@@ -12,7 +12,7 @@ import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/act
 import { walletAddCoBadgeCancel } from "../../store/actions";
 
 type OwnProps = {
-  abi: string;
+  abi?: string;
 };
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -26,10 +26,10 @@ const partecipatingBank_url =
 /**
  * The initial screen of the co-badge workflow (starting with a specific ABI, eg. from BANCOMAT screen)
  * The user can see the selected bank and can start the search for all the co-badge for the specific bank.
- * @param _
  * @constructor
+ * @param props
  */
-const CoBadgeSingleBankScreen = (props: Props): React.ReactElement => {
+const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
   const { showModal, hideModal } = useContext(LightModalContext);
 
   const openTosModal = () => {
@@ -69,4 +69,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoBadgeSingleBankScreen);
+)(CoBadgeChosenBankScreen);
