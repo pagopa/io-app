@@ -125,7 +125,7 @@ function* watchLoadServicesDetailToTrack() {
             startTime: new Date().getTime() as Millisecond,
             servicesId: new Set([...action.payload]),
             loaded: 0,
-            toLoad: servicesDetailLoadTrack.servicesId.size
+            toLoad: action.payload.length
           };
           servicesDetailLoadTrack = stats;
           break;
