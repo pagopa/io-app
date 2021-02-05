@@ -735,7 +735,7 @@ payment:
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
-  noticeCode: Codice avviso
+  noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
@@ -1041,7 +1041,7 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     updateInfo:
-      Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
+      pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
@@ -1069,7 +1069,7 @@ wallet:
   transactionFee: Costo operazione
   why: Perché?
   paymentReason: Causale
-  recipient: Destinatario
+  recipient: Ente Creditore
   date: Data
   time: Ora
   psp: Gestore della transazione
@@ -1162,8 +1162,8 @@ wallet:
     wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo:
-      Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
-      inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
+      Inquadra il codice QR che trovi nell'avviso, oppure
+      inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
