@@ -107,6 +107,9 @@ export function* watchServicesDetailLoadSaga(
   }
 }
 
+const calculateLoadingTime = (startTime: Millisecond): Millisecond =>
+  (startTime !== 0 ? new Date().getTime() - startTime : 0) as Millisecond;
+
 /**
  * listen for loading services details events to extract some track information
  * like amount of details to load and how much time they take
@@ -144,8 +147,9 @@ function* watchLoadServicesDetailToTrack() {
             trackServicesDetailLoad({
               ...servicesDetailLoadTrack,
               kind: "COMPLETE",
-              loadingTime: (new Date().getTime() -
-                servicesDetailLoadTrack.startTime) as Millisecond
+              loadingTime: calculateLoadingTime(
+                servicesDetailLoadTrack.startTime
+              )
             });
           }
 
@@ -157,11 +161,15 @@ function* watchLoadServicesDetailToTrack() {
            * could be not valid since the OS could apply a freeze or a limitation around the app context
            * so the app could run but with few limitations
            */
-          if (action.payload !== "active") {
+          if (
+            action.payload !== "active" &&
+            servicesDetailLoadTrack.servicesId.size > 0
+          ) {
             trackServicesDetailLoad({
               ...servicesDetailLoadTrack,
-              loadingTime: (new Date().getTime() -
-                servicesDetailLoadTrack.startTime) as Millisecond,
+              loadingTime: calculateLoadingTime(
+                servicesDetailLoadTrack.startTime
+              ),
               kind: "PARTIAL"
             });
           }
