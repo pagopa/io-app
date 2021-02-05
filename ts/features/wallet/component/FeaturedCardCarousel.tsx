@@ -52,7 +52,9 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const anyBonusNotActive = !pot.getOrElse(props.bpdActiveBonus, false);
+  const anyBonusNotActive =
+    !(pot.getOrElse(props.bpdActiveBonus, false) && bpdEnabled) ||
+    (!props.cgnActiveBonus && cgnEnabled);
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -92,7 +94,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_CGN_TYPE:
               return (
-                !props.cgnActiveBonus && (
+                !props.cgnActiveBonus &&
+                cgnEnabled && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
