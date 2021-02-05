@@ -166,8 +166,6 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 4
       .select(getAllWallets)
       .next(walletStateCardCheckout3ds)
-      .call(aPmSessionManager.getNewToken)
-      .next()
       .put(fetchWalletsRequest())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])

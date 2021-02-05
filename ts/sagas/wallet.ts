@@ -309,7 +309,7 @@ function* startOrResumeAddCreditCardSaga(
       if (pot.isNone(state.creditCardCheckout3ds)) {
         if (urlCheckout3ds !== undefined) {
           // Request a new token to the PM. This prevent expired token during the webview navigation.
-          // If the request for the new token fails a new Error is catched, the step fails and we exit the flow.
+          // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
           const pagoPaToken: Option<PaymentManagerToken> = yield call(
             pmSessionManager.getNewToken
           );
