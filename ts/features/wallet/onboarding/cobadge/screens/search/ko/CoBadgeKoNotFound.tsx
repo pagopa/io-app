@@ -8,8 +8,10 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
+import View from "../../../../../../../components/ui/TextWithIcon";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -29,10 +31,12 @@ const loadLocales = () => ({
  */
 const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
   const { headerTitle, title, body } = loadLocales();
-
+  // disable hardware back
+  useHardwareBackButton(() => true);
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View />}
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
