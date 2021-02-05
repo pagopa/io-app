@@ -20,14 +20,16 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 import { SearchStartComponent } from "./SearchStartComponent";
 
-type MethodType = "bancomatPay" | "bancomat";
+type MethodType = "bancomatPay" | "bancomat" | "cobadge";
 
 type Props = {
   methodType: MethodType;
   onSearch: (abi?: string) => void;
-  navigateToSearchBank: () => void;
+  navigateToSearchBank?: () => void;
   onCancel: () => void;
   handleTosModal: () => void;
+  handlePartecipatingBanksModal?: () => void;
+  bankName?: string;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -47,8 +49,9 @@ const handleMethodName = (methodType: MethodType) => {
     case "bancomatPay":
       return I18n.t("wallet.methods.bancomatPay.name");
     case "bancomat":
-    default:
       return I18n.t("wallet.methods.pagobancomat.name");
+    case "cobadge":
+      return I18n.t("wallet.methods.cobadge.name");
   }
 };
 
@@ -58,6 +61,8 @@ const getSectionName = (methodType: MethodType): SectionStatusKey => {
       return "bancomat";
     case "bancomatPay":
       return "bancomatpay";
+    case "cobadge":
+      return "cobadge";
   }
 };
 
@@ -84,6 +89,9 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             openTosModal={props.handleTosModal}
             onSearch={props.navigateToSearchBank}
             methodType={props.methodType}
+            bankName={props.bankName}
+            openPartecipatingBanksModal={props.handlePartecipatingBanksModal}
+            showCircuitLogo={props.methodType === "cobadge"}
           />
         </Content>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />

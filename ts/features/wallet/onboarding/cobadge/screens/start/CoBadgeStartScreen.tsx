@@ -9,8 +9,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadCoBadgeAbiConfiguration } from "../../store/actions";
 import { getCoBadgeAbiConfigurationSelector } from "../../store/reducers/abiConfiguration";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
-import CoBadgeAllBanksScreen from "./CoBadgeAllBanksScreen";
-import CoBadgeSingleBankScreen from "./CoBadgeSingleBankScreen";
+import CoBadgeChosenBankScreen from "./CoBadgeChosenBankScreen";
 import CoBadgeStartKoDisabled from "./ko/CoBadgeStartKoDisabled";
 import CoBadgeStartKoUnavailable from "./ko/CoBadgeStartKoUnavailable";
 import LoadAbiConfiguration from "./LoadAbiConfiguration";
@@ -26,8 +25,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   // All ABI selected
   if (props.maybeAbiSelected === undefined) {
-    return <CoBadgeAllBanksScreen />;
+    return <CoBadgeChosenBankScreen />;
   }
+
   // If a single ABI is selected, we should check the abiConfiguration
   useEffect(() => {
     props.loadAbiConfig();
@@ -40,7 +40,7 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   switch (props.abiSelectedConfiguration.value) {
     case StatusEnum.enabled:
       // Single ABI (bank) screen that allow to start the search
-      return <CoBadgeSingleBankScreen />;
+      return <CoBadgeChosenBankScreen abi={props.maybeAbiSelected} />;
     case StatusEnum.disabled:
       // The chosen ABI is disabled (not yet available)
       return <CoBadgeStartKoDisabled />;
