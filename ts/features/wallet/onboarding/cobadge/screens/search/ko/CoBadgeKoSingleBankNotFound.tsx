@@ -8,6 +8,7 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
+import View from "../../../../../../../components/ui/TextWithIcon";
 
 import I18n from "../../../../../../../i18n";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -16,6 +17,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import {
   searchUserCoBadge,
   walletAddCoBadgeCancel
@@ -42,9 +44,14 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body, searchAll } = loadLocales();
 
   const onSearchAll = () => props.searchAll();
+
+  // disable hardware back
+  useHardwareBackButton(() => true);
+
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View />}
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
