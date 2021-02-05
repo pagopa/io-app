@@ -2136,6 +2136,7 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    name: Carta Giovani Nazionale
     cta:
       activeBonus: Attiva la tua Carta Giovani
 webView:

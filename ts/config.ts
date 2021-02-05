@@ -93,7 +93,7 @@ export const totMessageFetchWorkers = t.Integer.decode(
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
 export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
+  Config.DISPLAY_VERSION_INFO_OVERLAY === "NO";
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";

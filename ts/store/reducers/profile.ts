@@ -77,6 +77,18 @@ export const profileNameSelector = createSelector(
 );
 
 /**
+ * Return the fiscal code of the profile if some, else undefined
+ */
+export const profileFCSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.fiscal_code),
+      undefined
+    )
+);
+
+/**
  * The complete name + surname
  */
 export const profileNameSurnameSelector = createSelector(
