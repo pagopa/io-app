@@ -16,7 +16,7 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
-import CobadgeCard from "../component/CobadgeCard";
+import CobadgeCard from "../component/CoBadgeCard";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 
 type NavigationParams = Readonly<{
@@ -76,13 +76,7 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
-        <CobadgeCard
-          expireMonth={cobadge.info.expireMonth}
-          expireYear={cobadge.info.expireYear}
-          caption={cobadge.caption}
-          abiLogo={cobadge.abiInfo?.logoUrl}
-          brandLogo={brandLogo}
-        />
+        <CobadgeCard enhancedCoBadge={cobadge} />
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
