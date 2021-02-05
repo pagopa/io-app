@@ -1,3 +1,4 @@
+import { none } from "fp-ts/lib/Option";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -9,15 +10,17 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
+import { cobadgeEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { navigateToWalletAddPaymentMethod } from "../../../../store/actions/navigation";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
-import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/store/actions";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -131,7 +134,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         }
       })
     ),
-  addCoBadge: (abi: string) => dispatch(walletAddCoBadgeFromBancomatStart(abi))
+  addCoBadge: (abi: string) =>
+    dispatch(
+      cobadgeEnabled
+        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({
+            abi,
+            legacyAddCreditCardBack: 1
+          })
+        : navigateToWalletAddPaymentMethod({ inPayment: none })
+    )
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

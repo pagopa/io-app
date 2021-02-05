@@ -69,7 +69,7 @@ import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge,
-  walletAddCoBadgeFromBancomatStart
+  walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import {
   handleAddUserSatispayToWallet,
@@ -965,10 +965,7 @@ export function* watchWalletSaga(
     );
 
     // watch for add co-badge to Wallet workflow
-    yield takeLatest(
-      walletAddCoBadgeFromBancomatStart,
-      addCoBadgeToWalletAndActivateBpd
-    );
+    yield takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
