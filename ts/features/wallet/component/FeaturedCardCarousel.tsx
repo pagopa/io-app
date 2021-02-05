@@ -92,7 +92,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_CGN_TYPE:
               return (
-                !props.cgnActiveBonus && (
+                props.cgnActiveBonus && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
