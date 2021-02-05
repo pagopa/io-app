@@ -108,8 +108,8 @@ export function* watchServicesDetailLoadSaga(
 }
 
 /**
- * listen for services detail loading event to extract some track information
- * like amount of detail to load and how much time they take
+ * listen for loading services details events to extract some track information
+ * like amount of details to load and how much time they take
  */
 function* watchLoadServicesDetailToTrack() {
   yield takeLatest(
