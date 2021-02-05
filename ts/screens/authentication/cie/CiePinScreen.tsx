@@ -68,9 +68,7 @@ const FORGOT_PIN_PAGE_URL =
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
   body: () => (
-    <Markdown avoidTextSelection>
-      {I18n.t("authentication.cie.pin.contextualHelpBody")}
-    </Markdown>
+    <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
   )
 });
 const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
@@ -90,7 +88,9 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present } = useIOBottomSheet(
     <View>
-      <Markdown>{I18n.t("bottomSheets.ciePin.content")}</Markdown>
+      <Markdown avoidTextSelection>
+        {I18n.t("bottomSheets.ciePin.content")}
+      </Markdown>
       <ButtonDefaultOpacity
         onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}
