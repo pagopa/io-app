@@ -81,7 +81,7 @@ export function* watchServicesDetailLoadSaga(
   getService: ReturnType<typeof BackendClient>["getService"]
 ) {
   // start a saga to track services detail load stats
-  yield call(watchLoadServicesDetailToTrack);
+  yield fork(watchLoadServicesDetailToTrack);
 
   // Create the channel used for the communication with the handlers.
   const requestsChannel: Channel<ActionType<
@@ -138,16 +138,17 @@ function* watchLoadServicesDetailToTrack() {
               servicesDetailLoadTrack.toLoad -
               servicesDetailLoadTrack.servicesId.size
           };
+          servicesDetailLoadTrack = statsServiceLoad;
           if (statsServiceLoad.servicesId.size === 0) {
             // all service are been loaded
-
             trackServicesDetailLoad({
-              ...statsServiceLoad,
+              ...servicesDetailLoadTrack,
               kind: "COMPLETE",
               loadingTime: (new Date().getTime() -
-                statsServiceLoad.startTime) as Millisecond
+                servicesDetailLoadTrack.startTime) as Millisecond
             });
           }
+
           break;
         // app changes state
         case getType(applicationChangeState):
@@ -166,14 +167,13 @@ function* watchLoadServicesDetailToTrack() {
           }
           // app comes back active, restore stats
           else if (action.payload === "active") {
-            const restoreStats: ServicesDetailLoadTrack = {
+            servicesDetailLoadTrack = {
               ...servicesDetailLoadTrack,
               kind: undefined,
               startTime: new Date().getTime() as Millisecond,
               loaded: 0,
               toLoad: servicesDetailLoadTrack.servicesId.size
             };
-            servicesDetailLoadTrack = restoreStats;
           }
           break;
       }
@@ -207,8 +207,10 @@ let servicesDetailLoadTrack: ServicesDetailLoadTrack = {
 
 const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
   void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
-    ...trackingStats,
-    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead in sending
-    servicesId: undefined
+    serviceLoadingStats: {
+      ...trackingStats,
+      // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead in sending
+      servicesId: undefined
+    }
   });
 };
