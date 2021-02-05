@@ -1,19 +1,34 @@
 import { NavigationActions } from "react-navigation";
 import CGN_ROUTES from "./routes";
 
-export const navigateToCgnOnboardingLoadActivationStatus = () =>
+export const navigateToCgnActivationLoadActivationStatus = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.LOAD_CHECK_ACTIVATION_STATUS
   });
 
-export const navigateToCgnOnboardingInformationTos = () =>
+export const navigateToCgnActivationInformationTos = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
   });
 
-export const navigateToCgnOnboardingLoadActivate = () =>
+export const navigateToCgnActivationLoading = () =>
   NavigationActions.navigate({
-    routeName: CGN_ROUTES.ACTIVATION.LOAD_ACTIVATE
+    routeName: CGN_ROUTES.ACTIVATION.LOADING
+  });
+
+export const navigateToCgnActivationPending = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.PENDING
+  });
+
+export const navigateToCgnActivationTimeout = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
+  });
+
+export const navigateToCgnActivationCompleted = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.COMPLETED
   });
 
 // Details
