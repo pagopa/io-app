@@ -1,6 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
@@ -50,6 +54,9 @@ export const getPaymentMethodHash = (
   }
   return undefined;
 };
+export const getTitleFromPaymentInstrument = (
+  paymentInstrument: PaymentInstrument
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
 
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
@@ -192,3 +199,6 @@ export const enhancePaymentMethod = (
 
 export const isBancomatBlocked = (pan: Card) =>
   pan.validityState === ValidityStateEnum.BR;
+
+export const isCoBadgeBlocked = (pan: PaymentInstrument) =>
+  pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
