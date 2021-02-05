@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0-rc.2](https://github.com/pagopa/io-app/compare/1.20.0-rc.1...1.20.0-rc.2) (2021-02-05)
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[#176824599](https://www.pivotaltracker.com/story/show/176824599)] Show CGN item when the user is not BPD enrolled  ([#2790](https://github.com/pagopa/io-app/issues/2790)) ([6007a88](https://github.com/pagopa/io-app/commit/6007a88ffa5adce92f063e224e4758f81c22ae71))
+
 ## [1.20.0-rc.1](https://github.com/pagopa/io-app/compare/1.20.0-rc.0...1.20.0-rc.1) (2021-02-05)
 
 
