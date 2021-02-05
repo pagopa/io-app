@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   startCoBadgeOnboarding: () =>
     dispatch(
       cobadgeEnabled
-        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({ abi: undefined })
+        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({})
         : navigateToWalletAddPaymentMethod({ inPayment: none })
     )
 });
