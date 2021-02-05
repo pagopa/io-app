@@ -207,10 +207,8 @@ let servicesDetailLoadTrack: ServicesDetailLoadTrack = {
 
 const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
   void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
-    serviceLoadingStats: {
-      ...trackingStats,
-      // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead in sending
-      servicesId: undefined
-    }
+    ...trackingStats,
+    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
+    servicesId: undefined
   });
 };
