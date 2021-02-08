@@ -20,6 +20,7 @@ import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activ
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
+import { isCgnActive } from "../../bonus/cgn/store/reducers/details";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -116,8 +117,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
-  // FIXME replace with Selector when the API implementation is completed.
-  cgnActiveBonus: false,
+  cgnActiveBonus: isCgnActive(state),
   availableBonusesList: pot.getOrElse(availableBonusTypesSelector(state), [])
 });
 
