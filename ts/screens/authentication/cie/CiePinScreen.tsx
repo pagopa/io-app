@@ -88,7 +88,9 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present } = useIOBottomSheet(
     <View>
-      <Markdown>{I18n.t("bottomSheets.ciePin.content")}</Markdown>
+      <Markdown avoidTextSelection>
+        {I18n.t("bottomSheets.ciePin.content")}
+      </Markdown>
       <ButtonDefaultOpacity
         onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}
