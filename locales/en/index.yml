@@ -868,6 +868,19 @@ wallet:
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
         warning: "Check that the card number matches the one on your physical card."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
+      chooseType:
+        title: "Does your card allow you to shop online?"
+        description: "This question allows us to better understand what your card is like and help you add it to your Wallet."
+        path:
+          enabled:
+            title: "Yes, it is enabled for online purchases"
+            description: "The data will be verified in the way appointed by your bank, for example via text message or app."
+          disabled:
+            title: "No, I only use it in shops"
+            description: "We will look for all the cards in your name at the banks participating in the service."
+          unknown:
+            title: "I do not know"
+            description: "We will look for all the cards in your name at the banks participating in the service."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"

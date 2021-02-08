@@ -888,6 +888,19 @@ wallet:
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
         warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
+      chooseType:
+        title: "La tua carta ti permette di acquistare online?"
+        description: "Questa domanda ci permette di capire meglio com’è fatta la tua carta e aiutarti ad aggiungerla al tuo Portafoglio."
+        path:
+          enabled:
+            title: "Sì, è abilitata agli acquisti online"
+            description: "I dati verranno verificati con le modalità previste dalla tua banca, ad esempio via sms o app."
+          disabled:
+            title: "No, la uso solo nei negozi"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio."
+          unknown:
+            title: "Non lo so"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
