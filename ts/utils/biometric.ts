@@ -5,6 +5,9 @@ import variables from "../theme/variables";
 export const authenticateConfig: AuthenticateConfig = {
   title: I18n.t("identification.biometric.popup.title"),
   sensorDescription: I18n.t("identification.biometric.popup.sensorDescription"),
+  sensorErrorDescription: I18n.t(
+    "identification.biometric.popup.sensorErrorDescription"
+  ),
   cancelText: I18n.t("global.buttons.cancel"),
   fallbackLabel: I18n.t("identification.biometric.popup.fallbackLabel"),
   imageColor: variables.contentPrimaryBackground,
