@@ -22,6 +22,15 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
+jest.mock("react-native-device-info", () => {
+  const getDeviceIdMock = jest.fn();
+  getDeviceIdMock.mockReturnValue("");
+
+  return {
+    getDeviceId: getDeviceIdMock
+  };
+});
+
 describe("bpdStartOnboardingWorker", () => {
   it("should onboard a user", () => {
     const notLoadingScreenRoute = "NotLoadingScreenRoute";
