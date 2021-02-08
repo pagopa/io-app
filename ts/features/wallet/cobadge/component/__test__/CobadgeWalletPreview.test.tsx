@@ -136,7 +136,9 @@ describe("CobadgeWalletPreview component", () => {
     const expectedPayload = {
       type: NavigationActions.NAVIGATE,
       routeName: ROUTES.WALLET_COBADGE_DETAIL,
-      params: { cobadge: aCobadgeCard }
+      params: {
+        cobadge: aCobadgeCard
+      }
     };
     if (cardComponent) {
       fireEvent.press(cardComponent);

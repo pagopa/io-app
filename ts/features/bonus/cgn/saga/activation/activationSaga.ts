@@ -1,20 +1,34 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
+import { call, delay, put, race, take } from "redux-saga/effects";
 import { NavigationActions } from "react-navigation";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
-  cgnActivationStatus
+  cgnRequestActivation
 } from "../../store/actions/activation";
-import { navigateToCgnOnboardingInformationTos } from "../../navigation/actions";
+import {
+  navigateToCgnActivationCompleted,
+  navigateToCgnActivationInformationTos,
+  navigateToCgnActivationLoading
+} from "../../navigation/actions";
 
 export function* cgnStartActivationWorker() {
-  yield put(navigateToCgnOnboardingInformationTos());
+  yield put(navigateToCgnActivationInformationTos());
   yield put(navigationHistoryPop(1));
 
-  // TODO :HERE WILL BE IMPLEMENTED THE ACTIVATION LOGIC
-  // WIP remove this instruction when the activation flow will be implemented
-  yield take(cgnActivationStatus.request);
+  yield take(cgnRequestActivation.request);
+
+  yield put(navigateToCgnActivationLoading());
+  yield put(navigationHistoryPop(1));
+
+  // UNCOMMENT when api implementation has been completed
+  // yield take(cgnRequestActivation.success);
+  // yield put(cgnActivationStatus.request());
+
+  yield delay(1000);
+
+  yield put(navigateToCgnActivationCompleted());
+  yield put(navigationHistoryPop(1));
 }
 
 /**

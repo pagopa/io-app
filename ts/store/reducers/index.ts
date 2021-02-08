@@ -20,7 +20,9 @@ import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import cieReducer from "./cie";
-import contentReducer from "./content";
+import contentReducer, {
+  initialContentState as contentInitialContentState
+} from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
@@ -164,6 +166,8 @@ export function createRootReducer(
               authentication: { _persist: state.authentication._persist },
               // data should be kept across multiple sessions
               entities: {
+                services: state.entities.services,
+                organizations: state.entities.organizations,
                 messagesStatus: state.entities.messagesStatus,
                 paymentByRptId: state.entities.paymentByRptId,
                 calendarEvents: state.entities.calendarEvents,
@@ -171,7 +175,12 @@ export function createRootReducer(
               },
               // backend status must be kept
               backendStatus: state.backendStatus,
-              crossSessions: state.crossSessions
+              crossSessions: state.crossSessions,
+              // keep servicesMetadata from content section
+              content: {
+                ...contentInitialContentState,
+                servicesMetadata: state.content.servicesMetadata
+              }
             } as GlobalState)
           : state;
     }

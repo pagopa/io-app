@@ -5,15 +5,17 @@ import { cgnActivationStatus } from "../actions/activation";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
+  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
   "PROGRESS" = "PROGRESS", // The request is started
   "PENDING" = "PENDING", // Polling time exceeded
-  "ERROR" = "ERROR", // The request is started
+  "ERROR" = "ERROR", // There's an error
   "EXISTS" = "EXISTS", // Another bonus related to this user was found
   "SUCCESS" = "SUCCESS" // Activation has been completed
 }
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
+  value?: any; // FIXME Replace when API spec is correctly linked and defined
 };
 
 const INITIAL_STATE: ActivationState = {
@@ -33,7 +35,8 @@ const reducer = (
     case getType(cgnActivationStatus.success):
       return {
         ...state,
-        status: CgnActivationProgressEnum.SUCCESS // To replace with action payload when types are defined
+        status: action.payload.status,
+        value: action.payload.activation
       };
     case getType(cgnActivationStatus.failure):
       return {
