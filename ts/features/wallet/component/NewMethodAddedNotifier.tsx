@@ -1,8 +1,11 @@
+import { none } from "fp-ts/lib/Option";
 import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { cobadgeEnabled } from "../../../config";
 import I18n from "../../../i18n";
+import { navigateToWalletAddPaymentMethod } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   bottomSheetContent,
@@ -11,11 +14,12 @@ import {
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const newBancomatBottomSheet = () => {
+const newBancomatBottomSheet = (onAdd?: () => void) => {
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
     385,
     bottomSheetContent
@@ -24,7 +28,10 @@ const newBancomatBottomSheet = () => {
     present: () =>
       openBottomSheet(
         <BancomatInformation
-          onAddPaymentMethod={dismiss}
+          onAddPaymentMethod={() => {
+            onAdd?.();
+            dismiss();
+          }}
           hideCobrandTitle={true}
         />,
         I18n.t("wallet.bancomat.details.debit.title")
@@ -44,7 +51,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     string
   >("");
 
-  const { present } = newBancomatBottomSheet();
+  const { present } = newBancomatBottomSheet(props.startCoBadgeOnboarding);
 
   useActionOnFocus(() => {
     const lastAddedHash = props.addedBancomat.reduce(
@@ -61,7 +68,14 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  startCoBadgeOnboarding: () =>
+    dispatch(
+      cobadgeEnabled
+        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({})
+        : navigateToWalletAddPaymentMethod({ inPayment: none })
+    )
+});
 
 const mapStateToProps = (state: GlobalState) => ({
   addedBancomat: onboardingBancomatAddedPansSelector(state)

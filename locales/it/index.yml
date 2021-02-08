@@ -779,6 +779,8 @@ wallet:
       dateTime: Data e ora
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
+    details:
+      header: Dettaglio Metodo
   searchAbi:
     header: Aggiungi {{methodName}}
     bancomat:
@@ -795,6 +797,13 @@ wallet:
         text2: informativa sul trattamento dei dati personali.
         text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
         text4: cercando fra quelle disponibili
+    cobadge:
+      title: Ricerca delle tue carte con circuito internazionale
+      description:
+        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
+        text2: le banche aderenti al servizio
+        text3: "Proseguendo accetti l'"
+        text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -864,6 +873,21 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    coBadge:
+      headerTitle: "Aggiungi circuito internazionale"
+      start:
+        title: "TMP Start Title"
+      search:
+        koTimeout:
+          title: "TMP KO Timeout add"
+        koNotFound:
+          title: "TMP KO Timeout add"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        label: "Carta con circuito internazionale {{current}} di {{length}}"
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
+        warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
+        loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1086,6 +1110,9 @@ wallet:
     digital:
       name: App e strumenti di pagamento digitali
       description: I tuoi strumenti digitali preferiti su IO
+    loyalty:
+      name: Carta di pagamento supermercati
+      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1108,6 +1135,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: circuito internazionale
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -1190,6 +1219,10 @@ wallet:
         one: "Satispay"
         two: " non consente ancora di pagare tramite IO"
         three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
@@ -1256,9 +1289,9 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Puoi pagare questo avviso entro il
+        block1: Questo avviso scade il giorno
       expiredAlert:
-        block1: L'avviso di pagamento è scaduto alle
+        block1: L'avviso è scaduto alle
         block2: del
     prescription:
       addMemo: Questa ricetta scade il
@@ -1442,6 +1475,7 @@ identification:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
+      sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
     wrongCode: Codice errato
@@ -2006,7 +2040,7 @@ bonus:
             one: "Devi aver fatto almeno"
             two: " {{transactions}} transazioni"
             three: " per sbloccare il Cashback che hai accumulato!"
-          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!!"
+          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!"
           currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
           currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
           gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
@@ -2058,8 +2092,8 @@ bonus:
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
-              title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
+              title: "Complimenti, hai raggiunto {{cashbackValue}}"
+              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
@@ -2072,7 +2106,7 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         add:
-          cta: "Aggiungi un metodo al cashback"
+          cta: "Aggiungi un metodo al Cashback"
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"

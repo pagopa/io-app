@@ -8,11 +8,7 @@ import {
 import { enhanceCreditCard } from "../../../../../../utils/paymentMethod";
 import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
-import {
-  addCoBadgeToWallet,
-  walletAddCoBadgeFromBancomatStart,
-  walletAddCoBadgeStart
-} from "../actions";
+import { addCoBadgeToWallet, walletAddCoBadgeStart } from "../actions";
 
 const addedCoBadgeReducer = (
   state: ReadonlyArray<RawCreditCardPaymentMethod> = [],
@@ -24,13 +20,12 @@ const addedCoBadgeReducer = (
       return [...state, action.payload];
     // Reset the state when starting a new Cobadge onboarding workflow
     case getType(walletAddCoBadgeStart):
-    case getType(walletAddCoBadgeFromBancomatStart):
       return [];
   }
   return state;
 };
 
-export const onboardingCoBadgeAddedAccountSelector = createSelector(
+export const onboardingCoBadgeAddedSelector = createSelector(
   [state => state.wallet.onboarding.coBadge.addedCoBadge, abiSelector],
   (addedCoBadge, remoteAbi): ReadonlyArray<CreditCardPaymentMethod> =>
     addedCoBadge.map(p => enhanceCreditCard(p, getValueOrElse(remoteAbi, {})))

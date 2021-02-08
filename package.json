@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.19.0-rc.2",
+  "version": "1.20.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -11,6 +11,7 @@
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions.json",
   "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
+  "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -42,17 +43,19 @@
     "generate:bpd-award-periods": "rimraf definitions/bpd/award_periods && mkdir -p definitions/bpd/award_periods  && gen-api-models --api-spec $npm_package_io_bpd_award_periods --out-dir ./definitions/bpd/award_periods --no-strict --request-types --response-decoders",
     "generate:bpd-winning-transactions": "rimraf definitions/bpd/winning_transactions && mkdir -p definitions/bpd/winning_transactions  && gen-api-models --api-spec $npm_package_io_bpd_winning_transactions --out-dir ./definitions/bpd/winning_transactions --no-strict --request-types --response-decoders",
     "generate:pagopa-api-walletv2": "rimraf definitions/pagopa/walletv2 && mkdir -p definitions/pagopa/walletv2  && gen-api-models --api-spec $npm_package_pagopa_api_walletv2 --out-dir ./definitions/pagopa/walletv2 --no-strict --request-types --response-decoders",
+    "generate:pagopa-cobadge-configuration": "rimraf definitions/pagopa/cobadge/configuration && mkdir -p definitions/pagopa/cobadge/configuration && gen-api-models --api-spec $npm_package_pagopa_cobadge_configuration --out-dir ./definitions/pagopa/cobadge/configuration",
+    "generate:pagopa-cobadge-api": "rimraf definitions/pagopa/cobadge && mkdir -p definitions/pagopa/cobadge && gen-api-models --api-spec $npm_package_pagopa_cobadge_api --out-dir ./definitions/pagopa/cobadge --no-strict --request-types --response-decoders",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec $npm_package_io_content_specs --out-dir ./definitions/content",
     "generate:bpd": "npm-run-all generate:bpd-citizen generate:bpd-payment generate:bpd-award-periods generate:bpd-winning-transactions",
-    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:locales",
+    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:locales",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "0.3.3",
+    "@pagopa/react-native-cie": "^1.0.3",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/clipboard": "^1.5.0",

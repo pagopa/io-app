@@ -24,8 +24,7 @@ export function* handleLoadAbi(
 ) {
   try {
     const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> = yield call(
-      getAbi,
-      {}
+      getAbi
     );
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {
