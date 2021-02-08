@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
 import { CoBadgeServices } from "../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { CobadgeResponse } from "../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
+import { ExecutionStatusEnum } from "../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../../utils/errors";
@@ -69,6 +70,12 @@ export const trackCobadgeResponse = (
     {
       serviceProviders: response.payload?.searchRequestMetadata?.map(s =>
         s.serviceProviderName?.toString()
+      ),
+      anyServiceError: response.payload?.searchRequestMetadata.some(
+        m => m.executionStatus === ExecutionStatusEnum.KO
+      ),
+      anyServicePending: response.payload?.searchRequestMetadata.some(
+        m => m.executionStatus === ExecutionStatusEnum.PENDING
       ),
       count: response.payload?.paymentInstruments?.length,
       status: response.status
