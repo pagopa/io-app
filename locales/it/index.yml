@@ -144,6 +144,7 @@ global:
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
+    findOutMore: "Scopri di più"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -877,6 +878,13 @@ wallet:
       headerTitle: "Aggiungi circuito internazionale"
       start:
         title: "TMP Start Title"
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        koDisabled:
+          title: "La tua banca non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta con circuito internazionale."
+        koUnavailable:
+          title: "Non riusciamo a contattare la tua banca"
+          body: "Siamo al lavoro per risolvere il problema."
       search:
         koTimeout:
           title: "TMP KO Timeout add"
