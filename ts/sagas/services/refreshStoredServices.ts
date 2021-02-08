@@ -37,6 +37,7 @@ export function* refreshStoredServices(
       );
     })
     .map(_ => _.service_id);
-
-  yield put(loadServicesDetail(serviceDetailIdsToLoad));
+  if (serviceDetailIdsToLoad.length > 0) {
+    yield put(loadServicesDetail(serviceDetailIdsToLoad));
+  }
 }
