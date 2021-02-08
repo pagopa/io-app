@@ -49,7 +49,7 @@ const reducer = (
 };
 
 // Selectors
-export const availableBonusTypesSelector = (
+const availableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
@@ -78,6 +78,21 @@ export const visibleAvailableBonusSelector = createSelector(
       ),
       []
     )
+);
+
+export const isAvailableBonusLoadingSelector = createSelector(
+  availableBonusTypesSelector,
+  (abs: AvailableBonusTypesState) => pot.isLoading(abs)
+);
+
+export const isAvailableBonusNoneErrorSelector = createSelector(
+  availableBonusTypesSelector,
+  (abs: AvailableBonusTypesState) => pot.isNone(abs) && pot.isError(abs)
+);
+
+export const isAvailableBonusErrorSelector = createSelector(
+  availableBonusTypesSelector,
+  (abs: AvailableBonusTypesState) => pot.isError(abs)
 );
 
 /**

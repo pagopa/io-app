@@ -13,7 +13,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { visibleAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
@@ -94,8 +94,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_CGN_TYPE:
               return (
-                !props.cgnActiveBonus &&
-                cgnEnabled && (
+                !props.cgnActiveBonus && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
@@ -118,7 +117,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
   // FIXME replace with Selector when the API implementation is completed.
   cgnActiveBonus: false,
-  availableBonusesList: pot.getOrElse(availableBonusTypesSelector(state), [])
+  availableBonusesList: visibleAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
