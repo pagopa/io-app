@@ -7,6 +7,7 @@
 
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import deviceInfoModule from "react-native-device-info";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -44,16 +45,34 @@ const getIcon = (routeName: string): string => {
   return route === undefined ? fallbackIcon : route;
 };
 
-const styles = StyleSheet.create({
-  tabBarStyle: {
-    height: 64,
+const tabBarStyleFactory = () => {
+  const defaultStyle = {
     backgroundColor: variables.colorWhite,
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
-    paddingTop: 8,
-    paddingBottom: 10
-  },
+    paddingTop: 8
+  };
+
+  // Add space to the bottom bar for iPhone 12
+  const isIPhone12 = deviceInfoModule.getDeviceId().indexOf("iPhone13") !== -1;
+
+  return {
+    ...defaultStyle,
+    ...(isIPhone12
+      ? {
+          paddingBottom: 20,
+          height: 74
+        }
+      : {
+          paddingBottom: 10,
+          height: 64
+        })
+  };
+};
+
+const styles = StyleSheet.create({
+  tabBarStyle: tabBarStyleFactory(),
   upsideShadow: {
     // iOS shadow
     shadowColor: variables.footerShadowColor,
