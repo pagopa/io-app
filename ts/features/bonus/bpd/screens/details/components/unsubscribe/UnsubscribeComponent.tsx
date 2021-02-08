@@ -35,8 +35,7 @@ export const UnsubscribeComponent: React.FunctionComponent<Props> = props => (
             props.onConfirm,
             I18n.t("bonus.bpd.unsubscribe.confirmCta")
           ),
-          onPressWithGestureHandler: true,
-          testID: "UnsubscribeBpdButtonTestID"
+          onPressWithGestureHandler: true
         }}
       />
     }
