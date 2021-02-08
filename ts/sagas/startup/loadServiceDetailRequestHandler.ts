@@ -1,7 +1,8 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, fork, put, take } from "redux-saga/effects";
+import { call, Effect, fork, put, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { buffers, channel, Channel } from "redux-saga";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { BackendClient } from "../../api/backend";
 import {
   loadServiceDetail,
@@ -11,6 +12,8 @@ import { SagaCallReturnType } from "../../types/utils";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
 import { totServiceFetchWorkers } from "../../config";
+import { applicationChangeState } from "../../store/actions/application";
+import { mixpanelTrack } from "../../mixpanel";
 
 /**
  * A generator to load the service details from the Backend
@@ -77,6 +80,9 @@ function* handleServiceLoadRequest(
 export function* watchServicesDetailLoadSaga(
   getService: ReturnType<typeof BackendClient>["getService"]
 ) {
+  // start a saga to track services detail load stats
+  yield fork(watchLoadServicesDetailToTrack);
+
   // Create the channel used for the communication with the handlers.
   const requestsChannel: Channel<ActionType<
     typeof loadServiceDetail.request
@@ -100,3 +106,117 @@ export function* watchServicesDetailLoadSaga(
     );
   }
 }
+
+const calculateLoadingTime = (startTime: Millisecond): Millisecond =>
+  (startTime !== 0 ? new Date().getTime() - startTime : 0) as Millisecond;
+
+/**
+ * listen for loading services details events to extract some track information
+ * like amount of details to load and how much time they take
+ */
+function* watchLoadServicesDetailToTrack() {
+  yield takeLatest(
+    [loadServicesDetail, loadServiceDetail.success, applicationChangeState],
+    action => {
+      switch (action.type) {
+        // request to load a set of services detail
+        // copying object is needed to avoid "immutable" error on frozen objects
+        case getType(loadServicesDetail):
+          const stats: ServicesDetailLoadTrack = {
+            ...servicesDetailLoadTrack,
+            kind: undefined,
+            startTime: new Date().getTime() as Millisecond,
+            servicesId: new Set([...action.payload]),
+            loaded: 0,
+            toLoad: action.payload.length
+          };
+          servicesDetailLoadTrack = stats;
+          break;
+        // single service detail is been loaded
+        case getType(loadServiceDetail.success):
+          servicesDetailLoadTrack.servicesId.delete(action.payload.service_id);
+          const statsServiceLoad: ServicesDetailLoadTrack = {
+            ...servicesDetailLoadTrack,
+            loaded:
+              servicesDetailLoadTrack.toLoad -
+              servicesDetailLoadTrack.servicesId.size
+          };
+          servicesDetailLoadTrack = statsServiceLoad;
+          if (statsServiceLoad.servicesId.size === 0) {
+            // all service are been loaded
+            trackServicesDetailLoad({
+              ...servicesDetailLoadTrack,
+              kind: "COMPLETE",
+              loadingTime: calculateLoadingTime(
+                servicesDetailLoadTrack.startTime
+              )
+            });
+          }
+
+          break;
+        // app changes state
+        case getType(applicationChangeState):
+          /**
+           * if the app went in inactive or background state these measurements
+           * could be not valid since the OS could apply a freeze or a limitation around the app context
+           * so the app could run but with few limitations
+           */
+          if (
+            action.payload !== "active" &&
+            servicesDetailLoadTrack.servicesId.size > 0
+          ) {
+            trackServicesDetailLoad({
+              ...servicesDetailLoadTrack,
+              loadingTime: calculateLoadingTime(
+                servicesDetailLoadTrack.startTime
+              ),
+              kind: "PARTIAL"
+            });
+          }
+          // app comes back active, restore stats
+          else if (action.payload === "active") {
+            servicesDetailLoadTrack = {
+              ...servicesDetailLoadTrack,
+              kind: undefined,
+              startTime: new Date().getTime() as Millisecond,
+              loaded: 0,
+              toLoad: servicesDetailLoadTrack.servicesId.size
+            };
+          }
+          break;
+      }
+    }
+  );
+}
+
+type ServicesDetailLoadTrack = {
+  // when loading starts
+  startTime: Millisecond;
+  // the amount of loading millis
+  loadingTime: Millisecond;
+  // the amount of services detail to load
+  toLoad: number;
+  // the amount of services detail loaded
+  loaded: number;
+  // the set of the services id that remain to be loaded
+  servicesId: Set<string>;
+  // COMPLETE: all services detail are been loaded
+  // PARTIAL: a sub-set of services detail to load are been loaded
+  kind?: "COMPLETE" | "PARTIAL";
+};
+// eslint-disable-next-line functional/no-let
+let servicesDetailLoadTrack: ServicesDetailLoadTrack = {
+  startTime: 0 as Millisecond,
+  loadingTime: 0 as Millisecond,
+  toLoad: 0,
+  loaded: 0,
+  servicesId: new Set<string>()
+};
+
+const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
+  void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
+    ...trackingStats,
+    // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
+    servicesId: undefined
+  });
+};
