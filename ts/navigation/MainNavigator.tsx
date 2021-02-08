@@ -54,7 +54,10 @@ const tabBarStyleFactory = () => {
     paddingTop: 8
   };
 
-  // Add space to the bottom bar for iPhone 12
+  // Add space to the bottom bar for iPhone 12, which has
+  // deviceId "iPhone 13" counterintuitevely
+  // See https://gist.github.com/adamawolf/3048717 for device IDs
+
   const isIPhone12 = deviceInfoModule.getDeviceId().indexOf("iPhone13") !== -1;
 
   return {
