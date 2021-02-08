@@ -802,7 +802,7 @@ wallet:
       description:
         text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
         text2: le banche aderenti al servizio
-        text3: "Proseguendo accetti l'"
+        text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
