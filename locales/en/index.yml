@@ -1443,6 +1443,7 @@ identification:
       reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
+      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
       fallbackLabel: Use the unlock code
   fail:
     wrongCode: Wrong code
