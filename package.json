@@ -51,7 +51,7 @@
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec $npm_package_io_content_specs --out-dir ./definitions/content",
     "generate:bpd": "npm-run-all generate:bpd-citizen generate:bpd-payment generate:bpd-award-periods generate:bpd-winning-transactions",
-    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-api generate:pagopa-cobadge-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:cgn-definitions generate:locales",
+    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:cgn-definitions generate:locales",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
