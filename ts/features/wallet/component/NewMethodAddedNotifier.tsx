@@ -1,8 +1,11 @@
+import { none } from "fp-ts/lib/Option";
 import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { cobadgeEnabled } from "../../../config";
 import I18n from "../../../i18n";
+import { navigateToWalletAddPaymentMethod } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   bottomSheetContent,
@@ -11,7 +14,7 @@ import {
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import BancomatInformation from "../bancomat/screen/BancomatInformation";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
-import { walletAddCoBadgeFromBancomatStart } from "../onboarding/cobadge/store/actions";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -67,7 +70,11 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   startCoBadgeOnboarding: () =>
-    dispatch(walletAddCoBadgeFromBancomatStart(undefined))
+    dispatch(
+      cobadgeEnabled
+        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({})
+        : navigateToWalletAddPaymentMethod({ inPayment: none })
+    )
 });
 
 const mapStateToProps = (state: GlobalState) => ({

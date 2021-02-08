@@ -759,6 +759,8 @@ wallet:
       dateTime: Date and time
       detailTitle: Details
       help: If you have encountered a problem entering this payment method, write for more information and details
+    details:
+      header: Method detail
   searchAbi:
     header: "Add {{methodName}}"
     bancomat:
@@ -775,6 +777,13 @@ wallet:
         text2: information on the processing of personal data.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
+    cobadge:
+      title: "Search for your international circuit cards"
+      description:
+        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
+        text2: the banks participating in the service
+        text3: "By continuing you accept the "
+        text4: information on the processing of personal data.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -854,7 +863,11 @@ wallet:
         koNotFound:
           title: "TMP KO Timeout add"
       add:
-        title: "TMP Add title"
+        screenTitle: "Do you want to add this card?"
+        label: "International circuit card {{current}} of {{length}}"
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        warning: "Check that the card number matches the one on your physical card."
+        loading: "We are adding your international circuit card\n\nPlease hold on..."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1071,6 +1084,9 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
+    loyalty:
+      name: Supermarket Loyalty Card
+      description: The payment card issued by your supermarket, used to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
@@ -1093,6 +1109,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: international circuit
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1174,6 +1192,10 @@ wallet:
         one: "Satispay"
         two: " can't be used yet to make payments through IO"
         three: ": this feature will be enabled on future app version release."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valid until {{expiryDate}}"
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
@@ -1985,7 +2007,7 @@ bonus:
             one: "You must have reached at least"
             two: " {{transactions}} transactions"
             three: " to unlock the cashback collected so far!"
-          currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
+          currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
           gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
@@ -2038,8 +2060,8 @@ bonus:
               text4: "and collected "
               text5: "a cashback of "
             milestone:
-              title: "Congratulation, you earned {{cashbackValue}}"
-              body: "You have reached the maximum refund for this phase. Keep collecting valid transactions to climb the ranking!"
+              title: "Congratulation, you reached {{cashbackValue}}"
+              body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
           title: "Transaction details"
           paymentCircuit: "Payment circuit"
           transactionAmount: "Transaction amount"
@@ -2052,7 +2074,7 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
-          cta: "Add a method to cashback"
+          cta: "Add a method to Cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
