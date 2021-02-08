@@ -9,6 +9,8 @@ import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { useIOBottomSheetRaw } from "../../../../../../../utils/bottomSheet";
 import { bpdDeleteUserFromProgram } from "../../../../store/actions/onboarding";
+import { identificationRequest } from "../../../../../../../store/actions/identification";
+import { shufflePinPadOnPayment } from "../../../../../../../config";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -51,7 +53,19 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancelBpd: () => {
-    dispatch(bpdDeleteUserFromProgram.request());
+    const onSuccess = () => dispatch(bpdDeleteUserFromProgram.request());
+    dispatch(
+      identificationRequest(
+        false,
+        true,
+        undefined,
+        undefined,
+        {
+          onSuccess
+        },
+        shufflePinPadOnPayment
+      )
+    );
   }
 });
 
