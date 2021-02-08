@@ -48,18 +48,14 @@ export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
   return Promise.resolve();
 };
 
-type MixpanelPayload = {
-  [key: string]: string | number | ReadonlyArray<string> | undefined;
-};
-
 /**
  * Transform a {@link CobadgeResponse} into a {@link MixpanelPayload}
  * @param response
  */
-const trackCobadgeResponse = (
+export const trackCobadgeResponse = (
   response: CobadgeResponse
-): MixpanelPayload | undefined =>
-  response.payload?.searchRequestMetadata?.reduce<MixpanelPayload>(
+): Record<string, unknown> | undefined =>
+  response.payload?.searchRequestMetadata?.reduce<Record<string, unknown>>(
     (acc, val) => {
       if (val.serviceProviderName !== undefined) {
         return {
@@ -76,7 +72,7 @@ const trackCobadgeResponse = (
       ),
       count: response.payload?.paymentInstruments?.length,
       status: response.status
-    } as MixpanelPayload
+    } as Record<string, unknown>
   );
 
 /**
@@ -84,7 +80,7 @@ const trackCobadgeResponse = (
  * @param cobadgeSettings
  */
 const trackCoBadgeServices = (cobadgeSettings: CoBadgeServices) =>
-  Object.keys(cobadgeSettings).reduce<MixpanelPayload>(
+  Object.keys(cobadgeSettings).reduce<Record<string, unknown>>(
     (acc, val) => ({ ...acc, [`${val}service`]: cobadgeSettings[val].status }),
     {
       serviceProviders: Object.keys(cobadgeSettings)

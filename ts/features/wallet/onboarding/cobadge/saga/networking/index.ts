@@ -5,21 +5,26 @@ import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import {
   isRawCreditCard,
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getNetworkError } from "../../../../../../utils/errors";
+import { getNetworkError, NetworkError } from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
+import { trackCobadgeResponse } from "../../analytics";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
 import { onboardingCoBadgeSearchRequestId } from "../../store/reducers/searchCoBadgeRequestId";
+
+const withTokenPrefix = "WALLET_ONBOARDING_COBADGE_SEARCH_WITH_TOKEN";
+const withoutTokenPrefix = "WALLET_ONBOARDING_COBADGE_SEARCH_WITHOUT_TOKEN";
 
 /**
  * Load the user's cobadge cards. if a previous stored SearchRequestId is found then it will be used
@@ -33,13 +38,20 @@ export function* handleSearchUserCoBadge(
   sessionManager: SessionManager<PaymentManagerToken>,
   searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
+  const onboardingCoBadgeSearchRequest: ReturnType<typeof onboardingCoBadgeSearchRequestId> = yield select(
+    onboardingCoBadgeSearchRequestId
+  );
+  const trackPrefix = onboardingCoBadgeSearchRequest
+    ? withTokenPrefix
+    : withoutTokenPrefix;
   try {
-    const onboardingCoBadgeSearchRequest: ReturnType<typeof onboardingCoBadgeSearchRequestId> = yield select(
-      onboardingCoBadgeSearchRequestId
-    );
     const getPansWithRefresh = sessionManager.withRefresh(
       getCobadgePans(searchAction.payload)
     );
+
+    void mixpanelTrack(`${trackPrefix}_REQUEST`, {
+      abi: searchAction.payload ?? "all"
+    });
 
     const getPansWithRefreshResult:
       | SagaCallReturnType<typeof getPansWithRefresh>
@@ -53,38 +65,44 @@ export function* handleSearchUserCoBadge(
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         if (getPansWithRefreshResult.value.value.data) {
+          void mixpanelTrack(
+            `${trackPrefix}_SUCCESS`,
+            trackCobadgeResponse(getPansWithRefreshResult.value.value.data)
+          );
           return yield put(
             searchUserCoBadge.success(getPansWithRefreshResult.value.value.data)
           );
         } else {
           // it should not never happen
-          return yield put(
-            searchUserCoBadge.failure({
-              kind: "generic",
-              value: new Error(`data is undefined`)
-            })
-          );
+          const error: NetworkError = {
+            kind: "generic",
+            value: new Error(`data is undefined`)
+          };
+          void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+          return yield put(searchUserCoBadge.failure(error));
         }
       } else {
-        return yield put(
-          searchUserCoBadge.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${getPansWithRefreshResult.value.status}`
-            )
-          })
-        );
+        const error: NetworkError = {
+          kind: "generic",
+          value: new Error(
+            `response status ${getPansWithRefreshResult.value.status}`
+          )
+        };
+        void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+        return yield put(searchUserCoBadge.failure(error));
       }
     } else {
-      return yield put(
-        searchUserCoBadge.failure({
-          kind: "generic",
-          value: new Error(readableReport(getPansWithRefreshResult.value))
-        })
-      );
+      const error: NetworkError = {
+        kind: "generic",
+        value: new Error(readableReport(getPansWithRefreshResult.value))
+      };
+      void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+      return yield put(searchUserCoBadge.failure(error));
     }
   } catch (e) {
-    return yield put(searchUserCoBadge.failure(getNetworkError(e)));
+    const error = getNetworkError(e);
+    void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+    return yield put(searchUserCoBadge.failure(error));
   }
 }
 
