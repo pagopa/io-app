@@ -17,6 +17,15 @@ import { PreferredLanguageEnum } from ".../../../definitions/backend/PreferredLa
 
 jest.mock("react-native-share", () => jest.fn());
 
+jest.mock("react-native-device-info", () => {
+  const getDeviceIdMock = jest.fn();
+  getDeviceIdMock.mockReturnValue("");
+
+  return {
+    getDeviceId: getDeviceIdMock
+  };
+});
+
 describe("Test How Fiscal Code Overlay gets rendered on lifetime methods", () => {
   afterAll(() => jest.resetAllMocks());
 
