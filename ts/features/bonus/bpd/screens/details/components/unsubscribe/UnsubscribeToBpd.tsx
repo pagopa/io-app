@@ -59,7 +59,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         false,
         true,
         undefined,
-        undefined,
+        {
+          label: I18n.t("global.buttons.cancel"),
+          onCancel: () => undefined
+        },
         {
           onSuccess
         },
