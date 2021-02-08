@@ -9,7 +9,7 @@ import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 
 type ActivationStatus = {
   status: CgnActivationProgressEnum;
-  activation?: CgnStatus; // Replace when API spec is correctly linked and defined
+  activation?: CgnStatus; 
 };
 
 export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
