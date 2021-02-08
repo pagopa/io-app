@@ -45,11 +45,7 @@ const UnsubscribeToBpd: React.FunctionComponent<Props> = props => {
     );
 
   return (
-    <ButtonDefaultOpacity
-      style={styles.button}
-      onPress={openModalBox}
-      testID={"UnsubscribeOpenBSButtonTestID"}
-    >
+    <ButtonDefaultOpacity style={styles.button} onPress={openModalBox}>
       <Label color={"red"}>{I18n.t("bonus.bpd.unsubscribe.cta")}</Label>
     </ButtonDefaultOpacity>
   );
