@@ -8,6 +8,7 @@ import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import { startTimer } from "../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { CgnActivatedStatus } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
+import { getError } from "../../../../../../utils/errors";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
@@ -67,7 +68,7 @@ export const cgnActivationSaga = (
       // decoding failure
       throw Error(readablePrivacyReport(startCgnActivationResult.value));
     } catch (e) {
-      return cgnActivationStatus.failure(e);
+      return cgnActivationStatus.failure(getError(e));
     }
   };
 
