@@ -902,13 +902,13 @@ wallet:
         path:
           enabled:
             title: "Sì, è abilitata agli acquisti online"
-            description: "I dati verranno verificati con le modalità previste dalla tua banca, ad esempio via sms o app."
+            description: "Verificheremo i dati della carta con la tua banca, di solito via sms o notifica push"
           disabled:
             title: "No, la uso solo nei negozi"
-            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio."
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
           unknown:
             title: "Non lo so"
-            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio."
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1230,9 +1230,9 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha uno di questi loghi?"
-        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
-        addCta: "Aggiungi Carta di Debito/Credito"
+        title: "La tua carta ha più di un logo?"
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
+        addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
