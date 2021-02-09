@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0-rc.1](https://github.com/pagopa/io-app/compare/1.21.0-rc.0...1.21.0-rc.1) (2021-02-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176578587](https://www.pivotaltracker.com/story/show/176578587)] Update the co-badge in app payment badge ([#2797](https://github.com/pagopa/io-app/issues/2797)) ([16a0517](https://github.com/pagopa/io-app/commit/16a05174924bc6e6462bc04b5a496b4f7f45696b))
+
 ## [1.21.0-rc.0](https://github.com/pagopa/io-app/compare/1.20.0-rc.2...1.21.0-rc.0) (2021-02-09)
 
 
