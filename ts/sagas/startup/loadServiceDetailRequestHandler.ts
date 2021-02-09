@@ -225,6 +225,10 @@ const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
     // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
     servicesId: undefined
   });
-  // reset data
-  servicesDetailLoadTrack = defaultDetailLoadTrack();
+  // reset on complete
+  // when it is "PARTIAL" data must be keep to be used when the app come active again
+  if (trackingStats.kind === "COMPLETE") {
+    // reset data
+    servicesDetailLoadTrack = defaultDetailLoadTrack();
+  }
 };
