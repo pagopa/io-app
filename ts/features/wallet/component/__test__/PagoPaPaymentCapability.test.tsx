@@ -87,4 +87,22 @@ describe("PagoPaPaymentCapability", () => {
 
     expect(component.getByText("Incompatible")).toBeTruthy();
   });
+
+  it("should render a disabled switch if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and PagoPa = false", () => {
+    const aNonMaestroCreditCard = {
+      info: {
+        brand: CreditCardType.decode("VISA").value,
+        issuerAbiCode: "123"
+      }
+    } as CreditCardPaymentMethod;
+    const aPaymentMethod = {
+      ...aNonMaestroCreditCard,
+      kind: "CreditCard",
+      pagoPA: false
+    } as PaymentMethod;
+
+    const component = renderTestTarget(aPaymentMethod);
+    const disabledSwitch = component.queryByTestId("switchOnboardCard");
+    expect(disabledSwitch).not.toBeNull();
+  });
 });
