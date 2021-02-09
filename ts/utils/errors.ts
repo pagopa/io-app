@@ -15,7 +15,10 @@ export const getError = (error: unknown): Error => {
 };
 
 export const getNetworkError = (error: unknown): NetworkError => {
-  if (error === "max-retries") {
+  if (
+    error === "max-retries" ||
+    (error instanceof Error && error.message === "max-retries")
+  ) {
     return { kind: "timeout" };
   }
   return { kind: "generic", value: getError(error) };

@@ -75,7 +75,11 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import { loadServiceDetail, loadVisibleServices } from "../actions/services";
+import {
+  loadServiceDetail,
+  loadServicesDetail,
+  loadVisibleServices
+} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
@@ -186,8 +190,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         total: action.payload.total.getOrElse(-1)
       });
     //
-    // Wallet actions (with properties)
+    // wallets success / services load requests
     //
+    case getType(loadServicesDetail):
     case getType(fetchWalletsSuccess):
       return mp.track(action.type, {
         count: action.payload.length
@@ -306,7 +311,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
-
     // track when a missing municipality is detected
     case getType(contentMunicipalityLoad.failure):
       return mp.track(action.type, {

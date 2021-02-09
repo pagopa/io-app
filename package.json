@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.18.0-rc.1",
+  "version": "1.21.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -11,6 +11,7 @@
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions.json",
   "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
+  "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -46,13 +47,13 @@
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && gen-api-models --api-spec $npm_package_io_content_specs --out-dir ./definitions/content",
     "generate:bpd": "npm-run-all generate:bpd-citizen generate:bpd-payment generate:bpd-award-periods generate:bpd-winning-transactions",
-    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:locales",
+    "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:pagopa-api-walletv2 generate:pagopa-cobadge-configuration generate:content-definitions generate:bonus-vacanze-definitions generate:bpd generate:locales",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "0.3.3",
+    "@pagopa/react-native-cie": "^1.0.3",
     "@react-native-community/async-storage": "^1.6.1",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/clipboard": "^1.5.0",
@@ -205,6 +206,7 @@
     "plist": "^3.0.1",
     "postinstall-postinstall": "^1.0.0",
     "prettier": "2.1.0",
+    "react-native-bundle-visualizer": "^2.2.1",
     "react-test-renderer": "16.13.1",
     "redux-mock-store": "^1.5.4",
     "redux-saga-test-plan": "4.0.0-rc.3",

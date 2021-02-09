@@ -29,6 +29,9 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
+// Default number of workers to fetch service.
+const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
@@ -61,6 +64,8 @@ export const isPlaygroundsEnabled: boolean =
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
 
+export const cobadgeEnabled: boolean = Config.COBADGE_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
@@ -91,6 +96,10 @@ export const contentRepoUrl = NonEmptyString.decode(
 export const totMessageFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
+
+export const totServiceFetchWorkers = t.Integer.decode(
+  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
+).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
 
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";

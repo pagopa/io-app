@@ -1,6 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { ImageSourcePropType } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
@@ -13,6 +17,7 @@ import { IndexedById } from "../store/helpers/indexer";
 import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
+  CreditCardPaymentMethod,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
@@ -49,6 +54,9 @@ export const getPaymentMethodHash = (
   }
   return undefined;
 };
+export const getTitleFromPaymentInstrument = (
+  paymentInstrument: PaymentInstrument
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
 
 export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
   `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
@@ -156,6 +164,18 @@ export const enhanceBPay = (
   icon: getImageFromPaymentMethod(rawBPay)
 });
 
+export const enhanceCreditCard = (
+  rawCreditCard: RawCreditCardPaymentMethod,
+  abiList: IndexedById<Abi>
+): CreditCardPaymentMethod => ({
+  ...rawCreditCard,
+  abiInfo: rawCreditCard.info.issuerAbiCode
+    ? abiList[rawCreditCard.info.issuerAbiCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
+  icon: getImageFromPaymentMethod(rawCreditCard)
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -167,6 +187,7 @@ export const enhancePaymentMethod = (
     case "BPay":
       return enhanceBPay(pm, abiList);
     case "CreditCard":
+      return enhanceCreditCard(pm, abiList);
     case "Satispay":
       return {
         ...pm,
@@ -178,3 +199,6 @@ export const enhancePaymentMethod = (
 
 export const isBancomatBlocked = (pan: Card) =>
   pan.validityState === ValidityStateEnum.BR;
+
+export const isCoBadgeBlocked = (pan: PaymentInstrument) =>
+  pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;

@@ -35,7 +35,6 @@ interface FullCommonProps extends BaseProps {
   extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
-  showPsp?: boolean;
 }
 
 interface FullProps extends FullCommonProps {
@@ -108,7 +107,7 @@ export default class CardComponent extends React.Component<Props> {
     if (
       this.props.type === "Preview" ||
       this.props.type === "Picking" ||
-      (this.props.type === "Full" && this.props.showPsp)
+      this.props.type === "Full"
     ) {
       const { wallet } = this.props;
       return (
@@ -118,7 +117,7 @@ export default class CardComponent extends React.Component<Props> {
       );
     }
 
-    if (this.props.type === "Full" || this.props.type === "Header") {
+    if (this.props.type === "Header") {
       const {
         hideFavoriteIcon,
         isFavorite,
@@ -186,37 +185,25 @@ export default class CardComponent extends React.Component<Props> {
   }
 
   private renderBody(creditCard: CreditCard) {
-    const { type, wallet } = this.props;
-
-    const getBodyIcon = () => {
-      if (
-        this.props.type === "Picking" ||
-        (this.props.type === "Full" && this.props.showPsp)
-      ) {
-        return wallet.psp ? (
-          <View style={[styles.cardPsp]}>
-            <Logo
-              item={creditCard}
-              pspLogo={wallet.psp.logoPSP}
-              imageStyle={styles.pspLogo}
-            />
-          </View>
-        ) : (
-          <View style={[styles.cardPsp]}>
-            <Logo />
-          </View>
-        );
-      }
-      return (
-        <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
-          <Logo item={creditCard} />
-        </View>
-      );
-    };
+    const { type } = this.props;
 
     if (type === "Preview") {
       return null;
     }
+    // Right icon, basically needed for the sole "Header" variant
+    const getBodyIcon = () => {
+      switch (type) {
+        case "Picking":
+        case "Full":
+          return null;
+        case "Header":
+          return (
+            <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
+              <Logo item={creditCard} />
+            </View>
+          );
+      }
+    };
 
     const expirationDate = buildExpirationDate(creditCard);
     const isExpired = isExpiredCard(creditCard);
@@ -287,9 +274,11 @@ export default class CardComponent extends React.Component<Props> {
     const hasFlatBottom =
       this.props.type === "Preview" || this.props.type === "Header";
 
+    const isHeader = this.props.type === "Header";
+
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+        style={[styles.card, styles.cardShadow, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
@@ -304,6 +293,7 @@ export default class CardComponent extends React.Component<Props> {
             <View>{this.renderTopRightCorner()}</View>
           </View>
           {hasFlatBottom && <View spacer={true} />}
+          {isHeader && <View style={{paddingTop:20}}/> }
           {this.renderBody(wallet.creditCard)}
         </View>
         {this.renderFooterRow()}

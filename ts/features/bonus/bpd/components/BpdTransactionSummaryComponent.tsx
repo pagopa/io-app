@@ -2,22 +2,25 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import { InfoBox } from "../../../../components/box/InfoBox";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
+import { InfoBox } from "../../../../components/box/InfoBox";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { Link } from "../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../utils/url";
+import Markdown from "../../../../components/ui/Markdown";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberAmount
+} from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
-import { Link } from "../../../../components/core/typography/Link";
-import { openWebUrl } from "../../../../utils/url";
 
 type Props = {
   lastUpdateDate: string;
@@ -32,6 +35,9 @@ const styles = StyleSheet.create({
   },
   readMore: { marginLeft: 31, marginBottom: 24 }
 });
+
+const readMoreLink = "https://io.italia.it/cashback/acquirer/";
+
 const CSS_STYLE = `
 body {
   font-size: 16;
@@ -39,21 +45,35 @@ body {
 }
 `;
 
-const readMoreLink = "https://io.italia.it/cashback/acquirer/";
-export const bottomSheetBpdTransactionsBody = () => (
-  <>
-    <Markdown cssStyle={CSS_STYLE} avoidTextSelection={true}>
-      {I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.body")}
-    </Markdown>
-    <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
-      <Link style={styles.readMore} weight={"SemiBold"}>
+export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
+  const [CTAVisibility, setCTAVisibility] = React.useState(false);
+
+  const setCTAVisible = () => setCTAVisibility(true);
+
+  return (
+    <>
+      <Markdown
+        cssStyle={CSS_STYLE}
+        avoidTextSelection={true}
+        onLoadEnd={setCTAVisible}
+      >
         {I18n.t(
-          "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+          "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
         )}
-      </Link>
-    </TouchableWithoutFeedback>
-  </>
-);
+      </Markdown>
+      {CTAVisibility && (
+        <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
+          <Link style={styles.readMore} weight={"SemiBold"}>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+            )}
+          </Link>
+        </TouchableWithoutFeedback>
+      )}
+    </>
+  );
+};
+
 const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -77,7 +97,8 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         </H4>
       </InfoBox>
       <View spacer={true} large={true} />
-      {bottomSheetBpdTransactionsBody()}
+
+      <BottomSheetBpdTransactionsBody />
     </>,
     I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
     600
@@ -115,9 +136,16 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {
             defaultValue: I18n.t(
               "bonus.bpd.details.transaction.detail.summary.body.text3.other",
-              { count: props.totalAmount.transactionNumber }
+              {
+                transactions: formatIntegerNumber(
+                  props.totalAmount.transactionNumber
+                )
+              }
             ),
-            count: props.totalAmount.transactionNumber
+            count: props.totalAmount.transactionNumber,
+            transactions: formatIntegerNumber(
+              props.totalAmount.transactionNumber
+            )
           })}
         </H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text4")}

@@ -141,6 +141,14 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "digital_payments",
         "en-EN": "digital_payments"
       }
+    },
+    cobadge: {
+      is_visible: false,
+      level: "warning",
+      message: {
+        "it-IT": "cobadge",
+        "en-EN": "cobadge"
+      }
     }
   }
 };
@@ -158,6 +166,6 @@ export const withBpdRankingConfig = (
   ...baseState,
   status: baseState.status.map(s => ({
     ...s,
-    config: { bpd_ranking: newConfig }
+    config: { bpd_ranking: newConfig, bpd_ranking_v2: newConfig }
   }))
 });

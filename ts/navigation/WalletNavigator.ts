@@ -1,16 +1,21 @@
 import { createStackNavigator } from "react-navigation";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
+import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
+import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
+import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboarding/cobadge/navigation/navigator";
+import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
@@ -59,6 +64,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_BPAY_DETAIL]: {
     screen: BPayDetailScreen
+  },
+  [ROUTES.WALLET_COBADGE_DETAIL]: {
+    screen: CobadgeDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
@@ -128,6 +136,17 @@ const bpdConfigMap = bpdEnabled
       },
       [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingBPayNavigator
+      },
+      [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingCoBadgeNavigator
+      }
+    }
+  : {};
+
+const cgnConfigMap = cgnEnabled
+  ? {
+      [CGN_ROUTES.MAIN]: {
+        screen: CgnNavigator
       }
     }
   : {};
@@ -135,7 +154,8 @@ const bpdConfigMap = bpdEnabled
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
-  ...bpdConfigMap
+  ...bpdConfigMap,
+  ...cgnConfigMap
 };
 
 /**

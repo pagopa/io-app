@@ -58,7 +58,7 @@ export type ServiceMetadataById = Readonly<{
   [key: string]: ServiceMetadataState;
 }>;
 
-const initialContentState: ContentState = {
+export const initialContentState: ContentState = {
   servicesMetadata: {
     byId: {}
   },
@@ -304,7 +304,6 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata },
         municipality: { ...initialContentState.municipality },
         contextualHelp: { ...initialContentState.contextualHelp }
       };

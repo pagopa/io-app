@@ -47,13 +47,16 @@ const Sections = t.interface({
   messages: SectionStatus,
   satispay: SectionStatus,
   services: SectionStatus,
-  wallets: SectionStatus
+  wallets: SectionStatus,
+  cobadge: SectionStatus
 });
 export type Sections = t.TypeOf<typeof Sections>;
 
 // it represents a remote config to switch on/off a specific section,feature,module,etc
 const Config = t.interface({
-  bpd_ranking: t.boolean
+  // bpd_ranking is legacy, don't use it anymore see https://www.pivotaltracker.com/story/show/176498731
+  bpd_ranking: t.boolean,
+  bpd_ranking_v2: t.boolean
 });
 
 export type Config = t.TypeOf<typeof Config>;
