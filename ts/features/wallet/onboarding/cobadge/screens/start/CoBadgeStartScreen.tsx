@@ -25,7 +25,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const CoBadgeStartScreen = (props: Props): React.ReactElement => {
   // All ABI selected
   if (props.maybeAbiSelected === undefined) {
-    return <CoBadgeChosenBankScreen />;
+    return <CoBadgeChosenBankScreen testID={"CoBadgeChosenBankScreenAll"} />;
   }
 
   // If a single ABI is selected, we should check the abiConfiguration
@@ -35,12 +35,17 @@ const CoBadgeStartScreen = (props: Props): React.ReactElement => {
 
   // The ABI configuration is loading
   if (props.abiSelectedConfiguration.kind !== "PotSome") {
-    return <LoadAbiConfiguration />;
+    return <LoadAbiConfiguration testID={"LoadAbiConfiguration"} />;
   }
   switch (props.abiSelectedConfiguration.value) {
     case StatusEnum.enabled:
       // Single ABI (bank) screen that allow to start the search
-      return <CoBadgeChosenBankScreen abi={props.maybeAbiSelected} />;
+      return (
+        <CoBadgeChosenBankScreen
+          abi={props.maybeAbiSelected}
+          testID={"CoBadgeChosenBankScreenSingleBank"}
+        />
+      );
     case StatusEnum.disabled:
       // The chosen ABI is disabled (not yet available)
       return <CoBadgeStartKoDisabled />;
