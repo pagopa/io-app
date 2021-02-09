@@ -1037,7 +1037,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Institution Fiscal Code
+    entityCode: Payee Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -1072,7 +1072,7 @@ wallet:
   transactionFee: Transaction fee
   why: Why?
   paymentReason: Reason
-  recipient: Recipient
+  recipient: Payee
   date: Date
   time: Time
   psp: Payment provider
@@ -1164,8 +1164,8 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
-    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-      manually insert the transaction-related data (IUV and the entity/company code).
+    cameraUsageInfo: Scan the QR Code on the payment notice, or
+      manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
