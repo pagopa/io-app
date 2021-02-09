@@ -11,7 +11,7 @@ import IconFont from "../../../../components/ui/IconFont";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import BancomatInformationBottomSheet from "../component/BancomatInformationBottomSheet";
+import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
  */
 
 const BancomatInformation: React.FunctionComponent<Props> = props => {
-  const { present } = BancomatInformationBottomSheet(props.onAddPaymentMethod);
+  const { present } = bancomatInformationBottomSheet(props.onAddPaymentMethod);
   return (
     <View>
       <View style={styles.titleContainer}>

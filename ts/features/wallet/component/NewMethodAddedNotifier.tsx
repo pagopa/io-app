@@ -6,7 +6,7 @@ import { cobadgeEnabled } from "../../../config";
 import { navigateToWalletAddPaymentMethod } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
-import BancomatInformationBottomSheet from "../bancomat/component/BancomatInformationBottomSheet";
+import bancomatInformationBottomSheet from "../bancomat/utils/bancomatInformationBottomSheet";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
@@ -24,7 +24,7 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     string
   >("");
 
-  const { present } = BancomatInformationBottomSheet(
+  const { present } = bancomatInformationBottomSheet(
     props.startCoBadgeOnboarding
   );
 
