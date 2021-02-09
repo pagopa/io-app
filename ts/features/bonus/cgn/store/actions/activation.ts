@@ -9,7 +9,7 @@ import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 
 type ActivationStatus = {
   status: CgnActivationProgressEnum;
-  activation?: CgnStatus; 
+  activation?: CgnStatus;
 };
 
 export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
@@ -29,6 +29,13 @@ export const cgnActivationComplete = createStandardAction(
 export const cgnActivationCancel = createStandardAction(
   "CGN_ACTIVATION_CANCEL"
 )<void>();
+
+/**
+ * Back from the activation workflow
+ */
+export const cgnActivationBack = createStandardAction("CGN_ACTIVATION_BACK")<
+  void
+>();
 
 /**
  * get and handle activation state of a CGN
@@ -53,4 +60,5 @@ export type CgnActivationActions =
   | ActionType<typeof cgnRequestActivation>
   | ActionType<typeof cgnActivationStart>
   | ActionType<typeof cgnActivationComplete>
-  | ActionType<typeof cgnActivationCancel>;
+  | ActionType<typeof cgnActivationCancel>
+  | ActionType<typeof cgnActivationBack>;
