@@ -103,11 +103,13 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}

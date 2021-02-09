@@ -1,44 +1,17 @@
 import { none } from "fp-ts/lib/Option";
-import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { cobadgeEnabled } from "../../../config";
-import I18n from "../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  bottomSheetContent,
-  useIOBottomSheetRaw
-} from "../../../utils/bottomSheet";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
-import BancomatInformation from "../bancomat/screen/BancomatInformation";
+import bancomatInformationBottomSheet from "../bancomat/utils/bancomatInformationBottomSheet";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-const newBancomatBottomSheet = (onAdd?: () => void) => {
-  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    385,
-    bottomSheetContent
-  );
-  return {
-    present: () =>
-      openBottomSheet(
-        <BancomatInformation
-          onAddPaymentMethod={() => {
-            onAdd?.();
-            dismiss();
-          }}
-          hideCobrandTitle={true}
-        />,
-        I18n.t("wallet.bancomat.details.debit.title")
-      ),
-    dismiss
-  };
-};
 
 /**
  * Handle the notification for a new payment method added
@@ -51,7 +24,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     string
   >("");
 
-  const { present } = newBancomatBottomSheet(props.startCoBadgeOnboarding);
+  const { present } = bancomatInformationBottomSheet(
+    props.startCoBadgeOnboarding
+  );
 
   useActionOnFocus(() => {
     const lastAddedHash = props.addedBancomat.reduce(
