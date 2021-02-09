@@ -267,10 +267,9 @@ const mapStateToProps = (state: GlobalState) => {
   const { psps } = state.wallet.payment;
   // checkout3ds is the step after creditCardVerification
   // so we can infer it is loading when the verification is completed and
-  // checkout3ds is not some loading (when it has a value it is some loading)
+  // checkout3ds is not some
   const isCheckout3dsLoading =
-    isStrictSome(creditCardVerification) &&
-    creditCardCheckout3ds.kind !== "PotSomeLoading";
+    isStrictSome(creditCardVerification) && !pot.some(creditCardCheckout3ds);
   const isLoading =
     isCheckout3dsLoading ||
     pot.isLoading(creditCardAddWallet) ||
