@@ -10,7 +10,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
-import { cobadgeEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { navigateToWalletAddPaymentMethod } from "../../../../store/actions/navigation";
@@ -138,12 +137,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   addCoBadge: (abi: string) =>
     dispatch(
-      cobadgeEnabled
-        ? navigateToOnboardingCoBadgeChooseTypeStartScreen({
-            abi,
-            legacyAddCreditCardBack: 1
-          })
-        : navigateToWalletAddPaymentMethod({ inPayment: none })
+      navigateToOnboardingCoBadgeChooseTypeStartScreen({
+        abi,
+        legacyAddCreditCardBack: 1
+      })
     )
 });
 
