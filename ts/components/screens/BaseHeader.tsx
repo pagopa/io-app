@@ -80,6 +80,7 @@ interface OwnProps {
     accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
+  titleColor?: string;
 }
 
 type Props = OwnProps &
@@ -155,6 +156,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           numberOfLines={1}
           accessible={true}
           accessibilityRole={"header"}
+          style={{ color: this.props.titleColor }}
         >
           {l}
         </Text>

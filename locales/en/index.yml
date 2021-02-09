@@ -2108,6 +2108,15 @@ bonus:
     name: Carta Giovani Nazionale
     cta:
       activeBonus: Activate your Carta Giovani
+    detail:
+      ownership: Who can take advantage of discounts?
+      activationDateLabel: Activated on
+      status:
+        title: Card Status
+        badge:
+          active: Active
+          revoked: Revoked
+          expired: Expired
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

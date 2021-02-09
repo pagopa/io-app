@@ -2139,6 +2139,15 @@ bonus:
     name: Carta Giovani Nazionale
     cta:
       activeBonus: Attiva la tua Carta Giovani
+    detail:
+      ownership: Chi può usufruire degli sconti?
+      activationDateLabel: Attivata il
+      status:
+        title: Stato Carta
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
