@@ -1,10 +1,10 @@
-import { none } from "fp-ts/lib/Option";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -12,17 +12,15 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { navigateToWalletAddPaymentMethod } from "../../../../store/actions/navigation";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
-import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{

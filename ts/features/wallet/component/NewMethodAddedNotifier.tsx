@@ -1,8 +1,6 @@
-import { none } from "fp-ts/lib/Option";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { navigateToWalletAddPaymentMethod } from "../../../store/actions/navigation";
 import { GlobalState } from "../../../store/reducers/types";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import bancomatInformationBottomSheet from "../bancomat/utils/bancomatInformationBottomSheet";
