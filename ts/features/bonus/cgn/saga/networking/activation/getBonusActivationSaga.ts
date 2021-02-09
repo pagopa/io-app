@@ -21,6 +21,17 @@ const statusProgressRecord: Record<403 | 409, CgnActivationProgressEnum> = {
 
 export type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
 
+/**
+ * Function that handles the activation of a CGN
+ * Calls the activation API returning the next iteration for orchestration saga:
+ * 201 -> Request created start polling with handleCgnStatusPolling saga.
+ * 202 -> There's already a processing request.
+ * 401 -> Bearer token null or expired.
+ * 409 -> Cannot activate the user's cgn because another updateCgn request was found for this user or it is already active.
+ * 403 -> Cannot activate a new CGN because the user is ineligible to get the CGN.
+ * @param startCgnActivation backend client for CGN Activation API
+ * @param handleCgnStatusPolling saga that handles the polling result of a CGN
+ */
 export const cgnActivationSaga = (
   startCgnActivation: ReturnType<typeof BackendCGN>["startCgnActivation"],
   handleCgnStatusPolling: CgnStatusPollingSaga
@@ -60,6 +71,11 @@ export const cgnActivationSaga = (
     }
   };
 
+/**
+ * Function that handles the polling check of the CGN's status
+ * Calls the status API with a polling interrupted only if it's activated or if a network error has been raised
+ * @param getCgnStatus backend client to know the current user CGN status
+ */
 export const handleCgnStatusPolling = (
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"]
 ) =>
