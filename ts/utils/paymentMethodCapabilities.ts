@@ -27,6 +27,7 @@ export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
  * "available" -> can pay
  * "arriving" -> will pay
  * "not_available" -> can't pay
+ * "onboardableNotImplemented" -> can onboard a card that can pay but is not yet implemented
  */
 export const isPaymentMethodSupported = (
   paymentMethod: PaymentMethod
@@ -39,6 +40,8 @@ export const isPaymentMethodSupported = (
             ? canMethodPay(pM)
               ? "available"
               : "arriving"
+            : pM.info?.issuerAbiCode
+            ? "onboardableNotImplemented"
             : "not_available";
         case "Satispay":
         case "BPay":
