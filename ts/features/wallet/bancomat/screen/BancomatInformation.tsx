@@ -15,7 +15,6 @@ import BancomatInformationBottomSheet from "../component/BancomatInformationBott
 
 type OwnProps = {
   onAddPaymentMethod?: () => void;
-  hideCobrandTitle?: true;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
