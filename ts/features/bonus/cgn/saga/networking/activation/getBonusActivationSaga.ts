@@ -1,5 +1,5 @@
 import { call, Effect } from "redux-saga/effects";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { BackendCGN } from "../../../api/backendCgn";
@@ -9,6 +9,7 @@ import { startTimer } from "../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { CgnActivatedStatus } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
 import { getError } from "../../../../../../utils/errors";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
@@ -94,12 +95,18 @@ export const handleCgnStatusPolling = (
       // we got the result -> stop polling
       else if (
         cgnStatusResult.isRight() &&
-        CgnActivatedStatus.is(cgnStatusResult.value.value)
+        cgnStatusResult.value.status === 200
       ) {
-        return cgnActivationStatus.success({
-          status: CgnActivationProgressEnum.SUCCESS,
-          activation: cgnStatusResult.value.value
-        });
+        if (CgnActivatedStatus.is(cgnStatusResult.value.value)) {
+          return cgnActivationStatus.success({
+            status: CgnActivationProgressEnum.SUCCESS,
+            activation: cgnStatusResult.value.value
+          });
+        } else {
+          void mixpanelTrack(getType(cgnActivationStatus.failure), {
+            reason: `unexpected status result ${cgnStatusResult.value.value.status}`
+          });
+        }
       }
       // sleep
       yield call(startTimer, cgnResultPolling);
