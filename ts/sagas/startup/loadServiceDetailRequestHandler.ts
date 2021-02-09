@@ -142,7 +142,10 @@ function* watchLoadServicesDetailToTrack() {
               servicesDetailLoadTrack.servicesId.size
           };
           servicesDetailLoadTrack = statsServiceLoad;
-          if (statsServiceLoad.servicesId.size === 0) {
+          if (
+            statsServiceLoad.servicesId.size === 0 &&
+            statsServiceLoad.loaded > 0
+          ) {
             // all service are been loaded
             trackServicesDetailLoad({
               ...servicesDetailLoadTrack,
@@ -204,14 +207,17 @@ type ServicesDetailLoadTrack = {
   // PARTIAL: a sub-set of services detail to load are been loaded
   kind?: "COMPLETE" | "PARTIAL";
 };
-// eslint-disable-next-line functional/no-let
-let servicesDetailLoadTrack: ServicesDetailLoadTrack = {
+
+const defaultDetailLoadTrack = (): ServicesDetailLoadTrack => ({
   startTime: 0 as Millisecond,
   loadingTime: 0 as Millisecond,
   toLoad: 0,
   loaded: 0,
   servicesId: new Set<string>()
-};
+});
+
+// eslint-disable-next-line functional/no-let
+let servicesDetailLoadTrack = defaultDetailLoadTrack();
 
 const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
   void mixpanelTrack("SERVICES_DETAIL_LOADING_STATS", {
@@ -219,4 +225,6 @@ const trackServicesDetailLoad = (trackingStats: ServicesDetailLoadTrack) => {
     // drop servicesId since it is not serialized in mixpanel and it could be an extra overhead on sending
     servicesId: undefined
   });
+  // reset data
+  servicesDetailLoadTrack = defaultDetailLoadTrack();
 };
