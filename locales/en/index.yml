@@ -144,6 +144,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    findOutMore: "Find out more"
   navigator:
     messages: messages
     wallet: wallet
@@ -767,14 +768,14 @@ wallet:
       title: "Search for your PagoBANCOMAT cards"
       description:
         text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
         text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
     cobadge:
@@ -782,8 +783,8 @@ wallet:
       description:
         text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
         text2: the banks participating in the service
-        text3: "By continuing you accept the "
-        text4: information on the processing of personal data.
+        text3: "For further information, please read the "
+        text4: privacy policy.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -857,6 +858,13 @@ wallet:
       headerTitle: "Add international circuit"
       start:
         title: "TMP Start Title"
+        loading: "We are loading the settings\n\nPlease wait"
+        koDisabled:
+          title: "Your bank does not yet offer this functionality"
+          body: "We are working to allow you to add your international circuit card soon."
+        koUnavailable:
+          title: "We can't contact your bank"
+          body: "We are working to solve the problem."
       search:
         koTimeout:
           title: "TMP KO Timeout add"
@@ -868,6 +876,19 @@ wallet:
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
         warning: "Check that the card number matches the one on your physical card."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
+      chooseType:
+        title: "Does your card allow you to shop online?"
+        description: "This question allows us to better understand what your card is like and help you add it to your Wallet."
+        path:
+          enabled:
+            title: "Yes, it is enabled for online purchases"
+            description: "The data will be verified in the way appointed by your bank, for example via text message or app."
+          disabled:
+            title: "No, I only use it in shops"
+            description: "We will look for all the cards in your name at the banks participating in the service."
+          unknown:
+            title: "I do not know"
+            description: "We will look for all the cards in your name at the banks participating in the service."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
