@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0-rc.1](https://github.com/pagopa/io-app/compare/1.21.0-rc.0...1.21.0-rc.1) (2021-02-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176578587](https://www.pivotaltracker.com/story/show/176578587)] Update the co-badge in app payment badge ([#2797](https://github.com/pagopa/io-app/issues/2797)) ([16a0517](https://github.com/pagopa/io-app/commit/16a05174924bc6e6462bc04b5a496b4f7f45696b))
+
+## [1.21.0-rc.0](https://github.com/pagopa/io-app/compare/1.20.0-rc.2...1.21.0-rc.0) (2021-02-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176576458](https://www.pivotaltracker.com/story/show/176576458),[#176576505](https://www.pivotaltracker.com/story/show/176576505)] Added co-badge abi config ko screens ([#2768](https://github.com/pagopa/io-app/issues/2768)) ([ee6b8e3](https://github.com/pagopa/io-app/commit/ee6b8e39497b765c3763b53665cb48c3a85b20e2)), closes [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620)
+* **Bonus Pagamenti Digitali:** [[#176739150](https://www.pivotaltracker.com/story/show/176739150)] Chose to add cobadge or credit card screen ([#2778](https://github.com/pagopa/io-app/issues/2778)) ([867b608](https://github.com/pagopa/io-app/commit/867b60889cce0f985f7c5b93940089b66d823839)), closes [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620)
+* **Bonus Pagamenti Digitali:** [[#176842170](https://www.pivotaltracker.com/story/show/176842170)] Ask identification to unsubscribe from cashback ([#2794](https://github.com/pagopa/io-app/issues/2794)) ([a503f12](https://github.com/pagopa/io-app/commit/a503f12cbff4cc5058fe9870cf1c5993e3a17c5c))
+
+
+### Bug Fixes
+
+* [[#175419820](https://www.pivotaltracker.com/story/show/175419820)] Restore screen brightness ([#2728](https://github.com/pagopa/io-app/issues/2728)) ([385a3b5](https://github.com/pagopa/io-app/commit/385a3b508af9981a87852c15106d79e2c0ac2e98))
+* [[#176476117](https://www.pivotaltracker.com/story/show/176476117)] Improved localization of TouchID dialog on Android [#2788](https://github.com/pagopa/io-app/issues/2788) ([f4b64ca](https://github.com/pagopa/io-app/commit/f4b64ca61549d280da29d952d8b82e5a233967b4))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176848601](https://www.pivotaltracker.com/story/show/176848601)] Privacy policy CTA localization update [#2799](https://github.com/pagopa/io-app/issues/2799) ([1ca5dc9](https://github.com/pagopa/io-app/commit/1ca5dc913f95515b794dd4357333a6324b73310e))
+
 ## [1.20.0-rc.2](https://github.com/pagopa/io-app/compare/1.20.0-rc.1...1.20.0-rc.2) (2021-02-05)
 
 
