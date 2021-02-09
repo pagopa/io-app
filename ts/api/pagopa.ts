@@ -594,6 +594,10 @@ const cobadgeInstrumentReplacer = (key: string | number, value: any) => {
   return format(date, "YYYY-MM-DD");
 };
 
+const addWalletsCobadgePaymentInstrumentAsCreditCardUtils = addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
+  PatchedWalletV2ListResponse
+);
+
 const addCobadgeToWallet: AddWalletsCobadge = {
   method: "post",
   url: () => `/v1/cobadge/add-wallets`,
@@ -603,9 +607,7 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     // see https://www.pivotaltracker.com/story/show/176720702
     JSON.stringify(cobadegPaymentInstrumentsRequest, cobadgeInstrumentReplacer),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
-    PatchedWalletV2ListResponse
-  )
+  response_decoder: addWalletsCobadgePaymentInstrumentAsCreditCardUtils
 };
 
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
