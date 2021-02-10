@@ -26,6 +26,11 @@ export const navigateToCgnActivationTimeout = () =>
     routeName: CGN_ROUTES.ACTIVATION.TIMEOUT
   });
 
+export const navigateToCgnActivationIneligible = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.INELIGIBLE
+  });
+
 export const navigateToCgnActivationCompleted = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.COMPLETED
