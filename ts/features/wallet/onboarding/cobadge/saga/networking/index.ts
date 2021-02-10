@@ -90,10 +90,9 @@ export function* handleSearchUserCoBadge(
         return yield put(searchUserCoBadge.failure(error));
       }
     } else {
-      const error: NetworkError = {
-        kind: "generic",
-        value: new Error(readableReport(getPansWithRefreshResult.value))
-      };
+      const error = getGenericError(
+        new Error(readableReport(getPansWithRefreshResult.value))
+      );
       void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
       return yield put(searchUserCoBadge.failure(error));
     }
