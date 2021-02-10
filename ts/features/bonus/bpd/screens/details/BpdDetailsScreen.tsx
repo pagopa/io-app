@@ -104,9 +104,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         contextualHelp={emptyContextualHelp}
         footerContent={
           canRenderButton && (
-            <GoToTransactions
-              goToTransactions={() => props.goToTransactions()}
-            />
+            <GoToTransactions goToTransactions={props.goToTransactions} />
           )
         }
         footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
