@@ -1,4 +1,4 @@
-import { RenderAPI } from "@testing-library/react-native";
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationParams } from "react-navigation";
@@ -143,6 +143,18 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
     expect(
       testComponent.queryByTestId("LoadingErrorComponentError")
     ).toBeTruthy();
+
+    const retryButton = testComponent.queryByText(
+      I18n.t("global.buttons.retry")
+    );
+    expect(retryButton).toBeTruthy();
+    if (retryButton !== null) {
+      // If the user press the retry button, the state change to LoadingErrorComponentLoading
+      fireEvent.press(retryButton);
+      expect(
+        testComponent.queryByTestId("LoadingErrorComponentLoading")
+      ).toBeTruthy();
+    }
   });
   it("When receive a configuration without the selected abi, the screen should render CoBadgeStartKoDisabled", () => {
     const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
@@ -192,7 +204,9 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
       loadAbi.success({ data: [{ abi: abiTestId, name: bankName }] })
     );
 
-    // if the selected abi is in the abi list, the user will see the name of the bank instead of the generic "all bank"
+    // if the selected abi is in the abi list,
+    // the user will see the name of the bank instead of the generic "all bank"
+    // The name displayed to the user is taken from abiListSelector
     expect(testComponent.queryByText(bankName)).toBeTruthy();
   });
   it("When change the configuration, CoBadgeChosenBankScreen should update (check memoization)", () => {
