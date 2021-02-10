@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * [[#176821234](https://www.pivotaltracker.com/story/show/176821234)] remove iuv reference ([#2787](https://github.com/pagopa/io-app/issues/2787)) ([30a9b2b](https://github.com/pagopa/io-app/commit/30a9b2b36ad1c4d1fbe2de288dae4ca1fa0036b6))
 * [[#176869229](https://www.pivotaltracker.com/story/show/176869229)] SERVICES_DETAIL_LOADING_STATS event is sent on every service detail loaded ([#2800](https://github.com/pagopa/io-app/issues/2800)) ([7d2137f](https://github.com/pagopa/io-app/commit/7d2137f6a179cbb7bc963defd729abc181811055))
-* [[176843412]](https://www.pivotaltracker.com/story/show/176843412) fixes shadow on credit cards for android ([#2805](https://github.com/pagopa/io-app/issues/2805)) ([fe4d3b0](https://github.com/pagopa/io-app/commit/fe4d3b0782772d28dd5bc3570bd33967d6491dff))
+* [[#176843412](https://www.pivotaltracker.com/story/show/176843412)] fixes shadow on credit cards for android ([#2805](https://github.com/pagopa/io-app/issues/2805)) ([fe4d3b0](https://github.com/pagopa/io-app/commit/fe4d3b0782772d28dd5bc3570bd33967d6491dff))
 
 
 ### Chores
