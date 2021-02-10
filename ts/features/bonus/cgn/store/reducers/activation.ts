@@ -19,7 +19,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: CgnStatus; // Replace when API spec is correctly linked and defined
+  value?: CgnStatus; 
 };
 
 const INITIAL_STATE: ActivationState = {

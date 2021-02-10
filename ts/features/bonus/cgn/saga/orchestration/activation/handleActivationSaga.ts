@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, NavigationNavigateAction } from "react-navigation";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
@@ -21,7 +21,10 @@ import CGN_ROUTES from "../../../navigation/routes";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
 
-const mapEnumToNavigation = new Map([
+const mapEnumToNavigation = new Map<
+  CgnActivationProgressEnum,
+  () => NavigationNavigateAction
+>([
   [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],
   [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
   [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
@@ -37,7 +40,7 @@ type NavigationCurrentRouteSelectorType = ReturnType<
 // Get the next activation steps from the saga call function based on status ENUM
 const getNextNavigationStep = (
   action: ActionType<typeof cgnActivationStatus>
-) =>
+): (() => NavigationNavigateAction) =>
   isActionOf(cgnActivationStatus.success, action)
     ? fromNullable(mapEnumToNavigation.get(action.payload.status)).getOrElse(
         navigateToCgnActivationLoading

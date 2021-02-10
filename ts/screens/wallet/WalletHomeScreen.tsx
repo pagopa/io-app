@@ -27,7 +27,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -81,6 +81,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -206,6 +207,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
+    this.loadBonusCgn();
     this.setState({ hasFocus: true });
   };
 
@@ -223,6 +225,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private loadBonusBpd = () => {
     if (bpdEnabled) {
       this.props.loadBpdData();
+    }
+  };
+
+  private loadBonusCgn = () => {
+    if (cgnEnabled) {
+      this.props.loadCgnData();
     }
   };
 
@@ -359,6 +367,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
               if (bonusLoadingStatus !== "loading") {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
+                this.loadBonusCgn();
               }
             }}
             activeBonuses={this.props.allActiveBonus}
@@ -597,6 +606,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
+  loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
