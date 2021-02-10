@@ -102,10 +102,6 @@ const SearchAvailableCoBadgeScreen = (
   if (isError(coBadgeFound) && isTimeoutError(coBadgeFound.error)) {
     return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
-  // if (isLoading(coBadgeFound) || isError(coBadgeFound)) {
-  //   return <LoadCoBadgeSearch />;
-  // }
-
   return <LoadCoBadgeSearch />;
 };
 
