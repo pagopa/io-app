@@ -9,7 +9,7 @@ export enum CgnActivationProgressEnum {
   "TIMEOUT" = "TIMEOUT", // number of polling exceeded
   "PROGRESS" = "PROGRESS", // The request is started
   "PENDING" = "PENDING", // Polling time exceeded
-  "ERROR" = "ERROR", // The request is started
+  "ERROR" = "ERROR", // There's an error
   "EXISTS" = "EXISTS", // Another bonus related to this user was found
   "INELIGIBLE" = "INELIGIBLE", // Another bonus related to this user was found
   "SUCCESS" = "SUCCESS" // Activation has been completed
@@ -17,7 +17,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: CgnStatus; // Replace when API spec is correctly linked and defined
+  value?: CgnStatus; 
 };
 
 const INITIAL_STATE: ActivationState = {

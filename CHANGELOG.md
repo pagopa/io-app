@@ -2,6 +2,98 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0-rc.1](https://github.com/pagopa/io-app/compare/1.21.0-rc.0...1.21.0-rc.1) (2021-02-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176578587](https://www.pivotaltracker.com/story/show/176578587)] Update the co-badge in app payment badge ([#2797](https://github.com/pagopa/io-app/issues/2797)) ([16a0517](https://github.com/pagopa/io-app/commit/16a05174924bc6e6462bc04b5a496b4f7f45696b))
+
+## [1.21.0-rc.0](https://github.com/pagopa/io-app/compare/1.20.0-rc.2...1.21.0-rc.0) (2021-02-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176576458](https://www.pivotaltracker.com/story/show/176576458),[#176576505](https://www.pivotaltracker.com/story/show/176576505)] Added co-badge abi config ko screens ([#2768](https://github.com/pagopa/io-app/issues/2768)) ([ee6b8e3](https://github.com/pagopa/io-app/commit/ee6b8e39497b765c3763b53665cb48c3a85b20e2)), closes [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620)
+* **Bonus Pagamenti Digitali:** [[#176739150](https://www.pivotaltracker.com/story/show/176739150)] Chose to add cobadge or credit card screen ([#2778](https://github.com/pagopa/io-app/issues/2778)) ([867b608](https://github.com/pagopa/io-app/commit/867b60889cce0f985f7c5b93940089b66d823839)), closes [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620) [#176738620](https://www.pivotaltracker.com/story/show/176738620)
+* **Bonus Pagamenti Digitali:** [[#176842170](https://www.pivotaltracker.com/story/show/176842170)] Ask identification to unsubscribe from cashback ([#2794](https://github.com/pagopa/io-app/issues/2794)) ([a503f12](https://github.com/pagopa/io-app/commit/a503f12cbff4cc5058fe9870cf1c5993e3a17c5c))
+
+
+### Bug Fixes
+
+* [[#175419820](https://www.pivotaltracker.com/story/show/175419820)] Restore screen brightness ([#2728](https://github.com/pagopa/io-app/issues/2728)) ([385a3b5](https://github.com/pagopa/io-app/commit/385a3b508af9981a87852c15106d79e2c0ac2e98))
+* [[#176476117](https://www.pivotaltracker.com/story/show/176476117)] Improved localization of TouchID dialog on Android [#2788](https://github.com/pagopa/io-app/issues/2788) ([f4b64ca](https://github.com/pagopa/io-app/commit/f4b64ca61549d280da29d952d8b82e5a233967b4))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176848601](https://www.pivotaltracker.com/story/show/176848601)] Privacy policy CTA localization update [#2799](https://github.com/pagopa/io-app/issues/2799) ([1ca5dc9](https://github.com/pagopa/io-app/commit/1ca5dc913f95515b794dd4357333a6324b73310e))
+
+## [1.20.0-rc.2](https://github.com/pagopa/io-app/compare/1.20.0-rc.1...1.20.0-rc.2) (2021-02-05)
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[#176824599](https://www.pivotaltracker.com/story/show/176824599)] Show CGN item when the user is not BPD enrolled  ([#2790](https://github.com/pagopa/io-app/issues/2790)) ([6007a88](https://github.com/pagopa/io-app/commit/6007a88ffa5adce92f063e224e4758f81c22ae71))
+
+## [1.20.0-rc.1](https://github.com/pagopa/io-app/compare/1.20.0-rc.0...1.20.0-rc.1) (2021-02-05)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176575663](https://www.pivotaltracker.com/story/show/176575663)] Added Start onboarding cobadge screen ([#2760](https://github.com/pagopa/io-app/issues/2760)) ([48d54a1](https://github.com/pagopa/io-app/commit/48d54a18f367f8424b8de9ce5f03fba75a2b5e33))
+* **Bonus Pagamenti Digitali:** [[#176578322](https://www.pivotaltracker.com/story/show/176578322)] Visualize iteratively co-badge card that can be added to the wallet ([#2770](https://github.com/pagopa/io-app/issues/2770)) ([187b665](https://github.com/pagopa/io-app/commit/187b6654a55b9a4f378794065de05f1cb831b625))
+* **Bonus Pagamenti Digitali:** [[#176738620](https://www.pivotaltracker.com/story/show/176738620)] Choose card type before starting the co-badge onboarding workflow ([#2766](https://github.com/pagopa/io-app/issues/2766)) ([28bb25e](https://github.com/pagopa/io-app/commit/28bb25ea7c3a6553f876744cdbd8a163e951dcd7))
+* **Bonus Pagamenti Digitali:** [[#176786909](https://www.pivotaltracker.com/story/show/176786909)] Added start onboarding co-badge for all abi screen ([#2777](https://github.com/pagopa/io-app/issues/2777)) ([09aa68c](https://github.com/pagopa/io-app/commit/09aa68c9aaab8ece5485675ee420333eb364814d))
+* **Carta Giovani Nazionale:** [[#176443367](https://www.pivotaltracker.com/story/show/176443367)] Activation Saga handler ([#2742](https://github.com/pagopa/io-app/issues/2742)) ([60b3f5c](https://github.com/pagopa/io-app/commit/60b3f5caa029163ff53d818ad37f54f63905378a))
+* **Carta Giovani Nazionale:** [[#176715047](https://www.pivotaltracker.com/story/show/176715047)] Adds the CGN card carousel  ([#2769](https://github.com/pagopa/io-app/issues/2769)) ([fa583bc](https://github.com/pagopa/io-app/commit/fa583bcc8f5dca1ae211dab1a982efac680619d4))
+
+
+### Bug Fixes
+
+* [[#176097298](https://www.pivotaltracker.com/story/show/176097298)] card showing the bottom borders ([#2653](https://github.com/pagopa/io-app/issues/2653)) ([f731ca1](https://github.com/pagopa/io-app/commit/f731ca1228de748d54de0c4feb4dcd91328d7b17))
+* [[#176481360](https://www.pivotaltracker.com/story/show/176481360)] CIE "Where can I find my PIN" bottom sheet text must not be selectable ([#2781](https://github.com/pagopa/io-app/issues/2781)) ([b204dbc](https://github.com/pagopa/io-app/commit/b204dbc61e5b24a94881c4b390d165f01da52745))
+* [[#176778241](https://www.pivotaltracker.com/story/show/176778241)] On bug report can't share the screenshot ([#2772](https://github.com/pagopa/io-app/issues/2772)) ([4b6611f](https://github.com/pagopa/io-app/commit/4b6611f0ce3bd9fbc93b3aaca617d3cc3aa411cb))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176816895](https://www.pivotaltracker.com/story/show/176816895)] Add feature flag for cobadge workflow ([#2786](https://github.com/pagopa/io-app/issues/2786)) ([fad5740](https://github.com/pagopa/io-app/commit/fad574047612f82ce0aac2de11e72aca3a57849c))
+* [[#176778467](https://www.pivotaltracker.com/story/show/176778467)] Track loading services details stats ([#2785](https://github.com/pagopa/io-app/issues/2785)) ([f3f56de](https://github.com/pagopa/io-app/commit/f3f56deb41f912365c75b61c29c45638e5d97f1e))
+
+## [1.20.0-rc.0](https://github.com/pagopa/io-app/compare/1.19.0-rc.2...1.20.0-rc.0) (2021-02-02)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#175741693](https://www.pivotaltracker.com/story/show/175741693)] Remove timestamp from transactions when it's equal to 00:00 ([#2734](https://github.com/pagopa/io-app/issues/2734)) ([b19d3f1](https://github.com/pagopa/io-app/commit/b19d3f1cf4bed44577429528dac970061797aa72))
+* **Bonus Pagamenti Digitali:** [[#176553194](https://www.pivotaltracker.com/story/show/176553194)] implements supermarket loyalty card ([#2748](https://github.com/pagopa/io-app/issues/2748)) ([6d8571f](https://github.com/pagopa/io-app/commit/6d8571f27009496f37aa33fcb89f879aae1b5552))
+* **Bonus Pagamenti Digitali:** [[#176559650](https://www.pivotaltracker.com/story/show/176559650)] Actions, store & reducers for co-badge ([#2747](https://github.com/pagopa/io-app/issues/2747)) ([6c3e30b](https://github.com/pagopa/io-app/commit/6c3e30b2b9f4798509f7ecb839cdef19a6aa87e8))
+* **Bonus Pagamenti Digitali:** [[#176559662](https://www.pivotaltracker.com/story/show/176559662)] Navigation & screen stubs for co-badge workflow ([#2750](https://github.com/pagopa/io-app/issues/2750)) ([4c2654f](https://github.com/pagopa/io-app/commit/4c2654f0cafee8e9899c88d7e547fa50aca919b9))
+* **Bonus Pagamenti Digitali:** [[#176559982](https://www.pivotaltracker.com/story/show/176559982),[#176560026](https://www.pivotaltracker.com/story/show/176560026)] Load user cobadge pans  ([#2759](https://github.com/pagopa/io-app/issues/2759)) ([315b0f4](https://github.com/pagopa/io-app/commit/315b0f44b286d692d096efa954a6cc144628e608))
+* [[#176311366](https://www.pivotaltracker.com/story/show/176311366)] Added "Send screenshot" checkbox to the add card screen's contextual help funnel ([#2670](https://github.com/pagopa/io-app/issues/2670)) ([178a8c7](https://github.com/pagopa/io-app/commit/178a8c7fa0358a80fed9430f68acdee0c4b0fea3))
+* **Bonus Pagamenti Digitali:** [[#176575256](https://www.pivotaltracker.com/story/show/176575256)] Co-badge card onboarding workflow ([#2752](https://github.com/pagopa/io-app/issues/2752)) ([390d2d4](https://github.com/pagopa/io-app/commit/390d2d4e68bcf491ce14a4af994390905f08adee))
+* [[#173962963](https://www.pivotaltracker.com/story/show/173962963)] Expanded header icons touch area ([#2644](https://github.com/pagopa/io-app/issues/2644)) ([6bd6c25](https://github.com/pagopa/io-app/commit/6bd6c2543306c8ad1fe7bceaed4c7d17f28452dc))
+* [[#174034081](https://www.pivotaltracker.com/story/show/174034081)] Unlock code is persisted across logins if citizen doesn't change (2nd attempt) ([#2767](https://github.com/pagopa/io-app/issues/2767)) ([7994983](https://github.com/pagopa/io-app/commit/79949834e23715508c81eba68a57c5545fc3a8f2))
+* **Bonus Pagamenti Digitali:** [[#176575992](https://www.pivotaltracker.com/story/show/176575992)] Add cobadge load configuration API ([#2756](https://github.com/pagopa/io-app/issues/2756)) ([58db5d1](https://github.com/pagopa/io-app/commit/58db5d14d5521a679949933a1562a252b64cab4f))
+* **Bonus Pagamenti Digitali:** [[#176578578](https://www.pivotaltracker.com/story/show/176578578)] Cobadge card preview ([#2746](https://github.com/pagopa/io-app/issues/2746)) ([3a49eb8](https://github.com/pagopa/io-app/commit/3a49eb8cd1d77c88975a25ba19c48ae86acd0bc2))
+* **Bonus Pagamenti Digitali:** [[#176578587](https://www.pivotaltracker.com/story/show/176578587)] Cobadge detail screen ([#2751](https://github.com/pagopa/io-app/issues/2751)) ([0192964](https://github.com/pagopa/io-app/commit/0192964ada9a2f9aa13ab8490138b25d275e554c))
+* **Carta Giovani Nazionale:** [[#176443163](https://www.pivotaltracker.com/story/show/176443163)] New bonuses available visibility and start cgn flow logic ([#2733](https://github.com/pagopa/io-app/issues/2733)) ([4e4e1b6](https://github.com/pagopa/io-app/commit/4e4e1b6640f0d8f996debf3411b86f86456f1030))
+* **Services:** [[#176676680](https://www.pivotaltracker.com/story/show/176676680),[#176606850](https://www.pivotaltracker.com/story/show/176606850),[#176513922](https://www.pivotaltracker.com/story/show/176513922)] Improve services caching and loading ([#2765](https://github.com/pagopa/io-app/issues/2765)) ([e1ee048](https://github.com/pagopa/io-app/commit/e1ee04835d785e8e48aaa7c66633abdba0d3d328))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176477833](https://www.pivotaltracker.com/story/show/176477833)] Fixed mistake that inhibited BPD CTA to properly show ([#2738](https://github.com/pagopa/io-app/issues/2738)) ([86f3404](https://github.com/pagopa/io-app/commit/86f3404e6903cafc29333566fe3402990782e521))
+* **Bonus Pagamenti Digitali:** [[#176720702](https://www.pivotaltracker.com/story/show/176720702)] Cobadge add-wallet payload has an invalid date format ([#2761](https://github.com/pagopa/io-app/issues/2761)) ([9e1a40a](https://github.com/pagopa/io-app/commit/9e1a40a6d8835e5684c85fa0568503b44a08392d))
+
+
+### Chores
+
+* [[#176175845](https://www.pivotaltracker.com/story/show/176175845)] removes transactions list from the transactions screen ([#2628](https://github.com/pagopa/io-app/issues/2628)) ([ec5437b](https://github.com/pagopa/io-app/commit/ec5437bc3d1a2bf2c346aff7b89dfd1ce134fba6))
+* **Bonus Pagamenti Digitali:** [[#176737219](https://www.pivotaltracker.com/story/show/176737219)] milestone copy ([#2763](https://github.com/pagopa/io-app/issues/2763)) ([29f93eb](https://github.com/pagopa/io-app/commit/29f93ebd7fd26ef75034843a44b0926c4bf9f7b0))
+* [[#176614756](https://www.pivotaltracker.com/story/show/176614756)] Use [@pagopa](https://github.com/pagopa) packages from npm registry ([#2754](https://github.com/pagopa/io-app/issues/2754)) ([434d0e4](https://github.com/pagopa/io-app/commit/434d0e4307acc941f390a8a5e1de89cba0b03e40))
+
 ## [1.19.0-rc.2](https://github.com/pagopa/io-app/compare/1.19.0-rc.1...1.19.0-rc.2) (2021-01-22)
 
 
@@ -22,7 +114,7 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **Payments:** [[#175857824](https://www.pivotaltracker.com/story/show/175857824)] dispatched sessionExpired on getWallets failure ([#2481](https://github.com/pagopa/io-app/issues/2481)) ([24f09f5](https://github.com/pagopa/io-app/commit/24f09f53c2342db93d425195abe0523aac5659a5))
-* [[#176455315](https://www.pivotaltracker.com/story/show/176455315),[#176417779](https://www.pivotaltracker.com/story/show/176417779)] Persist payment/message status  ([#2736](https://github.com/pagopa/io-app/issues/2736)) ([e97c483](https://github.com/pagopa/io-app/commit/e97c483d720d0764e92c17674902b8446f338bad)), closes [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587) [#176497587](https://www.pivotaltracker.com/story/show/176497587)
+* [[#176455315](https://www.pivotaltracker.com/story/show/176455315),[#176417779](https://www.pivotaltracker.com/story/show/176417779)] Persist payment/message status  ([#2736](https://github.com/pagopa/io-app/issues/2736)) ([e97c483](https://github.com/pagopa/io-app/commit/e97c483d720d0764e92c17674902b8446f338bad))
 
 
 ### Chores
@@ -65,7 +157,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Chores
 
-* **Bonus Pagamenti Digitali:** [[#176436807](https://www.pivotaltracker.com/story/show/176436807)] Improve and fix backoff delay reducer ([#2706](https://github.com/pagopa/io-app/issues/2706)) ([390c4e6](https://github.com/pagopa/io-app/commit/390c4e637eef5a433a14a28c5ac75ff5e6b1f410)), closes [#175890963](https://www.pivotaltracker.com/story/show/175890963) [#175890963](https://www.pivotaltracker.com/story/show/175890963) [#175890963](https://www.pivotaltracker.com/story/show/175890963)
+* **Bonus Pagamenti Digitali:** [[#176436807](https://www.pivotaltracker.com/story/show/176436807)] Improve and fix backoff delay reducer ([#2706](https://github.com/pagopa/io-app/issues/2706)) ([390c4e6](https://github.com/pagopa/io-app/commit/390c4e637eef5a433a14a28c5ac75ff5e6b1f410))
 * **Bonus Pagamenti Digitali:** [[#176498731](https://www.pivotaltracker.com/story/show/176498731)] Add new bpd ranking config flag ([#2726](https://github.com/pagopa/io-app/issues/2726)) ([2967024](https://github.com/pagopa/io-app/commit/296702436fff70ec6ac33502b12fc1844a2273ef))
 * **Bonus Vacanze:** [[#176459696](https://www.pivotaltracker.com/story/show/176459696)] Remove API handlers and saga of start/get eligibilityCheck  ([#2715](https://github.com/pagopa/io-app/issues/2715)) ([93616c7](https://github.com/pagopa/io-app/commit/93616c779d06cf3b0910566dc126e78bd9642288))
 
@@ -76,7 +168,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * [[#175272158](https://www.pivotaltracker.com/story/show/175272158)] Refactored CIE PIN screen to functional, added informative bottom sheet ([#2612](https://github.com/pagopa/io-app/issues/2612)) ([f05a443](https://github.com/pagopa/io-app/commit/f05a4437af1f6588dafcea2f3aa871fd0e42e2e7))
 * [[#176424621](https://www.pivotaltracker.com/story/show/176424621)] Upgrades TypeScript to 4.1 ([#2596](https://github.com/pagopa/io-app/issues/2596)) ([4a40558](https://github.com/pagopa/io-app/commit/4a405589d8c8ad01b2cd02cbcec4bab3ab462efb))
-* **Bonus Pagamenti Digitali:** [[#175890963](https://www.pivotaltracker.com/story/show/175890963)] Adds the screen to see all BPay accounts to add ([#2697](https://github.com/pagopa/io-app/issues/2697)) ([8d8d6cf](https://github.com/pagopa/io-app/commit/8d8d6cffbee489af79f7c2c0b2c2542f7460a1a4)), closes [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863) [#175890863](https://www.pivotaltracker.com/story/show/175890863)
+* **Bonus Pagamenti Digitali:** [[#175890963](https://www.pivotaltracker.com/story/show/175890963)] Adds the screen to see all BPay accounts to add ([#2697](https://github.com/pagopa/io-app/issues/2697)) ([8d8d6cf](https://github.com/pagopa/io-app/commit/8d8d6cffbee489af79f7c2c0b2c2542f7460a1a4))
 * **Bonus Pagamenti Digitali:** [[#176417281](https://www.pivotaltracker.com/story/show/176417281)] Return to wallet after add BPay ([#2703](https://github.com/pagopa/io-app/issues/2703)) ([08c036e](https://github.com/pagopa/io-app/commit/08c036e34d37eb70873ef9fd34a9f719179affea))
 * **Bonus Pagamenti Digitali:** [[#176432457](https://www.pivotaltracker.com/story/show/176432457)] Remove navigation bar from the BPay detail screen ([#2699](https://github.com/pagopa/io-app/issues/2699)) ([53a6b21](https://github.com/pagopa/io-app/commit/53a6b215239fdb9076920f2c315423acfb1cc14e))
 
@@ -101,12 +193,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* **Bonus Pagamenti Digitali:** [[#175883232](https://www.pivotaltracker.com/story/show/175883232)] Send BPay actions to mixpanel ([#2678](https://github.com/pagopa/io-app/issues/2678)) ([44f2978](https://github.com/pagopa/io-app/commit/44f2978bd943d9f535c9d16352da54d1184dc7df)), closes [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351)
-* **Bonus Pagamenti Digitali:** [[#175883367](https://www.pivotaltracker.com/story/show/175883367),[#175883472](https://www.pivotaltracker.com/story/show/175883472)] Wallet BPay visualization ([#2682](https://github.com/pagopa/io-app/issues/2682)) ([e39332f](https://github.com/pagopa/io-app/commit/e39332fc43e05b2776fd55f187943e07fd5c229e)), closes [#2685](https://github.com/pagopa/io-app/issues/2685)
+* **Bonus Pagamenti Digitali:** [[#175883232](https://www.pivotaltracker.com/story/show/175883232)] Send BPay actions to mixpanel ([#2678](https://github.com/pagopa/io-app/issues/2678)) ([44f2978](https://github.com/pagopa/io-app/commit/44f2978bd943d9f535c9d16352da54d1184dc7df))
+* **Bonus Pagamenti Digitali:** [[#175883367](https://www.pivotaltracker.com/story/show/175883367),[#175883472](https://www.pivotaltracker.com/story/show/175883472)] Wallet BPay visualization ([#2682](https://github.com/pagopa/io-app/issues/2682)) ([e39332f](https://github.com/pagopa/io-app/commit/e39332fc43e05b2776fd55f187943e07fd5c229e))
 * **Bonus Pagamenti Digitali:** [[#175889262](https://www.pivotaltracker.com/story/show/175889262),[#175889280](https://www.pivotaltracker.com/story/show/175889280)] Add bpay/list API ([#2662](https://github.com/pagopa/io-app/issues/2662)) ([fbd4b67](https://github.com/pagopa/io-app/commit/fbd4b67bddb296a44dfc2b1d097ab3133871ffaa))
 * **Bonus Pagamenti Digitali:** [[#175889351](https://www.pivotaltracker.com/story/show/175889351),[#175889362](https://www.pivotaltracker.com/story/show/175889362),[#175889493](https://www.pivotaltracker.com/story/show/175889493),[#175890975](https://www.pivotaltracker.com/story/show/175890975)] Action, store & reducer Bpay ([#2673](https://github.com/pagopa/io-app/issues/2673)) ([3f9bb70](https://github.com/pagopa/io-app/commit/3f9bb700cf7ed2f7d5263a9ab74aa2ee2cda22db))
 * **Bonus Pagamenti Digitali:** [[#175890863](https://www.pivotaltracker.com/story/show/175890863),[#175883224](https://www.pivotaltracker.com/story/show/175883224)] Creates base component for bpay search funnel ([#2681](https://github.com/pagopa/io-app/issues/2681)) ([f44d049](https://github.com/pagopa/io-app/commit/f44d0494817c84bcd06c163985198ba16cf2fb73))
-* **Bonus Pagamenti Digitali:** [[#175890882](https://www.pivotaltracker.com/story/show/175890882)] Update caption for BPay ko & loading screens ([#2680](https://github.com/pagopa/io-app/issues/2680)) ([9dc52bd](https://github.com/pagopa/io-app/commit/9dc52bd400662999749b94efc5974ef9aa9ea94a)), closes [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175889351](https://www.pivotaltracker.com/story/show/175889351) [#175883232](https://www.pivotaltracker.com/story/show/175883232) [#175883232](https://www.pivotaltracker.com/story/show/175883232) [#175883232](https://www.pivotaltracker.com/story/show/175883232)
+* **Bonus Pagamenti Digitali:** [[#175890882](https://www.pivotaltracker.com/story/show/175890882)] Update caption for BPay ko & loading screens ([#2680](https://github.com/pagopa/io-app/issues/2680)) ([9dc52bd](https://github.com/pagopa/io-app/commit/9dc52bd400662999749b94efc5974ef9aa9ea94a))
 * **Bonus Pagamenti Digitali:** [[#176401375](https://www.pivotaltracker.com/story/show/176401375)] Update BPay description and numberObfuscated [#2685](https://github.com/pagopa/io-app/issues/2685) ([cc67d74](https://github.com/pagopa/io-app/commit/cc67d7485366af1214eb58656fed57e240478073))
 
 

@@ -1,11 +1,11 @@
 import { getType } from "typesafe-actions";
-import { clearCache } from "../../../actions/profile";
 import {
   markServiceAsRead,
   showServiceDetails
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -36,8 +36,8 @@ export function readServicesByIdReducer(
         ...state,
         [action.payload]: true
       };
-
-    case getType(clearCache):
+    // reset reading state if current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
 
     default:

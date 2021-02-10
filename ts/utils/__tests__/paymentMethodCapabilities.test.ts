@@ -96,7 +96,7 @@ describe("isPaymentMethodSupported", () => {
 
     expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
   });
-  it("should return not_available if is a cobadge card, pagoPa is false", () => {
+  it("should return not_available if is a credit card and pagoPa is false", () => {
     const aMaestroCreditCard = {
       kind: "CreditCard",
       info: {
@@ -110,6 +110,24 @@ describe("isPaymentMethodSupported", () => {
     } as PaymentMethod;
 
     expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
+  });
+  it("should return onboardableNotImplemented if is a cobadge card", () => {
+    const aCreditCard = {
+      kind: "CreditCard",
+      info: {
+        brand: "MAESTRO",
+        issuerAbiCode: "123"
+      }
+    } as CreditCardPaymentMethod;
+    const aPaymentMethod = {
+      ...aCreditCard,
+      kind: "CreditCard",
+      pagoPA: false
+    } as PaymentMethod;
+
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual(
+      "onboardableNotImplemented"
+    );
   });
 
   it("should return arriving if the payment method is of kind Satispay", () => {

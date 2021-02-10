@@ -144,6 +144,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    findOutMore: "Find out more"
   navigator:
     messages: messages
     wallet: wallet
@@ -767,16 +768,23 @@ wallet:
       title: "Search for your PagoBANCOMAT cards"
       description:
         text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
         text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
+    cobadge:
+      title: "Search for your international circuit cards"
+      description:
+        text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
+        text2: the banks participating in the service
+        text3: "For further information, please read the "
+        text4: privacy policy.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -850,13 +858,37 @@ wallet:
       headerTitle: "Add international circuit"
       start:
         title: "TMP Start Title"
+        loading: "We are loading the settings\n\nPlease wait"
+        koDisabled:
+          title: "Your bank does not yet offer this functionality"
+          body: "We are working to allow you to add your international circuit card soon."
+        koUnavailable:
+          title: "We can't contact your bank"
+          body: "We are working to solve the problem."
       search:
         koTimeout:
           title: "TMP KO Timeout add"
         koNotFound:
           title: "TMP KO Timeout add"
       add:
-        title: "TMP Add title"
+        screenTitle: "Do you want to add this card?"
+        label: "International circuit card {{current}} of {{length}}"
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
+        warning: "Check that the card number matches the one on your physical card."
+        loading: "We are adding your international circuit card\n\nPlease hold on..."
+      chooseType:
+        title: "Does your card allow you to shop online?"
+        description: "This allows us to better identify your card and help you add it to your Wallet."
+        path:
+          enabled:
+            title: "Yes, it works online"
+            description: "We'll verify card data with your bank, usually with an SMS or a push notification"
+          disabled:
+            title: "No, I only use it for in-store purchases"
+            description: "We will search for all cards registered to you at participating banks"
+          unknown:
+            title: "I don't know"
+            description: "We will search for all cards registered to you at participating banks"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -997,7 +1029,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Institution Fiscal Code
+    entityCode: Payee Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -1032,7 +1064,7 @@ wallet:
   transactionFee: Transaction fee
   why: Why?
   paymentReason: Reason
-  recipient: Recipient
+  recipient: Payee
   date: Date
   time: Time
   psp: Payment provider
@@ -1073,6 +1105,9 @@ wallet:
     digital:
       name: App and digital payment tools
       description: Use your favourite mobile payment apps in IO
+    loyalty:
+      name: Supermarket Loyalty Card
+      description: The payment card issued by your supermarket, used to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
       description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
@@ -1095,6 +1130,8 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: international circuit
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -1119,8 +1156,8 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
-    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-      manually insert the transaction-related data (IUV and the entity/company code).
+    cameraUsageInfo: Scan the QR Code on the payment notice, or
+      manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
@@ -1166,9 +1203,9 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have one of these logos?"
-        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
-        addCta: "Add as Debit/Credit Card"
+        title: "Does your card have more than one logo?"
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        addCta: "Add second circuit"
       removeCta: "Delete this payment method"
   satispay:
     details:
@@ -1179,7 +1216,7 @@ wallet:
   cobadge:
     details:
       card:
-        validUntil: "Valid until {{expireMonth}}/{{expireYear}}"
+        validUntil: "Valid until {{expiryDate}}"
   newRemove:
     title: "Delete this payment method?"
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
@@ -1427,6 +1464,7 @@ identification:
       reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
+      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
       fallbackLabel: Use the unlock code
   fail:
     wrongCode: Wrong code
@@ -1991,7 +2029,7 @@ bonus:
             one: "You must have reached at least"
             two: " {{transactions}} transactions"
             three: " to unlock the cashback collected so far!"
-          currentPeriodUnlockBody: "Congratulations {{name}}! You have exceeded the threshold of {{transactions}} transactions and unlocked the Cashback !!"
+          currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
           gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
@@ -2058,7 +2096,7 @@ bonus:
           canceled: "Refund"
       paymentMethods:
         add:
-          cta: "Add a method to cashback"
+          cta: "Add a method to Cashback"
           alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
         noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
         noActiveMethod: "You must have activated at least one payment method to collect valid transactions"

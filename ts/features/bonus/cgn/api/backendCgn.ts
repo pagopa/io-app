@@ -18,7 +18,7 @@ const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
 const startCgnActivation: StartCgnActivationT = {
   method: "post",
-  url: () => `/api/v1/cgn/activations`,
+  url: () => `/api/v1/cgn/activation`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
