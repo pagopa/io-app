@@ -13,8 +13,7 @@ import {
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
-  getNetworkError,
-  NetworkError
+  getNetworkError
 } from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
