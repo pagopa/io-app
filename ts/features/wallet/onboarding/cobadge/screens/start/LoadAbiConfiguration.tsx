@@ -29,7 +29,6 @@ const LoadAbiConfiguration = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      // TODO: replace with locale
       loadingCaption={I18n.t("wallet.onboarding.coBadge.start.loading")}
       onAbort={props.cancel}
       onRetry={props.retry}
