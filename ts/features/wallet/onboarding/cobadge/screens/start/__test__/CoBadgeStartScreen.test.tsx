@@ -11,6 +11,7 @@ import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { loadAbi } from "../../../../bancomat/store/actions";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../../navigation/routes";
 import {
   loadCoBadgeAbiConfiguration,
@@ -37,6 +38,12 @@ const abiConfigurationDisabled: CoBadgeServices = {
 const abiConfigurationUnavailable: CoBadgeServices = {
   ServiceName: {
     status: StatusEnum.unavailable,
+    issuers: [{ abi: abiTestId, name: "bankName" }]
+  }
+};
+const abiConfigurationEnabled: CoBadgeServices = {
+  ServiceName: {
+    status: StatusEnum.enabled,
     issuers: [{ abi: abiTestId, name: "bankName" }]
   }
 };
@@ -160,6 +167,30 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
     // The user should see the unavailable screen
     expect(isUnavailableScreen(testComponent)).toBe(true);
   });
+  it("When receive a configuration with an abi enabled, the screen should render CoBadgeChosenBankScreen", () => {
+    const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
+
+    store.dispatch(
+      loadCoBadgeAbiConfiguration.success(abiConfigurationEnabled)
+    );
+    // The user should see the single bank screen
+    expect(isCoBadgeChosenSingleBankScreen(testComponent)).toBe(true);
+
+    // if the selected abi is not in the abi list, the user will see a generic text:
+    expect(
+      testComponent.queryByText(
+        I18n.t("wallet.searchAbi.cobadge.description.text2")
+      )
+    ).toBeTruthy();
+
+    const bankName = "abiBankName";
+    store.dispatch(
+      loadAbi.success({ data: [{ abi: abiTestId, name: bankName }] })
+    );
+
+    // if the selected abi is in the abi list, the user will see the name of the bank instead of the generic "all bank"
+    expect(testComponent.queryByText(bankName)).toBeTruthy();
+  });
 });
 
 /**
@@ -196,3 +227,6 @@ const isDisabledScreen = (component: RenderAPI) =>
 
 const isUnavailableScreen = (component: RenderAPI) =>
   component.queryByTestId("CoBadgeStartKoUnavailable") !== null;
+
+const isCoBadgeChosenSingleBankScreen = (component: RenderAPI) =>
+  component.queryByTestId("CoBadgeChosenBankScreenSingleBank") !== null;
