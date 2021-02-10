@@ -9,6 +9,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../components/ui/Markdown";
+import Switch from "../../../components/ui/Switch";
 import I18n from "../../../i18n";
 import { PaymentMethod } from "../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../types/paymentMethodCapabilities";
@@ -85,16 +86,19 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
           <H5 color="blue">{incompatible}</H5>
         </Badge>
       );
+    case "onboardableNotImplemented":
+      return <Switch testID={"switchOnboardCard"} disabled={true} />;
   }
 };
 
 /**
  * Represent the capability to pay in PagoPa of a payment method.
  *
- * We have 3 possible different cases:
+ * We have 4 possible different cases:
  *   - The card can pay on IO -> pagoPa === true and if is a credit card must be different from MAESTRO
  *   - The card in the future can pay on IO -> Satispay, MAESTRO
  *   - The card is not abilitated to pay on IO
+ *   - The card can onboard another card that can pay on IO -> co-badge credit card
  * @param props
  */
 const PagoPaPaymentCapability: React.FC<Props> = props => {

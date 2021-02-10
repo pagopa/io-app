@@ -144,6 +144,7 @@ global:
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
+    findOutMore: "Scopri di più"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -735,7 +736,7 @@ payment:
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
-  noticeCode: Codice avviso
+  noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
@@ -802,7 +803,7 @@ wallet:
       description:
         text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
         text2: le banche aderenti al servizio
-        text3: "Proseguendo accetti l'"
+        text3: "Per maggiori informazioni consulta l'"
         text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
@@ -877,6 +878,13 @@ wallet:
       headerTitle: "Aggiungi circuito internazionale"
       start:
         title: "TMP Start Title"
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        koDisabled:
+          title: "La tua banca non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta con circuito internazionale."
+        koUnavailable:
+          title: "Non riusciamo a contattare la tua banca"
+          body: "Siamo al lavoro per risolvere il problema."
       search:
         koTimeout:
           title: "TMP KO Timeout add"
@@ -888,6 +896,19 @@ wallet:
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
         warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
+      chooseType:
+        title: "La tua carta ti permette di acquistare online?"
+        description: "Questa domanda ci permette di capire meglio com’è fatta la tua carta e aiutarti ad aggiungerla al tuo Portafoglio."
+        path:
+          enabled:
+            title: "Sì, è abilitata agli acquisti online"
+            description: "Verificheremo i dati della carta con la tua banca, di solito via sms o notifica push"
+          disabled:
+            title: "No, la uso solo nei negozi"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+          unknown:
+            title: "Non lo so"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1041,7 +1062,7 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     updateInfo:
-      Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
+      pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
@@ -1069,7 +1090,7 @@ wallet:
   transactionFee: Costo operazione
   why: Perché?
   paymentReason: Causale
-  recipient: Destinatario
+  recipient: Ente Creditore
   date: Data
   time: Ora
   psp: Gestore della transazione
@@ -1162,8 +1183,8 @@ wallet:
     wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo:
-      Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
-      inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
+      Inquadra il codice QR che trovi nell'avviso, oppure
+      inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
@@ -1209,9 +1230,9 @@ wallet:
         two: "non consentono di pagare tramite IO"
         three: ", ma solo presso i punti fisici (POS)."
       debit:
-        title: "La tua carta ha uno di questi loghi?"
-        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
-        addCta: "Aggiungi Carta di Debito/Credito"
+        title: "La tua carta ha più di un logo?"
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
+        addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
@@ -1475,6 +1496,7 @@ identification:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
+      sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
     wrongCode: Codice errato
@@ -2063,6 +2085,10 @@ bonus:
           other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        loading: "Stiamo recuperando la lista delle tue transazioni\n\nAttendi qualche secondo..."
+        error:
+          title: "I sistemi stanno impiegando più tempo del previsto"
+          body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
