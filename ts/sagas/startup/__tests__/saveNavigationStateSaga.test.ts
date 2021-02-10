@@ -13,15 +13,6 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("react-native-device-info", () => {
-  const getDeviceIdMock = jest.fn();
-  getDeviceIdMock.mockReturnValue("");
-
-  return {
-    getDeviceId: getDeviceIdMock
-  };
-});
-
 describe("saveNavigationStateSaga", () => {
   it("should not set a deep link when not in main navigator", () =>
     expectSaga(saveNavigationStateSaga)

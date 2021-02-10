@@ -23,15 +23,6 @@ import { reproduceSequence } from "../../../../utils/tests";
 // Mock react native share
 jest.mock("react-native-share", () => jest.fn());
 
-jest.mock("react-native-device-info", () => {
-  const getDeviceIdMock = jest.fn();
-  getDeviceIdMock.mockReturnValue("");
-
-  return {
-    getDeviceId: getDeviceIdMock
-  };
-});
-
 // Be sure that navigation is unmocked
 jest.unmock("react-navigation");
 

@@ -38,15 +38,6 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("react-native-device-info", () => {
-  const getDeviceIdMock = jest.fn();
-  getDeviceIdMock.mockReturnValue("");
-
-  return {
-    getDeviceId: getDeviceIdMock
-  };
-});
-
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {
