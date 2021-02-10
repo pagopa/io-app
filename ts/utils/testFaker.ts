@@ -32,7 +32,7 @@ const validCreditCard: CreditCard = {
   pan: "************0111" as string & IPatternStringTag<string>,
   securityCode: "345" as string & IPatternStringTag<"^[0-9]{3,4}$">,
   expireMonth: "05" as string & IPatternStringTag<"^(0[1-9]|1[0-2])$">,
-  expireYear: "22" as string & IPatternStringTag<"^[0-9]{2}$">,
+  expireYear: "22" as string & IPatternStringTag<"^(?=(?:.{2}|.{4})$)[0-9]*$">,
 
   brandLogo:
     "https://acardste.vaservices.eu:1443/static/wallet/assets/img/creditcard/generic.png",

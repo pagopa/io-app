@@ -26,11 +26,11 @@ export type CreditCardExpirationMonth = t.TypeOf<
 >;
 
 /**
- * A string that matches a two digits year number (00-99)
+ * A string that matches either a two or four digits year number (00-99, 0000-9999)
  */
-// FIXME: check that expiration year is >= current year
-// (possibly check month as well if year == current year)
-export const CreditCardExpirationYear = PatternString("^[0-9]{2,4}$");
+export const CreditCardExpirationYear = PatternString(
+  "^(?=(?:.{2}|.{4})$)[0-9]*$"
+);
 export type CreditCardExpirationYear = t.TypeOf<
   typeof CreditCardExpirationYear
 >;
