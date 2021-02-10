@@ -2047,13 +2047,16 @@ bonus:
             body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
                    We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n
                    Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
-
       transaction:
         label:
           one: "1 transaction"
           other: "{{transactions}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
+        loading: "We're retrieving your transactions\n\nPlease hold on..."
+        error:
+          title: "Systems are taking longer than expected"
+          body: "We're currently unable to retrieve your transactions. Don't worry! The list will be available again soon."
         noPaymentMethod:
           text1: "You must activate "
           text2: "at least one payment method "
