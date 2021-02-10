@@ -23,8 +23,9 @@ import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancoma
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isExpired } from "../../../../utils/dates";
 import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
-import BancomatInformation from "./BancomatInformation";
 import { walletAddBancomatStart } from "../../onboarding/bancomat/store/actions";
+
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
