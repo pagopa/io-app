@@ -11,7 +11,11 @@ import {
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getNetworkError, NetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError,
+  NetworkError
+} from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
@@ -74,20 +78,14 @@ export function* handleSearchUserCoBadge(
           );
         } else {
           // it should not never happen
-          const error: NetworkError = {
-            kind: "generic",
-            value: new Error(`data is undefined`)
-          };
+          const error = getGenericError(new Error(`data is undefined`));
           void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
           return yield put(searchUserCoBadge.failure(error));
         }
       } else {
-        const error: NetworkError = {
-          kind: "generic",
-          value: new Error(
-            `response status ${getPansWithRefreshResult.value.status}`
-          )
-        };
+        const error = getGenericError(
+          new Error(`response status ${getPansWithRefreshResult.value.status}`)
+        );
         void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
         return yield put(searchUserCoBadge.failure(error));
       }
