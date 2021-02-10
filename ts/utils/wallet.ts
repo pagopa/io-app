@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import I18n from "../i18n";
 import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 /*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
@@ -13,6 +14,15 @@ export const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 export const isExpiredCard = (creditCard: CreditCard) => {
   const { expireYear, expireMonth } = creditCard;
+
+  // Expiration cannot be decoded, mark as expired
+  if (
+    !(
+      CreditCardExpirationMonth.is(expireMonth) &&
+      CreditCardExpirationYear.is(expireYear)
+    )
+  )
+    return true;
 
   // In case the date is not valid, this call will return -1
   // thus considering the card as expired

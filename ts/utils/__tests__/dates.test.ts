@@ -18,7 +18,15 @@ describe("getExpireStatus", () => {
     expect(getExpireStatus(remote)).toBe("EXPIRED");
   });
 
-  it("should mark the card as expired, thus true", () => {
+  it("should mark the card as expired since no valid date is given", () => {
+    expect(isExpired(Number("AAA"), Number("BBB"))).toBe(true);
+  });
+
+  it("should mark the card as expired since we're passing a valid past date with 4-digit year", () => {
+    expect(isExpired(2, 2004)).toBe(true);
+  });
+
+  it("should mark the card as expired since we're passing the last month", () => {
     const lastMonth = subMonths(new Date(), 1);
 
     // We're passing the preceeding month/year, remember getMonth() is zero-based

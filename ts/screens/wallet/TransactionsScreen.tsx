@@ -2,6 +2,7 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
+import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -21,6 +22,7 @@ import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMe
 import I18n from "../../i18n";
 
 import {
+  navigateToWalletAddCreditCard,
   navigateToWalletHome,
   navigateToWalletList
 } from "../../store/actions/navigation";
@@ -157,7 +159,9 @@ class TransactionsScreen extends React.Component<Props> {
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} extralarge={true} />
               {cardIsExpired ? (
-                <ExpiredCardAdvice />
+                <ExpiredCardAdvice
+                  navigateToAddCard={this.props.navigateToAddCard}
+                />
               ) : (
                 <>
                   <PaymentMethodCapabilities paymentMethod={pm} />
@@ -180,6 +184,13 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToAddCard: () =>
+    dispatch(
+      navigateToWalletAddCreditCard({
+        inPayment: none
+      })
+    ),
+
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>

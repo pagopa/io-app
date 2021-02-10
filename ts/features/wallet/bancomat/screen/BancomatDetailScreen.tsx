@@ -1,6 +1,6 @@
 import { Button, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -24,6 +24,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isExpired } from "../../../../utils/dates";
 import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
 import BancomatInformation from "./BancomatInformation";
+import { walletAddBancomatStart } from "../../onboarding/bancomat/store/actions";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -109,7 +110,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
 
       <View style={IOStyles.horizontalContentPadding}>
         {cardIsExpired ? (
-          <ExpiredCardAdvice forBancomat />
+          <ExpiredCardAdvice navigateToAddCard={props.navigateToAddCard} />
         ) : (
           <>
             <PaymentMethodCapabilities paymentMethod={bancomat} />
@@ -133,6 +134,18 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToAddCard: () => {
+    Alert.alert(
+      I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.title"),
+      I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.body"),
+      [
+        {
+          text: I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.confirm"),
+          onPress: () => dispatch(walletAddBancomatStart())
+        }
+      ]
+    );
+  },
   // using the legacy action with callback instead of using the redux state to read the results
   // for time reasons...
   deleteWallet: (walletId: number) =>

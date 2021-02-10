@@ -1,21 +1,17 @@
 import React, { FC } from "react";
-import { Alert, StyleSheet } from "react-native";
-import { Text, View } from "native-base";
-import { connect } from "react-redux";
-import { none } from "fp-ts/lib/Option";
+import { StyleSheet } from "react-native";
+import { View } from "native-base";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import customVariables from "../../../theme/variables";
-import { walletAddBancomatStart } from "../onboarding/bancomat/store/actions";
-import { Dispatch } from "../../../store/actions/types";
-import { navigateToWalletAddCreditCard } from "../../../store/actions/navigation";
 import I18n from "../../../i18n";
+import { Label } from "../../../components/core/typography/Label";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   icon: {
-    color: customVariables.brandPrimaryInverted,
-    height: 24
+    color: customVariables.brandPrimaryInverted
   },
   button: {
     justifyContent: "center",
@@ -24,38 +20,11 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   textButton: {
-    paddingLeft: 0,
-    paddingRight: 0
+    color: IOColors.white
   }
 });
 
-type OwnProps = { forBancomat?: boolean };
-
-const mapDispatchToProps = (dispatch: Dispatch, { forBancomat }: OwnProps) => ({
-  navigateToAddCard: forBancomat
-    ? () => {
-        Alert.alert(
-          I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.title"),
-          I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.body"),
-          [
-            {
-              text: I18n.t(
-                "wallet.onboarding.bancomat.pleaseWaitDialog.confirm"
-              ),
-              onPress: () => dispatch(walletAddBancomatStart())
-            }
-          ]
-        );
-      }
-    : () =>
-        dispatch(
-          navigateToWalletAddCreditCard({
-            inPayment: none
-          })
-        )
-});
-
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = { navigateToAddCard: () => void };
 
 const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
   <>
@@ -69,9 +38,9 @@ const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
       onPress={navigateToAddCard}
     >
       <IconFont name="io-plus" style={styles.icon} />
-      <Text style={styles.textButton}>{I18n.t("onboarding.addNewCard")}</Text>
+      <Label color="white">{I18n.t("onboarding.addNewCard")}</Label>
     </ButtonDefaultOpacity>
   </>
 );
 
-export default connect(null, mapDispatchToProps)(ExpiredCardAdvice);
+export default ExpiredCardAdvice;

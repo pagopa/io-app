@@ -30,7 +30,7 @@ export type CreditCardExpirationMonth = t.TypeOf<
  */
 // FIXME: check that expiration year is >= current year
 // (possibly check month as well if year == current year)
-export const CreditCardExpirationYear = PatternString("^[0-9]{2}$");
+export const CreditCardExpirationYear = PatternString("^[0-9]{2,4}$");
 export type CreditCardExpirationYear = t.TypeOf<
   typeof CreditCardExpirationYear
 >;
