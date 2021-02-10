@@ -23,6 +23,7 @@ jest.mock("react-native-share", () => jest.fn());
 
 const configurationFailure = getGenericError(new Error("generic Error"));
 const abiTestId = "9876";
+const abiTestId2 = "2222";
 const abiConfigurationWithoutBankMock: CoBadgeServices = {
   ServiceName: {
     status: StatusEnum.enabled,
@@ -44,7 +45,10 @@ const abiConfigurationUnavailable: CoBadgeServices = {
 const abiConfigurationEnabled: CoBadgeServices = {
   ServiceName: {
     status: StatusEnum.enabled,
-    issuers: [{ abi: abiTestId, name: "bankName" }]
+    issuers: [
+      { abi: abiTestId, name: "bankName1" },
+      { abi: abiTestId2, name: "bankName2" }
+    ]
   }
 };
 
@@ -190,6 +194,31 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
 
     // if the selected abi is in the abi list, the user will see the name of the bank instead of the generic "all bank"
     expect(testComponent.queryByText(bankName)).toBeTruthy();
+  });
+  it("When change the configuration, CoBadgeChosenBankScreen should update (check memoization)", () => {
+    const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
+    const bankName = "abiBankName1";
+    const bankName2 = "abiBankName2";
+    store.dispatch(
+      loadAbi.success({
+        data: [
+          { abi: abiTestId, name: bankName },
+          { abi: abiTestId2, name: bankName2 }
+        ]
+      })
+    );
+
+    store.dispatch(
+      loadCoBadgeAbiConfiguration.success(abiConfigurationEnabled)
+    );
+    // The user should see the single bank screen
+    expect(isCoBadgeChosenSingleBankScreen(testComponent)).toBe(true);
+
+    expect(testComponent.queryByText(bankName)).toBeTruthy();
+
+    store.dispatch(walletAddCoBadgeStart(abiTestId2));
+
+    expect(testComponent.queryByText(bankName2)).toBeTruthy();
   });
 });
 
