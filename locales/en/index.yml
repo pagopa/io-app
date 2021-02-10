@@ -878,17 +878,17 @@ wallet:
         loading: "We are adding your international circuit card\n\nPlease hold on..."
       chooseType:
         title: "Does your card allow you to shop online?"
-        description: "This question allows us to better understand what your card is like and help you add it to your Wallet."
+        description: "This allows us to better identify your card and help you add it to your Wallet."
         path:
           enabled:
-            title: "Yes, it is enabled for online purchases"
-            description: "The data will be verified in the way appointed by your bank, for example via text message or app."
+            title: "Yes, it works online"
+            description: "We'll verify card data with your bank, usually with an SMS or a push notification"
           disabled:
-            title: "No, I only use it in shops"
-            description: "We will look for all the cards in your name at the banks participating in the service."
+            title: "No, I only use it for in-store purchases"
+            description: "We will search for all cards registered to you at participating banks"
           unknown:
-            title: "I do not know"
-            description: "We will look for all the cards in your name at the banks participating in the service."
+            title: "I don't know"
+            description: "We will search for all cards registered to you at participating banks"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1029,7 +1029,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Institution Fiscal Code
+    entityCode: Payee Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -1064,7 +1064,7 @@ wallet:
   transactionFee: Transaction fee
   why: Why?
   paymentReason: Reason
-  recipient: Recipient
+  recipient: Payee
   date: Date
   time: Time
   psp: Payment provider
@@ -1156,8 +1156,8 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
-    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-      manually insert the transaction-related data (IUV and the entity/company code).
+    cameraUsageInfo: Scan the QR Code on the payment notice, or
+      manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
@@ -1203,9 +1203,9 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have one of these logos?"
-        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
-        addCta: "Add as Debit/Credit Card"
+        title: "Does your card have more than one logo?"
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        addCta: "Add second circuit"
       removeCta: "Delete this payment method"
   satispay:
     details:
