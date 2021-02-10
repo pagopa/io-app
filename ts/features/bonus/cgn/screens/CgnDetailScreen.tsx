@@ -23,14 +23,13 @@ import { H5 } from "../../../../components/core/typography/H5";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { H4 } from "../../../../components/core/typography/H4";
-import { profileSelector } from "../../../../store/reducers/profile";
-import { Monospace } from "../../../../components/core/typography/Monospace";
 import { Link } from "../../../../components/core/typography/Link";
 import { cgnDetailSelector } from "../store/reducers/details";
 import variables from "../../../../theme/variables";
 // import { localeDateFormat } from "../../../../utils/locale";
 import { CgnActivatedStatus } from "../../../../../definitions/cgn/CgnActivatedStatus";
 import { CgnRevokedStatus } from "../../../../../definitions/cgn/CgnRevokedStatus";
+import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -115,16 +114,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <View spacer />
           <ItemSeparatorComponent noPadded />
           <View spacer />
-          <H4>{I18n.t("bonus.cgn.detail.ownership")}</H4>
-          <View spacer />
-          {pot.isSome(props.currentProfile) &&
-            renderRowBlock(
-              <H4
-                weight={"Regular"}
-                color={"bluegrey"}
-              >{`${props.currentProfile.value.name} ${props.currentProfile.value.family_name}`}</H4>,
-              <Monospace>{props.currentProfile.value.fiscal_code}</Monospace>
-            )}
+          <CgnOwnershipInformation />
           <ItemSeparatorComponent noPadded />
           <View spacer />
           {pot.isSome(props.cgnDetails) &&
@@ -162,6 +152,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <ItemSeparatorComponent noPadded />
           <View spacer large />
           <View style={styles.verticallyCenter}>
+            {/* FIXME Add on press event when TOS are defined */}
             <Link>{"Informativa sul trattamento dei dati personali"}</Link>
           </View>
         </View>
@@ -182,7 +173,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  currentProfile: profileSelector(state),
   cgnDetails: cgnDetailSelector(state)
 });
 
