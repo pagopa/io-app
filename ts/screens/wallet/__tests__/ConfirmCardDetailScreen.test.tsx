@@ -1,20 +1,21 @@
 import { none } from "fp-ts/lib/Option";
-import { pot } from "italia-ts-commons";
+// import { pot } from "italia-ts-commons";
 import * as React from "react";
 import { createStore } from "redux";
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { CreditCard } from "../../../types/pagopa";
+import { CreditCard, PaymentManagerToken } from "../../../types/pagopa";
 import { CreditCardPan } from "../../../utils/input";
 // import { reproduceSequence } from "../../../utils/tests";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
   NavigationParams
 } from "../ConfirmCardDetailsScreen";
+import { creditCardCheckout3dsRequest } from "../../../store/actions/wallet/wallets";
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
@@ -56,18 +57,12 @@ describe("ConfirmCardDetailScreen", () => {
       store
     );
 
-    const finalState: GlobalState = {
-      wallet: {
-        ...globalState.wallet,
-        wallets: {
-          ...globalState.wallet.wallets,
-          creditCardVerification: pot.some({}),
-          creditCardAddWallet: pot.some({})
-        }
-      }
-    } as GlobalState;
-    const finalStore = createStore(appReducer, finalState as any);
-    component.rerender(<Provider store={finalStore}>{ToBeTested}</Provider>);
+    store.dispatch(
+      creditCardCheckout3dsRequest({
+        urlCheckout3ds: "anUrl3ds",
+        paymentManagerToken: "aPaymentManagerToken" as PaymentManagerToken
+      })
+    );
 
     const loadingModal = component.getAllByTestId("overlayComponent");
     const loadingText = component.getByText(

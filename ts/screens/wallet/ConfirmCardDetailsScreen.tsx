@@ -94,9 +94,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     this.props.addWalletCreditCardInit();
   }
 
-  public componentDidUpdate() {
-    console.log("entra");
-  }
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -293,8 +290,6 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isError(psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
-  console.log(creditCardVerification);
-  console.log(creditCardCheckout3ds);
   return {
     isLoading,
     error,
