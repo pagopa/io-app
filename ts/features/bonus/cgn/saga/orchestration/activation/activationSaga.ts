@@ -1,32 +1,38 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, race, take } from "redux-saga/effects";
-import { NavigationActions } from "react-navigation";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { call, put } from "redux-saga/effects";
 import {
+  cgnActivationBack,
   cgnActivationCancel,
-  cgnActivationComplete,
-  cgnRequestActivation
+  cgnActivationComplete
 } from "../../../store/actions/activation";
 import { navigateToCgnActivationInformationTos } from "../../../navigation/actions";
+import {
+  executeWorkUnit,
+  withResetNavigationStack
+} from "../../../../../../sagas/workUnit";
+import CGN_ROUTES from "../../../navigation/routes";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 
-export function* cgnStartActivationWorker() {
-  yield put(navigateToCgnActivationInformationTos());
-  yield put(navigationHistoryPop(1));
-
-  yield take(cgnRequestActivation.request);
-
-  yield take(cgnActivationComplete);
+function* cgnActivationWorkUnit() {
+  return yield call(executeWorkUnit, {
+    startScreenNavigation: navigateToCgnActivationInformationTos(),
+    startScreenName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
+    complete: cgnActivationComplete,
+    back: cgnActivationBack,
+    cancel: cgnActivationCancel
+  });
 }
 
 /**
  * This saga handles the CGN activation workflow
  */
 export function* handleCgnStartActivationSaga(): SagaIterator {
-  const { cancelAction } = yield race({
-    activation: call(cgnStartActivationWorker),
-    cancelAction: take(cgnActivationCancel)
-  });
-  if (cancelAction) {
-    yield put(NavigationActions.back());
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
+    withResetNavigationStack,
+    cgnActivationWorkUnit
+  );
+  if (res !== "back") {
+    yield put(navigateToWalletHome());
   }
 }
