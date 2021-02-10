@@ -35,7 +35,12 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { creditCardListVisibleInWalletSelector } from "../../../store/reducers/wallet/wallets";
+import {
+  bancomatListVisibleInWalletSelector,
+  bPayListVisibleInWalletSelector,
+  creditCardListVisibleInWalletSelector,
+  satispayListVisibleInWalletSelector
+} from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
@@ -189,14 +194,14 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
         <H1>{"Con quale metodo vuoi pagare?"}</H1>
         <View spacer={true} />
         <H4 weight={"Regular"} color={"bluegreyDark"}>
-          {props.payableCards.length > 0
+          {props.payableWallets.length > 0
             ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
             : I18n.t("wallet.payWith.noWallets.text")}
         </H4>
         <View spacer={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={props.payableCards}
+          data={props.payableWallets}
           keyExtractor={item => item.idWallet.toString()}
           ListFooterComponent={<View spacer />}
           renderItem={i => renderListItem(i)}
@@ -206,7 +211,7 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
         <View spacer={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={props.payableCards}
+          data={props.notPayableWallets}
           keyExtractor={item => item.idWallet.toString()}
           ListFooterComponent={<View spacer />}
           renderItem={i => renderListItem(i)}
@@ -226,7 +231,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       "verifica"
     );
     const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-    const { payableCards: wallets } = this.props;
+    const { payableWallets: wallets } = this.props;
 
     const primaryButtonProps = {
       block: true,
@@ -302,28 +307,29 @@ class PickPaymentMethodScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potVisibleCreditCards = creditCardListVisibleInWalletSelector(state);
+  const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
+  const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
+  const potVisibleBPay = bPayListVisibleInWalletSelector(state);
+  const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
   const isLoading =
-    pot.isLoading(potVisibleCreditCards) || pot.isLoading(potPsps);
+    pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
 
-  const notPayableCreditCard = pot
-    .getOrElse(potVisibleCreditCards, [])
-    .filter(cc => !canMethodPay(cc));
+  const visibleCreditCard = pot.getOrElse(potVisibleCreditCard, []).map(c => c);
+  const visibleBancomat = pot.getOrElse(potVisibleBancomat, []).map(b => b);
+  const visibleBPay = pot.getOrElse(potVisibleBPay, []).map(bP => bP);
+  const visibleSatispay = pot.getOrElse(potVisibleSatispay, []).map(s => s);
 
-  // EXAMPLE CONCAT ARRAY
-  // const payableCC = pot
-  //   .getOrElse(potVisibleCreditCards, [])
-  //   .filter(cc => canMethodPay(cc));
-  // const M = getMonoid<PaymentMethod>();
-  // const allCards = M.concat(notPayableCreditCard, payableCC);
+  const M = getMonoid<PaymentMethod>();
+  const visiblePayableWallets = M.concat(visibleCreditCard, visibleBancomat)
+    .concat(visibleBPay)
+    .concat(visibleSatispay);
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
     // only the cards that can pay on IO (eg. Maestro is a not valid credit card)
-    payableCards: pot
-      .getOrElse(potVisibleCreditCards, [])
-      .filter(cc => canMethodPay(cc)),
+    payableWallets: visiblePayableWallets.filter(vPW => canMethodPay(vPW)),
+    notPayableWallets: visiblePayableWallets.filter(vPW => !canMethodPay(vPW)),
     isLoading
   };
 };
