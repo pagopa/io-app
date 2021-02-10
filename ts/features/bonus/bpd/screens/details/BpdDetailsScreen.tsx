@@ -105,11 +105,7 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         footerContent={
           canRenderButton && (
             <GoToTransactions
-              goToTransactions={() =>
-                // if the transactions state is in pot.isError state
-                // on press request a refresh
-                props.goToTransactions()
-              }
+              goToTransactions={() => props.goToTransactions()}
             />
           )
         }
