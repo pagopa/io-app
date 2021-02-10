@@ -97,9 +97,40 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
 
     expect(isLoadingScreen(testComponent)).toBe(true);
 
-    // check the error state for the loading error component
+    // check the loading state for the loading error component
     expect(
       testComponent.queryByTestId("LoadingErrorComponentLoading")
+    ).toBeTruthy();
+  });
+  it("When receive an error during the loading, the screen should render LoadAbiConfiguration (error state)", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(walletAddCoBadgeStart(abiTestId));
+
+    // check default initial state
+    expect(store.getState().wallet.onboarding.coBadge.abiSelected).toBe(
+      abiTestId
+    );
+    const testComponent = renderCoBadgeScreen(store);
+
+    // When the component is mounted with coBadgeConfiguration pot.none, the component should try to reload the state
+    expect(
+      store.getState().wallet.onboarding.coBadge.abiConfiguration
+    ).toStrictEqual(pot.noneLoading);
+
+    expect(isLoadingScreen(testComponent)).toBe(true);
+
+    // check the loading state for the loading error component
+    expect(
+      testComponent.queryByTestId("LoadingErrorComponentLoading")
+    ).toBeTruthy();
+
+    store.dispatch(loadCoBadgeAbiConfiguration.failure(configurationFailure));
+    // After an error, the component switch to "error" mode
+    expect(isLoadingScreen(testComponent)).toBe(true);
+    // check the error state for the loading error component
+    expect(
+      testComponent.queryByTestId("LoadingErrorComponentError")
     ).toBeTruthy();
   });
 });
