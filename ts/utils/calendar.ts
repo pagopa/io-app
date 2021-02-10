@@ -151,7 +151,7 @@ export const saveCalendarEvent = (
     startDate: dueDateIsoString,
     endDate: dueDateIsoString,
     allDay: true,
-    alarms: []
+    alarms: [{ date: dueDateIsoString }]
   })
     .then(eventId => {
       showToast(
