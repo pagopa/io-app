@@ -2093,6 +2093,10 @@ bonus:
           other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        loading: "Stiamo recuperando la lista delle tue transazioni\n\nAttendi qualche secondo..."
+        error:
+          title: "I sistemi stanno impiegando più tempo del previsto"
+          body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
