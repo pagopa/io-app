@@ -1,17 +1,19 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
-import { some } from "fp-ts/lib/Option";
+import { fromNullable, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, List, ListItem, Text, View } from "native-base";
 import * as React from "react";
+import { getMonoid } from "fp-ts/lib/Array";
 import {
   Image,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  ImageSourcePropType
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -27,7 +29,6 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import { InfoBox } from "../../../components/box/InfoBox";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { Label } from "../../../components/core/typography/Label";
-
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -44,7 +45,6 @@ import {
 import variables from "../../../theme/variables";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
-import { dispatchPickPspOrConfirm } from "./common";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 import {
   cancelButtonProps,
@@ -57,7 +57,11 @@ import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { H5 } from "../../../components/core/typography/H5";
 import { localeDateFormat } from "../../../utils/locale";
 import IconFont from "../../../components/ui/IconFont";
-import { getMonoid } from "fp-ts/lib/Array";
+import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
+import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -105,36 +109,87 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
   return new Date(year, indexedMonth - 1);
 };
 
-const extractInfoFromPaymentMethod = (paymentMethod: PaymentMethod) => {
+type PaymentMethodInformation = {
+  logo: ImageSourcePropType;
+  title: string;
+  description: string;
+  rightElement: JSX.Element;
+};
+
+const extractInfoFromPaymentMethod = (
+  paymentMethod: PaymentMethod,
+  holder?: string
+): PaymentMethodInformation => {
   switch (paymentMethod.kind) {
     case "CreditCard":
-      const expiryDate = getExpireDate(
-        paymentMethod.info.expireYear,
-        paymentMethod.info.expireMonth
-      );
-      if (expiryDate) {
-        return localeDateFormat(
-          expiryDate,
-          I18n.t("global.dateFormats.numericMonthYear")
-        );
-      }
-      return "";
+      return {
+        logo: getCardIconFromBrandLogo(paymentMethod.info),
+        title: paymentMethod.caption,
+        description: `${fromNullable(
+          getExpireDate(
+            paymentMethod.info.expireYear,
+            paymentMethod.info.expireMonth
+          )
+        ).fold("", ed =>
+          localeDateFormat(ed, I18n.t("global.dateFormats.numericMonthYear"))
+        )} -  ${holder}`,
+        rightElement: (
+          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        )
+      };
     case "Bancomat":
+      return {
+        logo: pagoBancomatLogo,
+        title: paymentMethod.kind,
+        description: fromNullable(
+          getExpireDate(
+            paymentMethod.info.expireYear,
+            paymentMethod.info.expireMonth
+          )
+        ).fold("", ed =>
+          localeDateFormat(ed, I18n.t("global.dateFormats.numericMonthYear"))
+        ),
+        rightElement: (
+          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
+        )
+      };
     case "BPay":
+      return {
+        logo: bancomatPayLogo,
+        title: paymentMethod.kind,
+        description: paymentMethod.info.numberObfuscated ?? "",
+        rightElement: (
+          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
+        )
+      };
     case "Satispay":
-      return "";
+      return {
+        logo: satispayLogo,
+        title: paymentMethod.kind,
+        description: holder ?? "",
+        rightElement: (
+          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
+        )
+      };
   }
 };
 
 const renderListItem = (
-  paymentMethodItem: ListRenderItemInfo<PaymentMethod>
+  paymentMethodItem: ListRenderItemInfo<PaymentMethod>,
+  onPress: (wallet: Wallet) => void,
+  holder?: string
 ) => {
-  const brandLogo = getCardIconFromBrandLogo(paymentMethodItem.item.info);
-  const paymentMethodInfo = extractInfoFromPaymentMethod(
-    paymentMethodItem.item
-  );
+  const {
+    logo,
+    title,
+    description,
+    rightElement
+  } = extractInfoFromPaymentMethod(paymentMethodItem.item, holder);
   return (
-    <ListItem first={paymentMethodItem.index === 0}>
+    <ListItem
+      first={paymentMethodItem.index === 0}
+      onPress={() => onPress(paymentMethodItem.item)}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -143,18 +198,14 @@ const renderListItem = (
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image
-            source={brandLogo}
-            style={styles.cardLogo}
-            testID={"cardImage"}
-          />
+          <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
           <View spacer={true} />
           <View style={styles.paymentMethodInfo}>
             <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-              {paymentMethodItem.item.caption}
+              {title}
             </H4>
             <H5 weight={"Regular"} color={"bluegreyDark"}>
-              {paymentMethodInfo}
+              {description}
             </H5>
           </View>
         </View>
@@ -162,7 +213,7 @@ const renderListItem = (
           {paymentMethodItem.item.favourite && (
             <IconFont name={"io-filled-star"} color={IOColors.blue} size={24} />
           )}
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          {rightElement}
         </View>
       </View>
     </ListItem>
@@ -204,7 +255,13 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
           data={props.payableWallets}
           keyExtractor={item => item.idWallet.toString()}
           ListFooterComponent={<View spacer />}
-          renderItem={i => renderListItem(i)}
+          renderItem={i =>
+            renderListItem(
+              i,
+              props.navigateToConfirmOrPickPsp,
+              props.nameSurname
+            )
+          }
         />
         <View spacer={true} />
         <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
@@ -214,7 +271,7 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
           data={props.notPayableWallets}
           keyExtractor={item => item.idWallet.toString()}
           ListFooterComponent={<View spacer />}
-          renderItem={i => renderListItem(i)}
+          renderItem={i => renderListItem(i, () => true, props.nameSurname)}
         />
       </Content>
       {renderFooterButtons(
@@ -330,7 +387,8 @@ const mapStateToProps = (state: GlobalState) => {
     // only the cards that can pay on IO (eg. Maestro is a not valid credit card)
     payableWallets: visiblePayableWallets.filter(vPW => canMethodPay(vPW)),
     notPayableWallets: visiblePayableWallets.filter(vPW => !canMethodPay(vPW)),
-    isLoading
+    isLoading,
+    nameSurname: profileNameSurnameSelector(state)
   };
 };
 
