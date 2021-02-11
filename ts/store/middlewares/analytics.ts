@@ -459,7 +459,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
 */
 export function screenTracking(
   store: MiddlewareAPI
