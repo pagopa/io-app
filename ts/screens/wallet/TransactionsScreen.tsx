@@ -17,17 +17,13 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import CardComponent from "../../components/wallet/card/CardComponent";
 import H5 from "../../components/ui/H5";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import TransactionsList from "../../components/wallet/TransactionsList";
 import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import UnsubscribeButton from "../../features/wallet/component/UnsubscribeButton";
 import amex from "../../../img/wallet/cards-icons/form/amex.png";
 import I18n from "../../i18n";
 
-import {
-  navigateToTransactionDetailsScreen,
-  navigateToWalletHome
-} from "../../store/actions/navigation";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   areMoreTransactionsAvailable,
@@ -145,9 +141,6 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
         </View>
       </React.Fragment>
   );
-  const handleLoadMoreTransactions = () => {
-    props.loadTransactions(props.transactionsLoadedLength);
-  };
 
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
@@ -196,18 +189,6 @@ const TransactionsScreen: React.FunctionComponent<Props> = (props: Props) => {
           </View>
         </>
       )}
-      <TransactionsList
-        title={I18n.t("wallet.transactions")}
-        amount={I18n.t("wallet.amount")}
-        transactions={transactions}
-        areMoreTransactionsAvailable={props.areMoreTransactionsAvailable}
-        onLoadMoreTransactions={handleLoadMoreTransactions}
-        navigateToTransactionDetails={
-          props.navigateToTransactionDetailsScreen
-        }
-        readTransactions={props.readTransactions}
-        ListEmptyComponent={ListEmptyComponent}
-      />
       <View style={{marginHorizontal: variables.contentPadding, marginTop: 40 }}>
       <UnsubscribeButton
         onPress={() => present(() => props.deleteWallet(selectedWallet.idWallet))}
@@ -229,17 +210,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadTransactions: (start: number) =>
-    dispatch(fetchTransactionsRequest({ start })),
-  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
-    dispatch(readTransaction(transaction));
-    dispatch(
-      navigateToTransactionDetailsScreen({
-        transaction,
-        isPaymentCompletedTransaction: false
-      })
-    );
-  },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>
