@@ -4,6 +4,12 @@ import { NavigationParams } from "react-navigation";
 import { Action, createStore, Store } from "redux";
 import { CobadgeResponse } from "../../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import {
+  PaymentInstrument,
+  PaymentNetworkEnum,
+  ProductTypeEnum,
+  ValidityStatusEnum
+} from "../../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import {
   ExecutionStatusEnum,
   SearchRequestMetadata
 } from "../../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
@@ -16,6 +22,7 @@ import {
   getTimeoutError
 } from "../../../../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { FOUR_UNICODE_CIRCLES } from "../../../../../../../utils/wallet";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../../navigation/routes";
 import {
   searchUserCoBadge,
@@ -29,6 +36,25 @@ const genericError = getGenericError(new Error("Generic Error"));
 const malformedData: CobadgeResponse = {};
 const noCardResponse: CobadgeResponse = {
   payload: { paymentInstruments: [], searchRequestMetadata: [] }
+};
+
+const paymentInstrument: PaymentInstrument = {
+  validityStatus: ValidityStatusEnum.VALID,
+  paymentNetwork: PaymentNetworkEnum.MAESTRO,
+  expiringDate: new Date("2025-11-09"),
+  abiCode: abiTestId,
+  productType: ProductTypeEnum.CREDIT,
+  hpan: "hpan",
+  panCode: "panCode",
+  panPartialNumber: "panPartialNumber",
+  tokenMac: "tokenMac"
+};
+
+const oneCardResponse: CobadgeResponse = {
+  payload: {
+    paymentInstruments: [paymentInstrument],
+    searchRequestMetadata: []
+  }
 };
 
 const searchRequestMetaPending: SearchRequestMetadata = {
@@ -124,61 +150,112 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
     store.dispatch(searchUserCoBadge.success(noCardResponse));
     expect(isCoBadgeKoNotFoundScreen(testComponent)).toBe(true);
   });
-  it("With at least one pending request, single abi, should render CoBadgeKoTimeout", () => {
-    const { store, testComponent } = getSearchAvailableCoBadgeScreen();
-    store.dispatch(searchUserCoBadge.request(abiTestId));
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([searchRequestMetaPending])(noCardResponse)
-      )
+  describe("Search request metadata pending behaviour", () => {
+    [undefined, abiTestId].map(abi =>
+      it(`With at least one pending in search metadata request, abi=${abi}, should render CoBadgeKoServiceError`, () => {
+        const { store, testComponent } = getSearchAvailableCoBadgeScreen();
+        store.dispatch(searchUserCoBadge.request(undefined));
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([searchRequestMetaPending])(
+              noCardResponse
+            )
+          )
+        );
+        expect(isTimeoutScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaPending,
+              searchRequestMetaPending
+            ])(noCardResponse)
+          )
+        );
+        expect(isTimeoutScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaPending,
+              searchRequestMetaOK
+            ])(noCardResponse)
+          )
+        );
+        expect(isTimeoutScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaPending,
+              searchRequestMetaKO
+            ])(noCardResponse)
+          )
+        );
+        expect(isTimeoutScreen(testComponent)).toBe(false);
+      })
     );
-    expect(isTimeoutScreen(testComponent)).toBe(true);
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([
-          searchRequestMetaPending,
-          searchRequestMetaOK
-        ])(noCardResponse)
-      )
-    );
-    expect(isTimeoutScreen(testComponent)).toBe(true);
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([
-          searchRequestMetaPending,
-          searchRequestMetaKO
-        ])(noCardResponse)
-      )
-    );
-    expect(isTimeoutScreen(testComponent)).toBe(false);
   });
-  it("With at least one pending request, all abi, should render CoBadgeKoTimeout", () => {
-    const { store, testComponent } = getSearchAvailableCoBadgeScreen();
-    store.dispatch(searchUserCoBadge.request(undefined));
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([searchRequestMetaPending])(noCardResponse)
-      )
+
+  describe("Search request metadata error behaviour", () => {
+    [undefined, abiTestId].map(abi =>
+      it(`With at least one error in search metadata request, abi=${abi}, should render CoBadgeKoServiceError`, () => {
+        const { store, testComponent } = getSearchAvailableCoBadgeScreen();
+        store.dispatch(searchUserCoBadge.request(abi));
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([searchRequestMetaKO])(noCardResponse)
+          )
+        );
+        expect(isCoBadgeKoServiceErrorScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaKO,
+              searchRequestMetaKO
+            ])(noCardResponse)
+          )
+        );
+        expect(isCoBadgeKoServiceErrorScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaPending,
+              searchRequestMetaKO
+            ])(noCardResponse)
+          )
+        );
+        expect(isCoBadgeKoServiceErrorScreen(testComponent)).toBe(true);
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([
+              searchRequestMetaOK,
+              searchRequestMetaKO
+            ])(noCardResponse)
+          )
+        );
+        expect(isCoBadgeKoServiceErrorScreen(testComponent)).toBe(true);
+      })
     );
-    expect(isTimeoutScreen(testComponent)).toBe(true);
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([
-          searchRequestMetaPending,
-          searchRequestMetaOK
-        ])(noCardResponse)
-      )
+  });
+  describe("Payment methods found", () => {
+    [undefined, abiTestId].map(abi =>
+      it(`With at least one payment method found  and all search metadata request ok, abi=${abi}, should render AddCoBadgeScreen`, () => {
+        const { store, testComponent } = getSearchAvailableCoBadgeScreen();
+        store.dispatch(searchUserCoBadge.request(abi));
+        store.dispatch(
+          searchUserCoBadge.success(
+            withSearchRequestMetadata([searchRequestMetaOK])(oneCardResponse)
+          )
+        );
+        expect(isAddCoBadgeScreen(testComponent)).toBe(true);
+        expect(paymentInstrument.panPartialNumber).toBeDefined();
+        if (paymentInstrument.panPartialNumber) {
+          expect(
+            testComponent.queryByText(
+              `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`
+            )
+          ).toBeTruthy();
+        }
+      })
     );
-    expect(isTimeoutScreen(testComponent)).toBe(true);
-    store.dispatch(
-      searchUserCoBadge.success(
-        withSearchRequestMetadata([
-          searchRequestMetaPending,
-          searchRequestMetaKO
-        ])(noCardResponse)
-      )
-    );
-    expect(isTimeoutScreen(testComponent)).toBe(false);
   });
 });
 
@@ -220,3 +297,12 @@ const isCoBadgeKoNotFoundScreen = (component: RenderAPI) =>
   component.queryByText(
     I18n.t("wallet.onboarding.coBadge.search.koNotFound.body")
   ) !== null;
+
+const isCoBadgeKoServiceErrorScreen = (component: RenderAPI) =>
+  component.queryByTestId("CoBadgeKoServiceError") !== null &&
+  component.queryByText(
+    I18n.t("wallet.onboarding.coBadge.search.koServiceError.body")
+  ) !== null;
+
+const isAddCoBadgeScreen = (component: RenderAPI) =>
+  component.queryByTestId("AddCobadgeComponent") !== null;

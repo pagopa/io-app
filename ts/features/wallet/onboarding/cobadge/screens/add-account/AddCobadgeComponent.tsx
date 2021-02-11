@@ -71,7 +71,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"AddCobadgeComponent"}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
           <View
