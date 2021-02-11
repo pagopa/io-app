@@ -62,6 +62,7 @@ import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { dispatchPickPspOrConfirm } from "./common";
+import { ScrollView } from "react-native-gesture-handler";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -241,39 +242,41 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
     faqCategories={["wallet_methods"]}
   >
     <SafeAreaView style={IOStyles.flex}>
-      <Content>
-        <H1>{"Con quale metodo vuoi pagare?"}</H1>
-        <View spacer={true} />
-        <H4 weight={"Regular"} color={"bluegreyDark"}>
-          {props.payableWallets.length > 0
-            ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
-            : I18n.t("wallet.payWith.noWallets.text")}
-        </H4>
-        <View spacer={true} />
-        <FlatList
-          removeClippedSubviews={false}
-          data={props.payableWallets}
-          keyExtractor={item => item.idWallet.toString()}
-          ListFooterComponent={<View spacer />}
-          renderItem={i =>
-            renderListItem(
-              i,
-              props.navigateToConfirmOrPickPsp,
-              props.nameSurname
-            )
-          }
-        />
-        <View spacer={true} />
-        <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
-        <View spacer={true} />
-        <FlatList
-          removeClippedSubviews={false}
-          data={props.notPayableWallets}
-          keyExtractor={item => item.idWallet.toString()}
-          ListFooterComponent={<View spacer />}
-          renderItem={i => renderListItem(i, () => true, props.nameSurname)}
-        />
-      </Content>
+      <ScrollView style={IOStyles.flex}>
+        <Content>
+          <H1>{"Con quale metodo vuoi pagare?"}</H1>
+          <View spacer={true} />
+          <H4 weight={"Regular"} color={"bluegreyDark"}>
+            {props.payableWallets.length > 0
+              ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
+              : I18n.t("wallet.payWith.noWallets.text")}
+          </H4>
+          <View spacer={true} />
+          <FlatList
+            removeClippedSubviews={false}
+            data={props.payableWallets}
+            keyExtractor={item => item.idWallet.toString()}
+            ListFooterComponent={<View spacer />}
+            renderItem={i =>
+              renderListItem(
+                i,
+                props.navigateToConfirmOrPickPsp,
+                props.nameSurname
+              )
+            }
+          />
+          <View spacer={true} />
+          <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
+          <View spacer={true} />
+          <FlatList
+            removeClippedSubviews={false}
+            data={props.notPayableWallets}
+            keyExtractor={item => item.idWallet.toString()}
+            ListFooterComponent={<View spacer />}
+            renderItem={i => renderListItem(i, () => true, props.nameSurname)}
+          />
+        </Content>
+      </ScrollView>
       {renderFooterButtons(
         props.navigateToTransactionSummary,
         props.navigateToAddPaymentMethod
