@@ -38,7 +38,6 @@ import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 import variables from "../../theme/variables";
 
-
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
 }>;
@@ -84,9 +83,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: Platform.OS === "android" ? 35 : 7,
     elevation: Platform.OS === "android" ? 35 : 7
-  },
+  }
 });
- 
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -137,6 +135,8 @@ class TransactionsScreen extends React.Component<Props> {
       undefined
     );
 
+    const onSetFavoriteWallet = () =>
+      this.props.setFavoriteWallet(selectedWallet.idWallet);
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -152,13 +152,16 @@ class TransactionsScreen extends React.Component<Props> {
           <>
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} extralarge={true} />
-              <PaymentMethodCapabilities paymentMethod={pm} />
+              <PaymentMethodCapabilities
+                isFavorite={isFavorite}
+                onSetFavoriteWallet={onSetFavoriteWallet}
+                paymentMethod={pm}
+              />
               <View spacer={true} />
               <ItemSeparatorComponent noPadded={true} />
             </View>
             <EdgeBorderComponent />
           </>
-
         )}
       </WalletLayout>
     );

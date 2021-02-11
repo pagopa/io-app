@@ -14,10 +14,17 @@ import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
 } from "../../../types/pagopa";
+import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabilities";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
+import PaymentMethodSetFavoriteExplicit from "./PaymentMethodSetFavoriteExplicit";
+import * as pot from "italia-ts-commons/lib/pot";
 
-type OwnProps = { paymentMethod: PaymentMethod };
+type OwnProps = {
+  paymentMethod: PaymentMethod;
+  isFavorite: pot.Pot<boolean, Error>;
+  onSetFavoriteWallet: () => void;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -62,6 +69,8 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
  */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
+  const isActivePaymentMethod =
+    isPaymentMethodSupported(props.paymentMethod) == "available";
 
   return (
     <>
@@ -85,6 +94,18 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       )}
       <View spacer={true} />
       <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
+
+      {isActivePaymentMethod && (
+        <>
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} />
+          <PaymentMethodSetFavoriteExplicit
+            isFavoritePot={props.isFavorite}
+            onSetFavoriteWallet={props.onSetFavoriteWallet}
+          />
+        </>
+      )}
     </>
   );
 };
