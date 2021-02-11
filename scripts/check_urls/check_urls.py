@@ -44,7 +44,7 @@ class IOUrl(object):
         self.has_error = True
 
 
-def scan_directory(path, black_list, urls_black_list, exts={'*.ts'}):
+def scan_directory(path, file_black_list, urls_black_list, exts={'*.ts'}):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
@@ -59,7 +59,7 @@ def scan_directory(path, black_list, urls_black_list, exts={'*.ts'}):
     # exclude test files
     for f in files:
         name = basename(f)
-        if name.endswith("test.ts") or name in black_list:
+        if name.endswith("test.ts") or name in file_black_list:
             to_remove.append(f)
     for tr in to_remove:
         files.remove(tr)
@@ -202,7 +202,9 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
     all_uris = []
-    urls_black_list = ["https://assets.cdn.io.italia.it"]
+    urls_black_list = ["https://assets.cdn.io.italia.it",
+                       "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
+                       "https://www.trusttechnologies.it/contatti/#form"]
     locales = (abspath(join(dirname(__file__), "../..", "locales")),[])
     ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),["testFaker.ts"])
     for directory,black_list in [locales,ts_dir]:
