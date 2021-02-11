@@ -21,7 +21,14 @@ export function* cgnGetInformationSaga(
     ) {
       yield put(cgnDetails.success(cgnInformationResult.value.value));
     } else {
-      throw Error(`response status ${cgnInformationResult.value.status}`);
+      yield put(
+        cgnDetails.failure({
+          kind: "generic",
+          value: new Error(
+            `response status ${cgnInformationResult.value.status}`
+          )
+        })
+      );
     }
   } catch (e) {
     yield put(cgnDetails.failure(getNetworkError(e)));
