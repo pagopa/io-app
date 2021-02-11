@@ -2,7 +2,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { cgnActivationStatus } from "../actions/activation";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
@@ -17,7 +17,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: CgnStatus; 
+  value?: CgnActivationDetail;
 };
 
 const INITIAL_STATE: ActivationState = {
