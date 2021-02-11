@@ -44,7 +44,7 @@ class IOUrl(object):
         self.has_error = True
 
 
-def scan_directory(path, black_list, exts={'*.ts'}):
+def scan_directory(path, black_list, urls_black_list, exts={'*.ts'}):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
@@ -63,7 +63,7 @@ def scan_directory(path, black_list, exts={'*.ts'}):
             to_remove.append(f)
     for tr in to_remove:
         files.remove(tr)
-    return readFile(files)
+    return readFile(files,urls_black_list)
 
 
 def extract_uris(text):
@@ -73,7 +73,7 @@ def extract_uris(text):
     return urls
 
 
-def readFile(files):
+def readFile(files, urls_black_list):
     """
     Reads the collection of files passed as parameter and returns the set of uris found inside all the files
     :param files: an iterable of file paths
@@ -84,6 +84,7 @@ def readFile(files):
         with open(path, 'r') as f:
             content = f.read()
             uris = extract_uris(content)
+            uris = list(filter(lambda f: f not in urls_black_list,uris))
             uri_set = uri_set.union(uris)
     return uri_set
 
@@ -201,10 +202,11 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
     all_uris = []
+    urls_black_list = ["https://assets.cdn.io.italia.it"]
     locales = (abspath(join(dirname(__file__), "../..", "locales")),[])
     ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),["testFaker.ts"])
     for directory,black_list in [locales,ts_dir]:
-      all_uris.extend(list(map(lambda u: IOUrl(u, basename(directory)), scan_directory(directory,black_list))))
+      all_uris.extend(list(map(lambda u: IOUrl(u, basename(directory)), scan_directory(directory,black_list,urls_black_list))))
     print("scanning remote resources...")
     for ru in remote_content_uri:
         c = load_remote_content(ru)
