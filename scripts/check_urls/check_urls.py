@@ -66,11 +66,12 @@ def scan_directory(path, file_black_list, urls_black_list, exts={'*.ts'}):
     return readFile(files,urls_black_list)
 
 
-def extract_uris(text):
+def extract_uris(text,urls_black_list = []):
     extractor = URLExtract()
     urls = set(extractor.find_urls(text))
-    urls = set(map(lambda r : r.replace(")","").replace("}",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
-    return urls
+    urls = list(map(lambda r : r.replace(")","").replace("}",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
+    urls_set = set(filter(lambda f: f not in urls_black_list, urls))
+    return urls_set
 
 
 def readFile(files, urls_black_list):
@@ -213,7 +214,7 @@ if not run_test and __name__ == '__main__':
     for ru in remote_content_uri:
         c = load_remote_content(ru)
         if c is not None:
-            uris = extract_uris(c)
+            uris = extract_uris(c,urls_black_list)
             all_uris.extend(list(map(lambda u: IOUrl(u, basename(ru)), uris)))
     pool = Pool(cpu_count())
     invalid_uri_processing = []
