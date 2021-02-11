@@ -5,7 +5,6 @@ import { Action } from "../../../../../store/actions/types";
 import { cgnDetails } from "../actions/details";
 import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { CgnActivatedStatus } from "../../../../../../definitions/cgn/CgnActivatedStatus";
 
 export type CgnDetailsState = {
   information: pot.Pot<CgnStatus, Error>;
@@ -49,8 +48,4 @@ export const isCgnActive = createSelector<
   GlobalState,
   pot.Pot<CgnStatus, Error>,
   boolean
->(
-  cgnDetailSelector,
-  information =>
-    pot.isSome(information) && CgnActivatedStatus.is(information.value)
-);
+>(cgnDetailSelector, information => pot.isSome(information));
