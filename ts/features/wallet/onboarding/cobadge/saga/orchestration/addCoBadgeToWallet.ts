@@ -73,7 +73,15 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     ) {
       yield put(NavigationActions.back());
       if (res === "completed") {
-        yield put(NavigationActions.back());
+        const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+          navigationCurrentRouteSelector
+        );
+        if (
+          currentRoute.isSome() &&
+          currentRoute.value === "WALLET_BANCOMAT_DETAIL"
+        ) {
+          yield put(NavigationActions.back());
+        }
       }
     }
   }
