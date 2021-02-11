@@ -5,7 +5,7 @@
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
-  "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/175896908_add_get_cgn_status_api/api_cgn.yaml",
+  "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/175761632_add_cgn_activation_api/api_cgn.yaml",
   "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/citizen.json",
   "io_bpd_payment": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/payment.json",
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/award.json",
