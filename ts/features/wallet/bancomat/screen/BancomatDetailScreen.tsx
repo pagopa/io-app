@@ -15,7 +15,7 @@ import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
-import { walletAddCoBadgeFromBancomatStart } from "../../onboarding/cobadge/store/actions";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -89,11 +89,13 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
@@ -120,7 +122,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         }
       })
     ),
-  addCoBadge: (abi: string) => dispatch(walletAddCoBadgeFromBancomatStart(abi))
+  addCoBadge: (abi: string) =>
+    dispatch(
+      navigateToOnboardingCoBadgeChooseTypeStartScreen({
+        abi,
+        legacyAddCreditCardBack: 1
+      })
+    )
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

@@ -5,9 +5,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { Platform, StyleSheet, RefreshControl } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -19,6 +20,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
+
 import {
   navigateToTransactionDetailsScreen,
   navigateToWalletHome
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
 
   noBottomPadding: {
     padding: variables.contentPadding,
-    paddingBottom: 30
+    paddingBottom: 0
   },
 
   whiteBg: {
@@ -81,21 +83,26 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-
-  cardContainer: {
-    height: 235,
-    width: "100%",
-    position: "absolute",
-    top: 16,
-    zIndex: 7,
-    elevation: 7,
-    alignItems: "center"
-  },
-  headerSpacer: {
-    height: 172
+  cardBox: {
+    height: 152,
+    paddingTop: 20,
+    width: widthPercentageToDP("88%"),
+    paddingBottom: 22,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 4.65,
+    zIndex: Platform.OS === "android" ? 35 : 7,
+    elevation: Platform.OS === "android" ? 35 : 7
   },
 });
-
+ 
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",

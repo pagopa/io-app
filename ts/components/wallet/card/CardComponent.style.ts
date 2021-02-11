@@ -3,14 +3,24 @@ import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 
 export default StyleSheet.create({
-  card: {
-    // iOS and Andorid card shadow
+  cardHeader:{
+    marginTop: -20,
+    marginLeft: 12,
+    marginRight: 12,
+    paddingBottom: 10,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  cardShadow: {
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: -7,
-    zIndex: -7,
+    elevation: Platform.OS === "android" ? 5 : 25,
+    zIndex: Platform.OS === "android" ? 5 : 25
+  },
+  card: {
+    // iOS and Android card shadow
     backgroundColor: variables.brandGray,
     borderRadius: 8,
     marginLeft: 0,

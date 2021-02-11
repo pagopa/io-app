@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -7,9 +8,18 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
+import { LightModalContext } from "../../../../../../../components/ui/LightModal";
+import View from "../../../../../../../components/ui/TextWithIcon";
+import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -17,24 +27,40 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
-  // TODO: replace with locales
-  headerTitle: "TMP Cobadge header title",
-  title: "TMP KONotFound title",
-  body: "TMP KONotFound body"
+  headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
+  title: I18n.t("wallet.onboarding.coBadge.search.koNotFound.title"),
+  body: I18n.t("wallet.onboarding.coBadge.search.koNotFound.body"),
+  close: I18n.t("global.buttons.close"),
+  findOutMore: I18n.t("global.buttons.findOutMore")
 });
+
+// TODO: unify with the link used in CoBadgeSingleBankScreen https://www.pivotaltracker.com/story/show/176780396
+const participatingBankUrl =
+  "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
 
 /**
  * This screen informs the user that no co-badge in his name were found.
  * @constructor
  */
 const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
-  const { headerTitle, title, body } = loadLocales();
+  const { headerTitle, title, body, close, findOutMore } = loadLocales();
 
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
+  const { showModal, hideModal } = useContext(LightModalContext);
+  const openCardsNotEnabledModal = () => {
+    showModal(
+      <TosBonusComponent tos_url={participatingBankUrl} onClose={hideModal} />
+    );
+  };
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}
+      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
@@ -42,9 +68,11 @@ const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
           title={title}
           body={body}
         />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(props.cancel)}
+        <FooterStackButton
+          buttons={[
+            confirmButtonProps(props.cancel, close),
+            cancelButtonProps(openCardsNotEnabledModal, findOutMore)
+          ]}
         />
       </SafeAreaView>
     </BaseScreenComponent>
