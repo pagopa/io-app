@@ -1,9 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
-import * as pot from "italia-ts-commons/lib/pot";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import Switch from "../../../components/ui/Switch";
 import I18n from "../../../i18n";

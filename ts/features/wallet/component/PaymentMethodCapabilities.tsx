@@ -70,7 +70,7 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
   const isActivePaymentMethod =
-    isPaymentMethodSupported(props.paymentMethod) == "available";
+    isPaymentMethodSupported(props.paymentMethod) === "available";
 
   return (
     <>
