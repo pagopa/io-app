@@ -286,4 +286,7 @@ if run_test:
     test5 = extract_uris("bla bla http://www.google.it")
     assert len(test5) == 1
 
+    test6 = extract_uris("bla bla http://www.google.it", ["http://www.google.it"])
+    assert len(test6) == 0
+
     print("all tests passed")
