@@ -22,8 +22,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
-  isFavorite: pot.Pot<boolean, Error>;
-  onSetFavoriteWallet: () => void;
+  isFavoritePot?: pot.Pot<boolean, Error>;
+  onSetFavoriteWallet?: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -95,17 +95,19 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
       <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
 
-      {isActivePaymentMethod && (
-        <>
-          <View spacer={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} />
-          <PaymentMethodSetFavoriteExplicit
-            isFavoritePot={props.isFavorite}
-            onSetFavoriteWallet={props.onSetFavoriteWallet}
-          />
-        </>
-      )}
+      {isActivePaymentMethod &&
+        props.isFavoritePot &&
+        props.onSetFavoriteWallet && (
+          <>
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <PaymentMethodSetFavoriteExplicit
+              isFavoritePot={props.isFavoritePot}
+              onSetFavoriteWallet={props.onSetFavoriteWallet}
+            />
+          </>
+        )}
     </>
   );
 };

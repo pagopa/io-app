@@ -153,7 +153,7 @@ class TransactionsScreen extends React.Component<Props> {
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} extralarge={true} />
               <PaymentMethodCapabilities
-                isFavorite={isFavorite}
+                isFavoritePot={isFavorite}
                 onSetFavoriteWallet={onSetFavoriteWallet}
                 paymentMethod={pm}
               />
