@@ -121,7 +121,6 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdAllData.request()),
   completeUnsubscription: () => {
     dispatch(bpdAllData.request());
     dispatch(bpdUnsubscribeCompleted());
