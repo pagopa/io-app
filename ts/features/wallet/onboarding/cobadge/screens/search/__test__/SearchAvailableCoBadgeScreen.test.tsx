@@ -237,7 +237,7 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
   });
   describe("Payment methods found", () => {
     [undefined, abiTestId].map(abi =>
-      it(`With at least one payment method found  and all search metadata request ok, abi=${abi}, should render AddCoBadgeScreen`, () => {
+      it(`With at least one payment method found and all search metadata request ok, abi=${abi}, should render AddCoBadgeScreen`, () => {
         const { store, testComponent } = getSearchAvailableCoBadgeScreen();
         store.dispatch(searchUserCoBadge.request(abi));
         store.dispatch(
