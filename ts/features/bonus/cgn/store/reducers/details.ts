@@ -5,9 +5,10 @@ import { Action } from "../../../../../store/actions/types";
 import { cgnDetails } from "../actions/details";
 import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../utils/errors";
 
 export type CgnDetailsState = {
-  information: pot.Pot<CgnStatus, Error>;
+  information: pot.Pot<CgnStatus, NetworkError>;
 };
 
 const INITIAL_STATE: CgnDetailsState = {
@@ -44,8 +45,8 @@ export default reducer;
 export const cgnDetailSelector = (state: GlobalState) =>
   state.bonus.cgn.detail.information;
 
-export const isCgnActive = createSelector<
-  GlobalState,
-  pot.Pot<CgnStatus, Error>,
-  boolean
->(cgnDetailSelector, information => pot.isSome(information));
+export const isCgnActive = createSelector(
+  cgnDetailSelector,
+  (information: pot.Pot<CgnStatus, NetworkError>): boolean =>
+    pot.isSome(information)
+);

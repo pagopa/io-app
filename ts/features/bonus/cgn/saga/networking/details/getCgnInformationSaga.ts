@@ -14,7 +14,12 @@ export function* cgnGetInformationSaga(
       {}
     );
     if (cgnInformationResult.isLeft()) {
-      throw Error(readableReport(cgnInformationResult.value));
+      yield put(
+        cgnDetails.failure({
+          kind: "generic",
+          value: new Error(readableReport(cgnInformationResult.value))
+        })
+      );
     } else if (
       cgnInformationResult.isRight() &&
       cgnInformationResult.value.status === 200
