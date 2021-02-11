@@ -26,9 +26,9 @@ tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/services.yml",
-                      "https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
-                      "https://assets.cdn.io.italia.it/contextualhelp/data.json"]
+remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+                      "https://assets.cdn.io.italia.it/contextualhelp/data.json",
+                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/status/backend.json"]
 
 
 class IOUrl(object):
@@ -44,7 +44,7 @@ class IOUrl(object):
         self.has_error = True
 
 
-def scan_directory(path, exts={'*.ts'}):
+def scan_directory(path, black_list, exts={'*.ts'}):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
@@ -55,13 +55,21 @@ def scan_directory(path, exts={'*.ts'}):
     files = []
     for ext in exts:
         files.extend(list(Path(path).rglob(ext)))
+    to_remove = []
+    # exclude test files
+    for f in files:
+        name = basename(f)
+        if name.endswith("test.ts") or name in black_list:
+            to_remove.append(f)
+    for tr in to_remove:
+        files.remove(tr)
     return readFile(files)
 
 
 def extract_uris(text):
     extractor = URLExtract()
     urls = set(extractor.find_urls(text))
-    urls = set(map(lambda r : r.replace(")",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
+    urls = set(map(lambda r : r.replace(")","").replace("}",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
     return urls
 
 
@@ -192,8 +200,11 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
-    locales = abspath(join(dirname(__file__), "../..", "locales"))
-    all_uris = list(map(lambda u: IOUrl(u, basename(locales)), scan_directory(locales)))
+    all_uris = []
+    locales = (abspath(join(dirname(__file__), "../..", "locales")),[])
+    ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),["testFaker.ts"])
+    for directory,black_list in [locales,ts_dir]:
+      all_uris.extend(list(map(lambda u: IOUrl(u, basename(directory)), scan_directory(directory,black_list))))
     print("scanning remote resources...")
     for ru in remote_content_uri:
         c = load_remote_content(ru)
