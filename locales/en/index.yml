@@ -144,6 +144,7 @@ global:
     deactivate: "Deactivate"
     show: "Show"
     update: "Update"
+    findOutMore: "Find out more"
   navigator:
     messages: messages
     wallet: wallet
@@ -767,14 +768,14 @@ wallet:
       title: "Search for your PagoBANCOMAT cards"
       description:
         text1: "IO will search for all PagoBANCOMAT cards associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active PagoBANCOMAT card "
         text4: by searching among those available
     bpay:
       title: "Search for your BANCOMAT Pay accounts"
       description:
         text1: "IO will search for all BANCOMAT Pay accounts associated with you.\nBy continuing you accept the "
-        text2: information on the processing of personal data.
+        text2: privacy policy.
         text3: "If you prefer, you can choose the bank on which you have an active BANCOMAT Pay account "
         text4: by searching among those available
     cobadge:
@@ -782,8 +783,8 @@ wallet:
       description:
         text1: "IO will search for all Maestro, Mastercard, V-Pay and Visa cards associated with you at "
         text2: the banks participating in the service
-        text3: "By continuing you accept the "
-        text4: information on the processing of personal data.
+        text3: "For further information, please read the "
+        text4: privacy policy.
     bankName: Name of the bank
     noName: Name unavailable
     loading: Loading bank list...
@@ -856,18 +857,46 @@ wallet:
     coBadge:
       headerTitle: "Add international circuit"
       start:
-        title: "TMP Start Title"
+        loading: "We are loading the settings\n\nPlease wait"
+        koDisabled:
+          title: "Your bank does not offer this feature yet"
+          body: "We are working to let you to add your international circuit card soon."
+        koUnavailable:
+          title: "We can't contact your bank"
+          body: "We are working to solve the problem."
       search:
+        loading: "We are retrieving your card list\n\nPlease wait a few seconds"
         koTimeout:
-          title: "TMP KO Timeout add"
+          title: "Sorry, we're unable to retrieve your cards"
+          body: "Please try again"
         koNotFound:
-          title: "TMP KO Timeout add"
+          title: "Sorry, we haven't found any card among the participating banks"
+          body: "There are no cards with an international circuit registered to you: contact your bank for further information."
+        koSingleBankNotFound:
+          title: "Sorry, we couldn't find any card on this bank"
+          body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your cards"
+          body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
         warning: "Check that the card number matches the one on your physical card."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
+      chooseType:
+        title: "Does your card allow you to shop online?"
+        description: "This allows us to better identify your card and help you add it to your Wallet."
+        path:
+          enabled:
+            title: "Yes, it works online"
+            description: "We'll verify card data with your bank, usually with an SMS or a push notification"
+          disabled:
+            title: "No, I only use it for in-store purchases"
+            description: "We will search for all cards registered to you at participating banks"
+          unknown:
+            title: "I don't know"
+            description: "We will search for all cards registered to you at participating banks"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1008,7 +1037,7 @@ wallet:
     object: Reason
     date: Date and Time
     iuv: IUV code
-    entityCode: Institution Fiscal Code
+    entityCode: Payee Fiscal Code
     fee: Fee
     idTransaction: Transaction identification code
     updatedAmount: Updated amount
@@ -1043,7 +1072,7 @@ wallet:
   transactionFee: Transaction fee
   why: Why?
   paymentReason: Reason
-  recipient: Recipient
+  recipient: Payee
   date: Date
   time: Time
   psp: Payment provider
@@ -1135,8 +1164,8 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
-    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-      manually insert the transaction-related data (IUV and the entity/company code).
+    cameraUsageInfo: Scan the QR Code on the payment notice, or
+      manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter the data
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
@@ -1182,9 +1211,9 @@ wallet:
         two: "can't be used to make in-app payments"
         three: ", but they can only be used at physical stores (POS)."
       debit:
-        title: "Does your card have one of these logos?"
-        body: "If your PagoBANCOMAT card has other international circuits, you can also add it as a **debit or credit card** by entering its number on the front. When you activate Cashback on this method, you will also be able to collect transactions on these circuits."
-        addCta: "Add as Debit/Credit Card"
+        title: "Does your card have more than one logo?"
+        body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
+        addCta: "Add second circuit"
       removeCta: "Delete this payment method"
   satispay:
     details:
@@ -1443,6 +1472,7 @@ identification:
       reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
+      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
       fallbackLabel: Use the unlock code
   fail:
     wrongCode: Wrong code
@@ -2025,13 +2055,16 @@ bonus:
             body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n
                    We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n
                    Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
-
       transaction:
         label:
           one: "1 transaction"
           other: "{{transactions}} transactions"
         title: "Your transactions"
         goToButton: "Transactions detail"
+        loading: "We're retrieving your transactions\n\nPlease hold on..."
+        error:
+          title: "Systems are taking longer than expected"
+          body: "We're currently unable to retrieve your transactions. Don't worry! The list will be available again soon."
         noPaymentMethod:
           text1: "You must activate "
           text2: "at least one payment method "

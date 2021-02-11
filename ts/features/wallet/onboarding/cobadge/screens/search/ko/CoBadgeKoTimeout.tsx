@@ -7,8 +7,11 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import {
   searchUserCoBadge,
@@ -21,10 +24,9 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const loadLocales = () => ({
-  // TODO: replace locales
-  headerTitle: "TMP header title",
-  title: "TMP KOTIMEOUT title",
-  body: "TMP body",
+  headerTitle: I18n.t("wallet.onboarding.coBadge.headerTitle"),
+  title: I18n.t("wallet.onboarding.coBadge.search.koTimeout.title"),
+  body: I18n.t("wallet.onboarding.coBadge.search.koTimeout.body"),
   cancel: I18n.t("global.buttons.cancel"),
   retry: I18n.t("global.buttons.retry")
 });
@@ -35,11 +37,17 @@ const loadLocales = () => ({
  */
 const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
   const { headerTitle, title, body, cancel, retry } = loadLocales();
+
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={false}
+      customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}
+      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
