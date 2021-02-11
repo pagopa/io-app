@@ -82,7 +82,7 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
-import {cgnDetailSelector} from "../../features/bonus/cgn/store/reducers/details";
+import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -328,7 +328,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      ) || pot.isLoading(this.props.cgnDetails)
+      ) ||
+      pot.isLoading(this.props.cgnDetails)
     ) {
       return "loading";
     }
