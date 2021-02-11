@@ -4,11 +4,7 @@ import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-<<<<<<< HEAD
-=======
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
-import { Label } from "../../../../components/core/typography/Label";
->>>>>>> master
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
