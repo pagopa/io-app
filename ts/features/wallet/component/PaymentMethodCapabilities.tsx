@@ -1,5 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -18,7 +19,6 @@ import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabiliti
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 import PaymentMethodSetFavoriteExplicit from "./PaymentMethodSetFavoriteExplicit";
-import * as pot from "italia-ts-commons/lib/pot";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
