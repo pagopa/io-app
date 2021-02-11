@@ -480,8 +480,6 @@ workflows:
       - run-tests
 
       - eslint
-      
-      - io_check_uris
 
       - run-danger:
           filters:
