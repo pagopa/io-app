@@ -857,19 +857,27 @@ wallet:
     coBadge:
       headerTitle: "Add international circuit"
       start:
-        title: "TMP Start Title"
         loading: "We are loading the settings\n\nPlease wait"
         koDisabled:
-          title: "Your bank does not yet offer this functionality"
-          body: "We are working to allow you to add your international circuit card soon."
+          title: "Your bank does not offer this feature yet"
+          body: "We are working to let you to add your international circuit card soon."
         koUnavailable:
           title: "We can't contact your bank"
           body: "We are working to solve the problem."
       search:
+        loading: "We are retrieving your card list\n\nPlease wait a few seconds"
         koTimeout:
-          title: "TMP KO Timeout add"
+          title: "Sorry, we're unable to retrieve your cards"
+          body: "Please try again"
         koNotFound:
-          title: "TMP KO Timeout add"
+          title: "Sorry, we haven't found any card among the participating banks"
+          body: "There are no cards with an international circuit registered to you: contact your bank for further information."
+        koSingleBankNotFound:
+          title: "Sorry, we couldn't find any card on this bank"
+          body: "There are no cards with an international circuit registered to you. If you'd like, IO can search among all the participating banks."
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your cards"
+          body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
