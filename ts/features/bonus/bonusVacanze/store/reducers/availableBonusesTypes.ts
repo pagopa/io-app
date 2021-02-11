@@ -80,19 +80,24 @@ export const visibleAvailableBonusSelector = createSelector(
     )
 );
 
+// Returns true if information about Available Bonuses list is loading
 export const isAvailableBonusLoadingSelector = createSelector(
   availableBonusTypesSelector,
   (abs: AvailableBonusTypesState) => pot.isLoading(abs)
 );
 
-export const isAvailableBonusNoneErrorSelector = createSelector(
-  availableBonusTypesSelector,
-  (abs: AvailableBonusTypesState) => pot.isNone(abs) && pot.isError(abs)
-);
-
+// Returns true if information about Available Bonuses list is in error
 export const isAvailableBonusErrorSelector = createSelector(
   availableBonusTypesSelector,
-  (abs: AvailableBonusTypesState) => pot.isError(abs)
+  (abs: AvailableBonusTypesState): boolean => pot.isError(abs)
+);
+
+// Returns true if information about Available Bonuses list
+// is in error state and no data is available in list (NoneError type)
+export const isAvailableBonusNoneErrorSelector = createSelector(
+  [availableBonusTypesSelector, isAvailableBonusErrorSelector],
+  (abs: AvailableBonusTypesState, hasError: boolean): boolean =>
+    hasError && pot.isNone(abs)
 );
 
 /**
