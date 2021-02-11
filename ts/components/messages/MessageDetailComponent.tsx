@@ -1,6 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H3, Text, View } from "native-base";
+import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -212,6 +213,11 @@ export default class MessageDetailComponent extends React.PureComponent<
             </React.Fragment>
           )}
         </Content>
+        {DeviceInfo.hasNotch() &&
+        <React.Fragment>
+          <View spacer={true} large={true} />
+          <View spacer={true} small={true} />
+        </React.Fragment>}
         {this.maybeMedicalData.fold(
           <MessageDetailCTABar
             message={message}
