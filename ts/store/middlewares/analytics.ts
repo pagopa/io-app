@@ -19,6 +19,7 @@ import {
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
+import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -451,13 +452,14 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackBancomatAction(mixpanel)(action);
     void trackSatispayAction(mixpanel)(action);
     void trackBPayAction(mixpanel)(action);
+    void trackCoBadgeAction(mixpanel)(action);
   }
   return next(action);
 };
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
 */
 export function screenTracking(
   store: MiddlewareAPI
