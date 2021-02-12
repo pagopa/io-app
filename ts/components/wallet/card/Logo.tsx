@@ -39,7 +39,6 @@ import { CardInfo } from "../../../../definitions/pagopa/CardInfo";
  * If there is NO matching a default card icon will be returned
  * Consider to evaluate the field "brand" instead of "brandLogo"
  * because it should contain only the name of the credit card type
- * for more info check https://www.pivotaltracker.com/story/show/165067615
  * @param cardInfo
  */
 export const getCardIconFromBrandLogo = (cardInfo: CardInfo) => {
