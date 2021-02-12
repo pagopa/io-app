@@ -1,7 +1,6 @@
 import { reverse } from "fp-ts/lib/Array";
 import { constUndefined } from "fp-ts/lib/function";
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -20,6 +19,7 @@ import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activ
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
+import { isStrictSome } from "../../../utils/pot";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -52,10 +52,10 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const hasBpdActive: boolean | undefined = pot.getOrElse(
-    props.bpdActiveBonus,
-    false
-  );
+  const hasBpdActive: boolean | undefined = isStrictSome(props.bpdActiveBonus)
+    ? props.bpdActiveBonus.value
+    : undefined;
+
   const anyBonusNotActive = hasBpdActive === false || !props.cgnActiveBonus;
 
   return anyBonusNotActive ? (
