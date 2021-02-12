@@ -38,7 +38,7 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { visibleAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
@@ -591,11 +591,10 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
+    availableBonusesList: visibleAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
