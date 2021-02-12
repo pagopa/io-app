@@ -13,7 +13,7 @@ declare module "react-native-vector-icons/Icon" {
      * Name of the icon to show
      *
      * See Icon Explorer app
-     * {@link https://github.com/oblador/react-native-vector-icons/tree/master/Examples/IconExplorer}
+     * {@link https://github.com/oblador/react-native-vector-icons/tree/master/Examples/IconExplorer }
      */
     name: string;
 
