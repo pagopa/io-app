@@ -4,7 +4,7 @@
 import { fromNullable, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem, Text, View } from "native-base";
+import { Content, ListItem, View } from "native-base";
 import * as React from "react";
 import { getMonoid } from "fp-ts/lib/Array";
 import {
@@ -17,15 +17,14 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { ScrollView } from "react-native-gesture-handler";
+import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import CardComponent from "../../../components/wallet/card/CardComponent";
-import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { Label } from "../../../components/core/typography/Label";
@@ -62,8 +61,6 @@ import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { dispatchPickPspOrConfirm } from "./common";
-import { ScrollView } from "react-native-gesture-handler";
-import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -235,119 +232,56 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 
 const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
   props: Props
-) => (
-  <BaseScreenComponent
-    goBack={true}
-    headerTitle={I18n.t("wallet.payWith.header")}
-    contextualHelpMarkdown={contextualHelpMarkdown}
-    faqCategories={["wallet_methods"]}
-  >
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView style={IOStyles.flex}>
-        <Content>
-          <H1>{"Con quale metodo vuoi pagare?"}</H1>
-          <View spacer={true} />
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
-            {props.payableWallets.length > 0
-              ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
-              : I18n.t("wallet.payWith.noWallets.text")}
-          </H4>
-          <View spacer={true} />
-          <FlatList
-            removeClippedSubviews={false}
-            data={props.payableWallets}
-            keyExtractor={item => item.idWallet.toString()}
-            ListFooterComponent={<View spacer />}
-            renderItem={i =>
-              renderListItem(
-                i,
-                props.navigateToConfirmOrPickPsp,
-                props.nameSurname
-              )
-            }
-          />
-          <View spacer={true} />
-          <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
-          <View spacer={true} />
-          <FlatList
-            removeClippedSubviews={false}
-            data={props.notPayableWallets}
-            keyExtractor={item => item.idWallet.toString()}
-            ListFooterComponent={<View spacer />}
-            renderItem={i => renderListItem(i, () => true, props.nameSurname)}
-          />
-        </Content>
-      </ScrollView>
-      {renderFooterButtons(
-        props.navigateToTransactionSummary,
-        props.navigateToAddPaymentMethod
-      )}
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
-
-class PickPaymentMethodScreen extends React.Component<Props> {
-  public render(): React.ReactNode {
-    const verifica: PaymentRequestsGetResponse = this.props.navigation.getParam(
-      "verifica"
-    );
-    const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-    const { payableWallets: wallets } = this.props;
-
-    const primaryButtonProps = {
-      block: true,
-      onPress: this.props.navigateToAddPaymentMethod,
-      title: I18n.t("wallet.newPaymentMethod.addButton")
-    };
-
-    const secondaryButtonProps = {
-      block: true,
-      bordered: true,
-      onPress: this.props.navigateToTransactionSummary,
-      title: I18n.t("global.buttons.cancel")
-    };
-
-    return (
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("wallet.payWith.header")}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
-      >
-        <Content noPadded={true} bounces={false}>
-          <PaymentBannerComponent
-            paymentReason={paymentReason}
-            currentAmount={verifica.importoSingoloVersamento}
-          />
-
-          <View style={styles.paddedLR}>
+) => {
+  const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
+    "verifica"
+  );
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("wallet.payWith.header")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_methods"]}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={IOStyles.flex}>
+          <Content>
+            <H1>{"Con quale metodo vuoi pagare?"}</H1>
             <View spacer={true} />
-            <Text>
-              {I18n.t(
-                wallets.length > 0
-                  ? "wallet.payWith.text"
-                  : "wallet.payWith.noWallets.text"
-              )}
-            </Text>
-            <List
-              keyExtractor={item => `${item.idWallet}`}
+            <H4 weight={"Regular"} color={"bluegreyDark"}>
+              {props.payableWallets.length > 0
+                ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
+                : I18n.t("wallet.payWith.noWallets.text")}
+            </H4>
+            <View spacer={true} />
+            <FlatList
               removeClippedSubviews={false}
-              dataArray={wallets} // eslint-disable-line
-              renderRow={(item): React.ReactElement<any> => (
-                <CardComponent
-                  type="Picking"
-                  wallet={item}
-                  mainAction={this.props.navigateToConfirmOrPickPsp}
-                />
-              )}
+              data={props.payableWallets}
+              keyExtractor={item => item.idWallet.toString()}
+              ListFooterComponent={<View spacer />}
+              renderItem={i =>
+                renderListItem(
+                  i,
+                  props.navigateToConfirmOrPickPsp,
+                  props.nameSurname
+                )
+              }
             />
-            {wallets.length > 0 && <EdgeBorderComponent />}
-          </View>
-        </Content>
-
-        <View spacer={true} />
-
-        {wallets.some(myWallet => myWallet.info?.brand === "AMEX") &&
+            <View spacer={true} />
+            <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
+            <View spacer={true} />
+            <FlatList
+              removeClippedSubviews={false}
+              data={props.notPayableWallets}
+              keyExtractor={item => item.idWallet.toString()}
+              ListFooterComponent={<View spacer />}
+              renderItem={i => renderListItem(i, () => true, props.nameSurname)}
+            />
+          </Content>
+        </ScrollView>
+        {props.payableWallets.some(
+          pW => pW.kind === "CreditCard" && pW.info?.brand === "AMEX"
+        ) &&
           verifica.importoSingoloVersamento >= amexPaymentWarningTreshold && (
             <View style={styles.infoBoxContainer}>
               <InfoBox alignedCentral={true} iconColor={IOColors.white}>
@@ -357,15 +291,14 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               </InfoBox>
             </View>
           )}
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
-      </BaseScreenComponent>
-    );
-  }
-}
+        {renderFooterButtons(
+          props.navigateToTransactionSummary,
+          props.navigateToAddPaymentMethod
+        )}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
