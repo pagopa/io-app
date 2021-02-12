@@ -131,7 +131,7 @@ export default class NewServiceListItem extends React.PureComponent<
     return (
       <ListItemComponent
         title={serviceName}
-        hasBadge={!this.props.isRead}
+        hasBadge={false}
         onPress={onPress}
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
