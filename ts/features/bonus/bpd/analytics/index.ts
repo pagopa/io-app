@@ -63,6 +63,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { reason: action.payload.message });
 
     // transactions
+    case getType(bpdTransactionsLoad.failure):
+      return mp.track(action.type, {
+        awardPeriodId: action.payload,
+        reason: action.payload.error.message
+      });
     case getType(bpdTransactionsLoad.request):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdTransactionsLoad.success):
@@ -75,7 +80,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         circuitType: action.payload.results.map(r => r.circuitType)
       });
     // CashBack details
-    case getType(bpdTransactionsLoad.failure):
     case getType(bpdAllData.request):
     case getType(bpdAllData.success):
     case getType(bpdLoadActivationStatus.request):
