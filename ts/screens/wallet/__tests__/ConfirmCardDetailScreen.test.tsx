@@ -1,21 +1,18 @@
 import { none } from "fp-ts/lib/Option";
-// import { pot } from "italia-ts-commons";
 import * as React from "react";
 import { createStore } from "redux";
-// import { Provider } from "react-redux";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { CreditCard, PaymentManagerToken } from "../../../types/pagopa";
+import { CreditCard, TransactionResponse } from "../../../types/pagopa";
 import { CreditCardPan } from "../../../utils/input";
-// import { reproduceSequence } from "../../../utils/tests";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
   NavigationParams
 } from "../ConfirmCardDetailsScreen";
-import { creditCardCheckout3dsRequest } from "../../../store/actions/wallet/wallets";
+import { payCreditCardVerificationSuccess } from "../../../store/actions/wallet/wallets";
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
@@ -33,21 +30,13 @@ describe("ConfirmCardDetailScreen", () => {
     inPayment: none
   } as NavigationParams;
 
-  it("should show the loading modal if creditCardVerification is some and creditCardCheckout3ds is someLoading", () => {
+  it("should show the loading modal if creditCardVerification is some and creditCardCheckout3ds is not pot.some", () => {
     const ToBeTested: React.FunctionComponent<React.ComponentProps<
       typeof ConfirmCardDetailsScreen
     >> = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
       <ConfirmCardDetailsScreen {...props} />
     );
 
-    // const sequenceOfActions: ReadonlyArray<Action> = [
-    //   creditCardCheckout3dsRequest({
-    //     urlCheckout3ds: "anUrl3ds",
-    //     paymentManagerToken: "aPaymentManagerToken" as PaymentManagerToken
-    //   })
-    // ];
-
-    // eslint-disable-next-line functional/no-let
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
@@ -57,12 +46,7 @@ describe("ConfirmCardDetailScreen", () => {
       store
     );
 
-    store.dispatch(
-      creditCardCheckout3dsRequest({
-        urlCheckout3ds: "anUrl3ds",
-        paymentManagerToken: "aPaymentManagerToken" as PaymentManagerToken
-      })
-    );
+    store.dispatch(payCreditCardVerificationSuccess({} as TransactionResponse));
 
     const loadingModal = component.getAllByTestId("overlayComponent");
     const loadingText = component.getByText(
