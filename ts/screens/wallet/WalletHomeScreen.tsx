@@ -239,9 +239,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    // FIXME restore loadWallets and loadTransactions see https://www.pivotaltracker.com/story/show/176051000
-    // this.props.loadWallets();
-    // this.props.loadTransactions(this.props.transactionsLoadedLength);
+    if (pot.isNone(this.props.potWallets)) {
+      this.props.loadWallets();
+    }
+
+    // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
