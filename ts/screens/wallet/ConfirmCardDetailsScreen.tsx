@@ -269,7 +269,7 @@ const mapStateToProps = (state: GlobalState) => {
   // so we can infer it is loading when the verification is completed and
   // checkout3ds is not some
   const isCheckout3dsLoading =
-    isStrictSome(creditCardVerification) && !pot.some(creditCardCheckout3ds);
+    isStrictSome(creditCardVerification) && !pot.isSome(creditCardCheckout3ds);
   const isLoading =
     isCheckout3dsLoading ||
     pot.isLoading(creditCardAddWallet) ||
