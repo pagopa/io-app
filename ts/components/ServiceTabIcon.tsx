@@ -11,8 +11,9 @@ type Props = {
 
 class ServiceTabIcon extends React.PureComponent<Props> {
   public render() {
-    const { color } = this.props;
-    return <TabIconComponent iconName={"io-servizi"} color={color} />;
+    return (
+      <TabIconComponent iconName={"io-servizi"} color={this.props.color} />
+    );
   }
 }
 
