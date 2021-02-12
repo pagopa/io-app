@@ -2162,10 +2162,12 @@ bonus:
         link: Information on the processing of personal data
       information:
         active: "Your card is active and can be used until {{date}}"
-        revoked: "Attention! This card has been revoked cause {{reason}}"
-        expired: "Attention! This card expired on {{date}}"
+        warning: "Attention! "
+        revoked: "This card has been revoked cause {{reason}}"
+        expired: "This card expired on {{date}}"
       ownership: Who can take advantage of discounts?
       activationDateLabel: Activated on
+      expirationDateLabel: Expired on
       status:
         title: Card Status
         badge:

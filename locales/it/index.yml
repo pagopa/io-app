@@ -2194,10 +2194,12 @@ bonus:
         link: Informativa sul trattamento dei dati personali
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
-        revoked: "Attenzione! Questa carta è stata annullata per {{reason}}"
-        expired: "Attenzione! Questa carta è scaduta il {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
       ownership: Chi può usufruire degli sconti?
       activationDateLabel: Attivata il
+      expirationDateLabel: Scaduta il
       status:
         title: Stato Carta
         badge:
