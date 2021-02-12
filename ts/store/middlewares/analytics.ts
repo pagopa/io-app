@@ -116,9 +116,6 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  fetchWalletsFailure,
-  fetchWalletsRequest,
-  fetchWalletsSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
@@ -194,7 +191,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // wallets success / services load requests
     //
     case getType(loadServicesDetail):
-    case getType(fetchWalletsSuccess):
       return mp.track(action.type, {
         count: action.payload.length
       });
@@ -294,7 +290,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
-    case getType(fetchWalletsFailure):
     case getType(payCreditCardVerificationFailure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -365,7 +360,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
     // wallet
-    case getType(fetchWalletsRequest):
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
@@ -459,7 +453,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
 */
 export function screenTracking(
   store: MiddlewareAPI
