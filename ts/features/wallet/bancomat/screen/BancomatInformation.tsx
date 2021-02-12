@@ -14,7 +14,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
 
 type OwnProps = {
-  onAddPaymentMethod?: () => void;
+  onAddPaymentMethod: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 const BancomatInformation: React.FunctionComponent<Props> = props => {
   const { present } = bancomatInformationBottomSheet(props.onAddPaymentMethod);
   return (
-    <View>
+    <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
         <IconFont
