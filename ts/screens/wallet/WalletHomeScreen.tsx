@@ -18,6 +18,7 @@ import { withValidatedPagoPaVersion } from "../../components/helpers/withValidat
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
+import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -80,7 +81,6 @@ import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -236,14 +236,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
 
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
-
-    // eslint-disable-next-line functional/immutable-data
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // eslint-disable-line
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
@@ -542,6 +534,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
+        <FocusAwareStatusBar />
         {this.newMethodAdded ? (
           this.newMethodAddedContent
         ) : (
