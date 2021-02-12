@@ -83,6 +83,7 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
+import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -328,7 +329,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      )
+      ) ||
+      pot.isLoading(this.props.cgnDetails)
     ) {
       return "loading";
     }
@@ -604,7 +606,8 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state),
+    cgnDetails: cgnDetailSelector(state)
   };
 };
 
