@@ -63,6 +63,7 @@ import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { dispatchPickPspOrConfirm } from "./common";
 import { ScrollView } from "react-native-gesture-handler";
+import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -189,7 +190,7 @@ const renderListItem = (
   return (
     <ListItem
       first={paymentMethodItem.index === 0}
-      onPress={() => onPress(paymentMethodItem.item)}
+      onPress={() => onPress(convertWalletV2toWalletV1(paymentMethodItem.item))}
     >
       <View
         style={{
