@@ -83,7 +83,7 @@ export const visibleAvailableBonusSelector = createSelector(
 // Returns true if information about Available Bonuses list is loading
 export const isAvailableBonusLoadingSelector = createSelector(
   availableBonusTypesSelector,
-  (abs: AvailableBonusTypesState) => pot.isLoading(abs)
+  (abs: AvailableBonusTypesState): boolean => pot.isLoading(abs)
 );
 
 // Returns true if information about Available Bonuses list is in error
