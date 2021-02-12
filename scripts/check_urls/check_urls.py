@@ -48,7 +48,7 @@ def scan_directory(path, file_black_list, urls_black_list, exts={'*.ts*'}):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
-      :param file_black_list: a set of file to exclude from scanning
+      :param file_black_list: a set of files to exclude from scanning
       :param urls_black_list: a set of urls to exclude from scanning
       :param exts: file extension to retrieve
       :return: a dictionary containing all uris found
