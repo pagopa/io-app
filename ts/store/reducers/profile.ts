@@ -175,7 +175,6 @@ const reducer = (
     //
 
     case getType(profileUpsert.request):
-      // TODO: remove the cast after: https://www.pivotaltracker.com/story/show/160924538 (https://www.pivotaltracker.com/story/show/170819398)
       // eslint-disable-next-line
       return pot.toUpdating(state, action.payload as any);
 

@@ -78,26 +78,26 @@ export function* handleSearchUserCoBadge(
         } else {
           // it should not never happen
           const error = getGenericError(new Error(`data is undefined`));
-          void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+          void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
           return yield put(searchUserCoBadge.failure(error));
         }
       } else {
         const error = getGenericError(
           new Error(`response status ${getPansWithRefreshResult.value.status}`)
         );
-        void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+        void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
         return yield put(searchUserCoBadge.failure(error));
       }
     } else {
       const error = getGenericError(
         new Error(readableReport(getPansWithRefreshResult.value))
       );
-      void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+      void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
       return yield put(searchUserCoBadge.failure(error));
     }
   } catch (e) {
     const error = getNetworkError(e);
-    void mixpanelTrack(`${trackPrefix}_FAILURE`, error);
+    void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
     return yield put(searchUserCoBadge.failure(error));
   }
 }

@@ -371,7 +371,6 @@ const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
 };
 
 // Remove this patch once SIA has fixed the spec.
-// @see https://www.pivotaltracker.com/story/show/161113136
 type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   AddResponseType<AddWalletCreditCardUsingPOSTT, 422, PagoPAErrorResponse>,
   200,
