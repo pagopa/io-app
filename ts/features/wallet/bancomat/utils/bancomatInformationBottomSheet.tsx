@@ -6,7 +6,7 @@ import {
   bottomSheetContent,
   useIOBottomSheetRaw
 } from "../../../../utils/bottomSheet";
-import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconBar";
+import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";

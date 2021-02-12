@@ -8,7 +8,7 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
-import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconBar";
+import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
