@@ -50,6 +50,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           size={24}
           color={IOColors.blue}
           onPress={present}
+          testID={"noticeIconFont"}
         />
       </View>
       <View spacer={true} />
@@ -62,6 +63,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           props.onAddPaymentMethod?.();
         }}
         onPressWithGestureHandler={true}
+        testID={"addPaymentMethodButton"}
       >
         <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
       </ButtonDefaultOpacity>
