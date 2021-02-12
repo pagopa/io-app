@@ -18,8 +18,6 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
-
-import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
