@@ -1,7 +1,6 @@
 import { reverse } from "fp-ts/lib/Array";
 import { constUndefined } from "fp-ts/lib/function";
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -13,7 +12,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { availableBonusTypesSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { visibleAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
@@ -21,6 +20,7 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
 import { isCgnActive } from "../../bonus/cgn/store/reducers/details";
+import { isStrictSome } from "../../../utils/pot";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -53,9 +53,12 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     });
   }
 
-  const anyBonusNotActive =
-    (!pot.getOrElse(props.bpdActiveBonus, false) && bpdEnabled) ||
-    (!props.cgnActiveBonus && cgnEnabled);
+  const hasBpdActive: boolean | undefined = isStrictSome(props.bpdActiveBonus)
+    ? props.bpdActiveBonus.value
+    : undefined;
+
+  const anyBonusNotActive = hasBpdActive === false || !props.cgnActiveBonus;
+
   return anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
@@ -83,7 +86,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
           switch (b.id_type) {
             case ID_BPD_TYPE:
               return (
-                !pot.getOrElse(props.bpdActiveBonus, false) && (
+                hasBpdActive === false && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
@@ -95,8 +98,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_CGN_TYPE:
               return (
-                !props.cgnActiveBonus &&
-                cgnEnabled && (
+                !props.cgnActiveBonus && (
                   <FeaturedCard
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
@@ -118,7 +120,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
   cgnActiveBonus: isCgnActive(state),
-  availableBonusesList: pot.getOrElse(availableBonusTypesSelector(state), [])
+  availableBonusesList: visibleAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
