@@ -10,8 +10,6 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
