@@ -7,6 +7,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import Switch from "../../../components/ui/Switch";
 import I18n from "../../../i18n";
+import { handleSetFavourite } from "../../../utils/wallet";
 
 const styles = StyleSheet.create({
   row: {
@@ -53,9 +54,7 @@ const PaymentMethodSetFavoriteExplicit: React.FC<{
           value={isFavorite}
           disabled={false}
           onValueChange={hasBeenSetFavorite => {
-            if (hasBeenSetFavorite) {
-              onSetFavoriteWallet();
-            }
+            handleSetFavourite(hasBeenSetFavorite, onSetFavoriteWallet);
           }}
         />
       ) : (
