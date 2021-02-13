@@ -563,7 +563,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private getHeaderHeight() {
     return (
-      250 +
+      630 +
       (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
