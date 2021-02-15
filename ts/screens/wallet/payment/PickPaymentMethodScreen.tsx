@@ -61,6 +61,7 @@ import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { dispatchPickPspOrConfirm } from "./common";
+import { useIOBottomSheet } from "../../../utils/bottomSheet";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -115,6 +116,37 @@ type PaymentMethodInformation = {
   rightElement: JSX.Element;
 };
 
+const showBottomSheet = (paymentMethod: PaymentMethod) => {
+  const { present } = useIOBottomSheet(
+    <>
+      <View spacer={true} large={true} />
+      <InfoBox iconName={"io-calendar"} iconSize={32}>
+        <H4 weight={"Regular"}>
+          {I18n.t(
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+          )}
+          <H4>
+            {" "}
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
+            )}
+          </H4>
+          {I18n.t(
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
+          )}
+        </H4>
+      </InfoBox>
+      <View spacer={true} large={true} />
+    </>,
+    I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
+    600
+  );
+
+  return {
+    present: () => present()
+  };
+};
+
 const extractInfoFromPaymentMethod = (
   paymentMethod: PaymentMethod,
   holder?: string
@@ -132,8 +164,10 @@ const extractInfoFromPaymentMethod = (
         ).fold("", ed =>
           localeDateFormat(ed, I18n.t("global.dateFormats.numericMonthYear"))
         )} -  ${holder}`,
-        rightElement: (
+        rightElement: canMethodPay(paymentMethod) ? (
           <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        ) : (
+          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
         )
       };
     case "Bancomat":
@@ -173,11 +207,13 @@ const extractInfoFromPaymentMethod = (
   }
 };
 
-const renderListItem = (
-  paymentMethodItem: ListRenderItemInfo<PaymentMethod>,
-  onPress: (wallet: Wallet) => void,
-  holder?: string
-) => {
+type listProp = {
+  paymentMethodItem: ListRenderItemInfo<PaymentMethod>;
+  onPress: () => void;
+  holder?: string;
+};
+const renderListItem: React.FunctionComponent<listProp> = (props: listProp) => {
+  const { paymentMethodItem, onPress, holder } = props;
   const {
     logo,
     title,
@@ -185,10 +221,7 @@ const renderListItem = (
     rightElement
   } = extractInfoFromPaymentMethod(paymentMethodItem.item, holder);
   return (
-    <ListItem
-      first={paymentMethodItem.index === 0}
-      onPress={() => onPress(convertWalletV2toWalletV1(paymentMethodItem.item))}
-    >
+    <ListItem first={paymentMethodItem.index === 0} onPress={onPress}>
       <View
         style={{
           flexDirection: "row",
@@ -236,6 +269,7 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
   const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
     "verifica"
   );
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -259,12 +293,16 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
               data={props.payableWallets}
               keyExtractor={item => item.idWallet.toString()}
               ListFooterComponent={<View spacer />}
-              renderItem={i =>
-                renderListItem(
-                  i,
-                  props.navigateToConfirmOrPickPsp,
-                  props.nameSurname
-                )
+              renderItem={
+                i => <renderListItem />
+                // renderListItem(
+                //   i,
+                //   () =>
+                //     props.navigateToConfirmOrPickPsp(
+                //       convertWalletV2toWalletV1(i.item)
+                //     ),
+                //   props.nameSurname
+                // )
               }
             />
             <View spacer={true} />
@@ -275,7 +313,16 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
               data={props.notPayableWallets}
               keyExtractor={item => item.idWallet.toString()}
               ListFooterComponent={<View spacer />}
-              renderItem={i => renderListItem(i, () => true, props.nameSurname)}
+              renderItem={i =>
+                renderListItem(
+                  i,
+                  () => {
+                    const { present } = showBottomSheet(i.item);
+                    void present();
+                  },
+                  props.nameSurname
+                )
+              }
             />
           </Content>
         </ScrollView>
