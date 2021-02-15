@@ -44,7 +44,7 @@ const textAndIconFromStatus = ({
       return {
         icon: "io-complete",
         text: (
-          <H4>
+          <H4 testID={"infobox-text"}>
             {TypedI18n.t("bonus.cgn.detail.information.active", {
               date: localeDateFormat(
                 cgnDetail.expiration_date,
@@ -58,8 +58,8 @@ const textAndIconFromStatus = ({
       return {
         icon: "io-notice",
         text: (
-          <H4>
-            <H4 weight={"Bold"}>
+          <H4 testID={"infobox-text"}>
+            <H4 weight={"Bold"} testID={"infobox-text-warning"}>
               {TypedI18n.t("bonus.cgn.detail.information.warning")}
             </H4>
             {/* FIXME Add Expiration date when type CgnStatus has been updated */}
@@ -76,8 +76,8 @@ const textAndIconFromStatus = ({
       return {
         icon: "io-notice",
         text: (
-          <H4>
-            <H4 weight={"Bold"}>
+          <H4 testID={"infobox-text"}>
+            <H4 weight={"Bold"} testID={"infobox-text-warning"}>
               {TypedI18n.t("bonus.cgn.detail.information.warning")}
             </H4>
             {TypedI18n.t("bonus.cgn.detail.information.revoked", {
@@ -91,6 +91,12 @@ const textAndIconFromStatus = ({
   }
 };
 
+/**
+ * Renders the status infobox on the center top of the screen
+ * the message differs based on the status of the card
+ * @param props
+ * @constructor
+ */
 const CgnInformationText: React.FunctionComponent<Props> = (props: Props) => {
   const info = textAndIconFromStatus(props);
   return fromNullable(info).fold(null, i => (

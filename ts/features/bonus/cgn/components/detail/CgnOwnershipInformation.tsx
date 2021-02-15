@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
+ * @param props
+ * @constructor
+ */
 const CgnOwnershipInformation = (props: Props): React.ReactElement => (
   <>
     {pot.isSome(props.currentProfile) && (

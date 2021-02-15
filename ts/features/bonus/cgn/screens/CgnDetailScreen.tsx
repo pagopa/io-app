@@ -4,7 +4,6 @@ import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import * as pot from "italia-ts-commons/lib/pot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -21,7 +20,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { Link } from "../../../../components/core/typography/Link";
-import { cgnDetailSelector } from "../store/reducers/details";
+import { cgnDetailsInformationSelector } from "../store/reducers/details";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
@@ -62,6 +61,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         <LinearGradient
           colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
         >
+          {/* TODO Add Specific CGN Card element when card is available */}
           <View style={{ height: 164 }} />
         </LinearGradient>
         <View
@@ -71,17 +71,21 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             { paddingTop: customVariables.contentPadding }
           ]}
         >
-          {pot.isSome(props.cgnDetails) && (
-            <CgnInfoboxDetail cgnDetail={props.cgnDetails.value} />
+          {props.cgnDetails && (
+            // Renders the message based on the current status of the card
+            <CgnInfoboxDetail cgnDetail={props.cgnDetails} />
           )}
           <View spacer />
           <ItemSeparatorComponent noPadded />
           <View spacer />
+          {/* Ownership block rendering owner's fiscal code */}
           <CgnOwnershipInformation />
           <ItemSeparatorComponent noPadded />
           <View spacer />
-          {pot.isSome(props.cgnDetails) && (
-            <CgnStatusDetail cgnDetail={props.cgnDetails.value} />
+          {props.cgnDetails && (
+            // Renders status informations including activation and expiring date and a badge that represents the CGN status
+            // ACTIVATED - EXPIRED - REVOKED
+            <CgnStatusDetail cgnDetail={props.cgnDetails} />
           )}
           <ItemSeparatorComponent noPadded />
           <View spacer large />
@@ -107,7 +111,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  cgnDetails: cgnDetailSelector(state)
+  cgnDetails: cgnDetailsInformationSelector(state)
 });
 
 const mapDispatchToProps = (_: Dispatch) => ({});

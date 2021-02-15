@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { navigateToCgnDetails } from "../navigation/actions";
-import { isCgnActive } from "../store/reducers/details";
+import { isCgnInformationAvailableSelector } from "../store/reducers/details";
 import { cgnDetails } from "../store/actions/details";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  isCgnActive: isCgnActive(state)
+  isCgnActive: isCgnInformationAvailableSelector(state)
 });
 
 export default connect(

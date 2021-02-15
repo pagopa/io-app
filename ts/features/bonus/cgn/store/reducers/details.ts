@@ -6,6 +6,7 @@ import { cgnDetails } from "../actions/details";
 import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { CgnPendingStatus } from "../../../../../../definitions/cgn/CgnPendingStatus";
 
 export type CgnDetailsState = {
   information: pot.Pot<CgnStatus, NetworkError>;
@@ -45,8 +46,19 @@ export default reducer;
 export const cgnDetailSelector = (state: GlobalState) =>
   state.bonus.cgn.detail.information;
 
-export const isCgnActive = createSelector(
+// Returns true only if card informations are available and not in PENDING status
+export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
   (information: pot.Pot<CgnStatus, NetworkError>): boolean =>
-    pot.isSome(information)
+    pot.isSome(information) && !CgnPendingStatus.is(information)
+);
+
+// Returns the CGN information only if they are in the available status else undefined
+export const cgnDetailsInformationSelector = createSelector(
+  [cgnDetailSelector, isCgnInformationAvailableSelector],
+  (
+    information: pot.Pot<CgnStatus, NetworkError>,
+    isAvailable: boolean
+  ): CgnStatus | undefined =>
+    pot.isSome(information) && isAvailable ? information.value : undefined
 );
