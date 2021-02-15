@@ -1,8 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
@@ -17,7 +17,8 @@ import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
-  bpdUnsubscribeCompleted
+  bpdUnsubscribeCompleted,
+  bpdUnsubscribeFailure
 } from "../../../actions/onboarding";
 import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
@@ -78,6 +79,7 @@ const unsubscriptionReducer = (
       return remoteError(action.payload);
     // reset the state when return to wallet
     case getType(bpdUnsubscribeCompleted):
+    case getType(bpdUnsubscribeFailure):
       return remoteUndefined;
   }
   return state;
