@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { cgnActivationStatus } from "../actions/activation";
 import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
@@ -17,7 +18,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: CgnStatus; 
+  value?: CgnStatus;
 };
 
 const INITIAL_STATE: ActivationState = {
@@ -48,5 +49,12 @@ const reducer = (
   }
   return state;
 };
+
+// TODO replace with the effective implementation.
+// false -> user is not CGN enrolled
+// true -> user is CGN enrolled
+// undefined -> don't known
+export const isCGNBonusActiveSelector = (_: GlobalState): boolean | undefined =>
+  undefined;
 
 export default reducer;

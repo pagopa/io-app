@@ -20,6 +20,7 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
 import { isStrictSome } from "../../../utils/pot";
+import { isCGNBonusActiveSelector } from "../../bonus/cgn/store/reducers/activation";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -56,9 +57,10 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
     ? props.bpdActiveBonus.value
     : undefined;
 
-  const anyBonusNotActive = hasBpdActive === false || !props.cgnActiveBonus;
-
-  return anyBonusNotActive ? (
+  // are there any bonus to activate?
+  const anyBonusNotActive =
+    hasBpdActive === false || props.cgnActiveBonus === false;
+  return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container}>
       <View style={[IOStyles.horizontalContentPadding]}>
         <H3 weight={"SemiBold"} color={"bluegreyDark"}>
@@ -87,6 +89,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               return (
                 hasBpdActive === false && (
                   <FeaturedCard
+                    testID={"FeaturedCardBPDTestID"}
                     key={`featured_bonus_${i}`}
                     title={I18n.t("bonus.bpd.name")}
                     image={logo}
@@ -97,8 +100,9 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
               );
             case ID_CGN_TYPE:
               return (
-                !props.cgnActiveBonus && (
+                props.cgnActiveBonus === false && (
                   <FeaturedCard
+                    testID={"FeaturedCardCGNTestID"}
                     key={`featured_bonus_${i}`}
                     title={b[currentLocale].name}
                     image={logo}
@@ -118,8 +122,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
-  // FIXME replace with Selector when the API implementation is completed.
-  cgnActiveBonus: false,
+  cgnActiveBonus: isCGNBonusActiveSelector(state),
   availableBonusesList: visibleAvailableBonusSelector(state)
 });
 

@@ -24,11 +24,12 @@ export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
 const INITIAL_STATE: AvailableBonusTypesState = pot.none;
 
-const mapBonusIdFeatureFlag = new Map<number, boolean>([
-  [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
-  [ID_BPD_TYPE, bpdEnabled],
-  [ID_CGN_TYPE, cgnEnabled]
-]);
+export const mapBonusIdFeatureFlag = () =>
+  new Map<number, boolean>([
+    [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
+    [ID_BPD_TYPE, bpdEnabled],
+    [ID_CGN_TYPE, cgnEnabled]
+  ]);
 
 const reducer = (
   state: AvailableBonusTypesState = INITIAL_STATE,
@@ -65,14 +66,16 @@ export const visibleAvailableBonusSelector = createSelector(
     pot.getOrElse(
       pot.map(availableBonusesState, bonuses =>
         bonuses.filter(b => {
-          const isExperimentalEnabled =
-            fromNullable(mapBonusIdFeatureFlag.get(b.id_type)).getOrElse(
-              false
-            ) && b.visibility === BonusVisibilityEnum.experimental;
-
+          const isFeatureFlagEnabled = fromNullable(
+            mapBonusIdFeatureFlag().get(b.id_type)
+          ).getOrElse(false);
+          const isFFEnabledAndExperimental =
+            isFeatureFlagEnabled &&
+            b.visibility === BonusVisibilityEnum.experimental;
           return (
-            isExperimentalEnabled ||
-            b.visibility === BonusVisibilityEnum.visible
+            isFFEnabledAndExperimental ||
+            (isFeatureFlagEnabled &&
+              b.visibility === BonusVisibilityEnum.visible)
           );
         })
       ),

@@ -1,0 +1,363 @@
+import { render } from "@testing-library/react-native";
+import * as React from "react";
+import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
+import { Provider } from "react-redux";
+import FeaturedCardCarousel from "../FeaturedCardCarousel";
+import { appReducer } from "../../../../store/reducers";
+import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
+import { GlobalState } from "../../../../store/reducers/types";
+import { loadAvailableBonuses } from "../../../bonus/bonusVacanze/store/actions/bonusVacanze";
+import { availableBonuses } from "../../../bonus/bonusVacanze/__mock__/availableBonuses";
+import * as availableBonusSelectors from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../../../bonus/bonusVacanze/utils/bonus";
+import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
+import * as cgnActivationSelectors from "../../../bonus/cgn/store/reducers/activation";
+
+jest.mock("react-native-share", () => jest.fn());
+describe("FeaturedCardCarousel", () => {
+  it("BPD should not be displayed (FF enabled and BPD enrolled)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, true],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({ enabled: true, payoffInstr: undefined })
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success(availableBonuses)
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    // bpd is enrolled so the item should be not displayed
+    expect(bpdItem).toBeNull();
+  });
+
+  it("BPD should not be displayed (FF not enabled and BPD enrolled)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, false],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: true,
+        payoffInstr: undefined
+      })
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success(availableBonuses)
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+  });
+
+  it("BPD should not be displayed (FF not enabled and BPD not enrolled)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, false],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: false,
+        payoffInstr: undefined
+      })
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success(availableBonuses)
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+  });
+
+  it("BPD should be displayed (FF enabled and BPD not enrolled and visibility visible)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, false],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: false,
+        payoffInstr: undefined
+      })
+    );
+    const bpdBonus = availableBonuses[1];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.visible }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeDefined();
+  });
+
+  it("BPD should not be displayed (FF enabled and BPD enrolled loading and visibility visible)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, true],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.request()
+    );
+    const bpdBonus = availableBonuses[1];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.visible }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+  });
+
+  it("BPD should be displayed (FF enabled and BPD not enrolled and visibility experimental)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, false],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: false,
+        payoffInstr: undefined
+      })
+    );
+    const bpdBonus = availableBonuses[1];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.experimental }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeDefined();
+  });
+
+  it("BPD and CGN should be not displayed (FF off, BPD not enrolled, CGN not enrolled)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, false],
+            [ID_CGN_TYPE, false]
+          ])
+      );
+    jest
+      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .mockImplementation(() => false);
+
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: false,
+        payoffInstr: undefined
+      })
+    );
+    const bpdBonus = availableBonuses[1];
+    const cgnBonus = availableBonuses[2];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE && b.id_type !== ID_CGN_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.visible },
+        { ...cgnBonus, visibility: BonusVisibilityEnum.visible }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+    const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
+    expect(cgnItem).toBeNull();
+  });
+
+  it("BPD and CGN should be not displayed (FF on, BPD enrolled, CGN enrolled)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, true],
+            [ID_CGN_TYPE, true]
+          ])
+      );
+    jest
+      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .mockImplementation(() => true);
+
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.success({
+        enabled: true,
+        payoffInstr: undefined
+      })
+    );
+    const bpdBonus = availableBonuses[1];
+    const cgnBonus = availableBonuses[2];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE && b.id_type !== ID_CGN_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.visible },
+        { ...cgnBonus, visibility: BonusVisibilityEnum.visible }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+    const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
+    expect(cgnItem).toBeNull();
+  });
+
+  it("BPD and CGN should be not displayed (FF on, BPD loading, CGN undefined)", () => {
+    jest
+      .spyOn(availableBonusSelectors, "mapBonusIdFeatureFlag")
+      .mockImplementation(
+        // eslint-disable-next-line sonarjs/no-identical-functions
+        () =>
+          new Map<number, boolean>([
+            [ID_BONUS_VACANZE_TYPE, false],
+            [ID_BPD_TYPE, true],
+            [ID_CGN_TYPE, true]
+          ])
+      );
+    jest
+      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .mockImplementation(() => undefined);
+
+    const mockStore = configureMockStore<GlobalState>();
+    const withBpdEnabled: GlobalState = appReducer(
+      undefined,
+      bpdLoadActivationStatus.request()
+    );
+    const bpdBonus = availableBonuses[1];
+    const cgnBonus = availableBonuses[2];
+    const updatedAvailableBonuses = availableBonuses.filter(
+      b => b.id_type !== ID_BPD_TYPE && b.id_type !== ID_CGN_TYPE
+    );
+    const withBonusAvailable = appReducer(
+      withBpdEnabled,
+      loadAvailableBonuses.success([
+        ...updatedAvailableBonuses,
+        { ...bpdBonus, visibility: BonusVisibilityEnum.visible },
+        { ...cgnBonus, visibility: BonusVisibilityEnum.visible }
+      ])
+    );
+
+    const component = getComponent(mockStore(withBonusAvailable));
+    expect(component).toBeDefined();
+    const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
+    expect(bpdItem).toBeNull();
+    const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
+    expect(cgnItem).toBeNull();
+  });
+});
+
+const getComponent = (store: MockStoreEnhanced) =>
+  render(
+    <Provider store={store}>
+      <FeaturedCardCarousel />
+    </Provider>
+  );
