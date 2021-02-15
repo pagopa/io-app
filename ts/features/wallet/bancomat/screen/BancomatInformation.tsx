@@ -46,7 +46,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
         <IconFont
-          name={"io-notice"}
+          name={"io-info"}
           size={24}
           color={IOColors.blue}
           onPress={present}
