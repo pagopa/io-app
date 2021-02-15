@@ -96,8 +96,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               </H5>,
               <H5 weight={"Regular"} color={"bluegrey"}>
                 {localeDateFormat(
-                  // FIXME Replace when types have been updated
-                  new Date(),
+                  cgnDetail.activation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
@@ -108,8 +107,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               </H5>,
               <H5 weight={"Regular"} color={"bluegrey"}>
                 {localeDateFormat(
-                  // FIXME Replace when types have been updated
-                  new Date(),
+                  cgnDetail.expiration_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
@@ -134,8 +132,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               </H5>,
               <H5 weight={"Regular"} color={"bluegrey"}>
                 {localeDateFormat(
-                  // FIXME Replace when types have been updated
-                  new Date(),
+                  cgnDetail.activation_date,
+                  TypedI18n.t("global.dateFormats.shortFormat")
+                )}
+              </H5>
+            )}
+            {renderRowBlock(
+              <H5 weight={"Regular"} color={"bluegrey"}>
+                {I18n.t("bonus.cgn.detail.expirationDateLabel")}
+              </H5>,
+              <H5 weight={"Regular"} color={"bluegrey"}>
+                {localeDateFormat(
+                  cgnDetail.revocation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>

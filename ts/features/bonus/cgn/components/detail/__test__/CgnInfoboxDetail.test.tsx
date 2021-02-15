@@ -19,13 +19,16 @@ const cgnStatusActivated: CgnStatus = {
 
 const cgnStatusRevoked: CgnStatus = {
   status: CgnRevokedStatusEnum.REVOKED,
-  revocation_date: new Date("2037-02-20"),
+  revocation_date: new Date("2030-02-20"),
+  activation_date: new Date("2020-03-04"),
+  expiration_date: new Date("2037-02-20"),
   revocation_reason: "A reason to revoke" as CgnRevokedStatus["revocation_reason"]
 };
 
-// FIXME Update when expired type definition has been updated
 const cgnStatusExpired: CgnStatus = {
-  status: CgnExpiredStatusEnum.EXPIRED
+  status: CgnExpiredStatusEnum.EXPIRED,
+  activation_date: new Date("2020-03-04"),
+  expiration_date: new Date("2037-02-20")
 };
 
 describe("CgnInfoboxDetail", () => {
@@ -62,7 +65,7 @@ describe("CgnInfoboxDetail", () => {
     const component = render(<CgnInfoboxDetail cgnDetail={cgnStatusExpired} />);
     const expiredLabel = TypedI18n.t("bonus.cgn.detail.information.expired", {
       date: localeDateFormat(
-        new Date(),
+        cgnStatusExpired.expiration_date,
         TypedI18n.t("global.dateFormats.shortFormat")
       )
     });

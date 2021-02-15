@@ -2200,6 +2200,7 @@ bonus:
       ownership: Chi può usufruire degli sconti?
       activationDateLabel: Attivata il
       expirationDateLabel: Scaduta il
+      revocationDateLabel: Revocata il
       status:
         title: Stato Carta
         badge:

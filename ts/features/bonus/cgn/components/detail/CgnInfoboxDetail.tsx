@@ -62,10 +62,9 @@ const textAndIconFromStatus = ({
             <H4 weight={"Bold"} testID={"infobox-text-warning"}>
               {TypedI18n.t("bonus.cgn.detail.information.warning")}
             </H4>
-            {/* FIXME Add Expiration date when type CgnStatus has been updated */}
             {TypedI18n.t("bonus.cgn.detail.information.expired", {
               date: localeDateFormat(
-                new Date(),
+                cgnDetail.expiration_date,
                 TypedI18n.t("global.dateFormats.shortFormat")
               )
             })}
