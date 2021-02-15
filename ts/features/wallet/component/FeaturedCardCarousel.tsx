@@ -61,7 +61,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const anyBonusNotActive =
     hasBpdActive === false || props.cgnActiveBonus === false;
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
-    <View style={styles.container}>
+    <View style={styles.container} testID={"FeaturedCardCarousel"}>
       <View style={[IOStyles.horizontalContentPadding]}>
         <H3 weight={"SemiBold"} color={"bluegreyDark"}>
           {I18n.t("wallet.featured")}

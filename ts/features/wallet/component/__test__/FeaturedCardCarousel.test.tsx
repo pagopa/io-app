@@ -42,6 +42,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     // bpd is enrolled so the item should be not displayed
     expect(bpdItem).toBeNull();
@@ -73,6 +77,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
   });
@@ -104,6 +112,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
   });
@@ -116,7 +128,7 @@ describe("FeaturedCardCarousel", () => {
         () =>
           new Map<number, boolean>([
             [ID_BONUS_VACANZE_TYPE, false],
-            [ID_BPD_TYPE, false],
+            [ID_BPD_TYPE, true],
             [ID_CGN_TYPE, false]
           ])
       );
@@ -142,8 +154,12 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeTruthy();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
-    expect(bpdItem).toBeDefined();
+    expect(bpdItem).toBeTruthy();
   });
 
   it("BPD should not be displayed (FF enabled and BPD enrolled loading and visibility visible)", () => {
@@ -177,6 +193,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
   });
@@ -189,7 +209,7 @@ describe("FeaturedCardCarousel", () => {
         () =>
           new Map<number, boolean>([
             [ID_BONUS_VACANZE_TYPE, false],
-            [ID_BPD_TYPE, false],
+            [ID_BPD_TYPE, true],
             [ID_CGN_TYPE, false]
           ])
       );
@@ -215,8 +235,12 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeTruthy();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
-    expect(bpdItem).toBeDefined();
+    expect(bpdItem).toBeTruthy();
   });
 
   it("BPD and CGN should be not displayed (FF off, BPD not enrolled, CGN not enrolled)", () => {
@@ -259,6 +283,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
     const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
@@ -305,6 +333,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
     const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
@@ -348,6 +380,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
     const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
@@ -394,6 +430,10 @@ describe("FeaturedCardCarousel", () => {
 
     const component = getComponent(mockStore(withBonusAvailable));
     expect(component).toBeDefined();
+    const featuredCardCarousel = component.queryByTestId(
+      "FeaturedCardCarousel"
+    );
+    expect(featuredCardCarousel).toBeNull();
     const bpdItem = component.queryByTestId("FeaturedCardBPDTestID");
     expect(bpdItem).toBeNull();
     const cgnItem = component.queryByTestId("FeaturedCardCGNTestID");
