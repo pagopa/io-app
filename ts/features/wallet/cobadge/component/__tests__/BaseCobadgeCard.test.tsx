@@ -70,6 +70,21 @@ describe("CoBadgeWalletPreview component", () => {
     expect(caption).not.toBeNull();
     expect(caption).toHaveTextContent(aCaption);
   });
+
+  it("should show the blocked badge if is blocked prop is true", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    const component = getComponent(
+      store,
+      aBrandLogo,
+      anAbiLogo,
+      aCaption,
+      anexpiringDateNotExpired,
+      true
+    );
+    const blockedBadge = component.queryByTestId("blockedBadge");
+
+    expect(blockedBadge).not.toBeNull();
+  });
 });
 
 const getComponent = (
@@ -77,7 +92,8 @@ const getComponent = (
   brandLogo: ImageSourcePropType,
   abi: Abi,
   caption?: string,
-  expiringDate?: Date
+  expiringDate?: Date,
+  blocked?: boolean
 ) =>
   render(
     <Provider store={store}>
@@ -86,6 +102,7 @@ const getComponent = (
         caption={caption}
         expiringDate={expiringDate}
         abi={abi}
+        blocked={blocked}
       />
     </Provider>
   );
