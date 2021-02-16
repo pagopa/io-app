@@ -2,8 +2,8 @@ import { call, put } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { CgnActivatedStatus } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
 import { cgnDetails } from "../../../store/actions/details";
+import { getNetworkError } from "../../../../../../utils/errors";
 
 export function* cgnGetInformationSaga(
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"]
@@ -14,16 +14,28 @@ export function* cgnGetInformationSaga(
       {}
     );
     if (cgnInformationResult.isLeft()) {
-      throw Error(readableReport(cgnInformationResult.value));
+      yield put(
+        cgnDetails.failure({
+          kind: "generic",
+          value: new Error(readableReport(cgnInformationResult.value))
+        })
+      );
     } else if (
       cgnInformationResult.isRight() &&
-      CgnActivatedStatus.is(cgnInformationResult.value.value)
+      cgnInformationResult.value.status === 200
     ) {
       yield put(cgnDetails.success(cgnInformationResult.value.value));
     } else {
-      throw Error("Card is in another status");
+      yield put(
+        cgnDetails.failure({
+          kind: "generic",
+          value: new Error(
+            `response status ${cgnInformationResult.value.status}`
+          )
+        })
+      );
     }
   } catch (e) {
-    yield put(cgnDetails.failure(e));
+    yield put(cgnDetails.failure(getNetworkError(e)));
   }
 }

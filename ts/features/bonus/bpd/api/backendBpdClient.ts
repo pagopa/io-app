@@ -93,7 +93,6 @@ const deleteResponseDecoders = r.composeResponseDecoders(
 );
 
 // these responses code/codec are built from api usage and not from API spec
-// see https://bpd-dev.portal.azure-api.net/docs/services/bpd-ms-citizen/operations/deleteUsingDELETE
 type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
   {
     readonly Authorization: string;

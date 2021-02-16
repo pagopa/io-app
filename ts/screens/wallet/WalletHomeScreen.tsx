@@ -38,7 +38,7 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { visibleAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
@@ -82,6 +82,7 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
+import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -327,7 +328,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      )
+      ) ||
+      pot.isLoading(this.props.cgnDetails)
     ) {
       return "loading";
     }
@@ -587,11 +589,10 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
+    availableBonusesList: visibleAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
@@ -602,7 +603,8 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state),
+    cgnDetails: cgnDetailSelector(state)
   };
 };
 
