@@ -4,7 +4,7 @@ import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
-import { getLocalePrimary } from "./locale";
+import { getLocalePrimary, localeDateFormat } from "./locale";
 import { ExpireStatus } from "./messages";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
@@ -124,3 +124,21 @@ export class DateFromISOStringType extends t.Type<Date, string, unknown> {
 }
 
 export const DateFromISOString: DateFromISOStringType = new DateFromISOStringType();
+
+export const getTranslatedShortNumericMonthYear = (
+  fullYear?: string,
+  month?: string
+): string | undefined => {
+  if (!fullYear || !month) {
+    return undefined;
+  }
+  const year = parseInt(fullYear, 10);
+  const indexedMonth = parseInt(month, 10);
+  if (isNaN(year) || isNaN(indexedMonth)) {
+    return undefined;
+  }
+  return localeDateFormat(
+    new Date(year, indexedMonth - 1),
+    I18n.t("global.dateFormats.shortNumericMonthYear")
+  );
+};
