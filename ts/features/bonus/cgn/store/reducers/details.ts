@@ -3,12 +3,12 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
 import { cgnDetails } from "../actions/details";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 
 export type CgnDetailsState = {
-  information: pot.Pot<CgnStatus, NetworkError>;
+  information: pot.Pot<Card, NetworkError>;
 };
 
 const INITIAL_STATE: CgnDetailsState = {
@@ -47,6 +47,5 @@ export const cgnDetailSelector = (state: GlobalState) =>
 
 export const isCgnActive = createSelector(
   cgnDetailSelector,
-  (information: pot.Pot<CgnStatus, NetworkError>): boolean =>
-    pot.isSome(information)
+  (information: pot.Pot<Card, NetworkError>): boolean => pot.isSome(information)
 );

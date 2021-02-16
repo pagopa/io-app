@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import { NetworkError } from "../../../../../utils/errors";
 
 /**
@@ -9,6 +9,6 @@ export const cgnDetails = createAsyncAction(
   "CGN_DETAILS_REQUEST",
   "CGN_DETAILS_SUCCESS",
   "CGN_DETAILS_FAILURE"
-)<void, CgnStatus, NetworkError>();
+)<void, Card, NetworkError>();
 
 export type CgnDetailsActions = ActionType<typeof cgnDetails>;
