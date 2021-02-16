@@ -3,13 +3,13 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
 import { cgnDetails } from "../actions/details";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { CgnPendingStatus } from "../../../../../../definitions/cgn/CgnPendingStatus";
+import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 
 export type CgnDetailsState = {
-  information: pot.Pot<CgnStatus, NetworkError>;
+  information: pot.Pot<Card, NetworkError>;
 };
 
 const INITIAL_STATE: CgnDetailsState = {
@@ -49,16 +49,16 @@ export const cgnDetailSelector = (state: GlobalState) =>
 // Returns true only if card informations are available and not in PENDING status
 export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
-  (information: pot.Pot<CgnStatus, NetworkError>): boolean =>
-    pot.isSome(information) && !CgnPendingStatus.is(information)
+  (information: pot.Pot<Card, NetworkError>): boolean =>
+    pot.isSome(information) && !CardPending.is(information)
 );
 
 // Returns the CGN information only if they are in the available status else undefined
 export const cgnDetailsInformationSelector = createSelector(
   [cgnDetailSelector, isCgnInformationAvailableSelector],
   (
-    information: pot.Pot<CgnStatus, NetworkError>,
+    information: pot.Pot<Card, NetworkError>,
     isAvailable: boolean
-  ): CgnStatus | undefined =>
+  ): Card | undefined =>
     pot.isSome(information) && isAvailable ? information.value : undefined
 );
