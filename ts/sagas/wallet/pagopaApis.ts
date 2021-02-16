@@ -5,6 +5,7 @@ import { ActionType } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import { mixpanelTrack } from "../../mixpanel";
 import {
   paymentAttiva,
   paymentCheck,
@@ -72,6 +73,7 @@ export function* getWalletsV2(
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
   try {
+    void mixpanelTrack("WALLETS_LOAD_REQUEST");
     const request = pmSessionManager.withRefresh(pagoPaClient.getWalletsV2);
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
     if (getResponse.isRight()) {
@@ -79,6 +81,9 @@ export function* getWalletsV2(
         const wallets = (getResponse.value.value.data ?? []).map(
           convertWalletV2toWalletV1
         );
+        void mixpanelTrack("WALLETS_LOAD_SUCCESS", {
+          count: wallets.length
+        });
         yield put(fetchWalletsSuccess(wallets));
         return right<Error, ReadonlyArray<Wallet>>(wallets);
       } else {
@@ -91,6 +96,11 @@ export function* getWalletsV2(
     // this is required to handle 401 response from PM
     // On 401 response sessionManager retries for X attempts to get a valid session
     // If it exceeds a fixed threshold of attempts a max retries error will be dispatched
+
+    void mixpanelTrack("WALLETS_LOAD_FAILURE", {
+      reason: error.message
+    });
+
     if (isTimeoutError(getNetworkError(error))) {
       // check if also the IO session is expired
       yield put(checkCurrentSession.request());
@@ -676,9 +686,9 @@ export function* paymentAttivaRequestHandler(
         paymentActivationsPostRequest: {
           rptId: RptIdFromString.encode(action.payload.rptId),
           codiceContestoPagamento:
-          action.payload.verifica.codiceContestoPagamento,
+            action.payload.verifica.codiceContestoPagamento,
           importoSingoloVersamento:
-          action.payload.verifica.importoSingoloVersamento
+            action.payload.verifica.importoSingoloVersamento
         },
         test: isPagoPATestEnabled
       }
