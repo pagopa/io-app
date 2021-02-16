@@ -102,6 +102,7 @@ global:
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -1022,6 +1023,15 @@ wallet:
     noPspsAvailable: This payment method cannot be used
     contextualHelpTitle: Payment method's choice
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
+    pickPaymentMethod:
+      description: "{{firstElement}} · {{secondElement}}"
+      notAvailable:
+        bancomat:
+          bottomSheetTitle: "Perché non puoi pagare in app con le carte PagoBANCOMAT?"
+          bottomSheetDescription: 
+            text1: "Il circuito PagoBANCOMAT consente di pagare nei punti vendita fisici, ma non online. Se la tua carta mostra altri circuiti internazionali" 
+            text2: "ed è abilitata ai pagamenti online,"
+            text3: "puoi anche aggiungerla al tuo Portafoglio come carta di debito o di credito."
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
