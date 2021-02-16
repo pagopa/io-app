@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -34,7 +35,8 @@ import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
   isAvailableBonusNoneErrorSelector,
   isAvailableBonusLoadingSelector,
-  visibleAvailableBonusSelector
+  allAvailableBonusTypesSelector,
+  experimentalAndVisibleBonus
 } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
@@ -96,14 +98,20 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (cgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
-
+    // if bonus is experimental but there is no handler, it won't be shown
+    if (item.visibility === "experimental" && !handlersMap.has(item.id_type)) {
+      return null;
+    }
+    // when the bonus is visibile but this version cant handle it
+    const isComingSoon =
+      item.visibility === "visible" && !handlersMap.has(item.id_type);
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
       // if the bonus is not active, do nothing
-      if (item.is_active === false) {
+      if (item.is_active === false || isComingSoon) {
         return;
       }
       // if the bonus is active ask for app update
@@ -130,7 +138,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       );
     };
 
-    return <AvailableBonusItem bonusItem={item} onPress={onItemPress} />;
+    return (
+      <AvailableBonusItem
+        bonusItem={item}
+        onPress={onItemPress}
+        isComingSoon={isComingSoon}
+      />
+    );
   };
 
   public componentDidMount() {
@@ -170,7 +184,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}
-                data={availableBonusesList}
+                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
                 renderItem={this.renderListItem}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
@@ -190,7 +204,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  availableBonusesList: visibleAvailableBonusSelector(state),
+  availableBonusesList: pot.getOrElse(
+    allAvailableBonusTypesSelector(state),
+    []
+  ),
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state)

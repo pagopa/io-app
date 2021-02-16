@@ -10,6 +10,7 @@ import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 type Props = {
   bonusItem: BonusAvailable;
   onPress: () => void;
+  isComingSoon: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -66,8 +67,7 @@ const styles = StyleSheet.create({
 export const AvailableBonusItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { bonusItem } = props;
-  const isComingSoon = !bonusItem.is_active;
+  const { bonusItem, isComingSoon } = props;
   const disabledStyle = isComingSoon ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getLocalePrimaryWithFallback()];

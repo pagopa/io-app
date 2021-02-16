@@ -4,7 +4,7 @@ import {
   isAvailableBonusErrorSelector,
   isAvailableBonusLoadingSelector,
   isAvailableBonusNoneErrorSelector,
-  visibleAvailableBonusSelector
+  supportedAvailableBonusSelector
 } from "../availableBonusesTypes";
 import {
   availableBonuses,
@@ -53,8 +53,9 @@ describe("availableBonusesTypes with FF enabled", () => {
           ])
       );
     expect(
-      visibleAvailableBonusSelector.resultFunc(pot.some([...availableBonuses]))
-        .length
+      supportedAvailableBonusSelector.resultFunc(
+        pot.some([...availableBonuses])
+      ).length
     ).toBe(2);
   });
 
@@ -79,7 +80,7 @@ describe("availableBonusesTypes with FF enabled", () => {
       }
     ];
     expect(
-      visibleAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(3);
   });
 
@@ -104,7 +105,7 @@ describe("availableBonusesTypes with FF enabled", () => {
       }
     ];
     expect(
-      visibleAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(3);
   });
 
@@ -117,7 +118,7 @@ describe("availableBonusesTypes with FF enabled", () => {
       }
     ];
     expect(
-      visibleAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
+      supportedAvailableBonusSelector.resultFunc(pot.some(bonuses)).length
     ).toBe(2);
   });
 
@@ -140,7 +141,9 @@ describe("availableBonusesTypes with FF enabled", () => {
       { ...mockBonus, id_type: ID_BONUS_VACANZE_TYPE, visibility },
       { ...mockBonus, id_type: ID_BPD_TYPE, visibility }
     ];
-    const result = visibleAvailableBonusSelector.resultFunc(pot.some(bonuses));
+    const result = supportedAvailableBonusSelector.resultFunc(
+      pot.some(bonuses)
+    );
     expect(result.length).toBe(1);
     expect(result).toEqual([bonuses[2]]);
   });
@@ -181,7 +184,9 @@ describe("availableBonusesTypes with FF enabled", () => {
         visibility
       }
     ];
-    const result = visibleAvailableBonusSelector.resultFunc(pot.some(bonuses));
+    const result = supportedAvailableBonusSelector.resultFunc(
+      pot.some(bonuses)
+    );
     expect(result.length).toBe(2);
     expect(result).toEqual([bonuses[1], bonuses[2]]);
   });

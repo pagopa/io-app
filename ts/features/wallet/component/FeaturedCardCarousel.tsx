@@ -12,7 +12,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { visibleAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
 import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
@@ -123,7 +123,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
   cgnActiveBonus: isCGNBonusActiveSelector(state),
-  availableBonusesList: visibleAvailableBonusSelector(state)
+  availableBonusesList: supportedAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
