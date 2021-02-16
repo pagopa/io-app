@@ -103,7 +103,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (item.visibility === "experimental" && !handled) {
       return null;
     }
-    // when the bonus is visible but this version cant handle it
+    // when the bonus is visible but this app version cant handle it
     const isComingSoon = item.visibility === "visible" && !handled;
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
