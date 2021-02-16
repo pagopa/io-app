@@ -903,7 +903,7 @@ wallet:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-        warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
+        warning: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
       chooseType:
         title: "La tua carta ti permette di acquistare online?"
