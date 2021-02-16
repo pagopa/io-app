@@ -2,7 +2,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { cgnActivationStatus } from "../actions/activation";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
@@ -18,7 +18,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: CgnStatus;
+  value?: Card;
 };
 
 const INITIAL_STATE: ActivationState = {
