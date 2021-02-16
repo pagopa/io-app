@@ -1,20 +1,13 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
-import { fromNullable, some } from "fp-ts/lib/Option";
+import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, ListItem, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 import { getMonoid } from "fp-ts/lib/Array";
-import {
-  Image,
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-  StyleSheet,
-  ImageSourcePropType
-} from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
@@ -25,9 +18,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { InfoBox } from "../../../components/box/InfoBox";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -35,13 +25,13 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
-import variables from "../../../theme/variables";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
@@ -52,16 +42,10 @@ import {
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
-import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
-import { H5 } from "../../../components/core/typography/H5";
-import { localeDateFormat } from "../../../utils/locale";
-import IconFont from "../../../components/ui/IconFont";
-import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { dispatchPickPspOrConfirm } from "./common";
-import { useIOBottomSheet } from "../../../utils/bottomSheet";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -76,181 +60,12 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({
-  paddedLR: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
-  },
-  infoBoxContainer: { padding: 20, backgroundColor: IOColors.orange },
-  cardLogo: {
-    height: 26,
-    width: 41
-  },
-  paymentMethodInfo: {
-    paddingLeft: 15
-  }
-});
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.payWith.contextualHelpTitle",
   body: "wallet.payWith.contextualHelpContent"
 };
 
-const amexPaymentWarningTreshold = 100000; // Eurocents
-const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
-  if (!fullYear || !month) {
-    return undefined;
-  }
-  const year = parseInt(fullYear, 10);
-  const indexedMonth = parseInt(month, 10);
-  if (isNaN(year) || isNaN(indexedMonth)) {
-    return undefined;
-  }
-  return new Date(year, indexedMonth - 1);
-};
-
-type PaymentMethodInformation = {
-  logo: ImageSourcePropType;
-  title: string;
-  description: string;
-  rightElement: JSX.Element;
-};
-
-const showBottomSheet = (paymentMethod: PaymentMethod) => {
-  const { present } = useIOBottomSheet(
-    <>
-      <View spacer={true} large={true} />
-      <InfoBox iconName={"io-calendar"} iconSize={32}>
-        <H4 weight={"Regular"}>
-          {I18n.t(
-            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
-          )}
-          <H4>
-            {" "}
-            {I18n.t(
-              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
-            )}
-          </H4>
-          {I18n.t(
-            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
-          )}
-        </H4>
-      </InfoBox>
-      <View spacer={true} large={true} />
-    </>,
-    I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
-    600
-  );
-
-  return {
-    present: () => present()
-  };
-};
-
-const extractInfoFromPaymentMethod = (
-  paymentMethod: PaymentMethod,
-  holder?: string
-): PaymentMethodInformation => {
-  switch (paymentMethod.kind) {
-    case "CreditCard":
-      return {
-        logo: getCardIconFromBrandLogo(paymentMethod.info),
-        title: paymentMethod.caption,
-        description: `${fromNullable(
-          getExpireDate(
-            paymentMethod.info.expireYear,
-            paymentMethod.info.expireMonth
-          )
-        ).fold("", ed =>
-          localeDateFormat(ed, I18n.t("global.dateFormats.numericMonthYear"))
-        )} -  ${holder}`,
-        rightElement: canMethodPay(paymentMethod) ? (
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
-        ) : (
-          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
-        )
-      };
-    case "Bancomat":
-      return {
-        logo: pagoBancomatLogo,
-        title: paymentMethod.kind,
-        description: fromNullable(
-          getExpireDate(
-            paymentMethod.info.expireYear,
-            paymentMethod.info.expireMonth
-          )
-        ).fold("", ed =>
-          localeDateFormat(ed, I18n.t("global.dateFormats.numericMonthYear"))
-        ),
-        rightElement: (
-          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
-        )
-      };
-    case "BPay":
-      return {
-        logo: bancomatPayLogo,
-        title: paymentMethod.kind,
-        description: paymentMethod.info.numberObfuscated ?? "",
-        rightElement: (
-          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
-        )
-      };
-    case "Satispay":
-      return {
-        logo: satispayLogo,
-        title: paymentMethod.kind,
-        description: holder ?? "",
-        rightElement: (
-          <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
-        )
-      };
-  }
-};
-
-type listProp = {
-  paymentMethodItem: ListRenderItemInfo<PaymentMethod>;
-  onPress: () => void;
-  holder?: string;
-};
-const renderListItem: React.FunctionComponent<listProp> = (props: listProp) => {
-  const { paymentMethodItem, onPress, holder } = props;
-  const {
-    logo,
-    title,
-    description,
-    rightElement
-  } = extractInfoFromPaymentMethod(paymentMethodItem.item, holder);
-  return (
-    <ListItem first={paymentMethodItem.index === 0} onPress={onPress}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          flex: 1
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
-          <View spacer={true} />
-          <View style={styles.paymentMethodInfo}>
-            <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-              {title}
-            </H4>
-            <H5 weight={"Regular"} color={"bluegreyDark"}>
-              {description}
-            </H5>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          {paymentMethodItem.item.favourite && (
-            <IconFont name={"io-filled-star"} color={IOColors.blue} size={24} />
-          )}
-          {rightElement}
-        </View>
-      </View>
-    </ListItem>
-  );
-};
+const amexPaymentTreshold = 100000; // Eurocents
 
 const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   <FooterWithButtons
@@ -263,7 +78,7 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   />
 );
 
-const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
+const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
@@ -290,54 +105,40 @@ const PickPaymentMethodScreen2: React.FunctionComponent<Props> = (
             <View spacer={true} />
             <FlatList
               removeClippedSubviews={false}
-              data={props.payableWallets}
+              data={props.payableWallets(verifica.importoSingoloVersamento)}
               keyExtractor={item => item.idWallet.toString()}
               ListFooterComponent={<View spacer />}
-              renderItem={
-                i => <renderListItem />
-                // renderListItem(
-                //   i,
-                //   () =>
-                //     props.navigateToConfirmOrPickPsp(
-                //       convertWalletV2toWalletV1(i.item)
-                //     ),
-                //   props.nameSurname
-                // )
-              }
+              renderItem={i => (
+                <PickAvailablePaymentMethodListItem
+                  isFirst={i.index === 0}
+                  paymentMethod={i.item}
+                  onPress={() =>
+                    props.navigateToConfirmOrPickPsp(
+                      // Since only credit cards are now accepted method we manage only this case
+                      // TODO: if payment methods different from credit card should be accepted manage every case
+                      convertWalletV2toWalletV1(i.item)
+                    )
+                  }
+                />
+              )}
             />
             <View spacer={true} />
             <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
             <View spacer={true} />
             <FlatList
               removeClippedSubviews={false}
-              data={props.notPayableWallets}
+              data={props.notPayableWallets(verifica.importoSingoloVersamento)}
               keyExtractor={item => item.idWallet.toString()}
               ListFooterComponent={<View spacer />}
-              renderItem={i =>
-                renderListItem(
-                  i,
-                  () => {
-                    const { present } = showBottomSheet(i.item);
-                    void present();
-                  },
-                  props.nameSurname
-                )
-              }
+              renderItem={i => (
+                <PickNotAvailablePaymentMethodListItem
+                  isFirst={i.index === 0}
+                  paymentMethod={i.item}
+                />
+              )}
             />
           </Content>
         </ScrollView>
-        {props.payableWallets.some(
-          pW => pW.kind === "CreditCard" && pW.info?.brand === "AMEX"
-        ) &&
-          verifica.importoSingoloVersamento >= amexPaymentWarningTreshold && (
-            <View style={styles.infoBoxContainer}>
-              <InfoBox alignedCentral={true} iconColor={IOColors.white}>
-                <Label weight={"Regular"} color="white">
-                  {I18n.t("wallet.alert.amex")}
-                </Label>
-              </InfoBox>
-            </View>
-          )}
         {renderFooterButtons(
           props.navigateToTransactionSummary,
           props.navigateToAddPaymentMethod
@@ -362,15 +163,33 @@ const mapStateToProps = (state: GlobalState) => {
   const visibleSatispay = pot.getOrElse(potVisibleSatispay, []).map(s => s);
 
   const M = getMonoid<PaymentMethod>();
-  const visiblePayableWallets = M.concat(visibleCreditCard, visibleBancomat)
+  const visibleWallets = M.concat(visibleCreditCard, visibleBancomat)
     .concat(visibleBPay)
     .concat(visibleSatispay);
+
+  const exceedsAmexLimit = (amount: ImportoEuroCents) =>
+    amount >= amexPaymentTreshold;
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
-    // only the cards that can pay on IO (eg. Maestro is a not valid credit card)
-    payableWallets: visiblePayableWallets.filter(vPW => canMethodPay(vPW)),
-    notPayableWallets: visiblePayableWallets.filter(vPW => !canMethodPay(vPW)),
+    // only the cards that can pay on IO (eg. Maestro is a not valid credit card).
+    // Furthermore we must filter also the AMEX card if the amount of the payment
+    // is greater or equal to amexPaymentTreshold
+    payableWallets: (amount: ImportoEuroCents) =>
+      visibleWallets.filter(
+        vPW =>
+          canMethodPay(vPW) &&
+          ((vPW.kind === "CreditCard" && vPW.info?.brand !== "AMEX") ||
+            !exceedsAmexLimit(amount))
+      ),
+    notPayableWallets: (amount: ImportoEuroCents) =>
+      visibleWallets.filter(
+        vPW =>
+          !canMethodPay(vPW) ||
+          (vPW.kind === "CreditCard" &&
+            vPW.info?.brand !== "AMEX" &&
+            exceedsAmexLimit(amount))
+      ),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
@@ -423,4 +242,4 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(PickPaymentMethodScreen2));
+)(withLoadingSpinner(PickPaymentMethodScreen));
