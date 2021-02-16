@@ -17,8 +17,17 @@ import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
-import { Psp, Transaction, Wallet } from "../types/pagopa";
-import { formatDateAsReminder } from "./dates";
+import {
+  BancomatPaymentMethod,
+  CreditCardPaymentMethod,
+  Psp,
+  Transaction,
+  Wallet
+} from "../types/pagopa";
+import {
+  formatDateAsReminder,
+  getTranslatedShortNumericMonthYear
+} from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
@@ -263,4 +272,19 @@ export const getCodiceAvviso = (rptId: RptId) => {
         pnn.checkDigit
       }`;
   }
+};
+
+export const getBancomatOrCreditCardPickMethodDescription = (
+  bancomatOrCreditCard: CreditCardPaymentMethod | BancomatPaymentMethod
+) => {
+  const translatedExpiryDate = getTranslatedShortNumericMonthYear(
+    bancomatOrCreditCard.info.expireYear,
+    bancomatOrCreditCard.info.expireMonth
+  );
+  return translatedExpiryDate
+    ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
+        firstElement: translatedExpiryDate,
+        secondElement: bancomatOrCreditCard.info.holder
+      })
+    : fromNullable(bancomatOrCreditCard.info.holder).getOrElse("");
 };
