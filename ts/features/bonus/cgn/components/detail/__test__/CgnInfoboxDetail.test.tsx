@@ -1,38 +1,38 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { CgnStatus } from "../../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../../definitions/cgn/Card";
 import CgnInfoboxDetail from "../CgnInfoboxDetail";
-import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
+import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import TypedI18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import {
-  CgnRevokedStatus,
+  CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
-} from "../../../../../../../definitions/cgn/CgnRevokedStatus";
-import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CgnExpiredStatus";
-import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CgnPendingStatus";
+} from "../../../../../../../definitions/cgn/CardRevoked";
+import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
+import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 
-const cgnStatusActivated: CgnStatus = {
+const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
   activation_date: new Date("2020-03-04"),
   expiration_date: new Date("2037-02-20")
 };
 
-const cgnStatusRevoked: CgnStatus = {
+const cgnStatusRevoked: Card = {
   status: CgnRevokedStatusEnum.REVOKED,
   revocation_date: new Date("2030-02-20"),
   activation_date: new Date("2020-03-04"),
   expiration_date: new Date("2037-02-20"),
-  revocation_reason: "A reason to revoke" as CgnRevokedStatus["revocation_reason"]
+  revocation_reason: "A reason to revoke" as CardRevoked["revocation_reason"]
 };
 
-const cgnStatusExpired: CgnStatus = {
+const cgnStatusExpired: Card = {
   status: CgnExpiredStatusEnum.EXPIRED,
   activation_date: new Date("2020-03-04"),
   expiration_date: new Date("2037-02-20")
 };
 
-const cgnStatusPending: CgnStatus = {
+const cgnStatusPending: Card = {
   status: CgnPendingStatusEnum.PENDING
 };
 
