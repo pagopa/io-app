@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import IconFont from "../../../../../components/ui/IconFont";
 import { H4 } from "../../../../../components/core/typography/H4";
 import TypedI18n from "../../../../../i18n";
@@ -10,7 +10,7 @@ import { localeDateFormat } from "../../../../../utils/locale";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type Props = {
-  cgnDetail: CgnStatus;
+  cgnDetail: Card;
 };
 
 const styles = StyleSheet.create({
