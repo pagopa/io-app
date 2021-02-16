@@ -187,7 +187,7 @@ const mapStateToProps = (state: GlobalState) => {
         vPW =>
           !canMethodPay(vPW) ||
           (vPW.kind === "CreditCard" &&
-            vPW.info?.brand !== "AMEX" &&
+            vPW.info?.brand === "AMEX" &&
             exceedsAmexLimit(amount))
       ),
     isLoading,
