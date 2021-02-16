@@ -98,20 +98,20 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (cgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
+    const handled = handlersMap.has(item.id_type);
     // if bonus is experimental but there is no handler, it won't be shown
-    if (item.visibility === "experimental" && !handlersMap.has(item.id_type)) {
+    if (item.visibility === "experimental" && !handled) {
       return null;
     }
-    // when the bonus is visibile but this version cant handle it
-    const isComingSoon =
-      item.visibility === "visible" && !handlersMap.has(item.id_type);
+    // when the bonus is visible but this version cant handle it
+    const isComingSoon = item.visibility === "visible" && !handled;
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
       // if the bonus is not active, do nothing
-      if (item.is_active === false || isComingSoon) {
+      if (item.is_active === false) {
         return;
       }
       // if the bonus is active ask for app update
