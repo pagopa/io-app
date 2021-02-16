@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text, View } from "native-base";
-import { CgnStatus } from "../../../../../../definitions/cgn/CgnStatus";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import I18n from "../../../../../i18n";
 import { H4 } from "../../../../../components/core/typography/H4";
 import variables from "../../../../../theme/variables";
@@ -10,7 +10,7 @@ import TypedI18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 
 type Props = {
-  cgnDetail: CgnStatus;
+  cgnDetail: Card;
 };
 
 const styles = StyleSheet.create({
