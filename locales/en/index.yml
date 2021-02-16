@@ -1024,14 +1024,19 @@ wallet:
     contextualHelpTitle: Payment method's choice
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
     pickPaymentMethod:
+      title: "Con quale metodo vuoi pagare?"
       description: "{{firstElement}} · {{secondElement}}"
       notAvailable:
+        title: "Metodi non compatibili"
         bancomat:
           bottomSheetTitle: "Perché non puoi pagare in app con le carte PagoBANCOMAT?"
           bottomSheetDescription: 
             text1: "Il circuito PagoBANCOMAT consente di pagare nei punti vendita fisici, ma non online. Se la tua carta mostra altri circuiti internazionali" 
             text2: "ed è abilitata ai pagamenti online,"
             text3: "puoi anche aggiungerla al tuo Portafoglio come carta di debito o di credito."
+        amex:
+          bottomSheetTitle: "Perché non puoi pagare con questo metodo?"
+          bottomSheetDescription: "L’importo da pagare supera il massimo consentito dai gestori responsabili del pagamento. Prova con un altro metodo."
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice

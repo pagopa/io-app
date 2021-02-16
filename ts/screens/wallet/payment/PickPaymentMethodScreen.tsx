@@ -85,6 +85,12 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
     "verifica"
   );
 
+  const payableWallets = props.payableWallets(
+    verifica.importoSingoloVersamento
+  );
+  const notPayableWallets = props.notPayableWallets(
+    verifica.importoSingoloVersamento
+  );
   return (
     <BaseScreenComponent
       goBack={true}
@@ -95,48 +101,63 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <Content>
-            <H1>{"Con quale metodo vuoi pagare?"}</H1>
+            <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <View spacer={true} />
-            <H4 weight={"Regular"} color={"bluegreyDark"}>
-              {props.payableWallets.length > 0
-                ? "Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo."
-                : I18n.t("wallet.payWith.noWallets.text")}
-            </H4>
-            <View spacer={true} />
-            <FlatList
-              removeClippedSubviews={false}
-              data={props.payableWallets(verifica.importoSingoloVersamento)}
-              keyExtractor={item => item.idWallet.toString()}
-              ListFooterComponent={<View spacer />}
-              renderItem={i => (
-                <PickAvailablePaymentMethodListItem
-                  isFirst={i.index === 0}
-                  paymentMethod={i.item}
-                  onPress={() =>
-                    props.navigateToConfirmOrPickPsp(
-                      // Since only credit cards are now accepted method we manage only this case
-                      // TODO: if payment methods different from credit card should be accepted manage every case
-                      convertWalletV2toWalletV1(i.item)
-                    )
-                  }
+            {payableWallets.length > 0 ? (
+              <>
+                <H4 weight={"Regular"} color={"bluegreyDark"}>
+                  {I18n.t("wallet.payWith.text")}
+                </H4>
+                <FlatList
+                  removeClippedSubviews={false}
+                  data={payableWallets}
+                  keyExtractor={item => item.idWallet.toString()}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickAvailablePaymentMethodListItem
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                      onPress={() =>
+                        props.navigateToConfirmOrPickPsp(
+                          // Since only credit cards are now accepted method we manage only this case
+                          // TODO: if payment methods different from credit card should be accepted manage every case
+                          convertWalletV2toWalletV1(i.item)
+                        )
+                      }
+                    />
+                  )}
                 />
-              )}
-            />
-            <View spacer={true} />
-            <H4 color={"bluegreyDark"}>Metodi non compatibili</H4>
-            <View spacer={true} />
-            <FlatList
-              removeClippedSubviews={false}
-              data={props.notPayableWallets(verifica.importoSingoloVersamento)}
-              keyExtractor={item => item.idWallet.toString()}
-              ListFooterComponent={<View spacer />}
-              renderItem={i => (
-                <PickNotAvailablePaymentMethodListItem
-                  isFirst={i.index === 0}
-                  paymentMethod={i.item}
+                <View spacer={true} />
+              </>
+            ) : (
+              <H4 weight={"Regular"} color={"bluegreyDark"}>
+                {I18n.t("wallet.payWith.noWallets.text")}
+              </H4>
+            )}
+
+            {notPayableWallets.length > 0 && (
+              <>
+                <View spacer={true} />
+                <H4 color={"bluegreyDark"}>
+                  {I18n.t(
+                    "wallet.payWith.pickPaymentMethod.notAvailable.title"
+                  )}
+                </H4>
+                <View spacer={true} />
+                <FlatList
+                  removeClippedSubviews={false}
+                  data={notPayableWallets}
+                  keyExtractor={item => item.idWallet.toString()}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickNotAvailablePaymentMethodListItem
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                    />
+                  )}
                 />
-              )}
-            />
+              </>
+            )}
           </Content>
         </ScrollView>
         {renderFooterButtons(

@@ -66,14 +66,8 @@ const AmexBottomSheetBody = () => (
     <View spacer={true} large={true} />
     <H4 weight={"Regular"}>
       {I18n.t(
-        "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+        "wallet.payWith.pickPaymentMethod.notAvailable.amex.bottomSheetDescription"
       )}
-      <H4>
-        {" "}
-        {I18n.t(
-          "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
-        )}
-      </H4>
     </H4>
     <View spacer={true} large={true} />
   </>
@@ -116,7 +110,14 @@ const extractInfoFromPaymentMethod = (
         description: getBancomatOrCreditCardPickMethodDescription(
           paymentMethod
         ),
-        bottomSheetTitle: "bottom sheet title",
+        bottomSheetTitle:
+          paymentMethod.info.brand === "MAESTRO"
+            ? "arriving"
+            : paymentMethod.info.brand === "AMEX"
+            ? I18n.t(
+                "wallet.payWith.pickPaymentMethod.notAvailable.amex.bottomSheetTitle"
+              )
+            : "cobadge",
         bottomSheetBody:
           paymentMethod.info.brand === "MAESTRO"
             ? ArrivingBottomSheetBody()
