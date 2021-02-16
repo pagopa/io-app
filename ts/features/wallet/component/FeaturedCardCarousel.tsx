@@ -35,6 +35,12 @@ const styles = StyleSheet.create({
   container: { backgroundColor: "white", paddingTop: 14 },
   scrollViewPadding: { paddingVertical: 15 }
 });
+
+/**
+ * this component shows an horizontal scrollview of items
+ * an item represents a bonus that the app can handle (relative feature flag enabled and handler set) and its
+ * visibility is 'visible' or 'experimental'
+ */
 const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   const bonusMap: Map<number, BonusUtils> = new Map<number, BonusUtils>([]);
 

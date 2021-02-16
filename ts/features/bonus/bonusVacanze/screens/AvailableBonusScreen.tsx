@@ -69,8 +69,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 /**
  * This component presents the list of available bonus the user can request
- * if the bonus is already active, the component shows the active bonus item and user can navigate to the bonus detail
- * instead if bonus is not active the user can navigate to the begin of request flow.
+ * only the visible bonus are shown ('visible' or 'experimental')
+ * - if the bonus handler is set, the relative item performs the handler
+ * - if the bonus handler is not set:
+ *    - it displays the 'incoming label' within the bonus
+ *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
+ *    - if the bonus is not active at the on press it does nothing
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private openAppStore = () => {
