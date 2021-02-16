@@ -69,10 +69,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 /**
  * This component presents the list of available bonus the user can request
- * only the visible bonus are shown ('visible' or 'experimental')
+ * Only the visible bonus are shown ('visible' or 'experimental')
  * - if the bonus handler is set, the relative item performs the handler
  * - if the bonus handler is not set:
- *    - it displays the 'incoming label' within the bonus
+ *    - it displays the 'incoming label' within the bonus (only if the bonus is 'visible')
  *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
  *    - if the bonus is not active at the on press it does nothing
  */
