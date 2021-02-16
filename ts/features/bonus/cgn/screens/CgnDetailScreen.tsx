@@ -91,18 +91,18 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <View spacer large />
           <View style={styles.verticallyCenter}>
             {/* FIXME Add on press event when TOS are defined */}
-            <Link>{"Informativa sul trattamento dei dati personali"}</Link>
+            <Link>{I18n.t("bonus.cgn.detail.tos.link")}</Link>
           </View>
         </View>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
             constNull,
-            I18n.t("global.buttons.exit")
+            I18n.t("bonus.cgn.detail.cta.buyers")
           )}
           rightButton={confirmButtonProps(
             constNull,
-            I18n.t("global.buttons.confirm")
+            I18n.t("bonus.cgn.detail.cta.otp")
           )}
         />
       </SafeAreaView>

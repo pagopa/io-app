@@ -2158,6 +2158,9 @@ bonus:
     cta:
       activeBonus: Activate your Carta Giovani
     detail:
+      cta:
+        buyers: See merchants
+        otp: Generate code
       tos:
         link: Information on the processing of personal data
       information:

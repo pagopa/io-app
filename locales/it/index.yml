@@ -2190,6 +2190,9 @@ bonus:
     cta:
       activeBonus: Attiva la tua Carta Giovani
     detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
