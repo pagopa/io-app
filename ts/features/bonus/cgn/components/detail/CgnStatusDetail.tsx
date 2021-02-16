@@ -57,7 +57,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "ACTIVATED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeActive}>
+          <Badge style={styles.statusBadgeActive} testID={"status-badge"}>
             <Text style={styles.statusText} semibold={true}>
               {I18n.t("bonus.cgn.detail.status.badge.active")}
             </Text>
@@ -66,10 +66,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
         dateInformation: (
           <>
             {renderRowBlock(
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-label"}
+              >
                 {I18n.t("bonus.cgn.detail.activationDateLabel")}
               </H5>,
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-value"}
+              >
                 {localeDateFormat(
                   cgnDetail.activation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
@@ -82,7 +90,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "EXPIRED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeRevoked}>
+          <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
             <Text style={styles.statusText} semibold={true}>
               {I18n.t("bonus.cgn.detail.status.badge.expired")}
             </Text>
@@ -91,10 +99,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
         dateInformation: (
           <>
             {renderRowBlock(
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-label"}
+              >
                 {I18n.t("bonus.cgn.detail.activationDateLabel")}
               </H5>,
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-value"}
+              >
                 {localeDateFormat(
                   cgnDetail.activation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
@@ -102,10 +118,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               </H5>
             )}
             {renderRowBlock(
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"expiration-date-label"}
+              >
                 {I18n.t("bonus.cgn.detail.expirationDateLabel")}
               </H5>,
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"expiration-date-value"}
+              >
                 {localeDateFormat(
                   cgnDetail.expiration_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
@@ -118,7 +142,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "REVOKED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeRevoked}>
+          <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
             <Text style={styles.statusText} semibold={true}>
               {I18n.t("bonus.cgn.detail.status.badge.revoked")}
             </Text>
@@ -127,10 +151,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
         dateInformation: (
           <>
             {renderRowBlock(
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-label"}
+              >
                 {I18n.t("bonus.cgn.detail.activationDateLabel")}
               </H5>,
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"activation-date-value"}
+              >
                 {localeDateFormat(
                   cgnDetail.activation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")
@@ -138,10 +170,18 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               </H5>
             )}
             {renderRowBlock(
-              <H5 weight={"Regular"} color={"bluegrey"}>
-                {I18n.t("bonus.cgn.detail.expirationDateLabel")}
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"revocation-date-label"}
+              >
+                {I18n.t("bonus.cgn.detail.revocationDateLabel")}
               </H5>,
-              <H5 weight={"Regular"} color={"bluegrey"}>
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"revocation-date-value"}
+              >
                 {localeDateFormat(
                   cgnDetail.revocation_date,
                   TypedI18n.t("global.dateFormats.shortFormat")

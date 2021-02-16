@@ -10,6 +10,7 @@ import {
   StatusEnum as CgnRevokedStatusEnum
 } from "../../../../../../../definitions/cgn/CgnRevokedStatus";
 import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CgnExpiredStatus";
+import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CgnPendingStatus";
 
 const cgnStatusActivated: CgnStatus = {
   status: CgnActivatedStatusEnum.ACTIVATED,
@@ -29,6 +30,10 @@ const cgnStatusExpired: CgnStatus = {
   status: CgnExpiredStatusEnum.EXPIRED,
   activation_date: new Date("2020-03-04"),
   expiration_date: new Date("2037-02-20")
+};
+
+const cgnStatusPending: CgnStatus = {
+  status: CgnPendingStatusEnum.PENDING
 };
 
 describe("CgnInfoboxDetail", () => {
@@ -75,5 +80,12 @@ describe("CgnInfoboxDetail", () => {
     expect(component.queryByTestId("infobox-text")).toHaveTextContent(
       expiredLabel
     );
+  });
+
+  it("Pending status", () => {
+    const component = render(<CgnInfoboxDetail cgnDetail={cgnStatusPending} />);
+
+    expect(component).not.toBeNull();
+    expect(component.queryByTestId("infobox-text")).toBeNull();
   });
 });
