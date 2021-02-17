@@ -8,7 +8,7 @@
  * and it includes the barcode of the fiscal code with the code 128 format
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Appearance, Text, View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: textFontSizeF,
     marginLeft: textLeftMarginF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeText: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   fullFiscalCodeText: {
     lineHeight: cardLineHeightF * 2,
     marginTop: fiscalCodeHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeFiscalCodeText: {
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   fullLastNameText: {
     lineHeight: textdLineHeightF,
     marginTop: lastNameHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeLastNameText: {
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   fullNameText: {
     lineHeight: textdLineHeightF,
     marginTop: nameHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeNameText: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     lineHeight: textdLineHeightF,
     marginTop: nameHeightF,
     marginLeft: textGenderLeftMarginF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeGender: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   fullBirthPlaceText: {
     lineHeight: cardLineHeightF * 2,
     marginTop: birdPlaceHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeBirthPlaceText: {
@@ -270,13 +270,13 @@ const styles = StyleSheet.create({
   fullBirthCityText: {
     lineHeight: textdLineHeightF,
     marginTop: birthCityHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   fullDateText: {
     lineHeight: cardLineHeightF * 2,
     marginTop: dateHeightF,
-    color: IOColors.black
+    color: Appearance.getColorScheme() === 'dark' ? IOColors.white : IOColors.black
   },
 
   landscapeDateText: {
