@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import configureStoreAndPersistor from "./boot/configureStoreAndPersistor";
+import FocusAwareStatusBar from "./components/ui/FocusAwareStatusBar";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
@@ -20,6 +21,7 @@ export const { store, persistor } = configureStoreAndPersistor();
 export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
+      <FocusAwareStatusBar />
       <PersistGate loading={undefined} persistor={persistor}>
         <BottomSheetModalProvider>
           <LightModalProvider>

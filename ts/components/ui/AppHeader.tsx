@@ -17,8 +17,6 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => (
           ? { backgroundColor: props.backgroundColor }
           : undefined
       }
-      androidStatusBarColor={variables.androidStatusBarColor}
-      iosBarStyle={"dark-content"}
       {...props}
     />
     <ConnectionBar />

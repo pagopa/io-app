@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { connect } from "react-redux";
-import { StatusBar } from "react-native";
+import { Platform, StatusBar } from "react-native";
+import { NavigationState, NavigationRoute } from "react-navigation";
 import ROUTES from "../../navigation/routes";
 import customVariables from "../../theme/variables";
 import { GlobalState } from "../../store/reducers/types";
@@ -13,16 +14,28 @@ type StatusBarColorBackgroundConfig = {
 
 type Routes = keyof typeof ROUTES;
 
-const mapStateToProps = ({ nav: { routes } }: GlobalState) => ({
-  // Only way to access current route name, within the TabNavigator
-  currentRoute: routes[0].routes[routes[0].index].routes[0].routeName
+const getActiveRoute = (route: NavigationState): NavigationRoute => {
+  const { routes, index } = route;
+
+  return routes?.length && index < routes.length
+    ? (getActiveRoute(routes[index] as NavigationState) as NavigationRoute)
+    : (route as NavigationRoute);
+};
+
+const mapStateToProps = ({ nav }: GlobalState) => ({
+  currentRoute: getActiveRoute(nav).routeName
 });
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-const darkConfig: StatusBarColorBackgroundConfig = {
+const darkGrayConfig: StatusBarColorBackgroundConfig = {
   barStyle: "light-content",
   backgroundColor: customVariables.brandDarkGray
+};
+
+const blueConfig: StatusBarColorBackgroundConfig = {
+  barStyle: "light-content",
+  backgroundColor: customVariables.brandPrimary
 };
 
 const defaultConfig: StatusBarColorBackgroundConfig = {
@@ -31,20 +44,31 @@ const defaultConfig: StatusBarColorBackgroundConfig = {
 };
 
 const statusBarConfigMap = new Map<Routes, StatusBarColorBackgroundConfig>([
-  ["WALLET_HOME", darkConfig],
-  ["PROFILE_MAIN", darkConfig]
+  ["WALLET_HOME", darkGrayConfig],
+  ["PROFILE_MAIN", darkGrayConfig],
+  ["WALLET_BPAY_DETAIL", darkGrayConfig],
+  ["WALLET_CARD_TRANSACTIONS", darkGrayConfig],
+  ["WALLET_BANCOMAT_DETAIL", darkGrayConfig],
+  ["WALLET_SATISPAY_DETAIL", darkGrayConfig],
+  ["WALLET_BPAY_DETAIL", darkGrayConfig],
+  ["WALLET_COBADGE_DETAIL", darkGrayConfig],
+  ["INGRESS", blueConfig]
 ]);
 
 const FocusAwareStatusBar: FC<Props> = ({ currentRoute }) => {
   const currentRouteConfig = statusBarConfigMap.get(currentRoute as Routes);
+  const statusBarProps =
+    currentRouteConfig !== undefined ? currentRouteConfig : defaultConfig;
 
-  return (
-    <StatusBar
-      {...(currentRouteConfig !== undefined
-        ? currentRouteConfig
-        : defaultConfig)}
-    />
-  );
+  console.log(currentRouteConfig, currentRoute, statusBarProps);
+
+  useEffect(() => {
+    StatusBar.setBarStyle(statusBarProps.barStyle);
+    if (Platform.OS == "android") {
+      StatusBar.setBackgroundColor(statusBarProps.backgroundColor);
+    }
+  });
+  return <StatusBar {...statusBarProps} />;
 };
 
 export default connect(mapStateToProps)(FocusAwareStatusBar);

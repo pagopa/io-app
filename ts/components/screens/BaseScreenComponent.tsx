@@ -23,8 +23,6 @@ import {
   defaultAttachmentTypeConfiguration
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
 import ContextualHelpModal from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
@@ -191,9 +189,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private showHelp = () => {
-    maybeDark(this.props.dark).map(_ =>
-      setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
-    );
     this.setState({
       isHelpVisible: true,
       markdownContentLoaded: fromNullable(
@@ -203,12 +198,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private hideHelp = () => {
-    maybeDark(this.props.dark).map(_ =>
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      )
-    );
     this.handleOnContextualHelpDismissed();
     this.setState({ isHelpVisible: false });
   };

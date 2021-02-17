@@ -534,7 +534,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        <FocusAwareStatusBar />
         {this.newMethodAdded ? (
           this.newMethodAddedContent
         ) : (

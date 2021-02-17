@@ -21,7 +21,6 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
@@ -511,7 +510,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile"]}
       >
-        <FocusAwareStatusBar />
         {screenContent()}
       </DarkLayout>
     );
