@@ -8,7 +8,7 @@
  * and it includes the barcode of the fiscal code with the code 128 format
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Appearance, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
