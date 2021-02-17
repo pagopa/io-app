@@ -293,6 +293,9 @@ export const navigateToWalletHome = (
     params
   });
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletList = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_LIST
