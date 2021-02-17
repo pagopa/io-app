@@ -6,13 +6,23 @@ import I18n from "../../../i18n";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { CreditCard, TransactionResponse } from "../../../types/pagopa";
+import {
+  CreditCard,
+  NullableWallet,
+  PayRequest,
+  TransactionResponse
+} from "../../../types/pagopa";
 import { CreditCardPan } from "../../../utils/input";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
   NavigationParams
 } from "../ConfirmCardDetailsScreen";
-import { payCreditCardVerificationSuccess } from "../../../store/actions/wallet/wallets";
+import {
+  addWalletCreditCardWithBackoffRetryRequest,
+  fetchWalletsRequest,
+  payCreditCardVerificationSuccess,
+  payCreditCardVerificationWithBackoffRetryRequest
+} from "../../../store/actions/wallet/wallets";
 
 jest.unmock("react-navigation");
 jest.mock("react-native-share", () => ({
@@ -22,29 +32,8 @@ jest.mock("react-native-share", () => ({
 describe("ConfirmCardDetailScreen", () => {
   beforeEach(() => jest.useFakeTimers());
 
-  const params: NavigationParams = {
-    creditCard: {
-      pan: "123456789" as CreditCardPan,
-      holder: "tester"
-    } as CreditCard,
-    inPayment: none
-  } as NavigationParams;
-
   it("should show the loading modal if creditCardVerification is some and creditCardCheckout3ds is not pot.some", () => {
-    const ToBeTested: React.FunctionComponent<React.ComponentProps<
-      typeof ConfirmCardDetailsScreen
-    >> = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
-      <ConfirmCardDetailsScreen {...props} />
-    );
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      ToBeTested,
-      ROUTES.WALLET_ADD_CARD,
-      params,
-      store
-    );
+    const { component, store } = getComponent();
 
     store.dispatch(payCreditCardVerificationSuccess({} as TransactionResponse));
 
@@ -56,4 +45,77 @@ describe("ConfirmCardDetailScreen", () => {
     expect(loadingModal).not.toBeNull();
     expect(loadingText).not.toBeEmpty();
   });
+  it("should show the loading modal if creditCardAddWallet is pot.loading", () => {
+    const { component, store } = getComponent();
+
+    store.dispatch(
+      addWalletCreditCardWithBackoffRetryRequest({
+        creditcard: {} as NullableWallet
+      })
+    );
+
+    const loadingModal = component.getAllByTestId("overlayComponent");
+    const loadingText = component.getByText(
+      I18n.t("wallet.saveCard.loadingAlert")
+    );
+
+    expect(loadingModal).not.toBeNull();
+    expect(loadingText).not.toBeEmpty();
+  });
+  it("should show the loading modal if creditCardVerification is pot.loading", () => {
+    const { component, store } = getComponent();
+
+    store.dispatch(
+      payCreditCardVerificationWithBackoffRetryRequest({
+        payRequest: {} as PayRequest
+      })
+    );
+
+    const loadingModal = component.getAllByTestId("overlayComponent");
+    const loadingText = component.getByText(
+      I18n.t("wallet.saveCard.loadingAlert")
+    );
+
+    expect(loadingModal).not.toBeNull();
+    expect(loadingText).not.toBeEmpty();
+  });
+  it("should show the loading modal if walletById is pot.loading", () => {
+    const { component, store } = getComponent();
+
+    store.dispatch(fetchWalletsRequest());
+
+    const loadingModal = component.getAllByTestId("overlayComponent");
+    const loadingText = component.getByText(
+      I18n.t("wallet.saveCard.loadingAlert")
+    );
+
+    expect(loadingModal).not.toBeNull();
+    expect(loadingText).not.toBeEmpty();
+  });
 });
+
+const getComponent = () => {
+  const params: NavigationParams = {
+    creditCard: {
+      pan: "123456789" as CreditCardPan,
+      holder: "tester"
+    } as CreditCard,
+    inPayment: none
+  } as NavigationParams;
+  const ToBeTested: React.FunctionComponent<React.ComponentProps<
+    typeof ConfirmCardDetailsScreen
+  >> = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
+    <ConfirmCardDetailsScreen {...props} />
+  );
+
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    ToBeTested,
+    ROUTES.WALLET_ADD_CARD,
+    params,
+    store
+  );
+
+  return { component, store };
+};
