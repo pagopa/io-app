@@ -23,6 +23,8 @@ import {
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
+import { H4 } from "./core/typography/H4";
+import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
 
@@ -44,6 +46,7 @@ type CommonProp = Readonly<{
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
+  description?: string;
 }>;
 
 type State = {
@@ -172,6 +175,19 @@ export class LabelledItem extends React.Component<Props, State> {
             />
           )}
         </Item>
+        {this.props.description && (
+          <Item style={styles.noBottomLine}>
+            <H5
+              color={
+                this.props.isValid === undefined || this.props.isValid === true
+                  ? "bluegreyDark"
+                  : "red"
+              }
+            >
+              {this.props.label}
+            </H5>
+          </Item>
+        )}
       </View>
     );
   }
