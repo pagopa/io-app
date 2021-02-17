@@ -64,8 +64,8 @@ const tabBarStyleFactory = () => {
     ...defaultStyle,
     ...(isIPhone12
       ? {
-          paddingBottom: 20,
-          height: 74
+          paddingBottom: 30,
+          height: 84
         }
       : {
           paddingBottom: 10,
