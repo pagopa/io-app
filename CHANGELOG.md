@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0-rc.5](https://github.com/pagopa/io-app/compare/1.21.0-rc.4...1.21.0-rc.5) (2021-02-15)
+
+## [1.21.0-rc.4](https://github.com/pagopa/io-app/compare/1.21.0-rc.3...1.21.0-rc.4) (2021-02-15)
+
+
+### Features
+
+* [[#176825286](https://www.pivotaltracker.com/story/show/176825286),[#176323469](https://www.pivotaltracker.com/story/show/176323469)] Features Carousel: Items are now shown depending on local and remote feature flag. BPD item is shown only when user is not enrolled to the program, hidden if loading or the information is not available ([#2793](https://github.com/pagopa/io-app/issues/2793)) ([435cde1](https://github.com/pagopa/io-app/commit/435cde196b6338e69bd139deee15fa06f2d78273))
+* **Services:** [[#176919053](https://www.pivotaltracker.com/story/show/176919053)] Remove services tab counter badge and item unread badge indicator ([#2823](https://github.com/pagopa/io-app/issues/2823)) ([39c0be5](https://github.com/pagopa/io-app/commit/39c0be5a83e3cff2acffdef43d5afd3213d8f58b))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176023332](https://www.pivotaltracker.com/story/show/176023332)] If the unsubscription to bpd fails, exiting and re-entering the detail screen, the error toast is displayed again ([#2822](https://github.com/pagopa/io-app/issues/2822)) ([9a872e6](https://github.com/pagopa/io-app/commit/9a872e6d9247771f71ec31a1b760188d95212b1b))
+* **Bonus Pagamenti Digitali:** [[#176551362](https://www.pivotaltracker.com/story/show/176551362)] Not all the getWalletV2 call are tracked ([#2815](https://github.com/pagopa/io-app/issues/2815)) ([a286f21](https://github.com/pagopa/io-app/commit/a286f21a1e7934375eac1202491fb3aea530a564))
+* **Bonus Pagamenti Digitali:** [[#176903622](https://www.pivotaltracker.com/story/show/176903622)] Wrong back navigation when the workflow start from the new added bancomat bottomsheet ([#2813](https://github.com/pagopa/io-app/issues/2813)) ([a1381c7](https://github.com/pagopa/io-app/commit/a1381c7e2f9cb1283955bae6c2540456f1589364))
+* **Bonus Pagamenti Digitali:** [[#176940152](https://www.pivotaltracker.com/story/show/176940152)] The BANCOMAT detail icons is (!) instead of (i) ([#2827](https://github.com/pagopa/io-app/issues/2827)) ([ec75063](https://github.com/pagopa/io-app/commit/ec75063400950bd2140100c698bf62eb457417d3))
+* **Carta Giovani Nazionale:** [[#176905852](https://www.pivotaltracker.com/story/show/176905852)] Updated CGN spec url to master branch of IO Backend repository ([#2814](https://github.com/pagopa/io-app/issues/2814)) ([3995303](https://github.com/pagopa/io-app/commit/399530315e3a5d0f1a165d12805fd601edbd35cb))
+
+
+### Chores
+
+* [[#176900759](https://www.pivotaltracker.com/story/show/176900759)] Extend urls checking to *.ts source files ([#2811](https://github.com/pagopa/io-app/issues/2811)) ([eb94f57](https://github.com/pagopa/io-app/commit/eb94f57e3fbc724d4d68df62268d71151637f870))
+* **Bonus Pagamenti Digitali:** [[#176918770](https://www.pivotaltracker.com/story/show/176918770)] Update copy when adding a co-badge card to the wallet ([4af4fb0](https://github.com/pagopa/io-app/commit/4af4fb06721f57677385e419b945faa413d62f2e))
+
+## [1.21.0-rc.3](https://github.com/pagopa/io-app/compare/1.21.0-rc.2...1.21.0-rc.3) (2021-02-11)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176895859](https://www.pivotaltracker.com/story/show/176895859)] Wrong tracking format for handleSearchUserCoBadge errors [#2810](https://github.com/pagopa/io-app/issues/2810) ([6a4449a](https://github.com/pagopa/io-app/commit/6a4449a4b4fa471d9f87d6c10fa90622da8775f3))
+
 ## [1.21.0-rc.2](https://github.com/pagopa/io-app/compare/1.21.0-rc.1...1.21.0-rc.2) (2021-02-10)
 
 
