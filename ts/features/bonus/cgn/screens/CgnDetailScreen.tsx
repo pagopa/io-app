@@ -4,6 +4,7 @@ import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -24,6 +25,11 @@ import { cgnDetailsInformationSelector } from "../store/reducers/details";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
+import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -47,7 +53,10 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
 
-  // const isCgnDetailsAvailable = pot.isSome(props.cgnDetails);
+  const { showModal, hideModal } = React.useContext(LightModalContext);
+
+  const handleModalPress = (tos: string) =>
+    showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
 
   return (
     <BaseScreenComponent
@@ -89,10 +98,16 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           )}
           <ItemSeparatorComponent noPadded />
           <View spacer large />
-          <View style={styles.verticallyCenter}>
-            {/* FIXME Add on press event when TOS are defined */}
-            <Link>{I18n.t("bonus.cgn.detail.tos.link")}</Link>
-          </View>
+          {props.cgnBonusInfo &&
+            fromNullable(
+              props.cgnBonusInfo[getLocalePrimaryWithFallback()].tos_url
+            ).fold(<></>, tos => (
+              <View style={styles.verticallyCenter}>
+                <Link onPress={() => handleModalPress(tos)}>
+                  {I18n.t("bonus.cgn.detail.tos.link")}
+                </Link>
+              </View>
+            ))}
         </View>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
@@ -111,7 +126,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  cgnDetails: cgnDetailsInformationSelector(state)
+  cgnDetails: cgnDetailsInformationSelector(state),
+  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
 const mapDispatchToProps = (_: Dispatch) => ({});
