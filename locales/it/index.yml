@@ -1170,7 +1170,7 @@ wallet:
   addCardTitle: Dati carta
   dummyCard:
     labels:
-      holder: Titolare
+      holder: Intestatario della carta
       pan: Numero della carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza

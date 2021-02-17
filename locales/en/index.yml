@@ -1144,7 +1144,7 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: Card holder
+      holder: Cardholder
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
