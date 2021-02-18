@@ -181,15 +181,6 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
           )
         );
         expect(isTimeoutScreen(testComponent)).toBe(true);
-        store.dispatch(
-          searchUserCoBadge.success(
-            withSearchRequestMetadata([
-              searchRequestMetaPending,
-              searchRequestMetaKO
-            ])(noCardResponse)
-          )
-        );
-        expect(isTimeoutScreen(testComponent)).toBe(false);
       })
     );
   });
