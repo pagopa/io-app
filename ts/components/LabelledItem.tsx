@@ -181,11 +181,7 @@ export class LabelledItem extends React.Component<Props, State> {
           <Item style={styles.noBottomLine}>
             <H5
               weight={"Regular"}
-              color={
-                this.props.isValid === undefined || this.props.isValid === true
-                  ? "bluegreyDark"
-                  : "red"
-              }
+              color={this.props.isValid === false ? "red" : "bluegreyDark"}
             >
               {this.props.description}
             </H5>
