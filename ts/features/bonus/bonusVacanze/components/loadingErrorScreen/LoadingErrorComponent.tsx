@@ -5,23 +5,25 @@ import { useEffect } from "react";
 import { ActivityIndicator, SafeAreaView } from "react-native";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
+import { WithTestID } from "../../../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { bonusVacanzeStyle } from "../Styles";
 
-export type LoadingErrorProps = {
+export type LoadingErrorProps = WithTestID<{
   isLoading: boolean;
   loadingCaption: string;
   errorText?: string;
   errorSubText?: string;
   onRetry: () => void;
   onAbort?: () => void;
-};
+}>;
 
 const errorRef = React.createRef<GenericErrorComponent>();
 const loadingRef = React.createRef<React.Component>();
 
 const renderError = (props: LoadingErrorProps) => (
   <GenericErrorComponent
+    testID={"LoadingErrorComponentError"}
     onRetry={props.onRetry}
     onCancel={props.onAbort}
     text={props.errorText}
@@ -31,7 +33,12 @@ const renderError = (props: LoadingErrorProps) => (
 );
 
 const renderLoading = (loadingCaption: string) => (
-  <View accessible={true} ref={loadingRef} style={{ flex: 1 }}>
+  <View
+    accessible={true}
+    ref={loadingRef}
+    style={{ flex: 1 }}
+    testID={"LoadingErrorComponentLoading"}
+  >
     <InfoScreenComponent
       image={
         <ActivityIndicator
@@ -64,7 +71,7 @@ export const LoadingErrorComponent: React.FunctionComponent<LoadingErrorProps> =
   }, [props.isLoading]);
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={bonusVacanzeStyle.flex} testID={props.testID}>
       {props.isLoading
         ? renderLoading(props.loadingCaption)
         : renderError(props)}
