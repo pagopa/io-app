@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { WithTestID } from "../../../../../../types/WithTestID";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
@@ -12,8 +13,9 @@ import {
 } from "../../store/actions";
 import { coBadgeAbiConfigurationSelector } from "../../store/reducers/abiConfiguration";
 
-export type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+export type Props = WithTestID<
+  ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>
+>;
 
 /**
  * This screen is displayed when loading co-badge configuration
