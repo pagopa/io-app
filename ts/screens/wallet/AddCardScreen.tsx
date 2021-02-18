@@ -52,6 +52,7 @@ import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { fromPredicate } from "fp-ts/lib/Option";
 
 export type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -154,7 +155,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
-      [key]: value.length > 0 ? fromNullable(value) : none
+      [key]: fromPredicate((value: string) => value.length > 0)(value)
     });
   };
 
