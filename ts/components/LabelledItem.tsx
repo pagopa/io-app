@@ -11,7 +11,7 @@
  */
 import color from "color";
 import { isString } from "lodash";
-import { Input, Item, Text, View } from "native-base";
+import { Input, Item, View } from "native-base";
 import * as React from "react";
 import {
   StyleSheet,
@@ -23,7 +23,6 @@ import {
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
-import { H4 } from "./core/typography/H4";
 import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
