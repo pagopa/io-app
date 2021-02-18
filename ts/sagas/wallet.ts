@@ -3,8 +3,7 @@
 /**
  * A saga that manages the Wallet.
  */
-
-import { none, some } from "fp-ts/lib/Option";
+import { none, some, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
@@ -82,6 +81,7 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import { mixpanelTrack } from "../mixpanel";
 import ROUTES from "../navigation/routes";
 import { navigateBack } from "../store/actions/navigation";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
@@ -141,6 +141,7 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -177,6 +178,7 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { isTestEnv } from "../utils/environment";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -200,14 +202,13 @@ const POLL_TRANSACTION_DELAY_MILLIS = 500;
  * 3) if required, complete the 3DS checkout for the payment in step (2)
  *
  * This saga updates a state for each step, thus it can be run multiple times
- * to resume the flow from the last succesful step (retry behavior).
+ * to resume the flow from the last successful step (retry behavior).
  *
  * This saga gets run from ConfirmCardDetailsScreen that is also responsible
  * for showing relevant error and loading states to the user based on the
  * potential state of the flow substates (see GlobalState.wallet.wallets).
  *
  */
-// eslint-disable-next-line
 function* startOrResumeAddCreditCardSaga(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof runStartOrResumeAddCreditCardSaga>
@@ -221,21 +222,16 @@ function* startOrResumeAddCreditCardSaga(
     creditCard: action.payload.creditCard,
     psp: undefined
   };
-
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
-    const state: GlobalState["wallet"]["wallets"] = yield select(
-      _ => _.wallet.wallets
-    );
-
+    const state: ReturnType<typeof getAllWallets> = yield select(getAllWallets);
     //
     // First step: add the credit card to the user wallets
     //
     // Note that the new wallet will not be visibile to the user until all the
     // card onboarding steps have been completed.
     //
-
     if (pot.isNone(state.creditCardAddWallet)) {
       yield put(
         addWalletCreditCardWithBackoffRetryRequest({
@@ -260,7 +256,6 @@ function* startOrResumeAddCreditCardSaga(
       // all is ok, continue to the next step
       continue;
     }
-
     //
     // Second step: verify the card with a "fake" payment.
     //
@@ -308,28 +303,51 @@ function* startOrResumeAddCreditCardSaga(
     // Even though this step is optional, in practice Pagopa will always
     // require the 3DS checkout for cards that gets added to the wallet.
     //
-
     const urlCheckout3ds =
       state.creditCardVerification.value.data.urlCheckout3ds;
-    const pagoPaToken = pmSessionManager.get();
-
-    if (pot.isNone(state.creditCardCheckout3ds)) {
-      if (urlCheckout3ds !== undefined && pagoPaToken.isSome()) {
-        yield put(
-          creditCardCheckout3dsRequest({
-            urlCheckout3ds,
-            paymentManagerToken: pagoPaToken.value
-          })
-        );
-        yield take(getType(creditCardCheckout3dsSuccess));
-        // all is ok, continue to the next step
-        continue;
-      } else {
-        // if there is no need for a 3ds checkout, simulate a success checkout
-        // to proceed to the next step
-        yield put(creditCardCheckout3dsSuccess("done"));
-        continue;
+    try {
+      if (pot.isNone(state.creditCardCheckout3ds)) {
+        if (urlCheckout3ds !== undefined) {
+          // Request a new token to the PM. This prevent expired token during the webview navigation.
+          // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
+          const pagoPaToken: Option<PaymentManagerToken> = yield call(
+            pmSessionManager.getNewToken
+          );
+          if (pagoPaToken.isSome()) {
+            yield put(
+              creditCardCheckout3dsRequest({
+                urlCheckout3ds,
+                paymentManagerToken: pagoPaToken.value
+              })
+            );
+            yield take(getType(creditCardCheckout3dsSuccess));
+            // all is ok, continue to the next step
+            continue;
+          } else {
+            if (action.payload.onFailure) {
+              yield call(
+                mixpanelTrack,
+                getType(addWalletNewCreditCardFailure),
+                {
+                  reason: "cannot refresh wallet token"
+                }
+              );
+              action.payload.onFailure();
+            }
+            return;
+          }
+        } else {
+          // if there is no need for a 3ds checkout, simulate a success checkout
+          // to proceed to the next step
+          yield put(creditCardCheckout3dsSuccess("done"));
+          continue;
+        }
       }
+    } catch (e) {
+      if (action.payload.onFailure) {
+        action.payload.onFailure(e.message);
+      }
+      return;
     }
 
     //
@@ -1028,3 +1046,8 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
     }
   });
 }
+
+// to keep solid code encapsulation
+export const testableWalletsSaga = isTestEnv
+  ? { startOrResumeAddCreditCardSaga }
+  : undefined;
