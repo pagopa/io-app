@@ -83,7 +83,7 @@ const crateAutoPostForm = (
  * - on each page load request it checks the url
  *    - if it is the exit url
  *    - if it contains the outcome code
- * - when the the exit url is found, it doens't load it and call the handler props.onFinish passing the found (maybe not) outcome value
+ * - when the the exit url is found, it doesn't load it and call the handler props.onFinish passing the found (maybe not) outcome value
  */
 export const PayWebViewModal = (props: Props) => {
   const [outcomeCode, setOutcomeCode] = React.useState<string | undefined>(
