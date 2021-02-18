@@ -1108,7 +1108,7 @@ wallet:
         bottomSheetBody: With IO you can pay all pagoPA notices, even those on paper. When you perform in-app payments, you'll need to authorize the transaction using your biometrics or the unlock code.
         bottomSheetCTA: Learn more.
         setFavoriteExplicitTitle: Use as favorite
-        setFavoriteExplicitSubtitle: When making in-app payments, IO will automatically show this payment method
+        setFavoriteExplicitSubtitle: When you pay in-app, IO will automatically show this payment method
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
