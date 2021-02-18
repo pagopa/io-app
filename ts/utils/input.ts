@@ -143,5 +143,5 @@ export function getCreditCardFromState(
 export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
   cardHolder.fold(false, cH => {
     const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
-    return _.isEqual(cH, cardHolderWithoutDiacriticalMarks);
+    return cH === cardHolderWithoutDiacriticalMarks;
   });
