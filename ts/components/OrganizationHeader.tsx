@@ -20,6 +20,8 @@ type Props = {
   service: ServicePublic;
 };
 
+const leftColumnStyle = { marginRight: 16 };
+
 /**
  * A component to render the name of the organization and of the related service
  * with the corresponding image
@@ -28,7 +30,7 @@ const OrganizationHeader = (props: Props) => {
   const { service } = props;
   return (
     <Grid>
-      <Col>
+      <Col style={leftColumnStyle}>
         <H5>{service.organization_name}</H5>
         <Text>{service.service_name}</Text>
       </Col>
