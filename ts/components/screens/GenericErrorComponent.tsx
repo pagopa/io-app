@@ -5,18 +5,21 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
-type Props = Readonly<{
-  avoidNavigationEvents?: boolean;
-  onRetry: () => void;
-  onCancel?: () => void;
-  image?: ImageSourcePropType;
-  text?: string;
-  subText?: string;
-}>;
+type Props = WithTestID<
+  Readonly<{
+    avoidNavigationEvents?: boolean;
+    onRetry: () => void;
+    onCancel?: () => void;
+    image?: ImageSourcePropType;
+    text?: string;
+    subText?: string;
+  }>
+>;
 
 const styles = StyleSheet.create({
   center: {
@@ -76,7 +79,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             onDidFocus={() => setAccessibilityFocus(this.elementRef)}
           />
         )}
-        <Content bounces={false}>
+        <Content bounces={false} testID={this.props.testID}>
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />
             <Image
