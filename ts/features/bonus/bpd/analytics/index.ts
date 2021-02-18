@@ -65,7 +65,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // transactions
     case getType(bpdTransactionsLoad.failure):
       return mp.track(action.type, {
-        awardPeriodId: action.payload,
+        awardPeriodId: action.payload.awardPeriodId,
         reason: action.payload.error.message
       });
     case getType(bpdTransactionsLoad.request):
