@@ -135,7 +135,7 @@ export function getCreditCardFromState(
 }
 
 /**
- * This function checks if the cardholder charset is ammitted.
+ * This function checks if the cardholder charset is admitted.
  * We consider not a valid character an accented character.
  *
  * @param cardHolder
