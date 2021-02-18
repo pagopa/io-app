@@ -1134,7 +1134,7 @@ wallet:
         bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
         bottomSheetCTA: Scopri di più
         setFavoriteExplicitTitle: Usa come preferito
-        setFavoriteExplicitSubtitle: Durante i pagamenti in app, IO mostra in automatico questo metodo di pagamento
+        setFavoriteExplicitSubtitle: Quando paghi in app, IO mostra in automatico questo metodo di pagamento
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
