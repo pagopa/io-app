@@ -23,6 +23,7 @@ import {
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
+import { WithTestID } from "../types/WithTestID";
 import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
@@ -53,7 +54,7 @@ type State = {
   hasFocus: boolean;
 };
 
-type Props = CommonProp &
+type Props = WithTestID<CommonProp> &
   (
     | Readonly<{
         type: "masked";
@@ -160,6 +161,7 @@ export class LabelledItem extends React.Component<Props, State> {
               onChangeText={this.handleOnMaskedChangeText}
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
+              testID={`${this.props.testID}InputMask`}
             />
           ) : (
             <Input
@@ -171,6 +173,7 @@ export class LabelledItem extends React.Component<Props, State> {
               onChangeText={this.handleOnChangeText}
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
+              testID={`${this.props.testID}Input`}
             />
           )}
         </Item>

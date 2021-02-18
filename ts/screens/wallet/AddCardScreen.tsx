@@ -201,6 +201,7 @@ const AddCardScreen: React.FC<Props> = props => {
               returnKeyType: "done",
               onChangeText: (value: string) => updateState("holder", value)
             }}
+            testID={"cardHolder"}
           />
 
           <View spacer={true} />
@@ -229,6 +230,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
               }
             }}
+            testID={"pan"}
           />
 
           <View spacer={true} />
@@ -249,6 +251,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   includeRawValueInChangeText: true,
                   onChangeText: value => updateState("expirationDate", value)
                 }}
+                testID={"expirationDate"}
               />
             </Col>
             <Col style={styles.verticalSpacing} />
@@ -278,6 +281,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   includeRawValueInChangeText: true,
                   onChangeText: value => updateState("securityCode", value)
                 }}
+                testID={"securityCode"}
               />
             </Col>
           </Grid>
