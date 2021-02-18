@@ -1,9 +1,11 @@
-import { fromNullable, none, some } from "fp-ts/lib/Option";
+import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan,
+  CreditCardState,
+  getCreditCardFromState,
   isValidCardHolder,
   isValidExpirationDate,
   isValidPan,
@@ -171,4 +173,63 @@ describe("isValidCardHolder", () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
     })
   );
+});
+
+describe("getCreditCardFromState", () => {
+  const aValidCardHolder = "Mario Rossi";
+  const anInvalidCardHolder = "Mariò Rossi";
+  const aValidPan = "1234567891234568";
+  const anInvalidPan = "1234 5678 9123";
+  const aValidExpirationDate = "12/99";
+  const anInvalidExpirationDate = "99/9";
+  const aValidSecurityCode = "123";
+  const anInvalidSecurityCode = "1";
+  it.each`
+    pan                   | expirationDate                   | securityCode                   | holder
+    ${none}               | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${none}                          | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${none}                        | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${none}
+    ${some(anInvalidPan)} | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(anInvalidExpirationDate)} | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
+  `(
+    "should return none if at least one field of the credit card is none or is invalid",
+    async ({ pan, expirationDate, securityCode, holder }) => {
+      const cardState: CreditCardState = {
+        pan,
+        expirationDate,
+        securityCode,
+        holder
+      };
+      expect(getCreditCardFromState(cardState)).toBe(none);
+    }
+  );
+
+  it("should return a credit card if all the field are correctly filled ", () => {
+    const cardState: CreditCardState = {
+      pan: some(aValidPan),
+      expirationDate: some(aValidExpirationDate),
+      securityCode: some(aValidSecurityCode),
+      holder: some(aValidCardHolder)
+    };
+
+    if (isSome(cardState.expirationDate)) {
+      const [expireMonth, expireYear] = cardState.expirationDate.value.split(
+        "/"
+      );
+
+      const expectedCreditCard = {
+        pan: aValidPan,
+        expireMonth,
+        expireYear,
+        securityCode: aValidSecurityCode,
+        holder: aValidCardHolder
+      };
+      expect(getCreditCardFromState(cardState)).toStrictEqual(
+        some(expectedCreditCard)
+      );
+    }
+  });
 });
