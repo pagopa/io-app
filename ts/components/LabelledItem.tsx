@@ -124,7 +124,7 @@ export class LabelledItem extends React.Component<Props, State> {
     return (
       <View>
         <Item style={styles.noBottomLine}>
-          <Text>{this.props.label}</Text>
+          <H5>{this.props.label}</H5>
         </Item>
         <Item
           style={{
@@ -178,13 +178,14 @@ export class LabelledItem extends React.Component<Props, State> {
         {this.props.description && (
           <Item style={styles.noBottomLine}>
             <H5
+              weight={"Regular"}
               color={
                 this.props.isValid === undefined || this.props.isValid === true
                   ? "bluegreyDark"
                   : "red"
               }
             >
-              {this.props.label}
+              {this.props.description}
             </H5>
           </Item>
         )}
