@@ -86,7 +86,10 @@ const WALLETS_INITIAL_STATE: WalletsState = {
   creditCardCheckout3ds: pot.none
 };
 
-// selectors
+// Selectors
+export const getAllWallets = (state: GlobalState): WalletsState =>
+  state.wallet.wallets;
+
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
