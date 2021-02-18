@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -150,11 +150,12 @@ const AddCardScreen: React.FC<Props> = props => {
     creditCard.pan
   );
 
-  const updateState = (key: CreditCardStateKeys, value: string) =>
+  const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
-      [key]: fromNullable(value)
+      [key]: value.length > 0 ? fromNullable(value) : none
     });
+  };
 
   const secondaryButtonProps = {
     block: true,
@@ -179,7 +180,7 @@ const AddCardScreen: React.FC<Props> = props => {
         <Content scrollEnabled={false}>
           <LabelledItem
             type={"text"}
-            label={I18n.t("wallet.dummyCard.labels.holder")}
+            label={I18n.t("wallet.dummyCard.labels.holder.label")}
             icon="io-titolare"
             isValid={creditCard.holder.getOrElse("") === "" ? undefined : true}
             inputProps={{
@@ -295,7 +296,7 @@ const AddCardScreen: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({});
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
