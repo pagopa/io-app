@@ -140,7 +140,7 @@ export function getCreditCardFromState(
  *
  * @param cardHolder
  */
-export const isValidCardHolder = (cardHolder: Option<string>) =>
+export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
   cardHolder.fold(false, cH => {
     const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
     return _.isEqual(cH, cardHolderWithoutDiacriticalMarks);
