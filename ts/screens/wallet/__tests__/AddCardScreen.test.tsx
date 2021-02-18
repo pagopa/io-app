@@ -30,7 +30,7 @@ const aValidSecurityCode = "123";
 const anInvalidCardHolder = "Màriò Ròssì";
 describe("AddCardScreen", () => {
   beforeEach(() => jest.useFakeTimers());
-  it("should show the continue button blocked if the aren't data", () => {
+  it("should show the continue button disabled if there aren't data", () => {
     const component = getComponent();
     const continueButton = component.queryByText(
       I18n.t("global.buttons.continue")
@@ -39,7 +39,7 @@ describe("AddCardScreen", () => {
     expect(continueButton).toBeDisabled();
   });
 
-  it("should show the continue button active if all the field are filled correctly", () => {
+  it("should show the continue button active if all fields are correctly filled", () => {
     const component = getComponent();
     const cardHolderInput = component.queryByTestId("cardHolderInput");
     const panInputMask = component.queryByTestId("panInputMask");
@@ -70,7 +70,7 @@ describe("AddCardScreen", () => {
 
     expect(continueButton).not.toBeDisabled();
   });
-  it("should show the continue button blocked if all the cardHolder is invalid", () => {
+  it("should show the continue button disabled if the cardHolder is invalid", () => {
     const component = getComponent();
     const cardHolderInput = component.queryByTestId("cardHolderInput");
     const panInputMask = component.queryByTestId("panInputMask");
