@@ -4,6 +4,7 @@ import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan,
+  isValidCardHolder,
   isValidExpirationDate,
   isValidPan,
   isValidSecurityCode
@@ -130,4 +131,44 @@ describe("CreditCardCVC", () => {
   it("should reject invalid CVCs, round 2", () => {
     invalidCVCs.forEach(d => expect(isValidSecurityCode(some(d))).toBeFalsy());
   });
+});
+
+describe("isValidCardHolder", () => {
+  [
+    "á",
+    "à",
+    "ã",
+    "â",
+    "é",
+    "è",
+    "ê",
+    "í",
+    "ì",
+    "î",
+    "õ",
+    "ó",
+    "ò",
+    "ô",
+    "ú",
+    "ù",
+    "û"
+  ].map(accentedCardHolder =>
+    it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
+      expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();
+    })
+  );
+
+  it("should return false if the input string is none", () => {
+    expect(isValidCardHolder(none)).toBeFalsy();
+  });
+
+  [
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "0123456789",
+    "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+  ].map(notAccentedCardHolder =>
+    it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
+      expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
+    })
+  );
 });
