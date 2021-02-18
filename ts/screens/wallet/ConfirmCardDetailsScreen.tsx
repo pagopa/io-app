@@ -47,9 +47,10 @@ import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { isStrictSome } from "../../utils/pot";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   creditCard: CreditCard;
   inPayment: Option<{
     rptId: RptId;
@@ -264,8 +265,13 @@ const mapStateToProps = (state: GlobalState) => {
   } = state.wallet.wallets;
 
   const { psps } = state.wallet.payment;
-
+  // checkout3ds is the step after creditCardVerification
+  // so we can infer it is loading when the verification is completed and
+  // checkout3ds is not some
+  const isCheckout3dsLoading =
+    isStrictSome(creditCardVerification) && !pot.isSome(creditCardCheckout3ds);
   const isLoading =
+    isCheckout3dsLoading ||
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(creditCardVerification) ||
     pot.isLoading(walletById) ||
@@ -284,7 +290,6 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isError(psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
-
   return {
     isLoading,
     error,
