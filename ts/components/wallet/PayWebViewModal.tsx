@@ -69,7 +69,9 @@ const crateAutoPostForm = (
   </form>`;
 
 /**
- * webview component used to start a payment. A payment could start
+ * A modal including a webview component.
+ * It must be used to handle a payment.
+ * A payment could start
  * - on credit card on-boarding
  * - on a regular payment
  * see https://docs.google.com/document/d/1FUkW7nwHlcmN2GrBWq1YnAzoNuvcvxa7WM0_VTkYV-I/edit#heading=h.v23dcgmq0ypp
