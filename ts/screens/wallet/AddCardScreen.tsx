@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -38,7 +38,8 @@ import {
   CreditCardState,
   getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
-  CreditCardStateKeys
+  CreditCardStateKeys,
+  isValidCardHolder
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -52,7 +53,7 @@ import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
@@ -181,8 +182,17 @@ const AddCardScreen: React.FC<Props> = props => {
           <LabelledItem
             type={"text"}
             label={I18n.t("wallet.dummyCard.labels.holder.label")}
+            description={
+              isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
+                ? I18n.t("wallet.dummyCard.labels.holder.description.base")
+                : I18n.t("wallet.dummyCard.labels.holder.description.error")
+            }
             icon="io-titolare"
-            isValid={creditCard.holder.getOrElse("") === "" ? undefined : true}
+            isValid={
+              isNone(creditCard.holder)
+                ? undefined
+                : isValidCardHolder(creditCard.holder)
+            }
             inputProps={{
               value: creditCard.holder.getOrElse(""),
               placeholder: I18n.t("wallet.dummyCard.values.holder"),
