@@ -1,5 +1,5 @@
-type TimeoutError = { readonly kind: "timeout" };
-type GenericError = { kind: "generic"; value: Error };
+export type TimeoutError = { readonly kind: "timeout" };
+export type GenericError = { readonly kind: "generic"; value: Error };
 export type NetworkError = TimeoutError | GenericError;
 
 /**
@@ -28,6 +28,8 @@ export const getGenericError = (error: Error): GenericError => ({
   kind: "generic",
   value: error
 });
+
+export const getTimeoutError = (): TimeoutError => ({ kind: "timeout" });
 
 export const isTimeoutError = (error: NetworkError): error is TimeoutError =>
   error.kind === "timeout";
