@@ -6,6 +6,7 @@ import CgnActivationTimeoutScreen from "../screens/activation/CgnActivationTimeo
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnDetailScreen from "../screens/CgnDetailScreen";
+import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CGN_ROUTES from "./routes";
 
 const CgnNavigator = createStackNavigator(
@@ -27,6 +28,9 @@ const CgnNavigator = createStackNavigator(
     },
     [CGN_ROUTES.ACTIVATION.COMPLETED]: {
       screen: CgnActivationCompletedScreen
+    },
+    [CGN_ROUTES.MERCHANTS.LIST]: {
+      screen: MerchantsListScreen
     },
     [CGN_ROUTES.DETAILS]: {
       screen: CgnDetailScreen
