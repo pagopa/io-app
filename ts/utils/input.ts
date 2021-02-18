@@ -138,14 +138,10 @@ export function getCreditCardFromState(
  * This function checks if the cardholder charset is ammitted.
  * We consider not a valid character an accented character.
  *
- * This function return 3 possible state:
- *  - undefined -> the cardHolder is none
- *  - true -> the card doesn't contain accented characters
- *  - false -> the card contain accented characters.
  * @param cardHolder
  */
 export const isValidCardHolder = (cardHolder: Option<string>) =>
-  cardHolder.fold(undefined, cH => {
+  cardHolder.fold(false, cH => {
     const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
     return _.isEqual(cH, cardHolderWithoutDiacriticalMarks);
   });
