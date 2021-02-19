@@ -10,7 +10,6 @@ import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import _ from "lodash";
 import {
   call,
-  delay,
   Effect,
   fork,
   put,
@@ -91,7 +90,6 @@ import {
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
-  paymentExecutePayment,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
@@ -105,16 +103,11 @@ import {
 import {
   deleteReadTransaction,
   fetchPsp,
-  fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsFailure,
   fetchTransactionsLoadComplete,
   fetchTransactionsRequest,
-  fetchTransactionsRequestWithExpBackoff,
-  fetchTransactionSuccess,
-  pollTransactionSagaCompleted,
-  pollTransactionSagaTimeout,
-  runPollTransactionSaga
+  fetchTransactionsRequestWithExpBackoff
 } from "../store/actions/wallet/transactions";
 import {
   addWalletCreditCardFailure,
@@ -170,7 +163,6 @@ import {
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
   paymentDeletePaymentRequestHandler,
-  paymentExecutePaymentRequestHandler,
   paymentFetchAllPspsForWalletRequestHandler,
   paymentFetchPspsForWalletRequestHandler,
   paymentIdPollingRequestHandler,
@@ -179,15 +171,6 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { isTestEnv } from "../utils/environment";
-
-/**
- * Configure the max number of retries and delay between retries when polling
- * for the completion of a transaction during payment.
- *
- * Max wait time will be POLL_TRANSACTION_MAX_RETRIES * POLL_TRANSACTION_DELAY_MILLIS
- */
-const POLL_TRANSACTION_MAX_RETRIES = 30;
-const POLL_TRANSACTION_DELAY_MILLIS = 500;
 
 /**
  * This saga manages the flow for adding a new card.
@@ -530,57 +513,6 @@ function* startOrResumePaymentActivationSaga(
 }
 
 /**
- * This saga will poll for a transaction until it reaches a certain "valid"
- * status, as defined by the isValid predicate.
- * The saga will retry for POLL_TRANSACTION_MAX_RETRIES times, with a delay
- * of POLL_TRANSACTION_DELAY_MILLIS between retries.
- */
-function* pollTransactionSaga(
-  action: ActionType<typeof runPollTransactionSaga>
-) {
-  // eslint-disable-next-line no-var
-  var count = POLL_TRANSACTION_MAX_RETRIES;
-
-  const { id, isValid, onValid, onTimeout } = action.payload;
-
-  while (count > 0) {
-    // cycle until POLL_TRANSACTION_MAX_RETRIES
-
-    // issue a request for fetch the transaction
-    yield put(fetchTransactionRequest(id));
-    const result = yield take([
-      getType(fetchTransactionSuccess),
-      getType(fetchTransactionFailure)
-    ]);
-
-    if (isActionOf(fetchTransactionSuccess, result)) {
-      // on success, emit the completed action and call the (optional) callback
-      const transaction = result.payload;
-      if (isValid(transaction)) {
-        yield put(pollTransactionSagaCompleted(transaction));
-        if (onValid) {
-          onValid(transaction);
-        }
-        return;
-      }
-    }
-
-    // on failure, try again after a delay
-
-    // eslint-disable-next-line
-    yield delay(POLL_TRANSACTION_DELAY_MILLIS);
-
-    count -= 1;
-  }
-  // no more retries, emit a timeout action and call the (optional) failure
-  // callback
-  yield put(pollTransactionSagaTimeout());
-  if (onTimeout) {
-    onTimeout();
-  }
-}
-
-/**
  * This saga attempts to delete the active payment, if there's one.
  *
  * This is a best effort operation as the result is actually ignored.
@@ -676,8 +608,6 @@ export function* watchWalletSaga(
     getType(runStartOrResumePaymentActivationSaga),
     startOrResumePaymentActivationSaga
   );
-
-  yield takeLatest(getType(runPollTransactionSaga), pollTransactionSaga);
 
   yield takeLatest(
     getType(runDeleteActivePaymentSaga),
@@ -844,12 +774,14 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  /*
   yield takeLatest(
     getType(paymentExecutePayment.request),
     paymentExecutePaymentRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
+   */
 
   yield takeLatest(
     getType(paymentDeletePayment.request),

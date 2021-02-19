@@ -10,7 +10,6 @@ import {
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
-  paymentExecutePayment,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
@@ -559,42 +558,6 @@ export function* paymentCheckRequestHandler(
     }
   } catch (error) {
     yield put(paymentCheck.failure(error));
-  }
-}
-
-/**
- * Handles paymentExecutePaymentRequest
- */
-export function* paymentExecutePaymentRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentExecutePayment["request"]>
-): Generator<Effect, void, any> {
-  const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
-    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
-  });
-  const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
-  try {
-    const response: SagaCallReturnType<typeof postPaymentWithRefresh> = yield call(
-      postPaymentWithRefresh
-    );
-
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const newTransaction = response.value.value.data;
-        const successAction = paymentExecutePayment.success(newTransaction);
-        yield put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    yield put(paymentExecutePayment.failure(e));
   }
 }
 

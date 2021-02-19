@@ -6,19 +6,15 @@ import { Action } from "../../actions/types";
 import {
   paymentAttiva,
   paymentCheck,
-  paymentExecutePayment,
+  paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
+  PaymentStartPayload,
   paymentVerifica
 } from "../../actions/wallet/payment";
-import {
-  pollTransactionSagaCompleted,
-  pollTransactionSagaTimeout,
-  runPollTransactionSaga
-} from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
 
 export type EntrypointRoute = Readonly<{
@@ -54,15 +50,8 @@ export type PaymentState = Readonly<{
     typeof paymentFetchAllPspsForPaymentId["success"],
     typeof paymentFetchAllPspsForPaymentId["failure"]
   >;
-  transaction: PotFromActions<
-    typeof paymentExecutePayment["success"],
-    typeof paymentExecutePayment["failure"]
-  >;
-  confirmedTransaction: PotFromActions<
-    typeof pollTransactionSagaCompleted,
-    false
-  >;
   entrypointRoute?: EntrypointRoute;
+  paymentStartPayload: PaymentStartPayload | undefined;
 }>;
 
 /**
@@ -87,9 +76,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   check: pot.none,
   psps: pot.none,
   allPsps: pot.none,
-  transaction: pot.none,
-  confirmedTransaction: pot.none,
-  entrypointRoute: undefined
+  entrypointRoute: undefined,
+  paymentStartPayload: undefined
 };
 
 /**
@@ -231,41 +219,12 @@ const reducer = (
       };
 
     //
-    // execute payment
+    // start payment
     //
-    case getType(paymentExecutePayment.request):
+    case getType(paymentExecuteStart):
       return {
         ...state,
-        transaction: pot.noneLoading
-      };
-    case getType(paymentExecutePayment.success):
-      return {
-        ...state,
-        transaction: pot.some(action.payload)
-      };
-    case getType(paymentExecutePayment.failure):
-      return {
-        ...state,
-        transaction: pot.noneError(action.payload)
-      };
-
-    //
-    // confirmed transaction
-    //
-    case getType(runPollTransactionSaga):
-      return {
-        ...state,
-        confirmedTransaction: pot.noneLoading
-      };
-    case getType(pollTransactionSagaCompleted):
-      return {
-        ...state,
-        confirmedTransaction: pot.some(action.payload)
-      };
-    case getType(pollTransactionSagaTimeout):
-      return {
-        ...state,
-        confirmedTransaction: pot.noneError<false>(false)
+        paymentStartPayload: action.payload
       };
   }
   return state;

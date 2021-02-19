@@ -15,6 +15,7 @@ import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTyp
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { EntrypointRoute } from "../../reducers/wallet/payment";
+import { Locales } from "../../../../locales/locales";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -167,19 +168,15 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 // execute payment
 //
 
-type PaymentExecutePaymentRequestPayload = Readonly<{
+export type PaymentStartPayload = Readonly<{
   idPayment: string;
-  wallet: Wallet;
-  onSuccess?: (
-    action: ActionType<typeof paymentExecutePayment["success"]>
-  ) => void;
+  idWallet: number;
+  language: Locales;
 }>;
 
-export const paymentExecutePayment = createAsyncAction(
-  "PAYMENT_EXECUTE_PAYMENT_REQUEST",
-  "PAYMENT_EXECUTE_PAYMENT_SUCCESS",
-  "PAYMENT_EXECUTE_PAYMENT_FAILURE"
-)<PaymentExecutePaymentRequestPayload, Transaction, Error>();
+export const paymentExecuteStart = createStandardAction(
+  "PAYMENT_EXECUTE_START"
+)<PaymentStartPayload>();
 
 //
 // Signal the completion of a payment
@@ -250,7 +247,7 @@ export type PaymentActions =
   | ActionType<typeof paymentIdPolling>
   | ActionType<typeof paymentCheck>
   | ActionType<typeof paymentFetchPspsForPaymentId>
-  | ActionType<typeof paymentExecutePayment>
+  | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>

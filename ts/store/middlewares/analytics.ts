@@ -93,7 +93,6 @@ import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
-  paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
@@ -295,7 +294,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
     case getType(paymentFetchPspsForPaymentId.failure):
-    case getType(paymentExecutePayment.failure):
+    // case getType(paymentExecutePayment.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
@@ -384,8 +383,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentExecutePayment.request):
-    case getType(paymentExecutePayment.success):
+    // case getType(paymentExecutePayment.request):
+    // case getType(paymentExecutePayment.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
