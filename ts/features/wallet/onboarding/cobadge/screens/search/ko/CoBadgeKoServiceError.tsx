@@ -46,7 +46,7 @@ const CoBadgeKoServiceError: React.FunctionComponent<Props> = props => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoServiceError"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}
