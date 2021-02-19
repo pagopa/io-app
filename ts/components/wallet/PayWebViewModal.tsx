@@ -65,7 +65,7 @@ const crateAutoPostForm = (
 
 /**
  * return a 2-tuple
- * 0 element: boolean. true is the given {@param url} contains the given {@param finishPathName} path name
+ * 0 element: boolean. true if the given {@param url} contains the given {@param finishPathName} path name
  * 0 element: string | undefined. a string contains the value of {@param outcomeQueryparamName} in query string of {@param url}
  * @param url
  * @param finishPathName
