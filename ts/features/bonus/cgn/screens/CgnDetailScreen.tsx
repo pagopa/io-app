@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -20,30 +19,15 @@ import {
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { Link } from "../../../../components/core/typography/Link";
 import { cgnDetailsInformationSelector } from "../store/reducers/details";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  verticallyCenter: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
-  rowBlock: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  }
-});
 
 /**
  * Screen to display all the information about the active CGN
@@ -52,11 +36,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
-
-  const { showModal, hideModal } = React.useContext(LightModalContext);
-
-  const handleModalPress = (tos: string) =>
-    showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
 
   return (
     <BaseScreenComponent
@@ -98,16 +77,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           )}
           <ItemSeparatorComponent noPadded />
           <View spacer large />
-          {props.cgnBonusInfo &&
-            fromNullable(
-              props.cgnBonusInfo[getLocalePrimaryWithFallback()].tos_url
-            ).fold(<></>, tos => (
-              <View style={styles.verticallyCenter}>
-                <Link onPress={() => handleModalPress(tos)}>
-                  {I18n.t("bonus.cgn.detail.tos.link")}
-                </Link>
-              </View>
-            ))}
         </View>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
