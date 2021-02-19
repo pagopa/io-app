@@ -81,6 +81,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { paymentMethodsSelector } from "../../store/reducers/wallet/wallets";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -169,6 +170,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * a "pay notice" button and payment methods info/button to add new ones
  */
 class WalletHomeScreen extends React.PureComponent<Props, State> {
+  paymentMethods: any;
   constructor(props: Props) {
     super(props);
     this.state = { hasFocus: false };
@@ -562,13 +564,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private getHeaderHeight() {
+    const paymentMethods = pot.getOrElse(
+      pot.map(this.props.paymentMethods, pms => pms),
+      []
+    );
     return (
-      630 +
-      (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
-      (bpdEnabled
-        ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
-        : 0) +
-      this.getCreditCards().length * 56
+      250 + (paymentMethods.length * 75.5)
     );
   }
 }
@@ -592,11 +593,12 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state),
+    paymentMethods: paymentMethodsSelector(state)
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({  
   loadBpdData: () => dispatch(bpdAllData.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
