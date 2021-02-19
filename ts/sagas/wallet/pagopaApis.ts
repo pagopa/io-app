@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -49,6 +49,7 @@ import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
+import { getPaymentIdFromGlobalState } from "../../store/reducers/wallet/payment";
 
 //
 // Payment Manager APIs
@@ -558,6 +559,19 @@ export function* paymentCheckRequestHandler(
     }
   } catch (error) {
     yield put(paymentCheck.failure(error));
+  }
+}
+
+export function* paymentStartRequest(
+  pmSessionManager: SessionManager<PaymentManagerToken>
+) {
+  const pmSessionToken: Option<PaymentManagerToken> = yield call(
+    pmSessionManager.getNewToken
+  );
+  const maybePaymentWallet: ReturnType<typeof getPaymentIdFromGlobalState> = yield select(
+    getPaymentIdFromGlobalState
+  );
+  if (pmSessionToken.isSome()) {
   }
 }
 

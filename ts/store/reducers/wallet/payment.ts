@@ -12,7 +12,6 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
-  PaymentStartPayload,
   paymentVerifica
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
@@ -23,10 +22,18 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../features/bonus/bpd/model/RemoteValue";
+import { Locales } from "../../../../locales/locales";
+import { PaymentManagerToken } from "../../../types/pagopa";
 
 export type EntrypointRoute = Readonly<{
   name: string;
   key: string;
+}>;
+
+export type PaymentStartPayload = Readonly<{
+  idWallet: number;
+  idPayment: string;
+  language: Locales;
 }>;
 
 // TODO: instead of keeping one single state, it would me more correct to keep
@@ -58,13 +65,14 @@ export type PaymentState = Readonly<{
     typeof paymentFetchAllPspsForPaymentId["failure"]
   >;
   entrypointRoute?: EntrypointRoute;
-  paymentStartPayload: RemoteValue<PaymentStartPayload, Error>;
+  paymentStartPayload: PaymentStartPayload | undefined;
+  pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
 }>;
 
 /**
  * Returns the payment ID if one has been fetched so far
  */
-const getPaymentIdFromGlobalState = (state: GlobalState) =>
+export const getPaymentIdFromGlobalState = (state: GlobalState) =>
   pot.toOption(state.wallet.payment.paymentId);
 
 export const allPspsSelector = (state: GlobalState) =>
@@ -84,7 +92,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   psps: pot.none,
   allPsps: pot.none,
   entrypointRoute: undefined,
-  paymentStartPayload: remoteUndefined
+  paymentStartPayload: undefined,
+  pmSessionToken: remoteUndefined
 };
 
 /**
@@ -231,17 +240,18 @@ const reducer = (
     case getType(paymentExecuteStart.request):
       return {
         ...state,
-        paymentStartPayload: remoteLoading
+        paymentStartPayload: action.payload,
+        pmSessionToken: remoteLoading
       };
     case getType(paymentExecuteStart.success):
       return {
         ...state,
-        paymentStartPayload: remoteReady(action.payload)
+        pmSessionToken: remoteReady(action.payload)
       };
     case getType(paymentExecuteStart.failure):
       return {
         ...state,
-        paymentStartPayload: remoteError(action.payload)
+        pmSessionToken: remoteError(action.payload)
       };
   }
   return state;

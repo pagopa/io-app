@@ -48,6 +48,7 @@ import {
 } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { PayloadForAction } from "../../../types/utils";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -127,6 +128,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   );
 
   const wallet: Wallet = props.navigation.getParam("wallet");
+  const idPayment: string = props.navigation.getParam("idPayment");
 
   const paymentReason = verifica.causaleVersamento;
 
@@ -194,7 +196,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <ButtonDefaultOpacity
           block={true}
           primary={true}
-          onPress={props.dispathPaymentStart}
+          onPress={() =>
+            props.dispatchPaymentStart({
+              idWallet: wallet.idWallet,
+              idPayment,
+              language: getLocalePrimaryWithFallback()
+            })
+          }
         >
           <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
         </ButtonDefaultOpacity>
@@ -317,7 +325,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         }
       );
     },
-    dispathPaymentStart: () => dispatch(paymentExecuteStart.request())
+    dispatchPaymentStart: (
+      payload: PayloadForAction<typeof paymentExecuteStart["request"]>
+    ) => dispatch(paymentExecuteStart.request(payload))
   };
 };
 

@@ -12,7 +12,12 @@ import { PaymentActivationsPostResponse } from "../../../../definitions/backend/
 import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
-import { Psp, Transaction, Wallet } from "../../../types/pagopa";
+import {
+  PaymentManagerToken,
+  Psp,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { EntrypointRoute } from "../../reducers/wallet/payment";
 import { Locales } from "../../../../locales/locales";
@@ -168,21 +173,20 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 // execute payment
 //
 
-export type PaymentStartPayload = Readonly<{
-  idWallet: number;
-  idPayment: string;
-  language: Locales;
-  pmSessionToken: string;
-}>;
 /**
  * user wants to pay. All payment information are available (idWallet, idPayment).
  * This event triggers the a PM session token refresh to use inside the PayWebViewModal within payment data
+ * - request: the id of wallet used to pay
  */
 export const paymentExecuteStart = createAsyncAction(
   "PAYMENT_EXECUTE_START_REQUEST",
   "PAYMENT_EXECUTE_START_SUCCESS",
   "PAYMENT_EXECUTE_START_FAILURE"
-)<void, PaymentStartPayload, Error>();
+)<
+  { idWallet: number; idPayment: string; language: Locales },
+  PaymentManagerToken,
+  Error
+>();
 
 //
 // Signal the completion of a payment
