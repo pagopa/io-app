@@ -1,8 +1,8 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
@@ -24,31 +24,34 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import {
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
-  navigateToTransactionSuccessScreen
+  navigateToPaymentPickPspScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
-  paymentCompletedFailure,
-  paymentCompletedSuccess,
   paymentExecuteStart,
   paymentInitializeState,
+  paymentWebViewEnd,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
-import { fetchTransactionsRequest } from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
-import {
-  isSuccessTransaction,
-  Psp,
-  Transaction,
-  Wallet
-} from "../../../types/pagopa";
+import { Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { PayloadForAction } from "../../../types/utils";
+import {
+  paymentStartPayloadSelector,
+  PaymentStartWebViewPayload,
+  pmSessionTokenSelector
+} from "../../../store/reducers/wallet/payment";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -227,109 +230,93 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           </ButtonDefaultOpacity>
         </View>
       </View>
+      {props.payStartWebviewPayload.isSome() && (
+        <PayWebViewModal
+          postUri={"http://127.0.0.1:3000/pay-webview"}
+          formData={props.payStartWebviewPayload.value}
+          finishPathName={"/payExitUrl/name"}
+          onFinish={maybeCode => {
+            Alert.alert(maybeCode.toString());
+            props.dispathEndPaymentWebview();
+          }}
+          outcomeQueryparamName={"code"}
+          onGoBack={props.dispathEndPaymentWebview}
+        />
+      )}
     </BaseScreenComponent>
   );
 };
 
-const mapStateToProps = ({ wallet }: GlobalState) => ({
-  isLoading: false, // pot.isLoading(wallet.payment.transaction),
-  // || pot.isLoading(wallet.payment.confirmedTransaction),
-  error: none // pot.isError(wallet.payment.transaction)
-  // ? some(wallet.payment.transaction.error.message)
-  // : none
-});
-
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const onTransactionTimeout = () => {
-    dispatch(backToEntrypointPayment());
-    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
-  };
-
-  const onTransactionValid = (tx: Transaction) => {
-    if (isSuccessTransaction(tx)) {
-      // on success:
-      dispatch(
-        navigateToTransactionSuccessScreen({
-          transaction: tx
-        })
-      );
-      // signal success
-      dispatch(
-        paymentCompletedSuccess({
-          transaction: tx,
-          rptId: props.navigation.getParam("rptId"),
-          kind: "COMPLETED"
-        })
-      );
-      // update the transactions state (the first transaction is the most recent)
-      dispatch(fetchTransactionsRequest({ start: 0 }));
-    } else {
-      // on failure:
-      // signal faliure
-      dispatch(paymentCompletedFailure());
-      // delete the active payment from pagoPA
-      dispatch(runDeleteActivePaymentSaga());
-      // navigate to entrypoint of payment or wallet home
-      dispatch(backToEntrypointPayment());
-      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
-    }
-  };
-
+const mapStateToProps = (state: GlobalState) => {
+  const pmSessionToken = pmSessionTokenSelector(state);
+  const paymentStartPayload = paymentStartPayloadSelector(state);
+  const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
+    isReady(pmSessionToken) && paymentStartPayload
+      ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
+      : none;
   return {
-    pickPaymentMethod: () =>
-      dispatch(
-        navigateToPaymentPickPaymentMethodScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
-      ),
-    pickPsp: () =>
-      dispatch(
-        navigateToPaymentPickPspScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment"),
-          psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet"),
-          chooseToChange: true
-        })
-      ),
-    onCancel: () => {
-      ActionSheet.show(
-        {
-          options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
-          ],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            // on cancel:
-            // navigate to entrypoint of payment or wallet home
-            dispatch(backToEntrypointPayment());
-            // delete the active payment from pagoPA
-            dispatch(runDeleteActivePaymentSaga());
-            // reset the payment state
-            dispatch(paymentInitializeState());
-            showToast(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
-              "success"
-            );
-          }
-        }
-      );
-    },
-    dispatchPaymentStart: (
-      payload: PayloadForAction<typeof paymentExecuteStart["request"]>
-    ) => dispatch(paymentExecuteStart.request(payload))
+    payStartWebviewPayload,
+    isLoading: isLoading(pmSessionToken),
+    // TODO add generic error and the explicit one
+    error: isError(pmSessionToken) ? some(pmSessionToken.error.message) : none
   };
 };
+
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+  pickPaymentMethod: () =>
+    dispatch(
+      navigateToPaymentPickPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
+      })
+    ),
+  pickPsp: () =>
+    dispatch(
+      navigateToPaymentPickPspScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment"),
+        psps: props.navigation.getParam("psps"),
+        wallet: props.navigation.getParam("wallet"),
+        chooseToChange: true
+      })
+    ),
+  onCancel: () => {
+    ActionSheet.show(
+      {
+        options: [
+          I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+          I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+        ],
+        destructiveButtonIndex: 0,
+        cancelButtonIndex: 1,
+        title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          // on cancel:
+          // navigate to entrypoint of payment or wallet home
+          dispatch(backToEntrypointPayment());
+          // delete the active payment from pagoPA
+          dispatch(runDeleteActivePaymentSaga());
+          // reset the payment state
+          dispatch(paymentInitializeState());
+          showToast(
+            I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+            "success"
+          );
+        }
+      }
+    );
+  },
+  dispatchPaymentStart: (
+    payload: PayloadForAction<typeof paymentExecuteStart["request"]>
+  ) => dispatch(paymentExecuteStart.request(payload)),
+  dispathEndPaymentWebview: () => dispatch(paymentWebViewEnd())
+});
 
 export default connect(
   mapStateToProps,

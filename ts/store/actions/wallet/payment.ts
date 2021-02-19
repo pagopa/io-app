@@ -188,6 +188,8 @@ export const paymentExecuteStart = createAsyncAction(
   Error
 >();
 
+export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")();
+
 //
 // Signal the completion of a payment
 //
@@ -255,6 +257,7 @@ export type PaymentActions =
   | ActionType<typeof paymentVerifica>
   | ActionType<typeof paymentAttiva>
   | ActionType<typeof paymentIdPolling>
+  | ActionType<typeof paymentWebViewEnd>
   | ActionType<typeof paymentCheck>
   | ActionType<typeof paymentFetchPspsForPaymentId>
   | ActionType<typeof paymentExecuteStart>

@@ -10,6 +10,7 @@ import {
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
+  paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
@@ -562,16 +563,24 @@ export function* paymentCheckRequestHandler(
   }
 }
 
+/**
+ * to start a payment we need a fresh PM session token
+ * @param pmSessionManager
+ */
 export function* paymentStartRequest(
   pmSessionManager: SessionManager<PaymentManagerToken>
 ) {
   const pmSessionToken: Option<PaymentManagerToken> = yield call(
     pmSessionManager.getNewToken
   );
-  const maybePaymentWallet: ReturnType<typeof getPaymentIdFromGlobalState> = yield select(
-    getPaymentIdFromGlobalState
-  );
   if (pmSessionToken.isSome()) {
+    yield put(paymentExecuteStart.success(pmSessionToken.value));
+  } else {
+    yield put(
+      paymentExecuteStart.failure(
+        new Error("cannot retrieve a valid PM session token")
+      )
+    );
   }
 }
 

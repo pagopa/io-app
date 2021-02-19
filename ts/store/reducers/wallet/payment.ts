@@ -12,7 +12,8 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import {
@@ -35,6 +36,10 @@ export type PaymentStartPayload = Readonly<{
   idPayment: string;
   language: Locales;
 }>;
+
+export type PaymentStartWebViewPayload = PaymentStartPayload & {
+  sessionToken: PaymentManagerToken;
+};
 
 // TODO: instead of keeping one single state, it would me more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
@@ -83,6 +88,15 @@ export const isPaymentOngoingSelector = (state: GlobalState) =>
 
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;
+
+export const pmSessionTokenSelector = (
+  state: GlobalState
+): RemoteValue<PaymentManagerToken, Error> =>
+  state.wallet.payment.pmSessionToken;
+
+export const paymentStartPayloadSelector = (
+  state: GlobalState
+): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;
 
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
@@ -252,6 +266,14 @@ const reducer = (
       return {
         ...state,
         pmSessionToken: remoteError(action.payload)
+      };
+
+    // end payment web view - reset data about payment
+    case getType(paymentWebViewEnd):
+      return {
+        ...state,
+        paymentStartPayload: PAYMENT_INITIAL_STATE.paymentStartPayload,
+        pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
       };
   }
   return state;
