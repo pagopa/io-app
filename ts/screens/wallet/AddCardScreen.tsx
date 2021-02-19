@@ -53,7 +53,7 @@ import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 
-export type NavigationParams = Readonly<{
+type NavigationParams = Readonly<{
   inPayment: Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;

@@ -8,8 +8,9 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
-import AddCardScreen, { NavigationParams } from "../AddCardScreen";
+import AddCardScreen from "../AddCardScreen";
 import { isValidCardHolder } from "../../../utils/input";
+import { InferNavigationParams } from "../../../types/react";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -105,6 +106,7 @@ describe("AddCardScreen", () => {
 });
 
 const getComponent = () => {
+  type NavigationParams = InferNavigationParams<typeof AddCardScreen>;
   const params: NavigationParams = {
     inPayment: none
   } as NavigationParams;
