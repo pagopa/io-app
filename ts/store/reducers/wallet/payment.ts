@@ -16,6 +16,13 @@ import {
   paymentVerifica
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -51,7 +58,7 @@ export type PaymentState = Readonly<{
     typeof paymentFetchAllPspsForPaymentId["failure"]
   >;
   entrypointRoute?: EntrypointRoute;
-  paymentStartPayload: PaymentStartPayload | undefined;
+  paymentStartPayload: RemoteValue<PaymentStartPayload, Error>;
 }>;
 
 /**
@@ -77,7 +84,7 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   psps: pot.none,
   allPsps: pot.none,
   entrypointRoute: undefined,
-  paymentStartPayload: undefined
+  paymentStartPayload: remoteUndefined
 };
 
 /**
@@ -221,10 +228,20 @@ const reducer = (
     //
     // start payment
     //
-    case getType(paymentExecuteStart):
+    case getType(paymentExecuteStart.request):
       return {
         ...state,
-        paymentStartPayload: action.payload
+        paymentStartPayload: remoteLoading
+      };
+    case getType(paymentExecuteStart.success):
+      return {
+        ...state,
+        paymentStartPayload: remoteReady(action.payload)
+      };
+    case getType(paymentExecuteStart.failure):
+      return {
+        ...state,
+        paymentStartPayload: remoteError(action.payload)
       };
   }
   return state;

@@ -21,9 +21,7 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
-import { shufflePinPadOnPayment } from "../../../config";
 import I18n from "../../../i18n";
-import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
@@ -34,7 +32,6 @@ import {
   backToEntrypointPayment,
   paymentCompletedFailure,
   paymentCompletedSuccess,
-  PaymentStartPayload,
   paymentExecuteStart,
   paymentInitializeState,
   runDeleteActivePaymentSaga
@@ -125,18 +122,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     );
   };
 
-  const askAuthorizationAndStartPayment = () => {
-    const onIdentificationSuccess = async () => {
-      const paymentPayload: PaymentStartPayload = {
-        idWallet: props.navigation.getParam("wallet").idWallet,
-        idPayment: props.navigation.getParam("idPayment"),
-        language: getLocalePrimaryWithFallback()
-      };
-      props.dispathPaymentExecuteStart(paymentPayload);
-    };
-    props.dispatchIdentificationRequestToStartPayment(onIdentificationSuccess);
-  };
-
   const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
     "verifica"
   );
@@ -209,7 +194,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <ButtonDefaultOpacity
           block={true}
           primary={true}
-          onPress={askAuthorizationAndStartPayment}
+          onPress={props.dispathPaymentStart}
         >
           <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
         </ButtonDefaultOpacity>
@@ -332,28 +317,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         }
       );
     },
-    dispathPaymentExecuteStart: (payload: PaymentStartPayload) =>
-      dispatch(paymentExecuteStart(payload)),
-    dispatchIdentificationRequestToStartPayment: (
-      onIdentificationSuccess: () => void
-    ) =>
-      dispatch(
-        identificationRequest(
-          false,
-          true,
-          {
-            message: I18n.t("wallet.ConfirmPayment.identificationMessage")
-          },
-          {
-            label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
-            onCancel: () => undefined
-          },
-          {
-            onSuccess: onIdentificationSuccess
-          },
-          shufflePinPadOnPayment
-        )
-      )
+    dispathPaymentStart: () => dispatch(paymentExecuteStart.request())
   };
 };
 

@@ -169,14 +169,20 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 //
 
 export type PaymentStartPayload = Readonly<{
-  idPayment: string;
   idWallet: number;
+  idPayment: string;
   language: Locales;
+  pmSessionToken: string;
 }>;
-
-export const paymentExecuteStart = createStandardAction(
-  "PAYMENT_EXECUTE_START"
-)<PaymentStartPayload>();
+/**
+ * user wants to pay. All payment information are available (idWallet, idPayment).
+ * This event triggers the a PM session token refresh to use inside the PayWebViewModal within payment data
+ */
+export const paymentExecuteStart = createAsyncAction(
+  "PAYMENT_EXECUTE_START_REQUEST",
+  "PAYMENT_EXECUTE_START_SUCCESS",
+  "PAYMENT_EXECUTE_START_FAILURE"
+)<void, PaymentStartPayload, Error>();
 
 //
 // Signal the completion of a payment
