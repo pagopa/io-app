@@ -140,6 +140,19 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     psp => psp.fixedCost.amount
   );
 
+  const handlePayWebviewGoBack = () => {
+    Alert.alert(I18n.t("payment.abortWebView.title"), "", [
+      {
+        text: I18n.t("payment.abortWebView.confirm"),
+        onPress: props.dispatchEndPaymentWebview,
+        style: "cancel"
+      },
+      {
+        text: I18n.t("payment.abortWebView.cancel")
+      }
+    ]);
+  };
+
   return (
     <BaseScreenComponent
       goBack={props.onCancel}
@@ -237,10 +250,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           finishPathName={"/payExitUrl/name"}
           onFinish={maybeCode => {
             Alert.alert(maybeCode.toString());
-            props.dispathEndPaymentWebview();
+            props.dispatchEndPaymentWebview();
           }}
           outcomeQueryparamName={"code"}
-          onGoBack={props.dispathEndPaymentWebview}
+          onGoBack={handlePayWebviewGoBack}
         />
       )}
     </BaseScreenComponent>
@@ -315,7 +328,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   dispatchPaymentStart: (
     payload: PayloadForAction<typeof paymentExecuteStart["request"]>
   ) => dispatch(paymentExecuteStart.request(payload)),
-  dispathEndPaymentWebview: () => dispatch(paymentWebViewEnd())
+  dispatchEndPaymentWebview: () => dispatch(paymentWebViewEnd())
 });
 
 export default connect(

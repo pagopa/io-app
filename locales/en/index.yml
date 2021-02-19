@@ -709,6 +709,11 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  abortWebView:
+    title: Do you want to stop the payment in progress?
+    confirm: Cancel the payment
+    cancel: Continue with payment
+    success: The payment was successfully canceled
   errorDetails: Details
   currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
