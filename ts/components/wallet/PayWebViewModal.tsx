@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// the ID used as form ID and to identify it to ensure the autosubit
+// the ID used as form ID and to identify it to ensure the autosubmit
 const formId = `io-form-id-${uuid()}`;
 // the javascript submit command
 const injectedJSPostForm: string = `<script type="application/javascript">document.getElementById("${formId}").submit();</script>`;
