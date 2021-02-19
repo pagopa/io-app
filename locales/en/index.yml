@@ -1145,7 +1145,7 @@ wallet:
   dummyCard:
     labels:
       holder: 
-        label: Cardholder
+        label: Card holder
         description:
           base: "Enter as shown on the card"
           error: "Enter exactly as shown on the card"
