@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -20,6 +20,7 @@ import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
+import DeviceInfo from "react-native-device-info";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -33,7 +34,8 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingBottom: Platform.OS === 'ios' && DeviceInfo.hasNotch() ? 28 : 15,
   }
 });
 
