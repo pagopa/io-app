@@ -140,6 +140,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     psp => psp.fixedCost.amount
   );
 
+  // the user press back during the pay web view challenge
   const handlePayWebviewGoBack = () => {
     Alert.alert(I18n.t("payment.abortWebView.title"), "", [
       {

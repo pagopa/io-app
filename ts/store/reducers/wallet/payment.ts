@@ -70,7 +70,9 @@ export type PaymentState = Readonly<{
     typeof paymentFetchAllPspsForPaymentId["failure"]
   >;
   entrypointRoute?: EntrypointRoute;
+  // id payment, id wallet and locale (used inside paywebview)
   paymentStartPayload: PaymentStartPayload | undefined;
+  // pm fresh session token (used inside paywebview)
   pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
 }>;
 

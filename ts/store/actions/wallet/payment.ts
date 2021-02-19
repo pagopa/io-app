@@ -19,8 +19,10 @@ import {
   Wallet
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
-import { EntrypointRoute } from "../../reducers/wallet/payment";
-import { Locales } from "../../../../locales/locales";
+import {
+  EntrypointRoute,
+  PaymentStartPayload
+} from "../../reducers/wallet/payment";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -174,20 +176,18 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 //
 
 /**
- * user wants to pay. All payment information are available (idWallet, idPayment).
- * This event triggers the a PM session token refresh to use inside the PayWebViewModal within payment data
- * - request: the id of wallet used to pay
+ * user wants to pay
+ * - request: we already know the idPayment and the idWallet used to pay, we need a fresh PM session token
+ * - success: we got a fresh PM session token
+ * - failure: we can't get a fresh PM session token
  */
 export const paymentExecuteStart = createAsyncAction(
   "PAYMENT_EXECUTE_START_REQUEST",
   "PAYMENT_EXECUTE_START_SUCCESS",
   "PAYMENT_EXECUTE_START_FAILURE"
-)<
-  { idWallet: number; idPayment: string; language: Locales },
-  PaymentManagerToken,
-  Error
->();
+)<PaymentStartPayload, PaymentManagerToken, Error>();
 
+// event fired when the paywebview ends its challenge (used to reset payment values)
 export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")();
 
 //
