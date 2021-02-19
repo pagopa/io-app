@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// the ID used as form ID and to identify it to ensure the autosubit
+// the ID used as form ID and to identify it to ensure the autosubmit
 const formId = `io-form-id-${uuid()}`;
 // the javascript submit command
 const injectedJSPostForm: string = `<script type="application/javascript">document.getElementById("${formId}").submit();</script>`;
@@ -65,7 +65,7 @@ const crateAutoPostForm = (
 
 /**
  * return a 2-tuple
- * 0 element: boolean. true is the given {@param url} contains the given {@param finishPathName} path name
+ * 0 element: boolean. true if the given {@param url} contains the given {@param finishPathName} path name
  * 0 element: string | undefined. a string contains the value of {@param outcomeQueryparamName} in query string of {@param url}
  * @param url
  * @param finishPathName
