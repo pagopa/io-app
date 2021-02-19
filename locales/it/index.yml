@@ -1170,8 +1170,12 @@ wallet:
   addCardTitle: Dati carta
   dummyCard:
     labels:
-      holder: Titolare
-      pan: Numero della carta
+      holder:
+        label: Intestatario carta
+        description:
+          base: "Inserisci come riportato sulla carta"
+          error: "Inserisci esattamente come riportato sulla carta"
+      pan: Numero carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
       securityCode4D: CID (4 cifre)
