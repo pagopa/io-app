@@ -10,6 +10,7 @@ import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { isTestEnv } from "../../utils/environment";
 
 type Props = {
   // the uri to send the form data thought POST
@@ -46,12 +47,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// a loading component rendered during the webview loading times
-const renderLoading = () => (
-  <View style={styles.refreshIndicatorContainer}>
-    <RefreshIndicator />
-  </View>
-);
 // the ID used as form ID and to identify it to ensure the autosubit
 const formId = `io-form-id-${uuid()}`;
 // the javascript submit command
@@ -67,6 +62,31 @@ const crateAutoPostForm = (
       .map(kv => `<input type="text" name="${kv[0]}" value="${kv[1]}">`)
       .join("<br/>")}
   </form>`;
+
+const getFinishAndOutcome = (
+  url: string,
+  finishPathName: string,
+  outcomeQueryparamName: string
+): [isFinish: boolean, outComeCode: string | undefined] => {
+  const urlParse = new URLParse(url, true);
+  // find the object entry name in case insensitive
+  const maybeEntry = _.toPairs(urlParse.query).find(
+    kv => kv[0].toLowerCase() === outcomeQueryparamName.toLowerCase()
+  );
+  const outcome = maybeEntry ? maybeEntry[1] : undefined;
+  // found exit path
+  if (urlParse.pathname.toLowerCase().includes(finishPathName.toLowerCase())) {
+    return [true, outcome];
+  }
+  return [false, outcome];
+};
+
+// a loading component rendered during the webview loading times
+const renderLoading = () => (
+  <View style={styles.refreshIndicatorContainer}>
+    <RefreshIndicator />
+  </View>
+);
 
 /**
  * A modal including a webview component.
@@ -96,15 +116,17 @@ export const PayWebViewModal = (props: Props) => {
 
   const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
     if (navState.url) {
-      const url = new URLParse(navState.url, true);
-      const outcome = url.query[props.outcomeQueryparamName] ?? outcomeCode;
+      const [isFinish, maybeOutcome] = getFinishAndOutcome(
+        navState.url,
+        props.finishPathName,
+        props.outcomeQueryparamName
+      );
+      const outcome = maybeOutcome ?? outcomeCode;
       if (outcome !== outcomeCode) {
         setOutcomeCode(outcome);
       }
       // found exit path
-      if (
-        url.pathname.toLowerCase().includes(props.finishPathName.toLowerCase())
-      ) {
+      if (isFinish) {
         props.onFinish(fromNullable(outcome));
         return false;
       }
@@ -140,3 +162,8 @@ export const PayWebViewModal = (props: Props) => {
     </Modal>
   );
 };
+
+// keep encapsulation strong
+export const testableGetFinishAndOutcome = isTestEnv
+  ? getFinishAndOutcome
+  : undefined;
