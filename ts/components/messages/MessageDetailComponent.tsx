@@ -14,6 +14,7 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
+import IconFont from "../ui/IconFont";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -21,7 +22,6 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
-import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
@@ -152,7 +152,7 @@ export default class MessageDetailComponent extends React.PureComponent<
         <IconFont name="io-complete" style={styles.messagePaidLabel} />
         <Text style={[styles.messagePaidLabel, styles.padded]}>{I18n.t("wallet.errors.PAYMENT_DUPLICATED")}</Text>
       </View>
-    )
+    );
 
   public render() {
     const {
