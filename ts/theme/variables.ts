@@ -316,7 +316,10 @@ const customVariables = Object.assign(materialVariables, {
   unselectedColor: "#5C6F82",
 
   // Checkbox
-  checkboxDefaultColor: "transparent"
+  checkboxDefaultColor: "transparent",
+
+  //notice paid
+  noticeBg: "#2AC6CB",
 });
 
 export default customVariables;
