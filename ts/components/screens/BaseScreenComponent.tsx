@@ -77,10 +77,6 @@ interface State {
   contextualHelpModalAnimation: ModalBaseProps["animationType"];
 }
 
-const maybeDark = fromPredicate(
-  (isDark: boolean | undefined = undefined) => isDark === true
-);
-
 const ANDROID_OPEN_REPORT_DELAY = 50 as Millisecond;
 
 class BaseScreenComponent extends React.PureComponent<Props, State> {
