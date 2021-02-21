@@ -1,10 +1,4 @@
-import {
-  fromNullable,
-  fromPredicate,
-  none,
-  Option,
-  some
-} from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
