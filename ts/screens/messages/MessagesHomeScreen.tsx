@@ -43,7 +43,6 @@ import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -149,7 +148,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         searchType={"Messages"}
         appLogo={true}
       >
-        <FocusAwareStatusBar />
         {!isSearchEnabled && (
           <React.Fragment>
             <AnimatedScreenContentHeader

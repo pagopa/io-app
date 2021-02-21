@@ -109,7 +109,6 @@ import { showToast } from "../../utils/showToast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 
 type OwnProps = NavigationScreenProps;
 

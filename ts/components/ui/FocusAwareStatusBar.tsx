@@ -1,6 +1,6 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { connect } from "react-redux";
-import { Platform, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { NavigationState, NavigationRoute } from "react-navigation";
 import ROUTES from "../../navigation/routes";
 import customVariables from "../../theme/variables";
@@ -60,14 +60,6 @@ const FocusAwareStatusBar: FC<Props> = ({ currentRoute }) => {
   const statusBarProps =
     currentRouteConfig !== undefined ? currentRouteConfig : defaultConfig;
 
-  console.log(currentRouteConfig, currentRoute, statusBarProps);
-
-  useEffect(() => {
-    StatusBar.setBarStyle(statusBarProps.barStyle);
-    if (Platform.OS == "android") {
-      StatusBar.setBackgroundColor(statusBarProps.backgroundColor);
-    }
-  });
   return <StatusBar {...statusBarProps} />;
 };
 

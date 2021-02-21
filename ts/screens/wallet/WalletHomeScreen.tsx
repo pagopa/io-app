@@ -18,7 +18,6 @@ import { withValidatedPagoPaVersion } from "../../components/helpers/withValidat
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
