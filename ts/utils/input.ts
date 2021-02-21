@@ -1,5 +1,6 @@
 import { Option, none, some } from "fp-ts/lib/Option";
 import * as t from "io-ts";
+import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
@@ -118,6 +119,10 @@ export function getCreditCardFromState(
     return none;
   }
 
+  if (!isValidCardHolder(holder)) {
+    return none;
+  }
+
   const card: CreditCard = {
     pan: pan.value,
     holder: holder.value,
@@ -128,3 +133,15 @@ export function getCreditCardFromState(
 
   return some(card);
 }
+
+/**
+ * This function checks if the cardholder charset is admitted.
+ * We consider not a valid character an accented character.
+ *
+ * @param cardHolder
+ */
+export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
+  cardHolder.fold(false, cH => {
+    const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
+    return cH === cardHolderWithoutDiacriticalMarks;
+  });

@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { View } from "native-base";
 import * as React from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { View } from "native-base";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
@@ -19,8 +19,8 @@ import {
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { walletAddCoBadgeCancel } from "../../../store/actions";
 import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -61,7 +61,7 @@ const CoBadgeStartKoDisabled = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeStartKoDisabled"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

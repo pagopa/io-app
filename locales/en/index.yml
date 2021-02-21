@@ -1144,7 +1144,11 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: Card holder
+      holder: 
+        label: Card holder
+        description:
+          base: "Enter as shown on the card"
+          error: "Enter exactly as shown on the card"
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
