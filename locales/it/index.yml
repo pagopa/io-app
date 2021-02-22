@@ -924,7 +924,7 @@ wallet:
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
-    favourite: Questo metodo di pagamento è già contrassegnato come il tuo preferito, se vuoi cambiarlo devi selezionarne un altro
+    favourite: Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito.
     amex: I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
