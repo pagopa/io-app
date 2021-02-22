@@ -187,8 +187,13 @@ export const paymentExecuteStart = createAsyncAction(
   "PAYMENT_EXECUTE_START_FAILURE"
 )<PaymentStartPayload, PaymentManagerToken, Error>();
 
+export type PaymentWebViewEndReason =
+  | "ABORT_BY_THE_USER"
+  | "EXIT_FROM_WEB_VIEW";
 // event fired when the paywebview ends its challenge (used to reset payment values)
-export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")();
+export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
+  PaymentWebViewEndReason
+>();
 
 //
 // Signal the completion of a payment

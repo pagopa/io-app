@@ -288,6 +288,7 @@ export function* updateWalletPspRequestHandler(
             // the wallet is still there, we can proceed
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
+              // attention: updatedWallet is V1
               updatedWallet: response.value.value.data
             });
             yield put(successAction);

@@ -32,6 +32,7 @@ import {
   paymentExecuteStart,
   paymentInitializeState,
   paymentWebViewEnd,
+  PaymentWebViewEndReason,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -53,6 +54,7 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { pagoPaApiUrlPrefix } from "../../../config";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -116,6 +118,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.whyAFee.text"
 };
 
+const payUrl = pagoPaApiUrlPrefix + "/v3/webview/transactions/pay";
+const webViewExitPathName = "/v3/webview/logout/bye";
+const webViewOutcomeParamName = "outcome";
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const showHelp = () => {
     props.showModal(
@@ -151,7 +156,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     Alert.alert(I18n.t("payment.abortWebView.title"), "", [
       {
         text: I18n.t("payment.abortWebView.confirm"),
-        onPress: props.dispatchEndPaymentWebview,
+        onPress: () => {
+          props.dispatchCancelPayment();
+          props.dispatchEndPaymentWebview("ABORT_BY_THE_USER");
+        },
         style: "cancel"
       },
       {
@@ -254,14 +262,15 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       </View>
       {props.payStartWebviewPayload.isSome() && (
         <PayWebViewModal
-          postUri={"http://127.0.0.1:3000/pay-webview"}
+          postUri={payUrl}
           formData={props.payStartWebviewPayload.value}
-          finishPathName={"/payExitUrl/name"}
+          finishPathName={webViewExitPathName}
           onFinish={maybeCode => {
+            // TODO display the outcome screen
             Alert.alert(maybeCode.toString());
-            props.dispatchEndPaymentWebview();
+            props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
           }}
-          outcomeQueryparamName={"code"}
+          outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={handlePayWebviewGoBack}
         />
       )}
@@ -284,61 +293,66 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  pickPaymentMethod: () =>
-    dispatch(
-      navigateToPaymentPickPaymentMethodScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
-      })
-    ),
-  pickPsp: () =>
-    dispatch(
-      navigateToPaymentPickPspScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment"),
-        psps: props.navigation.getParam("psps"),
-        wallet: props.navigation.getParam("wallet"),
-        chooseToChange: true
-      })
-    ),
-  onCancel: () => {
-    ActionSheet.show(
-      {
-        options: [
-          I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-          I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
-        ],
-        destructiveButtonIndex: 0,
-        cancelButtonIndex: 1,
-        title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          // on cancel:
-          // navigate to entrypoint of payment or wallet home
-          dispatch(backToEntrypointPayment());
-          // delete the active payment from pagoPA
-          dispatch(runDeleteActivePaymentSaga());
-          // reset the payment state
-          dispatch(paymentInitializeState());
-          showToast(
-            I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
-            "success"
-          );
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
+  const dispatchCancelPayment = () => {
+    // on cancel:
+    // navigate to entrypoint of payment or wallet home
+    dispatch(backToEntrypointPayment());
+    // delete the active payment from pagoPA
+    dispatch(runDeleteActivePaymentSaga());
+    // reset the payment state
+    dispatch(paymentInitializeState());
+    showToast(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"), "success");
+  };
+  return {
+    pickPaymentMethod: () =>
+      dispatch(
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          idPayment: props.navigation.getParam("idPayment")
+        })
+      ),
+    pickPsp: () =>
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          idPayment: props.navigation.getParam("idPayment"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet"),
+          chooseToChange: true
+        })
+      ),
+    onCancel: () => {
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            dispatchCancelPayment();
+          }
         }
-      }
-    );
-  },
-  dispatchPaymentStart: (
-    payload: PayloadForAction<typeof paymentExecuteStart["request"]>
-  ) => dispatch(paymentExecuteStart.request(payload)),
-  dispatchEndPaymentWebview: () => dispatch(paymentWebViewEnd())
-});
+      );
+    },
+    dispatchPaymentStart: (
+      payload: PayloadForAction<typeof paymentExecuteStart["request"]>
+    ) => dispatch(paymentExecuteStart.request(payload)),
+    dispatchEndPaymentWebview: (reason: PaymentWebViewEndReason) => {
+      dispatch(paymentWebViewEnd(reason));
+    },
+    dispatchCancelPayment
+  };
+};
 
 export default connect(
   mapStateToProps,
