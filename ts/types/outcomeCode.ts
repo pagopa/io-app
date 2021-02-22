@@ -10,17 +10,21 @@ const Status = t.keyof({
   errorTryAgain: null,
   success: null
 });
-const OutcomeCode = t.type({
-  title: LocalizedMessage,
-  description: LocalizedMessage,
-  icon: t.unknown,
+const OutcomeCodeR = t.type({
   status: Status
 });
 
+const OutcomeCodeO = t.partial({
+  title: LocalizedMessage,
+  description: LocalizedMessage,
+  icon: t.unknown
+});
+
+const OutcomeCode = t.intersection([OutcomeCodeR, OutcomeCodeO]);
 // This are the errors that we want to map specifically at the moment.
 // All the other errors will fall back in the generic error category.
 const OutcomeCodes = {
-  "0": OutcomeCode,
+  "0": OutcomeCodeR,
   "1": OutcomeCode,
   "2": OutcomeCode,
   "4": OutcomeCode,
