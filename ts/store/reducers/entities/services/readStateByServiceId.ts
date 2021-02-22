@@ -6,6 +6,7 @@ import {
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
+import { loadVisibleServicesByScope } from "../../../actions/content";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -24,6 +25,22 @@ export function readServicesByIdReducer(
   action: Action
 ): ReadStateByServicesId {
   switch (action.type) {
+    case getType(loadVisibleServicesByScope.success):
+      const { LOCAL, NATIONAL } = action.payload;
+
+      return [...LOCAL, ...NATIONAL].reduce(
+        (accumulator: { [key: string]: boolean | undefined }, serviceID) => {
+          if (serviceID in state) {
+            // Keep the existing read state
+            accumulator[serviceID] = state[serviceID];
+          } else {
+            accumulator[serviceID] = false;
+          }
+
+          return accumulator;
+        },
+        {}
+      ) as ReadStateByServicesId;
     case getType(showServiceDetails):
       // add the service to the read list
       return {
