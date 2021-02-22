@@ -146,7 +146,7 @@ class PickPspScreen extends React.Component<Props> {
           <View style={styles.padded}>
             <Text>
               <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
-              <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
+              {`${I18n.t("wallet.pickPsp.info2")} `}
             </Text>
             <Text link={true} onPress={this.showHelp}>
               {I18n.t("wallet.pickPsp.link")}
