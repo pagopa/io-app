@@ -1287,6 +1287,10 @@ wallet:
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
+    payment:
+      success:
+        title: "Grazie, l’operazione è stata eseguita con successo!"
+        description: "Abbiamo inviato una ricevuta al tuo indirizzo email. Puoi trovarla anche nel tuo Portafoglio."
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?

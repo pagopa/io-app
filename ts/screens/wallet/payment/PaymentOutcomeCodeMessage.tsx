@@ -19,7 +19,8 @@ type Props = ReturnType<typeof mapStateToProps> &
 const successComponent = () => (
   <InfoScreenComponent
     image={renderInfoRasterImage(paymentCompleted)}
-    title={I18n.t("wallet.outcomeMessage.addCreditCard.success.title")}
+    title={I18n.t("wallet.outcomeMessage.payment.success.title")}
+    body={I18n.t("wallet.outcomeMessage.payment.success.description")}
   />
 );
 
