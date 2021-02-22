@@ -2155,6 +2155,9 @@ bonus:
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
     name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: View merchants
+      screenTitle: Select the merchant where you want to buy something
     cta:
       activeBonus: Activate your Carta Giovani
     detail:

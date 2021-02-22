@@ -2187,6 +2187,9 @@ bonus:
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
     name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: Visualizza esercenti
+      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
     cta:
       activeBonus: Attiva la tua Carta Giovani
     detail:
