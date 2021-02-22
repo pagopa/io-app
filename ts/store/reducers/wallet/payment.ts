@@ -1,7 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { Option } from "fp-ts/lib/Option";
-import { index } from "fp-ts/lib/Array";
 import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
@@ -26,7 +24,7 @@ import {
   RemoteValue
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { Locales } from "../../../../locales/locales";
-import { PaymentManagerToken, Psp } from "../../../types/pagopa";
+import { PaymentManagerToken } from "../../../types/pagopa";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -86,10 +84,6 @@ export const getPaymentIdFromGlobalState = (state: GlobalState) =>
 
 export const allPspsSelector = (state: GlobalState) =>
   state.wallet.payment.allPsps;
-
-// the psp selected for the payment
-export const pspSelectedSelector = (state: GlobalState): Option<Psp> =>
-  index(0, [...pot.getOrElse(state.wallet.payment.psps, [])]);
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();

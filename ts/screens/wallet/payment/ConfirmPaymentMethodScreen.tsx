@@ -44,8 +44,7 @@ import { PayloadForAction } from "../../../types/utils";
 import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
-  pmSessionTokenSelector,
-  pspSelectedSelector
+  pmSessionTokenSelector
 } from "../../../store/reducers/wallet/payment";
 import {
   isError,
@@ -137,14 +136,10 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const paymentReason = verifica.causaleVersamento;
 
-  const fee = props.maybePspSelected.fold(
-    undefined,
-    psp => psp.fixedCost.amount
-  );
+  const maybePsp = fromNullable(wallet.psp);
+  const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
-  const psp = props.maybePspSelected.toUndefined();
-
-  const totalAmount = fromNullable(psp).fold(
+  const totalAmount = maybePsp.fold(
     verifica.importoSingoloVersamento,
     fee =>
       (verifica.importoSingoloVersamento as number) +
@@ -187,12 +182,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             hideFavoriteIcon={true}
           />
           <View spacer={true} />
-          {psp === undefined ? (
+          {maybePsp.isNone() ? (
             <Text>{I18n.t("payment.noPsp")}</Text>
           ) : (
             <Text>
               {I18n.t("payment.currentPsp")}
-              <Text bold={true}>{` ${psp.businessName}`}</Text>
+              <Text bold={true}>{` ${maybePsp.value.businessName}`}</Text>
             </Text>
           )}
           <TouchableDefaultOpacity onPress={props.pickPsp}>
@@ -276,14 +271,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
-  const maybePspSelected = pspSelectedSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
-    maybePspSelected,
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     // TODO add generic error and the explicit one
