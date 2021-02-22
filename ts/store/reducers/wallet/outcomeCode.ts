@@ -1,6 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import I18n from "../../../i18n";
 import {
   OutcomeCode,
   OutcomeCodes,
@@ -25,104 +26,87 @@ const initialOutcomeCodeState: OutcomeCodeState = {
 // This data structure replicates the future remote data structure.
 const OutcomeCodesPrintable: OutcomeCodes = {
   "0": {
-    title: {
-      "en-EN": "",
-      "it-IT": ""
-    },
-    description: {
-      "en-EN": "",
-      "it-IT": ""
-    },
-    icon: "",
     status: "success"
   },
   "1": {
     title: {
-      "en-EN": "",
-      "it-IT": "Spiacenti, si è verificato un errore imprevisto"
+      "en-EN": I18n.t("wallet.outcomeMessage.code1.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code1.title")
     },
     description: {
-      "en-EN": "",
-      "it-IT": "Non è stato addebitato alcun importo."
+      "en-EN": I18n.t("wallet.outcomeMessage.code1.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code1.description")
     },
     icon: genericError,
     status: "errorBlocking"
   },
   "2": {
     title: {
-      "en-EN": "",
-      "it-IT": "Autorizzazione negata"
+      "en-EN": I18n.t("wallet.outcomeMessage.code2.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code2.title")
     },
     description: {
-      "en-EN": "",
-      "it-IT":
-        "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+      "en-EN": I18n.t("wallet.outcomeMessage.code2.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code2.description")
     },
     icon: authorizationDenied,
     status: "errorBlocking"
   },
   "4": {
     title: {
-      "en-EN": "",
-      "it-IT": "Spiacenti, la sessione è scaduta"
+      "en-EN": I18n.t("wallet.outcomeMessage.code4.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code4.title")
     },
     description: {
-      "en-EN": "",
-      "it-IT":
-        "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+      "en-EN": I18n.t("wallet.outcomeMessage.code4.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code4.description")
     },
     icon: sessionExpired,
     status: "errorBlocking"
   },
   "7": {
     title: {
-      "en-EN": "",
-      "it-IT": "C’è un problema con la tua carta"
+      "en-EN": I18n.t("wallet.outcomeMessage.code7.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code7.title")
     },
     description: {
-      "en-EN": "",
-      "it-IT":
-        "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
+      "en-EN": I18n.t("wallet.outcomeMessage.code7.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code7.description")
     },
     icon: cardProblemOrOperationCanceled,
     status: "errorBlocking"
   },
   "8": {
     title: {
-      "en-EN": "",
-      "it-IT": "L’operazione è stata annullata"
-    },
-    description: {
-      "en-EN": "",
-      "it-IT": ""
+      "en-EN": I18n.t("wallet.outcomeMessage.code8.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code8.title")
     },
     icon: cardProblemOrOperationCanceled,
     status: "errorBlocking"
   },
   "10": {
     title: {
-      "en-EN": "",
-      "it-IT": "Autorizzazione negata"
+      "en-EN": I18n.t("wallet.outcomeMessage.code10.title"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code10.title")
     },
     description: {
-      "en-EN": "",
-      "it-IT":
-        "Probabilmente hai sforato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      "en-EN": I18n.t("wallet.outcomeMessage.code10.description"),
+      "it-IT": I18n.t("wallet.outcomeMessage.code10.description")
     },
     icon: authorizationDenied,
-    status: "errorTryAgain"
+    status: "errorBlocking"
   }
 };
 
 // This fallback is used both for unexpected code and for code that we don't want to map specifically.
 const fallbackOutcomeCodes: OutcomeCode = {
   title: {
-    "en-EN": "fallback title",
-    "it-IT": "Spiacenti, si è verificato un errore imprevisto"
+    "en-EN": I18n.t("wallet.outcomeMessage.fallback.title"),
+    "it-IT": I18n.t("wallet.outcomeMessage.fallback.title")
   },
   description: {
-    "en-EN": "fallback description",
-    "it-IT": "Non è stato addebitato alcun importo."
+    "en-EN": I18n.t("wallet.outcomeMessage.fallback.description"),
+    "it-IT": I18n.t("wallet.outcomeMessage.fallback.description")
   },
   icon: genericError,
   status: "errorBlocking"
