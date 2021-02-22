@@ -145,8 +145,6 @@ class PickPspScreen extends React.Component<Props> {
           <View spacer={true} />
           <View style={styles.padded}>
             <Text>
-              {!this.props.navigation.getParam("chooseToChange") &&
-                `${I18n.t("wallet.pickPsp.info")} `}
               <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
               <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
             </Text>
