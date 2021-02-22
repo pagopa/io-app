@@ -343,7 +343,7 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
-export const navigateToOutcomeCode = () =>
+export const navigateToAddCreditCardOutcomeCode = () =>
   NavigationActions.navigate({
     routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE
   });
