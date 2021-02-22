@@ -343,6 +343,11 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
+export const navigateToOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE
+  });
+
 /**
  * CIE
  */

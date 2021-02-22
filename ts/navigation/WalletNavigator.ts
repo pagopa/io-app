@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import OutcomeCodeMessageComponent from "../components/wallet/OutcomeCodeMessageComponent";
 import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
@@ -112,6 +113,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL]: {
     screen: CreditCardOnboardingAttemptDetailScreen
+  },
+  [ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE]: {
+    screen: OutcomeCodeMessageComponent
   }
 };
 
