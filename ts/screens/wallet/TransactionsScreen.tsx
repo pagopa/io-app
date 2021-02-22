@@ -32,8 +32,6 @@ import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
-import variables from "../../theme/variables";
-
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
