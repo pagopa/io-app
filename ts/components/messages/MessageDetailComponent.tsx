@@ -78,9 +78,8 @@ const styles = StyleSheet.create({
     backgroundColor: variables.noticeBg,
   },
   messagePaidLabel: {
-    color: '#FFF',
-  },
-  
+    color: '#17324D',
+  }, 
 });
 
 /**
