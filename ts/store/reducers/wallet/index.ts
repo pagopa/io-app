@@ -20,6 +20,7 @@ import walletsReducer, { PersistedWalletsState, WalletsState } from "./wallets";
 import lastRequestErrorReducer, {
   LastRequestErrorState
 } from "./lastRequestError";
+import outcomeCodeReducer, { OutcomeCodeState } from "./outcomeCode";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;
@@ -31,6 +32,7 @@ export type WalletState = Readonly<{
   // section used for the onboarding of a new payment method. Each payment have a sub-section
   onboarding: PaymentMethodOnboardingState;
   lastRequestError: LastRequestErrorState;
+  lastPaymentOutcomeCode: OutcomeCodeState;
 }>;
 
 // A custom configuration to store list of wallets
@@ -51,7 +53,8 @@ const reducer = combineReducers<WalletState, Action>({
   pspsById: pspsByIdReducer,
   abi: abiReducer,
   onboarding: onboardingReducer,
-  lastRequestError: lastRequestErrorReducer
+  lastRequestError: lastRequestErrorReducer,
+  lastPaymentOutcomeCode: outcomeCodeReducer
 });
 
 export default reducer;
