@@ -288,7 +288,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
-    // TODO add generic error and the explicit one
+    // TODO handle the error considering the failure coming from pm session token refresh and webview outcome
     error: isError(pmSessionToken) ? some(pmSessionToken.error.message) : none
   };
 };
