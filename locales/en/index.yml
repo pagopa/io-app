@@ -999,7 +999,7 @@ wallet:
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
-    goToPay: Confirm and pay
+    goToPay: Pay
     askConfirm: Want to proceed with the transaction?
     partialAmount: Amount to pay
     fee: Fee

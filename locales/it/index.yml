@@ -1027,7 +1027,7 @@ wallet:
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione

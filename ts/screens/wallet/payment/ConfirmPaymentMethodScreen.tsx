@@ -44,7 +44,8 @@ import { PayloadForAction } from "../../../types/utils";
 import {
   paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
-  pmSessionTokenSelector
+  pmSessionTokenSelector,
+  pspSelectedSelector
 } from "../../../store/reducers/wallet/payment";
 import {
   isError,
@@ -52,6 +53,7 @@ import {
   isReady
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -135,9 +137,18 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const paymentReason = verifica.causaleVersamento;
 
-  const fee = fromNullable(wallet.psp).fold(
+  const fee = props.maybePspSelected.fold(
     undefined,
     psp => psp.fixedCost.amount
+  );
+
+  const psp = props.maybePspSelected.toUndefined();
+
+  const totalAmount = fromNullable(psp).fold(
+    verifica.importoSingoloVersamento,
+    fee =>
+      (verifica.importoSingoloVersamento as number) +
+      (fee.fixedCost.amount as number)
   );
 
   // the user press back during the pay web view challenge
@@ -176,12 +187,12 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             hideFavoriteIcon={true}
           />
           <View spacer={true} />
-          {wallet.psp === undefined ? (
+          {psp === undefined ? (
             <Text>{I18n.t("payment.noPsp")}</Text>
           ) : (
             <Text>
               {I18n.t("payment.currentPsp")}
-              <Text bold={true}>{` ${wallet.psp.businessName}`}</Text>
+              <Text bold={true}>{` ${psp.businessName}`}</Text>
             </Text>
           )}
           <TouchableDefaultOpacity onPress={props.pickPsp}>
@@ -221,7 +232,9 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
             })
           }
         >
-          <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
+          <Text>{`${I18n.t(
+            "wallet.ConfirmPayment.goToPay"
+          )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
         <View style={styles.parent}>
@@ -263,12 +276,14 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => {
   const pmSessionToken = pmSessionTokenSelector(state);
+  const maybePspSelected = pspSelectedSelector(state);
   const paymentStartPayload = paymentStartPayloadSelector(state);
   const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
     isReady(pmSessionToken) && paymentStartPayload
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    maybePspSelected,
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     // TODO add generic error and the explicit one
