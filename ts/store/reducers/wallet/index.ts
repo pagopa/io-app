@@ -32,6 +32,7 @@ export type WalletState = Readonly<{
   // section used for the onboarding of a new payment method. Each payment have a sub-section
   onboarding: PaymentMethodOnboardingState;
   lastRequestError: LastRequestErrorState;
+  // Section used to know the outcome of the last payment, used both when the user pay or add a credit card.
   lastPaymentOutcomeCode: OutcomeCodeState;
 }>;
 
