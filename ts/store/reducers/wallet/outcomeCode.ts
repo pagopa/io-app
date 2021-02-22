@@ -99,7 +99,7 @@ const OutcomeCodesPrintable = (): OutcomeCodes => ({
 });
 
 // This fallback is used both for unexpected code and for code that we don't want to map specifically.
-const fallbackOutcomeCodes: OutcomeCode = {
+const fallbackOutcomeCodes = (): OutcomeCode => ({
   title: {
     "en-EN": I18n.t("wallet.outcomeMessage.fallback.title"),
     "it-IT": I18n.t("wallet.outcomeMessage.fallback.title")
@@ -110,14 +110,14 @@ const fallbackOutcomeCodes: OutcomeCode = {
   },
   icon: genericError,
   status: "errorBlocking"
-};
+});
 
 const extractOutcomeCode = (
   code: Option<string>
 ): pot.Pot<OutcomeCode, Error> =>
-  code.fold(pot.some(fallbackOutcomeCodes), c =>
+  code.fold(pot.some(fallbackOutcomeCodes()), c =>
     OutcomeCodesKey.decode(c).fold(
-      _ => pot.some(fallbackOutcomeCodes),
+      _ => pot.some(fallbackOutcomeCodes()),
       oCK => pot.some(OutcomeCodesPrintable()[oCK])
     )
   );
