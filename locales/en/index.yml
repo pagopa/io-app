@@ -882,7 +882,8 @@ wallet:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
-        warning: "In some cases, the displayed data might be different from the data printed on the physical card."
+        warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
+        warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
       chooseType:
         title: "Does your card allow you to shop online?"
@@ -982,9 +983,8 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the manager
-    info: This card does not belong to the pagoPA payment network.
-    infoBold: Choose the economic operator
+    title: Choose the provider
+    infoBold: Choose the Payment Service Provider
     info2: (PSP) which will have to manage your payment.
     link: Find out more
     maxFee: Maximum fee
