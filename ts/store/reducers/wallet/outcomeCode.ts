@@ -24,7 +24,7 @@ const initialOutcomeCodeState: OutcomeCodeState = {
 
 // TODO: As refinement make the outcomeCodes list remote, like backend status.
 // This data structure replicates the future remote data structure.
-const OutcomeCodesPrintable: OutcomeCodes = {
+const OutcomeCodesPrintable = (): OutcomeCodes => ({
   "0": {
     status: "success"
   },
@@ -96,7 +96,7 @@ const OutcomeCodesPrintable: OutcomeCodes = {
     icon: authorizationDenied,
     status: "errorBlocking"
   }
-};
+});
 
 // This fallback is used both for unexpected code and for code that we don't want to map specifically.
 const fallbackOutcomeCodes: OutcomeCode = {
@@ -118,7 +118,7 @@ const extractOutcomeCode = (
   code.fold(pot.some(fallbackOutcomeCodes), c =>
     OutcomeCodesKey.decode(c).fold(
       _ => pot.some(fallbackOutcomeCodes),
-      oCK => pot.some(OutcomeCodesPrintable[oCK])
+      oCK => pot.some(OutcomeCodesPrintable()[oCK])
     )
   );
 
