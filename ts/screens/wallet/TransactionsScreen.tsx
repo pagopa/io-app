@@ -6,9 +6,9 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { NavigationActions, NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -18,11 +18,6 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
-
-import {
-  navigateToWalletHome,
-  navigateToWalletList
-} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
@@ -33,10 +28,12 @@ import {
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
+import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { handleSetFavourite } from "../../utils/wallet";
 import variables from "../../theme/variables";
+
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -180,13 +177,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       deleteWalletRequest({
         walletId,
-        onSuccess: action => {
+        onSuccess: _ => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          if (action.payload.length > 0) {
-            dispatch(navigateToWalletList());
-          } else {
-            dispatch(navigateToWalletHome());
-          }
+          dispatch(NavigationActions.back());
         },
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");

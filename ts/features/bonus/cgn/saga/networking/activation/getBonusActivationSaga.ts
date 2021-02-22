@@ -7,7 +7,7 @@ import { cgnActivationStatus } from "../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import { startTimer } from "../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { CgnActivatedStatus } from "../../../../../../../definitions/cgn/CgnActivatedStatus";
+import { CardActivated } from "../../../../../../../definitions/cgn/CardActivated";
 import { getError } from "../../../../../../utils/errors";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 
@@ -97,7 +97,7 @@ export const handleCgnStatusPolling = (
         cgnStatusResult.isRight() &&
         cgnStatusResult.value.status === 200
       ) {
-        if (CgnActivatedStatus.is(cgnStatusResult.value.value)) {
+        if (CardActivated.is(cgnStatusResult.value.value)) {
           return cgnActivationStatus.success({
             status: CgnActivationProgressEnum.SUCCESS,
             activation: cgnStatusResult.value.value

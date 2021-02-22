@@ -32,6 +32,13 @@ export const bpdUnsubscribeCompleted = createStandardAction(
 )<void>();
 
 /**
+ * The user complete the unsubscribe workflow with a failure
+ */
+export const bpdUnsubscribeFailure = createStandardAction(
+  "BPD_UNSUBSCRIBE_COMPLETED_WITH_FAILURE"
+)<void>();
+
+/**
  * Start the onboarding workflow
  */
 export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
@@ -74,4 +81,5 @@ export type BpdOnboardingActions =
   | ActionType<typeof bpdOnboardingCancel>
   | ActionType<typeof bpdOnboardingCompleted>
   | ActionType<typeof bpdDeleteUserFromProgram>
-  | ActionType<typeof bpdUnsubscribeCompleted>;
+  | ActionType<typeof bpdUnsubscribeCompleted>
+  | ActionType<typeof bpdUnsubscribeFailure>;

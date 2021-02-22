@@ -882,7 +882,8 @@ wallet:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
-        warning: "Check that the card number matches the one on your physical card."
+        warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
+        warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
       chooseType:
         title: "Does your card allow you to shop online?"
@@ -1146,7 +1147,11 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: Card holder
+      holder: 
+        label: Card holder
+        description:
+          base: "Enter as shown on the card"
+          error: "Enter exactly as shown on the card"
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
