@@ -4,6 +4,14 @@
 import { Option } from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
+// This action is supposed to be used to update the state with the outcome
+// code when the add credit card workflow is finished
+export const addCreditCardOutcomeCode = createStandardAction(
+  "PAYMENT_OUTCOME_CODE"
+)<Option<string>>();
+
+// This action is supposed to be used to update the state with the outcome
+// code when the payment workflow is finished
 export const paymentOutcomeCode = createStandardAction("PAYMENT_OUTCOME_CODE")<
   Option<string>
 >();
@@ -14,5 +22,6 @@ export const resetLastPaymentOutcomeCode = createStandardAction(
 )();
 
 export type OutcomeCodeActions =
+  | ActionType<typeof addCreditCardOutcomeCode>
   | ActionType<typeof paymentOutcomeCode>
   | ActionType<typeof resetLastPaymentOutcomeCode>;

@@ -8,6 +8,7 @@ import {
 } from "../../../types/outcomeCode";
 import { Action } from "../../actions/types";
 import {
+  addCreditCardOutcomeCode,
   paymentOutcomeCode,
   resetLastPaymentOutcomeCode
 } from "../../actions/wallet/outcomeCode";
@@ -129,13 +130,15 @@ export default function outcomeCodeReducer(
   state: OutcomeCodeState = initialOutcomeCodeState,
   action: Action
 ): OutcomeCodeState {
-  if (action.type === getType(paymentOutcomeCode)) {
-    return { outcomeCode: extractOutcomeCode(action.payload) };
+  switch (action.type) {
+    case getType(addCreditCardOutcomeCode):
+    case getType(paymentOutcomeCode):
+      return { outcomeCode: extractOutcomeCode(action.payload) };
+    case getType(resetLastPaymentOutcomeCode):
+      return initialOutcomeCodeState;
+    default:
+      return state;
   }
-  if (action.type === getType(resetLastPaymentOutcomeCode)) {
-    return initialOutcomeCodeState;
-  }
-  return state;
 }
 
 export const lastPaymentOutcomeCodeSelector = (
