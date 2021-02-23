@@ -10,6 +10,7 @@ import { renderInfoRasterImage } from "../infoScreen/imageRendering";
 import FooterWithButtons from "../ui/FooterWithButtons";
 import { cancelButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { OutcomeCode } from "../../types/outcomeCode";
+import { getFullLocale } from "../../utils/locale";
 
 type OwnProp = {
   outcomeCode: OutcomeCode;
@@ -39,7 +40,7 @@ const blockingFooterWithButton = (onClose: () => void) => (
  * @param props
  */
 const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
-  const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
+  const locale = getFullLocale();
   const title = props.outcomeCode.title
     ? props.outcomeCode.title[locale]
     : undefined;
