@@ -41,7 +41,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
   sessionToken: PaymentManagerToken;
 };
 
-// TODO: instead of keeping one single state, it would me more correct to keep
+// TODO: instead of keeping one single state, it would be more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
