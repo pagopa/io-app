@@ -8,7 +8,10 @@ import {
   OutcomeCodesKey
 } from "../../../types/outcomeCode";
 import { Action } from "../../actions/types";
-import { outcomeCodeRetrieved } from "../../actions/wallet/outcomeCode";
+import {
+  paymentOutcomeCode,
+  resetLastPaymentOutcomeCode
+} from "../../actions/wallet/outcomeCode";
 import authorizationDenied from "../../../../img/servicesStatus/error-detail-icon.png";
 import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
 import sessionExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
@@ -126,8 +129,11 @@ export default function outcomeCodeReducer(
   state: OutcomeCodeState = initialOutcomeCodeState,
   action: Action
 ): OutcomeCodeState {
-  if (action.type === getType(outcomeCodeRetrieved)) {
+  if (action.type === getType(paymentOutcomeCode)) {
     return { outcomeCode: extractOutcomeCode(action.payload) };
+  }
+  if (action.type === getType(resetLastPaymentOutcomeCode)) {
+    return initialOutcomeCodeState;
   }
   return state;
 }

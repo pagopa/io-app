@@ -4,8 +4,15 @@
 import { Option } from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const outcomeCodeRetrieved = createStandardAction(
-  "OUTCOME_CODE_RETRIEVED"
-)<Option<string>>();
+export const paymentOutcomeCode = createStandardAction("PAYMENT_OUTCOME_CODE")<
+  Option<string>
+>();
 
-export type OutcomeCodeActions = ActionType<typeof outcomeCodeRetrieved>;
+// Bring the state to the initial value
+export const resetLastPaymentOutcomeCode = createStandardAction(
+  "RESET_LAST_PAYMENT_OUTCOME_CODE"
+)();
+
+export type OutcomeCodeActions =
+  | ActionType<typeof paymentOutcomeCode>
+  | ActionType<typeof resetLastPaymentOutcomeCode>;
