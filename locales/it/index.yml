@@ -1283,7 +1283,7 @@ wallet:
       title: "L’operazione è stata annullata"
     code10: 
       title: "Autorizzazione negata"
-      description: "Probabilmente hai sforato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
     addCreditCard:
       success:
         title: "La tua carta è stata aggiunta con successo!"
