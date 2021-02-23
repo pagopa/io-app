@@ -7,7 +7,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 // This action is supposed to be used to update the state with the outcome
 // code when the add credit card workflow is finished
 export const addCreditCardOutcomeCode = createStandardAction(
-  "PAYMENT_OUTCOME_CODE"
+  "CREDIT_CARD_PAYMENT_OUTCOME_CODE"
 )<Option<string>>();
 
 // This action is supposed to be used to update the state with the outcome
