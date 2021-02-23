@@ -115,8 +115,8 @@ const fallbackOutcomeCodes = (): OutcomeCode => ({
   status: "errorBlocking"
 });
 
-// This function extract, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
-// that containe the list of outcome codes.
+// This function extracts, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
+// that contains the list of outcome codes.
 // If the string is none or if the the code is not a key of the OutcomeCodesPrintable the fallback outcome code object is returned.
 const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
   code.fold(some(fallbackOutcomeCodes()), c =>
