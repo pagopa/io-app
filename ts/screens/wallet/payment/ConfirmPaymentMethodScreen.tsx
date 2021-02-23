@@ -123,6 +123,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
+
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const showHelp = () => {
     props.showModal(
