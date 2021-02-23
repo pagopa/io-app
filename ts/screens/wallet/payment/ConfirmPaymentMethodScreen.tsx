@@ -55,6 +55,8 @@ import {
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { pagoPaApiUrlPrefix } from "../../../config";
+import { H4 } from "../../../components/core/typography/H4";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -142,6 +144,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
 
   const maybePsp = fromNullable(wallet.psp);
+  RTron.log(maybePsp);
   const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
   const totalAmount = maybePsp.fold(
@@ -192,17 +195,11 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           <View spacer={true} />
           {maybePsp.isNone() ? (
             <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
-            ) : (
+          ) : (
             <H4 weight={"Regular"}>
               {I18n.t("payment.currentPsp")}
-              <H4 >{` ${maybePsp.value.businessName}`}</H4>
+              <H4>{` ${maybePsp.value.businessName}`}</H4>
             </H4>
-          )
-          ) : (
-            <Text>
-              {I18n.t("payment.currentPsp")}
-              <Text bold={true}>{` ${maybePsp.value.businessName}`}</Text>
-            </Text>
           )}
           <TouchableDefaultOpacity onPress={props.pickPsp}>
             <Text link={true} bold={true}>
