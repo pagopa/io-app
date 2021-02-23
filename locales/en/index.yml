@@ -1250,7 +1250,7 @@ wallet:
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
     code4: 
       title: "Sorry, the session has expired"
-      description: "No amount was charged. For your safety, you have 5 minutes to complete the operation."
+      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
     code7: 
       title: "C’è un problema con la tua carta"
       description: "No amount was charged. For more information, contact your bank."
