@@ -14,7 +14,8 @@ import { differentProfileLoggedIn } from "../../actions/crossSessions";
 export type PaidReason = Readonly<
   | {
       kind: "COMPLETED";
-      // TODO Transaction is not available, add it when PM make it available see https://www.pivotaltracker.com/story/show/177067134
+      // TODO Transaction is not available, add it when PM make it available again
+      //  see https://www.pivotaltracker.com/story/show/177067134
       transactionId: number | undefined;
     }
   | {

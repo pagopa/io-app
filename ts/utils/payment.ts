@@ -266,7 +266,7 @@ export const getCodiceAvviso = (rptId: RptId) => {
   }
 };
 
-// from a give generic code and outcome codes say true if that code represent success
+// from a give generic code and outcome codes say true if that code represents a success
 export const isPaymentOutcomeCodeSuccessfully = (
   code: string,
   outcomeCodes: OutcomeCodes
