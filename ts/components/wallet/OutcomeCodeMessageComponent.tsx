@@ -40,10 +40,12 @@ const blockingFooterWithButton = (onClose: () => void) => (
  */
 const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
   const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
-  const title = props.outcomeCode.title ? props.outcomeCode.title[locale] : "";
+  const title = props.outcomeCode.title
+    ? props.outcomeCode.title[locale]
+    : undefined;
   const description = props.outcomeCode.description
     ? props.outcomeCode.description[locale]
-    : "";
+    : undefined;
   return (
     <BaseScreenComponent
       goBack={false}
@@ -58,13 +60,16 @@ const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
           </>
         ) : (
           <>
-            <InfoScreenComponent
-              image={renderInfoRasterImage(
-                props.outcomeCode.icon as ImageSourcePropType
-              )}
-              title={title}
-              body={description}
-            />
+            {/* Since the description can be undefined only the title is used for the conditional rendering condition */}
+            {title && (
+              <InfoScreenComponent
+                image={renderInfoRasterImage(
+                  props.outcomeCode.icon as ImageSourcePropType
+                )}
+                title={title}
+                body={description}
+              />
+            )}
             {props.outcomeCode.status === "errorBlocking" &&
               blockingFooterWithButton(props.onClose)}
           </>
