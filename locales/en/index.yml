@@ -1241,7 +1241,7 @@ wallet:
       visualizeCard: View card
     fallback:
       title: "Sorry, an unexpected error has occurred"
-      description: "No amount was charged."
+      description: "No charges were made."
     code1: 
       title: "Sorry, an unexpected error has occurred"
       description: "No amount was charged."
