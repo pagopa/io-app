@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import I18n from "../../../i18n";
@@ -19,10 +19,10 @@ import cardProblemOrOperationCanceled from "../../../../img/wallet/errors/paymen
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
-  outcomeCode: pot.Pot<OutcomeCode, Error>;
+  outcomeCode: Option<OutcomeCode>;
 };
 const initialOutcomeCodeState: OutcomeCodeState = {
-  outcomeCode: pot.none
+  outcomeCode: none
 };
 
 // TODO: As refinement make the outcomeCodes list remote, like backend status.
@@ -118,13 +118,11 @@ const fallbackOutcomeCodes = (): OutcomeCode => ({
 // This function extract, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
 // that containe the list of outcome codes.
 // If the string is none or if the the code is not a key of the OutcomeCodesPrintable the fallback outcome code object is returned.
-const extractOutcomeCode = (
-  code: Option<string>
-): pot.Pot<OutcomeCode, Error> =>
-  code.fold(pot.some(fallbackOutcomeCodes()), c =>
+const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
+  code.fold(some(fallbackOutcomeCodes()), c =>
     OutcomeCodesKey.decode(c).fold(
-      _ => pot.some(fallbackOutcomeCodes()),
-      oCK => pot.some(OutcomeCodesPrintable()[oCK])
+      _ => some(fallbackOutcomeCodes()),
+      oCK => some(OutcomeCodesPrintable()[oCK])
     )
   );
 

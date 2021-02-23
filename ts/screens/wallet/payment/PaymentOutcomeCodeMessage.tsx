@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
@@ -43,7 +42,7 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = pot.getOrElse(props.outcomeCode.outcomeCode, undefined);
+  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent

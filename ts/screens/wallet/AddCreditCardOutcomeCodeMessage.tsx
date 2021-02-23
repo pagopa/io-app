@@ -53,7 +53,7 @@ const successFooter = (onVisualize: () => void, onClose: () => void) => (
  */
 const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const selectedWallet = props.navigation.getParam("selectedWallet");
-  const outcomeCode = pot.getOrElse(props.outcomeCode.outcomeCode, undefined);
+  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
