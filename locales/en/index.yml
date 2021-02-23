@@ -1264,7 +1264,7 @@ wallet:
         title: "Your card has been successfully added!"
     payment:
       success:
-        title: "Thank you, the operation was successful!"
+        title: "Thank you for your payment!"
         description: "We have sent a receipt to your email address. You can also find it in your Wallet."
 saveCard:
   saveCard: Save the card
