@@ -1235,6 +1235,37 @@ wallet:
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available Functions"
+  outcomeMessage:
+    cta:
+      close: Close
+      visualizeCard: View card
+    fallback:
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code1: 
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code2: 
+      title: "Authorization declined"
+      description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code4: 
+      title: "Sorry, the session has expired"
+      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+    code7: 
+      title: "There's a problem with your card"
+      description: "No charges were made. For more information, contact your bank."
+    code8: 
+      title: "The operation was canceled"
+    code10: 
+      title: "Authorization declined"
+      description: "You have probably reached your card limit. Check with your bank before trying again."
+    addCreditCard:
+      success:
+        title: "Your card has been successfully added!"
+    payment:
+      success:
+        title: "Thank you for your payment!"
+        description: "We sent a receipt to your email address. You can also find it in your Wallet."
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
