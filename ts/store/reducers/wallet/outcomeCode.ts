@@ -1,5 +1,4 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import I18n from "../../../i18n";
 import {
