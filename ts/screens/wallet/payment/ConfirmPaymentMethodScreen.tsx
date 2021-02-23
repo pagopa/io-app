@@ -191,7 +191,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           />
           <View spacer={true} />
           {maybePsp.isNone() ? (
-            <Text>{I18n.t("payment.noPsp")}</Text>
+            <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
+            ) : (
+            <H4 weight={"Regular"}>
+              {I18n.t("payment.currentPsp")}
+              <H4 >{` ${maybePsp.value.businessName}`}</H4>
+            </H4>
+          )
           ) : (
             <Text>
               {I18n.t("payment.currentPsp")}
