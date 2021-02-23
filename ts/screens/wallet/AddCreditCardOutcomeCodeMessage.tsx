@@ -44,7 +44,7 @@ const successFooter = (onVisualize: () => void, onClose: () => void) => (
 
 /**
  * This is the wrapper component which takes care of showing the outcome message after that
- * a user try to add a card.
+ * a user tries to add a card to his/her wallet.
  * The component expects the action outcomeCodeRetrieved to be dispatched before being rendered,
  * so the pot.none case is not taken into account.
  *
