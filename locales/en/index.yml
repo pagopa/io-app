@@ -1257,7 +1257,7 @@ wallet:
     code8: 
       title: "The operation was canceled"
     code10: 
-      title: "Authorization denied"
+      title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
     addCreditCard:
       success:
