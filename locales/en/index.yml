@@ -1244,7 +1244,7 @@ wallet:
       description: "No charges were made."
     code1: 
       title: "Sorry, an unexpected error has occurred"
-      description: "No amount was charged."
+      description: "No charges were made."
     code2: 
       title: "Authorization denied"
       description: "Your bank did not authorize the transaction. Check that you have correctly entered the various codes required by your bank."
