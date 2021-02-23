@@ -983,9 +983,8 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the manager
-    info: This card does not belong to the pagoPA payment network.
-    infoBold: Choose the economic operator
+    title: Choose the provider
+    infoBold: Choose the Payment Service Provider
     info2: (PSP) which will have to manage your payment.
     link: Find out more
     maxFee: Maximum fee
