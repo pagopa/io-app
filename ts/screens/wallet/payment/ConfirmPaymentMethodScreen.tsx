@@ -54,8 +54,9 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { pagoPaApiUrlPrefix } from "../../../config";
+import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -119,7 +120,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.whyAFee.text"
 };
 
-const payUrl = pagoPaApiUrlPrefix + "/v3/webview/transactions/pay";
+const payUrlSuffix = "/v3/webview/transactions/pay";
 const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
@@ -132,16 +133,16 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       />
     );
   };
+  const urlPrefix = props.isPagoPATestEnabled
+    ? pagoPaApiUrlPrefixTest
+    : pagoPaApiUrlPrefix;
 
   const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
     "verifica"
   );
-
   const wallet: Wallet = props.navigation.getParam("wallet");
   const idPayment: string = props.navigation.getParam("idPayment");
-
   const paymentReason = verifica.causaleVersamento;
-
   const maybePsp = fromNullable(wallet.psp);
   const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
@@ -263,7 +264,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       </View>
       {props.payStartWebviewPayload.isSome() && (
         <PayWebViewModal
-          postUri={payUrl}
+          postUri={urlPrefix + payUrlSuffix}
           formData={props.payStartWebviewPayload.value}
           finishPathName={webViewExitPathName}
           onFinish={maybeCode => {
@@ -287,6 +288,7 @@ const mapStateToProps = (state: GlobalState) => {
       ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
       : none;
   return {
+    isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     // TODO handle the error considering the failure coming from pm session token refresh and webview outcome
