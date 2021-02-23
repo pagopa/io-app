@@ -56,7 +56,6 @@ import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { pagoPaApiUrlPrefix } from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -144,7 +143,6 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
   const paymentReason = verifica.causaleVersamento;
 
   const maybePsp = fromNullable(wallet.psp);
-  RTron.log(maybePsp);
   const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
   const totalAmount = maybePsp.fold(
