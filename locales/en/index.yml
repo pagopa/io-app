@@ -1252,7 +1252,7 @@ wallet:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
     code7: 
-      title: "C’è un problema con la tua carta"
+      title: "There's a problem with your card"
       description: "No amount was charged. For more information, contact your bank."
     code8: 
       title: "The operation was canceled"
