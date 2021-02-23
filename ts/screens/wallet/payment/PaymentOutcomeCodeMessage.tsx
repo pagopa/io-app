@@ -43,9 +43,7 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = pot.isSome(props.outcomeCode.outcomeCode)
-    ? props.outcomeCode.outcomeCode.value
-    : false;
+  const outcomeCode = pot.getOrElse(props.outcomeCode.outcomeCode, undefined);
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
