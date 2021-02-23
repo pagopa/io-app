@@ -1246,7 +1246,7 @@ wallet:
       title: "Sorry, an unexpected error has occurred"
       description: "No charges were made."
     code2: 
-      title: "Authorization denied"
+      title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Check that you have correctly entered the various codes required by your bank."
     code4: 
       title: "Sorry, the session has expired"
