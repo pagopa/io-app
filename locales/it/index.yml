@@ -1015,13 +1015,10 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info:
-      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      pagoPA.
-    infoBold: Scegli il soggetto economico
+    infoBold: Scegli il soggetto
     info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
-    maxFee: Commissione massima
+    maxFee: Costo di transazione
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
