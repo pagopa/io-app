@@ -902,7 +902,8 @@ wallet:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-        warning: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica."
+        warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
+        warning2: "se hai dubbi contatta la tua banca."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
       chooseType:
         title: "La tua carta ti permette di acquistare online?"
@@ -1009,13 +1010,10 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info:
-      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      pagoPA.
-    infoBold: Scegli il soggetto economico
+    infoBold: Scegli il soggetto
     info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
-    maxFee: Commissione massima
+    maxFee: Costo di transazione
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
