@@ -18,6 +18,7 @@ import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumb
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
+import { OutcomeCodes, OutcomeCodesKey } from "../types/outcomeCode";
 import { formatDateAsReminder } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -263,4 +264,16 @@ export const getCodiceAvviso = (rptId: RptId) => {
         pnn.checkDigit
       }`;
   }
+};
+
+// from a give generic code and outcome codes say true if that code represent success
+export const isPaymentOutcomeCodeSuccessfully = (
+  code: string,
+  outcomeCodes: OutcomeCodes
+): boolean => {
+  const maybeValidCode = OutcomeCodesKey.decode(code);
+  return maybeValidCode.fold(
+    _ => false,
+    c => outcomeCodes[c].status === "success"
+  );
 };

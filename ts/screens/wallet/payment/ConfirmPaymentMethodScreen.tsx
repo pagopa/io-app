@@ -9,7 +9,6 @@ import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCen
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -23,12 +22,14 @@ import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import {
+  navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
+  paymentCompletedSuccess,
   paymentExecuteStart,
   paymentInitializeState,
   paymentWebViewEnd,
@@ -57,6 +58,9 @@ import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
 import { H4 } from "../../../components/core/typography/H4";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
+import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
+import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -125,6 +129,13 @@ const webViewExitPathName = "/v3/webview/logout/bye";
 const webViewOutcomeParamName = "outcome";
 
 const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
+  React.useEffect(() => {
+    // show a toast if we got an error while retrieving pm session token
+    if (props.retrievingSessionTokenError.isSome()) {
+      showToast(I18n.t("global.actions.retry"));
+    }
+  }, [props.retrievingSessionTokenError]);
+
   const showHelp = () => {
     props.showModal(
       <ContextualHelp
@@ -153,6 +164,27 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       (verifica.importoSingoloVersamento as number) +
       (fee.fixedCost.amount as number)
   );
+
+  // emit an event to inform the pay web view finished
+  // dispatch the outcome code and navigate to payment outcome code screen
+  const handlePaymentOutcome = (maybeOutcomeCode: Option<string>) => {
+    // the outcome is a payment done successfully
+    if (
+      maybeOutcomeCode.isSome() &&
+      isPaymentOutcomeCodeSuccessfully(
+        maybeOutcomeCode.value,
+        props.outcomeCodes
+      )
+    ) {
+      // store the rptid of a payment done
+      props.dispatchPaymentCompleteSuccessfully(
+        props.navigation.getParam("rptId")
+      );
+    }
+    props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
+    props.dispatchPaymentOutCome(maybeOutcomeCode);
+    props.navigateToOutComePaymentScreen();
+  };
 
   // the user press back during the pay web view challenge
   const handlePayWebviewGoBack = () => {
@@ -268,11 +300,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           postUri={urlPrefix + payUrlSuffix}
           formData={props.payStartWebviewPayload.value}
           finishPathName={webViewExitPathName}
-          onFinish={maybeCode => {
-            // TODO display the outcome screen
-            Alert.alert(maybeCode.toString());
-            props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
-          }}
+          onFinish={handlePaymentOutcome}
           outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={handlePayWebviewGoBack}
         />
@@ -290,10 +318,12 @@ const mapStateToProps = (state: GlobalState) => {
       : none;
   return {
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+    outcomeCodes: outcomeCodesSelector(),
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
-    // TODO handle the error considering the failure coming from pm session token refresh and webview outcome
-    error: isError(pmSessionToken) ? some(pmSessionToken.error.message) : none
+    retrievingSessionTokenError: isError(pmSessionToken)
+      ? some(pmSessionToken.error.message)
+      : none
   };
 };
 
@@ -354,18 +384,23 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchEndPaymentWebview: (reason: PaymentWebViewEndReason) => {
       dispatch(paymentWebViewEnd(reason));
     },
-    dispatchCancelPayment
+    dispatchCancelPayment,
+    dispatchPaymentOutCome: (outComeCode: Option<string>) =>
+      dispatch(paymentOutcomeCode(outComeCode)),
+    navigateToOutComePaymentScreen: () =>
+      dispatch(navigateToPaymentOutcomeCode()),
+    dispatchPaymentCompleteSuccessfully: (rptId: RptId) =>
+      dispatch(
+        paymentCompletedSuccess({
+          kind: "COMPLETED",
+          rptId,
+          transaction: undefined
+        })
+      )
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withLightModalContext(
-    withErrorModal(
-      withLoadingSpinner(ConfirmPaymentMethodScreen),
-      (_: string) => _
-    )
-  )
-);
+)(withLightModalContext(withLoadingSpinner(ConfirmPaymentMethodScreen)));
