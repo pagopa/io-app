@@ -565,7 +565,7 @@ export function* paymentCheckRequestHandler(
 
 /**
  * handle the start of a payment
- * we already know about the payment (idPayment) and the used wallet to pay (idWallet)
+ * we already know which is the payment (idPayment) and the used wallet to pay (idWallet)
  * we need a fresh PM session token to start the challenge into the PayWebViewModal
  * @param pmSessionManager
  */
