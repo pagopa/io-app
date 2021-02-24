@@ -49,6 +49,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -92,6 +93,8 @@ const NOTICE_ICON_SIZE = 24;
  */
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
+    // refresh wallet list (to avoid cache de-sync)
+    this.props.dispatchWalletsLoad();
     if (pot.isNone(this.props.potVerifica)) {
       // on component mount, fetch the payment summary if we haven't already
       this.props.dispatchPaymentVerificaRequest();
@@ -478,6 +481,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
 
   return {
+    dispatchWalletsLoad: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
