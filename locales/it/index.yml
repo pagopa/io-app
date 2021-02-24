@@ -2222,6 +2222,7 @@ bonus:
     name: Carta Giovani Nazionale
     cta:
       activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
         buyers: Vedi esercenti
@@ -2265,9 +2266,6 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
-    cta:
-      activeBonus: Attiva la tua Carta Giovani
-      goToDetail: Visualizza la Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

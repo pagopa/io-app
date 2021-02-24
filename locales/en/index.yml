@@ -2192,6 +2192,7 @@ bonus:
     name: Carta Giovani Nazionale
     cta:
       activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
     detail:
       cta:
         buyers: See merchants
@@ -2235,9 +2236,7 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
-    cta:
-      activeBonus: Activate your Carta Giovani
-      goToDetail: View your Carta Giovani
+
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
