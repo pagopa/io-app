@@ -48,6 +48,7 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { CrossSessionsActions } from "./crossSessions";
+import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
 export type Action =
   | AnalyticsActions
@@ -88,7 +89,8 @@ export type Action =
   | CoBadgeActions
   | SatispayActions
   | CrossSessionsActions
-  | CgnActions;
+  | CgnActions
+  | OutcomeCodeActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

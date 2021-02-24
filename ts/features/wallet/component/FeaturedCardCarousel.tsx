@@ -21,6 +21,7 @@ import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
 import { isCgnActive } from "../../bonus/cgn/store/reducers/details";
 import { isStrictSome } from "../../../utils/pot";
+
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
