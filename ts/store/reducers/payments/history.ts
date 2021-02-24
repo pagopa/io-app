@@ -11,13 +11,13 @@
  * - "transaction" coming from payment manager when we ask for info about latest transaction
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { DetailEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Transaction } from "../../../types/pagopa";
+import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import {
@@ -32,6 +32,8 @@ export type PaymentHistory = {
   started_at: string;
   data: RptId;
   paymentId?: string;
+  // TODO Transaction is not available, add it when PM makes it available again
+  // see https://www.pivotaltracker.com/story/show/177067134
   transaction?: Transaction;
   verified_data?: PaymentRequestsGetResponse;
   failure?: keyof typeof DetailEnum;
@@ -160,7 +162,11 @@ export const isPaymentDoneSuccessfully = (
     return some(true);
   }
   // if we have an outcomeCode we got an error on pay
-  return payment.outcomeCode ? some(false) : none;
+  return payment.outcomeCode
+    ? some(false)
+    : fromNullable(payment.transaction).map(
+        t => t !== undefined && isSuccessTransaction(t)
+      );
 };
 
 export default reducer;
