@@ -261,28 +261,7 @@ function* startOrResumeAddCreditCardSaga(
       continue;
     }
 
-    //
-    // Second step: verify the card with a "fake" payment.
-    //
-    // Note that this is not actually a real payment, the card processor will
-    // just lock the amount from the card available credit. The user will not
-    // see this transaction in the transaction list and he will not receive
-    // any email notification concerning this transaction.
-    //
-
     const { idWallet } = state.creditCardAddWallet.value.data;
-    if (pot.isNone(state.creditCardVerification)) {
-      const responseAction = yield take([
-        getType(payCreditCardVerificationSuccess),
-        getType(payCreditCardVerificationFailure)
-      ]);
-      if (isActionOf(payCreditCardVerificationFailure, responseAction)) {
-        // this step failed, exit the flow
-        return;
-      }
-      // all is ok, continue to the next step
-      continue;
-    }
 
     //
     // Third step: process the optional 3ds checkout.
