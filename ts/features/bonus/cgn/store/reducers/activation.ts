@@ -35,7 +35,7 @@ const reducer = (
 ): ActivationState => {
   switch (action.type) {
     // bonus activation
-    case getType(cgnRequestActivation.request):
+    case getType(cgnRequestActivation):
     case getType(cgnActivationStatus.request):
       return {
         ...state,

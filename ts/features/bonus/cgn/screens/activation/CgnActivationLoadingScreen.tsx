@@ -33,7 +33,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onRetry: () => dispatch(cgnRequestActivation.request()),
+  onRetry: () => dispatch(cgnRequestActivation()),
   onCancel: () => dispatch(cgnActivationCancel())
 });
 

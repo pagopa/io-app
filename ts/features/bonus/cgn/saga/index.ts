@@ -22,7 +22,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // CGN Activation request with status polling
   yield takeLatest(
-    getType(cgnRequestActivation.request),
+    getType(cgnRequestActivation),
     handleCgnActivationSaga,
     cgnActivationSaga(
       backendCGN.startCgnActivation,
