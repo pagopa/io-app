@@ -51,7 +51,6 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -441,7 +440,6 @@ const reducer = (
     //
     // pay credit card verification
     //
-    case getType(payCreditCardVerificationWithBackoffRetryRequest):
     case getType(payCreditCardVerificationRequest):
       return {
         ...state,

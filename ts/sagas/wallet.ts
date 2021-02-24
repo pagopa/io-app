@@ -133,7 +133,6 @@ import {
   payCreditCardVerificationFailure,
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled
@@ -141,7 +140,10 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import { getAllWallets } from "../store/reducers/wallet/wallets";
+import {
+  getAllWallets,
+  getWalletsById
+} from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
@@ -179,6 +181,9 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { isTestEnv } from "../utils/environment";
+import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
+import reactotron from "reactotron-react-native";
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -256,6 +261,7 @@ function* startOrResumeAddCreditCardSaga(
       // all is ok, continue to the next step
       continue;
     }
+
     //
     // Second step: verify the card with a "fake" payment.
     //
@@ -266,23 +272,7 @@ function* startOrResumeAddCreditCardSaga(
     //
 
     const { idWallet } = state.creditCardAddWallet.value.data;
-
     if (pot.isNone(state.creditCardVerification)) {
-      const payRequest: PayRequest = {
-        data: {
-          idWallet,
-          tipo: "web",
-          cvv: action.payload.creditCard.securityCode
-            ? action.payload.creditCard.securityCode
-            : undefined
-        }
-      };
-      yield put(
-        payCreditCardVerificationWithBackoffRetryRequest({
-          payRequest,
-          language: action.payload.language
-        })
-      );
       const responseAction = yield take([
         getType(payCreditCardVerificationSuccess),
         getType(payCreditCardVerificationFailure)
@@ -366,6 +356,28 @@ function* startOrResumeAddCreditCardSaga(
       getType(fetchWalletsSuccess),
       getType(fetchWalletsFailure)
     ]);
+
+    // Get the outcome code after the verification and the 3ds2 steps inside the webview.
+    // yield take(getType(addCreditCardOutcomeCode));
+
+    // const outcomeCode: ReturnType<typeof lastPaymentOutcomeCodeSelector> = yield select(
+    //   lastPaymentOutcomeCodeSelector
+    // );
+
+    // outcomeCode.outcomeCode.fold(undefined, function* (oC) {
+    //   // The credit card was added succesfully
+    //   if (oC.status === "success") {
+    //     yield put(addWalletNewCreditCardSuccess());
+
+    //     // Check the bpd information and na
+    //     const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
+    //       bpdEnabledSelector
+    //     );
+    //   }
+
+    //   // There was a problem in the add credit card flow
+    // });
+
     if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
       const updatedWallets = fetchWalletsResultAction.payload;
       const maybeAddedWallet = updatedWallets.find(
@@ -376,6 +388,7 @@ function* startOrResumeAddCreditCardSaga(
         const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
           bpdEnabledSelector
         );
+        reactotron.log(maybeAddedWallet.paymentMethod);
         // dispatch the action: a new card has been added
         yield put(addWalletNewCreditCardSuccess());
         // check if the new method is compliant with bpd
@@ -765,18 +778,6 @@ export function* watchWalletSaga(
     payCreditCardVerificationRequestHandler,
     paymentManagerClient,
     pmSessionManager
-  );
-
-  yield takeLatest(
-    getType(payCreditCardVerificationWithBackoffRetryRequest),
-    function* (
-      action: ActionType<
-        typeof payCreditCardVerificationWithBackoffRetryRequest
-      >
-    ) {
-      yield call(backoffWait, payCreditCardVerificationFailure);
-      yield put(payCreditCardVerificationRequest(action.payload));
-    }
   );
 
   yield takeLatest(
