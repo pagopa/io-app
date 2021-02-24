@@ -32,7 +32,13 @@ export function getCurrentRouteName(navNode: any): string | undefined {
   return undefined;
 }
 
-export const getActiveRoute = (route: NavigationState): NavigationRoute => {
+export const getActiveRoute = (
+  route: NavigationState
+): NavigationRoute | undefined => {
+  if (!route) {
+    return undefined;
+  }
+
   const { routes, index } = route;
 
   return routes?.length && index < routes.length

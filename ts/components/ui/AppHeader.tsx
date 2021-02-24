@@ -20,7 +20,7 @@ type StatusBarColorBackgroundConfig = {
 type Routes = keyof typeof ROUTES;
 
 const mapStateToProps = ({ nav }: GlobalState) => ({
-  currentRoute: getActiveRoute(nav).routeName
+  currentRoute: getActiveRoute(nav)?.routeName
 });
 
 type Props = NativeBase.Header &
@@ -58,8 +58,9 @@ const statusBarConfigMap = new Map<Routes, StatusBarColorBackgroundConfig>([
 ]);
 
 const AppHeader = (props: React.PropsWithChildren<Props>) => {
-  const { backgroundColor, barStyle } =
-    statusBarConfigMap.get(props.currentRoute as Routes) || defaultConfig;
+  const { backgroundColor, barStyle } = props.currentRoute
+    ? statusBarConfigMap.get(props.currentRoute as Routes) || defaultConfig
+    : defaultConfig;
 
   return (
     <View>
