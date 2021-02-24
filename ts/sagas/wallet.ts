@@ -168,7 +168,6 @@ import {
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   getWallets,
-  payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
   paymentDeletePaymentRequestHandler,
@@ -771,13 +770,6 @@ export function* watchWalletSaga(
       yield call(backoffWait, addWalletCreditCardFailure);
       yield put(addWalletCreditCardRequest(action.payload));
     }
-  );
-
-  yield takeLatest(
-    getType(payCreditCardVerificationRequest),
-    payCreditCardVerificationRequestHandler,
-    paymentManagerClient,
-    pmSessionManager
   );
 
   yield takeLatest(

@@ -268,25 +268,23 @@ const mapStateToProps = (state: GlobalState) => {
   // checkout3ds is the step after creditCardVerification
   // so we can infer it is loading when the verification is completed and
   // checkout3ds is not some
-  const isCheckout3dsLoading =
-    isStrictSome(creditCardVerification) && !pot.isSome(creditCardCheckout3ds);
+  // const isCheckout3dsLoading =
+  //   isStrictSome(creditCardVerification) && !pot.isSome(creditCardCheckout3ds);
   const isLoading =
-    isCheckout3dsLoading ||
     pot.isLoading(creditCardAddWallet) ||
-    pot.isLoading(creditCardVerification) ||
+    // pot.isLoading(creditCardVerification) ||
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
   // considering wallet error only when the fisrt two steps are completed and not in error
   const areWalletsInError =
-    pot.isError(walletById) &&
-    pot.isSome(creditCardAddWallet) &&
-    pot.isSome(creditCardVerification);
+    pot.isError(walletById) && pot.isSome(creditCardAddWallet);
+  // pot.isSome(creditCardVerification);
 
   const error =
     (pot.isError(creditCardAddWallet) &&
       creditCardAddWallet.error.kind !== "ALREADY_EXISTS") ||
-    pot.isError(creditCardVerification) ||
+    // pot.isError(creditCardVerification) ||
     pot.isError(psps)
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
