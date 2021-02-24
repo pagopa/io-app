@@ -1,4 +1,3 @@
-import { Function1, Lazy, Predicate } from "fp-ts/lib/function";
 import { Option } from "fp-ts/lib/Option";
 import {
   ActionType,
@@ -92,29 +91,6 @@ export const fetchPsp = createAsyncAction(
   "FETCH_PSP_FAILURE"
 )<FetchPspRequestPayload, FetchPspSuccessPayload, FetchPspFailurePayload>();
 
-//
-// poll for a transaction until it reaches a certain state
-//
-
-type RunPollTransactionSagaPayload = Readonly<{
-  id: number;
-  isValid: Predicate<Transaction>;
-  onValid?: Function1<Transaction, void>;
-  onTimeout?: Lazy<void>;
-}>;
-
-export const runPollTransactionSaga = createStandardAction(
-  "POLL_TRANSACTION_SAGA_RUN"
-)<RunPollTransactionSagaPayload>();
-
-export const pollTransactionSagaCompleted = createStandardAction(
-  "POLL_TRANSACTION_SAGA_COMPLETED"
-)<Transaction>();
-
-export const pollTransactionSagaTimeout = createStandardAction(
-  "POLL_TRANSACTION_SAGA_TIMEOUT"
-)();
-
 export type TransactionsActions =
   | ActionType<typeof readTransaction>
   | ActionType<typeof fetchTransactionsSuccess>
@@ -125,9 +101,6 @@ export type TransactionsActions =
   | ActionType<typeof fetchTransactionFailure>
   | ActionType<typeof fetchPsp>
   | ActionType<typeof clearTransactions>
-  | ActionType<typeof runPollTransactionSaga>
-  | ActionType<typeof pollTransactionSagaCompleted>
-  | ActionType<typeof pollTransactionSagaTimeout>
   | ActionType<typeof deleteReadTransaction>
   | ActionType<typeof fetchTransactionsLoadComplete>
   | ActionType<typeof fetchTransactionsRequestWithExpBackoff>;
