@@ -32,7 +32,6 @@ import { Dispatch } from "../../store/actions/types";
 import {
   addWalletCreditCardInit,
   creditCardCheckout3dsRedirectionUrls,
-  creditCardCheckout3dsSuccess,
   fetchWalletsRequestWithExpBackoff,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
@@ -54,6 +53,15 @@ import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
+import { getAllWallets } from "../../store/reducers/wallet/wallets";
+import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
+import { isReady } from "../../features/bonus/bpd/model/RemoteValue";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import reactotron from "reactotron-react-native";
+import {
+  paymentWebViewEnd,
+  PaymentWebViewEndReason
+} from "../../store/actions/wallet/payment";
 
 export type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -136,8 +144,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         {
           text: I18n.t("payment.abortWebView.confirm"),
           onPress: () => {
-            props.dispatchCancelPayment();
-            props.dispatchEndPaymentWebview("ABORT_BY_THE_USER");
+            this.props.onCancel();
           },
           style: "cancel"
         },
@@ -147,6 +154,27 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       ]);
     };
 
+    const payWebViewPayload =
+      isReady(this.props.pmSessionToken) &&
+      this.props.creditCardTempWallet.isSome() &&
+      creditCard.securityCode
+        ? {
+            formData: {
+              idWallet: this.props.creditCardTempWallet.value.idWallet,
+              cvv: creditCard.securityCode,
+              sessionToken: this.props.pmSessionToken.value,
+              language: getLocalePrimaryWithFallback()
+            },
+            crediCardTempWallet: this.props.creditCardTempWallet.value
+          }
+        : undefined;
+
+    reactotron.log(
+      this.props.pmSessionToken,
+      this.props.creditCardTempWallet,
+      creditCard.securityCode,
+      urlPrefix + payUrlSuffix
+    );
     const wallet = {
       creditCard,
       type: TypeEnum.CREDIT_CARD,
@@ -263,14 +291,18 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
          * When the first step is finished (creditCardAddWallet === some) show the webview
          * for the payment component.
          */}
-        {this.props.canShow3dsWebView && (
+        {payWebViewPayload && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
-            formData={props.payStartWebviewPayload.value}
+            formData={payWebViewPayload.formData}
             finishPathName={webViewExitPathName}
             onFinish={maybeCode => {
+              reactotron.log(maybeCode);
               this.props.storeCreditCardOutcome(maybeCode);
-              this.props.goToAddCreditCardOutcomeCode(creditCard);
+              this.props.goToAddCreditCardOutcomeCode(
+                payWebViewPayload.crediCardTempWallet
+              );
+              this.props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
             }}
             outcomeQueryparamName={webViewOutcomeParamName}
             onGoBack={handlePayWebviewGoBack}
@@ -320,14 +352,21 @@ const mapStateToProps = (state: GlobalState) => {
       ? some(I18n.t("wallet.saveCard.temporaryError"))
       : none;
 
-  const canShow3dsWebView = pot.isSome(creditCardAddWallet);
+  // Props needed to create the form for the payment web view
+  const allWallets = getAllWallets(state);
+  const creditCardTempWallet: Option<Wallet> = pot
+    .toOption(allWallets.creditCardAddWallet)
+    .map(c => c.data);
+  const pmSessionToken = pmSessionTokenSelector(state);
+
   return {
     isLoading,
     error,
     areWalletsInError,
     loadingOpacity: 0.98,
     loadingCaption: I18n.t("wallet.saveCard.loadingAlert"),
-    canShow3dsWebView,
+    creditCardTempWallet,
+    pmSessionToken,
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
   };
 };
@@ -382,10 +421,6 @@ const mapDispatchToProps = (
     navigateToWalletHome: () => dispatch(navigateToWalletHome()),
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
-    creditCardCheckout3dsSuccess: (redirectionUrl: ReadonlyArray<string>) => {
-      dispatch(creditCardCheckout3dsRedirectionUrls(redirectionUrl));
-      dispatch(creditCardCheckout3dsSuccess("done"));
-    },
     runStartOrResumeAddCreditCardSaga: (
       creditCard: CreditCard,
       setAsFavorite: boolean
@@ -413,9 +448,14 @@ const mapDispatchToProps = (
       ),
     onCancel: () => props.navigation.goBack(),
     storeCreditCardOutcome: (outcomeCode: Option<string>) =>
-      addCreditCardOutcomeCode(outcomeCode),
+      dispatch(addCreditCardOutcomeCode(outcomeCode)),
     goToAddCreditCardOutcomeCode: (creditCard: Wallet) =>
-      navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard })
+      dispatch(
+        navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard })
+      ),
+    dispatchEndPaymentWebview: (reason: PaymentWebViewEndReason) => {
+      dispatch(paymentWebViewEnd(reason));
+    }
   };
 };
 
