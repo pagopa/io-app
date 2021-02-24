@@ -3,13 +3,14 @@
 /**
  * A saga that manages the Wallet.
  */
-import { none, some, Option, fromNullable, isSome } from "fp-ts/lib/Option";
+import { none, some, Option, isSome } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import _ from "lodash";
 import {
   call,
+  delay,
   Effect,
   fork,
   put,
@@ -117,8 +118,6 @@ import {
   addWalletCreditCardWithBackoffRetryRequest,
   addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
@@ -131,17 +130,13 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import {
-  getAllWallets,
-  getWalletsById
-} from "../store/reducers/wallet/wallets";
+import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
   EnableableFunctionsTypeEnum,
   isRawCreditCard,
   NullableWallet,
-  PaymentManagerToken,
-  PayRequest
+  PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
@@ -184,8 +179,7 @@ import reactotron from "reactotron-react-native";
  * To board a new card, we must complete the following steps:
  *
  * 1) add the card to the user wallets
- * 2) execute a "fake" payment to validate the card
- * 3) if required, complete the 3DS checkout for the payment in step (2)
+ * 2) complete the 3DS checkout for a fake payment
  *
  * This saga updates a state for each step, thus it can be run multiple times
  * to resume the flow from the last successful step (retry behavior).
@@ -256,6 +250,7 @@ function* startOrResumeAddCreditCardSaga(
         pmSessionManager.getNewToken
       );
       if (pagoPaToken.isSome()) {
+        yield put(paymentExecuteStart.success(pagoPaToken.value));
         // Wait until the outcome code from the webview is available
         yield take(getType(addCreditCardOutcomeCode));
 
@@ -268,7 +263,6 @@ function* startOrResumeAddCreditCardSaga(
         //      - Start the bpd enrolling
         //   - if the request fail:
         //      - ?
-
         if (isSome(maybeOutcomeCode.outcomeCode)) {
           const outcomeCode = maybeOutcomeCode.outcomeCode.value;
 
@@ -290,6 +284,7 @@ function* startOrResumeAddCreditCardSaga(
               );
 
               if (maybeAddedWallet !== undefined) {
+                yield delay(2000);
                 // The wallet was found
                 const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
                   bpdEnabledSelector
@@ -329,7 +324,7 @@ function* startOrResumeAddCreditCardSaga(
                     // remove these screens from the navigation stack: method choice, credit card form, credit card resume
                     // this pop could be easily break when this flow is entered by other points
                     // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
-                    yield put(navigationHistoryPop(3));
+                    yield put(navigationHistoryPop(4));
                     return;
                   }
                 }
@@ -358,7 +353,10 @@ function* startOrResumeAddCreditCardSaga(
 
           // There was a problem in the add credit card flow
         } else {
-          // TODO: If none???
+          yield put(addWalletNewCreditCardFailure());
+          if (action.payload.onFailure) {
+            action.payload.onFailure();
+          }
         }
       } else {
         if (action.payload.onFailure) {
