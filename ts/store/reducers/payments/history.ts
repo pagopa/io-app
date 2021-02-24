@@ -51,7 +51,10 @@ const replaceLastItem = (
   state: PaymentsHistoryState,
   newItem: PaymentHistory
 ): PaymentsHistoryState => {
-  // eslint-disable-next-line
+  // it shouldn't never happen since an update actions should come after a create action
+  if (state.length === 0) {
+    return state;
+  }
   const cloneState = [...state];
   // eslint-disable-next-line functional/immutable-data
   cloneState.splice(state.length - 1, 1, newItem);
@@ -81,30 +84,18 @@ const reducer = (
         { data: { ...action.payload }, started_at: new Date().toISOString() }
       ];
     case getType(paymentIdPolling.success):
-      // it shouldn't happen since paymentIdPolling comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const paymentWithPaymentId: PaymentHistory = {
         ...state[state.length - 1],
         paymentId: action.payload
       };
       return replaceLastItem(state, paymentWithPaymentId);
     case getType(fetchTransactionSuccess):
-      // it shouldn't happen since paymentIdPolling comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const paymentWithTransaction: PaymentHistory = {
         ...state[state.length - 1],
         transaction: { ...action.payload }
       };
       return replaceLastItem(state, paymentWithTransaction);
     case getType(paymentVerifica.success):
-      // it shouldn't happen since success comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const successPayload = action.payload;
       const updateHistorySuccess: PaymentHistory = {
         ...state[state.length - 1],
@@ -112,10 +103,6 @@ const reducer = (
       };
       return replaceLastItem(state, updateHistorySuccess);
     case getType(paymentVerifica.failure):
-      // it shouldn't happen since failure comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const failurePayload = action.payload;
       const updateHistoryFailure: PaymentHistory = {
         ...state[state.length - 1],
@@ -123,20 +110,12 @@ const reducer = (
       };
       return replaceLastItem(state, updateHistoryFailure);
     case getType(paymentCompletedSuccess):
-      // it shouldn't happen since failure comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const updateSuccess: PaymentHistory = {
         ...state[state.length - 1],
         success: true
       };
       return replaceLastItem(state, updateSuccess);
     case getType(paymentOutcomeCode):
-      // it shouldn't happen since failure comes after request
-      if (state.length === 0) {
-        return state;
-      }
       if (action.payload.isNone()) {
         return state;
       }
