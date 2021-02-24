@@ -4,33 +4,35 @@ import { SafeAreaView } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
-import { FooterStackButton } from "../../../bonusVacanze/components/buttons/FooterStackButtons";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../components/ui/IconFont";
-import { cgnActivationComplete } from "../../store/actions/activation";
-import { navigateToCgnDetails } from "../../navigation/actions";
+import { cgnActivationCancel } from "../../store/actions/activation";
+import image from "../../../../../../img/messages/empty-due-date-list-icon.png";
 import I18n from "../../../../../i18n";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { navigateToCgnDetails } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
  * Screen which is displayed when a user requested a CGN activation
- * and it has been correctly activated
+ * but it is yet active
  */
-const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
+const CgnAlreadyActiveScreen = (props: Props): React.ReactElement => (
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
-      image={<IconFont name={"io-complete"} size={104} color={IOColors.aqua} />}
-      title={I18n.t("bonus.cgn.activation.success.title")}
-      body={I18n.t("bonus.cgn.activation.success.body")}
+      image={renderInfoRasterImage(image)}
+      title={I18n.t("bonus.cgn.activation.alreadyActive.title")}
+      body={I18n.t("bonus.cgn.activation.alreadyActive.body")}
     />
-    <FooterStackButton
-      buttons={[
-        confirmButtonProps(props.onConfirm, I18n.t("bonus.cgn.cta.goToDetail"))
-      ]}
+    <FooterWithButtons
+      type="SingleButton"
+      leftButton={confirmButtonProps(
+        props.navigateToDetail,
+        I18n.t("bonus.cgn.cta.goToDetail")
+      )}
     />
   </SafeAreaView>
 );
@@ -38,8 +40,8 @@ const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
 const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onConfirm: () => {
-    dispatch(cgnActivationComplete());
+  navigateToDetail: () => {
+    dispatch(cgnActivationCancel());
     dispatch(navigateToCgnDetails());
   }
 });
@@ -47,4 +49,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CgnActivationCompletedScreen);
+)(CgnAlreadyActiveScreen);

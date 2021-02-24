@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
-import { H1 } from "../../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { BaseTimeoutScreen } from "../../../bonusVacanze/components/BaseTimeoutScreen";
+import { cgnActivationCancel } from "../../store/actions/activation";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -14,22 +14,19 @@ type Props = ReturnType<typeof mapStateToProps> &
  * and it took too long to get an answer from the server
  * (the user will be notified when the activation is completed by a message)
  */
-const CgnActivationTimeoutScreen = (_: Props): React.ReactElement => (
-  // PLACEHOLDER for activation timeout screen
-  <BaseScreenComponent>
-    <View>
-      <H1>
-        {
-          "It took too long to verify the activation, we will notify you once completed"
-        }
-      </H1>
-    </View>
-  </BaseScreenComponent>
+const CgnActivationTimeoutScreen = (props: Props): React.ReactElement => (
+  <BaseTimeoutScreen
+    title={I18n.t("bonus.cgn.activation.timeout.title")}
+    body={I18n.t("bonus.cgn.activation.timeout.body")}
+    onExit={props.onExit}
+  />
 );
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onExit: () => dispatch(cgnActivationCancel())
+});
 
 export default connect(
   mapStateToProps,
