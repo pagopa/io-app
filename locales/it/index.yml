@@ -1260,6 +1260,37 @@ wallet:
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Funzioni Disponibili"
+  outcomeMessage:
+    cta:
+      close: Chiudi
+      visualizeCard: Visualizza carta
+    fallback:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code1: 
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code2: 
+      title: "Autorizzazione negata"
+      description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code4: 
+      title: "Spiacenti, la sessione è scaduta"
+      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+    code7: 
+      title: "C’è un problema con la tua carta"
+      description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
+    code8: 
+      title: "L’operazione è stata annullata"
+    code10: 
+      title: "Autorizzazione negata"
+      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+    addCreditCard:
+      success:
+        title: "La tua carta è stata aggiunta con successo!"
+    payment:
+      success:
+        title: "Grazie, l’operazione è stata eseguita con successo!"
+        description: "Abbiamo inviato una ricevuta al tuo indirizzo email. Puoi trovarla anche nel tuo Portafoglio."
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -2194,6 +2225,7 @@ bonus:
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
     cta:
       activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
         buyers: Vedi esercenti
@@ -2215,6 +2247,28 @@ bonus:
           active: Attiva
           revoked: Annullata
           expired: Scaduta
+    activation:
+      loading:
+        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
+        subCaption: "Ti preghiamo di attendere."
+      error:
+        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
+        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ineligible:
+        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+      timeout:
+        title: "Stiamo processando la tua richiesta."
+        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è già attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+      pending:
+        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
+        body: "Riceverai un messaggio quando sarà attivata."
+      success:
+        title: "Congratulazioni!"
+        body: "La tua Carta Giovani Nazionale è attiva"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
