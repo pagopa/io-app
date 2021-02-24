@@ -13,14 +13,13 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
-  }
+  },
+  leftColumnStyle: { marginRight: 16 }
 });
 
 type Props = {
   service: ServicePublic;
 };
-
-const leftColumnStyle = { marginRight: 16 };
 
 /**
  * A component to render the name of the organization and of the related service
@@ -30,7 +29,7 @@ const OrganizationHeader = (props: Props) => {
   const { service } = props;
   return (
     <Grid>
-      <Col style={leftColumnStyle}>
+      <Col style={styles.leftColumnStyle}>
         <H5>{service.organization_name}</H5>
         <Text>{service.service_name}</Text>
       </Col>
