@@ -1235,6 +1235,37 @@ wallet:
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available Functions"
+  outcomeMessage:
+    cta:
+      close: Close
+      visualizeCard: View card
+    fallback:
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code1: 
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code2: 
+      title: "Authorization declined"
+      description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code4: 
+      title: "Sorry, the session has expired"
+      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+    code7: 
+      title: "There's a problem with your card"
+      description: "No charges were made. For more information, contact your bank."
+    code8: 
+      title: "The operation was canceled"
+    code10: 
+      title: "Authorization declined"
+      description: "You have probably reached your card limit. Check with your bank before trying again."
+    addCreditCard:
+      success:
+        title: "Your card has been successfully added!"
+    payment:
+      success:
+        title: "Thank you for your payment!"
+        description: "We sent a receipt to your email address. You can also find it in your Wallet."
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -2161,6 +2192,7 @@ bonus:
     name: Carta Giovani Nazionale
     cta:
       activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
     detail:
       cta:
         buyers: See merchants
@@ -2182,6 +2214,29 @@ bonus:
           active: Active
           revoked: Revoked
           expired: Expired
+    activation:
+      loading:
+        caption: "We're activating your Carta Giovani Nazionale"
+        subCaption: "Please wait."
+      error:
+        title: "The Carta Giovani Nazionale service is not available at the moment."
+        body: "We apologize for the issue.\nWe invite you to retry again later."
+      ineligible:
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
+        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+      timeout:
+        title: "We're processing your request."
+        body: "We will send you an in-app message when your Carta Giovani will be activated."
+      alreadyActive:
+        title: "Your Carta Giovani Nazionale is already active!"
+        body: "You can find more details inside the Wallet section."
+      pending:
+        title: "Your Carta Giovani Nazionale's activation is in progress."
+        body: "You will receive a message when it has been activated."
+      success:
+        title: "Congratulation!"
+        body: "Your Carta Giovani Nazionale is active"
+
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
