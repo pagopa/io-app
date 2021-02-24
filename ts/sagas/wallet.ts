@@ -261,7 +261,7 @@ function* startOrResumeAddCreditCardSaga(
     const { idWallet } = state.creditCardAddWallet.value.data;
 
     //
-    // Second step: process the optional 3ds checkout.
+    // Second step: process the 3ds checkout
     //
 
     try {
@@ -271,7 +271,6 @@ function* startOrResumeAddCreditCardSaga(
         pmSessionManager.getNewToken
       );
       if (pagoPaToken.isSome()) {
-        // Dispatch the action that allow the 3ds2 webview to be show
         // Wait until the outcome code from the webview is available
         yield take(getType(addCreditCardOutcomeCode));
 
