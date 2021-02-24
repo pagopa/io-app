@@ -7,9 +7,7 @@ import {
   cgnRequestActivation
 } from "../actions/activation";
 import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
-import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
-
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
