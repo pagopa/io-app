@@ -11,21 +11,22 @@
  * - "transaction" coming from payment manager when we ask for info about latest transaction
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
-import { fromNullable, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { DetailEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
+import { Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import {
+  paymentCompletedSuccess,
   paymentIdPolling,
   paymentVerifica
 } from "../../actions/wallet/payment";
-import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
 
 export type PaymentHistory = {
   started_at: string;
@@ -34,6 +35,8 @@ export type PaymentHistory = {
   transaction?: Transaction;
   verified_data?: PaymentRequestsGetResponse;
   failure?: keyof typeof DetailEnum;
+  outcomeCode?: string;
+  success?: true;
 };
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
@@ -84,16 +87,6 @@ const reducer = (
         paymentId: action.payload
       };
       return replaceLastItem(state, paymentWithPaymentId);
-    case getType(fetchTransactionSuccess):
-      // it shouldn't happen since paymentIdPolling comes after request
-      if (state.length === 0) {
-        return state;
-      }
-      const paymentWithTransaction: PaymentHistory = {
-        ...state[state.length - 1],
-        transaction: { ...action.payload }
-      };
-      return replaceLastItem(state, paymentWithTransaction);
     case getType(paymentVerifica.success):
       // it shouldn't happen since success comes after request
       if (state.length === 0) {
@@ -116,6 +109,29 @@ const reducer = (
         failure: failurePayload
       };
       return replaceLastItem(state, updateHistoryFailure);
+    case getType(paymentCompletedSuccess):
+      // it shouldn't happen since failure comes after request
+      if (state.length === 0) {
+        return state;
+      }
+      const updateSuccess: PaymentHistory = {
+        ...state[state.length - 1],
+        success: true
+      };
+      return replaceLastItem(state, updateSuccess);
+    case getType(paymentOutcomeCode):
+      // it shouldn't happen since failure comes after request
+      if (state.length === 0) {
+        return state;
+      }
+      if (action.payload.isNone()) {
+        return state;
+      }
+      const updateOutcome: PaymentHistory = {
+        ...state[state.length - 1],
+        outcomeCode: action.payload.value
+      };
+      return replaceLastItem(state, updateOutcome);
     case getType(clearCache): {
       return INITIAL_STATE;
     }
@@ -135,12 +151,16 @@ export const paymentsHistorySelector = (state: GlobalState) =>
 export const isPaymentDoneSuccessfully = (
   payment: PaymentHistory
 ): Option<boolean> => {
+  // we got a failure (on attiva)
   if (payment.failure) {
     return some(false);
   }
-  return fromNullable(payment.transaction).map(
-    t => t !== undefined && isSuccessTransaction(t)
-  );
+  // we got a success
+  if (payment.success) {
+    return some(true);
+  }
+  // if we have an outcomeCode we got an error on pay
+  return payment.outcomeCode ? some(false) : none;
 };
 
 export default reducer;
