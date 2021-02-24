@@ -729,6 +729,11 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  abortWebView:
+    title: Vuoi interrompere il pagamento in corso?
+    confirm: Annulla il pagamento
+    cancel: Continua con il pagamento
+    success: Il pagamento è stato annullato correttamente
   errorDetails: Dettagli
   currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
@@ -1020,7 +1025,7 @@ wallet:
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione
