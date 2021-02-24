@@ -27,6 +27,7 @@ import {
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
+import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 
 export type PaymentHistory = {
   started_at: string;
@@ -89,6 +90,16 @@ const reducer = (
         paymentId: action.payload
       };
       return replaceLastItem(state, paymentWithPaymentId);
+    case getType(fetchTransactionSuccess):
+      // it shouldn't happen since paymentIdPolling comes after request
+      if (state.length === 0) {
+        return state;
+      }
+      const paymentWithTransaction: PaymentHistory = {
+        ...state[state.length - 1],
+        transaction: { ...action.payload }
+      };
+      return replaceLastItem(state, paymentWithTransaction);
     case getType(paymentVerifica.success):
       // it shouldn't happen since success comes after request
       if (state.length === 0) {
