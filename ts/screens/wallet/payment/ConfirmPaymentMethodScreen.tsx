@@ -61,6 +61,7 @@ import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPr
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
+import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -180,6 +181,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       props.dispatchPaymentCompleteSuccessfully(
         props.navigation.getParam("rptId")
       );
+      // refresh transactions list
+      props.loadTransactions();
     }
     props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
     props.dispatchPaymentOutCome(maybeOutcomeCode);
@@ -262,6 +265,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         <ButtonDefaultOpacity
           block={true}
           primary={true}
+          // a payment is running
+          disabled={props.payStartWebviewPayload.isSome()}
           onPress={() =>
             props.dispatchPaymentStart({
               idWallet: wallet.idWallet,
@@ -389,6 +394,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentOutcomeCode(outComeCode)),
     navigateToOutComePaymentScreen: () =>
       dispatch(navigateToPaymentOutcomeCode()),
+    loadTransactions: () =>
+      dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
+
     dispatchPaymentCompleteSuccessfully: (rptId: RptId) =>
       dispatch(
         paymentCompletedSuccess({
