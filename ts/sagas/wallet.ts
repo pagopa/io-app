@@ -130,9 +130,6 @@ import {
   fetchWalletsRequest,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled

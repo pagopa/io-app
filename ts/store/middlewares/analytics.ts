@@ -117,7 +117,6 @@ import {
   deleteWalletRequest,
   deleteWalletSuccess,
   payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
@@ -363,7 +362,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationRequest):
     case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
