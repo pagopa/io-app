@@ -2212,7 +2212,7 @@ bonus:
       ownership: Who can take advantage of discounts?
       activationDateLabel: Activated on
       expirationDateLabel: Expired on
-      revocationDateLabel: Revoked il
+      revocationDateLabel: Revoked on
       status:
         title: Card Status
         badge:
