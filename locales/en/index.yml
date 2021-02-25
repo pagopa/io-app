@@ -1270,7 +1270,7 @@ wallet:
     payment:
       success:
         title: "Thank you for your payment!"
-        description1: "We sent a receipt to your email address"
+        description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
 saveCard:
   saveCard: Save the card
