@@ -1,7 +1,11 @@
 // bonus reducer
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
-import { cgnActivationStatus } from "../actions/activation";
+import {
+  cgnActivationStatus,
+  cgnRequestActivation
+} from "../actions/activation";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 
@@ -24,12 +28,14 @@ export type ActivationState = {
 const INITIAL_STATE: ActivationState = {
   status: CgnActivationProgressEnum.UNDEFINED
 };
+
 const reducer = (
   state: ActivationState = INITIAL_STATE,
   action: Action
 ): ActivationState => {
   switch (action.type) {
     // bonus activation
+    case getType(cgnRequestActivation.request):
     case getType(cgnActivationStatus.request):
       return {
         ...state,
@@ -50,11 +56,25 @@ const reducer = (
   return state;
 };
 
+
 // TODO replace with the effective implementation.
 // false -> user is not CGN enrolled
 // true -> user is CGN enrolled
 // undefined -> don't known
 export const isCGNBonusActiveSelector = (_: GlobalState): boolean | undefined =>
   undefined;
+
+// Selectors
+export const activationSelector = (state: GlobalState): ActivationState =>
+  state.bonus.cgn.activation;
+
+export const isCgnActivationLoading = createSelector<
+  GlobalState,
+  ActivationState,
+  boolean
+>(
+  activationSelector,
+  activation => activation.status !== CgnActivationProgressEnum.ERROR
+);
 
 export default reducer;

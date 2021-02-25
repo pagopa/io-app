@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * @deprecated from 1st March 2021 this checkout will not valid. See https://www.pivotaltracker.com/story/show/176983293
+ */
 class Checkout3DsModal extends React.Component<Props, State> {
   private navigationUrls: Array<string>;
   constructor(props: Props) {

@@ -12,9 +12,18 @@ import { PaymentActivationsPostResponse } from "../../../../definitions/backend/
 import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
-import { Psp, Transaction, Wallet } from "../../../types/pagopa";
+import {
+  PaymentManagerToken,
+  Psp,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
-import { EntrypointRoute } from "../../reducers/wallet/payment";
+import {
+  EntrypointRoute,
+  PaymentStartPayload
+} from "../../reducers/wallet/payment";
+import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -167,19 +176,25 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 // execute payment
 //
 
-type PaymentExecutePaymentRequestPayload = Readonly<{
-  idPayment: string;
-  wallet: Wallet;
-  onSuccess?: (
-    action: ActionType<typeof paymentExecutePayment["success"]>
-  ) => void;
-}>;
+/**
+ * user wants to pay
+ * - request: we already know the idPayment and the idWallet used to pay, we need a fresh PM session token
+ * - success: we got a fresh PM session token
+ * - failure: we can't get a fresh PM session token
+ */
+export const paymentExecuteStart = createAsyncAction(
+  "PAYMENT_EXECUTE_START_REQUEST",
+  "PAYMENT_EXECUTE_START_SUCCESS",
+  "PAYMENT_EXECUTE_START_FAILURE"
+)<PaymentStartPayload, PaymentManagerToken, Error>();
 
-export const paymentExecutePayment = createAsyncAction(
-  "PAYMENT_EXECUTE_PAYMENT_REQUEST",
-  "PAYMENT_EXECUTE_PAYMENT_SUCCESS",
-  "PAYMENT_EXECUTE_PAYMENT_FAILURE"
-)<PaymentExecutePaymentRequestPayload, Transaction, Error>();
+export type PaymentWebViewEndReason =
+  | "ABORT_BY_THE_USER"
+  | "EXIT_FROM_WEB_VIEW";
+// event fired when the paywebview ends its challenge (used to reset payment values)
+export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
+  PaymentWebViewEndReason
+>();
 
 //
 // Signal the completion of a payment
@@ -188,7 +203,9 @@ export const paymentExecutePayment = createAsyncAction(
 type PaymentCompletedSuccessPayload = Readonly<
   | {
       kind: "COMPLETED";
-      transaction: Transaction;
+      // TODO Transaction is not available, add it when PM make it available again
+      //  see https://www.pivotaltracker.com/story/show/177067134
+      transaction: Transaction | undefined;
       rptId: RptId;
     }
   | {
@@ -203,7 +220,7 @@ export const paymentCompletedSuccess = createStandardAction(
 
 export const paymentCompletedFailure = createStandardAction(
   "PAYMENT_COMPLETED_FAILURE"
-)();
+)<OutcomeCodesKey | undefined>();
 
 //
 // delete an ongoing payment
@@ -248,9 +265,10 @@ export type PaymentActions =
   | ActionType<typeof paymentVerifica>
   | ActionType<typeof paymentAttiva>
   | ActionType<typeof paymentIdPolling>
+  | ActionType<typeof paymentWebViewEnd>
   | ActionType<typeof paymentCheck>
   | ActionType<typeof paymentFetchPspsForPaymentId>
-  | ActionType<typeof paymentExecutePayment>
+  | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>

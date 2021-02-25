@@ -93,7 +93,6 @@ import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
-  paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
@@ -216,13 +215,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // by a verifica operation that return a duplicated payment error.
       // Only in the former case we have a transaction and an amount.
       if (action.payload.kind === "COMPLETED") {
-        const amount = action.payload.transaction.amount.amount;
+        const amount = action.payload.transaction?.amount.amount;
         return mp
           .track(action.type, {
             amount,
             kind: action.payload.kind
           })
-          .then(_ => mp.trackCharge(amount));
+          .then(_ => mp.trackCharge(amount ?? -1));
       } else {
         return mp.track(action.type, {
           kind: action.payload.kind
@@ -295,7 +294,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
     case getType(paymentFetchPspsForPaymentId.failure):
-    case getType(paymentExecutePayment.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
@@ -384,8 +382,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentExecutePayment.request):
-    case getType(paymentExecutePayment.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
