@@ -1297,7 +1297,7 @@ wallet:
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description: "Abbiamo inviato una ricevuta al tuo indirizzo email. Puoi trovarla anche nel tuo Portafoglio."
   abortWebView:
-    title: Vuoi interrompere l'aggiunta della carta di credito in corso?
+    title: Vuoi uscire dall'operazione in corso?
     confirm: Annulla l'aggiunta
     cancel: Continua con l'aggiunta
     success: L'aggiunta della carta di credito è stata annullata correttamente
