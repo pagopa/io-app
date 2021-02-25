@@ -225,7 +225,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       showInstabugChat,
       children,
       faqCategories,
-      shouldAskForScreenshotWithInitialValue
+      shouldAskForScreenshotWithInitialValue,
+      titleColor
     } = this.props;
 
     const {
@@ -275,6 +276,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           appLogo={appLogo}
           customRightIcon={customRightIcon}
           customGoBack={customGoBack}
+          titleColor={titleColor}
         />
         {children}
         {ch && (
