@@ -27,6 +27,7 @@ import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/redu
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
