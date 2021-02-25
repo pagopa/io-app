@@ -1295,7 +1295,7 @@ wallet:
     payment:
       success:
         title: "Grazie, l’operazione è stata eseguita con successo!"
-        description1: "Abbiamo inviato una ricevuta al tuo indirizzo email"
+        description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
 saveCard:
   saveCard: Salva la carta
