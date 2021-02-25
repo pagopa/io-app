@@ -1,32 +1,29 @@
 import { some } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
-import { none } from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
+import { paymentExecuteStart } from "../../store/actions/wallet/payment";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardSuccess,
   addWalletCreditCardWithBackoffRetryRequest,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
-import { getAllWallets } from "../../store/reducers/wallet/wallets";
 import {
-  NullableWallet,
-  PaymentManagerToken,
-  PayRequest
-} from "../../types/pagopa";
+  lastPaymentOutcomeCodeSelector,
+  OutcomeCodeState
+} from "../../store/reducers/wallet/outcomeCode";
+import { getAllWallets } from "../../store/reducers/wallet/wallets";
+import { OutcomeCode } from "../../types/outcomeCode";
+import { NullableWallet, PaymentManagerToken } from "../../types/pagopa";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -50,6 +47,10 @@ const walletState = {
   walletById: pot.none,
   creditCardAddWallet: pot.none,
   creditCardVerification: pot.none
+};
+
+const anOutcomeCode: OutcomeCodeState = {
+  outcomeCode: some({ status: "success" } as OutcomeCode)
 };
 
 const aCreditCard = {
@@ -87,33 +88,11 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .mockReturnValue(Promise.resolve(some(aNewPMToken)));
     const anIdWallet = 123456;
 
-    const aPayRequest: PayRequest = {
-      data: {
-        idWallet: anIdWallet,
-        tipo: "web",
-        cvv: anAction.payload.creditCard.securityCode
-      }
-    };
-
     const walletStateCardAdded = {
       ...walletState,
       creditCardAddWallet: pot.some({ data: { idWallet: anIdWallet } })
     };
 
-    const anUrlCheckout3ds = "http://192.168.1.7:3000/wallet/loginMethod";
-
-    const walletStateCardVerified = {
-      ...walletStateCardAdded,
-      creditCardVerification: pot.some({
-        data: { urlCheckout3ds: anUrlCheckout3ds }
-      }),
-      creditCardCheckout3ds: none
-    };
-
-    const walletStateCardCheckout3ds = {
-      ...walletStateCardVerified,
-      creditCardCheckout3ds: pot.some("1234")
-    };
     testSaga(
       testableWalletsSaga!.startOrResumeAddCreditCardSaga,
       aPmSessionManager,
@@ -137,35 +116,16 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 2
       .select(getAllWallets)
       .next(walletStateCardAdded)
-      .put(
-        payCreditCardVerificationWithBackoffRetryRequest({
-          payRequest: aPayRequest,
-          language: undefined
-        })
-      )
-      .next()
-      .take([
-        getType(payCreditCardVerificationSuccess),
-        getType(payCreditCardVerificationFailure)
-      ])
-      .next(getType(payCreditCardVerificationSuccess))
-      // Step 3
-      .select(getAllWallets)
-      .next(walletStateCardVerified)
       .call(aPmSessionManager.getNewToken)
       .next(some(aNewPMToken))
-      .put(
-        creditCardCheckout3dsRequest({
-          urlCheckout3ds: anUrlCheckout3ds,
-          paymentManagerToken: aNewPMToken
-        })
-      )
+      .put(paymentExecuteStart.success(aNewPMToken))
       .next()
-      .take(getType(creditCardCheckout3dsSuccess))
-      .next(getType(creditCardCheckout3dsSuccess))
-      // Step 4
-      .select(getAllWallets)
-      .next(walletStateCardCheckout3ds)
+      .take(getType(addCreditCardOutcomeCode))
+      .next()
+      .select(lastPaymentOutcomeCodeSelector)
+      .next(anOutcomeCode)
+      .put(addWalletNewCreditCardSuccess())
+      .next()
       .put(fetchWalletsRequest())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
@@ -173,10 +133,10 @@ describe("startOrResumeAddCreditCardSaga", () => {
         type: getType(fetchWalletsSuccess),
         payload: [{ idWallet: anIdWallet }]
       })
+      .delay(2000)
+      .next()
       .select(bpdEnabledSelector)
       .next(pot.some(true))
-      .put(addWalletNewCreditCardSuccess())
-      .next()
       .put(setFavouriteWalletRequest(anIdWallet))
       .next();
   });
