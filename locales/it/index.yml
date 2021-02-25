@@ -1298,8 +1298,8 @@ wallet:
         description: "Abbiamo inviato una ricevuta al tuo indirizzo email. Puoi trovarla anche nel tuo Portafoglio."
   abortWebView:
     title: Vuoi uscire dall'operazione in corso?
-    confirm: Annulla l'aggiunta
-    cancel: Continua con l'aggiunta
+    confirm: Sì, esci
+    cancel: No, continua
     success: L'aggiunta della carta di credito è stata annullata correttamente
 saveCard:
   saveCard: Salva la carta

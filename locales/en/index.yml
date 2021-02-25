@@ -1272,9 +1272,9 @@ wallet:
         title: "Thank you for your payment!"
         description: "We sent a receipt to your email address. You can also find it in your Wallet."
   abortWebView:
-    title: Do you want to cancel the credit card onboarding in progress?
-    confirm: Cancel the onboarding
-    cancel: Continue with the onboarding
+    title: Quit adding your card?
+    confirm: Yes, quit
+    cancel: Keep adding
     success: The credit card onboarding was successfully canceled
 saveCard:
   saveCard: Save the card
