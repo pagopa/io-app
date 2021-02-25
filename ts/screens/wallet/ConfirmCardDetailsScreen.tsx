@@ -331,7 +331,7 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
-  // considering wallet error only when the fisrt two steps are completed and not in error
+  // considering wallet error only when the fisrt step is completed and not in error
   const areWalletsInError =
     pot.isError(walletById) && pot.isSome(creditCardAddWallet);
 
