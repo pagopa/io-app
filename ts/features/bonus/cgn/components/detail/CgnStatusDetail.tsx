@@ -4,10 +4,10 @@ import { Badge, Text, View } from "native-base";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import I18n from "../../../../../i18n";
 import { H4 } from "../../../../../components/core/typography/H4";
-import variables from "../../../../../theme/variables";
 import { H5 } from "../../../../../components/core/typography/H5";
 import TypedI18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type Props = {
   cgnDetail: Card;
@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
   statusBadgeActive: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.contentPrimaryBackground
+    backgroundColor: IOColors.aqua
   },
   statusBadgeRevoked: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.brandHighLighter
+    backgroundColor: IOColors.bluegrey
   },
   statusText: {
     fontSize: 12,
@@ -58,7 +58,10 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeActive} testID={"status-badge"}>
-            <Text style={styles.statusText} semibold={true}>
+            <Text
+              style={[styles.statusText, { color: IOColors.bluegreyDark }]}
+              semibold={true}
+            >
               {I18n.t("bonus.cgn.detail.status.badge.active")}
             </Text>
           </Badge>
@@ -91,7 +94,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <Text style={styles.statusText} semibold={true}>
+            <Text style={[styles.statusText]} semibold={true} white>
               {I18n.t("bonus.cgn.detail.status.badge.expired")}
             </Text>
           </Badge>
@@ -143,7 +146,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <Text style={styles.statusText} semibold={true}>
+            <Text style={styles.statusText} semibold={true} white>
               {I18n.t("bonus.cgn.detail.status.badge.revoked")}
             </Text>
           </Badge>
