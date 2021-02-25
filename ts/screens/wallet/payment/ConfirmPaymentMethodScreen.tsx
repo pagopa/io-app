@@ -332,7 +332,7 @@ const mapStateToProps = (state: GlobalState) => {
       : none;
   return {
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-    outcomeCodes: outcomeCodesSelector(),
+    outcomeCodes: outcomeCodesSelector(state),
     payStartWebviewPayload,
     isLoading: isLoading(pmSessionToken),
     retrievingSessionTokenError: isError(pmSessionToken)
