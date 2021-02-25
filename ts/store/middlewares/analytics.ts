@@ -107,6 +107,7 @@ import {
   fetchTransactionsSuccess
 } from "../actions/wallet/transactions";
 import {
+  addCreditCardWebViewEnd,
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
@@ -119,6 +120,7 @@ import {
   deleteWalletSuccess,
   payCreditCardVerificationFailure,
   payCreditCardVerificationSuccess,
+  refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -127,7 +129,10 @@ import {
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
-import { paymentOutcomeCode } from "../actions/wallet/outcomeCode";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../actions/wallet/outcomeCode";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -196,16 +201,21 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         count: action.payload.length
       });
     //
-    // Payment actions (with properties)
+    // end pay webview Payment (payment + onboarding credit card) actions (with properties)
     //
+    case getType(addCreditCardWebViewEnd):
     case getType(paymentWebViewEnd):
       return mp.track(action.type, {
         exitType: action.payload
       });
+    case getType(addCreditCardOutcomeCode):
     case getType(paymentOutcomeCode):
       return mp.track(action.type, {
         outCome: action.payload.getOrElse("")
       });
+    //
+    // Payment actions (with properties)
+    //
     case getType(paymentVerifica.request):
       return mp.track(action.type, {
         organizationFiscalCode: action.payload.organizationFiscalCode,
@@ -300,6 +310,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
     case getType(payCreditCardVerificationFailure):
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
@@ -380,6 +391,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
     case getType(fetchTransactionsRequest):
+    case getType(refreshPMTokenWhileAddCreditCard.request):
+    case getType(refreshPMTokenWhileAddCreditCard.success):
     // payment
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
