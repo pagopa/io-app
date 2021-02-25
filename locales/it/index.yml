@@ -756,6 +756,7 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      outcomeCode: Codice esito
       onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione

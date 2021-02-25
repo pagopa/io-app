@@ -43,6 +43,9 @@ import {
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
+import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
+import { OutcomeCode, OutcomeCodesKey } from "../../types/outcomeCode";
+import { getFullLocale } from "../../utils/locale";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -109,7 +112,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       color: paymentInfo.color,
       description: paymentInfo.text11
     };
-    const errorDetail = fromNullable(getErrorDescription(payment.failure));
+    const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
+      fromNullable(payment.outcomeCode).map(oc => {
+        const maybeCutcomecodeKey = OutcomeCodesKey.decode(oc);
+        if (maybeCutcomecodeKey.isRight()) {
+          const oc: OutcomeCode = this.props.outcomeCodes[
+            maybeCutcomecodeKey.value
+          ];
+          if (oc.description !== undefined) {
+            return oc.description[getFullLocale()];
+          }
+          return "-";
+        }
+        return "-";
+      })
+    );
 
     const paymentOutcome = isPaymentDoneSuccessfully(payment);
 
@@ -159,6 +176,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       EnteBeneficiario | undefined
     >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
 
+    const outcomeCode = payment.outcomeCode ?? "-";
     return {
       recipient,
       reason,
@@ -168,6 +186,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       paymentInfo,
       paymentStatus,
       dateTime,
+      outcomeCode,
       amount,
       fee,
       grandTotal,
@@ -253,6 +272,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
           <View spacer={true} xsmall={true} />
           {this.standardRow(
+            I18n.t("payment.details.info.outcomeCode"),
+            data.outcomeCode
+          )}
+
+          <View spacer={true} xsmall={true} />
+          {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
           )}
@@ -321,7 +346,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state)
+  profile: profileSelector(state),
+  outcomeCodes: outcomeCodesSelector(state)
 });
 
 export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);
