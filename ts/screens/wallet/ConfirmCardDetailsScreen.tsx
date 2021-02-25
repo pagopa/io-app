@@ -29,9 +29,13 @@ import {
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
+import {
+  paymentWebViewEnd,
+  PaymentWebViewEndReason
+} from "../../store/actions/wallet/payment";
 import {
   addWalletCreditCardInit,
-  creditCardCheckout3dsRedirectionUrls,
   fetchWalletsRequestWithExpBackoff,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
@@ -39,7 +43,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
-import Checkout3DsComponent from "../modal/Checkout3DsModal";
+
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
@@ -47,8 +51,6 @@ import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { isStrictSome } from "../../utils/pot";
-import { dispatchPickPspOrConfirm } from "./payment/common";
 import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -56,12 +58,7 @@ import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode
 import { getAllWallets } from "../../store/reducers/wallet/wallets";
 import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
 import { isReady } from "../../features/bonus/bpd/model/RemoteValue";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
-import reactotron from "reactotron-react-native";
-import {
-  paymentWebViewEnd,
-  PaymentWebViewEndReason
-} from "../../store/actions/wallet/payment";
+import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
   creditCard: CreditCard;
@@ -161,7 +158,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         ? {
             formData: {
               idWallet: this.props.creditCardTempWallet.value.idWallet,
-              cvv: creditCard.securityCode,
+              securityCode: creditCard.securityCode,
               sessionToken: this.props.pmSessionToken.value,
               language: getLocalePrimaryWithFallback()
             },
@@ -169,12 +166,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           }
         : undefined;
 
-    reactotron.log(
-      this.props.pmSessionToken,
-      this.props.creditCardTempWallet,
-      creditCard.securityCode,
-      urlPrefix + payUrlSuffix
-    );
     const wallet = {
       creditCard,
       type: TypeEnum.CREDIT_CARD,
@@ -297,7 +288,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             formData={payWebViewPayload.formData}
             finishPathName={webViewExitPathName}
             onFinish={maybeCode => {
-              reactotron.log(maybeCode);
               this.props.storeCreditCardOutcome(maybeCode);
               this.props.goToAddCreditCardOutcomeCode(
                 payWebViewPayload.crediCardTempWallet
