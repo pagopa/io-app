@@ -57,7 +57,10 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
 import { getAllWallets } from "../../store/reducers/wallet/wallets";
 import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
-import { isReady } from "../../features/bonus/bpd/model/RemoteValue";
+import {
+  isLoading as isRemoteLoading,
+  isReady
+} from "../../features/bonus/bpd/model/RemoteValue";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
@@ -325,13 +328,14 @@ const mapStateToProps = (state: GlobalState) => {
   const { creditCardAddWallet, walletById } = state.wallet.wallets;
 
   const { psps } = state.wallet.payment;
-
+  const pmSessionToken = pmSessionTokenSelector(state);
   const isLoading =
+    isRemoteLoading(pmSessionToken) ||
     pot.isLoading(creditCardAddWallet) ||
     pot.isLoading(walletById) ||
     pot.isLoading(psps);
 
-  // considering wallet error only when the fisrt step is completed and not in error
+  // considering wallet error only when the first step is completed and not in error
   const areWalletsInError =
     pot.isError(walletById) && pot.isSome(creditCardAddWallet);
 
@@ -347,7 +351,6 @@ const mapStateToProps = (state: GlobalState) => {
   const creditCardTempWallet: Option<Wallet> = pot
     .toOption(allWallets.creditCardAddWallet)
     .map(c => c.data);
-  const pmSessionToken = pmSessionTokenSelector(state);
 
   return {
     isLoading,

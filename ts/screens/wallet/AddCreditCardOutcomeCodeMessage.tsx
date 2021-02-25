@@ -46,7 +46,6 @@ const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
       outcomeCode={outcomeCode}
       onClose={props.navigateToWalletHome}
       successComponent={successComponent}
-      successFooter={() => <></>}
     />
   ) : null;
 };

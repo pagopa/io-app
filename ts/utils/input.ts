@@ -43,10 +43,10 @@ export const CreditCardCVC = PatternString("^[0-9]{3,4}$");
 export type CreditCardCVC = t.TypeOf<typeof CreditCardCVC>;
 
 export const INITIAL_CARD_FORM_STATE: CreditCardState = {
-  pan: none,
-  expirationDate: none,
-  securityCode: none,
-  holder: none
+  pan: some("12312313213132112"),
+  expirationDate: some("12/21"),
+  securityCode: some("123"),
+  holder: some("test")
 };
 
 export const isValidPan = (pan: Option<string>) =>

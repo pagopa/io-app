@@ -3,9 +3,7 @@ import { pot } from "italia-ts-commons";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { addCreditCardOutcomeCode } from "../../store/actions/wallet/outcomeCode";
-import { paymentExecuteStart } from "../../store/actions/wallet/payment";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardSuccess,
@@ -14,6 +12,7 @@ import {
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess,
+  refreshPMTokenWhileAddCreditCard,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
@@ -116,9 +115,11 @@ describe("startOrResumeAddCreditCardSaga", () => {
       // Step 2
       .select(getAllWallets)
       .next(walletStateCardAdded)
+      .put(refreshPMTokenWhileAddCreditCard.request({ idWallet: anIdWallet }))
+      .next()
       .call(aPmSessionManager.getNewToken)
       .next(some(aNewPMToken))
-      .put(paymentExecuteStart.success(aNewPMToken))
+      .put(refreshPMTokenWhileAddCreditCard.success(aNewPMToken))
       .next()
       .take(getType(addCreditCardOutcomeCode))
       .next()
@@ -133,10 +134,8 @@ describe("startOrResumeAddCreditCardSaga", () => {
         type: getType(fetchWalletsSuccess),
         payload: [{ idWallet: anIdWallet }]
       })
-      .delay(2000)
+      .delay(testableWalletsSaga!.successScreenDelay)
       .next()
-      .select(bpdEnabledSelector)
-      .next(pot.some(true))
       .put(setFavouriteWalletRequest(anIdWallet))
       .next();
   });
