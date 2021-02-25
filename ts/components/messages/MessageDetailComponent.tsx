@@ -14,7 +14,6 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
-import IconFont from "../ui/IconFont";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -70,16 +69,7 @@ const styles = StyleSheet.create({
     flex: 0,
     marginBottom: 5,
     height: variables.lineHeightBase
-  },
-  messagePaidBg: {
-    padding: 24,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: variables.noticeBg,
-  },
-  messagePaidLabel: {
-    color: '#17324D',
-  }, 
+  }
 });
 
 /**
@@ -88,7 +78,7 @@ const styles = StyleSheet.create({
 export default class MessageDetailComponent extends React.PureComponent<
   Props,
   State
-  > {
+> {
   constructor(props: Props) {
     super(props);
     this.state = { isContentLoadCompleted: false };
@@ -115,10 +105,10 @@ export default class MessageDetailComponent extends React.PureComponent<
     return fromNullable(
       pot.isNone(potServiceDetail)
         ? ({
-          organization_name: I18n.t("messages.errorLoading.senderInfo"),
-          department_name: I18n.t("messages.errorLoading.departmentInfo"),
-          service_name: I18n.t("messages.errorLoading.serviceInfo")
-        } as ServicePublic)
+            organization_name: I18n.t("messages.errorLoading.senderInfo"),
+            department_name: I18n.t("messages.errorLoading.departmentInfo"),
+            service_name: I18n.t("messages.errorLoading.serviceInfo")
+          } as ServicePublic)
         : pot.toUndefined(potServiceDetail)
     );
   }
@@ -146,13 +136,6 @@ export default class MessageDetailComponent extends React.PureComponent<
       )
     );
 
-    private getNoticePaid = () => (
-      <View style={styles.messagePaidBg}>
-        <IconFont name="io-complete" style={styles.messagePaidLabel} />
-        <Text style={[styles.messagePaidLabel, styles.padded]}>{I18n.t("wallet.errors.PAYMENT_DUPLICATED")}</Text>
-      </View>
-    );
-
   public render() {
     const {
       message,
@@ -178,8 +161,6 @@ export default class MessageDetailComponent extends React.PureComponent<
             {this.getTitle()}
             <View spacer={true} />
           </View>
-
-          {this.payment !== undefined && this.getNoticePaid()}
 
           {maybeMedicalData.fold(undefined, md => (
             <MedicalPrescriptionIdentifiersComponent prescriptionData={md} />
