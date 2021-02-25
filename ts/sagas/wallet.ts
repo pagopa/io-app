@@ -168,7 +168,6 @@ import {
 import { isTestEnv } from "../utils/environment";
 import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
 import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
-import reactotron from "reactotron-react-native";
 
 /**
  * This saga manages the flow for adding a new card.
@@ -238,11 +237,20 @@ function* startOrResumeAddCreditCardSaga(
     }
 
     const { idWallet } = state.creditCardAddWallet.value.data;
-
-    //
-    // Second step: process the 3ds checkout
-    //
-
+    /**
+     * Second step: process the 3ds checkout:
+     * 1. Request a new token to the PM
+     * 2. Check the new token response:
+     *    - If the token is returned successfully request all the wallets
+     *    - else dispatch a failure action and call the onFailure function
+     * 3. Wait until the addCreditCardOutcomeCode action is dispatched -> the user exit from the webview
+     * 4. Check if lastPaymentOutcomeCodeSelector is some or none:
+     *    - The value will be always some since we are waiting the dispatch of the addCreditCardOutcomeCode action
+     * 5. Check if lastPaymentOutcomeCodeSelector.status is success:
+     *    - If success show the thank you page for 2 seconds and starts the bpd onboarding
+     *    - If not success dispatch a failure action and show the ko page (the show of the ko page is
+     *      managed inside the PayWebViewModal component)
+     *  */
     try {
       // Request a new token to the PM. This prevent expired token during the webview navigation.
       // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
@@ -257,12 +265,8 @@ function* startOrResumeAddCreditCardSaga(
         const maybeOutcomeCode: ReturnType<typeof lastPaymentOutcomeCodeSelector> = yield select(
           lastPaymentOutcomeCodeSelector
         );
-        // If the code is success:
-        // - request all the wallets
-        //   - if the request succeed:
-        //      - Start the bpd enrolling
-        //   - if the request fail:
-        //      - ?
+        // Since we wait the dispatch of the addCreditCardOutcomeCode action,
+        // the else case can't happen, because the action in every case set a some value in the store.
         if (isSome(maybeOutcomeCode.outcomeCode)) {
           const outcomeCode = maybeOutcomeCode.outcomeCode.value;
 
@@ -284,6 +288,7 @@ function* startOrResumeAddCreditCardSaga(
               );
 
               if (maybeAddedWallet !== undefined) {
+                // Add a delay to allow
                 yield delay(2000);
                 // The wallet was found
                 const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
@@ -321,7 +326,7 @@ function* startOrResumeAddCreditCardSaga(
                     } else {
                       yield put(navigateToSuggestBpdActivation());
                     }
-                    // remove these screens from the navigation stack: method choice, credit card form, credit card resume
+                    // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
                     // this pop could be easily break when this flow is entered by other points
                     // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
                     yield put(navigationHistoryPop(4));
@@ -334,7 +339,6 @@ function* startOrResumeAddCreditCardSaga(
                   );
                 }
 
-                // TODO: is needed since that there are the outcome screen?
                 // signal the completion
                 if (action.payload.onSuccess) {
                   action.payload.onSuccess(maybeAddedWallet);
@@ -344,21 +348,16 @@ function* startOrResumeAddCreditCardSaga(
           } else {
             // outcome is different from success
             yield put(addWalletNewCreditCardFailure());
-
-            // TODO: is needed since that there are the outcome screen?
-            if (action.payload.onFailure) {
-              action.payload.onFailure();
-            }
           }
-
-          // There was a problem in the add credit card flow
         } else {
+          // There was a problem in the add credit card flow
           yield put(addWalletNewCreditCardFailure());
           if (action.payload.onFailure) {
             action.payload.onFailure();
           }
         }
       } else {
+        // Cannot refresh wallet token
         if (action.payload.onFailure) {
           yield call(mixpanelTrack, getType(addWalletNewCreditCardFailure), {
             reason: "cannot refresh wallet token"
