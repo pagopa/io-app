@@ -170,6 +170,10 @@ export const getPaymentHistoryDetails = (
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
+  const success = `- pagamento concluso con successo: ${
+    payment.success === true ? "si" : "no"
+  }`;
+  const outcomeCode = `- codice di uscita: ${payment.outcomeCode ?? "n/a"}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("ccp: n/a");
@@ -185,6 +189,10 @@ export const getPaymentHistoryDetails = (
     paymentDetails,
     separator,
     ccp,
+    separator,
+    success,
+    separator,
+    outcomeCode,
     separator,
     failureDetails
   );
