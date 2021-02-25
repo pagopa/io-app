@@ -1218,7 +1218,7 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1296,7 +1296,7 @@ wallet:
     payment:
       success:
         title: "Grazie, l’operazione è stata eseguita con successo!"
-        description1: "Abbiamo inviato una ricevuta al tuo indirizzo email"
+        description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
 saveCard:
   saveCard: Salva la carta
