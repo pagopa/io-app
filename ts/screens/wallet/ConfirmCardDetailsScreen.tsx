@@ -144,6 +144,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         {
           text: I18n.t("wallet.abortWebView.confirm"),
           onPress: () => {
+            this.props.dispatchEndPaymentWebview("USER_ABORT");
             this.props.onCancel();
           },
           style: "cancel"
@@ -295,7 +296,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               this.props.goToAddCreditCardOutcomeCode(
                 payWebViewPayload.crediCardTempWallet
               );
-              this.props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
+              this.props.dispatchEndPaymentWebview("EXIT_PATH");
             }}
             outcomeQueryparamName={webViewOutcomeParamName}
             onGoBack={handlePayWebviewGoBack}
