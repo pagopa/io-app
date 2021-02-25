@@ -137,16 +137,16 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     // the user press back during the pay web view challenge
     const handlePayWebviewGoBack = () => {
-      Alert.alert(I18n.t("payment.abortWebView.title"), "", [
+      Alert.alert(I18n.t("wallet.abortWebView.title"), "", [
         {
-          text: I18n.t("payment.abortWebView.confirm"),
+          text: I18n.t("wallet.abortWebView.confirm"),
           onPress: () => {
             this.props.onCancel();
           },
           style: "cancel"
         },
         {
-          text: I18n.t("payment.abortWebView.cancel")
+          text: I18n.t("wallet.abortWebView.cancel")
         }
       ]);
     };
