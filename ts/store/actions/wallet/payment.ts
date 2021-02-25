@@ -23,6 +23,7 @@ import {
   EntrypointRoute,
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
+import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -202,7 +203,9 @@ export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
 type PaymentCompletedSuccessPayload = Readonly<
   | {
       kind: "COMPLETED";
-      transaction: Transaction;
+      // TODO Transaction is not available, add it when PM makes it available again
+      //  see https://www.pivotaltracker.com/story/show/177067134
+      transaction: Transaction | undefined;
       rptId: RptId;
     }
   | {
@@ -217,7 +220,7 @@ export const paymentCompletedSuccess = createStandardAction(
 
 export const paymentCompletedFailure = createStandardAction(
   "PAYMENT_COMPLETED_FAILURE"
-)();
+)<OutcomeCodesKey | undefined>();
 
 //
 // delete an ongoing payment
