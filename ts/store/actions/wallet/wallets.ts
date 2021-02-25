@@ -4,7 +4,6 @@ import {
   CreditCard,
   NullableWallet,
   PaymentManagerToken,
-  PayRequest,
   TransactionResponse,
   Wallet,
   WalletResponse
