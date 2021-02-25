@@ -112,10 +112,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       color: paymentInfo.color,
       description: paymentInfo.text11
     };
+    // the error could be on attiva or while the payment execution
+    // so the description is built first checking the attiva failure, alternatively
+    // it checks about the outcome if the payment went wrong
     const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
       fromNullable(payment.outcomeCode).map(oc => {
         const maybeCutcomecodeKey = OutcomeCodesKey.decode(oc);
-        if (maybeCutcomecodeKey.isRight()) {
+        if (payment.success !== true && maybeCutcomecodeKey.isRight()) {
           const oc: OutcomeCode = this.props.outcomeCodes[
             maybeCutcomecodeKey.value
           ];
