@@ -93,11 +93,13 @@ import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
+  paymentExecuteStart,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -126,6 +128,7 @@ import {
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
+import { paymentOutcomeCode } from "../actions/wallet/outcomeCode";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -196,6 +199,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //
     // Payment actions (with properties)
     //
+    case getType(paymentWebViewEnd):
+      return mp.track(action.type, {
+        exitType: action.payload
+      });
+    case getType(paymentOutcomeCode):
+      return mp.track(action.type, {
+        outCome: action.payload.getOrElse("")
+      });
     case getType(paymentVerifica.request):
       return mp.track(action.type, {
         organizationFiscalCode: action.payload.organizationFiscalCode,
@@ -296,6 +307,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentFetchPspsForPaymentId.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
+    case getType(paymentExecuteStart.failure):
     case getType(updateNotificationInstallationFailure):
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
@@ -379,13 +391,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
-
+    case getType(paymentExecuteStart.request):
+    case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
-
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
