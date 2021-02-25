@@ -1277,7 +1277,7 @@ wallet:
     title: Quit adding your card?
     confirm: Yes, quit
     cancel: Keep adding
-    success: The credit card onboarding was successfully canceled
+    success: Problems while adding your card? Please contact your bank.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
