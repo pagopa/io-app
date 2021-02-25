@@ -46,7 +46,7 @@ export default reducer;
 export const cgnDetailSelector = (state: GlobalState) =>
   state.bonus.cgn.detail.information;
 
-// Returns true only if card informations are available and not in PENDING status
+// Returns true only if card information are available and not in PENDING status
 export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
   (information: pot.Pot<Card, NetworkError>): boolean =>
