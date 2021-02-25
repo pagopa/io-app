@@ -14,7 +14,9 @@ import { differentProfileLoggedIn } from "../../actions/crossSessions";
 export type PaidReason = Readonly<
   | {
       kind: "COMPLETED";
-      transactionId: number;
+      // TODO Transaction is not available, add it when PM make it available again
+      //  see https://www.pivotaltracker.com/story/show/177067134
+      transactionId: number | undefined;
     }
   | {
       kind: "DUPLICATED";
@@ -44,7 +46,7 @@ export const paymentByRptIdReducer = (
           action.payload.kind === "COMPLETED"
             ? {
                 kind: "COMPLETED",
-                transactionId: action.payload.transaction.id
+                transactionId: action.payload.transaction?.id
               }
             : {
                 kind: "DUPLICATED"

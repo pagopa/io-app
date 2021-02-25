@@ -214,13 +214,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // by a verifica operation that return a duplicated payment error.
       // Only in the former case we have a transaction and an amount.
       if (action.payload.kind === "COMPLETED") {
-        const amount = action.payload.transaction.amount.amount;
+        const amount = action.payload.transaction?.amount.amount;
         return mp
           .track(action.type, {
             amount,
             kind: action.payload.kind
           })
-          .then(_ => mp.trackCharge(amount));
+          .then(_ => mp.trackCharge(amount ?? -1));
       } else {
         return mp.track(action.type, {
           kind: action.payload.kind

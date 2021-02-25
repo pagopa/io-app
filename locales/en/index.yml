@@ -1192,7 +1192,7 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid! ;-)
+    PAYMENT_DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
@@ -1270,7 +1270,8 @@ wallet:
     payment:
       success:
         title: "Thank you for your payment!"
-        description: "We sent a receipt to your email address. You can also find it in your Wallet."
+        description1: "We sent a receipt to"
+        description2: "You can also find it in your Wallet."
   abortWebView:
     title: Quit adding your card?
     confirm: Yes, quit
