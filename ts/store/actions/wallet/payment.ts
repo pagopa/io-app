@@ -203,7 +203,7 @@ export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
 type PaymentCompletedSuccessPayload = Readonly<
   | {
       kind: "COMPLETED";
-      // TODO Transaction is not available, add it when PM make it available again
+      // TODO Transaction is not available, add it when PM makes it available again
       //  see https://www.pivotaltracker.com/story/show/177067134
       transaction: Transaction | undefined;
       rptId: RptId;

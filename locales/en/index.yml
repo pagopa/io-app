@@ -736,6 +736,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      outcomeCode: Outcome code
       onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
