@@ -2231,6 +2231,31 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    name: Carta Giovani Nazionale
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
+    detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usufruire degli sconti?
+      activationDateLabel: Attivata il
+      expirationDateLabel: Scaduta il
+      revocationDateLabel: Revocata il
+      status:
+        title: Stato Carta
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
     activation:
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
@@ -2253,9 +2278,6 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
-    cta:
-      activeBonus: Attiva la tua Carta Giovani
-      goToDetail: Visualizza la Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
