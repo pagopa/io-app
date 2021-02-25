@@ -203,7 +203,7 @@ const calculatePaymentStatus = (
 const getNoticePaid = () => (
   <View style={styles.messagePaidBg}>
     <IconFont name="io-complete" />
-    <Label style={styles.padded} color={"bluegrey"}>
+    <Label style={styles.padded} color={"bluegrey"} weight={"Regular"}>
       {I18n.t("wallet.errors.PAYMENT_DUPLICATED")}
     </Label>
   </View>
