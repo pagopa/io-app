@@ -1,31 +1,48 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
+import { SafeAreaView } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
-import { H1 } from "../../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
+import { FooterStackButton } from "../../../bonusVacanze/components/buttons/FooterStackButtons";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import IconFont from "../../../../../components/ui/IconFont";
+import { cgnActivationComplete } from "../../store/actions/activation";
+import { navigateToCgnDetails } from "../../navigation/actions";
+import I18n from "../../../../../i18n";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
  * Screen which is displayed when a user requested a CGN activation
- * and it took too long to get an answer from the server
- * (the user will be notified when the activation is completed by a message)
+ * and it has been correctly activated
  */
-const CgnActivationCompletedScreen = (_: Props): React.ReactElement => (
-  // PLACEHOLDER for activation completed screen
-  <BaseScreenComponent>
-    <View>
-      <H1>{"Congrats, activation completed"}</H1>
-    </View>
-  </BaseScreenComponent>
+const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
+  <SafeAreaView style={IOStyles.flex}>
+    <InfoScreenComponent
+      image={<IconFont name={"io-complete"} size={104} color={IOColors.aqua} />}
+      title={I18n.t("bonus.cgn.activation.success.title")}
+      body={I18n.t("bonus.cgn.activation.success.body")}
+    />
+    <FooterStackButton
+      buttons={[
+        confirmButtonProps(props.onConfirm, I18n.t("bonus.cgn.cta.goToDetail"))
+      ]}
+    />
+  </SafeAreaView>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onConfirm: () => {
+    dispatch(cgnActivationComplete());
+    dispatch(navigateToCgnDetails());
+  }
+});
 
 export default connect(
   mapStateToProps,

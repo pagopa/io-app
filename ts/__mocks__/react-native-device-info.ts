@@ -3,9 +3,12 @@
  */
 
 const getReadableVersion = jest.fn();
+const getDeviceIdMock = jest.fn();
+getDeviceIdMock.mockReturnValue("");
 
 const DeviceInfo = {
-  getReadableVersion
+  getReadableVersion,
+  getDeviceId: getDeviceIdMock
 };
 
 export default DeviceInfo;

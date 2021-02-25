@@ -62,7 +62,7 @@ const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoNotFound"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}
