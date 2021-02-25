@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 24,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: variables.noticeBg
+    backgroundColor: IOColors.aqua
   }
 });
 
