@@ -63,11 +63,11 @@ interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
   accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
-  dark?: boolean;
+  dark?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   headerTitle?: string;
   backgroundColor?: ColorValue;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
-  primary?: boolean;
+  primary?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
@@ -150,15 +150,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
     maybeNotNullyString(label).fold(undefined, l => {
       const { titleColor } = this.props;
-      const isWhite = this.props.primary || this.props.dark;
       return (
         <Text
           ref={ref}
-          white={isWhite}
           numberOfLines={1}
           accessible={true}
           accessibilityRole={"header"}
-          style={{ color: titleColor ? IOColors[titleColor] : IOColors.black }}
+          style={{
+            color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
+          }}
         >
           {l}
         </Text>
