@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import IconFont from "../../../../../components/ui/IconFont";
 import { H4 } from "../../../../../components/core/typography/H4";
 import TypedI18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { InfoBox } from "../../../../../components/box/InfoBox";
 
 type Props = {
   cgnDetail: Card;
@@ -28,8 +28,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-
-const ICON_SIZE = 24;
 
 type IconTextInformation = {
   icon: string;
@@ -58,7 +56,7 @@ const textAndIconFromStatus = ({
       return {
         icon: "io-notice",
         text: (
-          <H4 testID={"infobox-text"}>
+          <H4 testID={"infobox-text"} weight={"Regular"}>
             <H4 weight={"Bold"} testID={"infobox-text-warning"}>
               {TypedI18n.t("bonus.cgn.detail.information.warning")}
             </H4>
@@ -75,7 +73,7 @@ const textAndIconFromStatus = ({
       return {
         icon: "io-notice",
         text: (
-          <H4 testID={"infobox-text"}>
+          <H4 testID={"infobox-text"} weight={"Regular"}>
             <H4 weight={"Bold"} testID={"infobox-text-warning"}>
               {TypedI18n.t("bonus.cgn.detail.information.warning")}
             </H4>
@@ -99,12 +97,10 @@ const textAndIconFromStatus = ({
 const CgnInformationText: React.FunctionComponent<Props> = (props: Props) => {
   const info = textAndIconFromStatus(props);
   return fromNullable(info).fold(null, i => (
-    <View
-      style={[styles.row, styles.contentExtraPadding, styles.alignedCentral]}
-    >
-      <IconFont name={i.icon} color={IOColors.bluegrey} size={ICON_SIZE} />
-      <View hspacer={true} />
-      {i.text}
+    <View style={styles.contentExtraPadding}>
+      <InfoBox iconName={i.icon} iconColor={IOColors.bluegrey} alignedCentral>
+        {i.text}
+      </InfoBox>
     </View>
   ));
 };
