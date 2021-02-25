@@ -193,7 +193,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         })
       );
     }
-    props.dispatchEndPaymentWebview("EXIT_FROM_WEB_VIEW");
+    props.dispatchEndPaymentWebview("EXIT_PATH");
     props.dispatchPaymentOutCome(maybeOutcomeCode);
     props.navigateToOutComePaymentScreen();
   };
@@ -205,7 +205,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
         text: I18n.t("payment.abortWebView.confirm"),
         onPress: () => {
           props.dispatchCancelPayment();
-          props.dispatchEndPaymentWebview("ABORT_BY_THE_USER");
+          props.dispatchEndPaymentWebview("USER_ABORT");
         },
         style: "cancel"
       },
