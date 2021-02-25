@@ -24,7 +24,7 @@ import {
 } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
 import variables from "../../theme/variables";
-import { Label } from "../core/typography/Label";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
@@ -202,10 +202,10 @@ const calculatePaymentStatus = (
 
 const getNoticePaid = () => (
   <View style={styles.messagePaidBg}>
-    <IconFont name="io-complete" />
-    <Label style={styles.padded} color={"bluegrey"} weight={"Regular"}>
+    <IconFont name="io-complete" color={IOColors.bluegreyDark} />
+    <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
       {I18n.t("wallet.errors.PAYMENT_DUPLICATED")}
-    </Label>
+    </Text>
   </View>
 );
 
