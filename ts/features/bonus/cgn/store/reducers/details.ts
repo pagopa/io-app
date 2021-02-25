@@ -50,7 +50,7 @@ export const cgnDetailSelector = (state: GlobalState) =>
 export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
   (information: pot.Pot<Card, NetworkError>): boolean =>
-    pot.isSome(information) && !CardPending.is(information)
+    pot.isSome(information) && !CardPending.is(information.value)
 );
 
 // Returns the CGN information only if they are in the available status else undefined

@@ -21,6 +21,7 @@ import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -80,7 +81,7 @@ interface OwnProps {
     accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
-  titleColor?: string;
+  titleColor?: IOColorType;
 }
 
 type Props = OwnProps &
@@ -148,6 +149,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
   private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
     maybeNotNullyString(label).fold(undefined, l => {
+      const { titleColor } = this.props;
       const isWhite = this.props.primary || this.props.dark;
       return (
         <Text
@@ -156,7 +158,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           numberOfLines={1}
           accessible={true}
           accessibilityRole={"header"}
-          style={{ color: this.props.titleColor }}
+          style={{ color: titleColor ? IOColors[titleColor] : IOColors.black }}
         >
           {l}
         </Text>
