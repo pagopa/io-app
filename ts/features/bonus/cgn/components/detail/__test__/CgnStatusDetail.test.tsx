@@ -12,7 +12,6 @@ import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definit
 import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import CgnStatusDetail from "../CgnStatusDetail";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import variables from "../../../../../../theme/variables";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
@@ -48,7 +47,7 @@ describe("CgnStatusDetail", () => {
       TypedI18n.t("bonus.cgn.detail.status.badge.active")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.blue
+      backgroundColor: IOColors.aqua
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       TypedI18n.t("bonus.cgn.detail.activationDateLabel")
@@ -72,7 +71,7 @@ describe("CgnStatusDetail", () => {
       TypedI18n.t("bonus.cgn.detail.status.badge.revoked")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: variables.brandHighLighter
+      backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       TypedI18n.t("bonus.cgn.detail.activationDateLabel")
@@ -103,7 +102,7 @@ describe("CgnStatusDetail", () => {
       TypedI18n.t("bonus.cgn.detail.status.badge.expired")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: variables.brandHighLighter
+      backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       TypedI18n.t("bonus.cgn.detail.activationDateLabel")
