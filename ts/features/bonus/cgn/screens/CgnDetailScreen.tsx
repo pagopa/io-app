@@ -42,7 +42,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       headerBackgroundColor={IOColors.yellowGradientTop}
       goBack
       headerTitle={I18n.t("bonus.cgn.name")}
-      titleColor={IOColors.black}
+      titleColor={"black"}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
@@ -71,7 +71,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <ItemSeparatorComponent noPadded />
           <View spacer />
           {props.cgnDetails && (
-            // Renders status informations including activation and expiring date and a badge that represents the CGN status
+            // Renders status information including activation and expiring date and a badge that represents the CGN status
             // ACTIVATED - EXPIRED - REVOKED
             <CgnStatusDetail cgnDetail={props.cgnDetails} />
           )}

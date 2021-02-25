@@ -60,7 +60,7 @@ describe("CgnInfoboxDetail", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("infobox-text-warning")).toBeDefined();
+    expect(component.queryByTestId("infobox-text-warning")).toBeTruthy();
     expect(component.queryByTestId("infobox-text")).toHaveTextContent(
       revokedLabel
     );
@@ -76,7 +76,7 @@ describe("CgnInfoboxDetail", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("infobox-text-warning")).toBeDefined();
+    expect(component.queryByTestId("infobox-text-warning")).toBeTruthy();
     expect(component.queryByTestId("infobox-text")).toHaveTextContent(
       expiredLabel
     );

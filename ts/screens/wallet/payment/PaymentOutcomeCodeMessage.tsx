@@ -11,15 +11,25 @@ import { renderInfoRasterImage } from "../../../components/infoScreen/imageRende
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { Label } from "../../../components/core/typography/Label";
+import { profileEmailSelector } from "../../../store/reducers/profile";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const successComponent = () => (
+const successBody = (emailAddress: string) => (
+  <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
+    {I18n.t("wallet.outcomeMessage.payment.success.description1")}
+    <Label weight={"Bold"} color={"bluegrey"}>{` ${emailAddress}\n`}</Label>
+    {I18n.t("wallet.outcomeMessage.payment.success.description2")}
+  </Label>
+);
+
+const successComponent = (emailAddress: string) => (
   <InfoScreenComponent
     image={renderInfoRasterImage(paymentCompleted)}
     title={I18n.t("wallet.outcomeMessage.payment.success.title")}
-    body={I18n.t("wallet.outcomeMessage.payment.success.description")}
+    body={successBody(emailAddress)}
   />
 );
 
@@ -48,7 +58,9 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
       onClose={props.navigateToWalletHome}
-      successComponent={successComponent}
+      successComponent={() =>
+        successComponent(props.profileEmail.getOrElse(""))
+      }
       successFooter={() => successFooter(props.navigateToWalletHome)}
     />
   ) : null;
@@ -59,7 +71,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  outcomeCode: lastPaymentOutcomeCodeSelector(state)
+  outcomeCode: lastPaymentOutcomeCodeSelector(state),
+  profileEmail: profileEmailSelector(state)
 });
 
 export default connect(
