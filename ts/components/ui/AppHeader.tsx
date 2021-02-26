@@ -62,14 +62,24 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => {
     ? statusBarConfigMap.get(props.currentRoute as Routes) || defaultConfig
     : defaultConfig;
 
+  const color =
+    barStyle == "dark-content"
+      ? customVariables.colorBlack
+      : customVariables.colorWhite;
+
+  const headerStyle = props.backgroundColor
+    ? {
+        backgroundColor: props.backgroundColor as string, // See https://github.com/DefinitelyTyped/DefinitelyTyped/issues/46864
+        color
+      }
+    : {
+        color
+      };
+
   return (
     <View>
       <Header
-        style={
-          props.backgroundColor
-            ? { backgroundColor: props.backgroundColor }
-            : undefined
-        }
+        style={headerStyle}
         androidStatusBarColor={backgroundColor}
         iosBarStyle={barStyle}
         {...props}
