@@ -4,6 +4,7 @@ import { View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import DeviceInfo from "react-native-device-info";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { loadServiceMetadata } from "../../store/actions/content";
@@ -20,7 +21,6 @@ import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
-import DeviceInfo from "react-native-device-info";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
