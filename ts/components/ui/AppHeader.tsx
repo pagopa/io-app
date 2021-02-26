@@ -63,7 +63,7 @@ const AppHeader = (props: React.PropsWithChildren<Props>) => {
     : defaultConfig;
 
   const color =
-    barStyle == "dark-content"
+    barStyle === "dark-content"
       ? customVariables.colorBlack
       : customVariables.colorWhite;
 
