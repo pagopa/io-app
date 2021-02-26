@@ -709,6 +709,11 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  abortWebView:
+    title: Do you want to stop the payment in progress?
+    confirm: Cancel the payment
+    cancel: Continue with payment
+    success: The payment was successfully canceled
   errorDetails: Details
   currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
@@ -731,6 +736,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      outcomeCode: Outcome code
       onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
@@ -994,7 +1000,7 @@ wallet:
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
-    goToPay: Confirm and pay
+    goToPay: Pay
     askConfirm: Want to proceed with the transaction?
     partialAmount: Amount to pay
     fee: Fee
@@ -1187,7 +1193,7 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid! ;-)
+    PAYMENT_DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
@@ -1265,7 +1271,13 @@ wallet:
     payment:
       success:
         title: "Thank you for your payment!"
-        description: "We sent a receipt to your email address. You can also find it in your Wallet."
+        description1: "We sent a receipt to"
+        description2: "You can also find it in your Wallet."
+  abortWebView:
+    title: Quit adding your card?
+    confirm: Yes, quit
+    cancel: Keep adding
+    success: Problems while adding your card? Please contact your bank.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -2189,6 +2201,31 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    name: Carta Giovani Nazionale
+    cta:
+      activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
+    detail:
+      cta:
+        buyers: See merchants
+        otp: Generate code
+      tos:
+        link: Information on the processing of personal data
+      information:
+        active: "Your card is active and can be used until {{date}}"
+        warning: "Attention! "
+        revoked: "This card has been revoked cause {{reason}}"
+        expired: "This card expired on {{date}}"
+      ownership: Who can take advantage of discounts?
+      activationDateLabel: Activated on
+      expirationDateLabel: Expired on
+      revocationDateLabel: Revoked on
+      status:
+        title: Card Status
+        badge:
+          active: Active
+          revoked: Revoked
+          expired: Expired
     activation:
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
@@ -2211,9 +2248,7 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
-    cta:
-      activeBonus: Activate your Carta Giovani
-      goToDetail: View your Carta Giovani
+
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

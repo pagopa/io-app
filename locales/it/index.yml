@@ -729,6 +729,11 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  abortWebView:
+    title: Vuoi interrompere il pagamento in corso?
+    confirm: Annulla il pagamento
+    cancel: Continua con il pagamento
+    success: Il pagamento è stato annullato correttamente
   errorDetails: Dettagli
   currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
@@ -751,6 +756,7 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      outcomeCode: Codice esito
       onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
@@ -1020,7 +1026,7 @@ wallet:
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione
@@ -1212,7 +1218,7 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1290,7 +1296,13 @@ wallet:
     payment:
       success:
         title: "Grazie, l’operazione è stata eseguita con successo!"
-        description: "Abbiamo inviato una ricevuta al tuo indirizzo email. Puoi trovarla anche nel tuo Portafoglio."
+        description1: "Abbiamo inviato una ricevuta a"
+        description2: "Puoi trovarla anche nel tuo Portafoglio."
+  abortWebView:
+    title: Vuoi uscire dall'operazione in corso?
+    confirm: Sì, esci
+    cancel: No, continua
+    success: Problemi con l'aggiunta? Contatta la tua banca.
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -2219,6 +2231,31 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    name: Carta Giovani Nazionale
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
+    detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usufruire degli sconti?
+      activationDateLabel: Attivata il
+      expirationDateLabel: Scaduta il
+      revocationDateLabel: Revocata il
+      status:
+        title: Stato Carta
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
     activation:
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
@@ -2241,9 +2278,6 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
-    cta:
-      activeBonus: Attiva la tua Carta Giovani
-      goToDetail: Visualizza la Carta Giovani
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
