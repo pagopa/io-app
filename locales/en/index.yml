@@ -1273,6 +1273,11 @@ wallet:
         title: "Thank you for your payment!"
         description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
+  abortWebView:
+    title: Quit adding your card?
+    confirm: Yes, quit
+    cancel: Keep adding
+    success: Problems while adding your card? Please contact your bank.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
