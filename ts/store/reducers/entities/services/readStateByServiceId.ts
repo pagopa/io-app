@@ -29,18 +29,10 @@ export function readServicesByIdReducer(
       const { LOCAL, NATIONAL } = action.payload;
 
       return [...LOCAL, ...NATIONAL].reduce(
-        (accumulator: { [key: string]: boolean | undefined }, serviceID) => {
-          if (serviceID in state) {
-            // Keep the existing read state
-            // eslint-disable-next-line
-            accumulator[serviceID] = state[serviceID];
-          } else {
-            // eslint-disable-next-line
-            accumulator[serviceID] = false;
-          }
-
-          return accumulator;
-        },
+        (accumulator: { [key: string]: boolean | undefined }, serviceID) => ({
+          ...accumulator,
+          [serviceID]: !!state[serviceID]
+        }),
         {}
       ) as ReadStateByServicesId;
     case getType(showServiceDetails):
