@@ -18,7 +18,7 @@ const renderTestTarget = (paymentMethod: PaymentMethod) =>
   );
 
 describe("PagoPaPaymentCapability", () => {
-  it("should render a badge with the text Active if passed a payment method of kind CreditCard and the brand is not MAESTRO", () => {
+  it("should render a badge with the text Active if passed a payment method of kind CreditCard and without issuerAbiCode and PagoPa = true", () => {
     const aNonMaestroCreditCard = {
       info: {
         brand: CreditCardType.decode("VISA").value
@@ -33,23 +33,6 @@ describe("PagoPaPaymentCapability", () => {
     const component = renderTestTarget(aPaymentMethod);
 
     expect(component.getByText("Active")).toBeTruthy();
-  });
-
-  it("should render a badge with the text Arriving if passed a payment method of kind CreditCard and the brand is MAESTRO", () => {
-    const aMaestroCreditCard = {
-      info: {
-        brand: CreditCardType.decode("MAESTRO").value
-      }
-    } as CreditCardPaymentMethod;
-    const aPaymentMethod = {
-      ...aMaestroCreditCard,
-      kind: "CreditCard",
-      pagoPA: true
-    } as PaymentMethod;
-
-    const component = renderTestTarget(aPaymentMethod);
-
-    expect(component.getByText("Arriving")).toBeTruthy();
   });
 
   it("should render a badge with the text Arriving if passed a payment method of kind Satispay", () => {

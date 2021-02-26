@@ -6,27 +6,46 @@ import { Action } from "../../actions/types";
 import {
   paymentAttiva,
   paymentCheck,
-  paymentExecutePayment,
+  paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../../actions/wallet/payment";
-import {
-  pollTransactionSagaCompleted,
-  pollTransactionSagaTimeout,
-  runPollTransactionSaga
-} from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import { Locales } from "../../../../locales/locales";
+import { PaymentManagerToken } from "../../../types/pagopa";
+import {
+  addCreditCardWebViewEnd,
+  refreshPMTokenWhileAddCreditCard
+} from "../../actions/wallet/wallets";
 
 export type EntrypointRoute = Readonly<{
   name: string;
   key: string;
 }>;
 
-// TODO: instead of keeping one single state, it would me more correct to keep
+export type PaymentStartPayload = Readonly<{
+  idWallet: number;
+  idPayment: string;
+  language: Locales;
+}>;
+
+export type PaymentStartWebViewPayload = PaymentStartPayload & {
+  sessionToken: PaymentManagerToken;
+};
+
+// TODO: instead of keeping one single state, it would be more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
@@ -54,21 +73,17 @@ export type PaymentState = Readonly<{
     typeof paymentFetchAllPspsForPaymentId["success"],
     typeof paymentFetchAllPspsForPaymentId["failure"]
   >;
-  transaction: PotFromActions<
-    typeof paymentExecutePayment["success"],
-    typeof paymentExecutePayment["failure"]
-  >;
-  confirmedTransaction: PotFromActions<
-    typeof pollTransactionSagaCompleted,
-    false
-  >;
   entrypointRoute?: EntrypointRoute;
+  // id payment, id wallet and locale (used inside paywebview)
+  paymentStartPayload: PaymentStartPayload | undefined;
+  // pm fresh session token (used inside paywebview)
+  pmSessionToken: RemoteValue<PaymentManagerToken, Error>;
 }>;
 
 /**
  * Returns the payment ID if one has been fetched so far
  */
-const getPaymentIdFromGlobalState = (state: GlobalState) =>
+export const getPaymentIdFromGlobalState = (state: GlobalState) =>
   pot.toOption(state.wallet.payment.paymentId);
 
 export const allPspsSelector = (state: GlobalState) =>
@@ -80,6 +95,15 @@ export const isPaymentOngoingSelector = (state: GlobalState) =>
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;
 
+export const pmSessionTokenSelector = (
+  state: GlobalState
+): RemoteValue<PaymentManagerToken, Error> =>
+  state.wallet.payment.pmSessionToken;
+
+export const paymentStartPayloadSelector = (
+  state: GlobalState
+): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;
+
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
@@ -87,9 +111,9 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   check: pot.none,
   psps: pot.none,
   allPsps: pot.none,
-  transaction: pot.none,
-  confirmedTransaction: pot.none,
-  entrypointRoute: undefined
+  entrypointRoute: undefined,
+  paymentStartPayload: undefined,
+  pmSessionToken: remoteUndefined
 };
 
 /**
@@ -230,42 +254,44 @@ const reducer = (
         allPsps: pot.noneError(action.payload)
       };
 
+    // start payment or refresh token while add credit card
     //
-    // execute payment
-    //
-    case getType(paymentExecutePayment.request):
+    case getType(paymentExecuteStart.request):
       return {
         ...state,
-        transaction: pot.noneLoading
+        paymentStartPayload: action.payload,
+        pmSessionToken: remoteLoading
       };
-    case getType(paymentExecutePayment.success):
+    case getType(refreshPMTokenWhileAddCreditCard.request):
       return {
         ...state,
-        transaction: pot.some(action.payload)
+        pmSessionToken: remoteLoading
       };
-    case getType(paymentExecutePayment.failure):
+    case getType(refreshPMTokenWhileAddCreditCard.success):
+    case getType(paymentExecuteStart.success):
       return {
         ...state,
-        transaction: pot.noneError(action.payload)
+        pmSessionToken: remoteReady(action.payload)
+      };
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
+    case getType(paymentExecuteStart.failure):
+      return {
+        ...state,
+        pmSessionToken: remoteError(action.payload)
       };
 
-    //
-    // confirmed transaction
-    //
-    case getType(runPollTransactionSaga):
+    // end payment web view - reset data about payment
+    case getType(paymentWebViewEnd):
       return {
         ...state,
-        confirmedTransaction: pot.noneLoading
+        paymentStartPayload: PAYMENT_INITIAL_STATE.paymentStartPayload,
+        pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
       };
-    case getType(pollTransactionSagaCompleted):
+    // end add credit card web view - reset pm session token data
+    case getType(addCreditCardWebViewEnd):
       return {
         ...state,
-        confirmedTransaction: pot.some(action.payload)
-      };
-    case getType(pollTransactionSagaTimeout):
-      return {
-        ...state,
-        confirmedTransaction: pot.noneError<false>(false)
+        pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
       };
   }
   return state;
