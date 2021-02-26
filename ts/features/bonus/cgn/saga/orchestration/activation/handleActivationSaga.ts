@@ -6,7 +6,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   cgnActivationCancel,
-  cgnActivationComplete,
   cgnActivationStatus
 } from "../../../store/actions/activation";
 import {
@@ -14,7 +13,8 @@ import {
   navigateToCgnActivationIneligible,
   navigateToCgnActivationLoading,
   navigateToCgnActivationPending,
-  navigateToCgnActivationTimeout
+  navigateToCgnActivationTimeout,
+  navigateToCgnAlreadyActive
 } from "../../../navigation/actions";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import CGN_ROUTES from "../../../navigation/routes";
@@ -29,7 +29,7 @@ const mapEnumToNavigation = new Map<
   [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
   [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
   [CgnActivationProgressEnum.INELIGIBLE, navigateToCgnActivationIneligible],
-  [CgnActivationProgressEnum.EXISTS, navigateToCgnActivationCompleted]
+  [CgnActivationProgressEnum.EXISTS, navigateToCgnAlreadyActive]
 ]);
 
 type CgnActivationType = ReturnType<typeof cgnActivationSaga>;
@@ -68,8 +68,6 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
     yield put(nextNavigationStep());
     yield put(navigationHistoryPop(1));
   }
-
-  yield take(cgnActivationComplete);
 }
 
 /**

@@ -5,6 +5,7 @@ import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Transaction } from "../../../types/pagopa";
 import {
+  paymentCompletedSuccess,
   paymentIdPolling,
   paymentVerifica
 } from "../../actions/wallet/payment";
@@ -14,6 +15,7 @@ import reducer, {
   isPaymentDoneSuccessfully,
   PaymentsHistoryState
 } from "../payments/history";
+import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
 // eslint-disable-next-line
 let state: PaymentsHistoryState = [];
 
@@ -60,7 +62,7 @@ describe("payments history", () => {
     expect(state.length).toEqual(1);
   });
 
-  it("should update the existing payment history with success values", () => {
+  it("should update the existing payment history with success verifica values", () => {
     state = reducer(state, paymentVerifica.success(successData));
     expect(state.length).toEqual(1);
     expect(state[0].verified_data).toEqual(successData);
@@ -68,6 +70,33 @@ describe("payments history", () => {
 
   it("should not recognize a payment as failed or successfully", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
+  });
+
+  it("should update the existing payment history when it ends successfully", () => {
+    state = reducer(state, paymentOutcomeCode(some("0")));
+    expect(state.length).toEqual(1);
+    expect(state[0].outcomeCode).toEqual("0");
+  });
+
+  it("should not recognize a payment as failed", () => {
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(false));
+  });
+
+  it("should update the existing payment history when it ends successfully", () => {
+    state = reducer(
+      state,
+      paymentCompletedSuccess({
+        kind: "COMPLETED",
+        rptId: anRptId,
+        transaction: undefined
+      })
+    );
+    expect(state.length).toEqual(1);
+    expect(state[0].success).toBeTruthy();
+  });
+
+  it("should  recognize a payment as successfully", () => {
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(true));
   });
 
   it("should update the existing payment history with the payment id", () => {
