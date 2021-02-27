@@ -10816,7 +10816,7 @@ react-native-push-notification@^4.0.0:
   dependencies:
     "@react-native-community/push-notification-ios" "^1.2.2"
 
-react-native-qrcode-scanner@^1.1.0:
+react-native-qrcode-scanner@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.5.3.tgz#90ed1cc342af4399dcd07454966127ac6a9bfdaf"
   integrity sha512-JvjUH1+qR1rz0SDFyr0jXZZKC4B5rgZ+4yQrDsHl1jIYcyq5UZBcz2XrDYYeb6+yddvoJXFCgrHMxzhTSPbUnw==
