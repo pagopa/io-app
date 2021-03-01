@@ -16,6 +16,11 @@ export const navigateToCgnActivationLoading = () =>
     routeName: CGN_ROUTES.ACTIVATION.LOADING
   });
 
+export const navigateToCgnAlreadyActive = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.EXISTS
+  });
+
 export const navigateToCgnActivationPending = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.PENDING

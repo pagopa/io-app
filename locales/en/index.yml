@@ -709,6 +709,11 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  abortWebView:
+    title: Do you want to stop the payment in progress?
+    confirm: Cancel the payment
+    cancel: Continue with payment
+    success: The payment was successfully canceled
   errorDetails: Details
   currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
@@ -731,6 +736,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      outcomeCode: Outcome code
       onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
@@ -882,7 +888,8 @@ wallet:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
-        warning: "In some cases, the displayed data might be different from the data printed on the physical card."
+        warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
+        warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
       chooseType:
         title: "Does your card allow you to shop online?"
@@ -982,9 +989,8 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the manager
-    info: This card does not belong to the pagoPA payment network.
-    infoBold: Choose the economic operator
+    title: Choose the provider
+    infoBold: Choose the Payment Service Provider
     info2: (PSP) which will have to manage your payment.
     link: Find out more
     maxFee: Maximum fee
@@ -994,7 +1000,7 @@ wallet:
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
-    goToPay: Confirm and pay
+    goToPay: Pay
     askConfirm: Want to proceed with the transaction?
     partialAmount: Amount to pay
     fee: Fee
@@ -1144,7 +1150,11 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: Card holder
+      holder: 
+        label: Card holder
+        description:
+          base: "Enter as shown on the card"
+          error: "Enter exactly as shown on the card"
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
@@ -1183,7 +1193,7 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid! ;-)
+    PAYMENT_DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
@@ -1231,6 +1241,43 @@ wallet:
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available Functions"
+  outcomeMessage:
+    cta:
+      close: Close
+      visualizeCard: View card
+    fallback:
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code1: 
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code2: 
+      title: "Authorization declined"
+      description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code4: 
+      title: "Sorry, the session has expired"
+      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+    code7: 
+      title: "There's a problem with your card"
+      description: "No charges were made. For more information, contact your bank."
+    code8: 
+      title: "The operation was canceled"
+    code10: 
+      title: "Authorization declined"
+      description: "You have probably reached your card limit. Check with your bank before trying again."
+    addCreditCard:
+      success:
+        title: "Your card has been successfully added!"
+    payment:
+      success:
+        title: "Thank you for your payment!"
+        description1: "We sent a receipt to"
+        description2: "You can also find it in your Wallet."
+  abortWebView:
+    title: Quit adding your card?
+    confirm: Yes, quit
+    cancel: Keep adding
+    success: Problems while adding your card? Please contact your bank.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -2154,8 +2201,54 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    name: Carta Giovani Nazionale
     cta:
       activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
+    detail:
+      cta:
+        buyers: See merchants
+        otp: Generate code
+      tos:
+        link: Information on the processing of personal data
+      information:
+        active: "Your card is active and can be used until {{date}}"
+        warning: "Attention! "
+        revoked: "This card has been revoked cause {{reason}}"
+        expired: "This card expired on {{date}}"
+      ownership: Who can take advantage of discounts?
+      activationDateLabel: Activated on
+      expirationDateLabel: Expired on
+      revocationDateLabel: Revoked on
+      status:
+        title: Card Status
+        badge:
+          active: Active
+          revoked: Revoked
+          expired: Expired
+    activation:
+      loading:
+        caption: "We're activating your Carta Giovani Nazionale"
+        subCaption: "Please wait."
+      error:
+        title: "The Carta Giovani Nazionale service is not available at the moment."
+        body: "We apologize for the issue.\nWe invite you to retry again later."
+      ineligible:
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
+        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+      timeout:
+        title: "We're processing your request."
+        body: "We will send you an in-app message when your Carta Giovani will be activated."
+      alreadyActive:
+        title: "Your Carta Giovani Nazionale is already active!"
+        body: "You can find more details inside the Wallet section."
+      pending:
+        title: "Your Carta Giovani Nazionale's activation is in progress."
+        body: "You will receive a message when it has been activated."
+      success:
+        title: "Congratulation!"
+        body: "Your Carta Giovani Nazionale is active"
+
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
