@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.21.0-rc.5",
+  "version": "1.22.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.9.0/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -109,7 +109,7 @@
     "react-native-popup-menu": "^0.14.0",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^4.0.0",
-    "react-native-qrcode-scanner": "^1.1.0",
+    "react-native-qrcode-scanner": "^1.5.3",
     "react-native-reanimated": "^1.13.1",
     "react-native-responsive-screen": "^1.4.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
