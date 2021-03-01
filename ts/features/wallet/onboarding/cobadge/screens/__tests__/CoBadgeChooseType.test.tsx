@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { none } from "fp-ts/lib/Option";
-import * as React from "react";
 import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../../../navigation/routes";
@@ -67,11 +66,6 @@ describe("CoBadgeChooseType component", () => {
 const getComponent = (abi?: string, legacyAddCreditCardBack?: number) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
-  const ToBeTested: React.FunctionComponent<React.ComponentProps<
-    typeof CoBadgeChooseType
-  >> = (props: React.ComponentProps<typeof CoBadgeChooseType>) => (
-    <CoBadgeChooseType {...props} />
-  );
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({
     ...globalState
@@ -79,7 +73,7 @@ const getComponent = (abi?: string, legacyAddCreditCardBack?: number) => {
 
   return {
     component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      ToBeTested,
+      CoBadgeChooseType,
       ROUTES.WALLET_BPAY_DETAIL,
       { abi, legacyAddCreditCardBack },
       store
