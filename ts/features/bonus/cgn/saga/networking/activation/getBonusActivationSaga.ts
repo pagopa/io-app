@@ -108,6 +108,9 @@ export const handleCgnStatusPolling = (
               `CGN Activation status ${cgnActivationResult.value.value.status}`
             );
             break;
+           // activation is still pending skip
+          case StatusEnum.PENDING:
+            break;
           default:
             void mixpanelTrack(getType(cgnActivationStatus.failure), {
               reason: `unexpected status result ${cgnActivationResult.value.value.status}`
