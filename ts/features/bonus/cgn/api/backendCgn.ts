@@ -12,15 +12,23 @@ import {
   GetCgnActivationT,
   getCgnStatusDefaultDecoder,
   GetCgnStatusT,
+  getEycaActivationDefaultDecoder,
+  GetEycaActivationT,
+  getEycaStatusDefaultDecoder,
+  GetEycaStatusT,
   startCgnActivationDefaultDecoder,
-  StartCgnActivationT
+  StartCgnActivationT,
+  startEycaActivationDefaultDecoder,
+  StartEycaActivationT
 } from "../../../../../definitions/cgn/requestTypes";
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
+const BASE_URL = "/api/v1/cgn";
+
 const startCgnActivation: StartCgnActivationT = {
   method: "post",
-  url: () => `/api/v1/cgn/activation`,
+  url: () => `${BASE_URL}/activation`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
@@ -29,7 +37,7 @@ const startCgnActivation: StartCgnActivationT = {
 
 const getCgnActivation: GetCgnActivationT = {
   method: "get",
-  url: () => `/api/v1/cgn/activation`,
+  url: () => `${BASE_URL}/activation`,
   query: _ => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getCgnActivationDefaultDecoder()
@@ -37,10 +45,35 @@ const getCgnActivation: GetCgnActivationT = {
 
 const getCgnStatus: GetCgnStatusT = {
   method: "get",
-  url: () => `/api/v1/cgn/status`,
+  url: () => `${BASE_URL}/status`,
   query: _ => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getCgnStatusDefaultDecoder()
+};
+
+const startEycaActivation: StartEycaActivationT = {
+  method: "post",
+  url: () => `${BASE_URL}/eyca/activation`,
+  query: _ => ({}),
+  body: _ => "",
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: startEycaActivationDefaultDecoder()
+};
+
+const getEycaActivation: GetEycaActivationT = {
+  method: "get",
+  url: () => `${BASE_URL}/eyca/activation`,
+  query: _ => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getEycaActivationDefaultDecoder()
+};
+
+const getEycaStatus: GetEycaStatusT = {
+  method: "get",
+  url: () => `${BASE_URL}/eyca/status`,
+  query: _ => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getEycaStatusDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -82,6 +115,15 @@ export function BackendCGN(
     ),
     getCgnStatus: withBearerToken(
       createFetchRequestForApi(getCgnStatus, options)
+    ),
+    startEycaActivation: withBearerToken(
+      createFetchRequestForApi(startEycaActivation, options)
+    ),
+    getEycaActivation: withBearerToken(
+      createFetchRequestForApi(getEycaActivation, options)
+    ),
+    getEycaStatus: withBearerToken(
+      createFetchRequestForApi(getEycaStatus, options)
     )
   };
 }
