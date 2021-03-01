@@ -3,13 +3,14 @@
 /**
  * A saga that manages the Wallet.
  */
-import { none, some, Option } from "fp-ts/lib/Option";
+import { none, some, Option, isSome } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import _ from "lodash";
 import {
   call,
+  delay,
   Effect,
   fork,
   put,
@@ -80,9 +81,11 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
-import { mixpanelTrack } from "../mixpanel";
 import ROUTES from "../navigation/routes";
-import { navigateBack } from "../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToWalletHome
+} from "../store/actions/navigation";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import {
@@ -117,17 +120,12 @@ import {
   addWalletCreditCardWithBackoffRetryRequest,
   addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletRequest,
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest,
+  refreshPMTokenWhileAddCreditCard,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled
@@ -141,8 +139,7 @@ import {
   EnableableFunctionsTypeEnum,
   isRawCreditCard,
   NullableWallet,
-  PaymentManagerToken,
-  PayRequest
+  PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
@@ -160,7 +157,6 @@ import {
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   getWallets,
-  payCreditCardVerificationRequestHandler,
   paymentAttivaRequestHandler,
   paymentCheckRequestHandler,
   paymentDeletePaymentRequestHandler,
@@ -173,7 +169,11 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { isTestEnv } from "../utils/environment";
+import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
+import { Millisecond } from "italia-ts-commons/lib/units";
 
+const successScreenDelay = 2000 as Millisecond;
 /**
  * This saga manages the flow for adding a new card.
  *
@@ -183,8 +183,7 @@ import { isTestEnv } from "../utils/environment";
  * To board a new card, we must complete the following steps:
  *
  * 1) add the card to the user wallets
- * 2) execute a "fake" payment to validate the card
- * 3) if required, complete the 3DS checkout for the payment in step (2)
+ * 2) complete the 3DS checkout for a fake payment
  *
  * This saga updates a state for each step, thus it can be run multiple times
  * to resume the flow from the last successful step (retry behavior).
@@ -241,179 +240,161 @@ function* startOrResumeAddCreditCardSaga(
       // all is ok, continue to the next step
       continue;
     }
-    //
-    // Second step: verify the card with a "fake" payment.
-    //
-    // Note that this is not actually a real payment, the card processor will
-    // just lock the amount from the card available credit. The user will not
-    // see this transaction in the transaction list and he will not receive
-    // any email notification concerning this transaction.
-    //
 
     const { idWallet } = state.creditCardAddWallet.value.data;
 
-    if (pot.isNone(state.creditCardVerification)) {
-      const payRequest: PayRequest = {
-        data: {
-          idWallet,
-          tipo: "web",
-          cvv: action.payload.creditCard.securityCode
-            ? action.payload.creditCard.securityCode
-            : undefined
-        }
-      };
-      yield put(
-        payCreditCardVerificationWithBackoffRetryRequest({
-          payRequest,
-          language: action.payload.language
-        })
-      );
-      const responseAction = yield take([
-        getType(payCreditCardVerificationSuccess),
-        getType(payCreditCardVerificationFailure)
-      ]);
-      if (isActionOf(payCreditCardVerificationFailure, responseAction)) {
-        // this step failed, exit the flow
-        return;
+    function* dispatchAddNewCreditCardFailure() {
+      yield put(addWalletNewCreditCardFailure());
+      if (action.payload.onFailure) {
+        action.payload.onFailure();
       }
-      // all is ok, continue to the next step
-      continue;
     }
 
-    //
-    // Third step: process the optional 3ds checkout.
-    //
-    // The previous payment step may provide a web URL for the 3DS checkout
-    // flow that must be completed by the user to authorize the transaction.
-    // Even though this step is optional, in practice Pagopa will always
-    // require the 3DS checkout for cards that gets added to the wallet.
-    //
-    const urlCheckout3ds =
-      state.creditCardVerification.value.data.urlCheckout3ds;
+    function* waitAndNavigateToWalletHome() {
+      // Add a delay to allow the user to see the thank you page
+      yield delay(successScreenDelay);
+      yield put(navigationHistoryPop(4));
+      yield put(navigateToWalletHome());
+    }
+
+    /**
+     * Second step: process the 3ds checkout:
+     * 1. Request a new token to the PM
+     * 2. Check the new token response:
+     *    - If the token is returned successfully request all the wallets (to check if the temporary one is present in the wallet list)
+     *    - else dispatch a failure action and call the onFailure function
+     * 3. Wait until the addCreditCardOutcomeCode action is dispatched -> the user exit from the webview
+     * 4. Check if lastPaymentOutcomeCodeSelector is some or none:
+     *    - The value will be always some since we are waiting the dispatch of the addCreditCardOutcomeCode action
+     * 5. Check if lastPaymentOutcomeCodeSelector.status is success:
+     *    - If success show the thank you page for 2 seconds and starts the bpd onboarding
+     *    - If not success dispatch a failure action and show the ko page (the show of the ko page is
+     *      managed inside the PayWebViewModal component)
+     *  */
     try {
-      if (pot.isNone(state.creditCardCheckout3ds)) {
-        if (urlCheckout3ds !== undefined) {
-          // Request a new token to the PM. This prevent expired token during the webview navigation.
-          // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
-          const pagoPaToken: Option<PaymentManagerToken> = yield call(
-            pmSessionManager.getNewToken
-          );
-          if (pagoPaToken.isSome()) {
-            yield put(
-              creditCardCheckout3dsRequest({
-                urlCheckout3ds,
-                paymentManagerToken: pagoPaToken.value
-              })
-            );
-            yield take(getType(creditCardCheckout3dsSuccess));
-            // all is ok, continue to the next step
-            continue;
-          } else {
-            if (action.payload.onFailure) {
-              yield call(
-                mixpanelTrack,
-                getType(addWalletNewCreditCardFailure),
-                {
-                  reason: "cannot refresh wallet token"
-                }
+      // change the store to loading just before ask for a new token
+      yield put(refreshPMTokenWhileAddCreditCard.request({ idWallet }));
+      // Request a new token to the PM. This prevent expired token during the webview navigation.
+      // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
+      const pagoPaToken: Option<PaymentManagerToken> = yield call(
+        pmSessionManager.getNewToken
+      );
+      if (pagoPaToken.isSome()) {
+        // store the pm session token
+        yield put(refreshPMTokenWhileAddCreditCard.success(pagoPaToken.value));
+        // Wait until the outcome code from the webview is available
+        yield take(getType(addCreditCardOutcomeCode));
+
+        const maybeOutcomeCode: ReturnType<typeof lastPaymentOutcomeCodeSelector> = yield select(
+          lastPaymentOutcomeCodeSelector
+        );
+        // Since we wait the dispatch of the addCreditCardOutcomeCode action,
+        // the else case can't happen, because the action in every case set a some value in the store.
+        if (isSome(maybeOutcomeCode.outcomeCode)) {
+          const outcomeCode = maybeOutcomeCode.outcomeCode.value;
+
+          // The credit card was added successfully
+          if (outcomeCode.status === "success") {
+            yield put(addWalletNewCreditCardSuccess());
+
+            // Get all the wallets
+            yield put(fetchWalletsRequest());
+            const fetchWalletsResultAction = yield take([
+              getType(fetchWalletsSuccess),
+              getType(fetchWalletsFailure)
+            ]);
+            if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
+              const updatedWallets = fetchWalletsResultAction.payload;
+              const maybeAddedWallet = updatedWallets.find(
+                _ => _.idWallet === idWallet
               );
-              action.payload.onFailure();
+
+              if (maybeAddedWallet !== undefined) {
+                // Add a delay to allow the user to see the thank you page
+                yield delay(successScreenDelay);
+                // check if the new method is compliant with bpd
+                if (bpdEnabled) {
+                  const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
+                    bpdEnabledSelector
+                  );
+                  const hasBpdFeature = hasFunctionEnabled(
+                    maybeAddedWallet.paymentMethod,
+                    EnableableFunctionsTypeEnum.BPD
+                  );
+                  // if the method is bpd compliant check if we have info about bpd activation
+                  if (hasBpdFeature && pot.isSome(bpdEnroll)) {
+                    // if bdp is active navigate to a screen where it asked to enroll that method in bpd
+                    // otherwise navigate to a screen where is asked to join bpd
+                    if (
+                      bpdEnroll.value &&
+                      isRawCreditCard(maybeAddedWallet.paymentMethod)
+                    ) {
+                      yield put(
+                        navigateToActivateBpdOnNewCreditCard({
+                          creditCards: [
+                            {
+                              ...maybeAddedWallet.paymentMethod,
+                              icon: getCardIconFromBrandLogo(
+                                maybeAddedWallet.paymentMethod.info
+                              ),
+                              caption: getTitleFromCard(
+                                maybeAddedWallet.paymentMethod
+                              )
+                            }
+                          ]
+                        })
+                      );
+                    } else {
+                      yield put(navigateToSuggestBpdActivation());
+                    }
+                    // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
+                    // this pop could be easily break when this flow is entered by other points
+                    // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
+                    yield put(navigationHistoryPop(4));
+                    return;
+                  }
+                }
+                if (action.payload.setAsFavorite) {
+                  yield put(
+                    setFavouriteWalletRequest(maybeAddedWallet.idWallet)
+                  );
+                }
+                // signal the completion
+                if (action.payload.onSuccess) {
+                  action.payload.onSuccess(maybeAddedWallet);
+                }
+              } else {
+                // cant find wallet in wallet list
+                yield call(waitAndNavigateToWalletHome);
+              }
+            } else {
+              // cant load wallets but credit card is added successfully
+              yield call(waitAndNavigateToWalletHome);
+              return;
             }
-            return;
+          } else {
+            // outcome is different from success
+            yield call(dispatchAddNewCreditCardFailure);
           }
         } else {
-          // if there is no need for a 3ds checkout, simulate a success checkout
-          // to proceed to the next step
-          yield put(creditCardCheckout3dsSuccess("done"));
-          continue;
+          // the outcome is none
+          yield call(dispatchAddNewCreditCardFailure);
         }
+      } else {
+        yield put(
+          refreshPMTokenWhileAddCreditCard.failure(
+            new Error("cant load pm session token")
+          )
+        );
+        // Cannot refresh wallet token
+        yield call(dispatchAddNewCreditCardFailure);
+        return;
       }
     } catch (e) {
       if (action.payload.onFailure) {
         action.payload.onFailure(e.message);
       }
       return;
-    }
-
-    //
-    // Fourth step: verify that the new card exists in the user wallets
-    //
-    // There currently is no way of determining whether the card has been added
-    // successfully from the URL returned in the webview, so the approach here
-    // is to fetch the wallets and look for a wallet with the same ID of the
-    // wallet we just added.
-    // TODO: find a way of finding out the result of the request from the URL
-    //
-    // FIXME: we may want to trigger a success here and leave the fetching of
-    //        the wallets to the caller
-    yield put(fetchWalletsRequest());
-    const fetchWalletsResultAction = yield take([
-      getType(fetchWalletsSuccess),
-      getType(fetchWalletsFailure)
-    ]);
-    if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
-      const updatedWallets = fetchWalletsResultAction.payload;
-      const maybeAddedWallet = updatedWallets.find(
-        _ => _.idWallet === idWallet
-      );
-      // if the new method has been added
-      if (maybeAddedWallet !== undefined) {
-        const bpdEnroll: ReturnType<typeof bpdEnabledSelector> = yield select(
-          bpdEnabledSelector
-        );
-        // dispatch the action: a new card has been added
-        yield put(addWalletNewCreditCardSuccess());
-        // check if the new method is compliant with bpd
-        if (bpdEnabled) {
-          const hasBpdFeature = hasFunctionEnabled(
-            maybeAddedWallet.paymentMethod,
-            EnableableFunctionsTypeEnum.BPD
-          );
-          // if the method is bpd compliant check if we have info about bpd activation
-          if (hasBpdFeature && pot.isSome(bpdEnroll)) {
-            // if bdp is active navigate to a screen where it asked to enroll that method in bpd
-            // otherwise navigate to a screen where is asked to join bpd
-            if (
-              bpdEnroll.value &&
-              isRawCreditCard(maybeAddedWallet.paymentMethod)
-            ) {
-              yield put(
-                navigateToActivateBpdOnNewCreditCard({
-                  creditCards: [
-                    {
-                      ...maybeAddedWallet.paymentMethod,
-                      icon: getCardIconFromBrandLogo(
-                        maybeAddedWallet.paymentMethod.info
-                      ),
-                      caption: getTitleFromCard(maybeAddedWallet.paymentMethod)
-                    }
-                  ]
-                })
-              );
-            } else {
-              yield put(navigateToSuggestBpdActivation());
-            }
-            // remove these screens from the navigation stack: method choice, credit card form, credit card resume
-            // this pop could be easily break when this flow is entered by other points
-            // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
-            yield put(navigationHistoryPop(3));
-            return;
-          }
-        }
-        if (action.payload.setAsFavorite === true) {
-          yield put(setFavouriteWalletRequest(maybeAddedWallet.idWallet));
-        }
-        // signal the completion
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(maybeAddedWallet);
-        }
-      } else {
-        yield put(addWalletNewCreditCardFailure());
-
-        if (action.payload.onFailure) {
-          action.payload.onFailure();
-        }
-      }
     }
     break;
   }
@@ -693,25 +674,6 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
-    getType(payCreditCardVerificationRequest),
-    payCreditCardVerificationRequestHandler,
-    paymentManagerClient,
-    pmSessionManager
-  );
-
-  yield takeLatest(
-    getType(payCreditCardVerificationWithBackoffRetryRequest),
-    function* (
-      action: ActionType<
-        typeof payCreditCardVerificationWithBackoffRetryRequest
-      >
-    ) {
-      yield call(backoffWait, payCreditCardVerificationFailure);
-      yield put(payCreditCardVerificationRequest(action.payload));
-    }
-  );
-
-  yield takeLatest(
     getType(setFavouriteWalletRequest),
     setFavouriteWalletRequestHandler,
     paymentManagerClient,
@@ -980,5 +942,5 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
 
 // to keep solid code encapsulation
 export const testableWalletsSaga = isTestEnv
-  ? { startOrResumeAddCreditCardSaga }
+  ? { startOrResumeAddCreditCardSaga, successScreenDelay }
   : undefined;

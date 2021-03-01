@@ -6,12 +6,7 @@ import I18n from "../../../i18n";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import {
-  CreditCard,
-  NullableWallet,
-  PayRequest,
-  TransactionResponse
-} from "../../../types/pagopa";
+import { CreditCard, NullableWallet } from "../../../types/pagopa";
 import { CreditCardPan } from "../../../utils/input";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
@@ -19,9 +14,7 @@ import ConfirmCardDetailsScreen, {
 } from "../ConfirmCardDetailsScreen";
 import {
   addWalletCreditCardWithBackoffRetryRequest,
-  fetchWalletsRequest,
-  payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest
+  fetchWalletsRequest
 } from "../../../store/actions/wallet/wallets";
 
 jest.unmock("react-navigation");
@@ -32,19 +25,6 @@ jest.mock("react-native-share", () => ({
 describe("ConfirmCardDetailScreen", () => {
   beforeEach(() => jest.useFakeTimers());
 
-  it("should show the loading modal if creditCardVerification is some and creditCardCheckout3ds is not pot.some", () => {
-    const { component, store } = getComponent();
-
-    store.dispatch(payCreditCardVerificationSuccess({} as TransactionResponse));
-
-    const loadingModal = component.getAllByTestId("overlayComponent");
-    const loadingText = component.getByText(
-      I18n.t("wallet.saveCard.loadingAlert")
-    );
-
-    expect(loadingModal).not.toBeNull();
-    expect(loadingText).not.toBeEmpty();
-  });
   it("should show the loading modal if creditCardAddWallet is pot.loading", () => {
     const { component, store } = getComponent();
 
@@ -62,23 +42,7 @@ describe("ConfirmCardDetailScreen", () => {
     expect(loadingModal).not.toBeNull();
     expect(loadingText).not.toBeEmpty();
   });
-  it("should show the loading modal if creditCardVerification is pot.loading", () => {
-    const { component, store } = getComponent();
 
-    store.dispatch(
-      payCreditCardVerificationWithBackoffRetryRequest({
-        payRequest: {} as PayRequest
-      })
-    );
-
-    const loadingModal = component.getAllByTestId("overlayComponent");
-    const loadingText = component.getByText(
-      I18n.t("wallet.saveCard.loadingAlert")
-    );
-
-    expect(loadingModal).not.toBeNull();
-    expect(loadingText).not.toBeEmpty();
-  });
   it("should show the loading modal if walletById is pot.loading", () => {
     const { component, store } = getComponent();
 

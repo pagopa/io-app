@@ -129,8 +129,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
-  cgnActiveBonus: isCGNBonusActiveSelector(state),
-  availableBonusesList: supportedAvailableBonusSelector(state)
+  cgnActiveBonus: isCgnInformationAvailableSelector(state),
+  availableBonusesList: visibleAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
