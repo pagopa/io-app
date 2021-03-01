@@ -62,3 +62,10 @@ export const cgnDetailsInformationSelector = createSelector(
   ): Card | undefined =>
     pot.isSome(information) && isAvailable ? information.value : undefined
 );
+
+// TODO replace with the effective implementation.
+// false -> user is not CGN enrolled
+// true -> user is CGN enrolled
+// undefined -> don't known
+export const isCgnBonusActiveSelector = (_: GlobalState): boolean | undefined =>
+  undefined;
