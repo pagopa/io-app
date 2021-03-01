@@ -25,6 +25,7 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { cgnEycaDetails } from "../store/actions/eyca/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -35,6 +36,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
+    props.loadEycaDetails();
   }, []);
 
   return (
@@ -99,6 +101,8 @@ const mapStateToProps = (state: GlobalState) => ({
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadEycaDetails: () => dispatch(cgnEycaDetails.request())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

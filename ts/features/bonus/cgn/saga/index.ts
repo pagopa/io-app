@@ -8,6 +8,7 @@ import {
 import { apiUrlPrefix } from "../../../../config";
 import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
+import { cgnEycaDetails } from "../store/actions/eyca/details";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -15,6 +16,7 @@ import {
   handleCgnStatusPolling
 } from "./networking/activation/getBonusActivationSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
+import { eycaGetInformationSaga } from "./networking/eyca/details/getEycaDetailSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -38,5 +40,13 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnDetails.request),
     cgnGetInformationSaga,
     backendCGN.getCgnStatus
+  );
+
+  // Eyca Load details
+  yield takeLatest(
+    getType(cgnEycaDetails.request),
+    eycaGetInformationSaga,
+    backendCGN.getEycaStatus,
+    backendCGN.getEycaActivation
   );
 }
