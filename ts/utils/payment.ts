@@ -18,9 +18,13 @@ import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumb
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
-import { OutcomeCodes, OutcomeCodesKey } from "../types/outcomeCode";
+import {
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
 import { formatDateAsReminder } from "./dates";
-import { getLocalePrimaryWithFallback } from "./locale";
+import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
@@ -284,4 +288,18 @@ export const isPaymentOutcomeCodeSuccessfully = (
     _ => false,
     c => outcomeCodes[c].status === "success"
   );
+};
+
+export const getPaymentOutcomeCodeDescription = (
+  outcomeCode: string,
+  outcomeCodes: OutcomeCodes
+): Option<string> => {
+  const maybeCutcomecodeKey = OutcomeCodesKey.decode(outcomeCode);
+  if (maybeCutcomecodeKey.isRight()) {
+    const oc: OutcomeCode = outcomeCodes[maybeCutcomecodeKey.value];
+    if (oc.description !== undefined) {
+      return some(oc.description[getFullLocale()]);
+    }
+  }
+  return none;
 };

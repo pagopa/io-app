@@ -116,12 +116,9 @@ const reducer = (
       };
       return replaceLastItem(state, updateSuccess);
     case getType(paymentOutcomeCode):
-      if (action.payload.isNone()) {
-        return state;
-      }
       const updateOutcome: PaymentHistory = {
         ...state[state.length - 1],
-        outcomeCode: action.payload.value
+        outcomeCode: action.payload.getOrElse("n/a")
       };
       return replaceLastItem(state, updateOutcome);
     case getType(clearCache): {

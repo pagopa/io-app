@@ -27,6 +27,8 @@ import { H3 } from "../../../components/core/typography/H3";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { getProfileDetailsLog } from "../../../utils/profile";
+import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
+import { getPaymentOutcomeCodeDescription } from "../../../utils/payment";
 
 type NavigationParams = Readonly<{
   attempt: CreditCardInsertion;
@@ -119,6 +121,13 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
         color: "red",
         header: I18n.t("wallet.creditCard.onboardingAttempts.failure")
       };
+  const errorDescription =
+    !attempt.onboardingComplete && attempt.outcomeCode
+      ? getPaymentOutcomeCodeDescription(
+          attempt.outcomeCode,
+          props.outcomeCodes
+        )
+      : undefined;
   return (
     <BaseScreenComponent
       goBack={props.navigation.goBack}
@@ -155,6 +164,19 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
             <View spacer={true} />
           </>
         )}
+        {errorDescription && errorDescription.isSome() && (
+          <>
+            <Label color={"bluegrey"} weight={"Regular"}>
+              {errorDescription.value}
+            </Label>
+            <View spacer={true} />
+          </>
+        )}
+        {renderRow(
+          I18n.t("payment.details.info.outcomeCode"),
+          attempt.outcomeCode ?? "-"
+        )}
+        <View spacer={true} xsmall={true} />
         {renderRow(
           I18n.t("wallet.creditCard.onboardingAttempts.dateTime"),
           when
@@ -167,7 +189,8 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state)
+  profile: profileSelector(state),
+  outcomeCodes: outcomeCodesSelector(state)
 });
 
 export default connect(mapStateToProps)(

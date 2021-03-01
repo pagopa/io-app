@@ -9,14 +9,12 @@ import {
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
   creditCardCheckout3dsRedirectionUrls,
-  CreditCardFailure,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess
+  CreditCardFailure
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
-import { TransactionResponse } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { GlobalState } from "../types";
+import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
 
 export type CreditCardInsertion = {
   startDate: Date;
@@ -30,10 +28,9 @@ export type CreditCardInsertion = {
     brand?: string;
   };
   failureReason?: CreditCardFailure;
-  verificationFailureReason?: string;
-  verificationTransaction?: TransactionResponse;
   urlHistory3ds?: ReadonlyArray<string>;
   onboardingComplete: boolean;
+  outcomeCode?: string;
 };
 
 // The state is modeled as a stack on which the last element is added at the head
@@ -131,21 +128,15 @@ const reducer = (
         urlHistory3ds: action.payload
       }));
 
-    case getType(payCreditCardVerificationSuccess):
-      return updateStateHead(state, attempt => ({
-        ...attempt,
-        verificationTransaction: action.payload
-      }));
-    case getType(payCreditCardVerificationFailure):
-      return updateStateHead(state, attempt => ({
-        ...attempt,
-        verificationFailureReason: action.payload.message ?? "n/a"
-      }));
-
     case getType(addWalletNewCreditCardSuccess):
       return updateStateHead(state, attempt => ({
         ...attempt,
         onboardingComplete: true
+      }));
+    case getType(addCreditCardOutcomeCode):
+      return updateStateHead(state, attempt => ({
+        ...attempt,
+        outcomeCode: action.payload.getOrElse("n/a")
       }));
     case getType(clearCache): {
       return INITIAL_STATE;
@@ -158,11 +149,11 @@ const reducer = (
 
 export default reducer;
 
-const creditCardAttemptions = (state: GlobalState) =>
+const creditCardAttempts = (state: GlobalState) =>
   state.payments.creditCardInsertion;
 
 // return the list of credit card onboarding attempts
-export const creditCardAttemptionsSelector = createSelector(
-  creditCardAttemptions,
+export const creditCardAttemptsSelector = createSelector(
+  creditCardAttempts,
   (ca: CreditCardInsertionState): CreditCardInsertionState => ca
 );

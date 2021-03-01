@@ -14,7 +14,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import {
-  creditCardAttemptionsSelector,
+  creditCardAttemptsSelector,
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import { Body } from "../../../components/core/typography/Body";
@@ -81,7 +81,7 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  creditCardOnboardingAttempts: creditCardAttemptionsSelector(state)
+  creditCardOnboardingAttempts: creditCardAttemptsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
