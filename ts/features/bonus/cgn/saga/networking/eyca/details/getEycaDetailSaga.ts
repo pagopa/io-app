@@ -9,6 +9,16 @@ import { CardPending } from "../../../../../../../../definitions/cgn/CardPending
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 
+/**
+ * Saga to retrieve the actual status of EYCA Details and status:
+ * We have a mixture of cases based on EYCA status and API response status:
+ * - 200 -> we check if the card is PENDING and check the actual status of the activation process if it's in ERROR
+ *          status we should show the Eyca Error component
+ * - 409/404 -> The user is ELIGIBLE for an EYCA Card but no information is available, should ask again for EYCA Activation
+ * - Others -> User is not ELIGIBLE for an Eyca card we, won't show any information in the screen
+ * @param getEycaStatus
+ * @param getEycaActivation
+ */
 export function* eycaGetInformationSaga(
   getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"],
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
@@ -69,6 +79,7 @@ export function* eycaGetInformationSaga(
   }
 }
 
+// Get the EYCA activation status from the the Backend Orchestrator
 export const getEycaActivationStatus = (
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   card: EycaCard
