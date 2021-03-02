@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Badge, Text, View } from "native-base";
+import { Badge, View } from "native-base";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import I18n from "../../../../../i18n";
 import { H4 } from "../../../../../components/core/typography/H4";
