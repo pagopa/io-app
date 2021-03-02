@@ -202,7 +202,7 @@ export const getPaymentHistoryDetails = (
     outcomeCode,
     separator,
     navigationUrls,
-    separator
+    separator,
     failureDetails
   );
 };
