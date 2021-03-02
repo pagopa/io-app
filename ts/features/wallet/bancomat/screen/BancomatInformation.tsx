@@ -8,13 +8,13 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
-import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconBar";
+import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
 
 type OwnProps = {
-  onAddPaymentMethod?: () => void;
+  onAddPaymentMethod: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 const BancomatInformation: React.FunctionComponent<Props> = props => {
   const { present } = bancomatInformationBottomSheet(props.onAddPaymentMethod);
   return (
-    <View>
+    <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
         <IconFont
@@ -50,6 +50,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           size={24}
           color={IOColors.blue}
           onPress={present}
+          testID={"noticeIconFont"}
         />
       </View>
       <View spacer={true} />
@@ -62,6 +63,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           props.onAddPaymentMethod?.();
         }}
         onPressWithGestureHandler={true}
+        testID={"addPaymentMethodButton"}
       >
         <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
       </ButtonDefaultOpacity>
