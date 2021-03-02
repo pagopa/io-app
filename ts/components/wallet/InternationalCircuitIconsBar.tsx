@@ -19,16 +19,20 @@ const styles = StyleSheet.create({
 });
 
 const InternationalCircuitIconsBar: React.FunctionComponent = () => (
-  <View style={styles.row}>
-    <Image source={maestro} style={styles.brandLogo} />
+  <View style={styles.row} testID={"internationalCircuitIconsBar"}>
+    <Image source={maestro} style={styles.brandLogo} testID={"maestro"} />
     <View hspacer={true} />
-    <Image source={mastercard} style={styles.brandLogo} />
+    <Image source={mastercard} style={styles.brandLogo} testID={"mastercard"} />
     <View hspacer={true} />
-    <Image source={visa} style={styles.brandLogo} />
+    <Image source={visa} style={styles.brandLogo} testID={"visa"} />
     <View hspacer={true} />
-    <Image source={visaElectron} style={styles.brandLogo} />
+    <Image
+      source={visaElectron}
+      style={styles.brandLogo}
+      testID={"visaElectron"}
+    />
     <View hspacer={true} />
-    <Image source={vpay} style={styles.brandLogo} />
+    <Image source={vpay} style={styles.brandLogo} testID={"vPay"} />
   </View>
 );
 
