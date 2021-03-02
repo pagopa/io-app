@@ -49,9 +49,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
-  payCreditCardVerificationWithBackoffRetryRequest,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -86,7 +84,10 @@ const WALLETS_INITIAL_STATE: WalletsState = {
   creditCardCheckout3ds: pot.none
 };
 
-// selectors
+// Selectors
+export const getAllWallets = (state: GlobalState): WalletsState =>
+  state.wallet.wallets;
+
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
@@ -438,12 +439,6 @@ const reducer = (
     //
     // pay credit card verification
     //
-    case getType(payCreditCardVerificationWithBackoffRetryRequest):
-    case getType(payCreditCardVerificationRequest):
-      return {
-        ...state,
-        creditCardVerification: pot.noneLoading
-      };
 
     case getType(payCreditCardVerificationSuccess):
       return {

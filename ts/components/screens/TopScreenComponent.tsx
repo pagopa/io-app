@@ -2,6 +2,7 @@ import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { SearchType } from "../search/SearchButton";
+import { IOColorType } from "../core/variables/IOColors";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
@@ -17,6 +18,7 @@ interface OwnProps {
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   accessibilityEvents?: AccessibilityEvents;
+  titleColor?: IOColorType;
 }
 
 type BaseScreenComponentProps =
@@ -53,7 +55,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
-      accessibilityEvents
+      accessibilityEvents,
+      titleColor
     } = this.props;
 
     return (
@@ -75,6 +78,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}
+        titleColor={titleColor}
       >
         {this.props.children}
       </BaseScreenComponent>

@@ -729,6 +729,11 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  abortWebView:
+    title: Vuoi interrompere il pagamento in corso?
+    confirm: Annulla il pagamento
+    cancel: Continua con il pagamento
+    success: Il pagamento è stato annullato correttamente
   errorDetails: Dettagli
   currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
@@ -751,6 +756,7 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      outcomeCode: Codice esito
       onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
@@ -877,7 +883,6 @@ wallet:
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
-        title: "TMP Start Title"
         loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
         koDisabled:
           title: "La tua banca non offre ancora questa funzionalità"
@@ -886,15 +891,25 @@ wallet:
           title: "Non riusciamo a contattare la tua banca"
           body: "Siamo al lavoro per risolvere il problema."
       search:
+        loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
         koTimeout:
-          title: "TMP KO Timeout add"
+          title: "Non riusciamo a recuperare le tue carte"
+          body: "Riprova per favore"
         koNotFound:
-          title: "TMP KO Timeout add"
+          title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
+          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
+        koSingleBankNotFound:
+          title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+          body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
+        koServiceError:
+          title: "Non riusciamo a recuperare le tue carte"
+          body: "Riprova più tardi per favore"
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-        warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
+        warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
+        warning2: "se hai dubbi contatta la tua banca."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
       chooseType:
         title: "La tua carta ti permette di acquistare online?"
@@ -1001,20 +1016,17 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info:
-      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      pagoPA.
-    infoBold: Scegli il soggetto economico
+    infoBold: Scegli il soggetto
     info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
-    maxFee: Commissione massima
+    maxFee: Costo di transazione
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione
@@ -1162,8 +1174,12 @@ wallet:
   addCardTitle: Dati carta
   dummyCard:
     labels:
-      holder: Titolare
-      pan: Numero della carta
+      holder:
+        label: Intestatario carta
+        description:
+          base: "Inserisci come riportato sulla carta"
+          error: "Inserisci esattamente come riportato sulla carta"
+      pan: Numero carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
       securityCode4D: CID (4 cifre)
@@ -1202,7 +1218,7 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1250,6 +1266,43 @@ wallet:
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Funzioni Disponibili"
+  outcomeMessage:
+    cta:
+      close: Chiudi
+      visualizeCard: Visualizza carta
+    fallback:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code1: 
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code2: 
+      title: "Autorizzazione negata"
+      description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code4: 
+      title: "Spiacenti, la sessione è scaduta"
+      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+    code7: 
+      title: "C’è un problema con la tua carta"
+      description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
+    code8: 
+      title: "L’operazione è stata annullata"
+    code10: 
+      title: "Autorizzazione negata"
+      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+    addCreditCard:
+      success:
+        title: "La tua carta è stata aggiunta con successo!"
+    payment:
+      success:
+        title: "Grazie, l’operazione è stata eseguita con successo!"
+        description1: "Abbiamo inviato una ricevuta a"
+        description2: "Puoi trovarla anche nel tuo Portafoglio."
+  abortWebView:
+    title: Vuoi uscire dall'operazione in corso?
+    confirm: Sì, esci
+    cancel: No, continua
+    success: Problemi con l'aggiunta? Contatta la tua banca.
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -2085,6 +2138,10 @@ bonus:
           other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        loading: "Stiamo recuperando la lista delle tue transazioni\n\nAttendi qualche secondo..."
+        error:
+          title: "I sistemi stanno impiegando più tempo del previsto"
+          body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
@@ -2174,8 +2231,53 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    name: Carta Giovani Nazionale
     cta:
       activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
+    detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usufruire degli sconti?
+      activationDateLabel: Attivata il
+      expirationDateLabel: Scaduta il
+      revocationDateLabel: Revocata il
+      status:
+        title: Stato Carta
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
+    activation:
+      loading:
+        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
+        subCaption: "Ti preghiamo di attendere."
+      error:
+        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
+        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ineligible:
+        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+      timeout:
+        title: "Stiamo processando la tua richiesta."
+        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è già attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+      pending:
+        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
+        body: "Riceverai un messaggio quando sarà attivata."
+      success:
+        title: "Congratulazioni!"
+        body: "La tua Carta Giovani Nazionale è attiva"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

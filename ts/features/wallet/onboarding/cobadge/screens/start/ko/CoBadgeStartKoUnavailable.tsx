@@ -32,8 +32,10 @@ const loadLocales = () => ({
  * @param props
  */
 const CoBadgeStartKoUnavailable = (props: Props): React.ReactElement => {
-  // disable hardware back
-  useHardwareBackButton(() => true);
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   const { headerTitle, title, body, close } = loadLocales();
   return (
     <BaseScreenComponent
@@ -42,7 +44,7 @@ const CoBadgeStartKoUnavailable = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeStartKoUnavailable"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

@@ -12,6 +12,7 @@ import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen"
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
@@ -293,6 +294,9 @@ export const navigateToWalletHome = (
     params
   });
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletList = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_LIST
@@ -338,6 +342,19 @@ export const navigateToPaymentManualDataInsertion = (
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
+  });
+
+export const navigateToAddCreditCardOutcomeCode = (
+  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    params
+  });
+
+export const navigateToPaymentOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
   });
 
 /**

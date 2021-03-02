@@ -30,7 +30,7 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   }
 }
 
-// remove protocol from a link ex: http://www.site.com -> www.site.com
+// remove protocol from a link
 export const removeProtocol = (link: string): string =>
   link.replace(new RegExp(/https?:\/\//gi), "");
 

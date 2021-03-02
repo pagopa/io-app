@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { View } from "native-base";
 import * as React from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { View } from "native-base";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
@@ -19,8 +19,8 @@ import {
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { walletAddCoBadgeCancel } from "../../../store/actions";
 import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -33,8 +33,8 @@ const loadLocales = () => ({
   findOutMore: I18n.t("global.buttons.findOutMore")
 });
 
-// TODO: unify with the link used in CoBadgeSingleBankScreen
-const partecipatingBankUrl =
+// TODO: unify with the link used in CoBadgeSingleBankScreen https://www.pivotaltracker.com/story/show/176780396
+const participatingBankUrl =
   "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
 
 /**
@@ -43,13 +43,15 @@ const partecipatingBankUrl =
  * @param props
  */
 const CoBadgeStartKoDisabled = (props: Props): React.ReactElement => {
-  // disable hardware back
-  useHardwareBackButton(() => true);
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
   const { headerTitle, title, body, close, findOutMore } = loadLocales();
   const { showModal, hideModal } = useContext(LightModalContext);
   const openCardsNotEnabledModal = () => {
     showModal(
-      <TosBonusComponent tos_url={partecipatingBankUrl} onClose={hideModal} />
+      <TosBonusComponent tos_url={participatingBankUrl} onClose={hideModal} />
     );
   };
   return (
@@ -59,7 +61,7 @@ const CoBadgeStartKoDisabled = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeStartKoDisabled"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

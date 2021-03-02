@@ -27,7 +27,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -38,7 +38,7 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { visibleAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
@@ -81,6 +81,9 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
+import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
+import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -206,6 +209,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
+    this.loadBonusCgn();
     this.setState({ hasFocus: true });
   };
 
@@ -226,14 +230,22 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private loadBonusCgn = () => {
+    if (cgnEnabled) {
+      this.props.loadCgnData();
+    }
+  };
+
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    // FIXME restore loadWallets and loadTransactions see https://www.pivotaltracker.com/story/show/176051000
-    // this.props.loadWallets();
-    // this.props.loadTransactions(this.props.transactionsLoadedLength);
+    if (pot.isNone(this.props.potWallets)) {
+      this.props.loadWallets();
+    }
+
+    // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -317,7 +329,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      )
+      ) ||
+      pot.isLoading(this.props.cgnDetails)
     ) {
       return "loading";
     }
@@ -359,6 +372,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
               if (bonusLoadingStatus !== "loading") {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
+                this.loadBonusCgn();
               }
             }}
             activeBonuses={this.props.allActiveBonus}
@@ -367,6 +381,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
+        {cgnEnabled && <CgnCardInWalletContainer />}
       </View>
     );
   }
@@ -576,11 +591,10 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
+    availableBonusesList: visibleAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
@@ -591,12 +605,14 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdLoadState: bpdLastUpdateSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state),
+    cgnDetails: cgnDetailSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
+  loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>

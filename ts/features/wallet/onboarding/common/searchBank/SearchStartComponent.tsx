@@ -5,7 +5,7 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
-import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconBar";
+import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
 
 type Props = {
   openTosModal: () => void;
