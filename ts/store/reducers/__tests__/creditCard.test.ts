@@ -1,5 +1,6 @@
 import { range } from "fp-ts/lib/Array";
 import sha from "sha.js";
+import { some } from "fp-ts/lib/Option";
 import { NullableWallet, WalletResponse } from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
@@ -15,9 +16,11 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  addWalletNewCreditCardSuccess
+  addWalletNewCreditCardSuccess,
+  creditCardPaymentNavigationUrls
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
+import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
 
 const creditCardToAdd: NullableWallet = {
   creditCard: {
@@ -240,10 +243,31 @@ describe("credit card history", () => {
 
     expect(cardItem.onboardingComplete).toBe(true);
   });
+
+  it("should save the outcome code", () => {
+    const outComeCode = "123";
+    const state = runReducer(
+      [],
+      addCCAction,
+      addCreditCardOutcomeCode(some(outComeCode))
+    );
+    const [cardItem] = state;
+    expect(cardItem.outcomeCode).toEqual(outComeCode);
+  });
+
+  it("should save the navigation urls", () => {
+    const urls = ["url1", "url2", "url3", "url4"];
+    const state = runReducer(
+      [],
+      addCCAction,
+      creditCardPaymentNavigationUrls(urls)
+    );
+    const [cardItem] = state;
+    expect(cardItem.payNavigationUrls).toEqual(urls);
+  });
 });
 
 const runReducer = (
   initialState: CreditCardInsertionState,
   ...actions: Array<Action>
-): CreditCardInsertionState =>
-  actions.reduce((s, a) => reducer(s, a), initialState);
+): CreditCardInsertionState => actions.reduce(reducer, initialState);
