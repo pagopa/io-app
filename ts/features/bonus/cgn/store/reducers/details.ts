@@ -65,6 +65,7 @@ export const isCgnEnrolledSelector = createSelector(
       constUndefined,
       constUndefined,
       constUndefined,
+      // we have a network error or a 404 the user is not enrolled
       () => false,
       isNotPending,
       constUndefined,
