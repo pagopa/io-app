@@ -19,7 +19,7 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { bpdEnabled, cgnEnabled } from "../../../config";
 import { isStrictSome } from "../../../utils/pot";
-import { isCgnInformationAvailableSelector } from "../../bonus/cgn/store/reducers/details";
+import { isCgnEnrolledSelector } from "../../bonus/cgn/store/reducers/details";
 import { supportedAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import FeaturedCard from "./FeaturedCard";
 
@@ -128,7 +128,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapStateToProps = (state: GlobalState) => ({
   bpdActiveBonus: bpdEnabledSelector(state),
-  cgnActiveBonus: isCgnInformationAvailableSelector(state),
+  cgnActiveBonus: isCgnEnrolledSelector(state),
   availableBonusesList: supportedAvailableBonusSelector(state)
 });
 
