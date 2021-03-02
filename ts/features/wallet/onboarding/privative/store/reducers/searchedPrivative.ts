@@ -1,29 +1,46 @@
+import { IUnitTag } from "italia-ts-commons/lib/units";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { searchUserCoBadge, walletAddCoBadgeStart } from "../actions";
+import {
+  searchUserPrivative,
+  walletAddPrivativeChooseBrand,
+  walletAddPrivativeStart
+} from "../actions";
 
-export type BrandSelected = string | null;
+export type BrandId = string & IUnitTag<"PrivativeService">;
 
-const abiSelectedReducer = (
-  state: BrandSelected = null,
+export type SearchedPrivativeData = {
+  brandId?: BrandId;
+  cardNumber?: string;
+};
+
+const defaultState: SearchedPrivativeData = {
+  brandId: undefined,
+  cardNumber: undefined
+};
+
+const searchedPrivativeReducer = (
+  state: SearchedPrivativeData = defaultState,
   action: Action
-): BrandSelected => {
+): SearchedPrivativeData => {
   switch (action.type) {
-    case getType(searchUserCoBadge.request):
-    case getType(walletAddCoBadgeStart):
-      return action.payload ?? null;
+    case getType(searchUserPrivative.request):
+      return action.payload;
+    case getType(walletAddPrivativeChooseBrand):
+      return { ...state, brandId: action.payload };
+    case getType(walletAddPrivativeStart):
+      return defaultState;
   }
   return state;
 };
 
 /**
- * Return the abi chosen from the user to search for their CoBadge
+ * Return the current searched parameters (BrandId and CardNumber) for the privative search
  * @param state
  */
-export const onboardingCoBadgeAbiSelectedSelector = (
+export const onboardingSearchedPrivativeSelector = (
   state: GlobalState
-): string | undefined =>
-  state.wallet.onboarding.coBadge.abiSelected ?? undefined;
+): SearchedPrivativeData => state.wallet.onboarding.privative.searchedPrivative;
 
-export default abiSelectedReducer;
+export default searchedPrivativeReducer;
