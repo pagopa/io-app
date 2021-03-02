@@ -7,6 +7,7 @@ import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
+import { isStrictSome } from "../../../../../utils/pot";
 
 export type CgnDetailsState = {
   information: pot.Pot<Card, NetworkError>;
@@ -50,7 +51,7 @@ export const cgnDetailSelector = (state: GlobalState) =>
 export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
   (information: pot.Pot<Card, NetworkError>): boolean =>
-    pot.isSome(information) && !CardPending.is(information.value)
+    isStrictSome(information) && !CardPending.is(information.value)
 );
 
 // Returns the CGN information only if they are in the available status else undefined
@@ -60,5 +61,5 @@ export const cgnDetailsInformationSelector = createSelector(
     information: pot.Pot<Card, NetworkError>,
     isAvailable: boolean
   ): Card | undefined =>
-    pot.isSome(information) && isAvailable ? information.value : undefined
+    isStrictSome(information) && isAvailable ? information.value : undefined
 );
