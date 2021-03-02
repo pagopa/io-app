@@ -1,3 +1,4 @@
+import URLParse from "url-parse";
 import { testableGetFinishAndOutcome } from "../PayWebViewModal";
 
 const loadingCases: ReadonlyArray<[
@@ -44,7 +45,7 @@ describe("getFinishAndOutcome", () => {
     "given %p as url, %p as finishPathName, %p as outcomeQueryparamName, returns %p",
     (url, finishPathName, outcomeQueryparamName, expectedResult) => {
       const result = testableGetFinishAndOutcome!(
-        url,
+        new URLParse(url, true),
         finishPathName,
         outcomeQueryparamName
       );

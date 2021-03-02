@@ -178,6 +178,9 @@ export const getPaymentHistoryDetails = (
     payment.success === true ? "si" : "no"
   }`;
   const outcomeCode = `- codice di uscita: ${payment.outcomeCode ?? "n/a"}`;
+  const navigationUrls = `- navigazione webview: ${(
+    payment.payNavigationUrls ?? []
+  ).join(", ")}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("ccp: n/a");
@@ -198,6 +201,8 @@ export const getPaymentHistoryDetails = (
     separator,
     outcomeCode,
     separator,
+    navigationUrls,
+    separator
     failureDetails
   );
 };

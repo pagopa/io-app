@@ -23,6 +23,7 @@ import { Action } from "../../actions/types";
 import {
   paymentCompletedSuccess,
   paymentIdPolling,
+  paymentRedirectionUrls,
   paymentVerifica
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
@@ -40,6 +41,7 @@ export type PaymentHistory = {
   failure?: keyof typeof DetailEnum;
   outcomeCode?: string;
   success?: true;
+  payNavigationUrls?: ReadonlyArray<string>;
 };
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
@@ -121,6 +123,12 @@ const reducer = (
         outcomeCode: action.payload.getOrElse("n/a")
       };
       return replaceLastItem(state, updateOutcome);
+    case getType(paymentRedirectionUrls):
+      const navigationUrls: PaymentHistory = {
+        ...state[state.length - 1],
+        payNavigationUrls: action.payload
+      };
+      return replaceLastItem(state, navigationUrls);
     case getType(clearCache): {
       return INITIAL_STATE;
     }

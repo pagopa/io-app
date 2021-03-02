@@ -13,9 +13,7 @@ import {
   addWalletCreditCardFailure,
   addWalletCreditCardSuccess,
   fetchWalletsFailure,
-  fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess
+  fetchWalletsSuccess
 } from "../../actions/wallet/wallets";
 import { GlobalState } from "../types";
 import { bpdLoadActivationStatus } from "../../../features/bonus/bpd/store/actions/details";
@@ -31,7 +29,6 @@ const monitoredActions: ReadonlyArray<[
   PayloadAC<any, any>,
   PayloadAC<any, any>
 ]> = [
-  [payCreditCardVerificationFailure, payCreditCardVerificationSuccess],
   [addWalletCreditCardFailure, addWalletCreditCardSuccess],
   [fetchTransactionsFailure, fetchTransactionsSuccess],
   [fetchWalletsFailure, fetchWalletsSuccess],

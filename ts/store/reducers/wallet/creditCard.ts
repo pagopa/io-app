@@ -8,7 +8,7 @@ import {
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRedirectionUrls,
+  creditCardPaymentNavigationUrls,
   CreditCardFailure
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
@@ -28,7 +28,7 @@ export type CreditCardInsertion = {
     brand?: string;
   };
   failureReason?: CreditCardFailure;
-  urlHistory3ds?: ReadonlyArray<string>;
+  payNavigationUrls?: ReadonlyArray<string>;
   onboardingComplete: boolean;
   outcomeCode?: string;
 };
@@ -54,7 +54,7 @@ const trimState = (state: CreditCardInsertionState) =>
 const updateStateHead = (
   state: CreditCardInsertionState,
   updaterFn: (item: CreditCardInsertion) => CreditCardInsertion
-) =>
+): CreditCardInsertionState =>
   index<CreditCardInsertion>(0, [...state])
     .map(updaterFn)
     .fold(state, updateItem => {
@@ -122,10 +122,10 @@ const reducer = (
         ...attempt,
         failureReason: action.payload
       }));
-    case getType(creditCardCheckout3dsRedirectionUrls):
+    case getType(creditCardPaymentNavigationUrls):
       return updateStateHead(state, attempt => ({
         ...attempt,
-        urlHistory3ds: action.payload
+        payNavigationUrls: action.payload
       }));
 
     case getType(addWalletNewCreditCardSuccess):

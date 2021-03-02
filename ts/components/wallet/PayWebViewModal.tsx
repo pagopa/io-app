@@ -29,7 +29,12 @@ type Props = {
    * outcomeQueryparamName should be "myoutcome"
    */
   outcomeQueryparamName: string;
-  onFinish: (outcomeCode: Option<string>) => void;
+  // outcomeCode could be the outcome code detected during navigation
+  // navigations urls is the list of urls browsed during navigation
+  onFinish: (
+    outcomeCode: Option<string>,
+    navigationUrls: ReadonlyArray<string>
+  ) => void;
   onGoBack: () => void;
   modalHeaderTitle?: string;
 };
@@ -72,11 +77,10 @@ const crateAutoPostForm = (
  * @param outcomeQueryparamName
  */
 const getFinishAndOutcome = (
-  url: string,
+  urlParse: URLParse,
   finishPathName: string,
   outcomeQueryparamName: string
 ): [isFinish: boolean, outComeCode: string | undefined] => {
-  const urlParse = new URLParse(url, true);
   // find the object entry name in case insensitive
   const maybeEntry = _.toPairs(urlParse.query).find(
     kv => kv[0].toLowerCase() === outcomeQueryparamName.toLowerCase()
@@ -117,6 +121,7 @@ export const PayWebViewModal = (props: Props) => {
   const [outcomeCode, setOutcomeCode] = React.useState<string | undefined>(
     undefined
   );
+  const navigationUrlsRef = React.useRef<Array<string>>([]);
   useHardwareBackButton(() => {
     props.onGoBack();
     return true;
@@ -124,8 +129,16 @@ export const PayWebViewModal = (props: Props) => {
 
   const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
     if (navState.url) {
+      const urlParse = new URLParse(navState.url, true);
+      // it happens when navState.url is "about:blank"
+      // i.e when we load local html
+      if (urlParse.origin !== "null") {
+        // eslint-disable-next-line functional/immutable-data
+        navigationUrlsRef.current.push(urlParse.origin);
+      }
+
       const [isFinish, maybeOutcome] = getFinishAndOutcome(
-        navState.url,
+        urlParse,
         props.finishPathName,
         props.outcomeQueryparamName
       );
@@ -135,7 +148,7 @@ export const PayWebViewModal = (props: Props) => {
       }
       // found exit path
       if (isFinish) {
-        props.onFinish(fromNullable(outcome));
+        props.onFinish(fromNullable(outcome), navigationUrlsRef.current);
         return false;
       }
     }

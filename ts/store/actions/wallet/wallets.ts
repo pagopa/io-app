@@ -8,7 +8,6 @@ import {
   CreditCard,
   NullableWallet,
   PaymentManagerToken,
-  TransactionResponse,
   Wallet,
   WalletResponse
 } from "../../../types/pagopa";
@@ -75,20 +74,6 @@ export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
 )<CreditCardFailure>();
 
-/**
- * @deprecated don't used anymore
- */
-export const payCreditCardVerificationSuccess = createStandardAction(
-  "WALLET_ADD_CREDITCARD_VERIFICATION_SUCCESS"
-)<TransactionResponse>();
-
-/**
- * @deprecated don't used anymore
- */
-export const payCreditCardVerificationFailure = createStandardAction(
-  "WALLET_ADD_CREDITCARD_VERIFICATION_FAILURE"
-)<Error>();
-
 type CreditCardCheckout3dsRequestPayload = Readonly<{
   urlCheckout3ds: string;
   paymentManagerToken: PaymentManagerToken;
@@ -102,8 +87,9 @@ export const creditCardCheckout3dsSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
 )<string>();
 
-export const creditCardCheckout3dsRedirectionUrls = createStandardAction(
-  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_REDIRECTION_URLS"
+// used to accumulate all the urls browsed into the pay webview
+export const creditCardPaymentNavigationUrls = createStandardAction(
+  "WALLET_ADD_CREDITCARD_PAYMENT_NAVIGATION_URLS"
 )<ReadonlyArray<string>>();
 
 type DeleteWalletRequestPayload = Readonly<{
@@ -190,10 +176,8 @@ export type WalletsActions =
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
   | ActionType<typeof addWalletNewCreditCardFailure>
-  | ActionType<typeof payCreditCardVerificationSuccess>
-  | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
-  | ActionType<typeof creditCardCheckout3dsRedirectionUrls>
+  | ActionType<typeof creditCardPaymentNavigationUrls>
   | ActionType<typeof fetchWalletsRequestWithExpBackoff>;
