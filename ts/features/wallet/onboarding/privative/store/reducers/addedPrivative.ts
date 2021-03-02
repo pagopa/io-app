@@ -8,27 +8,28 @@ import {
 import { enhanceCreditCard } from "../../../../../../utils/paymentMethod";
 import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
-import { addCoBadgeToWallet, walletAddCoBadgeStart } from "../actions";
+import { addPrivativeToWallet, walletAddPrivativeStart } from "../actions";
 
-const addedCoBadgeReducer = (
+const addedPrivativeReducer = (
   state: ReadonlyArray<RawCreditCardPaymentMethod> = [],
   action: Action
 ): ReadonlyArray<RawCreditCardPaymentMethod> => {
   switch (action.type) {
-    // Register a new Cobadge added in the current onboarding session
-    case getType(addCoBadgeToWallet.success):
+    // Register a new privative card added in the current onboarding session
+    case getType(addPrivativeToWallet.success):
       return [...state, action.payload];
-    // Reset the state when starting a new Cobadge onboarding workflow
-    case getType(walletAddCoBadgeStart):
+    // Reset the state when starting a new privative onboarding workflow
+    case getType(walletAddPrivativeStart):
       return [];
   }
   return state;
 };
 
-export const onboardingCoBadgeAddedSelector = createSelector(
-  [state => state.wallet.onboarding.coBadge.addedCoBadge, abiSelector],
+// TODO: replace enhanceCreditCard with enhancePrivative to add the brand logo!
+export const onboardingPrivativeAddedSelector = createSelector(
+  [state => state.wallet.onboarding.privative.addedPrivative, abiSelector],
   (addedCoBadge, remoteAbi): ReadonlyArray<CreditCardPaymentMethod> =>
     addedCoBadge.map(p => enhanceCreditCard(p, getValueOrElse(remoteAbi, {})))
 );
 
-export default addedCoBadgeReducer;
+export default addedPrivativeReducer;

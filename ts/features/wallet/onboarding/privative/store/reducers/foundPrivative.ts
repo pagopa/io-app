@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -13,7 +13,7 @@ import {
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserPrivative } from "../actions";
 
-export type RemotePrivative = RemoteValue<PaymentInstrument, NetworkError>;
+export type RemotePrivative = RemoteValue<CobadgeResponse, NetworkError>;
 
 const foundPrivativeReducer = (
   state: RemotePrivative = remoteUndefined,
@@ -31,7 +31,7 @@ const foundPrivativeReducer = (
 };
 
 /**
- * Return {@link RemoteCoBadge}, a list of Cobadge cards to be viewed by the user.
+ * Return {@link RemotePrivative}, a list of Privative cards to be viewed by the user with response metadata.
  * @param state
  */
 export const onboardingPrivativeFoundSelector = (

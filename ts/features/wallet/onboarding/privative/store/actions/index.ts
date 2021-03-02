@@ -8,11 +8,9 @@ import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
+import { BrandId, SearchedPrivativeData } from "../reducers/searchedPrivative";
 
-type PrivativeQuery = {
-  brand: string;
-  cardNumber: string;
-};
+type PrivativeQuery = Required<SearchedPrivativeData>;
 
 /**
  * Search for user's privative cards (can be only one)
@@ -21,7 +19,7 @@ export const searchUserPrivative = createAsyncAction(
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_REQUEST",
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_SUCCESS",
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_FAILURE"
-)<PrivativeQuery, PaymentInstrument, NetworkError>();
+)<PrivativeQuery, CobadgeResponse, NetworkError>();
 
 /**
  * The user adds a specific privative card to the wallet
@@ -44,11 +42,18 @@ export const loadPrivativeBrandConfiguration = createAsyncAction(
 )<void, PrivativeService, NetworkError>();
 
 /**
+ * The user chooses a brand to search a privative card
+ */
+export const walletAddPrivativeChooseBrand = createStandardAction(
+  "WALLET_ONBOARDING_PRIVATIVE_CHOOSE_BRAND"
+)<BrandId>();
+
+/**
  * The user chooses to start the workflow to add a new privative card to the wallet
  */
 export const walletAddPrivativeStart = createStandardAction(
   "WALLET_ONBOARDING_PRIVATIVE_START"
-)<string | undefined>();
+)<void>();
 
 /**
  * The user completes the workflow to add a new privative card to the wallet
@@ -76,6 +81,7 @@ export type PrivativeActions =
   | ActionType<typeof searchUserPrivative>
   | ActionType<typeof addPrivativeToWallet>
   | ActionType<typeof loadPrivativeBrandConfiguration>
+  | ActionType<typeof walletAddPrivativeChooseBrand>
   | ActionType<typeof walletAddPrivativeStart>
   | ActionType<typeof walletAddPrivativeCompleted>
   | ActionType<typeof walletAddPrivativeCancel>

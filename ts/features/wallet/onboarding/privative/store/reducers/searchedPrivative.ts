@@ -3,12 +3,12 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { searchUserCoBadge, walletAddCoBadgeStart } from "../actions";
 
-export type AbiSelected = string | null;
+export type BrandSelected = string | null;
 
 const abiSelectedReducer = (
-  state: AbiSelected = null,
+  state: BrandSelected = null,
   action: Action
-): AbiSelected => {
+): BrandSelected => {
   switch (action.type) {
     case getType(searchUserCoBadge.request):
     case getType(walletAddCoBadgeStart):

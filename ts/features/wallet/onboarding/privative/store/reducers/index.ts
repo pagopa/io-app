@@ -1,26 +1,27 @@
 import { Action, combineReducers } from "redux";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
-import abiConfigurationReducer, {
-  AbiConfigurationState
-} from "./abiConfiguration";
-import abiSelectedReducer, { AbiSelected } from "./abiSelected";
-import addedCoBadgeReducer from "./addedCoBadge";
-import addingCoBadgeReducer, { AddingCoBadgeState } from "./addingCoBadge";
+import addedPrivativeReducer from "./addedPrivative";
 import addingPrivativeReducer, {
   AddingPrivativeState
 } from "./addingPrivative";
+import brandConfigurationReducer, {
+  BrandConfigurationState
+} from "./brandConfiguration";
 import foundPrivativeReducer, { RemotePrivative } from "./foundPrivative";
-import searchRequestIdReducer, {
-  SearchCoBadgeRequestIdState
-} from "./searchCoBadgeRequestId";
+import searchedPrivativeReducer, {
+  SearchedPrivativeData
+} from "./searchedPrivative";
+import searchPrivativeRequestIdReducer, {
+  SearchPrivativeRequestIdState
+} from "./searchPrivativeRequestId";
 
 export type OnboardingPrivativeState = {
   foundPrivative: RemotePrivative;
   addingPrivative: AddingPrivativeState;
   addedPrivative: ReadonlyArray<RawCreditCardPaymentMethod>;
-  brandSelected: AbiSelected;
-  brandConfiguration: AbiConfigurationState;
-  searchPrivativeRequestId: SearchCoBadgeRequestIdState;
+  searchedPrivative: SearchedPrivativeData;
+  brandConfiguration: BrandConfigurationState;
+  searchPrivativeRequestId: SearchPrivativeRequestIdState;
 };
 
 const onboardingPrivativeReducer = combineReducers<
@@ -32,13 +33,13 @@ const onboardingPrivativeReducer = combineReducers<
   // The privative card that user is adding to his wallet
   addingPrivative: addingPrivativeReducer,
   // The privative that user added to his wallet (during the last privative onboarding workflow)
-  addedPrivative: addedCoBadgeReducer,
-  // The brand chosen by the user during the onboarding phase.
-  brandSelected: abiSelectedReducer,
+  addedPrivative: addedPrivativeReducer,
+  // The card information (brand, card number) searched
+  searchedPrivative: searchedPrivativeReducer,
   // A list of brand for which it is allowed to use the privative search service
-  brandConfiguration: abiConfigurationReducer,
+  brandConfiguration: brandConfigurationReducer,
   // the search id used to follow up the privative search
-  searchPrivativeRequestId: searchRequestIdReducer
+  searchPrivativeRequestId: searchPrivativeRequestIdReducer
 });
 
 export default onboardingPrivativeReducer;
