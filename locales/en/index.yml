@@ -2217,15 +2217,21 @@ bonus:
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
       ownership: Who can take advantage of discounts?
-      activationDateLabel: Activated on
-      expirationDateLabel: Expired on
-      revocationDateLabel: Revoked on
       status:
-        title: Card Status
+        title: Carta Giovani Nazionale
+        eyca: EYCA card
+        eycaNumber: Card number
         badge:
           active: Active
           revoked: Revoked
           expired: Expired
+        date:
+          activated: Activated on
+          expired: Expired on
+          revoked: Revoked on
+        expiration:
+          cgn: CGN Expiration
+          eyca: EYCA Expiration
     activation:
       loading:
         caption: "We're activating your Carta Giovani Nazionale"

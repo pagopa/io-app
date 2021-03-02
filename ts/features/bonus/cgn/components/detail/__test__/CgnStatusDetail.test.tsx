@@ -50,7 +50,7 @@ describe("CgnStatusDetail", () => {
       backgroundColor: IOColors.aqua
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      TypedI18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
@@ -74,7 +74,7 @@ describe("CgnStatusDetail", () => {
       backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      TypedI18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
@@ -85,7 +85,7 @@ describe("CgnStatusDetail", () => {
     expect(component.queryByTestId("expiration-date-label")).toBeNull();
     expect(component.queryByTestId("expiration-date-value")).toBeNull();
     expect(component.queryByTestId("revocation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.revocationDateLabel")
+      TypedI18n.t("bonus.cgn.detail.status.date.revoked")
     );
     expect(component.queryByTestId("revocation-date-value")).toHaveTextContent(
       localeDateFormat(
@@ -105,7 +105,7 @@ describe("CgnStatusDetail", () => {
       backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      TypedI18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
@@ -114,7 +114,7 @@ describe("CgnStatusDetail", () => {
       )
     );
     expect(component.queryByTestId("expiration-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.expirationDateLabel")
+      TypedI18n.t("bonus.cgn.detail.status.date.expired")
     );
     expect(component.queryByTestId("expiration-date-value")).toHaveTextContent(
       localeDateFormat(

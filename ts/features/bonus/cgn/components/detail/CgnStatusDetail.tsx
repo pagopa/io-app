@@ -74,7 +74,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
                 weight={"Regular"}
@@ -107,7 +107,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
                 weight={"Regular"}
@@ -126,7 +126,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"expiration-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.expirationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.expired")}
               </H5>,
               <H5
                 weight={"Regular"}
@@ -159,7 +159,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
                 weight={"Regular"}
@@ -178,7 +178,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"revocation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.revocationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.revoked")}
               </H5>,
               <H5
                 weight={"Regular"}

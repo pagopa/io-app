@@ -2247,15 +2247,21 @@ bonus:
         revoked: "Questa carta è stata annullata per {{reason}}"
         expired: "Questa carta è scaduta il {{date}}"
       ownership: Chi può usufruire degli sconti?
-      activationDateLabel: Attivata il
-      expirationDateLabel: Scaduta il
-      revocationDateLabel: Revocata il
       status:
-        title: Stato Carta
+        title: Carta Giovani Nazionale
+        eyca: Carta EYCA
+        eycaNumber: Numero carta
         badge:
           active: Attiva
           revoked: Annullata
           expired: Scaduta
+        date:
+          activated: Attivata il
+          expired: Scaduta il
+          revoked: Revocata il
+        expiration:
+          cgn: Scadenza CGN
+          eyca: Scadenza EYCA
     activation:
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"

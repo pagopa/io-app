@@ -26,6 +26,7 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { cgnEycaDetails } from "../store/actions/eyca/details";
+import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -78,7 +79,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             <CgnStatusDetail cgnDetail={props.cgnDetails} />
           )}
           <ItemSeparatorComponent noPadded />
-          <View spacer large />
+          <View spacer />
+          <EycaDetailComponent />
         </View>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
