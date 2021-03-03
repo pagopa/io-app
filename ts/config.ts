@@ -51,7 +51,7 @@ export const bonusVacanzeEnabled: boolean =
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "NO";
+export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const privativeEnabled: boolean = Config.PRIVATIVE_ENABLED === "YES";
 
