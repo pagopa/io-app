@@ -24,6 +24,18 @@ jest.mock("react-native-share", () => jest.fn());
 const configurationFailure = getGenericError(new Error("generic Error"));
 const abiTestId = "9876";
 const abiTestId2 = "2222";
+const abiConfigurationWithoutBankMock: CoBadgeServices = {
+  ServiceName: {
+    status: StatusEnum.enabled,
+    issuers: [{ abi: "1", name: "bankName" }]
+  }
+};
+const abiConfigurationDisabled: CoBadgeServices = {
+  ServiceName: {
+    status: StatusEnum.disabled,
+    issuers: [{ abi: abiTestId, name: "bankName" }]
+  }
+};
 const abiConfigurationUnavailable: CoBadgeServices = {
   ServiceName: {
     status: StatusEnum.unavailable,
@@ -144,7 +156,24 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
       ).toBeTruthy();
     }
   });
+  it("When receive a configuration without the selected abi, the screen should render CoBadgeStartKoDisabled", () => {
+    const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
 
+    store.dispatch(
+      loadCoBadgeAbiConfiguration.success(abiConfigurationWithoutBankMock)
+    );
+    // The user should see the disabled screen when the selected abi is not in the remote configuration
+    expect(isDisabledScreen(testComponent)).toBe(true);
+  });
+  it("When receive a configuration without an abi disabled, the screen should render CoBadgeStartKoDisabled", () => {
+    const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
+
+    store.dispatch(
+      loadCoBadgeAbiConfiguration.success(abiConfigurationDisabled)
+    );
+    // The user should see the disabled screen
+    expect(isDisabledScreen(testComponent)).toBe(true);
+  });
   it("When receive a configuration with an abi unavailable, the screen should render CoBadgeStartKoUnavailable", () => {
     const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
 
@@ -235,6 +264,9 @@ const isAllBankScreen = (component: RenderAPI) =>
 
 const isLoadingScreen = (component: RenderAPI) =>
   component.queryByTestId("LoadAbiConfiguration") !== null;
+
+const isDisabledScreen = (component: RenderAPI) =>
+  component.queryByTestId("CoBadgeStartKoDisabled") !== null;
 
 const isUnavailableScreen = (component: RenderAPI) =>
   component.queryByTestId("CoBadgeStartKoUnavailable") !== null;
