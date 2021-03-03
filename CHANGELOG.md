@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0-rc.1](https://github.com/pagopa/io-app/compare/1.23.0-rc.0...1.23.0-rc.1) (2021-03-03)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177187748](https://www.pivotaltracker.com/story/show/177187748)] Unlock the search for SIA and ICCREA (for test only) ([#2862](https://github.com/pagopa/io-app/issues/2862)) ([8f29540](https://github.com/pagopa/io-app/commit/8f29540e987513d201c52333f31c195e45b73990))
+
 ## [1.23.0-rc.0](https://github.com/pagopa/io-app/compare/1.22.0-rc.1...1.23.0-rc.0) (2021-03-03)
 
 
