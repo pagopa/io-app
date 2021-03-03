@@ -1,9 +1,10 @@
 import { createStackNavigator } from "react-navigation";
-import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
-import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
-import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
-import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  cgnEnabled,
+  privativeEnabled
+} from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
@@ -20,16 +21,20 @@ import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/
 import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
 import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboarding/cobadge/navigation/navigator";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
+import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
+import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
+import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
@@ -133,6 +138,14 @@ const bonusVacanzeConfigMap = bonusVacanzeEnabled
     }
   : {};
 
+const privativeConfigMap = privativeEnabled
+  ? {
+      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingPrivativeNavigator
+      }
+    }
+  : {};
+
 const bpdConfigMap = bpdEnabled
   ? {
       [BPD_ROUTES.MAIN]: {
@@ -150,9 +163,7 @@ const bpdConfigMap = bpdEnabled
       [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingCoBadgeNavigator
       },
-      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingPrivativeNavigator
-      }
+      ...privativeConfigMap
     }
   : {};
 

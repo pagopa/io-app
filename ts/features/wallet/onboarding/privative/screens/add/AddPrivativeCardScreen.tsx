@@ -12,10 +12,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param props
  * @constructor
  */
-const AddPrivativeCard = (_: Props): React.ReactElement => <View />;
+const AddPrivativeCardScreen = (_: Props): React.ReactElement => <View />;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddPrivativeCard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddPrivativeCardScreen);
