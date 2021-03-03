@@ -11,7 +11,7 @@ export type SearchPrivativeRequestIdState = string | null;
 /**
  * Return true if there is at least one request pending
  * @param cobadgeResponse
- * TODO: refactor with cobadge logic (only one logic, the same result)
+ * TODO: refactor with privative logic (only one logic, the same result)
  */
 const isPrivativeResponsePending = (
   cobadgeResponse: CobadgeResponse
