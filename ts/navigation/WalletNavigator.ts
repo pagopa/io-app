@@ -1,4 +1,6 @@
 import { createStackNavigator } from "react-navigation";
+import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
+import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
 import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
@@ -147,6 +149,9 @@ const bpdConfigMap = bpdEnabled
       },
       [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingCoBadgeNavigator
+      },
+      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingPrivativeNavigator
       }
     }
   : {};
