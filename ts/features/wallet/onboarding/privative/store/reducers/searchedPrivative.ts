@@ -8,6 +8,7 @@ import {
   walletAddPrivativeStart
 } from "../actions";
 
+// TODO
 export type BrandId = string & IUnitTag<"PrivativeService">;
 
 export type SearchedPrivativeData = {
