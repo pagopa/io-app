@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0-rc.0](https://github.com/pagopa/io-app/compare/1.22.0-rc.1...1.23.0-rc.0) (2021-03-03)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177141889](https://www.pivotaltracker.com/story/show/177141889)] Added Privative cards actions, store & reducers ([#2860](https://github.com/pagopa/io-app/issues/2860)) ([d9fac56](https://github.com/pagopa/io-app/commit/d9fac567496702fae8c757c3525b97e24e322e47))
+* **Carta Giovani Nazionale:** [[#176870737](https://www.pivotaltracker.com/story/show/176870737)] Implements CGN Activation Workflow by using the specific GET Status API for polling  ([#2812](https://github.com/pagopa/io-app/issues/2812)) ([406cb03](https://github.com/pagopa/io-app/commit/406cb0357f91341879a3b45252f34711d5bde14c)), closes [#176443044](https://www.pivotaltracker.com/story/show/176443044) [#176443044](https://www.pivotaltracker.com/story/show/176443044) [#176443044](https://www.pivotaltracker.com/story/show/176443044) [#176443163](https://www.pivotaltracker.com/story/show/176443163) [#176443163](https://www.pivotaltracker.com/story/show/176443163) [#176443163](https://www.pivotaltracker.com/story/show/176443163) [#176443163](https://www.pivotaltracker.com/story/show/176443163) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443367](https://www.pivotaltracker.com/story/show/176443367) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176443215](https://www.pivotaltracker.com/story/show/176443215) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176715047](https://www.pivotaltracker.com/story/show/176715047) [#176715047](https://www.pivotaltracker.com/story/show/176715047)
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#176842973](https://www.pivotaltracker.com/story/show/176842973)] Add tests for the CoBadge components ([#2826](https://github.com/pagopa/io-app/issues/2826)) ([0860f77](https://github.com/pagopa/io-app/commit/0860f77fc2d824a0405ba9424129a755f212df6f))
+* **Bonus Pagamenti Digitali:** [[#177140858](https://www.pivotaltracker.com/story/show/177140858)] Add privative feature flag ([#2859](https://github.com/pagopa/io-app/issues/2859)) ([e9f08e3](https://github.com/pagopa/io-app/commit/e9f08e36a4d653972ecf17af6326675d09a2fa44))
+* drop react-native-qrcode-scanner patch ([#2735](https://github.com/pagopa/io-app/issues/2735)) ([8b59304](https://github.com/pagopa/io-app/commit/8b5930436c14d2435f2da375d84fbb11e05ef3ec))
+* **deps:** bump aiohttp from 3.6.2 to 3.7.4 in /scripts/check_urls ([#2850](https://github.com/pagopa/io-app/issues/2850)) ([39c5798](https://github.com/pagopa/io-app/commit/39c5798737c5188a7a4de2b240f0e1d94beeac9a))
+
 ## [1.22.0-rc.1](https://github.com/pagopa/io-app/compare/1.22.0-rc.0...1.22.0-rc.1) (2021-02-25)
 
 
