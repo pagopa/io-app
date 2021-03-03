@@ -18,7 +18,7 @@ import searchPrivativeRequestIdReducer, {
 export type OnboardingPrivativeState = {
   foundPrivative: RemotePrivative;
   addingPrivative: AddingPrivativeState;
-  addedPrivative: ReadonlyArray<RawCreditCardPaymentMethod>;
+  addedPrivative: RawCreditCardPaymentMethod | null;
   searchedPrivative: SearchedPrivativeData;
   brandConfiguration: BrandConfigurationState;
   searchPrivativeRequestId: SearchPrivativeRequestIdState;
