@@ -2241,6 +2241,7 @@ bonus:
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
+          pending: Scopri di più su EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2252,7 +2253,10 @@ bonus:
       status:
         title: Carta Giovani Nazionale
         eyca: Carta EYCA
+        eycaCircuit: Circuito EYCA
         eycaNumber: Numero carta
+        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
+        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         badge:
           active: Attiva
           revoked: Annullata
