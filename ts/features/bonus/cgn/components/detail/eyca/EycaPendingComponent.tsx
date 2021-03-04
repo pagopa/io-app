@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import IconFont from "../../../../../../components/ui/IconFont";
@@ -9,6 +8,7 @@ import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { openWebUrl } from "../../../../../../utils/url";
 
 const styles = StyleSheet.create({
   rowBlock: {
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 });
 
 const ICON_SIZE = 24;
+const EYCA_URL = "https://www.eyca.org";
 
 const EycaStatusDetailsComponent: React.FunctionComponent = () => (
   <>
@@ -37,7 +38,7 @@ const EycaStatusDetailsComponent: React.FunctionComponent = () => (
     <ButtonDefaultOpacity
       bordered
       style={{ width: "100%" }}
-      onPress={constNull}
+      onPress={() => openWebUrl(EYCA_URL)}
     >
       <Label color={"blue"}>
         {I18n.t("bonus.cgn.detail.cta.eyca.pending")}
