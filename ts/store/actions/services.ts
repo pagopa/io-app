@@ -40,7 +40,7 @@ type ServiceLoadFailurePayload = {
   service_id: string;
 };
 
-// a specific action used when a requested services is not found
+// a specific action used when a requested service is not found
 export const loadServiceDetailNotFound = createStandardAction(
   "LOAD_SERVICE_DETAIL_NOT_FOUND"
 )<ServiceId>();
