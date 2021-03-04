@@ -21,6 +21,7 @@ const EycaInformationComponent: React.FunctionComponent = () => (
         style={{ width: "100%" }}
         bordered
         onPress={() => openWebUrl(EYCA_DISCOUNTS_URL)}
+        onPressWithGestureHandler
       >
         <Label color={"blue"}>
           {I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
