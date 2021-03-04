@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CGNMerchant, cgnMerchants } from "../actions/merchants";
 
 export type CgnMerchantsState = {
+  // FIXME remove this temp type when the real one is defined
   list: pot.Pot<ReadonlyArray<CGNMerchant>, NetworkError>;
 };
 
