@@ -6,6 +6,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { BackendClient } from "../../api/backend";
 import {
   loadServiceDetail,
+  loadServiceDetailNotFound,
   loadServicesDetail
 } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
@@ -14,6 +15,7 @@ import { handleServiceReadabilitySaga } from "../services/handleServiceReadabili
 import { totServiceFetchWorkers } from "../../config";
 import { applicationChangeState } from "../../store/actions/application";
 import { mixpanelTrack } from "../../mixpanel";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 /**
  * A generator to load the service details from the Backend
@@ -43,6 +45,9 @@ export function* loadServiceDetailRequestHandler(
       // Update, if needed, the name of the organization that provides the service
       yield call(handleOrganizationNameUpdateSaga, response.value.value);
     } else {
+      if (response.value.status === 404) {
+        yield put(loadServiceDetailNotFound(action.payload as ServiceId));
+      }
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
