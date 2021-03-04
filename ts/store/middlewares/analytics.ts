@@ -136,6 +136,7 @@ import {
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -434,8 +435,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
-    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
     case getType(deleteUserDataProcessing.failure):
