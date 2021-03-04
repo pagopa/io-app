@@ -11,13 +11,22 @@ import { GlobalState } from "../types";
 
 export type InstabugUnreadMessagesState = Readonly<{
   unreadMessages: number;
-  bugReportingType: BugReporting.reportType;
+  lastOpenReportType?: string;
 }>;
 
 const INITIAL_STATE: InstabugUnreadMessagesState = {
   unreadMessages: 0,
-  bugReportingType: BugReporting.reportType.question
+  lastOpenReportType: undefined
 };
+
+const reportTypeMapping: Map<BugReporting.reportType, string> = new Map<
+  BugReporting.reportType,
+  string
+>([
+  [BugReporting.reportType.question, "question"],
+  [BugReporting.reportType.bug, "bug"],
+  [BugReporting.reportType.feedback, "feedback"]
+]);
 
 const reducer = (
   state: InstabugUnreadMessagesState = INITIAL_STATE,
@@ -32,7 +41,7 @@ const reducer = (
     case getType(instabugReportOpened):
       return {
         ...state,
-        bugReportingType: action.payload.type
+        lastOpenReportType: reportTypeMapping.get(action.payload.type)
       };
   }
   return state;
@@ -44,5 +53,6 @@ export default reducer;
 export const instabugMessageStateSelector = (state: GlobalState) =>
   state.instabug.unreadMessages;
 
-export const instabugReportingTypeSelector = (state: GlobalState) =>
-  state.instabug.bugReportingType;
+export const instabugLastOpenReportTypeSelector = (
+  state: GlobalState
+): string | undefined => state.instabug.lastOpenReportType;

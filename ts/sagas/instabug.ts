@@ -12,7 +12,7 @@ import {
   instabugUnreadMessagesLoaded,
   updateInstabugUnreadMessages
 } from "../store/actions/instabug";
-import { instabugReportingTypeSelector } from "../store/reducers/instabug/instabugUnreadMessages";
+import { instabugLastOpenReportTypeSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 
 const loadInstabugUnreadMessages = () =>
   new Promise<number>(resolve => {
@@ -38,15 +38,18 @@ function* watchIBSDKdismiss() {
     });
   while (true) {
     const ibHowDismissed = yield call(onDismissPromise);
-    const type = yield select(instabugReportingTypeSelector);
-    yield put(instabugReportClosed({ type, how: ibHowDismissed }));
+    const type: ReturnType<typeof instabugLastOpenReportTypeSelector> = yield select(
+      instabugLastOpenReportTypeSelector
+    );
+    if (type) {
+      yield put(instabugReportClosed({ type, how: ibHowDismissed }));
+    }
     yield put(updateInstabugUnreadMessages());
   }
 }
 
 function* watchInstabugSaga() {
   yield call(updateInstabugBadgeSaga);
-
   yield fork(watchIBSDKdismiss);
 
   while (true) {

@@ -70,7 +70,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
   }
 
   private handleIBChatPress = () => {
-    this.props.openQuestionReport();
+    this.props.dispatchOpenReportQuestion();
     openInstabugReplies();
   };
 
@@ -122,7 +122,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openQuestionReport: () =>
+  dispatchOpenReportQuestion: () =>
     dispatch(instabugReportOpened({ type: BugReporting.reportType.question }))
 });
 

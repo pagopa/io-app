@@ -160,6 +160,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
         return;
       }
     }
+    props.dispatchOpenReportType(BugReporting.reportType.question);
     props.onRequestAssistance(reportType, props.supportToken);
   };
 
@@ -170,14 +171,9 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
    */
   const handleContinue = (options: SupportRequestOptions) => {
-    const { openBugReport } = props;
-
-    // See comment below to know why this is not
-    // called "openQuestionReport"
-    openBugReport();
-
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
+      props.dispatchOpenReportType(st);
       props.onRequestAssistance(
         st,
         options.sendPersonalInfo ? props.supportToken : remoteUndefined,
@@ -236,10 +232,8 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
   loadSupportToken: () => dispatch(loadSupportToken.request()),
-  // Before this, user will be prompted to select the "question type" by
-  // IB SDK. But the question eventually leads to reporting a bug.
-  openBugReport: () =>
-    dispatch(instabugReportOpened({ type: BugReporting.reportType.bug }))
+  dispatchOpenReportType: (type: BugReporting.reportType) =>
+    dispatch(instabugReportOpened({ type }))
 });
 
 export default connect(
