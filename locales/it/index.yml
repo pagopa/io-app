@@ -2239,6 +2239,8 @@ bonus:
       cta:
         buyers: Vedi esercenti
         otp: Genera codice
+        eyca:
+          copy: Copia numero carta EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:

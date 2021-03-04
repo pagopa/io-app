@@ -12,6 +12,9 @@ import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardEx
 import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { localeDateFormat } from "../../../../../../utils/locale";
+import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../../../components/core/typography/Label";
+import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -113,6 +116,16 @@ const EycaStatusDetailsComponent: React.FunctionComponent<Props> = (
           )}
         </H5>
       </View>
+      <View spacer />
+      <ButtonDefaultOpacity
+        bordered
+        style={{ width: "100%" }}
+        onPress={() =>
+          clipboardSetStringWithFeedback(props.eycaCard.card_number)
+        }
+      >
+        <Label color={"blue"}>{I18n.t("bonus.cgn.detail.cta.eyca.copy")}</Label>
+      </ButtonDefaultOpacity>
     </>
   );
 };

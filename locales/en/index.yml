@@ -2209,6 +2209,8 @@ bonus:
       cta:
         buyers: See merchants
         otp: Generate code
+        eyca:
+          copy: Copy EYCA's card number
       tos:
         link: Information on the processing of personal data
       information:
