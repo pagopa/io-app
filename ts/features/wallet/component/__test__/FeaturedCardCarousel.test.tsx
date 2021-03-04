@@ -15,7 +15,7 @@ import {
   ID_CGN_TYPE
 } from "../../../bonus/bonusVacanze/utils/bonus";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
-import * as cgnActivationSelectors from "../../../bonus/cgn/store/reducers/activation";
+import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
 
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {
@@ -256,7 +256,7 @@ describe("FeaturedCardCarousel", () => {
           ])
       );
     jest
-      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => false);
 
     const mockStore = configureMockStore<GlobalState>();
@@ -306,7 +306,7 @@ describe("FeaturedCardCarousel", () => {
           ])
       );
     jest
-      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => true);
 
     const mockStore = configureMockStore<GlobalState>();
@@ -356,7 +356,7 @@ describe("FeaturedCardCarousel", () => {
           ])
       );
     jest
-      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => undefined);
 
     const mockStore = configureMockStore<GlobalState>();
@@ -403,7 +403,7 @@ describe("FeaturedCardCarousel", () => {
           ])
       );
     jest
-      .spyOn(cgnActivationSelectors, "isCGNBonusActiveSelector")
+      .spyOn(cgnDetailSelectors, "isCgnEnrolledSelector")
       .mockImplementation(() => false);
 
     const mockStore = configureMockStore<GlobalState>();
