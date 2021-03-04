@@ -51,11 +51,6 @@ const CobadgePayloadRight = (p: {
     m => m.executionStatus === ExecutionStatusEnum.PENDING
   );
 
-  // with a pending request we show the timeout screen and the user will retry with the response token
-  if (anyPendingRequest) {
-    return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
-  }
-
   const anyServiceError = payload.searchRequestMetadata.some(
     m => m.executionStatus === ExecutionStatusEnum.KO
   );
@@ -63,6 +58,11 @@ const CobadgePayloadRight = (p: {
   // not all the services replied with success
   if (anyServiceError) {
     return <CoBadgeKoServiceError contextualHelp={emptyContextualHelp} />;
+  }
+
+  // with a pending request we show the timeout screen and the user will retry with the response token
+  if (anyPendingRequest) {
+    return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
 
   const noCoBadgeFound = payload.paymentInstruments.length === 0;
@@ -102,11 +102,7 @@ const SearchAvailableCoBadgeScreen = (
   if (isError(coBadgeFound) && isTimeoutError(coBadgeFound.error)) {
     return <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
-  // if (isLoading(coBadgeFound) || isError(coBadgeFound)) {
-  //   return <LoadCoBadgeSearch />;
-  // }
-
-  return <LoadCoBadgeSearch />;
+  return <LoadCoBadgeSearch testID={"LoadCoBadgeSearch"} />;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

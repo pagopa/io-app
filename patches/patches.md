@@ -1,12 +1,5 @@
 This file describes the reason for the patches applied.
 
-### react-native-qrcode-scanner+1.4.1
-Created on **19/05/2020**
-
-#### Reason:
-- Integrate https://github.com/moaazsidat/react-native-qrcode-scanner/pull/280, waiting for the official release.
-
-
 ### @types/react-native+0.63.2
 Created on **29/07/2020**
 

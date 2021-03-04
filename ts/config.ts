@@ -7,7 +7,7 @@ import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL = "https://assets.cdn.io.italia.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -53,6 +53,8 @@ export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
 export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
+export const privativeEnabled: boolean = Config.PRIVATIVE_ENABLED === "YES";
+
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
 export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
@@ -63,8 +65,6 @@ export const isPlaygroundsEnabled: boolean =
 
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
-
-export const cobadgeEnabled: boolean = Config.COBADGE_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;

@@ -1,7 +1,13 @@
 // bonus reducer
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
-import { cgnActivationStatus } from "../actions/activation";
+import {
+  cgnActivationStatus,
+  cgnRequestActivation
+} from "../actions/activation";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
   "UNDEFINED" = "UNDEFINED",
@@ -10,23 +16,26 @@ export enum CgnActivationProgressEnum {
   "PENDING" = "PENDING", // Polling time exceeded
   "ERROR" = "ERROR", // There's an error
   "EXISTS" = "EXISTS", // Another bonus related to this user was found
+  "INELIGIBLE" = "INELIGIBLE", // Another bonus related to this user was found
   "SUCCESS" = "SUCCESS" // Activation has been completed
 }
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: any; // FIXME Replace when API spec is correctly linked and defined
+  value?: CgnActivationDetail;
 };
 
 const INITIAL_STATE: ActivationState = {
   status: CgnActivationProgressEnum.UNDEFINED
 };
+
 const reducer = (
   state: ActivationState = INITIAL_STATE,
   action: Action
 ): ActivationState => {
   switch (action.type) {
     // bonus activation
+    case getType(cgnRequestActivation.request):
     case getType(cgnActivationStatus.request):
       return {
         ...state,
@@ -46,5 +55,18 @@ const reducer = (
   }
   return state;
 };
+
+// Selectors
+export const activationSelector = (state: GlobalState): ActivationState =>
+  state.bonus.cgn.activation;
+
+export const isCgnActivationLoading = createSelector<
+  GlobalState,
+  ActivationState,
+  boolean
+>(
+  activationSelector,
+  activation => activation.status !== CgnActivationProgressEnum.ERROR
+);
 
 export default reducer;

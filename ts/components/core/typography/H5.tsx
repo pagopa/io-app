@@ -14,7 +14,7 @@ type AllowedSemiBoldColors = Extract<
 // when the weight is bold, only the white color is allowed
 type AllowedRegularColors = Extract<
   IOColorType,
-  "bluegreyDark" | "bluegrey" | "blue" | "white"
+  "bluegreyDark" | "bluegrey" | "blue" | "white" | "red"
 >;
 
 // all the possible colors

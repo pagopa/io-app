@@ -22,6 +22,9 @@ import {
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
+import IconFont from "../ui/IconFont";
+import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
@@ -55,6 +58,15 @@ const styles = StyleSheet.create({
   },
   center: {
     justifyContent: "center"
+  },
+  padded: {
+    paddingHorizontal: variables.contentPadding
+  },
+  messagePaidBg: {
+    padding: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: IOColors.aqua
   }
 });
 
@@ -188,6 +200,15 @@ const calculatePaymentStatus = (
   }
 };
 
+const getNoticePaid = () => (
+  <View style={styles.messagePaidBg}>
+    <IconFont name="io-complete" color={IOColors.bluegreyDark} />
+    <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
+      {I18n.t("wallet.errors.PAYMENT_DUPLICATED")}
+    </Text>
+  </View>
+);
+
 /**
  * A component to show detailed info about the due date of a message
  */
@@ -201,15 +222,12 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
    */
 
   const paymentStatus = calculatePaymentStatus(payment, message);
+  if (paymentStatus === "paid") {
+    return getNoticePaid();
+  }
   return fromNullable(message.content.due_date).fold(null, dueDate => (
     <>
-      <View
-        style={[
-          styles.container,
-          bannerStyle(paymentStatus),
-          paymentStatus === "paid" ? styles.center : undefined
-        ]}
-      >
+      <View style={[styles.container, bannerStyle(paymentStatus)]}>
         <>
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />

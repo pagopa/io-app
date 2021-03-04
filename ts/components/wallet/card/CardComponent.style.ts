@@ -16,8 +16,8 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
-    elevation: Platform.OS === "android" ? -2 : 25,
-    zIndex: Platform.OS === "android" ? -2 : 25
+    elevation: Platform.OS === "android" ? 5 : 25,
+    zIndex: Platform.OS === "android" ? 5 : 25
   },
   card: {
     // iOS and Android card shadow

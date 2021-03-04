@@ -62,6 +62,7 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
   <ListItem
     onPress={cardPathItem.item.onPress}
     first={cardPathItem.index === 0}
+    testID={`${cardPathItem.item.path}Item`}
   >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
@@ -124,7 +125,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("wallet.onboarding.coBadge.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
         <Content style={IOStyles.flex}>
           <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
           <View spacer={true} />
@@ -162,7 +163,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   addCoBadge: (abi: string | undefined) => dispatch(walletAddCoBadgeStart(abi)),
   addCreditCard: (popScreenNumber: number = 0) => {
     navigateBack(popScreenNumber, dispatch);
-
     dispatch(
       navigateToWalletAddCreditCard({
         inPayment: none

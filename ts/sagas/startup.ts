@@ -317,7 +317,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (cgnEnabled) {
     // Start watching for actions about bonus bpd
-    yield fork(watchBonusCgnSaga);
+    yield fork(watchBonusCgnSaga, sessionToken);
   }
 
   // Load the user metadata

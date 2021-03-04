@@ -1,28 +1,31 @@
-import { useEffect } from "react";
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import DarkLayout from "../../../../../components/screens/DarkLayout";
-import I18n from "../../../../../i18n";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { showToast } from "../../../../../utils/showToast";
-import { isError, isLoading, isReady } from "../../model/RemoteValue";
-import { bpdAllData } from "../../store/actions/details";
-import { bpdUnsubscribeCompleted } from "../../store/actions/onboarding";
-import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
-import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
-import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
-import { navigateToBpdTransactions } from "../../navigation/actions";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
-import { navigateBack } from "../../../../../store/actions/navigation";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import I18n from "../../../../../i18n";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
+import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
+import { isError, isLoading, isReady } from "../../model/RemoteValue";
+import { navigateToBpdTransactions } from "../../navigation/actions";
+import { bpdAllData } from "../../store/actions/details";
+import {
+  bpdUnsubscribeCompleted,
+  bpdUnsubscribeFailure
+} from "../../store/actions/onboarding";
+import { bpdUnsubscriptionSelector } from "../../store/reducers/details/activation";
+import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
+import { bpdTransactionsForSelectedPeriod } from "../../store/reducers/details/transactions";
 import BpdPeriodSelector from "./BpdPeriodSelector";
 import BpdPeriodDetail from "./periods/BpdPeriodDetail";
 import GoToTransactions from "./transaction/GoToTransactions";
@@ -58,9 +61,10 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   useEffect(() => {
     if (isError(props.unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.failure"), "danger");
+      props.completeUnsubscriptionFailure();
     } else if (isReady(props.unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.success"), "success");
-      props.completeUnsubscription();
+      props.completeUnsubscriptionSuccess();
     }
   }, [props.unsubscription]);
 
@@ -121,14 +125,14 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  load: () => dispatch(bpdAllData.request()),
-  completeUnsubscription: () => {
+  completeUnsubscriptionSuccess: () => {
     dispatch(bpdAllData.request());
     dispatch(bpdUnsubscribeCompleted());
     dispatch(NavigationActions.back());
   },
   goToTransactions: () => dispatch(navigateToBpdTransactions()),
-  goBack: () => dispatch(navigateBack())
+  goBack: () => dispatch(navigateBack()),
+  completeUnsubscriptionFailure: () => dispatch(bpdUnsubscribeFailure())
 });
 
 const mapStateToProps = (state: GlobalState) => ({

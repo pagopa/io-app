@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
@@ -33,7 +32,8 @@ import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
-  availableBonusTypesSelector,
+  isAvailableBonusNoneErrorSelector,
+  isAvailableBonusLoadingSelector,
   visibleAvailableBonusSelector
 } from "../store/reducers/availableBonusesTypes";
 import {
@@ -189,16 +189,12 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonusTypesSelector(state);
-  return {
-    // fallback to hardcode data if pot is none
-    availableBonusesList: visibleAvailableBonusSelector(state),
-    isLoading: pot.isLoading(potAvailableBonuses),
-    // show error only when we have an error and no data to show
-    isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  availableBonusesList: visibleAvailableBonusSelector(state),
+  isLoading: isAvailableBonusLoadingSelector(state),
+  // show error only when we have an error and no data to show
+  isError: isAvailableBonusNoneErrorSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
