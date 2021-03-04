@@ -199,7 +199,7 @@ type OwnProps = {
    * The code will be inserted in the html body between
    * <script> and </script> tags.
    */
-  avoidTextSelection?: boolean;
+  avoidTextSelection?: true;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
   letUserZoom?: boolean;
