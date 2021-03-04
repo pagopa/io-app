@@ -1,5 +1,6 @@
 This file describes the reason for the patches applied.
 
+
 ### @types/react-native+0.63.2
 Created on **29/07/2020**
 
@@ -8,10 +9,10 @@ Created on **29/07/2020**
 
 
 ### react-native-mixpanel+1.2.0
-Created on **20/03/2020**
 
 #### Reason:
-- Change the endpoint to european server.
+- **20/03/2020** Change the endpoint to european server.
+- **04/03/2021** Improve track function type definition.
 
 
 ### react-native-safe-area-view+0.12.0
