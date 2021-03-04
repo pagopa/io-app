@@ -93,11 +93,13 @@ import {
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
+  paymentExecuteStart,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -105,6 +107,7 @@ import {
   fetchTransactionsSuccess
 } from "../actions/wallet/transactions";
 import {
+  addCreditCardWebViewEnd,
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
@@ -116,8 +119,8 @@ import {
   deleteWalletRequest,
   deleteWalletSuccess,
   payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
+  refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -126,11 +129,16 @@ import {
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../actions/wallet/outcomeCode";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -192,6 +200,19 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
+      });
+    //
+    // end pay webview Payment (payment + onboarding credit card) actions (with properties)
+    //
+    case getType(addCreditCardWebViewEnd):
+    case getType(paymentWebViewEnd):
+      return mp.track(action.type, {
+        exitType: action.payload
+      });
+    case getType(addCreditCardOutcomeCode):
+    case getType(paymentOutcomeCode):
+      return mp.track(action.type, {
+        outCome: action.payload.getOrElse("")
       });
     //
     // Payment actions (with properties)
@@ -290,12 +311,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
     case getType(payCreditCardVerificationFailure):
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
     case getType(paymentFetchPspsForPaymentId.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
+    case getType(paymentExecuteStart.failure):
     case getType(updateNotificationInstallationFailure):
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
@@ -361,7 +384,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationRequest):
     case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
@@ -370,6 +392,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
     case getType(fetchTransactionsRequest):
+    case getType(refreshPMTokenWhileAddCreditCard.request):
+    case getType(refreshPMTokenWhileAddCreditCard.success):
     // payment
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
@@ -379,13 +403,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
-
+    case getType(paymentExecuteStart.request):
+    case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
-
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
@@ -415,8 +439,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
-    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
     case getType(deleteUserDataProcessing.failure):

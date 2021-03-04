@@ -25,6 +25,10 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { Locales } from "../../../../locales/locales";
 import { PaymentManagerToken } from "../../../types/pagopa";
+import {
+  addCreditCardWebViewEnd,
+  refreshPMTokenWhileAddCreditCard
+} from "../../actions/wallet/wallets";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -250,8 +254,7 @@ const reducer = (
         allPsps: pot.noneError(action.payload)
       };
 
-    //
-    // start payment
+    // start payment or refresh token while add credit card
     //
     case getType(paymentExecuteStart.request):
       return {
@@ -259,11 +262,18 @@ const reducer = (
         paymentStartPayload: action.payload,
         pmSessionToken: remoteLoading
       };
+    case getType(refreshPMTokenWhileAddCreditCard.request):
+      return {
+        ...state,
+        pmSessionToken: remoteLoading
+      };
+    case getType(refreshPMTokenWhileAddCreditCard.success):
     case getType(paymentExecuteStart.success):
       return {
         ...state,
         pmSessionToken: remoteReady(action.payload)
       };
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(paymentExecuteStart.failure):
       return {
         ...state,
@@ -275,6 +285,12 @@ const reducer = (
       return {
         ...state,
         paymentStartPayload: PAYMENT_INITIAL_STATE.paymentStartPayload,
+        pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
+      };
+    // end add credit card web view - reset pm session token data
+    case getType(addCreditCardWebViewEnd):
+      return {
+        ...state,
         pmSessionToken: PAYMENT_INITIAL_STATE.pmSessionToken
       };
   }

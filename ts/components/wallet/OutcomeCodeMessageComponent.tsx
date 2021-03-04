@@ -15,7 +15,7 @@ import { getFullLocale } from "../../utils/locale";
 type OwnProp = {
   outcomeCode: OutcomeCode;
   successComponent: React.FC;
-  successFooter: React.FC;
+  successFooter?: React.FC;
   onClose: () => void;
 };
 type Props = OwnProp;
@@ -57,7 +57,7 @@ const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
         {props.outcomeCode.status === "success" ? (
           <>
             <props.successComponent />
-            <props.successFooter />
+            {props.successFooter && <props.successFooter />}
           </>
         ) : (
           <>

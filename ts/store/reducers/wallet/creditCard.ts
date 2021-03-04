@@ -136,7 +136,6 @@ const reducer = (
         ...attempt,
         verificationTransaction: action.payload
       }));
-
     case getType(payCreditCardVerificationFailure):
       return updateStateHead(state, attempt => ({
         ...attempt,
