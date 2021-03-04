@@ -29,9 +29,14 @@ const onNewReplyReceived = () =>
     });
   });
 
+/**
+ * listen about Instabug report dismiss event and dispatch an event with report type and how it was closed
+ */
 function* watchIBSDKdismiss() {
   const onDismissPromise = () =>
     new Promise<dismissType>(resolve => {
+      // we don't use the parameter type since this handler has a bug: it reports always report type 'bug'
+      // event when the user close 'question'
       BugReporting.onSDKDismissedHandler((how: dismissType): void =>
         resolve(how)
       );
