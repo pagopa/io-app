@@ -3,10 +3,10 @@ import { getType } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { cgnMerchants } from "../actions/merchants";
+import { CGNMerchant, cgnMerchants } from "../actions/merchants";
 
 export type CgnMerchantsState = {
-  list: pot.Pot<ReadonlyArray<any>, NetworkError>;
+  list: pot.Pot<ReadonlyArray<CGNMerchant>, NetworkError>;
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
