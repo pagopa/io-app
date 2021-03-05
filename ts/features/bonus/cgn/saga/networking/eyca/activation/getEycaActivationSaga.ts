@@ -24,6 +24,9 @@ const statusProgressRecord: Record<403 | 409, CgnEycaActivationProgressEnum> = {
 };
 
 export type EycaStatusPollingSaga = ReturnType<typeof handleEycaStatusPolling>;
+export type RequestEycaActivationSaga = ReturnType<
+  typeof requestEycaActivationSaga
+>;
 
 /**
  * Function that handles the activation of a EYCA Card
@@ -36,7 +39,7 @@ export type EycaStatusPollingSaga = ReturnType<typeof handleEycaStatusPolling>;
  * @param startEycaActivation backend client for CGN Activation API
  * @param handleEycaStatusPolling saga that handles the polling result of a EYCA Activation
  */
-export const eycaActivationSaga = (
+export const requestEycaActivationSaga = (
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"],
   handleEycaStatusPolling: EycaStatusPollingSaga
 ) =>

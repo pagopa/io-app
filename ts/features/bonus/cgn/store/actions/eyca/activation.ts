@@ -19,6 +19,13 @@ export const cgnEycaActivationRequest = createStandardAction(
 )<void>();
 
 /**
+ * Cancel the activation workflow
+ */
+export const cgnEycaActivationCancel = createStandardAction(
+  "CGN_EYCA_ACTIVATION_CANCEL"
+)<void>();
+
+/**
  * Action to handle EYCA Activation Status
  */
 export const cgnEycaActivationStatus = createAsyncAction(
@@ -29,4 +36,5 @@ export const cgnEycaActivationStatus = createAsyncAction(
 
 export type CgnEycaActivationActions =
   | ActionType<typeof cgnEycaActivationRequest>
+  | ActionType<typeof cgnEycaActivationCancel>
   | ActionType<typeof cgnEycaActivationStatus>;

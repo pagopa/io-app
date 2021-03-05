@@ -61,7 +61,7 @@ export const eycaActivationSelector = (
   state: GlobalState
 ): EycaActivationState => state.bonus.cgn.eyca.activation;
 
-export const isCgnActivationLoading = createSelector<
+export const isEycaActivationLoading = createSelector<
   GlobalState,
   EycaActivationState,
   boolean
