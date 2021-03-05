@@ -8,5 +8,5 @@ export type CgnActions =
   | CgnActivationActions
   | CgnDetailsActions
   | CgnEycaActivationActions
-  | CgnEycaDetailsActions;
+  | CgnEycaDetailsActions
   | CgnMerchantsAction;
