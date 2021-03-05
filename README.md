@@ -506,7 +506,7 @@ In order to access the Github registry a Github token is needed:
 Now you can install the libraries used by the project:
 
 ```
-$ bundle install 
+$ bundle install
 $ yarn install
 $ cd ios        # skip on linux
 $ pod install   # skip on linux
