@@ -53,6 +53,8 @@ export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
 export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
+export const privativeEnabled: boolean = Config.PRIVATIVE_ENABLED === "YES";
+
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
 export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;

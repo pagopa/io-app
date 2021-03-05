@@ -900,6 +900,10 @@ $ detox test
 
 ### Troubleshooting
 
+### Bundler install error
+
+If you get an error like this `Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException)` after launching `bundle install` you can fix it launching this `gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)`
+
 #### iOS build warning
 
 If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
