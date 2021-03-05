@@ -26,6 +26,7 @@ import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { ProductTypeEnum } from "../../definitions/pagopa/walletv2/CreditCard";
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
@@ -223,6 +224,10 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
 
+export type PrivativePaymentMethod = CreditCardPaymentMethod & {
+  cardLogo?: ImageSourcePropType;
+};
+
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
@@ -233,7 +238,8 @@ export type PaymentMethod =
   | BancomatPaymentMethod
   | CreditCardPaymentMethod
   | BPayPaymentMethod
-  | SatispayPaymentMethod;
+  | SatispayPaymentMethod
+  | PrivativePaymentMethod;
 
 // payment methods type guards
 export const isBancomat = (
@@ -254,6 +260,14 @@ export const isCreditCard = (
 export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
+
+export const isPrivativeCard = (
+  pm: PaymentMethod | RawPaymentMethod | undefined
+): pm is PrivativePaymentMethod =>
+  pm === undefined
+    ? false
+    : pm.kind === "CreditCard" &&
+      pm.info.productType === ProductTypeEnum.PRIVATIVE;
 
 /**
  * A refined Wallet
