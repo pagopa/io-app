@@ -5,7 +5,7 @@ import { ContentClient } from "../../../../../../api/content";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
 import { loadCoBadgeAbiConfiguration } from "../../../cobadge/store/actions";
-import { loadPrivativeBrandConfiguration } from "../../store/actions";
+import { loadPrivativeIssuers } from "../../store/actions";
 
 /**
  * Load CoBadge configuration
@@ -14,7 +14,7 @@ export function* handleLoadPrivativeConfiguration(
   getPrivativeServices: ReturnType<
     typeof ContentClient
   >["getPrivativeServices"],
-  _: ActionType<typeof loadPrivativeBrandConfiguration.request>
+  _: ActionType<typeof loadPrivativeIssuers.request>
 ) {
   try {
     const getPrivativeServicesResult: SagaCallReturnType<typeof getPrivativeServices> = yield call(
@@ -23,9 +23,7 @@ export function* handleLoadPrivativeConfiguration(
     if (getPrivativeServicesResult.isRight()) {
       if (getPrivativeServicesResult.value.status === 200) {
         yield put(
-          loadPrivativeBrandConfiguration.success(
-            getPrivativeServicesResult.value.value
-          )
+          loadPrivativeIssuers.success(getPrivativeServicesResult.value.value)
         );
       } else {
         throw new Error(

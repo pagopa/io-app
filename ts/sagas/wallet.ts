@@ -74,7 +74,7 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
-import { loadPrivativeBrandConfiguration } from "../features/wallet/onboarding/privative/store/actions";
+import { loadPrivativeIssuers } from "../features/wallet/onboarding/privative/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -862,7 +862,7 @@ export function* watchWalletSaga(
 
     if (privativeEnabled) {
       yield takeLatest(
-        loadPrivativeBrandConfiguration.request,
+        loadPrivativeIssuers.request,
         handleLoadPrivativeConfiguration,
         contentClient.getPrivativeServices
       );

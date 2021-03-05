@@ -31,12 +31,12 @@ export const addPrivativeToWallet = createAsyncAction(
 )<PaymentInstrument, RawCreditCardPaymentMethod, NetworkError>();
 
 /**
- * Load the brand configuration for the privative services (the list of brand supported and the operational state)
+ * Load the privative issuers configuration (the list of issuer that can issue a privative card )
  */
-export const loadPrivativeBrandConfiguration = createAsyncAction(
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_BRAND_CONFIG_REQUEST",
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_BRAND_CONFIG_SUCCESS",
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_BRAND_CONFIG_FAILURE"
+export const loadPrivativeIssuers = createAsyncAction(
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUER_REQUEST",
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUER_SUCCESS",
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUER_FAILURE"
 )<void, PrivativeServices, NetworkError>();
 
 /**
@@ -78,7 +78,7 @@ export const walletAddPrivativeBack = createStandardAction(
 export type PrivativeActions =
   | ActionType<typeof searchUserPrivative>
   | ActionType<typeof addPrivativeToWallet>
-  | ActionType<typeof loadPrivativeBrandConfiguration>
+  | ActionType<typeof loadPrivativeIssuers>
   | ActionType<typeof walletAddPrivativeChooseBrand>
   | ActionType<typeof walletAddPrivativeStart>
   | ActionType<typeof walletAddPrivativeCompleted>
