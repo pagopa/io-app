@@ -18,11 +18,13 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
+  isPrivativeCard,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
   isRawSatispay,
   PaymentMethod,
+  PrivativePaymentMethod,
   RawBancomatPaymentMethod,
   RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
@@ -63,6 +65,14 @@ export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
 
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
+
+const getPrivativeGdoLogoUrl = (abi: string): ImageSourcePropType => ({
+  uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
+});
+
+const getPrivativeLoyaltyLogoUrl = (abi: string): ImageSourcePropType => ({
+  uri: `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`
+});
 
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
@@ -176,6 +186,23 @@ export const enhanceCreditCard = (
   icon: getImageFromPaymentMethod(rawCreditCard)
 });
 
+export const enhancePrivativeCard = (
+  rawCreditCard: RawCreditCardPaymentMethod,
+  abiList: IndexedById<Abi>
+): PrivativePaymentMethod => ({
+  ...rawCreditCard,
+  abiInfo: rawCreditCard.info.issuerAbiCode
+    ? abiList[rawCreditCard.info.issuerAbiCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
+  icon: rawCreditCard.info.issuerAbiCode
+    ? getPrivativeGdoLogoUrl(rawCreditCard.info.issuerAbiCode)
+    : cardIcons.UNKNOWN,
+  cardLogo: rawCreditCard.info.issuerAbiCode
+    ? getPrivativeLoyaltyLogoUrl(rawCreditCard.info.issuerAbiCode)
+    : undefined
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -187,7 +214,9 @@ export const enhancePaymentMethod = (
     case "BPay":
       return enhanceBPay(pm, abiList);
     case "CreditCard":
-      return enhanceCreditCard(pm, abiList);
+      return isPrivativeCard(pm)
+        ? enhancePrivativeCard(pm, abiList)
+        : enhanceCreditCard(pm, abiList);
     case "Satispay":
       return {
         ...pm,
