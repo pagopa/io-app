@@ -262,7 +262,7 @@ export const isBPay = (
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
 
 export const isPrivativeCard = (
-  pm: PaymentMethod | RawPaymentMethod | undefined
+  pm: PaymentMethod | undefined
 ): pm is PrivativePaymentMethod =>
   pm === undefined
     ? false
