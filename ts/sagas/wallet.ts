@@ -175,6 +175,12 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { isTestEnv } from "../utils/environment";
+import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
+import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { walletAddPrivativeStart } from "../features/wallet/onboarding/privative/store/actions";
+import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
 
 const successScreenDelay = 2000 as Millisecond;
 /**
@@ -870,6 +876,14 @@ export function* watchWalletSaga(
 
     // watch for add co-badge to Wallet workflow
     yield takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
+
+    if (privativeEnabled) {
+      // watch for add privative to Wallet workflow
+      yield takeLatest(
+        walletAddPrivativeStart,
+        addPrivativeToWalletAndActivateBpd
+      );
+    }
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
