@@ -506,7 +506,7 @@ In order to access the Github registry a Github token is needed:
 Now you can install the libraries used by the project:
 
 ```
-$ bundle install
+$ bundle install 
 $ yarn install
 $ cd ios        # skip on linux
 $ pod install   # skip on linux
@@ -899,6 +899,8 @@ $ detox test
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
 ### Troubleshooting
+
+If you get an error like this `Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException)` after launching `bundle install` you can fix it launching this `gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)`
 
 #### iOS build warning
 
