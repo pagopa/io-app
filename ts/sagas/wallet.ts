@@ -74,7 +74,11 @@ import {
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
-import { loadPrivativeIssuers } from "../features/wallet/onboarding/privative/store/actions";
+import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
+import {
+  loadPrivativeIssuers,
+  walletAddPrivativeStart
+} from "../features/wallet/onboarding/privative/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -175,12 +179,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { isTestEnv } from "../utils/environment";
-import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
-import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { walletAddPrivativeStart } from "../features/wallet/onboarding/privative/store/actions";
-import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
 
 const successScreenDelay = 2000 as Millisecond;
 /**
