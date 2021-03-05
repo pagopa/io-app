@@ -15,7 +15,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
- * Screen that renders the list of the merchants which has an active discount for CGN
+ * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
  * @constructor
  */
