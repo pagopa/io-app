@@ -1,5 +1,6 @@
 import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -70,7 +71,7 @@ export function* addPrivativeToWalletAndActivateBpd() {
 
     if (
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+      currentRoute.value === ROUTES.WALLET_ADD_PAYMENT_METHOD
     ) {
       yield put(NavigationActions.back());
     }
