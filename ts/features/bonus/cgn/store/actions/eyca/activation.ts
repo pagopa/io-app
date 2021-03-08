@@ -25,7 +25,7 @@ export const cgnEycaActivationRequest = createStandardAction(
 export const cgnEycaActivationStatus = createAsyncAction(
   "CGN_EYCA_ACTIVATION_STATUS_REQUEST",
   "CGN_EYCA_ACTIVATION_STATUS_SUCCESS",
-  "CGN_EYCA_ACTIVATION__STATUS_FAILURE"
+  "CGN_EYCA_ACTIVATION_STATUS_FAILURE"
 )<void, EycaActivationStatus, NetworkError>();
 
 export type CgnEycaActivationActions =
