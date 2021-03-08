@@ -934,7 +934,7 @@ wallet:
           title: "Questo supermercato non offre ancora questa funzionalità"
           body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
         koUnavailable:
-          title: "Non riusciamo a contattare ???"
+          title: "Non riusciamo a contattare il server"
           body: "Siamo al lavoro per risolvere il problema."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
