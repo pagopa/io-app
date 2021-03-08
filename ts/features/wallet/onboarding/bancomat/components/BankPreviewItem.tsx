@@ -10,6 +10,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { useImageResize } from "../screens/hooks/useImageResize";
 
 type Props = {
+  // TODO: change bank in info and use a generic type
   bank: Abi;
   inList: boolean;
   onPress: (abi: string) => void;
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// TODO: rename
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {

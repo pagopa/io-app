@@ -1,16 +1,21 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { PrivativeServiceIssuer } from "../../../../../../../definitions/pagopa/privative/configuration/PrivativeServiceIssuer";
 import { PrivativeServiceStatus } from "../../../../../../../definitions/pagopa/privative/configuration/PrivativeServiceStatus";
+import { contentRepoUrl } from "../../../../../../config";
 import { Action } from "../../../../../../store/actions/types";
-import { IndexedById } from "../../../../../../store/helpers/indexer";
+import { IndexedById, toArray } from "../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import { loadPrivativeIssuers } from "../actions";
-import { BrandId } from "./searchedPrivative";
+import { PrivativeIssuerId } from "./searchedPrivative";
 
-type PrivativeIssuer = PrivativeServiceIssuer & {
+// Replace string Id with a typed Id, in order to have a type check in the application domain
+export type PrivativeIssuer = Omit<PrivativeServiceIssuer, "id"> & {
+  id: PrivativeIssuerId;
   status: PrivativeServiceStatus;
+  gdoLogo: string;
 };
 
 export type PrivativeIssuersState = pot.Pot<
@@ -36,7 +41,12 @@ const privativeIssuersReducer = (
         >(
           (acc, val) => ({
             ...acc,
-            [val.id]: { ...val, status: serviceState }
+            [val.id]: {
+              ...val,
+              id: val.id as PrivativeIssuerId,
+              status: serviceState,
+              gdoLogo: `${contentRepoUrl}/logos/privative/gdo/${val.id}.png`
+            }
           }),
           {}
         );
@@ -55,18 +65,28 @@ export const privativeIssuersSelector = (
 ): pot.Pot<IndexedById<PrivativeIssuer>, NetworkError> =>
   state.wallet.onboarding.privative.privativeIssuers;
 
+export const privativeIssuersListSelector = createSelector(
+  [privativeIssuersSelector],
+  potPrivativeIssuers =>
+    pot.map(potPrivativeIssuers, privativeIssuers =>
+      toArray(privativeIssuers)
+        .concat()
+        .sort((v1, v2) => v1.gdo.localeCompare(v2.gdo))
+    )
+);
+
 /**
  * Return the privative brand configuration for a specific brandId
  * @param state
- * @param brandId
+ * @param privativeIssuerId
  */
 export const getPrivativeIssuersSelector = (
   state: GlobalState,
-  brandId: BrandId
+  privativeIssuerId: PrivativeIssuerId
 ): pot.Pot<PrivativeIssuer | undefined, NetworkError> =>
   pot.map(
     state.wallet.onboarding.privative.privativeIssuers,
-    issuersById => issuersById[brandId]
+    issuersById => issuersById[privativeIssuerId]
   );
 
 export default privativeIssuersReducer;

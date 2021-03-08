@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { loadPrivativeIssuers } from "../../store/actions";
-import { privativeIssuersSelector } from "../../store/reducers/privativeIssuers";
+import { privativeIssuersListSelector } from "../../store/reducers/privativeIssuers";
 import ChoosePrivativeIssuerComponent from "./ChoosePrivativeIssuerComponent";
 import LoadChoosePrivativeIssuer from "./LoadChoosePrivativeIssuer";
 
@@ -13,7 +13,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 /**
  * The user will choose a brand between a list of available brands
  * This screen handles also the loading and error of the brands configuration
- * TODO: add loading and error screen
  * @param props
  * @constructor
  */
@@ -26,7 +25,11 @@ const ChoosePrivativeIssuerScreen = (props: Props): React.ReactElement => {
     return <LoadChoosePrivativeIssuer />;
   }
 
-  return <ChoosePrivativeIssuerComponent />;
+  return (
+    <ChoosePrivativeIssuerComponent
+      privativeIssuers={props.privativeIssuers.value}
+    />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -34,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  privativeIssuers: privativeIssuersSelector(state)
+  privativeIssuers: privativeIssuersListSelector(state)
 });
 
 export default connect(

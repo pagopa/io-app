@@ -4,11 +4,10 @@ import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { loadCoBadgeAbiConfiguration } from "../../../cobadge/store/actions";
 import { loadPrivativeIssuers } from "../../store/actions";
 
 /**
- * Load CoBadge configuration
+ * Load Privative Issuers configuration
  */
 export function* handleLoadPrivativeConfiguration(
   getPrivativeServices: ReturnType<
@@ -34,6 +33,6 @@ export function* handleLoadPrivativeConfiguration(
       throw new Error(readableReport(getPrivativeServicesResult.value));
     }
   } catch (e) {
-    yield put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));
+    yield put(loadPrivativeIssuers.failure(getNetworkError(e)));
   }
 }

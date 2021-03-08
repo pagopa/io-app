@@ -8,7 +8,10 @@ import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
-import { BrandId, SearchedPrivativeData } from "../reducers/searchedPrivative";
+import {
+  PrivativeIssuerId,
+  SearchedPrivativeData
+} from "../reducers/searchedPrivative";
 
 type PrivativeQuery = Required<SearchedPrivativeData>;
 
@@ -40,11 +43,11 @@ export const loadPrivativeIssuers = createAsyncAction(
 )<void, PrivativeServices, NetworkError>();
 
 /**
- * The user chooses a brand to search a privative card
+ * The user chooses a privative Issuer to search a privative card
  */
-export const walletAddPrivativeChooseBrand = createStandardAction(
-  "WALLET_ONBOARDING_PRIVATIVE_CHOOSE_BRAND"
-)<BrandId>();
+export const walletAddPrivativeChooseIssuer = createStandardAction(
+  "WALLET_ONBOARDING_PRIVATIVE_CHOOSE_ISSUER"
+)<PrivativeIssuerId>();
 
 /**
  * The user chooses to start the workflow to add a new privative card to the wallet
@@ -79,7 +82,7 @@ export type PrivativeActions =
   | ActionType<typeof searchUserPrivative>
   | ActionType<typeof addPrivativeToWallet>
   | ActionType<typeof loadPrivativeIssuers>
-  | ActionType<typeof walletAddPrivativeChooseBrand>
+  | ActionType<typeof walletAddPrivativeChooseIssuer>
   | ActionType<typeof walletAddPrivativeStart>
   | ActionType<typeof walletAddPrivativeCompleted>
   | ActionType<typeof walletAddPrivativeCancel>

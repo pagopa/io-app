@@ -11,6 +11,16 @@ export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
     routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER
   });
 
+export const navigateToOnboardingPrivativeKoDisabledScreen = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_BRAND
+  });
+
+export const navigateToOnboardingPrivativeKoUnavailableScreen = () =>
+  NavigationActions.navigate({
+    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_BRAND
+  });
+
 export const navigateToOnboardingPrivativeSearchAvailable = () =>
   NavigationActions.navigate({
     routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE

@@ -3,6 +3,8 @@ import ActivateBpdOnNewPrivativeScreen from "../screens/ActivateBpdOnNewPrivativ
 import AddPrivativeCardScreen from "../screens/add/AddPrivativeCardScreen";
 import AddPrivativeCardNumberScreen from "../screens/AddPrivativeCardNumberScreen";
 import ChoosePrivativeIssuerScreen from "../screens/choosePrivative/ChoosePrivativeIssuerScreen";
+import PrivativeIssuerKoDisabled from "../screens/choosePrivative/ko/PrivativeIssuerKoDisabled";
+import PrivativeIssuerKoUnavailable from "../screens/choosePrivative/ko/PrivativeIssuerKoUnavailable";
 import SearchPrivativeCardScreen from "../screens/search/SearchPrivativeCardScreen";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
@@ -13,6 +15,12 @@ const PaymentMethodOnboardingPrivativeNavigator = createStackNavigator(
     },
     [WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER]: {
       screen: AddPrivativeCardNumberScreen
+    },
+    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_BRAND]: {
+      screen: PrivativeIssuerKoDisabled
+    },
+    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_BRAND]: {
+      screen: PrivativeIssuerKoUnavailable
     },
     [WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE]: {
       screen: SearchPrivativeCardScreen
