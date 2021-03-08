@@ -109,7 +109,7 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
-import { LocalServicesWebView } from "../../components/services/LocalServicesWebView";
+import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -708,7 +708,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             textStyle={styles.textStyle}
             heading={I18n.t("services.tab.locals")}
           >
-            <LocalServicesWebView />
+            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
           <Tab
             activeTextStyle={styles.activeTextStyle}
