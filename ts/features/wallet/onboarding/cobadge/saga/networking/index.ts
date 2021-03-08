@@ -42,7 +42,7 @@ export function* handleSearchUserCoBadge(
   // get the results
   const result = yield call(
     searchUserCobadge,
-    { abiCode: searchAction.payload, panCode: "asd" },
+    { abiCode: searchAction.payload },
     getCobadgePans,
     searchCobadgePans,
     sessionManager,
