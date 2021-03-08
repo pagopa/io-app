@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { CreditCardType, isCreditCard, PaymentMethod } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 
-export const brandsBlackList = new Set<CreditCardType>(["MAESTRO"]);
+export const brandsBlackList = new Set<CreditCardType>();
 
 /**
  * check if a payment method is supported to make payment via pagaPA platform.

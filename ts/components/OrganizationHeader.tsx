@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
-  }
+  },
+  leftColumnStyle: { marginRight: 16 }
 });
 
 type Props = {
@@ -28,7 +29,7 @@ const OrganizationHeader = (props: Props) => {
   const { service } = props;
   return (
     <Grid>
-      <Col>
+      <Col style={styles.leftColumnStyle}>
         <H5>{service.organization_name}</H5>
         <Text>{service.service_name}</Text>
       </Col>

@@ -90,7 +90,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
     <View spacer={true} />
     {props.selectedPeriod && (
       <>
-        <Markdown cssStyle={CSS_STYLE}>
+        <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
           {I18n.t("bonus.bpd.details.superCashback.howItWorks.body", {
             citizens: formatIntegerNumber(props.selectedPeriod.minPosition),
             amount: formatNumberWithNoDigits(
@@ -104,7 +104,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
           props.selectedPeriod.endDate,
           props.selectedPeriod.gracePeriod
         ) ? (
-          <Markdown cssStyle={CSS_STYLE}>
+          <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
             {I18n.t(
               "bonus.bpd.details.superCashback.howItWorks.status.active",
               {

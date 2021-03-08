@@ -32,7 +32,7 @@ const cardMapIcon: { [key in string]: any } = {
 };
 
 import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
-import { CardInfo } from "../../../../definitions/pagopa/CardInfo";
+import { CardInfo } from "../../../../definitions/pagopa/walletv2/CardInfo";
 /**
  * pagoPA's "brandLogo" field contains an url to an image
  * From the given url it will check if there is a matching and an icon will be returned

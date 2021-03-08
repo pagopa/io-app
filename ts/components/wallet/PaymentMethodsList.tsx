@@ -22,11 +22,9 @@ import { LightModalContextInterface } from "../ui/LightModal";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { backendStatusSelector } from "../../store/reducers/backendStatus";
-import {
-  getSectionMessageLocale,
-  statusColorMap
-} from "../SectionStatusComponent";
+import { statusColorMap } from "../SectionStatusComponent";
 import { BackendStatus, SectionStatusKey } from "../../types/backendStatus";
+import { getFullLocale } from "../../utils/locale";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -107,7 +105,7 @@ const getBadgeStatus = (
       if (section.is_visible === false || section.badge === undefined) {
         return null;
       }
-      const locale = getSectionMessageLocale();
+      const locale = getFullLocale();
       const badgeLabel = section.badge[locale];
       return {
         badge: (

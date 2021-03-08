@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -10,7 +10,7 @@ import {
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
-  paymentExecutePayment,
+  paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
@@ -35,9 +35,6 @@ import {
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -288,6 +285,7 @@ export function* updateWalletPspRequestHandler(
             // the wallet is still there, we can proceed
             const successAction = paymentUpdateWalletPsp.success({
               wallets: maybeWallets.value,
+              // attention: updatedWallet is V1
               updatedWallet: response.value.value.data
             });
             yield put(successAction);
@@ -414,38 +412,6 @@ export function* addWalletCreditCardRequestHandler(
 }
 
 /**
- * Handles payCreditCardVerificationRequest
- */
-export function* payCreditCardVerificationRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof payCreditCardVerificationRequest>
-) {
-  const boardPay = pagoPaClient.payCreditCardVerification(
-    action.payload.payRequest,
-    action.payload.language
-  );
-  const boardPayWithRefresh = pmSessionManager.withRefresh(boardPay);
-  try {
-    const response: SagaCallReturnType<typeof boardPayWithRefresh> = yield call(
-      boardPayWithRefresh
-    );
-
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield put(payCreditCardVerificationSuccess(response.value.value));
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    yield put(payCreditCardVerificationFailure(e));
-  }
-}
-
-/**
  * Handles paymentFetchPspsForWalletRequest
  */
 export function* paymentFetchPspsForWalletRequestHandler(
@@ -563,38 +529,25 @@ export function* paymentCheckRequestHandler(
 }
 
 /**
- * Handles paymentExecutePaymentRequest
+ * handle the start of a payment
+ * we already know which is the payment (idPayment) and the used wallet to pay (idWallet)
+ * we need a fresh PM session token to start the challenge into the PayWebViewModal
+ * @param pmSessionManager
  */
-export function* paymentExecutePaymentRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentExecutePayment["request"]>
-): Generator<Effect, void, any> {
-  const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
-    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
-  });
-  const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
-  try {
-    const response: SagaCallReturnType<typeof postPaymentWithRefresh> = yield call(
-      postPaymentWithRefresh
+export function* paymentStartRequest(
+  pmSessionManager: SessionManager<PaymentManagerToken>
+) {
+  const pmSessionToken: Option<PaymentManagerToken> = yield call(
+    pmSessionManager.getNewToken
+  );
+  if (pmSessionToken.isSome()) {
+    yield put(paymentExecuteStart.success(pmSessionToken.value));
+  } else {
+    yield put(
+      paymentExecuteStart.failure(
+        new Error("cannot retrieve a valid PM session token")
+      )
     );
-
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const newTransaction = response.value.value.data;
-        const successAction = paymentExecutePayment.success(newTransaction);
-        yield put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    yield put(paymentExecutePayment.failure(e));
   }
 }
 

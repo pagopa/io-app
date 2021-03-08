@@ -21,19 +21,25 @@ import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import {
+  paymentCompletedSuccess,
   paymentIdPolling,
   paymentVerifica
 } from "../../actions/wallet/payment";
-import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
+import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 
 export type PaymentHistory = {
   started_at: string;
   data: RptId;
   paymentId?: string;
+  // TODO Transaction is not available, add it when PM makes it available again
+  // see https://www.pivotaltracker.com/story/show/177067134
   transaction?: Transaction;
   verified_data?: PaymentRequestsGetResponse;
   failure?: keyof typeof DetailEnum;
+  outcomeCode?: string;
+  success?: true;
 };
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
@@ -45,7 +51,10 @@ const replaceLastItem = (
   state: PaymentsHistoryState,
   newItem: PaymentHistory
 ): PaymentsHistoryState => {
-  // eslint-disable-next-line
+  // it shouldn't never happen since an update actions should come after a create action
+  if (state.length === 0) {
+    return state;
+  }
   const cloneState = [...state];
   // eslint-disable-next-line functional/immutable-data
   cloneState.splice(state.length - 1, 1, newItem);
@@ -75,30 +84,18 @@ const reducer = (
         { data: { ...action.payload }, started_at: new Date().toISOString() }
       ];
     case getType(paymentIdPolling.success):
-      // it shouldn't happen since paymentIdPolling comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const paymentWithPaymentId: PaymentHistory = {
         ...state[state.length - 1],
         paymentId: action.payload
       };
       return replaceLastItem(state, paymentWithPaymentId);
     case getType(fetchTransactionSuccess):
-      // it shouldn't happen since paymentIdPolling comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const paymentWithTransaction: PaymentHistory = {
         ...state[state.length - 1],
         transaction: { ...action.payload }
       };
       return replaceLastItem(state, paymentWithTransaction);
     case getType(paymentVerifica.success):
-      // it shouldn't happen since success comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const successPayload = action.payload;
       const updateHistorySuccess: PaymentHistory = {
         ...state[state.length - 1],
@@ -106,16 +103,27 @@ const reducer = (
       };
       return replaceLastItem(state, updateHistorySuccess);
     case getType(paymentVerifica.failure):
-      // it shouldn't happen since failure comes after request
-      if (state.length === 0) {
-        return state;
-      }
       const failurePayload = action.payload;
       const updateHistoryFailure: PaymentHistory = {
         ...state[state.length - 1],
         failure: failurePayload
       };
       return replaceLastItem(state, updateHistoryFailure);
+    case getType(paymentCompletedSuccess):
+      const updateSuccess: PaymentHistory = {
+        ...state[state.length - 1],
+        success: true
+      };
+      return replaceLastItem(state, updateSuccess);
+    case getType(paymentOutcomeCode):
+      if (action.payload.isNone()) {
+        return state;
+      }
+      const updateOutcome: PaymentHistory = {
+        ...state[state.length - 1],
+        outcomeCode: action.payload.value
+      };
+      return replaceLastItem(state, updateOutcome);
     case getType(clearCache): {
       return INITIAL_STATE;
     }
@@ -135,12 +143,20 @@ export const paymentsHistorySelector = (state: GlobalState) =>
 export const isPaymentDoneSuccessfully = (
   payment: PaymentHistory
 ): Option<boolean> => {
+  // we got a failure (on attiva)
   if (payment.failure) {
     return some(false);
   }
-  return fromNullable(payment.transaction).map(
-    t => t !== undefined && isSuccessTransaction(t)
-  );
+  // we got a success
+  if (payment.success) {
+    return some(true);
+  }
+  // if we have an outcomeCode we got an error on pay
+  return payment.outcomeCode
+    ? some(false)
+    : fromNullable(payment.transaction).map(
+        t => t !== undefined && isSuccessTransaction(t)
+      );
 };
 
 export default reducer;

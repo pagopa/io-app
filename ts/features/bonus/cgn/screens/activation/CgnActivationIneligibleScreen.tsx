@@ -1,10 +1,16 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
+import { SafeAreaView } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
-import { H1 } from "../../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { cgnActivationCancel } from "../../store/actions/activation";
+import image from "../../../../../../img/servicesStatus/error-detail-icon.png";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -13,18 +19,28 @@ type Props = ReturnType<typeof mapStateToProps> &
  * Screen which is displayed when a user requested a CGN activation
  * but is not eligible for its activation
  */
-const CgnActivationIneligibleScreen = (_: Props): React.ReactElement => (
-  // PLACEHOLDER for request INELIGIBLE screen
-  <BaseScreenComponent>
-    <View>
-      <H1>{"You're not eligible to CGN activation"}</H1>
-    </View>
-  </BaseScreenComponent>
+const CgnActivationIneligibleScreen = (props: Props): React.ReactElement => (
+  <SafeAreaView style={IOStyles.flex}>
+    <InfoScreenComponent
+      image={renderInfoRasterImage(image)}
+      title={I18n.t("bonus.cgn.activation.ineligible.title")}
+      body={I18n.t("bonus.cgn.activation.ineligible.body")}
+    />
+    <FooterWithButtons
+      type="SingleButton"
+      leftButton={cancelButtonProps(
+        props.onCancel,
+        I18n.t("global.buttons.exit")
+      )}
+    />
+  </SafeAreaView>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onCancel: () => dispatch(cgnActivationCancel())
+});
 
 export default connect(
   mapStateToProps,
