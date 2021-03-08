@@ -93,6 +93,9 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
               />
             )}
             keyExtractor={c => `${c.name}-${c.category}`}
+            ListFooterComponent={
+              merchantList.length > 0 && <EdgeBorderComponent />
+            }
           />
         </View>
       </SafeAreaView>
