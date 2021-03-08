@@ -685,7 +685,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
-      localTabSections,
       nationalTabSections,
       potUserMetadata,
       isLoadingServices

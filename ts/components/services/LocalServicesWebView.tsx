@@ -1,4 +1,3 @@
-// a loading component rendered during the webview loading times
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -14,8 +13,9 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import { GlobalState } from "../../store/reducers/types";
 import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { isStrictSome } from "../../utils/pot";
+import I18n from "../../i18n";
+import { showToast } from "../../utils/showToast";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
@@ -40,9 +40,16 @@ const renderLoading = () => (
     <RefreshIndicator />
   </View>
 );
-const localServicesUri = "http://127.0.0.1:3000/services_web_view";
+const localServicesUri = "http://192.168.1.77:3000/services_web_view";
 const queryParam = "serviceId";
 
+/**
+ * This component is basically a webview that loads an url showing local services
+ * It intercepts the loading request of a service and it does:
+ * - block that request from loading
+ * - extract the service id to load
+ * - load the selected service (load and error are handled)
+ */
 const LocalServicesWebView = (props: Props) => {
   const [serviceIdToLoad, setServiceIdToLoad] = React.useState<
     string | undefined
@@ -52,8 +59,13 @@ const LocalServicesWebView = (props: Props) => {
     fromNullable(serviceIdToLoad)
       .mapNullable(sid => props.servicesById[sid])
       .map(servicePot => {
+        // if service has been loaded
         if (isStrictSome(servicePot)) {
           props.onServiceSelect(servicePot.value);
+          return;
+        }
+        if (pot.isError(servicePot)) {
+          showToast(I18n.t("global.genericError"));
         }
       });
   }, [props.servicesById]);
