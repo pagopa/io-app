@@ -45,10 +45,10 @@ const queryParam = "serviceId";
 
 /**
  * This component is basically a webview that loads an url showing local services
- * It intercepts the loading request of a service and it does:
+ * It intercepts the request of loading a service and it does:
  * - block that request from loading
- * - extract the service id to load
- * - load the selected service (load and error are handled)
+ * - extract from the request url the service id
+ * - load the selected service starting from the service id (load and error are handled)
  */
 const LocalServicesWebView = (props: Props) => {
   const [serviceIdToLoad, setServiceIdToLoad] = React.useState<
