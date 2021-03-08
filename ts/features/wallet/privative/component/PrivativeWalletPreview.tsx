@@ -25,9 +25,11 @@ const BASE_IMG_H = 20;
 
 const renderRight = (props: Props, size: Option<[number, number]>) =>
   size.fold(
-    <Body style={IOStyles.flex} numberOfLines={1} testID={"bankLogoFallback"}>
-      {props.privative.caption}
-    </Body>,
+    <Image
+      source={unknownGdo}
+      style={{ width: 40, height: 40, resizeMode: "contain" }}
+      testID={"unknownGdoLogo"}
+    />,
     imgDim => {
       const imageUrl = props.privative?.cardLogo;
 
@@ -45,7 +47,7 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
       ) : (
         <Image
           source={unknownGdo}
-          style={{ width: 50, height: 50, resizeMode: "contain" }}
+          style={{ width: 40, height: 40, resizeMode: "contain" }}
           testID={"unknownGdoLogo"}
         />
       );
