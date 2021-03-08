@@ -16,6 +16,7 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { isStrictSome } from "../../utils/pot";
 import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
+import { localServicesWebUrl } from "../../config";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
@@ -40,8 +41,6 @@ const renderLoading = () => (
     <RefreshIndicator />
   </View>
 );
-const localServicesUri =
-  "https://deploy-preview-279--elated-archimedes-b3b6a6.netlify.app/app-content/enti-servizi.html";
 const queryParam = "idService";
 
 /**
@@ -97,7 +96,7 @@ const LocalServicesWebView = (props: Props) => {
         style={{ flex: 1 }}
         textZoom={100}
         source={{
-          uri: localServicesUri
+          uri: localServicesWebUrl
         }}
         onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
         startInLoadingState={true}
