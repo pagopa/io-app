@@ -61,6 +61,9 @@ export const eycaActivationSelector = (
   state: GlobalState
 ): EycaActivationState => state.bonus.cgn.eyca.activation;
 
+// This selector is used to handle the loading/error component related to the eyca activation request
+// if the status is in error we're going to show the Error Component unless we'll see the loading screen until
+// a navigation action is dispatched
 export const isCgnActivationLoading = createSelector<
   GlobalState,
   EycaActivationState,
