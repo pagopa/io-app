@@ -26,7 +26,7 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
-
+import CgnCardComponent from "../components/detail/CgnCardComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -52,7 +52,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
         >
           {/* TODO Add Specific CGN Card element when card is available */}
-          <View style={{ height: 164 }} />
+          <View style={[IOStyles.horizontalContentPadding]}>
+            <CgnCardComponent />
+          </View>
         </LinearGradient>
         <View
           style={[
