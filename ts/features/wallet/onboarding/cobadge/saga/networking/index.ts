@@ -5,29 +5,22 @@ import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 import {
   isRawCreditCard,
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import {
-  getGenericError,
-  getNetworkError
-} from "../../../../../../utils/errors";
+import { getNetworkError } from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
-import { trackCobadgeResponse } from "../../analytics";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
 import { onboardingCoBadgeSearchRequestId } from "../../store/reducers/searchCoBadgeRequestId";
-
-const withTokenPrefix = "WALLET_ONBOARDING_COBADGE_SEARCH_WITH_TOKEN";
-const withoutTokenPrefix = "WALLET_ONBOARDING_COBADGE_SEARCH_WITHOUT_TOKEN";
+import { searchUserCobadge } from "./searchUserCobadge";
 
 /**
  * Load the user's cobadge cards. if a previous stored SearchRequestId is found then it will be used
@@ -41,64 +34,26 @@ export function* handleSearchUserCoBadge(
   sessionManager: SessionManager<PaymentManagerToken>,
   searchAction: ActionType<typeof searchUserCoBadge.request>
 ) {
+  // try to retrieve the searchRequestId for co-badge search
   const onboardingCoBadgeSearchRequest: ReturnType<typeof onboardingCoBadgeSearchRequestId> = yield select(
     onboardingCoBadgeSearchRequestId
   );
-  const trackPrefix = onboardingCoBadgeSearchRequest
-    ? withTokenPrefix
-    : withoutTokenPrefix;
-  try {
-    const getPansWithRefresh = sessionManager.withRefresh(
-      getCobadgePans(searchAction.payload)
-    );
 
-    void mixpanelTrack(`${trackPrefix}_REQUEST`, {
-      abi: searchAction.payload ?? "all"
-    });
+  // get the results
+  const result = yield call(
+    searchUserCobadge,
+    { abiCode: searchAction.payload, panCode: "asd" },
+    getCobadgePans,
+    searchCobadgePans,
+    sessionManager,
+    onboardingCoBadgeSearchRequest
+  );
 
-    const getPansWithRefreshResult:
-      | SagaCallReturnType<typeof getPansWithRefresh>
-      | SagaCallReturnType<typeof searchCobadgePans> = yield call(
-      onboardingCoBadgeSearchRequest
-        ? sessionManager.withRefresh(
-            searchCobadgePans(onboardingCoBadgeSearchRequest)
-          )
-        : getPansWithRefresh
-    );
-    if (getPansWithRefreshResult.isRight()) {
-      if (getPansWithRefreshResult.value.status === 200) {
-        if (getPansWithRefreshResult.value.value.data) {
-          void mixpanelTrack(
-            `${trackPrefix}_SUCCESS`,
-            trackCobadgeResponse(getPansWithRefreshResult.value.value.data)
-          );
-          return yield put(
-            searchUserCoBadge.success(getPansWithRefreshResult.value.value.data)
-          );
-        } else {
-          // it should not never happen
-          const error = getGenericError(new Error(`data is undefined`));
-          void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
-          return yield put(searchUserCoBadge.failure(error));
-        }
-      } else {
-        const error = getGenericError(
-          new Error(`response status ${getPansWithRefreshResult.value.status}`)
-        );
-        void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
-        return yield put(searchUserCoBadge.failure(error));
-      }
-    } else {
-      const error = getGenericError(
-        new Error(readableReport(getPansWithRefreshResult.value))
-      );
-      void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
-      return yield put(searchUserCoBadge.failure(error));
-    }
-  } catch (e) {
-    const error = getNetworkError(e);
-    void mixpanelTrack(`${trackPrefix}_FAILURE`, { reason: error });
-    return yield put(searchUserCoBadge.failure(error));
+  // dispatch the related action
+  if (result.isRight()) {
+    yield put(searchUserCoBadge.success(result.value));
+  } else {
+    yield put(searchUserCoBadge.failure(result.value));
   }
 }
 
