@@ -41,6 +41,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     text: string,
     merchantList: ReadonlyArray<TmpMerchantType>
   ) => {
+    // if search text is empty, restore the whole list
     if (text.length === 0) {
       setMerchantsList(props.merchants);
       return;
