@@ -3,7 +3,7 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
 export const navigateToOnboardingPrivativeChooseBrandScreen = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_BRAND
+    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
   });
 
 export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
@@ -13,12 +13,12 @@ export const navigateToOnboardingPrivativeInsertCardNumberScreen = () =>
 
 export const navigateToOnboardingPrivativeKoDisabledScreen = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_BRAND
+    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER
   });
 
 export const navigateToOnboardingPrivativeKoUnavailableScreen = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_BRAND
+    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER
   });
 
 export const navigateToOnboardingPrivativeSearchAvailable = () =>

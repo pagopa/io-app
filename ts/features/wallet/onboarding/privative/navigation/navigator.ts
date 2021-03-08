@@ -10,16 +10,16 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
 const PaymentMethodOnboardingPrivativeNavigator = createStackNavigator(
   {
-    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_BRAND]: {
+    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER]: {
       screen: ChoosePrivativeIssuerScreen
     },
     [WALLET_ONBOARDING_PRIVATIVE_ROUTES.INSERT_CARD_NUMBER]: {
       screen: AddPrivativeCardNumberScreen
     },
-    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_BRAND]: {
+    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.DISABLED_ISSUER]: {
       screen: PrivativeIssuerKoDisabled
     },
-    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_BRAND]: {
+    [WALLET_ONBOARDING_PRIVATIVE_ROUTES.UNAVAILABLE_ISSUER]: {
       screen: PrivativeIssuerKoUnavailable
     },
     [WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE]: {

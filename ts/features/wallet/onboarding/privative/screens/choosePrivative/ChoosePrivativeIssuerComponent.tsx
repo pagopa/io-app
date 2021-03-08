@@ -70,7 +70,10 @@ const ChoosePrivativeIssuerComponent = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"ChoosePrivativeIssuerComponent"}
+      >
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <H1>{title}</H1>
           <View spacer={true} />

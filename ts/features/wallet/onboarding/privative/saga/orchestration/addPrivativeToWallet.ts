@@ -32,7 +32,7 @@ import { onboardingPrivativeAddedSelector } from "../../store/reducers/addedPriv
 function* privativeWorkUnit() {
   return yield call(executeWorkUnit, {
     startScreenNavigation: navigateToOnboardingPrivativeChooseBrandScreen(),
-    startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_BRAND,
+    startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER,
     complete: walletAddPrivativeCompleted,
     back: walletAddPrivativeBack,
     cancel: walletAddPrivativeCancel
