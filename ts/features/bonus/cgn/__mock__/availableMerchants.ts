@@ -1,4 +1,6 @@
-export const availableMerchants : ReadonlyArray<TmpMerchantType> = [
+import { TmpMerchantType } from "../screens/merchants/CgnMerchantsListScreen";
+
+export const availableMerchants: ReadonlyArray<TmpMerchantType> = [
   {
     category: "A",
     name: "Test merchant 1",

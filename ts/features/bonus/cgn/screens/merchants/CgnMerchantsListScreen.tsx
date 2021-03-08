@@ -22,7 +22,7 @@ import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorde
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-type TmpMerchantType = {
+export type TmpMerchantType = {
   name: string;
   category: string;
   location: string;
