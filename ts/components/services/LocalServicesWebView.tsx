@@ -40,8 +40,9 @@ const renderLoading = () => (
     <RefreshIndicator />
   </View>
 );
-const localServicesUri = "http://192.168.1.77:3000/services_web_view";
-const queryParam = "serviceId";
+const localServicesUri =
+  "https://deploy-preview-279--elated-archimedes-b3b6a6.netlify.app/app-content/enti-servizi.html";
+const queryParam = "idService";
 
 /**
  * This component is basically a webview that loads an url showing local services
