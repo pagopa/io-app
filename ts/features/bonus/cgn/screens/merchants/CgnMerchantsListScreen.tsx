@@ -25,9 +25,9 @@ type TmpMerchantType = {
   category: string;
   location: string;
 };
-
+        
 /**
- * Screen that renders the list of the merchants which has an active discount for CGN
+ * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
  * @constructor
  */
