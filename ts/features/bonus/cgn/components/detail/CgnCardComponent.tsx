@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     height: 192,
     width: "100%",
-    // position: "absolute",
     top: 30,
     zIndex: 7,
     elevation: 7
