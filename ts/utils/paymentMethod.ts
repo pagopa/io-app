@@ -70,10 +70,8 @@ const getPrivativeGdoLogoUrl = (abi: string): ImageSourcePropType => ({
   uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
 });
 
-const getPrivativeLoyaltyLogoUrl = (abi: string): ImageSourcePropType => ({
-  uri: `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`
-});
-
+const getPrivativeLoyaltyLogoUrl = (abi: string): string =>
+  `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`;
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod

@@ -226,7 +226,7 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   WithAbi;
 
 export type PrivativePaymentMethod = CreditCardPaymentMethod & {
-  cardLogo?: ImageSourcePropType;
+  cardLogo?: string;
 };
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
