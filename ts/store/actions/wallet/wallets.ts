@@ -89,7 +89,7 @@ export const creditCardCheckout3dsSuccess = createStandardAction(
 
 // used to accumulate all the urls browsed into the pay webview
 export const creditCardPaymentNavigationUrls = createStandardAction(
-  "WALLET_ADD_CREDITCARD_PAYMENT_NAVIGATION_URLS"
+  "CREDITCARD_PAYMENT_NAVIGATION_URLS"
 )<ReadonlyArray<string>>();
 
 type DeleteWalletRequestPayload = Readonly<{
