@@ -299,12 +299,11 @@ export const getPaymentOutcomeCodeDescription = (
   outcomeCode: string,
   outcomeCodes: OutcomeCodes
 ): Option<string> => {
-  const maybeCutcomecodeKey = OutcomeCodesKey.decode(outcomeCode);
-  if (maybeCutcomecodeKey.isRight()) {
-    const oc: OutcomeCode = outcomeCodes[maybeCutcomecodeKey.value];
-    if (oc.description !== undefined) {
-      return some(oc.description[getFullLocale()]);
-    }
+  const maybeOutcomeCodeKey = OutcomeCodesKey.decode(outcomeCode);
+  if (maybeOutcomeCodeKey.isRight()) {
+    return fromNullable<OutcomeCode>(outcomeCodes[maybeOutcomeCodeKey.value])
+      .mapNullable(oc => oc.description)
+      .map(description => description[getFullLocale()]);
   }
   return none;
 };
