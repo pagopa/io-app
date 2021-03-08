@@ -18,7 +18,6 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  isPrivativeCard,
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
@@ -37,6 +36,7 @@ import {
   Card,
   ValidityStateEnum
 } from "../../definitions/pagopa/walletv2/Card";
+import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
@@ -82,7 +82,7 @@ export const getImageFromPaymentMethod = (
   paymentMethod: RawPaymentMethod
 ): ImageSourcePropType => {
   if (isRawCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod.info);
+    return getCardIconFromBrandLogo(paymentMethod);
   }
   if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
@@ -191,9 +191,6 @@ export const enhancePrivativeCard = (
   abiList: IndexedById<Abi>
 ): PrivativePaymentMethod => ({
   ...rawCreditCard,
-  abiInfo: rawCreditCard.info.issuerAbiCode
-    ? abiList[rawCreditCard.info.issuerAbiCode]
-    : undefined,
   caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
   icon: rawCreditCard.info.issuerAbiCode
     ? getPrivativeGdoLogoUrl(rawCreditCard.info.issuerAbiCode)
@@ -214,7 +211,7 @@ export const enhancePaymentMethod = (
     case "BPay":
       return enhanceBPay(pm, abiList);
     case "CreditCard":
-      return isPrivativeCard(pm)
+      return pm.info.type === CreditCardTypeEnum.PRV
         ? enhancePrivativeCard(pm, abiList)
         : enhanceCreditCard(pm, abiList);
     case "Satispay":
