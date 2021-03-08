@@ -82,7 +82,7 @@ export const getImageFromPaymentMethod = (
   paymentMethod: RawPaymentMethod
 ): ImageSourcePropType => {
   if (isRawCreditCard(paymentMethod)) {
-    return getCardIconFromBrandLogo(paymentMethod);
+    return getCardIconFromBrandLogo(paymentMethod.info);
   }
   if (isRawBancomat(paymentMethod)) {
     return pagoBancomatImage;
