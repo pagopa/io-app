@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -31,19 +31,6 @@ import CgnCardComponent from "../components/detail/CgnCardComponent";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const styles = StyleSheet.create({
-  cgnCard: {
-    position: "absolute",
-    top: -30,
-    width: "100%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3
-    }
-  }
-});
-
 /**
  * Screen to display all the information about the active CGN
  */
@@ -67,9 +54,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           {/* TODO Add Specific CGN Card element when card is available */}
           <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
         </LinearGradient>
-        <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
-          <CgnCardComponent />
-        </View>
+        <CgnCardComponent />
         <View
           style={[
             IOStyles.flex,

@@ -1,4 +1,4 @@
-export const playSvg = (width: number) => `<html>
+export const playSvg = `<html>
 <body>
 <svg width="1000" viewBox = "0 0 300 1000">
   <svg>
