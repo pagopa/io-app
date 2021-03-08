@@ -1,4 +1,4 @@
-export const availableMerchants = [
+export const availableMerchants : ReadonlyArray<TmpMerchantType> = [
   {
     category: "A",
     name: "Test merchant 1",
