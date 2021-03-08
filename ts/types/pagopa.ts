@@ -26,7 +26,7 @@ import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import { ProductTypeEnum } from "../../definitions/pagopa/walletv2/CreditCard";
+
 import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
@@ -35,6 +35,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -266,8 +267,7 @@ export const isPrivativeCard = (
 ): pm is PrivativePaymentMethod =>
   pm === undefined
     ? false
-    : pm.kind === "CreditCard" &&
-      pm.info.productType === ProductTypeEnum.PRIVATIVE;
+    : pm.kind === "CreditCard" && pm.info.type === CreditCardTypeEnum.PRV;
 
 /**
  * A refined Wallet
