@@ -56,7 +56,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { ProductTypeEnum } from "../../../../definitions/pagopa/walletv2/CreditCard";
+import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -279,20 +279,20 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
         cc =>
           cc.pagoPA === false &&
           cc.info.issuerAbiCode !== undefined &&
-          cc.info.productType !== ProductTypeEnum.PRIVATIVE
+          cc.info.type !== TypeEnum.PRV
       )
     )
 );
 
 /**
- * Return a CoBadge list visible in the wallet
+ * Return a Privative card list visible in the wallet
  */
 export const privativeListVisibleInWalletSelector = createSelector(
   [creditCardListVisibleInWalletSelector],
   (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
     pot.map(creditCardListPot, creditCardList =>
       creditCardList.filter(
-        cc => cc.info.productType === ProductTypeEnum.PRIVATIVE
+        cc => cc.info.type === TypeEnum.PRV && cc.pagoPA === false
       )
     )
 );
