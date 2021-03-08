@@ -67,7 +67,7 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
   return (
     <CardLayoutPreview
       left={
-        <Body style={IOStyles.flex} numberOfLines={1}>
+        <Body style={IOStyles.flex} numberOfLines={1} testID={"caption"}>
           {props.privative.caption}
         </Body>
       }
