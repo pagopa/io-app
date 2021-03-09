@@ -42,13 +42,6 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCGN.getCgnStatus
   );
 
-  // CGN Load details
-  yield takeLatest(
-    getType(cgnDetails.request),
-    cgnGetInformationSaga,
-    backendCGN.getCgnStatus
-  );
-
   // CGN Otp generation
   yield takeLatest(
     getType(cngGenerateOtp.request),

@@ -3,7 +3,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 
 /**
- * get and handle activation state of a CGN
+ * handle CGN Otp generation
  */
 export const cngGenerateOtp = createAsyncAction(
   "CGN_GENERATE_OTP_REQUEST",
