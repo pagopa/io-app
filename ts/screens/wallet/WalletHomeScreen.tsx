@@ -67,7 +67,7 @@ import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
+import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
@@ -597,7 +597,7 @@ const mapStateToProps = (state: GlobalState) => {
     availableBonusesList: visibleAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
+    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
     transactionsLoadedLength: getTransactionsLoadedLength(state),
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),

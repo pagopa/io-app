@@ -24,6 +24,8 @@ import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformatio
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { navigateToCgnMerchantsList } from "../navigation/actions";
+
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -74,7 +76,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
-            constNull,
+            props.navigateToMerchants,
             I18n.t("bonus.cgn.detail.cta.buyers")
           )}
           rightButton={confirmButtonProps(
@@ -92,6 +94,8 @@ const mapStateToProps = (state: GlobalState) => ({
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

@@ -924,6 +924,8 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    privative:
+      headerTitle: "Aggiungi carta supermercato"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -2232,6 +2234,9 @@ bonus:
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
     name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: Visualizza esercenti
+      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani
