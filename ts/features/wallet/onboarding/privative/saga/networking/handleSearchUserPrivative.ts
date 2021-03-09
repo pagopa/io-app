@@ -28,7 +28,7 @@ export function* handleSearchUserPrivative(
     searchUserCobadge,
     {
       abiCode: searchAction.payload.brandId,
-      panCode: searchAction.payload.brandId
+      panCode: searchAction.payload.cardNumber
     },
     getCobadgePans,
     searchCobadgePans,

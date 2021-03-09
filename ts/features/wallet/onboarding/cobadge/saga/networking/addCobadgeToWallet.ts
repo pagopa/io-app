@@ -17,6 +17,12 @@ import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 
+/**
+ * Handle the networking logic to add a co-badge card to the wallet
+ * @param addCobadgeToWallet http client to execute the request
+ * @param sessionManager pm session manager
+ * @param paymentInstrument the payload representing the cobadge card to add
+ */
 export const addCobadgeToWallet = async (
   addCobadgeToWallet: ReturnType<
     typeof PaymentManagerClient
