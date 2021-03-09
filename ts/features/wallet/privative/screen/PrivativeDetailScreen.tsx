@@ -62,6 +62,7 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
     icon: privative.icon,
     caption: privative.caption
   });
+
   return (
     <DarkLayout
       bounces={false}
@@ -74,7 +75,11 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>
-        <BasePrivativeCard caption={privative.caption} />
+        <BasePrivativeCard
+          icon={privative.icon}
+          caption={privative.caption}
+          cardLogo={privative.cardLogo}
+        />
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>

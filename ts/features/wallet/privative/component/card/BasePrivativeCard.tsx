@@ -6,35 +6,34 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import I18n from "../../../../../i18n";
 import BaseCardComponent from "../../../component/BaseCardComponent";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import abiLogoFallback from "../../../../../../img/wallet/cards-icons/abiLogoFallback.png";
-import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
 
 type Props = {
+  icon: ImageSourcePropType;
   caption?: string;
-  abi: Abi;
-  icon: string;
+  cardLogo?: string;
   blocked?: boolean;
 };
 
 const styles = StyleSheet.create({
-  abiLogoFallback: {
+  cardLogoFallback: {
     width: 40,
     height: 40,
     resizeMode: "contain"
   },
   icon: {
-    width: 48,
-    height: 31,
+    width: 120,
+    height: 30,
     resizeMode: "contain"
   },
-  bankName: { textTransform: "capitalize" },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -47,24 +46,26 @@ const styles = StyleSheet.create({
   }
 });
 
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 40;
+const BASE_IMG_W = 120;
+const BASE_IMG_H = 30;
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
-  const imgDimensions = useImageResize(
-    BASE_IMG_W,
-    BASE_IMG_H,
-    props.abi?.logoUrl
+  const cardLogo = fromNullable(props.cardLogo).fold(
+    <Image style={styles.cardLogoFallback} source={unknownGdo} />,
+    cL => {
+      const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, cL);
+      const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
+        undefined,
+        imgDim => ({
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        })
+      );
+      return <Image style={imageStyle} source={{ uri: cL }} />;
+    }
   );
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
-  );
   return (
     <BaseCardComponent
       topLeftCorner={
@@ -76,19 +77,8 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
               justifyContent: "space-between"
             }}
           >
-            {props.abi.logoUrl && imageStyle ? (
-              <Image
-                source={{ uri: props.abi.logoUrl }}
-                style={imageStyle}
-                testID={"abiLogo"}
-              />
-            ) : (
-              <Image
-                source={abiLogoFallback}
-                style={styles.abiLogoFallback}
-                testID={"abiLogoFallback"}
-              />
-            )}
+            <Image source={props.icon} style={styles.icon} testID={"abiLogo"} />
+
             {props.blocked && (
               <Badge
                 style={[styles.badgeInfo, styles.badgeInfoExpired]}
@@ -114,11 +104,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
           )}
         </View>
       }
-      bottomRightCorner={
-        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.icon} source={props.icon} />
-        </View>
-      }
+      bottomRightCorner={cardLogo}
     />
   );
 };
