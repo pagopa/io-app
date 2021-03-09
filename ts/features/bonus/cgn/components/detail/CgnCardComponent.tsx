@@ -12,7 +12,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { localeDateFormat } from "../../../../../utils/locale";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
-import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask_1.png";
+// import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
+import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
 
 type Props = {
@@ -75,55 +77,110 @@ const styles = StyleSheet.create({
   }
 });
 
-const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => (
-  <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
-    <ImageBackground
-      source={cardBg}
-      imageStyle={styles.imageFull}
-      style={styles.cardContainer}
-    >
-      <WebView
-        style={{ left: -3, top: -3, width: "110%" }}
-        source={{ html: playSvg }}
-      />
-    </ImageBackground>
-    {/* <View style={[styles.informationContainer, styles.paddedContentFull]}> */}
-    {/*  <View */}
-    {/*    style={[ */}
-    {/*      IOStyles.row, */}
-    {/*      IOStyles.flex, */}
-    {/*      { justifyContent: "space-between" } */}
-    {/*    ]} */}
-    {/*  > */}
-    {/*    <View style={[styles.column, styles.flex2, styles.spaced]}> */}
-    {/*      <H3 weight={"Bold"} color={"black"}> */}
-    {/*        {I18n.t("bonus.cgn.name")} */}
-    {/*      </H3> */}
-    {/*      <View> */}
-    {/*        {props.cgnDetails.status !== "PENDING" && ( */}
-    {/*          <H5> */}
-    {/*            {"Valida fino al " + */}
-    {/*              localeDateFormat( */}
-    {/*                props.cgnDetails.expiration_date, */}
-    {/*                I18n.t("global.dateFormats.shortFormat") */}
-    {/*              )} */}
-    {/*          </H5> */}
-    {/*        )} */}
-    {/*        {props.currentProfile && ( */}
-    {/*          <H3 weight={"Bold"} color={"black"}> */}
-    {/*            {props.currentProfile} */}
-    {/*          </H3> */}
-    {/*        )} */}
-    {/*      </View> */}
-    {/*    </View> */}
-    {/*    <View style={[styles.column, styles.flex1, styles.spaced]}> */}
-    {/*      <View hspacer /> */}
-    {/*      <Image source={cgnLogo} style={styles.fullLogo} /> */}
-    {/*    </View> */}
-    {/*  </View> */}
-    {/* </View> */}
-  </View>
-);
+const minPointA: Point = {
+  x: 80,
+  y: -100
+};
+const maxPointA: Point = {
+  x: 100,
+  y: 50
+};
+
+const minPointB: Point = {
+  x: -80,
+  y: 0
+};
+const maxPointB: Point = {
+  x: 100,
+  y: 10
+};
+
+const minPointC: Point = {
+  x: -50,
+  y: 50
+};
+const maxPointC: Point = {
+  x: 50,
+  y: 10
+};
+
+const MOVEMENT_STEPS = 12;
+
+const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
+  const generatedTranslationA = generateRandomSvgMovement(
+    MOVEMENT_STEPS,
+    minPointA,
+    maxPointA
+  );
+  const generatedTranslationB = generateRandomSvgMovement(
+    MOVEMENT_STEPS,
+    minPointB,
+    maxPointB
+  );
+  const generatedTranslationC = generateRandomSvgMovement(
+    MOVEMENT_STEPS,
+    minPointC,
+    maxPointC
+  );
+
+  const generatedSvg = playSvg(
+    generatedTranslationA,
+    generatedTranslationB,
+    generatedTranslationC
+  );
+
+  return (
+    <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
+      <ImageBackground
+        source={cardBg}
+        imageStyle={styles.imageFull}
+        style={styles.cardContainer}
+      >
+        <WebView
+          style={{ width: "100%" }}
+          source={{
+            html: generatedSvg
+          }}
+        />
+      </ImageBackground>
+      <View style={[styles.informationContainer, styles.paddedContentFull]}>
+        <View
+          style={[
+            IOStyles.row,
+            IOStyles.flex,
+            { justifyContent: "space-between" }
+          ]}
+        >
+          <View style={[styles.column, styles.flex2, styles.spaced]}>
+            <H3 weight={"Bold"} color={"black"}>
+              {I18n.t("bonus.cgn.name")}
+            </H3>
+            <View>
+              {props.cgnDetails.status !== "PENDING" && (
+                <H5>
+                  {"Valida fino al " +
+                    localeDateFormat(
+                      props.cgnDetails.expiration_date,
+                      I18n.t("global.dateFormats.shortFormat")
+                    )}
+                </H5>
+              )}
+              {props.currentProfile && (
+                <H3 weight={"Bold"} color={"black"}>
+                  {props.currentProfile}
+                </H3>
+              )}
+            </View>
+          </View>
+          <View style={[styles.column, styles.flex1, styles.spaced]}>
+            <View hspacer />
+            <Image source={cgnLogo} style={styles.fullLogo} />
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   currentProfile: profileNameSurnameSelector(state)

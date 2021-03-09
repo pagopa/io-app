@@ -48,7 +48,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <LinearGradient colors={["#7CB3D9", "#7CB3D9"]}>
+        <LinearGradient colors={["#7CB3D9", IOColors.bluegrey]}>
           <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
         </LinearGradient>
         {props.cgnDetails && <CgnCardComponent cgnDetails={props.cgnDetails} />}
