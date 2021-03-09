@@ -17,6 +17,7 @@ import { isStrictSome } from "../../utils/pot";
 import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
 import { localServicesWebUrl } from "../../config";
+import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
@@ -34,6 +35,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
+  },
+  genericError: {
+    flex: 1,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
   }
 });
 const renderLoading = () => (
@@ -54,6 +63,8 @@ const LocalServicesWebView = (props: Props) => {
   const [serviceIdToLoad, setServiceIdToLoad] = React.useState<
     string | undefined
   >(undefined);
+  const [webViewError, setWebViewError] = React.useState<boolean>(false);
+  const webViewRef = React.createRef<WebView>();
 
   React.useEffect(() => {
     fromNullable(serviceIdToLoad)
@@ -69,6 +80,13 @@ const LocalServicesWebView = (props: Props) => {
         }
       });
   }, [props.servicesById]);
+
+  const reloadWebView = () => {
+    if (webViewRef.current) {
+      webViewRef.current.reload();
+      setWebViewError(false);
+    }
+  };
 
   const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
     if (navState.url) {
@@ -86,23 +104,31 @@ const LocalServicesWebView = (props: Props) => {
     }
     return true;
   };
-  const isLoading = fromNullable(serviceIdToLoad)
+  const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
     .mapNullable(sid => props.servicesById[sid])
     .fold(false, pot.isLoading);
   return (
     <>
-      {isLoading && renderLoading()}
+      {isLoadingServiceLoading && renderLoading()}
+
       <WebView
+        ref={webViewRef}
         style={{ flex: 1 }}
         textZoom={100}
         source={{
           uri: localServicesWebUrl
         }}
+        onError={() => setWebViewError(true)}
         onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
         startInLoadingState={true}
         renderLoading={renderLoading}
         javaScriptEnabled={true}
       />
+      {webViewError && (
+        <View style={styles.genericError}>
+          <GenericErrorComponent onRetry={reloadWebView} />
+        </View>
+      )}
     </>
   );
 };
