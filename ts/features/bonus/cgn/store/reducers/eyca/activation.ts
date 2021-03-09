@@ -61,13 +61,13 @@ export const eycaActivationSelector = (
   state: GlobalState
 ): EycaActivationState => state.bonus.cgn.eyca.activation;
 
-export const isEycaActivationLoading = createSelector<
-  GlobalState,
-  EycaActivationState,
-  boolean
->(
+// return the cgn eyca status
+// TODO Use this selector in PR https://github.com/pagopa/io-app/pull/2872
+//  to check the EYCA activation status is not ERROR
+export const cgnEycaActivationstatus = createSelector(
   eycaActivationSelector,
-  activation => activation.status !== CgnEycaActivationProgressEnum.ERROR
+  (activation: EycaActivationState): CgnEycaActivationProgressEnum =>
+    activation.status
 );
 
 export default reducer;
