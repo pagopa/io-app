@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import WebView from "react-native-webview";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { localeDateFormat } from "../../../../../utils/locale";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { playSvg } from "./CardSvgPayload";
 
 type Props = {
@@ -20,10 +21,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    shadowColor: "#000",
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    height: 192
+    height: "100%"
   },
   cgnCard: {
     position: "absolute",
@@ -34,6 +32,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 7
     },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
     zIndex: 7,
     elevation: 7
   },
@@ -66,52 +66,62 @@ const styles = StyleSheet.create({
     height: 56,
     width: 56,
     alignSelf: "flex-end"
+  },
+  imageFull: {
+    resizeMode: "stretch",
+    height: "100%",
+    zIndex: 8,
+    elevation: 8
   }
 });
 
 const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => (
   <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
-    <View style={[styles.cardContainer]}>
+    <ImageBackground
+      source={cardBg}
+      imageStyle={styles.imageFull}
+      style={styles.cardContainer}
+    >
       <WebView
-        style={{ borderRadius: 10, borderWidth: 1 }}
+        style={{ left: -3, top: -3, width: "110%" }}
         source={{ html: playSvg }}
       />
-    </View>
-    <View style={[styles.informationContainer, styles.paddedContentFull]}>
-      <View
-        style={[
-          IOStyles.row,
-          IOStyles.flex,
-          { justifyContent: "space-between" }
-        ]}
-      >
-        <View style={[styles.column, styles.flex2, styles.spaced]}>
-          <H3 weight={"Bold"} color={"black"}>
-            {I18n.t("bonus.cgn.name")}
-          </H3>
-          <View>
-            {props.cgnDetails.status !== "PENDING" && (
-              <H5>
-                {"Valida fino al " +
-                  localeDateFormat(
-                    props.cgnDetails.expiration_date,
-                    I18n.t("global.dateFormats.shortFormat")
-                  )}
-              </H5>
-            )}
-            {props.currentProfile && (
-              <H3 weight={"Bold"} color={"black"}>
-                {props.currentProfile}
-              </H3>
-            )}
-          </View>
-        </View>
-        <View style={[styles.column, styles.flex1, styles.spaced]}>
-          <View hspacer />
-          <Image source={cgnLogo} style={styles.fullLogo} />
-        </View>
-      </View>
-    </View>
+    </ImageBackground>
+    {/* <View style={[styles.informationContainer, styles.paddedContentFull]}> */}
+    {/*  <View */}
+    {/*    style={[ */}
+    {/*      IOStyles.row, */}
+    {/*      IOStyles.flex, */}
+    {/*      { justifyContent: "space-between" } */}
+    {/*    ]} */}
+    {/*  > */}
+    {/*    <View style={[styles.column, styles.flex2, styles.spaced]}> */}
+    {/*      <H3 weight={"Bold"} color={"black"}> */}
+    {/*        {I18n.t("bonus.cgn.name")} */}
+    {/*      </H3> */}
+    {/*      <View> */}
+    {/*        {props.cgnDetails.status !== "PENDING" && ( */}
+    {/*          <H5> */}
+    {/*            {"Valida fino al " + */}
+    {/*              localeDateFormat( */}
+    {/*                props.cgnDetails.expiration_date, */}
+    {/*                I18n.t("global.dateFormats.shortFormat") */}
+    {/*              )} */}
+    {/*          </H5> */}
+    {/*        )} */}
+    {/*        {props.currentProfile && ( */}
+    {/*          <H3 weight={"Bold"} color={"black"}> */}
+    {/*            {props.currentProfile} */}
+    {/*          </H3> */}
+    {/*        )} */}
+    {/*      </View> */}
+    {/*    </View> */}
+    {/*    <View style={[styles.column, styles.flex1, styles.spaced]}> */}
+    {/*      <View hspacer /> */}
+    {/*      <Image source={cgnLogo} style={styles.fullLogo} /> */}
+    {/*    </View> */}
+    {/*  </View> */}
+    {/* </View> */}
   </View>
 );
 

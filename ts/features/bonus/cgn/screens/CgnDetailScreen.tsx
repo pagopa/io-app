@@ -41,17 +41,14 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   return (
     <BaseScreenComponent
-      headerBackgroundColor={IOColors.yellowGradientTop}
+      headerBackgroundColor={"#7CB3D9"}
       goBack
       headerTitle={I18n.t("bonus.cgn.name")}
       titleColor={"black"}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <LinearGradient
-          colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
-        >
-          {/* TODO Add Specific CGN Card element when card is available */}
+        <LinearGradient colors={["#7CB3D9", "#7CB3D9"]}>
           <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
         </LinearGradient>
         {props.cgnDetails && <CgnCardComponent cgnDetails={props.cgnDetails} />}
