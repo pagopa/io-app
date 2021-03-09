@@ -39,13 +39,12 @@ import {
   getCodiceAvviso,
   getErrorDescription,
   getPaymentHistoryDetails,
+  getPaymentOutcomeCodeDescription,
   getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
-import { OutcomeCode, OutcomeCodesKey } from "../../types/outcomeCode";
-import { getFullLocale } from "../../utils/locale";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -116,19 +115,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // so the description is built first checking the attiva failure, alternatively
     // it checks about the outcome if the payment went wrong
     const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
-      fromNullable(payment.outcomeCode).map(oc => {
-        const maybeCutcomecodeKey = OutcomeCodesKey.decode(oc);
-        if (payment.success !== true && maybeCutcomecodeKey.isRight()) {
-          const oc: OutcomeCode = this.props.outcomeCodes[
-            maybeCutcomecodeKey.value
-          ];
-          if (oc.description !== undefined) {
-            return oc.description[getFullLocale()];
-          }
-          return "-";
-        }
-        return "-";
-      })
+      fromNullable(payment.outcomeCode).chain(oc =>
+        getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
+      )
     );
 
     const paymentOutcome = isPaymentDoneSuccessfully(payment);
