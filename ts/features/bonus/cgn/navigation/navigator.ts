@@ -8,6 +8,8 @@ import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIn
 import CgnAlreadyActiveScreen from "../screens/activation/CgnAlreadyActiveScreen";
 import CgnDetailScreen from "../screens/CgnDetailScreen";
 import EycaActivationLoading from "../screens/eyca/activation/EycaActivationLoading";
+import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
+
 import CGN_ROUTES from "./routes";
 
 const CgnNavigator = createStackNavigator(
@@ -35,6 +37,9 @@ const CgnNavigator = createStackNavigator(
     },
     [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: {
       screen: EycaActivationLoading
+    },
+    [CGN_ROUTES.MERCHANTS.LIST]: {
+      screen: MerchantsListScreen
     },
     [CGN_ROUTES.DETAILS]: {
       screen: CgnDetailScreen
