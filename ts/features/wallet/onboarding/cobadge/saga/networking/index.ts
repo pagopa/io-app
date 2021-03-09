@@ -1,25 +1,20 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { select } from "redux-saga-test-plan/matchers";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import {
-  isRawCreditCard,
-  PaymentManagerToken
-} from "../../../../../../types/pagopa";
+import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { SessionManager } from "../../../../../../utils/SessionManager";
-import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge
 } from "../../store/actions";
 import { onboardingCoBadgeSearchRequestId } from "../../store/reducers/searchCoBadgeRequestId";
+import { addCobadgeToWallet } from "./addCobadgeToWallet";
 import { searchUserCobadge } from "./searchUserCobadge";
 
 /**
@@ -61,59 +56,24 @@ export function* handleSearchUserCoBadge(
  * Add Cobadge to wallet
  */
 export function* handleAddCoBadgeToWallet(
-  addCobadgeToWallet: ReturnType<
+  addCobadgeToWalletClient: ReturnType<
     typeof PaymentManagerClient
   >["addCobadgeToWallet"],
   sessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof addCoBadgeToWallet.request>
 ) {
-  try {
-    const cobadgePaymentInstrument = action.payload;
-    const addCobadgeToWalletWithRefresh = sessionManager.withRefresh(
-      addCobadgeToWallet({
-        data: { payload: { paymentInstruments: [cobadgePaymentInstrument] } }
-      })
-    );
-    const addCobadgeToWalletWithRefreshResult: SagaCallReturnType<typeof addCobadgeToWalletWithRefresh> = yield call(
-      addCobadgeToWalletWithRefresh
-    );
-    if (addCobadgeToWalletWithRefreshResult.isRight()) {
-      if (addCobadgeToWalletWithRefreshResult.value.status === 200) {
-        const wallets = (
-          addCobadgeToWalletWithRefreshResult.value.value.data ?? []
-        ).map(convertWalletV2toWalletV1);
-        // search for the added cobadge.
-        const maybeWallet = fromNullable(
-          wallets.find(
-            w =>
-              w.paymentMethod &&
-              getPaymentMethodHash(w.paymentMethod) ===
-                cobadgePaymentInstrument.hpan
-          )
-        );
-        if (
-          maybeWallet.isSome() &&
-          isRawCreditCard(maybeWallet.value.paymentMethod)
-        ) {
-          yield put(
-            // success
-            addCoBadgeToWallet.success(maybeWallet.value.paymentMethod)
-          );
-        } else {
-          throw new Error(`cannot find added cobadge in wallets list response`);
-        }
-      } else {
-        throw new Error(
-          `response status ${addCobadgeToWalletWithRefreshResult.value.status}`
-        );
-      }
-    } else {
-      throw new Error(
-        readableReport(addCobadgeToWalletWithRefreshResult.value)
-      );
-    }
-  } catch (e) {
-    yield put(addCoBadgeToWallet.failure(getNetworkError(e)));
+  // get the results
+  const result = yield call(
+    addCobadgeToWallet,
+    addCobadgeToWalletClient,
+    sessionManager,
+    action.payload
+  );
+  // dispatch the related action
+  if (result.isRight()) {
+    yield put(addCoBadgeToWallet.success(result.value));
+  } else {
+    yield put(addCoBadgeToWallet.failure(result.value));
   }
 }
 
