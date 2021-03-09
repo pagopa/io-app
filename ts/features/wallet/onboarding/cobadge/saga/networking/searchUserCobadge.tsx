@@ -46,17 +46,15 @@ export const searchUserCobadge = async (
   }_${searchRequestId ? withTokenSuffix : withoutTokenSuffix}`;
 
   try {
-    const getPansWithRefresh = sessionManager.withRefresh(
-      getCobadgePans(cobadgeQuery.abiCode, cobadgeQuery.panCode)
-    );
-
     void mixpanelTrack(`${logPrefix}_REQUEST`, {
       abi: cobadgeQuery.abiCode ?? "all"
     });
 
-    const getPansWithRefreshResult = searchRequestId
-      ? await sessionManager.withRefresh(searchCobadgePans(searchRequestId))()
-      : await getPansWithRefresh();
+    const getPansWithRefreshResult = await sessionManager.withRefresh(
+      searchRequestId
+        ? searchCobadgePans(searchRequestId)
+        : getCobadgePans(cobadgeQuery.abiCode, cobadgeQuery.panCode)
+    )();
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         if (getPansWithRefreshResult.value.value.data) {
