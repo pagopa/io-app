@@ -8,6 +8,8 @@ import {
 import { Omit } from "italia-ts-commons/lib/types";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
+  generateOtpDefaultDecoder,
+  GenerateOtpT,
   getCgnActivationDefaultDecoder,
   GetCgnActivationT,
   getCgnStatusDefaultDecoder,
@@ -41,6 +43,15 @@ const getCgnStatus: GetCgnStatusT = {
   query: _ => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getCgnStatusDefaultDecoder()
+};
+
+const generateOtp: GenerateOtpT = {
+  method: "post",
+  url: () => `/api/v1/cgn/otp`,
+  query: _ => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: generateOtpDefaultDecoder()
 };
 
 function ParamAuthorizationBearerHeaderProducer<
@@ -82,6 +93,7 @@ export function BackendCGN(
     ),
     getCgnStatus: withBearerToken(
       createFetchRequestForApi(getCgnStatus, options)
-    )
+    ),
+    generateOtp: withBearerToken(createFetchRequestForApi(generateOtp, options))
   };
 }
