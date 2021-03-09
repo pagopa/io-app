@@ -28,6 +28,7 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
     <Image
       source={unknownGdo}
       style={{ width: 40, height: 40, resizeMode: "contain" }}
+      key={"unknownGdoLogo"}
       testID={"unknownGdoLogo"}
     />,
     imgDim => {
@@ -42,12 +43,14 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
         <Image
           source={{ uri: imageUrl }}
           style={imageStyle}
+          key={"gdoLogo"}
           testID={"gdoLogo"}
         />
       ) : (
         <Image
           source={unknownGdo}
           style={{ width: 40, height: 40, resizeMode: "contain" }}
+          key={"unknownGdoLogo"}
           testID={"unknownGdoLogo"}
         />
       );
