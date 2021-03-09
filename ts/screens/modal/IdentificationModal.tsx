@@ -38,6 +38,8 @@ import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
+import { OtpCodeRefreshComponent } from "../../features/bonus/cgn/components/otp/OtpCodeRefreshComponent";
+import { OtpCode } from "../../../definitions/cgn/OtpCode";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -462,6 +464,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           />
           <Content primary={!isValidatingTask}>
             {renderHeader()}
+            <OtpCodeRefreshComponent
+              otp={{
+                code: "M6R3E4PNG36" as OtpCode,
+                expires_at: new Date("2021-09-08T00:53:12.966Z"),
+                ttl: 100
+              }}
+            />
             {this.renderErrorDescription()}
             <Pinpad
               onPinResetHandler={this.props.onPinResetHandler}
