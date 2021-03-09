@@ -88,11 +88,11 @@ describe("searchUserCobadge", () => {
       .run()
       .then(rr => {
         const globalState = rr.storeState as GlobalState;
-        // Without pending, no searchPrivativeRequestId is expected
+        // Without pending, no searchCoBadgeRequestId is expected
         expect(
           globalState.wallet.onboarding.coBadge.searchCoBadgeRequestId
         ).toBeNull();
-        // without searchPrivativeRequestId in the initial state, only 1 call to getCobadgePans is expected
+        // without searchCoBadgeRequestId in the initial state, only 1 call to getCobadgePans is expected
         expect(getCobadgePans.mock.calls.length).toBe(1);
         expect(searchCobadgePans.mock.calls.length).toBe(0);
       }));
@@ -118,11 +118,11 @@ describe("searchUserCobadge", () => {
       .run()
       .then(rr => {
         const globalState = rr.storeState as GlobalState;
-        // Without pending in the response, no searchPrivativeRequestId is expected
+        // Without pending in the response, no searchCoBadgeRequestId is expected
         expect(
           globalState.wallet.onboarding.coBadge.searchCoBadgeRequestId
         ).toBeNull();
-        // with searchPrivativeRequestId in the initial state, only 1 call to searchCobadgePans is expected
+        // with searchCoBadgeRequestId in the initial state, only 1 call to searchCobadgePans is expected
         expect(getCobadgePans.mock.calls.length).toBe(0);
         expect(searchCobadgePans.mock.calls.length).toBe(1);
       });
