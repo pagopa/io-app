@@ -88,6 +88,13 @@ const LocalServicesWebView = (props: Props) => {
     }
   };
 
+  /**
+   * 'listen' on web loading requests
+   * if a serviceId is present in the url query params:
+   * - avoid page url loading (return false)
+   * - dispatch service loading request
+   * @param navState
+   */
   const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
     if (navState.url) {
       const urlParse = new URLParse(navState.url, true);
