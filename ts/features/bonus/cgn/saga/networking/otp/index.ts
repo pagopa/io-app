@@ -2,7 +2,7 @@ import { call, put } from "redux-saga/effects";
 import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { cngGenerateOtp } from "../../../store/actions/otp";
+import { cgnGenerateOtp } from "../../../store/actions/otp";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 
 // handle the request for CGN Otp code generation
@@ -16,10 +16,10 @@ export function* cgnGenerateOtp(
     );
     if (generateOtpResult.isRight()) {
       if (generateOtpResult.value.status === 200) {
-        yield put(cngGenerateOtp.success(generateOtpResult.value.value));
+        yield put(cgnGenerateOtp.success(generateOtpResult.value.value));
       } else {
         yield put(
-          cngGenerateOtp.failure(
+          cgnGenerateOtp.failure(
             getNetworkError(
               new Error(`response status ${generateOtpResult.value.status}`)
             )
@@ -28,7 +28,7 @@ export function* cgnGenerateOtp(
       }
     } else {
       yield put(
-        cngGenerateOtp.failure(
+        cgnGenerateOtp.failure(
           getNetworkError(
             new Error(readablePrivacyReport(generateOtpResult.value))
           )
@@ -36,6 +36,6 @@ export function* cgnGenerateOtp(
       );
     }
   } catch (e) {
-    yield put(cngGenerateOtp.failure(getNetworkError(e)));
+    yield put(cgnGenerateOtp.failure(getNetworkError(e)));
   }
 }

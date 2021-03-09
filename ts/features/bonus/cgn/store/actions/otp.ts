@@ -5,10 +5,10 @@ import { Otp } from "../../../../../../definitions/cgn/Otp";
 /**
  * handle CGN Otp generation
  */
-export const cngGenerateOtp = createAsyncAction(
+export const cgnGenerateOtp = createAsyncAction(
   "CGN_GENERATE_OTP_REQUEST",
   "CGN_GENERATE_OTP_SUCCESS",
   "CGN_GENERATE_OTP_FAILURE"
 )<void, Otp, NetworkError>();
 
-export type CgnOtpActions = ActionType<typeof cngGenerateOtp>;
+export type CgnOtpActions = ActionType<typeof cgnGenerateOtp>;

@@ -6,7 +6,7 @@ import {
   remoteLoading,
   remoteReady
 } from "../../../../bpd/model/RemoteValue";
-import { cngGenerateOtp } from "../../actions/otp";
+import { cgnGenerateOtp } from "../../actions/otp";
 import { cgnOtpDataSelector } from "../otp";
 import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
 import { getGenericError } from "../../../../../../utils/errors";
@@ -15,7 +15,7 @@ describe("cgnOtpReducer", () => {
   it("should be loading", () => {
     const globalState: GlobalState = appReducer(
       undefined,
-      cngGenerateOtp.request()
+      cgnGenerateOtp.request()
     );
     expect(cgnOtpDataSelector(globalState)).toEqual(remoteLoading);
   });
@@ -28,7 +28,7 @@ describe("cgnOtpReducer", () => {
     };
     const globalState: GlobalState = appReducer(
       undefined,
-      cngGenerateOtp.success(otpData)
+      cgnGenerateOtp.success(otpData)
     );
     expect(isReady(cgnOtpDataSelector(globalState))).toBeTruthy();
     if (isReady(cgnOtpDataSelector(globalState))) {
@@ -40,7 +40,7 @@ describe("cgnOtpReducer", () => {
     const genericError = getGenericError(new Error("an error"));
     const globalState: GlobalState = appReducer(
       undefined,
-      cngGenerateOtp.failure(genericError)
+      cgnGenerateOtp.failure(genericError)
     );
     expect(cgnOtpDataSelector(globalState)).toEqual(remoteError(genericError));
   });

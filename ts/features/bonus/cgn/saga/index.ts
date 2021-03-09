@@ -8,7 +8,7 @@ import {
 import { apiUrlPrefix } from "../../../../config";
 import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
-import { cngGenerateOtp } from "../store/actions/otp";
+import { cgnGenerateOtp } from "../store/actions/otp";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -44,7 +44,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // CGN Otp generation
   yield takeLatest(
-    getType(cngGenerateOtp.request),
+    getType(cgnGenerateOtp.request),
     cgnGenerateOtp,
     backendCGN.generateOtp
   );
