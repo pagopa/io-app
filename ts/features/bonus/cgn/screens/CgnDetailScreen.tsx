@@ -28,6 +28,8 @@ import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { cgnEycaDetails } from "../store/actions/eyca/details";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { isEycaEligible } from "../store/reducers/eyca/details";
+import { navigateToCgnMerchantsList } from "../navigation/actions";
+
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -90,7 +92,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
-            constNull,
+            props.navigateToMerchants,
             I18n.t("bonus.cgn.detail.cta.buyers")
           )}
           rightButton={confirmButtonProps(
@@ -110,7 +112,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadEycaDetails: () => dispatch(cgnEycaDetails.request())
+  loadEycaDetails: () => dispatch(cgnEycaDetails.request()),
+  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
