@@ -911,10 +911,10 @@ wallet:
         title: "Choose your card brand"
         body: "You can only add cards that allow you to pay in supermarkets."
         koDisabled:
-          title: "This supermarket does not yet offer this functionality"
+          title: "This supermarket doesn't offer this feature yet"
           body: "We are working to allow you to add your card soon."
         koUnavailable:
-          title: "We can't contact the server"
+          title: "We're unable to contact the server"
           body: "We are working to solve the problem."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
