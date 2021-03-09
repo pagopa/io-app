@@ -15,7 +15,7 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
-import { bpdEnabled } from "../../config";
+import { bpdEnabled, privativeEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import I18n from "../../i18n";
 import {
@@ -82,7 +82,10 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
-    status: "incoming"
+    status:
+      privativeEnabled && props.navigation.getParam("inPayment").isNone()
+        ? "implemented"
+        : "incoming"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
