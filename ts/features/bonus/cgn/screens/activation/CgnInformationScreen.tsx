@@ -42,7 +42,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  userActivateCgn: () => dispatch(cgnRequestActivation.request()),
+  userActivateCgn: () => dispatch(cgnRequestActivation()),
   onCancel: () => dispatch(cgnActivationCancel())
 });
 
