@@ -54,7 +54,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           {/* TODO Add Specific CGN Card element when card is available */}
           <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
         </LinearGradient>
-        <CgnCardComponent />
+        {props.cgnDetails && <CgnCardComponent cgnDetails={props.cgnDetails} />}
         <View
           style={[
             IOStyles.flex,
