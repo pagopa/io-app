@@ -118,8 +118,6 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess,
   refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
@@ -310,7 +308,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
-    case getType(payCreditCardVerificationFailure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -384,7 +381,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
