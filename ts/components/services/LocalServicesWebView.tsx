@@ -96,16 +96,16 @@ const LocalServicesWebView = (props: Props) => {
    * @param navState
    */
   const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) =>
-    fromNullable(navState.url).fold(true, u => {
-      const urlParse = new URLParse(u, true);
-      return fromNullable(urlParse.query[queryParam]).fold(true, sId => {
+    fromNullable(navState.url)
+      .map(u => new URLParse(u, true))
+      .mapNullable(up => up.query[queryParam])
+      .fold(true, sId => {
         setServiceIdToLoad(sId);
         // request loading service
         props.loadService(sId);
         // avoid webview loading this url
         return false;
       });
-    });
 
   const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
     .mapNullable(sid => props.servicesById[sid])
