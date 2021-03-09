@@ -137,7 +137,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         style={styles.cardContainer}
       >
         <WebView
-          style={{ width: "100%" }}
+          style={{ borderRadius: 15 }}
           source={{
             html: generatedSvg
           }}
