@@ -97,7 +97,7 @@ const LocalServicesWebView = (props: Props) => {
         setServiceIdToLoad(maybeServiceId);
         // request for 'internal' service loading
         props.loadService(maybeServiceId);
-        // avoid webview loading this url and
+        // avoid webview loading this url
         return false;
       }
       return true;
