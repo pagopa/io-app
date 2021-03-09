@@ -6,6 +6,7 @@ import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/lib/function";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -62,6 +63,7 @@ type State = {
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
   errorDescription?: string;
+  otpIndex: number;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -118,7 +120,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
       biometryAuthAvailable: true,
-      canInsertPinTooManyAttempts: this.props.identificationFailState.isNone()
+      canInsertPinTooManyAttempts: this.props.identificationFailState.isNone(),
+      otpIndex: 0
     };
   }
 
@@ -415,6 +418,34 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.props.onCancelIdentification();
     };
 
+    const otps = [
+      {
+        code: "XXR3E4PNG36" as OtpCode,
+        expires_at: new Date("2021-09-08T00:53:12.966Z"),
+        ttl: 100
+      },
+      {
+        code: "YYR3E4PNG37" as OtpCode,
+        expires_at: new Date("2021-09-08T00:53:12.966Z"),
+        ttl: 100
+      },
+      {
+        code: "ZZR3E4PNG38" as OtpCode,
+        expires_at: new Date("2021-09-08T00:53:12.966Z"),
+        ttl: 100
+      },
+      {
+        code: "GGR3E4PNG39" as OtpCode,
+        expires_at: new Date("2021-09-08T00:53:12.966Z"),
+        ttl: 100
+      },
+      {
+        code: "M6R3E4PNG36" as OtpCode,
+        expires_at: new Date("2021-09-08T00:53:12.966Z"),
+        ttl: 100
+      }
+    ];
+
     const renderHeader = () => (
       <React.Fragment>
         <Text
@@ -465,11 +496,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           <Content primary={!isValidatingTask}>
             {renderHeader()}
             <OtpCodeRefreshComponent
-              otp={{
-                code: "M6R3E4PNG36" as OtpCode,
-                expires_at: new Date("2021-09-08T00:53:12.966Z"),
-                ttl: 100
-              }}
+              onEnd={() =>
+                this.setState(ov => ({
+                  otpIndex: ov.otpIndex + 1
+                }))
+              }
+              otp={otps[this.state.otpIndex % otps.length]}
             />
             {this.renderErrorDescription()}
             <Pinpad
