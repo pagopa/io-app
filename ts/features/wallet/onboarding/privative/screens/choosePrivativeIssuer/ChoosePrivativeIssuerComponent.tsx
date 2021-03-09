@@ -56,7 +56,11 @@ const handlePress = (pi: PrivativeIssuer, props: Props) => {
 
 const renderItem = (pi: ListRenderItemInfo<PrivativeIssuer>, props: Props) => (
   <BankPreviewItem
-    bank={{ abi: pi.item.id, name: pi.item.gdo, logoUrl: pi.item.gdoLogo }}
+    bank={{
+      abi: pi.item.id,
+      name: `${pi.item.gdo} - ${pi.item.loyalty}`,
+      logoUrl: pi.item.gdoLogo
+    }}
     inList={true}
     onPress={_ => handlePress(pi.item, props)}
   />

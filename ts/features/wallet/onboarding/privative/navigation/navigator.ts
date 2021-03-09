@@ -2,9 +2,9 @@ import { createStackNavigator } from "react-navigation";
 import ActivateBpdOnNewPrivativeScreen from "../screens/ActivateBpdOnNewPrivativeScreen";
 import AddPrivativeCardScreen from "../screens/add/AddPrivativeCardScreen";
 import AddPrivativeCardNumberScreen from "../screens/AddPrivativeCardNumberScreen";
-import ChoosePrivativeIssuerScreen from "../screens/choosePrivative/ChoosePrivativeIssuerScreen";
-import PrivativeIssuerKoDisabled from "../screens/choosePrivative/ko/PrivativeIssuerKoDisabled";
-import PrivativeIssuerKoUnavailable from "../screens/choosePrivative/ko/PrivativeIssuerKoUnavailable";
+import ChoosePrivativeIssuerScreen from "../screens/choosePrivativeIssuer/ChoosePrivativeIssuerScreen";
+import PrivativeIssuerKoDisabled from "../screens/choosePrivativeIssuer/ko/PrivativeIssuerKoDisabled";
+import PrivativeIssuerKoUnavailable from "../screens/choosePrivativeIssuer/ko/PrivativeIssuerKoUnavailable";
 import SearchPrivativeCardScreen from "../screens/search/SearchPrivativeCardScreen";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 

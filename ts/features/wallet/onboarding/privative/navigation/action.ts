@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "./routes";
 
-export const navigateToOnboardingPrivativeChooseBrandScreen = () =>
+export const navigateToOnboardingPrivativeChooseIssuerScreen = () =>
   NavigationActions.navigate({
     routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
   });
