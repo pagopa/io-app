@@ -95,22 +95,18 @@ const LocalServicesWebView = (props: Props) => {
    * - dispatch service loading request
    * @param navState
    */
-  const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
-    if (navState.url) {
-      const urlParse = new URLParse(navState.url, true);
-      const maybeServiceId = urlParse.query[queryParam];
-      // click on service
-      if (maybeServiceId) {
-        setServiceIdToLoad(maybeServiceId);
-        // request for 'internal' service loading
-        props.loadService(maybeServiceId);
+  const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) =>
+    fromNullable(navState.url).fold(true, u => {
+      const urlParse = new URLParse(u, true);
+      return fromNullable(urlParse.query[queryParam]).fold(true, sId => {
+        setServiceIdToLoad(sId);
+        // request loading service
+        props.loadService(sId);
         // avoid webview loading this url
         return false;
-      }
-      return true;
-    }
-    return true;
-  };
+      });
+    });
+
   const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
     .mapNullable(sid => props.servicesById[sid])
     .fold(false, pot.isLoading);
