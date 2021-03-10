@@ -3,10 +3,11 @@
 /**
  * A saga that manages the Wallet.
  */
-import { none, some, Option, isSome } from "fp-ts/lib/Option";
+import { isSome, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
 import {
   call,
@@ -30,7 +31,8 @@ import {
   apiUrlPrefix,
   bpdEnabled,
   fetchPagoPaTimeout,
-  fetchPaymentManagerLongTimeout
+  fetchPaymentManagerLongTimeout,
+  privativeEnabled
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
@@ -71,6 +73,16 @@ import {
   searchUserCoBadge,
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
+import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
+import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
+import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
+import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
+import {
+  addPrivativeToWallet,
+  loadPrivativeIssuers,
+  searchUserPrivative,
+  walletAddPrivativeStart
+} from "../features/wallet/onboarding/privative/store/actions";
 import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
@@ -88,6 +100,7 @@ import {
 } from "../store/actions/navigation";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
 import {
   backToEntrypointPayment,
   paymentAttiva,
@@ -133,6 +146,7 @@ import {
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
 import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
@@ -142,6 +156,7 @@ import {
   PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
+import { isTestEnv } from "../utils/environment";
 
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
@@ -168,10 +183,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { isTestEnv } from "../utils/environment";
-import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
-import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
-import { Millisecond } from "italia-ts-commons/lib/units";
 
 const successScreenDelay = 2000 as Millisecond;
 /**
@@ -857,8 +868,37 @@ export function* watchWalletSaga(
       contentClient.getCobadgeServices
     );
 
+    if (privativeEnabled) {
+      yield takeLatest(
+        loadPrivativeIssuers.request,
+        handleLoadPrivativeConfiguration,
+        contentClient.getPrivativeServices
+      );
+    }
+
     // watch for add co-badge to Wallet workflow
     yield takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
+
+    if (privativeEnabled) {
+      // watch for add privative to Wallet workflow
+      yield takeLatest(
+        walletAddPrivativeStart,
+        addPrivativeToWalletAndActivateBpd
+      );
+      yield takeLatest(
+        searchUserPrivative.request,
+        handleSearchUserPrivative,
+        paymentManagerClient.getCobadgePans,
+        paymentManagerClient.searchCobadgePans,
+        pmSessionManager
+      );
+      yield takeLatest(
+        addPrivativeToWallet.request,
+        handleAddPrivativeToWallet,
+        paymentManagerClient.addCobadgeToWallet,
+        pmSessionManager
+      );
+    }
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
