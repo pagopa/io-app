@@ -7,11 +7,12 @@ import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/ShadowBox";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = {
   category: string;
   description: string;
-  value: string;
+  value: number;
 };
 
 const PERCENTAGE_SYMBOL = "%";
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   verticalPadding: {
-    paddingVertical: 16
+    paddingBottom: 16
   },
   discountValueBox: {
     borderRadius: 6.5,
@@ -43,7 +44,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
           { justifyContent: "space-between", alignItems: "center" }
         ]}
       >
-        <View>
+        <View style={IOStyles.flex}>
           <View style={styles.row}>
             {/* TODO when available and defined the icon name should be defined through a map of category codes */}
             <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />

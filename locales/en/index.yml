@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -377,8 +377,8 @@ profile:
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
-        alert: 
-          title: Do you want to change the language to 
+        alert:
+          title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
     empty:
@@ -754,7 +754,7 @@ wallet:
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
-  featured: Highlighted 
+  featured: Highlighted
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -1107,7 +1107,7 @@ wallet:
       shortName: "Card"
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
-        title: In app payments 
+        title: In app payments
         description: Make payments to the public administration through pagoPA
         active: Active
         arriving: Arriving
@@ -1136,7 +1136,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: your Postepay app
     postepay:
@@ -1152,7 +1152,7 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: 
+      holder:
         label: Card holder
         description:
           base: "Enter as shown on the card"
@@ -1250,21 +1250,21 @@ wallet:
     fallback:
       title: "Sorry, an unexpected error has occurred"
       description: "No charges were made."
-    code1: 
+    code1:
       title: "Sorry, an unexpected error has occurred"
       description: "No charges were made."
-    code2: 
+    code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
-    code4: 
+    code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
-    code7: 
+    code7:
       title: "There's a problem with your card"
       description: "No charges were made. For more information, contact your bank."
-    code8: 
+    code8:
       title: "The operation was canceled"
-    code10: 
+    code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
     addCreditCard:
@@ -1334,19 +1334,19 @@ messages:
     payment:
       expired: Payment expired
       paid: This notice is paid. Show the receipt in your
-      addMemo: 
-          block1: Add a reminder for the 
+      addMemo:
+          block1: Add a reminder for the
           block2: at
       expiringOrValidAlert:
         block1: This notice will expire on
       expiredAlert:
         block1: This notice expired at
         block2: on
-    prescription:  
+    prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
-          block1: The prescription expired at 
+          block1: The prescription expired at
           block2: "on"
     pay: Pay € {{amount}}
     onlyPay: Pay
@@ -2095,7 +2095,7 @@ bonus:
           moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
-            one: "1 valid transaction" 
+            one: "1 valid transaction"
             other: "{{transactions}} valid transactions"
         ranking:
           title: "Your position"
@@ -2119,7 +2119,7 @@ bonus:
           text2: "at least one payment method "
           text3: "at Cashback to start collecting necessary transactions"
         detail:
-          empty: 
+          empty:
             text1: "There are no valid transactions yet."
             text2: "Check back in the next few days!"
           summary:
@@ -2207,6 +2207,14 @@ bonus:
     merchantsList:
       navigationTitle: View merchants
       screenTitle: Select the merchant where you want to buy something
+    merchantDetail:
+      title:
+        deals: Discounts
+        description: Description
+        services: Services
+        hours: Working Hours
+      cta:
+        label: Navigate to merchant website
     cta:
       activeBonus: Activate your Carta Giovani
       goToDetail: View your Carta Giovani
