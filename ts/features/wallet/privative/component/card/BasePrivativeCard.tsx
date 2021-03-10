@@ -51,7 +51,11 @@ const BASE_IMG_H = 30;
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
   const cardLogo = fromNullable(props.cardLogo).fold(
-    <Image style={styles.cardLogoFallback} source={unknownGdo} />,
+    <Image
+      style={styles.cardLogoFallback}
+      source={unknownGdo}
+      testID={"fallbackLoyaltyLogo"}
+    />,
     cL => {
       const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, cL);
       const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
@@ -62,7 +66,9 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
           resizeMode: "contain"
         })
       );
-      return <Image style={imageStyle} source={{ uri: cL }} />;
+      return (
+        <Image style={imageStyle} source={{ uri: cL }} testID={"loyaltyLogo"} />
+      );
     }
   );
 
@@ -77,7 +83,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
               justifyContent: "space-between"
             }}
           >
-            <Image source={props.icon} style={styles.icon} testID={"abiLogo"} />
+            <Image source={props.icon} style={styles.icon} testID={"gdoLogo"} />
 
             {props.blocked && (
               <Badge
