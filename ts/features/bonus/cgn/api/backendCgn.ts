@@ -8,6 +8,8 @@ import {
 import { Omit } from "italia-ts-commons/lib/types";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
+  generateOtpDefaultDecoder,
+  GenerateOtpT,
   getCgnActivationDefaultDecoder,
   GetCgnActivationT,
   getCgnStatusDefaultDecoder,
@@ -76,6 +78,15 @@ const getEycaStatus: GetEycaStatusT = {
   response_decoder: getEycaStatusDefaultDecoder()
 };
 
+const generateOtp: GenerateOtpT = {
+  method: "post",
+  url: () => `/api/v1/cgn/otp`,
+  query: _ => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: generateOtpDefaultDecoder()
+};
+
 function ParamAuthorizationBearerHeaderProducer<
   P extends { readonly Bearer: string }
 >(): RequestHeaderProducer<P, "Authorization"> {
@@ -124,6 +135,7 @@ export function BackendCGN(
     ),
     getEycaStatus: withBearerToken(
       createFetchRequestForApi(getEycaStatus, options)
-    )
+    ),
+    generateOtp: withBearerToken(createFetchRequestForApi(generateOtp, options))
   };
 }
