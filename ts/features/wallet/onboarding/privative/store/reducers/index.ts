@@ -4,10 +4,11 @@ import addedPrivativeReducer from "./addedPrivative";
 import addingPrivativeReducer, {
   AddingPrivativeState
 } from "./addingPrivative";
-import brandConfigurationReducer, {
-  BrandConfigurationState
-} from "./brandConfiguration";
 import foundPrivativeReducer, { RemotePrivative } from "./foundPrivative";
+import privativeIssuersReducer, {
+  PrivativeIssuersState
+} from "./privativeIssuers";
+
 import searchedPrivativeReducer, {
   SearchedPrivativeData
 } from "./searchedPrivative";
@@ -20,7 +21,7 @@ export type OnboardingPrivativeState = {
   addingPrivative: AddingPrivativeState;
   addedPrivative: RawCreditCardPaymentMethod | null;
   searchedPrivative: SearchedPrivativeData;
-  brandConfiguration: BrandConfigurationState;
+  privativeIssuers: PrivativeIssuersState;
   searchPrivativeRequestId: SearchPrivativeRequestIdState;
 };
 
@@ -37,7 +38,7 @@ const onboardingPrivativeReducer = combineReducers<
   // The card information (brand, card number) searched
   searchedPrivative: searchedPrivativeReducer,
   // A list of brand for which it is allowed to use the privative search service
-  brandConfiguration: brandConfigurationReducer,
+  privativeIssuers: privativeIssuersReducer,
   // the search id used to follow up the privative search
   searchPrivativeRequestId: searchPrivativeRequestIdReducer
 });

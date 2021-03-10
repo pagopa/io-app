@@ -12,7 +12,7 @@ import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
   navigateToActivateBpdOnNewPrivative,
-  navigateToOnboardingPrivativeChooseBrandScreen
+  navigateToOnboardingPrivativeChooseIssuerScreen
 } from "../../navigation/action";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../navigation/routes";
 import {
@@ -31,8 +31,8 @@ import { onboardingPrivativeAddedSelector } from "../../store/reducers/addedPriv
  */
 function* privativeWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingPrivativeChooseBrandScreen(),
-    startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_BRAND,
+    startScreenNavigation: navigateToOnboardingPrivativeChooseIssuerScreen(),
+    startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER,
     complete: walletAddPrivativeCompleted,
     back: walletAddPrivativeBack,
     cancel: walletAddPrivativeCancel
