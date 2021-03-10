@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// TODO: rename
+// TODO: rename the component, in order to have a generic list item that accepts an image with a text
 export const BankPreviewItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
