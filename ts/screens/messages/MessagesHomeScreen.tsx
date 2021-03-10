@@ -10,6 +10,7 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
@@ -44,6 +45,8 @@ import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { OtpCodeRefreshComponent } from "../../features/bonus/cgn/components/otp/OtpCodeRefreshComponent";
+import { OtpCode } from "../../../definitions/cgn/OtpCode";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -216,23 +219,21 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             textStyle={styles.textStyle}
             heading={I18n.t("messages.tab.inbox")}
           >
-            <MessagesInbox
-              currentTab={this.state.currentTab}
-              messagesState={lexicallyOrderedMessagesState}
-              servicesById={servicesById}
-              paymentsByRptId={paymentsByRptId}
-              onRefresh={this.onRefreshMessages}
-              setMessagesArchivedState={updateMessagesArchivedState}
-              navigateToMessageDetail={navigateToMessageDetail}
-              animated={{
-                onScroll: Animated.event([
-                  {
-                    nativeEvent: {
-                      contentOffset: { y: this.animatedTabScrollPositions[0] }
-                    }
-                  }
-                ]),
-                scrollEventThrottle: 8
+            <OtpCodeRefreshComponent
+              progressConfig={{
+                start: 100,
+                end: 0,
+                duration: 3000 as Millisecond
+              }}
+              onEnd={() => {
+                // this.setState(ov => ({
+                //  otpIndex: ov.otpIndex + 1
+                // }));
+              }}
+              otp={{
+                code: "XXR3E4PNG36" as OtpCode,
+                expires_at: new Date("2021-09-08T00:53:12.966Z"),
+                ttl: 100
               }}
             />
           </Tab>

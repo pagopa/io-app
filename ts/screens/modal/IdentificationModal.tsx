@@ -496,8 +496,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           <Content primary={!isValidatingTask}>
             {renderHeader()}
             <OtpCodeRefreshComponent
-              duration={60000 as Millisecond}
-              progressConfig={{ start: 100, end: 0 }}
+              progressConfig={{
+                start: 100,
+                end: 0,
+                duration: 10000 as Millisecond
+              }}
               onEnd={() => {
                 // this.setState(ov => ({
                 //  otpIndex: ov.otpIndex + 1
