@@ -2,8 +2,6 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
-import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -19,7 +17,6 @@ import { showToast } from "../../utils/showToast";
 import { localServicesWebUrl } from "../../config";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
-import { WebviewMessage } from "../../types/WebviewMessage";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 type Props = {
@@ -53,7 +50,6 @@ const renderLoading = () => (
     <RefreshIndicator />
   </View>
 );
-const queryParam = "idService";
 
 /**
  * This component is basically a webview that loads an url showing local services
@@ -91,6 +87,11 @@ const LocalServicesWebView = (props: Props) => {
     }
   };
 
+  /**
+   * 'listen' on web message
+   * if a serviceId is sent: dispatch service loading request
+   * @param navState
+   */
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
     ServiceId.decode(event.nativeEvent.data).map(sId => {
       setServiceIdToLoad(sId);
