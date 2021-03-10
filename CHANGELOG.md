@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0-rc.3](https://github.com/pagopa/io-app/compare/1.23.0-rc.2...1.23.0-rc.3) (2021-03-10)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177142050](https://www.pivotaltracker.com/story/show/177142050),[#177142212](https://www.pivotaltracker.com/story/show/177142212)] Support search privative card API ([#2881](https://github.com/pagopa/io-app/issues/2881)) ([f856dba](https://github.com/pagopa/io-app/commit/f856dba8c3e095b32a098ce985c635f5e6231e06))
+* **Bonus Pagamenti Digitali:** [[#177142282](https://www.pivotaltracker.com/story/show/177142282)] Manage add supermarket card item ([#2879](https://github.com/pagopa/io-app/issues/2879)) ([572f28e](https://github.com/pagopa/io-app/commit/572f28eb111b44cc89f9331502735a547c8df767))
+* **Bonus Pagamenti Digitali:** [[#177142358](https://www.pivotaltracker.com/story/show/177142358)] Added privative issuers configuration and choice screen  ([#2876](https://github.com/pagopa/io-app/issues/2876)) ([e8b559a](https://github.com/pagopa/io-app/commit/e8b559a4e6fa015f4ca02e323209efb7010983c1))
+* **Carta Giovani Nazionale:** [[#176959318](https://www.pivotaltracker.com/story/show/176959318),[#177244438](https://www.pivotaltracker.com/story/show/177244438),[#177244411](https://www.pivotaltracker.com/story/show/177244411)] Add OTP generation network / actions / saga / reducer ([#2882](https://github.com/pagopa/io-app/issues/2882)) ([04c9905](https://github.com/pagopa/io-app/commit/04c99053b10fa9b1adee174ae21d2908a2dcdf2a))
+
+
+### Bug Fixes
+
+* [[#177281052](https://www.pivotaltracker.com/story/show/177281052)] Services list could display not found page and zoom is allowed ([#2883](https://github.com/pagopa/io-app/issues/2883)) ([f4d2342](https://github.com/pagopa/io-app/commit/f4d234231bcfbf972ca3546f496d4fe5acaf5906)), closes #177281074 #177281074 #177281074 #177281074
+
+
+### Chores
+
+* [[#177241763](https://www.pivotaltracker.com/story/show/177241763)] Change Instabug report hint text ([#2875](https://github.com/pagopa/io-app/issues/2875)) ([1c20674](https://github.com/pagopa/io-app/commit/1c2067461149ccfcaa1abf263f3c4d2bb66edde0))
+
 ## [1.23.0-rc.2](https://github.com/pagopa/io-app/compare/1.23.0-rc.1...1.23.0-rc.2) (2021-03-09)
 
 
