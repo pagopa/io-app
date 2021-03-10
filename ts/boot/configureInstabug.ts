@@ -60,6 +60,10 @@ export const initialiseInstabug = () => {
     NetworkLogger.setEnabled(false);
   }
 
+  Instabug.setString(
+    Instabug.strings.commentFieldHintForQuestion,
+    I18n.t("instabug.overrideText.commentFieldHintForQuestion")
+  );
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
   Instabug.setColorTheme(Instabug.colorTheme.light);
@@ -89,13 +93,13 @@ export const attachmentTypeConfigurationNoScreenshot = {
 export type DefaultReportAttachmentTypeConfiguration = typeof defaultAttachmentTypeConfiguration;
 
 export const openInstabugQuestionReport = (
-  attcahmentTypeConfiguration: DefaultReportAttachmentTypeConfiguration = defaultAttachmentTypeConfiguration
+  attachmentTypeConfiguration: DefaultReportAttachmentTypeConfiguration = defaultAttachmentTypeConfiguration
 ) => {
   Instabug.setEnabledAttachmentTypes(
-    attcahmentTypeConfiguration.screenshot,
-    attcahmentTypeConfiguration.extraScreenshot,
-    attcahmentTypeConfiguration.galleryImage,
-    attcahmentTypeConfiguration.screenRecording
+    attachmentTypeConfiguration.screenshot,
+    attachmentTypeConfiguration.extraScreenshot,
+    attachmentTypeConfiguration.galleryImage,
+    attachmentTypeConfiguration.screenRecording
   );
   BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
