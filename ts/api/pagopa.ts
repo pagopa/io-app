@@ -505,7 +505,10 @@ const getCobadgePans: GetCobadgesUsingGETT = {
     return `/v1/cobadge/pans${abiParameter}`;
   },
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeader,
+  headers: p => {
+    const authBearer = ParamAuthorizationBearerHeader(p);
+    return p.PanCode ? { ...authBearer, PanCode: p.PanCode } : authBearer;
+  },
   response_decoder: getCobadgesUsingGETDefaultDecoder()
 };
 
@@ -766,12 +769,12 @@ export function PaymentManagerClient(
           createFetchRequestForApi(addBPayToWallet, altOptions)
         )
       )({ bPayRequest }),
-    getCobadgePans: (abiCode: string | undefined) =>
+    getCobadgePans: (abiCode: string | undefined, panCode?: string) =>
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getCobadgePans, altOptions)
         )
-      )({ abiCode }),
+      )({ abiCode, PanCode: panCode }),
     searchCobadgePans: (searchRequestId: string) =>
       flip(
         withPaymentManagerToken(
