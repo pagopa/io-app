@@ -14,6 +14,7 @@ import { Municipality as MunicipalityMedadata } from "../../definitions/content/
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
@@ -129,6 +130,20 @@ const getCobadgeServicesT: GetCoBadgeServicesT = {
   response_decoder: basicResponseDecoder(CoBadgeServices)
 };
 
+type GetPrivativeServicesT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<PrivativeServices>
+>;
+const getPrivativeServicesT: GetPrivativeServicesT = {
+  method: "get",
+  url: () => "/status/privativeServices.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(PrivativeServices)
+};
+
 /**
  * A client for the static content
  */
@@ -145,6 +160,10 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
     getAbiList: createFetchRequestForApi(getAbisListT, options),
-    getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options)
+    getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
+    getPrivativeServices: createFetchRequestForApi(
+      getPrivativeServicesT,
+      options
+    )
   };
 }
