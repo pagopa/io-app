@@ -93,17 +93,32 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       easing: Easing.linear
     }).start(() => {
       translateX.setValue(0);
+      setElapsedSeconds(cv => cv + 1);
       stopInterval();
       props.onEnd();
     });
-    // eslint-disable-next-line functional/immutable-data
-    intervalRef.current = setInterval(() => {
-      const seconds = elapsedSeconds + 1;
-      setElapsedSeconds(cv => cv + 1);
-      console.log(seconds);
-    }, 1000);
+    if (intervalRef.current === undefined) {
+      // eslint-disable-next-line functional/immutable-data
+      intervalRef.current = setInterval(() => {
+        setElapsedSeconds(cv => cv + 1);
+      }, 1000);
+    }
+
     return stopInterval;
   }, [props.otp.code]);
+
+  useEffect(() => {
+    const durationInSeconds = props.progressConfig.duration / 1000;
+    const minutes = Math.max(
+      0,
+      Math.floor((durationInSeconds - elapsedSeconds) / 60)
+    );
+    const seconds = Math.max(
+      0,
+      Math.round(durationInSeconds - (minutes * 60 + (elapsedSeconds % 60)))
+    );
+    console.log(minutes, seconds);
+  }, [elapsedSeconds]);
 
   return (
     <View style={styles.container}>
