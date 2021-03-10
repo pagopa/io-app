@@ -10,6 +10,7 @@ import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
 import { cgnEycaDetails } from "../store/actions/eyca/details";
 import { cgnEycaActivationRequest } from "../store/actions/eyca/activation";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -23,6 +24,8 @@ import {
   handleEycaStatusPolling,
   requestEycaActivationSaga
 } from "./networking/eyca/activation/getEycaActivationSaga";
+import { cgnGenerateOtp } from "./networking/otp";
+
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -63,5 +66,12 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
       backendCGN.startEycaActivation,
       handleEycaStatusPolling(backendCGN.getEycaActivation)
     )
+  );
+  
+  // CGN Otp generation
+  yield takeLatest(
+    getType(cgnGenerateOtpAction.request),
+    cgnGenerateOtp,
+    backendCGN.generateOtp
   );
 }
