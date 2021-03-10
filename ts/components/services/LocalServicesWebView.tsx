@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
-import WebView from "react-native-webview";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import { connect } from "react-redux";
@@ -18,6 +18,9 @@ import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
 import { localServicesWebUrl } from "../../config";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
+import { WebviewMessage } from "../../types/WebviewMessage";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
@@ -88,24 +91,13 @@ const LocalServicesWebView = (props: Props) => {
     }
   };
 
-  /**
-   * 'listen' on web loading requests
-   * if a serviceId is present in the url query params:
-   * - avoid page url loading (return false)
-   * - dispatch service loading request
-   * @param navState
-   */
-  const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) =>
-    fromNullable(navState.url)
-      .map(u => new URLParse(u, true))
-      .mapNullable(up => up.query[queryParam])
-      .fold(true, sId => {
-        setServiceIdToLoad(sId);
-        // request loading service
-        props.loadService(sId);
-        // avoid webview loading this url
-        return false;
-      });
+  const handleWebviewMessage = (event: WebViewMessageEvent) => {
+    ServiceId.decode(event.nativeEvent.data).map(sId => {
+      setServiceIdToLoad(sId);
+      // request loading service
+      props.loadService(sId);
+    });
+  };
 
   const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
     .mapNullable(sid => props.servicesById[sid])
@@ -116,13 +108,14 @@ const LocalServicesWebView = (props: Props) => {
 
       <WebView
         ref={webViewRef}
+        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
         style={{ flex: 1 }}
         textZoom={100}
         source={{
           uri: localServicesWebUrl
         }}
         onError={() => setWebViewError(true)}
-        onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+        onMessage={handleWebviewMessage}
         startInLoadingState={true}
         renderLoading={renderLoading}
         javaScriptEnabled={true}
