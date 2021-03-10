@@ -75,9 +75,11 @@ import {
 } from "../features/wallet/onboarding/cobadge/store/actions";
 import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
 import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
+import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
 import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
 import {
   addPrivativeToWallet,
+  loadPrivativeIssuers,
   searchUserPrivative,
   walletAddPrivativeStart
 } from "../features/wallet/onboarding/privative/store/actions";
@@ -865,6 +867,14 @@ export function* watchWalletSaga(
       handleLoadCoBadgeConfiguration,
       contentClient.getCobadgeServices
     );
+
+    if (privativeEnabled) {
+      yield takeLatest(
+        loadPrivativeIssuers.request,
+        handleLoadPrivativeConfiguration,
+        contentClient.getPrivativeServices
+      );
+    }
 
     // watch for add co-badge to Wallet workflow
     yield takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
