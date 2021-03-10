@@ -1,3 +1,5 @@
+import { fromNullable } from "fp-ts/lib/Option";
+
 /**
  * represents a "list" of objects that have
  * been indexed by a specific property
@@ -19,3 +21,14 @@ export const toIndexed = <T>(
   key: (_: T) => string | number
 ): IndexedById<T> =>
   lst.reduce((o, obj) => ({ ...o, [key(obj)]: obj }), {} as IndexedById<T>);
+
+/**
+ * Convert an IndexedById<T> to an ReadonlyArray<T>
+ * @param indexedById
+ */
+export const toArray = <T>(indexedById: IndexedById<T>): ReadonlyArray<T> =>
+  Object.keys(indexedById).reduce(
+    (acc: ReadonlyArray<T>, curr: string) =>
+      fromNullable(indexedById[curr]).fold(acc, val => [...acc, val]),
+    []
+  );
