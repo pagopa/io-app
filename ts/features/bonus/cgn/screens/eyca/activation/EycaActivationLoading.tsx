@@ -4,7 +4,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { LoadingErrorComponent } from "../../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../../../../i18n";
-import { isEycaActivationLoading } from "../../../store/reducers/eyca/activation";
+import { cgnEycaActivationstatus } from "../../../store/reducers/eyca/activation";
 import {
   cgnEycaActivationCancel,
   cgnEycaActivationRequest
@@ -28,7 +28,7 @@ const EycaActivationLoading: React.FunctionComponent<Props> = (
 );
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: isEycaActivationLoading(state)
+  isLoading: cgnEycaActivationstatus(state) !== "ERROR"
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
