@@ -92,7 +92,6 @@ const OtpCodeComponent = (code: string) => (
 );
 // TODO considering duration from OTP (expire date)
 // if (now - expire < 0 || now - expire > ttl ) -> use ttl
-// copy for whole component (use io-copy as icon)
 export const OtpCodeRefreshComponent = (props: Props) => {
   const { start = 0, end = 100, duration } = props.progressConfig;
   const formattedCode = addEvery(props.otp.code, " ", 3);
