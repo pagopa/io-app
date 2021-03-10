@@ -73,10 +73,14 @@ import {
   searchUserCoBadge,
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
+import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
+import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
 import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
 import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
 import {
+  addPrivativeToWallet,
   loadPrivativeIssuers,
+  searchUserPrivative,
   walletAddPrivativeStart
 } from "../features/wallet/onboarding/privative/store/actions";
 import {
@@ -880,6 +884,19 @@ export function* watchWalletSaga(
       yield takeLatest(
         walletAddPrivativeStart,
         addPrivativeToWalletAndActivateBpd
+      );
+      yield takeLatest(
+        searchUserPrivative.request,
+        handleSearchUserPrivative,
+        paymentManagerClient.getCobadgePans,
+        paymentManagerClient.searchCobadgePans,
+        pmSessionManager
+      );
+      yield takeLatest(
+        addPrivativeToWallet.request,
+        handleAddPrivativeToWallet,
+        paymentManagerClient.addCobadgeToWallet,
+        pmSessionManager
       );
     }
   }
