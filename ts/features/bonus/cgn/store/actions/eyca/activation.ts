@@ -3,7 +3,6 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NetworkError } from "../../../../../../utils/errors";
 import { EycaActivationDetail } from "../../../../../../../definitions/cgn/EycaActivationDetail";
 import { CgnEycaActivationProgressEnum } from "../../reducers/eyca/activation";
 
