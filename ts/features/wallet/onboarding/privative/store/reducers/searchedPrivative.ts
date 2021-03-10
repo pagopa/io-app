@@ -4,20 +4,20 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   searchUserPrivative,
-  walletAddPrivativeChooseBrand,
+  walletAddPrivativeChooseIssuer,
   walletAddPrivativeStart
 } from "../actions";
 
 // TODO
-export type BrandId = string & IUnitTag<"PrivativeService">;
+export type PrivativeIssuerId = string & IUnitTag<"PrivativeIssuerId">;
 
 export type SearchedPrivativeData = {
-  brandId?: BrandId;
+  id?: PrivativeIssuerId;
   cardNumber?: string;
 };
 
 const defaultState: SearchedPrivativeData = {
-  brandId: undefined,
+  id: undefined,
   cardNumber: undefined
 };
 
@@ -28,8 +28,8 @@ const searchedPrivativeReducer = (
   switch (action.type) {
     case getType(searchUserPrivative.request):
       return action.payload;
-    case getType(walletAddPrivativeChooseBrand):
-      return { ...state, brandId: action.payload };
+    case getType(walletAddPrivativeChooseIssuer):
+      return { ...state, id: action.payload };
     case getType(walletAddPrivativeStart):
       return defaultState;
   }

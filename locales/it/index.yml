@@ -926,6 +926,16 @@ wallet:
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     privative:
       headerTitle: "Aggiungi carta supermercato"
+      choosePrivativeIssuer:
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        title: "Scegli il marchio della tua carta"
+        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        koDisabled:
+          title: "Questo supermercato non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
+        koUnavailable:
+          title: "Non riusciamo a contattare il server"
+          body: "Siamo al lavoro per risolvere il problema."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1613,6 +1623,8 @@ contextualHelp:
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
   contextualHelp:
     title1: Hai bisogno di aiuto?
     descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
