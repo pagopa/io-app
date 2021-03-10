@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackComponent,
+  View,
+  ViewStyle
+} from "react-native";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -7,6 +15,10 @@ import { addEvery } from "../../../../../utils/strings";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import customVariables from "../../../../../theme/variables";
+import { Label } from "../../../../../components/core/typography/Label";
+import IconFont from "../../../../../components/ui/IconFont";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type ProgressConfig = {
   duration: Millisecond;
@@ -64,12 +76,17 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 4
   },
-  optCode: { fontSize: 20, padding: 4, marginRight: 4, textAlign: "center" }
+  remainingTimeContainer: {
+    alignSelf: "center",
+    marginTop: 4,
+    width: "90%"
+  },
+  optCode: { fontSize: 30, padding: 4, marginRight: 4, textAlign: "center" }
 });
 
 // Monospace custom component
 const OtpCodeComponent = (code: string) => (
-  <BaseTypography color={"blue"} weight={"Regular"} fontStyle={styles.optCode}>
+  <BaseTypography color={"blue"} weight={"Bold"} fontStyle={styles.optCode}>
     {code}
   </BaseTypography>
 );
@@ -102,12 +119,10 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       stopInterval();
       props.onEnd();
     });
-    if (intervalRef.current === undefined) {
-      // eslint-disable-next-line functional/immutable-data
-      intervalRef.current = setInterval(() => {
-        setElapsedSeconds(cv => cv + 1);
-      }, 1000);
-    }
+    // eslint-disable-next-line functional/immutable-data
+    intervalRef.current = setInterval(() => {
+      setElapsedSeconds(cv => cv + 1);
+    }, 1000);
     return stopInterval;
   }, [props.otp.code]);
 
@@ -119,17 +134,22 @@ export const OtpCodeRefreshComponent = (props: Props) => {
     );
     const seconds = Math.max(
       0,
-      Math.round(durationInSeconds - (minutes * 60 + (elapsedSeconds % 60)))
+      Math.floor((durationInSeconds - elapsedSeconds) % 60)
     );
     setRemainingTime({ minutes, seconds });
   }, [elapsedSeconds]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.otpContainer}>
+      <TouchableDefaultOpacity
+        style={styles.otpContainer}
+        onPress={() => clipboardSetStringWithFeedback(formattedCode)}
+      >
         {OtpCodeComponent(formattedCode)}
-        <CopyButtonComponent textToCopy={formattedCode} />
-      </View>
+        <View style={{ justifyContent: "center" }}>
+          <IconFont name="io-copy" color={IOColors.blue} />
+        </View>
+      </TouchableDefaultOpacity>
       <View
         style={[
           styles.progressBase,
@@ -155,6 +175,15 @@ export const OtpCodeRefreshComponent = (props: Props) => {
           ]}
         />
       </View>
+      {remaningTime && (
+        <View style={styles.remainingTimeContainer}>
+          <Label weight={"Regular"}>{`Valido ancora per ${
+            remaningTime.minutes > 0
+              ? remaningTime.minutes.toString() + " minuti "
+              : ""
+          }${remaningTime.seconds} secondi`}</Label>
+        </View>
+      )}
     </View>
   );
 };
