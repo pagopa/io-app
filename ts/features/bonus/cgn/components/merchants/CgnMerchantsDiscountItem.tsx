@@ -14,6 +14,8 @@ type Props = {
   value: string;
 };
 
+const PERCENTAGE_SYMBOL = "%";
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row"
@@ -61,9 +63,9 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
             color={"white"}
             style={{ textAlign: "center", lineHeight: 30 }}
           >
-            {`-${props.value}`}
+            {`${props.value}`}
             <H5 weight={"SemiBold"} color={"white"}>
-              {"%"}
+              {PERCENTAGE_SYMBOL}
             </H5>
           </H3>
         </View>
