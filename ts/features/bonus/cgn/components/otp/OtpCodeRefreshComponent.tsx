@@ -7,7 +7,6 @@ import { addEvery } from "../../../../../utils/strings";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import customVariables from "../../../../../theme/variables";
-import { format } from "../../../../../utils/dates";
 
 type ProgressConfig = {
   duration: Millisecond;
@@ -74,7 +73,9 @@ const OtpCodeComponent = (code: string) => (
     {code}
   </BaseTypography>
 );
-
+// TODO considering duration from OTP (expire date)
+// if (now - expire < 0 || now - expire > ttl ) -> use ttl
+// copy for whole component (use io-copy as icon)
 export const OtpCodeRefreshComponent = (props: Props) => {
   const { start = 0, end = 100, duration } = props.progressConfig;
   const formattedCode = addEvery(props.otp.code, " ", 3);
@@ -86,13 +87,14 @@ export const OtpCodeRefreshComponent = (props: Props) => {
   // start the progress animation when otp changes (at startup too)
   useEffect(() => {
     setElapsedSeconds(0);
+    translateX.setValue(start);
     Animated.timing(translateX, {
       useNativeDriver: false,
       toValue: end,
       duration: duration as number,
       easing: Easing.linear
     }).start(() => {
-      translateX.setValue(0);
+      translateX.setValue(start);
       setElapsedSeconds(cv => cv + 1);
       stopInterval();
       props.onEnd();
@@ -103,7 +105,6 @@ export const OtpCodeRefreshComponent = (props: Props) => {
         setElapsedSeconds(cv => cv + 1);
       }, 1000);
     }
-
     return stopInterval;
   }, [props.otp.code]);
 
@@ -117,7 +118,6 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       0,
       Math.round(durationInSeconds - (minutes * 60 + (elapsedSeconds % 60)))
     );
-    console.log(minutes, seconds);
   }, [elapsedSeconds]);
 
   return (

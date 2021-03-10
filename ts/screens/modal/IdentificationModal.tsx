@@ -499,12 +499,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               progressConfig={{
                 start: 100,
                 end: 0,
-                duration: 72000 as Millisecond
+                duration: 7200 as Millisecond
               }}
               onEnd={() => {
-                // this.setState(ov => ({
-                //  otpIndex: ov.otpIndex + 1
-                // }));
+                this.setState(ov => ({
+                  otpIndex: ov.otpIndex + 1
+                }));
               }}
               otp={otps[this.state.otpIndex % otps.length]}
             />
