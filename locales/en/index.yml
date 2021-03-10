@@ -2215,6 +2215,9 @@ bonus:
         description: Description
         services: Services
         hours: Working Hours
+        validity: Validity
+        discountCode: Discount code
+        conditions: Conditions
       cta:
         label: Navigate to merchant website
     cta:
