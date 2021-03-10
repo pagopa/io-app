@@ -81,6 +81,9 @@ export const OtpCodeRefreshComponent = (props: Props) => {
   const formattedCode = addEvery(props.otp.code, " ", 3);
   const [translateX] = useState(new Animated.Value(start));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [remaningTime, setRemainingTime] = useState<
+    undefined | { minutes: number; seconds: number }
+  >(undefined);
   const intervalRef = useRef<undefined | number>(undefined);
 
   const stopInterval = () => clearInterval(intervalRef.current);
@@ -118,6 +121,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       0,
       Math.round(durationInSeconds - (minutes * 60 + (elapsedSeconds % 60)))
     );
+    setRemainingTime({ minutes, seconds });
   }, [elapsedSeconds]);
 
   return (
