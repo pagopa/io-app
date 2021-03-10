@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     zIndex: 7,
-    elevation: 7
+    elevation: 7,
+    top: 2
   },
   informationContainer: {
     height: "100%",
@@ -133,11 +134,11 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
       <ImageBackground
         source={cardBg}
-        imageStyle={styles.imageFull}
+        imageStyle={[styles.imageFull, { borderRadius: 10 }]}
         style={styles.cardContainer}
       >
         <WebView
-          style={{ borderRadius: 15 }}
+          style={{ borderRadius: 15, top: -1, left: -1 }}
           source={{
             html: generatedSvg
           }}
