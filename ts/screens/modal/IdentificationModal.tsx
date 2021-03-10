@@ -497,8 +497,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderHeader()}
             <OtpCodeRefreshComponent
               progressConfig={{
-                start: 100,
-                end: 0,
+                startPercentage: 100,
+                endPercentage: 0,
                 duration: 8000 as Millisecond
               }}
               onEnd={() => {

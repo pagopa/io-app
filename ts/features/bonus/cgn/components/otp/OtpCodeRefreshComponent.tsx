@@ -1,19 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableWithoutFeedbackComponent,
-  View,
-  ViewStyle
-} from "react-native";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { addEvery } from "../../../../../utils/strings";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
-import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import customVariables from "../../../../../theme/variables";
 import { Label } from "../../../../../components/core/typography/Label";
 import IconFont from "../../../../../components/ui/IconFont";
@@ -21,9 +11,8 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type ProgressConfig = {
-  duration: Millisecond;
-  start?: number;
-  end?: number;
+  startPercentage?: number;
+  endPercentage?: number;
 };
 
 type Props = {
@@ -93,27 +82,38 @@ const OtpCodeComponent = (code: string) => (
 // TODO considering duration from OTP (expire date)
 // if (now - expire < 0 || now - expire > ttl ) -> use ttl
 export const OtpCodeRefreshComponent = (props: Props) => {
-  const { start = 0, end = 100, duration } = props.progressConfig;
-  const formattedCode = addEvery(props.otp.code, " ", 3);
-  const [translateX] = useState(new Animated.Value(start));
+  const { startPercentage = 0, endPercentage = 100 } = props.progressConfig;
+
+  const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [remaningTime, setRemainingTime] = useState<
+  const [remainingTime, setRemainingTime] = useState<
     undefined | { minutes: number; seconds: number }
   >(undefined);
   const intervalRef = useRef<undefined | number>(undefined);
+  const duration = 1000;
+  const formattedCode = addEvery(props.otp.code, " ", 3);
 
+  // reset interval timer
   const stopInterval = () => clearInterval(intervalRef.current);
-  // start the progress animation when otp changes (at startup too)
+
+  /**
+   * when otp changes
+   * - reset elapsed seconds
+   * - reset progress width
+   * - start progress animation
+   */
   useEffect(() => {
     setElapsedSeconds(0);
-    translateX.setValue(start);
-    Animated.timing(translateX, {
+    progressWidth.setValue(startPercentage);
+
+    Animated.timing(progressWidth, {
       useNativeDriver: false,
-      toValue: end,
+      toValue: endPercentage,
       duration: duration as number,
       easing: Easing.linear
     }).start(() => {
-      translateX.setValue(start);
+      // when animation end
+      progressWidth.setValue(startPercentage);
       setElapsedSeconds(cv => cv + 1);
       stopInterval();
       props.onEnd();
@@ -125,8 +125,9 @@ export const OtpCodeRefreshComponent = (props: Props) => {
     return stopInterval;
   }, [props.otp.code]);
 
+  // update the remaining time
   useEffect(() => {
-    const durationInSeconds = props.progressConfig.duration / 1000;
+    const durationInSeconds = duration / 1000;
     const minutes = Math.max(
       0,
       Math.floor((durationInSeconds - elapsedSeconds) / 60)
@@ -171,7 +172,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
                 props.progressBgColor ?? styles.progress.backgroundColor
             },
             {
-              width: translateX.interpolate({
+              width: progressWidth.interpolate({
                 inputRange: [0, 100],
                 outputRange: ["0%", "100%"]
               })
@@ -179,13 +180,13 @@ export const OtpCodeRefreshComponent = (props: Props) => {
           ]}
         />
       </View>
-      {remaningTime && (
+      {remainingTime && (
         <View style={styles.remainingTimeContainer}>
           <Label weight={"Regular"} color={"bluegrey"}>{`Valido ancora per ${
-            remaningTime.minutes > 0
-              ? remaningTime.minutes.toString() + " minuti "
+            remainingTime.minutes > 0
+              ? remainingTime.minutes.toString() + " minuti "
               : ""
-          }${remaningTime.seconds} secondi`}</Label>
+          }${remainingTime.seconds} secondi`}</Label>
         </View>
       )}
     </View>
