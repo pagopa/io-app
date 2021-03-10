@@ -705,13 +705,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}
-          >
-            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
-          </Tab>
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
             heading={I18n.t("services.tab.national")}
           >
             <ServicesTab
@@ -725,6 +718,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.locals")}
+          >
+            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
         <SectionStatusComponent sectionKey={"services"} />
