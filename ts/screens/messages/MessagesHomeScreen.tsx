@@ -54,6 +54,7 @@ type Props = NavigationScreenProps &
 
 type State = {
   currentTab: number;
+  otpIndex: number;
 };
 
 const styles = StyleSheet.create({
@@ -96,6 +97,34 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "messages.contextualHelpContent"
 };
 
+const otps = [
+  {
+    code: "XXR3E4PNG36" as OtpCode,
+    expires_at: new Date("2021-09-08T00:53:12.966Z"),
+    ttl: 100
+  },
+  {
+    code: "YYR3E4PNG37" as OtpCode,
+    expires_at: new Date("2021-09-08T00:53:12.966Z"),
+    ttl: 100
+  },
+  {
+    code: "ZZR3E4PNG38" as OtpCode,
+    expires_at: new Date("2021-09-08T00:53:12.966Z"),
+    ttl: 100
+  },
+  {
+    code: "GGR3E4PNG39" as OtpCode,
+    expires_at: new Date("2021-09-08T00:53:12.966Z"),
+    ttl: 100
+  },
+  {
+    code: "M6R3E4PNG36" as OtpCode,
+    expires_at: new Date("2021-09-08T00:53:12.966Z"),
+    ttl: 100
+  }
+];
+
 /**
  * A screen that contains all the Tabs related to messages.
  */
@@ -104,7 +133,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      otpIndex: 0
     };
   }
 
@@ -223,18 +253,14 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
               progressConfig={{
                 start: 100,
                 end: 0,
-                duration: 3000 as Millisecond
+                duration: 8000 as Millisecond
               }}
               onEnd={() => {
-                // this.setState(ov => ({
-                //  otpIndex: ov.otpIndex + 1
-                // }));
+                this.setState(ov => ({
+                  otpIndex: ov.otpIndex + 1
+                }));
               }}
-              otp={{
-                code: "XXR3E4PNG36" as OtpCode,
-                expires_at: new Date("2021-09-08T00:53:12.966Z"),
-                ttl: 100
-              }}
+              otp={otps[this.state.otpIndex % otps.length]}
             />
           </Tab>
           <Tab

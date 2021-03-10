@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   remainingTimeContainer: {
     alignSelf: "center",
-    marginTop: 4,
+    marginTop: 2,
     width: "90%"
   },
   optCode: { fontSize: 30, padding: 4, marginRight: 4, textAlign: "center" }
@@ -141,6 +141,11 @@ export const OtpCodeRefreshComponent = (props: Props) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.remainingTimeContainer}>
+        <Label weight={"Regular"} color={"bluegrey"}>
+          {"Il tuo codice sconto"}
+        </Label>
+      </View>
       <TouchableDefaultOpacity
         style={styles.otpContainer}
         onPress={() => clipboardSetStringWithFeedback(formattedCode)}
@@ -177,7 +182,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       </View>
       {remaningTime && (
         <View style={styles.remainingTimeContainer}>
-          <Label weight={"Regular"}>{`Valido ancora per ${
+          <Label weight={"Regular"} color={"bluegrey"}>{`Valido ancora per ${
             remaningTime.minutes > 0
               ? remaningTime.minutes.toString() + " minuti "
               : ""
