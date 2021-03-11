@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { addEvery } from "../../../../../utils/strings";
@@ -11,6 +12,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
+import I18n from "../../../../../i18n";
 
 type ProgressConfig = {
   startPercentage: number;
@@ -82,6 +84,7 @@ const OtpCodeComponent = (code: string) => (
   </BaseTypography>
 );
 
+type RemainingTime = { minutes: number; seconds: number };
 const getOtpTTL = (otp: Otp): Millisecond => {
   const now = new Date();
   const remain = otp.expires_at.getTime() - now.getTime();
@@ -93,6 +96,30 @@ const getOtpTTL = (otp: Otp): Millisecond => {
   return (otp.ttl * 1000) as Millisecond;
 };
 
+const getRemaingTimeRepr = (remainingTime: RemainingTime) =>
+  fromNullable(remainingTime)
+    .map<string | undefined>(rt => {
+      const minutes =
+        rt.minutes === 0
+          ? ""
+          : I18n.t("bonus.cgn.otp.code.minutes", {
+              defaultValue: I18n.t("bonus.cgn.otp.code.minutes", {
+                minutes: rt.minutes
+              }),
+              count: rt.minutes,
+              minutes: rt.minutes
+            }) + " ";
+      const seconds = I18n.t("bonus.cgn.otp.code.seconds", {
+        defaultValue: I18n.t("bonus.cgn.otp.code.seconds", {
+          seconds: rt.seconds
+        }),
+        count: rt.seconds,
+        seconds: rt.seconds
+      });
+      return `${I18n.t("bonus.cgn.otp.code.validUntil")} ${minutes}${seconds}`;
+    })
+    .getOrElse(undefined);
+
 // TODO considering duration from OTP (expire date)
 // if (now - expire < 0 || now - expire > ttl ) -> use ttl
 export const OtpCodeRefreshComponent = (props: Props) => {
@@ -103,9 +130,9 @@ export const OtpCodeRefreshComponent = (props: Props) => {
   const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [remainingTime, setRemainingTime] = useState<
-    undefined | { minutes: number; seconds: number }
-  >(undefined);
+  const [remainingTime, setRemainingTime] = useState<RemainingTime | undefined>(
+    undefined
+  );
   const intervalRef = useRef<undefined | number>(undefined);
   const formattedCode = addEvery(props.otp.code, " ", 3);
 
@@ -163,7 +190,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
     <View style={styles.container}>
       <View style={styles.remainingTimeContainer}>
         <Label weight={"Regular"} color={"bluegrey"}>
-          {"Il tuo codice sconto"}
+          {I18n.t("bonus.cgn.otp.code.title")}
         </Label>
       </View>
       <TouchableDefaultOpacity
@@ -202,11 +229,9 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       </View>
       {remainingTime && (
         <View style={styles.remainingTimeContainer}>
-          <Label weight={"Regular"} color={"bluegrey"}>{`Valido ancora per ${
-            remainingTime.minutes > 0
-              ? remainingTime.minutes.toString() + " minuti "
-              : ""
-          }${remainingTime.seconds} secondi`}</Label>
+          <Label weight={"Regular"} color={"bluegrey"}>
+            {getRemaingTimeRepr(remainingTime)}
+          </Label>
         </View>
       )}
     </View>
