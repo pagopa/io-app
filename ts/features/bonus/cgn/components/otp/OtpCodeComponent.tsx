@@ -198,7 +198,7 @@ export const OtpCodeComponent = (props: Props) => {
       </View>
       <TouchableDefaultOpacity
         style={styles.otpContainer}
-        onPress={() => clipboardSetStringWithFeedback(formattedCode)}
+        onPress={() => clipboardSetStringWithFeedback(props.otp.code)}
       >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
