@@ -2271,7 +2271,7 @@ bonus:
         validUntil: Still valid for
         minutes:
           one: 1 minute
-          other: "{{minutes}} minute2"
+          other: "{{minutes}} minutes"
         seconds:
           one: 1 second
           other: "{{seconds}} seconds"
