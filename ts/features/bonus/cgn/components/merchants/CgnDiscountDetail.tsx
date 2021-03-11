@@ -62,37 +62,35 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       <>
         <View spacer small />
         <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
-        <ShadowBox>
-          <ButtonDefaultOpacity
-            onPress={() =>
-              discount.discountCode &&
-              clipboardSetStringWithFeedback(discount.discountCode)
-            }
-            onPressWithGestureHandler
-            style={{
-              backgroundColor: "rgba(52, 52, 52, 0)"
-            }}
+        <ButtonDefaultOpacity
+          onPress={() =>
+            discount.discountCode &&
+            clipboardSetStringWithFeedback(discount.discountCode)
+          }
+          onPressWithGestureHandler
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0)"
+          }}
+        >
+          <View
+            style={[
+              IOStyles.row,
+              { alignItems: "center", justifyContent: "space-between" }
+            ]}
           >
-            <View
-              style={[
-                IOStyles.row,
-                { alignItems: "center", justifyContent: "space-between" }
-              ]}
-            >
-              <View style={[IOStyles.row, { alignItems: "center" }]}>
-                <IconFont name={"io-bonus"} color={IOColors.blue} size={24} />
-                <View hspacer />
-                <Monospace weight={"Bold"}>{discount.discountCode}</Monospace>
-              </View>
-              <IconFont
-                name={"io-copy"}
-                size={24}
-                color={IOColors.blue}
-                style={{ alignSelf: "flex-end" }}
-              />
+            <View style={[IOStyles.row, { alignItems: "center" }]}>
+              <IconFont name={"io-bonus"} color={IOColors.blue} size={24} />
+              <View hspacer />
+              <Monospace weight={"Bold"}>{discount.discountCode}</Monospace>
             </View>
-          </ButtonDefaultOpacity>
-        </ShadowBox>
+            <IconFont
+              name={"io-copy"}
+              size={24}
+              color={IOColors.blue}
+              style={{ alignSelf: "flex-end" }}
+            />
+          </View>
+        </ButtonDefaultOpacity>
       </>
     )}
     <View spacer />
