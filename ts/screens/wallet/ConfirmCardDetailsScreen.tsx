@@ -34,6 +34,7 @@ import {
   addCreditCardWebViewEnd,
   AddCreditCardWebViewEndReason,
   addWalletCreditCardInit,
+  creditCardPaymentNavigationUrls,
   fetchWalletsRequestWithExpBackoff,
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
@@ -289,7 +290,10 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             postUri={urlPrefix + payUrlSuffix}
             formData={payWebViewPayload.formData}
             finishPathName={webViewExitPathName}
-            onFinish={maybeCode => {
+            onFinish={(maybeCode, navigationUrls) => {
+              this.props.dispatchCreditCardPaymentNavigationUrls(
+                navigationUrls
+              );
               this.props.storeCreditCardOutcome(maybeCode);
               this.props.goToAddCreditCardOutcomeCode(
                 payWebViewPayload.crediCardTempWallet
@@ -449,6 +453,11 @@ const mapDispatchToProps = (
       reason: AddCreditCardWebViewEndReason
     ) => {
       dispatch(addCreditCardWebViewEnd(reason));
+    },
+    dispatchCreditCardPaymentNavigationUrls: (
+      navigationUrls: ReadonlyArray<string>
+    ) => {
+      dispatch(creditCardPaymentNavigationUrls(navigationUrls));
     }
   };
 };

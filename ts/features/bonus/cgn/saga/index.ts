@@ -8,6 +8,7 @@ import {
 import { apiUrlPrefix } from "../../../../config";
 import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -15,6 +16,7 @@ import {
   handleCgnStatusPolling
 } from "./networking/activation/getBonusActivationSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
+import { cgnGenerateOtp } from "./networking/otp";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -22,7 +24,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // CGN Activation request with status polling
   yield takeLatest(
-    getType(cgnRequestActivation.request),
+    getType(cgnRequestActivation),
     handleCgnActivationSaga,
     cgnActivationSaga(
       backendCGN.startCgnActivation,
@@ -38,5 +40,12 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     getType(cgnDetails.request),
     cgnGetInformationSaga,
     backendCGN.getCgnStatus
+  );
+
+  // CGN Otp generation
+  yield takeLatest(
+    getType(cgnGenerateOtpAction.request),
+    cgnGenerateOtp,
+    backendCGN.generateOtp
   );
 }

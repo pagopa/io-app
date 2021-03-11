@@ -118,8 +118,6 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess,
   refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
@@ -138,6 +136,7 @@ import {
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -309,7 +308,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
-    case getType(payCreditCardVerificationFailure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -383,7 +381,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
@@ -438,8 +435,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
-    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
     case getType(deleteUserDataProcessing.failure):

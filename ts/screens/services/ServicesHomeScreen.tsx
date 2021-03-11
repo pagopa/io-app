@@ -109,6 +109,7 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
+import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -323,7 +324,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
-    new Animated.Value(0),
     new Animated.Value(0),
     new Animated.Value(0)
   ];
@@ -584,7 +584,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { userMetadata } = this.props;
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -598,7 +597,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             faqCategories={["services"]}
-            isSearchAvailable={userMetadata !== undefined}
+            isSearchAvailable={false}
             searchType={"Services"}
           >
             {this.renderErrorContent() ? (
@@ -685,9 +684,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
-      localTabSections,
       nationalTabSections,
-      allTabSections,
       potUserMetadata,
       isLoadingServices
     } = this.props;
@@ -698,40 +695,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     return (
       <View style={IOStyles.flex}>
         <AnimatedTabs
+          locked={true}
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           onScroll={this.handleOnScroll}
           onChangeTab={this.handleOnChangeTab}
           initialPage={0}
         >
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}
-          >
-            <ServicesTab
-              isLocal={true}
-              isAll={false}
-              sections={localTabSections}
-              isRefreshing={isRefreshing}
-              onRefresh={this.refreshScreenContent}
-              onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
-              isLongPressEnabled={this.state.isLongPressEnabled}
-              updateOrganizationsOfInterestMetadata={
-                this.props.updateOrganizationsOfInterestMetadata
-              }
-              updateToast={() =>
-                this.setState({
-                  toastErrorMessage: I18n.t(
-                    "serviceDetail.onUpdateEnabledChannelsFailure"
-                  )
-                })
-              }
-              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-              tabScrollOffset={this.animatedTabScrollPositions[0]}
-            />
-          </Tab>
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
@@ -749,23 +719,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />
           </Tab>
-
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.all")}
+            heading={I18n.t("services.tab.locals")}
           >
-            <ServicesTab
-              isAll={true}
-              sections={allTabSections}
-              isRefreshing={isRefreshing}
-              onRefresh={this.refreshScreenContent}
-              onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
-              isLongPressEnabled={this.state.isLongPressEnabled}
-              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-              tabScrollOffset={this.animatedTabScrollPositions[2]}
-            />
+            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
         <SectionStatusComponent sectionKey={"services"} />
