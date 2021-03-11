@@ -11,16 +11,18 @@ import { H3 } from "../../../../../components/core/typography/H3";
 type Props = {
   category: string;
   description: string;
-  value: string;
+  value: number;
 };
 
 const PERCENTAGE_SYMBOL = "%";
 
 const styles = StyleSheet.create({
+  container: { justifyContent: "space-between", alignItems: "center" },
   row: {
     flexDirection: "row"
   },
   verticalPadding: {
+    flex: 1,
     paddingVertical: 16
   },
   discountValueBox: {
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
     width: 48,
     textAlign: "center",
     backgroundColor: "#EB9505"
-  }
+  },
+  percentage: { textAlign: "center", lineHeight: 30 }
 });
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
@@ -37,12 +40,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
 ) => (
   <View style={styles.verticalPadding}>
     <ShadowBox>
-      <View
-        style={[
-          styles.row,
-          { justifyContent: "space-between", alignItems: "center" }
-        ]}
-      >
+      <View style={[styles.row, styles.container]}>
         <View>
           <View style={styles.row}>
             {/* TODO when available and defined the icon name should be defined through a map of category codes */}
@@ -58,12 +56,9 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
           </H4>
         </View>
         <View style={styles.discountValueBox}>
-          <H3
-            weight={"Bold"}
-            color={"white"}
-            style={{ textAlign: "center", lineHeight: 30 }}
-          >
-            {`${props.value}`}
+          <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
+            {/* avoid overflow */}
+            {Math.min(Math.floor(props.value), 100)}
             <H5 weight={"SemiBold"} color={"white"}>
               {PERCENTAGE_SYMBOL}
             </H5>
