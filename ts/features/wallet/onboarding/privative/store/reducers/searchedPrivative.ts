@@ -5,6 +5,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   searchUserPrivative,
   walletAddPrivativeChooseIssuer,
+  walletAddPrivativeInsertCardNumber,
   walletAddPrivativeStart
 } from "../actions";
 
@@ -30,6 +31,8 @@ const searchedPrivativeReducer = (
       return action.payload;
     case getType(walletAddPrivativeChooseIssuer):
       return { ...state, id: action.payload };
+    case getType(walletAddPrivativeInsertCardNumber):
+      return { ...state, cardNumber: action.payload };
     case getType(walletAddPrivativeStart):
       return defaultState;
   }

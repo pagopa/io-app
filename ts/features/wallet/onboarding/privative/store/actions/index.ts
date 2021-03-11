@@ -50,6 +50,13 @@ export const walletAddPrivativeChooseIssuer = createStandardAction(
 )<PrivativeIssuerId>();
 
 /**
+ * The user chooses a privative Issuer to search a privative card
+ */
+export const walletAddPrivativeInsertCardNumber = createStandardAction(
+  "WALLET_ONBOARDING_PRIVATIVE_INSERT_CARD_NUMBER"
+)<string>();
+
+/**
  * The user chooses to start the workflow to add a new privative card to the wallet
  */
 export const walletAddPrivativeStart = createStandardAction(
@@ -83,6 +90,7 @@ export type PrivativeActions =
   | ActionType<typeof addPrivativeToWallet>
   | ActionType<typeof loadPrivativeIssuers>
   | ActionType<typeof walletAddPrivativeChooseIssuer>
+  | ActionType<typeof walletAddPrivativeInsertCardNumber>
   | ActionType<typeof walletAddPrivativeStart>
   | ActionType<typeof walletAddPrivativeCompleted>
   | ActionType<typeof walletAddPrivativeCancel>
