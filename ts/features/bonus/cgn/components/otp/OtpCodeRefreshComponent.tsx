@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -128,7 +128,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
   };
   const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState<Second>(0);
   const [remainingTime, setRemainingTime] = useState<RemainingTime | undefined>(
     undefined
   );
@@ -146,7 +146,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
    */
   useEffect(() => {
     const currentDuration = getOtpTTL(props.otp);
-    setDuration(currentDuration);
+    setDuration((currentDuration / 1000) as Second);
     setElapsedSeconds(0);
     progressWidth.setValue(startPercentage);
 
@@ -173,15 +173,8 @@ export const OtpCodeRefreshComponent = (props: Props) => {
     if (duration === 0) {
       return;
     }
-    const durationInSeconds = duration / 1000;
-    const minutes = Math.max(
-      0,
-      Math.floor((durationInSeconds - elapsedSeconds) / 60)
-    );
-    const seconds = Math.max(
-      0,
-      Math.floor((durationInSeconds - elapsedSeconds) % 60)
-    );
+    const minutes = Math.max(0, Math.floor((duration - elapsedSeconds) / 60));
+    const seconds = Math.max(0, Math.floor((duration - elapsedSeconds) % 60));
     setRemainingTime({ minutes, seconds });
   }, [duration, elapsedSeconds]);
 
