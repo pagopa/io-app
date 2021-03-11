@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
+import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -19,19 +20,23 @@ type Props = {
 const PERCENTAGE_SYMBOL = "%";
 
 const styles = StyleSheet.create({
+  container: { justifyContent: "space-between", alignItems: "center" },
   row: {
     flexDirection: "row"
   },
   verticalPadding: {
-    paddingBottom: 16
+    flex: 1,
+    paddingVertical: 16
   },
   discountValueBox: {
     borderRadius: 6.5,
     paddingVertical: 8,
     width: 48,
-    textAlign: "center",
+    marginLeft: "auto",
+    height: 48,
     backgroundColor: "#EB9505"
-  }
+  },
+  percentage: { textAlign: "center", lineHeight: 30 }
 });
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
@@ -41,14 +46,9 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   return (
     <TouchableDefaultOpacity style={styles.verticalPadding} onPress={present}>
       <ShadowBox>
-        <View
-          style={[
-            styles.row,
-            { justifyContent: "space-between", alignItems: "center" }
-          ]}
-        >
+        <View style={[styles.row, styles.container]}>
           <View style={IOStyles.flex}>
-            <View style={styles.row}>
+            <View style={[styles.row, styles.container]}>
               {/* TODO when available and defined the icon name should be defined through a map of category codes */}
               <IconFont
                 name={"io-theater"}
@@ -56,22 +56,26 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
                 color={IOColors.bluegrey}
               />
               <View hspacer small />
-              <H5 weight={"SemiBold"} color={"bluegrey"}>
-                {discount.category.toLocaleUpperCase()}
-              </H5>
+              <View style={IOStyles.flex}>
+                <H5 weight={"SemiBold"} color={"bluegrey"}>
+                  {discount.category.toLocaleUpperCase()}
+                </H5>
+              </View>
             </View>
             <View spacer xsmall />
-            <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-              {discount.title}
-            </H4>
+            <View style={IOStyles.flex}>
+              <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                {discount.title}
+              </H4>
+            </View>
           </View>
           <View style={styles.discountValueBox}>
-            <H3
-              weight={"Bold"}
-              color={"white"}
-              style={{ textAlign: "center", lineHeight: 30 }}
-            >
-              {`${discount.value}`}
+            <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
+              {/* avoid overflow */}
+              {WithinRangeInteger(0, 100)
+                .decode(discount.value)
+                .map(v => v.toString())
+                .getOrElse("-")}
               <H5 weight={"SemiBold"} color={"white"}>
                 {PERCENTAGE_SYMBOL}
               </H5>
