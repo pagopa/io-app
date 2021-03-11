@@ -53,10 +53,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement => (
     headerTitle={I18n.t("wallet.onboarding.privative.headerTitle")}
     contextualHelp={emptyContextualHelp}
   >
-    <SafeAreaView
-      style={IOStyles.flex}
-      testID={"ChoosePrivativeIssuerComponent"}
-    >
+    <SafeAreaView style={IOStyles.flex}>
       {/* TODO: Complete the component, this is a draft version for test purpose only */}
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>TMP Timeout Screen</H1>
