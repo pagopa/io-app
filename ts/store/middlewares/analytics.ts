@@ -367,7 +367,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
+      return mp.track(action.type);
     case getType(loadMessages.success):
+      return mp.track(action.type, {
+        numberOfMessages: action.payload.length
+      });
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
     // services
