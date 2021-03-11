@@ -2275,7 +2275,7 @@ bonus:
         body: "Your Carta Giovani Nazionale is active"
     otp:
       code:
-        title: Your code
+        title: Your discount code
         validUntil: Still valid for
         minutes:
           one: 1 minute
