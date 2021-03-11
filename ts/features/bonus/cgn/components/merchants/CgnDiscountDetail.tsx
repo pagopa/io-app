@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import I18n from "../../../../../i18n";
@@ -11,8 +12,6 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { Monospace } from "../../../../../components/core/typography/Monospace";
-import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/ShadowBox";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 type Props = {
@@ -39,65 +38,76 @@ const styles = StyleSheet.create({
 });
 
 const PERCENTAGE_SYMBOL = "%";
+const FEEDBACK_MS = 3000;
 
 const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   discount
-}: Props) => (
-  <View style={styles.container}>
-    <View style={IOStyles.row}>
-      {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-      <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
-      <View hspacer small />
-      <H5 weight={"SemiBold"} color={"bluegrey"}>
-        {discount.category.toLocaleUpperCase()}
-      </H5>
-    </View>
-    <View spacer />
-    <H3>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H3>
-    <H4 weight={"Regular"}>{discount.description}</H4>
-    <View spacer />
-    <H3>{I18n.t("bonus.cgn.merchantDetail.title.validity")}</H3>
-    <H4 weight={"Regular"}>{discount.validityDescription}</H4>
-    {discount.discountCode !== undefined && (
-      <>
-        <View spacer small />
-        <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
-        <ButtonDefaultOpacity
-          onPress={() =>
-            discount.discountCode &&
-            clipboardSetStringWithFeedback(discount.discountCode)
-          }
-          onPressWithGestureHandler
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0)"
-          }}
-        >
-          <View
-            style={[
-              IOStyles.row,
-              { alignItems: "center", justifyContent: "space-between" }
-            ]}
-          >
-            <View style={[IOStyles.row, { alignItems: "center" }]}>
-              <IconFont name={"io-bonus"} color={IOColors.blue} size={24} />
-              <View hspacer />
-              <Monospace weight={"Bold"}>{discount.discountCode}</Monospace>
+}: Props) => {
+  const [isTap, setIsTap] = React.useState(false);
+  const timerRetry = React.useRef<number | undefined>(undefined);
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
+
+  const handleCopyPress = () => {
+    if (discount.discountCode) {
+      setIsTap(true);
+      clipboardSetStringWithFeedback(discount.discountCode);
+      // eslint-disable-next-line functional/immutable-data
+      timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_MS);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={IOStyles.row}>
+        {/* TODO when available and defined the icon name should be defined through a map of category codes */}
+        <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
+        <View hspacer small />
+        <H5 weight={"SemiBold"} color={"bluegrey"}>
+          {discount.category.toLocaleUpperCase()}
+        </H5>
+      </View>
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H3>
+      <H4 weight={"Regular"}>{discount.description}</H4>
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.validity")}</H3>
+      <H4 weight={"Regular"}>{discount.validityDescription}</H4>
+      {discount.discountCode !== undefined && (
+        <>
+          <View spacer small />
+          <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
+          <TouchableWithoutFeedback onPress={handleCopyPress}>
+            <View
+              style={[
+                IOStyles.row,
+                { alignItems: "center", justifyContent: "space-between" }
+              ]}
+            >
+              <Monospace weight={"Bold"} color={"bluegrey"}>
+                {discount.discountCode}
+              </Monospace>
+              <IconFont
+                name={isTap ? "io-complete" : "io-copy"}
+                size={24}
+                color={IOColors.blue}
+                style={{ alignSelf: "flex-end" }}
+              />
             </View>
-            <IconFont
-              name={"io-copy"}
-              size={24}
-              color={IOColors.blue}
-              style={{ alignSelf: "flex-end" }}
-            />
-          </View>
-        </ButtonDefaultOpacity>
-      </>
-    )}
-    <View spacer />
-    <H3>{I18n.t("bonus.cgn.merchantDetail.title.conditions")}</H3>
-    <H4 weight={"Regular"}>{discount.conditions}</H4>
-  </View>
-);
+          </TouchableWithoutFeedback>
+        </>
+      )}
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.conditions")}</H3>
+      <H4 weight={"Regular"}>{discount.conditions}</H4>
+    </View>
+  );
+};
 
 const CgnDiscountDetailHeader: React.FunctionComponent<Props> = ({
   discount
