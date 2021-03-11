@@ -112,14 +112,14 @@ const getRemainingTimeRepr = (
         rt.minutes === 0
           ? ""
           : I18n.t("bonus.cgn.otp.code.minutes", {
-              defaultValue: I18n.t("bonus.cgn.otp.code.minutes", {
+              defaultValue: I18n.t("bonus.cgn.otp.code.minutes.other", {
                 minutes: rt.minutes
               }),
               count: rt.minutes,
               minutes: rt.minutes
             }) + " ";
       const seconds = I18n.t("bonus.cgn.otp.code.seconds", {
-        defaultValue: I18n.t("bonus.cgn.otp.code.seconds", {
+        defaultValue: I18n.t("bonus.cgn.otp.code.seconds.other", {
           seconds: rt.seconds
         }),
         count: rt.seconds,
