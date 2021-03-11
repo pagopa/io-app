@@ -31,8 +31,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const toPrivativeQuery = (
   searched: SearchedPrivativeData
 ): Option<PrivativeQuery> => {
-  const id = searched.id;
-  const cardNumber = searched.cardNumber;
+  const { id, cardNumber } = searched;
 
   return id !== undefined && cardNumber !== undefined
     ? some({ id, cardNumber })

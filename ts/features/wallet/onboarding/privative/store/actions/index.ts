@@ -4,8 +4,8 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { PrivativeServices } from "../../../../../../../definitions/pagopa/privative/configuration/PrivativeServices";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
+import { SearchRequestMetadata } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
 import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
@@ -14,6 +14,11 @@ import {
 } from "../reducers/searchedPrivative";
 
 export type PrivativeQuery = Required<SearchedPrivativeData>;
+export type PrivativeResponse = {
+  paymentInstrument: PaymentInstrument;
+  searchRequestId?: string;
+  searchRequestMetadata: SearchRequestMetadata;
+};
 
 /**
  * Search for user's privative cards (can be only one)
@@ -22,7 +27,7 @@ export const searchUserPrivative = createAsyncAction(
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_REQUEST",
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_SUCCESS",
   "WALLET_ONBOARDING_PRIVATIVE_SEARCH_FAILURE"
-)<PrivativeQuery, CobadgeResponse, NetworkError>();
+)<PrivativeQuery, PrivativeResponse, NetworkError>();
 
 /**
  * The user adds a specific privative card to the wallet

@@ -1,22 +1,22 @@
-import { call, put } from "redux-saga/effects";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import { call, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
   isRawBancomat,
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { SessionManager } from "../../../../../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import {
   addBancomatToWallet,
   loadAbi,
   searchUserPans
 } from "../../store/actions";
-import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
-import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
-import { ContentClient } from "../../../../../../api/content";
 
 // load all bancomat abi
 export function* handleLoadAbi(
@@ -35,7 +35,7 @@ export function* handleLoadAbi(
         );
       }
     } else {
-      throw new Error(readableReport(getAbiWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(getAbiWithRefreshResult.value));
     }
   } catch (e) {
     yield put(loadAbi.failure(e));
@@ -81,7 +81,9 @@ export function* handleLoadPans(
       return yield put(
         searchUserPans.failure({
           kind: "generic",
-          value: new Error(readableReport(getPansWithRefreshResult.value))
+          value: new Error(
+            readablePrivacyReport(getPansWithRefreshResult.value)
+          )
         })
       );
     }
@@ -144,7 +146,7 @@ export function* handleAddPan(
         );
       }
     } else {
-      throw new Error(readableReport(addPansWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(addPansWithRefreshResult.value));
     }
   } catch (e) {
     yield put(addBancomatToWallet.failure(e));

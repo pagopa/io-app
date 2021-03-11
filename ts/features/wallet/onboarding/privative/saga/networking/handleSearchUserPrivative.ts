@@ -1,14 +1,43 @@
 /**
  * Load the user's privative card.
  */
+import { Either, left, right } from "fp-ts/lib/Either";
 import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { GenericError, getGenericError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { searchUserCobadge } from "../../../cobadge/saga/networking/searchUserCobadge";
-import { searchUserPrivative } from "../../store/actions";
+import { CoBadgePayload } from "../../../cobadge/screens/search/SearchAvailableCoBadgeScreen";
+import { PrivativeResponse, searchUserPrivative } from "../../store/actions";
 import { onboardingPrivativeSearchRequestId } from "../../store/reducers/searchPrivativeRequestId";
+
+const toPrivativeResponse = (
+  response: CobadgeResponse
+): Either<GenericError, PrivativeResponse> =>
+  CoBadgePayload.decode(response.payload)
+    .mapLeft(errors =>
+      getGenericError(new Error(readablePrivacyReport(errors)))
+    )
+    .chain(x =>
+      x.paymentInstruments.length > 1
+        ? left(
+            getGenericError(
+              new Error(
+                `paymentInstruments in privative response should be only 1, received ${x.paymentInstruments.length}`
+              )
+            )
+          )
+        : right({
+            paymentInstrument: x.paymentInstruments[0],
+            searchRequestId: x.searchRequestId,
+            searchRequestMetadata: x.searchRequestMetadata
+          })
+    );
 
 export function* handleSearchUserPrivative(
   getCobadgePans: ReturnType<typeof PaymentManagerClient>["getCobadgePans"],
@@ -24,7 +53,7 @@ export function* handleSearchUserPrivative(
   );
 
   // get the results
-  const result = yield call(
+  const result: SagaCallReturnType<typeof searchUserCobadge> = yield call(
     searchUserCobadge,
     {
       abiCode: searchAction.payload.id,
@@ -36,10 +65,11 @@ export function* handleSearchUserPrivative(
     searchRequestId
   );
 
+  const eitherPrivative = result.chain(toPrivativeResponse);
   // dispatch the related action
-  if (result.isRight()) {
-    yield put(searchUserPrivative.success(result.value));
+  if (eitherPrivative.isRight()) {
+    yield put(searchUserPrivative.success(eitherPrivative.value));
   } else {
-    yield put(searchUserPrivative.failure(result.value));
+    yield put(searchUserPrivative.failure(eitherPrivative.value));
   }
 }

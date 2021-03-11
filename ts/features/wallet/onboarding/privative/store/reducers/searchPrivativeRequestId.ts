@@ -29,7 +29,7 @@ const searchPrivativeRequestIdReducer = (
     case getType(searchUserPrivative.success):
       // if response is pending then save the searchRequestId
       return isPrivativeResponsePending(action.payload)
-        ? action.payload?.payload?.searchRequestId ?? null
+        ? action.payload.searchRequestId ?? null
         : null;
     // reset at the start
     case getType(walletAddPrivativeStart):

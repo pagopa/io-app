@@ -6,6 +6,7 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getError, getNetworkError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { fromPatchedWalletV2ToRawSatispay } from "../../../../../../utils/walletv2";
 import { addSatispayToWallet, searchUserSatispay } from "../../store/actions";
@@ -52,7 +53,7 @@ export function* handleSearchUserSatispay(
         searchUserSatispay.failure({
           kind: "generic",
           value: new Error(
-            readableReport(searchSatispayWithRefreshResult.value)
+            readablePrivacyReport(searchSatispayWithRefreshResult.value)
           )
         })
       );
