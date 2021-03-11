@@ -85,12 +85,12 @@ const OtpCode = (code: string) => (
 );
 
 type ExpirationTime = { minutes: number; seconds: number };
+
 /**
  * compute otp code expiration time
  * - if the otp elapsed time is before the current time, the remaining time is ttl
  * - if the otp elapsed time is after the current time, the remaining time is the minimum between now - elapsed time and ttl
  */
-
 const getOtpTTL = (otp: Otp): Millisecond => {
   const now = new Date();
   const expiration = otp.expires_at.getTime() - now.getTime();
