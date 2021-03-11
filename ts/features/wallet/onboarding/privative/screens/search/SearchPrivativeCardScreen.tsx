@@ -4,7 +4,14 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { searchUserPrivative } from "../../store/actions";
-import { SearchedPrivativeData } from "../../store/reducers/searchedPrivative";
+import {
+  SearchedPrivativeData,
+  onboardingSearchedPrivativeSelector
+} from "../../store/reducers/searchedPrivative";
+import {
+  onboardingPrivativeFoundIsError,
+  onboardingPrivativeFoundSelector
+} from "../../store/reducers/foundPrivative";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -21,7 +28,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(searchUserPrivative.request(searchedPrivativeData))
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  searchedPrivative: onboardingSearchedPrivativeSelector(state),
+  foundPrivative: onboardingPrivativeFoundSelector(state),
+  foundError: onboardingPrivativeFoundIsError(state)
+});
 
 export default connect(
   mapStateToProps,
