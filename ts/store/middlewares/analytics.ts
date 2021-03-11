@@ -370,7 +370,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type);
     case getType(loadMessages.success):
       return mp.track(action.type, {
-        numberOfMessages: action.payload.length
+        count: action.payload.length
       });
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
