@@ -34,7 +34,17 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: 16
-  }
+  },
+  codeContainer: { alignItems: "center", justifyContent: "space-between" },
+  codeText: {
+    fontSize: 20,
+    fontFamily: Platform.select({
+      android: "RobotoMono",
+      ios: "Roboto Mono"
+    })
+  },
+  flexEnd: { alignSelf: "flex-end" },
+  discountValue: { textAlign: "center", lineHeight: 30 }
 });
 
 const PERCENTAGE_SYMBOL = "%";
@@ -83,22 +93,11 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           <View spacer small />
           <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
           <TouchableWithoutFeedback onPress={handleCopyPress}>
-            <View
-              style={[
-                IOStyles.row,
-                { alignItems: "center", justifyContent: "space-between" }
-              ]}
-            >
+            <View style={[IOStyles.row, styles.codeContainer]}>
               <BaseTypography
                 weight={"Bold"}
                 color={"bluegreyDark"}
-                style={{
-                  fontSize: 20,
-                  fontFamily: Platform.select({
-                    android: "RobotoMono",
-                    ios: "Roboto Mono"
-                  })
-                }}
+                style={styles.codeText}
               >
                 {discount.discountCode}
               </BaseTypography>
@@ -106,7 +105,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                 name={isTap ? "io-complete" : "io-copy"}
                 size={24}
                 color={IOColors.blue}
-                style={{ alignSelf: "flex-end" }}
+                style={styles.flexEnd}
               />
             </View>
           </TouchableWithoutFeedback>
@@ -124,11 +123,7 @@ const CgnDiscountDetailHeader: React.FunctionComponent<Props> = ({
 }: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
     <View style={styles.discountValueBox}>
-      <H4
-        weight={"Bold"}
-        color={"white"}
-        style={{ textAlign: "center", lineHeight: 30 }}
-      >
+      <H4 weight={"Bold"} color={"white"} style={styles.discountValue}>
         {`${discount.value}`}
         <H5 weight={"SemiBold"} color={"white"}>
           {PERCENTAGE_SYMBOL}
