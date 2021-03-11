@@ -84,8 +84,6 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
 import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
-import { searchUserPrivative } from "../../features/wallet/onboarding/privative/store/actions";
-import { BrandId } from "../../features/wallet/onboarding/privative/store/reducers/searchedPrivative";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -620,13 +618,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () =>
-    dispatch(
-      searchUserPrivative.request({
-        brandId: "COOP1" as BrandId,
-        cardNumber: "1234"
-      })
-    ),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
