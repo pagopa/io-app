@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
+import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -11,7 +12,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 type Props = {
   category: string;
   description: string;
-  value: number;
+  value: string;
 };
 
 const PERCENTAGE_SYMBOL = "%";
@@ -58,7 +59,10 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
         <View style={styles.discountValueBox}>
           <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
             {/* avoid overflow */}
-            {Math.min(Math.floor(props.value), 100)}
+            {WithinRangeInteger(0, 100)
+              .decode(parseInt(props.value, 10))
+              .map(v => v.toString())
+              .getOrElse("-")}
             <H5 weight={"SemiBold"} color={"white"}>
               {PERCENTAGE_SYMBOL}
             </H5>
