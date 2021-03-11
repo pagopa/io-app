@@ -79,7 +79,12 @@ const styles = StyleSheet.create({
 
 // Monospace custom component
 const OtpCode = (code: string) => (
-  <BaseTypography color={"blue"} weight={"Bold"} fontStyle={styles.optCode}>
+  <BaseTypography
+    color={"blue"}
+    weight={"Bold"}
+    fontStyle={styles.optCode}
+    font={"RobotoMono"}
+  >
     {code}
   </BaseTypography>
 );
