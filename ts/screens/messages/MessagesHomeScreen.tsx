@@ -10,7 +10,6 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
@@ -45,8 +44,6 @@ import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { OtpCodeRefreshComponent } from "../../features/bonus/cgn/components/otp/OtpCodeRefreshComponent";
-import { OtpCode } from "../../../definitions/cgn/OtpCode";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -54,7 +51,6 @@ type Props = NavigationScreenProps &
 
 type State = {
   currentTab: number;
-  otpIndex: number;
 };
 
 const styles = StyleSheet.create({
@@ -97,34 +93,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "messages.contextualHelpContent"
 };
 
-const otps = [
-  {
-    code: "XXR3E4PNG36" as OtpCode,
-    expires_at: new Date("2021-09-08T00:53:12.966Z"),
-    ttl: 100
-  },
-  {
-    code: "YYR3E4PNG37" as OtpCode,
-    expires_at: new Date("2021-09-08T00:53:12.966Z"),
-    ttl: 100
-  },
-  {
-    code: "ZZR3E4PNG38" as OtpCode,
-    expires_at: new Date("2021-09-08T00:53:12.966Z"),
-    ttl: 100
-  },
-  {
-    code: "GGR3E4PNG39" as OtpCode,
-    expires_at: new Date("2021-09-08T00:53:12.966Z"),
-    ttl: 100
-  },
-  {
-    code: "M6R3E4PNG36" as OtpCode,
-    expires_at: new Date("2021-09-08T00:53:12.966Z"),
-    ttl: 100
-  }
-];
-
 /**
  * A screen that contains all the Tabs related to messages.
  */
@@ -133,8 +101,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0,
-      otpIndex: 0
+      currentTab: 0
     };
   }
 
@@ -216,7 +183,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  // Update currentTab state when horizontal scroll is completed
+  // Update cuttentTab state when horizontal scroll is completed
   private handleOnChangeTab = (evt: any) => {
     const nextTab: number = evt.i;
     this.setState({
@@ -249,19 +216,23 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             textStyle={styles.textStyle}
             heading={I18n.t("messages.tab.inbox")}
           >
-            <OtpCodeRefreshComponent
-              progressConfig={{
-                startPercentage: 100,
-                endPercentage: 0
-              }}
-              onEnd={() => {
-                this.setState(ov => ({
-                  otpIndex: ov.otpIndex + 1
-                }));
-              }}
-              otp={{
-                ...otps[this.state.otpIndex % otps.length],
-                expires_at: new Date(new Date().getTime() + 10000)
+            <MessagesInbox
+              currentTab={this.state.currentTab}
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              onRefresh={this.onRefreshMessages}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
+              animated={{
+                onScroll: Animated.event([
+                  {
+                    nativeEvent: {
+                      contentOffset: { y: this.animatedTabScrollPositions[0] }
+                    }
+                  }
+                ]),
+                scrollEventThrottle: 8
               }}
             />
           </Tab>

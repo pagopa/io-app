@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 });
 
 // Monospace custom component
-const OtpCodeComponent = (code: string) => (
+const OtpCode = (code: string) => (
   <BaseTypography color={"blue"} weight={"Bold"} fontStyle={styles.optCode}>
     {code}
   </BaseTypography>
@@ -97,7 +97,9 @@ const getOtpTTL = (otp: Otp): Millisecond => {
 };
 
 // return a string (or undefined) of the remaining time
-const getRemaingTimeRepr = (remainingTime: RemainingTime): string | undefined =>
+const getRemainingTimeRepr = (
+  remainingTime: RemainingTime
+): string | undefined =>
   fromNullable(remainingTime)
     .map<string | undefined>(rt => {
       const minutes =
@@ -121,14 +123,14 @@ const getRemaingTimeRepr = (remainingTime: RemainingTime): string | undefined =>
     })
     .getOrElse(undefined);
 
-export const OtpCodeRefreshComponent = (props: Props) => {
+export const OtpCodeComponent = (props: Props) => {
   const { startPercentage, endPercentage } = props.progressConfig ?? {
     startPercentage: 0,
     endPercentage: 100
   };
   const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
-  const [duration, setDuration] = useState<Second>(0);
+  const [duration, setDuration] = useState<Second>(0 as Second);
   const [remainingTime, setRemainingTime] = useState<RemainingTime | undefined>(
     undefined
   );
@@ -189,7 +191,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
         style={styles.otpContainer}
         onPress={() => clipboardSetStringWithFeedback(formattedCode)}
       >
-        {OtpCodeComponent(formattedCode)}
+        {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
           <IconFont name="io-copy" color={IOColors.blue} />
         </View>
@@ -222,7 +224,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       {remainingTime && (
         <View style={styles.remainingTimeContainer}>
           <Label weight={"Regular"} color={"bluegrey"}>
-            {getRemaingTimeRepr(remainingTime)}
+            {getRemainingTimeRepr(remainingTime)}
           </Label>
         </View>
       )}

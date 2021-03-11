@@ -1,5 +1,5 @@
 import MockDate from "mockdate";
-import { testableOtpCodeRefreshComponent } from "../otp/OtpCodeRefreshComponent";
+import { testableOtpCodeRefreshComponent } from "../otp/OtpCodeComponent";
 import { OtpCode } from "../../../../../../definitions/cgn/OtpCode";
 
 describe("getOtpTTL", () => {
