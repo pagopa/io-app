@@ -1,14 +1,8 @@
-import { none, Option, some } from "fp-ts/lib/Option";
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import {
-  isReady,
-  remoteReady
-} from "../../../../../bonus/bpd/model/RemoteValue";
-import { AbiState } from "../../../store/abi";
 import {
   PrivativeQuery,
   searchUserPrivative,
