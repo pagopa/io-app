@@ -2273,7 +2273,16 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
-
+    otp:
+      code:
+        title: Your discount code
+        validUntil: Still valid for
+        minutes:
+          one: 1 minute
+          other: "{{minutes}} minutes"
+        seconds:
+          one: 1 second
+          other: "{{seconds}} seconds"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
