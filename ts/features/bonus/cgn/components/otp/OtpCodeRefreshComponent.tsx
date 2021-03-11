@@ -96,7 +96,8 @@ const getOtpTTL = (otp: Otp): Millisecond => {
   return (otp.ttl * 1000) as Millisecond;
 };
 
-const getRemaingTimeRepr = (remainingTime: RemainingTime) =>
+// return a string (or undefined) of the remaining time
+const getRemaingTimeRepr = (remainingTime: RemainingTime): string | undefined =>
   fromNullable(remainingTime)
     .map<string | undefined>(rt => {
       const minutes =
@@ -120,8 +121,6 @@ const getRemaingTimeRepr = (remainingTime: RemainingTime) =>
     })
     .getOrElse(undefined);
 
-// TODO considering duration from OTP (expire date)
-// if (now - expire < 0 || now - expire > ttl ) -> use ttl
 export const OtpCodeRefreshComponent = (props: Props) => {
   const { startPercentage, endPercentage } = props.progressConfig ?? {
     startPercentage: 0,
