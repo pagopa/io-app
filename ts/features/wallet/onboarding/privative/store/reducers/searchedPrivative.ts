@@ -1,8 +1,16 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import { IUnitTag } from "italia-ts-commons/lib/units";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  isReady,
+  remoteReady
+} from "../../../../../bonus/bpd/model/RemoteValue";
+import { AbiState } from "../../../store/abi";
+import {
+  PrivativeQuery,
   searchUserPrivative,
   walletAddPrivativeChooseIssuer,
   walletAddPrivativeInsertCardNumber,
@@ -43,8 +51,27 @@ const searchedPrivativeReducer = (
  * Return the current searched parameters (BrandId and CardNumber) for the privative search
  * @param state
  */
-export const onboardingSearchedPrivativeSelector = (
+export const onboardingSearchedPrivativePartialSelector = (
   state: GlobalState
 ): SearchedPrivativeData => state.wallet.onboarding.privative.searchedPrivative;
+
+const toPrivativeQuery = (
+  searched: SearchedPrivativeData
+): PrivativeQuery | undefined => {
+  const { id, cardNumber } = searched;
+
+  return id !== undefined && cardNumber !== undefined
+    ? { id, cardNumber }
+    : undefined;
+};
+
+/**
+ * Return the privative query only if all the fields are filled
+ */
+export const onboardingSearchedPrivativeQuery = createSelector(
+  [onboardingSearchedPrivativePartialSelector],
+  (searchedPrivativeData): PrivativeQuery | undefined =>
+    toPrivativeQuery(searchedPrivativeData)
+);
 
 export default searchedPrivativeReducer;

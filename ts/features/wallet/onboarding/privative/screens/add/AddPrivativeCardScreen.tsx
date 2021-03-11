@@ -45,7 +45,13 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement => (
       {/* TODO: Complete the component, this is a draft version for test purpose only */}
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>TMP Privative card display screen</H1>
-        <Body>Card Number: {props.foundPrivative}</Body>
+        <Body>
+          Card Number:
+          {props.foundPrivative.fold(
+            "No card number",
+            pm => pm.panPartialNumber
+          )}
+        </Body>
       </View>
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}

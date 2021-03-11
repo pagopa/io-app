@@ -16,6 +16,10 @@ import { CoBadgePayload } from "../../../cobadge/screens/search/SearchAvailableC
 import { PrivativeResponse, searchUserPrivative } from "../../store/actions";
 import { onboardingPrivativeSearchRequestId } from "../../store/reducers/searchPrivativeRequestId";
 
+/**
+ * Try to convert a CobadgeResponse to a PrivativeResponse (only one paymentInstrument is allowed)
+ * @param response
+ */
 const toPrivativeResponse = (
   response: CobadgeResponse
 ): Either<GenericError, PrivativeResponse> =>

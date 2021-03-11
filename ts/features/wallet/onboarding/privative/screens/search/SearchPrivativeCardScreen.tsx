@@ -1,7 +1,10 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { PrivativeQuery, searchUserPrivative } from "../../store/actions";
+import { onboardingSearchedPrivativeQuery } from "../../store/reducers/searchedPrivative";
 import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -12,13 +15,22 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param props
  * @constructor
  */
-const SearchPrivativeCardScreen = (_: Props): React.ReactElement => (
-  <AddPrivativeCardScreen />
-);
+const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
+  useEffect(() => {
+    if (props.privativeQuery) {
+      props.search(props.privativeQuery);
+    }
+  }, []);
+  return <AddPrivativeCardScreen />;
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  search: (pr: PrivativeQuery) => dispatch(searchUserPrivative.request(pr))
+});
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  privativeQuery: onboardingSearchedPrivativeQuery(state)
+});
 
 export default connect(
   mapStateToProps,

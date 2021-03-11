@@ -1,4 +1,3 @@
-import { none, Option, some } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -20,23 +19,10 @@ import {
   searchUserPrivative,
   walletAddPrivativeCancel
 } from "../../../store/actions";
-import {
-  onboardingSearchedPrivativeSelector,
-  SearchedPrivativeData
-} from "../../../store/reducers/searchedPrivative";
+import { onboardingSearchedPrivativeQuery } from "../../../store/reducers/searchedPrivative";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-const toPrivativeQuery = (
-  searched: SearchedPrivativeData
-): Option<PrivativeQuery> => {
-  const { id, cardNumber } = searched;
-
-  return id !== undefined && cardNumber !== undefined
-    ? some({ id, cardNumber })
-    : none;
-};
 
 /**
  * This screen informs the user that a timeout is occurred while searching the indicated privative card.
@@ -62,9 +48,9 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement => (
         leftButton={cancelButtonProps(props.cancel)}
         rightButton={confirmButtonProps(
           () =>
-            toPrivativeQuery(props.searchedPrivative).fold(undefined, val =>
-              props.search(val)
-            ),
+            props.searchedPrivative
+              ? props.search(props.searchedPrivative)
+              : undefined,
           I18n.t("global.buttons.retry")
         )}
       />
@@ -78,7 +64,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  searchedPrivative: onboardingSearchedPrivativeSelector(state)
+  searchedPrivative: onboardingSearchedPrivativeQuery(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivativeKoTimeout);
