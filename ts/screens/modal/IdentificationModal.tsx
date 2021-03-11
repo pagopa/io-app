@@ -506,7 +506,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   otpIndex: ov.otpIndex + 1
                 }));
               }}
-              otp={otps[this.state.otpIndex % otps.length]}
+              otp={{
+                ...otps[this.state.otpIndex % otps.length],
+                expires_at: new Date(new Date().getTime() + 100000)
+              }}
             />
             {this.renderErrorDescription()}
             <Pinpad

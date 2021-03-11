@@ -216,7 +216,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  // Update cuttentTab state when horizontal scroll is completed
+  // Update currentTab state when horizontal scroll is completed
   private handleOnChangeTab = (evt: any) => {
     const nextTab: number = evt.i;
     this.setState({
@@ -252,15 +252,17 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             <OtpCodeRefreshComponent
               progressConfig={{
                 startPercentage: 100,
-                endPercentage: 0,
-                duration: 8000 as Millisecond
+                endPercentage: 0
               }}
               onEnd={() => {
                 this.setState(ov => ({
                   otpIndex: ov.otpIndex + 1
                 }));
               }}
-              otp={otps[this.state.otpIndex % otps.length]}
+              otp={{
+                ...otps[this.state.otpIndex % otps.length],
+                expires_at: new Date(new Date().getTime() + 10000)
+              }}
             />
           </Tab>
           <Tab

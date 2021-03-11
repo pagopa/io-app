@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { addEvery } from "../../../../../utils/strings";
@@ -9,10 +10,11 @@ import { Label } from "../../../../../components/core/typography/Label";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import { isTestEnv } from "../../../../../utils/environment";
 
 type ProgressConfig = {
-  startPercentage?: number;
-  endPercentage?: number;
+  startPercentage: number;
+  endPercentage: number;
 };
 
 type Props = {
@@ -20,7 +22,7 @@ type Props = {
   progressBaseBgColor?: ViewStyle["backgroundColor"];
   progressBgColor?: ViewStyle["backgroundColor"];
   onEnd: () => void;
-  progressConfig: ProgressConfig;
+  progressConfig?: ProgressConfig;
 };
 
 const styles = StyleSheet.create({
@@ -79,18 +81,32 @@ const OtpCodeComponent = (code: string) => (
     {code}
   </BaseTypography>
 );
+
+const getOtpTTL = (otp: Otp): Millisecond => {
+  const now = new Date();
+  const remain = otp.expires_at.getTime() - now.getTime();
+  if (remain > 0) {
+    // take the min between ttl and computed seconds
+    return Math.min(Math.ceil(remain), otp.ttl * 1000) as Millisecond;
+  }
+  // expires is in the past relative to the dice current time, use ttl as fallback
+  return (otp.ttl * 1000) as Millisecond;
+};
+
 // TODO considering duration from OTP (expire date)
 // if (now - expire < 0 || now - expire > ttl ) -> use ttl
 export const OtpCodeRefreshComponent = (props: Props) => {
-  const { startPercentage = 0, endPercentage = 100 } = props.progressConfig;
-
+  const { startPercentage, endPercentage } = props.progressConfig ?? {
+    startPercentage: 0,
+    endPercentage: 100
+  };
   const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [remainingTime, setRemainingTime] = useState<
     undefined | { minutes: number; seconds: number }
   >(undefined);
   const intervalRef = useRef<undefined | number>(undefined);
-  const duration = 1000;
   const formattedCode = addEvery(props.otp.code, " ", 3);
 
   // reset interval timer
@@ -100,20 +116,21 @@ export const OtpCodeRefreshComponent = (props: Props) => {
    * when otp changes
    * - reset elapsed seconds
    * - reset progress width
-   * - start progress animation
+   * - start progress width animation
    */
   useEffect(() => {
+    const currentDuration = getOtpTTL(props.otp);
+    setDuration(currentDuration);
     setElapsedSeconds(0);
     progressWidth.setValue(startPercentage);
 
     Animated.timing(progressWidth, {
       useNativeDriver: false,
       toValue: endPercentage,
-      duration: duration as number,
+      duration: currentDuration as number,
       easing: Easing.linear
     }).start(() => {
       // when animation end
-      progressWidth.setValue(startPercentage);
       setElapsedSeconds(cv => cv + 1);
       stopInterval();
       props.onEnd();
@@ -127,6 +144,9 @@ export const OtpCodeRefreshComponent = (props: Props) => {
 
   // update the remaining time
   useEffect(() => {
+    if (duration === 0) {
+      return;
+    }
     const durationInSeconds = duration / 1000;
     const minutes = Math.max(
       0,
@@ -137,7 +157,7 @@ export const OtpCodeRefreshComponent = (props: Props) => {
       Math.floor((durationInSeconds - elapsedSeconds) % 60)
     );
     setRemainingTime({ minutes, seconds });
-  }, [elapsedSeconds]);
+  }, [duration, elapsedSeconds]);
 
   return (
     <View style={styles.container}>
@@ -192,3 +212,8 @@ export const OtpCodeRefreshComponent = (props: Props) => {
     </View>
   );
 };
+
+// keep encapsulation strong
+export const testableOtpCodeRefreshComponent = isTestEnv
+  ? { getOtpTTL }
+  : undefined;
