@@ -6,13 +6,12 @@ import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { addEvery } from "../../../../../utils/strings";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
-import customVariables from "../../../../../theme/variables";
-import { Label } from "../../../../../components/core/typography/Label";
 import IconFont from "../../../../../components/ui/IconFont";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
 import I18n from "../../../../../i18n";
+import { H5 } from "../../../../../components/core/typography/H5";
 
 type ProgressConfig = {
   startPercentage: number;
@@ -32,13 +31,11 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white
   },
   otpContainer: {
-    paddingHorizontal: customVariables.contentPadding,
-    paddingVertical: 4,
-    marginRight: 20,
-    marginLeft: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 36,
     marginTop: 4,
     marginBottom: 4,
-    justifyContent: "center",
+    justifyContent: "space-between",
     backgroundColor: IOColors.white,
     flexDirection: "row",
     shadowColor: "#00274e",
@@ -57,7 +54,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: "#d9d9d9",
-    width: "90%",
+    width: "100%",
     height: 6,
     margin: 4,
     borderRadius: 4
@@ -72,9 +69,9 @@ const styles = StyleSheet.create({
   remainingTimeContainer: {
     alignSelf: "center",
     marginTop: 2,
-    width: "90%"
+    width: "100%"
   },
-  optCode: { fontSize: 30, padding: 4, marginRight: 4, textAlign: "center" }
+  optCode: { fontSize: 30, textAlign: "left" }
 });
 
 // Monospace custom component
@@ -195,9 +192,9 @@ export const OtpCodeComponent = (props: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.remainingTimeContainer}>
-        <Label weight={"Regular"} color={"bluegrey"}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.cgn.otp.code.title")}
-        </Label>
+        </H5>
       </View>
       <TouchableDefaultOpacity
         style={styles.otpContainer}
@@ -235,9 +232,9 @@ export const OtpCodeComponent = (props: Props) => {
       </View>
       {expirationTime && (
         <View style={styles.remainingTimeContainer}>
-          <Label weight={"Regular"} color={"bluegrey"}>
+          <H5 weight={"Regular"} color={"bluegrey"}>
             {getRemainingTimeRepr(expirationTime)}
-          </Label>
+          </H5>
         </View>
       )}
     </View>
