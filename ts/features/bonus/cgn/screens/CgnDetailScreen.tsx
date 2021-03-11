@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -28,6 +28,7 @@ import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -48,36 +49,38 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <LinearGradient colors={["#7CB3D9", IOColors.bluegrey]}>
-          <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
-        </LinearGradient>
-        {props.cgnDetails && <CgnCardComponent cgnDetails={props.cgnDetails} />}
-        <View
-          style={[
-            IOStyles.flex,
-            IOStyles.horizontalContentPadding,
-            { paddingTop: customVariables.contentPadding }
-          ]}
-        >
-          {props.cgnDetails && (
-            // Renders the message based on the current status of the card
-            <CgnInfoboxDetail cgnDetail={props.cgnDetails} />
-          )}
-          <View spacer />
-          <ItemSeparatorComponent noPadded />
-          <View spacer />
-          {/* Ownership block rendering owner's fiscal code */}
-          <CgnOwnershipInformation />
-          <ItemSeparatorComponent noPadded />
-          <View spacer />
-          {props.cgnDetails && (
-            // Renders status information including activation and expiring date and a badge that represents the CGN status
-            // ACTIVATED - EXPIRED - REVOKED
-            <CgnStatusDetail cgnDetail={props.cgnDetails} />
-          )}
-          <ItemSeparatorComponent noPadded />
-          <View spacer large />
-        </View>
+        <ScrollView style={[IOStyles.flex]} bounces={false}>
+          <LinearGradient colors={["#7CB3D9", IOColors.bluegrey]}>
+            <View style={[IOStyles.horizontalContentPadding, { height: 180 }]} />
+          </LinearGradient>
+          {props.cgnDetails && <CgnCardComponent cgnDetails={props.cgnDetails} />}
+          <View
+            style={[
+              IOStyles.flex,
+              IOStyles.horizontalContentPadding,
+              { paddingTop: customVariables.contentPadding }
+            ]}
+          >
+            {props.cgnDetails && (
+              // Renders the message based on the current status of the card
+              <CgnInfoboxDetail cgnDetail={props.cgnDetails} />
+            )}
+            <View spacer />
+            <ItemSeparatorComponent noPadded />
+            <View spacer />
+            {/* Ownership block rendering owner's fiscal code */}
+            <CgnOwnershipInformation />
+            <ItemSeparatorComponent noPadded />
+            <View spacer />
+            {props.cgnDetails && (
+              // Renders status information including activation and expiring date and a badge that represents the CGN status
+              // ACTIVATED - EXPIRED - REVOKED
+              <CgnStatusDetail cgnDetail={props.cgnDetails} />
+            )}
+            <ItemSeparatorComponent noPadded />
+            <View spacer large />
+          </View>
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
