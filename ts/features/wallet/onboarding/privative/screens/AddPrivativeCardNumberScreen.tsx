@@ -1,10 +1,9 @@
 import { Input, Item, View } from "native-base";
-import { useState } from "react";
 import * as React from "react";
-import { FlatList, Platform, SafeAreaView } from "react-native";
+import { useState } from "react";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -45,7 +44,7 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
         style={IOStyles.flex}
         testID={"ChoosePrivativeIssuerComponent"}
       >
-        {/* TODO: Complete the component */}
+        {/* TODO: Complete the component, this is a draft version for test purpose only */}
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <H1>TMP Inserisci numero carta</H1>
           <View spacer={true} />
