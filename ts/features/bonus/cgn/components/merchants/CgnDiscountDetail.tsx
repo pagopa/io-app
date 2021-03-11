@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "native-base";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
@@ -11,8 +11,8 @@ import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { Monospace } from "../../../../../components/core/typography/Monospace";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
 
 type Props = {
   discount: TmpDiscountType;
@@ -89,9 +89,19 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                 { alignItems: "center", justifyContent: "space-between" }
               ]}
             >
-              <Monospace weight={"Bold"} color={"bluegrey"}>
+              <BaseTypography
+                weight={"Bold"}
+                color={"bluegreyDark"}
+                style={{
+                  fontSize: 20,
+                  fontFamily: Platform.select({
+                    android: "RobotoMono",
+                    ios: "Roboto Mono"
+                  })
+                }}
+              >
                 {discount.discountCode}
-              </Monospace>
+              </BaseTypography>
               <IconFont
                 name={isTap ? "io-complete" : "io-copy"}
                 size={24}
