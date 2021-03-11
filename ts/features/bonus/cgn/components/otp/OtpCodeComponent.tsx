@@ -84,13 +84,19 @@ const OtpCode = (code: string) => (
   </BaseTypography>
 );
 
-type RemainingTime = { minutes: number; seconds: number };
+type ExpirationTime = { minutes: number; seconds: number };
+/**
+ * compute otp code expiration time
+ * - if the otp elapsed time is before the current time, the remaining time is ttl
+ * - if the otp elapsed time is after the current time, the remaining time is the minimum between now - elapsed time and ttl
+ */
+
 const getOtpTTL = (otp: Otp): Millisecond => {
   const now = new Date();
-  const remain = otp.expires_at.getTime() - now.getTime();
-  if (remain > 0) {
+  const expiration = otp.expires_at.getTime() - now.getTime();
+  if (expiration > 0) {
     // take the min between ttl and computed seconds
-    return Math.min(Math.ceil(remain), otp.ttl * 1000) as Millisecond;
+    return Math.min(Math.ceil(expiration), otp.ttl * 1000) as Millisecond;
   }
   // expires is in the past relative to the dice current time, use ttl as fallback
   return (otp.ttl * 1000) as Millisecond;
@@ -98,9 +104,9 @@ const getOtpTTL = (otp: Otp): Millisecond => {
 
 // return a string (or undefined) of the remaining time
 const getRemainingTimeRepr = (
-  remainingTime: RemainingTime
+  expirationtime: ExpirationTime
 ): string | undefined =>
-  fromNullable(remainingTime)
+  fromNullable(expirationtime)
     .map<string | undefined>(rt => {
       const minutes =
         rt.minutes === 0
@@ -131,9 +137,9 @@ export const OtpCodeComponent = (props: Props) => {
   const [progressWidth] = useState(new Animated.Value(startPercentage));
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [duration, setDuration] = useState<Second>(0 as Second);
-  const [remainingTime, setRemainingTime] = useState<RemainingTime | undefined>(
-    undefined
-  );
+  const [expirationTime, setExpirationTime] = useState<
+    ExpirationTime | undefined
+  >(undefined);
   const intervalRef = useRef<undefined | number>(undefined);
   const formattedCode = addEvery(props.otp.code, " ", 3);
 
@@ -175,9 +181,10 @@ export const OtpCodeComponent = (props: Props) => {
     if (duration === 0) {
       return;
     }
-    const minutes = Math.max(0, Math.floor((duration - elapsedSeconds) / 60));
-    const seconds = Math.max(0, Math.floor((duration - elapsedSeconds) % 60));
-    setRemainingTime({ minutes, seconds });
+    const expiration = duration - elapsedSeconds;
+    const minutes = Math.max(0, Math.floor(expiration / 60));
+    const seconds = Math.max(0, Math.floor(expiration % 60));
+    setExpirationTime({ minutes, seconds });
   }, [duration, elapsedSeconds]);
 
   return (
@@ -221,10 +228,10 @@ export const OtpCodeComponent = (props: Props) => {
           ]}
         />
       </View>
-      {remainingTime && (
+      {expirationTime && (
         <View style={styles.remainingTimeContainer}>
           <Label weight={"Regular"} color={"bluegrey"}>
-            {getRemainingTimeRepr(remainingTime)}
+            {getRemainingTimeRepr(expirationTime)}
           </Label>
         </View>
       )}
