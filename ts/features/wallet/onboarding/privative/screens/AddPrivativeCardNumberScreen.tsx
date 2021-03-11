@@ -59,9 +59,9 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
         </View>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(props.onCancel)}
+          leftButton={cancelButtonProps(props.cancel)}
           rightButton={confirmButtonProps(
-            () => props.onSearch(cardNumber),
+            () => props.search(cardNumber),
             I18n.t("global.buttons.continue")
           )}
         />
@@ -71,14 +71,14 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCancel: () => dispatch(walletAddPrivativeCancel()),
-  onSearch: (cardNumber: string) => {
+  cancel: () => dispatch(walletAddPrivativeCancel()),
+  search: (cardNumber: string) => {
     dispatch(walletAddPrivativeInsertCardNumber(cardNumber));
     dispatch(navigateToOnboardingPrivativeSearchAvailable());
   }
 });
 
-const mapStateToProps = (state: GlobalState) => ({});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

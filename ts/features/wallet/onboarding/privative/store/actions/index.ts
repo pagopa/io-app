@@ -13,7 +13,7 @@ import {
   SearchedPrivativeData
 } from "../reducers/searchedPrivative";
 
-type PrivativeQuery = Required<SearchedPrivativeData>;
+export type PrivativeQuery = Required<SearchedPrivativeData>;
 
 /**
  * Search for user's privative cards (can be only one)
