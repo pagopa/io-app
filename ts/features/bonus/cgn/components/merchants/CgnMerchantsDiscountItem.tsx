@@ -13,7 +13,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 type Props = {
   category: string;
   description: string;
-  value: string;
+  value: number;
 };
 
 const PERCENTAGE_SYMBOL = "%";
@@ -62,7 +62,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = (
               <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
                 {/* avoid overflow */}
                 {WithinRangeInteger(0, 100)
-                  .decode(parseInt(props.value, 10))
+                  .decode(props.value)
                   .map(v => v.toString())
                   .getOrElse("-")}
                 <H5 weight={"SemiBold"} color={"white"}>
