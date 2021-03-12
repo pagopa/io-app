@@ -35,11 +35,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = ({
   const renderDiscountListItem = ({
     item
   }: ListRenderItemInfo<TmpDiscountType>) => (
-    <CgnMerchantDiscountItem
-      category={item.category}
-      description={item.title}
-      value={item.value}
-    />
+    <CgnMerchantDiscountItem discount={item} />
   );
 
   return (
