@@ -8,7 +8,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 
 type ValueBoxProps = {
   value: number;
-  small?: boolean;
+  small?: true;
 };
 
 const styles = StyleSheet.create({
@@ -37,23 +37,23 @@ const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
     .decode(value)
     .map(v => v.toString())
     .getOrElse("-");
-
+  const percentage = (
+    <H5 weight={"SemiBold"} color={"white"}>
+      {PERCENTAGE_SYMBOL}
+    </H5>
+  );
   return (
     <View style={small ? styles.smallValueBox : styles.discountValueBox}>
       {small ? (
         <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
           {normalizedValue}
           <H5 weight={"SemiBold"} color={"white"}>
-            {PERCENTAGE_SYMBOL}
+            {percentage}
           </H5>
         </H4>
       ) : (
         <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
-          {/* avoid overflow */}
-          {normalizedValue}
-          <H5 weight={"SemiBold"} color={"white"}>
-            {PERCENTAGE_SYMBOL}
-          </H5>
+          {percentage}
         </H3>
       )}
     </View>

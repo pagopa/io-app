@@ -2,6 +2,7 @@ import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import I18n from "../../../../../i18n";
@@ -13,6 +14,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
+import { addEvery } from "../../../../../utils/strings";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
   discountValue: { textAlign: "center", lineHeight: 30 }
 });
 
-const FEEDBACK_MS = 3000;
+const FEEDBACK_TIMEOUT = 3000 as Millisecond;
 
 const CATEGORY_ICON_SIZE = 22;
 const COPY_ICON_SIZE = 24;
@@ -67,7 +69,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       setIsTap(true);
       clipboardSetStringWithFeedback(discount.discountCode);
       // eslint-disable-next-line functional/immutable-data
-      timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_MS);
+      timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_TIMEOUT);
     }
   };
 
@@ -103,7 +105,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                 font={"RobotoMono"}
                 style={styles.codeText}
               >
-                {discount.discountCode}
+                {addEvery(discount.discountCode, " ", 3)}
               </BaseTypography>
               <IconFont
                 name={isTap ? "io-complete" : "io-copy"}
