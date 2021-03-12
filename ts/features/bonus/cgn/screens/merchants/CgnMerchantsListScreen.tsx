@@ -1,6 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FlatList, ListRenderItemInfo, SafeAreaView } from "react-native";
+import {
+  FlatList,
+  Keyboard,
+  ListRenderItemInfo,
+  SafeAreaView
+} from "react-native";
 import { Input, Item, View } from "native-base";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -65,6 +70,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const onItemPress = () => {
     // TODO Add the dispatch of merchant selected when the complete workflow is available
     props.navigateToMerchantDetail();
+    Keyboard.dismiss();
   };
 
   const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
@@ -104,6 +110,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
             )}
             renderItem={renderListItem}
             keyExtractor={c => `${c.name}-${c.category}`}
+            keyboardShouldPersistTaps={"handled"}
             ListFooterComponent={
               merchantList.length > 0 && <EdgeBorderComponent />
             }
