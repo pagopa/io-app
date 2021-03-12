@@ -33,7 +33,7 @@ describe("PrivativeWalletPreview", () => {
     onboardingChannel: "IO",
     pagoPA: false,
     updateDate: "2020-11-20",
-    kind: "CreditCard",
+    kind: "Privative",
     caption: "●●●●0001",
     icon: 37
   } as PrivativePaymentMethod;
@@ -45,7 +45,7 @@ describe("PrivativeWalletPreview", () => {
     expect(caption).not.toBeNull();
     expect(caption).toHaveTextContent(aPrivativeCard.caption);
   });
-  it("should show the fallback gdo logo if useImageResize return a size but there isn't the cardLogo", () => {
+  it("should show the fallback gdo logo if useImageResize returns a size but there isn't the cardLogo", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
     const { component } = getComponent(aPrivativeCard);
     const cardLogo = component.queryByTestId("gdoLogo");
@@ -58,7 +58,7 @@ describe("PrivativeWalletPreview", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
     const { component } = getComponent({
       ...aPrivativeCard,
-      cardLogo: "aCardLogoUrl"
+      gdoLogo: { uri: "aCardLogoUrl" }
     });
     const cardLogo = component.queryByTestId("gdoLogo");
     const cardLogoFallback = component.queryByTestId("unknownGdoLogo");
@@ -66,7 +66,7 @@ describe("PrivativeWalletPreview", () => {
     expect(cardLogo).not.toBeNull();
     expect(cardLogoFallback).toBeNull();
   });
-  it("should call navigateToPrivativeDetailScreen when press on it", () => {
+  it("should call navigateToPrivativeDetailScreen when it is pressed", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const { component, store } = getComponent(aPrivativeCard);
     const cardComponent = component.queryByTestId("cardPreview");
