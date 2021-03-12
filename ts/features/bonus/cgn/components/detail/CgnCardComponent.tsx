@@ -158,11 +158,10 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View>
               {props.cgnDetails.status !== "PENDING" && (
                 <H5>
-                  {"Valida fino al " +
-                    localeDateFormat(
-                      props.cgnDetails.expiration_date,
-                      I18n.t("global.dateFormats.shortFormat")
-                    )}
+                  {`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
+                    props.cgnDetails.expiration_date,
+                    I18n.t("global.dateFormats.shortFormat")
+                  )}`}
                 </H5>
               )}
               {props.currentProfile && (
