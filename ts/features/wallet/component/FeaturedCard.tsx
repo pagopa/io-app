@@ -6,7 +6,9 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import TouchableDefaultOpacity, {
+  TouchableDefaultOpacityProps
+} from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
   onPress?: () => void;
   image?: ImageSourcePropType;
   isNew: boolean;
+  testID?: TouchableDefaultOpacityProps["testID"];
 };
 
 const styles = StyleSheet.create({
@@ -52,7 +55,11 @@ const styles = StyleSheet.create({
 });
 
 const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
-  <TouchableDefaultOpacity style={styles.container} onPress={props.onPress}>
+  <TouchableDefaultOpacity
+    style={styles.container}
+    onPress={props.onPress}
+    testID={props.testID}
+  >
     <View style={styles.row}>
       {fromNullable(props.image).fold(
         <View

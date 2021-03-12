@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -34,7 +35,8 @@ import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
   isAvailableBonusNoneErrorSelector,
   isAvailableBonusLoadingSelector,
-  visibleAvailableBonusSelector
+  allAvailableBonusTypesSelector,
+  experimentalAndVisibleBonus
 } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
@@ -67,8 +69,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 /**
  * This component presents the list of available bonus the user can request
- * if the bonus is already active, the component shows the active bonus item and user can navigate to the bonus detail
- * instead if bonus is not active the user can navigate to the begin of request flow.
+ * Only the visible bonus are shown ('visible' or 'experimental')
+ * - if the bonus handler is set, the relative item performs the handler
+ * - if the bonus handler is not set and the bonus is 'visible':
+ *    - it displays the 'incoming label' within the bonus
+ *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
+ *    - if the bonus is not active at the on press it does nothing
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
   private openAppStore = () => {
@@ -96,7 +102,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (cgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
-
+    const handled = handlersMap.has(item.id_type);
+    // if bonus is experimental but there is no handler, it won't be shown
+    if (item.visibility === "experimental" && !handled) {
+      return null;
+    }
+    // when the bonus is visible but this app version cant handle it
+    const isComingSoon = item.visibility === "visible" && !handled;
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
@@ -130,7 +142,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       );
     };
 
-    return <AvailableBonusItem bonusItem={item} onPress={onItemPress} />;
+    return (
+      <AvailableBonusItem
+        bonusItem={item}
+        onPress={onItemPress}
+        isComingSoon={isComingSoon}
+      />
+    );
   };
 
   public componentDidMount() {
@@ -170,7 +188,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}
-                data={availableBonusesList}
+                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
                 renderItem={this.renderListItem}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
@@ -190,7 +208,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  availableBonusesList: visibleAvailableBonusSelector(state),
+  availableBonusesList: pot.getOrElse(
+    allAvailableBonusTypesSelector(state),
+    []
+  ),
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state)
