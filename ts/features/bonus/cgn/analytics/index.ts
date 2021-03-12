@@ -21,10 +21,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnActivationComplete):
     case getType(cgnActivationCancel):
     case getType(cgnActivationBack):
-    case getType(cgnActivationStatus.request):
-    case getType(cgnActivationStatus.success):
-    case getType(cgnRequestActivation.request):
-    case getType(cgnRequestActivation.success):
     case getType(cgnDetails.request):
     case getType(cgnDetails.success):
       return mp.track(action.type);
