@@ -2306,6 +2306,16 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
+    otp:
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
