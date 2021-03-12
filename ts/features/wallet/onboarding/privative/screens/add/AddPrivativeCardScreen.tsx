@@ -33,7 +33,7 @@ import { onboardingPrivativeFoundSelector } from "../../store/reducers/foundPriv
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;;
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 const AddPrivativeBody = (props: Props) => (
   <>
@@ -55,7 +55,7 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     fold(
       props.addingResult,
-      () => setStateLabel("undefined"),
+      () => setStateLabel(""),
       () => setStateLabel("Adding to wallet, Loading..."),
       _ => props.complete(),
       error => setStateLabel(`Error! ${JSON.stringify(error)}`)
