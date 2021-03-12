@@ -91,7 +91,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       <View spacer />
       <H3>{I18n.t("bonus.cgn.merchantDetail.title.validity")}</H3>
       <H4 weight={"Regular"}>{discount.validityDescription}</H4>
-      {discount.discountCode !== undefined && (
+      {discount.discountCode && (
         <>
           <View spacer small />
           <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
@@ -122,7 +122,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   );
 };
 
-const CgnDiscountDetailHeader: React.FunctionComponent<Props> = ({
+const CgnDiscountDetailHeader = ({
   discount
 }: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
