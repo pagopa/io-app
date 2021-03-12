@@ -72,6 +72,7 @@ const LocalServicesWebView = (props: Props) => {
         // if service has been loaded
         if (isStrictSome(servicePot)) {
           props.onServiceSelect(servicePot.value);
+          setServiceIdToLoad(undefined);
           return;
         }
         if (pot.isError(servicePot)) {
@@ -90,7 +91,7 @@ const LocalServicesWebView = (props: Props) => {
   /**
    * 'listen' on web message
    * if a serviceId is sent: dispatch service loading request
-   * @param navState
+   * @param event
    */
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
     ServiceId.decode(event.nativeEvent.data).map(sId => {
