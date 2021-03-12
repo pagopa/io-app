@@ -256,7 +256,9 @@ export const isSatispay = (
 export const isCreditCard = (
   pm: PaymentMethod | undefined
 ): pm is CreditCardPaymentMethod =>
-  pm === undefined ? false : pm.kind === "CreditCard";
+  pm === undefined
+    ? false
+    : pm.kind === "CreditCard" && pm.info.type !== CreditCardTypeEnum.PRV;
 
 export const isBPay = (
   pm: PaymentMethod | undefined
@@ -265,9 +267,7 @@ export const isBPay = (
 export const isPrivativeCard = (
   pm: PaymentMethod | undefined
 ): pm is PrivativePaymentMethod =>
-  pm === undefined
-    ? false
-    : pm.kind === "CreditCard" && pm.info.type === CreditCardTypeEnum.PRV;
+  isCreditCard(pm) && pm.info.type === CreditCardTypeEnum.PRV;
 
 /**
  * A refined Wallet
