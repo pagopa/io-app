@@ -924,6 +924,8 @@ wallet:
         koNotFound:
           title: "Sorry, this card is not in your name"
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
+          cta:
+            modifyCardNumber: "Change card number"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"

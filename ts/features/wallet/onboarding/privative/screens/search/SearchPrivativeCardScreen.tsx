@@ -110,7 +110,6 @@ const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
   }, []);
 
   const privativeFound = props.privativeFound;
-
   if (isReady(privativeFound)) {
     const payload = decodePayload(privativeFound.value);
     return payload.fold(
@@ -122,6 +121,7 @@ const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
   if (isError(privativeFound) && isTimeoutError(privativeFound.error)) {
     return <PrivativeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
+
   return <LoadPrivativeSearch testID={"LoadPrivativeSearch"} />;
 };
 
