@@ -1,24 +1,20 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isNone } from "fp-ts/lib/Option";
 import I18n from "../../../../../../i18n";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { WithTestID } from "../../../../../../types/WithTestID";
+import { showToast } from "../../../../../../utils/showToast";
+import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
+  PrivativeQuery,
   searchUserPrivative,
   walletAddPrivativeCancel
 } from "../../store/actions";
-import {
-  onboardingSearchedPrivativeSelector,
-  SearchedPrivativeData
-} from "../../store/reducers/searchedPrivative";
 import { onboardingPrivativeFoundIsError } from "../../store/reducers/foundPrivative";
-import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { WithTestID } from "../../../../../../types/WithTestID";
-import { showToast } from "../../../../../../utils/showToast";
-import { mixpanelTrack } from "../../../../../../mixpanel";
-import { toPrivativeQuery } from "./SearchPrivativeCardScreen";
+import { onboardingSearchedPrivativeQuerySelector } from "../../store/reducers/searchedPrivative";
 
 type Props = WithTestID<
   ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>
@@ -37,8 +33,9 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
     return true;
   });
 
-  const privativeQueryParam = toPrivativeQuery(props.privativeSelected);
-  if (isNone(privativeQueryParam)) {
+  const { privativeSelected } = props;
+
+  if (privativeSelected === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
     void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
     props.cancel();
@@ -49,7 +46,7 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
         {...props}
         loadingCaption={I18n.t("wallet.onboarding.privative.search.loading")}
         onAbort={props.cancel}
-        onRetry={() => props.retry(privativeQueryParam.value)}
+        onRetry={() => props.retry(privativeSelected)}
       />
     );
   }
@@ -57,12 +54,12 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
-  retry: (searchedPrivativeData: Required<SearchedPrivativeData>) =>
+  retry: (searchedPrivativeData: PrivativeQuery) =>
     dispatch(searchUserPrivative.request(searchedPrivativeData))
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  privativeSelected: onboardingSearchedPrivativeSelector(state),
+  privativeSelected: onboardingSearchedPrivativeQuerySelector(state),
   isLoading: !onboardingPrivativeFoundIsError(state)
 });
 
