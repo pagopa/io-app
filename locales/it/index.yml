@@ -2265,6 +2265,9 @@ bonus:
         description: Descrizione
         services: Servizi
         hours: Orari
+        validity: Validità
+        discountCode: Codice Sconto
+        conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
     cta:
