@@ -288,8 +288,8 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
  */
 export const privativeListVisibleInWalletSelector = createSelector(
   [privativeListSelector],
-  (creditCardListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
-    pot.map(creditCardListPot, privativeList =>
+  (privativeListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(privativeListPot, privativeList =>
       privativeList.filter(isVisibleInWallet)
     )
 );
