@@ -7,7 +7,7 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
@@ -237,7 +237,7 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   WithAbi;
 
 export type PrivativePaymentMethod = RawPrivativePaymentMethod & {
-  cardLogo?: string;
+  gdoLogo?: ImageURISource;
 };
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
@@ -278,7 +278,7 @@ export const isBPay = (
 export const isPrivativeCard = (
   pm: PaymentMethod | undefined
 ): pm is PrivativePaymentMethod =>
-  isCreditCard(pm) && pm.info.type === CreditCardTypeEnum.PRV;
+  pm === undefined ? false : pm.kind === "Privative";
 
 /**
  * A refined Wallet
