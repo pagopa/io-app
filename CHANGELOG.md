@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0-rc.4](https://github.com/pagopa/io-app/compare/1.23.0-rc.3...1.23.0-rc.4) (2021-03-11)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#176959185](https://www.pivotaltracker.com/story/show/176959185)] Introduces the screen to check on Merchant detail conventioned to CGN ([#2886](https://github.com/pagopa/io-app/issues/2886)) ([db50f36](https://github.com/pagopa/io-app/commit/db50f3600b01a72d2f4b83b0cbd8f38f37baefa0)), closes [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#177059013](https://www.pivotaltracker.com/story/show/177059013)
+* **Carta Giovani Nazionale:** [[#176959374](https://www.pivotaltracker.com/story/show/176959374)] Add a component to show the OTP code and its expiration time ([#2892](https://github.com/pagopa/io-app/issues/2892)) ([e679d69](https://github.com/pagopa/io-app/commit/e679d693104a88d48af3ce538c61aac02404e265))
+* **Carta Giovani Nazionale:** [[#177059013](https://www.pivotaltracker.com/story/show/177059013)] Introduces the component to display a discount value for a CGN merchant ([#2884](https://github.com/pagopa/io-app/issues/2884)) ([a211fa5](https://github.com/pagopa/io-app/commit/a211fa51bf484d2ee9cb722f928a60ada461f215))
+
+
+### Bug Fixes
+
+* [[#177298671](https://www.pivotaltracker.com/story/show/177298671)] On message pressed Service details is shown instead of Message details ([#2889](https://github.com/pagopa/io-app/issues/2889)) ([9fe615b](https://github.com/pagopa/io-app/commit/9fe615beb68f629cabe1c278c99dddc1aad807ae))
+
+
+### Chores
+
+* [[#176433685](https://www.pivotaltracker.com/story/show/176433685)] Track Instabug report open/close ([#2727](https://github.com/pagopa/io-app/issues/2727)) ([955524c](https://github.com/pagopa/io-app/commit/955524ca1d4babf34ee2427fc6ea3345c8b5773e))
+
 ## [1.23.0-rc.3](https://github.com/pagopa/io-app/compare/1.23.0-rc.2...1.23.0-rc.3) (2021-03-10)
 
 
