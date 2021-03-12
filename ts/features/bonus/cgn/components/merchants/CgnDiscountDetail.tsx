@@ -13,7 +13,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
-import { CgnDiscountValueBox } from "./CgnMerchantsDiscountItem";
+import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: TmpDiscountType;

@@ -1,23 +1,20 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
-import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/ShadowBox";
-import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
+import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: TmpDiscountType;
 };
-
-const PERCENTAGE_SYMBOL = "%";
 
 const styles = StyleSheet.create({
   container: { justifyContent: "space-between", alignItems: "center" },
@@ -27,59 +24,10 @@ const styles = StyleSheet.create({
   verticalPadding: {
     flex: 1,
     paddingVertical: 16
-  },
-  discountValueBox: {
-    borderRadius: 6.5,
-    paddingVertical: 8,
-    width: 48,
-    marginLeft: "auto",
-    height: 48,
-    backgroundColor: "#EB9505"
-  },
-  percentage: { textAlign: "center", lineHeight: 30 },
-  smallValueBox: {
-    borderRadius: 6.5,
-    paddingVertical: 5,
-    width: 40,
-    textAlign: "center",
-    backgroundColor: "#EB9505"
   }
 });
 
-type ValueBoxProps = {
-  value: number;
-  small?: boolean;
-};
-
-export const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
-  const normalizedValue = WithinRangeInteger(0, 100)
-    .decode(value)
-    .map(v => v.toString())
-    .getOrElse("-");
-
-  return (
-    <View style={small ? styles.smallValueBox : styles.discountValueBox}>
-      {small ? (
-        <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
-          {normalizedValue}
-          <H5 weight={"SemiBold"} color={"white"}>
-            {PERCENTAGE_SYMBOL}
-          </H5>
-        </H4>
-      ) : (
-        <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
-          {/* avoid overflow */}
-          {normalizedValue}
-          <H5 weight={"SemiBold"} color={"white"}>
-            {PERCENTAGE_SYMBOL}
-          </H5>
-        </H3>
-      )}
-    </View>
-  );
-};
-
-export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
+const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount
 }: Props) => {
   const { present } = useCgnDiscountDetailBottomSheet(discount);
@@ -110,20 +58,10 @@ export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
             </View>
           </View>
           <CgnDiscountValueBox value={discount.value} small={true} />
-          <View style={styles.discountValueBox}>
-            <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
-              {/* avoid overflow */}
-              {WithinRangeInteger(0, 100)
-                .decode(discount.value)
-                .map(v => v.toString())
-                .getOrElse("-")}
-              <H5 weight={"SemiBold"} color={"white"}>
-                {PERCENTAGE_SYMBOL}
-              </H5>
-            </H3>
-          </View>
         </View>
       </ShadowBox>
     </TouchableDefaultOpacity>
   );
 };
+
+export default CgnMerchantDiscountItem;

@@ -24,7 +24,7 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H2 } from "../../../../../components/core/typography/H2";
 import I18n from "../../../../../i18n";
-import { CgnMerchantDiscountItem } from "../../components/merchants/CgnMerchantsDiscountItem";
+import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
