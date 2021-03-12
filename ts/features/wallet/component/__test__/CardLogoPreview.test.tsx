@@ -6,7 +6,7 @@ import anImage from "../../../../../img/wallet/cards-icons/bPay.png";
 
 describe("CardLogoPreview", () => {
   it("should show the left component, the image and when press should run the onPress", () => {
-    const left = () => <View testID="leftComponent"></View>;
+    const left = () => <View testID="leftComponent" />;
     const onPress = jest.fn();
     const component = render(
       <CardLogoPreview left={left()} image={anImage} onPress={onPress} />
