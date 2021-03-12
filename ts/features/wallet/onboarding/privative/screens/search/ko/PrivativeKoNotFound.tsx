@@ -3,6 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
+import { NavigationActions } from "react-navigation";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
@@ -14,7 +15,6 @@ import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualH
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { walletAddPrivativeCancel } from "../../../store/actions";
-import { NavigationActions } from "react-navigation";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

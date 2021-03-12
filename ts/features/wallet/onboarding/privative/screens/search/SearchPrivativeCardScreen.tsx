@@ -27,10 +27,10 @@ import { mixpanelTrack } from "../../../../../../mixpanel";
 import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
+import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
 import LoadPrivativeSearch from "./LoadPrivativeSearch";
 import PrivativeKoTimeout from "./ko/PrivativeKoTimeout";
 import PrivativeKoNotFound from "./ko/PrivativeKoNotFound";
-import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
