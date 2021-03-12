@@ -236,9 +236,10 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
 
-export type PrivativePaymentMethod = RawPrivativePaymentMethod & {
-  gdoLogo?: ImageURISource;
-};
+export type PrivativePaymentMethod = RawPrivativePaymentMethod &
+  PaymentMethodRepresentation & {
+    gdoLogo?: ImageURISource;
+  };
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
