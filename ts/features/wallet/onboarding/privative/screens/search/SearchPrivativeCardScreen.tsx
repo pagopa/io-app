@@ -3,12 +3,16 @@ import { useEffect } from "react";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import {isNone, none, Option, some} from "fp-ts/lib/Option";
+import { isNone, none, Option, some } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { searchUserPrivative } from "../../store/actions";
+import {
+  searchUserPrivative,
+  walletAddPrivativeCancel
+} from "../../store/actions";
 import {
   SearchedPrivativeData,
-  onboardingSearchedPrivativeSelector, PrivativeIssuerId
+  onboardingSearchedPrivativeSelector,
+  PrivativeIssuerId
 } from "../../store/reducers/searchedPrivative";
 import { onboardingPrivativeFoundSelector } from "../../store/reducers/foundPrivative";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
@@ -17,17 +21,16 @@ import {
   SearchRequestMetadata
 } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
-import {showToast} from "../../../../../../utils/showToast";
+import { showToast } from "../../../../../../utils/showToast";
 import I18n from "../../../../../../i18n";
-import {mixpanelTrack} from "../../../../../../mixpanel";
-import {isError, isReady} from "../../../../../bonus/bpd/model/RemoteValue";
-import {emptyContextualHelp} from "../../../../../../utils/emptyContextualHelp";
-import {isTimeoutError} from "../../../../../../utils/errors";
+import { mixpanelTrack } from "../../../../../../mixpanel";
+import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { isTimeoutError } from "../../../../../../utils/errors";
 import LoadPrivativeSearch from "./LoadPrivativeSearch";
 import PrivativeKoTimeout from "./ko/PrivativeKoTimeout";
 import PrivativeKoNotFound from "./ko/PrivativeKoNotFound";
 import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
-
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -51,15 +54,13 @@ const decodePayload = (privative: CobadgeResponse) =>
 type PrivativeQuery = {
   id: PrivativeIssuerId;
   cardNumber: string;
-}
+};
 
-const toPrivativeQuery = (
+export const toPrivativeQuery = (
   searched: SearchedPrivativeData
 ): Option<PrivativeQuery> => {
   const { id, cardNumber } = searched;
-  return id  &&  cardNumber
-    ? some({ id, cardNumber })
-    : none;
+  return id && cardNumber ? some({ id, cardNumber }) : none;
 };
 
 const PrivativePayloadRight = (p: {
@@ -76,20 +77,18 @@ const PrivativePayloadRight = (p: {
   );
 
   // with a pending request or if not all the services replied with success we show the timeout screen and the user
-  // will retry with the response token
+  // will retry
   if (anyPendingRequest || anyServiceError) {
     return <PrivativeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
 
   const noPrivativeFound = payload.paymentInstruments.length === 0;
   if (noPrivativeFound) {
-    return <PrivativeKoNotFound contextualHelp={emptyContextualHelp} />
-
+    return <PrivativeKoNotFound contextualHelp={emptyContextualHelp} />;
   }
   // success! payload.paymentInstruments.length > 0, the user can now choose to add to the wallet
   return <AddPrivativeCardScreen contextualHelp={emptyContextualHelp} />;
-
-}
+};
 /**
  * This screen orchestrates (loading, kos, success) the search of a privative card
  * @param props
@@ -97,16 +96,16 @@ const PrivativePayloadRight = (p: {
  */
 const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
-
-    const privativeQueryParam = toPrivativeQuery(props.privativeSelected)
+    const privativeQueryParam = toPrivativeQuery(props.privativeSelected);
     // Is not expected that the user can arrive in this screen without the issuerId and the cardNumber.
     // If this happens, an event will be send to mixpanel and the cancel action will be dispatched.
     // TODO: add an error action to the workunit
-    if(isNone(privativeQueryParam)){
+    if (isNone(privativeQueryParam)) {
       showToast(I18n.t("global.genericError"), "danger");
       void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
-    }else{
-     props.search(privativeQueryParam.value);
+      props.cancel();
+    } else {
+      props.search(privativeQueryParam.value);
     }
   }, []);
 
@@ -127,6 +126,7 @@ const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  cancel: () => dispatch(walletAddPrivativeCancel()),
   search: (searchedPrivativeData: Required<SearchedPrivativeData>) =>
     dispatch(searchUserPrivative.request(searchedPrivativeData))
 });
