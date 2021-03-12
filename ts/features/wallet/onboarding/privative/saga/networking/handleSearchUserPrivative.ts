@@ -32,7 +32,7 @@ const toPrivativeResponse = (
         ? left(
             getGenericError(
               new Error(
-                `paymentInstruments in privative response should be only 1, received ${x.paymentInstruments.length}`
+                `paymentInstruments in privative response should be only 0 or 1, received ${x.paymentInstruments.length}`
               )
             )
           )
