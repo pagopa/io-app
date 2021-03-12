@@ -8,6 +8,7 @@ import {
   PaymentManagerToken
 } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getGenericError } from "../../../../../../utils/errors";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
@@ -69,22 +70,22 @@ export function* handleLoadPans(
         );
       } else {
         return yield put(
-          searchUserPans.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${getPansWithRefreshResult.value.status}`
+          searchUserPans.failure(
+            getGenericError(
+              new Error(
+                `response status ${getPansWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        searchUserPans.failure({
-          kind: "generic",
-          value: new Error(
-            readablePrivacyReport(getPansWithRefreshResult.value)
+        searchUserPans.failure(
+          getGenericError(
+            new Error(readablePrivacyReport(getPansWithRefreshResult.value))
           )
-        })
+        )
       );
     }
   } catch (e) {
@@ -92,11 +93,9 @@ export function* handleLoadPans(
       return yield put(searchUserPans.failure({ kind: "timeout" }));
     }
     if (typeof e === "string") {
-      return yield put(
-        searchUserPans.failure({ kind: "generic", value: new Error(e) })
-      );
+      return yield put(searchUserPans.failure(getGenericError(new Error(e))));
     }
-    return yield put(searchUserPans.failure({ kind: "generic", value: e }));
+    return yield put(searchUserPans.failure(getGenericError(e)));
   }
 }
 
