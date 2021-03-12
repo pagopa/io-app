@@ -75,13 +75,13 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
         </Body>
       }
       right={renderRight(props, imgDimensions)}
-      onPress={() => props.navigateToCobadgeDetails(props.privative)}
+      onPress={() => props.navigateToPrivativeDetails(props.privative)}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToCobadgeDetails: (privative: PrivativePaymentMethod) =>
+  navigateToPrivativeDetails: (privative: PrivativePaymentMethod) =>
     dispatch(navigateToPrivativeDetailScreen(privative))
 });
 
