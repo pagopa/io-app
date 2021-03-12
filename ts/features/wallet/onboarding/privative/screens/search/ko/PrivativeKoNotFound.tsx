@@ -3,10 +3,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 /**
  * This screen informs the user that the private card indicated was not found
  * @param props
