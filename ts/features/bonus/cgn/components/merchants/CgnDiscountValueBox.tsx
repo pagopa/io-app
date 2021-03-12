@@ -47,12 +47,11 @@ const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
       {small ? (
         <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
           {normalizedValue}
-          <H5 weight={"SemiBold"} color={"white"}>
-            {percentage}
-          </H5>
+          {percentage}
         </H4>
       ) : (
         <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
+          {normalizedValue}
           {percentage}
         </H3>
       )}
