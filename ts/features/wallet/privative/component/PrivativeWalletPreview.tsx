@@ -7,7 +7,8 @@ import {
   ImageSourcePropType,
   ImageStyle,
   ImageURISource,
-  StyleProp
+  StyleProp,
+  StyleSheet
 } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
@@ -29,17 +30,24 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 20;
 
-const fallbackGdoLogo: React.ReactElement = (
+const styles = StyleSheet.create({
+  unknownLoyaltyLogo: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain"
+  }
+});
+const fallbackLoyaltyLogo: React.ReactElement = (
   <Image
     source={unknownGdo}
-    style={{ width: 40, height: 40, resizeMode: "contain" }}
+    style={styles.unknownLoyaltyLogo}
     key={"unknownLoyaltyLogo"}
     testID={"unknownLoyaltyLogo"}
   />
 );
 
 const renderRight = (props: Props, size: Option<[number, number]>) =>
-  size.fold(fallbackGdoLogo, imgDim => {
+  size.fold(fallbackLoyaltyLogo, imgDim => {
     const imageUrl = props.privative.icon;
 
     const imageStyle: StyleProp<ImageStyle> = {
@@ -77,7 +85,7 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
         props,
         useImageResize(BASE_IMG_W, BASE_IMG_H, props.privative.icon.uri)
       )
-    : fallbackGdoLogo;
+    : fallbackLoyaltyLogo;
 
   return (
     <CardLayoutPreview
