@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -937,7 +937,7 @@ wallet:
           title: "Non riusciamo a contattare il server"
           body: "Siamo al lavoro per risolvere il problema."
   alert:
-    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
@@ -1170,7 +1170,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Abbina il tuo account BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: la tua app Postepay
     postepay:
@@ -1285,21 +1285,21 @@ wallet:
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
       description: "Non è stato addebitato alcun importo."
-    code1: 
+    code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
       description: "Non è stato addebitato alcun importo."
-    code2: 
+    code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
-    code4: 
+    code4:
       title: "Spiacenti, la sessione è scaduta"
       description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
-    code7: 
+    code7:
       title: "C’è un problema con la tua carta"
       description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
-    code8: 
+    code8:
       title: "L’operazione è stata annullata"
-    code10: 
+    code10:
       title: "Autorizzazione negata"
       description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
     addCreditCard:
@@ -2161,7 +2161,7 @@ bonus:
           text2: "almeno un metodo di pagamento "
           text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: 
+          empty:
             text1: "Non ci sono ancora transazioni valide."
             text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
@@ -2249,6 +2249,14 @@ bonus:
     merchantsList:
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+    merchantDetail:
+      title:
+        deals: Offerte
+        description: Descrizione
+        services: Servizi
+        hours: Orari
+      cta:
+        label: Vai al sito dell'esercente
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani
@@ -2314,6 +2322,16 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
+    otp:
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
