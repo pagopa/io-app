@@ -32,7 +32,8 @@ import { onboardingPrivativeAddingResultSelector } from "../../store/reducers/ad
 import { onboardingPrivativeFoundSelector } from "../../store/reducers/foundPrivative";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;;
 
 const AddPrivativeBody = (props: Props) => (
   <>

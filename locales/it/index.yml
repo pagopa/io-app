@@ -936,6 +936,16 @@ wallet:
         koUnavailable:
           title: "Non riusciamo a contattare il server"
           body: "Siamo al lavoro per risolvere il problema."
+      search:
+        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
+        koTimeout:
+          title: "Al momento è impossibile verificare la tua carta"
+          body: "Riprova per favore"
+        koNotFound:
+          title: "Spiacenti, questa carta non risulta intestata a te"
+          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
+          cta:
+            modifyCardNumber: "Modifica numero carta"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"

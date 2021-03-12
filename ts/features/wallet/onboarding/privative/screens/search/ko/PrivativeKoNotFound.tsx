@@ -3,45 +3,74 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../../../components/core/typography/H1";
-import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
+import { SafeAreaView } from "react-native";
+import { NavigationActions } from "react-navigation";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
+import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
+import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { walletAddPrivativeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
+
+const loadLocales = () => ({
+  headerTitle: I18n.t("wallet.onboarding.privative.headerTitle"),
+  title: I18n.t("wallet.onboarding.privative.search.koNotFound.title"),
+  body: I18n.t("wallet.onboarding.privative.search.koNotFound.body"),
+  cancel: I18n.t("global.buttons.cancel"),
+  modifyCardNumber: I18n.t(
+    "wallet.onboarding.privative.search.koNotFound.cta.modifyCardNumber"
+  )
+});
 
 /**
  * This screen informs the user that the private card indicated was not found
  * @param props
  * @constructor
  */
-const PrivativeKoNotFound = (props: Props): React.ReactElement => (
-  <BaseScreenComponent
-    goBack={true}
-    headerTitle={I18n.t("wallet.onboarding.privative.headerTitle")}
-    contextualHelp={emptyContextualHelp}
-  >
-    <SafeAreaView style={IOStyles.flex}>
-      {/* TODO: Complete the component, this is a draft version for test purpose only */}
-      <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-        <H1>TMP Card not found</H1>
-      </View>
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={cancelButtonProps(props.cancel)}
-      />
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+const PrivativeKoNotFound = (props: Props): React.ReactElement => {
+  const { headerTitle, title, body, cancel, modifyCardNumber } = loadLocales();
+
+  useHardwareBackButton(() => {
+    props.cancel();
+    return true;
+  });
+  return (
+    <BaseScreenComponent
+      goBack={false}
+      customGoBack={<View />}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoTimeout"}>
+        <InfoScreenComponent
+          image={renderInfoRasterImage(image)}
+          title={title}
+          body={body}
+        />
+        <FooterTwoButtons
+          type={"TwoButtonsInlineThird"}
+          onRight={props.goToModifyCardNumber}
+          onCancel={props.cancel}
+          rightText={modifyCardNumber}
+          leftText={cancel}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(walletAddPrivativeCancel())
+  cancel: () => dispatch(walletAddPrivativeCancel()),
+  goToModifyCardNumber: () => dispatch(NavigationActions.back())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
