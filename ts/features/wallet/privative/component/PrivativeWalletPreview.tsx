@@ -33,8 +33,8 @@ const fallbackGdoLogo: React.ReactElement = (
   <Image
     source={unknownGdo}
     style={{ width: 40, height: 40, resizeMode: "contain" }}
-    key={"unknownGdoLogo"}
-    testID={"unknownGdoLogo"}
+    key={"unknownLoyaltyLogo"}
+    testID={"unknownLoyaltyLogo"}
   />
 );
 
@@ -51,8 +51,8 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
       <Image
         source={imageUrl}
         style={imageStyle}
-        key={"gdoLogo"}
-        testID={"gdoLogo"}
+        key={"loyaltyLogo"}
+        testID={"loyaltyLogo"}
       />
     );
   });

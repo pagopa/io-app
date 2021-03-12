@@ -48,20 +48,20 @@ describe("PrivativeWalletPreview", () => {
   it("should show the fallback gdo logo if useImageResize returns a size but there isn't the cardLogo", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
     const { component } = getComponent(aPrivativeCard);
-    const cardLogo = component.queryByTestId("gdoLogo");
-    const cardLogoFallback = component.queryByTestId("unknownGdoLogo");
+    const cardLogo = component.queryByTestId("loyaltyLogo");
+    const cardLogoFallback = component.queryByTestId("unknownLoyaltyLogo");
 
     expect(cardLogo).toBeNull();
     expect(cardLogoFallback).not.toBeNull();
   });
-  it("should show the gdo logo if useImageResize return a size and there is the cardLogo", () => {
+  it("should show the gdo logo if useImageResize return a size", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
     const { component } = getComponent({
       ...aPrivativeCard,
-      gdoLogo: { uri: "aCardLogoUrl" }
+      icon: { uri: "aCardLogoUrl" }
     });
-    const cardLogo = component.queryByTestId("gdoLogo");
-    const cardLogoFallback = component.queryByTestId("unknownGdoLogo");
+    const cardLogo = component.queryByTestId("loyaltyLogo");
+    const cardLogoFallback = component.queryByTestId("unknownLoyaltyLogo");
 
     expect(cardLogo).not.toBeNull();
     expect(cardLogoFallback).toBeNull();
