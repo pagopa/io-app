@@ -22,7 +22,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const PrivativeDetailScreen: React.FunctionComponent<Props> = _ => (
   <View>
-    <H1>PRIVATIVE DETAILD SCREEN</H1>
+    <H1>PRIVATIVE DETAIL SCREEN</H1>
   </View>
 );
 const mapDispatchToProps = (_: Dispatch) => ({});
