@@ -916,6 +916,8 @@ wallet:
         koUnavailable:
           title: "We're unable to contact the server"
           body: "We are working to solve the problem."
+      search:
+        loading: "We are verifying your card\n\nPlease wait"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
