@@ -162,7 +162,8 @@ export type RawPaymentMethod =
   | RawBancomatPaymentMethod
   | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
-  | RawSatispayPaymentMethod;
+  | RawSatispayPaymentMethod
+  | RawPrivativePaymentMethod;
 
 export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
   kind: "Bancomat";
@@ -171,6 +172,11 @@ export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
 
 export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
   kind: "CreditCard";
+  info: CardInfo;
+};
+
+export type RawPrivativePaymentMethod = WalletV2WithoutInfo & {
+  kind: "Privative";
   info: CardInfo;
 };
 
@@ -200,6 +206,11 @@ export const isRawCreditCard = (
 ): pm is RawCreditCardPaymentMethod =>
   pm === undefined ? false : pm.kind === "CreditCard";
 
+export const isRawPrivative = (
+  pm: RawPaymentMethod | undefined
+): pm is RawPrivativePaymentMethod =>
+  pm === undefined ? false : pm.kind === "Privative";
+
 export const isRawBPay = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBPayPaymentMethod =>
@@ -225,7 +236,7 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
 
-export type PrivativePaymentMethod = CreditCardPaymentMethod & {
+export type PrivativePaymentMethod = RawPrivativePaymentMethod & {
   cardLogo?: string;
 };
 
