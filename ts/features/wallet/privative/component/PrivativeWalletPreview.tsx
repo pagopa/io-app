@@ -2,7 +2,13 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Option } from "fp-ts/lib/Option";
-import { Image, ImageStyle, StyleProp } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  ImageStyle,
+  ImageURISource,
+  StyleProp
+} from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -23,50 +29,56 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const BASE_IMG_W = 160;
 const BASE_IMG_H = 20;
 
-const renderRight = (props: Props, size: Option<[number, number]>) =>
-  size.fold(
-    <Image
-      source={unknownGdo}
-      style={{ width: 40, height: 40, resizeMode: "contain" }}
-      key={"unknownGdoLogo"}
-      testID={"unknownGdoLogo"}
-    />,
-    imgDim => {
-      const imageUrl = props.privative?.cardLogo;
+const fallbackGdoLogo: React.ReactElement = (
+  <Image
+    source={unknownGdo}
+    style={{ width: 40, height: 40, resizeMode: "contain" }}
+    key={"unknownGdoLogo"}
+    testID={"unknownGdoLogo"}
+  />
+);
 
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      };
-      return imageUrl ? (
-        <Image
-          source={{ uri: imageUrl }}
-          style={imageStyle}
-          key={"gdoLogo"}
-          testID={"gdoLogo"}
-        />
-      ) : (
-        <Image
-          source={unknownGdo}
-          style={{ width: 40, height: 40, resizeMode: "contain" }}
-          key={"unknownGdoLogo"}
-          testID={"unknownGdoLogo"}
-        />
-      );
-    }
-  );
+const renderRight = (props: Props, size: Option<[number, number]>) =>
+  size.fold(fallbackGdoLogo, imgDim => {
+    const imageUrl = props.privative.icon;
+
+    const imageStyle: StyleProp<ImageStyle> = {
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    };
+    return (
+      <Image
+        source={imageUrl}
+        style={imageStyle}
+        key={"gdoLogo"}
+        testID={"gdoLogo"}
+      />
+    );
+  });
+
+/**
+ * Typeguard for handle backward compatibility of icon type
+ * @param image
+ */
+const isImageURISource = (
+  image: ImageSourcePropType
+): image is ImageURISource =>
+  typeof image !== "number" && (image as ImageURISource).uri !== undefined;
+
 /**
  * A card preview for a privative card
  * @param props
  * @constructor
  */
 const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
-  const imgDimensions = useImageResize(
-    BASE_IMG_W,
-    BASE_IMG_H,
-    props.privative.cardLogo
-  );
+  const rightElement = isImageURISource(props.privative.icon)
+    ? renderRight(
+        props,
+        useImageResize(BASE_IMG_W, BASE_IMG_H, props.privative.icon.uri)
+      )
+    : fallbackGdoLogo;
+
   return (
     <CardLayoutPreview
       left={
@@ -74,7 +86,7 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
           {props.privative.caption}
         </Body>
       }
-      right={renderRight(props, imgDimensions)}
+      right={rightElement}
       onPress={() => props.navigateToPrivativeDetails(props.privative)}
     />
   );
