@@ -584,7 +584,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { userMetadata } = this.props;
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -598,7 +597,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             faqCategories={["services"]}
-            isSearchAvailable={userMetadata !== undefined}
+            isSearchAvailable={false}
             searchType={"Services"}
           >
             {this.renderErrorContent() ? (
@@ -696,19 +695,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     return (
       <View style={IOStyles.flex}>
         <AnimatedTabs
+          locked={true}
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           onScroll={this.handleOnScroll}
           onChangeTab={this.handleOnChangeTab}
           initialPage={0}
         >
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}
-          >
-            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
-          </Tab>
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
@@ -725,6 +718,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.locals")}
+          >
+            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
         <SectionStatusComponent sectionKey={"services"} />

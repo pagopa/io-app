@@ -21,6 +21,7 @@ import {
   FAQType,
   getFAQsFromCategories
 } from "../utils/faq";
+import { instabugReportOpened } from "../store/actions/debug";
 import Markdown from "./ui/Markdown";
 import SendSupportRequestOptions, {
   SupportRequestOptions
@@ -159,6 +160,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
         return;
       }
     }
+    props.dispatchOpenReportType(BugReporting.reportType.question);
     props.onRequestAssistance(reportType, props.supportToken);
   };
 
@@ -171,6 +173,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const handleContinue = (options: SupportRequestOptions) => {
     setShowSendPersonalInfo(false);
     fromNullable(supportType).map(st => {
+      props.dispatchOpenReportType(st);
       props.onRequestAssistance(
         st,
         options.sendPersonalInfo ? props.supportToken : remoteUndefined,
@@ -228,7 +231,9 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadContextualHelpData: () => dispatch(loadContextualHelpData.request()),
-  loadSupportToken: () => dispatch(loadSupportToken.request())
+  loadSupportToken: () => dispatch(loadSupportToken.request()),
+  dispatchOpenReportType: (type: BugReporting.reportType) =>
+    dispatch(instabugReportOpened({ type }))
 });
 
 export default connect(
