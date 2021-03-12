@@ -37,7 +37,10 @@ const toPrivativeResponse = (
             )
           )
         : right({
-            paymentInstrument: x.paymentInstruments[0],
+            paymentInstrument:
+              x.paymentInstruments.length === 0
+                ? null
+                : x.paymentInstruments[0],
             searchRequestId: x.searchRequestId,
             searchRequestMetadata: x.searchRequestMetadata
           })

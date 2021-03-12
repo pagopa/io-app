@@ -62,7 +62,7 @@ const toPrivativeQuery = (
 /**
  * Return the privative query only if all the fields are filled
  */
-export const onboardingSearchedPrivativeQuery = createSelector(
+export const onboardingSearchedPrivativeQuerySelector = createSelector(
   [onboardingSearchedPrivativePartialSelector],
   (searchedPrivativeData): PrivativeQuery | undefined =>
     toPrivativeQuery(searchedPrivativeData)

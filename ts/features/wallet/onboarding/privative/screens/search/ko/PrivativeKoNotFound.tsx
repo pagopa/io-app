@@ -1,6 +1,5 @@
 import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";

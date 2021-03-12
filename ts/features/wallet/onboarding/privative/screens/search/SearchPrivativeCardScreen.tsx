@@ -1,79 +1,43 @@
-import * as t from "io-ts";
-import { useEffect } from "react";
 import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isNone, none, Option, some } from "fp-ts/lib/Option";
+import { ExecutionStatusEnum } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
+import I18n from "../../../../../../i18n";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import { isTimeoutError } from "../../../../../../utils/errors";
+import { showToast } from "../../../../../../utils/showToast";
+import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import {
+  PrivativeResponse,
   searchUserPrivative,
   walletAddPrivativeCancel
 } from "../../store/actions";
-import {
-  SearchedPrivativeData,
-  onboardingSearchedPrivativeSelector,
-  PrivativeIssuerId
-} from "../../store/reducers/searchedPrivative";
 import { onboardingPrivativeFoundSelector } from "../../store/reducers/foundPrivative";
-import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import {
-  ExecutionStatusEnum,
-  SearchRequestMetadata
-} from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
-import { showToast } from "../../../../../../utils/showToast";
-import I18n from "../../../../../../i18n";
-import { mixpanelTrack } from "../../../../../../mixpanel";
-import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
-import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { isTimeoutError } from "../../../../../../utils/errors";
+  onboardingSearchedPrivativeQuerySelector,
+  SearchedPrivativeData
+} from "../../store/reducers/searchedPrivative";
 import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
-import LoadPrivativeSearch from "./LoadPrivativeSearch";
-import PrivativeKoTimeout from "./ko/PrivativeKoTimeout";
 import PrivativeKoNotFound from "./ko/PrivativeKoNotFound";
+import PrivativeKoTimeout from "./ko/PrivativeKoTimeout";
+import LoadPrivativeSearch from "./LoadPrivativeSearch";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const PrivativePayload = t.type({
-  paymentInstruments: t.readonlyArray(
-    PaymentInstrument,
-    "array of PaymentInstrument"
-  ),
-  searchRequestMetadata: t.readonlyArray(
-    SearchRequestMetadata,
-    "array of SearchRequestMetadata"
-  )
-});
-
-type PrivativePayload = t.TypeOf<typeof PrivativePayload>;
-
-const decodePayload = (privative: CobadgeResponse) =>
-  PrivativePayload.decode(privative.payload);
-
-type PrivativeQuery = {
-  id: PrivativeIssuerId;
-  cardNumber: string;
-};
-
-export const toPrivativeQuery = (
-  searched: SearchedPrivativeData
-): Option<PrivativeQuery> => {
-  const { id, cardNumber } = searched;
-  return id && cardNumber ? some({ id, cardNumber }) : none;
-};
-
-const PrivativePayloadRight = (p: {
-  payload: PrivativePayload;
+const PrivativeReady = (p: {
+  privative: PrivativeResponse;
 }): React.ReactElement => {
-  const { payload } = p;
+  const privative = p.privative;
 
-  const anyPendingRequest = payload.searchRequestMetadata.some(
+  const anyPendingRequest = privative.searchRequestMetadata.some(
     m => m.executionStatus === ExecutionStatusEnum.PENDING
   );
 
-  const anyServiceError = payload.searchRequestMetadata.some(
+  const anyServiceError = privative.searchRequestMetadata.some(
     m => m.executionStatus === ExecutionStatusEnum.KO
   );
 
@@ -83,7 +47,7 @@ const PrivativePayloadRight = (p: {
     return <PrivativeKoTimeout contextualHelp={emptyContextualHelp} />;
   }
 
-  const noPrivativeFound = payload.paymentInstruments.length === 0;
+  const noPrivativeFound = privative.paymentInstrument === null;
   if (noPrivativeFound) {
     return <PrivativeKoNotFound contextualHelp={emptyContextualHelp} />;
   }
@@ -97,26 +61,22 @@ const PrivativePayloadRight = (p: {
  */
 const SearchPrivativeCardScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
-    const privativeQueryParam = toPrivativeQuery(props.privativeSelected);
+    const { privativeSelected } = props;
     // Is not expected that the user can arrive in this screen without the issuerId and the cardNumber.
     // If this happens, an event will be send to mixpanel and the cancel action will be dispatched.
     // TODO: add an error action to the workunit
-    if (isNone(privativeQueryParam)) {
+    if (privativeSelected === undefined) {
       showToast(I18n.t("global.genericError"), "danger");
       void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
       props.cancel();
     } else {
-      props.search(privativeQueryParam.value);
+      props.search(privativeSelected);
     }
   }, []);
 
   const privativeFound = props.privativeFound;
   if (isReady(privativeFound)) {
-    const payload = decodePayload(privativeFound.value);
-    return payload.fold(
-      _ => <PrivativeKoTimeout contextualHelp={emptyContextualHelp} />,
-      val => <PrivativePayloadRight payload={val} />
-    );
+    return <PrivativeReady privative={privativeFound.value} />;
   }
 
   if (isError(privativeFound) && isTimeoutError(privativeFound.error)) {
@@ -133,7 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  privativeSelected: onboardingSearchedPrivativeSelector(state),
+  privativeSelected: onboardingSearchedPrivativeQuerySelector(state),
   privativeFound: onboardingPrivativeFoundSelector(state)
 });
 

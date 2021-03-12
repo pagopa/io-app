@@ -15,9 +15,9 @@ import {
 
 export type PrivativeQuery = Required<SearchedPrivativeData>;
 export type PrivativeResponse = {
-  paymentInstrument: PaymentInstrument;
+  paymentInstrument: PaymentInstrument | null;
   searchRequestId?: string;
-  searchRequestMetadata: SearchRequestMetadata;
+  searchRequestMetadata: ReadonlyArray<SearchRequestMetadata>;
 };
 
 /**
