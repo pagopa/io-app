@@ -8,7 +8,7 @@ import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusV
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   isAvailableBonusErrorSelector,
-  visibleAvailableBonusSelector
+  supportedAvailableBonusSelector
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (globalState: GlobalState) => ({
-  availableBonus: visibleAvailableBonusSelector(globalState),
+  availableBonus: supportedAvailableBonusSelector(globalState),
   hasError: isAvailableBonusErrorSelector(globalState)
 });
 
