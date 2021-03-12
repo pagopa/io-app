@@ -17,9 +17,11 @@ import {
   isBancomat,
   isBPay,
   isCreditCard,
+  isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
+  PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
   SatispayPaymentMethod,
@@ -187,6 +189,17 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
+ * Return a privative card list in the wallet
+ */
+export const privativeListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod =>
+      paymentMethod.filter(isPrivativeCard)
+    )
+);
+
+/**
  * Return a satispay list in the wallet
  */
 export const satispayListSelector = createSelector(
@@ -274,12 +287,10 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
  * Return a Privative card list visible in the wallet
  */
 export const privativeListVisibleInWalletSelector = createSelector(
-  [creditCardListVisibleInWalletSelector],
-  (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
-    pot.map(creditCardListPot, creditCardList =>
-      creditCardList.filter(
-        cc => cc.info.type === TypeEnum.PRV && cc.pagoPA === false
-      )
+  [privativeListSelector],
+  (creditCardListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(creditCardListPot, privativeList =>
+      privativeList.filter(isVisibleInWallet)
     )
 );
 
