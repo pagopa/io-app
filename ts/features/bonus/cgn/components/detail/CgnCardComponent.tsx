@@ -13,7 +13,6 @@ import { profileNameSurnameSelector } from "../../../../../store/reducers/profil
 import { localeDateFormat } from "../../../../../utils/locale";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
 import cardBg from "../../../../../../img/bonus/cgn/card_mask_1.png";
-// import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
 
