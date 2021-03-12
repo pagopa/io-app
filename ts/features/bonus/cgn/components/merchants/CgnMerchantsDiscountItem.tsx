@@ -36,10 +36,50 @@ const styles = StyleSheet.create({
     height: 48,
     backgroundColor: "#EB9505"
   },
-  percentage: { textAlign: "center", lineHeight: 30 }
+  percentage: { textAlign: "center", lineHeight: 30 },
+  smallValueBox: {
+    borderRadius: 6.5,
+    paddingVertical: 5,
+    width: 40,
+    textAlign: "center",
+    backgroundColor: "#EB9505"
+  }
 });
 
-const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
+type ValueBoxProps = {
+  value: number;
+  small?: boolean;
+};
+
+export const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
+  const normalizedValue = WithinRangeInteger(0, 100)
+    .decode(value)
+    .map(v => v.toString())
+    .getOrElse("-");
+
+  return (
+    <View style={small ? styles.smallValueBox : styles.discountValueBox}>
+      {small ? (
+        <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
+          {normalizedValue}
+          <H5 weight={"SemiBold"} color={"white"}>
+            {PERCENTAGE_SYMBOL}
+          </H5>
+        </H4>
+      ) : (
+        <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
+          {/* avoid overflow */}
+          {normalizedValue}
+          <H5 weight={"SemiBold"} color={"white"}>
+            {PERCENTAGE_SYMBOL}
+          </H5>
+        </H3>
+      )}
+    </View>
+  );
+};
+
+export const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   discount
 }: Props) => {
   const { present } = useCgnDiscountDetailBottomSheet(discount);
@@ -69,6 +109,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
           </View>
+          <CgnDiscountValueBox value={discount.value} small={true} />
           <View style={styles.discountValueBox}>
             <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
               {/* avoid overflow */}
@@ -86,4 +127,3 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
     </TouchableDefaultOpacity>
   );
 };
-export default CgnMerchantDiscountItem;

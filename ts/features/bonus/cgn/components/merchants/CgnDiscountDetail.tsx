@@ -13,6 +13,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
+import { CgnDiscountValueBox } from "./CgnMerchantsDiscountItem";
 
 type Props = {
   discount: TmpDiscountType;
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
   discountValue: { textAlign: "center", lineHeight: 30 }
 });
 
-const PERCENTAGE_SYMBOL = "%";
 const FEEDBACK_MS = 3000;
 
 const CATEGORY_ICON_SIZE = 22;
@@ -122,18 +122,9 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   );
 };
 
-const CgnDiscountDetailHeader = ({
-  discount
-}: Props) => (
+const CgnDiscountDetailHeader = ({ discount }: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
-    <View style={styles.discountValueBox}>
-      <H4 weight={"Bold"} color={"white"} style={styles.discountValue}>
-        {`${discount.value}`}
-        <H5 weight={"SemiBold"} color={"white"}>
-          {PERCENTAGE_SYMBOL}
-        </H5>
-      </H4>
-    </View>
+    <CgnDiscountValueBox value={discount.value} small />
     <View hspacer />
     <H3>{discount.title}</H3>
   </View>
