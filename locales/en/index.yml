@@ -918,6 +918,12 @@ wallet:
           body: "We are working to solve the problem."
       search:
         loading: "We are verifying your card\n\nPlease wait"
+        koTimeout:
+          title: "It is currently impossible to verify your card"
+          body: "Please try again"
+        koNotFound:
+          title: "Sorry, this card is not in your name"
+          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
