@@ -1,11 +1,12 @@
-import { Input, Item, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { LabelledItem } from "../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
@@ -13,7 +14,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   cancelButtonProps,
-  confirmButtonProps
+  confirmButtonProps,
+  disablePrimaryButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { navigateToOnboardingPrivativeSearchAvailable } from "../navigation/action";
 import {
@@ -23,6 +25,8 @@ import {
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const maxPanCodeLength = 19;
 
 /**
  * In this screen the user can:
@@ -40,32 +44,48 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("wallet.onboarding.privative.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView
+      <KeyboardAvoidingView
         style={IOStyles.flex}
-        testID={"ChoosePrivativeIssuerComponent"}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        {/* TODO: Complete the component, this is a draft version for test purpose only */}
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <H1>TMP Inserisci numero carta</H1>
-          <View spacer={true} />
-          <Item>
-            <Input
-              onChangeText={text => {
-                // On Android we cannot modify the input text, or the text is duplicated
-                setCardNumber(text);
+        <SafeAreaView
+          style={IOStyles.flex}
+          testID={"ChoosePrivativeIssuerComponent"}
+        >
+          {/* TODO: Complete the component, this is a draft version for test purpose only */}
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <H1>TMP Inserisci numero carta</H1>
+            <View spacer={true} />
+
+            <LabelledItem
+              type={"masked"}
+              label={I18n.t("wallet.dummyCard.labels.pan")}
+              inputMaskProps={{
+                value: cardNumber,
+                type: "custom",
+                options: { mask: "9999999999999999999" },
+                maxLength: maxPanCodeLength,
+                onChangeText: text => {
+                  setCardNumber(text);
+                },
+                keyboardType: "number-pad"
               }}
             />
-          </Item>
-        </View>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(
-            () => props.search(cardNumber),
-            I18n.t("global.buttons.continue")
-          )}
-        />
-      </SafeAreaView>
+          </View>
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps(props.cancel)}
+            rightButton={
+              cardNumber.length === 0
+                ? disablePrimaryButtonProps(I18n.t("global.buttons.continue"))
+                : confirmButtonProps(
+                    () => props.search(cardNumber),
+                    I18n.t("global.buttons.continue")
+                  )
+            }
+          />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </BaseScreenComponent>
   );
 };
