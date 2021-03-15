@@ -2,14 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Option } from "fp-ts/lib/Option";
-import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
-  ImageURISource,
-  StyleProp,
-  StyleSheet
-} from "react-native";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -18,6 +11,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { CardLayoutPreview } from "../../component/CardLayoutPreview";
 import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
+import { isImageURISource } from "../../../../types/image";
 
 type OwnProps = {
   privative: PrivativePaymentMethod;
@@ -64,15 +58,6 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
       />
     );
   });
-
-/**
- * Typeguard for handle backward compatibility of icon type
- * @param image
- */
-const isImageURISource = (
-  image: ImageSourcePropType
-): image is ImageURISource =>
-  typeof image !== "number" && (image as ImageURISource).uri !== undefined;
 
 /**
  * A card preview for a privative card
