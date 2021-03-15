@@ -19,7 +19,7 @@ import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
 type Props = {
   icon: ImageSourcePropType;
   caption?: string;
-  cardLogo?: string;
+  gdoLogo?: string;
   blocked?: boolean;
 };
 
@@ -50,7 +50,7 @@ const BASE_IMG_W = 120;
 const BASE_IMG_H = 30;
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
-  const cardLogo = fromNullable(props.cardLogo).fold(
+  const cardLogo = fromNullable(props.gdoLogo).fold(
     <Image
       style={styles.cardLogoFallback}
       source={unknownGdo}
