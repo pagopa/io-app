@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
   PaymentInstrument,
@@ -21,12 +21,15 @@ import {
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
+  isRawPrivative,
   isRawSatispay,
   PaymentMethod,
+  PrivativePaymentMethod,
   RawBancomatPaymentMethod,
   RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
+  RawPrivativePaymentMethod,
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
@@ -58,12 +61,20 @@ export const getTitleFromPaymentInstrument = (
   paymentInstrument: PaymentInstrument
 ) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
 
-export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
+export const getTitleFromCard = (
+  creditCard: RawCreditCardPaymentMethod | RawPrivativePaymentMethod
+) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
 
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
+const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
+  uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
+});
+
+const getPrivativeLoyaltyLogoUrl = (abi: string): ImageSourcePropType => ({
+  uri: `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`
+});
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
@@ -106,7 +117,7 @@ export const getTitleFromPaymentMethod = (
   paymentMethod: RawPaymentMethod,
   abiList: IndexedById<Abi>
 ) => {
-  if (isRawCreditCard(paymentMethod)) {
+  if (isRawCreditCard(paymentMethod) || isRawPrivative(paymentMethod)) {
     return getTitleFromCard(paymentMethod);
   }
   if (isRawBancomat(paymentMethod)) {
@@ -176,6 +187,20 @@ export const enhanceCreditCard = (
   icon: getImageFromPaymentMethod(rawCreditCard)
 });
 
+export const enhancePrivativeCard = (
+  rawCreditCard: RawPrivativePaymentMethod,
+  abiList: IndexedById<Abi>
+): PrivativePaymentMethod => ({
+  ...rawCreditCard,
+  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
+  icon: rawCreditCard.info.issuerAbiCode
+    ? getPrivativeLoyaltyLogoUrl(rawCreditCard.info.issuerAbiCode)
+    : cardIcons.UNKNOWN,
+  gdoLogo: rawCreditCard.info.issuerAbiCode
+    ? getPrivativeGdoLogoUrl(rawCreditCard.info.issuerAbiCode)
+    : undefined
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -188,6 +213,8 @@ export const enhancePaymentMethod = (
       return enhanceBPay(pm, abiList);
     case "CreditCard":
       return enhanceCreditCard(pm, abiList);
+    case "Privative":
+      return enhancePrivativeCard(pm, abiList);
     case "Satispay":
       return {
         ...pm,

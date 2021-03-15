@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { navigateToBancomatDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
-import { CardPreview } from "../../component/CardPreview";
+import { CardLogoPreview } from "../../component/CardLogoPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = { bancomat: BancomatPaymentMethod };
@@ -59,7 +59,7 @@ const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
   );
 
   return (
-    <CardPreview
+    <CardLogoPreview
       left={renderLeft(props, imgDimensions)}
       image={pagoBancomatImage}
       onPress={() => props.navigateToBancomatDetails(props.bancomat)}
