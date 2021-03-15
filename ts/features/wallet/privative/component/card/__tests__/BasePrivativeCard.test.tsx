@@ -1,21 +1,24 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../../onboarding/bancomat/screens/hooks/useImageResize";
-import unknownGdo from "../../../../../../../img/wallet/unknown-gdo.png";
 import BasePrivativeCard from "../BasePrivativeCard";
 
 jest.mock("../../../../onboarding/bancomat/screens/hooks/useImageResize");
 
 const aCaption = "****1234";
-const anLoyaltyLogo =
-  "http://127.0.0.1:3000/static_contents/logos/privative/loyalty/CONAD.png";
-const icon = unknownGdo;
-describe("CoBadgeWalletPreview component", () => {
+const aLoyaltyLogo = {
+  uri: "http://127.0.0.1:3000/static_contents/logos/privative/loyalty/CONAD.png"
+};
+
+const aGdoLogo = {
+  uri: "http://127.0.0.1:3000/static_contents/logos/privative/gdo/CONAD.png"
+};
+describe("PrivativeWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
   let store: ReturnType<typeof mockStore>;
@@ -23,48 +26,64 @@ describe("CoBadgeWalletPreview component", () => {
   beforeEach(() => {
     store = mockStore();
   });
-  it("should show the icon", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const component = getComponent(store, icon);
-    const gdoLogoComponent = component.queryByTestId("gdoLogo");
+  it("should show the loyaltyLogo if is of type ImageURISource and if useImageResize return some value", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    const component = getComponent(store, aLoyaltyLogo);
+    const loyaltyLogoComponent = component.queryByTestId("loyaltyLogo");
 
-    expect(gdoLogoComponent).not.toBeNull();
-    expect(gdoLogoComponent).toHaveProp("source", {
+    expect(loyaltyLogoComponent).not.toBeNull();
+    expect(loyaltyLogoComponent).toHaveProp("source", aLoyaltyLogo);
+  });
+  it("should show the fallback loyaltyLogo if the loyaltyLogo prop is not of type ImageURISource", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    const notAnImageURISourceLogo = 3;
+    const component = getComponent(store, notAnImageURISourceLogo);
+    const unknownLoyaltyLogo = component.queryByTestId("unknownLoyaltyLogo");
+
+    expect(unknownLoyaltyLogo).not.toBeNull();
+    expect(unknownLoyaltyLogo).toHaveProp("source", {
       testUri: "../../../img/wallet/unknown-gdo.png"
     });
   });
-  it("should show the fallback loyaltyLogo if there isn't a cardLogo", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const component = getComponent(store, icon);
-    const gdoLogoComponent = component.queryByTestId("fallbackLoyaltyLogo");
 
-    expect(gdoLogoComponent).not.toBeNull();
-    expect(gdoLogoComponent).toHaveProp("source", {
+  it("should show the fallback loyaltyLogo if useImageResize return none", () => {
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    const component = getComponent(store, aLoyaltyLogo);
+    const unknownLoyaltyLogo = component.queryByTestId("unknownLoyaltyLogo");
+
+    expect(unknownLoyaltyLogo).not.toBeNull();
+    expect(unknownLoyaltyLogo).toHaveProp("source", {
       testUri: "../../../img/wallet/unknown-gdo.png"
     });
   });
 
   it("should show the caption if is defined", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const component = getComponent(store, icon, aCaption);
+    const component = getComponent(store, aLoyaltyLogo, aCaption);
     const caption = component.queryByTestId("caption");
 
     expect(caption).not.toBeNull();
     expect(caption).toHaveTextContent(aCaption);
   });
 
-  it("should show the abiLogo if there is an abiLogo and useImageResize return some value", () => {
+  it("should show the gdoLogo if there is a gdoLogo and useImageResize return some value", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
-    const component = getComponent(store, icon, aCaption, anLoyaltyLogo);
-    const loyaltyLogo = component.queryByTestId("loyaltyLogo");
+    const component = getComponent(store, aLoyaltyLogo, aCaption, aGdoLogo);
+    const loyaltyLogo = component.queryByTestId("gdoLogo");
 
     expect(loyaltyLogo).not.toBeNull();
-    expect(loyaltyLogo).toHaveProp("source", { uri: anLoyaltyLogo });
+    expect(loyaltyLogo).toHaveProp("source", aGdoLogo);
   });
 
   it("should show the blocked badge if is blocked prop is true", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const component = getComponent(store, icon, aCaption, undefined, true);
+    const component = getComponent(
+      store,
+      aLoyaltyLogo,
+      aCaption,
+      undefined,
+      true
+    );
     const blockedBadge = component.queryByTestId("blockedBadge");
 
     expect(blockedBadge).not.toBeNull();
@@ -73,17 +92,17 @@ describe("CoBadgeWalletPreview component", () => {
 
 const getComponent = (
   store: Store<unknown>,
-  icon: ImageSourcePropType,
+  loyaltyLogo: ImageSourcePropType,
   caption?: string,
-  cardLogo?: string,
+  gdoLogo?: ImageURISource,
   blocked?: boolean
 ) =>
   render(
     <Provider store={store}>
       <BasePrivativeCard
-        icon={icon}
+        loyaltyLogo={loyaltyLogo}
         caption={caption}
-        cardLogo={cardLogo}
+        gdoLogo={gdoLogo}
         blocked={blocked}
       />
     </Provider>

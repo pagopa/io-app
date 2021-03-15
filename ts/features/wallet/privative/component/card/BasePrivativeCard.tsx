@@ -92,8 +92,8 @@ const renderGdoLogo = (gdoLogo: ImageURISource) =>
         <Image
           source={gdoLogo}
           style={imageStyle}
-          key={"loyaltyLogo"}
-          testID={"loyaltyLogo"}
+          key={"gdoLogo"}
+          testID={"gdoLogo"}
         />
       );
     }
