@@ -1,10 +1,13 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  PrivativeQuery,
   searchUserPrivative,
   walletAddPrivativeChooseIssuer,
+  walletAddPrivativeInsertCardNumber,
   walletAddPrivativeStart
 } from "../actions";
 
@@ -30,6 +33,8 @@ const searchedPrivativeReducer = (
       return action.payload;
     case getType(walletAddPrivativeChooseIssuer):
       return { ...state, id: action.payload };
+    case getType(walletAddPrivativeInsertCardNumber):
+      return { ...state, cardNumber: action.payload };
     case getType(walletAddPrivativeStart):
       return defaultState;
   }
@@ -40,8 +45,27 @@ const searchedPrivativeReducer = (
  * Return the current searched parameters (BrandId and CardNumber) for the privative search
  * @param state
  */
-export const onboardingSearchedPrivativeSelector = (
+export const onboardingSearchedPrivativePartialSelector = (
   state: GlobalState
 ): SearchedPrivativeData => state.wallet.onboarding.privative.searchedPrivative;
+
+const toPrivativeQuery = (
+  searched: SearchedPrivativeData
+): PrivativeQuery | undefined => {
+  const { id, cardNumber } = searched;
+
+  return id !== undefined && cardNumber !== undefined
+    ? { id, cardNumber }
+    : undefined;
+};
+
+/**
+ * Return the privative query only if all the fields are filled
+ */
+export const onboardingSearchedPrivativeQuerySelector = createSelector(
+  [onboardingSearchedPrivativePartialSelector],
+  (searchedPrivativeData): PrivativeQuery | undefined =>
+    toPrivativeQuery(searchedPrivativeData)
+);
 
 export default searchedPrivativeReducer;

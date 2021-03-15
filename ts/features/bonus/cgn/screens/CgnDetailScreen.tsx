@@ -27,10 +27,12 @@ import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/redu
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { cgnEycaDetails } from "../store/actions/eyca/details";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
+import CgnCardComponent from "../components/detail/CgnCardComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const HEADER_BACKGROUND_COLOR = "#7CB3D9";
 /**
  * Screen to display all the information about the active CGN
  */
@@ -42,7 +44,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   return (
     <BaseScreenComponent
-      headerBackgroundColor={IOColors.yellowGradientTop}
+      headerBackgroundColor={HEADER_BACKGROUND_COLOR}
       goBack
       headerTitle={I18n.t("bonus.cgn.name")}
       titleColor={"black"}
@@ -50,12 +52,14 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
-          <LinearGradient
-            colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
-          >
-            {/* TODO Add Specific CGN Card element when card is available */}
-            <View style={{ height: 164 }} />
+          <LinearGradient colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}>
+            <View
+              style={[IOStyles.horizontalContentPadding, { height: 180 }]}
+            />
           </LinearGradient>
+          {props.cgnDetails && (
+            <CgnCardComponent cgnDetails={props.cgnDetails} />
+          )}
           <View
             style={[
               IOStyles.flex,

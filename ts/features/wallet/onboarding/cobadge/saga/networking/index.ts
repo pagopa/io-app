@@ -1,4 +1,3 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { select } from "redux-saga-test-plan/matchers";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -7,6 +6,7 @@ import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
   addCoBadgeToWallet,
@@ -63,7 +63,7 @@ export function* handleAddCoBadgeToWallet(
   action: ActionType<typeof addCoBadgeToWallet.request>
 ) {
   // get the results
-  const result = yield call(
+  const result: SagaCallReturnType<typeof addCobadgeToWallet> = yield call(
     addCobadgeToWallet,
     addCobadgeToWalletClient,
     sessionManager,
@@ -101,7 +101,7 @@ export function* handleLoadCoBadgeConfiguration(
         );
       }
     } else {
-      throw new Error(readableReport(getCobadgeServicesResult.value));
+      throw new Error(readablePrivacyReport(getCobadgeServicesResult.value));
     }
   } catch (e) {
     yield put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));

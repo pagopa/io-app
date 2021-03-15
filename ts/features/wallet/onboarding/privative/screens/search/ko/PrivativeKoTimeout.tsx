@@ -3,28 +3,24 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { isNone } from "fp-ts/lib/Option";
-import I18n from "../../../../../../../i18n";
-import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../../i18n";
+import { mixpanelTrack } from "../../../../../../../mixpanel";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../../../utils/showToast";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import {
+  PrivativeQuery,
   searchUserPrivative,
   walletAddPrivativeCancel
 } from "../../../store/actions";
-import {
-  onboardingSearchedPrivativeSelector,
-  SearchedPrivativeData
-} from "../../../store/reducers/searchedPrivative";
-import { toPrivativeQuery } from "../SearchPrivativeCardScreen";
-import { showToast } from "../../../../../../../utils/showToast";
-import { mixpanelTrack } from "../../../../../../../mixpanel";
+import { onboardingSearchedPrivativeQuerySelector } from "../../../store/reducers/searchedPrivative";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -54,8 +50,9 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
     return true;
   });
 
-  const privativeQueryParam = toPrivativeQuery(props.privativeSelected);
-  if (isNone(privativeQueryParam)) {
+  const { privativeSelected } = props;
+
+  if (privativeSelected === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
     void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
     props.cancel();
@@ -76,7 +73,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
           />
           <FooterTwoButtons
             type={"TwoButtonsInlineThird"}
-            onRight={() => props.retry(privativeQueryParam.value)}
+            onRight={() => props.retry(privativeSelected)}
             onCancel={props.cancel}
             rightText={retry}
             leftText={cancel}
@@ -89,12 +86,12 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
-  retry: (searchedPrivativeData: Required<SearchedPrivativeData>) =>
+  retry: (searchedPrivativeData: PrivativeQuery) =>
     dispatch(searchUserPrivative.request(searchedPrivativeData))
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  privativeSelected: onboardingSearchedPrivativeSelector(state)
+  privativeSelected: onboardingSearchedPrivativeQuerySelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivativeKoTimeout);

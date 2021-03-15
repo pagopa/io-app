@@ -9,7 +9,7 @@ import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Log
 import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
-import { CardPreview } from "../../component/CardPreview";
+import { CardLogoPreview } from "../../component/CardLogoPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
@@ -65,7 +65,7 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
 
   const brandLogo = getCardIconFromBrandLogo(props.cobadge.info);
   return (
-    <CardPreview
+    <CardLogoPreview
       left={renderLeft(props, imgDimensions)}
       image={brandLogo}
       onPress={() => props.navigateToCobadgeDetails(props.cobadge)}
