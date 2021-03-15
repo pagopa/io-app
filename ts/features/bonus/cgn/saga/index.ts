@@ -10,6 +10,7 @@ import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
 import { cgnEycaDetails } from "../store/actions/eyca/details";
 import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
+import { cgnEycaActivation } from "../store/actions/eyca/activation";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -19,6 +20,7 @@ import {
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
 import { eycaGetInformationSaga } from "./networking/eyca/details/getEycaDetailSaga";
 import { cgnGenerateOtp } from "./networking/otp";
+import { handleEycaActivation } from "./networking/eyca/activation/getEycaActivationSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -48,10 +50,17 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   yield takeLatest(
     getType(cgnEycaDetails.request),
     eycaGetInformationSaga,
-    backendCGN.getEycaStatus,
-    backendCGN.getEycaActivation
+    backendCGN.getEycaStatus
   );
-  
+
+  // Eyca Activation
+  yield takeLatest(
+    getType(cgnEycaActivation.request),
+    handleEycaActivation,
+    backendCGN.getEycaActivation,
+    backendCGN.startEycaActivation
+  );
+
   // CGN Otp generation
   yield takeLatest(
     getType(cgnGenerateOtpAction.request),

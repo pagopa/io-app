@@ -1,29 +1,34 @@
 import { call, Effect, put } from "redux-saga/effects";
-import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { Either, left, right } from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { startTimer } from "../../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
-import { getNetworkError } from "../../../../../../../utils/errors";
-import { mixpanelTrack } from "../../../../../../../mixpanel";
+import {
+  getGenericError,
+  getNetworkError,
+  NetworkError
+} from "../../../../../../../utils/errors";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
-import { CgnEycaActivationProgressEnum } from "../../../../store/reducers/eyca/activation";
-import { cgnEycaActivationStatus } from "../../../../store/actions/eyca/activation";
-import { cgnEycaDetails } from "../../../../store/actions/eyca/details";
-import { StatusEnum as CardPendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
+import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
+import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
-const statusProgressRecord: Record<403 | 409, CgnEycaActivationProgressEnum> = {
-  403: CgnEycaActivationProgressEnum.INELIGIBLE,
-  409: CgnEycaActivationProgressEnum.EXISTS
-};
-
-export type EycaStatusPollingSaga = ReturnType<typeof handleEycaStatusPolling>;
+type StartEycaStatus = Extract<
+  CgnEycaActivationStatus,
+  "PROCESSING" | "INELIGIBLE" | "ALREADY_ACTIVE"
+>;
+const mapStatus: Map<number, StartEycaStatus> = new Map([
+  [201, "PROCESSING"],
+  [202, "PROCESSING"],
+  [403, "INELIGIBLE"],
+  [409, "ALREADY_ACTIVE"]
+]);
 
 /**
  * Function that handles the activation of a EYCA Card
@@ -36,138 +41,126 @@ export type EycaStatusPollingSaga = ReturnType<typeof handleEycaStatusPolling>;
  * @param startEycaActivation backend client for CGN Activation API
  * @param handleEycaStatusPolling saga that handles the polling result of a EYCA Activation
  */
-export const eycaActivationSaga = (
-  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"],
-  handleEycaStatusPolling: EycaStatusPollingSaga
-) =>
-  function* (): Generator<
-    Effect,
-    ActionType<typeof cgnEycaActivationStatus>,
-    any
-  > {
-    try {
-      const startEycaActivationResult: SagaCallReturnType<typeof startEycaActivation> = yield call(
-        startEycaActivation,
-        {}
-      );
+function* handleStartActivation(
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
+): Generator<Effect, Either<NetworkError, StartEycaStatus>, any> {
+  try {
+    const startEycaActivationResult: SagaCallReturnType<typeof startEycaActivation> = yield call(
+      startEycaActivation,
+      {}
+    );
+    if (startEycaActivationResult.isRight()) {
+      const status = startEycaActivationResult.value.status;
+      const activationStatus = mapStatus.get(status);
+      if (activationStatus) {
+        return right(activationStatus);
+      }
+      throw Error(`response status ${startEycaActivationResult.value.status}`);
+    }
+    // decoding failure
+    throw Error(readablePrivacyReport(startEycaActivationResult.value));
+  } catch (e) {
+    return left(getNetworkError(e));
+  }
+}
 
-      if (startEycaActivationResult.isRight()) {
-        const status = startEycaActivationResult.value.status;
-        // Status is 201 request has been created -> Start Polling
-        if (status === 201) {
-          return yield call(handleEycaStatusPolling);
+function* getActivation(
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
+): Generator<Effect, Either<NetworkError, CgnEycaActivationStatus>, any> {
+  try {
+    const getEycaActivationResult: SagaCallReturnType<typeof getEycaActivation> = yield call(
+      getEycaActivation,
+      {}
+    );
+    if (getEycaActivationResult.isRight()) {
+      if (getEycaActivationResult.value.status === 200) {
+        const result = getEycaActivationResult.value.value;
+        switch (result.status) {
+          case StatusEnum.COMPLETED:
+            return right("COMPLETED");
+          case StatusEnum.ERROR:
+            return right("ERROR");
+          case StatusEnum.PENDING:
+          case StatusEnum.RUNNING:
+            return right("PROCESSING");
+          default:
+            const reason = `unexpected status result ${getEycaActivationResult.value.value.status}`;
+            return left(getGenericError(new Error(reason)));
         }
-        // 202 -> still processing
-        if (status === 202) {
-          yield put(
-            cgnEycaDetails.success({
-              status: "ELIGIBLE",
-              information: { status: CardPendingStatus.PENDING }
-            })
-          );
-          return cgnEycaActivationStatus.success({
-            status: CgnEycaActivationProgressEnum.PENDING
-          });
-        }
-        // 409 -> Cannot activate a new cgn because another card related to this user was found.
-        // 403 -> Ineligible
-        else if (status === 409 || status === 403) {
-          yield put(
-            cgnEycaDetails.success(
-              status === 403
-                ? { status: "INELIGIBLE" }
-                : {
-                    status: "ELIGIBLE",
-                    information: { status: CardPendingStatus.PENDING }
-                  }
-            )
-          );
-          return cgnEycaActivationStatus.success({
-            status: statusProgressRecord[status]
-          });
-        }
-        throw Error(
-          `response status ${startEycaActivationResult.value.status}`
+      } else if (getEycaActivationResult.value.status === 404) {
+        return right("NOT_FOUND");
+      } else {
+        return left(
+          getGenericError(
+            new Error(`response status ${getEycaActivationResult.value.status}`)
+          )
         );
       }
+    } else {
       // decoding failure
-      throw Error(readablePrivacyReport(startEycaActivationResult.value));
-    } catch (e) {
-      return cgnEycaActivationStatus.failure(getNetworkError(e));
+      return left(
+        getGenericError(
+          new Error(readablePrivacyReport(getEycaActivationResult.value))
+        )
+      );
     }
-  };
+  } catch (e) {
+    return left(getNetworkError(e));
+  }
+}
 
 /**
  * Function that handles the polling check of the EYCA's status
  * Calls the status API with a polling interrupted only if it's activated or if a network error has been raised
  * @param getEycaActivation backend client to know the current user CGN status
+ * @param startEycaActivation backend client to know the current user CGN status
  */
-export const handleEycaStatusPolling = (
-  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
-) =>
-  function* (): Generator<
-    Effect,
-    ActionType<typeof cgnEycaActivationStatus>,
-    any
-  > {
-    const startPollingTime = new Date().getTime();
-    while (true) {
-      const eycaActivationResult: SagaCallReturnType<typeof getEycaActivation> = yield call(
-        getEycaActivation,
-        {}
-      );
-      // blocking error -> stop polling
-      if (eycaActivationResult.isLeft()) {
-        throw eycaActivationResult.value;
+export function* handleEycaActivation(
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
+) {
+  const startPollingTime = new Date().getTime();
+  while (true) {
+    const activationInfo: SagaCallReturnType<typeof getActivation> = yield call(
+      getActivation,
+      getEycaActivation
+    );
+    if (activationInfo.isRight()) {
+      const status: CgnEycaActivationStatus = activationInfo.value;
+      switch (status) {
+        case "PROCESSING":
+          yield call(startTimer, cgnResultPolling);
+          const now = new Date().getTime();
+          if (now - startPollingTime >= pollingTimeThreshold) {
+            yield put(cgnEycaActivation.success("POLLING_TIMEOUT"));
+            return;
+          }
+          break;
+        case "COMPLETED":
+          yield put(cgnEycaActivation.success("COMPLETED"));
+          return;
+        case "NOT_FOUND":
+          const startActivation = yield call(
+            handleStartActivation,
+            startEycaActivation
+          );
+          if (startActivation.isLeft()) {
+            yield put(cgnEycaActivation.failure(startActivation.value));
+          } else {
+            if (startActivation.value === "PROCESSING") {
+              continue;
+            }
+            yield put(cgnEycaActivation.success(startActivation.value));
+            return;
+          }
+          return;
+        case "ERROR":
+          yield put(cgnEycaActivation.success("ERROR"));
+          return;
       }
-      // we got the result -> stop polling
-      else if (
-        eycaActivationResult.isRight() &&
-        eycaActivationResult.value.status === 200
-      ) {
-        switch (eycaActivationResult.value.value.status) {
-          case StatusEnum.COMPLETED:
-            // Activation Completed Retrieve the Eyca details
-            yield put(cgnEycaDetails.request());
-            return cgnEycaActivationStatus.success({
-              status: CgnEycaActivationProgressEnum.SUCCESS,
-              value: eycaActivationResult.value.value
-            });
-          case StatusEnum.ERROR:
-            yield put(
-              cgnEycaDetails.success({
-                status: "ELIGIBLE"
-              })
-            );
-            throw Error(
-              `Eyca Activation status ${eycaActivationResult.value.value.status}`
-            );
-            break;
-          // activation is still pending skip
-          case StatusEnum.PENDING:
-          case StatusEnum.RUNNING:
-            break;
-          default:
-            void mixpanelTrack(getType(cgnEycaActivationStatus.failure), {
-              reason: `unexpected status result ${eycaActivationResult.value.value.status}`
-            });
-            break;
-        }
-      }
-      // sleep
-      yield call(startTimer, cgnResultPolling);
-      // check if the time threshold was exceeded, if yes stop polling
-      const now = new Date().getTime();
-      if (now - startPollingTime >= pollingTimeThreshold) {
-        yield put(
-          cgnEycaDetails.success({
-            status: "ELIGIBLE",
-            information: { status: CardPendingStatus.PENDING }
-          })
-        );
-        return cgnEycaActivationStatus.success({
-          status: CgnEycaActivationProgressEnum.TIMEOUT
-        });
-      }
+    } else {
+      yield put(cgnEycaActivation.failure(activationInfo.value));
+      return;
     }
-  };
+  }
+}
