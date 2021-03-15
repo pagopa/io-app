@@ -24,6 +24,7 @@ import AddPrivativeCardScreen from "../add/AddPrivativeCardScreen";
 import PrivativeKoNotFound from "./ko/PrivativeKoNotFound";
 import PrivativeKoTimeout from "./ko/PrivativeKoTimeout";
 import LoadPrivativeSearch from "./LoadPrivativeSearch";
+import PrivativeKoServiceError from "./ko/PrivativeKoServiceError";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -43,8 +44,13 @@ const PrivativeReady = (p: {
 
   // with a pending request or if not all the services replied with success we show the timeout screen and the user
   // will retry
-  if (anyPendingRequest || anyServiceError) {
+  if (anyPendingRequest) {
     return <PrivativeKoTimeout contextualHelp={emptyContextualHelp} />;
+  }
+
+  // if not all the services replied with success we show the specific error
+  if (anyServiceError) {
+    return <PrivativeKoServiceError contextualHelp={emptyContextualHelp} />;
   }
 
   const noPrivativeFound = privative.paymentInstrument === null;
