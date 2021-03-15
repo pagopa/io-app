@@ -5,7 +5,7 @@ import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { startTimer } from "../../../../../../../utils/timer";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
-import { getError } from "../../../../../../../utils/errors";
+import { getNetworkError } from "../../../../../../../utils/errors";
 import { mixpanelTrack } from "../../../../../../../mixpanel";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import { CgnEycaActivationProgressEnum } from "../../../../store/reducers/eyca/activation";
@@ -93,7 +93,7 @@ export const eycaActivationSaga = (
       // decoding failure
       throw Error(readablePrivacyReport(startEycaActivationResult.value));
     } catch (e) {
-      return cgnEycaActivationStatus.failure(getError(e));
+      return cgnEycaActivationStatus.failure(getNetworkError(e));
     }
   };
 
