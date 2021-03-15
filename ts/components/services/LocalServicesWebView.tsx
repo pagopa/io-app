@@ -1,9 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 import * as pot from "italia-ts-commons/lib/pot";
-import WebView from "react-native-webview";
-import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -18,6 +16,8 @@ import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
 import { localServicesWebUrl } from "../../config";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
@@ -50,7 +50,6 @@ const renderLoading = () => (
     <RefreshIndicator />
   </View>
 );
-const queryParam = "idService";
 
 /**
  * This component is basically a webview that loads an url showing local services
@@ -73,6 +72,7 @@ const LocalServicesWebView = (props: Props) => {
         // if service has been loaded
         if (isStrictSome(servicePot)) {
           props.onServiceSelect(servicePot.value);
+          setServiceIdToLoad(undefined);
           return;
         }
         if (pot.isError(servicePot)) {
@@ -88,22 +88,19 @@ const LocalServicesWebView = (props: Props) => {
     }
   };
 
-  const handleOnShouldStartLoadWithRequest = (navState: WebViewNavigation) => {
-    if (navState.url) {
-      const urlParse = new URLParse(navState.url, true);
-      const maybeServiceId = urlParse.query[queryParam];
-      // click on service
-      if (maybeServiceId) {
-        setServiceIdToLoad(maybeServiceId);
-        // request for 'internal' service loading
-        props.loadService(maybeServiceId);
-        // avoid webview loading this url and
-        return false;
-      }
-      return true;
-    }
-    return true;
+  /**
+   * 'listen' on web message
+   * if a serviceId is sent: dispatch service loading request
+   * @param event
+   */
+  const handleWebviewMessage = (event: WebViewMessageEvent) => {
+    ServiceId.decode(event.nativeEvent.data).map(sId => {
+      setServiceIdToLoad(sId);
+      // request loading service
+      props.loadService(sId);
+    });
   };
+
   const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
     .mapNullable(sid => props.servicesById[sid])
     .fold(false, pot.isLoading);
@@ -113,13 +110,14 @@ const LocalServicesWebView = (props: Props) => {
 
       <WebView
         ref={webViewRef}
+        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
         style={{ flex: 1 }}
         textZoom={100}
         source={{
           uri: localServicesWebUrl
         }}
         onError={() => setWebViewError(true)}
-        onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+        onMessage={handleWebviewMessage}
         startInLoadingState={true}
         renderLoading={renderLoading}
         javaScriptEnabled={true}

@@ -2,6 +2,94 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0-rc.5](https://github.com/pagopa/io-app/compare/1.23.0-rc.4...1.23.0-rc.5) (2021-03-15)
+
+
+### Features
+
+* [[#177012479](https://www.pivotaltracker.com/story/show/177012479)] Tracking inbox messages count with mix panel ([#2890](https://github.com/pagopa/io-app/issues/2890)) ([9c19f25](https://github.com/pagopa/io-app/commit/9c19f2557a7a789ed0aa84ad5a69dfbe10146d31))
+* **Bonus Pagamenti Digitali:** [[#177145461](https://www.pivotaltracker.com/story/show/177145461)] Show privative cards in wallet home ([#2878](https://github.com/pagopa/io-app/issues/2878)) ([58b1098](https://github.com/pagopa/io-app/commit/58b109825f9ec9c3a0f6c46f69153d8d177978eb))
+* **Bonus Pagamenti Digitali:** [[#177164415](https://www.pivotaltracker.com/story/show/177164415)] Privative card detail screen ([#2885](https://github.com/pagopa/io-app/issues/2885)) ([bb5cb11](https://github.com/pagopa/io-app/commit/bb5cb11f63aab1c0a3224a3787c3fbd21b67c95b)), closes [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461) [#177145461](https://www.pivotaltracker.com/story/show/177145461)
+* **Bonus Pagamenti Digitali:** [[#177243608](https://www.pivotaltracker.com/story/show/177243608)] Added draft screens for privative cards onboarding workflow ([#2891](https://github.com/pagopa/io-app/issues/2891)) ([ac185da](https://github.com/pagopa/io-app/commit/ac185dacafd598387ed15af5d7fdb6fd47339283))
+* **Bonus Pagamenti Digitali:** [[#177243713](https://www.pivotaltracker.com/story/show/177243713),[#177144863](https://www.pivotaltracker.com/story/show/177144863),[#177144964](https://www.pivotaltracker.com/story/show/177144964)] Manages privative search loading and ko. ([#2894](https://github.com/pagopa/io-app/issues/2894)) ([065ee09](https://github.com/pagopa/io-app/commit/065ee09b52e3aeb965cd02ac44cf2e0746336b54))
+* **Bonus Pagamenti Digitali:** [[#177339683](https://www.pivotaltracker.com/story/show/177339683)] Change configuration to UAT ([#2899](https://github.com/pagopa/io-app/issues/2899)) ([d269dc4](https://github.com/pagopa/io-app/commit/d269dc40530bfb44de1adfff1e6d05158d686d31))
+* **Carta Giovani Nazionale:** [[#176961686](https://www.pivotaltracker.com/story/show/176961686)] Introduces CGN Card Component ([#2877](https://github.com/pagopa/io-app/issues/2877)) ([d82b6ef](https://github.com/pagopa/io-app/commit/d82b6ef698b3e275d431397214e40fd5182f5cd3))
+* **Carta Giovani Nazionale:** [[#177058904](https://www.pivotaltracker.com/story/show/177058904)] Introduces the Bottom Sheet that shows all the informations about an available discount for CGN ([#2888](https://github.com/pagopa/io-app/issues/2888)) ([3c08d46](https://github.com/pagopa/io-app/commit/3c08d461f6f0d940d0aed3464071aeb64d7d53c4)), closes [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#176959185](https://www.pivotaltracker.com/story/show/176959185) [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#176959185](https://www.pivotaltracker.com/story/show/176959185)
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[#176942137](https://www.pivotaltracker.com/story/show/176942137)] Features Card Carousel shows empty items section ([#2828](https://github.com/pagopa/io-app/issues/2828)) ([2c72029](https://github.com/pagopa/io-app/commit/2c720296b7e6f685004e276b2f47e2bcfb03ed04))
+* **Carta Giovani Nazionale:** [[#177303103](https://www.pivotaltracker.com/story/show/177303103)] First tap on merchants list item fails [#2895](https://github.com/pagopa/io-app/issues/2895) ([546dbef](https://github.com/pagopa/io-app/commit/546dbefa81970f0c16cf212228acb038d48b2afc))
+
+## [1.23.0-rc.4](https://github.com/pagopa/io-app/compare/1.23.0-rc.3...1.23.0-rc.4) (2021-03-11)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#176959185](https://www.pivotaltracker.com/story/show/176959185)] Introduces the screen to check on Merchant detail conventioned to CGN ([#2886](https://github.com/pagopa/io-app/issues/2886)) ([db50f36](https://github.com/pagopa/io-app/commit/db50f3600b01a72d2f4b83b0cbd8f38f37baefa0)), closes [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#177059013](https://www.pivotaltracker.com/story/show/177059013) [#177059013](https://www.pivotaltracker.com/story/show/177059013)
+* **Carta Giovani Nazionale:** [[#176959374](https://www.pivotaltracker.com/story/show/176959374)] Add a component to show the OTP code and its expiration time ([#2892](https://github.com/pagopa/io-app/issues/2892)) ([e679d69](https://github.com/pagopa/io-app/commit/e679d693104a88d48af3ce538c61aac02404e265))
+* **Carta Giovani Nazionale:** [[#177059013](https://www.pivotaltracker.com/story/show/177059013)] Introduces the component to display a discount value for a CGN merchant ([#2884](https://github.com/pagopa/io-app/issues/2884)) ([a211fa5](https://github.com/pagopa/io-app/commit/a211fa51bf484d2ee9cb722f928a60ada461f215))
+
+
+### Bug Fixes
+
+* [[#177298671](https://www.pivotaltracker.com/story/show/177298671)] On message pressed Service details is shown instead of Message details ([#2889](https://github.com/pagopa/io-app/issues/2889)) ([9fe615b](https://github.com/pagopa/io-app/commit/9fe615beb68f629cabe1c278c99dddc1aad807ae))
+
+
+### Chores
+
+* [[#176433685](https://www.pivotaltracker.com/story/show/176433685)] Track Instabug report open/close ([#2727](https://github.com/pagopa/io-app/issues/2727)) ([955524c](https://github.com/pagopa/io-app/commit/955524ca1d4babf34ee2427fc6ea3345c8b5773e))
+
+## [1.23.0-rc.3](https://github.com/pagopa/io-app/compare/1.23.0-rc.2...1.23.0-rc.3) (2021-03-10)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177142050](https://www.pivotaltracker.com/story/show/177142050),[#177142212](https://www.pivotaltracker.com/story/show/177142212)] Support search privative card API ([#2881](https://github.com/pagopa/io-app/issues/2881)) ([f856dba](https://github.com/pagopa/io-app/commit/f856dba8c3e095b32a098ce985c635f5e6231e06))
+* **Bonus Pagamenti Digitali:** [[#177142282](https://www.pivotaltracker.com/story/show/177142282)] Manage add supermarket card item ([#2879](https://github.com/pagopa/io-app/issues/2879)) ([572f28e](https://github.com/pagopa/io-app/commit/572f28eb111b44cc89f9331502735a547c8df767))
+* **Bonus Pagamenti Digitali:** [[#177142358](https://www.pivotaltracker.com/story/show/177142358)] Added privative issuers configuration and choice screen  ([#2876](https://github.com/pagopa/io-app/issues/2876)) ([e8b559a](https://github.com/pagopa/io-app/commit/e8b559a4e6fa015f4ca02e323209efb7010983c1))
+* **Carta Giovani Nazionale:** [[#176959318](https://www.pivotaltracker.com/story/show/176959318),[#177244438](https://www.pivotaltracker.com/story/show/177244438),[#177244411](https://www.pivotaltracker.com/story/show/177244411)] Add OTP generation network / actions / saga / reducer ([#2882](https://github.com/pagopa/io-app/issues/2882)) ([04c9905](https://github.com/pagopa/io-app/commit/04c99053b10fa9b1adee174ae21d2908a2dcdf2a))
+
+
+### Bug Fixes
+
+* [[#177281052](https://www.pivotaltracker.com/story/show/177281052)] Services list could display not found page and zoom is allowed ([#2883](https://github.com/pagopa/io-app/issues/2883)) ([f4d2342](https://github.com/pagopa/io-app/commit/f4d234231bcfbf972ca3546f496d4fe5acaf5906)), closes #177281074 #177281074 #177281074 #177281074
+
+
+### Chores
+
+* [[#177241763](https://www.pivotaltracker.com/story/show/177241763)] Change Instabug report hint text ([#2875](https://github.com/pagopa/io-app/issues/2875)) ([1c20674](https://github.com/pagopa/io-app/commit/1c2067461149ccfcaa1abf263f3c4d2bb66edde0))
+
+## [1.23.0-rc.2](https://github.com/pagopa/io-app/compare/1.23.0-rc.1...1.23.0-rc.2) (2021-03-09)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177141940](https://www.pivotaltracker.com/story/show/177141940)] Added screens & navigation stubs for privative card ([#2861](https://github.com/pagopa/io-app/issues/2861)) ([3ef249f](https://github.com/pagopa/io-app/commit/3ef249f7e813eba485f069e5ae93af3137f85210))
+* **Bonus Pagamenti Digitali:** [[#177161766](https://www.pivotaltracker.com/story/show/177161766)] Add orchestration workunit for privative card ([#2869](https://github.com/pagopa/io-app/issues/2869)) ([fe95e91](https://github.com/pagopa/io-app/commit/fe95e9121d425291bbdc3e4cd13dc33214416f23))
+* **Bonus Pagamenti Digitali:** [[#177187748](https://www.pivotaltracker.com/story/show/177187748)] Revert unlock the search for SIA and ICCREA (for test only) [#2865](https://github.com/pagopa/io-app/issues/2865) ([82180af](https://github.com/pagopa/io-app/commit/82180af7e9f8ffa48ab5ce805c0a313c1a90fd22))
+* **Carta Giovani Nazionale:** [[#176958889](https://www.pivotaltracker.com/story/show/176958889)] Implementation of the redux store/actions section for Merchants list load and storage ([#2843](https://github.com/pagopa/io-app/issues/2843)) ([0ec802b](https://github.com/pagopa/io-app/commit/0ec802b4a8cda4baef56c09754ca33e6eabe9bff))
+* **Carta Giovani Nazionale:** [[#176959176](https://www.pivotaltracker.com/story/show/176959176)] UI Implementation of Merchants list and search screen for CGN available discounts ([#2840](https://github.com/pagopa/io-app/issues/2840)) ([bea650e](https://github.com/pagopa/io-app/commit/bea650e40c8a1efb0b6cf3e46a1b803cdfd9fd12))
+* **Carta Giovani Nazionale:** [[#176959207](https://www.pivotaltracker.com/story/show/176959207)] UI Implementation of the List item component for CGN Conventioned Merchant  ([#2836](https://github.com/pagopa/io-app/issues/2836)) ([bd7046a](https://github.com/pagopa/io-app/commit/bd7046a271a4f100e36e5135427c4746665be937))
+* **Carta Giovani Nazionale:** [[#177063526](https://www.pivotaltracker.com/story/show/177063526)] Introduces scaffolding for action/reducer of EYCA details and activation process ([#2853](https://github.com/pagopa/io-app/issues/2853)) ([fbceb75](https://github.com/pagopa/io-app/commit/fbceb7581ef594dd73b26cb4ed721f1f1cd8aed4))
+* [[#177226606](https://www.pivotaltracker.com/story/show/177226606)] Load local services in a embedded WebView ([#2873](https://github.com/pagopa/io-app/issues/2873)) ([4637197](https://github.com/pagopa/io-app/commit/4637197f229b292440eff5ba235132febc80d28d))
+* [[#177264498](https://www.pivotaltracker.com/story/show/177264498)] Diners Logo Update [#2880](https://github.com/pagopa/io-app/issues/2880) ([07f9f12](https://github.com/pagopa/io-app/commit/07f9f12a4097721ec5237c9e222c7fc9bb98ef2f))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[#176993827](https://www.pivotaltracker.com/story/show/176993827)] In SuperCashbackRanking bottom sheet text is selectable ([#2866](https://github.com/pagopa/io-app/issues/2866)) ([faf26fe](https://github.com/pagopa/io-app/commit/faf26fe675d78c7fc663df24e20a67f0370fbfa4))
+* [[#176903407](https://www.pivotaltracker.com/story/show/176903407)] Inhibit dark mode on Android devices ([#2854](https://github.com/pagopa/io-app/issues/2854)) ([6f14f9d](https://github.com/pagopa/io-app/commit/6f14f9d2c71ff9314d8c1c4d43ff10305493a0fd))
+* [[#177182357](https://www.pivotaltracker.com/story/show/177182357)] Aborting profile deletion causes a crash ([#2863](https://github.com/pagopa/io-app/issues/2863)) ([37b7e7b](https://github.com/pagopa/io-app/commit/37b7e7b0b7aae0eaaacb30e7daaa160d811d729a))
+
+
+### Chores
+
+* [[#176981388](https://www.pivotaltracker.com/story/show/176981388)] Credit card onboarding attempt: store info about 3DS2 ([#2858](https://github.com/pagopa/io-app/issues/2858)) ([60eac27](https://github.com/pagopa/io-app/commit/60eac277178090df2085548b10f035522102f20d))
+* [[#177204492](https://www.pivotaltracker.com/story/show/177204492)] Update/Correct README ([#2871](https://github.com/pagopa/io-app/issues/2871)) ([eca840c](https://github.com/pagopa/io-app/commit/eca840c03b9072b7a33d7c21a933be0635a23c30))
+* Clean changelog ([#2864](https://github.com/pagopa/io-app/issues/2864)) ([256bf4b](https://github.com/pagopa/io-app/commit/256bf4b68457395800f9005d9ca136c81f8ab6ba))
+
 ## [1.23.0-rc.1](https://github.com/pagopa/io-app/compare/1.23.0-rc.0...1.23.0-rc.1) (2021-03-03)
 
 

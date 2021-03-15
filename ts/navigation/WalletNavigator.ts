@@ -25,6 +25,7 @@ import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboar
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
+import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
@@ -76,6 +77,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_COBADGE_DETAIL]: {
     screen: CobadgeDetailScreen
+  },
+  [ROUTES.WALLET_PRIVATIVE_DETAIL]: {
+    screen: PrivativeDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen

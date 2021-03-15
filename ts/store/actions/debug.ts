@@ -34,7 +34,7 @@ export const instabugReportOpened = createStandardAction(
  */
 export const instabugReportClosed = createStandardAction(
   "INSTABUG_REPORT_CLOSED"
-)<InstabugReport & InstabugDismiss>();
+)<{ type: string } & InstabugDismiss>();
 
 export type DebugActions =
   | ActionType<typeof setDebugModeEnabled>

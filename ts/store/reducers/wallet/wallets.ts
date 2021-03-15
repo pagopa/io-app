@@ -17,9 +17,11 @@ import {
   isBancomat,
   isBPay,
   isCreditCard,
+  isPrivativeCard,
   isRawCreditCard,
   isSatispay,
   PaymentMethod,
+  PrivativePaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
   SatispayPaymentMethod,
@@ -52,6 +54,7 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
+import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -186,6 +189,17 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
+ * Return a privative card list in the wallet
+ */
+export const privativeListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod =>
+      paymentMethod.filter(isPrivativeCard)
+    )
+);
+
+/**
  * Return a satispay list in the wallet
  */
 export const satispayListSelector = createSelector(
@@ -261,8 +275,22 @@ export const cobadgeListVisibleInWalletSelector = createSelector(
   (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
     pot.map(creditCardListPot, creditCardList =>
       creditCardList.filter(
-        cc => cc.pagoPA === false && cc.info.issuerAbiCode !== undefined
+        cc =>
+          cc.pagoPA === false &&
+          cc.info.issuerAbiCode !== undefined &&
+          cc.info.type !== TypeEnum.PRV
       )
+    )
+);
+
+/**
+ * Return a Privative card list visible in the wallet
+ */
+export const privativeListVisibleInWalletSelector = createSelector(
+  [privativeListSelector],
+  (privativeListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(privativeListPot, privativeList =>
+      privativeList.filter(isVisibleInWallet)
     )
 );
 
