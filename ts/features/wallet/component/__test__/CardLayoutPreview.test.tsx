@@ -5,8 +5,8 @@ import { CardLayoutPreview } from "../CardLayoutPreview";
 
 describe("CardLayoutPreview", () => {
   it("should show the left and the right received components", () => {
-    const left = () => <View testID="leftComponent"></View>;
-    const right = () => <View testID="right"></View>;
+    const left = () => <View testID="leftComponent" />;
+    const right = () => <View testID="right" />;
     const component = render(
       <CardLayoutPreview left={left()} right={right()} />
     );
