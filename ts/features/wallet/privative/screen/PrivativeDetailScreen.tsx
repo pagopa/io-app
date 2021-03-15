@@ -76,7 +76,7 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
     >
       <View style={styles.cardContainer}>
         <BasePrivativeCard
-          icon={privative.icon}
+          loyaltyLogo={privative.icon}
           caption={privative.caption}
           gdoLogo={privative.gdoLogo}
         />
