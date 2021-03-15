@@ -5,6 +5,7 @@ import {
 } from "typesafe-actions";
 import { EycaActivationDetail } from "../../../../../../../definitions/cgn/EycaActivationDetail";
 import { CgnEycaActivationProgressEnum } from "../../reducers/eyca/activation";
+import { NetworkError } from "../../../../../../utils/errors";
 
 type EycaActivationStatus = {
   status: CgnEycaActivationProgressEnum;
