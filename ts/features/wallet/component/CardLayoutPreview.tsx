@@ -1,13 +1,13 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 
 type Props = {
   left: React.ReactNode;
-  image: ImageSourcePropType;
+  right: React.ReactNode;
   onPress?: () => void;
 };
 
@@ -37,10 +37,7 @@ const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
   },
-  cardLogo: {
-    height: 30,
-    width: 48
-  },
+
   rotatedCard: {
     shadowColor: "#000",
     marginBottom: -30,
@@ -60,13 +57,12 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A Generic preview card layout extracted from {@link CardComponent} and simplified.
+ * A preview card layout that generalizes {@link CardPreview}.
  * Can be used to render a generic wallet preview card.
- * TODO: in this phase the CardComponent is preserved and no refactoring has been done on the pre-existing code
  * @param props
  * @constructor
  */
-export const CardPreview: React.FunctionComponent<Props> = props => (
+export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
   <>
     {/* In order to render the shadow on android */}
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -82,11 +78,7 @@ export const CardPreview: React.FunctionComponent<Props> = props => (
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             {props.left}
-            <Image
-              source={props.image}
-              style={styles.cardLogo}
-              testID={"cardImage"}
-            />
+            {props.right}
           </View>
           <View spacer={true} />
         </View>

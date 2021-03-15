@@ -4,7 +4,6 @@ import { ImageSourcePropType } from "react-native";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-// import { pot } from "italia-ts-commons";
 import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import CobadgeCard from "../BaseCoBadgeCard";

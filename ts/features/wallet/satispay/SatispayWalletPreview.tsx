@@ -6,7 +6,7 @@ import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { CardPreview } from "../component/CardPreview";
+import { CardLogoPreview } from "../component/CardLogoPreview";
 import { navigateToSatispayDetailScreen } from "../../../store/actions/navigation";
 import { SatispayPaymentMethod } from "../../../types/pagopa";
 
@@ -24,7 +24,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const SatispayWalletPreview: React.FunctionComponent<Props> = props => (
-  <CardPreview
+  <CardLogoPreview
     left={
       <Body style={IOStyles.flex} numberOfLines={1}>
         {I18n.t("wallet.methods.satispay.name")}
