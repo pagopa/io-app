@@ -1,8 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { FlatList, ListRenderItemInfo, SafeAreaView } from "react-native";
+import {
+  FlatList,
+  Keyboard,
+  ListRenderItemInfo,
+  SafeAreaView
+} from "react-native";
 import { Input, Item, View } from "native-base";
-import { nullType } from "io-ts";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -18,6 +22,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { availableMerchants } from "../../__mock__/availableMerchants";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
+import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -62,12 +67,18 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     debounceRef.current(searchValue, props.merchants);
   }, [searchValue, props.merchants]);
 
+  const onItemPress = () => {
+    // TODO Add the dispatch of merchant selected when the complete workflow is available
+    props.navigateToMerchantDetail();
+    Keyboard.dismiss();
+  };
+
   const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
     <CgnMerchantListItem
       category={listItem.item.category}
       name={listItem.item.name}
       location={listItem.item.location}
-      onPress={props.navigateToMerchantDetail}
+      onPress={onItemPress}
     />
   );
 
@@ -99,6 +110,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
             )}
             renderItem={renderListItem}
             keyExtractor={c => `${c.name}-${c.category}`}
+            keyboardShouldPersistTaps={"handled"}
             ListFooterComponent={
               merchantList.length > 0 && <EdgeBorderComponent />
             }
@@ -114,9 +126,8 @@ const mapStateToProps = (_: GlobalState) => ({
   merchants: availableMerchants
 });
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  // FIXME Replace with correct navigation action when available
-  navigateToMerchantDetail: () => nullType
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToMerchantDetail: () => dispatch(navigateToCgnMerchantDetail())
 });
 
 export default connect(

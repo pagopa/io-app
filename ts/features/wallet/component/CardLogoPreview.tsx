@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A preview card that show as right section an image of fixed dimensions.
+ * A preview card that shows as right section an image of fixed dimensions.
  * @param props
  * @constructor
  */

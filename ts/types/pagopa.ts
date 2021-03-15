@@ -7,7 +7,7 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
@@ -162,7 +162,8 @@ export type RawPaymentMethod =
   | RawBancomatPaymentMethod
   | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
-  | RawSatispayPaymentMethod;
+  | RawSatispayPaymentMethod
+  | RawPrivativePaymentMethod;
 
 export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
   kind: "Bancomat";
@@ -171,6 +172,11 @@ export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
 
 export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
   kind: "CreditCard";
+  info: CardInfo;
+};
+
+export type RawPrivativePaymentMethod = WalletV2WithoutInfo & {
+  kind: "Privative";
   info: CardInfo;
 };
 
@@ -200,6 +206,11 @@ export const isRawCreditCard = (
 ): pm is RawCreditCardPaymentMethod =>
   pm === undefined ? false : pm.kind === "CreditCard";
 
+export const isRawPrivative = (
+  pm: RawPaymentMethod | undefined
+): pm is RawPrivativePaymentMethod =>
+  pm === undefined ? false : pm.kind === "Privative";
+
 export const isRawBPay = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBPayPaymentMethod =>
@@ -225,9 +236,10 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
 
-export type PrivativePaymentMethod = CreditCardPaymentMethod & {
-  cardLogo?: string;
-};
+export type PrivativePaymentMethod = RawPrivativePaymentMethod &
+  PaymentMethodRepresentation & {
+    gdoLogo?: ImageURISource;
+  };
 
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
@@ -256,7 +268,9 @@ export const isSatispay = (
 export const isCreditCard = (
   pm: PaymentMethod | undefined
 ): pm is CreditCardPaymentMethod =>
-  pm === undefined ? false : pm.kind === "CreditCard";
+  pm === undefined
+    ? false
+    : pm.kind === "CreditCard" && pm.info.type !== CreditCardTypeEnum.PRV;
 
 export const isBPay = (
   pm: PaymentMethod | undefined
@@ -265,9 +279,7 @@ export const isBPay = (
 export const isPrivativeCard = (
   pm: PaymentMethod | undefined
 ): pm is PrivativePaymentMethod =>
-  pm === undefined
-    ? false
-    : pm.kind === "CreditCard" && pm.info.type === CreditCardTypeEnum.PRV;
+  pm === undefined ? false : pm.kind === "Privative";
 
 /**
  * A refined Wallet
