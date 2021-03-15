@@ -26,7 +26,7 @@ import LoadCoBadgeSearch from "./LoadCoBadgeSearch";
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const CoBadgePayload = t.type({
+export const CoBadgePayloadR = t.interface({
   paymentInstruments: t.readonlyArray(
     PaymentInstrument,
     "array of PaymentInstrument"
@@ -37,7 +37,16 @@ const CoBadgePayload = t.type({
   )
 });
 
-type CoBadgePayload = t.TypeOf<typeof CoBadgePayload>;
+const CoBadgePayloadP = t.partial({
+  searchRequestId: t.string
+});
+
+export const CoBadgePayload = t.intersection(
+  [CoBadgePayloadR, CoBadgePayloadP],
+  "CoBadgePayload"
+);
+
+export type CoBadgePayload = t.TypeOf<typeof CoBadgePayload>;
 
 const decodePayload = (cobadge: CobadgeResponse) =>
   CoBadgePayload.decode(cobadge.payload);
