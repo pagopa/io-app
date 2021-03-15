@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -11,9 +10,9 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { searchUserPrivative } from "../actions";
+import { PrivativeResponse, searchUserPrivative } from "../actions";
 
-export type RemotePrivative = RemoteValue<CobadgeResponse, NetworkError>;
+export type RemotePrivative = RemoteValue<PrivativeResponse, NetworkError>;
 
 const foundPrivativeReducer = (
   state: RemotePrivative = remoteUndefined,
