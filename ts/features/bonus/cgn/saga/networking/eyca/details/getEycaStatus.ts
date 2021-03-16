@@ -1,11 +1,11 @@
-import { call, put } from "redux-saga/effects";
+import { call, Effect, put } from "redux-saga/effects";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../../utils/errors";
-import { cgnEycaDetails } from "../../../../store/actions/eyca/details";
+import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { EycaDetailKOStatus } from "../../../../store/reducers/eyca/details";
 
@@ -18,15 +18,16 @@ const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
 /**
  * Saga to retrieve the actual status of EYCA Details and status:
  * We have a mixture of cases based on EYCA status and API response status:
- * - 200 -> FOUND - got the EycaCard (CardPending | EycaCardActivated | EycaCardRevoked | EycaCardExpired)
- * - 403 -> INELIGIBLE
- * - 404 -> NOT FOUND
- * - 409 / 401 / 500 -> ERROR
+ * - 200 -> success - FOUND - got the EycaCard (CardPending | EycaCardActivated | EycaCardRevoked | EycaCardExpired)
+ * - 403 -> success - INELIGIBLE
+ * - 404 -> success - NOT FOUND
+ * - 409 -> success - ERROR
+ * - 401 / 500 -> failure
  * @param getEycaStatus
  */
 export function* handleGetEycaStatus(
   getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"]
-) {
+): Generator<Effect, void, any> {
   try {
     const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> = yield call(
       getEycaStatus,
@@ -34,7 +35,7 @@ export function* handleGetEycaStatus(
     );
     if (eycaInformationResult.isLeft()) {
       yield put(
-        cgnEycaDetails.failure(
+        cgnEycaStatus.failure(
           getGenericError(
             new Error(readablePrivacyReport(eycaInformationResult.value))
           )
@@ -45,7 +46,7 @@ export function* handleGetEycaStatus(
 
     if (eycaInformationResult.value.status === 200) {
       yield put(
-        cgnEycaDetails.success({
+        cgnEycaStatus.success({
           status: "FOUND",
           card: eycaInformationResult.value.value
         })
@@ -54,16 +55,16 @@ export function* handleGetEycaStatus(
     }
     const status = eycaStatusMap[eycaInformationResult.value.status];
     const action = status
-      ? cgnEycaDetails.success({
+      ? cgnEycaStatus.success({
           status
         })
-      : cgnEycaDetails.failure(
+      : cgnEycaStatus.failure(
           getGenericError(
             new Error(`response status ${eycaInformationResult.value.status}`)
           )
         );
     yield put(action);
   } catch (e) {
-    yield put(cgnEycaDetails.failure(getNetworkError(e)));
+    yield put(cgnEycaStatus.failure(getNetworkError(e)));
   }
 }

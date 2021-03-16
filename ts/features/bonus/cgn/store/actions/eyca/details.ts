@@ -3,12 +3,12 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { EycaDetail } from "../../reducers/eyca/details";
 
 /**
- * get and handle activation state of the EYCA Card
+ * handle the eyca get status request
  */
-export const cgnEycaDetails = createAsyncAction(
-  "CGN_EYCA_DETAILS_REQUEST",
-  "CGN_EYCA_DETAILS_SUCCESS",
-  "CGN_EYCA_DETAILS_FAILURE"
+export const cgnEycaStatus = createAsyncAction(
+  "CGN_EYCA_STATUS_REQUEST",
+  "CGN_EYCA_STATUS_SUCCESS",
+  "CGN_EYCA_STATUS_FAILURE"
 )<void, EycaDetail, NetworkError>();
 
-export type CgnEycaDetailsActions = ActionType<typeof cgnEycaDetails>;
+export type CgnEycaStatusActions = ActionType<typeof cgnEycaStatus>;

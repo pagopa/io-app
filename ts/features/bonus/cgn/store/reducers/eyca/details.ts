@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { cgnEycaDetails } from "../../actions/eyca/details";
+import { cgnEycaStatus } from "../../actions/eyca/details";
 import {
   remoteError,
   remoteLoading,
@@ -12,7 +12,17 @@ import {
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 
-export type EycaDetail = EycaCard | undefined;
+export type EycaDetailStatus = "NOT_FOUND" | "INELIGIBLE" | "ERROR" | "FOUND";
+export type EycaDetailKOStatus = Exclude<EycaDetailStatus, "FOUND">;
+
+export type EycaDetail =
+  | {
+      status: Extract<EycaDetailStatus, "FOUND">;
+      card: EycaCard;
+    }
+  | {
+      status: EycaDetailKOStatus;
+    };
 export type EycaDetailsState = RemoteValue<EycaDetail, NetworkError>;
 
 const INITIAL_STATE: EycaDetailsState = remoteUndefined;
@@ -21,11 +31,11 @@ const reducer = (
   action: Action
 ): EycaDetailsState => {
   switch (action.type) {
-    case getType(cgnEycaDetails.request):
+    case getType(cgnEycaStatus.request):
       return remoteLoading;
-    case getType(cgnEycaDetails.success):
+    case getType(cgnEycaStatus.success):
       return remoteReady(action.payload);
-    case getType(cgnEycaDetails.failure):
+    case getType(cgnEycaStatus.failure):
       return remoteError(action.payload);
   }
   return state;

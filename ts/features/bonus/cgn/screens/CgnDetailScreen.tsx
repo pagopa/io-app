@@ -25,7 +25,7 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { cgnEycaDetails } from "../store/actions/eyca/details";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 
@@ -109,7 +109,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadEycaDetails: () => dispatch(cgnEycaDetails.request()),
+  loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
 });
 
