@@ -20,6 +20,7 @@ import {
 } from "../../features/bonus/bonusVacanze/utils/bonus";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -462,6 +463,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackSatispayAction(mixpanel)(action);
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
+    void trackPrivativeAction(mixpanel)(action);
   }
   return next(action);
 };

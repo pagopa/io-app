@@ -42,9 +42,9 @@ export const addPrivativeToWallet = createAsyncAction(
  * Load the privative issuers configuration (the list of issuer that can issue a privative card )
  */
 export const loadPrivativeIssuers = createAsyncAction(
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUERS_REQUEST",
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUERS_SUCCESS",
-  "WALLET_ONBOARDING_PRIVATIVE_LOAD_PRIVATIVE_ISSUERS_FAILURE"
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_ISSUERS_REQUEST",
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_ISSUERS_SUCCESS",
+  "WALLET_ONBOARDING_PRIVATIVE_LOAD_ISSUERS_FAILURE"
 )<void, PrivativeServices, NetworkError>();
 
 /**

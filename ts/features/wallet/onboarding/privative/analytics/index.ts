@@ -10,11 +10,13 @@ import {
   searchUserPrivative,
   walletAddPrivativeBack,
   walletAddPrivativeCancel,
+  walletAddPrivativeChooseIssuer,
   walletAddPrivativeCompleted,
+  walletAddPrivativeInsertCardNumber,
   walletAddPrivativeStart
 } from "../store/actions";
 
-export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
+export const trackPrivativeAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
   switch (action.type) {
@@ -24,16 +26,19 @@ export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(walletAddPrivativeBack):
     case getType(addPrivativeToWallet.request):
     case getType(loadPrivativeIssuers.request):
+    case getType(walletAddPrivativeInsertCardNumber):
       return mp.track(action.type);
+    case getType(walletAddPrivativeChooseIssuer):
+      return mp.track(action.type, { issuer: action.payload });
     case getType(searchUserPrivative.request):
-      return mp.track(action.type, { abi: action.payload });
+      return mp.track(action.type, { issuer: action.payload.id });
     case getType(loadPrivativeIssuers.success):
       return mp.track(action.type, trackPrivativeIssuers(action.payload));
     case getType(searchUserPrivative.success):
       return mp.track(action.type, trackCobadgeResponse(action.payload));
     case getType(addPrivativeToWallet.success):
       return mp.track(action.type, {
-        abi: action.payload.info.issuerAbiCode
+        issuer: action.payload.info.issuerAbiCode
       });
     case getType(addPrivativeToWallet.failure):
     case getType(loadPrivativeIssuers.failure):
