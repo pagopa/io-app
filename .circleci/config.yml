@@ -120,9 +120,9 @@ jobs:
       - run:
           command: |
               TEST=$(circleci tests glob **/__tests__/*.js | circleci tests split)
-      - run: yarn test $TEST
+              yarn test $TEST
       - run: "bash <(curl -s https://codecov.io/bash)"
-    parallelism: 4
+    parallelism: 5
 
   # Runs Danger checks on PR
   eslint:
