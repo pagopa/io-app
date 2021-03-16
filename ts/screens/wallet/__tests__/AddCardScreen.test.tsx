@@ -36,7 +36,7 @@ describe("AddCardScreen", () => {
     const continueButton = component.queryByText(
       I18n.t("global.buttons.continue")
     );
-    expect(continueButton).not.toBeNull();
+    expect(continueButton).toBeNull();
     expect(continueButton).toBeDisabled();
   });
 
