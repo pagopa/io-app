@@ -17,29 +17,32 @@ import { remoteError, remoteReady } from "../../../../bpd/model/RemoteValue";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 
+const card_number = "W413-K096-O814-Z223" as CcdbNumber;
+const activation_date = new Date("2021-03-16T11:41:34.394Z");
+const expiration_date = new Date("2050-05-10T00:00:00.000Z");
 const eycaCards: ReadonlyArray<EycaCard> = [
   {
     status: StatusEnum.ACTIVATED,
-    card_number: "W413-K096-O814-Z223" as CcdbNumber,
-    activation_date: new Date("2021-03-16T11:41:34.394Z"),
-    expiration_date: new Date("2050-05-10T00:00:00.000Z")
+    card_number,
+    activation_date,
+    expiration_date
   },
   {
     status: PendingStatus.PENDING
   },
   {
     status: ExpiredStatus.EXPIRED,
-    card_number: "W413-K096-O814-Z223" as CcdbNumber,
-    activation_date: new Date("2021-03-16T11:41:34.394Z"),
-    expiration_date: new Date("2050-05-10T00:00:00.000Z")
+    card_number,
+    activation_date,
+    expiration_date
   },
   {
     status: RevokedStatus.REVOKED,
     revocation_date: new Date("2021-03-16T11:41:34.394Z"),
     revocation_reason: "a reason" as NonEmptyString,
-    card_number: "W413-K096-O814-Z223" as CcdbNumber,
-    activation_date: new Date("2021-03-16T11:41:34.394Z"),
-    expiration_date: new Date("2050-05-10T00:00:00.000Z")
+    card_number,
+    activation_date,
+    expiration_date
   }
 ];
 

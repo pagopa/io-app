@@ -46,7 +46,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCGN.getCgnStatus
   );
 
-  // Eyca Load details
+  // Eyca get status
   yield takeLatest(
     getType(cgnEycaStatus.request),
     handleGetEycaStatus,
