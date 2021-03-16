@@ -117,7 +117,9 @@ jobs:
       - run: yarn generate:all
 
       # Run tests
-      - run: yarn test
+      - command: |
+          TEST=$(circleci tests glob **/__tests__/*.js | circleci tests split)
+      - run: yarn test $TEST
       - run: "bash <(curl -s https://codecov.io/bash)"
     parallelism: 4
 
