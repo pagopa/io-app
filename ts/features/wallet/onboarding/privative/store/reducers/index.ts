@@ -1,5 +1,5 @@
 import { Action, combineReducers } from "redux";
-import { RawPrivativePaymentMethod } from "../../../../../../types/pagopa";
+import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
 import addedPrivativeReducer from "./addedPrivative";
 import addingPrivativeReducer, {
   AddingPrivativeState
@@ -19,7 +19,7 @@ import searchPrivativeRequestIdReducer, {
 export type OnboardingPrivativeState = {
   foundPrivative: RemotePrivative;
   addingPrivative: AddingPrivativeState;
-  addedPrivative: RawPrivativePaymentMethod | null;
+  addedPrivative: RawCreditCardPaymentMethod | null;
   searchedPrivative: SearchedPrivativeData;
   privativeIssuers: PrivativeIssuersState;
   searchPrivativeRequestId: SearchPrivativeRequestIdState;

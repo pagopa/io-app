@@ -1,29 +1,11 @@
-import { Either, left, right } from "fp-ts/lib/Either";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import {
-  isRawPrivative,
-  PaymentManagerToken,
-  RawPaymentMethod,
-  RawPrivativePaymentMethod
-} from "../../../../../../types/pagopa";
+import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getGenericError, NetworkError } from "../../../../../../utils/errors";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { addCobadgeToWallet } from "../../../cobadge/saga/networking/addCobadgeToWallet";
 import { addPrivativeToWallet } from "../../store/actions";
-
-const toRawPrivativePaymentMethod = (
-  rpm: RawPaymentMethod
-): Either<NetworkError, RawPrivativePaymentMethod> =>
-  isRawPrivative(rpm)
-    ? right(rpm)
-    : left(
-        getGenericError(
-          new Error("Cannot decode the payload as RawCreditCardPaymentMethod")
-        )
-      );
 
 export function* handleAddPrivativeToWallet(
   addCobadgeToWalletClient: ReturnType<
@@ -39,13 +21,10 @@ export function* handleAddPrivativeToWallet(
     sessionManager,
     addAction.payload
   );
-
-  const eitherRawPrivative = result.chain(toRawPrivativePaymentMethod);
-
   // dispatch the related action
-  if (eitherRawPrivative.isRight()) {
-    yield put(addPrivativeToWallet.success(eitherRawPrivative.value));
+  if (result.isRight()) {
+    yield put(addPrivativeToWallet.success(result.value));
   } else {
-    yield put(addPrivativeToWallet.failure(eitherRawPrivative.value));
+    yield put(addPrivativeToWallet.failure(result.value));
   }
 }

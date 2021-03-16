@@ -4,8 +4,9 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import {
+  isRawCreditCard,
   PaymentManagerToken,
-  RawPaymentMethod
+  RawCreditCardPaymentMethod
 } from "../../../../../../types/pagopa";
 import {
   getGenericError,
@@ -28,7 +29,7 @@ export const addCobadgeToWallet = async (
   >["addCobadgeToWallet"],
   sessionManager: SessionManager<PaymentManagerToken>,
   paymentInstrument: PaymentInstrument
-): Promise<Either<NetworkError, RawPaymentMethod>> => {
+): Promise<Either<NetworkError, RawCreditCardPaymentMethod>> => {
   try {
     const addCobadgeToWalletWithRefresh = sessionManager.withRefresh(
       addCobadgeToWallet({
@@ -51,7 +52,7 @@ export const addCobadgeToWallet = async (
         );
         if (
           maybeWallet.isSome() &&
-          maybeWallet.value.paymentMethod !== undefined
+          isRawCreditCard(maybeWallet.value.paymentMethod)
         ) {
           return right(maybeWallet.value.paymentMethod);
         } else {

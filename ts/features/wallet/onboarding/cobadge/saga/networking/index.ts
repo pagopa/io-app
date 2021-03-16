@@ -1,21 +1,11 @@
-import { Either, left, right } from "fp-ts/lib/Either";
 import { select } from "redux-saga-test-plan/matchers";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import {
-  isRawCreditCard,
-  PaymentManagerToken,
-  RawCreditCardPaymentMethod,
-  RawPaymentMethod
-} from "../../../../../../types/pagopa";
+import { PaymentManagerToken } from "../../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import {
-  getGenericError,
-  getNetworkError,
-  NetworkError
-} from "../../../../../../utils/errors";
+import { getNetworkError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
@@ -62,17 +52,6 @@ export function* handleSearchUserCoBadge(
   }
 }
 
-const toRawCreditCardPaymentMethod = (
-  rpm: RawPaymentMethod
-): Either<NetworkError, RawCreditCardPaymentMethod> =>
-  isRawCreditCard(rpm)
-    ? right(rpm)
-    : left(
-        getGenericError(
-          new Error("Cannot decode the payload as RawCreditCardPaymentMethod")
-        )
-      );
-
 /**
  * Add Cobadge to wallet
  */
@@ -90,14 +69,11 @@ export function* handleAddCoBadgeToWallet(
     sessionManager,
     action.payload
   );
-
-  const eitherRawCreditCard = result.chain(toRawCreditCardPaymentMethod);
-
   // dispatch the related action
-  if (eitherRawCreditCard.isRight()) {
-    yield put(addCoBadgeToWallet.success(eitherRawCreditCard.value));
+  if (result.isRight()) {
+    yield put(addCoBadgeToWallet.success(result.value));
   } else {
-    yield put(addCoBadgeToWallet.failure(eitherRawCreditCard.value));
+    yield put(addCoBadgeToWallet.failure(result.value));
   }
 }
 
