@@ -95,10 +95,10 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
  * Represent the capability to pay in PagoPa of a payment method.
  *
  * We have 4 possible different cases:
- *   - The card can pay on IO -> pagoPa === true and if is a credit card must be different from MAESTRO
- *   - The card in the future can pay on IO -> Satispay, MAESTRO
- *   - The card is not abilitated to pay on IO
- *   - The card can onboard another card that can pay on IO -> co-badge credit card
+ *   - The card can pay on IO -> pagoPa === true
+ *   - The card in the future can pay on IO -> Satispay, BPay
+ *   - The card is not abilitated to pay on IO, pagoPa === false and type === PRV or Bancomat
+ *   - The card can onboard another card that can pay on IO -> co-badge credit card pagoPa === false and type !== PRV
  * @param props
  */
 const PagoPaPaymentCapability: React.FC<Props> = props => {
