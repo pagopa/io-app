@@ -84,6 +84,7 @@ import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
 import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
 import { cgnEycaActivation } from "../../features/bonus/cgn/store/actions/eyca/activation";
+import { cgnEycaDetails } from "../../features/bonus/cgn/store/actions/eyca/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -493,18 +494,25 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
-      <ButtonDefaultOpacity
-        block={true}
-        onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
-        }
-        activeOpacity={1}
-      >
-        <IconFont name="io-qr" style={styles.white} />
-        <Text>{I18n.t("wallet.payNotice")}</Text>
-      </ButtonDefaultOpacity>
+      <View>
+        <ButtonDefaultOpacity
+          block={true}
+          onPress={this.props.navigateToPaymentScanQrCode}
+          activeOpacity={1}
+        >
+          <IconFont name="io-qr" style={styles.white} />
+          <Text>{"eyca activation"}</Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} />
+        <ButtonDefaultOpacity
+          block={true}
+          onPress={this.props.navigateToPaymentScanQrCode2}
+          activeOpacity={1}
+        >
+          <IconFont name="io-qr" style={styles.white} />
+          <Text>{"eyca status"}</Text>
+        </ButtonDefaultOpacity>
+      </View>
     );
   }
 
@@ -619,6 +627,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(cgnEycaActivation.request()),
+  navigateToPaymentScanQrCode2: () => dispatch(cgnEycaDetails.request()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
