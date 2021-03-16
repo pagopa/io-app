@@ -56,7 +56,7 @@ const fallbackLoyaltyLogo: React.ReactElement = (
   />
 );
 
-const BASE_IMG_W = 120;
+const BASE_IMG_W = 100;
 const BASE_IMG_H = 30;
 
 const renderLoyaltyLogo = (
