@@ -72,7 +72,7 @@ const CgnCardList = (props: Props) => (
             ]}
           >
             <H3 color={"black"} weight={"Bold"}>
-              {TypedI18n.t("bonus.cgn.name")}
+              {I18n.t("bonus.cgn.name")}
             </H3>
             <Image source={cgnLogo} style={styles.previewLogo} />
           </TouchableDefaultOpacity>
