@@ -71,6 +71,7 @@ const PanInputField = (props: {
       onChangeText: props.onChangeText,
       keyboardType: "number-pad"
     }}
+    testID={"PanInputField"}
   />
 );
 
@@ -116,7 +117,7 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
       >
         <SafeAreaView
           style={IOStyles.flex}
-          testID={"ChoosePrivativeIssuerComponent"}
+          testID={"AddPrivativeCardNumberScreen"}
         >
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{title}</H1>
