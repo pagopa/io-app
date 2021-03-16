@@ -29,7 +29,7 @@ const loadLocales = () => ({
 
 /**
  * This screen informs the user that no privative card in his name was found because at least one service
- * reply with a fail.
+ * replied with a failure.
  * @param props
  * @constructor
  */
