@@ -8,10 +8,10 @@ import {
   cgnActivationStart,
   cgnActivationCancel,
   cgnActivationBack,
-  cgnActivationStatus,
-  cgnRequestActivation
+  cgnActivationStatus
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
+import { cgnGenerateOtp } from "../store/actions/otp";
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -23,10 +23,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnActivationBack):
     case getType(cgnDetails.request):
     case getType(cgnDetails.success):
+    case getType(cgnGenerateOtp.request):
+    case getType(cgnGenerateOtp.success):
       return mp.track(action.type);
     case getType(cgnActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
     case getType(cgnDetails.failure):
+    case getType(cgnGenerateOtp.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
       });
