@@ -6,6 +6,7 @@ import { H2 } from "../../../../../components/core/typography/H2";
 import { Label } from "../../../../../components/core/typography/Label";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   // FIXME change the props when merchant definition is available
@@ -30,7 +31,10 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
-  <View style={styles.verticalPadding}>
+  <TouchableDefaultOpacity
+    style={styles.verticalPadding}
+    onPress={props.onPress}
+  >
     <View style={styles.row}>
       {/* TODO when available and defined the icon name should be defined through a map of category codes */}
       <IconFont name={"io-books"} size={22} color={IOColors.bluegrey} />
@@ -44,7 +48,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
     <Label weight={"Regular"} color={"bluegrey"}>
       {props.location}
     </Label>
-  </View>
+  </TouchableDefaultOpacity>
 );
 
 export default CgnMerchantListItem;
