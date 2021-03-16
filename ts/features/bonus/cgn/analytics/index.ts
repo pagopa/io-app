@@ -13,7 +13,7 @@ import {
 import { cgnDetails } from "../store/actions/details";
 import { cgnGenerateOtp } from "../store/actions/otp";
 
-const trackAction = (mp: NonNullable<typeof mixpanel>) => (
+const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
   switch (action.type) {
@@ -40,4 +40,4 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
   Promise.resolve();
-export default cgnEnabled ? trackAction : emptyTracking;
+export default cgnEnabled ? trackCgnAction : emptyTracking;
