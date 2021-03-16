@@ -15,7 +15,7 @@ import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
-// stop polling when elapsed time from the beginning exceeds this threshold
+// polling will be stopped when elapsed time from start exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
