@@ -2,16 +2,21 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
+  Card,
+  ValidityStateEnum
+} from "../../definitions/pagopa/walletv2/Card";
+import {
   PaymentInstrument,
   ValidityStatusEnum
 } from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
-import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
+import satispayImage from "../../img/wallet/cards-icons/satispay.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
 } from "../components/wallet/card/Logo";
+import { contentRepoUrl } from "../config";
 import I18n from "../i18n";
 import { IndexedById } from "../store/helpers/indexer";
 import {
@@ -33,29 +38,21 @@ import {
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
-import { contentRepoUrl } from "../config";
-import {
-  Card,
-  ValidityStateEnum
-} from "../../definitions/pagopa/walletv2/Card";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
 ): string | undefined => {
-  if (isRawBancomat(pm)) {
-    return pm.info.hashPan;
+  switch (pm.kind) {
+    case "Satispay":
+      return pm.info.uuid;
+    case "BPay":
+      return pm.info.uidHash;
+    case "Bancomat":
+    case "CreditCard":
+    case "Privative":
+      return pm.info.hashPan;
   }
-  if (isRawCreditCard(pm)) {
-    return pm.info.hashPan;
-  }
-  if (isRawSatispay(pm)) {
-    return pm.info.uuid;
-  }
-  if (isRawBPay(pm)) {
-    return pm.info.uidHash;
-  }
-  return undefined;
 };
 export const getTitleFromPaymentInstrument = (
   paymentInstrument: PaymentInstrument
@@ -188,16 +185,16 @@ export const enhanceCreditCard = (
 });
 
 export const enhancePrivativeCard = (
-  rawCreditCard: RawPrivativePaymentMethod,
+  rawPrivative: RawPrivativePaymentMethod,
   abiList: IndexedById<Abi>
 ): PrivativePaymentMethod => ({
-  ...rawCreditCard,
-  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
-  icon: rawCreditCard.info.issuerAbiCode
-    ? getPrivativeLoyaltyLogoUrl(rawCreditCard.info.issuerAbiCode)
+  ...rawPrivative,
+  caption: getTitleFromPaymentMethod(rawPrivative, abiList),
+  icon: rawPrivative.info.issuerAbiCode
+    ? getPrivativeLoyaltyLogoUrl(rawPrivative.info.issuerAbiCode)
     : cardIcons.UNKNOWN,
-  gdoLogo: rawCreditCard.info.issuerAbiCode
-    ? getPrivativeGdoLogoUrl(rawCreditCard.info.issuerAbiCode)
+  gdoLogo: rawPrivative.info.issuerAbiCode
+    ? getPrivativeGdoLogoUrl(rawPrivative.info.issuerAbiCode)
     : undefined
 });
 
