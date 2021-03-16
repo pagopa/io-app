@@ -185,16 +185,16 @@ export const enhanceCreditCard = (
 });
 
 export const enhancePrivativeCard = (
-  rawCreditCard: RawPrivativePaymentMethod,
+  rawPrivative: RawPrivativePaymentMethod,
   abiList: IndexedById<Abi>
 ): PrivativePaymentMethod => ({
-  ...rawCreditCard,
-  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
-  icon: rawCreditCard.info.issuerAbiCode
-    ? getPrivativeLoyaltyLogoUrl(rawCreditCard.info.issuerAbiCode)
+  ...rawPrivative,
+  caption: getTitleFromPaymentMethod(rawPrivative, abiList),
+  icon: rawPrivative.info.issuerAbiCode
+    ? getPrivativeLoyaltyLogoUrl(rawPrivative.info.issuerAbiCode)
     : cardIcons.UNKNOWN,
-  gdoLogo: rawCreditCard.info.issuerAbiCode
-    ? getPrivativeGdoLogoUrl(rawCreditCard.info.issuerAbiCode)
+  gdoLogo: rawPrivative.info.issuerAbiCode
+    ? getPrivativeGdoLogoUrl(rawPrivative.info.issuerAbiCode)
     : undefined
 });
 

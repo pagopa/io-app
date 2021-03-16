@@ -2,7 +2,7 @@ import { getType } from "typesafe-actions";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
+import { RawPrivativePaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   remoteError,
@@ -14,7 +14,7 @@ import {
 import { addPrivativeToWallet, walletAddPrivativeStart } from "../actions";
 
 export type AddingPrivativeState = {
-  addingResult: RemoteValue<RawCreditCardPaymentMethod, NetworkError>;
+  addingResult: RemoteValue<RawPrivativePaymentMethod, NetworkError>;
   selectedPrivative?: PaymentInstrument;
 };
 
@@ -55,7 +55,7 @@ export const onboardingPrivativeChosenSelector = (
 
 export const onboardingPrivativeAddingResultSelector = (
   state: GlobalState
-): RemoteValue<RawCreditCardPaymentMethod, NetworkError> =>
+): RemoteValue<RawPrivativePaymentMethod, NetworkError> =>
   state.wallet.onboarding.privative.addingPrivative.addingResult;
 
 export default addingPrivativeReducer;
