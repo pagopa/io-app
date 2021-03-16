@@ -15,6 +15,7 @@ import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { LightModalContext } from "../../../../../components/ui/LightModal";
 import { privacyUrl } from "../../../../../config";
@@ -48,6 +49,42 @@ const loadLocales = () => ({
     "wallet.onboarding.privative.addPrivativeCardNumber.disclaimer.text2"
   )
 });
+
+/**
+ * LabelledItem customized for the privative pan insertion
+ * @param props
+ * @constructor
+ */
+const PanInputField = (props: {
+  value: string | undefined;
+  onChangeText: (text: string) => void;
+}): React.ReactElement => (
+  <LabelledItem
+    type={"masked"}
+    label={I18n.t("wallet.dummyCard.labels.pan")}
+    inputMaskProps={{
+      value: props.value,
+      type: "custom",
+      options: { mask: "9999999999999999999" },
+      maxLength: maxPanCodeLength,
+      onChangeText: props.onChangeText,
+      keyboardType: "number-pad"
+    }}
+  />
+);
+
+/**
+ * Return the right {@link BlockButtonProps} configuration, based on the canContinue condition
+ * @param canContinue
+ * @param onPress
+ */
+const continueButtonProps = (
+  canContinue: boolean,
+  onPress: () => void
+): BlockButtonProps =>
+  canContinue
+    ? disablePrimaryButtonProps(I18n.t("global.buttons.continue"))
+    : confirmButtonProps(onPress, I18n.t("global.buttons.continue"));
 
 /**
  * In this screen the user can:
@@ -87,20 +124,13 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
             <Body>{body}</Body>
             <View spacer={true} />
 
-            <LabelledItem
-              type={"masked"}
-              label={I18n.t("wallet.dummyCard.labels.pan")}
-              inputMaskProps={{
-                value: cardNumber,
-                type: "custom",
-                options: { mask: "9999999999999999999" },
-                maxLength: maxPanCodeLength,
-                onChangeText: text => {
-                  setCardNumber(text);
-                },
-                keyboardType: "number-pad"
+            <PanInputField
+              value={cardNumber}
+              onChangeText={text => {
+                setCardNumber(text);
               }}
             />
+
             <View spacer={true} />
             <Body onPress={openTosModal}>
               {disclaimer1}
@@ -110,14 +140,9 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
             leftButton={cancelButtonProps(props.cancel)}
-            rightButton={
-              cardNumber.length === 0
-                ? disablePrimaryButtonProps(I18n.t("global.buttons.continue"))
-                : confirmButtonProps(
-                    () => props.search(cardNumber),
-                    I18n.t("global.buttons.continue")
-                  )
-            }
+            rightButton={continueButtonProps(cardNumber.length === 0, () =>
+              props.search(cardNumber)
+            )}
           />
         </SafeAreaView>
       </KeyboardAvoidingView>
