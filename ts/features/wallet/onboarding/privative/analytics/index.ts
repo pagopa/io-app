@@ -18,7 +18,7 @@ import {
 
 export const trackPrivativeAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(walletAddPrivativeStart):
     case getType(walletAddPrivativeCompleted):
