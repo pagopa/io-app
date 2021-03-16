@@ -19,7 +19,6 @@ const cgnResultPolling = 1000 as Millisecond;
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
 type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
-type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 const mapStatus: Map<number, StartEycaStatus> = new Map([
   [201, "PROCESSING"],
   [202, "PROCESSING"],
@@ -28,15 +27,8 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
 ]);
 
 /**
- * Function that handles the activation of a EYCA Card
- * Calls the activation API returning the next iteration for orchestration saga:
- * 201 -> Request created start polling with handleEycaStatusPolling saga.
- * 202 -> There's already a processing request -> EycaDetails is in PENDING STATE
- * 401 -> Bearer token null or expired -> EycaDetails is in INELIGIBLE STATE
- * 409 -> Cannot activate the user's cgn because another updateCgn request was found for this user or it is already active
- * 403 -> Cannot activate a new EYCA because the user is ineligible to get the CGN -> EycaDetails is in INELIGIBLE STATE
- * @param startEycaActivation backend client for CGN Activation API
- * @param handleEycaStatusPolling saga that handles the polling result of a EYCA Activation
+ * ask for starting activation of EYCA card
+ * @param startEycaActivation
  */
 function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
@@ -61,6 +53,13 @@ function* handleStartActivation(
   }
 }
 
+type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
+/**
+ * ask for the current status of EYCA activation
+ * it returns the status {@link GetEycaStatus} - right case
+ * if an error occured it returns a {@link NetworkError} - left case
+ * @param getEycaActivation
+ */
 function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
@@ -107,10 +106,12 @@ function* getActivation(
 }
 
 /**
- * Function that handles the polling check of the EYCA's status
- * Calls the status API with a polling interrupted only if it's activated or if a network error has been raised
- * @param getEycaActivation backend client to know the current user CGN status
- * @param startEycaActivation backend client to know the current user CGN status
+ * Function that handles the activation of EYCA card
+ * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
+ * first it checks for the status activation
+ * depending on that, it could start a polling to wait about completion or ends with a defined state
+ * @param getEycaActivation asks for the status of EYCA card activation
+ * @param startEycaActivation asks for the activation of EYCA card
  */
 export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],

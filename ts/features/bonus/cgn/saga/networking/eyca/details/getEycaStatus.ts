@@ -16,9 +16,8 @@ const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
 };
 
 /**
- * Saga to retrieve the actual status of EYCA Details and status:
- * We have a mixture of cases based on EYCA status and API response status:
- * - 200 -> success - FOUND - got the EycaCard (CardPending | EycaCardActivated | EycaCardRevoked | EycaCardExpired)
+ * Retrieve dispatch the actual status of EYCA card:
+ * - 200 -> success - FOUND + EycaCard (CardPending | EycaCardActivated | EycaCardRevoked | EycaCardExpired)
  * - 403 -> success - INELIGIBLE
  * - 404 -> success - NOT FOUND
  * - 409 -> success - ERROR

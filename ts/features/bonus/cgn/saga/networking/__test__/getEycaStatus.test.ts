@@ -98,7 +98,7 @@ describe("handleGetEycaStatus", () => {
       });
   });
 
-  it(`With 409 status should be error`, () => {
+  it(`With 409 status should be ERROR`, () => {
     const getEycaStatus = jest.fn();
     getEycaStatus.mockImplementation(() => right({ status: 409 }));
     return expectSaga(handleGetEycaStatus, getEycaStatus)
@@ -133,7 +133,7 @@ describe("handleGetEycaStatus", () => {
     });
   });
 
-  it(`With request error should dispatch a failure`, () => {
+  it(`With response error should dispatch a failure`, () => {
     const getEycaStatus = jest.fn();
     const error = t.number.decode("abc");
     const genericError = getGenericError(
