@@ -7,7 +7,6 @@ import {
 } from "../../../../../../../utils/errors";
 import { cgnEycaDetails } from "../../../../store/actions/eyca/details";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
-import { RTron } from "../../../../../../../boot/configureStoreAndPersistor";
 
 /**
  * Saga to retrieve the actual status of EYCA Details and status:
