@@ -21,7 +21,7 @@ const toRawPrivativePaymentMethod = (
     ? right(rpm)
     : left(
         getGenericError(
-          new Error("Cannot decode the payload as RawCreditCardPaymentMethod")
+          new Error("Cannot decode the payload as RawPrivativePaymentMethod")
         )
       );
 
