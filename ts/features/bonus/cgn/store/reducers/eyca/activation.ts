@@ -12,9 +12,9 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../actions/eyca/activation";
 
 export type CgnEycaActivationStatus =
-  | "UNDEFINED"
   | "NOT_FOUND"
   | "PROCESSING"
+  | "POLLING"
   | "COMPLETED"
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"

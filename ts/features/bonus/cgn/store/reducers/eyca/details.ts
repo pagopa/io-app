@@ -12,8 +12,8 @@ import {
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 
-export type EycadDetail = EycaCard | "NOT_FOUND";
-export type EycaDetailsState = RemoteValue<EycadDetail, NetworkError>;
+export type EycaDetail = EycaCard | undefined;
+export type EycaDetailsState = RemoteValue<EycaDetail, NetworkError>;
 
 const INITIAL_STATE: EycaDetailsState = remoteUndefined;
 const reducer = (
@@ -33,5 +33,5 @@ const reducer = (
 
 export default reducer;
 
-export const eycaDetailSelector = (state: GlobalState) =>
+export const eycaDetailSelector = (state: GlobalState): EycaDetailsState =>
   state.bonus.cgn.eyca.details;

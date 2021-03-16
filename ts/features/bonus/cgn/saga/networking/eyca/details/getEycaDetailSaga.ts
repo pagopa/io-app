@@ -1,4 +1,4 @@
-import { call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import {
@@ -7,6 +7,7 @@ import {
 } from "../../../../../../../utils/errors";
 import { cgnEycaDetails } from "../../../../store/actions/eyca/details";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
+import { RTron } from "../../../../../../../boot/configureStoreAndPersistor";
 
 /**
  * Saga to retrieve the actual status of EYCA Details and status:
@@ -26,28 +27,36 @@ export function* eycaGetInformationSaga(
       {}
     );
     if (eycaInformationResult.isLeft()) {
-      return cgnEycaDetails.failure(
-        getGenericError(
-          new Error(readablePrivacyReport(eycaInformationResult.value))
+      yield put(
+        cgnEycaDetails.failure(
+          getGenericError(
+            new Error(readablePrivacyReport(eycaInformationResult.value))
+          )
         )
       );
     } else {
       switch (eycaInformationResult.value.status) {
         case 200:
-          return cgnEycaDetails.success(eycaInformationResult.value.value);
+          yield put(cgnEycaDetails.success(eycaInformationResult.value.value));
+          break;
         // FIXME 409 is really not found?
         case 409:
         case 404:
-          return cgnEycaDetails.success("NOT_FOUND");
+          yield put(cgnEycaDetails.success(undefined));
+          break;
         default:
-          return cgnEycaDetails.failure(
-            getGenericError(
-              new Error(`response status ${eycaInformationResult.value.status}`)
+          yield put(
+            cgnEycaDetails.failure(
+              getGenericError(
+                new Error(
+                  `response status ${eycaInformationResult.value.status}`
+                )
+              )
             )
           );
       }
     }
   } catch (e) {
-    return cgnEycaDetails.failure(getNetworkError(e));
+    yield put(cgnEycaDetails.failure(getNetworkError(e)));
   }
 }

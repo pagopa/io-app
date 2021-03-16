@@ -115,7 +115,7 @@ function* getActivation(
  * @param getEycaActivation backend client to know the current user CGN status
  * @param startEycaActivation backend client to know the current user CGN status
  */
-export function* handleEycaActivation(
+export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
@@ -125,42 +125,47 @@ export function* handleEycaActivation(
       getActivation,
       getEycaActivation
     );
-    if (activationInfo.isRight()) {
-      const status: CgnEycaActivationStatus = activationInfo.value;
-      switch (status) {
-        case "PROCESSING":
-          yield call(startTimer, cgnResultPolling);
-          const now = new Date().getTime();
-          if (now - startPollingTime >= pollingTimeThreshold) {
-            yield put(cgnEycaActivation.success("POLLING_TIMEOUT"));
-            return;
-          }
-          break;
-        case "COMPLETED":
-          yield put(cgnEycaActivation.success("COMPLETED"));
-          return;
-        case "NOT_FOUND":
-          const startActivation = yield call(
-            handleStartActivation,
-            startEycaActivation
-          );
-          if (startActivation.isLeft()) {
-            yield put(cgnEycaActivation.failure(startActivation.value));
-          } else {
-            if (startActivation.value === "PROCESSING") {
-              continue;
-            }
-            yield put(cgnEycaActivation.success(startActivation.value));
-            return;
-          }
-          return;
-        case "ERROR":
-          yield put(cgnEycaActivation.success("ERROR"));
-          return;
-      }
-    } else {
+    if (activationInfo.isLeft()) {
       yield put(cgnEycaActivation.failure(activationInfo.value));
       return;
     }
+    const status: CgnEycaActivationStatus = activationInfo.value;
+    switch (status) {
+      case "COMPLETED":
+        yield put(cgnEycaActivation.success("COMPLETED"));
+        return;
+      case "NOT_FOUND":
+        // ask for activation
+        const startActivation = yield call(
+          handleStartActivation,
+          startEycaActivation
+        );
+        // activation not handled error, stop
+        if (startActivation.isLeft()) {
+          yield put(cgnEycaActivation.failure(startActivation.value));
+          return;
+        } else {
+          const startActivationStatus: StartEycaStatus = startActivation.value;
+          // could be: ALREADY_ACTIVE, INELIGIBLE
+          if (startActivationStatus !== "PROCESSING") {
+            yield put(cgnEycaActivation.success(startActivation.value));
+            return;
+          }
+        }
+        break;
+      case "ERROR":
+        // activation logic error
+        yield put(cgnEycaActivation.success("ERROR"));
+        return;
+    }
+    // sleep
+    yield call(startTimer, cgnResultPolling);
+    const now = new Date().getTime();
+    // stop polling if threshold is exceeded
+    if (now - startPollingTime >= pollingTimeThreshold) {
+      yield put(cgnEycaActivation.success("POLLING_TIMEOUT"));
+      return;
+    }
+    yield put(cgnEycaActivation.success("POLLING"));
   }
 }
