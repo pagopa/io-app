@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import WebView from "react-native-webview";
-import { Image, ImageBackground, StyleSheet } from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   informationContainer: {
     height: "100%",
-    top: -190,
+    top: Platform.select({ android: -220, default: -190 }),
     zIndex: 9,
     elevation: 9
   },
@@ -74,6 +74,21 @@ const styles = StyleSheet.create({
     height: "100%",
     zIndex: 8,
     elevation: 8
+  },
+  upperShadowBox: {
+    marginBottom: -13,
+    borderRadius: 8,
+    borderTopWidth: 13,
+    borderTopColor: "rgba(0,0,0,0.1)",
+    height: 17,
+    width: "100%"
+  },
+  bottomShadowBox: {
+    marginBottom: 6,
+    borderRadius: 8,
+    borderBottomWidth: 15,
+    borderBottomColor: "rgba(0,0,0,0.1)",
+    width: "100%"
   }
 });
 
@@ -131,9 +146,10 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
+      {Platform.OS === "android" && <View style={styles.upperShadowBox} />}
       <ImageBackground
         source={cardBg}
-        imageStyle={[styles.imageFull, { borderRadius: 10 }]}
+        imageStyle={[styles.imageFull]}
         style={styles.cardContainer}
       >
         <WebView
@@ -143,6 +159,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           }}
         />
       </ImageBackground>
+      {Platform.OS === "android" && <View style={styles.bottomShadowBox} />}
       <View style={[styles.informationContainer, styles.paddedContentFull]}>
         <View
           style={[
