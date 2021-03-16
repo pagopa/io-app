@@ -14,7 +14,7 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../components/core/typography/H3";
-import TypedI18n from "../../../../i18n";
+import I18n from "../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
