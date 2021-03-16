@@ -916,6 +916,12 @@ wallet:
         koUnavailable:
           title: "We're unable to contact the server"
           body: "We are working to solve the problem."
+      addPrivativeCardNumber:
+        title: "Insert card number"
+        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        disclaimer:
+          text1: "By continuing you accept the"
+          text2: "information on the processing of personal data"
       search:
         loading: "We are verifying your card\n\nPlease wait"
         koTimeout:

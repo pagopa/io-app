@@ -1,14 +1,18 @@
 import { View } from "native-base";
 import * as React from "react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { Link } from "../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { LightModalContext } from "../../../../../components/ui/LightModal";
+import { privacyUrl } from "../../../../../config";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -17,6 +21,7 @@ import {
   confirmButtonProps,
   disablePrimaryButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { navigateToOnboardingPrivativeSearchAvailable } from "../navigation/action";
 import {
   walletAddPrivativeCancel,
@@ -28,15 +33,33 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const maxPanCodeLength = 19;
 
+const loadLocales = () => ({
+  title: I18n.t("wallet.onboarding.privative.addPrivativeCardNumber.title"),
+  body: I18n.t("wallet.onboarding.privative.addPrivativeCardNumber.body"),
+  disclaimer1: I18n.t(
+    "wallet.onboarding.privative.addPrivativeCardNumber.disclaimer.text1"
+  ),
+  disclaimer2: I18n.t(
+    "wallet.onboarding.privative.addPrivativeCardNumber.disclaimer.text2"
+  )
+});
+
 /**
  * In this screen the user can:
  * - insert the privative card number and start the search
  * - read the terms and condition
  * @constructor
- * @param _
+ * @param props
  */
 const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
+  const { title, body, disclaimer1, disclaimer2 } = loadLocales();
   const [cardNumber, setCardNumber] = useState("");
+
+  const { showModal, hideModal } = useContext(LightModalContext);
+
+  const openTosModal = () => {
+    showModal(<TosBonusComponent tos_url={privacyUrl} onClose={hideModal} />);
+  };
 
   return (
     <BaseScreenComponent
@@ -52,9 +75,10 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
           style={IOStyles.flex}
           testID={"ChoosePrivativeIssuerComponent"}
         >
-          {/* TODO: Complete the component, this is a draft version for test purpose only */}
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <H1>TMP Inserisci numero carta</H1>
+            <H1>{title}</H1>
+            <View spacer={true} />
+            <Body>{body}</Body>
             <View spacer={true} />
 
             <LabelledItem
@@ -71,6 +95,11 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
                 keyboardType: "number-pad"
               }}
             />
+            <View spacer={true} />
+            <Body onPress={openTosModal}>
+              {disclaimer1}
+              <Link>{disclaimer2}</Link>
+            </Body>
           </View>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
