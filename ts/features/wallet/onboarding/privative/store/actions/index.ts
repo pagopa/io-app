@@ -6,7 +6,7 @@ import {
 import { PrivativeServices } from "../../../../../../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { SearchRequestMetadata } from "../../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
-import { RawCreditCardPaymentMethod } from "../../../../../../types/pagopa";
+import { RawPrivativePaymentMethod } from "../../../../../../types/pagopa";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   PrivativeIssuerId,
@@ -36,7 +36,7 @@ export const addPrivativeToWallet = createAsyncAction(
   "WALLET_ONBOARDING_PRIVATIVE_ADD_REQUEST",
   "WALLET_ONBOARDING_PRIVATIVE_ADD_SUCCESS",
   "WALLET_ONBOARDING_PRIVATIVE_ADD_FAILURE"
-)<PaymentInstrument, RawCreditCardPaymentMethod, NetworkError>();
+)<PaymentInstrument, RawPrivativePaymentMethod, NetworkError>();
 
 /**
  * Load the privative issuers configuration (the list of issuer that can issue a privative card )
