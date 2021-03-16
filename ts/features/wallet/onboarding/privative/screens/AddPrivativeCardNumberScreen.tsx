@@ -1,7 +1,12 @@
 import { View } from "native-base";
 import * as React from "react";
 import { useContext, useState } from "react";
-import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -58,6 +63,7 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
   const { showModal, hideModal } = useContext(LightModalContext);
 
   const openTosModal = () => {
+    Keyboard.dismiss();
     showModal(<TosBonusComponent tos_url={privacyUrl} onClose={hideModal} />);
   };
 
@@ -122,6 +128,7 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
   search: (cardNumber: string) => {
+    Keyboard.dismiss();
     dispatch(walletAddPrivativeInsertCardNumber(cardNumber));
     dispatch(navigateToOnboardingPrivativeSearchAvailable());
   }
