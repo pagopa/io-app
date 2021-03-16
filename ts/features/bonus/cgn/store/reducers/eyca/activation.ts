@@ -12,13 +12,11 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { cgnEycaActivation } from "../../actions/eyca/activation";
 
 export type CgnEycaActivationStatus =
-  | "NOT_FOUND"
-  | "PROCESSING"
   | "POLLING"
+  | "POLLING_TIMEOUT"
   | "COMPLETED"
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"
-  | "POLLING_TIMEOUT"
   | "ERROR";
 
 export type EycaActivationState = RemoteValue<

@@ -11,7 +11,6 @@ import {
   NetworkError
 } from "../../../../../../../utils/errors";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
-import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 
 // wait time between requests
@@ -19,10 +18,8 @@ const cgnResultPolling = 1000 as Millisecond;
 // stop polling when elapsed time from the beginning exceeds this threshold
 const pollingTimeThreshold = (10 * 1000) as Millisecond;
 
-type StartEycaStatus = Extract<
-  CgnEycaActivationStatus,
-  "PROCESSING" | "INELIGIBLE" | "ALREADY_ACTIVE"
->;
+type StartEycaStatus = "INELIGIBLE" | "ALREADY_ACTIVE" | "PROCESSING";
+type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 const mapStatus: Map<number, StartEycaStatus> = new Map([
   [201, "PROCESSING"],
   [202, "PROCESSING"],
@@ -66,7 +63,7 @@ function* handleStartActivation(
 
 function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
-): Generator<Effect, Either<NetworkError, CgnEycaActivationStatus>, any> {
+): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
   try {
     const getEycaActivationResult: SagaCallReturnType<typeof getEycaActivation> = yield call(
       getEycaActivation,
@@ -129,7 +126,7 @@ export function* handleEycaActivationSaga(
       yield put(cgnEycaActivation.failure(activationInfo.value));
       return;
     }
-    const status: CgnEycaActivationStatus = activationInfo.value;
+    const status: GetEycaStatus = activationInfo.value;
     switch (status) {
       case "COMPLETED":
         yield put(cgnEycaActivation.success("COMPLETED"));
@@ -158,6 +155,7 @@ export function* handleEycaActivationSaga(
         yield put(cgnEycaActivation.success("ERROR"));
         return;
     }
+    yield put(cgnEycaActivation.success("POLLING"));
     // sleep
     yield call(startTimer, cgnResultPolling);
     const now = new Date().getTime();
@@ -166,6 +164,5 @@ export function* handleEycaActivationSaga(
       yield put(cgnEycaActivation.success("POLLING_TIMEOUT"));
       return;
     }
-    yield put(cgnEycaActivation.success("POLLING"));
   }
 }
