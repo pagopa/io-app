@@ -38,6 +38,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const maxPanCodeLength = 19;
+const minPanCodeLength = 1;
 
 const loadLocales = () => ({
   title: I18n.t("wallet.onboarding.privative.addPrivativeCardNumber.title"),
@@ -83,9 +84,8 @@ const continueButtonProps = (
   onPress: () => void
 ): BlockButtonProps =>
   canContinue
-    ? disablePrimaryButtonProps(I18n.t("global.buttons.continue"))
-    : confirmButtonProps(onPress, I18n.t("global.buttons.continue"));
-
+    ? confirmButtonProps(onPress, I18n.t("global.buttons.continue"))
+    : disablePrimaryButtonProps(I18n.t("global.buttons.continue"));
 /**
  * In this screen the user can:
  * - insert the privative card number and start the search
@@ -140,8 +140,9 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
             leftButton={cancelButtonProps(props.cancel)}
-            rightButton={continueButtonProps(cardNumber.length === 0, () =>
-              props.search(cardNumber)
+            rightButton={continueButtonProps(
+              cardNumber.length >= minPanCodeLength,
+              () => props.search(cardNumber)
             )}
           />
         </SafeAreaView>
