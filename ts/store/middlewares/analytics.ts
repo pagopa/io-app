@@ -137,7 +137,7 @@ import {
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<void> => {
+): Promise<void | ReadonlyArray<null>> => {
   // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
