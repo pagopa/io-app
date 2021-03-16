@@ -58,7 +58,7 @@ describe("ownedActiveOrRedeemedBonus", () => {
         [pot.none, pot.none, pot.noneError(new Error("some error"))],
         potProfile
       )
-    ).toStrictEqual("wrong");
+    ).toStrictEqual([]);
   });
 
   it("should return an empty array (different applicant)", () => {
