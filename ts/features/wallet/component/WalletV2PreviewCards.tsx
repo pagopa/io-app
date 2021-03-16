@@ -7,11 +7,13 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   cobadgeListVisibleInWalletSelector,
+  privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
 import BPayWalletPreview from "../bancomatpay/component/BPayWalletPreview";
 import CobadgeWalletPreview from "../cobadge/component/CobadgeWalletPreview";
+import PrivativeWalletPreview from "../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -71,6 +73,18 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
         </>
       ))
     )}
+    {pot.toUndefined(
+      pot.mapNullable(props.privativeList, c => (
+        <>
+          {c.map(privativeMethod => (
+            <PrivativeWalletPreview
+              key={privativeMethod.idWallet}
+              privative={privativeMethod}
+            />
+          ))}
+        </>
+      ))
+    )}
   </>
 );
 
@@ -80,7 +94,8 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatList: bancomatListVisibleInWalletSelector(state),
   bPayList: bPayListVisibleInWalletSelector(state),
   satispayList: satispayListVisibleInWalletSelector(state),
-  cobadgeList: cobadgeListVisibleInWalletSelector(state)
+  cobadgeList: cobadgeListVisibleInWalletSelector(state),
+  privativeList: privativeListVisibleInWalletSelector(state)
 });
 
 export default connect(
