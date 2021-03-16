@@ -35,12 +35,13 @@ export function* eycaGetInformationSaga(
       );
     } else {
       switch (eycaInformationResult.value.status) {
-        case 200:
+        case 200: // CARD
           yield put(cgnEycaDetails.success(eycaInformationResult.value.value));
           break;
         // FIXME 409 is really not found?
-        case 409:
-        case 404:
+        case 409: // ERROR
+        case 403: // INELIGIBLE
+        case 404: // NOT_FOUND
           yield put(cgnEycaDetails.success(undefined));
           break;
         default:
