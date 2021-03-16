@@ -2,6 +2,7 @@ import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { Action, createStore, Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import * as showToast from "../../../../../../../utils/showToast";
 import {
   PaymentInstrument,
@@ -22,7 +23,7 @@ import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper
 import { PrivativeResponse } from "../../../store/actions";
 import SearchPrivativeCardScreen from "../SearchPrivativeCardScreen";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../navigation/routes";
-import configureMockStore from "redux-mock-store";
+
 import {
   searchUserPrivative,
   walletAddPrivativeCancel,
@@ -53,7 +54,7 @@ const paymentInstrument: PaymentInstrument = {
 };
 
 const oneCardResponse: PrivativeResponse = {
-  paymentInstrument: paymentInstrument,
+  paymentInstrument,
   searchRequestId: "aSearchRequestId",
   searchRequestMetadata: []
 };
