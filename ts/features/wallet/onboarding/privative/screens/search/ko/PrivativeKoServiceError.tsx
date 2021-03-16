@@ -47,7 +47,7 @@ const PrivativeKoServiceError = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoServiceError"}>
+      <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoServiceError"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

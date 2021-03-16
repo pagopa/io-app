@@ -49,7 +49,7 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoTimeout"}>
+      <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoNotFound"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}
