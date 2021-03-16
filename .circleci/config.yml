@@ -119,7 +119,7 @@ jobs:
       # Run tests
       - run:
           command: |
-              TEST=$(circleci tests glob **/__tests__/*.js | circleci tests split)
+              TEST=$(circleci tests glob **/__tests__/*.ts* | circleci tests split)
               yarn test $TEST
       - run: "bash <(curl -s https://codecov.io/bash)"
     parallelism: 5
