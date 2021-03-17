@@ -14,7 +14,7 @@ import { getNetworkErrorMessage } from "../../../../../utils/errors";
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(walletAddBancomatStart):
     case getType(walletAddBancomatCompleted):

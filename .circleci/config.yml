@@ -117,8 +117,12 @@ jobs:
       - run: yarn generate:all
 
       # Run tests
-      - run: yarn test
+      - run:
+          command: |
+              TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
+              yarn test $TEST
       - run: "bash <(curl -s https://codecov.io/bash)"
+    parallelism: 8
 
   # Runs Danger checks on PR
   eslint:
