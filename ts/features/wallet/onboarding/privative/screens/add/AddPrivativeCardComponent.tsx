@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 
 const loadLocales = () => ({
   headerTitle: I18n.t("wallet.onboarding.privative.headerTitle"),
-  screenTitle: I18n.t("wallet.onboarding.coBadge.add.screenTitle"),
-  blockedCard: I18n.t("wallet.onboarding.coBadge.add.blocked")
+  screenTitle: I18n.t("wallet.onboarding.privative.add.screenTitle"),
+  blockedCard: I18n.t("wallet.onboarding.privative.add.blocked")
 });
 
 const AddPrivativeCardComponent: React.FunctionComponent<Props> = (

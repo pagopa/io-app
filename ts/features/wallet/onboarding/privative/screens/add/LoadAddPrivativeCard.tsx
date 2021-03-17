@@ -25,7 +25,7 @@ const LoadAddPrivativeCard = (props: Props): React.ReactElement => {
   return (
     <LoadingErrorComponent
       {...props}
-      loadingCaption={I18n.t("wallet.onboarding.coBadge.add.loading")}
+      loadingCaption={I18n.t("wallet.onboarding.privative.add.loading")}
       onAbort={props.onCancel}
       onRetry={props.onRetry}
     />

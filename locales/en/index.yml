@@ -926,6 +926,10 @@ wallet:
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
+      add:
+        screenTitle: "Do you want to add this card?"
+        loading: "We are adding your card\n\nPlease hold on..."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
