@@ -198,4 +198,4 @@ const isPrivativeKoServiceErrorScreen = (component: RenderAPI) =>
   ) !== null;
 
 const isAddPrivativeScreen = (component: RenderAPI) =>
-  component.queryByTestId("AddPrivativeCardScreen") !== null;
+  component.queryByTestId("AddPrivativeComponent") !== null;
