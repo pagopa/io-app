@@ -77,21 +77,21 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
-  - Permission-Calendars (2.1.5):
+  - Permission-Calendars (2.2.2):
     - RNPermissions
-  - Permission-Camera (2.1.5):
+  - Permission-Camera (2.2.2):
     - RNPermissions
-  - Permission-Contacts (2.1.5):
+  - Permission-Contacts (2.2.2):
     - RNPermissions
-  - Permission-FaceID (2.1.5):
+  - Permission-FaceID (2.2.2):
     - RNPermissions
-  - Permission-MediaLibrary (2.1.5):
+  - Permission-MediaLibrary (2.2.2):
     - RNPermissions
-  - Permission-Notifications (2.1.5):
+  - Permission-Notifications (2.2.2):
     - RNPermissions
-  - Permission-PhotoLibrary (2.1.5):
+  - Permission-PhotoLibrary (2.2.2):
     - RNPermissions
-  - Permission-Reminders (2.1.5):
+  - Permission-Reminders (2.2.2):
     - RNPermissions
   - QrCode (1.1.0):
     - React
@@ -374,8 +374,8 @@ PODS:
     - React
   - RNKeychain (3.1.3):
     - React
-  - RNPermissions (2.1.5):
-    - React
+  - RNPermissions (2.2.2):
+    - React-Core
   - RNReanimated (1.13.1):
     - React
   - RNScreens (2.10.1):
@@ -663,14 +663,14 @@ SPEC CHECKSUMS:
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
-  Permission-Calendars: dc345e3388149514603309c621151ff3cfd5816a
-  Permission-Camera: afad27bf90337684d4a86f3825112d648c8c4d3b
-  Permission-Contacts: edde2d433382b3118f0d4c9ebc7708d5d87c4f17
-  Permission-FaceID: fbdeb41087f35887f0cade55396007fadee3a234
-  Permission-MediaLibrary: dd1c48888cd95961fbfebdaebf8d4127c6e92e7d
-  Permission-Notifications: 231d0e1db2300b686548587d384ba414e6a93332
-  Permission-PhotoLibrary: 4d2eff62c8f4b8a27bcf045c0e36f5047efbbf20
-  Permission-Reminders: 330cfafecc259594cfd7845a035580b623f771ae
+  Permission-Calendars: 17bb6a871acc7580754be7b56cfb25537e1b57de
+  Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
+  Permission-Contacts: 295b2f26e7607801e73b0fd35a56ec63cfd52dc4
+  Permission-FaceID: 8f034a57c60ed8c602d184f485a9bd524c0f98b7
+  Permission-MediaLibrary: e94e0a30ec5edc18b14e9df10fc78d5bb592a8ca
+  Permission-Notifications: 9c6b5cc4f0e6599e9fc3395b77cebddc48f1be41
+  Permission-PhotoLibrary: 8227a6ed9f6a971537afe63742d54f5f23a38fe2
+  Permission-Reminders: f1bddb60953645830289f9b00977b11e2b62fbf8
   QrCode: 1212ff8b8fae1a0e2c698d1c42560abcc0c9019b
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
@@ -715,7 +715,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
-  RNPermissions: ad71dd4f767ec254f2cd57592fbee02afee75467
+  RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
   RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085

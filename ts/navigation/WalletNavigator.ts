@@ -1,10 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  cgnEnabled,
-  privativeEnabled
-} from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
@@ -25,6 +20,7 @@ import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboar
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
+import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddCreditCardOutcomeCodeMessage from "../screens/wallet/AddCreditCardOutcomeCodeMessage";
@@ -76,6 +72,9 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_COBADGE_DETAIL]: {
     screen: CobadgeDetailScreen
+  },
+  [ROUTES.WALLET_PRIVATIVE_DETAIL]: {
+    screen: PrivativeDetailScreen
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
@@ -138,14 +137,6 @@ const bonusVacanzeConfigMap = bonusVacanzeEnabled
     }
   : {};
 
-const privativeConfigMap = privativeEnabled
-  ? {
-      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
-        screen: PaymentMethodOnboardingPrivativeNavigator
-      }
-    }
-  : {};
-
 const bpdConfigMap = bpdEnabled
   ? {
       [BPD_ROUTES.MAIN]: {
@@ -163,7 +154,9 @@ const bpdConfigMap = bpdEnabled
       [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingCoBadgeNavigator
       },
-      ...privativeConfigMap
+      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
+        screen: PaymentMethodOnboardingPrivativeNavigator
+      }
     }
   : {};
 

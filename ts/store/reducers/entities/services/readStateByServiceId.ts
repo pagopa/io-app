@@ -1,5 +1,7 @@
 import { getType } from "typesafe-actions";
+import _ from "lodash";
 import {
+  loadServiceDetailNotFound,
   markServiceAsRead,
   showServiceDetails
 } from "../../../actions/services";
@@ -36,6 +38,8 @@ export function readServicesByIdReducer(
         ...state,
         [action.payload]: true
       };
+    case getType(loadServiceDetailNotFound):
+      return _.omit(state, [action.payload]);
     // reset reading state if current profile is different from the previous one
     case getType(differentProfileLoggedIn):
       return INITIAL_STATE;

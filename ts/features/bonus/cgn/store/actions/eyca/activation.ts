@@ -1,32 +1,14 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
-import { EycaActivationDetail } from "../../../../../../../definitions/cgn/EycaActivationDetail";
-import { CgnEycaActivationProgressEnum } from "../../reducers/eyca/activation";
-
-type EycaActivationStatus = {
-  status: CgnEycaActivationProgressEnum;
-  value?: EycaActivationDetail;
-};
-
-/**
- * Action to handle EYCA Activation Request
- */
-export const cgnEycaActivationRequest = createStandardAction(
-  "CGN_EYCA_ACTIVATION_REQUEST"
-)<void>();
+import { ActionType, createAsyncAction } from "typesafe-actions";
+import { NetworkError } from "../../../../../../utils/errors";
+import { CgnEycaActivationStatus } from "../../reducers/eyca/activation";
 
 /**
  * Action to handle EYCA Activation Status
  */
-export const cgnEycaActivationStatus = createAsyncAction(
-  "CGN_EYCA_ACTIVATION_STATUS_REQUEST",
-  "CGN_EYCA_ACTIVATION_STATUS_SUCCESS",
-  "CGN_EYCA_ACTIVATION__STATUS_FAILURE"
-)<void, EycaActivationStatus, Error>();
+export const cgnEycaActivation = createAsyncAction(
+  "CGN_EYCA_ACTIVATION_REQUEST",
+  "CGN_EYCA_ACTIVATION_SUCCESS",
+  "CGN_EYCA_ACTIVATION_FAILURE"
+)<void, CgnEycaActivationStatus, NetworkError>();
 
-export type CgnEycaActivationActions =
-  | ActionType<typeof cgnEycaActivationRequest>
-  | ActionType<typeof cgnEycaActivationStatus>;
+export type CgnEycaActivationActions = ActionType<typeof cgnEycaActivation>;

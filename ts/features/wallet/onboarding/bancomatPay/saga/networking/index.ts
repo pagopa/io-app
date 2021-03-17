@@ -1,8 +1,7 @@
 import { call, put } from "redux-saga/effects";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
+import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
-import { SessionManager } from "../../../../../../utils/SessionManager";
 import {
   PatchedWalletV2ListResponse,
   PaymentManagerToken
@@ -12,12 +11,13 @@ import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
-import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
-import {
-  searchUserBPay,
-  addBPayToWallet as addBpayToWalletAction
-} from "../../store/actions";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { SessionManager } from "../../../../../../utils/SessionManager";
 import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
+import {
+  addBPayToWallet as addBpayToWalletAction,
+  searchUserBPay
+} from "../../store/actions";
 
 /**
  * Load all the user BPay accounts
@@ -60,7 +60,7 @@ export function* handleSearchUserBPay(
       return yield put(
         searchUserBPay.failure(
           getGenericError(
-            new Error(readableReport(searchBPayWithRefreshResult.value))
+            new Error(readablePrivacyReport(searchBPayWithRefreshResult.value))
           )
         )
       );
@@ -125,7 +125,9 @@ export function* handleAddpayToWallet(
       return yield put(
         addBpayToWalletAction.failure(
           getGenericError(
-            new Error(readableReport(addBPayToWalletWithRefreshResult.value))
+            new Error(
+              readablePrivacyReport(addBPayToWalletWithRefreshResult.value)
+            )
           )
         )
       );

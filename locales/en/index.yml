@@ -916,6 +916,16 @@ wallet:
         koUnavailable:
           title: "We're unable to contact the server"
           body: "We are working to solve the problem."
+      search:
+        loading: "We are verifying your card\n\nPlease wait"
+        koTimeout:
+          title: "It is currently impossible to verify your card"
+          body: "Please try again"
+        koNotFound:
+          title: "Sorry, this card is not in your name"
+          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
+          cta:
+            modifyCardNumber: "Change card number"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -2225,6 +2235,9 @@ bonus:
         description: Description
         services: Services
         hours: Working Hours
+        validity: Validity
+        discountCode: Discount code
+        conditions: Conditions
       cta:
         label: Navigate to merchant website
     cta:
