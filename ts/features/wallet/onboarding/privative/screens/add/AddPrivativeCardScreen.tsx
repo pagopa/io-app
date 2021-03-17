@@ -38,6 +38,15 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
     }
   }, [props.addingResult]);
 
+  const addToWallet = () => props.foundPrivative.map(p => props.addToWallet(p));
+  const loadErrorAddPrivativeCard = (isLoading: boolean) => (
+    <LoadAddPrivativeCard
+      isLoading={isLoading}
+      onCancel={props.cancel}
+      onRetry={addToWallet}
+    />
+  );
+
   return fold(
     props.addingResult,
     () =>
@@ -45,15 +54,13 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
         <AddPrivativeCardComponent
           pan={props.foundPrivative.value}
           handleSkip={props.cancel}
-          handleContinue={() =>
-            props.foundPrivative.map(p => props.addToWallet(p))
-          }
+          handleContinue={addToWallet}
           contextualHelp={emptyContextualHelp}
         />
       ) : null,
-    () => <LoadAddPrivativeCard />,
+    () => loadErrorAddPrivativeCard(true),
     _ => null,
-    _ => <LoadAddPrivativeCard />
+    _ => loadErrorAddPrivativeCard(false)
   );
 };
 
