@@ -31,8 +31,7 @@ import {
   apiUrlPrefix,
   bpdEnabled,
   fetchPagoPaTimeout,
-  fetchPaymentManagerLongTimeout,
-  privativeEnabled
+  fetchPaymentManagerLongTimeout
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
@@ -868,37 +867,33 @@ export function* watchWalletSaga(
       contentClient.getCobadgeServices
     );
 
-    if (privativeEnabled) {
-      yield takeLatest(
-        loadPrivativeIssuers.request,
-        handleLoadPrivativeConfiguration,
-        contentClient.getPrivativeServices
-      );
-    }
+    yield takeLatest(
+      loadPrivativeIssuers.request,
+      handleLoadPrivativeConfiguration,
+      contentClient.getPrivativeServices
+    );
 
     // watch for add co-badge to Wallet workflow
     yield takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
 
-    if (privativeEnabled) {
-      // watch for add privative to Wallet workflow
-      yield takeLatest(
-        walletAddPrivativeStart,
-        addPrivativeToWalletAndActivateBpd
-      );
-      yield takeLatest(
-        searchUserPrivative.request,
-        handleSearchUserPrivative,
-        paymentManagerClient.getCobadgePans,
-        paymentManagerClient.searchCobadgePans,
-        pmSessionManager
-      );
-      yield takeLatest(
-        addPrivativeToWallet.request,
-        handleAddPrivativeToWallet,
-        paymentManagerClient.addCobadgeToWallet,
-        pmSessionManager
-      );
-    }
+    // watch for add privative to Wallet workflow
+    yield takeLatest(
+      walletAddPrivativeStart,
+      addPrivativeToWalletAndActivateBpd
+    );
+    yield takeLatest(
+      searchUserPrivative.request,
+      handleSearchUserPrivative,
+      paymentManagerClient.getCobadgePans,
+      paymentManagerClient.searchCobadgePans,
+      pmSessionManager
+    );
+    yield takeLatest(
+      addPrivativeToWallet.request,
+      handleAddPrivativeToWallet,
+      paymentManagerClient.addCobadgeToWallet,
+      pmSessionManager
+    );
   }
 
   yield fork(paymentsDeleteUncompletedSaga);
