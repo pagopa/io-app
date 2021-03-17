@@ -1,11 +1,20 @@
-import * as React from "react";
 import { View } from "native-base";
+import * as React from "react";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../i18n";
-import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
+import { BpdTransactionDetailRepresentation } from "./BpdTransactionDetailComponent";
 
-type Props = { transaction: EnhancedBpdTransaction };
+type Props = { transaction: BpdTransactionDetailRepresentation };
+
+const TransactionWarning = (props: { text: string }) => (
+  <>
+    <View spacer={true} />
+    <InfoBox>
+      <Body>{props.text}</Body>
+    </InfoBox>
+  </>
+);
 
 /**
  * Displays a warning when certain conditions occur
@@ -13,37 +22,41 @@ type Props = { transaction: EnhancedBpdTransaction };
  * @constructor
  */
 export const BpdTransactionWarning: React.FunctionComponent<Props> = props => {
+  // max cashback for a single transaction reached
   if (
     props.transaction.maxCashbackForTransactionAmount ===
     props.transaction.cashback
   ) {
     return (
-      <>
-        <View spacer={true} />
-        <InfoBox>
-          <Body>
-            {I18n.t("bonus.bpd.details.transaction.detail.maxCashbackWarning", {
-              amount: props.transaction.maxCashbackForTransactionAmount
-            })}
-          </Body>
-        </InfoBox>
-      </>
+      <TransactionWarning
+        text={I18n.t(
+          "bonus.bpd.details.transaction.detail.maxCashbackWarning",
+          {
+            amount: props.transaction.maxCashbackForTransactionAmount
+          }
+        )}
+      />
     );
   }
-  if (props.transaction.cashback <= 0) {
+  // transaction canceled (negative amount)
+  if (props.transaction.cashback < 0) {
     return (
-      <>
-        <View spacer={true} />
-        <InfoBox>
-          <Body>
-            {I18n.t(
-              props.transaction.cashback < 0
-                ? "bonus.bpd.details.transaction.detail.canceledOperationWarning"
-                : "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
-            )}
-          </Body>
-        </InfoBox>
-      </>
+      <TransactionWarning
+        text={I18n.t(
+          "bonus.bpd.details.transaction.detail.canceledOperationWarning"
+        )}
+      />
+    );
+  }
+  // transaction not valid for cashback (eg: the user has already reached
+  // the maximum cashback value for the period
+  if (!props.transaction.validForCashback) {
+    return (
+      <TransactionWarning
+        text={I18n.t(
+          "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
+        )}
+      />
     );
   }
   return null;
