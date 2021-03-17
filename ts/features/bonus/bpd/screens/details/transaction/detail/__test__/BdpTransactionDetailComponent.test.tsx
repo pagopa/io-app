@@ -1,14 +1,16 @@
 // import { debug } from "console";
-import * as React from "react";
 import { render } from "@testing-library/react-native";
-import { BpdTransactionDetailComponent } from "../BpdTransactionDetailComponent";
-import { EnhancedBpdTransaction } from "../../../../../components/transactionItem/BpdTransactionItem";
+import * as React from "react";
 import { HPan } from "../../../../../store/actions/paymentMethods";
 import { AwardPeriodId } from "../../../../../store/actions/periods";
+import {
+  BpdTransactionDetailComponent,
+  BpdTransactionDetailRepresentation
+} from "../BpdTransactionDetailComponent";
 
 describe("Test Transaction Timestamp", () => {
   it("It should render label 'Date' and a value without hours and minutes when the transaction has a timestamp 00:00", () => {
-    const myTransaction: EnhancedBpdTransaction = {
+    const myTransaction: BpdTransactionDetailRepresentation = {
       hashPan: "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
       idTrxAcquirer: "10126487773E",
       idTrxIssuer: "R64692",
@@ -20,7 +22,8 @@ describe("Test Transaction Timestamp", () => {
       trxDate: new Date("2100-12-17T00:00"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard"
+      circuitType: "Mastercard",
+      validForCashback: true
     };
 
     // cut : Component Under Test
@@ -36,7 +39,7 @@ describe("Test Transaction Timestamp", () => {
   });
 
   it("It should render label 'Date and time' and a vale woth hours and minutes when the transaction has a timestamp different from 00:00 ", () => {
-    const myTransaction: EnhancedBpdTransaction = {
+    const myTransaction: BpdTransactionDetailRepresentation = {
       hashPan: "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
       idTrxAcquirer: "10126487773E",
       idTrxIssuer: "R64692",
@@ -48,7 +51,8 @@ describe("Test Transaction Timestamp", () => {
       trxDate: new Date("2100-12-17T01:00"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard"
+      circuitType: "Mastercard",
+      validForCashback: true
     };
 
     // cut : Component Under Test
