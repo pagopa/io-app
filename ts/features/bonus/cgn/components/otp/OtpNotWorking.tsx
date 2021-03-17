@@ -1,9 +1,14 @@
 import * as React from "react";
-import Markdown from "../../../../../components/ui/Markdown";
+import { View } from "native-base";
 import I18n from "../../../../../i18n";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import {
+  bottomSheetContent,
+  useIOBottomSheetRaw
+} from "../../../../../utils/bottomSheet";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../../components/core/typography/Label";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H4 } from "../../../../../components/core/typography/H4";
 
 type Props = {
   onPress: () => void;
@@ -11,20 +16,54 @@ type Props = {
 
 const OtpNotWorking: React.FunctionComponent<Props> = (props: Props) => (
   <>
-    <Markdown>{I18n.t("bonus.cgn.otp.screen.bottomSheet.body")}</Markdown>
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={cancelButtonProps(
-        props.onPress,
-        I18n.t("bonus.cgn.otp.screen.bottomSheet.cta")
-      )}
-    />
+    <View spacer />
+    <View style={IOStyles.flex}>
+      <H4 weight={"Regular"}>
+        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text1")}
+        <H4>{I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text2")}</H4>
+      </H4>
+      <View spacer />
+      <H4 weight={"Regular"}>
+        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text3")}
+      </H4>
+      <View spacer />
+      <H4 weight={"Regular"}>
+        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text4")}
+      </H4>
+    </View>
+    <View spacer={true} />
+    <ButtonDefaultOpacity
+      style={{ width: "100%" }}
+      bordered={true}
+      onPress={props.onPress}
+      onPressWithGestureHandler={true}
+    >
+      <Label>{I18n.t("bonus.cgn.otp.screen.bottomSheet.cta")}</Label>
+    </ButtonDefaultOpacity>
   </>
 );
 
-export const useOtpNotWorkingBottomSheet = (onPress: () => void) =>
-  useIOBottomSheet(
-    <OtpNotWorking onPress={onPress} />,
-    I18n.t("bonus.cgn.otp.screen.link"),
-    450
+/**
+ * A bottomsheet that display generic information on bancomat and a cta to start the onboarding of a new
+ * payment method.
+ * This will be also visualized inside a bottomsheet after an addition of a new bancomat
+ */
+export default (onPress: () => void) => {
+  const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
+    380,
+    bottomSheetContent
   );
+  return {
+    present: () =>
+      openBottomSheet(
+        <OtpNotWorking
+          onPress={() => {
+            dismiss();
+            onPress();
+          }}
+        />,
+        I18n.t("bonus.cgn.otp.screen.link")
+      ),
+    dismiss
+  };
+};

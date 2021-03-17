@@ -2324,7 +2324,11 @@ bonus:
         text2: "Una volta scaduto, il codice non è più valido"
         link: Il codice non funziona?
         bottomSheet:
-          body: "Alcuni esercenti richiedono l’inserimento di un **codice sconto statico.**\n\nCerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso.\n\nAll’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
+          body:
+            text1: "Alcuni esercenti richiedono l’inserimento di un "
+            text2: "codice sconto statico."
+            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
+            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
           cta: Vai alla lista esercenti
       code:
         title: Il tuo codice sconto

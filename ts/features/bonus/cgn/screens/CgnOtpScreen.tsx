@@ -3,7 +3,6 @@ import { View } from "native-base";
 import { connect } from "react-redux";
 import { SafeAreaView, ScrollView } from "react-native";
 import { nullType } from "io-ts";
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { cgnOtpDataSelector } from "../store/reducers/otp";
@@ -25,7 +24,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Otp } from "../../../../../definitions/cgn/Otp";
 import { NetworkError } from "../../../../utils/errors";
-import { useOtpNotWorkingBottomSheet } from "../components/otp/OtpNotWorking";
+import useOtpNotWorkingBottomSheet from "../components/otp/OtpNotWorking";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -57,16 +56,9 @@ const getReadableTTL = (
 const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
   useActionOnFocus(props.generateOtp);
 
-  const { dismiss } = useBottomSheetModal();
-
   const readableTTL = getReadableTTL(props.otp);
 
-  const onCtaBSPress = () => {
-    dismiss();
-    props.navigateToMerchants();
-  };
-
-  const { present } = useOtpNotWorkingBottomSheet(onCtaBSPress);
+  const { present } = useOtpNotWorkingBottomSheet(props.navigateToMerchants);
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading(props.otp)}>
