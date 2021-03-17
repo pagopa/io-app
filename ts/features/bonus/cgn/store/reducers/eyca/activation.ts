@@ -4,7 +4,8 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  isReady,
+  getValueOrElse,
+  isLoading,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -53,10 +54,15 @@ export const eycaActivationStatusSelector = (
 // return the cgn eyca status
 // TODO Use this selector in PR https://github.com/pagopa/io-app/pull/2872
 //  to check the EYCA activation status is not ERROR
-export const cgnEycaActivationstatus = createSelector(
+export const cgnEycaActivationStatus = createSelector(
   eycaActivationStatusSelector,
   (activation: EycaActivationState): CgnEycaActivationStatus =>
-    isReady(activation) ? activation : "ERROR"
+    getValueOrElse(activation, "POLLING")
+);
+
+export const cgnEycaActivationLoading = createSelector(
+  eycaActivationStatusSelector,
+  (activation: EycaActivationState): boolean => isLoading(activation)
 );
 
 export default reducer;

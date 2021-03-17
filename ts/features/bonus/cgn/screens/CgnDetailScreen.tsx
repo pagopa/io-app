@@ -25,7 +25,6 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { cgnEycaDetails } from "../store/actions/eyca/details";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { isEycaEligible } from "../store/reducers/eyca/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";

@@ -1,8 +1,10 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { cgnEycaStatus } from "../../actions/eyca/details";
 import {
+  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -45,3 +47,17 @@ export default reducer;
 
 export const eycaDetailSelector = (state: GlobalState): EycaDetailsState =>
   state.bonus.cgn.eyca.details;
+
+export const isEycaEligible = createSelector(
+  eycaDetailSelector,
+  (eycaDetail: EycaDetailsState): boolean =>
+    isReady(eycaDetail) && eycaDetail.value.status !== "INELIGIBLE"
+);
+
+export const eycaInformationSelector = createSelector(
+  eycaDetailSelector,
+  (eycaDetail: EycaDetailsState): EycaCard | undefined =>
+    isReady(eycaDetail) && eycaDetail.value.status === "FOUND"
+      ? eycaDetail.value.card
+      : undefined
+);
