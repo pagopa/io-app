@@ -37,7 +37,7 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
 
   if (privativeSelected === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
+    void mixpanelTrack("WALLET_ONBOARDING_PRIVATIVE_NO_QUERY_PARAMS_ERROR");
     props.cancel();
     return null;
   } else {

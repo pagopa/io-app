@@ -30,7 +30,7 @@ import {
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     // onboarding
     case getType(bpdEnrollUserToProgram.request):
