@@ -29,6 +29,8 @@ import {
   navigateToCgnMerchantsList
 } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { cgnDetails } from "../store/actions/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -41,6 +43,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
+
+  useActionOnFocus(props.loadCgnDetails);
 
   return (
     <BaseScreenComponent
@@ -111,6 +115,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
   navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

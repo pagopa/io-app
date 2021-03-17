@@ -926,6 +926,9 @@ wallet:
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your card"
+          body: "Please try again later."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
