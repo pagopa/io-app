@@ -102,8 +102,9 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               </InfoBox>
             ) : (
               <InfoBox>
-                <Body>{warning1}</Body>
-                <Label color={"bluegrey"}>{warning2}</Label>
+                <Body>
+                  {warning1} <Label color={"bluegrey"}>{warning2}</Label>
+                </Body>
               </InfoBox>
             )}
           </View>
