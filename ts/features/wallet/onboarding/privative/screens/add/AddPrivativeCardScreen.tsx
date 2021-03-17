@@ -44,6 +44,7 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
       isLoading={isLoading}
       onCancel={props.cancel}
       onRetry={addToWallet}
+      testID={"loadErrorAddPrivativeCard"}
     />
   );
 

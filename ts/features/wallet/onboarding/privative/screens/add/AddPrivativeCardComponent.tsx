@@ -63,7 +63,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"AddCobadgeComponent"}>
+      <SafeAreaView style={IOStyles.flex} testID={"AddPrivativeComponent"}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
           <View
