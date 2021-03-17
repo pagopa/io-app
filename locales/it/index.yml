@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -926,8 +926,28 @@ wallet:
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     privative:
       headerTitle: "Aggiungi carta supermercato"
+      choosePrivativeIssuer:
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        title: "Scegli il marchio della tua carta"
+        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        koDisabled:
+          title: "Questo supermercato non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
+        koUnavailable:
+          title: "Non riusciamo a contattare il server"
+          body: "Siamo al lavoro per risolvere il problema."
+      search:
+        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
+        koTimeout:
+          title: "Al momento è impossibile verificare la tua carta"
+          body: "Riprova per favore"
+        koNotFound:
+          title: "Spiacenti, questa carta non risulta intestata a te"
+          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
+          cta:
+            modifyCardNumber: "Modifica numero carta"
   alert:
-    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
@@ -1160,7 +1180,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Abbina il tuo account BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: la tua app Postepay
     postepay:
@@ -1275,21 +1295,21 @@ wallet:
     fallback:
       title: "Spiacenti, si è verificato un errore imprevisto"
       description: "Non è stato addebitato alcun importo."
-    code1: 
+    code1:
       title: "Spiacenti, si è verificato un errore imprevisto"
       description: "Non è stato addebitato alcun importo."
-    code2: 
+    code2:
       title: "Autorizzazione negata"
       description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
-    code4: 
+    code4:
       title: "Spiacenti, la sessione è scaduta"
       description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
-    code7: 
+    code7:
       title: "C’è un problema con la tua carta"
       description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
-    code8: 
+    code8:
       title: "L’operazione è stata annullata"
-    code10: 
+    code10:
       title: "Autorizzazione negata"
       description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
     addCreditCard:
@@ -1613,6 +1633,8 @@ contextualHelp:
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
   contextualHelp:
     title1: Hai bisogno di aiuto?
     descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
@@ -2149,7 +2171,7 @@ bonus:
           text2: "almeno un metodo di pagamento "
           text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: 
+          empty:
             text1: "Non ci sono ancora transazioni valide."
             text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
@@ -2234,6 +2256,20 @@ bonus:
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
     name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: Visualizza esercenti
+      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+    merchantDetail:
+      title:
+        deals: Offerte
+        description: Descrizione
+        services: Servizi
+        hours: Orari
+        validity: Validità
+        discountCode: Codice Sconto
+        conditions: Condizioni
+      cta:
+        label: Vai al sito dell'esercente
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani
@@ -2280,6 +2316,16 @@ bonus:
       success:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
+    otp:
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

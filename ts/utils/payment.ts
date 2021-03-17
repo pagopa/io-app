@@ -18,9 +18,13 @@ import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumb
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
-import { OutcomeCodes, OutcomeCodesKey } from "../types/outcomeCode";
+import {
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
 import { formatDateAsReminder } from "./dates";
-import { getLocalePrimaryWithFallback } from "./locale";
+import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
@@ -174,6 +178,9 @@ export const getPaymentHistoryDetails = (
     payment.success === true ? "si" : "no"
   }`;
   const outcomeCode = `- codice di uscita: ${payment.outcomeCode ?? "n/a"}`;
+  const navigationUrls = `- navigazione webview: ${(
+    payment.payNavigationUrls ?? []
+  ).join(", ")}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("ccp: n/a");
@@ -193,6 +200,8 @@ export const getPaymentHistoryDetails = (
     success,
     separator,
     outcomeCode,
+    separator,
+    navigationUrls,
     separator,
     failureDetails
   );
@@ -284,4 +293,17 @@ export const isPaymentOutcomeCodeSuccessfully = (
     _ => false,
     c => outcomeCodes[c].status === "success"
   );
+};
+
+export const getPaymentOutcomeCodeDescription = (
+  outcomeCode: string,
+  outcomeCodes: OutcomeCodes
+): Option<string> => {
+  const maybeOutcomeCodeKey = OutcomeCodesKey.decode(outcomeCode);
+  if (maybeOutcomeCodeKey.isRight()) {
+    return fromNullable<OutcomeCode>(outcomeCodes[maybeOutcomeCodeKey.value])
+      .mapNullable(oc => oc.description)
+      .map(description => description[getFullLocale()]);
+  }
+  return none;
 };

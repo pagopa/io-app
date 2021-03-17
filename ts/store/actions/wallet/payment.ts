@@ -194,6 +194,11 @@ export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
   PaymentWebViewEndReason
 >();
 
+// used to accumulate all the urls browsed into the pay webview
+export const paymentRedirectionUrls = createStandardAction(
+  "PAYMENT_NAVIGATION_URLS"
+)<ReadonlyArray<string>>();
+
 //
 // Signal the completion of a payment
 //
@@ -272,4 +277,5 @@ export type PaymentActions =
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
+  | ActionType<typeof paymentRedirectionUrls>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>;

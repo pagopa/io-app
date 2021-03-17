@@ -38,7 +38,7 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { visibleAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
@@ -67,7 +67,7 @@ import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
+import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
@@ -209,7 +209,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
-    this.loadBonusCgn();
     this.setState({ hasFocus: true });
   };
 
@@ -559,7 +558,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && <FeaturedCardCarousel />}
+            {(bpdEnabled || cgnEnabled) && <FeaturedCardCarousel />}
             {transactionContent}
           </>
         )}
@@ -594,10 +593,10 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: visibleAvailableBonusSelector(state),
+    availableBonusesList: supportedAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
+    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
     transactionsLoadedLength: getTransactionsLoadedLength(state),
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
