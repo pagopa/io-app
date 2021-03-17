@@ -1,6 +1,6 @@
 import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
-import { Platform } from "react-native";
+import { Appearance, Platform } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
@@ -28,7 +28,8 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale: DeviceInfo.getFontScaleSync(),
-    appReadableVersion: getAppVersion()
+    appReadableVersion: getAppVersion(),
+    colorScheme: Appearance.getColorScheme()
   });
 
   // Identify the user using the device uniqueId
