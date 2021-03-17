@@ -1,24 +1,35 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../../../../i18n";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = {
+  isLoading: boolean;
+  onCancel: () => void;
+  onRetry: () => void;
+};
 
 /**
  * Loading screen while adding the privative card to the wallet
  * @param _
  * @constructor
  */
-const LoadAddPrivativeCard = (_: Props): React.ReactElement => <View />;
+const LoadAddPrivativeCard = (props: Props): React.ReactElement => {
+  useHardwareBackButton(() => {
+    if (!props.isLoading) {
+      props.onCancel();
+    }
+    return true;
+  });
+  return (
+    <LoadingErrorComponent
+      {...props}
+      loadingCaption={I18n.t("wallet.onboarding.coBadge.add.loading")}
+      onAbort={props.onCancel}
+      onRetry={props.onRetry}
+    />
+  );
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoadAddPrivativeCard);
+export default connect()(LoadAddPrivativeCard);
