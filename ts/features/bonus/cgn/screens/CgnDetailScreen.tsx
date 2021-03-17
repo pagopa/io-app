@@ -114,7 +114,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
   loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
