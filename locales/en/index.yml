@@ -926,6 +926,9 @@ wallet:
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your card"
+          body: "Please try again later."
       add:
         screenTitle: "Do you want to add this card?"
         loading: "We are adding your card\n\nPlease hold on..."

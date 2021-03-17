@@ -946,6 +946,9 @@ wallet:
           body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
           cta:
             modifyCardNumber: "Modifica numero carta"
+        koServiceError:
+          title: "Al momento è impossibile recuperare la tua carta"
+          body: "Riprova più tardi per favore"
       add:
         screenTitle: "Vuoi aggiungere questa carta?"
         loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
