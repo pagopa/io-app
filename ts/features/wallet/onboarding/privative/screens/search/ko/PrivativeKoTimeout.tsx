@@ -54,7 +54,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
 
   if (privativeSelected === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("PRIVATIVE_NO_QUERY_PARAMS_ERROR");
+    void mixpanelTrack("WALLET_ONBOARDING_PRIVATIVE_NO_QUERY_PARAMS_ERROR");
     props.cancel();
     return null;
   } else {
@@ -65,7 +65,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
         headerTitle={headerTitle}
         contextualHelp={emptyContextualHelp}
       >
-        <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoTimeout"}>
+        <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoTimeout"}>
           <InfoScreenComponent
             image={renderInfoRasterImage(image)}
             title={title}

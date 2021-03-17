@@ -13,7 +13,7 @@ import {
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(searchUserSatispay.request):
     case getType(walletAddSatispayStart):
