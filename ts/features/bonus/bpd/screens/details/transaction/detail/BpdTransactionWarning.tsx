@@ -22,6 +22,17 @@ const TransactionWarning = (props: { text: string }) => (
  * @constructor
  */
 export const BpdTransactionWarning: React.FunctionComponent<Props> = props => {
+  // transaction not valid for cashback (eg: the user has already reached
+  // the maximum cashback value for the period
+  if (!props.transaction.validForCashback) {
+    return (
+      <TransactionWarning
+        text={I18n.t(
+          "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
+        )}
+      />
+    );
+  }
   // max cashback for a single transaction reached
   if (
     props.transaction.maxCashbackForTransactionAmount ===
@@ -44,17 +55,6 @@ export const BpdTransactionWarning: React.FunctionComponent<Props> = props => {
       <TransactionWarning
         text={I18n.t(
           "bonus.bpd.details.transaction.detail.canceledOperationWarning"
-        )}
-      />
-    );
-  }
-  // transaction not valid for cashback (eg: the user has already reached
-  // the maximum cashback value for the period
-  if (!props.transaction.validForCashback) {
-    return (
-      <TransactionWarning
-        text={I18n.t(
-          "bonus.bpd.details.transaction.detail.maxCashbackForPeriodWarning"
         )}
       />
     );

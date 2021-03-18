@@ -93,12 +93,6 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
         cashback: maxAmount,
         maxCashbackForTransactionAmount: maxAmount,
         validForCashback: true
-      },
-      {
-        ...baseTransaction,
-        cashback: maxAmount,
-        maxCashbackForTransactionAmount: maxAmount,
-        validForCashback: false
       }
     ];
 
@@ -130,6 +124,12 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
         cashback: maxAmount,
         maxCashbackForTransactionAmount: 0,
         validForCashback: false
+      },
+      {
+        ...baseTransaction,
+        cashback: maxAmount,
+        maxCashbackForTransactionAmount: maxAmount,
+        validForCashback: false
       }
     ];
 
@@ -153,11 +153,6 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
         ...baseTransaction,
         cashback: -0.01,
         validForCashback: true
-      },
-      {
-        ...baseTransaction,
-        cashback: -5,
-        validForCashback: false
       }
     ];
 
@@ -182,6 +177,11 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
       {
         ...baseTransaction,
         cashback: 5,
+        validForCashback: false
+      },
+      {
+        ...baseTransaction,
+        cashback: -5,
         validForCashback: false
       }
     ];
@@ -208,6 +208,17 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
         ...baseTransaction,
         cashback: 10.5,
         validForCashback: false
+      },
+      {
+        ...baseTransaction,
+        cashback: -10.5,
+        validForCashback: false
+      },
+      {
+        ...baseTransaction,
+        cashback: 15,
+        maxCashbackForTransactionAmount: 15,
+        validForCashback: false
       }
     ];
 
@@ -230,17 +241,6 @@ describe("Test BpdTransactionDetailComponent warnings", () => {
         ...baseTransaction,
         cashback: 0,
         validForCashback: true
-      },
-      {
-        ...baseTransaction,
-        cashback: -10.5,
-        validForCashback: false
-      },
-      {
-        ...baseTransaction,
-        cashback: 15,
-        maxCashbackForTransactionAmount: 15,
-        validForCashback: false
       }
     ];
 
