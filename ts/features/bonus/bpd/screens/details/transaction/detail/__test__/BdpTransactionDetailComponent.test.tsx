@@ -55,7 +55,7 @@ describe("Test Transaction Timestamp", () => {
     expect(dateValue.children[0]).toMatch(/17 Dec 2100/);
   });
 
-  it("It should render label 'Date and time' and a vale woth hours and minutes when the transaction has a timestamp different from 00:00 ", () => {
+  it("It should render label 'Date and time' and a value with hours and minutes when the transaction has a timestamp different from 00:00 ", () => {
     const myTransaction: BpdTransactionDetailRepresentation = {
       hashPan: "0d4194712c5d820fcbbb2e7ba199e15f73cfd43f8fe49f0aa62e7901253506df" as HPan,
       idTrxAcquirer: "10126487773E",
