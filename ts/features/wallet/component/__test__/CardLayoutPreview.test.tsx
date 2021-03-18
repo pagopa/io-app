@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
 import { View } from "native-base";
 import * as React from "react";
-import { CardLayoutPreview } from "../CardLayoutPreview";
+import { CardLayoutPreview } from "../card/CardLayoutPreview";
 
 describe("CardLayoutPreview", () => {
   it("should show the left and the right received components", () => {

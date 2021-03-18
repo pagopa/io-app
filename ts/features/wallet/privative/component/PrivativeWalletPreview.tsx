@@ -10,7 +10,7 @@ import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navig
 import { GlobalState } from "../../../../store/reducers/types";
 import { isImageURISource } from "../../../../types/image";
 import { PrivativePaymentMethod } from "../../../../types/pagopa";
-import { CardLayoutPreview } from "../../component/CardLayoutPreview";
+import { CardLayoutPreview } from "../../component/card/CardLayoutPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {

@@ -14,7 +14,7 @@ import { Monospace } from "../../../../components/core/typography/Monospace";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
-import BaseCardComponent from "../../component/BaseCardComponent";
+import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {

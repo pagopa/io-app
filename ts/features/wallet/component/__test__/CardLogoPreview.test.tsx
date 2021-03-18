@@ -1,7 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "native-base";
 import * as React from "react";
-import { CardLogoPreview } from "../CardLogoPreview";
+import { CardLogoPreview } from "../card/CardLogoPreview";
 import anImage from "../../../../../img/wallet/cards-icons/bPay.png";
 
 describe("CardLogoPreview", () => {
