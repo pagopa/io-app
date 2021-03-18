@@ -47,6 +47,7 @@ const CgnNavigator = createStackNavigator(
     },
     [CGN_ROUTES.CTA_START_CGN]: {
       screen: CgnCTAStartActivationScreen
+    },
     [CGN_ROUTES.DETAILS_OTP]: {
       screen: CgnOtpScreen
     }
