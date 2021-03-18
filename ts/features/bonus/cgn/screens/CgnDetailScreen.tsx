@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, ScrollView } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -25,11 +24,18 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { navigateToCgnMerchantsList } from "../navigation/actions";
+import {
+  navigateToCgnDetailsOtp,
+  navigateToCgnMerchantsList
+} from "../navigation/actions";
+import CgnCardComponent from "../components/detail/CgnCardComponent";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { cgnDetails } from "../store/actions/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const HEADER_BACKGROUND_COLOR = "#7CB3D9";
 /**
  * Screen to display all the information about the active CGN
  */
@@ -38,9 +44,11 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
 
+  useActionOnFocus(props.loadCgnDetails);
+
   return (
     <BaseScreenComponent
-      headerBackgroundColor={IOColors.yellowGradientTop}
+      headerBackgroundColor={HEADER_BACKGROUND_COLOR}
       goBack
       headerTitle={I18n.t("bonus.cgn.name")}
       titleColor={"black"}
@@ -48,12 +56,14 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
-          <LinearGradient
-            colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
-          >
-            {/* TODO Add Specific CGN Card element when card is available */}
-            <View style={{ height: 164 }} />
+          <LinearGradient colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}>
+            <View
+              style={[IOStyles.horizontalContentPadding, { height: 180 }]}
+            />
           </LinearGradient>
+          {props.cgnDetails && (
+            <CgnCardComponent cgnDetails={props.cgnDetails} />
+          )}
           <View
             style={[
               IOStyles.flex,
@@ -88,7 +98,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             I18n.t("bonus.cgn.detail.cta.buyers")
           )}
           rightButton={confirmButtonProps(
-            constNull,
+            props.navigateToOtp,
             I18n.t("bonus.cgn.detail.cta.otp")
           )}
         />
@@ -103,7 +113,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
+  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

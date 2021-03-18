@@ -1,9 +1,9 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { loadPrivativeIssuers } from "../../store/actions";
 
 /**
@@ -30,7 +30,7 @@ export function* handleLoadPrivativeConfiguration(
         );
       }
     } else {
-      throw new Error(readableReport(getPrivativeServicesResult.value));
+      throw new Error(readablePrivacyReport(getPrivativeServicesResult.value));
     }
   } catch (e) {
     yield put(loadPrivativeIssuers.failure(getNetworkError(e)));

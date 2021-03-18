@@ -1,0 +1,140 @@
+import * as React from "react";
+import { View } from "native-base";
+import { StyleSheet } from "react-native";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { H4 } from "../../../../../components/core/typography/H4";
+import IconFont from "../../../../../components/ui/IconFont";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
+import { addEvery } from "../../../../../utils/strings";
+import CgnDiscountValueBox from "./CgnDiscountValueBox";
+
+type Props = {
+  discount: TmpDiscountType;
+};
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row"
+  },
+  verticalPadding: {
+    paddingBottom: 16
+  },
+  discountValueBox: {
+    borderRadius: 6.5,
+    paddingVertical: 5,
+    width: 40,
+    textAlign: "center",
+    backgroundColor: "#EB9505"
+  },
+  container: {
+    paddingTop: 16
+  },
+  codeContainer: { alignItems: "center", justifyContent: "space-between" },
+  codeText: {
+    fontSize: 20
+  },
+  flexEnd: { alignSelf: "flex-end" },
+  discountValue: { textAlign: "center", lineHeight: 30 }
+});
+
+const FEEDBACK_TIMEOUT = 3000 as Millisecond;
+
+const CATEGORY_ICON_SIZE = 22;
+const COPY_ICON_SIZE = 24;
+
+const CgnDiscountDetail: React.FunctionComponent<Props> = ({
+  discount
+}: Props) => {
+  const [isTap, setIsTap] = React.useState(false);
+  const timerRetry = React.useRef<number | undefined>(undefined);
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
+
+  const handleCopyPress = () => {
+    if (discount.discountCode) {
+      setIsTap(true);
+      clipboardSetStringWithFeedback(discount.discountCode);
+      // eslint-disable-next-line functional/immutable-data
+      timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_TIMEOUT);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={IOStyles.row}>
+        {/* TODO when available and defined the icon name should be defined through a map of category codes */}
+        <IconFont
+          name={"io-theater"}
+          size={CATEGORY_ICON_SIZE}
+          color={IOColors.bluegrey}
+        />
+        <View hspacer small />
+        <H5 weight={"SemiBold"} color={"bluegrey"}>
+          {discount.category.toLocaleUpperCase()}
+        </H5>
+      </View>
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H3>
+      <H4 weight={"Regular"}>{discount.description}</H4>
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.validity")}</H3>
+      <H4 weight={"Regular"}>{discount.validityDescription}</H4>
+      {discount.discountCode && (
+        <>
+          <View spacer small />
+          <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
+          <TouchableWithoutFeedback onPress={handleCopyPress}>
+            <View style={[IOStyles.row, styles.codeContainer]}>
+              <BaseTypography
+                weight={"Bold"}
+                color={"bluegreyDark"}
+                font={"RobotoMono"}
+                style={styles.codeText}
+              >
+                {addEvery(discount.discountCode, " ", 3)}
+              </BaseTypography>
+              <IconFont
+                name={isTap ? "io-complete" : "io-copy"}
+                size={COPY_ICON_SIZE}
+                color={IOColors.blue}
+                style={styles.flexEnd}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </>
+      )}
+      <View spacer />
+      <H3>{I18n.t("bonus.cgn.merchantDetail.title.conditions")}</H3>
+      <H4 weight={"Regular"}>{discount.conditions}</H4>
+    </View>
+  );
+};
+
+const CgnDiscountDetailHeader = ({ discount }: Props) => (
+  <View style={[IOStyles.row, { alignItems: "center" }]}>
+    <CgnDiscountValueBox value={discount.value} small />
+    <View hspacer />
+    <H3>{discount.title}</H3>
+  </View>
+);
+
+export const useCgnDiscountDetailBottomSheet = (discount: TmpDiscountType) =>
+  useIOBottomSheet(
+    <CgnDiscountDetail {...{ discount }} />,
+    <CgnDiscountDetailHeader {...{ discount }} />,
+    520
+  );

@@ -83,7 +83,10 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
-import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
+import {
+  cgnDetailSelector,
+  isCgnInformationAvailableSelector
+} from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -209,7 +212,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
-    this.loadBonusCgn();
     this.setState({ hasFocus: true });
   };
 
@@ -581,6 +583,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
+      (cgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -606,7 +609,8 @@ const mapStateToProps = (state: GlobalState) => {
     nav: navSelector(state),
     isPagoPaVersionSupported,
     bpdLoadState: bpdLastUpdateSelector(state),
-    cgnDetails: cgnDetailSelector(state)
+    cgnDetails: cgnDetailSelector(state),
+    isCgnInfoAvailable: isCgnInformationAvailableSelector(state)
   };
 };
 

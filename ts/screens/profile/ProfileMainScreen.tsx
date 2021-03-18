@@ -396,7 +396,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               />
 
               {
-                // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+                // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994)
                 // It could be useful when new experimental features will be available
                 /*
                   this.developerListItem(
