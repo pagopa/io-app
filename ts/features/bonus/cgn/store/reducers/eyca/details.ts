@@ -4,6 +4,7 @@ import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { cgnEycaStatus } from "../../actions/eyca/details";
 import {
+  isLoading,
   isReady,
   remoteError,
   remoteLoading,
@@ -60,4 +61,9 @@ export const eycaInformationSelector = createSelector(
     isReady(eycaDetail) && eycaDetail.value.status === "FOUND"
       ? eycaDetail.value.card
       : undefined
+);
+
+export const isEycaDetailsLoading = createSelector(
+  eycaDetailSelector,
+  (eycaDetail: EycaDetailsState): boolean => isLoading(eycaDetail)
 );

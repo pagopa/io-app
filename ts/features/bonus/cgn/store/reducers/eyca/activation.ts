@@ -4,8 +4,8 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  getValueOrElse,
   isLoading,
+  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -13,7 +13,10 @@ import {
   RemoteValue
 } from "../../../../bpd/model/RemoteValue";
 import { NetworkError } from "../../../../../../utils/errors";
-import { cgnEycaActivation } from "../../actions/eyca/activation";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationStatusRequest
+} from "../../actions/eyca/activation";
 
 export type CgnEycaActivationStatus =
   | "POLLING"
@@ -37,6 +40,7 @@ const reducer = (
   switch (action.type) {
     // bonus activation
     case getType(cgnEycaActivation.request):
+    case getType(cgnEycaActivationStatusRequest):
       return remoteLoading;
     case getType(cgnEycaActivation.success):
       return remoteReady(action.payload);
@@ -56,8 +60,8 @@ export const eycaActivationStatusSelector = (
 //  to check the EYCA activation status is not ERROR
 export const cgnEycaActivationStatus = createSelector(
   eycaActivationStatusSelector,
-  (activation: EycaActivationState): CgnEycaActivationStatus =>
-    getValueOrElse(activation, "POLLING")
+  (activation: EycaActivationState): CgnEycaActivationStatus | undefined =>
+    isReady(activation) ? activation.value : undefined
 );
 
 export const cgnEycaActivationLoading = createSelector(

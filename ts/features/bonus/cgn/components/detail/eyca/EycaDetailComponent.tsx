@@ -2,12 +2,22 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
-import { eycaInformationSelector } from "../../../store/reducers/eyca/details";
-import { cgnEycaActivation } from "../../../store/actions/eyca/activation";
+import {
+  eycaInformationSelector,
+  isEycaDetailsLoading
+} from "../../../store/reducers/eyca/details";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationStatusRequest
+} from "../../../store/actions/eyca/activation";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-import { cgnEycaActivationStatus } from "../../../store/reducers/eyca/activation";
+import {
+  cgnEycaActivationLoading,
+  cgnEycaActivationStatus
+} from "../../../store/reducers/eyca/activation";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 import EycaPendingComponent from "./EycaPendingComponent";
@@ -19,6 +29,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
   useEffect(() => {
     if (CardPending.is(props.eyca)) {
+      props.getEycaActivationStatus();
     }
   }, [props.eyca]);
 
@@ -29,25 +40,41 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "EXPIRED":
         return <EycaStatusDetailsComponent eycaCard={eyca} />;
       case "PENDING":
-        return <EycaPendingComponent />;
+        return fromNullable(props.eycaActivationStatus).fold(
+          <EycaErrorComponent onRetry={props.requestEycaActivation} />,
+          as =>
+            as === "ERROR" ? (
+              <EycaErrorComponent onRetry={props.requestEycaActivation} />
+            ) : (
+              <EycaPendingComponent />
+            )
+        );
       default:
         return <></>;
     }
   };
 
-  return fromNullable(props.eyca).fold(
-    <EycaErrorComponent onRetry={props.requestEycaActivation} />,
-    renderComponentEycaStatus
+  return props.isLoading ? (
+    <ActivityIndicator
+      color={"black"}
+      accessible={false}
+      importantForAccessibility={"no-hide-descendants"}
+      accessibilityElementsHidden={true}
+    />
+  ) : (
+    fromNullable(props.eyca).fold(<></>, renderComponentEycaStatus)
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
   eyca: eycaInformationSelector(state),
-  eycaActivationStatus: cgnEycaActivationStatus(state)
+  eycaActivationStatus: cgnEycaActivationStatus(state),
+  isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestEycaActivation: () => dispatch(cgnEycaActivation.request())
+  requestEycaActivation: () => dispatch(cgnEycaActivation.request()),
+  getEycaActivationStatus: () => dispatch(cgnEycaActivationStatusRequest())
 });
 
 export default connect(

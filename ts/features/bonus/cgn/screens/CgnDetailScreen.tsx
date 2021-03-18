@@ -26,7 +26,6 @@ import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import { isEycaEligible } from "../store/reducers/eyca/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
@@ -85,13 +84,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               // ACTIVATED - EXPIRED - REVOKED
               <CgnStatusDetail cgnDetail={props.cgnDetails} />
             )}
-            {props.isEycaElgible && (
-              <>
-                <ItemSeparatorComponent noPadded />
-                <View spacer />
-                <EycaDetailComponent />
-              </>
-            )}
+            <ItemSeparatorComponent noPadded />
+            <View spacer />
+            <EycaDetailComponent />
           </View>
         </ScrollView>
         <FooterWithButtons
@@ -112,8 +107,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
-  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
-  isEycaElgible: isEycaEligible(state)
+  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
