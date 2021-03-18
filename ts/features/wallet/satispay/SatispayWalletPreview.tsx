@@ -6,7 +6,7 @@ import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { CardLogoPreview } from "../component/CardLogoPreview";
+import { CardLogoPreview } from "../component/card/CardLogoPreview";
 import { navigateToSatispayDetailScreen } from "../../../store/actions/navigation";
 import { SatispayPaymentMethod } from "../../../types/pagopa";
 
