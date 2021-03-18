@@ -1,3 +1,4 @@
+import { Badge, View } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -6,16 +7,15 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
-import { Badge, View } from "native-base";
-import I18n from "../../../../i18n";
-import BaseCardComponent from "../../component/BaseCardComponent";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
-import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
-import { localeDateFormat } from "../../../../utils/locale";
+import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
+import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import I18n from "../../../../i18n";
+import { localeDateFormat } from "../../../../utils/locale";
+import BaseCardComponent from "../../component/card/BaseCardComponent";
+import { BlurredPan } from "../../component/card/BlurredPan";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
   caption?: string;
@@ -126,9 +126,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
-                <H4 weight={"Regular"} testID="caption">
-                  {props.caption}
-                </H4>
+                <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
               <View spacer small />
             </>
