@@ -41,7 +41,7 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
   }, [props.eyca]);
 
   const errorComponent = (
-    <EycaErrorComponent onRetry={props.requestEycaActivation} />
+    <EycaErrorComponent onRetry={props.requestEycaActivation} openBottomSheet={openEycaBottomSheet} />
   );
 
   const renderComponentEycaStatus = (eyca: EycaCard) => {
