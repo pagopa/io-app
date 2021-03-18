@@ -24,6 +24,7 @@ export function* eycaActivationWorker(
   yield put(cgnEycaStatus.request());
 
   yield put(navigateToCgnDetails());
+  yield put(navigationHistoryPop(1));
 }
 
 /**
