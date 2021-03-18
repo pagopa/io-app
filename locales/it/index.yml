@@ -936,6 +936,12 @@ wallet:
         koUnavailable:
           title: "Non riusciamo a contattare il server"
           body: "Siamo al lavoro per risolvere il problema."
+      addPrivativeCardNumber:
+        title: "Inserisci il numero carta"
+        body: "Digita le cifre riportate. IO verificherà se è associata al tuo codice fiscale."
+        disclaimer:
+          text1: "Proseguendo accetti l’"
+          text2: "informativa sul trattamento dei dati personali"
       search:
         loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
         koTimeout:
@@ -946,6 +952,9 @@ wallet:
           body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
           cta:
             modifyCardNumber: "Modifica numero carta"
+        koServiceError:
+          title: "Al momento è impossibile recuperare la tua carta"
+          body: "Riprova più tardi per favore"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"

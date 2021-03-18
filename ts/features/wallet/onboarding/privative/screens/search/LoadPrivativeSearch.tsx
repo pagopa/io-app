@@ -2,10 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../../i18n";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../../types/WithTestID";
-import { showToast } from "../../../../../../utils/showToast";
 import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
@@ -36,9 +34,6 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
   const { privativeSelected } = props;
 
   if (privativeSelected === undefined) {
-    showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("WALLET_ONBOARDING_PRIVATIVE_NO_QUERY_PARAMS_ERROR");
-    props.cancel();
     return null;
   } else {
     return (

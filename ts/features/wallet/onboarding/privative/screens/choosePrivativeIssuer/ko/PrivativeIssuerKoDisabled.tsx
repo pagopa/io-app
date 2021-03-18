@@ -12,7 +12,7 @@ import FooterWithButtons from "../../../../../../../components/ui/FooterWithButt
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { confirmButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { walletAddPrivativeCancel } from "../../../store/actions";
 
@@ -57,7 +57,7 @@ const PrivativeIssuerKoDisabled = (props: Props): React.ReactElement => {
 
         <FooterWithButtons
           type={"SingleButton"}
-          leftButton={confirmButtonProps(props.cancel, close)}
+          leftButton={cancelButtonProps(props.cancel, close)}
         />
       </SafeAreaView>
     </BaseScreenComponent>
