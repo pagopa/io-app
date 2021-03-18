@@ -57,6 +57,8 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
     ? getPrivativeLoyaltyLogoUrl(props.paymentInstrument.abiCode)
     : undefined;
 
+  const isBlocked = isCoBadgeOrPrivativeBlocked(props.paymentInstrument);
+
   return (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
@@ -73,7 +75,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               IOStyles.horizontalContentPadding
             ]}
           >
-            <H1 style={styles.title}>{screenTitle}</H1>
+            {!isBlocked ? <H1 style={styles.title}>{screenTitle}</H1> : null}
             <View spacer={true} large={true} />
             <BasePrivativeCard
               loyaltyLogo={loyaltyLogo}
@@ -82,7 +84,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               blocked={isCoBadgeOrPrivativeBlocked(props.paymentInstrument)}
             />
             <View spacer={true} large={true} />
-            {isCoBadgeOrPrivativeBlocked(props.paymentInstrument) && (
+            {isBlocked && (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
               </InfoBox>
@@ -90,12 +92,12 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
           </View>
           <View spacer />
         </ScrollView>
-        {isCoBadgeOrPrivativeBlocked(props.paymentInstrument) ? (
+        {isBlocked ? (
           <FooterWithButtons
             type={"SingleButton"}
-            leftButton={confirmButtonProps(
+            leftButton={cancelButtonProps(
               props.handleSkip,
-              I18n.t("global.buttons.continue")
+              I18n.t("global.buttons.close")
             )}
           />
         ) : (
