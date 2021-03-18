@@ -1,19 +1,18 @@
 import { View } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
 import { NavigationActions } from "react-navigation";
-import I18n from "../../../../../../../i18n";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
-import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../../i18n";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { walletAddPrivativeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
