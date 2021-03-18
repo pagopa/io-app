@@ -3,7 +3,7 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
+import { Button, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -29,9 +29,15 @@ import {
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Wallet } from "../../types/pagopa";
+import { isRawCreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
-import { handleSetFavourite } from "../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES, handleSetFavourite } from "../../utils/wallet";
+import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
+import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
+import defaultCardIcon from "../../../img/wallet/cards-icons/unknown.png";
+import { getTitleFromCard } from "../../utils/paymentMethod";
+import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -78,6 +84,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     zIndex: Platform.OS === "android" ? 35 : 7,
     elevation: Platform.OS === "android" ? 35 : 7
+  },
+  cancelButton: {
+    borderColor: IOColors.red,
+    width: "100%"
   }
 });
 
@@ -128,7 +138,22 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     ),
     undefined
   );
+  const { present } = useRemovePaymentMethodBottomSheet({
+    icon: selectedWallet.creditCard
+      ? getCardIconFromBrandLogo(selectedWallet.creditCard)
+      : defaultCardIcon,
+    caption:
+      selectedWallet.paymentMethod &&
+      isRawCreditCard(selectedWallet.paymentMethod)
+        ? getTitleFromCard(selectedWallet.paymentMethod)
+        : FOUR_UNICODE_CIRCLES
+  });
 
+  const UnsubscribeButton = (props: { onPress?: () => void }) => (
+    <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+      <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+    </Button>
+  );
   return (
     <WalletLayout
       title={I18n.t("wallet.paymentMethod")}
@@ -152,6 +177,12 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <PaymentMethodCapabilities paymentMethod={pm} />
             <View spacer={true} />
             <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(selectedWallet.idWallet))
+              }
+            />
           </View>
           <EdgeBorderComponent />
         </>
