@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { Monospace } from "../../../../../components/core/typography/Monospace";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import { isImageURISource } from "../../../../../types/image";
 import BaseCardComponent from "../../../component/card/BaseCardComponent";
+import { BlurredPan } from "../../../component/card/BlurredPan";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
@@ -131,13 +131,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
-                <Monospace
-                  weight={"Regular"}
-                  testID="caption"
-                  color={"bluegreyDark"}
-                >
-                  {props.caption}
-                </Monospace>
+                <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
               <View spacer small />
             </>

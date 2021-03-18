@@ -13,13 +13,13 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES, isExpiredCard } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import { Monospace } from "../../core/typography/Monospace";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -289,9 +289,9 @@ export default class CardComponent extends React.Component<Props> {
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
-              <Monospace color={"bluegreyDark"}>
+              <BlurredPan>
                 {`${FOUR_UNICODE_CIRCLES} ${wallet.creditCard.pan.slice(-4)}`}
-              </Monospace>
+              </BlurredPan>
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>

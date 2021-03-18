@@ -10,11 +10,11 @@ import {
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import { H5 } from "../../../../components/core/typography/H5";
-import { Monospace } from "../../../../components/core/typography/Monospace";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
+import { BlurredPan } from "../../component/card/BlurredPan";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
@@ -126,9 +126,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
-                <Monospace testID="caption" color={"bluegreyDark"}>
-                  {props.caption}
-                </Monospace>
+                <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
               <View spacer small />
             </>

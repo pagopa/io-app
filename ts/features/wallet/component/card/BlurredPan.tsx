@@ -6,6 +6,12 @@ import { Monospace } from "../../../../components/core/typography/Monospace";
  * @param props
  * @constructor
  */
-export const BlurredPan: React.FunctionComponent = props => (
+
+type OwnProps = Omit<
+  React.ComponentProps<typeof Monospace>,
+  "color" | "weight"
+>;
+
+export const BlurredPan: React.FunctionComponent<OwnProps> = props => (
   <Monospace color={"bluegreyDark"}>{props.children}</Monospace>
 );

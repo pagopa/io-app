@@ -4,12 +4,12 @@ import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
-import { Monospace } from "../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isImageURISource } from "../../../../types/image";
 import { PrivativePaymentMethod } from "../../../../types/pagopa";
+import { BlurredPan } from "../../component/card/BlurredPan";
 import { CardLayoutPreview } from "../../component/card/CardLayoutPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
@@ -75,14 +75,9 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
   return (
     <CardLayoutPreview
       left={
-        <Monospace
-          style={IOStyles.flex}
-          numberOfLines={1}
-          testID={"caption"}
-          color={"bluegreyDark"}
-        >
+        <BlurredPan style={IOStyles.flex} numberOfLines={1} testID={"caption"}>
           {props.privative.caption}
-        </Monospace>
+        </BlurredPan>
       }
       right={rightElement}
       onPress={() => props.navigateToPrivativeDetails(props.privative)}
