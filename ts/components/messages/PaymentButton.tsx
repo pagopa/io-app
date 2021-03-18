@@ -123,7 +123,7 @@ class PaymentButton extends React.PureComponent<Props> {
 
     if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
       this.props.refreshService(message.sender_service_id);
-      // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
+      // TODO: optimize the managment of the payment initialization
       if (this.props.isEmailValidated && !this.props.isUpdatedNeededPagoPa) {
         this.props.paymentInitializeState();
         this.props.navigateToPaymentTransactionSummaryScreen({

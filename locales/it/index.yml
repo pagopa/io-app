@@ -952,6 +952,9 @@ wallet:
           body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
           cta:
             modifyCardNumber: "Modifica numero carta"
+        koServiceError:
+          title: "Al momento è impossibile recuperare la tua carta"
+          body: "Riprova più tardi per favore"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
