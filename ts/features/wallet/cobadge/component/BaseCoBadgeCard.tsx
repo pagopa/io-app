@@ -122,7 +122,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
         </>
       }
       bottomLeftCorner={
-        <View>
+        <>
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
@@ -133,7 +133,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View spacer small />
             </>
           )}
-        </View>
+        </>
       }
       bottomRightCorner={
         <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
