@@ -13,5 +13,7 @@ type OwnProps = Omit<
 >;
 
 export const BlurredPan: React.FunctionComponent<OwnProps> = props => (
-  <Monospace color={"bluegreyDark"}>{props.children}</Monospace>
+  <Monospace color={"bluegreyDark"} {...props}>
+    {props.children}
+  </Monospace>
 );
