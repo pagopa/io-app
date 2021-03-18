@@ -19,7 +19,7 @@ import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
 import { isImageURISource } from "../../../../../types/image";
 
 type Props = {
-  loyaltyLogo: ImageSourcePropType;
+  loyaltyLogo?: ImageSourcePropType;
   caption?: string;
   gdoLogo?: ImageURISource;
   blocked?: boolean;
@@ -56,7 +56,7 @@ const fallbackLoyaltyLogo: React.ReactElement = (
   />
 );
 
-const BASE_IMG_W = 120;
+const BASE_IMG_W = 100;
 const BASE_IMG_H = 30;
 
 const renderLoyaltyLogo = (
@@ -100,12 +100,13 @@ const renderGdoLogo = (gdoLogo: ImageURISource) =>
   );
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
-  const loyaltyLogo = isImageURISource(props.loyaltyLogo)
-    ? renderLoyaltyLogo(
-        props.loyaltyLogo,
-        useImageResize(BASE_IMG_W, BASE_IMG_H, props.loyaltyLogo.uri)
-      )
-    : fallbackLoyaltyLogo;
+  const loyaltyLogo =
+    props.loyaltyLogo && isImageURISource(props.loyaltyLogo)
+      ? renderLoyaltyLogo(
+          props.loyaltyLogo,
+          useImageResize(BASE_IMG_W, BASE_IMG_H, props.loyaltyLogo.uri)
+        )
+      : fallbackLoyaltyLogo;
 
   return (
     <BaseCardComponent
