@@ -19,6 +19,7 @@ import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES, isExpiredCard } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
+import { Monospace } from "../../core/typography/Monospace";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -278,22 +279,24 @@ export default class CardComponent extends React.Component<Props> {
 
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, styles.cardShadow, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
+        style={[
+          styles.card,
+          styles.cardShadow,
+          hasFlatBottom ? styles.flatBottom : undefined,
+          isHeader && styles.cardHeader
+        ]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
-              <Text style={[CreditCardStyles.smallTextStyle]}>
-                {`${FOUR_UNICODE_CIRCLES} `}
-              </Text>
-              <Text style={[CreditCardStyles.largeTextStyle]}>
-                {`${wallet.creditCard.pan.slice(-4)}`}
-              </Text>
+              <Monospace color={"bluegreyDark"}>
+                {`${FOUR_UNICODE_CIRCLES} ${wallet.creditCard.pan.slice(-4)}`}
+              </Monospace>
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>
           {hasFlatBottom && <View spacer={true} />}
-          {isHeader && <View style={{paddingTop:20}}/> }
+          {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>
         {this.renderFooterRow()}
