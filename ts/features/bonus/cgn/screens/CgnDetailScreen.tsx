@@ -24,6 +24,7 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
   navigateToCgnDetailsOtp,
   navigateToCgnMerchantsList
@@ -42,6 +43,7 @@ const HEADER_BACKGROUND_COLOR = "#7CB3D9";
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
+    props.loadEycaDetails();
   }, []);
 
   useActionOnFocus(props.loadCgnDetails);
@@ -113,9 +115,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadCgnDetails: () => dispatch(cgnDetails.request()),
+  loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
-  loadCgnDetails: () => dispatch(cgnDetails.request())
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

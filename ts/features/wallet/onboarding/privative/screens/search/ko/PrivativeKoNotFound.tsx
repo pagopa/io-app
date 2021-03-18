@@ -1,19 +1,18 @@
 import { View } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
 import { NavigationActions } from "react-navigation";
-import I18n from "../../../../../../../i18n";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
-import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
-import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../../i18n";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { walletAddPrivativeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -25,9 +24,7 @@ const loadLocales = () => ({
   title: I18n.t("wallet.onboarding.privative.search.koNotFound.title"),
   body: I18n.t("wallet.onboarding.privative.search.koNotFound.body"),
   cancel: I18n.t("global.buttons.cancel"),
-  modifyCardNumber: I18n.t(
-    "wallet.onboarding.privative.search.koNotFound.cta.modifyCardNumber"
-  )
+  retry: I18n.t("global.buttons.retry")
 });
 
 /**
@@ -36,7 +33,7 @@ const loadLocales = () => ({
  * @constructor
  */
 const PrivativeKoNotFound = (props: Props): React.ReactElement => {
-  const { headerTitle, title, body, cancel, modifyCardNumber } = loadLocales();
+  const { headerTitle, title, body, cancel, retry } = loadLocales();
 
   useHardwareBackButton(() => {
     props.cancel();
@@ -47,7 +44,6 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoNotFound"}>
         <InfoScreenComponent
@@ -59,7 +55,7 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
           type={"TwoButtonsInlineThird"}
           onRight={props.goToModifyCardNumber}
           onCancel={props.cancel}
-          rightText={modifyCardNumber}
+          rightText={retry}
           leftText={cancel}
         />
       </SafeAreaView>

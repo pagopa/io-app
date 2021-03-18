@@ -56,20 +56,22 @@ export const getPaymentMethodHash = (
 };
 export const getTitleFromPaymentInstrument = (
   paymentInstrument: PaymentInstrument
-) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber ?? ""}`;
 
 export const getTitleFromCard = (
   creditCard: RawCreditCardPaymentMethod | RawPrivativePaymentMethod
-) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
+) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber ?? ""}`;
 
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
-const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
+export const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
   uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
 });
 
-const getPrivativeLoyaltyLogoUrl = (abi: string): ImageSourcePropType => ({
+export const getPrivativeLoyaltyLogoUrl = (
+  abi: string
+): ImageSourcePropType => ({
   uri: `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`
 });
 /**
@@ -224,5 +226,5 @@ export const enhancePaymentMethod = (
 export const isBancomatBlocked = (pan: Card) =>
   pan.validityState === ValidityStateEnum.BR;
 
-export const isCoBadgeBlocked = (pan: PaymentInstrument) =>
+export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
   pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
