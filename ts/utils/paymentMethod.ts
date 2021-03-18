@@ -56,11 +56,11 @@ export const getPaymentMethodHash = (
 };
 export const getTitleFromPaymentInstrument = (
   paymentInstrument: PaymentInstrument
-) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber}`;
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber ?? ""}`;
 
 export const getTitleFromCard = (
   creditCard: RawCreditCardPaymentMethod | RawPrivativePaymentMethod
-) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
+) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber ?? ""}`;
 
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
