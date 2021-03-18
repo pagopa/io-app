@@ -955,6 +955,10 @@ wallet:
         koServiceError:
           title: "Al momento è impossibile recuperare la tua carta"
           body: "Riprova più tardi per favore"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta il tuo supermercato."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"

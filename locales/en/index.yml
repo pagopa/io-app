@@ -935,6 +935,10 @@ wallet:
         koServiceError:
           title: "Sorry, we're unable to retrieve your card"
           body: "Please try again later."
+      add:
+        screenTitle: "Do you want to add this card?"
+        loading: "We are adding your card\n\nPlease hold on..."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
