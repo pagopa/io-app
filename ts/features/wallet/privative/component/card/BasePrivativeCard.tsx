@@ -56,7 +56,7 @@ const fallbackLoyaltyLogo: React.ReactElement = (
   />
 );
 
-const BASE_IMG_W = 120;
+const BASE_IMG_W = 100;
 const BASE_IMG_H = 30;
 
 const renderLoyaltyLogo = (
@@ -126,7 +126,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
         </>
       }
       bottomLeftCorner={
-        <View>
+        <>
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
@@ -137,7 +137,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View spacer small />
             </>
           )}
-        </View>
+        </>
       }
       bottomRightCorner={loyaltyLogo}
     />
