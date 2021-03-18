@@ -88,32 +88,32 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const HEADER_HEIGHT = 250;
 
-class TransactionsScreen extends React.Component<Props> {
-  private headerContent(
-    selectedWallet: Wallet,
-    isFavorite: pot.Pot<boolean, Error>
-  ) {
-    return (
-      <React.Fragment>
-        <View style={styles.cardBox}>
-          <CardComponent
-            type={"Header"}
-            wallet={selectedWallet}
-            hideFavoriteIcon={false}
-            hideMenu={false}
-            isFavorite={isFavorite}
-            onSetFavorite={(willBeFavorite: boolean) =>
-              handleSetFavourite(willBeFavorite, () =>
-                this.props.setFavoriteWallet(selectedWallet.idWallet)
-              )
-            }
-            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-          />
-        </View>
-      </React.Fragment>
-    );
-  }
+const headerContent = (
+  selectedWallet: Wallet,
+  isFavorite: pot.Pot<boolean, Error>,
+  setFavorite: (walletId?: number) => void,
+  onDelete: (walletId: number) => void
+) => (
+  <>
+    <View style={styles.cardBox}>
+      <CardComponent
+        type={"Header"}
+        wallet={selectedWallet}
+        hideFavoriteIcon={false}
+        hideMenu={false}
+        isFavorite={isFavorite}
+        onSetFavorite={(willBeFavorite: boolean) =>
+          handleSetFavourite(willBeFavorite, () =>
+            setFavorite(selectedWallet.idWallet)
+          )
+        }
+        onDelete={() => onDelete(selectedWallet.idWallet)}
+      />
+    </View>
+  </>
+);
 
+class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
 
@@ -134,7 +134,12 @@ class TransactionsScreen extends React.Component<Props> {
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
         allowGoBack={true}
-        topContent={this.headerContent(selectedWallet, isFavorite)}
+        topContent={headerContent(
+          selectedWallet,
+          isFavorite,
+          this.props.setFavoriteWallet,
+          this.props.deleteWallet
+        )}
         hideHeader={true}
         hasDynamicSubHeader={true}
         topContentHeight={HEADER_HEIGHT}
