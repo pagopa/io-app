@@ -127,7 +127,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
         </>
       }
       bottomLeftCorner={
-        <View>
+        <>
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
@@ -138,7 +138,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View spacer small />
             </>
           )}
-        </View>
+        </>
       }
       bottomRightCorner={loyaltyLogo}
     />
