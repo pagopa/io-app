@@ -24,7 +24,7 @@ import {
 import BasePrivativeCard from "../../../../privative/component/card/BasePrivativeCard";
 
 type Props = {
-  pan: PaymentInstrument;
+  paymentInstrument: PaymentInstrument;
   handleContinue: () => void;
   handleSkip: () => void;
 } & Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
@@ -48,13 +48,13 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
 ) => {
   const { headerTitle, screenTitle, blockedCard } = loadLocales();
 
-  const caption = getTitleFromPaymentInstrument(props.pan);
+  const caption = getTitleFromPaymentInstrument(props.paymentInstrument);
 
-  const gdoLogo = props.pan.abiCode
-    ? getPrivativeGdoLogoUrl(props.pan.abiCode)
+  const gdoLogo = props.paymentInstrument.abiCode
+    ? getPrivativeGdoLogoUrl(props.paymentInstrument.abiCode)
     : undefined;
-  const loyaltyLogo = props.pan.abiCode
-    ? getPrivativeLoyaltyLogoUrl(props.pan.abiCode)
+  const loyaltyLogo = props.paymentInstrument.abiCode
+    ? getPrivativeLoyaltyLogoUrl(props.paymentInstrument.abiCode)
     : undefined;
 
   return (
@@ -79,10 +79,10 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               loyaltyLogo={loyaltyLogo}
               gdoLogo={gdoLogo}
               caption={caption}
-              blocked={isCoBadgeOrPrivativeBlocked(props.pan)}
+              blocked={isCoBadgeOrPrivativeBlocked(props.paymentInstrument)}
             />
             <View spacer={true} large={true} />
-            {isCoBadgeOrPrivativeBlocked(props.pan) && (
+            {isCoBadgeOrPrivativeBlocked(props.paymentInstrument) && (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
               </InfoBox>
@@ -90,7 +90,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
           </View>
           <View spacer />
         </ScrollView>
-        {isCoBadgeOrPrivativeBlocked(props.pan) ? (
+        {isCoBadgeOrPrivativeBlocked(props.paymentInstrument) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(
