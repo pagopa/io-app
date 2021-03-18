@@ -14,7 +14,7 @@ type Props = {
   onPress: () => void;
 };
 
-const OtpNotWorking: React.FunctionComponent<Props> = (props: Props) => (
+const OtpNotWorking = (props: Props) => (
   <>
     <View spacer />
     <View style={IOStyles.flex}>
