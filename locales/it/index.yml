@@ -955,6 +955,10 @@ wallet:
         koServiceError:
           title: "Al momento è impossibile recuperare la tua carta"
           body: "Riprova più tardi per favore"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta il tuo supermercato."
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -2326,6 +2330,19 @@ bonus:
         title: "Congratulazioni!"
         body: "La tua Carta Giovani Nazionale è attiva"
     otp:
+      screen:
+        title: Usa codice sconto
+        cta: Copia codice
+        text1: "Copia questo codice nell'apposito campo sul sito dell'esercente entro"
+        text2: "Una volta scaduto, il codice non è più valido"
+        link: Il codice non funziona?
+        bottomSheet:
+          body:
+            text1: "Alcuni esercenti richiedono l’inserimento di un "
+            text2: "codice sconto statico."
+            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
+            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
+          cta: Vai alla lista esercenti
       code:
         title: Il tuo codice sconto
         validUntil: Valido ancora per
