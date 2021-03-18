@@ -34,13 +34,15 @@ const getReadableTTL = (
   otp: RemoteValue<Otp, NetworkError>
 ): string | undefined => {
   if (isReady(otp)) {
+    const minutesValue = Math.round(otp.value.ttl / 60);
+
     return otp.value.ttl > 60
       ? I18n.t("bonus.cgn.otp.code.minutes", {
           defaultValue: I18n.t("bonus.cgn.otp.code.minutes.other", {
-            minutes: Math.round(otp.value.ttl / 60)
+            minutes: minutesValue
           }),
-          count: Math.round(otp.value.ttl / 60),
-          minutes: Math.round(otp.value.ttl / 60)
+          count: minutesValue,
+          minutes: minutesValue
         })
       : I18n.t("bonus.cgn.otp.code.seconds", {
           defaultValue: I18n.t("bonus.cgn.otp.code.seconds.other", {
@@ -66,7 +68,7 @@ const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={[IOStyles.flex]} bounces={false}>
             <View style={IOStyles.horizontalContentPadding}>
-              <H1>{"Usa codice sconto"}</H1>
+              <H1>{I18n.t("bonus.cgn.otp.screen.title")}</H1>
               {isReady(props.otp) && (
                 <OtpCodeComponent
                   otp={props.otp.value}
@@ -96,17 +98,19 @@ const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
               </Link>
             </View>
           </ScrollView>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={cancelButtonProps(
-              () =>
-                isReady(props.otp)
-                  ? clipboardSetStringWithFeedback(props.otp.value.code)
-                  : nullType,
-              "Copia codice",
-              "io-copy"
-            )}
-          />
+          {isReady(props.otp) && (
+            <FooterWithButtons
+              type={"SingleButton"}
+              leftButton={cancelButtonProps(
+                () =>
+                  isReady(props.otp)
+                    ? clipboardSetStringWithFeedback(props.otp.value.code)
+                    : nullType,
+                I18n.t("bonus.cgn.otp.screen.cta"),
+                "io-copy"
+              )}
+            />
+          )}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
