@@ -118,8 +118,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnDetails: () => dispatch(cgnDetails.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
-  loadCgnDetails: () => dispatch(cgnDetails.request())
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
