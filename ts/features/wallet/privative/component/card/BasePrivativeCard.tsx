@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Option } from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
+import { Monospace } from "../../../../../components/core/typography/Monospace";
 import I18n from "../../../../../i18n";
 import BaseCardComponent from "../../../component/BaseCardComponent";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
@@ -131,9 +132,13 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
-                <H4 weight={"Regular"} testID="caption">
+                <Monospace
+                  weight={"Regular"}
+                  testID="caption"
+                  color={"bluegreyDark"}
+                >
                   {props.caption}
-                </H4>
+                </Monospace>
               </View>
               <View spacer small />
             </>

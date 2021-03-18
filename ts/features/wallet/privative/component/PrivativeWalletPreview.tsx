@@ -1,17 +1,17 @@
+import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Option } from "fp-ts/lib/Option";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
-import { Body } from "../../../../components/core/typography/Body";
+import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
+import { Monospace } from "../../../../components/core/typography/Monospace";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
-import { PrivativePaymentMethod } from "../../../../types/pagopa";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { CardLayoutPreview } from "../../component/CardLayoutPreview";
-import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
 import { isImageURISource } from "../../../../types/image";
+import { PrivativePaymentMethod } from "../../../../types/pagopa";
+import { CardLayoutPreview } from "../../component/CardLayoutPreview";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
   privative: PrivativePaymentMethod;
@@ -75,9 +75,14 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
   return (
     <CardLayoutPreview
       left={
-        <Body style={IOStyles.flex} numberOfLines={1} testID={"caption"}>
+        <Monospace
+          style={IOStyles.flex}
+          numberOfLines={1}
+          testID={"caption"}
+          color={"bluegreyDark"}
+        >
           {props.privative.caption}
-        </Body>
+        </Monospace>
       }
       right={rightElement}
       onPress={() => props.navigateToPrivativeDetails(props.privative)}
