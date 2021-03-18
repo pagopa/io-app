@@ -1,64 +1,69 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { cgnEycaStatus } from "../../actions/eyca/details";
+import {
+  isLoading,
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-import { cgnEycaDetails } from "../../actions/eyca/details";
 
-export type EycaDetailsState = {
-  status: "ELIGIBLE" | "INELIGIBLE";
-  information: pot.Pot<EycaCard, NetworkError>;
-};
+export type EycaDetailStatus = "NOT_FOUND" | "INELIGIBLE" | "ERROR" | "FOUND";
+export type EycaDetailKOStatus = Exclude<EycaDetailStatus, "FOUND">;
 
-const INITIAL_STATE: EycaDetailsState = {
-  status: "ELIGIBLE",
-  information: pot.none
-};
+export type EycaDetail =
+  | {
+      status: Extract<EycaDetailStatus, "FOUND">;
+      card: EycaCard;
+    }
+  | {
+      status: EycaDetailKOStatus;
+    };
+export type EycaDetailsState = RemoteValue<EycaDetail, NetworkError>;
 
+const INITIAL_STATE: EycaDetailsState = remoteUndefined;
 const reducer = (
   state: EycaDetailsState = INITIAL_STATE,
   action: Action
 ): EycaDetailsState => {
   switch (action.type) {
-    case getType(cgnEycaDetails.request):
-      return {
-        ...state,
-        information: pot.toLoading(state.information)
-      };
-    case getType(cgnEycaDetails.success):
-      return {
-        ...state,
-        status: action.payload.status,
-        information: action.payload.information
-          ? pot.some(action.payload.information)
-          : pot.none
-      };
-    case getType(cgnEycaDetails.failure):
-      return {
-        ...state,
-        status: "INELIGIBLE",
-        information: pot.toError(state.information, action.payload)
-      };
+    case getType(cgnEycaStatus.request):
+      return remoteLoading;
+    case getType(cgnEycaStatus.success):
+      return remoteReady(action.payload);
+    case getType(cgnEycaStatus.failure):
+      return remoteError(action.payload);
   }
   return state;
 };
 
 export default reducer;
 
-export const eycaDetailSelector = (state: GlobalState) =>
+export const eycaDetailSelector = (state: GlobalState): EycaDetailsState =>
   state.bonus.cgn.eyca.details;
 
 export const isEycaEligible = createSelector(
   eycaDetailSelector,
-  (eycaDetails: EycaDetailsState): boolean => eycaDetails.status === "ELIGIBLE"
+  (eycaDetail: EycaDetailsState): boolean =>
+    isReady(eycaDetail) && eycaDetail.value.status !== "INELIGIBLE"
 );
 
-export const eycaDetailsInformationSelector = createSelector(
+export const eycaInformationSelector = createSelector(
   eycaDetailSelector,
-  (eycaDetails: EycaDetailsState): EycaCard | undefined =>
-    eycaDetails.status === "ELIGIBLE"
-      ? pot.getOrElse(eycaDetails.information, undefined)
+  (eycaDetail: EycaDetailsState): EycaCard | undefined =>
+    isReady(eycaDetail) && eycaDetail.value.status === "FOUND"
+      ? eycaDetail.value.card
       : undefined
+);
+
+export const isEycaDetailsLoading = createSelector(
+  eycaDetailSelector,
+  (eycaDetail: EycaDetailsState): boolean => isLoading(eycaDetail)
 );

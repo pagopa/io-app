@@ -8,8 +8,12 @@ import {
 import { apiUrlPrefix } from "../../../../config";
 import { BackendCGN } from "../api/backendCgn";
 import { cgnDetails } from "../store/actions/details";
-import { cgnEycaDetails } from "../store/actions/eyca/details";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationStatusRequest
+} from "../store/actions/eyca/activation";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
@@ -17,8 +21,10 @@ import {
   handleCgnStatusPolling
 } from "./networking/activation/getBonusActivationSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
-import { eycaGetInformationSaga } from "./networking/eyca/details/getEycaDetailSaga";
+import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
 import { cgnGenerateOtp } from "./networking/otp";
+import { handleEycaActivationSaga } from "./networking/eyca/activation/getEycaActivationSaga";
+import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -44,14 +50,28 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCGN.getCgnStatus
   );
 
-  // Eyca Load details
+  // Eyca get status
   yield takeLatest(
-    getType(cgnEycaDetails.request),
-    eycaGetInformationSaga,
-    backendCGN.getEycaStatus,
+    getType(cgnEycaStatus.request),
+    handleGetEycaStatus,
+    backendCGN.getEycaStatus
+  );
+
+  // Eyca Activation
+  yield takeLatest(
+    getType(cgnEycaActivation.request),
+    handleEycaActivationSaga,
+    backendCGN.getEycaActivation,
+    backendCGN.startEycaActivation
+  );
+
+  // Eyca Activation Status
+  yield takeLatest(
+    getType(cgnEycaActivationStatusRequest),
+    getEycaActivationStatusSaga,
     backendCGN.getEycaActivation
   );
-  
+
   // CGN Otp generation
   yield takeLatest(
     getType(cgnGenerateOtpAction.request),

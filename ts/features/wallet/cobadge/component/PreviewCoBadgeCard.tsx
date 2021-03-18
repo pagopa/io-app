@@ -4,7 +4,7 @@ import { PaymentInstrument } from "../../../../../definitions/pagopa/walletv2/Pa
 import { getCardIconFromPaymentNetwork } from "../../../../utils/card";
 import {
   getTitleFromPaymentInstrument,
-  isCoBadgeBlocked
+  isCoBadgeOrPrivativeBlocked
 } from "../../../../utils/paymentMethod";
 import BaseCoBadgeCard from "./BaseCoBadgeCard";
 
@@ -20,7 +20,7 @@ const PreviewCoBadgeCard: React.FunctionComponent<Props> = props => {
     <BaseCoBadgeCard
       abi={props.abi}
       expiringDate={props.coBadge.expiringDate}
-      blocked={isCoBadgeBlocked(props.coBadge)}
+      blocked={isCoBadgeOrPrivativeBlocked(props.coBadge)}
       brandLogo={brandLogo}
       caption={getTitleFromPaymentInstrument(props.coBadge)}
     />
