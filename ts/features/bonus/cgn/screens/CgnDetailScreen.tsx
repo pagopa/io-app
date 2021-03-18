@@ -33,6 +33,10 @@ import {
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
+import {
+  isEycaDetailsLoading,
+  isEycaEligible
+} from "../store/reducers/eyca/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -92,9 +96,13 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               // ACTIVATED - EXPIRED - REVOKED
               <CgnStatusDetail cgnDetail={props.cgnDetails} />
             )}
-            <ItemSeparatorComponent noPadded />
-            <View spacer />
-            <EycaDetailComponent />
+            {(props.isEycaLoading || props.isEycaEligible) && (
+              <>
+                <ItemSeparatorComponent noPadded />
+                <View spacer />
+                <EycaDetailComponent />
+              </>
+            )}
           </View>
         </ScrollView>
         <FooterWithButtons
@@ -115,7 +123,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
-  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
+  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
+  isEycaEligible: isEycaEligible(state),
+  isEycaLoading: isEycaDetailsLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

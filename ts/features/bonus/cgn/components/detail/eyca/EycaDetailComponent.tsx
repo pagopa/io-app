@@ -33,6 +33,10 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [props.eyca]);
 
+  const errorComponent = (
+    <EycaErrorComponent onRetry={props.requestEycaActivation} />
+  );
+
   const renderComponentEycaStatus = (eyca: EycaCard) => {
     switch (eyca.status) {
       case "ACTIVATED":
@@ -41,13 +45,8 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
         return <EycaStatusDetailsComponent eycaCard={eyca} />;
       case "PENDING":
         return fromNullable(props.eycaActivationStatus).fold(
-          <EycaErrorComponent onRetry={props.requestEycaActivation} />,
-          as =>
-            as === "ERROR" ? (
-              <EycaErrorComponent onRetry={props.requestEycaActivation} />
-            ) : (
-              <EycaPendingComponent />
-            )
+          errorComponent,
+          as => (as === "ERROR" ? errorComponent : <EycaPendingComponent />)
         );
       default:
         return <></>;
@@ -62,7 +61,7 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
       accessibilityElementsHidden={true}
     />
   ) : (
-    fromNullable(props.eyca).fold(<></>, renderComponentEycaStatus)
+    fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
   );
 };
 
