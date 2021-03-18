@@ -1,4 +1,3 @@
-// bonus reducer
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";

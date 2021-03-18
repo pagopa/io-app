@@ -105,10 +105,6 @@ export function* getActivation(
   }
 }
 
-export type RequestEycaActivationSaga = ReturnType<
-  typeof handleEycaActivationSaga
->;
-
 /**
  * Function that handles the activation of EYCA card
  * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
