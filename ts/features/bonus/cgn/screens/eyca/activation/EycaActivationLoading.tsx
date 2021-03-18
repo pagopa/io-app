@@ -1,13 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { LoadingErrorComponent } from "../../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../../../../i18n";
-import { cgnEycaActivationstatus } from "../../../store/reducers/eyca/activation";
 import {
-  cgnEycaActivationCancel,
-  cgnEycaActivationRequest
+  cgnEycaActivationLoading,
+  cgnEycaActivationStatus
+} from "../../../store/reducers/eyca/activation";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationCancel
 } from "../../../store/actions/eyca/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -28,11 +32,13 @@ const EycaActivationLoading: React.FunctionComponent<Props> = (
 );
 
 const mapStateToProps = (state: GlobalState) => ({
-  isLoading: cgnEycaActivationstatus(state) !== "ERROR"
+  isLoading:
+    cgnEycaActivationLoading(state) ||
+    fromNullable(cgnEycaActivationStatus(state)).fold(true, s => s !== "ERROR")
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onRetry: () => dispatch(cgnEycaActivationRequest()),
+  onRetry: () => dispatch(cgnEycaActivation.request()),
   onCancel: () => dispatch(cgnEycaActivationCancel())
 });
 
