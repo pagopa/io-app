@@ -53,7 +53,7 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
     () =>
       isSome(props.foundPrivative) ? (
         <AddPrivativeCardComponent
-          pan={props.foundPrivative.value}
+          paymentInstrument={props.foundPrivative.value}
           handleSkip={props.cancel}
           handleContinue={addToWallet}
           contextualHelp={emptyContextualHelp}
