@@ -1,11 +1,11 @@
+import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
+import { View } from "native-base";
+import { ScrollView } from "react-native-gesture-handler";
 import I18n from "../../../../../../i18n";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
-import * as React from "react";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import { View } from "native-base";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { ScrollView } from "react-native-gesture-handler";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import {
   getPrivativeGdoLogoUrl,

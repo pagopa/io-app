@@ -1,11 +1,11 @@
+import { NavigationParams } from "react-navigation";
+import * as React from "react";
+import { Action, createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { Action, createStore, Store } from "redux";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
-import { NavigationParams } from "react-navigation";
-import * as React from "react";
 import AddPrivativeCardScreen from "../AddPrivativeCardScreen";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../navigation/routes";
 import {
