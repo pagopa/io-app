@@ -948,7 +948,7 @@ wallet:
           title: "Al momento è impossibile verificare la tua carta"
           body: "Riprova per favore"
         koNotFound:
-          title: "Spiacenti, questa carta non risulta intestata a te"
+          title: "Spiacenti, c'è un problema con questa carta"
           body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
           cta:
             modifyCardNumber: "Modifica numero carta"
