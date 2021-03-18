@@ -1,3 +1,5 @@
+import { Option } from "fp-ts/lib/Option";
+import { Badge, View } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -7,17 +9,14 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
-import { Option } from "fp-ts/lib/Option";
-import { Badge, View } from "native-base";
+import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
+import { H5 } from "../../../../../components/core/typography/H5";
 import { Monospace } from "../../../../../components/core/typography/Monospace";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
+import { isImageURISource } from "../../../../../types/image";
 import BaseCardComponent from "../../../component/BaseCardComponent";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
-import { isImageURISource } from "../../../../../types/image";
 
 type Props = {
   loyaltyLogo?: ImageSourcePropType;
