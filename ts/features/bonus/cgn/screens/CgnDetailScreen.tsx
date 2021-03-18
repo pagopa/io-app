@@ -29,6 +29,8 @@ import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { cgnDetails } from "../store/actions/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -42,6 +44,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
     props.loadEycaDetails();
   }, []);
+
+  useActionOnFocus(props.loadCgnDetails);
 
   return (
     <BaseScreenComponent
@@ -112,6 +116,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
+  loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
 });
 
