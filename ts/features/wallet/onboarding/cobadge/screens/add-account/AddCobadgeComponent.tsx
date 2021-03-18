@@ -23,7 +23,7 @@ import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
+import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: PaymentInstrument;
@@ -96,20 +96,21 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-            {isCoBadgeBlocked(props.pan) ? (
+            {isCoBadgeOrPrivativeBlocked(props.pan) ? (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
               </InfoBox>
             ) : (
               <InfoBox>
-                <Body>{warning1}</Body>
-                <Label color={"bluegrey"}>{warning2}</Label>
+                <Body>
+                  {warning1} <Label color={"bluegrey"}>{warning2}</Label>
+                </Body>
               </InfoBox>
             )}
           </View>
           <View spacer />
         </ScrollView>
-        {isCoBadgeBlocked(props.pan) ? (
+        {isCoBadgeOrPrivativeBlocked(props.pan) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(
