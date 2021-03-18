@@ -2297,6 +2297,19 @@ bonus:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
     otp:
+      screen:
+        title: Use discount code
+        cta: Copy code
+        text1: "Paste this code into the corresponding field on the merchant website within"
+        text2: "Once the code expires, it is no longer valid"
+        link: Code is not working?
+        bottomSheet:
+          body:
+            text1: "Some merchants require you to enter a "
+            text2: "static discount code."
+            text3: "Search for the merchant you are interested in in the list of online merchants, and check for current offers."
+            text4: "Inside the tab for the offer you will find the code to get the benefit that you can copy and paste on the merchant's website."
+          cta: Navigate to merchants list
       code:
         title: Your discount code
         validUntil: Still valid for
