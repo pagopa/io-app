@@ -151,7 +151,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 
   const UnsubscribeButton = (props: { onPress?: () => void }) => (
     <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-      <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+      <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
     </Button>
   );
   return (

@@ -1354,6 +1354,7 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
+  removeCta: "Elimina questo metodo di pagamento"
 messages:
   accessibility:
     message:

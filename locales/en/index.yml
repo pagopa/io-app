@@ -1327,6 +1327,7 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
+  removeCta: "Delete this payment method"
 messages:
   accessibility:
     message:
