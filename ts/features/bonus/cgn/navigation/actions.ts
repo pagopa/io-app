@@ -52,6 +52,11 @@ export const navigateToCgnDetails = () =>
     routeName: CGN_ROUTES.DETAILS
   });
 
+export const navigateToCgnDetailsOtp = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.DETAILS_OTP
+  });
+
 // Merchants
 export const navigateToCgnMerchantsList = () =>
   NavigationActions.navigate({

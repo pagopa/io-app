@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, ScrollView } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -27,7 +26,10 @@ import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/redu
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
-import { navigateToCgnMerchantsList } from "../navigation/actions";
+import {
+  navigateToCgnDetailsOtp,
+  navigateToCgnMerchantsList
+} from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
@@ -102,7 +104,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             I18n.t("bonus.cgn.detail.cta.buyers")
           )}
           rightButton={confirmButtonProps(
-            constNull,
+            props.navigateToOtp,
             I18n.t("bonus.cgn.detail.cta.otp")
           )}
         />
@@ -119,7 +121,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
+  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

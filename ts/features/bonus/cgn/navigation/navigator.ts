@@ -10,6 +10,7 @@ import CgnDetailScreen from "../screens/CgnDetailScreen";
 import EycaActivationLoading from "../screens/eyca/activation/EycaActivationLoading";
 import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
+import CgnOtpScreen from "../screens/CgnOtpScreen";
 
 import CGN_ROUTES from "./routes";
 
@@ -47,6 +48,9 @@ const CgnNavigator = createStackNavigator(
     },
     [CGN_ROUTES.DETAILS]: {
       screen: CgnDetailScreen
+    },
+    [CGN_ROUTES.DETAILS_OTP]: {
+      screen: CgnOtpScreen
     }
   },
   {
