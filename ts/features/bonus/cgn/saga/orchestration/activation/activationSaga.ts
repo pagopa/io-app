@@ -42,7 +42,7 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   if (
     // if the activation started from the CTA -> go back
     route === CGN_ROUTES.CTA_START_CGN ||
-    // if the activation started from the bonus list and user abort the activation -> go back
+    // if the activation started from the bonus list and user aborted the activation -> go back
     (res === "cancel" && route === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST)
   ) {
     yield put(navigateBack());
