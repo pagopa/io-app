@@ -25,9 +25,7 @@ const loadLocales = () => ({
   title: I18n.t("wallet.onboarding.privative.search.koNotFound.title"),
   body: I18n.t("wallet.onboarding.privative.search.koNotFound.body"),
   cancel: I18n.t("global.buttons.cancel"),
-  modifyCardNumber: I18n.t(
-    "wallet.onboarding.privative.search.koNotFound.cta.modifyCardNumber"
-  )
+  retry: I18n.t("global.buttons.retry")
 });
 
 /**
@@ -36,7 +34,7 @@ const loadLocales = () => ({
  * @constructor
  */
 const PrivativeKoNotFound = (props: Props): React.ReactElement => {
-  const { headerTitle, title, body, cancel, modifyCardNumber } = loadLocales();
+  const { headerTitle, title, body, cancel, retry } = loadLocales();
 
   useHardwareBackButton(() => {
     props.cancel();
@@ -47,7 +45,6 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoNotFound"}>
         <InfoScreenComponent
@@ -59,7 +56,7 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
           type={"TwoButtonsInlineThird"}
           onRight={props.goToModifyCardNumber}
           onCancel={props.cancel}
-          rightText={modifyCardNumber}
+          rightText={retry}
           leftText={cancel}
         />
       </SafeAreaView>
