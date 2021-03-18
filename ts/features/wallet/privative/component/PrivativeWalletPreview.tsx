@@ -21,8 +21,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 20;
+const BASE_IMG_W = 100;
+const BASE_IMG_H = 30;
 
 const styles = StyleSheet.create({
   unknownLoyaltyLogo: {
