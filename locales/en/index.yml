@@ -916,6 +916,12 @@ wallet:
         koUnavailable:
           title: "We're unable to contact the server"
           body: "We are working to solve the problem."
+      addPrivativeCardNumber:
+        title: "Insert card number"
+        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        disclaimer:
+          text1: "By continuing you accept the"
+          text2: "information on the processing of personal data"
       search:
         loading: "We are verifying your card\n\nPlease wait"
         koTimeout:
@@ -926,6 +932,9 @@ wallet:
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your card"
+          body: "Please try again later."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
