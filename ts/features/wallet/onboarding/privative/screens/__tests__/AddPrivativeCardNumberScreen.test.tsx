@@ -19,7 +19,7 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-describe("CoBadgeChooseType component", () => {
+describe("AddPrivativeCardNumberScreen", () => {
   beforeEach(() => jest.useFakeTimers());
   it("Rendering AddPrivativeCardNumberScreen, all the required components should be defined", () => {
     const { component } = renderComponent();
