@@ -36,6 +36,7 @@ import {
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import BpdCashbackMilestoneComponent from "./BpdCashbackMilestoneComponent";
 import BpdEmptyTransactionsList from "./BpdEmptyTransactionsList";
+import { BpdTransactionDetailRepresentation } from "./detail/BpdTransactionDetailComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -67,7 +68,7 @@ const getTransactionsByDaySections = (
   transactions: ReadonlyArray<EnhancedBpdTransaction>,
   cashbackAward: number
 ): ReadonlyArray<
-  SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>
+  SectionListData<BpdTransactionDetailRepresentation | TotalCashbackPerDate>
 > => {
   const dates = [
     ...new Set(
@@ -124,25 +125,29 @@ const getTransactionsByDaySections = (
   // If the user reached the cashback amount within transactions we actualize all the cashback value starting from the index of winning transaction
   // if the winning transaction makes cashback value exceed the limit we set the amount to the difference of transaction cashback value, total amout at winnign transaction and cashback award limit.
   // all the following transactions will be set to 0 cashback value, since the limit has been reached (a dedicated item will be displayed)
-  const updatedTransactions = [...transactionsAsc].map((t, i) => {
-    if (maybeWinner.isSome()) {
-      if (
-        i === maybeWinner.value.index &&
-        maybeWinner.value.amount > cashbackAward
-      ) {
-        return {
-          ...t,
-          cashback: t.cashback - (maybeWinner.value.amount - cashbackAward)
-        };
-      } else if (i > maybeWinner.value.index) {
-        return {
-          ...t,
-          cashback: 0
-        };
+  const updatedTransactions = [...transactionsAsc].map(
+    (t, i): BpdTransactionDetailRepresentation => {
+      if (maybeWinner.isSome()) {
+        if (
+          i === maybeWinner.value.index &&
+          maybeWinner.value.amount > cashbackAward
+        ) {
+          return {
+            ...t,
+            cashback: t.cashback - (maybeWinner.value.amount - cashbackAward),
+            validForCashback: true
+          };
+        } else if (i > maybeWinner.value.index) {
+          return {
+            ...t,
+            cashback: 0,
+            validForCashback: false
+          };
+        }
       }
+      return { ...t, validForCashback: true };
     }
-    return t;
-  });
+  );
 
   return dates.map(d => ({
     title: d,
@@ -179,7 +184,9 @@ const getTransactionsByDaySections = (
 };
 
 const renderSectionHeader = (info: {
-  section: SectionListData<EnhancedBpdTransaction | TotalCashbackPerDate>;
+  section: SectionListData<
+    BpdTransactionDetailRepresentation | TotalCashbackPerDate
+  >;
 }): React.ReactNode => (
   <BaseDailyTransactionHeader
     date={info.section.title}
@@ -219,7 +226,7 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> = props => 
   const maybeLastUpdateDate = index(0, [...trxSortByDate]).map(t => t.trxDate);
 
   const renderTransactionItem: SectionListRenderItem<
-    EnhancedBpdTransaction | TotalCashbackPerDate
+    BpdTransactionDetailRepresentation | TotalCashbackPerDate
   > = info => {
     if (isTotalCashback(info.item)) {
       return (
