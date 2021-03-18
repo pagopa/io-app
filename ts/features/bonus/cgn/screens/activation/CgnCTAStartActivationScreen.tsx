@@ -6,12 +6,14 @@ import I18n from "../../../../../i18n";
 import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
+  availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { cgnActivationStart } from "../../store/actions/activation";
+import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -25,8 +27,8 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   useActionOnFocus(props.loadAvailableBonus);
 
   React.useEffect(() => {
-    // cgnActivationStart navigate to ToS screen that needs availableBonus data
-    if (props.availableBonus.length > 0) {
+    // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
+    if (props.availableBonus.length > 0 && props.cgnBonus) {
       props.startCgn();
     }
   }, [props.availableBonus]);
@@ -51,6 +53,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (globalState: GlobalState) => ({
   availableBonus: supportedAvailableBonusSelector(globalState),
+  cgnBonus: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(globalState),
   hasError: isAvailableBonusErrorSelector(globalState)
 });
 

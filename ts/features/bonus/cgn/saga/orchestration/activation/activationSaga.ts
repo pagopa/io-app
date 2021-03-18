@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import {
   cgnActivationBack,
   cgnActivationCancel,
@@ -12,7 +12,9 @@ import {
 } from "../../../../../../sagas/workUnit";
 import CGN_ROUTES from "../../../navigation/routes";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { navigateBack } from "../../../../../../store/actions/navigation";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
+import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield call(executeWorkUnit, {
@@ -32,7 +34,17 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     withResetNavigationStack,
     cgnActivationWorkUnit
   );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
+
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+    navigationCurrentRouteSelector
+  );
+  const route = currentRoute.toUndefined();
+  if (
+    // if the activation started from the CTA -> go back
+    route === CGN_ROUTES.CTA_START_CGN ||
+    // if the activation started from the bonus list and user abort the activation -> go back
+    (res === "cancel" && route === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST)
+  ) {
+    yield put(navigateBack());
   }
 }

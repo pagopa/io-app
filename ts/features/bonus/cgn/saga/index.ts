@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import {
   cgnActivationStart,
@@ -33,7 +33,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   );
 
   // CGN Activation workflow
-  yield takeEvery(getType(cgnActivationStart), handleCgnStartActivationSaga);
+  yield takeLatest(getType(cgnActivationStart), handleCgnStartActivationSaga);
 
   // CGN Load details
   yield takeLatest(
