@@ -113,54 +113,52 @@ const headerContent = (
   </>
 );
 
-class TransactionsScreen extends React.Component<Props> {
-  public render(): React.ReactNode {
-    const selectedWallet = this.props.navigation.getParam("selectedWallet");
+const TransactionsScreen: React.FC<Props> = (props: Props) => {
+  const selectedWallet = props.navigation.getParam("selectedWallet");
 
-    const isFavorite = pot.map(
-      this.props.favoriteWallet,
-      _ => _ === selectedWallet.idWallet
-    );
+  const isFavorite = pot.map(
+    props.favoriteWallet,
+    _ => _ === selectedWallet.idWallet
+  );
 
-    // to retro-compatibility purpose
-    const pm = pot.getOrElse(
-      pot.map(this.props.paymentMethods, pms =>
-        pms.find(pm => pm.idWallet === selectedWallet.idWallet)
-      ),
-      undefined
-    );
+  // to retro-compatibility purpose
+  const pm = pot.getOrElse(
+    pot.map(props.paymentMethods, pms =>
+      pms.find(pm => pm.idWallet === selectedWallet.idWallet)
+    ),
+    undefined
+  );
 
-    return (
-      <WalletLayout
-        title={I18n.t("wallet.paymentMethod")}
-        allowGoBack={true}
-        topContent={headerContent(
-          selectedWallet,
-          isFavorite,
-          this.props.setFavoriteWallet,
-          this.props.deleteWallet
-        )}
-        hideHeader={true}
-        hasDynamicSubHeader={true}
-        topContentHeight={HEADER_HEIGHT}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_transaction"]}
-      >
-        {pm && (
-          <>
-            <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} extralarge={true} />
-              <PaymentMethodCapabilities paymentMethod={pm} />
-              <View spacer={true} />
-              <ItemSeparatorComponent noPadded={true} />
-            </View>
-            <EdgeBorderComponent />
-          </>
-        )}
-      </WalletLayout>
-    );
-  }
-}
+  return (
+    <WalletLayout
+      title={I18n.t("wallet.paymentMethod")}
+      allowGoBack={true}
+      topContent={headerContent(
+        selectedWallet,
+        isFavorite,
+        props.setFavoriteWallet,
+        props.deleteWallet
+      )}
+      hideHeader={true}
+      hasDynamicSubHeader={true}
+      topContentHeight={HEADER_HEIGHT}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_transaction"]}
+    >
+      {pm && (
+        <>
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} extralarge={true} />
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+          </View>
+          <EdgeBorderComponent />
+        </>
+      )}
+    </WalletLayout>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWallet: getFavoriteWalletId(state),
