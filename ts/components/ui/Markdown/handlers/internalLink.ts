@@ -4,12 +4,13 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import URLParse from "url-parse";
-import { bpdEnabled, myPortalEnabled } from "../../../../config";
+import { bpdEnabled, cgnEnabled, myPortalEnabled } from "../../../../config";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
 import { addInternalRouteNavigation } from "../../../../store/actions/internalRouteNavigation";
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
+import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
 const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
@@ -33,11 +34,14 @@ const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
   BPD_ROUTES.CTA_BPD_IBAN_EDIT
 ];
 
+const CGN_ROUTE_NAMES: ReadonlyArray<string> = [CGN_ROUTES.CTA_START_CGN];
+
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 
 const ALLOWED_ROUTE_NAMES = ROUTE_NAMES.concat(
   myPortalEnabled ? MY_PORTAL_ROUTES : [],
-  bpdEnabled ? BPD_ROUTE_NAMES : []
+  bpdEnabled ? BPD_ROUTE_NAMES : [],
+  cgnEnabled ? CGN_ROUTE_NAMES : []
 );
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
