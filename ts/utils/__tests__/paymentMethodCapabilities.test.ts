@@ -1,3 +1,4 @@
+import { TypeEnum } from "../../../definitions/pagopa/walletv2/CardInfo";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
@@ -127,6 +128,24 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aBancomat,
       kind: "Bancomat"
+    } as PaymentMethod;
+
+    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
+  });
+
+  it("should return not_available if is a privative card", () => {
+    const aCreditCard = {
+      kind: "CreditCard",
+      info: {
+        brand: "MAESTRO",
+        issuerAbiCode: "123",
+        type: TypeEnum.PRV
+      }
+    } as CreditCardPaymentMethod;
+    const aPaymentMethod = {
+      ...aCreditCard,
+      kind: "CreditCard",
+      pagoPA: false
     } as PaymentMethod;
 
     expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");

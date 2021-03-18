@@ -5,18 +5,19 @@ import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
 } from "../../../navigation/actions";
-import { RequestEycaActivationSaga } from "../../networking/eyca/activation/getEycaActivationSaga";
+import { handleEycaActivationSaga } from "../../networking/eyca/activation/getEycaActivationSaga";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { cgnEycaActivationCancel } from "../../../store/actions/eyca/activation";
+import { BackendCGN } from "../../../api/backendCgn";
 
 export function* eycaActivationWorker(
-  requestEycaActivationSaga: RequestEycaActivationSaga
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
   yield put(navigateToEycaActivationLoading());
   yield put(navigationHistoryPop(1));
 
-  const progress = yield call(requestEycaActivationSaga);
-  yield put(progress);
+  yield call(handleEycaActivationSaga, getEycaActivation, startEycaActivation);
 
   yield put(navigateToCgnDetails());
 }
@@ -25,10 +26,15 @@ export function* eycaActivationWorker(
  * This saga handles the CGN activation polling
  */
 export function* eycaActivationSaga(
-  requestEycaActivationSaga: RequestEycaActivationSaga
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
+  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): SagaIterator {
   const { cancelAction } = yield race({
-    activation: call(eycaActivationWorker, requestEycaActivationSaga),
+    activation: call(
+      eycaActivationWorker,
+      getEycaActivation,
+      startEycaActivation
+    ),
     cancelAction: take(cgnEycaActivationCancel)
   });
   if (cancelAction) {

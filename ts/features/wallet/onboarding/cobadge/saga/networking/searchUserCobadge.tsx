@@ -1,5 +1,4 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { mixpanelTrack } from "../../../../../../mixpanel";
@@ -9,6 +8,7 @@ import {
   getNetworkError,
   NetworkError
 } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { trackCobadgeResponse } from "../../analytics";
 
@@ -78,7 +78,7 @@ export const searchUserCobadge = async (
       }
     } else {
       const error = getGenericError(
-        new Error(readableReport(getPansWithRefreshResult.value))
+        new Error(readablePrivacyReport(getPansWithRefreshResult.value))
       );
       void mixpanelTrack(`${logPrefix}_FAILURE`, { reason: error });
       return left(error);

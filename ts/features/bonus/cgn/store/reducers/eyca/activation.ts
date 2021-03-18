@@ -4,30 +4,34 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  cgnEycaActivationRequest,
-  cgnEycaActivationStatus
+  isLoading,
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
+import { NetworkError } from "../../../../../../utils/errors";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationStatusRequest
 } from "../../actions/eyca/activation";
-import { EycaActivationDetail } from "../../../../../../../definitions/cgn/EycaActivationDetail";
 
-export enum CgnEycaActivationProgressEnum {
-  "UNDEFINED" = "UNDEFINED",
-  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
-  "PROGRESS" = "PROGRESS", // The request is started
-  "PENDING" = "PENDING", // Polling time exceeded
-  "ERROR" = "ERROR", // There's an error
-  "EXISTS" = "EXISTS", // Another bonus related to this user was found
-  "INELIGIBLE" = "INELIGIBLE", // Another bonus related to this user was found
-  "SUCCESS" = "SUCCESS" // Activation has been completed
-}
+export type CgnEycaActivationStatus =
+  | "POLLING"
+  | "POLLING_TIMEOUT"
+  | "COMPLETED"
+  | "INELIGIBLE"
+  | "ALREADY_ACTIVE"
+  | "ERROR";
 
-export type EycaActivationState = {
-  status: CgnEycaActivationProgressEnum;
-  value?: EycaActivationDetail;
-};
+export type EycaActivationState = RemoteValue<
+  CgnEycaActivationStatus,
+  NetworkError
+>;
 
-const INITIAL_STATE: EycaActivationState = {
-  status: CgnEycaActivationProgressEnum.UNDEFINED
-};
+const INITIAL_STATE: EycaActivationState = remoteUndefined;
 
 const reducer = (
   state: EycaActivationState = INITIAL_STATE,
@@ -35,39 +39,34 @@ const reducer = (
 ): EycaActivationState => {
   switch (action.type) {
     // bonus activation
-    case getType(cgnEycaActivationRequest):
-    case getType(cgnEycaActivationStatus.request):
-      return {
-        ...state,
-        status: CgnEycaActivationProgressEnum.PROGRESS
-      };
-    case getType(cgnEycaActivationStatus.success):
-      return {
-        ...state,
-        status: action.payload.status,
-        value: action.payload.value
-      };
-    case getType(cgnEycaActivationStatus.failure):
-      return {
-        ...state,
-        status: CgnEycaActivationProgressEnum.ERROR
-      };
+    case getType(cgnEycaActivation.request):
+    case getType(cgnEycaActivationStatusRequest):
+      return remoteLoading;
+    case getType(cgnEycaActivation.success):
+      return remoteReady(action.payload);
+    case getType(cgnEycaActivation.failure):
+      return remoteError(action.payload);
   }
   return state;
 };
 
 // Selectors
-export const eycaActivationSelector = (
+export const eycaActivationStatusSelector = (
   state: GlobalState
 ): EycaActivationState => state.bonus.cgn.eyca.activation;
 
 // return the cgn eyca status
 // TODO Use this selector in PR https://github.com/pagopa/io-app/pull/2872
 //  to check the EYCA activation status is not ERROR
-export const cgnEycaActivationstatus = createSelector(
-  eycaActivationSelector,
-  (activation: EycaActivationState): CgnEycaActivationProgressEnum =>
-    activation.status
+export const cgnEycaActivationStatus = createSelector(
+  eycaActivationStatusSelector,
+  (activation: EycaActivationState): CgnEycaActivationStatus | undefined =>
+    isReady(activation) ? activation.value : undefined
+);
+
+export const cgnEycaActivationLoading = createSelector(
+  eycaActivationStatusSelector,
+  (activation: EycaActivationState): boolean => isLoading(activation)
 );
 
 export default reducer;

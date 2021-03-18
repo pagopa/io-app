@@ -25,26 +25,33 @@ import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { cgnEycaDetails } from "../store/actions/eyca/details";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import { isEycaEligible } from "../store/reducers/eyca/details";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { navigateToCgnMerchantsList } from "../navigation/actions";
+import CgnCardComponent from "../components/detail/CgnCardComponent";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { cgnDetails } from "../store/actions/details";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const HEADER_BACKGROUND_COLOR = "#7CB3D9";
 /**
  * Screen to display all the information about the active CGN
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
-    props.loadEycaDetails();
   }, []);
+
+  useActionOnFocus(() => {
+    props.loadCgnDetails();
+    props.loadEycaDetails();
+  });
 
   return (
     <BaseScreenComponent
-      headerBackgroundColor={IOColors.yellowGradientTop}
+      headerBackgroundColor={HEADER_BACKGROUND_COLOR}
       goBack
       headerTitle={I18n.t("bonus.cgn.name")}
       titleColor={"black"}
@@ -52,12 +59,14 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
-          <LinearGradient
-            colors={[IOColors.yellowGradientTop, IOColors.yellowGradientBottom]}
-          >
-            {/* TODO Add Specific CGN Card element when card is available */}
-            <View style={{ height: 164 }} />
+          <LinearGradient colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}>
+            <View
+              style={[IOStyles.horizontalContentPadding, { height: 180 }]}
+            />
           </LinearGradient>
+          {props.cgnDetails && (
+            <CgnCardComponent cgnDetails={props.cgnDetails} />
+          )}
           <View
             style={[
               IOStyles.flex,
@@ -81,13 +90,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               // ACTIVATED - EXPIRED - REVOKED
               <CgnStatusDetail cgnDetail={props.cgnDetails} />
             )}
-            {props.isEycaElgible && (
-              <>
-                <ItemSeparatorComponent noPadded />
-                <View spacer />
-                <EycaDetailComponent />
-              </>
-            )}
+            <ItemSeparatorComponent noPadded />
+            <View spacer />
+            <EycaDetailComponent />
           </View>
         </ScrollView>
         <FooterWithButtons
@@ -108,12 +113,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
-  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
-  isEycaElgible: isEycaEligible(state)
+  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadEycaDetails: () => dispatch(cgnEycaDetails.request()),
+  loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
+  loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
 });
 
