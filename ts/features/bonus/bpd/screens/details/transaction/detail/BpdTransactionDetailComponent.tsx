@@ -14,7 +14,13 @@ import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
-type Props = { transaction: EnhancedBpdTransaction };
+export type BpdTransactionDetailRepresentation = EnhancedBpdTransaction & {
+  // false if the transaction is not valid for the cashback (eg: the user has
+  // already reached the maximum cashback value for the period )
+  validForCashback: boolean;
+};
+
+type Props = { transaction: BpdTransactionDetailRepresentation };
 
 const styles = StyleSheet.create({
   image: { width: 48, height: 30 },
