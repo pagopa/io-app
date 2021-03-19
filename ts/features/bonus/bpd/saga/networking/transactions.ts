@@ -33,7 +33,7 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
   ["06", "Diners"],
   ["07", "PostePay"],
   ["08", "BancomatPay"],
-  ["09", "SatisPay"],
+  ["09", "Satispay"],
   ["10", "Private"]
 ]);
 
@@ -48,7 +48,7 @@ const convertTransactions = (
     awardPeriodId,
     circuitType: fromNullable(
       mapNetworkCircuitType.get(nt.circuitType)
-    ).getOrElse("Unknown") // TODO which is the right default? maybe 'Unknown' can be added to CircuitType literal union?
+    ).getOrElse("Unknown")
   }));
   return {
     results,

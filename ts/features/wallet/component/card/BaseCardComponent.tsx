@@ -2,7 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import customVariables from "../../../theme/variables";
+import customVariables from "../../../../theme/variables";
 
 type Props = {
   topLeftCorner: React.ReactNode;

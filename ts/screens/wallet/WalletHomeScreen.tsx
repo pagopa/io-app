@@ -43,9 +43,9 @@ import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walle
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
-import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
+import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
-import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import I18n from "../../i18n";
 import {
   navigateBack,

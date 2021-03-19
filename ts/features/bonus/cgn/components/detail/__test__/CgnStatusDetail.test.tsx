@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import TypedI18n from "../../../../../../i18n";
+import I18n from "../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../utils/locale";
 import {
   CardRevoked,
@@ -44,22 +44,29 @@ describe("CgnStatusDetail", () => {
     );
     expect(component).not.toBeNull();
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.status.badge.active")
+      I18n.t("bonus.cgn.detail.status.badge.active")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
       backgroundColor: IOColors.aqua
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      I18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
         cgnStatusActivated.activation_date,
-        TypedI18n.t("global.dateFormats.shortFormat")
+        I18n.t("global.dateFormats.shortFormat")
       )
     );
-    expect(component.queryByTestId("expiration-date-label")).toBeNull();
-    expect(component.queryByTestId("expiration-date-value")).toBeNull();
+    expect(component.queryByTestId("expiration-date-label")).toHaveTextContent(
+      I18n.t("bonus.cgn.detail.status.expiration.cgn")
+    );
+    expect(component.queryByTestId("expiration-date-value")).toHaveTextContent(
+      localeDateFormat(
+        cgnStatusActivated.expiration_date,
+        I18n.t("global.dateFormats.shortFormat")
+      )
+    );
     expect(component.queryByTestId("revocation-date-label")).toBeNull();
     expect(component.queryByTestId("revocation-date-value")).toBeNull();
   });
@@ -68,29 +75,29 @@ describe("CgnStatusDetail", () => {
     const component = render(<CgnStatusDetail cgnDetail={cgnStatusRevoked} />);
     expect(component).not.toBeNull();
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.status.badge.revoked")
+      I18n.t("bonus.cgn.detail.status.badge.revoked")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
       backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      I18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
         cgnStatusRevoked.activation_date,
-        TypedI18n.t("global.dateFormats.shortFormat")
+        I18n.t("global.dateFormats.shortFormat")
       )
     );
     expect(component.queryByTestId("expiration-date-label")).toBeNull();
     expect(component.queryByTestId("expiration-date-value")).toBeNull();
     expect(component.queryByTestId("revocation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.revocationDateLabel")
+      I18n.t("bonus.cgn.detail.status.date.revoked")
     );
     expect(component.queryByTestId("revocation-date-value")).toHaveTextContent(
       localeDateFormat(
         cgnStatusRevoked.revocation_date,
-        TypedI18n.t("global.dateFormats.shortFormat")
+        I18n.t("global.dateFormats.shortFormat")
       )
     );
   });
@@ -99,27 +106,27 @@ describe("CgnStatusDetail", () => {
     const component = render(<CgnStatusDetail cgnDetail={cgnStatusExpired} />);
     expect(component).not.toBeNull();
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.status.badge.expired")
+      I18n.t("bonus.cgn.detail.status.badge.expired")
     );
     expect(component.queryByTestId("status-badge")).toHaveStyle({
       backgroundColor: IOColors.bluegrey
     });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.activationDateLabel")
+      I18n.t("bonus.cgn.detail.status.date.activated")
     );
     expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
       localeDateFormat(
         cgnStatusExpired.activation_date,
-        TypedI18n.t("global.dateFormats.shortFormat")
+        I18n.t("global.dateFormats.shortFormat")
       )
     );
     expect(component.queryByTestId("expiration-date-label")).toHaveTextContent(
-      TypedI18n.t("bonus.cgn.detail.expirationDateLabel")
+      I18n.t("bonus.cgn.detail.status.date.expired")
     );
     expect(component.queryByTestId("expiration-date-value")).toHaveTextContent(
       localeDateFormat(
         cgnStatusExpired.expiration_date,
-        TypedI18n.t("global.dateFormats.shortFormat")
+        I18n.t("global.dateFormats.shortFormat")
       )
     );
     expect(component.queryByTestId("revocation-date-label")).toBeNull();
