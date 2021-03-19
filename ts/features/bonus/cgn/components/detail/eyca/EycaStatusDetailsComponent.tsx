@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Badge, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
@@ -42,49 +42,50 @@ const styles = StyleSheet.create({
 
 const ICON_SIZE = 24;
 
-const EycaStatusDetailsComponent: React.FunctionComponent<Props> = (
-  props: Props
-) => {
-  const badgeByStatus = () => {
+type BadgeProps = {
+  text: string;
+  badgeStyle: StyleProp<ViewStyle>;
+  textColor: "bluegreyDark" | "white";
+};
+
+const EycaStatusBadge = ({ text, badgeStyle, textColor }: BadgeProps) => (
+  <Badge style={badgeStyle}>
+    <H5 weight={"SemiBold"} color={textColor} style={styles.statusBadgeText}>
+      {text}
+    </H5>
+  </Badge>
+);
+
+// Component to show detasils of an EYCA card related to user's CGN
+const EycaStatusDetailsComponent = (props: Props) => {
+  const badgeByStatus = (): React.ReactNode => {
     switch (props.eycaCard.status) {
       case "ACTIVATED":
         return (
-          <Badge style={[styles.statusBadgeActive]}>
-            <H5
-              weight={"SemiBold"}
-              color={"bluegreyDark"}
-              style={styles.statusBadgeText}
-            >
-              {I18n.t("bonus.cgn.detail.status.badge.active")}
-            </H5>
-          </Badge>
+          <EycaStatusBadge
+            text={I18n.t("bonus.cgn.detail.status.badge.active")}
+            badgeStyle={styles.statusBadgeActive}
+            textColor={"bluegreyDark"}
+          />
         );
       case "REVOKED":
         return (
-          <Badge style={[styles.statusBadgeExpired]}>
-            <H5
-              weight={"SemiBold"}
-              color={"white"}
-              style={styles.statusBadgeText}
-            >
-              {I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            </H5>
-          </Badge>
+          <EycaStatusBadge
+            text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
+            badgeStyle={styles.statusBadgeExpired}
+            textColor={"white"}
+          />
         );
       case "EXPIRED":
         return (
-          <Badge style={[styles.statusBadgeExpired]}>
-            <H5
-              weight={"SemiBold"}
-              color={"white"}
-              style={styles.statusBadgeText}
-            >
-              {I18n.t("bonus.cgn.detail.status.badge.expired")}
-            </H5>
-          </Badge>
+          <EycaStatusBadge
+            text={I18n.t("bonus.cgn.detail.status.badge.expired")}
+            badgeStyle={styles.statusBadgeExpired}
+            textColor={"white"}
+          />
         );
       default:
-        return <></>;
+        return null;
     }
   };
   return (

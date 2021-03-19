@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import {
-  eycaInformationSelector,
+  eycaCardSelector,
   isEycaDetailsLoading
 } from "../../../store/reducers/eyca/details";
 import {
@@ -26,7 +26,12 @@ import EycaErrorComponent from "./EycaErrorComponent";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
+// This component is used to handle the rendering conditions of the three possible EYCA states for the user
+// ERROR => EycaErrorComponent
+// FOUND and PENDING => First we check the BE orchestrator status than shows EycaPendingComponent if card is pending and
+//                      orchestrator is not in an error state, unless we will show EycaErrorComponent
+// FOUND and detailed => EycaStatusDetailsComponent
+const EycaDetailComponent = (props: Props) => {
   useEffect(() => {
     if (CardPending.is(props.eyca)) {
       props.getEycaActivationStatus();
@@ -37,7 +42,7 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
     <EycaErrorComponent onRetry={props.requestEycaActivation} />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard) => {
+  const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":
@@ -49,24 +54,28 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
           as => (as === "ERROR" ? errorComponent : <EycaPendingComponent />)
         );
       default:
-        return <></>;
+        return null;
     }
   };
 
-  return props.isLoading ? (
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-    />
-  ) : (
-    fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+  return (
+    <>
+      {props.isLoading ? (
+        <ActivityIndicator
+          color={"black"}
+          accessible={false}
+          importantForAccessibility={"no-hide-descendants"}
+          accessibilityElementsHidden={true}
+        />
+      ) : (
+        fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+      )}
+    </>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  eyca: eycaInformationSelector(state),
+  eyca: eycaCardSelector(state),
   eycaActivationStatus: cgnEycaActivationStatus(state),
   isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
 });

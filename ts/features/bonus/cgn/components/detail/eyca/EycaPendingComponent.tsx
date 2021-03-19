@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 const ICON_SIZE = 24;
 const EYCA_URL = "https://www.eyca.org";
 
-const EycaStatusDetailsComponent: React.FunctionComponent = () => (
+// Component that informs the user that the EYCA card request is still in progress
+const EycaStatusDetailsComponent = () => (
   <>
     <View style={[styles.rowBlock, styles.spaced]}>
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>

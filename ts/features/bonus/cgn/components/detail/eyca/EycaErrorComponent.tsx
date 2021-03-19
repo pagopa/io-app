@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
 const TITLE_ICON_SIZE = 24;
 const INFOBOX_ICON_SIZE = 32;
 
-const EycaErrorComponent: React.FunctionComponent<Props> = (props: Props) => (
+// Component that informs the user that the EYCA card request has failed
+// and will give the user the opportunity to request again it's activation
+const EycaErrorComponent = (props: Props) => (
   <>
     <View style={[styles.rowBlock, styles.spaced]}>
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
