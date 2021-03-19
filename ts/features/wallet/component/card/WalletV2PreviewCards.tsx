@@ -2,19 +2,19 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { GlobalState } from "../../../store/reducers/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   cobadgeListVisibleInWalletSelector,
   privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
-} from "../../../store/reducers/wallet/wallets";
-import BancomatWalletPreview from "../bancomat/component/BancomatWalletPreview";
-import BPayWalletPreview from "../bancomatpay/component/BPayWalletPreview";
-import CobadgeWalletPreview from "../cobadge/component/CobadgeWalletPreview";
-import PrivativeWalletPreview from "../privative/component/PrivativeWalletPreview";
-import SatispayWalletPreview from "../satispay/SatispayWalletPreview";
+} from "../../../../store/reducers/wallet/wallets";
+import BancomatWalletPreview from "../../bancomat/component/BancomatWalletPreview";
+import BPayWalletPreview from "../../bancomatpay/component/BPayWalletPreview";
+import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
+import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
+import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

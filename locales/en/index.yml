@@ -928,13 +928,17 @@ wallet:
           title: "It is currently impossible to verify your card"
           body: "Please try again"
         koNotFound:
-          title: "Sorry, this card is not in your name"
+          title: "Sorry, there is an issue with this card"
           body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
           cta:
             modifyCardNumber: "Change card number"
         koServiceError:
           title: "Sorry, we're unable to retrieve your card"
           body: "Please try again later."
+      add:
+        screenTitle: "Do you want to add this card?"
+        loading: "We are adding your card\n\nPlease hold on..."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"

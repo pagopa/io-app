@@ -26,6 +26,7 @@ import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {
+  onBack?: () => void;
   bonus: BonusAvailable;
   onConfirm?: () => void;
   onCancel?: () => void;
@@ -217,7 +218,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.onBack ?? true}
       headerTitle={bonusTypeLocalizedContent.name}
       contextualHelpMarkdown={props.contextualHelpMarkdown}
       contextualHelp={props.contextualHelp}

@@ -10,7 +10,7 @@ import I18n from "../../../../i18n";
 import { navigateToBancomatDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
-import { CardLogoPreview } from "../../component/CardLogoPreview";
+import { CardLogoPreview } from "../../component/card/CardLogoPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = { bancomat: BancomatPaymentMethod };

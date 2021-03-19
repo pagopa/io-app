@@ -1,3 +1,5 @@
+import { Option } from "fp-ts/lib/Option";
+import { Badge, View } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -7,19 +9,17 @@ import {
   StyleProp,
   StyleSheet
 } from "react-native";
-import { Option } from "fp-ts/lib/Option";
-import { Badge, View } from "native-base";
-import I18n from "../../../../../i18n";
-import BaseCardComponent from "../../../component/BaseCardComponent";
-import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import { H4 } from "../../../../../components/core/typography/H4";
+import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
+import I18n from "../../../../../i18n";
 import { isImageURISource } from "../../../../../types/image";
+import BaseCardComponent from "../../../component/card/BaseCardComponent";
+import { BlurredPan } from "../../../component/card/BlurredPan";
+import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
-  loyaltyLogo: ImageSourcePropType;
+  loyaltyLogo?: ImageSourcePropType;
   caption?: string;
   gdoLogo?: ImageURISource;
   blocked?: boolean;
@@ -100,12 +100,13 @@ const renderGdoLogo = (gdoLogo: ImageURISource) =>
   );
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
-  const loyaltyLogo = isImageURISource(props.loyaltyLogo)
-    ? renderLoyaltyLogo(
-        props.loyaltyLogo,
-        useImageResize(BASE_IMG_W, BASE_IMG_H, props.loyaltyLogo.uri)
-      )
-    : fallbackLoyaltyLogo;
+  const loyaltyLogo =
+    props.loyaltyLogo && isImageURISource(props.loyaltyLogo)
+      ? renderLoyaltyLogo(
+          props.loyaltyLogo,
+          useImageResize(BASE_IMG_W, BASE_IMG_H, props.loyaltyLogo.uri)
+        )
+      : fallbackLoyaltyLogo;
 
   return (
     <BaseCardComponent
@@ -130,9 +131,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.caption && (
             <>
               <View style={{ flexDirection: "row" }}>
-                <H4 weight={"Regular"} testID="caption">
-                  {props.caption}
-                </H4>
+                <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
               <View spacer small />
             </>
