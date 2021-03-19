@@ -53,14 +53,14 @@ function* handleStartActivation(
   }
 }
 
-type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
+export type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 /**
  * ask for the current status of EYCA activation
  * it returns the status {@link GetEycaStatus} - right case
  * if an error occured it returns a {@link NetworkError} - left case
  * @param getEycaActivation
  */
-function* getActivation(
+export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
   try {
