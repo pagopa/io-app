@@ -23,7 +23,6 @@ import {
   isCgnDetailsLoading
 } from "../store/reducers/details";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
-import CgnInfoboxDetail from "../components/detail/CgnInfoboxDetail";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
@@ -87,12 +86,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 { paddingTop: customVariables.contentPadding }
               ]}
             >
-              {props.cgnDetails && (
-                // Renders the message based on the current status of the card
-                <CgnInfoboxDetail cgnDetail={props.cgnDetails} />
-              )}
-              <View spacer />
-              <ItemSeparatorComponent noPadded />
+
               <View spacer />
               {/* Ownership block rendering owner's fiscal code */}
               <CgnOwnershipInformation />
