@@ -21,7 +21,7 @@ const loadLocales = () => ({
 });
 
 /**
- * This screen is displayed when an expected failure occurs in a work unit
+ * This screen is displayed when an unexpected failure occurs in a work unit
  * @constructor
  * @param props
  */
