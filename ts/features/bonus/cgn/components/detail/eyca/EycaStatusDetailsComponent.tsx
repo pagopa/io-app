@@ -56,7 +56,7 @@ const EycaStatusBadge = ({ text, badgeStyle, textColor }: BadgeProps) => (
   </Badge>
 );
 
-// Component to show detasils of an EYCA card related to user's CGN
+// this component shows EYCA card details related to user's CGN
 const EycaStatusDetailsComponent = (props: Props) => {
   const badgeByStatus = (): React.ReactNode => {
     switch (props.eycaCard.status) {
