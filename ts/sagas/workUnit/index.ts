@@ -7,7 +7,7 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
-import { navigateToOnboardingPrivativeKoUnavailableScreen } from "../../features/wallet/onboarding/privative/navigation/action";
+import { navigateToWorkunitGenericErrorScreen } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
@@ -87,13 +87,11 @@ export function* withFailureHandling<T>(
   navigateTo?: NavigationNavigateAction
 ) {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
-  console.log("FAILUREEEE");
-  console.log(res);
   if (res === "failure") {
     if (navigateTo !== undefined) {
       yield put(navigateTo);
     }
-    yield put(navigateToOnboardingPrivativeKoUnavailableScreen());
+    yield put(navigateToWorkunitGenericErrorScreen());
   }
   return res;
 }

@@ -1,5 +1,6 @@
 import { Animated, Easing } from "react-native";
 import { createStackNavigator, TransitionConfig } from "react-navigation";
+import WorkunitGenericError from "../components/error/WorkunitGenericError";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
 import IngressScreen from "../screens/ingress/IngressScreen";
@@ -64,6 +65,9 @@ const navigator = createStackNavigator(
     [ROUTES.MAIN]: {
       // The navigator used for authenticated users on onboarding completed
       screen: MainNavigator
+    },
+    [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
+      screen: WorkunitGenericError
     }
   },
   {
