@@ -3,6 +3,7 @@ import { call, put, select } from "redux-saga/effects";
 import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
+  withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
@@ -46,9 +47,11 @@ function* privativeWorkUnit() {
  * to the wallet after the insertion.
  */
 export function* addPrivativeToWalletGeneric() {
+  const sagaExecution = () =>
+    withFailureHandling(() => withResetNavigationStack(privativeWorkUnit));
+
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    privativeWorkUnit
+    sagaExecution
   );
   if (res !== "back") {
     yield put(navigateToWalletHome());
@@ -59,11 +62,13 @@ export function* addPrivativeToWalletGeneric() {
  * Chain the add privative to wallet with "activate bpd on the new privative cards"
  */
 export function* addPrivativeToWalletAndActivateBpd() {
+  const sagaExecution = () =>
+    withFailureHandling(() => withResetNavigationStack(privativeWorkUnit));
+
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    privativeWorkUnit
+    sagaExecution
   );
-  if (res !== "back") {
+  if (res !== "back" && res !== "failure") {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit.

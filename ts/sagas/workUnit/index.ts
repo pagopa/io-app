@@ -7,9 +7,11 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
+import { navigateToOnboardingPrivativeKoUnavailableScreen } from "../../features/wallet/onboarding/privative/navigation/action";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
+import { SagaCallReturnType } from "../../types/utils";
 
 /**
  * The data model needed to run the workunit
@@ -72,6 +74,27 @@ export function* withResetNavigationStack<T>(
     yield put(navigationHistoryPop(deltaNavigation - 1));
   }
   yield put(NavigationActions.back());
+  return res;
+}
+
+/**
+ * TODO: commenta
+ * @param g
+ * @param navigateTo
+ */
+export function* withFailureHandling<T>(
+  g: (...args: Array<any>) => Generator<Effect, T, SagaResult>,
+  navigateTo?: NavigationNavigateAction
+) {
+  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
+  console.log("FAILUREEEE");
+  console.log(res);
+  if (res === "failure") {
+    if (navigateTo !== undefined) {
+      yield put(navigateTo);
+    }
+    yield put(navigateToOnboardingPrivativeKoUnavailableScreen());
+  }
   return res;
 }
 
