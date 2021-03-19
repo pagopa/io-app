@@ -84,4 +84,5 @@ export type AbiActions =
   | ActionType<typeof walletAddBancomatStart>
   | ActionType<typeof walletAddBancomatCompleted>
   | ActionType<typeof walletAddBancomatCancel>
+  | ActionType<typeof walletAddBancomatFailure>
   | ActionType<typeof walletAddBancomatBack>;

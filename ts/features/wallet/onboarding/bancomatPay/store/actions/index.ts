@@ -67,4 +67,5 @@ export type BPayActions =
   | ActionType<typeof walletAddBPayStart>
   | ActionType<typeof walletAddBPayCompleted>
   | ActionType<typeof walletAddBPayCancel>
+  | ActionType<typeof walletAddBPayFailure>
   | ActionType<typeof walletAddBPayBack>;

@@ -79,4 +79,5 @@ export type CoBadgeActions =
   | ActionType<typeof walletAddCoBadgeStart>
   | ActionType<typeof walletAddCoBadgeCompleted>
   | ActionType<typeof walletAddCoBadgeCancel>
+  | ActionType<typeof walletAddCoBadgeFailure>
   | ActionType<typeof walletAddCoBadgeBack>;

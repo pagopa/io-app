@@ -65,4 +65,5 @@ export type CgnActivationActions =
   | ActionType<typeof cgnActivationStart>
   | ActionType<typeof cgnActivationComplete>
   | ActionType<typeof cgnActivationCancel>
+  | ActionType<typeof cgnActivationFailure>
   | ActionType<typeof cgnActivationBack>;
