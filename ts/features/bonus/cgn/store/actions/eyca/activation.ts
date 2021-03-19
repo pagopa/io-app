@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../../utils/errors";
 import { CgnEycaActivationStatus } from "../../reducers/eyca/activation";
 
@@ -11,4 +15,13 @@ export const cgnEycaActivation = createAsyncAction(
   "CGN_EYCA_ACTIVATION_FAILURE"
 )<void, CgnEycaActivationStatus, NetworkError>();
 
-export type CgnEycaActivationActions = ActionType<typeof cgnEycaActivation>;
+/**
+ * Action to request the EYCA Activation Status of the orchestrator
+ */
+export const cgnEycaActivationStatusRequest = createStandardAction(
+  "CGN_EYCA_ACTIVATION_STATUS_REQUEST"
+)<void>();
+
+export type CgnEycaActivationActions =
+  | ActionType<typeof cgnEycaActivation>
+  | ActionType<typeof cgnEycaActivationStatusRequest>;
