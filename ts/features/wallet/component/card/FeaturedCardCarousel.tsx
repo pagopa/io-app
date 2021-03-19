@@ -5,22 +5,25 @@ import { View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
-import cashbackLogo from "../../../../img/bonus/bpd/logo_cashback_blue.png";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
-import { GlobalState } from "../../../store/reducers/types";
-import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../bonus/bonusVacanze/utils/bonus";
-import { bpdOnboardingStart } from "../../bonus/bpd/store/actions/onboarding";
-import { bpdEnabledSelector } from "../../bonus/bpd/store/reducers/details/activation";
-import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
-import { bpdEnabled, cgnEnabled } from "../../../config";
-import { isStrictSome } from "../../../utils/pot";
-import { isCgnEnrolledSelector } from "../../bonus/cgn/store/reducers/details";
-import { supportedAvailableBonusSelector } from "../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
+import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import I18n from "../../../../i18n";
+import { Dispatch } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import {
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../../../bonus/bonusVacanze/utils/bonus";
+import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
+import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
+import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
+import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
+import { bpdEnabled, cgnEnabled } from "../../../../config";
+import { isStrictSome } from "../../../../utils/pot";
+import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
+import { supportedAvailableBonusSelector } from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &

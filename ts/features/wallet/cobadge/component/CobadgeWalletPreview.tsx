@@ -9,7 +9,7 @@ import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Log
 import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
-import { CardLogoPreview } from "../../component/CardLogoPreview";
+import { CardLogoPreview } from "../../component/card/CardLogoPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
