@@ -1,5 +1,3 @@
-/* eslint-disable no-fallthrough */
-// disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
 import { cgnEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
@@ -10,16 +8,9 @@ import {
   cgnActivationStart,
   cgnActivationCancel,
   cgnActivationBack,
-  cgnActivationStatus,
-  cgnRequestActivation
+  cgnActivationStatus
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
-import {
-  cgnEycaActivation,
-  cgnEycaActivationCancel,
-  cgnEycaActivationStatusRequest
-} from "../store/actions/eyca/activation";
-import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnGenerateOtp } from "../store/actions/otp";
 
 const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -27,33 +18,18 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
 ): Promise<any> => {
   switch (action.type) {
     case getType(cgnActivationStart):
-    case getType(cgnRequestActivation):
     case getType(cgnActivationComplete):
     case getType(cgnActivationCancel):
     case getType(cgnActivationBack):
     case getType(cgnDetails.request):
     case getType(cgnDetails.success):
-    // OTP Related Actions
     case getType(cgnGenerateOtp.request):
     case getType(cgnGenerateOtp.success):
-    // EYCA Related Actions
-    case getType(cgnEycaActivation.request):
-    case getType(cgnEycaActivationStatusRequest):
-    case getType(cgnEycaActivationCancel):
-    case getType(cgnEycaStatus.request):
       return mp.track(action.type);
-    case getType(cgnActivationStatus.success):
-      return mp.track(action.type, { status: action.payload.status });
-    case getType(cgnEycaActivation.success):
-      return mp.track(action.type, { status: action.payload });
-    case getType(cgnEycaStatus.success):
-      return mp.track(action.type, { status: action.payload.status });
     case getType(cgnActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
     case getType(cgnDetails.failure):
     case getType(cgnGenerateOtp.failure):
-    case getType(cgnEycaActivation.failure):
-    case getType(cgnEycaStatus.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
       });
