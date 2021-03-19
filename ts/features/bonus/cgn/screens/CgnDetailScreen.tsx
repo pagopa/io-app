@@ -26,6 +26,7 @@ import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformatio
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
   navigateToCgnDetailsOtp,
@@ -34,6 +35,10 @@ import {
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
+import {
+  isEycaDetailsLoading,
+  isEycaEligible
+} from "../store/reducers/eyca/details";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -97,23 +102,28 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 // ACTIVATED - EXPIRED - REVOKED
                 <CgnStatusDetail cgnDetail={props.cgnDetails} />
               )}
-              <ItemSeparatorComponent noPadded />
-              <View spacer large />
-            </View>
-          </ScrollView>
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={cancelButtonProps(
-              props.navigateToMerchants,
-              I18n.t("bonus.cgn.detail.cta.buyers")
+            {(props.isEycaLoading || props.isEycaEligible) && (
+              <>
+                <ItemSeparatorComponent noPadded />
+                <View spacer />
+                <EycaDetailComponent />
+              </>
             )}
-            rightButton={confirmButtonProps(
-              props.navigateToOtp,
-              I18n.t("bonus.cgn.detail.cta.otp")
-            )}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
+          </View>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={cancelButtonProps(
+            props.navigateToMerchants,
+            I18n.t("bonus.cgn.detail.cta.buyers")
+          )}
+          rightButton={confirmButtonProps(
+            props.navigateToOtp,
+            I18n.t("bonus.cgn.detail.cta.otp")
+          )}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
 };
@@ -121,7 +131,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
-  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
+  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
+  isEycaEligible: isEycaEligible(state),
+  isEycaLoading: isEycaDetailsLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

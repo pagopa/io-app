@@ -2291,6 +2291,9 @@ bonus:
       cta:
         buyers: Vedi esercenti
         otp: Genera codice
+        eyca:
+          copy: Copia numero carta EYCA
+          pending: Scopri di più su EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2301,6 +2304,11 @@ bonus:
       ownership: Chi può usufruire degli sconti?
       status:
         title: Carta Giovani Nazionale
+        eyca: Carta EYCA
+        eycaCircuit: Circuito EYCA
+        eycaNumber: Numero carta
+        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
+        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
         badge:
           active: Attiva
           revoked: Annullata
@@ -2311,6 +2319,7 @@ bonus:
           revoked: Annullata il
         expiration:
           cgn: Scadenza CGN
+          eyca: Scadenza EYCA
     activation:
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
