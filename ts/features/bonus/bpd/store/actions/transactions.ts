@@ -13,7 +13,7 @@ export type CircuitType =
   | "Diners"
   | "PostePay"
   | "BancomatPay"
-  | "SatisPay"
+  | "Satispay"
   | "Private"
   | "Unknown";
 
