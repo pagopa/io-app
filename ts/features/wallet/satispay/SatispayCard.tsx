@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import BaseCardComponent from "../component/BaseCardComponent";
+import BaseCardComponent from "../component/card/BaseCardComponent";
 import satispayLogoExt from "../../../../img/wallet/payment-methods/satispay-logo.png";
 import satispayLogoMin from "../../../../img/wallet/cards-icons/satispay.png";
 import { Body } from "../../../components/core/typography/Body";

@@ -2315,7 +2315,7 @@ bonus:
         date:
           activated: Attivata il
           expired: Scaduta il
-          revoked: Revocata il
+          revoked: Annullata il
         expiration:
           cgn: Scadenza CGN
           eyca: Scadenza EYCA

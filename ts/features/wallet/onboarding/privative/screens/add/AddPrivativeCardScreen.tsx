@@ -19,8 +19,8 @@ import {
 } from "../../store/actions";
 import { onboardingPrivativeAddingResultSelector } from "../../store/reducers/addingPrivative";
 import { onboardingPrivativeFoundSelector } from "../../store/reducers/foundPrivative";
-import LoadAddPrivativeCard from "./LoadAddPrivativeCard";
 import AddPrivativeCardComponent from "./AddPrivativeCardComponent";
+import LoadAddPrivativeCard from "./LoadAddPrivativeCard";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &

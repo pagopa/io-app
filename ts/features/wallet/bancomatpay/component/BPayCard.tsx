@@ -3,7 +3,7 @@ import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
-import BaseCardComponent from "../../component/BaseCardComponent";
+import BaseCardComponent from "../../component/card/BaseCardComponent";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { GlobalState } from "../../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";

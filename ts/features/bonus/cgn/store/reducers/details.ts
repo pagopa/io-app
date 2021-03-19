@@ -84,3 +84,9 @@ export const cgnDetailsInformationSelector = createSelector(
   ): Card | undefined =>
     isStrictSome(information) && isAvailable ? information.value : undefined
 );
+
+export const isCgnDetailsLoading = createSelector(
+  cgnDetailSelector,
+  (information: CgnDetailsState["information"]): boolean =>
+    pot.isLoading(information)
+);

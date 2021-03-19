@@ -18,6 +18,7 @@ import { playSvg } from "./CardSvgPayload";
 
 type Props = {
   cgnDetails: Card;
+  onCardLoadEnd: () => void;
 } & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
@@ -154,6 +155,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       >
         <WebView
           style={{ borderRadius: 15, top: -1, left: -1 }}
+          onLoadEnd={props.onCardLoadEnd}
           source={{
             html: generatedSvg
           }}
