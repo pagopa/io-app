@@ -3,7 +3,7 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -38,6 +38,7 @@ import defaultCardIcon from "../../../img/wallet/cards-icons/unknown.png";
 import { getTitleFromCard } from "../../utils/paymentMethod";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -150,9 +151,13 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
   });
 
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
-    <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
+    <ButtonDefaultOpacity
+      bordered={true}
+      style={styles.cancelButton}
+      onPress={props.onPress}
+    >
       <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
-    </Button>
+    </ButtonDefaultOpacity>
   );
   return (
     <WalletLayout
