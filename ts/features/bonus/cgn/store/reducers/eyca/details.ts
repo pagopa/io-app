@@ -49,7 +49,7 @@ export default reducer;
 export const eycaDetailSelector = (state: GlobalState): EycaDetailsState =>
   state.bonus.cgn.eyca.details;
 
-// Returns true if the EYCA state is in any status than INELIGIBLE
+// Returns true if the EYCA state is in any status different from INELIGIBLE
 // NOT_FOUND or ERROR means the user may have an EYCA card but it's not available right now
 // FOUND means the user have an EYCA card and card field is defined
 export const isEycaEligible = createSelector(
