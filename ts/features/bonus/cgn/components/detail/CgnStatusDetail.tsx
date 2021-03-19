@@ -2,10 +2,9 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, View } from "native-base";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import I18n from "../../../../../i18n";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import TypedI18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
@@ -81,7 +80,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -100,7 +99,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.expiration_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -133,7 +132,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -152,7 +151,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.expiration_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -189,7 +188,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -208,7 +207,7 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
               >
                 {localeDateFormat(
                   cgnDetail.revocation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
