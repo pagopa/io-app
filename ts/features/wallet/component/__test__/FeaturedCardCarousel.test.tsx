@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import * as React from "react";
 import configureMockStore, { MockStoreEnhanced } from "redux-mock-store";
 import { Provider } from "react-redux";
-import FeaturedCardCarousel from "../FeaturedCardCarousel";
+import FeaturedCardCarousel from "../card/FeaturedCardCarousel";
 import { appReducer } from "../../../../store/reducers";
 import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
 import { GlobalState } from "../../../../store/reducers/types";

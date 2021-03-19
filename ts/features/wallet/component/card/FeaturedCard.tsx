@@ -3,13 +3,13 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import customVariables from "../../../theme/variables";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import customVariables from "../../../../theme/variables";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
-} from "../../../components/TouchableDefaultOpacity";
-import I18n from "../../../i18n";
+} from "../../../../components/TouchableDefaultOpacity";
+import I18n from "../../../../i18n";
 
 type Props = {
   title: string;

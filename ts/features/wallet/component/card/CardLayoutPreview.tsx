@@ -1,9 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import I18n from "../../../i18n";
-import variables from "../../../theme/variables";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import I18n from "../../../../i18n";
+import variables from "../../../../theme/variables";
 
 type Props = {
   left: React.ReactNode;
