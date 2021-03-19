@@ -93,7 +93,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 { paddingTop: customVariables.contentPadding }
               ]}
             >
-
               <View spacer />
               {/* Ownership block rendering owner's fiscal code */}
               <CgnOwnershipInformation />
@@ -104,28 +103,28 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 // ACTIVATED - EXPIRED - REVOKED
                 <CgnStatusDetail cgnDetail={props.cgnDetails} />
               )}
-            {(props.isEycaLoading || props.isEycaEligible) && (
-              <>
-                <ItemSeparatorComponent noPadded />
-                <View spacer />
-                <EycaDetailComponent />
-              </>
+              {(props.isEycaLoading || props.isEycaEligible) && (
+                <>
+                  <ItemSeparatorComponent noPadded />
+                  <View spacer />
+                  <EycaDetailComponent />
+                </>
+              )}
+            </View>
+          </ScrollView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={cancelButtonProps(
+              props.navigateToMerchants,
+              I18n.t("bonus.cgn.detail.cta.buyers")
             )}
-          </View>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            props.navigateToMerchants,
-            I18n.t("bonus.cgn.detail.cta.buyers")
-          )}
-          rightButton={confirmButtonProps(
-            props.navigateToOtp,
-            I18n.t("bonus.cgn.detail.cta.otp")
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+            rightButton={confirmButtonProps(
+              props.navigateToOtp,
+              I18n.t("bonus.cgn.detail.cta.otp")
+            )}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
 };
@@ -140,8 +139,9 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnDetails: () => dispatch(cgnDetails.request()),
+  loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
