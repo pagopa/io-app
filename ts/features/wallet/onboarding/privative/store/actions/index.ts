@@ -88,7 +88,7 @@ export const walletAddPrivativeCancel = createStandardAction(
  */
 export const walletAddPrivativeFailure = createStandardAction(
   "WALLET_ONBOARDING_PRIVATIVE_FAILURE"
-)<void>();
+)<string>();
 
 /**
  * The user chooses `back` from the first screen
@@ -106,4 +106,5 @@ export type PrivativeActions =
   | ActionType<typeof walletAddPrivativeStart>
   | ActionType<typeof walletAddPrivativeCompleted>
   | ActionType<typeof walletAddPrivativeCancel>
+  | ActionType<typeof walletAddPrivativeFailure>
   | ActionType<typeof walletAddPrivativeBack>;
