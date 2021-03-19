@@ -63,7 +63,7 @@ export const walletAddCoBadgeCancel = createStandardAction(
  */
 export const walletAddCoBadgeFailure = createStandardAction(
   "WALLET_ONBOARDING_COBADGE_FAILURE"
-)<void>();
+)<string>();
 
 /**
  * The user chooses `back` from the first screen

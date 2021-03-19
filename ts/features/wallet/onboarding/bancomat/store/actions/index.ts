@@ -68,7 +68,7 @@ export const walletAddBancomatCancel = createStandardAction(
  */
 export const walletAddBancomatFailure = createStandardAction(
   "WALLET_ONBOARDING_BANCOMAT_FAILURE"
-)<void>();
+)<string>();
 
 /**
  * The user choose `back` from the first screen

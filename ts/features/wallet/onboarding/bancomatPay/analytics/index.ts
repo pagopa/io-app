@@ -11,6 +11,7 @@ import {
   walletAddBPayBack,
   walletAddBPayCancel,
   walletAddBPayCompleted,
+  walletAddBPayFailure,
   walletAddBPayStart
 } from "../store/actions";
 
@@ -45,6 +46,10 @@ export const trackBPayAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: isTimeoutError(action.payload)
           ? action.payload.kind
           : action.payload.value.message
+      });
+    case getType(walletAddBPayFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();

@@ -52,7 +52,7 @@ export const walletAddBPayCancel = createStandardAction(
  */
 export const walletAddBPayFailure = createStandardAction(
   "WALLET_ONBOARDING_BPAY_FAILURE"
-)<void>();
+)<string>();
 
 /**
  * The user choose `back` from the first screen
