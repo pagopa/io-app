@@ -25,7 +25,7 @@ const loadLocales = () => ({
  * @constructor
  * @param props
  */
-const WorkunitGenericError = (props: Props): React.ReactElement => {
+const WorkunitGenericFailure = (props: Props): React.ReactElement => {
   const { headerTitle, title, close } = loadLocales();
   return (
     <BaseScreenComponent headerTitle={headerTitle} goBack={true}>
@@ -48,4 +48,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(NavigationActions.back())
 });
 
-export default connect(null, mapDispatchToProps)(WorkunitGenericError);
+export default connect(null, mapDispatchToProps)(WorkunitGenericFailure);

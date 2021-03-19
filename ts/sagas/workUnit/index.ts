@@ -7,7 +7,7 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
-import { navigateToWorkunitGenericErrorScreen } from "../../store/actions/navigation";
+import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
@@ -91,7 +91,7 @@ export function* withFailureHandling<T>(
     if (navigateTo !== undefined) {
       yield put(navigateTo);
     }
-    yield put(navigateToWorkunitGenericErrorScreen());
+    yield put(navigateToWorkunitGenericFailureScreen());
   }
   return res;
 }
