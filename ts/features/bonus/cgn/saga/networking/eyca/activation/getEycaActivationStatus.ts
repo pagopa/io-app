@@ -4,6 +4,7 @@ import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { getActivation } from "./getEycaActivationSaga";
 
+// export type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 export function* getEycaActivationStatusSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ) {
@@ -13,10 +14,7 @@ export function* getEycaActivationStatusSaga(
   );
   if (activationInfo.isLeft()) {
     yield put(cgnEycaActivation.failure(activationInfo.value));
-    return;
-  }
-
-  if (activationInfo.value === "ERROR") {
+  } else {
     yield put(cgnEycaActivation.success(activationInfo.value));
   }
 }

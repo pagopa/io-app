@@ -51,7 +51,12 @@ const EycaDetailComponent = (props: Props) => {
       case "PENDING":
         return fromNullable(props.eycaActivationStatus).fold(
           errorComponent,
-          as => (as === "ERROR" ? errorComponent : <EycaPendingComponent />)
+          as =>
+            as === "ERROR" || as === "NOT_FOUND" ? (
+              errorComponent
+            ) : (
+              <EycaPendingComponent />
+            )
         );
       default:
         return null;

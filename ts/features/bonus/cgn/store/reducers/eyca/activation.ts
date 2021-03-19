@@ -20,6 +20,8 @@ import {
 export type CgnEycaActivationStatus =
   | "POLLING"
   | "POLLING_TIMEOUT"
+  | "PROCESSING"
+  | "NOT_FOUND"
   | "COMPLETED"
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"
