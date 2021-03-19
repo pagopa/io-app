@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
@@ -18,7 +18,10 @@ import {
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import customVariables from "../../../../theme/variables";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { cgnDetailsInformationSelector } from "../store/reducers/details";
+import {
+  cgnDetailsInformationSelector,
+  isCgnDetailsLoading
+} from "../store/reducers/details";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
@@ -31,6 +34,7 @@ import {
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -40,6 +44,8 @@ const HEADER_BACKGROUND_COLOR = "#7CB3D9";
  * Screen to display all the information about the active CGN
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
+  const [cardLoading, setCardLoading] = useState(true);
+
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
     props.loadEycaDetails();
@@ -47,63 +53,74 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   useActionOnFocus(props.loadCgnDetails);
 
+  const onCardLoadEnd = () => setCardLoading(false);
+
   return (
-    <BaseScreenComponent
-      headerBackgroundColor={HEADER_BACKGROUND_COLOR}
-      goBack
-      headerTitle={I18n.t("bonus.cgn.name")}
-      titleColor={"black"}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.flex]} bounces={false}>
-          <LinearGradient colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}>
-            <View
-              style={[IOStyles.horizontalContentPadding, { height: 180 }]}
-            />
-          </LinearGradient>
-          {props.cgnDetails && (
-            <CgnCardComponent cgnDetails={props.cgnDetails} />
-          )}
-          <View
-            style={[
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding,
-              { paddingTop: customVariables.contentPadding }
-            ]}
-          >
-            <View spacer />
-            {/* Ownership block rendering owner's fiscal code */}
-            <CgnOwnershipInformation />
-            <ItemSeparatorComponent noPadded />
-            <View spacer />
+    <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
+      <BaseScreenComponent
+        headerBackgroundColor={HEADER_BACKGROUND_COLOR}
+        goBack
+        headerTitle={I18n.t("bonus.cgn.name")}
+        titleColor={"black"}
+        contextualHelp={emptyContextualHelp}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView style={[IOStyles.flex]} bounces={false}>
+            <LinearGradient
+              colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}
+            >
+              <View
+                style={[IOStyles.horizontalContentPadding, { height: 180 }]}
+              />
+            </LinearGradient>
             {props.cgnDetails && (
-              // Renders status information including activation and expiring date and a badge that represents the CGN status
-              // ACTIVATED - EXPIRED - REVOKED
-              <CgnStatusDetail cgnDetail={props.cgnDetails} />
+              <CgnCardComponent
+                cgnDetails={props.cgnDetails}
+                onCardLoadEnd={onCardLoadEnd}
+              />
             )}
-            <ItemSeparatorComponent noPadded />
-            <View spacer large />
-          </View>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            props.navigateToMerchants,
-            I18n.t("bonus.cgn.detail.cta.buyers")
-          )}
-          rightButton={confirmButtonProps(
-            props.navigateToOtp,
-            I18n.t("bonus.cgn.detail.cta.otp")
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+            <View
+              style={[
+                IOStyles.flex,
+                IOStyles.horizontalContentPadding,
+                { paddingTop: customVariables.contentPadding }
+              ]}
+            >
+
+              <View spacer />
+              {/* Ownership block rendering owner's fiscal code */}
+              <CgnOwnershipInformation />
+              <ItemSeparatorComponent noPadded />
+              <View spacer />
+              {props.cgnDetails && (
+                // Renders status information including activation and expiring date and a badge that represents the CGN status
+                // ACTIVATED - EXPIRED - REVOKED
+                <CgnStatusDetail cgnDetail={props.cgnDetails} />
+              )}
+              <ItemSeparatorComponent noPadded />
+              <View spacer large />
+            </View>
+          </ScrollView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={cancelButtonProps(
+              props.navigateToMerchants,
+              I18n.t("bonus.cgn.detail.cta.buyers")
+            )}
+            rightButton={confirmButtonProps(
+              props.navigateToOtp,
+              I18n.t("bonus.cgn.detail.cta.otp")
+            )}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
+    </LoadingSpinnerOverlay>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
+  isCgnInfoLoading: isCgnDetailsLoading(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state)
 });
 
