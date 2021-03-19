@@ -10,7 +10,8 @@ import {
   cgnActivationStart,
   cgnActivationCancel,
   cgnActivationBack,
-  cgnActivationStatus
+  cgnActivationStatus,
+  cgnRequestActivation
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import {
@@ -26,6 +27,7 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
 ): Promise<any> => {
   switch (action.type) {
     case getType(cgnActivationStart):
+    case getType(cgnRequestActivation):
     case getType(cgnActivationComplete):
     case getType(cgnActivationCancel):
     case getType(cgnActivationBack):
@@ -40,10 +42,12 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnEycaActivationCancel):
     case getType(cgnEycaStatus.request):
       return mp.track(action.type);
+    case getType(cgnActivationStatus.success):
+      return mp.track(action.type, { status: action.payload.status });
     case getType(cgnEycaActivation.success):
-      return mp.track(action.type, { activationStatus: action.payload });
+      return mp.track(action.type, { status: action.payload });
     case getType(cgnEycaStatus.success):
-      return mp.track(action.type, { detailStatus: action.payload.status });
+      return mp.track(action.type, { status: action.payload.status });
     case getType(cgnActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
     case getType(cgnDetails.failure):
