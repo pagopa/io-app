@@ -17,7 +17,8 @@ import WALLET_ONBOARDING_BPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddBPayBack,
   walletAddBPayCancel,
-  walletAddBPayCompleted
+  walletAddBPayCompleted,
+  walletAddBPayFailure
 } from "../../store/actions";
 import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBPay";
 
@@ -34,7 +35,8 @@ function* bPayWorkUnit() {
     startScreenName: WALLET_ONBOARDING_BPAY_ROUTES.START,
     complete: walletAddBPayCompleted,
     back: walletAddBPayBack,
-    cancel: walletAddBPayCancel
+    cancel: walletAddBPayCancel,
+    failure: walletAddBPayFailure
   });
 }
 

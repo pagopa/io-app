@@ -17,7 +17,8 @@ import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddSatispayBack,
   walletAddSatispayCancel,
-  walletAddSatispayCompleted
+  walletAddSatispayCompleted,
+  walletAddSatispayFailure
 } from "../../store/actions";
 import { onboardingSatispayAddedResultSelector } from "../../store/reducers/addedSatispay";
 
@@ -34,7 +35,8 @@ function* satispayWorkUnit() {
     startScreenName: WALLET_ONBOARDING_SATISPAY_ROUTES.START,
     complete: walletAddSatispayCompleted,
     back: walletAddSatispayBack,
-    cancel: walletAddSatispayCancel
+    cancel: walletAddSatispayCancel,
+    failure: walletAddSatispayFailure
   });
 }
 

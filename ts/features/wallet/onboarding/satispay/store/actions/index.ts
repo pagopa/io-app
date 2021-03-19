@@ -47,6 +47,13 @@ export const walletAddSatispayCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddSatispayFailure = createStandardAction(
+  "WALLET_ONBOARDING_SATISPAY_FAILURE"
+)<void>();
+
+/**
  * The user choose `back` from the first screen
  */
 export const walletAddSatispayBack = createStandardAction(

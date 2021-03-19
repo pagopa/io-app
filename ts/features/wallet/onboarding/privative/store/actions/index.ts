@@ -84,6 +84,13 @@ export const walletAddPrivativeCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddPrivativeFailure = createStandardAction(
+  "WALLET_ONBOARDING_PRIVATIVE_FAILURE"
+)<void>();
+
+/**
  * The user chooses `back` from the first screen
  */
 export const walletAddPrivativeBack = createStandardAction(

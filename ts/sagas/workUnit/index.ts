@@ -25,12 +25,14 @@ export type WorkUnit = {
   cancel: ActionCreator<TypeConstant>;
   // The action that will be taken when `back` is pressed from the `startScreenName`
   back: ActionCreator<TypeConstant>;
+  // The action that will be taken when the workflow fails for unexpected reasons
+  failure: ActionCreator<TypeConstant>;
 };
 
 /**
  * The result of the WorkUnit
  */
-export type SagaResult = "cancel" | "completed" | "back";
+export type SagaResult = "cancel" | "completed" | "back" | "failure";
 
 /**
  * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
@@ -82,14 +84,17 @@ export function* executeWorkUnit(
 ): Generator<
   Effect,
   SagaResult,
-  ActionType<typeof wu.cancel | typeof wu.complete | typeof wu.back>
+  ActionType<
+    typeof wu.cancel | typeof wu.complete | typeof wu.back | typeof wu.failure
+  >
 > {
   yield call(ensureScreen, wu.startScreenNavigation, wu.startScreenName);
 
   const result = yield take([
     getType(wu.complete),
     getType(wu.cancel),
-    getType(wu.back)
+    getType(wu.back),
+    getType(wu.failure)
   ]);
 
   if (isActionOf(wu.complete, result)) {
@@ -98,6 +103,8 @@ export function* executeWorkUnit(
     return "cancel";
   } else if (isActionOf(wu.back, result)) {
     return "back";
+  } else if (isActionOf(wu.failure, result)) {
+    return "failure";
   }
   throw new Error(`Unhandled case for ${result}`);
 }

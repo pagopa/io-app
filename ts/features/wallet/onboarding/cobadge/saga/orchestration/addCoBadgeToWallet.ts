@@ -17,7 +17,8 @@ import WALLET_ONBOARDING_COBADGE_ROUTES from "../../navigation/routes";
 import {
   walletAddCoBadgeBack,
   walletAddCoBadgeCancel,
-  walletAddCoBadgeCompleted
+  walletAddCoBadgeCompleted,
+  walletAddCoBadgeFailure
 } from "../../store/actions";
 import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadge";
 
@@ -34,7 +35,8 @@ function* coBadgeWorkUnit() {
     startScreenName: WALLET_ONBOARDING_COBADGE_ROUTES.START,
     complete: walletAddCoBadgeCompleted,
     back: walletAddCoBadgeBack,
-    cancel: walletAddCoBadgeCancel
+    cancel: walletAddCoBadgeCancel,
+    failure: walletAddCoBadgeFailure
   });
 }
 

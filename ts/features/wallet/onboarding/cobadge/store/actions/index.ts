@@ -59,6 +59,13 @@ export const walletAddCoBadgeCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddCoBadgeFailure = createStandardAction(
+  "WALLET_ONBOARDING_COBADGE_FAILURE"
+)<void>();
+
+/**
  * The user chooses `back` from the first screen
  */
 export const walletAddCoBadgeBack = createStandardAction(

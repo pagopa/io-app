@@ -18,7 +18,8 @@ import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../navigation/routes";
 import {
   walletAddPrivativeBack,
   walletAddPrivativeCancel,
-  walletAddPrivativeCompleted
+  walletAddPrivativeCompleted,
+  walletAddPrivativeFailure
 } from "../../store/actions";
 import { onboardingPrivativeAddedSelector } from "../../store/reducers/addedPrivative";
 
@@ -35,7 +36,8 @@ function* privativeWorkUnit() {
     startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER,
     complete: walletAddPrivativeCompleted,
     back: walletAddPrivativeBack,
-    cancel: walletAddPrivativeCancel
+    cancel: walletAddPrivativeCancel,
+    failure: walletAddPrivativeFailure
   });
 }
 

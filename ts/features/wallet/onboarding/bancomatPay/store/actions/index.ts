@@ -48,6 +48,13 @@ export const walletAddBPayCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddBPayFailure = createStandardAction(
+  "WALLET_ONBOARDING_BPAY_FAILURE"
+)<void>();
+
+/**
  * The user choose `back` from the first screen
  */
 export const walletAddBPayBack = createStandardAction(

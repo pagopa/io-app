@@ -17,7 +17,8 @@ import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
-  walletAddBancomatCompleted
+  walletAddBancomatCompleted,
+  walletAddBancomatFailure
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 
@@ -34,7 +35,8 @@ function* bancomatWorkUnit() {
     startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
-    cancel: walletAddBancomatCancel
+    cancel: walletAddBancomatCancel,
+    failure: walletAddBancomatFailure
   });
 }
 

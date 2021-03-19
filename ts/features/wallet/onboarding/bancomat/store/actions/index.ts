@@ -64,6 +64,13 @@ export const walletAddBancomatCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddBancomatFailure = createStandardAction(
+  "WALLET_ONBOARDING_BANCOMAT_FAILURE"
+)<void>();
+
+/**
  * The user choose `back` from the first screen
  */
 export const walletAddBancomatBack = createStandardAction(

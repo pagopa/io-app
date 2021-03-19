@@ -30,6 +30,13 @@ export const cgnActivationCancel = createStandardAction(
 )<void>();
 
 /**
+ * Fails the activation workflow
+ */
+export const cgnActivationFailure = createStandardAction(
+  "CGN_ACTIVATION_FAILURE"
+)<void>();
+
+/**
  * Back from the activation workflow
  */
 export const cgnActivationBack = createStandardAction("CGN_ACTIVATION_BACK")<
