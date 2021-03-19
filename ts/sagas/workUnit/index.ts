@@ -78,19 +78,14 @@ export function* withResetNavigationStack<T>(
 }
 
 /**
- * TODO: commenta
+ * TODO: Generic handling for the failure of a workunit, navigate to GenericFailureScren
  * @param g
- * @param navigateTo
  */
 export function* withFailureHandling<T>(
-  g: (...args: Array<any>) => Generator<Effect, T, SagaResult>,
-  navigateTo?: NavigationNavigateAction
+  g: (...args: Array<any>) => Generator<Effect, T, SagaResult>
 ) {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
   if (res === "failure") {
-    if (navigateTo !== undefined) {
-      yield put(navigateTo);
-    }
     yield put(navigateToWorkunitGenericFailureScreen());
   }
   return res;
