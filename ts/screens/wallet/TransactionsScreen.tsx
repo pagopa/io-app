@@ -149,7 +149,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         : FOUR_UNICODE_CIRCLES
   });
 
-  const UnsubscribeButton = (props: { onPress?: () => void }) => (
+  const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
       <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
     </Button>
@@ -178,7 +178,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
-            <UnsubscribeButton
+            <DeletePaymentMethodButton
               onPress={() =>
                 present(() => props.deleteWallet(selectedWallet.idWallet))
               }
