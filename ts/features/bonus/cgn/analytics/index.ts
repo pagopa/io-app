@@ -9,7 +9,8 @@ import {
   cgnActivationCancel,
   cgnActivationBack,
   cgnActivationStatus,
-  cgnRequestActivation
+  cgnRequestActivation,
+  cgnActivationFailure
 } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import {
@@ -52,6 +53,10 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnEycaStatus.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
+      });
+    case getType(cgnActivationFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();
