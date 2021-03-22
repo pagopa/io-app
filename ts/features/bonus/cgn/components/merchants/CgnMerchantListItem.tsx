@@ -37,7 +37,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   >
     <View style={styles.row}>
       {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-      <IconFont name={"io-books"} size={22} color={IOColors.bluegrey} />
+      <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
       <View hspacer small />
       <H5 weight={"SemiBold"} color={"bluegrey"}>
         {props.category.toLocaleUpperCase()}

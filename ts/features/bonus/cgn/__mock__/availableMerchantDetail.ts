@@ -21,8 +21,9 @@ export type TmpMerchantDetail = {
 
 export const sampleMerchant: TmpMerchantDetail = {
   name: "Nome teatro",
-  url: "https://google.com",
-  cover: "https://picsum.photos/343/230",
+  url: "https://io.italia.it",
+  cover:
+    "https://www.teatrosocialemantova.it/images/gallerie/alveo_2-960x500.jpg",
   location: "Via Roma 1, 00000, Roma",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin dolor ut lacus faucibus lobortis.",
@@ -31,7 +32,7 @@ export const sampleMerchant: TmpMerchantDetail = {
   workingHours: "Lun, Mar, Mer, Gio, Dom 9:00 - 23:00 Ven, Sab 9:00 - 00:00",
   discounts: [
     {
-      category: "test category",
+      category: "TEATRO, CINEMA E SPETTACOLO",
       title: "Abbonamento stagione danza",
       description:
         "Acquista un abbonamento per tutti gli spettacoli di danza previsti per la stagione 2021-22.",
@@ -42,10 +43,10 @@ export const sampleMerchant: TmpMerchantDetail = {
       value: 30
     },
     {
-      category: "test category 2",
-      title: "Abbonamento stagione danza",
+      category: "TEATRO, CINEMA E SPETTACOLO",
+      title: "Spettacolo: Uno, nessuno, centomila",
       description:
-        "Acquista un abbonamento per tutti gli spettacoli di danza previsti per la stagione 2021-22.",
+        "Acquista un biglietto per te le rappresentazioni dello spettacolo.",
       validityDescription: "Dal 15 Marzo al 15 Maggio 2021.",
       conditions:
         "Lo sconto del 30% si applica sull’acquisto di un solo abbonamento. L’offerta è nominale e non è rimborsabile.",
