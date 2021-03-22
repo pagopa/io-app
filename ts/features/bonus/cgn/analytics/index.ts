@@ -37,9 +37,9 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnEycaActivation.request): // EYCA Related Actions
     case getType(cgnEycaActivationStatusRequest):
     case getType(cgnEycaActivationCancel):
-    case getType(cgnEycaStatus.success):
     case getType(cgnEycaStatus.request):
       return mp.track(action.type);
+    case getType(cgnEycaStatus.success):
     case getType(cgnActivationStatus.success):
       return mp.track(action.type, { status: action.payload.status });
     case getType(cgnEycaActivation.success):
