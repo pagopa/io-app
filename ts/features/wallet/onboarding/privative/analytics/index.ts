@@ -12,6 +12,7 @@ import {
   walletAddPrivativeCancel,
   walletAddPrivativeChooseIssuer,
   walletAddPrivativeCompleted,
+  walletAddPrivativeFailure,
   walletAddPrivativeInsertCardNumber,
   walletAddPrivativeStart
 } from "../store/actions";
@@ -45,6 +46,10 @@ export const trackPrivativeAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(searchUserPrivative.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
+      });
+    case getType(walletAddPrivativeFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();

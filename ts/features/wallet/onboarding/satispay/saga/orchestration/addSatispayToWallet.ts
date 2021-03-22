@@ -4,7 +4,6 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -17,7 +16,8 @@ import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddSatispayBack,
   walletAddSatispayCancel,
-  walletAddSatispayCompleted
+  walletAddSatispayCompleted,
+  walletAddSatispayFailure
 } from "../../store/actions";
 import { onboardingSatispayAddedResultSelector } from "../../store/reducers/addedSatispay";
 
@@ -34,22 +34,9 @@ function* satispayWorkUnit() {
     startScreenName: WALLET_ONBOARDING_SATISPAY_ROUTES.START,
     complete: walletAddSatispayCompleted,
     back: walletAddSatispayBack,
-    cancel: walletAddSatispayCancel
+    cancel: walletAddSatispayCancel,
+    failure: walletAddSatispayFailure
   });
-}
-
-/**
- * A saga that invokes the addition of satispay workflow {@link satispayWorkUnit} and return
- * to the wallet after the insertion.
- */
-export function* addSatispayToWalletGeneric() {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    satispayWorkUnit
-  );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
-  }
 }
 
 /**

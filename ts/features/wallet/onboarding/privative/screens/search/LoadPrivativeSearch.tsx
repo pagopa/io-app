@@ -34,6 +34,7 @@ const LoadPrivativeSearch = (props: Props): React.ReactElement | null => {
   const { privativeSelected } = props;
 
   if (privativeSelected === undefined) {
+    // in this case the action walletAddPrivativeFailure is dispatched from the father component SearchPrivativeCardScreen
     return null;
   } else {
     return (
