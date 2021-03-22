@@ -65,8 +65,6 @@ import {
   GetWalletsUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
-  paySslUsingPOSTDecoder,
-  PaySslUsingPOSTT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
@@ -389,21 +387,6 @@ const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   )
 };
 
-type PayUsingPOSTTExtra = MapResponseType<
-  PaySslUsingPOSTT,
-  200,
-  TransactionResponse
->;
-
-const postPayment: PayUsingPOSTTExtra = {
-  method: "post",
-  url: ({ id }) => `/v1/payments/${id}/actions/pay`,
-  query: () => ({}),
-  body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: paySslUsingPOSTDecoder(TransactionResponse)
-};
-
 const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/payments/${id}/actions/delete`,
@@ -522,7 +505,10 @@ const getCobadgePans: GetCobadgesUsingGETT = {
     return `/v1/cobadge/pans${abiParameter}`;
   },
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeader,
+  headers: p => {
+    const authBearer = ParamAuthorizationBearerHeader(p);
+    return p.PanCode ? { ...authBearer, PanCode: p.PanCode } : authBearer;
+  },
   response_decoder: getCobadgesUsingGETDefaultDecoder()
 };
 
@@ -711,18 +697,6 @@ export function PaymentManagerClient(
       )({
         id
       }),
-    postPayment: (
-      id: TypeofApiParams<PaySslUsingPOSTT>["id"],
-      payRequest: TypeofApiParams<PaySslUsingPOSTT>["payRequest"]
-    ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(postPayment, altOptions)
-        )
-      )({
-        id,
-        payRequest
-      }),
     deletePayment: (
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
@@ -795,12 +769,12 @@ export function PaymentManagerClient(
           createFetchRequestForApi(addBPayToWallet, altOptions)
         )
       )({ bPayRequest }),
-    getCobadgePans: (abiCode: string | undefined) =>
+    getCobadgePans: (abiCode: string | undefined, panCode?: string) =>
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getCobadgePans, altOptions)
         )
-      )({ abiCode }),
+      )({ abiCode, PanCode: panCode }),
     searchCobadgePans: (searchRequestId: string) =>
       flip(
         withPaymentManagerToken(

@@ -7,6 +7,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { SectionStatusKey } from "../../../../../types/backendStatus";
+import { WithTestID } from "../../../../../types/WithTestID";
 import { isError, isLoading } from "../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../store/abi";
 import { loadAbi } from "../../bancomat/store/actions";
@@ -22,7 +23,7 @@ import { SearchStartComponent } from "./SearchStartComponent";
 
 type MethodType = "bancomatPay" | "bancomat" | "cobadge";
 
-type Props = {
+type Props = WithTestID<{
   methodType: MethodType;
   onSearch: (abi?: string) => void;
   navigateToSearchBank?: () => void;
@@ -30,7 +31,8 @@ type Props = {
   handleTosModal: () => void;
   handlePartecipatingBanksModal?: () => void;
   bankName?: string;
-} & ReturnType<typeof mapStateToProps> &
+}> &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
@@ -83,7 +85,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
       })}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={props.testID}>
         <Content style={IOStyles.flex}>
           <SearchStartComponent
             openTosModal={props.handleTosModal}

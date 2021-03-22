@@ -7,6 +7,14 @@ import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLangua
  */
 
 /**
+ * Return a full string locale.
+ * If not italian, for all other languages english is the default.
+ */
+export const getFullLocale = (): "it-IT" | "en-EN" =>
+  getLocalePrimary(I18n.currentLocale()).fold("en-EN", (l: string) =>
+    l === "it" ? "it-IT" : "en-EN"
+  );
+/**
  * Returns the primary component of a locale
  *
  * @see https://en.wikipedia.org/wiki/IETF_language_tag

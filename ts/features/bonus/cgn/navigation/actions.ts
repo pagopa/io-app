@@ -16,6 +16,11 @@ export const navigateToCgnActivationLoading = () =>
     routeName: CGN_ROUTES.ACTIVATION.LOADING
   });
 
+export const navigateToCgnAlreadyActive = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.ACTIVATION.EXISTS
+  });
+
 export const navigateToCgnActivationPending = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.ACTIVATION.PENDING
@@ -40,4 +45,20 @@ export const navigateToCgnActivationCompleted = () =>
 export const navigateToCgnDetails = () =>
   NavigationActions.navigate({
     routeName: CGN_ROUTES.DETAILS
+  });
+
+export const navigateToCgnDetailsOtp = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.DETAILS_OTP
+  });
+
+// Merchants
+export const navigateToCgnMerchantsList = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.MERCHANTS.LIST
+  });
+
+export const navigateToCgnMerchantDetail = () =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.MERCHANTS.DETAIL
   });

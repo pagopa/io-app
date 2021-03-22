@@ -12,6 +12,7 @@ import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen"
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
@@ -30,6 +31,7 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
+  PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -253,6 +255,14 @@ export const navigateToCobadgeDetailScreen = (
     params: { cobadge }
   });
 
+export const navigateToPrivativeDetailScreen = (
+  privative: PrivativePaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    params: { privative }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -341,6 +351,19 @@ export const navigateToPaymentManualDataInsertion = (
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
+  });
+
+export const navigateToAddCreditCardOutcomeCode = (
+  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    params
+  });
+
+export const navigateToPaymentOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
   });
 
 /**

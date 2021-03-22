@@ -9,6 +9,7 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
+import { Label } from "../../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
@@ -22,7 +23,7 @@ import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { isCoBadgeBlocked } from "../../../../../../utils/paymentMethod";
+import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
 
 type Props = {
   pan: PaymentInstrument;
@@ -50,14 +51,20 @@ const loadLocales = (props: Props) => ({
     length: props.pansNumber
   }),
   blockedCard: I18n.t("wallet.onboarding.coBadge.add.blocked"),
-  warning: I18n.t("wallet.onboarding.coBadge.add.warning")
+  warning1: I18n.t("wallet.onboarding.coBadge.add.warning1"),
+  warning2: I18n.t("wallet.onboarding.coBadge.add.warning2")
 });
 
 const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-  const { headerTitle, screenTitle, label, blockedCard, warning } = loadLocales(
-    props
-  );
+  const {
+    headerTitle,
+    screenTitle,
+    label,
+    blockedCard,
+    warning1,
+    warning2
+  } = loadLocales(props);
   React.useEffect(() => {
     const abi: Abi | undefined = props.abiList.find(
       elem => elem.abi === props.pan.abiCode
@@ -71,7 +78,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"AddCobadgeComponent"}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
           <View
@@ -89,19 +96,21 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <View spacer={true} large={true} />
-            {isCoBadgeBlocked(props.pan) ? (
+            {isCoBadgeOrPrivativeBlocked(props.pan) ? (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
               </InfoBox>
             ) : (
               <InfoBox>
-                <Body>{warning}</Body>
+                <Body>
+                  {warning1} <Label color={"bluegrey"}>{warning2}</Label>
+                </Body>
               </InfoBox>
             )}
           </View>
           <View spacer />
         </ScrollView>
-        {isCoBadgeBlocked(props.pan) ? (
+        {isCoBadgeOrPrivativeBlocked(props.pan) ? (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(

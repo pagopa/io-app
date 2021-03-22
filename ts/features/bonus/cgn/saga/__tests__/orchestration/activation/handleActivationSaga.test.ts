@@ -8,10 +8,7 @@ import {
   navigateToCgnActivationTimeout
 } from "../../../../navigation/actions";
 import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
-import {
-  cgnActivationComplete,
-  cgnActivationStatus
-} from "../../../../store/actions/activation";
+import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
 import CGN_ROUTES from "../../../../navigation/routes";
 
@@ -41,9 +38,7 @@ describe("cgnActivationWorker", () => {
       .next()
       .put(navigateToCgnActivationCompleted())
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
-      .take(cgnActivationComplete);
+      .put(navigationHistoryPop(1));
   });
 
   it("should activate user's CGN already on loading screen ", () => {
@@ -61,9 +56,7 @@ describe("cgnActivationWorker", () => {
       .next()
       .put(navigateToCgnActivationCompleted())
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
-      .take(cgnActivationComplete);
+      .put(navigationHistoryPop(1));
   });
 
   it("should navigate to TIMEOUT SCREEN on user's CGN activation", () => {
@@ -85,8 +78,6 @@ describe("cgnActivationWorker", () => {
       .next()
       .put(navigateToCgnActivationTimeout())
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
-      .take(cgnActivationComplete);
+      .put(navigationHistoryPop(1));
   });
 });

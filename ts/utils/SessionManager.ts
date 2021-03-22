@@ -2,7 +2,7 @@
 
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -34,10 +34,10 @@ export class SessionManager<T> {
    *    again (depending on the state of their retry policy) and the flow starts
    *    again from (1)
    */
-  private exclusiveTokenUpdate = async () => {
+  private exclusiveTokenUpdate = async (forceUpdate = false) => {
     this.isRefreshing = this.token === undefined;
     await this.mutex.runExclusive(async () => {
-      if (this.token === undefined) {
+      if (this.token === undefined || forceUpdate) {
         // token is not available, attempt to fetch a new token
         try {
           this.token = (await this.refreshSession()).toUndefined();
@@ -84,6 +84,23 @@ export class SessionManager<T> {
    * Returns the current token, if there's one
    */
   public get = () => fromNullable(this.token);
+
+  /**
+   * Returns a new token
+   */
+  public getNewToken = async (): Promise<Option<T>> => {
+    let count = 0;
+    while (count <= this.maxRetries) {
+      count += 1;
+      await this.exclusiveTokenUpdate(true);
+      if (this.token === undefined) {
+        await delayAsync(waitRetry);
+        continue;
+      }
+      return fromNullable(this.token);
+    }
+    return none;
+  };
 
   /**
    * Returns a new function, with the same params of the provided function but

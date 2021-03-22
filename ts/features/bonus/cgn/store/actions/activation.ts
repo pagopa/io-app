@@ -3,13 +3,12 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { NullType } from "io-ts";
 import { CgnActivationProgressEnum } from "../reducers/activation";
-import { Card } from "../../../../../../definitions/cgn/Card";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 
 type ActivationStatus = {
   status: CgnActivationProgressEnum;
-  activation?: Card;
+  activation?: CgnActivationDetail;
 };
 
 export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
@@ -49,11 +48,9 @@ export const cgnActivationStatus = createAsyncAction(
 /**
  * get and handle activation request of a CGN
  */
-export const cgnRequestActivation = createAsyncAction(
-  "CGN_REQUEST_ACTIVATION_REQUEST",
-  "CGN_REQUEST_ACTIVATION_SUCCESS",
-  "CGN_REQUEST_ACTIVATION_FAILURE"
-)<void, NullType, Error>(); // Replace when API spec is correctly linked and defined
+export const cgnRequestActivation = createStandardAction(
+  "CGN_REQUEST_ACTIVATION_REQUEST"
+)<void>();
 
 export type CgnActivationActions =
   | ActionType<typeof cgnActivationStatus>

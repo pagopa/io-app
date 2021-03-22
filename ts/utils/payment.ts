@@ -17,18 +17,14 @@ import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
+import { Psp, Transaction, Wallet } from "../types/pagopa";
 import {
-  BancomatPaymentMethod,
-  CreditCardPaymentMethod,
-  Psp,
-  Transaction,
-  Wallet
-} from "../types/pagopa";
-import {
-  formatDateAsReminder,
-  getTranslatedShortNumericMonthYear
-} from "./dates";
-import { getLocalePrimaryWithFallback } from "./locale";
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
+import { formatDateAsReminder } from "./dates";
+import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
@@ -178,6 +174,13 @@ export const getPaymentHistoryDetails = (
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
+  const success = `- pagamento concluso con successo: ${
+    payment.success === true ? "si" : "no"
+  }`;
+  const outcomeCode = `- codice di uscita: ${payment.outcomeCode ?? "n/a"}`;
+  const navigationUrls = `- navigazione webview: ${(
+    payment.payNavigationUrls ?? []
+  ).join(", ")}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("ccp: n/a");
@@ -193,6 +196,12 @@ export const getPaymentHistoryDetails = (
     paymentDetails,
     separator,
     ccp,
+    separator,
+    success,
+    separator,
+    outcomeCode,
+    separator,
+    navigationUrls,
     separator,
     failureDetails
   );
@@ -274,17 +283,27 @@ export const getCodiceAvviso = (rptId: RptId) => {
   }
 };
 
-export const getBancomatOrCreditCardPickMethodDescription = (
-  bancomatOrCreditCard: CreditCardPaymentMethod | BancomatPaymentMethod
-) => {
-  const translatedExpiryDate = getTranslatedShortNumericMonthYear(
-    bancomatOrCreditCard.info.expireYear,
-    bancomatOrCreditCard.info.expireMonth
+// from a give generic code and outcome codes say true if that code represents a success
+export const isPaymentOutcomeCodeSuccessfully = (
+  code: string,
+  outcomeCodes: OutcomeCodes
+): boolean => {
+  const maybeValidCode = OutcomeCodesKey.decode(code);
+  return maybeValidCode.fold(
+    _ => false,
+    c => outcomeCodes[c].status === "success"
   );
-  return translatedExpiryDate
-    ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
-        firstElement: translatedExpiryDate,
-        secondElement: bancomatOrCreditCard.info.holder
-      })
-    : fromNullable(bancomatOrCreditCard.info.holder).getOrElse("");
+};
+
+export const getPaymentOutcomeCodeDescription = (
+  outcomeCode: string,
+  outcomeCodes: OutcomeCodes
+): Option<string> => {
+  const maybeOutcomeCodeKey = OutcomeCodesKey.decode(outcomeCode);
+  if (maybeOutcomeCodeKey.isRight()) {
+    return fromNullable<OutcomeCode>(outcomeCodes[maybeOutcomeCodeKey.value])
+      .mapNullable(oc => oc.description)
+      .map(description => description[getFullLocale()]);
+  }
+  return none;
 };

@@ -4,7 +4,10 @@ import I18n from "../../../../../i18n";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { BpdTransactionDetailComponent } from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
+import {
+  BpdTransactionDetailComponent,
+  BpdTransactionDetailRepresentation
+} from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
 import { BpdTransaction } from "../../store/actions/transactions";
 import { BaseBpdTransactionItem } from "./BaseBpdTransactionItem";
 
@@ -16,7 +19,7 @@ export type EnhancedBpdTransaction = {
 } & BpdTransaction;
 
 type Props = {
-  transaction: EnhancedBpdTransaction;
+  transaction: BpdTransactionDetailRepresentation;
 };
 
 /**

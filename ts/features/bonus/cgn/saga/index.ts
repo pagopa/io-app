@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { takeEvery, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import {
   cgnActivationStart,
@@ -7,12 +7,24 @@ import {
 } from "../store/actions/activation";
 import { apiUrlPrefix } from "../../../../config";
 import { BackendCGN } from "../api/backendCgn";
+import { cgnDetails } from "../store/actions/details";
+import { cgnEycaStatus } from "../store/actions/eyca/details";
+import { cgnGenerateOtp as cgnGenerateOtpAction } from "../store/actions/otp";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationStatusRequest
+} from "../store/actions/eyca/activation";
 import { handleCgnStartActivationSaga } from "./orchestration/activation/activationSaga";
 import { handleCgnActivationSaga } from "./orchestration/activation/handleActivationSaga";
 import {
   cgnActivationSaga,
   handleCgnStatusPolling
 } from "./networking/activation/getBonusActivationSaga";
+import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
+import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
+import { cgnGenerateOtp } from "./networking/otp";
+import { handleEycaActivationSaga } from "./networking/eyca/activation/getEycaActivationSaga";
+import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -20,14 +32,50 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   // CGN Activation request with status polling
   yield takeLatest(
-    getType(cgnRequestActivation.request),
+    getType(cgnRequestActivation),
     handleCgnActivationSaga,
     cgnActivationSaga(
       backendCGN.startCgnActivation,
-      handleCgnStatusPolling(backendCGN.getCgnStatus)
+      handleCgnStatusPolling(backendCGN.getCgnActivation)
     )
   );
 
   // CGN Activation workflow
-  yield takeEvery(getType(cgnActivationStart), handleCgnStartActivationSaga);
+  yield takeLatest(getType(cgnActivationStart), handleCgnStartActivationSaga);
+
+  // CGN Load details
+  yield takeLatest(
+    getType(cgnDetails.request),
+    cgnGetInformationSaga,
+    backendCGN.getCgnStatus
+  );
+
+  // Eyca get status
+  yield takeLatest(
+    getType(cgnEycaStatus.request),
+    handleGetEycaStatus,
+    backendCGN.getEycaStatus
+  );
+
+  // Eyca Activation
+  yield takeLatest(
+    getType(cgnEycaActivation.request),
+    handleEycaActivationSaga,
+    backendCGN.getEycaActivation,
+    backendCGN.startEycaActivation
+  );
+
+  // Eyca Activation Status
+  yield takeLatest(
+    getType(cgnEycaActivationStatusRequest),
+    getEycaActivationStatusSaga,
+    backendCGN.getEycaActivation
+  );
+
+  // CGN Otp generation
+  yield takeLatest(
+    getType(cgnGenerateOtpAction.request),
+    cgnGenerateOtp,
+    backendCGN.generateOtp
+  );
 }
