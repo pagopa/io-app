@@ -1,5 +1,3 @@
-/* eslint-disable no-fallthrough */
-// disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
 import { cgnEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
@@ -25,7 +23,7 @@ import { cgnGenerateOtp } from "../store/actions/otp";
 // eslint-disable-next-line complexity
 const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(cgnActivationStart):
     case getType(cgnRequestActivation):
@@ -34,21 +32,18 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cgnActivationBack):
     case getType(cgnDetails.request):
     case getType(cgnDetails.success):
-    // OTP Related Actions
-    case getType(cgnGenerateOtp.request):
+    case getType(cgnGenerateOtp.request): // OTP Related Actions
     case getType(cgnGenerateOtp.success):
-    // EYCA Related Actions
-    case getType(cgnEycaActivation.request):
+    case getType(cgnEycaActivation.request): // EYCA Related Actions
     case getType(cgnEycaActivationStatusRequest):
     case getType(cgnEycaActivationCancel):
+    case getType(cgnEycaStatus.success):
     case getType(cgnEycaStatus.request):
       return mp.track(action.type);
     case getType(cgnActivationStatus.success):
       return mp.track(action.type, { status: action.payload.status });
     case getType(cgnEycaActivation.success):
       return mp.track(action.type, { status: action.payload });
-    case getType(cgnEycaStatus.success):
-      return mp.track(action.type, { status: action.payload.status });
     case getType(cgnActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
     case getType(cgnDetails.failure):
@@ -59,7 +54,6 @@ const trackCgnAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: getNetworkErrorMessage(action.payload)
       });
   }
-
   return Promise.resolve();
 };
 
