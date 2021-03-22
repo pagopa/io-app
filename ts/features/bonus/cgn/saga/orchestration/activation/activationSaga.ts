@@ -3,7 +3,8 @@ import { call, put, select } from "redux-saga/effects";
 import {
   cgnActivationBack,
   cgnActivationCancel,
-  cgnActivationComplete
+  cgnActivationComplete,
+  cgnActivationFailure
 } from "../../../store/actions/activation";
 import { navigateToCgnActivationInformationTos } from "../../../navigation/actions";
 import {
@@ -22,7 +23,8 @@ function* cgnActivationWorkUnit() {
     startScreenName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
     complete: cgnActivationComplete,
     back: cgnActivationBack,
-    cancel: cgnActivationCancel
+    cancel: cgnActivationCancel,
+    failure: cgnActivationFailure
   });
 }
 

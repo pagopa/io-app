@@ -3,7 +3,6 @@ import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { Action, createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import * as showToast from "../../../../../../../utils/showToast";
 import {
   PaymentInstrument,
   PaymentNetworkEnum,
@@ -20,18 +19,17 @@ import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { getTimeoutError } from "../../../../../../../utils/errors";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
-import { PrivativeResponse } from "../../../store/actions";
-import SearchPrivativeCardScreen from "../SearchPrivativeCardScreen";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../navigation/routes";
-
 import {
+  PrivativeResponse,
   searchUserPrivative,
-  walletAddPrivativeCancel,
   walletAddPrivativeChooseIssuer,
+  walletAddPrivativeFailure,
   walletAddPrivativeInsertCardNumber,
   walletAddPrivativeStart
 } from "../../../store/actions";
 import { PrivativeIssuerId } from "../../../store/reducers/searchedPrivative";
+import SearchPrivativeCardScreen from "../SearchPrivativeCardScreen";
 
 const cardTestId = "9876";
 const timeoutError = getTimeoutError();
@@ -84,15 +82,17 @@ const withSearchRequestMetadata = (
 });
 describe("SearchPrivativeCardScreen", () => {
   jest.useFakeTimers();
-  it("if privativeQuery is undefined a cancel action is dispatched and a toast is shown", () => {
-    const mySpy = jest.spyOn(showToast, "showToast").mockReturnValue();
+  it("if privativeQuery is undefined a failure action is dispatched and a toast is shown", () => {
     const mockStore = configureMockStore<GlobalState>();
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = mockStore(globalState);
     renderSearchPrivativeCardScreen(store);
 
-    expect(store.getActions()).toEqual([walletAddPrivativeCancel()]);
-    expect(mySpy).toBeCalled();
+    expect(store.getActions()).toEqual([
+      walletAddPrivativeFailure(
+        "privativeSelected is undefined in SearchPrivativeCardScreen"
+      )
+    ]);
   });
   it("With timeout error should render PrivativeKoTimeout and pressing on retry should request a reload", () => {
     const { store, testComponent } = getSearchPrivativeCardScreen();

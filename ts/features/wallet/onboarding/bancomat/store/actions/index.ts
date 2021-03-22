@@ -64,6 +64,13 @@ export const walletAddBancomatCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddBancomatFailure = createStandardAction(
+  "WALLET_ONBOARDING_BANCOMAT_FAILURE"
+)<string>();
+
+/**
  * The user choose `back` from the first screen
  */
 export const walletAddBancomatBack = createStandardAction(
@@ -77,4 +84,5 @@ export type AbiActions =
   | ActionType<typeof walletAddBancomatStart>
   | ActionType<typeof walletAddBancomatCompleted>
   | ActionType<typeof walletAddBancomatCancel>
+  | ActionType<typeof walletAddBancomatFailure>
   | ActionType<typeof walletAddBancomatBack>;
