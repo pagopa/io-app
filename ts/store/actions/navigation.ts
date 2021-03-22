@@ -387,3 +387,8 @@ export const navigateToCieCardReaderScreen = (
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
   });
+
+export const navigateToWorkunitGenericFailureScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+  });

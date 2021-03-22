@@ -41,6 +41,8 @@ import {
   EycaDetailsState,
   EycaDetailStatus
 } from "../store/reducers/eyca/details";
+import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import { navigateBack } from "../../../../store/actions/navigation";
 import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -74,18 +76,20 @@ const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   const [cardLoading, setCardLoading] = useState(true);
 
+  const loadCGN = () => {
+    props.loadCgnDetails();
+    props.loadEycaDetails();
+  };
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
 
-  useActionOnFocus(() => {
-    props.loadCgnDetails();
-    props.loadEycaDetails();
-  });
+  useActionOnFocus(loadCGN);
 
   const onCardLoadEnd = () => setCardLoading(false);
+
   const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
-  return (
+  return props.cgnDetails || props.isCgnInfoLoading ? (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
@@ -149,6 +153,13 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
+  ) : (
+    // subText is a blank space to avoid default value when it is undefined
+    <GenericErrorComponent
+      subText={" "}
+      onRetry={loadCGN}
+      onCancel={props.goBack}
+    />
   );
 };
 
@@ -160,6 +171,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(navigateBack()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),

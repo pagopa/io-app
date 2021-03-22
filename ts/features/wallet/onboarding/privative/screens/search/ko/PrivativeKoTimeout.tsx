@@ -9,16 +9,15 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../../i18n";
-import { mixpanelTrack } from "../../../../../../../mixpanel";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../../../utils/showToast";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import {
   PrivativeQuery,
   searchUserPrivative,
-  walletAddPrivativeCancel
+  walletAddPrivativeCancel,
+  walletAddPrivativeFailure
 } from "../../../store/actions";
 import { onboardingSearchedPrivativeQuerySelector } from "../../../store/reducers/searchedPrivative";
 
@@ -53,9 +52,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
   const { privativeSelected } = props;
 
   if (privativeSelected === undefined) {
-    showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("WALLET_ONBOARDING_PRIVATIVE_NO_QUERY_PARAMS_ERROR");
-    props.cancel();
+    props.failure("privativeSelected is undefined in PrivativeKoTimeout");
     return null;
   } else {
     return (
@@ -86,6 +83,7 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
+  failure: (reason: string) => dispatch(walletAddPrivativeFailure(reason)),
   retry: (searchedPrivativeData: PrivativeQuery) =>
     dispatch(searchUserPrivative.request(searchedPrivativeData))
 });

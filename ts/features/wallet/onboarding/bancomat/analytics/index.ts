@@ -8,6 +8,7 @@ import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
   walletAddBancomatCompleted,
+  walletAddBancomatFailure,
   walletAddBancomatStart
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../../../utils/errors";
@@ -63,6 +64,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(searchUserPans.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
+      });
+    case getType(walletAddBancomatFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();
