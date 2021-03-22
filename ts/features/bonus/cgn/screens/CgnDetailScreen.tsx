@@ -40,7 +40,8 @@ import {
   isEycaDetailsLoading,
   isEycaEligible
 } from "../store/reducers/eyca/details";
-
+import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import { navigateBack } from "../../../../store/actions/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -61,7 +62,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   const onCardLoadEnd = () => setCardLoading(false);
 
-  return (
+  return props.cgnDetails || props.isCgnInfoLoading ? (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
@@ -92,7 +93,6 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 { paddingTop: customVariables.contentPadding }
               ]}
             >
-
               <View spacer />
               {/* Ownership block rendering owner's fiscal code */}
               <CgnOwnershipInformation />
@@ -104,12 +104,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 <CgnStatusDetail cgnDetail={props.cgnDetails} />
               )}
               {(props.isEycaLoading || props.isEycaEligible) && (
-              <>
-                <ItemSeparatorComponent noPadded />
-                <View spacer />
-                <EycaDetailComponent />
-              </>
-            )}
+                <>
+                  <ItemSeparatorComponent noPadded />
+                  <View spacer />
+                  <EycaDetailComponent />
+                </>
+              )}
             </View>
           </ScrollView>
           <FooterWithButtons
@@ -126,6 +126,15 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
+  ) : (
+    <GenericErrorComponent
+      onRetry={() => {
+        props.loadCgnDetails();
+        props.loadEycaDetails();
+      }}
+      onCancel={props.goBack}
+      subText={" "}
+    />
   );
 };
 
@@ -138,10 +147,11 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goBack: () => dispatch(navigateBack()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

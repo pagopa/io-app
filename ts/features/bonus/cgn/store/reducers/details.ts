@@ -71,7 +71,7 @@ export const isCgnEnrolledSelector = createSelector(
       isNotPending,
       constUndefined,
       constUndefined,
-      constUndefined
+      () => false
     )
 );
 
