@@ -11,6 +11,7 @@ import { InfoBox } from "../../../../../../components/box/InfoBox";
 
 type Props = {
   onRetry: () => void;
+  openBottomSheet: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -31,7 +32,12 @@ const EycaErrorComponent = (props: Props) => (
   <>
     <View style={[styles.rowBlock, styles.spaced]}>
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
-      <IconFont name={"io-info"} size={TITLE_ICON_SIZE} color={IOColors.blue} />
+      <IconFont
+        name={"io-info"}
+        size={TITLE_ICON_SIZE}
+        color={IOColors.blue}
+        onPress={props.openBottomSheet}
+      />
     </View>
     <View spacer />
     <InfoBox iconName={"io-error"} alignedCentral iconSize={INFOBOX_ICON_SIZE}>

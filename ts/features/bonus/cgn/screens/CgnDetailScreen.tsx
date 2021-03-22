@@ -35,11 +35,12 @@ import {
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import {
   isEycaDetailsLoading,
   isEycaEligible
 } from "../store/reducers/eyca/details";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -102,28 +103,28 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 // ACTIVATED - EXPIRED - REVOKED
                 <CgnStatusDetail cgnDetail={props.cgnDetails} />
               )}
-            {(props.isEycaLoading || props.isEycaEligible) && (
+              {(props.isEycaLoading || props.isEycaEligible) && (
               <>
                 <ItemSeparatorComponent noPadded />
                 <View spacer />
                 <EycaDetailComponent />
               </>
             )}
-          </View>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            props.navigateToMerchants,
-            I18n.t("bonus.cgn.detail.cta.buyers")
-          )}
-          rightButton={confirmButtonProps(
-            props.navigateToOtp,
-            I18n.t("bonus.cgn.detail.cta.otp")
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+            </View>
+          </ScrollView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={cancelButtonProps(
+              props.navigateToMerchants,
+              I18n.t("bonus.cgn.detail.cta.buyers")
+            )}
+            rightButton={confirmButtonProps(
+              props.navigateToOtp,
+              I18n.t("bonus.cgn.detail.cta.otp")
+            )}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
 };
@@ -137,10 +138,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
+  loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
+  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
