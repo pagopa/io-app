@@ -46,7 +46,7 @@ export const sampleMerchant: TmpMerchantDetail = {
       category: "TEATRO, CINEMA E SPETTACOLO",
       title: "Spettacolo: Uno, nessuno, centomila",
       description:
-        "Acquista un biglietto per te le rappresentazioni dello spettacolo.",
+        "Acquista un biglietto per le rappresentazioni dello spettacolo.",
       validityDescription: "Dal 15 Marzo al 15 Maggio 2021.",
       conditions:
         "Lo sconto del 30% si applica sull’acquisto di un solo abbonamento. L’offerta è nominale e non è rimborsabile.",

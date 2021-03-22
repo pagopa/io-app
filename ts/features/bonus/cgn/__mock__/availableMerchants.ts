@@ -4,6 +4,6 @@ export const availableMerchants: ReadonlyArray<TmpMerchantType> = [
   {
     category: "TEATRO, CINEMA E SPETTACOLO",
     name: "Nome Teatro",
-    location: "www.urlteatro.it"
+    location: "https://www.teatrosocialemantova.it"
   }
 ];
