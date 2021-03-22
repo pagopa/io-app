@@ -22,7 +22,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
         <Markdown avoidTextSelection onLoadEnd={() => setMarkdownloaded(true)}>
           {I18n.t("bonus.cgn.detail.status.eycaDescription")}
         </Markdown>
-        <View spacer large />
+        <View spacer />
         {isMarkdownloaded && (
           <ButtonDefaultOpacity
             style={{ width: "100%" }}
