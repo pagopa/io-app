@@ -5,7 +5,6 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   getValueOrElse,
   isLoading,
-  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -21,11 +20,20 @@ import {
 export type CgnEycaActivationStatus =
   | "POLLING"
   | "POLLING_TIMEOUT"
+  | "PROCESSING"
+  | "NOT_FOUND"
   | "COMPLETED"
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"
   | "ERROR";
-
+ts /
+  features /
+  bonus /
+  cgn /
+  components /
+  detail /
+  eyca /
+  EycaDetailComponent.tsx;
 export type EycaActivationState = RemoteValue<
   CgnEycaActivationStatus,
   NetworkError

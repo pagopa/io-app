@@ -27,7 +27,7 @@ import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
+const EycaDetailComponent = (props: Props) => {
   const { present } = useEycaInformationBottomSheet();
 
   const openEycaBottomSheet = async () => {
@@ -41,7 +41,10 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
   }, [props.eyca]);
 
   const errorComponent = (
-    <EycaErrorComponent onRetry={props.requestEycaActivation} openBottomSheet={openEycaBottomSheet} />
+    <EycaErrorComponent
+      onRetry={props.requestEycaActivation}
+      openBottomSheet={openEycaBottomSheet}
+    />
   );
 
   const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
@@ -58,7 +61,12 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "PENDING":
         return fromNullable(props.eycaActivationStatus).fold(
           errorComponent,
-          as => (as === "ERROR" ? errorComponent : <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />)
+          as =>
+            as === "ERROR" || as === "NOT_FOUND" ? (
+              errorComponent
+            ) : (
+              <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />
+            )
         );
       default:
         return null;

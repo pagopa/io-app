@@ -27,7 +27,7 @@ const ICON_SIZE = 24;
 const EYCA_URL = "https://www.eyca.org";
 
 // Component that informs the user that the EYCA card requested is still in progress
-const EycaStatusDetailsComponent = () => (
+const EycaStatusDetailsComponent = (props: Props) => (
   <>
     <View style={[styles.rowBlock, styles.spaced]}>
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
