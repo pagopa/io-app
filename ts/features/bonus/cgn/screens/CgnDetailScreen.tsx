@@ -154,7 +154,12 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   ) : (
-    <GenericErrorComponent onRetry={loadCGN} onCancel={props.goBack} />
+    // subText is a blank space to avoid default value when it is undefined
+    <GenericErrorComponent
+      subText={" "}
+      onRetry={loadCGN}
+      onCancel={props.goBack}
+    />
   );
 };
 
