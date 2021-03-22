@@ -2324,6 +2324,13 @@ bonus:
           cgn: Scadenza CGN
           eyca: Scadenza EYCA
     activation:
+      eyca:
+        loading:
+          caption: "Stiamo processando la tua richiesta"
+          subCaption: "Ti preghiamo di attendere."
+        error:
+          title: "Il servizio di EYCA in questo momento non è disponibile."
+          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
         subCaption: "Ti preghiamo di attendere."
