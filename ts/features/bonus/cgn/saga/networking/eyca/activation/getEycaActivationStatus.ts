@@ -13,10 +13,7 @@ export function* getEycaActivationStatusSaga(
   );
   if (activationInfo.isLeft()) {
     yield put(cgnEycaActivation.failure(activationInfo.value));
-    return;
-  }
-
-  if (activationInfo.value === "ERROR") {
+  } else {
     yield put(cgnEycaActivation.success(activationInfo.value));
   }
 }

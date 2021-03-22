@@ -41,6 +41,7 @@ import {
   isEycaEligible
 } from "../store/reducers/eyca/details";
 
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 

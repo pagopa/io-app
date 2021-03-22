@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  getValueOrElse,
   isLoading,
   isReady,
   remoteError,
@@ -60,7 +61,7 @@ export const eycaActivationStatusSelector = (
 export const cgnEycaActivationStatus = createSelector(
   eycaActivationStatusSelector,
   (activation: EycaActivationState): CgnEycaActivationStatus | undefined =>
-    isReady(activation) ? activation.value : undefined
+    getValueOrElse(activation, undefined)
 );
 
 export const cgnEycaActivationLoading = createSelector(

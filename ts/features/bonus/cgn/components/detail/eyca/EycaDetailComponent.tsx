@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import {
-  eycaInformationSelector,
+  eycaCardSelector,
   isEycaDetailsLoading
 } from "../../../store/reducers/eyca/details";
 import {
@@ -44,7 +44,7 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
     <EycaErrorComponent onRetry={props.requestEycaActivation} openBottomSheet={openEycaBottomSheet} />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard) => {
+  const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":
@@ -61,24 +61,28 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
           as => (as === "ERROR" ? errorComponent : <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />)
         );
       default:
-        return <></>;
+        return null;
     }
   };
 
-  return props.isLoading ? (
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-    />
-  ) : (
-    fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+  return (
+    <>
+      {props.isLoading ? (
+        <ActivityIndicator
+          color={"black"}
+          accessible={false}
+          importantForAccessibility={"no-hide-descendants"}
+          accessibilityElementsHidden={true}
+        />
+      ) : (
+        fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+      )}
+    </>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  eyca: eycaInformationSelector(state),
+  eyca: eycaCardSelector(state),
   eycaActivationStatus: cgnEycaActivationStatus(state),
   isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
 });
