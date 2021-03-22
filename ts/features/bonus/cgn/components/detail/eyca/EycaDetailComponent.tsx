@@ -6,7 +6,7 @@ import { ActivityIndicator } from "react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import {
-  eycaInformationSelector,
+  eycaCardSelector,
   isEycaDetailsLoading
 } from "../../../store/reducers/eyca/details";
 import {
@@ -22,11 +22,18 @@ import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 import EycaPendingComponent from "./EycaPendingComponent";
 import EycaErrorComponent from "./EycaErrorComponent";
+import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
+const EycaDetailComponent = (props: Props) => {
+  const { present } = useEycaInformationBottomSheet();
+
+  const openEycaBottomSheet = async () => {
+    await present();
+  };
+
   useEffect(() => {
     if (CardPending.is(props.eyca)) {
       props.getEycaActivationStatus();
@@ -34,39 +41,56 @@ const EycaDetailComponent: React.FunctionComponent<Props> = (props: Props) => {
   }, [props.eyca]);
 
   const errorComponent = (
-    <EycaErrorComponent onRetry={props.requestEycaActivation} />
+    <EycaErrorComponent
+      onRetry={props.requestEycaActivation}
+      openBottomSheet={openEycaBottomSheet}
+    />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard) => {
+  const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":
       case "EXPIRED":
-        return <EycaStatusDetailsComponent eycaCard={eyca} />;
+        return (
+          <EycaStatusDetailsComponent
+            eycaCard={eyca}
+            openBottomSheet={openEycaBottomSheet}
+          />
+        );
       case "PENDING":
         return fromNullable(props.eycaActivationStatus).fold(
           errorComponent,
-          as => (as === "ERROR" ? errorComponent : <EycaPendingComponent />)
+          as =>
+            as === "ERROR" || as === "NOT_FOUND" ? (
+              errorComponent
+            ) : (
+              <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />
+            )
         );
       default:
-        return <></>;
+        return null;
     }
   };
 
-  return props.isLoading ? (
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-    />
-  ) : (
-    fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+  return (
+    <>
+      {props.isLoading ? (
+        <ActivityIndicator
+          color={"black"}
+          accessible={false}
+          importantForAccessibility={"no-hide-descendants"}
+          accessibilityElementsHidden={true}
+        />
+      ) : (
+        fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+      )}
+    </>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  eyca: eycaInformationSelector(state),
+  eyca: eycaCardSelector(state),
   eycaActivationStatus: cgnEycaActivationStatus(state),
   isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
 });

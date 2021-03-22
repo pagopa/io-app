@@ -3,8 +3,8 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
+  getValueOrElse,
   isLoading,
-  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -20,6 +20,8 @@ import {
 export type CgnEycaActivationStatus =
   | "POLLING"
   | "POLLING_TIMEOUT"
+  | "PROCESSING"
+  | "NOT_FOUND"
   | "COMPLETED"
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"
@@ -58,7 +60,7 @@ export const eycaActivationStatusSelector = (
 export const cgnEycaActivationStatus = createSelector(
   eycaActivationStatusSelector,
   (activation: EycaActivationState): CgnEycaActivationStatus | undefined =>
-    isReady(activation) ? activation.value : undefined
+    getValueOrElse(activation, undefined)
 );
 
 export const cgnEycaActivationLoading = createSelector(

@@ -35,11 +35,12 @@ import {
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import {
   isEycaDetailsLoading,
   isEycaEligible
 } from "../store/reducers/eyca/details";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -138,8 +139,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
+  loadCgnDetails: () => dispatch(cgnDetails.request()),
   navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
   navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
