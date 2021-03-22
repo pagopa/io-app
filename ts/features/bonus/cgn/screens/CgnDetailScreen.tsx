@@ -76,14 +76,15 @@ const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
 const CgnDetailScreen = (props: Props): React.ReactElement => {
   const [cardLoading, setCardLoading] = useState(true);
 
+  const loadCGN = () => {
+    props.loadCgnDetails();
+    props.loadEycaDetails();
+  };
   useEffect(() => {
     setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
   }, []);
 
-  useActionOnFocus(() => {
-    props.loadCgnDetails();
-    props.loadEycaDetails();
-  });
+  useActionOnFocus(loadCGN);
 
   const onCardLoadEnd = () => setCardLoading(false);
 
@@ -153,14 +154,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   ) : (
-    <GenericErrorComponent
-      onRetry={() => {
-        props.loadCgnDetails();
-        props.loadEycaDetails();
-      }}
-      onCancel={props.goBack}
-      subText={" "}
-    />
+    <GenericErrorComponent onRetry={loadCGN} onCancel={props.goBack} />
   );
 };
 
