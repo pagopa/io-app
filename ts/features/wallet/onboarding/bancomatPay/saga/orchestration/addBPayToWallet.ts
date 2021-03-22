@@ -4,7 +4,6 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -38,20 +37,6 @@ function* bPayWorkUnit() {
     cancel: walletAddBPayCancel,
     failure: walletAddBPayFailure
   });
-}
-
-/**
- * A saga that invokes the addition of a BPay workflow {@link bPayWorkUnit} and return
- * to the wallet after the insertion.
- */
-export function* addBPayToWalletGeneric() {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    bPayWorkUnit
-  );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
-  }
 }
 
 /**

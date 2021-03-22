@@ -6,7 +6,6 @@ import {
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -40,22 +39,6 @@ function* privativeWorkUnit() {
     cancel: walletAddPrivativeCancel,
     failure: walletAddPrivativeFailure
   });
-}
-
-/**
- * A saga that invokes the addition of a privative card workflow {@link privativeWorkUnit} and returns
- * to the wallet after the insertion.
- */
-export function* addPrivativeToWalletGeneric() {
-  const sagaExecution = () =>
-    withFailureHandling(() => withResetNavigationStack(privativeWorkUnit));
-
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    sagaExecution
-  );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
-  }
 }
 
 /**
