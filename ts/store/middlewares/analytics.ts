@@ -20,6 +20,7 @@ import {
 } from "../../features/bonus/bonusVacanze/utils/bonus";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -118,8 +119,6 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess,
   refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
@@ -127,6 +126,7 @@ import {
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
@@ -137,7 +137,8 @@ import {
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void | ReadonlyArray<null>> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -193,16 +194,15 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         count: action.payload.data.length,
         total: action.payload.total.getOrElse(-1)
       });
+    // messages
+    case getType(loadMessages.success):
     //
     // wallets success / services load requests
-    //
     case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
       });
-    //
     // end pay webview Payment (payment + onboarding credit card) actions (with properties)
-    //
     case getType(addCreditCardWebViewEnd):
     case getType(paymentWebViewEnd):
       return mp.track(action.type, {
@@ -309,7 +309,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
-    case getType(payCreditCardVerificationFailure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -369,7 +368,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
     // services
@@ -383,7 +381,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
@@ -438,8 +435,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
-    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
     case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
     case getType(deleteUserDataProcessing.failure):
@@ -466,6 +464,8 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackSatispayAction(mixpanel)(action);
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
+    void trackPrivativeAction(mixpanel)(action);
+    void trackCgnAction(mixpanel)(action);
   }
   return next(action);
 };

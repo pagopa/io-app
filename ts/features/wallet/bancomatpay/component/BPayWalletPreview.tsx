@@ -7,7 +7,7 @@ import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../store/reducers/types";
-import { CardPreview } from "../../component/CardPreview";
+import { CardLogoPreview } from "../../component/card/CardLogoPreview";
 import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
@@ -62,7 +62,7 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => {
     props.bPay.abiInfo?.logoUrl
   );
   return (
-    <CardPreview
+    <CardLogoPreview
       left={renderLeft(props, imgDimensions)}
       image={bPayImage}
       onPress={() => props.navigateToBPayDetails(props.bPay)}

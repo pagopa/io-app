@@ -4,7 +4,6 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -17,7 +16,8 @@ import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
-  walletAddBancomatCompleted
+  walletAddBancomatCompleted,
+  walletAddBancomatFailure
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
 
@@ -34,22 +34,9 @@ function* bancomatWorkUnit() {
     startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
-    cancel: walletAddBancomatCancel
+    cancel: walletAddBancomatCancel,
+    failure: walletAddBancomatFailure
   });
-}
-
-/**
- * A saga that invokes the addition of a bancomat workflow {@link bancomatWorkUnit} and return
- * to the wallet after the insertion.
- */
-export function* addBancomatToWalletGeneric() {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    bancomatWorkUnit
-  );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
-  }
 }
 
 /**

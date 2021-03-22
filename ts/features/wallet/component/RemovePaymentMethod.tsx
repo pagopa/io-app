@@ -8,7 +8,7 @@ import { PaymentMethodRepresentation } from "../../../types/pagopa";
 import { useIOBottomSheetRaw } from "../../../utils/bottomSheet";
 import {
   cancelButtonProps,
-  confirmButtonProps
+  errorButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRepresentationComponent } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
@@ -33,10 +33,7 @@ const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
           onPressWithGestureHandler: true
         }}
         rightButton={{
-          ...confirmButtonProps(
-            props.onConfirm,
-            I18n.t("global.buttons.delete")
-          ),
+          ...errorButtonProps(props.onConfirm, I18n.t("global.buttons.delete")),
           onPressWithGestureHandler: true
         }}
       />

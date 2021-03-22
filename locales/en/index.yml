@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -377,8 +377,8 @@ profile:
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
-        alert: 
-          title: Do you want to change the language to 
+        alert:
+          title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
     empty:
@@ -754,7 +754,7 @@ wallet:
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
-  featured: Highlighted 
+  featured: Highlighted
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -904,6 +904,41 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
+    privative:
+      headerTitle: "Add supermarket card"
+      choosePrivativeIssuer:
+        loading: "Loading settings\n\nPlease wait a few seconds"
+        title: "Choose your card brand"
+        body: "You can only add cards that allow you to pay in supermarkets."
+        koDisabled:
+          title: "This supermarket doesn't offer this feature yet"
+          body: "We are working to allow you to add your card soon."
+        koUnavailable:
+          title: "We're unable to contact the server"
+          body: "We are working to solve the problem."
+      addPrivativeCardNumber:
+        title: "Insert card number"
+        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        disclaimer:
+          text1: "By continuing you accept the"
+          text2: "information on the processing of personal data"
+      search:
+        loading: "We are verifying your card\n\nPlease wait"
+        koTimeout:
+          title: "It is currently impossible to verify your card"
+          body: "Please try again"
+        koNotFound:
+          title: "Sorry, there is an issue with this card"
+          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
+          cta:
+            modifyCardNumber: "Change card number"
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your card"
+          body: "Please try again later."
+      add:
+        screenTitle: "Do you want to add this card?"
+        loading: "We are adding your card\n\nPlease hold on..."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1105,7 +1140,7 @@ wallet:
       shortName: "Card"
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
-        title: In app payments 
+        title: In app payments
         description: Make payments to the public administration through pagoPA
         active: Active
         arriving: Arriving
@@ -1134,7 +1169,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: your Postepay app
     postepay:
@@ -1150,7 +1185,7 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: 
+      holder:
         label: Card holder
         description:
           base: "Enter as shown on the card"
@@ -1248,21 +1283,21 @@ wallet:
     fallback:
       title: "Sorry, an unexpected error has occurred"
       description: "No charges were made."
-    code1: 
+    code1:
       title: "Sorry, an unexpected error has occurred"
       description: "No charges were made."
-    code2: 
+    code2:
       title: "Authorization declined"
       description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
-    code4: 
+    code4:
       title: "Sorry, the session has expired"
       description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
-    code7: 
+    code7:
       title: "There's a problem with your card"
       description: "No charges were made. For more information, contact your bank."
-    code8: 
+    code8:
       title: "The operation was canceled"
-    code10: 
+    code10:
       title: "Authorization declined"
       description: "You have probably reached your card limit. Check with your bank before trying again."
     addCreditCard:
@@ -1296,6 +1331,7 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
+  removeCta: "Delete this payment method"
 messages:
   accessibility:
     message:
@@ -1332,19 +1368,19 @@ messages:
     payment:
       expired: Payment expired
       paid: This notice is paid. Show the receipt in your
-      addMemo: 
-          block1: Add a reminder for the 
+      addMemo:
+          block1: Add a reminder for the
           block2: at
       expiringOrValidAlert:
         block1: This notice will expire on
       expiredAlert:
         block1: This notice expired at
         block2: on
-    prescription:  
+    prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
-          block1: The prescription expired at 
+          block1: The prescription expired at
           block2: "on"
     pay: Pay € {{amount}}
     onlyPay: Pay
@@ -1582,6 +1618,8 @@ contextualHelp:
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Be as specific as possible. What should have happened and what happened instead?\nAs far as possible, please do not enter sensitive data in your reports"
   contextualHelp:
     title1: Do you need help?
     descriptionBug: "If something **doesn't work** as it should or if you want to **suggest an improvement** or a new feature, write us! The IO team will get back to you directly via app."
@@ -2093,7 +2131,7 @@ bonus:
           moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
-            one: "1 valid transaction" 
+            one: "1 valid transaction"
             other: "{{transactions}} valid transactions"
         ranking:
           title: "Your position"
@@ -2117,7 +2155,7 @@ bonus:
           text2: "at least one payment method "
           text3: "at Cashback to start collecting necessary transactions"
         detail:
-          empty: 
+          empty:
             text1: "There are no valid transactions yet."
             text2: "Check back in the next few days!"
           summary:
@@ -2202,6 +2240,20 @@ bonus:
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
     name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: View merchants
+      screenTitle: Select the merchant where you want to buy something
+    merchantDetail:
+      title:
+        deals: Discounts
+        description: Description
+        services: Services
+        hours: Working Hours
+        validity: Validity
+        discountCode: Discount code
+        conditions: Conditions
+      cta:
+        label: Navigate to merchant website
     cta:
       activeBonus: Activate your Carta Giovani
       goToDetail: View your Carta Giovani
@@ -2209,6 +2261,10 @@ bonus:
       cta:
         buyers: See merchants
         otp: Generate code
+        eyca:
+          copy: Copy EYCA's card number
+          pending: Find out more on EYCA
+          bottomSheet: Check EYCA discounts
       tos:
         link: Information on the processing of personal data
       information:
@@ -2217,16 +2273,34 @@ bonus:
         revoked: "This card has been revoked cause {{reason}}"
         expired: "This card expired on {{date}}"
       ownership: Who can take advantage of discounts?
-      activationDateLabel: Activated on
-      expirationDateLabel: Expired on
-      revocationDateLabel: Revoked on
       status:
-        title: Card Status
+        title: Carta Giovani Nazionale
+        eyca: EYCA card
+        eycaCircuit: EYCA circuit
+        eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
+        eycaError: "We had some issues with EYCA's systems."
+        eycaBottomSheetTitle: "EYCA card number"
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e-commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaNumber: Card number
         badge:
           active: Active
           revoked: Revoked
           expired: Expired
+        date:
+          activated: Activated on
+          expired: Expired on
+          revoked: Revoked on
+        expiration:
+          cgn: CGN Expiration
+          eyca: EYCA Expiration
     activation:
+      eyca:
+        loading:
+          caption: "We're processing your request"
+          subCaption: "Please wait."
+        error:
+          title: "The EYCA service is not available at the moment."
+          body: "We apologize for the issue.\nWe invite you to retry again later."
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
         subCaption: "Please wait."
@@ -2248,7 +2322,29 @@ bonus:
       success:
         title: "Congratulation!"
         body: "Your Carta Giovani Nazionale is active"
-
+    otp:
+      screen:
+        title: Use discount code
+        cta: Copy code
+        text1: "Paste this code into the corresponding field on the merchant website within"
+        text2: "Once the code expires, it is no longer valid"
+        link: Code is not working?
+        bottomSheet:
+          body:
+            text1: "Some merchants require you to enter a "
+            text2: "static discount code."
+            text3: "Search for the merchant you are interested in in the list of online merchants, and check for current offers."
+            text4: "Inside the tab for the offer you will find the code to get the benefit that you can copy and paste on the merchant's website."
+          cta: Navigate to merchants list
+      code:
+        title: Your discount code
+        validUntil: Still valid for
+        minutes:
+          one: 1 minute
+          other: "{{minutes}} minutes"
+        seconds:
+          one: 1 second
+          other: "{{seconds}} seconds"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

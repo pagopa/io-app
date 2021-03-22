@@ -1,11 +1,10 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Badge, Text, View } from "native-base";
+import { Badge, View } from "native-base";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import I18n from "../../../../../i18n";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import TypedI18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 
@@ -19,19 +18,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   statusBadgeActive: {
-    height: 18,
+    height: 20,
     marginTop: 2,
     backgroundColor: IOColors.aqua
   },
   statusBadgeRevoked: {
-    height: 18,
+    height: 20,
     marginTop: 2,
     backgroundColor: IOColors.bluegrey
   },
-  statusText: {
-    fontSize: 12,
-    lineHeight: 18
-  }
+  statusText: { paddingHorizontal: 8 }
 });
 
 type StatusElements = {
@@ -58,12 +54,13 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeActive} testID={"status-badge"}>
-            <Text
-              style={[styles.statusText, { color: IOColors.bluegreyDark }]}
-              semibold={true}
+            <H5
+              color={"bluegreyDark"}
+              style={styles.statusText}
+              weight={"SemiBold"}
             >
               {I18n.t("bonus.cgn.detail.status.badge.active")}
-            </Text>
+            </H5>
           </Badge>
         ),
         dateInformation: (
@@ -74,16 +71,35 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
-                weight={"Regular"}
+                weight={"SemiBold"}
                 color={"bluegrey"}
                 testID={"activation-date-value"}
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
+                )}
+              </H5>
+            )}
+            {renderRowBlock(
+              <H5
+                weight={"Regular"}
+                color={"bluegrey"}
+                testID={"expiration-date-label"}
+              >
+                {I18n.t("bonus.cgn.detail.status.expiration.cgn")}
+              </H5>,
+              <H5
+                weight={"SemiBold"}
+                color={"bluegrey"}
+                testID={"expiration-date-value"}
+              >
+                {localeDateFormat(
+                  cgnDetail.expiration_date,
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -94,9 +110,9 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <Text style={[styles.statusText]} semibold={true} white>
+            <H5 color={"white"} style={styles.statusText} weight={"SemiBold"}>
               {I18n.t("bonus.cgn.detail.status.badge.expired")}
-            </Text>
+            </H5>
           </Badge>
         ),
         dateInformation: (
@@ -107,16 +123,16 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
-                weight={"Regular"}
+                weight={"SemiBold"}
                 color={"bluegrey"}
                 testID={"activation-date-value"}
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -126,16 +142,16 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"expiration-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.expirationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.expired")}
               </H5>,
               <H5
-                weight={"Regular"}
+                weight={"SemiBold"}
                 color={"bluegrey"}
                 testID={"expiration-date-value"}
               >
                 {localeDateFormat(
                   cgnDetail.expiration_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -146,9 +162,13 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
       return {
         badge: (
           <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <Text style={styles.statusText} semibold={true} white>
+            <H5
+              color={"white"}
+              weight={"SemiBold"}
+              style={{ paddingHorizontal: 8 }}
+            >
               {I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            </Text>
+            </H5>
           </Badge>
         ),
         dateInformation: (
@@ -159,16 +179,16 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"activation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.activationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.activated")}
               </H5>,
               <H5
-                weight={"Regular"}
+                weight={"SemiBold"}
                 color={"bluegrey"}
                 testID={"activation-date-value"}
               >
                 {localeDateFormat(
                   cgnDetail.activation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}
@@ -178,16 +198,16 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
                 color={"bluegrey"}
                 testID={"revocation-date-label"}
               >
-                {I18n.t("bonus.cgn.detail.revocationDateLabel")}
+                {I18n.t("bonus.cgn.detail.status.date.revoked")}
               </H5>,
               <H5
-                weight={"Regular"}
+                weight={"SemiBold"}
                 color={"bluegrey"}
                 testID={"revocation-date-value"}
               >
                 {localeDateFormat(
                   cgnDetail.revocation_date,
-                  TypedI18n.t("global.dateFormats.shortFormat")
+                  I18n.t("global.dateFormats.shortFormat")
                 )}
               </H5>
             )}

@@ -38,14 +38,14 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { visibleAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
-import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
+import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
-import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -67,7 +67,7 @@ import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
+import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
@@ -83,7 +83,10 @@ import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
-import { cgnDetailSelector } from "../../features/bonus/cgn/store/reducers/details";
+import {
+  cgnDetailSelector,
+  isCgnInformationAvailableSelector
+} from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -209,7 +212,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
-    this.loadBonusCgn();
     this.setState({ hasFocus: true });
   };
 
@@ -559,7 +561,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && <FeaturedCardCarousel />}
+            {(bpdEnabled || cgnEnabled) && <FeaturedCardCarousel />}
             {transactionContent}
           </>
         )}
@@ -581,6 +583,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
+      (cgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -594,10 +597,10 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: visibleAvailableBonusSelector(state),
+    availableBonusesList: supportedAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
+    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
     transactionsLoadedLength: getTransactionsLoadedLength(state),
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
@@ -606,7 +609,8 @@ const mapStateToProps = (state: GlobalState) => {
     nav: navSelector(state),
     isPagoPaVersionSupported,
     bpdLoadState: bpdLastUpdateSelector(state),
-    cgnDetails: cgnDetailSelector(state)
+    cgnDetails: cgnDetailSelector(state),
+    isCgnInfoAvailable: isCgnInformationAvailableSelector(state)
   };
 };
 

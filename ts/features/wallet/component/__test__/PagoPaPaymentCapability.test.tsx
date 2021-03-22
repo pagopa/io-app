@@ -9,6 +9,7 @@ import {
   SatispayPaymentMethod
 } from "../../../../types/pagopa";
 import PagoPaPaymentCapability from "../PagoPaPaymentCapability";
+import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 
 const renderTestTarget = (paymentMethod: PaymentMethod) =>
   render(
@@ -87,5 +88,22 @@ describe("PagoPaPaymentCapability", () => {
     const component = renderTestTarget(aPaymentMethod);
     const disabledSwitch = component.queryByTestId("switchOnboardCard");
     expect(disabledSwitch).not.toBeNull();
+  });
+  it("should render a disabled switch if passed a privative card, payment method of kind CreditCard with issuerAbiCode, PagoPa = false and type = PRV", () => {
+    const aNonMaestroCreditCard = {
+      info: {
+        brand: CreditCardType.decode("VISA").value,
+        issuerAbiCode: "123",
+        type: TypeEnum.PRV
+      }
+    } as CreditCardPaymentMethod;
+    const aPaymentMethod = {
+      ...aNonMaestroCreditCard,
+      kind: "CreditCard",
+      pagoPA: false
+    } as PaymentMethod;
+
+    const component = renderTestTarget(aPaymentMethod);
+    expect(component.getByText("Incompatible")).toBeTruthy();
   });
 });

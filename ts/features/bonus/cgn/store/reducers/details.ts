@@ -1,12 +1,14 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import { constUndefined } from "fp-ts/lib/function";
 import { Action } from "../../../../../store/actions/types";
 import { cgnDetails } from "../actions/details";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
+import { isStrictSome } from "../../../../../utils/pot";
 
 export type CgnDetailsState = {
   information: pot.Pot<Card, NetworkError>;
@@ -50,7 +52,27 @@ export const cgnDetailSelector = (state: GlobalState) =>
 export const isCgnInformationAvailableSelector = createSelector(
   cgnDetailSelector,
   (information: pot.Pot<Card, NetworkError>): boolean =>
-    pot.isSome(information) && !CardPending.is(information.value)
+    isStrictSome(information) && !CardPending.is(information.value)
+);
+
+const isNotPending = (cgn: Card) => !CardPending.is(cgn);
+
+// Returns true only if card information are available and not in PENDING status
+export const isCgnEnrolledSelector = createSelector(
+  cgnDetailSelector,
+  (information: pot.Pot<Card, NetworkError>): boolean | undefined =>
+    pot.fold(
+      information,
+      constUndefined,
+      constUndefined,
+      constUndefined,
+      // we have a network error or a 404 the user is not enrolled
+      () => false,
+      isNotPending,
+      constUndefined,
+      constUndefined,
+      () => false
+    )
 );
 
 // Returns the CGN information only if they are in the available status else undefined
@@ -60,5 +82,11 @@ export const cgnDetailsInformationSelector = createSelector(
     information: pot.Pot<Card, NetworkError>,
     isAvailable: boolean
   ): Card | undefined =>
-    pot.isSome(information) && isAvailable ? information.value : undefined
+    isStrictSome(information) && isAvailable ? information.value : undefined
+);
+
+export const isCgnDetailsLoading = createSelector(
+  cgnDetailSelector,
+  (information: CgnDetailsState["information"]): boolean =>
+    pot.isLoading(information)
 );

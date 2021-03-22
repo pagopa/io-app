@@ -6,7 +6,7 @@ import {
   cgnActivationStatus,
   cgnRequestActivation
 } from "../actions/activation";
-import { Card } from "../../../../../../definitions/cgn/Card";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
@@ -22,7 +22,7 @@ export enum CgnActivationProgressEnum {
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;
-  value?: Card;
+  value?: CgnActivationDetail;
 };
 
 const INITIAL_STATE: ActivationState = {
@@ -35,7 +35,7 @@ const reducer = (
 ): ActivationState => {
   switch (action.type) {
     // bonus activation
-    case getType(cgnRequestActivation.request):
+    case getType(cgnRequestActivation):
     case getType(cgnActivationStatus.request):
       return {
         ...state,

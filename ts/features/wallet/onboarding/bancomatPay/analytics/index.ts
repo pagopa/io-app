@@ -11,12 +11,13 @@ import {
   walletAddBPayBack,
   walletAddBPayCancel,
   walletAddBPayCompleted,
+  walletAddBPayFailure,
   walletAddBPayStart
 } from "../store/actions";
 
 export const trackBPayAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(walletAddBPayStart):
     case getType(walletAddBPayCompleted):
@@ -45,6 +46,10 @@ export const trackBPayAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: isTimeoutError(action.payload)
           ? action.payload.kind
           : action.payload.value.message
+      });
+    case getType(walletAddBPayFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();

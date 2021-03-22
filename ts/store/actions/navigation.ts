@@ -31,6 +31,7 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
+  PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -254,6 +255,14 @@ export const navigateToCobadgeDetailScreen = (
     params: { cobadge }
   });
 
+export const navigateToPrivativeDetailScreen = (
+  privative: PrivativePaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    params: { privative }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -377,4 +386,9 @@ export const navigateToCieCardReaderScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
+  });
+
+export const navigateToWorkunitGenericFailureScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
   });
