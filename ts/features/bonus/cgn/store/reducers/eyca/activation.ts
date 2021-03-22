@@ -26,14 +26,7 @@ export type CgnEycaActivationStatus =
   | "INELIGIBLE"
   | "ALREADY_ACTIVE"
   | "ERROR";
-ts /
-  features /
-  bonus /
-  cgn /
-  components /
-  detail /
-  eyca /
-  EycaDetailComponent.tsx;
+
 export type EycaActivationState = RemoteValue<
   CgnEycaActivationStatus,
   NetworkError
