@@ -4,7 +4,6 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -17,7 +16,8 @@ import WALLET_ONBOARDING_BPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddBPayBack,
   walletAddBPayCancel,
-  walletAddBPayCompleted
+  walletAddBPayCompleted,
+  walletAddBPayFailure
 } from "../../store/actions";
 import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBPay";
 
@@ -34,22 +34,9 @@ function* bPayWorkUnit() {
     startScreenName: WALLET_ONBOARDING_BPAY_ROUTES.START,
     complete: walletAddBPayCompleted,
     back: walletAddBPayBack,
-    cancel: walletAddBPayCancel
+    cancel: walletAddBPayCancel,
+    failure: walletAddBPayFailure
   });
-}
-
-/**
- * A saga that invokes the addition of a BPay workflow {@link bPayWorkUnit} and return
- * to the wallet after the insertion.
- */
-export function* addBPayToWalletGeneric() {
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    bPayWorkUnit
-  );
-  if (res !== "back") {
-    yield put(navigateToWalletHome());
-  }
 }
 
 /**
