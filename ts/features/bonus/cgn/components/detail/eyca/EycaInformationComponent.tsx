@@ -9,27 +9,36 @@ import { Label } from "../../../../../../components/core/typography/Label";
 
 const EYCA_DISCOUNTS_URL = "https://www.eyca.org/discounts/it";
 
-const EycaInformationComponent: React.FunctionComponent = () => (
-  <View>
-    <View spacer />
-    <View style={{ flex: 1 }}>
-      <Markdown avoidTextSelection>
-        {I18n.t("bonus.cgn.detail.status.eycaDescription")}
-      </Markdown>
-      <View spacer large />
-      <ButtonDefaultOpacity
-        style={{ width: "100%" }}
-        bordered
-        onPress={() => openWebUrl(EYCA_DISCOUNTS_URL)}
-        onPressWithGestureHandler
-      >
-        <Label color={"blue"}>
-          {I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
-        </Label>
-      </ButtonDefaultOpacity>
+/**
+ * this component shows information about EYCA card. It is included within a bottom sheet
+ * @constructor
+ */
+const EycaInformationComponent: React.FunctionComponent = () => {
+  const [isMarkdownloaded, setMarkdownloaded] = React.useState(false);
+  return (
+    <View>
+      <View spacer />
+      <View style={{ flex: 1 }}>
+        <Markdown avoidTextSelection onLoadEnd={() => setMarkdownloaded(true)}>
+          {I18n.t("bonus.cgn.detail.status.eycaDescription")}
+        </Markdown>
+        <View spacer large />
+        {isMarkdownloaded && (
+          <ButtonDefaultOpacity
+            style={{ width: "100%" }}
+            bordered
+            onPress={() => openWebUrl(EYCA_DISCOUNTS_URL)}
+            onPressWithGestureHandler
+          >
+            <Label color={"blue"}>
+              {I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
+            </Label>
+          </ButtonDefaultOpacity>
+        )}
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export const useEycaInformationBottomSheet = () =>
   useIOBottomSheet(
