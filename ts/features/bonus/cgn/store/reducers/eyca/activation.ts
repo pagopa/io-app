@@ -57,8 +57,6 @@ export const eycaActivationStatusSelector = (
 ): EycaActivationState => state.bonus.cgn.eyca.activation;
 
 // return the cgn eyca status
-// TODO Use this selector in PR https://github.com/pagopa/io-app/pull/2872
-//  to check the EYCA activation status is not ERROR
 export const cgnEycaActivationStatus = createSelector(
   eycaActivationStatusSelector,
   (activation: EycaActivationState): CgnEycaActivationStatus | undefined =>
