@@ -37,15 +37,37 @@ import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import {
-  isEycaDetailsLoading,
-  isEycaEligible
+  eycaDetailSelector,
+  EycaDetailsState,
+  EycaDetailStatus
 } from "../store/reducers/eyca/details";
-
+import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const HEADER_BACKGROUND_COLOR = "#7CB3D9";
+
+// return true if the EYCA details component can be shown
+const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
+  if (isLoading(card)) {
+    return true;
+  }
+  const evaluateReady = (status: EycaDetailStatus): boolean => {
+    switch (status) {
+      case "FOUND":
+      case "NOT_FOUND":
+      case "ERROR":
+        return true;
+      case "INELIGIBLE":
+        return false;
+    }
+  };
+  if (isReady(card)) {
+    return evaluateReady(card.value.status);
+  }
+  return false;
+};
 /**
  * Screen to display all the information about the active CGN
  */
@@ -62,7 +84,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   });
 
   const onCardLoadEnd = () => setCardLoading(false);
-
+  const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
   return (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
@@ -104,7 +126,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 // ACTIVATED - EXPIRED - REVOKED
                 <CgnStatusDetail cgnDetail={props.cgnDetails} />
               )}
-              {(props.isEycaLoading || props.isEycaEligible) && (
+              {canDisplayEycaDetails && (
                 <>
                   <ItemSeparatorComponent noPadded />
                   <View spacer />
@@ -134,8 +156,7 @@ const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
-  isEycaEligible: isEycaEligible(state),
-  isEycaLoading: isEycaDetailsLoading(state)
+  eycaDetails: eycaDetailSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
