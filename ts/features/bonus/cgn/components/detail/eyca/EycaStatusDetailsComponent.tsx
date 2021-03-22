@@ -18,6 +18,7 @@ import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboar
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
+  openBottomSheet: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -94,7 +95,12 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <View style={styles.rowBlock}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
           <View hspacer small />
-          <IconFont name={"io-info"} size={ICON_SIZE} color={IOColors.blue} />
+          <IconFont
+            name={"io-info"}
+            size={ICON_SIZE}
+            color={IOColors.blue}
+            onPress={props.openBottomSheet}
+          />
         </View>
         {badgeByStatus()}
       </View>
