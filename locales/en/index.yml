@@ -2294,6 +2294,13 @@ bonus:
           cgn: CGN Expiration
           eyca: EYCA Expiration
     activation:
+      eyca:
+        loading:
+          caption: "We're processing your request"
+          subCaption: "Please wait."
+        error:
+          title: "The EYCA service is not available at the moment."
+          body: "We apologize for the issue.\nWe invite you to retry again later."
       loading:
         caption: "We're activating your Carta Giovani Nazionale"
         subCaption: "Please wait."

@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import {
   eycaCardSelector,
-  isEycaDetailsLoading
+  eycaDetailSelector
 } from "../../../store/reducers/eyca/details";
 import {
   cgnEycaActivation,
@@ -19,6 +19,7 @@ import {
   cgnEycaActivationStatus
 } from "../../../store/reducers/eyca/activation";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
+import { isLoading } from "../../../../bpd/model/RemoteValue";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 import EycaPendingComponent from "./EycaPendingComponent";
 import EycaErrorComponent from "./EycaErrorComponent";
@@ -72,7 +73,6 @@ const EycaDetailComponent = (props: Props) => {
         return null;
     }
   };
-
   return (
     <>
       {props.isLoading ? (
@@ -92,7 +92,8 @@ const EycaDetailComponent = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   eyca: eycaCardSelector(state),
   eycaActivationStatus: cgnEycaActivationStatus(state),
-  isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
+  isLoading:
+    isLoading(eycaDetailSelector(state)) || cgnEycaActivationLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
