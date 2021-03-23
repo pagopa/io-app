@@ -1,10 +1,19 @@
-import { Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { Locales } from "../../locales/locales";
 import I18n, { translations } from "../i18n";
+import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 /**
  * Helpers for handling locales
  */
 
+/**
+ * Return a full string locale.
+ * If not italian, for all other languages english is the default.
+ */
+export const getFullLocale = (): "it-IT" | "en-EN" =>
+  getLocalePrimary(I18n.currentLocale()).fold("en-EN", (l: string) =>
+    l === "it" ? "it-IT" : "en-EN"
+  );
 /**
  * Returns the primary component of a locale
  *
@@ -33,3 +42,37 @@ export const getLocalePrimaryWithFallback = (fallback: Locales = "en") =>
     .filter(l => translations.some(t => t.toLowerCase() === l.toLowerCase()))
     .map(s => s as Locales)
     .getOrElse(fallback);
+
+const localeToPreferredLanguageMapping = new Map<
+  Locales,
+  PreferredLanguageEnum
+>([
+  ["it", PreferredLanguageEnum.it_IT],
+  ["en", PreferredLanguageEnum.en_GB]
+]);
+
+const preferredLanguageMappingToLocale = new Map<
+  PreferredLanguageEnum,
+  Locales
+>(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
+
+export const localeDateFormat = (date: Date, format: string): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, format);
+
+// from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
+export const fromLocaleToPreferredLanguage = (
+  locale: Locales
+): PreferredLanguageEnum =>
+  fromNullable(localeToPreferredLanguageMapping.get(locale)).getOrElse(
+    PreferredLanguageEnum.en_GB
+  );
+
+// from a given preferredLanguage return the relative Locales (fallback is en)
+export const fromPreferredLanguageToLocale = (
+  preferredLanguage: PreferredLanguageEnum
+): Locales =>
+  fromNullable(
+    preferredLanguageMappingToLocale.get(preferredLanguage)
+  ).getOrElse("en");

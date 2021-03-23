@@ -7,6 +7,7 @@
 
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import deviceInfoModule from "react-native-device-info";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -20,7 +21,6 @@ import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
-import BONUSVACANZE_ROUTES from "../features/bonusVacanze/navigation/routes";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -45,16 +45,37 @@ const getIcon = (routeName: string): string => {
   return route === undefined ? fallbackIcon : route;
 };
 
-const styles = StyleSheet.create({
-  tabBarStyle: {
-    height: 64,
+const tabBarStyleFactory = () => {
+  const defaultStyle = {
     backgroundColor: variables.colorWhite,
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
-    paddingTop: 8,
-    paddingBottom: 10
-  },
+    paddingTop: 8
+  };
+
+  // Add space to the bottom bar for iPhone 12, which has
+  // deviceId "iPhone 13" counterintuitevely
+  // See https://gist.github.com/adamawolf/3048717 for device IDs
+
+  const isIPhone12 = deviceInfoModule.getDeviceId().indexOf("iPhone13") !== -1;
+
+  return {
+    ...defaultStyle,
+    ...(isIPhone12
+      ? {
+          paddingBottom: 30,
+          height: 84
+        }
+      : {
+          paddingBottom: 10,
+          height: 64
+        })
+  };
+};
+
+const styles = StyleSheet.create({
+  tabBarStyle: tabBarStyleFactory(),
   upsideShadow: {
     // iOS shadow
     shadowColor: variables.footerShadowColor,
@@ -70,24 +91,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const NoTabBarRoutes: ReadonlyArray<string> = [
-  ROUTES.WALLET_ADD_PAYMENT_METHOD,
-  ROUTES.PAYMENT_SCAN_QR_CODE,
-  ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-  ROUTES.WALLET_ADD_CARD,
-  ROUTES.WALLET_CONFIRM_CARD_DETAILS,
-  ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-  ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-  ROUTES.PAYMENT_PICK_PSP,
-  ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
-  ROUTES.PAYMENT_TRANSACTION_ERROR,
-  ROUTES.PAYMENT_TRANSACTION_SUCCESS,
-  ROUTES.READ_EMAIL_SCREEN,
-  ROUTES.INSERT_EMAIL_SCREEN,
-  ROUTES.PAYMENTS_HISTORY_SCREEN,
-  ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
-  ROUTES.WALLET_TRANSACTION_DETAILS,
-  BONUSVACANZE_ROUTES.MAIN
+const TabFirstLevelRoutes: Array<string> = [
+  ROUTES.WALLET_HOME,
+  ROUTES.MESSAGES_HOME,
+  ROUTES.SERVICES_HOME,
+  ROUTES.PROFILE_MAIN
 ];
 
 const getTabBarVisibility = (
@@ -97,10 +105,7 @@ const getTabBarVisibility = (
 
   const { routeName } = state.routes[state.index];
 
-  if (NoTabBarRoutes.indexOf(routeName) !== -1) {
-    return false;
-  }
-  return true;
+  return TabFirstLevelRoutes.indexOf(routeName) !== -1;
 };
 
 /**

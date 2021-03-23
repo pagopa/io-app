@@ -96,7 +96,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     if (this.isPrescriptionExpiring) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.presctiption.expiringAlert")}
+          {I18n.t("messages.cta.prescription.expiringAlert")}
         </React.Fragment>
       );
     }
@@ -104,9 +104,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     if (this.isPrescriptionExpired) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.presctiption.expiredAlert.block1")}
+          {I18n.t("messages.cta.prescription.expiredAlert.block1")}
           <Text bold={true} white={true}>{` ${time} `}</Text>
-          {I18n.t("messages.cta.presctiption.expiredAlert.block2")}
+          {I18n.t("messages.cta.prescription.expiredAlert.block2")}
           <Text bold={true} white={true}>{` ${date}`}</Text>
         </React.Fragment>
       );
@@ -114,7 +114,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        {I18n.t("messages.cta.presctiption.addMemo")}
+        {I18n.t("messages.cta.prescription.addMemo")}
         <Text bold={true}>{` ${date}`}</Text>
       </React.Fragment>
     );
@@ -153,7 +153,8 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
    */
   public render() {
     const { dueDate } = this;
-    return dueDate.fold(null, _ => !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
+    return dueDate.fold(null, _ =>
+      !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
         <View style={[styles.container, this.bannerStyle]}>
           <Text style={styles.text} white={false}>
             {this.textContent}
@@ -173,7 +174,8 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
             {this.textContent}
           </Text>
         </View>
-      ));
+      )
+    );
   }
 }
 

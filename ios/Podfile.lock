@@ -77,21 +77,21 @@ PODS:
   - OpenSSL-Universal (1.0.2.19):
     - OpenSSL-Universal/Static (= 1.0.2.19)
   - OpenSSL-Universal/Static (1.0.2.19)
-  - Permission-Calendars (2.1.5):
+  - Permission-Calendars (2.2.2):
     - RNPermissions
-  - Permission-Camera (2.1.5):
+  - Permission-Camera (2.2.2):
     - RNPermissions
-  - Permission-Contacts (2.1.5):
+  - Permission-Contacts (2.2.2):
     - RNPermissions
-  - Permission-FaceID (2.1.5):
+  - Permission-FaceID (2.2.2):
     - RNPermissions
-  - Permission-MediaLibrary (2.1.5):
+  - Permission-MediaLibrary (2.2.2):
     - RNPermissions
-  - Permission-Notifications (2.1.5):
+  - Permission-Notifications (2.2.2):
     - RNPermissions
-  - Permission-PhotoLibrary (2.1.5):
+  - Permission-PhotoLibrary (2.2.2):
     - RNPermissions
-  - Permission-Reminders (2.1.5):
+  - Permission-Reminders (2.2.2):
     - RNPermissions
   - QrCode (1.1.0):
     - React
@@ -277,6 +277,8 @@ PODS:
     - React
   - react-native-config (1.0.0):
     - React
+  - react-native-cookies (4.0.1):
+    - React
   - react-native-image-picker (0.28.1):
     - React
   - react-native-mixpanel (1.2.0):
@@ -358,6 +360,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.11.0):
     - React
+  - RNCClipboard (1.5.0):
+    - React-Core
   - RNCPushNotificationIOS (1.4.0):
     - React
   - RNDeviceInfo (5.6.4):
@@ -370,7 +374,9 @@ PODS:
     - React
   - RNKeychain (3.1.3):
     - React
-  - RNPermissions (2.1.5):
+  - RNPermissions (2.2.2):
+    - React-Core
+  - RNReanimated (1.13.1):
     - React
   - RNScreens (2.10.1):
     - React
@@ -442,6 +448,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-config (from `../node_modules/react-native-config`)
+  - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -462,6 +469,7 @@ DEPENDENCIES:
   - "ReactNativeART (from `../node_modules/@react-native-community/art/ReactNativeART.podspec`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -469,6 +477,7 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNPermissions (from `../node_modules/react-native-permissions/`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -558,6 +567,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-cookies:
+    :path: "../node_modules/@react-native-community/cookies"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
@@ -598,6 +609,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-exception-handler"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-community/clipboard"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
@@ -612,6 +625,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNPermissions:
     :path: "../node_modules/react-native-permissions/"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSha256:
@@ -648,14 +663,14 @@ SPEC CHECKSUMS:
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   Mixpanel: 61e6d8c0717c8e94ccc6d3a1ae8677b9a78f64c5
   OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
-  Permission-Calendars: dc345e3388149514603309c621151ff3cfd5816a
-  Permission-Camera: afad27bf90337684d4a86f3825112d648c8c4d3b
-  Permission-Contacts: edde2d433382b3118f0d4c9ebc7708d5d87c4f17
-  Permission-FaceID: fbdeb41087f35887f0cade55396007fadee3a234
-  Permission-MediaLibrary: dd1c48888cd95961fbfebdaebf8d4127c6e92e7d
-  Permission-Notifications: 231d0e1db2300b686548587d384ba414e6a93332
-  Permission-PhotoLibrary: 4d2eff62c8f4b8a27bcf045c0e36f5047efbbf20
-  Permission-Reminders: 330cfafecc259594cfd7845a035580b623f771ae
+  Permission-Calendars: 17bb6a871acc7580754be7b56cfb25537e1b57de
+  Permission-Camera: 5d2aaf95592660b6dcb5e8d1d90ed5d0156cad02
+  Permission-Contacts: 295b2f26e7607801e73b0fd35a56ec63cfd52dc4
+  Permission-FaceID: 8f034a57c60ed8c602d184f485a9bd524c0f98b7
+  Permission-MediaLibrary: e94e0a30ec5edc18b14e9df10fc78d5bb592a8ca
+  Permission-Notifications: 9c6b5cc4f0e6599e9fc3395b77cebddc48f1be41
+  Permission-PhotoLibrary: 8227a6ed9f6a971537afe63742d54f5f23a38fe2
+  Permission-Reminders: f1bddb60953645830289f9b00977b11e2b62fbf8
   QrCode: 1212ff8b8fae1a0e2c698d1c42560abcc0c9019b
   RCTRequired: f13f25e7b12f925f1f6a6a8c69d929a03c0129fe
   RCTTypeSafety: 44982c5c8e43ff4141eb519a8ddc88059acd1f3a
@@ -672,6 +687,7 @@ SPEC CHECKSUMS:
   react-native-camera: d9e7b66e40420dcef111f3265a00f01eea54c52c
   react-native-cameraroll: ae0a7c0cc8462508855707ff623b1e789b692865
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
+  react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
@@ -692,13 +708,15 @@ SPEC CHECKSUMS:
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
+  RNCClipboard: c7abea1baea58adca5c1f29e56dd5261837b4892
   RNCPushNotificationIOS: dc1c0c6aa18a128df123598149f42e848d26a4ac
   RNDeviceInfo: a576aac2f2927eb7e0058a27dad811c8e7cd1474
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
-  RNPermissions: ad71dd4f767ec254f2cd57592fbee02afee75467
+  RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
+  RNReanimated: dd8c286ab5dd4ba36d3a7fef8bff7e08711b5476
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491

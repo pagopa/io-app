@@ -4,8 +4,8 @@ import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { typographyFactory } from "./Factory";
 
-type AllowedColors = Extract<IOColorType, "bluegrey">;
-type AllowedWeight = Extract<IOFontWeight, "Regular">;
+type AllowedColors = Extract<IOColorType, "bluegreyDark" | "bluegrey">;
+type AllowedWeight = Extract<IOFontWeight, "Regular" | "SemiBold" | "Bold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
@@ -20,7 +20,8 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Monospace: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
+export const Monospace: React.FunctionComponent<OwnProps> = props =>
+  typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Regular",
     defaultColor: "bluegrey",

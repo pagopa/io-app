@@ -75,9 +75,8 @@ export default class NewServiceListItem extends React.PureComponent<
     }
   }
 
-  private getServiceKey = (
-    potService: pot.Pot<ServicePublic, Error>
-  ): string => pot.getOrElse(
+  private getServiceKey = (potService: pot.Pot<ServicePublic, Error>): string =>
+    pot.getOrElse(
       pot.map(
         potService,
         service => `${service.service_id}-${service.version || 0}`
@@ -132,7 +131,7 @@ export default class NewServiceListItem extends React.PureComponent<
     return (
       <ListItemComponent
         title={serviceName}
-        hasBadge={!this.props.isRead}
+        hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
         onPress={onPress}
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}

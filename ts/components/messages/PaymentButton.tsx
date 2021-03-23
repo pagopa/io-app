@@ -21,9 +21,11 @@ import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import {
+  isExpirable,
   isExpired,
   isExpiring,
-  MessagePaymentExpirationInfo
+  MessagePaymentExpirationInfo,
+  paymentExpirationInfo
 } from "../../utils/messages";
 import {
   formatPaymentAmount,
@@ -61,6 +63,17 @@ const styles = StyleSheet.create({
  * paired with a message.
  */
 class PaymentButton extends React.PureComponent<Props> {
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get isPaymentInvalidAfterDueDate() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
+  get isPaymentExpiredAndInvalid() {
+    return this.isPaymentExpired && this.isPaymentInvalidAfterDueDate;
+  }
+
   private getButtonText = (): string => {
     const { messagePaymentExpirationInfo } = this.props;
     const { amount } = messagePaymentExpirationInfo;
@@ -71,13 +84,7 @@ class PaymentButton extends React.PureComponent<Props> {
       });
     }
 
-    if (this.isPaymentExpired) {
-      return I18n.t("messages.cta.payment.expired");
-    }
-
-    return I18n.t("messages.cta.pay", {
-      amount: formatPaymentAmount(amount)
-    });
+    return I18n.t("messages.cta.seeNotice");
   };
 
   get isPaymentExpired() {
@@ -106,14 +113,17 @@ class PaymentButton extends React.PureComponent<Props> {
       )
     );
 
-    if (this.isPaymentExpired || paid) {
+    // (small means in list -.-')
+    // if it is rendered in list and the payment is expired and it is not still valid to pay (invalid after due date)
+    // navigate to message detail screen
+    if ((this.props.small && this.isPaymentExpiredAndInvalid) || paid) {
       this.props.navigateToMessageDetail();
       return;
     }
 
     if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
       this.props.refreshService(message.sender_service_id);
-      // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
+      // TODO: optimize the managment of the payment initialization
       if (this.props.isEmailValidated && !this.props.isUpdatedNeededPagoPa) {
         this.props.paymentInitializeState();
         this.props.navigateToPaymentTransactionSummaryScreen({
@@ -142,7 +152,11 @@ class PaymentButton extends React.PureComponent<Props> {
         disabled={disabled}
         onPress={this.handleOnPress}
         gray={paid}
-        darkGray={!paid && this.isPaymentExpired}
+        darkGray={
+          !paid &&
+          this.isPaymentExpired &&
+          messagePaymentExpirationInfo.kind === "EXPIRABLE"
+        }
         xsmall={small}
         alert={
           enableAlertStyle && !paid && isExpiring(messagePaymentExpirationInfo)

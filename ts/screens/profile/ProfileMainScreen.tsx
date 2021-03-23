@@ -24,6 +24,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
+import { isPlaygroundsEnabled, shufflePinPadOnPayment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -31,11 +32,12 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
+import { identificationRequest } from "../../store/actions/identification";
 import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
-import { startPinReset } from "../../store/actions/pinset";
+import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -295,57 +297,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  /**
-   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
-   * It could be usefull when new experimental features will be available
-   */
-  /*
-  private onExperimentalFeaturesToggle = (enabled: boolean) => {
-    if (enabled) {
-      Alert.alert(
-        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.ok"),
-            style: "destructive",
-            onPress: () => {
-              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
-                enabled
-              );
-            }
-          }
-        ],
-        { cancelable: false }
-      );
-    } else {
-      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
-    }
-  };
-  */
-
-  private confirmResetAlert = () =>
-    Alert.alert(
-      I18n.t("profile.main.resetPin.confirmTitle"),
-      I18n.t("profile.main.resetPin.confirmMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: this.props.resetPin
-        }
-      ],
-      { cancelable: false }
-    );
-
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.ServiceListRef.current) {
@@ -415,11 +366,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             sectionHeader={I18n.t("profile.main.accountSectionHeader")}
           />
 
-          {/* Reset unlock code */}
+          {/* Ask for verification and reset unlock code */}
           <ListItemComponent
             title={I18n.t("identification.unlockCode.reset.button_short")}
-            subTitle={I18n.t("identification.unlockCode.reset.tip_short")}
-            onPress={this.confirmResetAlert}
+            subTitle={I18n.t("identification.unlockCode.reset.subtitle")}
+            onPress={this.props.requestIdentificationAndResetPin}
             hideIcon={true}
           />
 
@@ -445,7 +396,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               />
 
               {
-                // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+                // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994)
                 // It could be useful when new experimental features will be available
                 /*
                   this.developerListItem(
@@ -454,6 +405,26 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 ) */
               }
+              {isPlaygroundsEnabled && (
+                <>
+                  <ListItemComponent
+                    title={"MyPortal Web Playground"}
+                    onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
+                  />
+                  <ListItemComponent
+                    title={"Markdown Playground"}
+                    onPress={() =>
+                      navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
+                    }
+                  />
+                </>
+              )}
+              {/* Showroom */}
+              <ListItemComponent
+                title={I18n.t("profile.main.showroom")}
+                onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
+                isFirstItem={true}
+              />
               {this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
                 this.props.isPagoPATestEnabled,
@@ -475,27 +446,32 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                       () => clipboardSetStringWithFeedback(backendInfo.version),
                       false
                     )}
-                  {sessionToken &&
+
+                  {isDevEnv &&
+                    sessionToken &&
                     this.debugListItem(
                       `Session Token ${sessionToken}`,
                       () => clipboardSetStringWithFeedback(sessionToken),
                       false
                     )}
 
-                  {walletToken &&
+                  {isDevEnv &&
+                    walletToken &&
                     this.debugListItem(
                       `Wallet token ${walletToken}`,
                       () => clipboardSetStringWithFeedback(walletToken),
                       false
                     )}
 
-                  {this.debugListItem(
-                    `Notification ID ${notificationId.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationId),
-                    false
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      `Notification ID ${notificationId.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationId),
+                      false
+                    )}
 
-                  {notificationToken &&
+                  {isDevEnv &&
+                    notificationToken &&
                     this.debugListItem(
                       `Notification token ${notificationToken.slice(0, 6)}`,
                       () => clipboardSetStringWithFeedback(notificationToken),
@@ -508,11 +484,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     true
                   )}
 
-                  {this.debugListItem(
-                    I18n.t("profile.main.forgetCurrentSession"),
-                    this.props.dispatchSessionExpired,
-                    true
-                  )}
+                  {isDevEnv &&
+                    this.debugListItem(
+                      I18n.t("profile.main.forgetCurrentSession"),
+                      this.props.dispatchSessionExpired,
+                      true
+                    )}
                 </React.Fragment>
               )}
             </React.Fragment>
@@ -569,15 +546,30 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
   logout: () => dispatch(logoutRequest({ keepUserData: false })),
-  resetPin: () => dispatch(startPinReset()),
+  requestIdentificationAndResetPin: () => {
+    const onSuccess = () => dispatch(updatePin());
+
+    return dispatch(
+      identificationRequest(
+        true,
+        false,
+        undefined,
+        undefined,
+        {
+          onSuccess
+        },
+        shufflePinPadOnPayment
+      )
+    );
+  },
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

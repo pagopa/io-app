@@ -38,7 +38,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  walletsSelector
+  pagoPaCreditCardWalletV1Selector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
@@ -312,7 +312,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
           )}
           <View spacer={true} small={true} />
           {standardRow(
-            I18n.t("wallet.firstTransactionSummary.iuv"),
+            I18n.t("payment.noticeCode"),
             PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
           )}
           <View spacer={true} large={true} />
@@ -372,7 +372,8 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
+  const hasWallets =
+    pot.getOrElse(pagoPaCreditCardWalletV1Selector(state), []).length !== 0;
 
   return {
     error,

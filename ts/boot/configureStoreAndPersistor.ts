@@ -26,6 +26,7 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
+import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
@@ -62,7 +63,8 @@ const migrations: MigrationManifest = {
 
   // Version 2
   // Adds messagesIdsByServiceId
-  "2": (state: PersistedState) => addMessagesIdsByServiceId(state as PersistedGlobalState),
+  "2": (state: PersistedState) =>
+    addMessagesIdsByServiceId(state as PersistedGlobalState),
 
   // Version 3
   // we changed the entities of organizations
@@ -70,9 +72,9 @@ const migrations: MigrationManifest = {
     const entitiesState = (state as any).entities;
     const orgNameByFiscalCode = entitiesState.organizations;
     const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => ({
-        fiscalCode: key,
-        name: orgNameByFiscalCode[key]
-      }));
+      fiscalCode: key,
+      name: orgNameByFiscalCode[key]
+    }));
 
     return {
       ...state,
@@ -88,8 +90,9 @@ const migrations: MigrationManifest = {
 
   // Version 4
   // we added a state to monitor what pagoPA environment is selected
-  "4": (state: PersistedState) => (state as PersistedGlobalState).persistedPreferences
-      .isPagoPATestEnabled === undefined
+  "4": (state: PersistedState) =>
+    (state as PersistedGlobalState).persistedPreferences.isPagoPATestEnabled ===
+    undefined
       ? {
           ...state,
           persistedPreferences: {
@@ -133,77 +136,77 @@ const migrations: MigrationManifest = {
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
   "7": (state: PersistedState) => ({
-      ...state,
-      entities: {
-        ...(state as PersistedGlobalState).entities,
-        services: {
-          ...(state as PersistedGlobalState).entities.services,
-          byId: {}
-        }
+    ...state,
+    entities: {
+      ...(state as PersistedGlobalState).entities,
+      services: {
+        ...(state as PersistedGlobalState).entities.services,
+        byId: {}
       }
-    }),
+    }
+  }),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
   // they will be stored only when a service details screen is displayed
   "8": (state: PersistedState) => ({
-      ...state,
-      content: {
-        ...(state as PersistedGlobalState).content,
-        servicesMetadata: {
-          ...(state as PersistedGlobalState).content.servicesMetadata,
-          byId: {}
-        }
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      servicesMetadata: {
+        ...(state as PersistedGlobalState).content.servicesMetadata,
+        byId: {}
       }
-    }),
+    }
+  }),
 
   // Version 9
   // we fix a bug on the version 8 of the migration implying a no proper creation of the content segment of store
   // (the servicesByScope state was not properly initialized)
   "9": (state: PersistedState) => ({
-      ...state,
-      content: {
-        ...(state as PersistedGlobalState).content,
-        servicesByScope: pot.none
-      }
-    }),
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      servicesByScope: pot.none
+    }
+  }),
   // Version 10
   // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => ({
-      ...state,
-      entities: {
-        ...(state as PersistedGlobalState).entities,
-        messages: {}
-      }
-    }),
+    ...state,
+    entities: {
+      ...(state as PersistedGlobalState).entities,
+      messages: {}
+    }
+  }),
 
   // Version 11
   // add the default state for isCustomEmailChannelEnabled
   "11": (state: PersistedState) => ({
-      ...state,
-      persistedPreferences: {
-        ...(state as PersistedGlobalState).persistedPreferences,
-        isCustomEmailChannelEnabled: pot.none
-      }
-    }),
+    ...state,
+    persistedPreferences: {
+      ...(state as PersistedGlobalState).persistedPreferences,
+      isCustomEmailChannelEnabled: pot.none
+    }
+  }),
   // Version 12
   // change default state of isDebugModeEnabled: false
   "12": (state: PersistedState) => ({
-      ...state,
-      debug: {
-        isDebugModeEnabled: false
-      }
-    }),
+    ...state,
+    debug: {
+      isDebugModeEnabled: false
+    }
+  }),
   // Version 13
   // add content.idpTextData
   // set default value
   "13": (state: PersistedState) => ({
-      ...state,
-      content: {
-        ...(state as PersistedGlobalState).content,
-        idpTextData: pot.none
-      }
-    }),
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      idpTextData: pot.none
+    }
+  }),
   // Version 14
   // remove content.idpTextData
   // add context.contextualHelp
@@ -241,7 +244,8 @@ const rootPersistConfig: PersistConfig = {
     "installation",
     "payments",
     "content",
-    "userMetadata"
+    "userMetadata",
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
@@ -253,7 +257,11 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   Action
 >(
   rootPersistConfig,
-  createRootReducer([rootPersistConfig, authenticationPersistConfig])
+  createRootReducer([
+    rootPersistConfig,
+    authenticationPersistConfig,
+    walletsPersistConfig
+  ])
 );
 
 const logger = createLogger({

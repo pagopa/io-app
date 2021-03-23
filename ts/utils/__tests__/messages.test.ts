@@ -1,12 +1,24 @@
-import { Option } from "fp-ts/lib/Option";
+import { isNone, isSome, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
+import { ScopeEnum } from "../../../definitions/content/Service";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
-import { cleanMarkdownFromCTAs, getCTA, isCtaActionValid } from "../messages";
+import {
+  cleanMarkdownFromCTAs,
+  getCTA,
+  getMessagePaymentExpirationInfo,
+  getServiceCTA,
+  isCtaActionValid,
+  MaybePotMetadata,
+  MessagePaymentExpirationInfo,
+  paymentExpirationInfo
+} from "../messages";
 
 const messageBody = `### this is a message
 
@@ -31,7 +43,32 @@ en:
 ---
 ` + messageBody;
 
-const messageWithContent = {
+const CTA_WEBVIEW =
+  `---
+it:
+    cta_1: 
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+en:
+    cta_1: 
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---
+` + messageBody;
+
+const messageWithoutPaymentData = {
+  created_at: new Date(),
+  fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
+  id: "93726BD8-D29C-48F2-AE6D-2F",
+  sender_service_id: "dev-service_0",
+  time_to_live: 3600,
+  content: {
+    subject: "Subject - test 1",
+    markdown: CTA_2
+  } as MessageContent
+} as CreatedMessageWithContent;
+
+const messageWithContentWithoutDueDate = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
@@ -40,7 +77,6 @@ const messageWithContent = {
   content: {
     subject: "Subject - test 1",
     markdown: CTA_2,
-    due_date: new Date(),
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
@@ -48,6 +84,49 @@ const messageWithContent = {
     }
   } as MessageContent
 } as CreatedMessageWithContent;
+
+const messageWithContent = {
+  ...messageWithContentWithoutDueDate,
+  content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
+};
+
+const messageInvalidAfterDueDate = {
+  ...messageWithContent,
+  content: {
+    ...messageWithContent.content,
+    payment_data: {
+      notice_number: "012345678912345678",
+      amount: 406,
+      invalid_after_due_date: true
+    }
+  }
+};
+
+const serviceMetadataBase = {
+  description: "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>",
+  scope: "LOCAL" as ScopeEnum,
+  address: "Piazza di Spagna, Roma, Italia",
+  email: "mock.service@email.com",
+  pec: "mock.pec@email.com",
+  phone: "5555555",
+  web_url: "https://www.google.com",
+  app_android: "https://www.google.com",
+  app_ios: "https://www.google.com",
+  support_url: "https://www.sos.com",
+  tos_url: "https://www.tos.com",
+  privacy_url: "https://www.privacy.com",
+  cta: `---
+  it:
+      cta_1: 
+          text: "premi"
+          action: "ioit://SERVICE_WEBVIEW"
+  en:
+      cta_1: 
+          text: "go1"
+          action: "ioit://SERVICE_WEBVIEW"
+  ---
+  `
+};
 
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
@@ -133,6 +212,60 @@ some noise`;
     });
     expect(maybeCTA.isNone()).toBeTruthy();
   });
+
+  it("should have a valid CTA for service", () => {
+    const validServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken"
+    });
+    const maybeCTAs = getCTA(
+      {
+        ...messageWithContent,
+        content: {
+          ...messageWithContent.content,
+          markdown: CTA_WEBVIEW as MessageBodyMarkdown
+        }
+      },
+      validServiceMetadata
+    );
+    expect(maybeCTAs.isSome()).toBeTruthy();
+    if (maybeCTAs.isSome()) {
+      const ctas = maybeCTAs.value;
+      expect(ctas.cta_1).toBeDefined();
+      expect(ctas.cta_1.text).toEqual("Interno con params");
+      expect(ctas.cta_1.action).toEqual(
+        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+      );
+    }
+  });
+
+  it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
+    const validServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase
+    });
+    const maybeCTAs = getCTA(
+      {
+        ...messageWithContent,
+        content: {
+          ...messageWithContent.content,
+          markdown: CTA_WEBVIEW as MessageBodyMarkdown
+        }
+      },
+      validServiceMetadata
+    );
+    expect(maybeCTAs.isSome()).toBeFalsy();
+  });
+
+  it("should not have a valid CTA without service", () => {
+    const maybeCTAs = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: CTA_WEBVIEW as MessageBodyMarkdown
+      }
+    });
+    expect(maybeCTAs.isSome()).toBeFalsy();
+  });
 });
 
 const test2CTA = (
@@ -156,7 +289,92 @@ const test2CTA = (
   }
 };
 
+describe("getServiceCTA", () => {
+  it("Should extract a valid CTA for the service", () => {
+    const CTA_SERVICE = `---
+it:
+    cta_1:
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+en:
+    cta_1:
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---`;
+    const validServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken",
+      cta: CTA_SERVICE
+    });
+    const maybeCTA = getServiceCTA(validServiceMetadata);
+    expect(maybeCTA.isSome()).toBeTruthy();
+    if (maybeCTA.isSome()) {
+      const ctas = maybeCTA.value;
+      expect(ctas.cta_1).toBeDefined();
+      expect(ctas.cta_1.text).toEqual("Interno con params");
+      expect(ctas.cta_1.action).toEqual(
+        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+      );
+    }
+  });
+
+  it("Should not extract a CTA for the service without cta attribute", () => {
+    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken"
+    });
+    const maybeCTA = getServiceCTA(invalidServiceMetadata);
+    expect(maybeCTA.isSome()).toBeFalsy();
+  });
+
+  it("Should not extract a CTA for the service without token_name attribute", () => {
+    const CTA_SERVICE = `---
+it:
+    cta_1:
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+en:
+    cta_1:
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---`;
+    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      cta: CTA_SERVICE
+    });
+    const maybeCTA = getServiceCTA(invalidServiceMetadata);
+    expect(maybeCTA.isSome()).toBeFalsy();
+  });
+});
+
 describe("isCtaActionValid", () => {
+  it("should be a valid action for service", () => {
+    const validServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase,
+      token_name: "myPortalToken"
+    });
+    const CTA = {
+      text: "dummy",
+      action:
+        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+    };
+    const isValid = isCtaActionValid(CTA, validServiceMetadata);
+    expect(isValid).toBeTruthy();
+  });
+
+  it("should NOT be a valid action for service", () => {
+    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+      ...serviceMetadataBase
+    });
+    const CTA = {
+      text: "dummy",
+      action:
+        "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+    };
+    const isValid = isCtaActionValid(CTA, invalidServiceMetadata);
+    expect(isValid).toBeFalsy();
+  });
+
   it("should be a valid internal navigation action", async () => {
     const valid: CTA = { text: "dummy", action: "ioit://PROFILE_MAIN" };
     const isValid = isCtaActionValid(valid);
@@ -219,5 +437,71 @@ some noise`;
   it("should be cleaned (extended version)", async () => {
     const cleaned = cleanMarkdownFromCTAs(CTA_2 as MessageBodyMarkdown);
     expect(cleaned).toEqual(messageBody);
+  });
+});
+
+describe("getMessagePaymentExpirationInfo", () => {
+  it("should return an object with type UNEXPIRABLE if there isn't a duedate", () => {
+    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
+      messageWithContentWithoutDueDate.content.payment_data as NonNullable<
+        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
+      >
+    );
+    const expectedInfo = {
+      kind: "UNEXPIRABLE",
+      noticeNumber:
+        messageWithContentWithoutDueDate.content.payment_data?.notice_number,
+      amount: messageWithContentWithoutDueDate.content.payment_data?.amount
+    };
+    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
+  });
+  it("should return an object with type UNEXPIRABLE if there a duedate but invalid_after_due_date is false", () => {
+    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
+      messageWithContent.content.payment_data as NonNullable<
+        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
+      >,
+      messageWithContent.content.due_date
+    );
+    const expectedInfo = {
+      kind: "UNEXPIRABLE",
+      noticeNumber: messageWithContent.content.payment_data?.notice_number,
+      amount: messageWithContent.content.payment_data?.amount,
+      expireStatus: "EXPIRED",
+      dueDate: messageWithContent.content.due_date
+    };
+    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
+  });
+  it("should return an object with type EXPIRABLE if there a duedate and invalid_after_due_date is true", () => {
+    const messagePaymentExpirationInfo = getMessagePaymentExpirationInfo(
+      messageInvalidAfterDueDate.content.payment_data as NonNullable<
+        CreatedMessageWithContentAndAttachments["content"]["payment_data"]
+      >,
+      messageInvalidAfterDueDate.content.due_date
+    );
+
+    const expectedInfo = {
+      kind: "EXPIRABLE",
+      noticeNumber:
+        messageInvalidAfterDueDate.content.payment_data.notice_number,
+      amount: messageInvalidAfterDueDate.content.payment_data.amount,
+      expireStatus: "EXPIRED",
+      dueDate: messageInvalidAfterDueDate.content.due_date
+    };
+    expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
+  });
+});
+
+describe("paymentExpirationInfo", () => {
+  it("should be None if there isn't payment data in the message", () => {
+    const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
+    expect(isNone(expirationInfo)).toBe(true);
+  });
+  it("should be a MessagePaymentExpirationInfo if there is payment data in the message", () => {
+    const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
+    if (isSome(expirationInfo)) {
+      expect(expirationInfo.value).toBeInstanceOf(
+        {} as MessagePaymentExpirationInfo
+      );
+    }
   });
 });

@@ -7,13 +7,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Image, StyleSheet } from "react-native";
+import { Alert, Image, StyleSheet, SafeAreaView } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import {
-  NavigationScreenProp,
-  NavigationState,
-  SafeAreaView
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";

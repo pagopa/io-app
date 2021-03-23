@@ -52,12 +52,6 @@ type State = Readonly<{
 
 const screenWidth = Dimensions.get("window").width;
 const minScreenWidth = 320;
-// On small devices use short label
-const reminderText = I18n.t(
-  screenWidth <= minScreenWidth
-    ? "messages.cta.reminderShort"
-    : "messages.cta.reminder"
-);
 
 const styles = StyleSheet.create({
   button: {
@@ -318,6 +312,12 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    // On small devices use short label
+    const reminderText = I18n.t(
+      screenWidth <= minScreenWidth
+        ? "messages.cta.reminderShort"
+        : "messages.cta.reminder"
+    );
     const { small, disabled, medium } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
       ? "io-tick-big"

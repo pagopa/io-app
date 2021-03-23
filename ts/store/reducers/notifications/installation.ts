@@ -35,6 +35,7 @@ const reducer = (
 };
 
 // Selectors
-export const notificationsInstallationSelector = (state: GlobalState) => state.notifications.installation;
+export const notificationsInstallationSelector = (state: GlobalState) =>
+  state.notifications.installation;
 
 export default reducer;

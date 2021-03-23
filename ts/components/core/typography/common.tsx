@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text } from "react-native";
+import { StyleProp, Text, TextStyle } from "react-native";
 import { RequiredAll } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
@@ -17,10 +17,9 @@ export function calculateWeightColor<WeightPropsType, ColorsPropsType>(
   weight?: WeightPropsType,
   color?: ColorsPropsType
 ): RequiredTypographyProps<WeightPropsType, ColorsPropsType> {
-  // TODO: Replace with nullish coalescing after prettier upgrade
   return {
-    weight: weight !== undefined ? weight : defaultWeight,
-    color: color !== undefined ? color : defaultColor
+    weight: weight ?? defaultWeight,
+    color: color ?? defaultColor
   };
 }
 
@@ -40,8 +39,19 @@ type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColorType>;
  * In addition to the {@link DefaultTypographyProps} all the {@link Text} props are allowed (`style` excluded)
  */
 export type ExternalTypographyProps<T> = T extends DefaultTypographyProps
-  ? Omit<React.ComponentPropsWithRef<typeof Text>, "style"> & T
+  ? Omit<React.ComponentPropsWithRef<typeof Text>, "style"> &
+      T & { style?: TypographyStyle }
   : never;
+
+/**
+ * The style exported for the typography elements, without the fields characterizing the font style
+ */
+type TypographyStyle = StyleProp<
+  Omit<
+    TextStyle,
+    "color" | "fontFamily" | "fontStyle" | "fontWeight" | "fontSize"
+  >
+>;
 
 /**
  * Define mandatory all the keys of {@link TypographyProps}

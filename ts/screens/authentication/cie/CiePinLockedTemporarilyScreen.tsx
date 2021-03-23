@@ -3,9 +3,10 @@
  */
 import { Content } from "native-base";
 import * as React from "react";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -27,12 +28,24 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     this.state = { isLoadingCompleted: false };
   }
   private goToCieID() {
-    const url = "https://play.google.com/store/apps/details?id=it.ipzs.cieid";
-    Linking.openURL(url).catch(_ => undefined);
+    Linking.openURL(
+      Platform.select({
+        ios: "https://apps.apple.com/it/app/cieid/id1504644677",
+        default: "https://play.google.com/store/apps/details?id=it.ipzs.cieid"
+      })
+    ).catch(constNull);
   }
+
+  private getContextualHelp = () => ({
+    title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
+    body: () => (
+      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    )
+  });
+
   private renderFooterButtons = () => {
     const cancelButtonProps = {
-      cancel: true,
+      bordered: true,
       onPress: this.handleGoBack,
       title: I18n.t("global.buttons.cancel")
     };
@@ -40,7 +53,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
       primary: true,
       iconColor: variables.colorWhite,
       iconName: "io-cie",
-      onPress: this.goToCieID, // TODO: if the app is installed, redirect to the page dedicated to rpin recovery
+      onPress: this.goToCieID,
       title: I18n.t("authentication.cie.pinTempLocked.button")
     };
     return (
@@ -57,6 +70,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
+        contextualHelp={this.getContextualHelp()}
         headerTitle={I18n.t("authentication.cie.pinTempLocked.header")} // TODO: validate
       >
         <ScreenContentHeader

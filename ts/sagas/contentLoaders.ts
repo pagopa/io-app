@@ -23,6 +23,8 @@ import {
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
+import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
 
@@ -121,14 +123,16 @@ function* watchServiceMetadataLoadSaga(
             : pot.some(undefined);
         yield put(loadServiceMetadata.success({ serviceId, data }));
       } else {
-        throw Error(`response status ${response.value.status}`);
+        throw Error(`[${serviceId}] response status ${response.value.status}`);
       }
     }
   } catch (e) {
     yield put(
       loadServiceMetadata.failure({
         serviceId,
-        error: e || Error(`Unable to load metadata for service ${serviceId}`)
+        error: e
+          ? new Error(`[${serviceId}] ${typeof e === "string" ? e : e.message}`)
+          : Error(`[${serviceId}] Unable to load metadata for service`)
       })
     );
   }
@@ -218,6 +222,29 @@ function* watchLoadContextualHelp(): SagaIterator {
   }
 }
 
+// handle available list loading
+function* handleLoadAvailableBonus(
+  getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
+): SagaIterator {
+  try {
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> = yield call(
+      getBonusAvailable,
+      {}
+    );
+    if (bonusListReponse.isRight()) {
+      if (bonusListReponse.value.status === 200) {
+        yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
+        return;
+      }
+      throw Error(`response status ${bonusListReponse.value.status}`);
+    } else {
+      throw Error(readableReport(bonusListReponse.value));
+    }
+  } catch (e) {
+    yield put(loadAvailableBonuses.failure(e));
+  }
+}
+
 export function* watchContentSaga() {
   // watch municipality loading request
   yield takeEvery(
@@ -245,4 +272,13 @@ export function* watchContentSaga() {
 
   // Load content related to the contextual help body
   yield put(loadContextualHelpData.request());
+
+  if (bonusVacanzeEnabled || bpdEnabled) {
+    // available bonus list request
+    yield takeLatest(
+      getType(loadAvailableBonuses.request),
+      handleLoadAvailableBonus,
+      contentClient.getBonusAvailable
+    );
+  }
 }

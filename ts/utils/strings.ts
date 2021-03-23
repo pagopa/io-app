@@ -32,10 +32,14 @@ export function isTextIncludedCaseInsensitive(
 export function capitalize(text: string, separator: string = " ") {
   return text
     .split(separator)
-    .reduce((acc: string, curr: string, index: number) => `${acc}${index === 0 ? "" : separator}${curr.replace(
-        new RegExp(curr.trimLeft(), "ig"),
-        _.capitalize(curr.trimLeft())
-      )}`, "");
+    .reduce(
+      (acc: string, curr: string, index: number) =>
+        `${acc}${index === 0 ? "" : separator}${curr.replace(
+          new RegExp(curr.trimLeft(), "ig"),
+          _.capitalize(curr.trimLeft())
+        )}`,
+      ""
+    );
 }
 
 /**

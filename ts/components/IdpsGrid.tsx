@@ -76,13 +76,13 @@ const renderItem = (props: Props) => (
 };
 
 const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
-    <FlatList
-      bounces={false}
-      data={props.idps}
-      numColumns={2}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem(props)}
-    />
-  );
+  <FlatList
+    bounces={false}
+    data={props.idps}
+    numColumns={2}
+    keyExtractor={keyExtractor}
+    renderItem={renderItem(props)}
+  />
+);
 
 export default IdpsGrid;

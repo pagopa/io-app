@@ -22,7 +22,9 @@ export function areStringsEqual(
   caseInsensitive: boolean = false
 ): boolean {
   return aa.fold(false, (a: string) =>
-    bb.fold(false, (b: string) => caseInsensitive ? a.toLowerCase() === b.toLowerCase() : a === b)
+    bb.fold(false, (b: string) =>
+      caseInsensitive ? a.toLowerCase() === b.toLowerCase() : a === b
+    )
   );
 }
 
@@ -36,6 +38,7 @@ export const maybeInnerProperty = <T, K extends keyof T, R>(
   item: T | undefined,
   key: K,
   extractor: (value: T[K]) => R
-): Option<R> => fromNullable(item)
+): Option<R> =>
+  fromNullable(item)
     .mapNullable(s => s[key])
     .map(value => extractor(value));

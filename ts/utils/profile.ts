@@ -1,12 +1,13 @@
-import { format, format as dateFnsFormat } from "date-fns";
+import { format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
+import { fromNullable } from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
-
+import { formatDateAsShortFormat } from "./dates";
 type GenderType = "M" | "F" | undefined;
 
 /**
@@ -81,15 +82,12 @@ export function extractFiscalCodeData(
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
   const birthday = new Date(year, month - 1, day);
-  const birthDateRepr = format(
-    new Date(year, month - 1, day), // months are 0-index
-    "DD/MM/YYYY"
-  );
+  const birthDate = formatDateAsShortFormat(birthday);
 
   return {
     gender,
     birthday,
-    birthDate: birthDateRepr,
+    birthDate,
     siglaProvincia,
     denominazione
   };
@@ -237,3 +235,14 @@ export const getBlockedChannels = (
     ...profileBlockedChannels
   };
 };
+
+// a string log containing profile details
+export const getProfileDetailsLog = (
+  profile: InitializedProfile,
+  separator: string = " / "
+) =>
+  `- spid_email: ${fromNullable(profile.spid_email as string).getOrElse(
+    "n/a"
+  )}${separator}- email: ${fromNullable(profile.email as string).getOrElse(
+    "n/a"
+  )}${separator}- cf: ${profile.fiscal_code as string}`;

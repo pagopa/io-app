@@ -1,7 +1,7 @@
 import { NavigationState } from "react-navigation";
 import { PersistPartial } from "redux-persist";
 
-import { BonusState } from "../../features/bonusVacanze/store/reducers";
+import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
@@ -27,6 +27,8 @@ import { SearchState } from "./search";
 import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
+import { InternalRouteNavigationState } from "./internalRouteNavigation";
+import { CrossSessionsState } from "./crossSessions";
 
 type NetworkState = Readonly<{
   isConnected: boolean;
@@ -61,6 +63,8 @@ export type GlobalState = Readonly<{
   emailValidation: EmailValidationState;
   cie: CieState;
   bonus: BonusState;
+  internalRouteNavigation: InternalRouteNavigationState;
+  crossSessions: CrossSessionsState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

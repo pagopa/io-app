@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnButtonProps = {
+  onPressWithGestureHandler?: true;
   title: string;
   buttonFontSize?: number;
   iconName?: string;
@@ -130,22 +131,24 @@ export default class BlockButtons extends React.Component<Props, never> {
     props: BlockButtonProps,
     style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
   ) => (
-      <ButtonDefaultOpacity style={style} {...props}>
-        {props.iconName && (
-          <IconFont
-            name={props.iconName}
-            style={fromNullable(props.iconColor).fold(undefined, c => ({
-              color: c
-            }))}
-          />
-        )}
-        <Text
-          style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({ fontSize: fs }))}
-        >
-          {props.title}
-        </Text>
-      </ButtonDefaultOpacity>
-    );
+    <ButtonDefaultOpacity style={style} {...props}>
+      {props.iconName && (
+        <IconFont
+          name={props.iconName}
+          style={fromNullable(props.iconColor).fold(undefined, c => ({
+            color: c
+          }))}
+        />
+      )}
+      <Text
+        style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({
+          fontSize: fs
+        }))}
+      >
+        {props.title}
+      </Text>
+    </ButtonDefaultOpacity>
+  );
 
   public render() {
     return (

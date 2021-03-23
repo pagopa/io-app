@@ -11,18 +11,13 @@
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEventPayload,
-  NavigationEvents,
-  NavigationInjectedProps
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { isLeft, isRight, left, right } from "fp-ts/lib/Either";
+import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
@@ -46,7 +41,6 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { NumberFromString } from "../../../utils/number";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -66,10 +60,6 @@ type State = Readonly<{
   organizationFiscalCode: Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  delocalizedAmount: Option<
-    ReturnType<typeof AmountInEuroCentsFromString.decode>
-  >;
-  inputAmountValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -82,10 +72,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AmountInEuroCentsFromString = NumberFromString.pipe(
-  AmountInEuroCentsFromNumber
-);
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
   body: "wallet.insertManually.contextualHelpContent"
@@ -95,29 +81,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       paymentNoticeNumber: none,
-      organizationFiscalCode: none,
-      delocalizedAmount: none,
-      inputAmountValue: ""
+      organizationFiscalCode: none
     };
   }
 
-  private handleWillFocus = (payload: NavigationEventPayload) => {
-    const isInvalidAmount =
-      payload.state.params !== undefined
-        ? payload.state.params.isInvalidAmount
-        : false;
-    if (isInvalidAmount) {
-      this.setState({ inputAmountValue: "", delocalizedAmount: none });
-    }
-  };
-
-  private decimalSeparatorRe = RegExp(
-    `\\${I18n.t("global.localization.decimalSeparator")}`,
-    "g"
-  );
-
   private isFormValid = () =>
-    this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
     this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
@@ -140,17 +108,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 paymentNoticeNumber,
                 organizationFiscalCode
               })
-            )
-          )
-          .chain(rptId =>
-            this.state.delocalizedAmount
-              .chain(fromEither)
-              .map(delocalizedAmount =>
-                this.props.navigateToTransactionSummary(
-                  rptId,
-                  delocalizedAmount
-                )
-              )
+            ).map(rptId => {
+              // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+              const initialAmount = "1" as AmountInEuroCents;
+              this.props.navigateToTransactionSummary(rptId, initialAmount);
+            })
           )
       );
   };
@@ -177,7 +139,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_insert_notice_data"]}
       >
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
+        <NavigationEvents />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
@@ -233,48 +195,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                         .map(_ => OrganizationFiscalCode.decode(_))
                     });
                   }}
-                />
-              </Item>
-              <Item
-                style={styles.noLeftMargin}
-                floatingLabel={true}
-                error={this.state.delocalizedAmount
-                  .map(isLeft)
-                  .getOrElse(false)}
-                success={this.state.delocalizedAmount
-                  .map(isRight)
-                  .getOrElse(false)}
-              >
-                <Label>{I18n.t("wallet.insertManually.amount")}</Label>
-                <Input
-                  keyboardType={"numeric"}
-                  returnKeyType={"done"}
-                  maxLength={10}
-                  value={this.state.inputAmountValue}
-                  onChangeText={value =>
-                    this.setState({
-                      inputAmountValue: value,
-                      delocalizedAmount: some(
-                        value.replace(this.decimalSeparatorRe, ".")
-                      )
-                        .filter(s => NonEmptyString.is(s))
-                        .map(_ => AmountInEuroCentsFromString.decode(_))
-                        // transform again the result
-                        .map(aec => {
-                          // if it is left just return
-                          if (aec.isLeft()) {
-                            return aec;
-                          }
-                          // check if it is a positive integer
-                          const v = parseInt(aec.value, 10);
-                          if (!isNaN(v) && v > 0) {
-                            return right(aec.value);
-                          }
-                          // if it is not a number nor a positive number return left
-                          return left([]);
-                        })
-                    })
-                  }
                 />
               </Item>
             </Form>

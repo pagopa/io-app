@@ -6,7 +6,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { clearCache } from "../../../actions/profile";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -68,16 +67,14 @@ const reducer = (
       return newState;
     }
 
-    case getType(clearCache):
-      return INITIAL_STATE;
-
     default:
       return state;
   }
 };
 
 // Selectors
-export const servicesByIdSelector = (state: GlobalState): ServicesByIdState => state.entities.services.byId;
+export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
+  state.entities.services.byId;
 
 export const serviceByIdSelector = (id: string) => (
   state: GlobalState

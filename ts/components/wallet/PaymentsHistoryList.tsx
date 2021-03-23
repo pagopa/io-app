@@ -7,7 +7,6 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import {
-  getIuv,
   isPaymentDoneSuccessfully,
   PaymentHistory,
   PaymentsHistoryState
@@ -17,6 +16,7 @@ import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import { getIuv } from "../../utils/payment";
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{
@@ -45,7 +45,8 @@ const notAvailable = I18n.t("global.remoteStates.notAvailable");
 export const getPaymentHistoryInfo = (
   paymentHistory: PaymentHistory,
   paymentCheckout: Option<boolean>
-) => paymentCheckout.fold(
+) =>
+  paymentCheckout.fold(
     {
       text11: I18n.t("payment.details.state.incomplete"),
       text3: getIuv(paymentHistory.data),

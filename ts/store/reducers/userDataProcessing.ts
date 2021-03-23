@@ -5,6 +5,7 @@ import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserD
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
+  deleteUserDataProcessing,
   loadUserDataProcessing,
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
@@ -43,6 +44,7 @@ const userDataProcessingReducer = (
       };
     }
 
+    case getType(deleteUserDataProcessing.failure):
     case getType(upsertUserDataProcessing.failure):
     case getType(loadUserDataProcessing.failure):
       return {
@@ -53,6 +55,7 @@ const userDataProcessingReducer = (
         )
       };
 
+    case getType(deleteUserDataProcessing.request):
     case getType(upsertUserDataProcessing.request): {
       const maybeValue = state[action.payload];
       const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
@@ -67,7 +70,6 @@ const userDataProcessingReducer = (
         [action.payload.choice]: pot.some(action.payload)
       };
     }
-
     case getType(resetUserDataProcessingRequest): {
       return {
         ...state,

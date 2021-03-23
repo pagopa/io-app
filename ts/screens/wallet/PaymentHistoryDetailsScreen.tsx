@@ -10,7 +10,7 @@ import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario"
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
-  openInstabugBugReport,
+  openInstabugQuestionReport,
   TypeLogs
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -26,7 +26,6 @@ import {
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
-  getCodiceAvviso,
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
@@ -37,12 +36,15 @@ import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
+  getCodiceAvviso,
   getErrorDescription,
   getPaymentHistoryDetails,
+  getPaymentOutcomeCodeDescription,
   getTransactionFee
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
+import { outcomeCodesSelector } from "../../store/reducers/wallet/outcomeCode";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -82,19 +84,22 @@ const renderItem = (label: string, value?: string) => {
     </React.Fragment>
   );
 };
+
+const instabugTag = "payment-support";
 /**
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
-    Instabug.appendTags(["payment-support"]);
+    Instabug.appendTags([instabugTag]);
     pot.map(this.props.profile, p => {
       instabugLog(
         getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
-        TypeLogs.INFO
+        TypeLogs.INFO,
+        instabugTag
       );
     });
-    openInstabugBugReport();
+    openInstabugQuestionReport();
   };
 
   private getData = () => {
@@ -106,7 +111,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       color: paymentInfo.color,
       description: paymentInfo.text11
     };
-    const errorDetail = fromNullable(getErrorDescription(payment.failure));
+    // the error could be on attiva or while the payment execution
+    // so the description is built first checking the attiva failure, alternatively
+    // it checks about the outcome if the payment went wrong
+    const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
+      fromNullable(payment.outcomeCode).chain(oc =>
+        getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
+      )
+    );
 
     const paymentOutcome = isPaymentDoneSuccessfully(payment);
 
@@ -156,6 +168,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       EnteBeneficiario | undefined
     >(payment.verified_data, "enteBeneficiario", m => m).getOrElse(undefined);
 
+    const outcomeCode = payment.outcomeCode ?? "-";
     return {
       recipient,
       reason,
@@ -165,6 +178,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       paymentInfo,
       paymentStatus,
       dateTime,
+      outcomeCode,
       amount,
       fee,
       grandTotal,
@@ -191,21 +205,21 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   );
 
   private renderHelper = () => (
-      <View>
-        <Text alignCenter={true} style={styles.padded}>
-          {I18n.t("payment.details.info.help")}
-        </Text>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          onPress={this.instabugLogAndOpenReport}
-          bordered={true}
-          block={true}
-        >
-          <IconFont name={"io-messaggi"} />
-          <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
-        </ButtonDefaultOpacity>
-      </View>
-    );
+    <View>
+      <Text alignCenter={true} style={styles.padded}>
+        {I18n.t("payment.details.info.help")}
+      </Text>
+      <View spacer={true} />
+      <ButtonDefaultOpacity
+        onPress={this.instabugLogAndOpenReport}
+        bordered={true}
+        block={true}
+      >
+        <IconFont name={"io-messaggi"} />
+        <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
+      </ButtonDefaultOpacity>
+    </View>
+  );
 
   public render(): React.ReactNode {
     const data = this.getData();
@@ -246,6 +260,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 </View>
               )}
             </React.Fragment>
+          )}
+
+          <View spacer={true} xsmall={true} />
+          {this.standardRow(
+            I18n.t("payment.details.info.outcomeCode"),
+            data.outcomeCode
           )}
 
           <View spacer={true} xsmall={true} />
@@ -318,7 +338,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-    profile: profileSelector(state)
-  });
+  profile: profileSelector(state),
+  outcomeCodes: outcomeCodesSelector(state)
+});
 
 export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);

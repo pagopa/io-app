@@ -22,7 +22,10 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToMessageDetailScreenAction } from "../store/actions/navigation";
+import {
+  navigateToMessageDetailScreenAction,
+  navigateToOnboardingPinScreenAction
+} from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
   paymentDeletePayment,
@@ -40,6 +43,7 @@ import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
+import { updatePin } from "../store/actions/pinset";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -180,12 +184,16 @@ function* startAndHandleIdentificationResult(
   }
 }
 
-export function* watchIdentificationRequest(
-  pin: PinString
-): IterableIterator<Effect> {
+export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
+  // Watch for identification request
   yield takeLatest(
     getType(identificationRequest),
     startAndHandleIdentificationResult,
     pin
   );
+
+  // Watch for requests to update the unlock code.
+  yield takeLatest(getType(updatePin), function* () {
+    yield put(navigateToOnboardingPinScreenAction);
+  });
 }

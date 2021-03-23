@@ -16,15 +16,19 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
-import {
-  getCodiceAvviso,
-  PaymentHistory
-} from "../store/reducers/payments/history";
+import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
+import {
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
 import { formatDateAsReminder } from "./dates";
-import { getLocalePrimaryWithFallback } from "./locale";
+import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
+import { maybeNotNullyString } from "./strings";
+import { getProfileDetailsLog } from "./profile";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -124,19 +128,14 @@ const hasDescriptionPrefix = (description: string) =>
  * This function removes the tag from payment description of a PagoPA transaction.
  */
 export const cleanTransactionDescription = (description: string): string => {
-  // detect description in pagoPA format - note that we also check for cases
-  // without the leading slash since some services don't add it (mistake on
-  // their side)
-  if (!hasDescriptionPrefix(description)) {
-    // not a description in the pagoPA format, return the description unmodified
-    return description;
-  }
-
-  const descriptionParts = description.split("/TXT/");
+  const descriptionParts = description.split("TXT/");
 
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].trim()
-    : "";
+    : getTransactionIUV(description) // try to extract codice avviso from description
+        .chain(maybeNotNullyString)
+        .map(ca => `${I18n.t("payment.IUV")} ${ca}`)
+        .getOrElse(description);
 };
 
 export const getErrorDescription = (
@@ -170,15 +169,18 @@ export const getPaymentHistoryDetails = (
   profile: InitializedProfile
 ): string => {
   const separator = " / ";
-  const profileDetails = `- spid_email: ${fromNullable(
-    profile.spid_email as string
-  ).getOrElse("spid email: n/a")}${separator}- email: ${fromNullable(
-    profile.email as string
-  ).getOrElse("email: n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
+  const profileDetails = getProfileDetailsLog(profile, separator);
   const paymentDetails = `- payment start time: ${formatDateAsReminder(
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
+  const success = `- pagamento concluso con successo: ${
+    payment.success === true ? "si" : "no"
+  }`;
+  const outcomeCode = `- codice di uscita: ${payment.outcomeCode ?? "n/a"}`;
+  const navigationUrls = `- navigazione webview: ${(
+    payment.payNavigationUrls ?? []
+  ).join(", ")}`;
   const ccp = fromNullable(payment.verified_data)
     .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("ccp: n/a");
@@ -194,6 +196,12 @@ export const getPaymentHistoryDetails = (
     paymentDetails,
     separator,
     ccp,
+    separator,
+    success,
+    separator,
+    outcomeCode,
+    separator,
+    navigationUrls,
     separator,
     failureDetails
   );
@@ -213,8 +221,9 @@ export const getTransactionFee = (
   return fromNullable(maybeFee).map(formatFunc).toNullable();
 };
 
-// try to extract codice avviso from transaction description
-export const getTransactionCodiceAvviso = (
+// try to extract IUV from transaction description
+// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo3.html
+export const getTransactionIUV = (
   transactionDescription: string
 ): Option<string> => {
   const description = transactionDescription.trim();
@@ -237,3 +246,64 @@ export const orderPspByAmount = (pspList: ReadonlyArray<Psp>) =>
     }
     return 0;
   });
+
+export const getIuv = (data: RptId): string => {
+  switch (data.paymentNoticeNumber.auxDigit) {
+    case "0":
+    case "3":
+      return data.paymentNoticeNumber.iuv13;
+    case "1":
+      return data.paymentNoticeNumber.iuv17;
+    case "2":
+      return data.paymentNoticeNumber.iuv15;
+  }
+};
+
+// return the notice code from the given rptId
+// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
+export const getCodiceAvviso = (rptId: RptId) => {
+  const pnn = rptId.paymentNoticeNumber;
+  switch (pnn.auxDigit) {
+    // 0<application code (2n)><IUV base (13n)><IUV check digit (2n)>
+    case "0":
+      return `${pnn.auxDigit}${pnn.applicationCode}${getIuv(rptId)}${
+        pnn.checkDigit
+      }`;
+    // 1<IUV base (17n)>
+    case "1":
+      return `${pnn.auxDigit}${getIuv(rptId)}`;
+    // 2<IUV base (15n)><IUV check digit (2n)>
+    case "2":
+      return `${pnn.auxDigit}${getIuv(rptId)}${pnn.checkDigit}`;
+    case "3":
+      // 3<codice segregazione (2n)><IUVbase (13n)><IUV check digit (2n)>
+      return `${pnn.auxDigit}${pnn.segregationCode}${getIuv(rptId)}${
+        pnn.checkDigit
+      }`;
+  }
+};
+
+// from a give generic code and outcome codes say true if that code represents a success
+export const isPaymentOutcomeCodeSuccessfully = (
+  code: string,
+  outcomeCodes: OutcomeCodes
+): boolean => {
+  const maybeValidCode = OutcomeCodesKey.decode(code);
+  return maybeValidCode.fold(
+    _ => false,
+    c => outcomeCodes[c].status === "success"
+  );
+};
+
+export const getPaymentOutcomeCodeDescription = (
+  outcomeCode: string,
+  outcomeCodes: OutcomeCodes
+): Option<string> => {
+  const maybeOutcomeCodeKey = OutcomeCodesKey.decode(outcomeCode);
+  if (maybeOutcomeCodeKey.isRight()) {
+    return fromNullable<OutcomeCode>(outcomeCodes[maybeOutcomeCodeKey.value])
+      .mapNullable(oc => oc.description)
+      .map(description => description[getFullLocale()]);
+  }
+  return none;
+};

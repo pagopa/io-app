@@ -4,10 +4,13 @@ import I18n from "../i18n";
 import { CreditCard } from "../types/pagopa";
 import { isExpired } from "./dates";
 import { NumberFromString } from "./number";
-/* 
+/*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
  */
+
+// TODO: unify card representation (multiple part of the application use this)
+export const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 export const isExpiredCard = (creditCard: CreditCard) => {
   const decodedValueYear = NumberFromString.decode(creditCard.expireYear);

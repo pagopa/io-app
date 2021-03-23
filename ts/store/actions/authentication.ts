@@ -9,9 +9,11 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
+import { SupportToken } from "../../../definitions/backend/SupportToken";
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -28,6 +30,10 @@ export type CheckSessionResult = {
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
+>();
+
+export const testLoginRequest = createStandardAction("TEST_LOGIN_REQUEST")<
+  PasswordLogin
 >();
 
 //
@@ -76,6 +82,12 @@ export const checkCurrentSession = createAsyncAction(
   "CHECK_CURRENT_SESSION_FAILURE"
 )<void, CheckSessionResult, Error>();
 
+export const loadSupportToken = createAsyncAction(
+  "LOAD_TOKEN_SUPPORT_REQUEST",
+  "LOAD_TOKEN_SUPPORT_SUCCESS",
+  "LOAD_TOKEN_SUPPORT_FAILURE"
+)<void, SupportToken, Error>();
+
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -83,6 +95,7 @@ export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
+  | ActionType<typeof testLoginRequest>
   | ActionType<typeof loginSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>
@@ -93,4 +106,5 @@ export type AuthenticationActions =
   | ActionType<typeof checkCurrentSession>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
-  | ActionType<typeof resetAuthenticationState>;
+  | ActionType<typeof resetAuthenticationState>
+  | ActionType<typeof loadSupportToken>;

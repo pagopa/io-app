@@ -1,7 +1,6 @@
-import { Option } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import Instabug, {
   BugReporting,
-  Chats,
   NetworkLogger,
   Replies
 } from "instabug-reactnative";
@@ -13,6 +12,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import { getAppVersion } from "../utils/appVersion";
 import { isDevEnv } from "../utils/environment";
+import { SupportToken } from "../../definitions/backend/SupportToken";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
@@ -23,7 +23,8 @@ type InstabugUserAttributeKeys =
   | "identityProvider"
   | "lastSeenMessageID"
   | "appVersion"
-  | "blockedPaymentRptId";
+  | "blockedPaymentRptId"
+  | "supportToken";
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
@@ -59,6 +60,10 @@ export const initialiseInstabug = () => {
     NetworkLogger.setEnabled(false);
   }
 
+  Instabug.setString(
+    Instabug.strings.commentFieldHintForQuestion,
+    I18n.t("instabug.overrideText.commentFieldHintForQuestion")
+  );
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
   Instabug.setColorTheme(Instabug.colorTheme.light);
@@ -72,19 +77,38 @@ export const initialiseInstabug = () => {
   setInstabugUserAttribute("appVersion", getAppVersion());
 };
 
-export const openInstabugBugReport = () => {
-  BugReporting.showWithOptions(BugReporting.reportType.bug, [
+export const defaultAttachmentTypeConfiguration = {
+  screenshot: true,
+  extraScreenshot: true,
+  galleryImage: true,
+  screenRecording: true
+};
+
+export const attachmentTypeConfigurationNoScreenshot = {
+  ...defaultAttachmentTypeConfiguration,
+  screenshot: false,
+  extraScreenshot: false
+};
+
+export type DefaultReportAttachmentTypeConfiguration = typeof defaultAttachmentTypeConfiguration;
+
+export const openInstabugQuestionReport = (
+  attachmentTypeConfiguration: DefaultReportAttachmentTypeConfiguration = defaultAttachmentTypeConfiguration
+) => {
+  Instabug.setEnabledAttachmentTypes(
+    attachmentTypeConfiguration.screenshot,
+    attachmentTypeConfiguration.extraScreenshot,
+    attachmentTypeConfiguration.galleryImage,
+    attachmentTypeConfiguration.screenRecording
+  );
+  BugReporting.showWithOptions(BugReporting.reportType.question, [
     BugReporting.option.commentFieldRequired,
     BugReporting.option.emailFieldOptional
   ]);
 };
 
-export const openInstabugChat = (hasChats: boolean = false) => {
-  if (hasChats) {
-    Replies.show();
-  } else {
-    Chats.show();
-  }
+export const openInstabugReplies = () => {
+  Replies.show();
 };
 
 export const setInstabugUserAttribute = (
@@ -101,6 +125,16 @@ export const setInstabugProfileAttributes = (
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
 };
+
+// if support token is defined set it as user property
+// otherwise remove that attribute
+export const setInstabugSupportTokenAttribute = (
+  supportToken: SupportToken | undefined
+) =>
+  fromNullable(supportToken).foldL(
+    () => Instabug.removeUserAttribute("supportToken"),
+    st => setInstabugUserAttribute("supportToken", st.access_token)
+  );
 
 // The maximum log length accepted by Instabug
 const maxInstabugLogLength = 4096;

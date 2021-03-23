@@ -1,11 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import {
+  enumType,
   ReplaceProp1,
   replaceProp1 as repP,
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
@@ -21,12 +23,19 @@ import { TransactionResponse as TransactionResponsePagoPA } from "../../definiti
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
+import { Abi } from "../../definitions/pagopa/walletv2/Abi";
+import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+
+import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
+import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 
 /**
  * Union of all possible credit card types
@@ -90,6 +99,188 @@ export const Psp = repP(
 );
 export type Psp = t.TypeOf<typeof Psp>;
 
+/** A refined WalletV2
+ * reasons:
+ * - createDate and updateDate are generated from spec as UTCISODateFromString but they have an invalid format (2020-11-03 22:20:29)
+ * - info is required
+ * - info is CardInfo and not PaymentMethodInfo (empty interface)
+ * - enableableFunctions is build as an array of strings instead of array of enum (io-utils code generation limit)
+ */
+
+export enum EnableableFunctionsTypeEnum {
+  "pagoPA" = "pagoPA",
+  "BPD" = "BPD",
+  "FA" = "FA"
+}
+
+// required attributes
+const PatchedPaymentMethodInfo = t.union([
+  CardInfo,
+  SatispayInfoPagoPa,
+  BPayInfoPagoPa
+]);
+export type PatchedPaymentMethodInfo = t.TypeOf<
+  typeof PatchedPaymentMethodInfo
+>;
+const WalletV2O = t.partial({
+  updateDate: t.string,
+  createDate: t.string,
+  onboardingChannel: t.string,
+  favourite: t.boolean
+});
+
+// optional attributes
+const WalletV2R = t.interface({
+  enableableFunctions: t.readonlyArray(
+    enumType<EnableableFunctionsTypeEnum>(
+      EnableableFunctionsTypeEnum,
+      "enableableFunctions"
+    ),
+    "array of enableableFunctions"
+  ),
+  info: PatchedPaymentMethodInfo,
+  idWallet: t.Integer,
+  pagoPA: t.boolean,
+  walletType: enumType<WalletTypeEnum>(WalletTypeEnum, "walletType")
+});
+
+export const PatchedWalletV2 = t.intersection(
+  [WalletV2R, WalletV2O],
+  "WalletV2"
+);
+
+export type PatchedWalletV2 = t.TypeOf<typeof PatchedWalletV2>;
+
+type WalletV2WithoutInfo = Exclude<PatchedWalletV2, "info" | "walletType">;
+
+/**
+ * RawPaymentMethod is a PatchedWalletV2 with "info" changed with one of the specific payment type info.
+ * The remote specification they are unable to encode this information, which is why it is reprocessed,
+ * in order to have the info value correctly valued in the application domain
+ */
+export type RawPaymentMethod =
+  | RawBancomatPaymentMethod
+  | RawCreditCardPaymentMethod
+  | RawBPayPaymentMethod
+  | RawSatispayPaymentMethod
+  | RawPrivativePaymentMethod;
+
+export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
+  kind: "Bancomat";
+  info: CardInfo;
+};
+
+export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
+  kind: "CreditCard";
+  info: CardInfo;
+};
+
+export type RawPrivativePaymentMethod = WalletV2WithoutInfo & {
+  kind: "Privative";
+  info: CardInfo;
+};
+
+export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
+  kind: "BPay";
+  info: BPayInfoPagoPa;
+};
+
+export type RawSatispayPaymentMethod = WalletV2WithoutInfo & {
+  kind: "Satispay";
+  info: SatispayInfoPagoPa;
+};
+
+// payment methods type guards
+export const isRawBancomat = (
+  pm: RawPaymentMethod | undefined
+): pm is RawBancomatPaymentMethod =>
+  pm === undefined ? false : pm.kind === "Bancomat";
+
+export const isRawSatispay = (
+  pm: RawPaymentMethod | undefined
+): pm is RawSatispayPaymentMethod =>
+  pm === undefined ? false : pm.kind === "Satispay";
+
+export const isRawCreditCard = (
+  pm: RawPaymentMethod | undefined
+): pm is RawCreditCardPaymentMethod =>
+  pm === undefined ? false : pm.kind === "CreditCard";
+
+export const isRawPrivative = (
+  pm: RawPaymentMethod | undefined
+): pm is RawPrivativePaymentMethod =>
+  pm === undefined ? false : pm.kind === "Privative";
+
+export const isRawBPay = (
+  pm: RawPaymentMethod | undefined
+): pm is RawBPayPaymentMethod =>
+  pm === undefined ? false : pm.kind === "BPay";
+
+export type PaymentMethodRepresentation = {
+  // A textual representation for a payment method
+  caption: string;
+  // An icon that represent the payment method
+  icon: ImageSourcePropType;
+};
+
+type WithAbi = {
+  abiInfo?: Abi;
+};
+
+// In addition to the representation, a bancomat have also the abiInfo
+export type BancomatPaymentMethod = RawBancomatPaymentMethod &
+  PaymentMethodRepresentation &
+  WithAbi;
+
+export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
+  PaymentMethodRepresentation &
+  WithAbi;
+
+export type PrivativePaymentMethod = RawPrivativePaymentMethod &
+  PaymentMethodRepresentation & {
+    gdoLogo?: ImageURISource;
+  };
+
+export type BPayPaymentMethod = RawBPayPaymentMethod &
+  PaymentMethodRepresentation &
+  WithAbi;
+export type SatispayPaymentMethod = RawSatispayPaymentMethod &
+  PaymentMethodRepresentation;
+
+export type PaymentMethod =
+  | BancomatPaymentMethod
+  | CreditCardPaymentMethod
+  | BPayPaymentMethod
+  | SatispayPaymentMethod
+  | PrivativePaymentMethod;
+
+// payment methods type guards
+export const isBancomat = (
+  pm: PaymentMethod | undefined
+): pm is BancomatPaymentMethod =>
+  pm === undefined ? false : pm.kind === "Bancomat";
+
+export const isSatispay = (
+  pm: PaymentMethod | undefined
+): pm is SatispayPaymentMethod =>
+  pm === undefined ? false : pm.kind === "Satispay";
+
+export const isCreditCard = (
+  pm: PaymentMethod | undefined
+): pm is CreditCardPaymentMethod =>
+  pm === undefined
+    ? false
+    : pm.kind === "CreditCard" && pm.info.type !== CreditCardTypeEnum.PRV;
+
+export const isBPay = (
+  pm: PaymentMethod | undefined
+): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
+
+export const isPrivativeCard = (
+  pm: PaymentMethod | undefined
+): pm is PrivativePaymentMethod =>
+  pm === undefined ? false : pm.kind === "Privative";
+
 /**
  * A refined Wallet
  */
@@ -103,7 +294,10 @@ export const Wallet = repP(
   t.union([Psp, t.undefined]),
   "Wallet"
 );
-export type Wallet = t.TypeOf<typeof Wallet>;
+
+export type Wallet = t.TypeOf<typeof Wallet> & {
+  paymentMethod?: RawPaymentMethod;
+};
 
 /**
  * A Wallet that has not being saved yet
@@ -155,11 +349,15 @@ const idStatusSuccessTransaction: ReadonlyArray<number> = [8, 9];
  * 2.payed /w other methods: accountingStatus is undefined AND id_status = 8 (Confermato mod1) or id_status = 9 (Confermato mod2)
  * ref: https://www.pivotaltracker.com/story/show/173850410
  */
-export const isSuccessTransaction = (tx: Transaction) =>
-  fromNullable(tx.accountingStatus).foldL(
-    () => idStatusSuccessTransaction.some(ids => ids === tx.idStatus),
-    as => as === 1
-  );
+export const isSuccessTransaction = (tx?: Transaction): boolean =>
+  fromNullable(tx)
+    .map(tsx =>
+      fromNullable(tsx.accountingStatus).foldL(
+        () => idStatusSuccessTransaction.some(ids => ids === tsx.idStatus),
+        as => as === 1
+      )
+    )
+    .getOrElse(false);
 
 /**
  * A refined TransactionListResponse
@@ -283,3 +481,34 @@ export const PagoPAErrorResponse = t.type({
 });
 
 export type PagoPAErrorResponse = t.TypeOf<typeof PagoPAErrorResponse>;
+
+const WalletV2ListResponseR = t.interface({});
+
+// optional attributes
+const WalletV2ListResponseO = t.partial({
+  data: t.readonlyArray(PatchedWalletV2, "array of PatchedWalletV2")
+});
+
+export const PatchedWalletV2ListResponse = t.intersection(
+  [WalletV2ListResponseR, WalletV2ListResponseO],
+  "WalletV2ListResponse"
+);
+
+export type PatchedWalletV2ListResponse = t.TypeOf<
+  typeof PatchedWalletV2ListResponse
+>;
+
+// required attributes
+const PatchedWalletV2ResponseR = t.interface({});
+
+// optional attributes
+const PatchedWalletV2ResponseO = t.partial({
+  data: PatchedWalletV2
+});
+
+export const PatchedWalletV2Response = t.intersection(
+  [PatchedWalletV2ResponseR, PatchedWalletV2ResponseO],
+  "PatchedWalletV2Response"
+);
+
+export type PatchedWalletV2Response = t.TypeOf<typeof PatchedWalletV2Response>;

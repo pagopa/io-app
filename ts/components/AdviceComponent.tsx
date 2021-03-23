@@ -29,15 +29,15 @@ const iconSize = 18;
  * @constructor
  */
 const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
-    <View style={styles.container}>
-      <IconFont
-        style={styles.icon}
-        name={props.iconName || "io-notice"}
-        size={iconSize}
-        color={props.iconColor || themeVariables.brandPrimary}
-      />
-      <Text style={styles.text}>{props.text}</Text>
-    </View>
-  );
+  <View style={styles.container}>
+    <IconFont
+      style={styles.icon}
+      name={props.iconName || "io-notice"}
+      size={iconSize}
+      color={props.iconColor || themeVariables.brandPrimary}
+    />
+    <Text style={styles.text}>{props.text}</Text>
+  </View>
+);
 
 export default React.memo(AdviceComponent);

@@ -16,37 +16,37 @@ type Props = {
 };
 
 const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
-    <>
-      <View style={{ flex: 1 }}>
-        <WebView
-          textZoom={100}
-          style={{ flex: 1 }}
-          onLoadEnd={props.handleLoadEnd}
-          onError={props.handleError}
-          source={{ uri: props.url }}
-          onMessage={props.handleWebViewMessage}
-          injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-        />
-      </View>
-      {props.shouldFooterRender && (
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            block: true,
-            light: true,
-            bordered: true,
-            onPress: props.onExit,
-            title: I18n.t("global.buttons.exit")
-          }}
-          rightButton={{
-            block: true,
-            primary: true,
-            onPress: props.onAcceptTos,
-            title: I18n.t("onboarding.tos.accept")
-          }}
-        />
-      )}
-    </>
-  );
+  <>
+    <View style={{ flex: 1 }}>
+      <WebView
+        textZoom={100}
+        style={{ flex: 1 }}
+        onLoadEnd={props.handleLoadEnd}
+        onError={props.handleError}
+        source={{ uri: props.url }}
+        onMessage={props.handleWebViewMessage}
+        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+      />
+    </View>
+    {props.shouldFooterRender && (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={{
+          block: true,
+          light: true,
+          bordered: true,
+          onPress: props.onExit,
+          title: I18n.t("global.buttons.exit")
+        }}
+        rightButton={{
+          block: true,
+          primary: true,
+          onPress: props.onAcceptTos,
+          title: I18n.t("onboarding.tos.accept")
+        }}
+      />
+    )}
+  </>
+);
 
 export default React.memo(TosWebviewComponent);

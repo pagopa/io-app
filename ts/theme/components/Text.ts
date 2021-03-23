@@ -33,73 +33,68 @@ declare module "native-base" {
 }
 
 export default (): Theme => ({
-    ".xsmall": {
-      fontSize: variables.fontSizeXSmall,
-      lineHeight: variables.lineHeightXSmall,
-      marginBottom: -2 // to solve alignment of the text in the given lineHeight
-    },
-    ".small": {
-      fontSize: variables.fontSizeSmall,
-      lineHeight: variables.lineHeightSmall
-    },
-    ".link": {
-      ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
-      color: variables.textLinkColor,
-      textDecorationLine: "underline"
-    },
+  ".xsmall": {
+    fontSize: variables.fontSizeXSmall,
+    lineHeight: variables.lineHeightXSmall,
+    marginBottom: -2 // to solve alignment of the text in the given lineHeight
+  },
+  ".small": {
+    fontSize: variables.fontSizeSmall,
+    lineHeight: variables.lineHeightSmall
+  },
+  ".link": {
+    ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
+    color: variables.textLinkColor,
+    textDecorationLine: "underline"
+  },
+  ".bold": {
+    ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
+  },
+  ".semibold": {
+    ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
+  },
+  ".italic": {
+    ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
+  },
+  ".underlined": {
+    textDecorationLine: "underline"
+  },
+  ".leftAlign": {
+    textAlign: "left"
+  },
+  ".rightAlign": {
+    textAlign: "right"
+  },
+  ".white": {
+    color: variables.colorWhite
+  },
+  ".dark": {
+    color: variables.brandDarkestGray
+  },
+  ".alignCenter": {
+    textAlign: "center"
+  },
+  ".primary": {
+    color: variables.brandPrimary
+  },
+  ".badge": {
+    ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
+    color: variables.colorWhite,
+    fontSize: 10,
+    textAlign: "center",
+    lineHeight: 14
+  },
+  ".robotomono": {
+    ...makeFontStyleObject(Platform.select, undefined, undefined, "RobotoMono"),
     ".bold": {
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
-    },
-    ".semibold": {
-      ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
-    },
-    ".italic": {
-      ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
-    },
-    ".underlined": {
-      textDecorationLine: "underline"
-    },
-    ".leftAlign": {
-      textAlign: "left"
-    },
-    ".rightAlign": {
-      textAlign: "right"
-    },
-    ".white": {
-      color: variables.colorWhite
-    },
-    ".dark": {
-      color: variables.brandDarkestGray
-    },
-    ".alignCenter": {
-      textAlign: "center"
-    },
-    ".primary": {
-      color: variables.brandPrimary
-    },
-    ".badge": {
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
-      color: variables.colorWhite,
-      fontSize: 10,
-      textAlign: "center",
-      lineHeight: 14
-    },
-    ".robotomono": {
       ...makeFontStyleObject(
         Platform.select,
-        undefined,
+        variables.textBoldWeight,
         undefined,
         "RobotoMono"
-      ),
-      ".bold": {
-        ...makeFontStyleObject(
-          Platform.select,
-          variables.textBoldWeight,
-          undefined,
-          "RobotoMono"
-        )
-      }
-    },
-    lineHeight: variables.lineHeightBase,
-    fontSize: variables.fontSizeBase
-  });
+      )
+    }
+  },
+  lineHeight: variables.lineHeightBase,
+  fontSize: variables.fontSizeBase
+});

@@ -248,7 +248,10 @@ const getServices = (
       );
       orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
       const serviceIdsForOrg = orgsFiscalCodes.reduce(
-        (acc: ReadonlyArray<string>, curr: string) => [...acc, ...(services.byOrgFiscalCode[curr] || [])],
+        (acc: ReadonlyArray<string>, curr: string) => [
+          ...acc,
+          ...(services.byOrgFiscalCode[curr] || [])
+        ],
         []
       );
 

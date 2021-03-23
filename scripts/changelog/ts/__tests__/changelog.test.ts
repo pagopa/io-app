@@ -7,7 +7,8 @@ import {
   bonusVacanzeStoryWithScopeLabel,
   clashScopeLabelStory,
   scopeLabelNotAllowedStory,
-  singleAndroidLabelStory
+  singleAndroidLabelStory,
+  singleEpicBpdStory
 } from "../__mocks__/storyMock";
 import { getChangelogScope, getStoryChangelogScope } from "../changelog";
 
@@ -48,6 +49,17 @@ describe("Test pivotal Utility", () => {
       "Condition eitherScope.isRight() && eitherScope.value.isSome() not satisfied"
     );
   });
+  it("getStoryChangelogScope on a story with epic label should return Right,string", () => {
+    const eitherScope = getStoryChangelogScope(singleEpicBpdStory);
+    expect(eitherScope.isRight()).toBeTruthy();
+    if (eitherScope.isRight() && eitherScope.value.isSome()) {
+      expect(eitherScope.value.value).toBe("Bonus Pagamenti Digitali");
+      return;
+    }
+    fail(
+      "Condition eitherScope.isRight() && eitherScope.value.isSome() not satisfied"
+    );
+  });
   it("getStoryChangelogScope on a story with scope label and other labels should return Right,string", () => {
     const eitherScope = getStoryChangelogScope(androidLabelAndOtherStory);
     expect(eitherScope.isRight()).toBeTruthy();
@@ -63,9 +75,12 @@ describe("Test pivotal Utility", () => {
     const eitherScope = getStoryChangelogScope(clashScopeLabelStory);
     expect(eitherScope.isLeft()).toBeTruthy();
   });
-  it("getStoryChangelogScope on a story with scope label not allowed should return Left,Error", () => {
+  it("getStoryChangelogScope on a story with scope label not allowed should return Right,none", () => {
     const eitherScope = getStoryChangelogScope(scopeLabelNotAllowedStory);
-    expect(eitherScope.isLeft()).toBeTruthy();
+    expect(eitherScope.isRight()).toBeTruthy();
+    if (eitherScope.isRight()) {
+      expect(eitherScope.value).toBe(none);
+    }
   });
   it("getStoryChangelogScope on a story with a scope labels and belonging to a project that assigns a scope should return Left,Error", () => {
     const eitherScope = getStoryChangelogScope(bonusVacanzeStoryWithScopeLabel);

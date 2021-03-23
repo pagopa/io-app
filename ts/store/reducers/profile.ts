@@ -64,6 +64,30 @@ export const profileEmailSelector = createSelector(
     )
 );
 
+/**
+ * Return the name of the profile if some, else undefined
+ */
+export const profileNameSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.name),
+      undefined
+    )
+);
+
+/**
+ * The complete name + surname
+ */
+export const profileNameSurnameSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => `${p.name} ${p.family_name}`),
+      undefined
+    )
+);
+
 // return the spid email address (as a string)
 export const profileSpidEmailSelector = createSelector(
   profileSelector,
@@ -139,7 +163,6 @@ const reducer = (
     //
 
     case getType(profileUpsert.request):
-      // TODO: remove the cast after: https://www.pivotaltracker.com/story/show/160924538 (https://www.pivotaltracker.com/story/show/170819398)
       // eslint-disable-next-line
       return pot.toUpdating(state, action.payload as any);
 

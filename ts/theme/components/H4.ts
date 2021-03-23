@@ -8,8 +8,8 @@ import variables from "../variables";
  * @deprecated
  */
 export default (): Theme => ({
-    ...makeFontStyleObject(Platform.select, variables.h4FontWeight),
-    color: variables.h4Color,
-    fontSize: variables.h4FontSize,
-    lineHeight: variables.h4LineHeight
-  });
+  ...makeFontStyleObject(Platform.select, variables.h4FontWeight),
+  color: variables.h4Color,
+  fontSize: variables.h4FontSize,
+  lineHeight: variables.h4LineHeight
+});

@@ -130,11 +130,168 @@ You need a recent macOS , Linux or Windows 10 based computer, and an Unix based 
 
 The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
 
+#### Install NodeJS and Ruby
+
+To run the project you need to install a properly version of NodeJS and ruby.
+
+On macOS and Linux we recommend the use of a virtual environment, such as `nodenv` for managing multiple versions of NodeJS, `rbenv` for managing multiple versions of ruby or `asdf` which can manage both under his virtual environment.
+
+The node version used in this project is stored in `.node-version`, meanwhile the version of ruby is stored in `.ruby-version`.
+
+If you already have nodenv or rbenv installed and configured on your system, the correct version node will be set when you access the app directory.
+
+To install, follow the steps described below.
+
+#### Install nodenv
+On macOS and Linux can be useful to install [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
+
+The node version used in this project is stored in [.node-version](.node-version).
+
+If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
+
+To install, follow the steps described below.
+
+##### Install nodenv on macOS
+
+First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
+
+Install `nodenv` with the command:
+
+```
+brew install nodenv
+```
+
+Brew installs `nodenv` in the path so no more steps are needed. Check you have it available with the command `which nodenv`.
+
+##### Install nodenv on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
+
+```
+git clone https://github.com/nodenv/nodenv-installer
+./nodenv-installer/bin/nodenv-installer
+```
+
+Add `nodenv` to the PATH, then reload the configuation as follows:
+
+```
+echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
+```
+
+Check you have it available with the command `which nodenv`.
+
+#### Completing and verifying configuration
+
+Either on Mac or Linux you need to add to your shell the initialization command and reload the configuration:
+
+```
+echo 'eval "$(nodenv init -)"' >>~/.bashrc
+source ~/.bashrc
+```
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+Finally you can install your version of `node` using `nodenv` (replace `<work-dir>` with your actual work directory)
+
+```
+cd <work-dir>/io-app
+nodenv install
+```
+
+You should now verify that the output of the `nodenv version` command and the version of the node in the PATH are the same as the content of the `.node-version` file. For example:
+
+```
+$ nodenv version
+10.18.0 (set by <work-dir>/io-app/.node-version)
+$ node -v
+v10.18.0
+$ cat .node-version
+10.18.0
+```
+
+#### Install rbenv
+
+On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), can be useful to install [rbenv](https://github.com/rbenv/rbenv).
+
+The Ruby version used in this project is stored in [.ruby-version](.ruby-version).
+
+If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
+
+To install, follow the steps described below.
+
+##### Installing `rbenv` on macOS
+
+You should already have installed `brew` so use:
+
+```
+brew install rbenv
+```
+
+Brew installs `rbenv` in the path so no more steps are needed.
+
+##### Installing `rbenv` on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. 
+
+```
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+mkdir ~/.rbenv/plugins
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+```
+
+Add `rbenv` to the PATH as follows then reload the intialization file
+
+```
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
+```
+
+Verify you have installed it correctly with the command `which rbenv`.
+
+#### Completing and verifying configuration
+
+Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
+
+```
+echo 'eval "$(rbenv init -)"' >>~/.bashrc
+source ~/.bashrc
+```
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+
+Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
+
+```
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
+ ```
+
+Now you can install your version of `ruby` using `rbenv` (replace `<work-dir>` with your actual work directory)
+
+```
+cd <work-dir>/io-app
+rbenv install
+```
+
+You should verify that the output of the `rbenv version` command and the content of the file `.ruby-version` are the same:
+
+For example (replace `<work-dir>` with your actual work directory):
+
+```
+$ cd <work-dir>/io-app
+$ rbenv version
+2.4.2 (set by <work-dir>/io-app/.ruby-version)
+$ ruby -v
+ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
+$ cat .ruby-version
+2.4.2
+```
+
 #### Install asdf
 
-On macOS and Linux we recommend the use of [asdf](https://github.com/asdf-vm/asdf) for managing multiple versions of NodeJS and Ruby.
-
-The versions used in this project are stored in [.tool-versions](.tool-fersions).
+On macOS and Linux we may recommend the use of [asdf](https://github.com/asdf-vm/asdf) for managing multiple versions of NodeJS and Ruby under the same virtual environment.
 
 If you already have asdf installed and configured on your system, the correct version node will be set when you access the app directory.
 
@@ -150,8 +307,16 @@ Install `asdf` with the command:
 brew install asdf
 ```
 
-Brew installs `asdf` in the path so no more steps are needed. Check you have it available with the command `which asdf`.
+Add `asdf.sh` to your shell with:
+```
+# ZSH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
 
+# BASH
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+```
+
+Restart your shell and check you have it available with the command `which asdf`.
 ##### Install asdf on Linux 
 
 This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
@@ -170,6 +335,11 @@ echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+Add a `.asdfrc` file to your home directory and asdf will use the settings specified in the file. The file should be formatted like this:
+```
+legacy_version_file = yes
+```
+
 Check you have it available with the command `which asdf`.
 
 #### Completing and verifying configuration
@@ -181,14 +351,34 @@ asdf plugin add ruby
 asdf plugin add nodejs
 ```
 
-Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
+Before you can install your version of Ruby, you need a C compiler and some libraries. 
+
+##### Ubuntu or Debian based systems:
+
+Run:
 
 ```
 sudo apt-get update
 sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
 ```
 
-Import the Node.js release team's OpenPGP keys to main keyring:
+##### MacOS:
+
+Run:
+
+```
+brew install build-essential libssl-dev libreadline-dev zlib1g-dev
+brew install gnupg
+```
+Install XCode from the App Store and then run:
+
+```
+sudo xcode-select --switch /Applications/Xcode.app
+```
+
+
+
+After the compiler installation import the Node.js release team's OpenPGP keys to main keyring:
 
 ```
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
@@ -198,15 +388,14 @@ Finally you can install your version of `node` and `ruby` using `asdf` (replace 
 
 ```
 cd <work-dir>/io-app
-asdf install ruby 2.4.2
-asdf install nodejs 10.13.0
+asdf install
 ```
 
 You should now verify that the output of the `asdf current` command and the version of the node in the PATH are the same as the content of the `.tool-versions` file. For example:
 
 ```
 $ asdf current
-nodejs         10.13.0  (set by <work-dir>/io-app/.tool-versions)
+nodejs         10.18.0  (set by <work-dir>/io-app/.tool-versions)
 ruby           2.4.2    (set by <work-dir>/io-app/.tool-versions)
 
 $ node -v
@@ -214,19 +403,6 @@ v10.13.0
 
 $ ruby -v
 ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
-
-$ cat .tool-versions
-ruby 2.4.2
-nodejs 10.13.0
-```
-
-#### Migration from nodenv and rbenv
-
-If you’re migrating from other tools and want to use your existing `.node-version` or `.ruby-version` version files, do this.
-
-Add a `.asdfrc` file to your home directory and asdf will use the settings specified in the file. The file should be formatted like this:
-```
-legacy_version_file = yes
 ```
 
 #### Install yarn
@@ -244,7 +420,7 @@ If you do not have node already installed you can install  `yarn` using `asdf` w
 
 ```
 cd <work-dir>/io-app
-asdf global nodejs 10.13.0
+asdf global nodejs 10.18.0
 npm install -g yarn
 ```
 
@@ -252,7 +428,7 @@ Now you have to login and logout again from the terminal as yarn installs the co
 
 Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
 
-#### Install bundler
+#### Install bundler and cocoapods
 
 Some dependencies are installed via [bundler](https://bundler.io/) and [cocoapods](https://cocoapods.org/) 
 
@@ -276,9 +452,15 @@ gem install bundler:2.0.2
 
 Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
 
+#### Only for macOS - install cocoapods
+Then install cocoapods, also in this case you can use Ruby to install it:
+```
+sudo gem install cocoapods
+```
+
 #### React Native
 
-Follow the tutorial [Building Projects with Native Code](https://facebook.github.io/react-native/docs/getting-started.html) for your operating system.
+Follow the tutorial [Setting up the development environment](https://reactnative.dev/docs/environment-setup) and install `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
@@ -306,10 +488,20 @@ _Note: The sample configuration sets the app to interface with our test environm
 #### Dependencies
 
 **module for CIE authentication**
-IO uses a [react native module](https://github.com/pagopa/io-cie-android-sdk) to allow authentication through CIE (Carta di Indentità Elettronica)
-This package is hosted on [Github Packages](https://github.com/features/packages). In order to install this package you need to be able to access the github registry.
-The configuration is pretty simple and fast, you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
-**If you don't do this step you can't download and install the cie module.**
+IO uses a [react native module](https://github.com/pagopa/io-cie-sdk) to allow authentication through CIE ([Carta di Identità Elettronica](https://www.cartaidentita.interno.gov.it/))
+
+#### Create Github token
+In order to access the Github registry a Github token is needed:
+
+- Go to [Github](https://github.com) and access to your account
+- In the upper-right hand corner click your profile photo then click Settings
+- On the left sidebar, click Developer settings.
+- On the left sidebar, click Personal access tokens.
+- Click the Generate new token button and create a new token with the following permissions:
+    - read:packages
+    - write:packages
+    - delete:packages
+- Click the green Generate token button.
 
 Now you can install the libraries used by the project:
 
@@ -332,7 +524,10 @@ $ yarn generate:all
 
 On Android (the device simulator must be [launched manually](https://medium.com/@deepak.gulati/running-react-native-app-on-the-android-emulator-11bf309443eb)):
 
+
 ```
+# Perform the port forwarding
+$ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 $ react-native run-android
 ```
 
@@ -447,11 +642,35 @@ For multi-language support the application uses:
 
 To add a new language you must:
 
+1. Clone the repository
 1. Create a new directory under [locales](locales) using the language code as the name (e.g. `es` for Spanish, `de` for German, etc...).
-1. Copy the content from the base language (`en`).
+1. Copy the content from the base language [locales/en](en)(`en`).
 1. Proceed with the translation by editing the YAML and Markdown files.
-1. Run the Typescript code generation script (`npm run generate:locales`).
+    - if is a YAML file (`*.yml`) translate only the text following the colon (e.g. `today:` **`"today"`** become in italian `today:` **`"oggi"`**).
+    - if is a Mardown file (`*.md`) translate the text leaving the formatting as is.
+1. Check that the command: ```npm run generate:locales``` (or ```yarn generate:locales```) returns a success message.
+1. Create a PR using as title `Internationalization {New Language}` (e.g. `Internationalization Italiano`)and apply the label `internationalization`.
+
+If you want to see the result in the app you must:
+
+1. Run the command: ```npm run generate:locales```.
 1. Edit the file [ts/i18n.ts](ts/i18n.ts) by adding the new language in the variable `I18n.translations`.
+
+    E.g. for German
+    ```
+    I18n.translations = {
+      en: locales.localeEN,
+      it: locales.localeIT
+    };
+    ```
+    become
+    ```
+    I18n.translations = {
+      en: locales.localeEN,
+      it: locales.localeIT
+      de: locales.localeDE
+    };
+    ```
 
 ### Error handling
 
@@ -680,6 +899,10 @@ $ detox test
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
 ### Troubleshooting
+
+### Bundler install error
+
+If you get an error like this `Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException)` after launching `bundle install` you can fix it launching this `gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)`
 
 #### iOS build warning
 

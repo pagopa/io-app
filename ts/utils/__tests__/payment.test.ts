@@ -10,14 +10,16 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
-  getTransactionCodiceAvviso,
-  getTransactionFee
+  getCodiceAvviso,
+  getTransactionFee,
+  getTransactionIUV
 } from "../payment";
 import {
   decodePagoPaQrCode,
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../payment";
+import I18n from "react-native-i18n";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
@@ -83,6 +85,19 @@ describe("cleanTransactionDescription", () => {
         "/RFS/0123456789012/666.98/TXT/ actual description",
         "actual description"
       ],
+      [
+        "/RFS/0123456789012/666.98/TXT/ actual description/other text",
+        "actual description/other text"
+      ],
+      [
+        "/RFB/000001234556859/143.00",
+        `${I18n.t("payment.IUV")} 000001234556859`
+      ],
+      ["/XYZ/TXT/some text", "some text"],
+      ["/TXT/some text", "some text"],
+      ["TXT/some text", "some text"],
+      ["/TXT/some text/other text", "some text/other text"],
+      ["TXT/some text/other text", "some text/other text"],
       ["actual description", "actual description"]
     ].forEach(([dirty, cleaned]) => {
       expect(cleanTransactionDescription(dirty)).toEqual(cleaned);
@@ -179,7 +194,7 @@ describe("getTransactionFee", () => {
   });
 });
 
-describe("getTransactionCodiceAvviso", () => {
+describe("getTransactionIUV", () => {
   [
     Tuple2(
       "/RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
@@ -197,10 +212,71 @@ describe("getTransactionCodiceAvviso", () => {
       "RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
       some("02000000000495213")
     ),
+    Tuple2(
+      "/RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
+    Tuple2(
+      "RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
+      some("02000000000495213")
+    ),
     Tuple2("", none),
     Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", none),
     Tuple2("RFB/", none)
   ].forEach(tuple => {
-    expect(getTransactionCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
+    expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
+  });
+});
+
+describe("getCodiceAvviso", () => {
+  const organizationFiscalCode = "00000123456";
+  [
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          applicationCode: "02",
+          auxDigit: "0",
+          checkDigit: "78",
+          iuv13: "1600203993985"
+        }
+      }).value as RptId,
+      `002160020399398578`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          auxDigit: "1",
+          iuv17: "16002039939851111"
+        }
+      }).value as RptId,
+      `116002039939851111`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          checkDigit: "78",
+          auxDigit: "2",
+          iuv15: "160020399398511"
+        }
+      }).value as RptId,
+      `216002039939851178`
+    ),
+    Tuple2<RptId, string>(
+      RptId.decode({
+        organizationFiscalCode,
+        paymentNoticeNumber: {
+          checkDigit: "78",
+          auxDigit: "3",
+          segregationCode: "55",
+          iuv13: "1600203993985"
+        }
+      }).value as RptId,
+      `355160020399398578`
+    )
+  ].forEach(tuple => {
+    expect(getCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
   });
 });

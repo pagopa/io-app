@@ -9,6 +9,7 @@ import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
+import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -17,6 +18,8 @@ import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   yield put(analyticsAuthenticationStarted());
 
+  // Watch for the test login
+  const watchTestLogin = yield fork(watchTestLoginRequestSaga);
   // Watch for login by CIE
   const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
@@ -30,6 +33,8 @@ export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   );
 
   yield cancel(watchCieAuthentication);
+  yield cancel(watchTestLogin);
+
   // stop cie manager from listening nfc
   yield call(stopCieManager);
 

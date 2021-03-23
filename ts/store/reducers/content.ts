@@ -58,7 +58,7 @@ export type ServiceMetadataById = Readonly<{
   [key: string]: ServiceMetadataState;
 }>;
 
-const initialContentState: ContentState = {
+export const initialContentState: ContentState = {
   servicesMetadata: {
     byId: {}
   },
@@ -232,11 +232,13 @@ export default function content(
       };
 
     case getType(contentMunicipalityLoad.request):
+      const codiceCatastale = state.municipality.codiceCatastale;
+      const municipalityData = state.municipality.data;
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.noneLoading,
-          data: pot.noneLoading
+          codiceCatastale: pot.toLoading(codiceCatastale),
+          data: pot.toLoading(municipalityData)
         }
       };
 
@@ -302,7 +304,6 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata },
         municipality: { ...initialContentState.municipality },
         contextualHelp: { ...initialContentState.contextualHelp }
       };

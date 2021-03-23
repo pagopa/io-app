@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { StyleProvider } from "native-base";
 import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
@@ -20,11 +21,13 @@ export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
-        <LightModalProvider>
-          <MenuProvider>
-            <RootContainer />
-          </MenuProvider>
-        </LightModalProvider>
+        <BottomSheetModalProvider>
+          <LightModalProvider>
+            <MenuProvider>
+              <RootContainer />
+            </MenuProvider>
+          </LightModalProvider>
+        </BottomSheetModalProvider>
       </PersistGate>
     </Provider>
   </StyleProvider>

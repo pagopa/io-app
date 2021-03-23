@@ -78,7 +78,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
     const link =
       this.state.currentTab === 0
         ? "https://www.spid.gov.it"
-        : "https://www.cartaidentita.interno.gov.it";
+        : "https://www.prenotazionicie.interno.gov.it/cittadino/n/sc/wizardAppuntamentoCittadino/sceltaComune";
     const text =
       this.state.currentTab === 0
         ? I18n.t("authentication.landing.request_spid")

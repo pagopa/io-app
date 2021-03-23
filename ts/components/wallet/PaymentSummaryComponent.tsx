@@ -67,7 +67,12 @@ export const PaymentSummaryComponent = (props: Props) => {
     return (
       <React.Fragment>
         <Text style={props.dark && styles.lighterGray}>{label}</Text>
-        <Text bold={true} dark={!props.dark} white={props.dark}>
+        <Text
+          bold={true}
+          dark={!props.dark}
+          white={props.dark}
+          selectable={true}
+        >
           {value}
         </Text>
         <View spacer={true} />

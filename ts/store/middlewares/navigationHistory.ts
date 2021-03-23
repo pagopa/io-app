@@ -181,3 +181,6 @@ export function navigationStateRoutesContainsKey(
   const notFound = -1;
   return index !== notFound;
 }
+
+export const navigationHistorySizeSelector = (state: GlobalState) =>
+  state.navigationHistory.length;

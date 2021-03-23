@@ -7,11 +7,11 @@ import { typographyFactory } from "./Factory";
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
   IOColorType,
-  "bluegreyDark" | "bluegreyLight" | "white"
+  "bluegreyDark" | "bluegreyLight" | "white" | "red" | "blue" | "bluegrey"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColorType, "white">;
+type AllowedBoldColors = Extract<IOColorType, "white" | "black">;
 
 // all the possible colors
 type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
@@ -68,7 +68,8 @@ const calculateWeightColor = (
  * @param props
  * @constructor
  */
-export const H3: React.FunctionComponent<OwnProps> = props => typographyFactory<AllowedWeight, AllowedColors>({
+export const H3: React.FunctionComponent<OwnProps> = props =>
+  typographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     weightColorFactory: calculateWeightColor,
     font: fontName,

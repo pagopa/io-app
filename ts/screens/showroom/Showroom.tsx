@@ -2,17 +2,20 @@ import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import customVariables from "../../theme/variables";
-import { ColorsShowroom } from "./ColorsShowroom";
-import { TypographyShowroom } from "./TypographyShowRoom";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import I18n from "../../i18n";
+import { ColorsShowroom } from "./core/ColorsShowroom";
+import { SelectionShowroom } from "./core/SelectionShowroom";
+import { TypographyShowroom } from "./core/TypographyShowRoom";
+import { OthersShowroom } from "./OthersShowroom";
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    alignItems: "center",
-    marginLeft: customVariables.contentPadding,
-    marginRight: customVariables.contentPadding
+    alignItems: "center"
   },
+
   scrollView: {
     width: "100%"
   },
@@ -33,12 +36,22 @@ export const Showroom = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.body}>
-      <ScrollView style={styles.scrollView}>
-        <ColorsShowroom />
-        <View spacer={true} extralarge={true} />
-        <TypographyShowroom />
-      </ScrollView>
-    </SafeAreaView>
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("profile.main.showroom")}
+    >
+      <SafeAreaView style={styles.body}>
+        <ScrollView>
+          <View style={IOStyles.horizontalContentPadding}>
+            <ColorsShowroom />
+            <View spacer={true} extralarge={true} />
+            <TypographyShowroom />
+            <SelectionShowroom />
+            <View spacer={true} extralarge={true} />
+            <OthersShowroom />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };

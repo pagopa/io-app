@@ -1,4 +1,3 @@
-import { Function1, Lazy, Predicate } from "fp-ts/lib/function";
 import { Option } from "fp-ts/lib/Option";
 import {
   ActionType,
@@ -15,6 +14,11 @@ import { Psp, Transaction } from "../../../types/pagopa";
 // item we want to load
 export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
+)<{ start: number }>();
+
+// this action load transaction following a backoff retry strategy
+export const fetchTransactionsRequestWithExpBackoff = createStandardAction(
+  "FETCH_TRANSACTIONS_BACKOFF_REQUEST"
 )<{ start: number }>();
 
 // transactions is a pagination API. Success payload includes 'total' to know how many
@@ -35,6 +39,16 @@ export const fetchTransactionsFailure = createStandardAction(
 export const readTransaction = createStandardAction("READ_TRANSACTION")<
   Transaction
 >();
+
+// all transactions id to remove from the store
+export const deleteReadTransaction = createStandardAction(
+  "DELETE_READ_TRANSACTION"
+)<ReadonlyArray<number>>();
+
+// notify all transactions are been fully loaded
+export const fetchTransactionsLoadComplete = createStandardAction(
+  "FETCH_TRANSACTION_LOAD_COMPLETE"
+)<ReadonlyArray<Transaction>>();
 
 //
 // fetch a single transaction
@@ -77,29 +91,6 @@ export const fetchPsp = createAsyncAction(
   "FETCH_PSP_FAILURE"
 )<FetchPspRequestPayload, FetchPspSuccessPayload, FetchPspFailurePayload>();
 
-//
-// poll for a transaction until it reaches a certain state
-//
-
-type RunPollTransactionSagaPayload = Readonly<{
-  id: number;
-  isValid: Predicate<Transaction>;
-  onValid?: Function1<Transaction, void>;
-  onTimeout?: Lazy<void>;
-}>;
-
-export const runPollTransactionSaga = createStandardAction(
-  "POLL_TRANSACTION_SAGA_RUN"
-)<RunPollTransactionSagaPayload>();
-
-export const pollTransactionSagaCompleted = createStandardAction(
-  "POLL_TRANSACTION_SAGA_COMPLETED"
-)<Transaction>();
-
-export const pollTransactionSagaTimeout = createStandardAction(
-  "POLL_TRANSACTION_SAGA_TIMEOUT"
-)();
-
 export type TransactionsActions =
   | ActionType<typeof readTransaction>
   | ActionType<typeof fetchTransactionsSuccess>
@@ -110,6 +101,6 @@ export type TransactionsActions =
   | ActionType<typeof fetchTransactionFailure>
   | ActionType<typeof fetchPsp>
   | ActionType<typeof clearTransactions>
-  | ActionType<typeof runPollTransactionSaga>
-  | ActionType<typeof pollTransactionSagaCompleted>
-  | ActionType<typeof pollTransactionSagaTimeout>;
+  | ActionType<typeof deleteReadTransaction>
+  | ActionType<typeof fetchTransactionsLoadComplete>
+  | ActionType<typeof fetchTransactionsRequestWithExpBackoff>;

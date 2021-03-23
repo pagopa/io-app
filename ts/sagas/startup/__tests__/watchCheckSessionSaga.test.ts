@@ -1,18 +1,30 @@
 import { left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
+import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import {
   checkCurrentSession,
-  sessionExpired
+  sessionExpired,
+  sessionInformationLoadSuccess
 } from "../../../store/actions/authentication";
-import { checkSession, checkSessionResult } from "../watchCheckSessionSaga";
+import {
+  testableCheckSession,
+  checkSessionResult
+} from "../watchCheckSessionSaga";
 
 describe("checkSession", () => {
   const getSessionValidity = jest.fn();
 
   it("if response is 200 the session is valid", () => {
-    const responseOK = right({ status: 200 });
-    testSaga(checkSession, getSessionValidity)
+    const responseValue = {
+      spidLevel: "https://www.spid.gov.it/SpidL2",
+      walletToken: "ZXCVBNM098876543"
+    };
+    const responseOK = right({
+      status: 200,
+      value: responseValue
+    });
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseOK)
@@ -22,12 +34,14 @@ describe("checkSession", () => {
         })
       )
       .next()
+      .put(sessionInformationLoadSuccess(responseValue as PublicSession))
+      .next()
       .isDone();
   });
 
   it("if response is 401 the session is invalid", () => {
     const responseUnauthorized = right({ status: 401 });
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responseUnauthorized)
@@ -42,7 +56,7 @@ describe("checkSession", () => {
 
   it("if response is 500 the session is valid", () => {
     const response500 = right({ status: 500 });
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(response500)
@@ -61,7 +75,7 @@ describe("checkSession", () => {
       context: [{ key: "", type: t.string }]
     };
     const responeLeft = left([validatorError]);
-    testSaga(checkSession, getSessionValidity)
+    testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
       .next(responeLeft)

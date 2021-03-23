@@ -13,6 +13,12 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
+// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
+export const formatDateAsShortFormat = (date: Date): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
+
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
 }
@@ -79,7 +85,7 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
  * A function to check if the given date is in the past or in the future.
  * It returns:
  * -VALID, if the date is in the future
- * -EXPIRING, if the date is within the next 24 hours
+ * -EXPIRING, if the date is within the next 7 days
  * -EXPIRED, if the date is in the past
  * @param date Date
  */

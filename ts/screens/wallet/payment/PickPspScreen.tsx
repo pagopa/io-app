@@ -145,10 +145,8 @@ class PickPspScreen extends React.Component<Props> {
           <View spacer={true} />
           <View style={styles.padded}>
             <Text>
-              {!this.props.navigation.getParam("chooseToChange") &&
-                `${I18n.t("wallet.pickPsp.info")} `}
               <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
-              <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
+              {`${I18n.t("wallet.pickPsp.info2")} `}
             </Text>
             <Text link={true} onPress={this.showHelp}>
               {I18n.t("wallet.pickPsp.link")}
@@ -179,27 +177,27 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-    loadAllPsp: (idWallet: string, idPayment: string) => {
-      dispatch(
-        paymentFetchAllPspsForPaymentId.request({
-          idWallet,
-          idPayment
-        })
-      );
-    },
-    pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
-      dispatchUpdatePspForWalletAndConfirm(dispatch)(
-        idPsp,
-        props.navigation.getParam("wallet"),
-        props.navigation.getParam("rptId"),
-        props.navigation.getParam("initialAmount"),
-        props.navigation.getParam("verifica"),
-        props.navigation.getParam("idPayment"),
-        psps,
-        () =>
-          showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
-      )
-  });
+  loadAllPsp: (idWallet: string, idPayment: string) => {
+    dispatch(
+      paymentFetchAllPspsForPaymentId.request({
+        idWallet,
+        idPayment
+      })
+    );
+  },
+  pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) =>
+    dispatchUpdatePspForWalletAndConfirm(dispatch)(
+      idPsp,
+      props.navigation.getParam("wallet"),
+      props.navigation.getParam("rptId"),
+      props.navigation.getParam("initialAmount"),
+      props.navigation.getParam("verifica"),
+      props.navigation.getParam("idPayment"),
+      psps,
+      () =>
+        showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
+    )
+});
 
 export default connect(
   mapStateToProps,

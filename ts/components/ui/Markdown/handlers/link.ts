@@ -30,8 +30,9 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   }
 }
 
-// remove protocol from a link ex: http://www.site.com -> www.site.com
-export const removeProtocol = (link: string): string => link.replace(new RegExp(/https?:\/\//gi), "");
+// remove protocol from a link
+export const removeProtocol = (link: string): string =>
+  link.replace(new RegExp(/https?:\/\//gi), "");
 
 // try to open the given url. If it fails an error toast will shown
 export function openLink(url: string, customError?: string) {

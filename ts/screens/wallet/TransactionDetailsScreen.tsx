@@ -36,8 +36,8 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import {
   cleanTransactionDescription,
-  getTransactionCodiceAvviso,
-  getTransactionFee
+  getTransactionFee,
+  getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
@@ -173,14 +173,12 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
-    const codiceAvviso = getTransactionCodiceAvviso(
-      transaction.description
-    ).toUndefined();
+    const iuv = getTransactionIUV(transaction.description).toUndefined();
 
     const idTransaction = transaction.id;
     return {
       fullReason: transaction.description,
-      codiceAvviso,
+      iuv,
       idTransaction,
       paymentMethodBrand,
       paymentMethodIcon,
@@ -202,7 +200,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
         <Text style={styles.flex}>{label}</Text>
-        <Text bold={true} dark={true}>
+        <Text bold={true} dark={true} selectable={true}>
           {value}
         </Text>
       </View>
@@ -228,6 +226,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           </TouchableWithoutFeedback>
           {this.state.showFullReason && (
             <Text
+              selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
               }
@@ -236,8 +235,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </Text>
           )}
           <View spacer={true} large={true} />
-          {data.codiceAvviso &&
-            standardRow(I18n.t("payment.noticeCode"), data.codiceAvviso)}
+          {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
           {/** transaction date */}
           <View spacer={true} xsmall={true} />
           <View spacer={true} large={true} />
@@ -305,22 +303,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           {(data.paymentMethodIcon || data.paymentMethodBrand) && (
             <View spacer={true} />
           )}
-
-          {/** psp logo */}
-          {psp && (
-            <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.psp")}</Text>
-              {psp.logoPSP && psp.logoPSP.length > 0 ? (
-                <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
-              ) : psp.businessName ? (
-                <Text>{psp.businessName}</Text>
-              ) : undefined}
-            </View>
-          )}
-
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
 
           {/** Transaction id */}
           <View>

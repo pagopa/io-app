@@ -1,11 +1,15 @@
-import { Text, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
+import I18n from "../i18n";
+import { IOColors } from "./core/variables/IOColors";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { H5 } from "./core/typography/H5";
+import { H3 } from "./core/typography/H3";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -13,6 +17,7 @@ type OwnProps = Readonly<{
   text2: string;
   text3: string;
   isNew: boolean;
+  isPaid?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
   isSelectionModeEnabled?: boolean;
@@ -64,9 +69,10 @@ const styles = StyleSheet.create({
     marginBottom: -4
   },
   icon: {
-    width: 64,
-    alignItems: "flex-end",
-    justifyContent: "center"
+    width: 90,
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
+    flexDirection: "row"
   },
   text3Line: {
     flex: 1,
@@ -76,6 +82,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     minHeight: 24
+  },
+  text3SubContainer: { width: `95%` },
+  badgeInfo: {
+    borderWidth: 1,
+    borderStyle: "solid",
+    width: 65,
+    height: 25,
+    flexDirection: "row"
+  },
+  badgeInfoExpired: {
+    backgroundColor: IOColors.white,
+    borderColor: IOColors.red
+  },
+  badgeInfoPaid: {
+    borderColor: IOColors.aqua,
+    backgroundColor: IOColors.aqua
   }
 });
 
@@ -87,7 +109,8 @@ const ICON_WIDTH = 24;
 export default class DetailedlistItemComponent extends React.PureComponent<
   Props
 > {
-  private getIconName = () => this.props.isSelectionModeEnabled
+  private getIconName = () =>
+    this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
         ? "io-checkbox-on"
         : "io-checkbox-off"
@@ -102,7 +125,7 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         {...this.props}
       >
         <View style={styles.spaced}>
-          <Text dark={true}>{this.props.text11}</Text>
+          <H5>{this.props.text11}</H5>
           <Text bold={true} style={styles.text12}>
             {this.props.text12}
           </Text>
@@ -119,17 +142,18 @@ export default class DetailedlistItemComponent extends React.PureComponent<
                 <BadgeComponent />
               </View>
             )}
-            <Text
-              numberOfLines={2}
-              style={[
-                styles.text3,
-                this.props.isNew ? styles.new : styles.notNew
-              ]}
-            >
-              {this.props.text3}
-            </Text>
+            <View style={styles.text3SubContainer}>
+              <H3 numberOfLines={2}>{this.props.text3}</H3>
+            </View>
           </View>
+
           <View style={styles.icon}>
+            {this.props.isPaid && (
+              <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
+                <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>
+              </Badge>
+            )}
+
             <IconFont
               name={this.getIconName()}
               size={ICON_WIDTH}
