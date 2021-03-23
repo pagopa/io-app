@@ -39,15 +39,14 @@ export const FavoritePaymentMethodSwitch = (props: Props) => (
       </H5>
     </View>
     <View style={styles.right}>
-      {props.isLoading && (
+      {props.isLoading ? (
         <ActivityIndicator
           color={"black"}
           accessible={false}
           importantForAccessibility={"no-hide-descendants"}
           accessibilityElementsHidden={true}
         />
-      )}
-      {!props.isLoading && (
+      ) : (
         <Switch
           onValueChange={v => props.onValueChange?.(v)}
           value={props.switchValue}
