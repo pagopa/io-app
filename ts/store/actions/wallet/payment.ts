@@ -243,6 +243,11 @@ export const runDeleteActivePaymentSaga = createStandardAction(
   "PAYMENT_RUN_DELETE_ACTIVE_PAYMENT_SAGA"
 )();
 
+// abort payment just before pay
+export const abortRunningPayment = createStandardAction(
+  "PAYMENT_RUN_ABORT_RUNNING_PAYMENT_SAGA"
+)();
+
 //
 // run startOrResumePaymentSaga
 //
@@ -276,6 +281,7 @@ export type PaymentActions =
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
+  | ActionType<typeof abortRunningPayment>
   | ActionType<typeof paymentFetchAllPspsForPaymentId>
   | ActionType<typeof paymentRedirectionUrls>
   | ActionType<typeof runStartOrResumePaymentActivationSaga>;
