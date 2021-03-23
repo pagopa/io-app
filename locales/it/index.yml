@@ -2034,7 +2034,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"Attiva il Cashback\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
