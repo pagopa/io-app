@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
 import {
   eycaCardSelector,
-  isEycaDetailsLoading
+  eycaDetailSelector
 } from "../../../store/reducers/eyca/details";
 import {
   cgnEycaActivation,
@@ -19,19 +19,22 @@ import {
   cgnEycaActivationStatus
 } from "../../../store/reducers/eyca/activation";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
+import { isLoading } from "../../../../bpd/model/RemoteValue";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 import EycaPendingComponent from "./EycaPendingComponent";
 import EycaErrorComponent from "./EycaErrorComponent";
+import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-// This component is used to handle the rendering conditions of the three possible EYCA states for the user
-// ERROR => EycaErrorComponent
-// FOUND and PENDING => First we check the BE orchestrator status than shows EycaPendingComponent if card is pending and
-//                      orchestrator is not in an error state, unless we will show EycaErrorComponent
-// FOUND and detailed => EycaStatusDetailsComponent
 const EycaDetailComponent = (props: Props) => {
+  const { present } = useEycaInformationBottomSheet();
+
+  const openEycaBottomSheet = async () => {
+    await present();
+  };
+
   useEffect(() => {
     if (CardPending.is(props.eyca)) {
       props.getEycaActivationStatus();
@@ -39,7 +42,10 @@ const EycaDetailComponent = (props: Props) => {
   }, [props.eyca]);
 
   const errorComponent = (
-    <EycaErrorComponent onRetry={props.requestEycaActivation} />
+    <EycaErrorComponent
+      onRetry={props.requestEycaActivation}
+      openBottomSheet={openEycaBottomSheet}
+    />
   );
 
   const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
@@ -47,7 +53,12 @@ const EycaDetailComponent = (props: Props) => {
       case "ACTIVATED":
       case "REVOKED":
       case "EXPIRED":
-        return <EycaStatusDetailsComponent eycaCard={eyca} />;
+        return (
+          <EycaStatusDetailsComponent
+            eycaCard={eyca}
+            openBottomSheet={openEycaBottomSheet}
+          />
+        );
       case "PENDING":
         return fromNullable(props.eycaActivationStatus).fold(
           errorComponent,
@@ -55,14 +66,13 @@ const EycaDetailComponent = (props: Props) => {
             as === "ERROR" || as === "NOT_FOUND" ? (
               errorComponent
             ) : (
-              <EycaPendingComponent />
+              <EycaPendingComponent openBottomSheet={openEycaBottomSheet} />
             )
         );
       default:
         return null;
     }
   };
-
   return (
     <>
       {props.isLoading ? (
@@ -82,7 +92,8 @@ const EycaDetailComponent = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   eyca: eycaCardSelector(state),
   eycaActivationStatus: cgnEycaActivationStatus(state),
-  isLoading: isEycaDetailsLoading(state) || cgnEycaActivationLoading(state)
+  isLoading:
+    isLoading(eycaDetailSelector(state)) || cgnEycaActivationLoading(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

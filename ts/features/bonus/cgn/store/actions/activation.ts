@@ -30,6 +30,13 @@ export const cgnActivationCancel = createStandardAction(
 )<void>();
 
 /**
+ * Fails the activation workflow
+ */
+export const cgnActivationFailure = createStandardAction(
+  "CGN_ACTIVATION_FAILURE"
+)<string>();
+
+/**
  * Back from the activation workflow
  */
 export const cgnActivationBack = createStandardAction("CGN_ACTIVATION_BACK")<
@@ -58,4 +65,5 @@ export type CgnActivationActions =
   | ActionType<typeof cgnActivationStart>
   | ActionType<typeof cgnActivationComplete>
   | ActionType<typeof cgnActivationCancel>
+  | ActionType<typeof cgnActivationFailure>
   | ActionType<typeof cgnActivationBack>;

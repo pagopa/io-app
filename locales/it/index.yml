@@ -2309,6 +2309,7 @@ bonus:
         eyca:
           copy: Copia numero carta EYCA
           pending: Scopri di più su EYCA
+          bottomSheet: Vedi gli sconti EYCA
       tos:
         link: Informativa sul trattamento dei dati personali
       information:
@@ -2324,6 +2325,8 @@ bonus:
         eycaNumber: Numero carta
         eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
         eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
+        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e-commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
         badge:
           active: Attiva
           revoked: Annullata
@@ -2336,6 +2339,13 @@ bonus:
           cgn: Scadenza CGN
           eyca: Scadenza EYCA
     activation:
+      eyca:
+        loading:
+          caption: "Stiamo processando la tua richiesta"
+          subCaption: "Ti preghiamo di attendere."
+        error:
+          title: "Il servizio di EYCA in questo momento non è disponibile."
+          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
       loading:
         caption: "Stiamo attivando la tua Carta Giovani Nazionale"
         subCaption: "Ti preghiamo di attendere."
