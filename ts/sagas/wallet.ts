@@ -526,6 +526,10 @@ function* deleteActivePaymentSaga() {
   }
 }
 
+/**
+ * this saga delete a payment just before the user pays
+ * it should be invoked from the payment UX
+ */
 function* abortRunningPaymentSaga() {
   // delete the active payment from pagoPA
   yield put(runDeleteActivePaymentSaga());
