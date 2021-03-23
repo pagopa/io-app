@@ -11,9 +11,9 @@ import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import IconFont from "../../ui/IconFont";
 import { IOColors } from "../../core/variables/IOColors";
+import { getBancomatOrCreditCardPickMethodDescription } from "../../../utils/payment";
 import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
-import { getBancomatOrCreditCardPickMethodDescription } from "../../../utils/payment";
 
 type Props = {
   isFirst: boolean;
@@ -41,19 +41,25 @@ const extractInfoFromPaymentMethod = (
     case "Bancomat":
       return {
         logo: pagoBancomatLogo,
-        title: paymentMethod.kind,
+        title: paymentMethod.caption,
         description: getBancomatOrCreditCardPickMethodDescription(paymentMethod)
       };
     case "BPay":
       return {
         logo: bancomatPayLogo,
-        title: paymentMethod.kind,
+        title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? ""
       };
     case "Satispay":
       return {
         logo: satispayLogo,
         title: paymentMethod.kind,
+        description: nameSurname
+      };
+    case "Privative":
+      return {
+        logo: paymentMethod.icon,
+        title: paymentMethod.caption,
         description: nameSurname
       };
   }

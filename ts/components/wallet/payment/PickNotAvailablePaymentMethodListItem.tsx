@@ -16,8 +16,8 @@ import IconFont from "../../ui/IconFont";
 import I18n from "../../../i18n";
 import { IOColors } from "../../core/variables/IOColors";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 import { getBancomatOrCreditCardPickMethodDescription } from "../../../utils/payment";
+import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
   isFirst: boolean;
