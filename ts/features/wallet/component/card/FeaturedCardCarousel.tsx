@@ -7,6 +7,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
+import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
@@ -56,8 +57,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   if (cgnEnabled) {
     bonusMap.set(ID_CGN_TYPE, {
-      // FIXME Replace the logo when it has been approved
-      logo: cashbackLogo,
+      logo: cgnLogo,
       handler: _ => props.startCgnActivation()
     });
   }
