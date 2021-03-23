@@ -6,7 +6,7 @@ import { ImageSourcePropType } from "react-native";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
-import { isCreditCard, PaymentMethod } from "../../../types/pagopa";
+import { PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
@@ -24,57 +24,33 @@ type Props = {
   paymentMethod: PaymentMethod;
 } & ReturnType<typeof mapStateToProps>;
 
-const unacceptedMethodBottomSheetBody = () => (
+const unacceptedBottomSheetTitle = () =>
+  I18n.t(
+    "wallet.payWith.pickPaymentMethod.notAvailable.unaccepted.bottomSheetTitle"
+  );
+const unacceptedBottomSheetBody = () => (
   <>
     <View spacer={true} large={true} />
     <H4 weight={"Regular"}>
       {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.bancomat.bottomSheetDescription.text1"
+        "wallet.payWith.pickPaymentMethod.notAvailable.unaccepted.bottomSheetDescription"
       )}
-      <H4>
-        {" "}
-        {I18n.t(
-          "wallet.payWith.pickPaymentMethod.notAvailable.bancomat.bottomSheetDescription.text2"
-        )}
-      </H4>{" "}
-      {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.bancomat.bottomSheetDescription.text3"
-      )}
-    </H4>
-    <View spacer={true} large={true} />
-  </>
-);
-const ArrivingBottomSheetBody = () => (
-  <>
-    <View spacer={true} large={true} />
-    <H4 weight={"Regular"}>
-      {I18n.t(
-        "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
-      )}
-      <H4>
-        {" "}
-        {I18n.t(
-          "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
-        )}
-      </H4>
     </H4>
     <View spacer={true} large={true} />
   </>
 );
 
-const CoBadgeBottomSheetBody = () => (
+const arrivingBottomSheetTitle = () =>
+  I18n.t(
+    "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
+  );
+const ArrivingBottomSheetBody = () => (
   <>
     <View spacer={true} large={true} />
     <H4 weight={"Regular"}>
       {I18n.t(
-        "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+        "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetDescription"
       )}
-      <H4>
-        {" "}
-        {I18n.t(
-          "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
-        )}
-      </H4>
     </H4>
     <View spacer={true} large={true} />
   </>
@@ -102,8 +78,8 @@ const extractInfoFromPaymentMethod = (
         description: getBancomatOrCreditCardPickMethodDescription(
           paymentMethod
         ),
-        bottomSheetTitle: "cobadge",
-        bottomSheetBody: CoBadgeBottomSheetBody()
+        bottomSheetTitle: unacceptedBottomSheetTitle(),
+        bottomSheetBody: unacceptedBottomSheetBody()
       };
     case "Bancomat":
       return {
@@ -112,17 +88,15 @@ const extractInfoFromPaymentMethod = (
         description: getBancomatOrCreditCardPickMethodDescription(
           paymentMethod
         ),
-        bottomSheetTitle: I18n.t(
-          "wallet.payWith.pickPaymentMethod.notAvailable.bancomat.bottomSheetTitle"
-        ),
-        bottomSheetBody: unacceptedMethodBottomSheetBody()
+        bottomSheetTitle: unacceptedBottomSheetTitle(),
+        bottomSheetBody: unacceptedBottomSheetBody()
       };
     case "BPay":
       return {
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
-        bottomSheetTitle: "bpay bottom sheet title",
+        bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: ArrivingBottomSheetBody()
       };
     case "Satispay":
@@ -130,8 +104,18 @@ const extractInfoFromPaymentMethod = (
         logo: satispayLogo,
         title: paymentMethod.kind,
         description: nameSurname,
-        bottomSheetTitle: "satispay bottom sheet title",
+        bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: ArrivingBottomSheetBody()
+      };
+    case "Privative":
+      return {
+        logo: paymentMethod.icon,
+        title: paymentMethod.caption,
+        description: getBancomatOrCreditCardPickMethodDescription(
+          paymentMethod
+        ),
+        bottomSheetTitle: unacceptedBottomSheetTitle(),
+        bottomSheetBody: unacceptedBottomSheetBody()
       };
   }
 };
@@ -163,7 +147,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
       title={title}
       description={description}
       rightElement={
-        <IconFont name={"io-notice"} color={IOColors.blue} size={24} />
+        <IconFont name={"io-info"} color={IOColors.blue} size={24} />
       }
       onPress={present}
     />

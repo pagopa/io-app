@@ -29,6 +29,7 @@ import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
+  privativeListVisibleInWalletSelector,
   satispayListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod, Wallet } from "../../../types/pagopa";
@@ -163,6 +164,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
   const potVisibleBPay = bPayListVisibleInWalletSelector(state);
   const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
+  const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
   const isLoading =
     pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
@@ -171,11 +173,13 @@ const mapStateToProps = (state: GlobalState) => {
   const visibleBancomat = pot.getOrElse(potVisibleBancomat, []).map(b => b);
   const visibleBPay = pot.getOrElse(potVisibleBPay, []).map(bP => bP);
   const visibleSatispay = pot.getOrElse(potVisibleSatispay, []).map(s => s);
+  const visiblePrivative = pot.getOrElse(potVisiblePrivative, []).map(p => p);
 
   const M = getMonoid<PaymentMethod>();
   const visibleWallets = M.concat(visibleCreditCard, visibleBancomat)
     .concat(visibleBPay)
-    .concat(visibleSatispay);
+    .concat(visibleSatispay)
+    .concat(visiblePrivative);
 
   return {
     // Considering that the creditCardListVisibleInWalletSelector return

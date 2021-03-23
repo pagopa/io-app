@@ -20,7 +20,8 @@ type Props = {
 const styles = StyleSheet.create({
   cardLogo: {
     height: 26,
-    width: 41
+    width: 41,
+    resizeMode: "contain"
   },
   paymentMethodInfo: {
     paddingLeft: 15,

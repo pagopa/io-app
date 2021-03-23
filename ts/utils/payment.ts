@@ -20,6 +20,7 @@ import { PaymentHistory } from "../store/reducers/payments/history";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
+  PrivativePaymentMethod,
   Psp,
   Transaction,
   Wallet
@@ -318,7 +319,10 @@ export const getPaymentOutcomeCodeDescription = (
 };
 
 export const getBancomatOrCreditCardPickMethodDescription = (
-  bancomatOrCreditCard: CreditCardPaymentMethod | BancomatPaymentMethod
+  bancomatOrCreditCard:
+    | CreditCardPaymentMethod
+    | PrivativePaymentMethod
+    | BancomatPaymentMethod
 ) => {
   const translatedExpiryDate = getTranslatedShortNumericMonthYear(
     bancomatOrCreditCard.info.expireYear,
