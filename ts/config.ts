@@ -63,6 +63,7 @@ export const isPlaygroundsEnabled: boolean =
 
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
+export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
