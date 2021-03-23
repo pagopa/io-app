@@ -751,6 +751,9 @@ payment:
 wallet:
   wallet: Wallet
   refreshWallet: Refresh the Wallet
+  favourite:
+    setFavoriteTitle: Use as favorite
+    setFavoriteSubtitle: When you pay in-app, IO will automatically show this payment method
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
@@ -945,7 +948,7 @@ wallet:
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
-    favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    favorite: To change this option, select another method from your Wallet and set it as favorite.
     amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
@@ -1323,8 +1326,8 @@ cardComponent:
   expiresOn: Expires on
   expiredCard: CARD EXPIRED ON
   actions: Actions
-  setFavourite: Set as favourite
-  unsetFavourite: Remove from favourites
+  setFavorite: Set as favourite
+  unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
   neverUsed: Never used

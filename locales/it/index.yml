@@ -771,6 +771,9 @@ payment:
 wallet:
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
+  favourite:
+    setFavoriteTitle: Usa come preferito
+    setFavoriteSubtitle: Quando paghi in app, IO mostra in automatico questo metodo di pagamento
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -965,7 +968,7 @@ wallet:
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
-    favourite: Questo metodo di pagamento è già contrassegnato come il tuo preferito, se vuoi cambiarlo devi selezionarne un altro
+    favorite: Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito.
     amex: I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
@@ -1350,8 +1353,8 @@ cardComponent:
   expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
-  setFavourite: Imposta come preferita
-  unsetFavourite: Rimuovi dai preferiti
+  setFavorite: Imposta come preferita
+  unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
   neverUsed: Mai utilizzata
