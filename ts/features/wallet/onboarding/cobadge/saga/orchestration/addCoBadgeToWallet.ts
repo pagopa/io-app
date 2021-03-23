@@ -55,25 +55,28 @@ export function* addCoBadgeToWalletAndActivateBpd() {
       navigationCurrentRouteSelector
     );
 
-    if (currentRoute.isSome()) {
-      if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
-        yield put(NavigationActions.back());
-        yield put(NavigationActions.back());
-      }
+    if (
+      currentRoute.isSome() &&
+      currentRoute.value === ROUTES.WALLET_ADD_CARD
+    ) {
+      yield put(NavigationActions.back());
+      yield put(NavigationActions.back());
+    }
 
-      if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+    if (
+      currentRoute.isSome() &&
+      currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
+    ) {
+      yield put(NavigationActions.back());
+      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+        navigationCurrentRouteSelector
+      );
+      if (
+        res === "completed" &&
+        newRoute.isSome() &&
+        newRoute.value === "WALLET_BANCOMAT_DETAIL"
+      ) {
         yield put(NavigationActions.back());
-        if (res === "completed") {
-          const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-            navigationCurrentRouteSelector
-          );
-          if (
-            newRoute.isSome() &&
-            newRoute.value === "WALLET_BANCOMAT_DETAIL"
-          ) {
-            yield put(NavigationActions.back());
-          }
-        }
       }
     }
   }
