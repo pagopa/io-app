@@ -4,15 +4,15 @@ import {
 } from "danger-plugin-digitalcitizenship/dist/utils";
 import { Either, left, Right, right } from "fp-ts/lib/Either";
 import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
-import { Story, StoryType } from "./types";
+import { PivotalStory, PivotalStoryType } from "./story/pivotal/types";
 
-const storyTag = new Map<StoryType, string>([
+const storyTag = new Map<PivotalStoryType, string>([
   ["feature", "feat"],
   ["bug", "fix"],
   ["chore", "chore"]
 ]);
 
-const storyOrder = new Map<StoryType, number>([
+const storyOrder = new Map<PivotalStoryType, number>([
   ["feature", 2],
   ["bug", 1],
   ["chore", 0]
@@ -62,7 +62,7 @@ export const getRawTitle = (title: string): string => {
  */
 export const getPivotalStoriesFromPrTitle = async (
   prTitle: string
-): Promise<ReadonlyArray<Story>> => {
+): Promise<ReadonlyArray<PivotalStory>> => {
   const storyIDs = getPivotalStoryIDs(prTitle);
   return (await getPivotalStories(storyIDs)).filter(
     s => s.story_type !== undefined
@@ -73,7 +73,9 @@ export const getPivotalStoriesFromPrTitle = async (
  * Return true if all the stories have the same `story_type`
  * @param stories
  */
-export const allStoriesSameType = (stories: ReadonlyArray<Story>): boolean =>
+export const allStoriesSameType = (
+  stories: ReadonlyArray<PivotalStory>
+): boolean =>
   stories.every((val, _, arr) => val.story_type === arr[0].story_type);
 
 /**
@@ -81,10 +83,10 @@ export const allStoriesSameType = (stories: ReadonlyArray<Story>): boolean =>
  * @param stories
  */
 export const getChangelogPrefixByStories = (
-  stories: ReadonlyArray<Story>
+  stories: ReadonlyArray<PivotalStory>
 ): Option<string> => {
   // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
-  const storyType = stories.reduce<Option<StoryType>>((acc, val) => {
+  const storyType = stories.reduce<Option<PivotalStoryType>>((acc, val) => {
     const currentStoryOrder = fromNullable(storyOrder.get(val.story_type));
     const prevStoryOrder = acc.chain(v => fromNullable(storyOrder.get(v)));
 
@@ -110,7 +112,7 @@ export const getChangelogPrefixByStories = (
  * @param story
  */
 export const getStoryChangelogScope = (
-  story: Story
+  story: PivotalStory
 ): Either<Error, Option<string>> => {
   // try to retrieve the project scope (if any)
   const maybeProjectScope = fromNullable(projectToScope.get(story.project_id));
@@ -172,7 +174,7 @@ export const getStoryChangelogScope = (
  * @param stories
  */
 export const getChangelogScope = (
-  stories: ReadonlyArray<Story>
+  stories: ReadonlyArray<PivotalStory>
 ): Either<ReadonlyArray<Error>, Option<string>> => {
   const eitherChangelogScopes = stories.map(getStoryChangelogScope);
 
