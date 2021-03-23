@@ -97,6 +97,10 @@ export const getFavoriteWalletId = createSelector(
     )
 );
 
+// return the pot representing the updating request of a favourite payment method
+export const favouriteWalletIdSelector = (state: GlobalState) =>
+  state.wallet.wallets.favoriteWalletId;
+
 export const getFavoriteWallet = createSelector(
   [getFavoriteWalletId, getWalletsById],
   (
