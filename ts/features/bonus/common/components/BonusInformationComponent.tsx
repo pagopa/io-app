@@ -92,6 +92,7 @@ const loadingOpacity = 0.9;
 // for long content markdown computed height should be not enough
 const extraMarkdownBodyHeight = 20;
 
+// TODO get the tos footer from props
 const getTosFooter = (
   maybeBonusTos: Option<string>,
   maybeRegulationUrl: Option<{ url: string; name: string }>,
