@@ -128,7 +128,7 @@ const extractInfoFromPaymentMethod = (
     case "Bancomat":
       return {
         logo: pagoBancomatLogo,
-        title: paymentMethod.kind,
+        title: paymentMethod.caption,
         description: getBancomatOrCreditCardPickMethodDescription(
           paymentMethod
         ),
@@ -140,7 +140,7 @@ const extractInfoFromPaymentMethod = (
     case "BPay":
       return {
         logo: bancomatPayLogo,
-        title: paymentMethod.kind,
+        title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: "bpay bottom sheet title",
         bottomSheetBody: ArrivingBottomSheetBody()
