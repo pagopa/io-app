@@ -92,11 +92,11 @@ const loadingOpacity = 0.9;
 // for long content markdown computed height should be not enough
 const extraMarkdownBodyHeight = 20;
 
-// TODO get the tos footer from props
 const getTosFooter = (
   maybeBonusTos: Option<string>,
   maybeRegulationUrl: Option<{ url: string; name: string }>,
-  handleModalPress: (tos: string) => void
+  handleModalPress: (tos: string) => void,
+  ctaText: string
 ) =>
   maybeBonusTos.fold(null, bT =>
     maybeRegulationUrl.fold(
@@ -133,6 +133,7 @@ const getTosFooter = (
             extraBodyHeight={extraMarkdownBodyHeight}
           >
             {I18n.t("bonus.termsAndConditionFooter", {
+              ctaText,
               regulationLink: rU.url,
               tosUrl: bT
             })}
@@ -262,7 +263,12 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           </Markdown>
           <View spacer={true} extralarge={true} />
           {isMarkdownLoaded && renderUrls()}
-          {getTosFooter(maybeBonusTos, maybeRegulationUrl, handleModalPress)}
+          {getTosFooter(
+            maybeBonusTos,
+            maybeRegulationUrl,
+            handleModalPress,
+            props.primaryCtaText
+          )}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
