@@ -245,7 +245,7 @@ export const runDeleteActivePaymentSaga = createStandardAction(
 
 // abort payment just before pay
 export const abortRunningPayment = createStandardAction(
-  "PAYMENT_RUN_ABORT_RUNNING_PAYMENT_SAGA"
+  "PAYMENT_ABORT_RUNNING_PAYMENT"
 )();
 
 //
