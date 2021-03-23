@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const FavouritePaymentMethodSwitch = (props: Props) => (
+export const FavoritePaymentMethodSwitch = (props: Props) => (
   <View style={styles.row}>
     <View style={styles.left}>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>

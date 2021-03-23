@@ -25,7 +25,7 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  favouriteWalletIdSelector,
+  favoriteWalletIdSelector,
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
@@ -40,7 +40,7 @@ import { getTitleFromCard } from "../../utils/paymentMethod";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { FavouritePaymentMethodSwitch } from "../../components/wallet/FavouriteMethodSwitch";
+import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -185,7 +185,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
-            <FavouritePaymentMethodSwitch
+            <FavoritePaymentMethodSwitch
               isLoading={
                 pot.isLoading(props.favouriteWallet) ||
                 pot.isUpdating(props.favouriteWallet)
@@ -214,7 +214,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  favouriteWallet: favouriteWalletIdSelector(state),
+  favouriteWallet: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state)
 });
