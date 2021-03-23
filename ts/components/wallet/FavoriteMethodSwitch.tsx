@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
+// this component represents the payment status as favorite and handle the user request to change it
 export const FavoritePaymentMethodSwitch = (props: Props) => (
   <View style={styles.row}>
     <View style={styles.left}>
