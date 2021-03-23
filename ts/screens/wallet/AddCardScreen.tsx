@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { isNone, Option, fromPredicate } from "fp-ts/lib/Option";
+import { isNone, Option, fromPredicate, isSome } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -147,6 +147,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
+  const inPayment = props.navigation.getParam("inPayment");
 
   const { present, dismiss } = useIOBottomSheet(
     <>
@@ -307,10 +308,12 @@ const AddCardScreen: React.FC<Props> = props => {
             </Col>
           </Grid>
 
-          <View spacer={true} />
-
-          <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
-
+          {!isSome(inPayment) && (
+            <>
+              <View spacer={true} />
+              <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+            </>
+          )}
           <View spacer />
 
           <Link onPress={openSupportedCardsPage}>
