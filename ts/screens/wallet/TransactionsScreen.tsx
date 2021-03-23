@@ -187,8 +187,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <FavoritePaymentMethodSwitch
               isLoading={
-                pot.isLoading(props.favouriteWallet) ||
-                pot.isUpdating(props.favouriteWallet)
+                pot.isLoading(props.favouriteWalletRequestStatus) ||
+                pot.isUpdating(props.favouriteWalletRequestStatus)
               }
               switchValue={pot.getOrElse(isFavorite, false)}
               onValueChange={v =>
@@ -214,7 +214,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  favouriteWallet: favoriteWalletIdSelector(state),
+  favouriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state)
 });

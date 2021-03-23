@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     paddingRight: 8
   },
   right: {
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    minWidth: 50
   }
 });
 
