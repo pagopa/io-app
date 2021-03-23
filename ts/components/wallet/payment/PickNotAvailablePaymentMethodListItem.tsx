@@ -6,7 +6,7 @@ import { ImageSourcePropType } from "react-native";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
-import { PaymentMethod } from "../../../types/pagopa";
+import { isCreditCard, PaymentMethod } from "../../../types/pagopa";
 import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
 import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
@@ -24,7 +24,7 @@ type Props = {
   paymentMethod: PaymentMethod;
 } & ReturnType<typeof mapStateToProps>;
 
-const BancomatBottomSheetBody = () => (
+const unacceptedMethodBottomSheetBody = () => (
   <>
     <View spacer={true} large={true} />
     <H4 weight={"Regular"}>
@@ -61,17 +61,7 @@ const ArrivingBottomSheetBody = () => (
     <View spacer={true} large={true} />
   </>
 );
-const AmexBottomSheetBody = () => (
-  <>
-    <View spacer={true} large={true} />
-    <H4 weight={"Regular"}>
-      {I18n.t(
-        "wallet.payWith.pickPaymentMethod.notAvailable.amex.bottomSheetDescription"
-      )}
-    </H4>
-    <View spacer={true} large={true} />
-  </>
-);
+
 const CoBadgeBottomSheetBody = () => (
   <>
     <View spacer={true} large={true} />
@@ -104,26 +94,16 @@ const extractInfoFromPaymentMethod = (
 ): PaymentMethodInformation => {
   switch (paymentMethod.kind) {
     case "CreditCard":
+      // The only paymentMethod of kind "CreditCard" that will be render in this component
+      // will be the co-badge cards.
       return {
         logo: getCardIconFromBrandLogo(paymentMethod.info),
         title: paymentMethod.caption,
         description: getBancomatOrCreditCardPickMethodDescription(
           paymentMethod
         ),
-        bottomSheetTitle:
-          paymentMethod.info.brand === "MAESTRO"
-            ? "arriving"
-            : paymentMethod.info.brand === "AMEX"
-            ? I18n.t(
-                "wallet.payWith.pickPaymentMethod.notAvailable.amex.bottomSheetTitle"
-              )
-            : "cobadge",
-        bottomSheetBody:
-          paymentMethod.info.brand === "MAESTRO"
-            ? ArrivingBottomSheetBody()
-            : paymentMethod.info.brand === "AMEX"
-            ? AmexBottomSheetBody()
-            : CoBadgeBottomSheetBody()
+        bottomSheetTitle: "cobadge",
+        bottomSheetBody: CoBadgeBottomSheetBody()
       };
     case "Bancomat":
       return {
@@ -135,7 +115,7 @@ const extractInfoFromPaymentMethod = (
         bottomSheetTitle: I18n.t(
           "wallet.payWith.pickPaymentMethod.notAvailable.bancomat.bottomSheetTitle"
         ),
-        bottomSheetBody: BancomatBottomSheetBody()
+        bottomSheetBody: unacceptedMethodBottomSheetBody()
       };
     case "BPay":
       return {

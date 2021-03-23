@@ -25,7 +25,6 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -65,8 +64,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.payWith.contextualHelpContent"
 };
 
-const amexPaymentTreshold = 100000; // Eurocents
-
 const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   <FooterWithButtons
     type={"TwoButtonsInlineThird"}
@@ -81,16 +78,8 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
-    "verifica"
-  );
-
-  const payableWallets = props.payableWallets(
-    verifica.importoSingoloVersamento
-  );
-  const notPayableWallets = props.notPayableWallets(
-    verifica.importoSingoloVersamento
-  );
+  const payableWallets = props.payableWallets();
+  const notPayableWallets = props.notPayableWallets();
   return (
     <BaseScreenComponent
       goBack={true}
@@ -188,29 +177,12 @@ const mapStateToProps = (state: GlobalState) => {
     .concat(visibleBPay)
     .concat(visibleSatispay);
 
-  const exceedsAmexLimit = (amount: ImportoEuroCents) =>
-    amount >= amexPaymentTreshold;
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
-    // only the cards that can pay on IO (eg. Maestro is a not valid credit card).
-    // Furthermore we must filter also the AMEX card if the amount of the payment
-    // is greater or equal to amexPaymentTreshold
-    payableWallets: (amount: ImportoEuroCents) =>
-      visibleWallets.filter(
-        vPW =>
-          canMethodPay(vPW) &&
-          ((vPW.kind === "CreditCard" && vPW.info?.brand !== "AMEX") ||
-            !exceedsAmexLimit(amount))
-      ),
-    notPayableWallets: (amount: ImportoEuroCents) =>
-      visibleWallets.filter(
-        vPW =>
-          !canMethodPay(vPW) ||
-          (vPW.kind === "CreditCard" &&
-            vPW.info?.brand === "AMEX" &&
-            exceedsAmexLimit(amount))
-      ),
+    // only the cards that can pay on IO.
+    payableWallets: () => visibleWallets.filter(vPW => canMethodPay(vPW)),
+    notPayableWallets: () => visibleWallets.filter(vPW => !canMethodPay(vPW)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
