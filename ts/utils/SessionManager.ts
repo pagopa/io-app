@@ -2,12 +2,13 @@
 
 import { Mutex } from "async-mutex";
 import { Function1, Lazy } from "fp-ts/lib/function";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { delayAsync } from "./timer";
 
+const waitRetry = 8000 as Millisecond;
 /**
  * Provides the logic for caching and updating a session token by wrapping
  * concurrent functions that need the token and may detect expired tokens.
@@ -16,6 +17,7 @@ export class SessionManager<T> {
   private token?: T;
   private isSessionEnabled: boolean = true;
   private mutex = new Mutex();
+  private isRefreshing: boolean = false;
 
   /**
    * Critical section:
@@ -32,9 +34,10 @@ export class SessionManager<T> {
    *    again (depending on the state of their retry policy) and the flow starts
    *    again from (1)
    */
-  private exclusiveTokenUpdate = async () => {
+  private exclusiveTokenUpdate = async (forceUpdate = false) => {
+    this.isRefreshing = this.token === undefined;
     await this.mutex.runExclusive(async () => {
-      if (this.token === undefined) {
+      if (this.token === undefined || forceUpdate) {
         // token is not available, attempt to fetch a new token
         try {
           this.token = (await this.refreshSession()).toUndefined();
@@ -44,6 +47,7 @@ export class SessionManager<T> {
           this.token = undefined;
         }
       }
+      this.isRefreshing = false;
     });
     return this.token;
   };
@@ -73,13 +77,30 @@ export class SessionManager<T> {
 
   constructor(
     private refreshSession: () => Promise<Option<T>>,
-    private maxRetries: number = 3
+    private maxRetries: number = 0
   ) {}
 
   /**
-   * Returns the current token, is there's one
+   * Returns the current token, if there's one
    */
   public get = () => fromNullable(this.token);
+
+  /**
+   * Returns a new token
+   */
+  public getNewToken = async (): Promise<Option<T>> => {
+    let count = 0;
+    while (count <= this.maxRetries) {
+      count += 1;
+      await this.exclusiveTokenUpdate(true);
+      if (this.token === undefined) {
+        await delayAsync(waitRetry);
+        continue;
+      }
+      return fromNullable(this.token);
+    }
+    return none;
+  };
 
   /**
    * Returns a new function, with the same params of the provided function but
@@ -97,14 +118,18 @@ export class SessionManager<T> {
           );
         }
         count += 1;
+        // FIXME remove this condition after cashback emergency https://www.pivotaltracker.com/story/show/176051000
+        // this ensures that only a request at time could be done (if token is undefined)
+        // ex: if a request is running (waiting for acquiring session token) no other requests will be processed
+        // all other requests will fail
+        if (this.isRefreshing) {
+          throw new Error("max-retries");
+        }
         await this.exclusiveTokenUpdate();
         if (this.token === undefined) {
           // if the token is still undefined, the refresh failed, try again
           // with a random delay to prevent the dogpile effect
-          const waitSeconds = (Math.ceil(Math.random() * 100) +
-            50) as Millisecond;
-
-          await delayAsync(waitSeconds);
+          await delayAsync(waitRetry);
           // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
           continue;
         }

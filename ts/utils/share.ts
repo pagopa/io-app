@@ -5,7 +5,7 @@ import Share from "react-native-share";
 import { hasAndroidPermission } from "./permission";
 
 /**
- * share an url see https://react-native-community.github.io/react-native-share/docs/share-open#supported-options
+ * share an url see https://react-native-share.github.io/react-native-share/docs/share-open#supported-options
  * @param url
  * @param message option string to attach as a text with shared file
  */

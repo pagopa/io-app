@@ -7,7 +7,7 @@ import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL = "https://assets.cdn.io.italia.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -28,6 +28,9 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
+
+// Default number of workers to fetch service.
+const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
@@ -57,6 +60,9 @@ export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
+
+// CGN Feature Flag
+export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
@@ -89,6 +95,10 @@ export const totMessageFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
+export const totServiceFetchWorkers = t.Integer.decode(
+  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
+).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
+
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
 
@@ -98,3 +108,7 @@ export const shufflePinPadOnPayment =
 export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
+
+export const localServicesWebUrl: string = t.string
+  .decode(Config.LOCAL_SERVICE_WEB_URL)
+  .getOrElse("https://io.italia.it");

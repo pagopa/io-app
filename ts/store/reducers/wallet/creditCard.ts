@@ -2,21 +2,21 @@ import { getType } from "typesafe-actions";
 import sha from "sha.js";
 import { fromNullable } from "fp-ts/lib/Option";
 import { index, take, takeEnd } from "fp-ts/lib/Array";
+import { createSelector } from "reselect";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRedirectionUrls,
-  CreditCardFailure,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationSuccess
+  creditCardPaymentNavigationUrls,
+  CreditCardFailure
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
-import { TransactionResponse } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
+import { GlobalState } from "../types";
+import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
 
-type CreditCardInsertion = {
+export type CreditCardInsertion = {
   startDate: Date;
   hashedPan: string; // hashed PAN
   blurredPan: string; // anonymized PAN
@@ -28,10 +28,9 @@ type CreditCardInsertion = {
     brand?: string;
   };
   failureReason?: CreditCardFailure;
-  verificationFailureReason?: string;
-  verificationTransaction?: TransactionResponse;
-  urlHistory3ds?: ReadonlyArray<string>;
+  payNavigationUrls?: ReadonlyArray<string>;
   onboardingComplete: boolean;
+  outcomeCode?: string;
 };
 
 // The state is modeled as a stack on which the last element is added at the head
@@ -55,7 +54,7 @@ const trimState = (state: CreditCardInsertionState) =>
 const updateStateHead = (
   state: CreditCardInsertionState,
   updaterFn: (item: CreditCardInsertion) => CreditCardInsertion
-) =>
+): CreditCardInsertionState =>
   index<CreditCardInsertion>(0, [...state])
     .map(updaterFn)
     .fold(state, updateItem => {
@@ -123,28 +122,21 @@ const reducer = (
         ...attempt,
         failureReason: action.payload
       }));
-    case getType(creditCardCheckout3dsRedirectionUrls):
+    case getType(creditCardPaymentNavigationUrls):
       return updateStateHead(state, attempt => ({
         ...attempt,
-        urlHistory3ds: action.payload
-      }));
-
-    case getType(payCreditCardVerificationSuccess):
-      return updateStateHead(state, attempt => ({
-        ...attempt,
-        verificationTransaction: action.payload
-      }));
-
-    case getType(payCreditCardVerificationFailure):
-      return updateStateHead(state, attempt => ({
-        ...attempt,
-        verificationFailureReason: action.payload.message ?? "n/a"
+        payNavigationUrls: action.payload
       }));
 
     case getType(addWalletNewCreditCardSuccess):
       return updateStateHead(state, attempt => ({
         ...attempt,
         onboardingComplete: true
+      }));
+    case getType(addCreditCardOutcomeCode):
+      return updateStateHead(state, attempt => ({
+        ...attempt,
+        outcomeCode: action.payload.getOrElse("n/a")
       }));
     case getType(clearCache): {
       return INITIAL_STATE;
@@ -156,3 +148,12 @@ const reducer = (
 };
 
 export default reducer;
+
+const creditCardAttempts = (state: GlobalState) =>
+  state.payments.creditCardInsertion;
+
+// return the list of credit card onboarding attempts
+export const creditCardAttemptsSelector = createSelector(
+  creditCardAttempts,
+  (ca: CreditCardInsertionState): CreditCardInsertionState => ca
+);

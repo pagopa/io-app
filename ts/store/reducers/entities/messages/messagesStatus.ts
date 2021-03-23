@@ -7,9 +7,10 @@ import {
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
-import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
+import { isTestEnv } from "../../../../utils/environment";
 
 export type MessageStatus = {
   isRead: boolean;
@@ -86,7 +87,8 @@ const reducer = (
         },
         {} as MessagesStatus
       );
-    case getType(clearCache):
+    // clear state if the current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
     default:
       return state;
@@ -170,4 +172,8 @@ export const isMessageRead = (
     .map(ms => ms.isRead)
     .getOrElse(false);
 
+// to keep solid code encapsulation
+export const testableMessageStatusReducer = isTestEnv
+  ? { initial_state: INITIAL_STATE }
+  : undefined;
 export default reducer;

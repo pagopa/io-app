@@ -9,11 +9,10 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { LoadPansError } from "../../saga/networking";
-import { searchUserPans } from "../actions";
-import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import { PansResponse, searchUserPans } from "../actions";
+import { NetworkError } from "../../../../../../utils/errors";
 
-export type Pans = RemoteValue<ReadonlyArray<Card>, LoadPansError>;
+export type Pans = RemoteValue<PansResponse, NetworkError>;
 
 const pansReducer = (state: Pans = remoteUndefined, action: Action): Pans => {
   switch (action.type) {

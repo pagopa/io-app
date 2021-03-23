@@ -5,8 +5,9 @@ import {
 } from "typesafe-actions";
 import { AbiListResponse } from "../../../../../../../definitions/pagopa/walletv2/AbiListResponse";
 import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
-import { PatchedWalletV2 } from "../../../../../../types/pagopa";
-import { LoadPansError } from "../../saga/networking";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
+import { Message } from "../../../../../../../definitions/pagopa/walletv2/Message";
+import { NetworkError } from "../../../../../../utils/errors";
 
 /**
  * Request the list of all abi
@@ -17,6 +18,11 @@ export const loadAbi = createAsyncAction(
   "WALLET_LOAD_ABI_FAILURE"
 )<void, AbiListResponse, Error>();
 
+// pans response contains pans (list of card) and messages (info services data provider)
+export type PansResponse = {
+  cards: ReadonlyArray<Card>;
+  messages: ReadonlyArray<Message>;
+};
 /**
  * search for user's bancomat pans
  */
@@ -24,7 +30,7 @@ export const searchUserPans = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_LOAD_PANS_FAILURE"
-)<string | undefined, ReadonlyArray<Card>, LoadPansError>();
+)<string | undefined, PansResponse, NetworkError>();
 
 /**
  * The user select the current bancomat to add to the wallet
@@ -33,7 +39,7 @@ export const addBancomatToWallet = createAsyncAction(
   "WALLET_ONBOARDING_BANCOMAT_ADD_REQUEST",
   "WALLET_ONBOARDING_BANCOMAT_ADD_SUCCESS",
   "WALLET_ONBOARDING_BANCOMAT_ADD_FAILURE"
-)<Card, PatchedWalletV2, Error>();
+)<Card, RawBancomatPaymentMethod, Error>();
 
 /**
  * The user choose to start the workflow to add a new bancomat to the wallet
@@ -58,6 +64,13 @@ export const walletAddBancomatCancel = createStandardAction(
 )<void>();
 
 /**
+ * The workflow fails
+ */
+export const walletAddBancomatFailure = createStandardAction(
+  "WALLET_ONBOARDING_BANCOMAT_FAILURE"
+)<string>();
+
+/**
  * The user choose `back` from the first screen
  */
 export const walletAddBancomatBack = createStandardAction(
@@ -71,4 +84,5 @@ export type AbiActions =
   | ActionType<typeof walletAddBancomatStart>
   | ActionType<typeof walletAddBancomatCompleted>
   | ActionType<typeof walletAddBancomatCancel>
+  | ActionType<typeof walletAddBancomatFailure>
   | ActionType<typeof walletAddBancomatBack>;

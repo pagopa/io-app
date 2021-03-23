@@ -10,6 +10,7 @@ import {
   toSome
 } from "../../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { bpdDeleteUserFromProgram } from "../../actions/onboarding";
 import { AwardPeriodId } from "../../actions/periods";
 import {
   BpdTransaction,
@@ -37,6 +38,8 @@ export const bpdTransactionsReducer = (
       );
     case getType(bpdTransactionsLoad.failure):
       return toError(action.payload.awardPeriodId, state, action.payload.error);
+    case getType(bpdDeleteUserFromProgram.success):
+      return {};
   }
 
   return state;

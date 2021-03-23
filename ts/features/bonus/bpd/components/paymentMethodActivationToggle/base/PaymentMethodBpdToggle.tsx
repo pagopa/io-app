@@ -1,15 +1,14 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
-import { useContext, useEffect, useRef } from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { NavigationContext } from "react-navigation";
+import { useEffect, useRef } from "react";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Body } from "../../../../../../components/core/typography/Body";
+import { fetchPaymentManagerLongTimeout } from "../../../../../../config";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { useNavigationContext } from "../../../../../../utils/hooks/useOnFocus";
 import {
   bpdPaymentMethodActivation,
   BpdPaymentMethodActivation,
@@ -18,7 +17,13 @@ import {
   HPan
 } from "../../../store/actions/paymentMethods";
 import { bpdPaymentMethodValueSelector } from "../../../store/reducers/details/paymentMethods";
+import { useChangeActivationConfirmationBottomSheet } from "../bottomsheet/BpdChangeActivationConfirmationScreen";
+import {
+  NotActivableType,
+  useNotActivableInformationBottomSheet
+} from "../bottomsheet/BpdNotActivableInformation";
 import { BpdToggle } from "./BpdToggle";
+import { PaymentMethodRepresentationComponent } from "./PaymentMethodRepresentationComponent";
 
 // TODO: accept only hpan, read all the other information with a selector from payment methods
 export type BpdToggleProps = {
@@ -55,7 +60,6 @@ const styles = StyleSheet.create({
   leftSection: { flexDirection: "row", flex: 1 }
 });
 
-const retryTimeout = 5000 as Millisecond;
 /**
  * This custom hook handles the load of the initial state and the retry in case of error.
  * TODO: refactor with  {@link useLoadPotValue}
@@ -64,7 +68,7 @@ const retryTimeout = 5000 as Millisecond;
  */
 const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigationContext();
   const retry = () => {
     timerRetry.current = undefined;
     props.loadActualValue(props.hPan);
@@ -92,7 +96,7 @@ const useInitialValue = (props: Props) => {
     ) {
       // If the pot is NoneError, the navigation focus is on the element
       // and no other retry are scheduled
-      timerRetry.current = setTimeout(retry, retryTimeout);
+      timerRetry.current = setTimeout(retry, fetchPaymentManagerLongTimeout);
     }
   }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
 
@@ -111,7 +115,7 @@ const loading: GraphicalValue = { state: "loading", value: undefined };
  * Calculate the graphical state based on the pot possible states
  * @param potBpdActivation
  */
-const calculateGraphicalState = (
+export const calculateBpdToggleGraphicalState = (
   potBpdActivation: pot.Pot<BpdPaymentMethodActivation, Error>
 ): GraphicalValue =>
   pot.fold<BpdPaymentMethodActivation, Error, GraphicalValue>(
@@ -142,26 +146,36 @@ const calculateGraphicalState = (
 const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   // Calculate the graphical state based on the potActivation and capability
   const graphicalState: GraphicalValue = props.hasBpdCapability
-    ? calculateGraphicalState(props.bpdPotActivation)
+    ? calculateBpdToggleGraphicalState(props.bpdPotActivation)
     : { state: "ready", value: "notActivable" };
   if (props.hasBpdCapability) {
     // trigger the initial loading / retry only if the method has the bpd capability
     useInitialValue(props);
   }
 
+  // a simplification because the onPress is dispatched only when is not activable / compatible
+  const notActivableType: NotActivableType = !props.hasBpdCapability
+    ? "NotCompatible"
+    : "NotActivable";
+
+  const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
+    .present;
+
+  const showExplanation = useNotActivableInformationBottomSheet(props).present;
+
   return (
     <>
       <View style={styles.row}>
-        <View style={styles.leftSection}>
-          <Image source={props.icon} style={styles.cardIcon} />
-          <View hspacer={true} />
-          <Body>{props.caption}</Body>
-        </View>
+        <PaymentMethodRepresentationComponent
+          icon={props.icon}
+          caption={props.caption}
+        />
         <BpdToggle
           graphicalValue={graphicalState}
-          // TODO: ask for user confirm when disable the bpd on payment method
-          onValueChanged={b => props.updateValue(props.hPan, b)}
-          // TODO: when onPress -> show bottomsheet explaining why the bpd cannot be activated
+          onValueChanged={newVal =>
+            askConfirmation(newVal, () => props.updateValue(props.hPan, newVal))
+          }
+          onPress={() => showExplanation(notActivableType)}
         />
       </View>
     </>

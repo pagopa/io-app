@@ -1,3 +1,7 @@
+import { left } from "fp-ts/lib/Either";
+import { fromNullable } from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -5,13 +9,22 @@ import {
   MapResponseType,
   RequestHeaderProducer
 } from "italia-ts-commons/lib/requests";
-import * as t from "io-ts";
-import * as r from "italia-ts-commons/lib/requests";
-import { fromNullable } from "fp-ts/lib/Option";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { Iban } from "../../../../../definitions/backend/Iban";
+import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+
+import {
+  findAllUsingGETDefaultDecoder,
+  FindAllUsingGETT
+} from "../../../../../definitions/bpd/award_periods/requestTypes";
+import {
+  CitizenPatchDTO,
+  PayoffInstrTypeEnum
+} from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
 import {
   enrollmentDecoder,
   EnrollmentT,
+  findRankingUsingGETDefaultDecoder,
+  FindRankingUsingGETT,
   findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
@@ -22,23 +35,14 @@ import {
   findUsingGETDefaultDecoder,
   FindUsingGETT as FindPaymentUsingGETT
 } from "../../../../../definitions/bpd/payment/requestTypes";
-import { Iban } from "../../../../../definitions/backend/Iban";
-
-import {
-  findAllUsingGETDefaultDecoder,
-  FindAllUsingGETT
-} from "../../../../../definitions/bpd/award_periods/requestTypes";
 import {
   findWinningTransactionsUsingGETDecoder,
   getTotalScoreUsingGETDefaultDecoder,
   GetTotalScoreUsingGETT
 } from "../../../../../definitions/bpd/winning_transactions/requestTypes";
+import { fetchPaymentManagerLongTimeout } from "../../../../config";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import {
-  CitizenPatchDTO,
-  PayoffInstrTypeEnum
-} from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
 import { PatchedCitizenResource } from "./patchedTypes";
 
 const headersProducers = <
@@ -89,7 +93,6 @@ const deleteResponseDecoders = r.composeResponseDecoders(
 );
 
 // these responses code/codec are built from api usage and not from API spec
-// see https://bpd-dev.portal.azure-api.net/docs/services/bpd-ms-citizen/operations/deleteUsingDELETE
 type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
   {
     readonly Authorization: string;
@@ -118,6 +121,15 @@ const findPayment: FindPaymentUsingGETT = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDefaultDecoder()
+};
+
+/* citizen ranking (super cashback) */
+const getRanking: FindRankingUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/citizen/ranking`,
+  query: (_: { awardPeriodId?: string }) => ({}),
+  headers: headersProducers(),
+  response_decoder: findRankingUsingGETDefaultDecoder()
 };
 
 const enrollPayment: EnrollmentPaymentInstrumentIOUsingPUTT = {
@@ -232,19 +244,23 @@ const updatePaymentMethodT = (
   token: string,
   payload: CitizenPatchDTO,
   headers: Record<string, string>
-): (() => Promise<t.Validation<finalType>>) => () =>
-  new Promise((res, rej) => {
-    options
-      .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
-        method: "patch",
-        headers: { ...headers, Authorization: `Bearer ${token}` },
-        body: JSON.stringify(payload)
-      })
-      .then(response => {
-        patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
-      })
-      .catch(rej);
+): (() => Promise<t.Validation<finalType>>) => async () => {
+  const response = await options.fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
+    method: "patch",
+    headers: { ...headers, Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload)
   });
+  const decode = await patchIbanDecoders(PatchIban)(response);
+  return (
+    decode ??
+    left([
+      {
+        context: [],
+        value: response
+      }
+    ])
+  );
+};
 
 type Options = {
   baseUrl: string;
@@ -254,7 +270,10 @@ type Options = {
 export function BackendBpdClient(
   baseUrl: string,
   token: string,
-  fetchApi: typeof fetch = defaultRetryingFetch()
+  fetchApi: typeof fetch = defaultRetryingFetch(
+    fetchPaymentManagerLongTimeout,
+    0
+  )
 ) {
   const options: Options = {
     baseUrl,
@@ -316,6 +335,7 @@ export function BackendBpdClient(
     ),
     winningTransactions: withBearerToken(
       createFetchRequestForApi(winningTransactions, options)
-    )
+    ),
+    getRanking: withBearerToken(createFetchRequestForApi(getRanking, options))
   };
 }

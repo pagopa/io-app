@@ -40,7 +40,7 @@ export const Overlay: React.SFC<Props> = props => {
     backgroundColor = DEFAULT_BACKGROUND_COLOR
   } = props;
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={"overlayComponent"}>
       {props.foreground && (
         <View
           style={[

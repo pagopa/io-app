@@ -17,7 +17,7 @@ I18n.translations = {
 
 export const translations = Object.keys(I18n.translations);
 
-export const availableTransations: ReadonlyArray<locales.Locales> = translations
+export const availableTranslations: ReadonlyArray<locales.Locales> = translations
   .map(k => k as locales.Locales)
   .sort();
 
@@ -28,7 +28,15 @@ export function setLocale(lang: locales.Locales) {
 
 type TranslateT = {
   // allow unsafe translations only when a defaultValue gets passed
-  (scope: string, options: { defaultValue: string }): string;
+  // allows the use of implicit pluralization of translations, use count as numeral variable
+  // how-to use pluralization explained here https://github.com/pagopa/io-app/pull/2366
+  (
+    scope: string,
+    options: { defaultValue: string; count?: number } & Omit<
+      I18n.TranslateOptions,
+      "defaultValue"
+    >
+  ): string;
   // or else, the lookup must be safe
   (scope: locales.TranslationKeys, options?: I18n.TranslateOptions): string;
 };
@@ -47,6 +55,7 @@ interface TypedI18n {
   readonly currentLocale: () => locales.Locales;
   readonly toNumber: typeof I18n.toNumber;
   readonly toCurrency: typeof I18n.toCurrency;
+  readonly strftime: typeof I18n.strftime;
 }
 
 const TypedI18n = I18n as TypedI18n;

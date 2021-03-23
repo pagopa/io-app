@@ -1,11 +1,18 @@
-import { call, put } from "redux-saga/effects";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
-import { SagaCallReturnType } from "../../../../../../types/utils";
+import { call, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { ContentClient } from "../../../../../../api/content";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
+import {
+  isRawBancomat,
+  PaymentManagerToken
+} from "../../../../../../types/pagopa";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getGenericError } from "../../../../../../utils/errors";
+import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
-import { PaymentManagerToken } from "../../../../../../types/pagopa";
+import { convertWalletV2toWalletV1 } from "../../../../../../utils/walletv2";
 import {
   addBancomatToWallet,
   loadAbi,
@@ -14,13 +21,11 @@ import {
 
 // load all bancomat abi
 export function* handleLoadAbi(
-  getAbi: ReturnType<typeof PaymentManagerClient>["getAbi"],
-  sessionManager: SessionManager<PaymentManagerToken>
+  getAbi: ReturnType<typeof ContentClient>["getAbiList"]
 ) {
   try {
-    const getAbiWithRefresh = sessionManager.withRefresh(getAbi);
-    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbiWithRefresh> = yield call(
-      getAbiWithRefresh
+    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> = yield call(
+      getAbi
     );
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {
@@ -31,18 +36,12 @@ export function* handleLoadAbi(
         );
       }
     } else {
-      throw new Error(readableReport(getAbiWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(getAbiWithRefreshResult.value));
     }
   } catch (e) {
     yield put(loadAbi.failure(e));
   }
 }
-
-export type LoadPansError = TimeoutError | GenericError;
-
-type TimeoutError = { readonly kind: "timeout" };
-
-type GenericError = { kind: "generic"; value: Error };
 
 // get user's pans
 export function* handleLoadPans(
@@ -60,29 +59,33 @@ export function* handleLoadPans(
     );
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
+        const response = getPansWithRefreshResult.value.value.data;
         return yield put(
           searchUserPans.success(
-            fromNullable(
-              getPansWithRefreshResult.value.value.data?.data
-            ).getOrElse([])
+            fromNullable({
+              cards: response?.data ?? [],
+              messages: response?.messages ?? []
+            }).getOrElse({ cards: [], messages: [] })
           )
         );
       } else {
         return yield put(
-          searchUserPans.failure({
-            kind: "generic",
-            value: new Error(
-              `response status ${getPansWithRefreshResult.value.status}`
+          searchUserPans.failure(
+            getGenericError(
+              new Error(
+                `response status ${getPansWithRefreshResult.value.status}`
+              )
             )
-          })
+          )
         );
       }
     } else {
       return yield put(
-        searchUserPans.failure({
-          kind: "generic",
-          value: new Error(readableReport(getPansWithRefreshResult.value))
-        })
+        searchUserPans.failure(
+          getGenericError(
+            new Error(readablePrivacyReport(getPansWithRefreshResult.value))
+          )
+        )
       );
     }
   } catch (e) {
@@ -90,11 +93,9 @@ export function* handleLoadPans(
       return yield put(searchUserPans.failure({ kind: "timeout" }));
     }
     if (typeof e === "string") {
-      return yield put(
-        searchUserPans.failure({ kind: "generic", value: new Error(e) })
-      );
+      return yield put(searchUserPans.failure(getGenericError(new Error(e))));
     }
-    return yield put(searchUserPans.failure({ kind: "generic", value: e }));
+    return yield put(searchUserPans.failure(getGenericError(e)));
   }
 }
 
@@ -107,22 +108,31 @@ export function* handleAddPan(
   try {
     const addPansWithRefresh = sessionManager.withRefresh(
       // add a card as an array of one element
-      addPans({ data: [action.payload] })
+      addPans({ data: { data: [action.payload] } })
     );
     const addPansWithRefreshResult: SagaCallReturnType<typeof addPansWithRefresh> = yield call(
       addPansWithRefresh
     );
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
-        const wallets = addPansWithRefreshResult.value.value.data ?? [];
+        const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(
+          convertWalletV2toWalletV1
+        );
         // search for the added bancomat.
         const maybeWallet = fromNullable(
-          wallets.find(w => w.info.hashPan === action.payload.hpan)
+          wallets.find(
+            w =>
+              w.paymentMethod &&
+              getPaymentMethodHash(w.paymentMethod) === action.payload.hpan
+          )
         );
-        if (maybeWallet.isSome()) {
+        if (
+          maybeWallet.isSome() &&
+          isRawBancomat(maybeWallet.value.paymentMethod)
+        ) {
           yield put(
             // success
-            addBancomatToWallet.success(maybeWallet.value)
+            addBancomatToWallet.success(maybeWallet.value.paymentMethod)
           );
         } else {
           throw new Error(
@@ -135,7 +145,7 @@ export function* handleAddPan(
         );
       }
     } else {
-      throw new Error(readableReport(addPansWithRefreshResult.value));
+      throw new Error(readablePrivacyReport(addPansWithRefreshResult.value));
     }
   } catch (e) {
     yield put(addBancomatToWallet.failure(e));

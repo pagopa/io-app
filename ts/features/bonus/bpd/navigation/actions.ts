@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import { BpdPeriod } from "../store/actions/periods";
+import { BpdPeriodWithInfo } from "../store/reducers/details/periods";
 import BPD_ROUTES from "./routes";
 
 export const navigateToBpdOnboardingLoadActivationStatus = () =>
@@ -32,21 +32,20 @@ export const navigateToBpdOnboardingNoPaymentMethods = () =>
     routeName: BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS
   });
 
+export const navigateToBpdOnboardingErrorPaymentMethods = () =>
+  NavigationActions.navigate({
+    routeName: BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS
+  });
+
 // IBAN
 export const navigateToBpdIbanInsertion = () =>
   NavigationActions.navigate({
     routeName: BPD_ROUTES.IBAN
   });
 
-// TODO: remove after the introduction of the bpd detail screen
-export const navigateToBpdTestScreen = () =>
-  NavigationActions.navigate({
-    routeName: BPD_ROUTES.TEST
-  });
-
 // Details
 
-export const navigateToBpdDetails = (specificPeriod?: BpdPeriod) =>
+export const navigateToBpdDetails = (specificPeriod?: BpdPeriodWithInfo) =>
   NavigationActions.navigate({
     routeName: BPD_ROUTES.DETAILS,
     params: { specificPeriod }

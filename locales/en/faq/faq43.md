@@ -1,1 +1,1 @@
-The Card Verification Code, CVC or CVV (Card Verification Value), is a security code present on the credit or debit card. On Visa, MasterCard and other cards, the code consists of three digits located on the back of the card, in the signature area.
+It's a three-digit code, named CVV or CVS, placed on the back of your card. On AMEX cards, the code (CID) has 4 digits and it's printed on the front.

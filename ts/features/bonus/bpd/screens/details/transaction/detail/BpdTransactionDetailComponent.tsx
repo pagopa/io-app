@@ -9,12 +9,18 @@ import { Monospace } from "../../../../../../../components/core/typography/Monos
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
-import { format } from "../../../../../../../utils/dates";
+import { localeDateFormat } from "../../../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
-type Props = { transaction: EnhancedBpdTransaction };
+export type BpdTransactionDetailRepresentation = EnhancedBpdTransaction & {
+  // false if the transaction is not valid for the cashback (eg: the user has
+  // already reached the maximum cashback value for the period )
+  validForCashback: boolean;
+};
+
+type Props = { transaction: BpdTransactionDetailRepresentation };
 
 const styles = StyleSheet.create({
   image: { width: 48, height: 30 },
@@ -30,8 +36,11 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderColor: IOColors.red,
     borderWidth: 1,
-    top: -10,
     height: 25
+  },
+  copyText: {
+    flex: 1,
+    paddingRight: 16
   }
 });
 
@@ -54,60 +63,86 @@ const CancelBadge = () => (
   </Badge>
 );
 
-const Table = (props: Props) => (
-  <View>
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("payment.details.info.dateAndTime")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {format(props.transaction.trxDate, "DD MMM YYYY, HH:mm")}
-      </H4>
-    </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {props.transaction.circuitType}
-      </H4>
-    </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
-      </H5>
+const Table = (props: Props) => {
+  const isMidNight =
+    props.transaction.trxDate.getHours() +
+      props.transaction.trxDate.getMinutes() +
+      props.transaction.trxDate.getSeconds() ===
+    0;
+  return (
+    <View>
       <View style={styles.rowId}>
-        {props.transaction.amount < 0 && (
-          <>
-            <CancelBadge />
-            <View hspacer={true} />
-          </>
-        )}
+        <H5 weight={"Regular"} color={"bluegrey"} testID="dateLabel">
+          {isMidNight
+            ? I18n.t("payment.details.info.onlyDate")
+            : I18n.t("payment.details.info.dateAndTime")}
+        </H5>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"} testID="dateValue">
+          {isMidNight
+            ? localeDateFormat(
+                props.transaction.trxDate,
+                I18n.t(
+                  "global.dateFormats.fullFormatShortMonthLiteralWithoutTime"
+                )
+              )
+            : localeDateFormat(
+                props.transaction.trxDate,
+                I18n.t("global.dateFormats.fullFormatShortMonthLiteralWithTime")
+              )}
+        </H4>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
+        </H5>
         <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-          {formatNumberAmount(props.transaction.amount, true)}
+          {props.transaction.circuitType === "Unknown"
+            ? I18n.t("global.unknown")
+            : props.transaction.circuitType}
+        </H4>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
+        </H5>
+        <View style={styles.rowId}>
+          {props.transaction.amount < 0 && (
+            <>
+              <CancelBadge />
+              <View hspacer={true} />
+            </>
+          )}
+          <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+            {formatNumberAmount(props.transaction.amount, true)}
+          </H4>
+        </View>
+      </View>
+      <View spacer={true} small={true} />
+      <View style={styles.rowId}>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
+        </H5>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+          {formatNumberAmount(props.transaction.cashback, true)}
         </H4>
       </View>
     </View>
-    <View spacer={true} small={true} />
-    <View style={styles.rowId}>
-      <H5 weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
-      </H5>
-      <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-        {formatNumberAmount(props.transaction.cashback, true)}
-      </H4>
-    </View>
-  </View>
-);
+  );
+};
 
 const IdBlock = (props: IdBlockProps) => (
   <View>
     <H5 weight={"Regular"}>{props.title}</H5>
     <View style={styles.rowId}>
-      <Monospace weight={"SemiBold"}>{props.value}</Monospace>
-      <CopyButtonComponent textToCopy={props.value} />
+      <Monospace weight={"SemiBold"} style={styles.copyText}>
+        {props.value}
+      </Monospace>
+      <CopyButtonComponent
+        textToCopy={props.value}
+        onPressWithGestureHandler={true}
+      />
     </View>
   </View>
 );

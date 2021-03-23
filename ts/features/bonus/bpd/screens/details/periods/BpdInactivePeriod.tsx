@@ -6,8 +6,8 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import IbanInformationComponent from "../components/iban/IbanInformationComponent";
 import BpdSummaryComponent from "../components/summary/BpdSummaryComponent";
-import UnsubscribeToBpd from "../components/UnsubscribeToBpd";
-import WalletPaymentMethodBpdList from "../components/WalletPaymentMethodBpdList";
+import UnsubscribeToBpd from "../components/unsubscribe/UnsubscribeToBpd";
+import WalletPaymentMethodBpdList from "../components/paymentMethod/WalletPaymentMethodBpdList";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

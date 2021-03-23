@@ -131,7 +131,7 @@ export default class NewServiceListItem extends React.PureComponent<
     return (
       <ListItemComponent
         title={serviceName}
-        hasBadge={!this.props.isRead}
+        hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
         onPress={onPress}
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}

@@ -19,6 +19,7 @@ type Props = Readonly<{
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
   subtitle?: string;
+  subtitleLink?: JSX.Element;
   dark?: boolean;
   dynamicHeight?: Animated.AnimatedInterpolation;
 }>;
@@ -79,7 +80,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { subtitle, dark, icon, iconFont } = this.props;
+    const { subtitle, subtitleLink, dark, icon, iconFont } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
@@ -100,6 +101,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           {subtitle && (
             <View style={styles.subheaderContainer}>
               <Text>{subtitle}</Text>
+              {subtitleLink}
               <View spacer={true} large={true} />
             </View>
           )}

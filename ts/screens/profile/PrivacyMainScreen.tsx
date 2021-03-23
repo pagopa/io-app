@@ -8,7 +8,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, AlertButton } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
@@ -23,6 +23,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
+  deleteUserDataProcessing,
   loadUserDataProcessing,
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
@@ -46,25 +47,15 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
 };
 
-const requestAlertTitle = {
-  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
-  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestTitle")
-};
-
-const requestAlertSubtitle = {
-  DOWNLOAD: undefined,
-  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestSubtitle")
-};
-
-const confirmAlertTitle = {
+const getRequestProcessingAlertTitle = () => ({
   DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
-};
+});
 
-const confirmAlertSubtitle = {
+const getRequestProcessingAlertSubtitle = () => ({
   DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
-  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
-};
+  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequestSubtitle")
+});
 
 class PrivacyMainScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -98,28 +89,41 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         });
         return;
       }
-      Alert.alert(requestAlertTitle[choice], requestAlertSubtitle[choice], [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel",
-          onPress: () => this.props.resetRequest(choice)
-        },
-        {
-          text: I18n.t("global.buttons.continue"),
-          style: "default",
-          onPress: () => {
-            this.props.upsertUserDataProcessing(choice);
-          }
-        }
-      ]);
     } else {
-      this.handleConfirmAlert(choice);
+      this.handleAlreadyProcessingAlert(choice);
     }
   };
 
   // show an alert to confirm the request submission
-  private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
-    Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
+  private handleAlreadyProcessingAlert = (
+    choice: UserDataProcessingChoiceEnum
+  ) => {
+    const alertButton: Array<AlertButton> =
+      choice === UserDataProcessingChoiceEnum.DOWNLOAD
+        ? []
+        : [
+            {
+              text: I18n.t(
+                "profile.main.privacy.removeAccount.alert.cta.return"
+              ),
+              style: "default"
+            },
+            {
+              text: I18n.t(
+                "profile.main.privacy.removeAccount.alert.cta.cancel"
+              ),
+              style: "cancel",
+              onPress: () => {
+                this.props.abortUserDataProcessing(choice);
+              }
+            }
+          ];
+
+    Alert.alert(
+      getRequestProcessingAlertTitle()[choice],
+      getRequestProcessingAlertSubtitle()[choice],
+      alertButton
+    );
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -159,7 +163,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
     );
   }
 
-  private canBeBadgeRendered = (
+  private isRequestProcessing = (
     choice: UserDataProcessingChoiceEnum
   ): boolean =>
     !pot.isError(this.props.userDataProcessing[choice]) &&
@@ -202,28 +206,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               useExtendedSubTitle={true}
             />
 
-            {/* Remove account - temporary disabled https://www.pivotaltracker.com/story/show/173418452
-
-            <ListItemComponent
-              title={I18n.t("profile.main.privacy.removeAccount.title")}
-              subTitle={I18n.t(
-                "profile.main.privacy.removeAccount.description"
-              )}
-              onPress={() =>
-                this.setState({ requestProcess: true }, () =>
-                  this.props.loadUserDataRequest(
-                    UserDataProcessingChoiceEnum.DELETE
-                  )
-                )
-              }
-              useExtendedSubTitle={true}
-              titleBadge={
-                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DELETE)
-                  ? I18n.t("profile.preferences.list.wip")
-                  : undefined
-              }
-            />
-            */}
             {/* Export your data */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}
@@ -237,7 +219,33 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               }
               useExtendedSubTitle={true}
               titleBadge={
-                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DOWNLOAD)
+                this.isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+                  ? I18n.t("profile.preferences.list.wip")
+                  : undefined
+              }
+            />
+            {/* Remove account */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.removeAccount.title")}
+              subTitle={I18n.t(
+                "profile.main.privacy.removeAccount.description"
+              )}
+              onPress={() => {
+                if (
+                  this.isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+                ) {
+                  this.handleUserDataRequestAlert(
+                    UserDataProcessingChoiceEnum.DELETE
+                  );
+                } else {
+                  this.props.navigation.navigate(
+                    ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
+                  );
+                }
+              }}
+              useExtendedSubTitle={true}
+              titleBadge={
+                this.isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
@@ -262,6 +270,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadUserDataProcessing.request(choice)),
   upsertUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(upsertUserDataProcessing.request(choice)),
+  abortUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(deleteUserDataProcessing.request(choice)),
   resetRequest: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(resetUserDataProcessingRequest(choice))
 });

@@ -5,9 +5,14 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BackendStatus } from "../../api/backendPublic";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
+import {
+  BackendStatus,
+  ConfigStatusKey,
+  SectionStatus,
+  SectionStatusKey
+} from "../../types/backendStatus";
 import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted
@@ -28,6 +33,28 @@ const initialBackendInfoState: BackendStatusState = {
 export const backendServicesStatusSelector = (
   state: GlobalState
 ): BackendStatusState => state.backendStatus;
+
+export const backendStatusSelector = (
+  state: GlobalState
+): Option<BackendStatus> => state.backendStatus.status;
+
+// return the section status for the given key. if it is not present, returns undefined
+export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
+  createSelector(backendStatusSelector, (backendStatus):
+    | SectionStatus
+    | undefined =>
+    backendStatus
+      .mapNullable(bs => bs.sections)
+      .fold(undefined, s => s[sectionStatusKey])
+  );
+
+// return the config status for the given key. if it is not present, returns undefined
+export const configSelector = (configStatusKey: ConfigStatusKey) =>
+  createSelector(backendStatusSelector, (backendStatus): boolean | undefined =>
+    backendStatus
+      .mapNullable(bs => bs.config)
+      .fold(undefined, c => c[configStatusKey])
+  );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;

@@ -35,6 +35,7 @@ export const BpdToggle: React.FunctionComponent<Props> = props => {
     case "update":
       return props.graphicalValue.value === "notActivable" ? (
         <IconFont
+          testID={"infoIconBpdPaymentActivationTestID"}
           name={"io-notice"}
           size={iconSize}
           color={IOColors.blue}
@@ -42,6 +43,7 @@ export const BpdToggle: React.FunctionComponent<Props> = props => {
         />
       ) : (
         <Switch
+          testID={"switchPaymentActivationTestID"}
           value={props.graphicalValue.value === "active"}
           disabled={props.graphicalValue.state === "update"}
           onValueChange={props.onValueChanged}

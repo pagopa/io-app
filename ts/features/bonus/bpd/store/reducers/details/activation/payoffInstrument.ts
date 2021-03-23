@@ -15,11 +15,12 @@ import { IbanStatus } from "../../../../saga/networking/patchCitizenIban";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdIbanInsertionResetScreen,
+  bpdIbanInsertionStart,
   bpdUpsertIban
 } from "../../../actions/iban";
 import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 
-type UpsertIBAN = {
+export type UpsertIBAN = {
   // the results of the upsert operation
   outcome: RemoteValue<IbanStatus, Error>;
   // the value the user is trying to enter
@@ -50,10 +51,12 @@ const paymentInstrumentValueReducer = (
       return remoteLoading;
     case getType(bpdLoadActivationStatus.success):
       return remoteReady(action.payload.payoffInstr);
+    // Update the effective value only if the upsert is OK or CANT_VERIFY
     case getType(bpdUpsertIban.success):
-      return action.payload.status === IbanStatus.NOT_VALID
-        ? state
-        : remoteReady(action.payload.payoffInstr);
+      return action.payload.status === IbanStatus.OK ||
+        action.payload.status === IbanStatus.CANT_VERIFY
+        ? remoteReady(action.payload.payoffInstr)
+        : state;
     case getType(bpdLoadActivationStatus.failure):
       return remoteError(action.payload);
   }
@@ -82,10 +85,7 @@ const paymentInstrumentUpsertReducer = (
       };
     case getType(bpdUpsertIban.success):
       return {
-        value:
-          action.payload.status === IbanStatus.NOT_VALID
-            ? state.value
-            : action.payload.payoffInstr,
+        value: action.payload.payoffInstr ?? state.value,
         outcome: remoteReady(action.payload.status)
       };
     case getType(bpdUpsertIban.failure):
@@ -98,6 +98,8 @@ const paymentInstrumentUpsertReducer = (
         ...state,
         outcome: remoteUndefined
       };
+    case getType(bpdIbanInsertionStart):
+      return INITIAL_UPSERT;
   }
   return state;
 };

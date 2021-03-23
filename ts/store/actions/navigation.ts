@@ -12,8 +12,10 @@ import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen"
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
@@ -25,6 +27,13 @@ import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDeta
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  CreditCardPaymentMethod,
+  PrivativePaymentMethod,
+  SatispayPaymentMethod
+} from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -150,6 +159,20 @@ export const navigateToLanguagePreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
   });
 
+export const navigateToRemoveAccountSuccess = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+  });
+
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
+export const navigateToPrivacyScreen = NavigationActions.navigate({
+  routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+  action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
+});
 /**
  * Wallet & Payments
  */
@@ -202,6 +225,44 @@ export const navigateToWalletTransactionsScreen = (
     params
   });
 
+export const navigateToBancomatDetailScreen = (
+  bancomat: BancomatPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
+    params: { bancomat }
+  });
+
+export const navigateToSatispayDetailScreen = (
+  satispay: SatispayPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+    params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
+  });
+
+export const navigateToCobadgeDetailScreen = (
+  cobadge: CreditCardPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_COBADGE_DETAIL,
+    params: { cobadge }
+  });
+
+export const navigateToPrivativeDetailScreen = (
+  privative: PrivativePaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    params: { privative }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -226,6 +287,14 @@ export const navigateToPaymentHistoryDetail = (
     params
   });
 
+export const navigateToCreditCardOnboardingAttempt = (
+  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
+    params
+  });
+
 export const navigateToWalletHome = (
   params?: InferNavigationParams<typeof WalletHomeScreen>
 ) =>
@@ -234,6 +303,9 @@ export const navigateToWalletHome = (
     params
   });
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletList = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_LIST
@@ -245,6 +317,11 @@ export const navigateToWalletAddPaymentMethod = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
     params
+  });
+
+export const navigateToWalletAddDigitalPaymentMethod = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
   });
 
 export const navigateToWalletAddCreditCard = (
@@ -276,6 +353,19 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
+export const navigateToAddCreditCardOutcomeCode = (
+  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    params
+  });
+
+export const navigateToPaymentOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+  });
+
 /**
  * CIE
  */
@@ -296,4 +386,9 @@ export const navigateToCieCardReaderScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
+  });
+
+export const navigateToWorkunitGenericFailureScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
   });

@@ -1,5 +1,6 @@
 import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
+import { Appearance, Platform } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
@@ -27,6 +28,32 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale: DeviceInfo.getFontScaleSync(),
-    appReadableVersion: getAppVersion()
+    appReadableVersion: getAppVersion(),
+    colorScheme: Appearance.getColorScheme()
   });
+
+  // Identify the user using the device uniqueId
+  await mp.identify(DeviceInfo.getUniqueId());
 };
+
+export const setMixpanelPushNotificationToken = (token: string) => {
+  if (mixpanel) {
+    if (Platform.OS === "ios") {
+      return mixpanel.addPushDeviceToken(token);
+    }
+    if (Platform.OS === "android") {
+      return mixpanel.setPushRegistrationId(token);
+    }
+  }
+  return Promise.resolve();
+};
+
+/**
+ * Track an event with properties
+ * @param event
+ * @param properties
+ */
+export const mixpanelTrack = (
+  event: string,
+  properties?: Record<string, unknown>
+) => mixpanel?.track(event, properties);

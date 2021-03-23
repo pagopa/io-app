@@ -1,4 +1,5 @@
-import { getExpireStatus } from "../dates";
+import { formatDateAsShortFormat, getExpireStatus } from "../dates";
+import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -14,5 +15,19 @@ describe("getExpireStatus", () => {
   it("should be EXPIRED", () => {
     const remote = new Date(Date.now() - 1000 * 60); // 1 sec ago
     expect(getExpireStatus(remote)).toBe("EXPIRED");
+  });
+});
+
+describe("formatDateAsShortFormat", () => {
+  const toTest: ReadonlyArray<[Date, string]> = [
+    [new Date(1970, 0, 1), "01/01/1970"],
+    [new Date(2020, 10, 30), "30/11/2020"],
+    [new Date(1900, 5, 5), "05/06/1900"],
+    [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
+    [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
+  ];
+
+  toTest.forEach(tt => {
+    expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
   });
 });

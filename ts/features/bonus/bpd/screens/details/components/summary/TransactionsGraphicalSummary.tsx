@@ -1,16 +1,25 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
+import { Dispatch } from "../../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { formatIntegerNumber } from "../../../../../../../utils/stringBuilder";
+import { navigateToBpdTransactions } from "../../../../navigation/actions";
+import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
 import { ProgressBar } from "./base/ProgressBar";
 
 type Props = {
   transactions: number;
   minTransactions: number;
-};
+  period: BpdPeriod;
+} & ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   title: {
@@ -26,8 +35,9 @@ const loadLocales = () => ({
 /**
  * When transactions < minTransactions, display a progress bar with the related information
  * @param props
+ * @deprecated not used anymore, it is kept for some time in case of second thoughts
  */
-const PercentageTransactionsSummary = (props: Props) => {
+export const PercentageTransactionsSummary = (props: Props) => {
   const { title, of } = loadLocales();
   return (
     <BpdBaseShadowBoxLayout
@@ -39,9 +49,9 @@ const PercentageTransactionsSummary = (props: Props) => {
       row2={
         <H2 style={styles.title}>
           <H2 testID={"percentageTransactions.transactions"} color={"blue"}>
-            {props.transactions}
+            {formatIntegerNumber(props.transactions)}
           </H2>{" "}
-          {of} {props.minTransactions}
+          {of} {formatIntegerNumber(props.minTransactions)}
         </H2>
       }
       row3={
@@ -72,7 +82,7 @@ const TextualTransactionsSummary = (props: Props) => {
           color={"blue"}
           style={styles.title}
         >
-          {props.transactions}
+          {formatIntegerNumber(props.transactions)}
         </H2>
       }
       row3={
@@ -81,7 +91,7 @@ const TextualTransactionsSummary = (props: Props) => {
           color={"bluegrey"}
           style={styles.title}
         >
-          {of} {props.minTransactions}
+          {of} {formatIntegerNumber(props.minTransactions)}
         </H5>
       }
     />
@@ -94,9 +104,19 @@ const TextualTransactionsSummary = (props: Props) => {
  * @param props
  * @constructor
  */
-export const TransactionsGraphicalSummary: React.FunctionComponent<Props> = props =>
-  props.transactions < props.minTransactions ? (
-    <PercentageTransactionsSummary {...props} />
-  ) : (
+const TransactionsGraphicalSummary = (props: Props) => (
+  <TouchableOpacity onPress={props.goToTransactions} style={IOStyles.flex}>
     <TextualTransactionsSummary {...props} />
-  );
+  </TouchableOpacity>
+);
+
+const mapStateToProps = (_: GlobalState) => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  goToTransactions: () => dispatch(navigateToBpdTransactions())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionsGraphicalSummary);

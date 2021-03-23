@@ -7,6 +7,14 @@ import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLangua
  */
 
 /**
+ * Return a full string locale.
+ * If not italian, for all other languages english is the default.
+ */
+export const getFullLocale = (): "it-IT" | "en-EN" =>
+  getLocalePrimary(I18n.currentLocale()).fold("en-EN", (l: string) =>
+    l === "it" ? "it-IT" : "en-EN"
+  );
+/**
  * Returns the primary component of a locale
  *
  * @see https://en.wikipedia.org/wiki/IETF_language_tag
@@ -47,6 +55,11 @@ const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
   Locales
 >(Array.from(localeToPreferredLanguageMapping).map(item => [item[1], item[0]]));
+
+export const localeDateFormat = (date: Date, format: string): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, format);
 
 // from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
 export const fromLocaleToPreferredLanguage = (

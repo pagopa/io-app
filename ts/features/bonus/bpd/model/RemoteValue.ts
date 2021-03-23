@@ -1,5 +1,6 @@
 /**
  * Experimental type used for represent an async load from remote source with a simpler structure than the pot
+ * Use this when you need to load a remote value one shot that shouldn't be updated later
  */
 import { fromNullable } from "fp-ts/lib/Option";
 

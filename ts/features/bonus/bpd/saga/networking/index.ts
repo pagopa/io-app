@@ -46,7 +46,7 @@ export function* executeAndDispatch(
       throw new Error(readableReport(enrollCitizenIOResult.value));
     }
   } catch (e) {
-    yield put(bpdEnrollUserToProgram.failure(e));
+    yield put(action.failure(e));
   }
 }
 

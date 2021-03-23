@@ -13,6 +13,7 @@ import {
   clearTransactions,
   fetchTransactionsFailure,
   fetchTransactionsRequest,
+  fetchTransactionsRequestWithExpBackoff,
   fetchTransactionsSuccess
 } from "../../actions/wallet/transactions";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -106,6 +107,7 @@ const reducer = (
   action: Action
 ): TransactionsState => {
   switch (action.type) {
+    case getType(fetchTransactionsRequestWithExpBackoff):
     case getType(fetchTransactionsRequest):
       return {
         ...state,

@@ -6,6 +6,7 @@ import { navigationHistoryPop } from "../../../../../../store/actions/navigation
 import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/actions";
 import BPD_ROUTES from "../../../navigation/routes";
+import { bpdAllData } from "../../../store/actions/details";
 import { bpdIbanInsertionStart } from "../../../store/actions/iban";
 import {
   bpdEnrollUserToProgram,
@@ -34,6 +35,7 @@ function* enrollToBpdWorker() {
   );
 
   if (enrollResult.payload.enabled) {
+    yield put(bpdAllData.request());
     yield put(bpdIbanInsertionStart());
     yield put(navigationHistoryPop(1));
   }
