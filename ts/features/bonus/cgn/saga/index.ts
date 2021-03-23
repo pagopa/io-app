@@ -23,8 +23,8 @@ import {
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
 import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
 import { cgnGenerateOtp } from "./networking/otp";
-import { handleEycaActivationSaga } from "./networking/eyca/activation/getEycaActivationSaga";
 import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
+import { eycaActivationSaga } from "./orchestration/eyca/eycaActivationSaga";
 
 export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // create client to exchange data with the APIs
@@ -60,7 +60,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
   // Eyca Activation
   yield takeLatest(
     getType(cgnEycaActivation.request),
-    handleEycaActivationSaga,
+    eycaActivationSaga,
     backendCGN.getEycaActivation,
     backendCGN.startEycaActivation
   );

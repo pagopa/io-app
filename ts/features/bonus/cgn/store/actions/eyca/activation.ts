@@ -7,6 +7,13 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { CgnEycaActivationStatus } from "../../reducers/eyca/activation";
 
 /**
+ * Cancel the activation workflow
+ */
+export const cgnEycaActivationCancel = createStandardAction(
+  "CGN_EYCA_ACTIVATION_CANCEL"
+)<void>();
+
+/**
  * Action to handle EYCA Activation Status
  */
 export const cgnEycaActivation = createAsyncAction(
@@ -24,4 +31,5 @@ export const cgnEycaActivationStatusRequest = createStandardAction(
 
 export type CgnEycaActivationActions =
   | ActionType<typeof cgnEycaActivation>
+  | ActionType<typeof cgnEycaActivationCancel>
   | ActionType<typeof cgnEycaActivationStatusRequest>;
