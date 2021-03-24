@@ -37,9 +37,12 @@ const retrieveRawJiraTicketTask = (id: JiraKey) =>
 const decodeRemoteJiraTicket = (payload: any) =>
   RemoteJiraTicket.decode(payload);
 
-export const getJiraTickets = async (_: ReadonlyArray<JiraKey>) =>
+const getJiraTicket = async (jiraId: JiraKey) =>
   (
-    await retrieveRawJiraTicketTask("FABT-4" as JiraKey)
+    await retrieveRawJiraTicketTask(jiraId)
       .mapLeft<Errors | Error>(e => e)
       .run()
   ).chain(decodeRemoteJiraTicket);
+
+export const getJiraTickets = async (jiraIds: ReadonlyArray<JiraKey>) =>
+  await Promise.all(jiraIds.map(getJiraTicket));
