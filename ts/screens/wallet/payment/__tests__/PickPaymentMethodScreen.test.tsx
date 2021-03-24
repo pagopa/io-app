@@ -1,22 +1,22 @@
 import { Action, Store } from "redux";
-import { GlobalState } from "../../../../store/reducers/types";
 import * as pot from "italia-ts-commons/lib/pot";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { some } from "fp-ts/lib/Option";
+import { fireEvent } from "@testing-library/react-native";
 import { NavigationParams } from "react-navigation";
+import configureMockStore from "redux-mock-store";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
-import configureMockStore from "redux-mock-store";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
-import { fireEvent } from "@testing-library/react-native";
 import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddPaymentMethod
 } from "../../../../store/actions/navigation";
-import { some } from "fp-ts/lib/Option";
 import {
   CreditCardPaymentMethod,
   SatispayPaymentMethod
