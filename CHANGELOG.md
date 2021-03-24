@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.24.0-rc.1](https://github.com/pagopa/io-app/compare/1.24.0-rc.0...1.24.0-rc.1) (2021-03-24)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#177479621](https://www.pivotaltracker.com/story/show/177479621)] Enables CGN Feature Flags [#2936](https://github.com/pagopa/io-app/issues/2936) ([dd3d439](https://github.com/pagopa/io-app/commit/dd3d43960992bef3db7c17bfef20982d6e4a6e53))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[#177461712](https://www.pivotaltracker.com/story/show/177461712)] Introduces the CGN Test overlay information ([#2934](https://github.com/pagopa/io-app/issues/2934)) ([a877448](https://github.com/pagopa/io-app/commit/a877448078c2062faee245e210a8ae9a221042e4))
+
 ## [1.24.0-rc.0](https://github.com/pagopa/io-app/compare/1.23.0-rc.5...1.24.0-rc.0) (2021-03-23)
 
 
