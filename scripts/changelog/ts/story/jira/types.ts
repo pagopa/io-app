@@ -3,32 +3,18 @@ import { IUnitTag } from "italia-ts-commons/lib/units";
 
 export type JiraKey = string & IUnitTag<"JiraKey">;
 
-export type JiraTicketType = "Epic" | "Story" | "Task" | "Sottotask" | "Bug";
+const JiraIssueType = t.union([
+  t.literal("Epic"),
+  t.literal("Story"),
+  t.literal("Task"),
+  t.literal("Sottotask"),
+  t.literal("Bug")
+]);
 
-export type JiraProjectId = string & IUnitTag<"JiraProjectId">;
-
-export type JiraProject = {
-  id: string;
-  name: string;
-  key: string;
-};
-
-export type JiraTicket = {
-  key: JiraKey;
-  type: JiraTicketType;
-  project: JiraProject;
-  summary: string;
-  parent?: JiraTicket;
-};
+export type JiraIssueType = t.TypeOf<typeof JiraIssueType>;
 
 const IssueType = t.interface({
-  name: t.union([
-    t.literal("Epic"),
-    t.literal("Story"),
-    t.literal("Task"),
-    t.literal("Sottotask"),
-    t.literal("Bug")
-  ]),
+  name: JiraIssueType,
   subtask: t.boolean
 });
 

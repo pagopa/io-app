@@ -1,4 +1,5 @@
-import { JiraTicketType, RemoteJiraTicket } from "./jira/types";
+import { JiraIssueType, RemoteJiraTicket } from "./jira/types";
+import { PivotalStory, PivotalStoryType } from "./pivotal/types";
 
 export type GenericTicketType = "feat" | "fix" | "chore";
 
@@ -11,7 +12,7 @@ export type GenericTicket = {
 };
 
 const convertJiraTypeToGeneric = (
-  jiraType: JiraTicketType
+  jiraType: JiraIssueType
 ): GenericTicketType => {
   switch (jiraType) {
     case "Bug":
@@ -43,4 +44,29 @@ export const fromJiraToGenericTicket = (
   type: getTypeFromJira(jira),
   projectId: jira.fields.project.key,
   tags: jira.fields.labels
+});
+
+const convertPivotalTypeToGeneric = (
+  pivotalType: PivotalStoryType
+): GenericTicketType => {
+  switch (pivotalType) {
+    case "bug":
+      return "fix";
+    case "feature":
+      return "feat";
+    case "chore":
+      return "chore";
+    case "release":
+      return "feat";
+  }
+};
+
+export const fromPivotalToGenericTicket = (
+  pivotalStory: PivotalStory
+): GenericTicket => ({
+  id: pivotalStory.id,
+  title: pivotalStory.name,
+  type: convertPivotalTypeToGeneric(pivotalStory.story_type),
+  projectId: pivotalStory.project_id.toString(),
+  tags: pivotalStory.labels.map(x => x.name)
 });
