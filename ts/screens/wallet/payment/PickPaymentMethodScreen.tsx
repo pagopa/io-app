@@ -81,6 +81,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
 ) => {
   const payableWallets = props.payableWallets();
   const notPayableWallets = props.notPayableWallets();
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -99,6 +100,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   {I18n.t("wallet.payWith.text")}
                 </H4>
                 <FlatList
+                  testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={payableWallets}
                   keyExtractor={item => item.idWallet.toString()}
@@ -120,7 +122,11 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 <View spacer={true} />
               </>
             ) : (
-              <H4 weight={"Regular"} color={"bluegreyDark"}>
+              <H4
+                weight={"Regular"}
+                color={"bluegreyDark"}
+                testID={"noWallets"}
+              >
                 {I18n.t("wallet.payWith.noWallets.text")}
               </H4>
             )}
@@ -135,6 +141,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 </H4>
                 <View spacer={true} />
                 <FlatList
+                  testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={notPayableWallets}
                   keyExtractor={item => item.idWallet.toString()}
@@ -168,19 +175,16 @@ const mapStateToProps = (state: GlobalState) => {
   const potPsps = state.wallet.payment.psps;
   const isLoading =
     pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
-
   const visibleCreditCard = pot.getOrElse(potVisibleCreditCard, []).map(c => c);
   const visibleBancomat = pot.getOrElse(potVisibleBancomat, []).map(b => b);
   const visibleBPay = pot.getOrElse(potVisibleBPay, []).map(bP => bP);
   const visibleSatispay = pot.getOrElse(potVisibleSatispay, []).map(s => s);
   const visiblePrivative = pot.getOrElse(potVisiblePrivative, []).map(p => p);
-
   const M = getMonoid<PaymentMethod>();
   const visibleWallets = M.concat(visibleCreditCard, visibleBancomat)
     .concat(visibleBPay)
     .concat(visibleSatispay)
     .concat(visiblePrivative);
-
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract

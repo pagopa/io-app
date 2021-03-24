@@ -74,6 +74,7 @@ const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
   );
   return (
     <PickPaymentMethodBaseListItem
+      testID={`availableMethod-${props.paymentMethod.idWallet}`}
       isFirst={props.isFirst}
       isFavourite={
         pot.isSome(props.favoriteWalletId)

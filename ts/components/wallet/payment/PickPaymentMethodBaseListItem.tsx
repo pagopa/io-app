@@ -6,8 +6,9 @@ import { H5 } from "../../core/typography/H5";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../../core/variables/IOStyles";
+import { WithTestID } from "../../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   isFirst: boolean;
   isFavourite: boolean;
   logo: ImageSourcePropType;
@@ -15,7 +16,7 @@ type Props = {
   description: string;
   rightElement: JSX.Element;
   onPress: () => void;
-};
+}>;
 
 const styles = StyleSheet.create({
   cardLogo: {
@@ -45,9 +46,10 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
   title,
   description,
   rightElement,
-  onPress
+  onPress,
+  testID
 }) => (
-  <ListItem first={isFirst} onPress={onPress}>
+  <ListItem first={isFirst} onPress={onPress} testID={testID}>
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
         <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
