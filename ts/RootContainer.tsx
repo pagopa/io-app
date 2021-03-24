@@ -14,7 +14,11 @@ import configurePushNotifications from "./boot/configurePushNotification";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
-import { bpdTestOverlay, shouldDisplayVersionInfoOverlay } from "./config";
+import {
+  bpdTestOverlay,
+  cgnTestOverlay,
+  shouldDisplayVersionInfoOverlay
+} from "./config";
 import { BpdTestOverlay } from "./features/bonus/bpd/components/BpdTestOverlay";
 import Navigation from "./navigation";
 import {
@@ -29,6 +33,7 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { setLocale } from "./i18n";
 import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
+import { CgnTestOverlay } from "./features/bonus/cgn/components/CgnTestOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -141,6 +146,7 @@ class RootContainer extends React.PureComponent<Props> {
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {bpdTestOverlay && <BpdTestOverlay />}
+        {cgnTestOverlay && <CgnTestOverlay />}
         <RootModal />
         <LightModalRoot />
       </Root>
