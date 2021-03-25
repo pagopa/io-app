@@ -39,9 +39,9 @@ ${foundTicket
   .filter(isRight)
   .map(
     s =>
-      `  * ${StoryEmoji[s.value.type]} [#${s.value.id}](${s.value.url}): ${
-        s.value.title
-      }`
+      `  * ${StoryEmoji[s.value.type]} [${s.value.idPrefix}${s.value.id}](${
+        s.value.url
+      }): ${s.value.title}`
   )
   .join("\n")}\n`);
   }

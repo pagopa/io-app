@@ -6,6 +6,7 @@ export type GenericTicketType = "feat" | "fix" | "chore";
 
 export type GenericTicket = {
   id: string;
+  idPrefix?: string;
   title: string;
   type: GenericTicketType;
   projectId: string;
@@ -68,6 +69,7 @@ export const fromPivotalToGenericTicket = (
   pivotalStory: PivotalStory
 ): GenericTicket => ({
   id: pivotalStory.id,
+  idPrefix: "#",
   title: pivotalStory.name,
   type: convertPivotalTypeToGeneric(pivotalStory.story_type),
   projectId: pivotalStory.project_id.toString(),
