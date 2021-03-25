@@ -56,17 +56,9 @@ export const updatePrTitleForChangelog = async () => {
 };
 
 const mainDanger = async () => {
-  // eslint-disable-next-line no-console
-  console.log("A");
   const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
-  // eslint-disable-next-line no-console
-  console.log(associatedStories);
   ticketDanger(associatedStories);
-  // eslint-disable-next-line no-console
-  console.log("ticketDangerA");
   await updatePrTitleForChangelog();
-  // eslint-disable-next-line no-console
-  console.log("updatePrTitleForChangelog");
 };
 
 void mainDanger().then().catch();
