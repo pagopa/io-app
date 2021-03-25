@@ -3,13 +3,14 @@ import { warn } from "danger";
 // See http://danger.systems/js
 import checkDangers from "danger-plugin-digitalcitizenship";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
+import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
   getChangelogPrefixByStories,
-  getChangelogScope,
-  getPivotalStoriesFromPrTitle
+  getChangelogScope
 } from "./scripts/changelog/ts/changelog";
+import { getTicketsFromTitle } from "./scripts/changelog/ts/story/titleParser";
 
 declare const danger: DangerDSLType;
 
@@ -17,19 +18,26 @@ const multipleTypesWarning =
   "Multiple stories with different types are associated with this Pull request.\n" +
   "Only one tag will be added, following the order: `feature > bug > chore`";
 
+const leftTickets = "Something went wrong with getting the ticket ids ";
+
 /**
  * Append the changelog tag and scope to the pull request title
  */
 const updatePrTitleForChangelog = async () => {
-  const associatedStories = await getPivotalStoriesFromPrTitle(
-    danger.github.pr.title
-  );
+  const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
 
-  if (!allStoriesSameType(associatedStories)) {
+  if (associatedStories.some(isLeft)) {
+    warn(leftTickets);
+    return;
+  }
+
+  const foundTicket = associatedStories.filter(isRight).map(x => x.value);
+
+  if (!allStoriesSameType(foundTicket)) {
     warn(multipleTypesWarning);
   }
-  const maybePrTag = getChangelogPrefixByStories(associatedStories);
-  const eitherScope = getChangelogScope(associatedStories);
+  const maybePrTag = getChangelogPrefixByStories(foundTicket);
+  const eitherScope = getChangelogScope(foundTicket);
 
   if (eitherScope.isLeft()) {
     eitherScope.value.map(err => warn(err.message));
