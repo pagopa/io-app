@@ -23,7 +23,9 @@ const retrieveRawJiraTicket = async (id: string) => {
     }
   });
   if (res.status !== 200) {
-    throw new Error(`Response status ${res.status} ${res.statusText}`);
+    throw new Error(
+      `Response status ${res.status} ${res.statusText} for ${id}`
+    );
   }
   return await res.json();
 };

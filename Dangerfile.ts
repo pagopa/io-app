@@ -2,7 +2,7 @@
 import { warn } from "danger";
 // See http://danger.systems/js
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { isLeft, isRight } from "fp-ts/lib/Either";
+import { isRight } from "fp-ts/lib/Either";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
@@ -18,18 +18,11 @@ const multipleTypesWarning =
   "Multiple stories with different types are associated with this Pull request.\n" +
   "Only one tag will be added, following the order: `feature > bug > chore`";
 
-const leftTickets = "Something went wrong with getting the ticket ids ";
-
 /**
  * Append the changelog tag and scope to the pull request title
  */
 export const updatePrTitleForChangelog = async () => {
   const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
-
-  if (associatedStories.some(isLeft)) {
-    warn(leftTickets);
-    return;
-  }
 
   const foundTicket = associatedStories.filter(isRight).map(x => x.value);
 
