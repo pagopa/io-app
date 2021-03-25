@@ -14,14 +14,11 @@ const StoryEmoji: Record<GenericTicketType, string> = {
   chore: "⚙️"
 };
 
-export const ticketDanger = (
-  foundTicket: ReadonlyArray<Either<Error | Errors, GenericTicket>>
-) => {
-  if (foundTicket.length === 0) {
-    warn(
-      "Please include a Pivotal story or Jira ticket at the beginning of the PR title"
-    );
-    markdown(`
+const warningNoTicket = () => {
+  warn(
+    "Please include a Pivotal story or Jira ticket at the beginning of the PR title"
+  );
+  markdown(`
   Example of PR titles that include pivotal stories:
   * single story: \`[#123456] my PR title\`
   * multiple stories: \`[#123456,#123457,#123458] my PR title\`
@@ -30,19 +27,29 @@ export const ticketDanger = (
   * single story: \`[PROJID-123] my PR title\`
   * multiple stories: \`[PROJID-1,PROJID-2,PROJID-3] my PR title\`
     `);
+};
+
+const renderTicket = (ticketList: ReadonlyArray<GenericTicket>) => {
+  markdown(`
+## Affected stories
+${ticketList
+  .map(
+    s =>
+      `  * ${StoryEmoji[s.type]} [${s.idPrefix ? s.idPrefix : ""}${s.id}](${
+        s.url
+      }): ${s.title}`
+  )
+  .join("\n")}\n`);
+};
+
+export const ticketDanger = (
+  foundTicket: ReadonlyArray<Either<Error | Errors, GenericTicket>>
+) => {
+  if (foundTicket.length === 0) {
+    warningNoTicket();
   } else if (foundTicket.some(isLeft)) {
     warn("Some errors!");
   } else {
-    markdown(`
-## Affected stories
-${foundTicket
-  .filter(isRight)
-  .map(
-    s =>
-      `  * ${StoryEmoji[s.value.type]} [${
-        s.value.idPrefix ? s.value.idPrefix : ""
-      }${s.value.id}](${s.value.url}): ${s.value.title}`
-  )
-  .join("\n")}\n`);
+    renderTicket(foundTicket.filter(isRight).map(x => x.value));
   }
 };
