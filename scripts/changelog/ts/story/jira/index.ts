@@ -2,7 +2,7 @@ import { toError } from "fp-ts/lib/Either";
 import { tryCatch } from "fp-ts/lib/TaskEither";
 import { Errors } from "io-ts";
 import fetch from "node-fetch";
-import { JiraKey, RemoteJiraTicket } from "./types";
+import { RemoteJiraTicket } from "./types";
 
 const jiraOrgBaseUrl = "https://pagopa.atlassian.net/rest/api/3/issue/";
 const username = "";
@@ -12,7 +12,7 @@ const password = "";
  * Http code to retrieve the remote representation for the JiraTicket
  * @param id
  */
-const retrieveRawJiraTicket = async (id: JiraKey) => {
+const retrieveRawJiraTicket = async (id: string) => {
   const url = new URL(id, jiraOrgBaseUrl);
   const res = await fetch(url, {
     method: "GET",
@@ -27,7 +27,7 @@ const retrieveRawJiraTicket = async (id: JiraKey) => {
   return await res.json();
 };
 
-const retrieveRawJiraTicketTask = (id: JiraKey) =>
+const retrieveRawJiraTicketTask = (id: string) =>
   tryCatch(() => retrieveRawJiraTicket(id), toError);
 
 /**
@@ -37,12 +37,12 @@ const retrieveRawJiraTicketTask = (id: JiraKey) =>
 const decodeRemoteJiraTicket = (payload: any) =>
   RemoteJiraTicket.decode(payload);
 
-const getJiraTicket = async (jiraId: JiraKey) =>
+const getJiraTicket = async (jiraId: string) =>
   (
     await retrieveRawJiraTicketTask(jiraId)
       .mapLeft<Errors | Error>(e => e)
       .run()
   ).chain(decodeRemoteJiraTicket);
 
-export const getJiraTickets = async (jiraIds: ReadonlyArray<JiraKey>) =>
+export const getJiraTickets = async (jiraIds: ReadonlyArray<string>) =>
   await Promise.all(jiraIds.map(getJiraTicket));
