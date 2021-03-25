@@ -9,6 +9,7 @@ import {
   getChangelogPrefixByStories,
   getChangelogScope
 } from "./scripts/changelog/ts/changelog";
+import { ticketDanger } from "./scripts/changelog/ts/checkDanger";
 import { getTicketsFromTitle } from "./scripts/changelog/ts/story/titleParser";
 
 declare const danger: DangerDSLType;
@@ -22,7 +23,7 @@ const leftTickets = "Something went wrong with getting the ticket ids ";
 /**
  * Append the changelog tag and scope to the pull request title
  */
-const updatePrTitleForChangelog = async () => {
+export const updatePrTitleForChangelog = async () => {
   const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
 
   if (associatedStories.some(isLeft)) {
@@ -61,5 +62,9 @@ const updatePrTitleForChangelog = async () => {
   );
 };
 
-// checkDangers();
-void updatePrTitleForChangelog().then().catch();
+const mainDanger = async () => {
+  const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
+  ticketDanger(associatedStories);
+};
+
+void mainDanger().then().catch();
