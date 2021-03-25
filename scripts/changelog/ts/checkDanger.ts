@@ -57,9 +57,12 @@ export const ticketDanger = (
 ) => {
   if (foundTicket.length === 0) {
     warningNoTicket();
-  } else if (foundTicket.some(isLeft)) {
+    return;
+  }
+  if (foundTicket.some(isLeft)) {
     renderFailure(foundTicket.filter(isLeft).map(x => x.value));
-  } else {
+  }
+  if (foundTicket.some(isRight)) {
     renderTicket(foundTicket.filter(isRight).map(x => x.value));
   }
 };
