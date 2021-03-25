@@ -161,8 +161,8 @@ export default class CardComponent extends React.Component<Props> {
                     <Text bold={true} style={styles.blueText}>
                       {I18n.t(
                         pot.getOrElseWithUpdating(isFavorite, false) === true
-                          ? "cardComponent.unsetFavourite"
-                          : "cardComponent.setFavourite"
+                          ? "cardComponent.unsetFavorite"
+                          : "cardComponent.setFavorite"
                       )}
                     </Text>
                   </MenuOption>

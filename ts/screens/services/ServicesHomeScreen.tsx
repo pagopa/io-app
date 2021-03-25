@@ -618,6 +618,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             )}
           </TopScreenComponent>
         </View>
+        <SectionStatusComponent sectionKey={"services"} />
       </KeyboardAvoidingView>
     );
   }
@@ -727,7 +728,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
-        <SectionStatusComponent sectionKey={"services"} />
       </View>
     );
   };
