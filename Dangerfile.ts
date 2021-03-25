@@ -9,6 +9,7 @@ import {
   getChangelogPrefixByStories,
   getChangelogScope
 } from "./scripts/changelog/ts/changelog";
+import { ticketDanger } from "./scripts/changelog/ts/checkDanger";
 import { getTicketsFromTitle } from "./scripts/changelog/ts/story/titleParser";
 
 declare const danger: DangerDSLType;
@@ -64,10 +65,10 @@ export const updatePrTitleForChangelog = async () => {
 const mainDanger = async () => {
   // eslint-disable-next-line no-console
   console.log("A");
-  // const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
+  const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
   // eslint-disable-next-line no-console
-  // console.log(associatedStories);
-  // ticketDanger(associatedStories);
+  console.log(associatedStories);
+  ticketDanger(associatedStories);
   // eslint-disable-next-line no-console
   console.log("ticketDangerA");
   await updatePrTitleForChangelog();
