@@ -1,3 +1,4 @@
+import { jiraTicketBaseUrl } from "./jira";
 import { JiraIssueType, RemoteJiraTicket } from "./jira/types";
 import { PivotalStory, PivotalStoryType } from "./pivotal/types";
 
@@ -9,6 +10,7 @@ export type GenericTicket = {
   type: GenericTicketType;
   projectId: string;
   tags: ReadonlyArray<string>;
+  url: string;
 };
 
 const convertJiraTypeToGeneric = (
@@ -43,7 +45,8 @@ export const fromJiraToGenericTicket = (
   title: jira.fields.summary,
   type: getTypeFromJira(jira),
   projectId: jira.fields.project.key,
-  tags: jira.fields.labels
+  tags: jira.fields.labels,
+  url: new URL(jira.key, jiraTicketBaseUrl).toString()
 });
 
 const convertPivotalTypeToGeneric = (
@@ -68,5 +71,6 @@ export const fromPivotalToGenericTicket = (
   title: pivotalStory.name,
   type: convertPivotalTypeToGeneric(pivotalStory.story_type),
   projectId: pivotalStory.project_id.toString(),
-  tags: pivotalStory.labels.map(x => x.name)
+  tags: pivotalStory.labels.map(x => x.name),
+  url: pivotalStory.url
 });

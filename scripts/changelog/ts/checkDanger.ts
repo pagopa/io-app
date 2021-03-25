@@ -1,5 +1,5 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { Either, isLeft } from "fp-ts/lib/Either";
+import { Either, isLeft, isRight } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { GenericTicket, GenericTicketType } from "./story/types";
 
@@ -33,6 +33,16 @@ export const ticketDanger = (
   } else if (foundTicket.some(isLeft)) {
     warn("Some errors!");
   } else {
-    markdown("Story found!" + StoryEmoji.feat);
+    markdown(`
+## Affected stories
+${foundTicket
+  .filter(isRight)
+  .map(
+    s =>
+      `  * ${StoryEmoji[s.value.type]} [#${s.value.id}](${s.value.url}): ${
+        s.value.title
+      }`
+  )
+  .join("\n")}\n`);
   }
 };
