@@ -25,19 +25,19 @@ export const getJiraIdFromPrTitle = (
 export const getTicketsFromTitle = async (
   title: string
 ): Promise<ReadonlyArray<Either<Error | Errors, GenericTicket>>> => {
-  const maybeJiraId = (
-    await getJiraIdFromPrTitle(title).map(getJiraTickets).toUndefined()
-  )?.map(x => x.map(fromJiraToGenericTicket));
+  const maybeJiraId = await getJiraIdFromPrTitle(title)
+    .map(getJiraTickets)
+    .toUndefined();
 
   if (maybeJiraId) {
-    return maybeJiraId;
+    return maybeJiraId.map(x => x.map(fromJiraToGenericTicket));
   }
 
-  const maybePivotalId =
-    (await getPivotalStories(getPivotalStoryIDs(title)))
-      ?.filter(s => s.story_type !== undefined)
-      .map<GenericTicket>(fromPivotalToGenericTicket) ?? [];
+  const maybePivotalId = await getPivotalStories(getPivotalStoryIDs(title));
   return maybePivotalId
-    ? maybePivotalId.map(x => right(x))
+    ? maybePivotalId
+        .filter(s => s.story_type !== undefined)
+        .map<GenericTicket>(fromPivotalToGenericTicket)
+        .map(x => right(x))
     : [left(new Error("No Pivotal stories found"))];
 };
