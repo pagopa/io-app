@@ -1,7 +1,6 @@
 // Import custom DangerJS rules.
 import { warn } from "danger";
 // See http://danger.systems/js
-import checkDangers from "danger-plugin-digitalcitizenship";
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromNullable, none } from "fp-ts/lib/Option";
@@ -62,5 +61,5 @@ const updatePrTitleForChangelog = async () => {
   );
 };
 
-checkDangers();
+// checkDangers();
 void updatePrTitleForChangelog().then().catch();
