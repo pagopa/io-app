@@ -2002,7 +2002,7 @@ bonus:
   requestLabel: Bonuses and discounts
   requestTitle: Request
   validity_interval: from {{from}} until {{to}}
-  active: Active\
+  active: Active
   failed: Failed
   redeemed: Consumed
   termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
