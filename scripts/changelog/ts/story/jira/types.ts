@@ -44,7 +44,6 @@ const FieldsP = t.partial({
 const Fields = t.intersection([FieldsR, FieldsP], "Fields");
 
 export const RemoteJiraTicket = t.interface({
-  id: t.string,
   key: t.string,
   fields: Fields
 });

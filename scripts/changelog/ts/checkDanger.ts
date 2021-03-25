@@ -29,15 +29,20 @@ const warningNoTicket = () => {
     `);
 };
 
-const renderTicket = (ticketList: ReadonlyArray<GenericTicket>) => {
+const renderTicket = (ticket: GenericTicket) =>
+  `${StoryEmoji[ticket.type]} [${ticket.idPrefix ? ticket.idPrefix : ""}${
+    ticket.id
+  }](${ticket.url}): ${ticket.title}`;
+
+const renderTickets = (ticketList: ReadonlyArray<GenericTicket>) => {
   markdown(`
 ## Affected stories
 ${ticketList
   .map(
     s =>
-      `  * ${StoryEmoji[s.type]} [${s.idPrefix ? s.idPrefix : ""}${s.id}](${
-        s.url
-      }): ${s.title}`
+      `  * ${renderTicket(s)}${
+        s.parent ? ` subtask of ${renderTicket(s.parent)}` : ""
+      }`
   )
   .join("\n")}\n`);
 };
@@ -63,6 +68,6 @@ export const ticketDanger = (
     renderFailure(foundTicket.filter(isLeft).map(x => x.value));
   }
   if (foundTicket.some(isRight)) {
-    renderTicket(foundTicket.filter(isRight).map(x => x.value));
+    renderTickets(foundTicket.filter(isRight).map(x => x.value));
   }
 };

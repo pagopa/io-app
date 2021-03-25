@@ -12,6 +12,7 @@ export type GenericTicket = {
   projectId: string;
   tags: ReadonlyArray<string>;
   url: string;
+  parent?: GenericTicket;
 };
 
 const convertJiraTypeToGeneric = (
@@ -47,7 +48,17 @@ export const fromJiraToGenericTicket = (
   type: getTypeFromJira(jira),
   projectId: jira.fields.project.key,
   tags: jira.fields.labels,
-  url: new URL(jira.key, jiraTicketBaseUrl).toString()
+  url: new URL(jira.key, jiraTicketBaseUrl).toString(),
+  parent: jira.fields.parent
+    ? fromJiraToGenericTicket({
+        ...jira.fields.parent,
+        fields: {
+          ...jira.fields.parent.fields,
+          project: jira.fields.project,
+          labels: []
+        }
+      })
+    : undefined
 });
 
 const convertPivotalTypeToGeneric = (
