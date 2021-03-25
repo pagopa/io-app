@@ -1,6 +1,6 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { Either, isLeft, isRight } from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
+import { Errors, Is } from "io-ts";
 import { GenericTicket, GenericTicketType } from "./story/types";
 
 declare const danger: DangerDSLType;
@@ -42,13 +42,23 @@ ${ticketList
   .join("\n")}\n`);
 };
 
+const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
+  errors.map(e =>
+    warn(
+      `There was an error retrieving a ticket: ${
+        e instanceof Error ? e.message : e.map(x => x.message)
+      }`
+    )
+  );
+};
+
 export const ticketDanger = (
   foundTicket: ReadonlyArray<Either<Error | Errors, GenericTicket>>
 ) => {
   if (foundTicket.length === 0) {
     warningNoTicket();
   } else if (foundTicket.some(isLeft)) {
-    warn("Some errors!");
+    renderFailure(foundTicket.filter(isLeft).map(x => x.value));
   } else {
     renderTicket(foundTicket.filter(isRight).map(x => x.value));
   }
