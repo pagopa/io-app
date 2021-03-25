@@ -41,7 +41,7 @@ ${ticketList
   .map(
     s =>
       `  * ${renderTicket(s)}${
-        s.parent ? ` subtask of\n     * ${renderTicket(s.parent)}` : ""
+        s.parent ? ` _subtask of_\n     * ${renderTicket(s.parent)}` : ""
       }`
   )
   .join("\n")}\n`);
