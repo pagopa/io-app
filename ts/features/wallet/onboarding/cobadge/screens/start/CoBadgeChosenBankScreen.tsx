@@ -10,8 +10,11 @@ import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosB
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
 import { abiListSelector, abiSelector } from "../../../store/abi";
 import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/action";
-import { walletAddCoBadgeCancel } from "../../store/actions";
-import { fold } from "../../../../../bonus/bpd/model/RemoteValue";
+import {
+  walletAddCoBadgeCancel,
+  walletAddCoBadgeFailure
+} from "../../store/actions";
+import { fold, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { loadAbi } from "../../../bancomat/store/actions";
 import I18n from "../../../../../../i18n";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -48,7 +51,7 @@ const abiListLoadingError = (
  * @constructor
  * @param props
  */
-const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
+const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
   const { showModal, hideModal } = useContext(LightModalContext);
 
   React.useEffect(() => {
@@ -74,6 +77,16 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
   const abiInfo: Abi | undefined = props.abiList.find(
     aI => aI.abi === props.abi
   );
+
+  if (
+    abiInfo === undefined &&
+    props.abi !== undefined &&
+    isReady(props.abiListStatus)
+  ) {
+    props.onGeneralError("Abi not found in abilist in CoBadgeChosenBankScreen");
+    return null;
+  }
+
   return fold(
     props.abiListStatus,
     () => abiListLoadingError(false, props.onCancel, props.loadAbiList),
@@ -96,7 +109,8 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(walletAddCoBadgeCancel()),
   searchAccounts: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable()),
-  loadAbiList: () => dispatch(loadAbi.request())
+  loadAbiList: () => dispatch(loadAbi.request()),
+  onGeneralError: (reason: string) => dispatch(walletAddCoBadgeFailure(reason))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

@@ -2,6 +2,7 @@ import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
 import {
   executeWorkUnit,
+  withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
@@ -43,11 +44,13 @@ function* coBadgeWorkUnit() {
  * Chain the add co-badge to wallet with "activate bpd on the new co-badge cards"
  */
 export function* addCoBadgeToWalletAndActivateBpd() {
+  const sagaExecution = () =>
+    withFailureHandling(() => withResetNavigationStack(coBadgeWorkUnit));
+
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    coBadgeWorkUnit
+    sagaExecution
   );
-  if (res !== "back") {
+  if (res !== "back" && res !== "failure") {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
     const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(

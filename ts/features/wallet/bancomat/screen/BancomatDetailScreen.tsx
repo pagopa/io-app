@@ -62,13 +62,13 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  */
 const startCoBadge = (props: Props) => {
   const bancomat = props.navigation.getParam("bancomat");
-  if (bancomat.abiInfo?.abi) {
-    props.addCoBadge(bancomat.abiInfo.abi);
-  } else {
+  if (bancomat.info.issuerAbiCode === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
     void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR", {
       issuerAbiCode: bancomat.info.issuerAbiCode
     });
+  } else {
+    props.addCoBadge(bancomat.info.issuerAbiCode);
   }
 };
 
