@@ -5,8 +5,8 @@ import fetch from "node-fetch";
 import { RemoteJiraTicket } from "./types";
 
 const jiraOrgBaseUrl = "https://pagopa.atlassian.net/rest/api/3/issue/";
-const username = "";
-const password = "";
+const username = process.env.JIRA_USERNAME;
+const password = process.env.JIRA_PASSWORD;
 
 /**
  * Http code to retrieve the remote representation for the JiraTicket
