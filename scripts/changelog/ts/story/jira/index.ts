@@ -18,7 +18,7 @@ const retrieveRawJiraTicket = async (id: string) => {
     method: "GET",
     headers: {
       Authorization:
-        "Basic " + Buffer.from(username + ":" + password).toString("base64")
+        "Basic " + Buffer.from(`${username}:${password}`).toString("base64")
     }
   });
   if (res.status !== 200) {
