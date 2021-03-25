@@ -13,6 +13,8 @@ import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/act
 import { walletAddCoBadgeCancel } from "../../store/actions";
 import { fold } from "../../../../../bonus/bpd/model/RemoteValue";
 import { loadAbi } from "../../../bancomat/store/actions";
+import I18n from "../../../../../../i18n";
+import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type OwnProps = {
   abi?: string;
@@ -26,6 +28,19 @@ const tos_url =
 
 const partecipatingBank_url =
   "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
+
+const abiListLoadingError = (
+  isLoading: boolean,
+  onAbort: () => void,
+  onRetry: () => void
+) => (
+  <LoadingErrorComponent
+    isLoading={isLoading}
+    loadingCaption={I18n.t("wallet.onboarding.coBadge.start.loading")}
+    onAbort={onAbort}
+    onRetry={onRetry}
+  />
+);
 
 /**
  * The initial screen of the co-badge workflow (starting with a specific ABI, eg. from BANCOMAT screen)
@@ -59,16 +74,22 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
   const abiInfo: Abi | undefined = props.abiList.find(
     aI => aI.abi === props.abi
   );
-  return (
-    <SearchStartScreen
-      testID={props.testID}
-      methodType={"cobadge"}
-      onCancel={props.onCancel}
-      onSearch={props.searchAccounts}
-      handlePartecipatingBanksModal={openPartecipatingBankModal}
-      handleTosModal={openTosModal}
-      bankName={abiInfo?.name}
-    />
+  return fold(
+    props.abiListStatus,
+    () => abiListLoadingError(false, props.onCancel, props.loadAbiList),
+    () => abiListLoadingError(true, props.onCancel, props.loadAbiList),
+    _ => (
+      <SearchStartScreen
+        testID={props.testID}
+        methodType={"cobadge"}
+        onCancel={props.onCancel}
+        onSearch={props.searchAccounts}
+        handlePartecipatingBanksModal={openPartecipatingBankModal}
+        handleTosModal={openTosModal}
+        bankName={abiInfo?.name}
+      />
+    ),
+    _ => abiListLoadingError(false, props.onCancel, props.loadAbiList)
   );
 };
 
