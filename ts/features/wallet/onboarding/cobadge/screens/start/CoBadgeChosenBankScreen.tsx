@@ -8,9 +8,11 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../../types/WithTestID";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
-import { abiListSelector } from "../../../store/abi";
+import { abiListSelector, abiSelector } from "../../../store/abi";
 import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/action";
 import { walletAddCoBadgeCancel } from "../../store/actions";
+import { fold } from "../../../../../bonus/bpd/model/RemoteValue";
+import { loadAbi } from "../../../bancomat/store/actions";
 
 type OwnProps = {
   abi?: string;
@@ -24,6 +26,7 @@ const tos_url =
 
 const partecipatingBank_url =
   "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
+
 /**
  * The initial screen of the co-badge workflow (starting with a specific ABI, eg. from BANCOMAT screen)
  * The user can see the selected bank and can start the search for all the co-badge for the specific bank.
@@ -32,6 +35,16 @@ const partecipatingBank_url =
  */
 const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
   const { showModal, hideModal } = useContext(LightModalContext);
+
+  React.useEffect(() => {
+    fold(
+      props.abiListStatus,
+      () => props.loadAbiList(),
+      () => null,
+      _ => null,
+      _ => props.loadAbiList()
+    );
+  }, []);
 
   const openTosModal = () => {
     showModal(<TosBonusComponent tos_url={tos_url} onClose={hideModal} />);
@@ -61,10 +74,12 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(walletAddCoBadgeCancel()),
-  searchAccounts: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable())
+  searchAccounts: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable()),
+  loadAbiList: () => dispatch(loadAbi.request())
 });
 
 const mapStateToProps = (state: GlobalState) => ({
+  abiListStatus: abiSelector(state),
   abiList: abiListSelector(state)
 });
 
