@@ -44,7 +44,7 @@ const arrivingBottomSheetTitle = () =>
   I18n.t(
     "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetTitle"
   );
-const ArrivingBottomSheetBody = () => (
+const arrivingBottomSheetBody = () => (
   <>
     <View spacer={true} large={true} />
     <H4 weight={"Regular"}>
@@ -93,7 +93,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.caption,
         description: paymentMethod.info.numberObfuscated ?? "",
         bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: ArrivingBottomSheetBody()
+        bottomSheetBody: arrivingBottomSheetBody()
       };
     case "Satispay":
       return {
@@ -101,7 +101,7 @@ const extractInfoFromPaymentMethod = (
         title: paymentMethod.kind,
         description: nameSurname,
         bottomSheetTitle: arrivingBottomSheetTitle(),
-        bottomSheetBody: ArrivingBottomSheetBody()
+        bottomSheetBody: arrivingBottomSheetBody()
       };
     case "Privative":
       return {
