@@ -7,11 +7,11 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import { FooterStackButton } from "../../../bonusVacanze/components/buttons/FooterStackButtons";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../components/ui/IconFont";
 import { cgnActivationComplete } from "../../store/actions/activation";
 import { navigateToCgnDetails } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import paymentCompleted from "../../../../../../img/pictograms/payment-completed.png";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -23,7 +23,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
-      image={<IconFont name={"io-complete"} size={104} color={IOColors.aqua} />}
+      image={renderInfoRasterImage(paymentCompleted)}
       title={I18n.t("bonus.cgn.activation.success.title")}
       body={I18n.t("bonus.cgn.activation.success.body")}
     />

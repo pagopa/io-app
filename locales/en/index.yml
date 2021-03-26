@@ -921,7 +921,7 @@ wallet:
           body: "We are working to solve the problem."
       addPrivativeCardNumber:
         title: "Insert card number"
-        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
         disclaimer:
           text1: "By continuing you accept the"
           text2: "information on the processing of personal data"
@@ -2283,7 +2283,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e-commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
