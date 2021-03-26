@@ -1,7 +1,7 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { Either, isLeft, isRight } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
-import { GenericTicket, GenericTicketType } from "./story/types";
+import { GenericTicket, GenericTicketType } from "../common/ticket/types";
 
 declare const danger: DangerDSLType;
 

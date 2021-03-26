@@ -1,4 +1,4 @@
-import { PivotalLabel, PivotalStory } from "../story/pivotal/types";
+import { PivotalLabel, PivotalStory } from "../../common/ticket/pivotal/types";
 
 export const baseStory: PivotalStory = {
   id: "123",
