@@ -16,7 +16,7 @@ const multipleTypesWarning =
   "Only one tag will be added, following the order: `feature > bug > chore`";
 
 const atLeastOneLeftTicket =
-  "An error occurred in the recovery of a ticket," +
+  "An error occurred during the retrieval of a ticket," +
   " the title of the pull request is updated taking into account only the recovered tickets ";
 
 /**
