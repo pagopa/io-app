@@ -2,6 +2,8 @@ const fs = require("fs-extra");
 const Pivotal = require("pivotaljs");
 const pivotal = new Pivotal();
 
+const jiraTicketBaseUrl = "https://pagopa.atlassian.net/browse/";
+
 /**
  * Skip the use of API to find the story url if the url is already retrieved (contains pivotaltracker.com)
  * or the id length is < 9 (not a pivotal id)
@@ -30,6 +32,11 @@ async function replacePivotalUrl(match, storyId, url) {
   } catch (err) {
     return sameUrl;
   }
+}
+
+async function replaceJiraStories() {
+  // capture [JIRAID-123], avoid already linked ticket with pattern [JIRAID-123](http://jiraurl)
+  const jiraTagRegex = /\[([a-zA-Z0-9]+-\d+)\](?!\()/g;
 }
 
 async function replacePivotalStories() {
@@ -71,8 +78,8 @@ async function replaceAsync(str, regex, asyncFn) {
  * @param storyId
  * @return {Promise<Pivotal.Story>}
  */
-getStory = storyId => {
-  return new Promise((resolve, reject) => {
+getStory = storyId =>
+  new Promise((resolve, reject) => {
     pivotal.getStory(storyId, (err, story) => {
       if (err) {
         return reject(err);
@@ -80,7 +87,6 @@ getStory = storyId => {
       resolve(story);
     });
   });
-};
 
 // Execute the script to find the pivotal stories id in order to associate the right url in the changelog
 replacePivotalStories()
