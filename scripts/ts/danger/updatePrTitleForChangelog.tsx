@@ -51,7 +51,7 @@ export const updatePrTitleForChangelog = async (
     .getOrElse(danger.github.pr.title);
 
   await danger.github.utils.createOrAddLabel({
-    name: scope,
+    name: scope.replace("(", "").replace(")", ""),
     color: "#000FFF",
     description: scope
   });
