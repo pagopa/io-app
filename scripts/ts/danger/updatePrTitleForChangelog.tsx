@@ -57,13 +57,16 @@ export const updatePrTitleForChangelog = async (
     color: "#FFFFFF",
     description: labelScope
   });
-  const upperCaseTitle = title.charAt(0).toUpperCase() + title.slice(1);
-  // eslint-disable-next-line no-console
-  console.log(title);
-  // eslint-disable-next-line no-console
-  console.log("****");
-  // eslint-disable-next-line no-console
-  console.log(upperCaseTitle);
+
+  // Ensure the first char after the ticket id is uppercase
+  const titleSplitter = new RegExp(/(\[.*]\s*)(.+)/g);
+  const splittingResults = titleSplitter.exec(title);
+  const upperCaseTitle = splittingResults
+    ? `${splittingResults[1]}${
+        splittingResults[2].charAt(0).toUpperCase() +
+        splittingResults[2].slice(1)
+      }`
+    : title;
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
