@@ -34,26 +34,37 @@ async function replacePivotalUrl(match, storyId, url) {
   }
 }
 
-async function replaceJiraStories() {
-  // capture [JIRAID-123], avoid already linked ticket with pattern [JIRAID-123](http://jiraurl)
-  const jiraTagRegex = /\[([a-zA-Z0-9]+-\d+)\](?!\()/g;
+async function addJiraUrl(match, ticketKeys) {
+  return `[${ticketKeys
+    .split(",")
+    .map(x => `[${x}](${new URL(x, jiraTicketBaseUrl).toString()})`)}]`;
 }
 
-async function replacePivotalStories() {
+async function replaceJiraStories(content) {
+  // capture [JIRAID-123], avoid already linked ticket with pattern [JIRAID-123](http://jiraurl)
+  const jiraTagRegex = /\[([A-Z0-9]+-\d+(,[a-zA-Z]+-\d+)*)](?!\()/g;
+  return await replaceAsync(content, jiraTagRegex, addJiraUrl);
+}
+
+async function addTasksUrls() {
   // read changelog
-  const content = fs.readFileSync("CHANGELOG.md").toString("utf8");
+  const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
+
+  // Add pivotal stories url
+  const withPivotalStories = await replacePivotalStories(rawChangelog);
+  // Add jira ticket url
+  const withJiraStories = await replaceJiraStories(withPivotalStories);
+
+  // write the new modified changelog
+  fs.writeFileSync("CHANGELOG.md", withJiraStories);
+}
+
+async function replacePivotalStories(content) {
   // identify the pattern [#XXXXX](url) for markdown link
   const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z:\/\.\d-@:%._\+~#=]+)\)/g;
 
   // check for all the matches if is a pivotal story and update the url
-  const updatedChangelog = await replaceAsync(
-    content,
-    pivotalTagRegex,
-    replacePivotalUrl
-  );
-
-  // write the new modified changelog
-  fs.writeFileSync("CHANGELOG.md", updatedChangelog);
+  return await replaceAsync(content, pivotalTagRegex, replacePivotalUrl);
 }
 
 /**
@@ -88,7 +99,8 @@ getStory = storyId =>
     });
   });
 
-// Execute the script to find the pivotal stories id in order to associate the right url in the changelog
-replacePivotalStories()
+// Execute the script to find the pivotal stories and jira ticket id in order to associate
+// the right url in the changelog
+addTasksUrls()
   .then(() => console.log("done"))
   .catch(ex => console.log(ex));
