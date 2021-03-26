@@ -1,7 +1,8 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { Either, isLeft, isRight } from "fp-ts/lib/Either";
+import { isLeft, isRight } from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { GenericTicket, GenericTicketType } from "../common/ticket/types";
+import { GenericTicketRetrievalResults } from "./utils/titleParser";
 
 declare const danger: DangerDSLType;
 
@@ -72,7 +73,7 @@ const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
  * @param foundTicket
  */
 export const commentPrWithTicketsInfo = (
-  foundTicket: ReadonlyArray<Either<Error | Errors, GenericTicket>>
+  foundTicket: GenericTicketRetrievalResults
 ) => {
   if (foundTicket.length === 0) {
     warningNoTicket();

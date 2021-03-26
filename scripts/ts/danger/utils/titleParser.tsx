@@ -14,17 +14,28 @@ import {
 
 const jiraRegex = /\[([A-Z0-9]+-\d+(,[A-Z0-9]+-\d+)*)]\s.+/;
 
-export const prTitleContainsJiraIds = (title: string) =>
-  title.match(jiraRegex) !== null;
+export type GenericTicketRetrievalResults = ReadonlyArray<
+  Either<Error | Errors, GenericTicket>
+>;
 
+/**
+ * Extracts Jira ticket ids from the pr title (if any)
+ * @param title
+ */
 export const getJiraIdFromPrTitle = (
   title: string
 ): Option<ReadonlyArray<string>> =>
   fromNullable(title.match(jiraRegex)).map(a => a[1].split(","));
 
+/**
+ * Try to retrieve Jira tickets (or Pivotal stories as fallback) from pr title
+ * and transforms them into {@link GenericTicket}
+ * ⚠️ Mixed Jira and Pivotal id in the pr title are not supported ⚠️
+ * @param title
+ */
 export const getTicketsFromTitle = async (
   title: string
-): Promise<ReadonlyArray<Either<Error | Errors, GenericTicket>>> => {
+): Promise<GenericTicketRetrievalResults> => {
   const maybeJiraId = await getJiraIdFromPrTitle(title)
     .map(getJiraTickets)
     .toUndefined();

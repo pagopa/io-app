@@ -10,7 +10,7 @@ const username = process.env.JIRA_USERNAME;
 const password = process.env.JIRA_PASSWORD;
 
 /**
- * Http code to retrieve the remote representation for the JiraTicket
+ * Networking code to retrieve the remote representation for the JiraTicket
  * @param id
  */
 const retrieveRawJiraTicket = async (id: string) => {

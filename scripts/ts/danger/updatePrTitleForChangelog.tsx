@@ -6,7 +6,7 @@ import {
   getChangelogPrefixByStories,
   getChangelogScope
 } from "./utils/changelog";
-import { getTicketsFromTitle } from "./utils/titleParser";
+import { GenericTicketRetrievalResults } from "./utils/titleParser";
 
 declare const danger: DangerDSLType;
 export declare function warn(message: string): void;
@@ -18,10 +18,10 @@ const multipleTypesWarning =
 /**
  * Append the changelog tag and scope to the pull request title
  */
-export const updatePrTitleForChangelog = async () => {
-  const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
-
-  const foundTicket = associatedStories.filter(isRight).map(x => x.value);
+export const updatePrTitleForChangelog = (
+  tickets: GenericTicketRetrievalResults
+) => {
+  const foundTicket = tickets.filter(isRight).map(x => x.value);
 
   if (!allStoriesSameType(foundTicket)) {
     warn(multipleTypesWarning);
