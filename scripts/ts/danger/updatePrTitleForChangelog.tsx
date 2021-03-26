@@ -59,14 +59,16 @@ export const updatePrTitleForChangelog = async (
   });
 
   // Ensure the first char after the ticket id is uppercase
+  // [JIRA-12] pr title -> [JIRA-12] Pr title
   const titleSplitter = new RegExp(/(\[.*]\s*)(.+)/g);
   const splittingResults = titleSplitter.exec(title);
-  const upperCaseTitle = splittingResults
-    ? `${splittingResults[1]}${
-        splittingResults[2].charAt(0).toUpperCase() +
-        splittingResults[2].slice(1)
-      }`
-    : title;
+  const upperCaseTitle =
+    splittingResults && splittingResults.length === 3
+      ? `${splittingResults[1]}${
+          splittingResults[2].charAt(0).toUpperCase() +
+          splittingResults[2].slice(1)
+        }`
+      : title;
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
