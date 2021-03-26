@@ -8,9 +8,9 @@ import {
   allStoriesSameType,
   getChangelogPrefixByStories,
   getChangelogScope
-} from "./scripts/changelog/ts/changelog";
-import { ticketDanger } from "./scripts/changelog/ts/checkDanger";
-import { getTicketsFromTitle } from "./scripts/changelog/ts/story/titleParser";
+} from "./scripts/ts/danger/pr/changelog";
+import { ticketDanger } from "./scripts/ts/danger/checkDanger";
+import { getTicketsFromTitle } from "./scripts/ts/danger/pr/titleParser";
 
 declare const danger: DangerDSLType;
 

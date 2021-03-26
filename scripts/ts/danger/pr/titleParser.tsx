@@ -5,12 +5,12 @@ import {
 import { Either, left, right } from "fp-ts/lib/Either";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { Errors } from "io-ts";
-import { getJiraTickets } from "./jira";
+import { getJiraTickets } from "../../ticket/jira";
 import {
   fromJiraToGenericTicket,
   fromPivotalToGenericTicket,
   GenericTicket
-} from "./types";
+} from "../../ticket/types";
 
 const jiraRegex = /\[([A-Z0-9]+-\d+(,[A-Z0-9]+-\d+)*)]\s.+/;
 

@@ -10,8 +10,11 @@ import {
   singleAndroidLabelStory,
   singleEpicBpdStory
 } from "../__mocks__/storyMock";
-import { getChangelogScope, getStoryChangelogScope } from "../changelog";
-import { fromPivotalToGenericTicket } from "../story/types";
+import {
+  getChangelogScope,
+  getStoryChangelogScope
+} from "../danger/pr/changelog";
+import { fromPivotalToGenericTicket } from "../ticket/types";
 
 describe("Test pivotal Utility", () => {
   it("getStoryChangelogScope on a story without labels should return Right none", () => {
