@@ -54,7 +54,7 @@ const abiConfigurationEnabled: CoBadgeServices = {
 
 describe("Test behaviour of the CoBadgeStartScreen", () => {
   jest.useFakeTimers();
-  it("With the default state, the screen should render CoBadgeChosenBankScreen without Abi", () => {
+  it("With the default state, the screen should render LoadingErrorComponent if the abiList is different from remoteReady", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
@@ -66,7 +66,7 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
 
     const testComponent = renderCoBadgeScreen(store);
 
-    expect(isAllBankScreen(testComponent)).toBe(true);
+    expect(isAbiListLoadingError(testComponent)).toBe(true);
   });
   it("With the configuration loading and a specific abi, the screen should render LoadAbiConfiguration (loading state)", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -183,22 +183,18 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
     // The user should see the unavailable screen
     expect(isUnavailableScreen(testComponent)).toBe(true);
   });
-  it("When receive a configuration with an abi enabled, the screen should render CoBadgeChosenBankScreen", () => {
+  it("When receive a configuration with an abi enabled, and the abiList is remoteReady the screen should render CoBadgeChosenBankScreen", () => {
     const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
-
+    console.log("step 1 ------------------------------");
     store.dispatch(
       loadCoBadgeAbiConfiguration.success(abiConfigurationEnabled)
     );
-    // The user should see the single bank screen
-    expect(isCoBadgeChosenSingleBankScreen(testComponent)).toBe(true);
-
+    // store.dispatch(loadAbi.failure(new Error()));
+    console.log("step 2 ------------------------------");
+    console.log(JSON.stringify(testComponent.toJSON()));
     // if the selected abi is not in the abi list, the user will see a generic text:
-    expect(
-      testComponent.queryByText(
-        I18n.t("wallet.searchAbi.cobadge.description.text2")
-      )
-    ).toBeTruthy();
-
+    expect(isAbiListLoadingError(testComponent)).toBe(true);
+    console.log("step 3 ------------------------------");
     const bankName = "abiBankName";
     store.dispatch(
       loadAbi.success({ data: [{ abi: abiTestId, name: bankName }] })
@@ -207,6 +203,8 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
     // if the selected abi is in the abi list,
     // the user will see the name of the bank instead of the generic "all bank"
     // The name displayed to the user is taken from abiListSelector
+    // The user should see the single bank screen
+    expect(isCoBadgeChosenSingleBankScreen(testComponent)).toBe(true);
     expect(testComponent.queryByText(bankName)).toBeTruthy();
   });
   it("When change the configuration, CoBadgeChosenBankScreen should update (check memoization)", () => {
@@ -256,11 +254,11 @@ const renderCoBadgeScreen = (store: Store<GlobalState, Action>) =>
     store
   );
 
-const isAllBankScreen = (component: RenderAPI) =>
-  component.queryByTestId("CoBadgeChosenBankScreenAll") !== null &&
-  component.queryByText(
-    I18n.t("wallet.searchAbi.cobadge.description.text2")
-  ) !== null;
+// const isAllBankScreen = (component: RenderAPI) =>
+//   component.queryByTestId("CoBadgeChosenBankScreenAll") !== null &&
+//   component.queryByText(
+//     I18n.t("wallet.searchAbi.cobadge.description.text2")
+//   ) !== null;
 
 const isLoadingScreen = (component: RenderAPI) =>
   component.queryByTestId("LoadAbiConfiguration") !== null;
@@ -273,3 +271,6 @@ const isUnavailableScreen = (component: RenderAPI) =>
 
 const isCoBadgeChosenSingleBankScreen = (component: RenderAPI) =>
   component.queryByTestId("CoBadgeChosenBankScreenSingleBank") !== null;
+
+const isAbiListLoadingError = (component: RenderAPI) =>
+  component.queryByTestId("abiListLoadingError") !== null;
