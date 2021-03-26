@@ -1,6 +1,6 @@
 import { Either, left, Right, right } from "fp-ts/lib/Either";
 import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
-import { GenericTicket, GenericTicketType } from "../../ticket/types";
+import { GenericTicket, GenericTicketType } from "./story/types";
 
 const storyTag = new Map<GenericTicketType, string>([
   ["feat", "feat"],
