@@ -5,7 +5,7 @@ import { PivotalStory, PivotalStoryType } from "./pivotal/types";
 export type GenericTicketType = "feat" | "fix" | "chore";
 
 /**
- * A generic representation of a ticket, independent of the platform used
+ * A generic representation of a ticket, platform independent
  */
 export type GenericTicket = {
   id: string;
