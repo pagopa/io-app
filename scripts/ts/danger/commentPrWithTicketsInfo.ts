@@ -14,6 +14,9 @@ const StoryEmoji: Record<GenericTicketType, string> = {
   chore: "⚙️"
 };
 
+/**
+ * Display how should be used the Jira / Pivotal id in the pr title
+ */
 const warningNoTicket = () => {
   warn(
     "Please include a Pivotal story or Jira ticket at the beginning of the PR title"
@@ -28,7 +31,10 @@ const warningNoTicket = () => {
   * multiple stories: \`[PROJID-1,PROJID-2,PROJID-3] my PR title\`
     `);
 };
-
+/**
+ * Comments with the ticket type, id and title
+ * @param ticket
+ */
 const renderTicket = (ticket: GenericTicket) =>
   `${StoryEmoji[ticket.type]} [${ticket.idPrefix ? ticket.idPrefix : ""}${
     ticket.id
@@ -47,6 +53,10 @@ ${ticketList
   .join("\n")}\n`);
 };
 
+/**
+ * Comments with the failures details obtained during the retrieval
+ * @param errors
+ */
 const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
   errors.map(e =>
     warn(
@@ -57,7 +67,11 @@ const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
   );
 };
 
-export const ticketDanger = (
+/**
+ * Uses foundTicket to create a pr comment with the related information
+ * @param foundTicket
+ */
+export const commentPrWithTicketsInfo = (
   foundTicket: ReadonlyArray<Either<Error | Errors, GenericTicket>>
 ) => {
   if (foundTicket.length === 0) {

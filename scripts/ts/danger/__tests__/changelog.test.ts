@@ -10,7 +10,7 @@ import {
   singleAndroidLabelStory,
   singleEpicBpdStory
 } from "../__mocks__/storyMock";
-import { getChangelogScope, getStoryChangelogScope } from "../changelog";
+import { getChangelogScope, getStoryChangelogScope } from "../utils/changelog";
 import { fromPivotalToGenericTicket } from "../../common/ticket/types";
 
 describe("Test pivotal Utility", () => {
