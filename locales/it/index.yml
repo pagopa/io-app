@@ -63,6 +63,11 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    inputLabel: Intestazione
+    description: Descrizione
+    date_field: Due cifre per il mese, due per l'anno
+    threeDigits: 3 cifre	
+    fourDigits: 4 cifre	
     date_format: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso

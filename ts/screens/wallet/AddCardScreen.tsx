@@ -52,6 +52,7 @@ import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -124,7 +125,8 @@ const primaryButtonPropsFromState = (
   return card.fold<BlockButtonProps>(
     {
       ...baseButtonProps,
-      disabled: true
+      disabled: true,
+      accessibilityRole: "button"
     },
     c => ({
       ...baseButtonProps,
@@ -165,6 +167,24 @@ const AddCardScreen: React.FC<Props> = props => {
     title: I18n.t("global.buttons.back")
   };
 
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+  const placeholderCard = isScreenReaderEnabled
+    ? ""
+    : I18n.t("wallet.dummyCard.values.pan");
+  const placeholderHolder = isScreenReaderEnabled
+    ? ""
+    : I18n.t("wallet.dummyCard.values.holder");
+  const placeholderDate = isScreenReaderEnabled
+    ? ""
+    : I18n.t("wallet.dummyCard.values.expirationDate");
+  const placeholderSecureCode = isScreenReaderEnabled
+    ? ""
+    : I18n.t(
+        detectedBrand.cvvLength === 4
+          ? "wallet.dummyCard.values.securityCode4D"
+          : "wallet.dummyCard.values.securityCode"
+      );
+
   return (
     <BaseScreenComponent
       shouldAskForScreenshotWithInitialValue={false}
@@ -193,9 +213,10 @@ const AddCardScreen: React.FC<Props> = props => {
                 ? undefined
                 : isValidCardHolder(creditCard.holder)
             }
+            accessibilityHint={I18n.t("wallet.dummyCard.labels.holder.label")}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              placeholder: placeholderHolder,
               autoCapitalize: "words",
               keyboardType: "default",
               returnKeyType: "done",
@@ -212,9 +233,10 @@ const AddCardScreen: React.FC<Props> = props => {
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
             isValid={isValidPan(creditCard.pan)}
+            accessibilityHint={I18n.t("wallet.dummyCard.labels.pan")}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.pan"),
+              placeholder: placeholderCard,
               keyboardType: "numeric",
               returnKeyType: "done",
               maxLength: 23,
@@ -241,9 +263,13 @@ const AddCardScreen: React.FC<Props> = props => {
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
                 isValid={isValidExpirationDate(creditCard.expirationDate)}
+                accessibilityLabel={I18n.t(
+                  "wallet.dummyCard.labels.expirationDate"
+                )}
+                accessibilityHint={I18n.t("global.accessibility.date_field")}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
-                  placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
+                  placeholder: placeholderDate,
                   keyboardType: "numeric",
                   returnKeyType: "done",
                   type: "custom",
@@ -265,13 +291,19 @@ const AddCardScreen: React.FC<Props> = props => {
                 )}
                 icon="io-lucchetto"
                 isValid={isValidSecurityCode(creditCard.securityCode)}
+                accessibilityLabel={I18n.t(
+                  detectedBrand.cvvLength === 4
+                    ? "wallet.dummyCard.labels.securityCode4D"
+                    : "wallet.dummyCard.labels.securityCode"
+                )}
+                accessibilityHint={I18n.t(
+                  detectedBrand.cvvLength === 4
+                    ? "global.accessibility.fourDigits"
+                    : "global.accessibility.threeDigits"
+                )}
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
-                  placeholder: I18n.t(
-                    detectedBrand.cvvLength === 4
-                      ? "wallet.dummyCard.values.securityCode4D"
-                      : "wallet.dummyCard.values.securityCode"
-                  ),
+                  placeholder: placeholderSecureCode,
                   returnKeyType: "done",
                   maxLength: 4,
                   type: "custom",
@@ -288,11 +320,21 @@ const AddCardScreen: React.FC<Props> = props => {
 
           <View spacer={true} />
 
-          <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+          <Link
+            accessibilityRole="link"
+            accessibilityLabel={I18n.t("wallet.missingDataCTA")}
+            onPress={present}
+          >
+            {I18n.t("wallet.missingDataCTA")}
+          </Link>
 
           <View spacer />
 
-          <Link onPress={openSupportedCardsPage}>
+          <Link
+            accessibilityRole="link"
+            accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
+            onPress={openSupportedCardsPage}
+          >
             {I18n.t("wallet.openAcceptedCardsPageCTA")}
           </Link>
         </Content>
