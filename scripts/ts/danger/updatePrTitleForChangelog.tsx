@@ -55,7 +55,7 @@ export const updatePrTitleForChangelog = (
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${scope}: ${title}`
+      title: `${tag}${scope}: ${title.charAt(0).toUpperCase() + title.slice(1)}`
     })
   );
 };
