@@ -1,7 +1,4 @@
 import * as t from "io-ts";
-import { IUnitTag } from "italia-ts-commons/lib/units";
-
-export type JiraKey = string & IUnitTag<"JiraKey">;
 
 const JiraIssueType = t.union([
   t.literal("Epic"),
@@ -43,6 +40,11 @@ const FieldsP = t.partial({
 
 const Fields = t.intersection([FieldsR, FieldsP], "Fields");
 
+/**
+ * The required fields from the remote response.
+ * Not all the fields are used, see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/#api-rest-api-3-issue-issueidorkey-get
+ * for more information
+ */
 export const RemoteJiraTicket = t.interface({
   key: t.string,
   fields: Fields

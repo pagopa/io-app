@@ -1,5 +1,5 @@
-import { toError } from "fp-ts/lib/Either";
-import { tryCatch } from "fp-ts/lib/TaskEither";
+import { Either, toError } from "fp-ts/lib/Either";
+import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import { Errors } from "io-ts";
 import fetch from "node-fetch";
 import { RemoteJiraTicket } from "./types";
@@ -13,7 +13,7 @@ const password = process.env.JIRA_PASSWORD;
  * Networking code to retrieve the remote representation for the JiraTicket
  * @param id
  */
-const retrieveRawJiraTicket = async (id: string) => {
+const retrieveRawJiraTicket = async (id: string): Promise<unknown> => {
   const url = new URL(id, jiraOrgBaseUrl);
   const res = await fetch(url, {
     method: "GET",
@@ -30,22 +30,31 @@ const retrieveRawJiraTicket = async (id: string) => {
   return await res.json();
 };
 
-const retrieveRawJiraTicketTask = (id: string) =>
+const retrieveRawJiraTicketTask = (id: string): TaskEither<Error, unknown> =>
   tryCatch(() => retrieveRawJiraTicket(id), toError);
 
 /**
  * Ensure that the remote payload have the required fields
  * @param payload
  */
-const decodeRemoteJiraTicket = (payload: any) =>
-  RemoteJiraTicket.decode(payload);
+const decodeRemoteJiraTicket = (
+  payload: any
+): Either<Errors, RemoteJiraTicket> => RemoteJiraTicket.decode(payload);
 
-const getJiraTicket = async (jiraId: string) =>
+const getJiraTicket = async (
+  jiraId: string
+): Promise<Either<Errors | Error, RemoteJiraTicket>> =>
   (
     await retrieveRawJiraTicketTask(jiraId)
       .mapLeft<Errors | Error>(e => e)
       .run()
   ).chain(decodeRemoteJiraTicket);
 
-export const getJiraTickets = async (jiraIds: ReadonlyArray<string>) =>
+/**
+ * Retrieve {@link RemoteJiraTicket} using jiraIds as input
+ * @param jiraIds
+ */
+export const getJiraTickets = async (
+  jiraIds: ReadonlyArray<string>
+): Promise<ReadonlyArray<Either<Errors | Error, RemoteJiraTicket>>> =>
   await Promise.all(jiraIds.map(getJiraTicket));

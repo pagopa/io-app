@@ -1,5 +1,5 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { isRight } from "fp-ts/lib/Either";
+import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import {
   allStoriesSameType,
@@ -15,12 +15,20 @@ const multipleTypesWarning =
   "Multiple stories with different types are associated with this Pull request.\n" +
   "Only one tag will be added, following the order: `feature > bug > chore`";
 
+const atLeastOneLeftTicket =
+  "An error occurred in the recovery of a ticket," +
+  " the title of the pull request is updated taking into account only the recovered tickets ";
+
 /**
- * Append the changelog tag and scope to the pull request title
+ * Append the changelog tag and scope to the pull request title, based on the story found
  */
 export const updatePrTitleForChangelog = (
   tickets: GenericTicketRetrievalResults
 ) => {
+  if (tickets.some(isLeft)) {
+    warn(atLeastOneLeftTicket);
+  }
+
   const foundTicket = tickets.filter(isRight).map(x => x.value);
 
   if (!allStoriesSameType(foundTicket)) {

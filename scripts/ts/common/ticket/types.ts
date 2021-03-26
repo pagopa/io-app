@@ -4,17 +4,27 @@ import { PivotalStory, PivotalStoryType } from "./pivotal/types";
 
 export type GenericTicketType = "feat" | "fix" | "chore";
 
+/**
+ * A generic representation of a ticket, independent of the platform used
+ */
 export type GenericTicket = {
   id: string;
+  // a prefix that should be used to represent the ticket id
   idPrefix?: string;
   title: string;
   type: GenericTicketType;
   projectId: string;
   tags: ReadonlyArray<string>;
+  // the url to reach the ticket
   url: string;
+  // is a subtask linked with a father ticket?
   parent?: GenericTicket;
 };
 
+/**
+ * From {@link JiraIssueType} to {@link GenericTicketType}
+ * @param jiraType
+ */
 const convertJiraTypeToGeneric = (
   jiraType: JiraIssueType
 ): GenericTicketType => {
@@ -32,6 +42,10 @@ const convertJiraTypeToGeneric = (
   }
 };
 
+/**
+ * Extracts the Jira ticket type. If is a subtask, use the father ticket for the type
+ * @param jira
+ */
 const getTypeFromJira = (jira: RemoteJiraTicket) => {
   // if this is a subtask with a parent, the type is the type of the parent
   if (jira.fields.parent !== undefined && jira.fields.issuetype.subtask) {
@@ -40,6 +54,10 @@ const getTypeFromJira = (jira: RemoteJiraTicket) => {
   return convertJiraTypeToGeneric(jira.fields.issuetype.name);
 };
 
+/**
+ * From {@link RemoteJiraTicket} to {@link GenericTicket}
+ * @param jira
+ */
 export const fromJiraToGenericTicket = (
   jira: RemoteJiraTicket
 ): GenericTicket => ({
@@ -61,6 +79,10 @@ export const fromJiraToGenericTicket = (
     : undefined
 });
 
+/**
+ * From {@link PivotalStoryType} to {@link GenericTicketType}
+ * @param pivotalType
+ */
 const convertPivotalTypeToGeneric = (
   pivotalType: PivotalStoryType
 ): GenericTicketType => {
@@ -76,6 +98,10 @@ const convertPivotalTypeToGeneric = (
   }
 };
 
+/**
+ * From {@link PivotalStory} to {@link GenericTicket}
+ * @param pivotalStory
+ */
 export const fromPivotalToGenericTicket = (
   pivotalStory: PivotalStory
 ): GenericTicket => ({
