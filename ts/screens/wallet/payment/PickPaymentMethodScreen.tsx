@@ -6,7 +6,6 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { getMonoid } from "fp-ts/lib/Array";
 import { FlatList, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -79,8 +78,8 @@ const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const payableWallets = props.payableWallets();
-  const notPayableWallets = props.notPayableWallets();
+  const payableWallets = props.payableWallets;
+  const notPayableWallets = props.notPayableWallets;
 
   return (
     <BaseScreenComponent
@@ -166,6 +165,12 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   );
 };
 
+function getValueOrEmptyArray(
+  value: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
+): ReadonlyArray<PaymentMethod> {
+  return pot.getOrElse(value, []);
+}
+
 const mapStateToProps = (state: GlobalState) => {
   const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
   const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
@@ -175,22 +180,27 @@ const mapStateToProps = (state: GlobalState) => {
   const potPsps = state.wallet.payment.psps;
   const isLoading =
     pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
-  const visibleCreditCard = pot.getOrElse(potVisibleCreditCard, []).map(c => c);
-  const visibleBancomat = pot.getOrElse(potVisibleBancomat, []).map(b => b);
-  const visibleBPay = pot.getOrElse(potVisibleBPay, []).map(bP => bP);
-  const visibleSatispay = pot.getOrElse(potVisibleSatispay, []).map(s => s);
-  const visiblePrivative = pot.getOrElse(potVisiblePrivative, []).map(p => p);
-  const M = getMonoid<PaymentMethod>();
-  const visibleWallets = M.concat(visibleCreditCard, visibleBancomat)
-    .concat(visibleBPay)
-    .concat(visibleSatispay)
-    .concat(visiblePrivative);
+
+  const visibleWallets = [
+    potVisibleCreditCard,
+    potVisibleBancomat,
+    potVisibleBPay,
+    potVisibleSatispay,
+    potVisiblePrivative
+  ].reduce(
+    (
+      acc: ReadonlyArray<PaymentMethod>,
+      curr: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
+    ) => [...acc, ...getValueOrEmptyArray(curr)],
+    [] as ReadonlyArray<PaymentMethod>
+  );
+
   return {
     // Considering that the creditCardListVisibleInWalletSelector return
     // all the visible credit card we need to filter them in order to extract
     // only the cards that can pay on IO.
-    payableWallets: () => visibleWallets.filter(vPW => canMethodPay(vPW)),
-    notPayableWallets: () => visibleWallets.filter(vPW => !canMethodPay(vPW)),
+    payableWallets: visibleWallets.filter(vPW => canMethodPay(vPW)),
+    notPayableWallets: visibleWallets.filter(vPW => !canMethodPay(vPW)),
     isLoading,
     nameSurname: profileNameSurnameSelector(state)
   };
