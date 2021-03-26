@@ -50,10 +50,12 @@ export const updatePrTitleForChangelog = async (
     .map(matches => matches.pop() || danger.github.pr.title)
     .getOrElse(danger.github.pr.title);
 
+  const labelScope = scope.replace("(", "").replace(")", "");
   await danger.github.utils.createOrAddLabel({
-    name: scope.replace("(", "").replace(")", ""),
-    color: "#000FFF",
-    description: scope
+    name: labelScope,
+    // The color is not used and can be customized from the "label" tab in the github page
+    color: "#FFFFFF",
+    description: labelScope
   });
 
   maybePrTag.map(tag =>
