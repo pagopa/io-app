@@ -125,6 +125,13 @@ export class DateFromISOStringType extends t.Type<Date, string, unknown> {
 
 export const DateFromISOString: DateFromISOStringType = new DateFromISOStringType();
 
+/**
+ *
+ * It provides, given 2 strings that represent the year and the month, a single string in the format
+ * specified by the locales (IT: MM/YY, EN: MM/YY) or undefined if one of the inputs is not provided
+ * @param fullYear
+ * @param month
+ */
 export const getTranslatedShortNumericMonthYear = (
   fullYear?: string,
   month?: string
