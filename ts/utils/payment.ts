@@ -324,13 +324,13 @@ export const getBancomatOrCreditCardPickMethodDescription = (
     | PrivativePaymentMethod
     | BancomatPaymentMethod
 ) => {
-  const translatedExpiryDate = getTranslatedShortNumericMonthYear(
+  const translatedExpireDate = getTranslatedShortNumericMonthYear(
     bancomatOrCreditCard.info.expireYear,
     bancomatOrCreditCard.info.expireMonth
   );
-  return translatedExpiryDate
+  return translatedExpireDate
     ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
-        firstElement: translatedExpiryDate,
+        firstElement: translatedExpireDate,
         secondElement: bancomatOrCreditCard.info.holder
       })
     : fromNullable(bancomatOrCreditCard.info.holder).getOrElse("");
