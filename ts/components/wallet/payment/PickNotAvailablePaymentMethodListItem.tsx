@@ -16,7 +16,7 @@ import IconFont from "../../ui/IconFont";
 import I18n from "../../../i18n";
 import { IOColors } from "../../core/variables/IOColors";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import { getBancomatOrCreditCardPickMethodDescription } from "../../../utils/payment";
+import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -75,9 +75,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: getCardIconFromBrandLogo(paymentMethod.info),
         title: paymentMethod.caption,
-        description: getBancomatOrCreditCardPickMethodDescription(
-          paymentMethod
-        ),
+        description: getPickPaymentMethodDescription(paymentMethod),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };
@@ -85,9 +83,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: pagoBancomatLogo,
         title: paymentMethod.caption,
-        description: getBancomatOrCreditCardPickMethodDescription(
-          paymentMethod
-        ),
+        description: getPickPaymentMethodDescription(paymentMethod),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };
@@ -111,9 +107,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: paymentMethod.icon,
         title: paymentMethod.caption,
-        description: getBancomatOrCreditCardPickMethodDescription(
-          paymentMethod
-        ),
+        description: getPickPaymentMethodDescription(paymentMethod),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };

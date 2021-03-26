@@ -318,7 +318,7 @@ export const getPaymentOutcomeCodeDescription = (
   return none;
 };
 
-export const getBancomatOrCreditCardPickMethodDescription = (
+export const getPickPaymentMethodDescription = (
   bancomatOrCreditCard:
     | CreditCardPaymentMethod
     | PrivativePaymentMethod
