@@ -941,7 +941,7 @@ wallet:
           body: "Siamo al lavoro per risolvere il problema."
       addPrivativeCardNumber:
         title: "Inserisci il numero carta"
-        body: "Digita le cifre riportate. IO verificherà se è associata al tuo codice fiscale."
+        body: "Digita le cifre riportate sul fronte. IO verificherà se la carta è associata al tuo codice fiscale."
         disclaimer:
           text1: "Proseguendo accetti l’"
           text2: "informativa sul trattamento dei dati personali"
