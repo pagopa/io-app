@@ -57,13 +57,20 @@ export const updatePrTitleForChangelog = async (
     color: "#FFFFFF",
     description: labelScope
   });
+  const upperCaseTitle = title.charAt(0).toUpperCase() + title.slice(1);
+  // eslint-disable-next-line no-console
+  console.log(title);
+  // eslint-disable-next-line no-console
+  console.log("****");
+  // eslint-disable-next-line no-console
+  console.log(upperCaseTitle);
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
       owner: danger.github.thisPR.owner,
       repo: danger.github.thisPR.repo,
       pull_number: danger.github.thisPR.number,
-      title: `${tag}${scope}: ${title.charAt(0).toUpperCase() + title.slice(1)}`
+      title: `${tag}${scope}: ${upperCaseTitle}`
     })
   );
 };
