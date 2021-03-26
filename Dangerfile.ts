@@ -10,7 +10,7 @@ declare const danger: DangerDSLType;
 const mainDanger = async () => {
   const associatedStories = await getTicketsFromTitle(danger.github.pr.title);
   commentPrWithTicketsInfo(associatedStories);
-  updatePrTitleForChangelog(associatedStories);
+  await updatePrTitleForChangelog(associatedStories);
 };
 
 void mainDanger().then().catch();

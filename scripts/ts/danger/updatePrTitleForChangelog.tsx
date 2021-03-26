@@ -22,7 +22,7 @@ const atLeastOneLeftTicket =
 /**
  * Append the changelog tag and scope to the pull request title, based on the story found
  */
-export const updatePrTitleForChangelog = (
+export const updatePrTitleForChangelog = async (
   tickets: GenericTicketRetrievalResults
 ) => {
   if (tickets.some(isLeft)) {
@@ -49,6 +49,12 @@ export const updatePrTitleForChangelog = (
   const title = fromNullable(danger.github.pr.title.match(cleanChangelogRegex))
     .map(matches => matches.pop() || danger.github.pr.title)
     .getOrElse(danger.github.pr.title);
+
+  await danger.github.utils.createOrAddLabel({
+    name: scope,
+    color: "#000FFF",
+    description: scope
+  });
 
   maybePrTag.map(tag =>
     danger.github.api.pulls.update({
