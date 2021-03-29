@@ -535,8 +535,6 @@ function* abortRunningPaymentSaga() {
   yield put(runDeleteActivePaymentSaga());
   // navigate to entrypoint of payment or wallet home
   yield put(backToEntrypointPayment());
-  // reset the payment state
-  yield put(paymentInitializeState());
 }
 
 // this is a shared DeferredPromise used to stop polling when user aborts a running payment
