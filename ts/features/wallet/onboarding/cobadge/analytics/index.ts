@@ -12,12 +12,13 @@ import {
   walletAddCoBadgeBack,
   walletAddCoBadgeCancel,
   walletAddCoBadgeCompleted,
+  walletAddCoBadgeFailure,
   walletAddCoBadgeStart
 } from "../store/actions";
 
 export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(walletAddCoBadgeStart):
       return mp.track(action.type, {
@@ -44,6 +45,11 @@ export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(searchUserCoBadge.failure):
       return mp.track(action.type, {
         reason: getNetworkErrorMessage(action.payload)
+      });
+
+    case getType(walletAddCoBadgeFailure):
+      return mp.track(action.type, {
+        reason: action.payload
       });
   }
   return Promise.resolve();

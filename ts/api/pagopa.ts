@@ -65,8 +65,6 @@ import {
   GetWalletsUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
-  paySslUsingPOSTDecoder,
-  PaySslUsingPOSTT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
@@ -371,7 +369,6 @@ const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
 };
 
 // Remove this patch once SIA has fixed the spec.
-// @see https://www.pivotaltracker.com/story/show/161113136
 type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   AddResponseType<AddWalletCreditCardUsingPOSTT, 422, PagoPAErrorResponse>,
   200,
@@ -388,21 +385,6 @@ const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
     addWalletCreditCardUsingPOSTDecoder(WalletResponse),
     ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
   )
-};
-
-type PayUsingPOSTTExtra = MapResponseType<
-  PaySslUsingPOSTT,
-  200,
-  TransactionResponse
->;
-
-const postPayment: PayUsingPOSTTExtra = {
-  method: "post",
-  url: ({ id }) => `/v1/payments/${id}/actions/pay`,
-  query: () => ({}),
-  body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: paySslUsingPOSTDecoder(TransactionResponse)
 };
 
 const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
@@ -523,7 +505,10 @@ const getCobadgePans: GetCobadgesUsingGETT = {
     return `/v1/cobadge/pans${abiParameter}`;
   },
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeader,
+  headers: p => {
+    const authBearer = ParamAuthorizationBearerHeader(p);
+    return p.PanCode ? { ...authBearer, PanCode: p.PanCode } : authBearer;
+  },
   response_decoder: getCobadgesUsingGETDefaultDecoder()
 };
 
@@ -712,18 +697,6 @@ export function PaymentManagerClient(
       )({
         id
       }),
-    postPayment: (
-      id: TypeofApiParams<PaySslUsingPOSTT>["id"],
-      payRequest: TypeofApiParams<PaySslUsingPOSTT>["payRequest"]
-    ) =>
-      flip(
-        withPaymentManagerToken(
-          createFetchRequestForApi(postPayment, altOptions)
-        )
-      )({
-        id,
-        payRequest
-      }),
     deletePayment: (
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
@@ -796,12 +769,12 @@ export function PaymentManagerClient(
           createFetchRequestForApi(addBPayToWallet, altOptions)
         )
       )({ bPayRequest }),
-    getCobadgePans: (abiCode: string | undefined) =>
+    getCobadgePans: (abiCode: string | undefined, panCode?: string) =>
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(getCobadgePans, altOptions)
         )
-      )({ abiCode }),
+      )({ abiCode, PanCode: panCode }),
     searchCobadgePans: (searchRequestId: string) =>
       flip(
         withPaymentManagerToken(

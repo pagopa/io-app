@@ -2,14 +2,13 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
-import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { NavigationActions, NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -17,15 +16,8 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import ExpiredCardAdvice from "../../features/wallet/component/ExpiredCardAdvice";
 import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
 import I18n from "../../i18n";
-
-import {
-  navigateToWalletAddCreditCard,
-  navigateToWalletHome,
-  navigateToWalletList
-} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
@@ -33,13 +25,22 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  favoriteWalletIdSelector,
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
-import { Wallet } from "../../types/pagopa";
-import { showToast } from "../../utils/showToast";
-import { handleSetFavourite, isExpiredCard } from "../../utils/wallet";
 import variables from "../../theme/variables";
+import { isRawCreditCard, Wallet } from "../../types/pagopa";
+import { showToast } from "../../utils/showToast";
+import { FOUR_UNICODE_CIRCLES, handleSetFavourite } from "../../utils/wallet";
+import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
+import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
+import defaultCardIcon from "../../../img/wallet/cards-icons/unknown.png";
+import { getTitleFromCard } from "../../utils/paymentMethod";
+import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -87,8 +88,11 @@ const styles = StyleSheet.create({
     zIndex: Platform.OS === "android" ? 35 : 7,
     elevation: Platform.OS === "android" ? 35 : 7
   },
+  cancelButton: {
+    borderColor: IOColors.red,
+    width: "100%"
+  }
 });
- 
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletCardTransaction.contextualHelpTitle",
@@ -97,113 +101,134 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const HEADER_HEIGHT = 250;
 
-class TransactionsScreen extends React.Component<Props> {
-  private headerContent(
-    selectedWallet: Wallet,
-    isFavorite: pot.Pot<boolean, Error>
-  ) {
-    return (
-      <React.Fragment>
-        <View style={styles.cardBox}>
-          <CardComponent
-            type={"Header"}
-            wallet={selectedWallet}
-            hideFavoriteIcon={false}
-            hideMenu={false}
-            isFavorite={isFavorite}
-            onSetFavorite={(willBeFavorite: boolean) =>
-              handleSetFavourite(willBeFavorite, () =>
-                this.props.setFavoriteWallet(selectedWallet.idWallet)
-              )
-            }
-            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-          />
-        </View>
-      </React.Fragment>
-    );
-  }
+const headerContent = (
+  selectedWallet: Wallet,
+  isFavorite: pot.Pot<boolean, Error>,
+  setFavorite: (walletId?: number) => void,
+  onDelete: (walletId: number) => void
+) => (
+  <>
+    <View style={styles.cardBox}>
+      <CardComponent
+        type={"Header"}
+        wallet={selectedWallet}
+        hideFavoriteIcon={false}
+        hideMenu={false}
+        isFavorite={isFavorite}
+        onSetFavorite={(willBeFavorite: boolean) =>
+          handleSetFavourite(willBeFavorite, () =>
+            setFavorite(selectedWallet.idWallet)
+          )
+        }
+        onDelete={() => onDelete(selectedWallet.idWallet)}
+      />
+    </View>
+  </>
+);
 
-  public render(): React.ReactNode {
-    const selectedWallet = this.props.navigation.getParam("selectedWallet");
+const TransactionsScreen: React.FC<Props> = (props: Props) => {
+  const selectedWallet = props.navigation.getParam("selectedWallet");
 
-    const isFavorite = pot.map(
-      this.props.favoriteWallet,
-      _ => _ === selectedWallet.idWallet
-    );
+  const isFavorite = pot.map(
+    props.favoriteWalletId,
+    _ => _ === selectedWallet.idWallet
+  );
 
-    // to retro-compatibility purpose
-    const pm = pot.getOrElse(
-      pot.map(this.props.paymentMethods, pms =>
-        pms.find(pm => pm.idWallet === selectedWallet.idWallet)
-      ),
-      undefined
-    );
+  // to retro-compatibility purpose
+  const pm = pot.getOrElse(
+    pot.map(props.paymentMethods, pms =>
+      pms.find(pm => pm.idWallet === selectedWallet.idWallet)
+    ),
+    undefined
+  );
+  const { present } = useRemovePaymentMethodBottomSheet({
+    icon: selectedWallet.creditCard
+      ? getCardIconFromBrandLogo(selectedWallet.creditCard)
+      : defaultCardIcon,
+    caption:
+      selectedWallet.paymentMethod &&
+      isRawCreditCard(selectedWallet.paymentMethod)
+        ? getTitleFromCard(selectedWallet.paymentMethod)
+        : FOUR_UNICODE_CIRCLES
+  });
 
-    const cardIsExpired = selectedWallet.creditCard
-      ? isExpiredCard(selectedWallet.creditCard)
-      : false;
-
-    return (
-      <WalletLayout
-        title={I18n.t("wallet.paymentMethod")}
-        allowGoBack={true}
-        topContent={this.headerContent(selectedWallet, isFavorite)}
-        hideHeader={true}
-        hasDynamicSubHeader={true}
-        topContentHeight={HEADER_HEIGHT}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_transaction"]}
-      >
-        {pm && (
-          <>
-            <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} extralarge={true} />
-              {cardIsExpired ? (
-                <ExpiredCardAdvice
-                  navigateToAddCard={this.props.navigateToAddCard}
-                />
-              ) : (
-                <>
-                  <PaymentMethodCapabilities paymentMethod={pm} />
-                  <View spacer={true} />
-                  <ItemSeparatorComponent noPadded={true} />
-                </>
-              )}
-            </View>
-            <EdgeBorderComponent />
-          </>
-        )}
-      </WalletLayout>
-    );
-  }
-}
+  const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
+    <ButtonDefaultOpacity
+      bordered={true}
+      style={styles.cancelButton}
+      onPress={props.onPress}
+    >
+      <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
+    </ButtonDefaultOpacity>
+  );
+  return (
+    <WalletLayout
+      title={I18n.t("wallet.paymentMethod")}
+      allowGoBack={true}
+      topContent={headerContent(
+        selectedWallet,
+        isFavorite,
+        props.setFavoriteWallet,
+        props.deleteWallet
+      )}
+      hideHeader={true}
+      hasDynamicSubHeader={true}
+      topContentHeight={HEADER_HEIGHT}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_transaction"]}
+    >
+      {pm && (
+        <>
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} extralarge={true} />
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <FavoritePaymentMethodSwitch
+              isLoading={
+                pot.isLoading(props.favoriteWalletRequestStatus) ||
+                pot.isUpdating(props.favoriteWalletRequestStatus)
+              }
+              switchValue={pot.getOrElse(isFavorite, false)}
+              onValueChange={v =>
+                handleSetFavourite(v, () =>
+                  props.setFavoriteWallet(pm.idWallet)
+                )
+              }
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <DeletePaymentMethodButton
+              onPress={() =>
+                present(() => props.deleteWallet(selectedWallet.idWallet))
+              }
+            />
+          </View>
+          <EdgeBorderComponent />
+        </>
+      )}
+    </WalletLayout>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
-  favoriteWallet: getFavoriteWalletId(state),
+  favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
+  favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToAddCard: () =>
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: none
-      })
-    ),
-
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({
         walletId,
-        onSuccess: action => {
+        onSuccess: _ => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          if (action.payload.length > 0) {
-            dispatch(navigateToWalletList());
-          } else {
-            dispatch(navigateToWalletHome());
-          }
+          dispatch(NavigationActions.back());
         },
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");

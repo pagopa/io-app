@@ -74,6 +74,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.walletList.contextualHelpContent"
 };
 
+/**
+ * A legacy screen that should be removed
+ * @param props
+ * @constructor
+ * @deprecated This screen should not be used anymore
+ */
 const WalletsScreen: React.FunctionComponent<Props> = (props: Props) => {
   React.useEffect(() => {
     props.loadWallets();

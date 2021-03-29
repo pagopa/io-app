@@ -17,6 +17,7 @@ import PaymentMethodsList, {
 } from "../../components/wallet/PaymentMethodsList";
 import { bpdEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
+import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -82,7 +83,10 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
-    status: "incoming"
+    onPress: props.startAddPrivative,
+    status: props.navigation.getParam("inPayment").isNone()
+      ? "implemented"
+      : "incoming"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
@@ -168,6 +172,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => dispatch(navigateBack()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
+  startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
     dispatch(navigateToWalletAddDigitalPaymentMethod()),
   navigateToTransactionSummary: () => {

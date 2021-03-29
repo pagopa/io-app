@@ -26,6 +26,7 @@ import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {
+  onBack?: () => void;
   bonus: BonusAvailable;
   onConfirm?: () => void;
   onCancel?: () => void;
@@ -95,7 +96,8 @@ const extraMarkdownBodyHeight = 20;
 const getTosFooter = (
   maybeBonusTos: Option<string>,
   maybeRegulationUrl: Option<{ url: string; name: string }>,
-  handleModalPress: (tos: string) => void
+  handleModalPress: (tos: string) => void,
+  ctaText: string
 ) =>
   maybeBonusTos.fold(null, bT =>
     maybeRegulationUrl.fold(
@@ -132,6 +134,7 @@ const getTosFooter = (
             extraBodyHeight={extraMarkdownBodyHeight}
           >
             {I18n.t("bonus.termsAndConditionFooter", {
+              ctaText,
               regulationLink: rU.url,
               tosUrl: bT
             })}
@@ -217,7 +220,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.onBack ?? true}
       headerTitle={bonusTypeLocalizedContent.name}
       contextualHelpMarkdown={props.contextualHelpMarkdown}
       contextualHelp={props.contextualHelp}
@@ -261,7 +264,12 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           </Markdown>
           <View spacer={true} extralarge={true} />
           {isMarkdownLoaded && renderUrls()}
-          {getTosFooter(maybeBonusTos, maybeRegulationUrl, handleModalPress)}
+          {getTosFooter(
+            maybeBonusTos,
+            maybeRegulationUrl,
+            handleModalPress,
+            props.primaryCtaText
+          )}
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </Content>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}

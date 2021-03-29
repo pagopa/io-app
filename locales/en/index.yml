@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -377,8 +377,8 @@ profile:
       preferred_language:
         title: Favourite language
         subtitle: In which language do you want to use the application?
-        alert: 
-          title: Do you want to change the language to 
+        alert:
+          title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
     empty:
@@ -710,6 +710,11 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  abortWebView:
+    title: Do you want to stop the payment in progress?
+    confirm: Cancel the payment
+    cancel: Continue with payment
+    success: The payment was successfully canceled
   errorDetails: Details
   currentPsp: Payment will be handled by
   noPsp: You have yet to select a PSP
@@ -732,6 +737,7 @@ payment:
       enteCreditore: Payee institution
       causaleVersamento: Payment description
       dateAndTime: Date and time
+      outcomeCode: Outcome code
       onlyDate: Date
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
@@ -747,10 +753,13 @@ wallet:
   wallet: Wallet
   expiredCard: This payment method has expired. If you already have the new card, please add it to the wallet.
   refreshWallet: Refresh the Wallet
+  favourite:
+    setFavoriteTitle: Use as favorite
+    setFavoriteSubtitle: When you pay in-app, IO will automatically show this payment method
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
-  featured: Highlighted 
+  featured: Highlighted
   creditCard:
     onboardingAttempts:
       title: Attempts to onboard payment method
@@ -888,7 +897,8 @@ wallet:
         screenTitle: "Do you want to add this card?"
         label: "International circuit card {{current}} of {{length}}"
         blocked: "This card is blocked and can't be activated for Cashback. Please, contact the card issuer."
-        warning: "Check that the card number matches the one on your physical card."
+        warning1: "In some cases, the displayed data might be different from the data printed on the physical card: "
+        warning2: "if in doubt, contact your bank."
         loading: "We are adding your international circuit card\n\nPlease hold on..."
       chooseType:
         title: "Does your card allow you to shop online?"
@@ -903,13 +913,48 @@ wallet:
           unknown:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
+    privative:
+      headerTitle: "Add supermarket card"
+      choosePrivativeIssuer:
+        loading: "Loading settings\n\nPlease wait a few seconds"
+        title: "Choose your card brand"
+        body: "You can only add cards that allow you to pay in supermarkets."
+        koDisabled:
+          title: "This supermarket doesn't offer this feature yet"
+          body: "We are working to allow you to add your card soon."
+        koUnavailable:
+          title: "We're unable to contact the server"
+          body: "We are working to solve the problem."
+      addPrivativeCardNumber:
+        title: "Insert card number"
+        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
+        disclaimer:
+          text1: "By continuing you accept the"
+          text2: "information on the processing of personal data"
+      search:
+        loading: "We are verifying your card\n\nPlease wait"
+        koTimeout:
+          title: "It is currently impossible to verify your card"
+          body: "Please try again"
+        koNotFound:
+          title: "Sorry, there is an issue with this card"
+          body: "Try entering the number again or, alternatively, ask your supermarket customer service for help."
+          cta:
+            modifyCardNumber: "Change card number"
+        koServiceError:
+          title: "Sorry, we're unable to retrieve your card"
+          body: "Please try again later."
+      add:
+        screenTitle: "Do you want to add this card?"
+        loading: "We are adding your card\n\nPlease hold on..."
+        blocked: "This card is blocked and can't be activated for Cashback. Please, contact your supermarket."
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
-    favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    favorite: To change this option, select another method from your Wallet and set it as favorite.
     amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
@@ -988,9 +1033,8 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the manager
-    info: This card does not belong to the pagoPA payment network.
-    infoBold: Choose the economic operator
+    title: Choose the provider
+    infoBold: Choose the Payment Service Provider
     info2: (PSP) which will have to manage your payment.
     link: Find out more
     maxFee: Maximum fee
@@ -1000,7 +1044,7 @@ wallet:
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
-    goToPay: Confirm and pay
+    goToPay: Pay
     askConfirm: Want to proceed with the transaction?
     partialAmount: Amount to pay
     fee: Fee
@@ -1105,7 +1149,7 @@ wallet:
       shortName: "Card"
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
-        title: In app payments 
+        title: In app payments
         description: Make payments to the public administration through pagoPA
         active: Active
         arriving: Arriving
@@ -1134,7 +1178,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Pay with BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: your Postepay app
     postepay:
@@ -1150,7 +1194,11 @@ wallet:
   addCardTitle: Card details
   dummyCard:
     labels:
-      holder: Card holder
+      holder:
+        label: Card holder
+        description:
+          base: "Enter as shown on the card"
+          error: "Enter exactly as shown on the card"
       pan: Card number
       expirationDate: Expiration date
       securityCode: Card security code
@@ -1189,7 +1237,7 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid! ;-)
+    PAYMENT_DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
@@ -1237,6 +1285,43 @@ wallet:
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available Functions"
+  outcomeMessage:
+    cta:
+      close: Close
+      visualizeCard: View card
+    fallback:
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code1:
+      title: "Sorry, an unexpected error has occurred"
+      description: "No charges were made."
+    code2:
+      title: "Authorization declined"
+      description: "Your bank did not authorize the transaction. Please make sure you enter all the security codes required by your bank correctly."
+    code4:
+      title: "Sorry, the session has expired"
+      description: "No charges were made. For your safety, you have 5 minutes to complete the payment."
+    code7:
+      title: "There's a problem with your card"
+      description: "No charges were made. For more information, contact your bank."
+    code8:
+      title: "The operation was canceled"
+    code10:
+      title: "Authorization declined"
+      description: "You have probably reached your card limit. Check with your bank before trying again."
+    addCreditCard:
+      success:
+        title: "Your card has been successfully added!"
+    payment:
+      success:
+        title: "Thank you for your payment!"
+        description1: "We sent a receipt to"
+        description2: "You can also find it in your Wallet."
+  abortWebView:
+    title: Quit adding your card?
+    confirm: Yes, quit
+    cancel: Keep adding
+    success: Problems while adding your card? Please contact your bank.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -1247,14 +1332,15 @@ cardComponent:
   expiresOn: Expires on
   expiredCard: Card expired on
   actions: Actions
-  setFavourite: Set as favourite
-  unsetFavourite: Remove from favourites
+  setFavorite: Set as favourite
+  unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
+  removeCta: "Delete this payment method"
 messages:
   accessibility:
     message:
@@ -1291,19 +1377,19 @@ messages:
     payment:
       expired: Payment expired
       paid: This notice is paid. Show the receipt in your
-      addMemo: 
-          block1: Add a reminder for the 
+      addMemo:
+          block1: Add a reminder for the
           block2: at
       expiringOrValidAlert:
         block1: This notice will expire on
       expiredAlert:
         block1: This notice expired at
         block2: on
-    prescription:  
+    prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
       expiredAlert:
-          block1: The prescription expired at 
+          block1: The prescription expired at
           block2: "on"
     pay: Pay € {{amount}}
     onlyPay: Pay
@@ -1541,6 +1627,8 @@ contextualHelp:
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Be as specific as possible. What should have happened and what happened instead?\nAs far as possible, please do not enter sensitive data in your reports"
   contextualHelp:
     title1: Do you need help?
     descriptionBug: "If something **doesn't work** as it should or if you want to **suggest an improvement** or a new feature, write us! The IO team will get back to you directly via app."
@@ -1923,7 +2011,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: "By pressing \"Request cashback\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
+  termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2052,7 +2140,7 @@ bonus:
           moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
-            one: "1 valid transaction" 
+            one: "1 valid transaction"
             other: "{{transactions}} valid transactions"
         ranking:
           title: "Your position"
@@ -2076,7 +2164,7 @@ bonus:
           text2: "at least one payment method "
           text3: "at Cashback to start collecting necessary transactions"
         detail:
-          empty: 
+          empty:
             text1: "There are no valid transactions yet."
             text2: "Check back in the next few days!"
           summary:
@@ -2160,8 +2248,112 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: View merchants
+      screenTitle: Select the merchant where you want to buy something
+    merchantDetail:
+      title:
+        deals: Discounts
+        description: Description
+        services: Services
+        hours: Working Hours
+        validity: Validity
+        discountCode: Discount code
+        conditions: Conditions
+      cta:
+        label: Navigate to merchant website
     cta:
       activeBonus: Activate your Carta Giovani
+      goToDetail: View your Carta Giovani
+    detail:
+      cta:
+        buyers: See merchants
+        otp: Generate code
+        eyca:
+          copy: Copy EYCA's card number
+          pending: Find out more on EYCA
+          bottomSheet: Check EYCA discounts
+      tos:
+        link: Information on the processing of personal data
+      information:
+        active: "Your card is active and can be used until {{date}}"
+        warning: "Attention! "
+        revoked: "This card has been revoked cause {{reason}}"
+        expired: "This card expired on {{date}}"
+      ownership: Who can take advantage of discounts?
+      status:
+        title: Carta Giovani Nazionale
+        eyca: EYCA card
+        eycaCircuit: EYCA circuit
+        eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
+        eycaError: "We had some issues with EYCA's systems."
+        eycaBottomSheetTitle: "EYCA card number"
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaNumber: Card number
+        badge:
+          active: Active
+          revoked: Revoked
+          expired: Expired
+        date:
+          activated: Activated on
+          expired: Expired on
+          revoked: Revoked on
+        expiration:
+          cgn: CGN Expiration
+          eyca: EYCA Expiration
+    activation:
+      eyca:
+        loading:
+          caption: "We're processing your request"
+          subCaption: "Please wait."
+        error:
+          title: "The EYCA service is not available at the moment."
+          body: "We apologize for the issue.\nWe invite you to retry again later."
+      loading:
+        caption: "We're activating your Carta Giovani Nazionale"
+        subCaption: "Please wait."
+      error:
+        title: "The Carta Giovani Nazionale service is not available at the moment."
+        body: "We apologize for the issue.\nWe invite you to retry again later."
+      ineligible:
+        title: "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionali."
+        body: "The Carta Giovani Nazionali is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+      timeout:
+        title: "We're processing your request."
+        body: "We will send you an in-app message when your Carta Giovani will be activated."
+      alreadyActive:
+        title: "Your Carta Giovani Nazionale is already active!"
+        body: "You can find more details inside the Wallet section."
+      pending:
+        title: "Your Carta Giovani Nazionale's activation is in progress."
+        body: "You will receive a message when it has been activated."
+      success:
+        title: "Congratulation!"
+        body: "Your Carta Giovani Nazionale is active"
+    otp:
+      screen:
+        title: Use discount code
+        cta: Copy code
+        text1: "Paste this code into the corresponding field on the merchant website within"
+        text2: "Once the code expires, it is no longer valid"
+        link: Code is not working?
+        bottomSheet:
+          body:
+            text1: "Some merchants require you to enter a "
+            text2: "static discount code."
+            text3: "Search for the merchant you are interested in in the list of online merchants, and check for current offers."
+            text4: "Inside the tab for the offer you will find the code to get the benefit that you can copy and paste on the merchant's website."
+          cta: Navigate to merchants list
+      code:
+        title: Your discount code
+        validUntil: Still valid for
+        minutes:
+          one: 1 minute
+          other: "{{minutes}} minutes"
+        seconds:
+          one: 1 second
+          other: "{{seconds}} seconds"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

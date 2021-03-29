@@ -13,6 +13,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
@@ -161,8 +162,8 @@ export default class CardComponent extends React.Component<Props> {
                     <Text bold={true} style={styles.blueText}>
                       {I18n.t(
                         pot.getOrElseWithUpdating(isFavorite, false) === true
-                          ? "cardComponent.unsetFavourite"
-                          : "cardComponent.setFavourite"
+                          ? "cardComponent.unsetFavorite"
+                          : "cardComponent.setFavorite"
                       )}
                     </Text>
                   </MenuOption>
@@ -292,12 +293,9 @@ export default class CardComponent extends React.Component<Props> {
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
-              <Text style={[CreditCardStyles.smallTextStyle]}>
-                {`${FOUR_UNICODE_CIRCLES} `}
-              </Text>
-              <Text style={[CreditCardStyles.largeTextStyle]}>
-                {`${wallet.creditCard.pan.slice(-4)}`}
-              </Text>
+              <BlurredPan>
+                {`${FOUR_UNICODE_CIRCLES} ${wallet.creditCard.pan.slice(-4)}`}
+              </BlurredPan>
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>

@@ -11,7 +11,7 @@
  */
 import color from "color";
 import { isString } from "lodash";
-import { Input, Item, Text, View } from "native-base";
+import { Input, Item, View } from "native-base";
 import * as React from "react";
 import {
   StyleSheet,
@@ -23,6 +23,8 @@ import {
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
+import { WithTestID } from "../types/WithTestID";
+import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
 
@@ -44,6 +46,7 @@ type CommonProp = Readonly<{
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
+  description?: string;
 }>;
 
 type State = {
@@ -51,7 +54,7 @@ type State = {
   hasFocus: boolean;
 };
 
-type Props = CommonProp &
+type Props = WithTestID<CommonProp> &
   (
     | Readonly<{
         type: "masked";
@@ -121,7 +124,7 @@ export class LabelledItem extends React.Component<Props, State> {
     return (
       <View>
         <Item style={styles.noBottomLine}>
-          <Text>{this.props.label}</Text>
+          <H5>{this.props.label}</H5>
         </Item>
         <Item
           style={{
@@ -158,6 +161,7 @@ export class LabelledItem extends React.Component<Props, State> {
               onChangeText={this.handleOnMaskedChangeText}
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
+              testID={`${this.props.testID}InputMask`}
             />
           ) : (
             <Input
@@ -169,9 +173,20 @@ export class LabelledItem extends React.Component<Props, State> {
               onChangeText={this.handleOnChangeText}
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
+              testID={`${this.props.testID}Input`}
             />
           )}
         </Item>
+        {this.props.description && (
+          <Item style={styles.noBottomLine}>
+            <H5
+              weight={"Regular"}
+              color={this.props.isValid === false ? "red" : "bluegreyDark"}
+            >
+              {this.props.description}
+            </H5>
+          </Item>
+        )}
       </View>
     );
   }

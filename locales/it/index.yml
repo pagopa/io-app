@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -730,6 +730,11 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  abortWebView:
+    title: Vuoi interrompere il pagamento in corso?
+    confirm: Annulla il pagamento
+    cancel: Continua con il pagamento
+    success: Il pagamento è stato annullato correttamente
   errorDetails: Dettagli
   currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
@@ -752,6 +757,7 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      outcomeCode: Codice esito
       onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
@@ -767,6 +773,9 @@ wallet:
   wallet: Portafoglio
   expiredCard: Questo metodo di pagamento è scaduto. Se sei in possesso della nuova carta, aggiungila al portafoglio.
   refreshWallet: Aggiorna il Portafoglio
+  favourite:
+    setFavoriteTitle: Usa come preferito
+    setFavoriteSubtitle: Quando paghi in app, IO mostra in automatico questo metodo di pagamento
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -908,7 +917,8 @@ wallet:
         screenTitle: "Vuoi aggiungere questa carta?"
         label: "Carta con circuito internazionale {{current}} di {{length}}"
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-        warning: "Controlla che il numero della carta corrisponda a quello riportato sulla tua carta fisica."
+        warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
+        warning2: "se hai dubbi contatta la tua banca."
         loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
       chooseType:
         title: "La tua carta ti permette di acquistare online?"
@@ -923,13 +933,48 @@ wallet:
           unknown:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    privative:
+      headerTitle: "Aggiungi carta supermercato"
+      choosePrivativeIssuer:
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        title: "Scegli il marchio della tua carta"
+        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        koDisabled:
+          title: "Questo supermercato non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
+        koUnavailable:
+          title: "Non riusciamo a contattare il server"
+          body: "Siamo al lavoro per risolvere il problema."
+      addPrivativeCardNumber:
+        title: "Inserisci il numero carta"
+        body: "Digita le cifre riportate sul fronte. IO verificherà se la carta è associata al tuo codice fiscale."
+        disclaimer:
+          text1: "Proseguendo accetti l’"
+          text2: "informativa sul trattamento dei dati personali"
+      search:
+        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
+        koTimeout:
+          title: "Al momento è impossibile verificare la tua carta"
+          body: "Riprova per favore"
+        koNotFound:
+          title: "Spiacenti, c'è un problema con questa carta"
+          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
+          cta:
+            modifyCardNumber: "Modifica numero carta"
+        koServiceError:
+          title: "Al momento è impossibile recuperare la tua carta"
+          body: "Riprova più tardi per favore"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta il tuo supermercato."
   alert:
-    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
-    favourite: Questo metodo di pagamento è già contrassegnato come il tuo preferito, se vuoi cambiarlo devi selezionarne un altro
+    favorite: Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito.
     amex: I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
@@ -1015,20 +1060,17 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info:
-      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      pagoPA.
-    infoBold: Scegli il soggetto economico
+    infoBold: Scegli il soggetto
     info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
-    maxFee: Commissione massima
+    maxFee: Costo di transazione
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione
@@ -1160,7 +1202,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Abbina il tuo account BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: la tua app Postepay
     postepay:
@@ -1176,8 +1218,12 @@ wallet:
   addCardTitle: Dati carta
   dummyCard:
     labels:
-      holder: Titolare
-      pan: Numero della carta
+      holder:
+        label: Intestatario carta
+        description:
+          base: "Inserisci come riportato sulla carta"
+          error: "Inserisci esattamente come riportato sulla carta"
+      pan: Numero carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
       securityCode4D: CID (4 cifre)
@@ -1216,7 +1262,7 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1264,6 +1310,43 @@ wallet:
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Funzioni Disponibili"
+  outcomeMessage:
+    cta:
+      close: Chiudi
+      visualizeCard: Visualizza carta
+    fallback:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code1:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code2:
+      title: "Autorizzazione negata"
+      description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code4:
+      title: "Spiacenti, la sessione è scaduta"
+      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+    code7:
+      title: "C’è un problema con la tua carta"
+      description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
+    code8:
+      title: "L’operazione è stata annullata"
+    code10:
+      title: "Autorizzazione negata"
+      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+    addCreditCard:
+      success:
+        title: "La tua carta è stata aggiunta con successo!"
+    payment:
+      success:
+        title: "Grazie, l’operazione è stata eseguita con successo!"
+        description1: "Abbiamo inviato una ricevuta a"
+        description2: "Puoi trovarla anche nel tuo Portafoglio."
+  abortWebView:
+    title: Vuoi uscire dall'operazione in corso?
+    confirm: Sì, esci
+    cancel: No, continua
+    success: Problemi con l'aggiunta? Contatta la tua banca.
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1276,14 +1359,15 @@ cardComponent:
   expiresOn: Scade il
   expiredCard: Carta scaduta il
   actions: Azioni
-  setFavourite: Imposta come preferita
-  unsetFavourite: Rimuovi dai preferiti
+  setFavorite: Imposta come preferita
+  unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
+  removeCta: "Elimina questo metodo di pagamento"
 messages:
   accessibility:
     message:
@@ -1572,6 +1656,8 @@ contextualHelp:
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
   contextualHelp:
     title1: Hai bisogno di aiuto?
     descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
@@ -1955,7 +2041,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"Attiva il Cashback\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2108,7 +2194,7 @@ bonus:
           text2: "almeno un metodo di pagamento "
           text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: 
+          empty:
             text1: "Non ci sono ancora transazioni valide."
             text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
@@ -2192,8 +2278,112 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: Visualizza esercenti
+      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+    merchantDetail:
+      title:
+        deals: Offerte
+        description: Descrizione
+        services: Servizi
+        hours: Orari
+        validity: Validità
+        discountCode: Codice Sconto
+        conditions: Condizioni
+      cta:
+        label: Vai al sito dell'esercente
     cta:
       activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
+    detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
+        eyca:
+          copy: Copia numero carta EYCA
+          pending: Scopri di più su EYCA
+          bottomSheet: Vedi gli sconti EYCA
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usufruire degli sconti?
+      status:
+        title: Carta Giovani Nazionale
+        eyca: Carta EYCA
+        eycaCircuit: Circuito EYCA
+        eycaNumber: Numero carta
+        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
+        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
+        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
+        date:
+          activated: Attivata il
+          expired: Scaduta il
+          revoked: Annullata il
+        expiration:
+          cgn: Scadenza CGN
+          eyca: Scadenza EYCA
+    activation:
+      eyca:
+        loading:
+          caption: "Stiamo processando la tua richiesta"
+          subCaption: "Ti preghiamo di attendere."
+        error:
+          title: "Il servizio di EYCA in questo momento non è disponibile."
+          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      loading:
+        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
+        subCaption: "Ti preghiamo di attendere."
+      error:
+        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
+        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ineligible:
+        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+      timeout:
+        title: "Stiamo processando la tua richiesta."
+        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è già attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+      pending:
+        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
+        body: "Riceverai un messaggio quando sarà attivata."
+      success:
+        title: "Congratulazioni!"
+        body: "La tua Carta Giovani Nazionale è attiva"
+    otp:
+      screen:
+        title: Usa codice sconto
+        cta: Copia codice
+        text1: "Copia questo codice nell'apposito campo sul sito dell'esercente entro"
+        text2: "Una volta scaduto, il codice non è più valido"
+        link: Il codice non funziona?
+        bottomSheet:
+          body:
+            text1: "Alcuni esercenti richiedono l’inserimento di un "
+            text2: "codice sconto statico."
+            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
+            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
+          cta: Vai alla lista esercenti
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

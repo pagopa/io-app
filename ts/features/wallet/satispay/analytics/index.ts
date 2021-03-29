@@ -8,12 +8,13 @@ import {
   walletAddSatispayBack,
   walletAddSatispayCancel,
   walletAddSatispayCompleted,
+  walletAddSatispayFailure,
   walletAddSatispayStart
 } from "../../onboarding/satispay/store/actions";
 
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     case getType(searchUserSatispay.request):
     case getType(walletAddSatispayStart):
@@ -36,6 +37,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(addSatispayToWallet.failure):
       return mp.track(action.type, { reason: action.payload.message });
+    case getType(walletAddSatispayFailure):
+      return mp.track(action.type, {
+        reason: action.payload
+      });
   }
   return Promise.resolve();
 };

@@ -82,8 +82,8 @@ export function isExpired(
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
 ): Option<boolean> {
-  const month = NumberFromString.decode(expireMonth);
-  const year = NumberFromString.decode(expireYear);
+  const month = NumberFromString.decode((expireMonth ?? "").toString());
+  const year = NumberFromString.decode((expireYear ?? "").toString());
   if (month.isLeft() || year.isLeft()) {
     return none;
   }

@@ -8,9 +8,11 @@ import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/r
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
 import {
+  cgnActivationBack,
   cgnActivationCancel,
   cgnRequestActivation
 } from "../../store/actions/activation";
+import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,11 +22,15 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () => props.userActivateCgn();
-
+  useHardwareBackButton(() => {
+    props.onBack();
+    return true;
+  });
   return (
     <>
       {props.bonus ? (
         <BonusInformationComponent
+          onBack={props.onBack}
           primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
           bonus={props.bonus}
           onConfirm={onConfirm}
@@ -42,7 +48,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  userActivateCgn: () => dispatch(cgnRequestActivation.request()),
+  userActivateCgn: () => dispatch(cgnRequestActivation()),
+  onBack: () => dispatch(cgnActivationBack()),
   onCancel: () => dispatch(cgnActivationCancel())
 });
 

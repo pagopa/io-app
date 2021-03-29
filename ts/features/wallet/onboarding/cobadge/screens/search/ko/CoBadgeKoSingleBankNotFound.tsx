@@ -57,7 +57,10 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"CoBadgeKoSingleBankNotFound"}
+      >
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

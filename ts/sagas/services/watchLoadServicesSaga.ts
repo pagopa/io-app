@@ -39,7 +39,6 @@ export function* watchLoadServicesSaga(
 
   // TODO: it could be implemented in a forked saga being canceled as soon as
   // isFirstServiceLoadCOmpleted is true (https://redux-saga.js.org/docs/advanced/TaskCancellation.html)
-  // https://www.pivotaltracker.com/story/show/170770471
   yield takeEvery(
     [
       getType(loadServiceDetail.success),

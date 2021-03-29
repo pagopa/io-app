@@ -53,5 +53,5 @@ export const handleSetFavourite = (
     ? callback()
     : Alert.alert(
         I18n.t("global.genericAlert"),
-        I18n.t("wallet.alert.favourite")
+        I18n.t("wallet.alert.favorite")
       );

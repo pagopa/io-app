@@ -24,11 +24,12 @@ export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
 
 const INITIAL_STATE: AvailableBonusTypesState = pot.none;
 
-const mapBonusIdFeatureFlag = new Map<number, boolean>([
-  [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
-  [ID_BPD_TYPE, bpdEnabled],
-  [ID_CGN_TYPE, cgnEnabled]
-]);
+export const mapBonusIdFeatureFlag = () =>
+  new Map<number, boolean>([
+    [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
+    [ID_BPD_TYPE, bpdEnabled],
+    [ID_CGN_TYPE, cgnEnabled]
+  ]);
 
 const reducer = (
   state: AvailableBonusTypesState = INITIAL_STATE,
@@ -48,36 +49,55 @@ const reducer = (
   return state;
 };
 
-// Selectors
-export const availableBonusTypesSelector = (
+/**
+ * return all available bonus: visibile, hidden or experimental
+ */
+export const allAvailableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
+export const experimentalAndVisibleBonus = (bonus: BonusAvailable): boolean =>
+  [BonusVisibilityEnum.experimental, BonusVisibilityEnum.visible].some(
+    v => v === bonus.visibility
+  );
 /**
- * return the bonuses that can be showed based on the 'visibility' bonus attribute.
- * if 'hidden' or unavailable bonus is hidden
- * if 'visible' bonus item is shown
- * if 'experimental' it visibility would depend on the related Feature Flag.
+ * return only these bonus the app supports: a bonus is supported when the relative feature flag
+ * exists and it is ON and the relative available bonus is in state 'visible' or 'experimental'
  */
-export const visibleAvailableBonusSelector = createSelector(
-  availableBonusTypesSelector,
+export const supportedAvailableBonusSelector = createSelector(
+  allAvailableBonusTypesSelector,
   (availableBonusesState: AvailableBonusTypesState): BonusesAvailable =>
     pot.getOrElse(
       pot.map(availableBonusesState, bonuses =>
         bonuses.filter(b => {
-          const isExperimentalEnabled =
-            fromNullable(mapBonusIdFeatureFlag.get(b.id_type)).getOrElse(
-              false
-            ) && b.visibility === BonusVisibilityEnum.experimental;
-
-          return (
-            isExperimentalEnabled ||
-            b.visibility === BonusVisibilityEnum.visible
-          );
+          const isFeatureFlagEnabled = fromNullable(
+            mapBonusIdFeatureFlag().get(b.id_type)
+          ).getOrElse(false);
+          return isFeatureFlagEnabled && experimentalAndVisibleBonus(b);
         })
       ),
       []
     )
+);
+
+// Returns true if information about Available Bonuses list is loading
+export const isAvailableBonusLoadingSelector = createSelector(
+  allAvailableBonusTypesSelector,
+  (abs: AvailableBonusTypesState): boolean => pot.isLoading(abs)
+);
+
+// Returns true if information about Available Bonuses list is in error
+export const isAvailableBonusErrorSelector = createSelector(
+  allAvailableBonusTypesSelector,
+  (abs: AvailableBonusTypesState): boolean => pot.isError(abs)
+);
+
+// Returns true if information about Available Bonuses list
+// is in error state and no data is available in list (NoneError type)
+export const isAvailableBonusNoneErrorSelector = createSelector(
+  [allAvailableBonusTypesSelector, isAvailableBonusErrorSelector],
+  (abs: AvailableBonusTypesState, hasError: boolean): boolean =>
+    hasError && pot.isNone(abs)
 );
 
 /**
@@ -89,7 +109,7 @@ export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
     GlobalState,
     AvailableBonusTypesState,
     BonusAvailable | undefined
-  >(availableBonusTypesSelector, ab =>
+  >(allAvailableBonusTypesSelector, ab =>
     pot.getOrElse(
       pot.map(ab, abs => abs.find(i => i.id_type === idBonusType)),
       undefined

@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { WithTestID } from "../../../../../../types/WithTestID";
 import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
 import { abiListSelector } from "../../../store/abi";
@@ -14,7 +15,7 @@ import { walletAddCoBadgeCancel } from "../../store/actions";
 type OwnProps = {
   abi?: string;
 };
-type Props = OwnProps &
+type Props = WithTestID<OwnProps> &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -47,6 +48,7 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement => {
   );
   return (
     <SearchStartScreen
+      testID={props.testID}
       methodType={"cobadge"}
       onCancel={props.onCancel}
       onSearch={props.searchAccounts}

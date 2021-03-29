@@ -8,10 +8,12 @@ import I18n from "../../../../../i18n";
  */
 export const cancelButtonProps = (
   onPress: () => void,
-  title?: string
+  title?: string,
+  iconName?: string
 ): BlockButtonProps => ({
   bordered: true,
   title: title ? title : I18n.t("global.buttons.cancel"),
+  iconName,
   onPress
 });
 /**
@@ -21,10 +23,12 @@ export const cancelButtonProps = (
  */
 export const confirmButtonProps = (
   onPress: () => void,
-  title?: string
+  title?: string,
+  iconName?: string
 ): BlockButtonProps => ({
   primary: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
+  iconName,
   onPress
 });
 
@@ -35,10 +39,12 @@ export const confirmButtonProps = (
  */
 export const errorButtonProps = (
   onPress: () => void,
-  title?: string
+  title?: string,
+  iconName?: string
 ): BlockButtonProps => ({
   alert: true,
   title: title ?? I18n.t("global.buttons.confirm"),
+  iconName,
   onPress
 });
 
@@ -48,9 +54,11 @@ export const errorButtonProps = (
  * @param title
  */
 export const disablePrimaryButtonProps = (
-  title?: string
+  title?: string,
+  iconName?: string
 ): BlockButtonProps => ({
   primary: true,
   disabled: true,
-  title: title ? title : I18n.t("global.buttons.confirm")
+  title: title ? title : I18n.t("global.buttons.confirm"),
+  iconName
 });

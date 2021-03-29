@@ -49,7 +49,7 @@ const CoBadgeKoTimeout = (props: Props): React.ReactElement => {
       headerTitle={headerTitle}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoTimeout"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

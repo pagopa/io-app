@@ -8,7 +8,7 @@ import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
-import { getLocalePrimary } from "../utils/locale";
+import { getFullLocale } from "../utils/locale";
 import { SectionStatus, SectionStatusKey } from "../types/backendStatus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
@@ -49,12 +49,6 @@ const statusIconMap: Record<SectionStatus["level"], string> = {
 const iconSize = 24;
 const color = IOColors.white;
 
-// if not italian, for all other languages english is the default
-export const getSectionMessageLocale = (): "it-IT" | "en-EN" =>
-  getLocalePrimary(I18n.currentLocale()).fold("en-EN", l =>
-    l === "it" ? "it-IT" : "en-EN"
-  );
-
 /**
  * this component shows a full width banner with an icon and text
  * it could be tappable if the web url is defined
@@ -73,7 +67,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   const sectionStatus = props.sectionStatus;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
-  const locale = getSectionMessageLocale();
+  const locale = getFullLocale();
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );

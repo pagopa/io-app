@@ -4,7 +4,7 @@
  */
 import { fromPredicate, Option } from "fp-ts/lib/Option";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
@@ -67,7 +67,10 @@ export const fromPatchedWalletV2ToRawPaymentMethod = (
   wallet: PatchedWalletV2
 ): RawPaymentMethod | undefined => {
   if (isWalletV2CreditCard(wallet, wallet.info)) {
-    return { ...wallet, kind: "CreditCard", info: wallet.info };
+    if (wallet.info.type !== TypeEnum.PRV) {
+      return { ...wallet, kind: "CreditCard", info: wallet.info };
+    }
+    return { ...wallet, kind: "Privative", info: wallet.info };
   }
   if (isWalletV2Bancomat(wallet, wallet.info)) {
     return { ...wallet, kind: "Bancomat", info: wallet.info };

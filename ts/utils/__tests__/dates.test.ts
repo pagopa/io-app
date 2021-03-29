@@ -1,9 +1,6 @@
 import { getMonth, getYear, subMonths } from "date-fns";
-import {
-  formatDateAsShortFormat,
-  getExpireStatus,
-  isCardExpired
-} from "../dates";
+import { none, some } from "fp-ts/lib/Option";
+import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
 import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
@@ -23,27 +20,23 @@ describe("getExpireStatus", () => {
   });
 
   it("should mark the card as expired since no valid date is given", () => {
-    expect(isCardExpired(Number("AAA"), Number("BBB"))).toBe(true);
+    expect(isExpired("AAA", "BBB")).toEqual(none);
   });
 
   it("should mark the card as expired since we're passing a valid past date with 4-digit year", () => {
-    expect(isCardExpired(2, 2004)).toBe(true);
+    expect(isExpired(2, 2004)).toEqual(some(true));
   });
 
   it("should mark the card as expired since we're passing the last month", () => {
     const lastMonth = subMonths(new Date(), 1);
-
-    // We're passing the preceeding month/year, remember getMonth() is zero-based
-    expect(isCardExpired(getMonth(lastMonth) + 1, getYear(lastMonth))).toBe(
-      true
+    expect(isExpired(getMonth(lastMonth) + 1, getYear(lastMonth))).toEqual(
+      some(true)
     );
   });
 
   it("should mark the card as valid, thus false", () => {
     const today = new Date();
-
-    // We're passing the current month/year, remember getMonth() is zero-based
-    expect(isCardExpired(getMonth(today) + 1, getYear(today))).toBe(false);
+    expect(isExpired(getMonth(today) + 1, getYear(today))).toEqual(some(false));
   });
 });
 

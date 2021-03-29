@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate, isNone, none, Option, some } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -37,12 +37,12 @@ import {
   CreditCardState,
   getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
-  CreditCardStateKeys
+  CreditCardStateKeys,
+  isValidCardHolder
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
-import { profileNameSurnameSelector } from "../../store/reducers/profile";
 import { Link } from "../../components/core/typography/Link";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import { openWebUrl } from "../../utils/url";
@@ -137,10 +137,9 @@ const primaryButtonPropsFromState = (
 };
 
 const AddCardScreen: React.FC<Props> = props => {
-  const [creditCard, setCreditCard] = useState<CreditCardState>({
-    ...INITIAL_CARD_FORM_STATE,
-    holder: fromNullable(props.profileNameSurname)
-  });
+  const [creditCard, setCreditCard] = useState<CreditCardState>(
+    INITIAL_CARD_FORM_STATE
+  );
 
   const { present } = useIOBottomSheet(
     <Body>{I18n.t("wallet.missingDataText")}</Body>,
@@ -152,11 +151,12 @@ const AddCardScreen: React.FC<Props> = props => {
     creditCard.pan
   );
 
-  const updateState = (key: CreditCardStateKeys, value: string) =>
+  const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
-      [key]: fromNullable(value)
+      [key]: fromPredicate((value: string) => value.length > 0)(value)
     });
+  };
 
   const isExpireDateValid = creditCard.expirationDate
     .chain(date => {
@@ -192,9 +192,18 @@ const AddCardScreen: React.FC<Props> = props => {
         <Content scrollEnabled={false}>
           <LabelledItem
             type={"text"}
-            label={I18n.t("wallet.dummyCard.labels.holder")}
+            label={I18n.t("wallet.dummyCard.labels.holder.label")}
+            description={
+              isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
+                ? I18n.t("wallet.dummyCard.labels.holder.description.base")
+                : I18n.t("wallet.dummyCard.labels.holder.description.error")
+            }
             icon="io-titolare"
-            isValid={creditCard.holder.getOrElse("") === "" ? undefined : true}
+            isValid={
+              isNone(creditCard.holder)
+                ? undefined
+                : isValidCardHolder(creditCard.holder)
+            }
             inputProps={{
               value: creditCard.holder.getOrElse(""),
               placeholder: I18n.t("wallet.dummyCard.values.holder"),
@@ -203,6 +212,7 @@ const AddCardScreen: React.FC<Props> = props => {
               returnKeyType: "done",
               onChangeText: (value: string) => updateState("holder", value)
             }}
+            testID={"cardHolder"}
           />
 
           <View spacer={true} />
@@ -231,6 +241,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
               }
             }}
+            testID={"pan"}
           />
 
           <View spacer={true} />
@@ -251,6 +262,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   includeRawValueInChangeText: true,
                   onChangeText: value => updateState("expirationDate", value)
                 }}
+                testID={"expirationDate"}
               />
             </Col>
             <Col style={styles.verticalSpacing} />
@@ -280,6 +292,7 @@ const AddCardScreen: React.FC<Props> = props => {
                   includeRawValueInChangeText: true,
                   onChangeText: value => updateState("securityCode", value)
                 }}
+                testID={"securityCode"}
               />
             </Col>
           </Grid>
@@ -308,9 +321,7 @@ const AddCardScreen: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  profileNameSurname: profileNameSurnameSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
