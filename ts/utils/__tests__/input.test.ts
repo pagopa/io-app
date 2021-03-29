@@ -100,32 +100,64 @@ describe("CreditCardExpirationYear", () => {
 
 describe("CreditCardExpirationDate", () => {
   MockDate.set("2020-01-01");
-  it("should accept a valid expiration date", () => {
+  it("should be false since it is not expired", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpired!(some("03/20"))
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/20"))
     ).toEqual(some(false));
   });
 
-  it("should reject an invalid expiration date", () => {
+  it("should be true since it is expired", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpired!(some("3/21"))
-    ).toEqual(some(false));
-  });
-
-  it("should reject an invalid expiration date", () => {
-    expect(
-      testableAddCardScreen?.isCreditCardDateExpired!(some("12/19"))
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("12/19"))
     ).toEqual(some(true));
   });
 
-  it("should reject an invalid expiration date", () => {
+  it("should be true since it is not in a valid format", () => {
     expect(
-      testableAddCardScreen?.isCreditCardDateExpired!(some("a/27"))
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("aa/bb"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("1/b"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("3/21"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/2"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("a/27"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01/"))
+    ).toEqual(some(true));
+  });
+
+  it("should be none since it is incomplete", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01"))
     ).toEqual(none);
   });
 
-  it("should be undefined", () => {
-    expect(testableAddCardScreen?.isCreditCardDateExpired!(none)).toEqual(none);
+  it("should be none", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(none)
+    ).toEqual(none);
   });
 });
 

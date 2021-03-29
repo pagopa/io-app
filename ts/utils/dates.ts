@@ -8,6 +8,7 @@ import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
 import { ExpireStatus } from "./messages";
 import { NumberFromString } from "./number";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
@@ -72,7 +73,8 @@ export function format(
 
 /**
  * if expireMonth and expireYear are defined and they represent a number
- * return some(true) if the given date is expired compared with now
+ * return some(true) if the given date is expired compared with now.
+ * {@expireYear could be 2 or 4 digits}
  * note: it compares the last day of the month
  * example: 03/21 becomes a comparison between 31/03/2021 and current time
  * @param expireMonth
@@ -82,11 +84,31 @@ export function isExpired(
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
 ): Option<boolean> {
-  const month = NumberFromString.decode((expireMonth ?? "").toString());
-  const year = NumberFromString.decode((expireYear ?? "").toString());
+  // convert month to string (if it is a number) and
+  // ensure it is left padded: 2 -> 02
+  const monthStr = (expireMonth ?? "").toString().trim().padStart(2, "0");
+  // eslint-disable-next-line functional/no-let
+  let yearStr = (expireYear ?? "").toString().trim();
+  // check that month is included matches the pattern (01-12)
+  if (!CreditCardExpirationMonth.is(monthStr)) {
+    return none;
+  }
+  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
+  if (yearStr.length === 2) {
+    // check that month is included matches the pattern (00-99)
+    if (!CreditCardExpirationYear.is(yearStr)) {
+      return none;
+    }
+    const now = new Date();
+    yearStr = now.getFullYear().toString().substring(0, 2) + yearStr.toString();
+  }
+  // check if the built string are valid numbers
+  const month = NumberFromString.decode(monthStr);
+  const year = NumberFromString.decode(yearStr);
   if (month.isLeft() || year.isLeft()) {
     return none;
   }
+  // get the last day of the month
   const date = endOfMonth(`${month.value}/01/${year.value}`);
   return some(compareDesc(date, new Date()) > 0);
 }

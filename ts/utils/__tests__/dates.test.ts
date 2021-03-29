@@ -25,6 +25,8 @@ describe("getExpireStatus", () => {
 
   it("should mark the card as expired since we're passing a valid past date with 4-digit year", () => {
     expect(isExpired(2, 2004)).toEqual(some(true));
+    expect(isExpired("2", "2004")).toEqual(some(true));
+    expect(isExpired("2", "04")).toEqual(some(true));
   });
 
   it("should mark the card as expired since we're passing the last month", () => {
@@ -37,6 +39,12 @@ describe("getExpireStatus", () => {
   it("should mark the card as valid, thus false", () => {
     const today = new Date();
     expect(isExpired(getMonth(today) + 1, getYear(today))).toEqual(some(false));
+    expect(
+      isExpired(
+        (getMonth(today) + 1).toString(),
+        today.getFullYear().toString().substring(2, 4)
+      )
+    ).toEqual(some(false));
   });
 });
 
