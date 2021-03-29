@@ -13,8 +13,14 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromPredicate, isNone, none, Option, some } from "fp-ts/lib/Option";
-import { isNone, Option, fromPredicate, isSome } from "fp-ts/lib/Option";
+import {
+  isNone,
+  Option,
+  fromPredicate,
+  isSome,
+  some,
+  none
+} from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
