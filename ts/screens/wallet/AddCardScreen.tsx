@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromNullable, fromPredicate, isNone, none, Option, some } from "fp-ts/lib/Option";
+import { fromPredicate, isNone, none, Option, some } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -52,6 +52,7 @@ import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { isExpired } from "../../utils/dates";
+import { isTestEnv } from "../../utils/environment";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -136,6 +137,18 @@ const primaryButtonPropsFromState = (
   );
 };
 
+const isCreditCardDateExpired = (expireDate: Option<string>): Option<boolean> =>
+  expireDate
+    .chain(date => {
+      const splitted = date.split("/");
+      console.log(splitted);
+      if (splitted.length !== 2) {
+        return none;
+      }
+      return some([splitted[0], splitted[1]]);
+    })
+    .chain(my => isExpired(my[0], my[1]));
+
 const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
@@ -158,16 +171,9 @@ const AddCardScreen: React.FC<Props> = props => {
     });
   };
 
-  const isExpireDateValid = creditCard.expirationDate
-    .chain(date => {
-      const splitted = date.split("/");
-      if (splitted.length !== 2) {
-        return none;
-      }
-      return some([splitted[0], splitted[1]]);
-    })
-    .chain(my => isExpired(my[0], my[1]))
-    .getOrElse(false);
+  const maybeCreditcardExpired = isCreditCardDateExpired(
+    creditCard.expirationDate
+  );
 
   const secondaryButtonProps = {
     block: true,
@@ -251,7 +257,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={isExpireDateValid !== false}
+                isValid={maybeCreditcardExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
                   placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
@@ -337,3 +343,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
+// keep encapsulation strong
+export const testableAddCardScreen = isTestEnv
+  ? { isCreditCardDateExpired }
+  : undefined;

@@ -23,11 +23,9 @@ import {
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
-import { formatDateAsReminder } from "./dates";
-import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import { formatDateAsReminder, isExpired } from "./dates";
-import { getLocalePrimaryWithFallback } from "./locale";
+import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";

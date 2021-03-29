@@ -1,4 +1,5 @@
 import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
+import MockDate from "mockdate";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -7,10 +8,10 @@ import {
   CreditCardState,
   getCreditCardFromState,
   isValidCardHolder,
-  isValidExpirationDate,
   isValidPan,
   isValidSecurityCode
 } from "../input";
+import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [
@@ -98,16 +99,33 @@ describe("CreditCardExpirationYear", () => {
 });
 
 describe("CreditCardExpirationDate", () => {
+  MockDate.set("2020-01-01");
   it("should accept a valid expiration date", () => {
-    expect(isValidExpirationDate(some("03/27"))).toBeTruthy();
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpired!(some("03/20"))
+    ).toEqual(some(false));
   });
 
   it("should reject an invalid expiration date", () => {
-    expect(isValidExpirationDate(some("3/27"))).toBeFalsy();
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpired!(some("3/21"))
+    ).toEqual(some(false));
+  });
+
+  it("should reject an invalid expiration date", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpired!(some("12/19"))
+    ).toEqual(some(true));
+  });
+
+  it("should reject an invalid expiration date", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpired!(some("a/27"))
+    ).toEqual(none);
   });
 
   it("should be undefined", () => {
-    expect(isValidExpirationDate(none)).not.toBeDefined();
+    expect(testableAddCardScreen?.isCreditCardDateExpired!(none)).toEqual(none);
   });
 });
 
