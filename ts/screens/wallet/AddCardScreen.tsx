@@ -141,7 +141,6 @@ const isCreditCardDateExpired = (expireDate: Option<string>): Option<boolean> =>
   expireDate
     .chain(date => {
       const splitted = date.split("/");
-      console.log(splitted);
       if (splitted.length !== 2) {
         return none;
       }
