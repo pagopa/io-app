@@ -156,6 +156,10 @@ export const addCreditCardWebViewEnd = createStandardAction(
   "ADD_CREDIT_CARD_WEB_VIEW_END"
 )<AddCreditCardWebViewEndReason>();
 
+export const runSendAddCobadgeMessageSaga = createStandardAction(
+  "RUN_SEND_ADD_COBADGE_MESSAGE_SAGA"
+)();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -180,4 +184,5 @@ export type WalletsActions =
   | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
   | ActionType<typeof creditCardPaymentNavigationUrls>
-  | ActionType<typeof fetchWalletsRequestWithExpBackoff>;
+  | ActionType<typeof fetchWalletsRequestWithExpBackoff>
+  | ActionType<typeof runSendAddCobadgeMessageSaga>;
