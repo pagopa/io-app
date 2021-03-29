@@ -36,13 +36,13 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: getCardIconFromBrandLogo(paymentMethod.info),
         title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod)
+        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
       };
     case "Bancomat":
       return {
         logo: pagoBancomatLogo,
         title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod)
+        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
       };
     case "BPay":
       return {
@@ -60,7 +60,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: paymentMethod.icon,
         title: paymentMethod.caption,
-        description: nameSurname
+        description: getPickPaymentMethodDescription(paymentMethod, nameSurname)
       };
   }
 };

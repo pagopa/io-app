@@ -319,19 +319,20 @@ export const getPaymentOutcomeCodeDescription = (
 };
 
 export const getPickPaymentMethodDescription = (
-  bancomatOrCreditCard:
+  paymentMethod:
     | CreditCardPaymentMethod
     | PrivativePaymentMethod
-    | BancomatPaymentMethod
+    | BancomatPaymentMethod,
+  defaultHolder: string = ""
 ) => {
   const translatedExpireDate = getTranslatedShortNumericMonthYear(
-    bancomatOrCreditCard.info.expireYear,
-    bancomatOrCreditCard.info.expireMonth
+    paymentMethod.info.expireYear,
+    paymentMethod.info.expireMonth
   );
   return translatedExpireDate
     ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
         firstElement: translatedExpireDate,
-        secondElement: bancomatOrCreditCard.info.holder
+        secondElement: paymentMethod.info.holder ?? defaultHolder
       })
-    : fromNullable(bancomatOrCreditCard.info.holder).getOrElse("");
+    : fromNullable(paymentMethod.info.holder).getOrElse(defaultHolder);
 };

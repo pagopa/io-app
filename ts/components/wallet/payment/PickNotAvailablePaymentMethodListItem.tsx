@@ -75,7 +75,10 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: getCardIconFromBrandLogo(paymentMethod.info),
         title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod),
+        description: getPickPaymentMethodDescription(
+          paymentMethod,
+          nameSurname
+        ),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };
@@ -83,7 +86,10 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: pagoBancomatLogo,
         title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod),
+        description: getPickPaymentMethodDescription(
+          paymentMethod,
+          nameSurname
+        ),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };
@@ -107,7 +113,10 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: paymentMethod.icon,
         title: paymentMethod.caption,
-        description: getPickPaymentMethodDescription(paymentMethod),
+        description: getPickPaymentMethodDescription(
+          paymentMethod,
+          nameSurname
+        ),
         bottomSheetTitle: unacceptedBottomSheetTitle(),
         bottomSheetBody: unacceptedBottomSheetBody()
       };
