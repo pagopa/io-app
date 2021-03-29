@@ -34,7 +34,7 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
     <IconFont
       style={styles.icon}
       name={props.iconName || "io-notice"}
-      size={props.iconSize || defaultIconSize}
+      size={props.iconSize ?? defaultIconSize}
       color={props.iconColor || themeVariables.brandPrimary}
     />
     <Text style={styles.text}>{props.text}</Text>

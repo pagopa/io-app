@@ -18,7 +18,8 @@ import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumb
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Transaction, Wallet } from "../types/pagopa";
-import { formatDateAsReminder } from "./dates";
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
+import { formatDateAsReminder, isExpired } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
@@ -264,3 +265,13 @@ export const getCodiceAvviso = (rptId: RptId) => {
       }`;
   }
 };
+
+/**
+ * check if card is expired by evaluating expireMonth and expireYear
+ * return none if can't valuate if it is expired (month/year undefined or they are not numbers)
+ * @param cardInfo
+ */
+export function isCardExpired(cardInfo: CardInfo): Option<boolean> {
+  const { expireMonth, expireYear } = cardInfo;
+  return isExpired(expireMonth, expireYear);
+}

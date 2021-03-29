@@ -17,9 +17,10 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
-import { FOUR_UNICODE_CIRCLES, isExpiredCard } from "../../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
+import { isExpired } from "../../../utils/dates";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -206,19 +207,22 @@ export default class CardComponent extends React.Component<Props> {
     };
 
     const expirationDate = buildExpirationDate(creditCard);
-    const isExpired = isExpiredCard(creditCard);
+    const isCardExpired = isExpired(
+      creditCard.expireMonth,
+      creditCard.expireYear
+    ).getOrElse(false);
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
           <Text
             style={[
               CreditCardStyles.textStyle,
-              !isExpired
+              !isCardExpired
                 ? CreditCardStyles.smallTextStyle
                 : CreditCardStyles.expiredTextStyle
             ]}
           >
-            {!isExpired
+            {!isCardExpired
               ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
               : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
           </Text>
@@ -278,7 +282,12 @@ export default class CardComponent extends React.Component<Props> {
 
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, styles.cardShadow, hasFlatBottom ? styles.flatBottom : undefined , isHeader && styles.cardHeader]}
+        style={[
+          styles.card,
+          styles.cardShadow,
+          hasFlatBottom ? styles.flatBottom : undefined,
+          isHeader && styles.cardHeader
+        ]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
@@ -293,7 +302,7 @@ export default class CardComponent extends React.Component<Props> {
             <View>{this.renderTopRightCorner()}</View>
           </View>
           {hasFlatBottom && <View spacer={true} />}
-          {isHeader && <View style={{paddingTop:20}}/> }
+          {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>
         {this.renderFooterRow()}

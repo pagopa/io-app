@@ -1,5 +1,9 @@
 import { getMonth, getYear, subMonths } from "date-fns";
-import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
+import {
+  formatDateAsShortFormat,
+  getExpireStatus,
+  isCardExpired
+} from "../dates";
 import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
@@ -19,25 +23,27 @@ describe("getExpireStatus", () => {
   });
 
   it("should mark the card as expired since no valid date is given", () => {
-    expect(isExpired(Number("AAA"), Number("BBB"))).toBe(true);
+    expect(isCardExpired(Number("AAA"), Number("BBB"))).toBe(true);
   });
 
   it("should mark the card as expired since we're passing a valid past date with 4-digit year", () => {
-    expect(isExpired(2, 2004)).toBe(true);
+    expect(isCardExpired(2, 2004)).toBe(true);
   });
 
   it("should mark the card as expired since we're passing the last month", () => {
     const lastMonth = subMonths(new Date(), 1);
 
     // We're passing the preceeding month/year, remember getMonth() is zero-based
-    expect(isExpired(getMonth(lastMonth) + 1, getYear(lastMonth))).toBe(true);
+    expect(isCardExpired(getMonth(lastMonth) + 1, getYear(lastMonth))).toBe(
+      true
+    );
   });
 
   it("should mark the card as valid, thus false", () => {
     const today = new Date();
 
     // We're passing the current month/year, remember getMonth() is zero-based
-    expect(isExpired(getMonth(today) + 1, getYear(today))).toBe(false);
+    expect(isCardExpired(getMonth(today) + 1, getYear(today))).toBe(false);
   });
 });
 

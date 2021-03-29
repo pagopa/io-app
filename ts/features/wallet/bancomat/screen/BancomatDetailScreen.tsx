@@ -21,10 +21,10 @@ import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboardi
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { isExpired } from "../../../../utils/dates";
 import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
 import { walletAddBancomatStart } from "../../onboarding/bancomat/store/actions";
 
+import { isCardExpired } from "../../../../utils/payment";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -87,10 +87,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
 
-  const { expireMonth, expireYear } = bancomat.info;
-  const cardIsExpired = bancomat
-    ? isExpired(Number(expireMonth), Number(expireYear))
-    : false;
+  const maybeExpired = isCardExpired(bancomat.info);
 
   return (
     <DarkLayout
@@ -110,7 +107,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        {cardIsExpired ? (
+        {maybeExpired.getOrElse(false) ? (
           <ExpiredCardAdvice navigateToAddCard={props.navigateToAddCard} />
         ) : (
           <>

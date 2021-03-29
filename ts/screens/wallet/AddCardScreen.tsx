@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -33,7 +33,6 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import {
   isValidPan,
-  isValidExpirationDate,
   isValidSecurityCode,
   CreditCardState,
   getCreditCardFromState,
@@ -52,6 +51,7 @@ import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { isExpired } from "../../utils/dates";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -158,6 +158,17 @@ const AddCardScreen: React.FC<Props> = props => {
       [key]: fromNullable(value)
     });
 
+  const isExpireDateValid = creditCard.expirationDate
+    .chain(date => {
+      const splitted = date.split("/");
+      if (splitted.length !== 2) {
+        return none;
+      }
+      return some([splitted[0], splitted[1]]);
+    })
+    .chain(my => isExpired(my[0], my[1]))
+    .getOrElse(false);
+
   const secondaryButtonProps = {
     block: true,
     bordered: true,
@@ -229,7 +240,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={isValidExpirationDate(creditCard.expirationDate)}
+                isValid={isExpireDateValid !== false}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
                   placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),

@@ -2,10 +2,12 @@ import { compareDesc, endOfMonth, format as dateFnsFormat } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
 import { ExpireStatus } from "./messages";
+import { NumberFromString } from "./number";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
@@ -68,17 +70,25 @@ export function format(
   );
 }
 
-export function isExpired(expireMonth: number, expireYear: number): boolean {
-  // Consider the card as expired in case of invalid date components (e.g. NaN)
-  if (!(expireMonth && expireYear)) {
-    return true;
+/**
+ * if expireMonth and expireYear are defined and they represent a number
+ * return some(true) if the given date is expired compared with now
+ * note: it compares the last day of the month
+ * example: 03/21 becomes a comparison between 31/03/2021 and current time
+ * @param expireMonth
+ * @param expireYear
+ */
+export function isExpired(
+  expireMonth: string | number | undefined,
+  expireYear: string | number | undefined
+): Option<boolean> {
+  const month = NumberFromString.decode(expireMonth);
+  const year = NumberFromString.decode(expireYear);
+  if (month.isLeft() || year.isLeft()) {
+    return none;
   }
-
-  // We pass the first day of the month, but endOfMonth() returns a Date object
-  // representing the last day of the target month.
-
-  const date = endOfMonth(`${expireMonth}/01/${expireYear}`);
-  return compareDesc(date, new Date()) > 0;
+  const date = endOfMonth(`${month.value}/01/${year.value}`);
+  return some(compareDesc(date, new Date()) > 0);
 }
 
 /**

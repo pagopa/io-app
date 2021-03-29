@@ -1,16 +1,10 @@
-import { Platform, StyleSheet } from "react-native";
-import { makeFontStyleObject as deprecatedMakeFontStyleObject } from "../../../theme/fonts";
+import { StyleSheet } from "react-native";
 import variables from "../../../theme/variables";
 import { makeFontStyleObject } from "../../core/fonts";
 
 export const CreditCardStyles = StyleSheet.create({
   largeTextStyle: {
-    ...deprecatedMakeFontStyleObject(
-      Platform.select,
-      undefined,
-      false,
-      "RobotoMono"
-    ),
+    ...makeFontStyleObject(undefined),
     fontSize: variables.fontSizeBase * 1.125 // 18
   },
   rowStyle: {
