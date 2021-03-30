@@ -211,7 +211,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
                 <ItemSeparatorComponent noPadded={true} />
               </>
             )}
-            <View spacer={true} large={true} />
+            <View spacer={true} />
             <DeletePaymentMethodButton
               onPress={() =>
                 present(() => props.deleteWallet(selectedWallet.idWallet))
