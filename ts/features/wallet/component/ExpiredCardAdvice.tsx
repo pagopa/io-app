@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "native-base";
-import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
