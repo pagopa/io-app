@@ -22,6 +22,7 @@ import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 import { isExpired } from "../../../utils/dates";
+import { H5 } from "../../core/typography/H5";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -215,19 +216,9 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <Text
-            style={[
-              CreditCardStyles.textStyle,
-              !isCardExpired
-                ? CreditCardStyles.smallTextStyle
-                : CreditCardStyles.expiredTextStyle
-            ]}
-          >
-            {!isCardExpired
-              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
-              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
-          </Text>
-
+          <H5 color={isCardExpired ? "red" : "bluegrey"} weight={"Regular"}>
+            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+          </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
             {creditCard.holder.toUpperCase()}
           </Text>

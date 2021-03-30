@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../components/ui/IconFont";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { Label } from "../../../components/core/typography/Label";
@@ -37,7 +36,6 @@ const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
       block={true}
       onPress={navigateToAddCard}
     >
-      <IconFont name="io-plus" style={styles.icon} />
       <Label color="white">{I18n.t("onboarding.addNewCard")}</Label>
     </ButtonDefaultOpacity>
   </>

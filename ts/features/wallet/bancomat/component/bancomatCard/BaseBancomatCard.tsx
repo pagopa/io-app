@@ -18,6 +18,7 @@ import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
+import { isExpired } from "../../../../../utils/dates";
 
 type Props = {
   abi: Abi;
@@ -118,7 +119,12 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
     BASE_IMG_H,
     props.abi?.logoUrl
   );
-
+  const isBancomatExpired = props.expiringDate
+    ? isExpired(
+        props.expiringDate.getMonth() + 1,
+        props.expiringDate.getFullYear()
+      ).getOrElse(false)
+    : false;
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -140,9 +146,10 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer={true} />
           {props.expiringDate && (
-            <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
-              "cardComponent.expiresOn"
-            )} ${localeDateFormat(
+            <H5
+              color={isBancomatExpired ? "red" : "bluegrey"}
+              weight={"Regular"}
+            >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
               props.expiringDate,
               I18n.t("global.dateFormats.numericMonthYear")
             )}`}</H5>
