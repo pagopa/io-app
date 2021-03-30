@@ -7,6 +7,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import OrganizationLogo from "../services/OrganizationLogo";
@@ -45,6 +46,13 @@ const styles = StyleSheet.create({
 
 export default class SectionHeaderComponent extends React.Component<Props> {
   public render() {
+    const rightItem = fromNullable<React.ReactNode | undefined>(
+      this.props.rightItem
+    ).getOrElse(
+      fromNullable(this.props.logoUri)
+        .map(uri => <OrganizationLogo key={"right_item"} logoUri={uri} />)
+        .toUndefined()
+    );
     return (
       <View
         style={[
@@ -53,10 +61,6 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           this.props.style
         ]}
       >
-        <View spacer={true} large={true} />
-        {this.props.logoUri && (
-          <OrganizationLogo logoUri={this.props.logoUri} />
-        )}
         <H5
           style={styles.sectionTitle}
           accessible={true}
@@ -64,7 +68,10 @@ export default class SectionHeaderComponent extends React.Component<Props> {
         >
           {this.props.sectionHeader}
         </H5>
-        {this.props.rightItem}
+        <>
+          {rightItem}
+          <View spacer={true} extralarge={true} />
+        </>
       </View>
     );
   }
