@@ -7,6 +7,8 @@ import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { Body } from "../../../components/core/typography/Body";
+import { InfoBox } from "../../../components/box/InfoBox";
 
 const styles = StyleSheet.create({
   icon: {
@@ -27,7 +29,9 @@ type Props = { navigateToAddCard: () => void };
 
 const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
   <>
-    <AdviceComponent iconSize={30} text={I18n.t("wallet.expiredCard")} />
+    <InfoBox iconSize={32}>
+      <Body>{I18n.t("wallet.expiredCard")}</Body>
+    </InfoBox>
     <View spacer />
     <ButtonDefaultOpacity
       small={true}
