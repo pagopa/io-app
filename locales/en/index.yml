@@ -921,7 +921,7 @@ wallet:
           body: "We are working to solve the problem."
       addPrivativeCardNumber:
         title: "Insert card number"
-        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
         disclaimer:
           text1: "By continuing you accept the"
           text2: "information on the processing of personal data"
@@ -1206,7 +1206,9 @@ wallet:
   acceptedCards: Accepted cards
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
-  missingDataText: If you can't find the security code, it's likely your card doesn't support online payments. We're working with your bank to let you add these cards and enroll them for Cashback.
+  missingDataText:
+    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
