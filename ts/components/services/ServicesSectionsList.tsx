@@ -80,6 +80,19 @@ const styles = StyleSheet.create({
   }
 });
 
+// component used when the list is empty
+const emptyListComponent = () => (
+  <View style={styles.headerContentWrapper}>
+    <View spacer={true} large={true} />
+    <Image
+      source={require("../../../img/services/icon-loading-services.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("services.emptyListMessage")}
+    </Text>
+  </View>
+);
+
 class ServicesSectionsList extends React.PureComponent<Props> {
   private localListEmptyComponent() {
     return (
@@ -111,21 +124,6 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     );
   }
 
-  // component used when the list is empty
-  private emptyListComponent() {
-    return (
-      <View style={styles.headerContentWrapper}>
-        <View spacer={true} large={true} />
-        <Image
-          source={require("../../../img/services/icon-loading-services.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("services.emptyListMessage")}
-        </Text>
-      </View>
-    );
-  }
-
   private renderEditButton = () =>
     this.props.isLocal &&
     this.props.selectedOrganizationsFiscalCodes &&
@@ -154,7 +152,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     // empty component is different from local and others (national and all)
     const emptyComponent = this.props.isLocal
       ? this.localListEmptyComponent()
-      : this.emptyListComponent();
+      : emptyListComponent();
     return (
       <ServiceList
         renderUnreadState={!this.props.isAll}
