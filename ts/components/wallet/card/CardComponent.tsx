@@ -133,7 +133,7 @@ export default class CardComponent extends React.Component<Props> {
           {!hideFavoriteIcon && isFavorite !== undefined && (
             <IconFont
               name={
-                pot.getOrElseWithUpdating(isFavorite, false) === true
+                pot.getOrElseWithUpdating(isFavorite, false)
                   ? "io-filled-star"
                   : "io-empty-star"
               }
