@@ -8,7 +8,8 @@ getDeviceIdMock.mockReturnValue("");
 
 const DeviceInfo = {
   getReadableVersion,
-  getDeviceId: getDeviceIdMock
+  getDeviceId: getDeviceIdMock,
+  hasNotch: () => true
 };
 
 export default DeviceInfo;
