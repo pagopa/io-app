@@ -160,6 +160,10 @@ export const runSendAddCobadgeMessageSaga = createStandardAction(
   "RUN_SEND_ADD_COBADGE_MESSAGE_SAGA"
 )();
 
+export const sendAddCobadgeMessage = createStandardAction(
+  "SEND_ADD_COBADGE_MESSAGE"
+)<boolean>();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -185,4 +189,5 @@ export type WalletsActions =
   | ActionType<typeof setWalletSessionEnabled>
   | ActionType<typeof creditCardPaymentNavigationUrls>
   | ActionType<typeof fetchWalletsRequestWithExpBackoff>
-  | ActionType<typeof runSendAddCobadgeMessageSaga>;
+  | ActionType<typeof runSendAddCobadgeMessageSaga>
+  | ActionType<typeof sendAddCobadgeMessage>;

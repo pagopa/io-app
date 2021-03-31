@@ -8,16 +8,14 @@ import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
-import {
-  coBadgeAbiConfigurationSelector,
-  getCoBadgeAbiConfigurationSelector
-} from "../../features/wallet/onboarding/cobadge/store/reducers/abiConfiguration";
+import { coBadgeAbiConfigurationSelector } from "../../features/wallet/onboarding/cobadge/store/reducers/abiConfiguration";
 import { IndexedById } from "../../store/helpers/indexer";
 import { StatusEnum } from "../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import { NetworkError } from "../../utils/errors";
 import { loadCoBadgeAbiConfiguration } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { getType, isActionOf } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
+import { sendAddCobadgeMessage } from "../../store/actions/wallet/wallets";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * This saga aims to send an event to Mixpanel to get information about whether the user has a bancomat card with which
@@ -25,29 +23,39 @@ import { fromNullable } from "fp-ts/lib/Option";
  *
  * This saga is called only if the {@link bancomatListVisibleInWalletSelector} return some
  */
-export function* runSendAddCobadgeMessageSaga() {
-  // Check if there is at least a cobadge card in the wallet
-  const cobadgeVisibleInWallet: pot.Pot<
+export function* sendAddCobadgeMessageSaga() {
+  RTron.log("entra");
+  // Check if there is at least one bancomat
+  const maybeBancomatListVisibleInWallet: pot.Pot<
+    ReadonlyArray<BancomatPaymentMethod>,
+    Error
+  > = yield select(bancomatListVisibleInWalletSelector);
+
+  const bancomatListVisibleInWallet = pot.getOrElse(
+    maybeBancomatListVisibleInWallet,
+    []
+  );
+
+  if (bancomatListVisibleInWallet.length === 0) {
+    yield put(sendAddCobadgeMessage(false));
+    RTron.log("no bancomat");
+    return;
+  }
+
+  // Extract the cobadgeAbi if there is at least a cobadge card
+  const maybeCobadgeVisibleInWallet: pot.Pot<
     ReadonlyArray<CreditCardPaymentMethod>,
     Error
   > = yield select(cobadgeListVisibleInWalletSelector);
 
-  // if yes send "don't send message" event and return
-  if (
-    pot.isSome(cobadgeVisibleInWallet) &&
-    cobadgeVisibleInWallet.value.length > 0
-  ) {
-    return;
-  }
+  const cobadgeVisibleInWallet = pot.getOrElse(maybeCobadgeVisibleInWallet, []);
+  const cobadgeAbis = cobadgeVisibleInWallet
+    .filter(c => c.info.issuerAbiCode !== undefined)
+    .map(cWithAbi => cWithAbi.info.issuerAbiCode);
 
   // Check if the abiConfiguration is Some
-  const coBadgeAbiConfiguration: pot.Pot<
-    IndexedById<StatusEnum>,
-    NetworkError
-  > = yield select(coBadgeAbiConfigurationSelector);
-
-  // If is not some request the abiConfiguration
-  if (!pot.isSome(coBadgeAbiConfiguration)) {
+  // and if not request the abiConfiguration
+  if (!pot.isSome(yield select(coBadgeAbiConfigurationSelector))) {
     yield put(loadCoBadgeAbiConfiguration.request());
 
     // Wait for the request results
@@ -61,33 +69,33 @@ export function* runSendAddCobadgeMessageSaga() {
       return;
     }
   }
-  // Check if there is at least one bancomat for wich is allow add cobadge
-  const maybeBancomatListVisibleInWallet: pot.Pot<
-    ReadonlyArray<BancomatPaymentMethod>,
-    Error
-  > = yield select(bancomatListVisibleInWalletSelector);
+  const maybeCoBadgeAbiConfiguration: pot.Pot<
+    IndexedById<StatusEnum>,
+    NetworkError
+  > = yield select(coBadgeAbiConfigurationSelector);
 
-  const bancomatListVisibleInWallet = pot.getOrElse(
-    maybeBancomatListVisibleInWallet,
-    []
-  );
+  if (pot.isSome(maybeCoBadgeAbiConfiguration)) {
+    const coBadgeAbiConfiguration = maybeCoBadgeAbiConfiguration.value;
 
-  const enalbedAbis = bancomatListVisibleInWallet.filter(b =>
-    fromNullable(b.info.issuerAbiCode).mapNullable(function* (abi) {
-      const maybeAbiConfiguration: pot.Pot<
-        StatusEnum,
-        NetworkError
-      > = yield select(getCoBadgeAbiConfigurationSelector, abi);
-      const abiConfiguration = pot.getOrElse(
-        maybeAbiConfiguration,
-        StatusEnum.disabled
-      );
-      return abiConfiguration === StatusEnum.enabled;
-    })
-  );
+    // Extract a list of abi that satisfy the following conditions:
+    // - is a bancomat in the wallet of the user
+    // - the abi of the bancomat is in the abiConfiguration list
+    // - the abi of the bancomant has the status enabled in the abiConfiguration list
+    // - there isn't a cobadge card in the wallet of the user with the sami abi
+    const enalbedAbis = bancomatListVisibleInWallet.filter(
+      b =>
+        b.info.issuerAbiCode !== undefined &&
+        coBadgeAbiConfiguration[b.info.issuerAbiCode] !== undefined &&
+        coBadgeAbiConfiguration[b.info.issuerAbiCode] === StatusEnum.enabled &&
+        cobadgeAbis.filter(abi => abi === b.info.issuerAbiCode).length === 0
+    );
 
-  if (enalbedAbis.length > 0) {
-  } else {
-    // dispatch "don't send message" and returns
+    if (enalbedAbis.length > 0) {
+      RTron.log("invia messaggio");
+      yield put(sendAddCobadgeMessage(true));
+    } else {
+      RTron.log("non invia messaggio");
+      yield put(sendAddCobadgeMessage(false));
+    }
   }
 }
