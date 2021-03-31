@@ -15,7 +15,6 @@ import { NetworkError } from "../../utils/errors";
 import { loadCoBadgeAbiConfiguration } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { getType, isActionOf } from "typesafe-actions";
 import { sendAddCobadgeMessage } from "../../store/actions/wallet/wallets";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * This saga aims to send an event to Mixpanel to get information about whether the user has a bancomat card with which
@@ -24,7 +23,6 @@ import { RTron } from "../../boot/configureStoreAndPersistor";
  * This saga is called only if the {@link bancomatListVisibleInWalletSelector} return some
  */
 export function* sendAddCobadgeMessageSaga() {
-  RTron.log("entra");
   // Check if there is at least one bancomat
   const maybeBancomatListVisibleInWallet: pot.Pot<
     ReadonlyArray<BancomatPaymentMethod>,
@@ -38,7 +36,6 @@ export function* sendAddCobadgeMessageSaga() {
 
   if (bancomatListVisibleInWallet.length === 0) {
     yield put(sendAddCobadgeMessage(false));
-    RTron.log("no bancomat");
     return;
   }
 
@@ -91,10 +88,8 @@ export function* sendAddCobadgeMessageSaga() {
     );
 
     if (enalbedAbis.length > 0) {
-      RTron.log("invia messaggio");
       yield put(sendAddCobadgeMessage(true));
     } else {
-      RTron.log("non invia messaggio");
       yield put(sendAddCobadgeMessage(false));
     }
   }
