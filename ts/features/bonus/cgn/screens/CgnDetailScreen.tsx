@@ -8,7 +8,6 @@ import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
