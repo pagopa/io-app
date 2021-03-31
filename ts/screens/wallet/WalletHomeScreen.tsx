@@ -78,6 +78,7 @@ import {
 } from "../../store/reducers/wallet/transactions";
 import {
   bancomatListVisibleInWalletSelector,
+  cobadgeListVisibleInWalletSelector,
   pagoPaCreditCardWalletV1Selector
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
@@ -303,13 +304,20 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
 
     // Dispatch the action associated to the saga responsible to remind a user
-    // to add the co-badge card only if a new bancomat was added
-    if (
+    // to add the co-badge card only if a new bancomat or a co-badge card was added
+    const isBancomatListUpdated =
       pot.isSome(this.props.bancomatListVisibleInWallet) &&
       (!pot.isSome(prevProps.bancomatListVisibleInWallet) ||
         this.props.bancomatListVisibleInWallet.value.length !==
-          prevProps.bancomatListVisibleInWallet.value.length)
-    ) {
+          prevProps.bancomatListVisibleInWallet.value.length);
+
+    const isCobadgeListUpdated =
+      pot.isSome(this.props.coBadgeListVisibleInWallet) &&
+      (!pot.isSome(prevProps.coBadgeListVisibleInWallet) ||
+        this.props.coBadgeListVisibleInWallet.value.length !==
+          prevProps.coBadgeListVisibleInWallet.value.length);
+
+    if (isBancomatListUpdated || isCobadgeListUpdated) {
       this.props.runSendAddCobadgeMessageSaga();
     }
   }
@@ -633,7 +641,8 @@ const mapStateToProps = (state: GlobalState) => {
     bpdLoadState: bpdLastUpdateSelector(state),
     cgnDetails: cgnDetailSelector(state),
     isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
-    bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state)
+    bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
+    coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state)
   };
 };
 
