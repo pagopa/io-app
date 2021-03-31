@@ -17,13 +17,23 @@ import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
-import { Psp, Transaction, Wallet } from "../types/pagopa";
+import {
+  BancomatPaymentMethod,
+  CreditCardPaymentMethod,
+  PrivativePaymentMethod,
+  Psp,
+  Transaction,
+  Wallet
+} from "../types/pagopa";
 import {
   OutcomeCode,
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
-import { formatDateAsReminder } from "./dates";
+import {
+  formatDateAsReminder,
+  getTranslatedShortNumericMonthYear
+} from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
@@ -306,4 +316,23 @@ export const getPaymentOutcomeCodeDescription = (
       .map(description => description[getFullLocale()]);
   }
   return none;
+};
+
+export const getPickPaymentMethodDescription = (
+  paymentMethod:
+    | CreditCardPaymentMethod
+    | PrivativePaymentMethod
+    | BancomatPaymentMethod,
+  defaultHolder: string = ""
+) => {
+  const translatedExpireDate = getTranslatedShortNumericMonthYear(
+    paymentMethod.info.expireYear,
+    paymentMethod.info.expireMonth
+  );
+  return translatedExpireDate
+    ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
+        firstElement: translatedExpireDate,
+        secondElement: paymentMethod.info.holder ?? defaultHolder
+      })
+    : fromNullable(paymentMethod.info.holder).getOrElse(defaultHolder);
 };
