@@ -5,7 +5,10 @@ import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
 } from "../../../navigation/actions";
-import { handleEycaActivationSaga } from "../../networking/eyca/activation/getEycaActivationSaga";
+import {
+  getActivation,
+  handleEycaActivationSaga
+} from "../../networking/eyca/activation/getEycaActivationSaga";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { cgnEycaActivationCancel } from "../../../store/actions/eyca/activation";
 import { BackendCGN } from "../../../api/backendCgn";
@@ -18,6 +21,7 @@ export function* eycaActivationWorker(
   yield put(navigateToEycaActivationLoading());
   yield put(navigationHistoryPop(1));
 
+  const eycaActivation = yield call(getActivation, getEycaActivation);
   yield call(handleEycaActivationSaga, getEycaActivation, startEycaActivation);
 
   // Activation saga ended, request again the details
