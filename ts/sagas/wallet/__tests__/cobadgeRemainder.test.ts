@@ -6,14 +6,18 @@ import {
   cobadgeListVisibleInWalletSelector
 } from "../../../store/reducers/wallet/wallets";
 import { sendAddCobadgeMessage } from "../../../store/actions/wallet/wallets";
+import { StatusEnum } from "../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod
 } from "../../../types/pagopa";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { coBadgeAbiConfigurationSelector } from "../../../features/wallet/onboarding/cobadge/store/reducers/abiConfiguration";
+import { loadCoBadgeAbiConfiguration } from "../../../features/wallet/onboarding/cobadge/store/actions";
+import { getType } from "typesafe-actions";
 
 const anAbiCode = "123";
+const anotherAbiCode = "456";
 const aBancomat = {
   walletType: "Bancomat",
   kind: "Bancomat",
@@ -27,7 +31,7 @@ const aCoBadge = {
   kind: "CreditCard",
   pagoPA: false,
   info: {
-    issuerAbiCode: anAbiCode,
+    issuerAbiCode: anotherAbiCode,
     type: TypeEnum.CRD
   }
 } as CreditCardPaymentMethod;
@@ -47,6 +51,73 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next(pot.some([aBancomat]))
       .select(cobadgeListVisibleInWalletSelector)
       .next(pot.some([aCoBadge]))
-      .select(coBadgeAbiConfigurationSelector);
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.none)
+      .put(loadCoBadgeAbiConfiguration.request())
+      .next()
+      .take([
+        getType(loadCoBadgeAbiConfiguration.success),
+        getType(loadCoBadgeAbiConfiguration.failure)
+      ])
+      .next(getType(loadCoBadgeAbiConfiguration.success))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.enabled }))
+      .put(sendAddCobadgeMessage(true));
+  });
+  it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat, the abi is in the abiConfig and is not enabled", () => {
+    testSaga(sendAddCobadgeMessageSaga)
+      .next()
+      .select(bancomatListVisibleInWalletSelector)
+      .next(pot.some([aBancomat]))
+      .select(cobadgeListVisibleInWalletSelector)
+      .next(pot.some([aCoBadge]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .put(sendAddCobadgeMessage(false));
+  });
+  it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat, the abi is not in the abiConfig", () => {
+    testSaga(sendAddCobadgeMessageSaga)
+      .next()
+      .select(bancomatListVisibleInWalletSelector)
+      .next(pot.some([aBancomat]))
+      .select(cobadgeListVisibleInWalletSelector)
+      .next(pot.some([aCoBadge]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "789": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "789": StatusEnum.disabled }))
+      .put(sendAddCobadgeMessage(false));
+  });
+  it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat and there is a co-badge with the same abi", () => {
+    testSaga(sendAddCobadgeMessageSaga)
+      .next()
+      .select(bancomatListVisibleInWalletSelector)
+      .next(pot.some([aBancomat]))
+      .select(cobadgeListVisibleInWalletSelector)
+      .next(
+        pot.some([
+          { ...aCoBadge, info: { ...aCoBadge.info, issuerAbiCode: anAbiCode } }
+        ])
+      )
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .put(sendAddCobadgeMessage(false));
+  });
+  it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat but without the issuerAbiCode", () => {
+    testSaga(sendAddCobadgeMessageSaga)
+      .next()
+      .select(bancomatListVisibleInWalletSelector)
+      .next(pot.some([{ ...aBancomat, info: {} }]))
+      .select(cobadgeListVisibleInWalletSelector)
+      .next(pot.some([aCoBadge]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .put(sendAddCobadgeMessage(false));
   });
 });
