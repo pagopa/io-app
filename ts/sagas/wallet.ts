@@ -183,7 +183,7 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeRemainder";
+import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 
 const successScreenDelay = 2000 as Millisecond;
 /**

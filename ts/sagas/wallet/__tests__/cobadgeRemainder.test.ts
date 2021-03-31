@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as pot from "italia-ts-commons/lib/pot";
-import { sendAddCobadgeMessageSaga } from "../cobadgeRemainder";
+import { sendAddCobadgeMessageSaga } from "../cobadgeReminder";
 import {
   bancomatListVisibleInWalletSelector,
   cobadgeListVisibleInWalletSelector
