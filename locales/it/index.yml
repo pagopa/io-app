@@ -105,6 +105,7 @@ global:
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
@@ -1087,11 +1088,22 @@ wallet:
       text: Aggiungi un metodo di pagamento per procedere con il pagamento
     header: Scelta metodo di pagamento
     title: Paga con
-    text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
+    text: Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo.
     fetchPspFailure: Errore temporaneo, riprova
     noPspsAvailable: Questo metodo di pagamento non può essere usato
     contextualHelpTitle: Scelta del metodo di pagamento
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
+    pickPaymentMethod:
+      title: "Con quale metodo vuoi pagare?"
+      description: "{{firstElement}} · {{secondElement}}"
+      notAvailable:
+        title: "Metodi non compatibili"
+        arriving:
+          bottomSheetTitle: "Stiamo lavorando per supportare questo metodo"
+          bottomSheetDescription: "Nel frattempo, prova a pagare con un altro metodo. Puoi utilizzare pagoPA anche sulla tua app di pagamenti preferita o sul sito del tuo Ente Creditore."
+        unaccepted:
+          bottomSheetTitle: "Perché non posso pagare con questa carta?"
+          bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento

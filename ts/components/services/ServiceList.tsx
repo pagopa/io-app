@@ -116,9 +116,7 @@ class ServiceList extends React.Component<Props> {
       sectionHeader={info.section.organizationName}
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
-      rightItem={
-        this.props.renderRightIcon && this.props.renderRightIcon(info.section)
-      }
+      rightItem={this.props.renderRightIcon?.(info.section)}
     />
   );
 
