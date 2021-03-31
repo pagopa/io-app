@@ -1,9 +1,10 @@
 import { put, select, take } from "redux-saga/effects";
+import * as pot from "italia-ts-commons/lib/pot";
+import { getType, isActionOf } from "typesafe-actions";
 import {
   bancomatListVisibleInWalletSelector,
   cobadgeListVisibleInWalletSelector
 } from "../../store/reducers/wallet/wallets";
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod
@@ -13,7 +14,6 @@ import { IndexedById } from "../../store/helpers/indexer";
 import { StatusEnum } from "../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
 import { NetworkError } from "../../utils/errors";
 import { loadCoBadgeAbiConfiguration } from "../../features/wallet/onboarding/cobadge/store/actions";
-import { getType, isActionOf } from "typesafe-actions";
 import { sendAddCobadgeMessage } from "../../store/actions/wallet/wallets";
 
 /**

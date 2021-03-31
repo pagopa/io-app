@@ -1,5 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as pot from "italia-ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
 import { sendAddCobadgeMessageSaga } from "../cobadgeReminder";
 import {
   bancomatListVisibleInWalletSelector,
@@ -14,7 +15,6 @@ import {
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { coBadgeAbiConfigurationSelector } from "../../../features/wallet/onboarding/cobadge/store/reducers/abiConfiguration";
 import { loadCoBadgeAbiConfiguration } from "../../../features/wallet/onboarding/cobadge/store/actions";
-import { getType } from "typesafe-actions";
 
 const anAbiCode = "123";
 const anotherAbiCode = "456";
