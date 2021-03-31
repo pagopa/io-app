@@ -82,7 +82,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     props.loadEycaDetails();
   };
   useEffect(() => {
-    setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
+    setStatusBarColorAndBackground("dark-content", HEADER_BACKGROUND_COLOR);
   }, []);
 
   useActionOnFocus(loadCGN);
