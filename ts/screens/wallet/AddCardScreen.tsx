@@ -13,7 +13,7 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { isNone, Option, fromPredicate } from "fp-ts/lib/Option";
+import { isNone, Option, fromPredicate, isSome } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -52,6 +52,10 @@ import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -90,7 +94,10 @@ const styles = StyleSheet.create({
     width: 16,
     flex: 0
   },
-
+  button: {
+    width: "100%",
+    borderColor: IOColors.blue
+  },
   whiteBg: {
     backgroundColor: variables.colorWhite
   }
@@ -140,11 +147,26 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
+  const inPayment = props.navigation.getParam("inPayment");
 
-  const { present } = useIOBottomSheet(
-    <Body>{I18n.t("wallet.missingDataText")}</Body>,
+  const { present, dismiss } = useIOBottomSheet(
+    <>
+      <Body>{I18n.t("wallet.missingDataText.body")}</Body>
+      <View spacer={true} large />
+      <ButtonDefaultOpacity
+        style={styles.button}
+        bordered={true}
+        onPress={() => {
+          dismiss();
+          props.startAddCobadgeWorkflow();
+        }}
+        onPressWithGestureHandler={true}
+      >
+        <Label>{I18n.t("wallet.missingDataText.cta")}</Label>
+      </ButtonDefaultOpacity>
+    </>,
     I18n.t("wallet.missingDataCTA"),
-    260
+    300
   );
 
   const detectedBrand: SupportedBrand = CreditCardDetector.validate(
@@ -286,10 +308,12 @@ const AddCardScreen: React.FC<Props> = props => {
             </Col>
           </Grid>
 
-          <View spacer={true} />
-
-          <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
-
+          {!isSome(inPayment) && (
+            <>
+              <View spacer={true} />
+              <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+            </>
+          )}
           <View spacer />
 
           <Link onPress={openSupportedCardsPage}>
@@ -313,6 +337,7 @@ const AddCardScreen: React.FC<Props> = props => {
 const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+  startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateBack: () => dispatch(navigateBack()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
