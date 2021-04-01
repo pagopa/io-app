@@ -259,12 +259,6 @@ const renderCoBadgeScreen = (store: Store<GlobalState, Action>) =>
     store
   );
 
-// const isAllBankScreen = (component: RenderAPI) =>
-//   component.queryByTestId("CoBadgeChosenBankScreenAll") !== null &&
-//   component.queryByText(
-//     I18n.t("wallet.searchAbi.cobadge.description.text2")
-//   ) !== null;
-
 const isLoadingScreen = (component: RenderAPI) =>
   component.queryByTestId("LoadAbiConfiguration") !== null;
 
