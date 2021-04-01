@@ -39,17 +39,6 @@ export function* sendAddCobadgeMessageSaga() {
     return;
   }
 
-  // Extract the cobadgeAbi if there is at least a cobadge card
-  const maybeCobadgeVisibleInWallet: pot.Pot<
-    ReadonlyArray<CreditCardPaymentMethod>,
-    Error
-  > = yield select(cobadgeListVisibleInWalletSelector);
-
-  const cobadgeVisibleInWallet = pot.getOrElse(maybeCobadgeVisibleInWallet, []);
-  const cobadgeAbis = cobadgeVisibleInWallet
-    .filter(c => c.info.issuerAbiCode !== undefined)
-    .map(cWithAbi => cWithAbi.info.issuerAbiCode);
-
   // Check if the abiConfiguration is Some
   // and if not request the abiConfiguration
   if (!pot.isSome(yield select(coBadgeAbiConfigurationSelector))) {
@@ -74,6 +63,19 @@ export function* sendAddCobadgeMessageSaga() {
   if (pot.isSome(maybeCoBadgeAbiConfiguration)) {
     const coBadgeAbiConfiguration = maybeCoBadgeAbiConfiguration.value;
 
+    // Extract the cobadgeAbi if there is at least a cobadge card
+    const maybeCobadgeVisibleInWallet: pot.Pot<
+      ReadonlyArray<CreditCardPaymentMethod>,
+      Error
+    > = yield select(cobadgeListVisibleInWalletSelector);
+
+    const cobadgeVisibleInWallet = pot.getOrElse(
+      maybeCobadgeVisibleInWallet,
+      []
+    );
+    const cobadgeAbis = cobadgeVisibleInWallet.map(
+      cWithAbi => cWithAbi.info.issuerAbiCode
+    );
     // Extract a list of abi that satisfy the following conditions:
     // - is a bancomat in the wallet of the user
     // - the abi of the bancomat is in the abiConfiguration list
