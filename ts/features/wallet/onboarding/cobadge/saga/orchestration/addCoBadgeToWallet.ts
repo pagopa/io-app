@@ -52,31 +52,30 @@ export function* addCoBadgeToWalletAndActivateBpd() {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     sagaExecution
   );
-  if (res !== "back" && res !== "failure") {
+
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+    navigationCurrentRouteSelector
+  );
+  if (res !== "back" && res !== "failure" && currentRoute.isSome()) {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-      navigationCurrentRouteSelector
-    );
 
-    if (currentRoute.isSome()) {
-      if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
-        yield put(navigationHistoryPop(1));
-        yield put(NavigationActions.back());
-      }
+    if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
+      yield put(navigationHistoryPop(1));
+      yield put(NavigationActions.back());
+    }
 
-      if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+    if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+      yield put(NavigationActions.back());
+      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+        navigationCurrentRouteSelector
+      );
+      if (
+        res === "completed" &&
+        newRoute.isSome() &&
+        newRoute.value === "WALLET_BANCOMAT_DETAIL"
+      ) {
         yield put(NavigationActions.back());
-        const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-          navigationCurrentRouteSelector
-        );
-        if (
-          res === "completed" &&
-          newRoute.isSome() &&
-          newRoute.value === "WALLET_BANCOMAT_DETAIL"
-        ) {
-          yield put(NavigationActions.back());
-        }
       }
     }
   }
