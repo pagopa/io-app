@@ -101,6 +101,7 @@ import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
 import {
+  abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
@@ -182,6 +183,7 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { paymentIdSelector } from "../store/reducers/wallet/payment";
 
 const successScreenDelay = 2000 as Millisecond;
 /**
@@ -511,8 +513,8 @@ function* startOrResumePaymentActivationSaga(
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
-  const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select(
-    _ => _.wallet.payment.paymentId
+  const potPaymentId: ReturnType<typeof paymentIdSelector> = yield select(
+    paymentIdSelector
   );
   const maybePaymentId = pot.toOption(potPaymentId);
   // stop polling
@@ -522,6 +524,17 @@ function* deleteActivePaymentSaga() {
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
   }
+}
+
+/**
+ * this saga delete a payment just before the user pays
+ * it should be invoked from the payment UX
+ */
+function* abortRunningPaymentSaga() {
+  // delete the active payment from pagoPA
+  yield put(runDeleteActivePaymentSaga());
+  // navigate to entrypoint of payment or wallet home
+  yield put(backToEntrypointPayment());
 }
 
 // this is a shared DeferredPromise used to stop polling when user aborts a running payment
@@ -606,6 +619,9 @@ export function* watchWalletSaga(
     getType(runDeleteActivePaymentSaga),
     deleteActivePaymentSaga
   );
+
+  //
+  yield takeLatest(getType(abortRunningPayment), abortRunningPaymentSaga);
 
   //
   // API requests
