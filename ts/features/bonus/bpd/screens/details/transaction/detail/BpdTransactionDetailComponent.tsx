@@ -162,7 +162,11 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = pro
       <Body>{paymentMethod}</Body>
       <View spacer={true} />
       <View style={[IOStyles.flex, IOStyles.row]}>
-        <Image source={props.transaction.image} style={styles.image} />
+        <Image
+          source={props.transaction.image}
+          style={styles.image}
+          resizeMode={"contain"}
+        />
         <View hspacer={true} small={true} />
         <H4>{props.transaction.title}</H4>
       </View>

@@ -8,7 +8,6 @@ import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
@@ -44,11 +43,13 @@ import {
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const HEADER_BACKGROUND_COLOR = "#7CB3D9";
+const HEADER_BACKGROUND_COLOR = "#C2DBEC";
+const GRADIENT_END_COLOR = "#94C0DD";
 
 // return true if the EYCA details component can be shown
 const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
@@ -81,12 +82,17 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     props.loadEycaDetails();
   };
   useEffect(() => {
-    setStatusBarColorAndBackground("dark-content", IOColors.yellowGradientTop);
+    setStatusBarColorAndBackground("dark-content", HEADER_BACKGROUND_COLOR);
   }, []);
 
   useActionOnFocus(loadCGN);
 
   const onCardLoadEnd = () => setCardLoading(false);
+
+  useHardwareBackButton(() => {
+    props.goBack();
+    return true;
+  });
 
   const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
   return props.cgnDetails || props.isCgnInfoLoading ? (
@@ -101,10 +107,10 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={[IOStyles.flex]} bounces={false}>
             <LinearGradient
-              colors={[HEADER_BACKGROUND_COLOR, IOColors.bluegrey]}
+              colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
             >
               <View
-                style={[IOStyles.horizontalContentPadding, { height: 180 }]}
+                style={[IOStyles.horizontalContentPadding, { height: 149 }]}
               />
             </LinearGradient>
             {props.cgnDetails && (
@@ -120,7 +126,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                 { paddingTop: customVariables.contentPadding }
               ]}
             >
-              <View spacer />
+              <View spacer extralarge />
+              <View spacer xsmall />
               {/* Ownership block rendering owner's fiscal code */}
               <CgnOwnershipInformation />
               <ItemSeparatorComponent noPadded />
