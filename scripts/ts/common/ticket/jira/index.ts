@@ -34,7 +34,7 @@ const retrieveRawJiraTicketTask = (id: string): TaskEither<Error, unknown> =>
   tryCatch(() => retrieveRawJiraTicket(id), toError);
 
 /**
- * Ensure that the remote payload have the required fields
+ * Ensure that the remote payload has the required fields
  * @param payload
  */
 const decodeRemoteJiraTicket = (
