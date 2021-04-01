@@ -1,35 +1,36 @@
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Content, View, H3 } from "native-base";
 import * as React from "react";
 import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { ContextualHelp } from "../../../components/ContextualHelp";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { Label } from "../../../components/core/typography/Label";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
-import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentFetchAllPspsForPaymentId } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { allPspsSelector } from "../../../store/reducers/wallet/payment";
-import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { navigateBack } from "../../../store/actions/navigation";
+import { Body } from "../../../components/core/typography/Body";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
-  feeText: {
-    color: variables.brandDarkGray
+  feeContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   },
-
-  flexStart: {
+  imageProvider: {
     width: 100,
     height: 50
   },
@@ -77,21 +78,22 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const ICON_SIZE = 24;
 
+type State = {
+  hasImageLoadingError: boolean;
+};
 /**
  * Select a PSP to be used for a the current selected wallet
  */
-class PickPspScreen extends React.Component<Props> {
-  private showHelp = () => {
-    this.props.showModal(
-      <ContextualHelp
-        onClose={this.props.hideModal}
-        title={I18n.t("wallet.pickPsp.contextualHelpTitle")}
-        body={() => (
-          <Markdown>{I18n.t("wallet.pickPsp.contextualHelpContent")}</Markdown>
-        )}
-      />
-    );
-  };
+class PickPspScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasImageLoadingError: false
+    };
+  }
+
+  private onErrorImageLoading = () =>
+    this.setState({ hasImageLoadingError: true });
 
   public componentDidMount() {
     // load all psp in order to offer to the user the complete psps list
@@ -102,31 +104,49 @@ class PickPspScreen extends React.Component<Props> {
     this.props.loadAllPsp(idWallet, idPayment);
   }
 
+  private headerItem = (
+    <View style={styles.padded}>
+      <View style={styles.line1}>
+        <LabelSmall weight="Regular" color="bluegrey">
+          {I18n.t("wallet.pickPsp.provider")}
+        </LabelSmall>
+        <LabelSmall weight="Regular" color="bluegrey">
+          {`${I18n.t("wallet.pickPsp.maxFee")} (€)`}
+        </LabelSmall>
+      </View>
+      <View spacer />
+      <ItemSeparatorComponent noPadded />
+    </View>
+  );
+
   private getListItem = (psp: ListRenderItemInfo<Psp>) => {
     const { item } = psp;
+
     return (
       <TouchableDefaultOpacity
         onPress={() => this.props.pickPsp(item.id, this.props.allPsps)}
         style={styles.itemContainer}
       >
         <View style={styles.line1}>
-          <Image
-            style={styles.flexStart}
-            resizeMode={"contain"}
-            source={{ uri: item.logoPSP }}
-          />
-          <IconFont
-            name={"io-right"}
-            size={ICON_SIZE}
-            color={customVariables.contentPrimaryBackground}
-          />
+          {!this.state.hasImageLoadingError ? (
+            <Image
+              style={styles.imageProvider}
+              resizeMode="contain"
+              source={{ uri: item.logoPSP }}
+              onError={this.onErrorImageLoading}
+            />
+          ) : (
+            <Body>{item.serviceName}</Body>
+          )}
+          <View style={styles.feeContainer}>
+            <Label>{formatNumberCentsToAmount(item.fixedCost.amount)}</Label>
+            <IconFont
+              name="io-right"
+              size={ICON_SIZE}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
         </View>
-        <Text style={styles.feeText}>
-          {`${I18n.t("wallet.pickPsp.maxFee")} `}
-          <Text bold={true} style={styles.feeText}>
-            {formatNumberCentsToAmount(item.fixedCost.amount)}
-          </Text>
-        </Text>
       </TouchableDefaultOpacity>
     );
   };
@@ -134,34 +154,48 @@ class PickPspScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const availablePsps = orderPspByAmount(this.props.allPsps);
 
+    const backButtonProps = {
+      block: true,
+      primary: true,
+      bordered: true,
+      onPress: this.props.navigateBack,
+      title: I18n.t("global.buttons.back")
+    };
+
     return (
       <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("wallet.pickPsp.title")}
+        headerTitle={I18n.t("wallet.pickPsp.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["payment"]}
       >
-        <Content noPadded={true}>
-          <View spacer={true} />
+        <Content noPadded>
+          <View spacer />
           <View style={styles.padded}>
-            <Text>
-              <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
-              {`${I18n.t("wallet.pickPsp.info2")} `}
-            </Text>
-            <Text link={true} onPress={this.showHelp}>
-              {I18n.t("wallet.pickPsp.link")}
-            </Text>
+            <H3>{I18n.t("wallet.pickPsp.title")}</H3>
+            <View spacer small />
+            <Label weight="Regular" color="bluegreyDark">
+              {I18n.t("wallet.pickPsp.info")}
+            </Label>
+            <Label weight="Regular" color="bluegreyDark">
+              {I18n.t("wallet.pickPsp.info2")}
+              <Label weight="Bold" color="bluegreyDark">{` ${I18n.t(
+                "wallet.pickPsp.info2Bold"
+              )}`}</Label>
+            </Label>
           </View>
-          <View spacer={true} />
+          <View spacer />
           <FlatList
             ItemSeparatorComponent={() => <ItemSeparatorComponent />}
             removeClippedSubviews={false}
             data={availablePsps}
             keyExtractor={item => item.id.toString()}
             renderItem={this.getListItem}
-            ListFooterComponent={<EdgeBorderComponent />}
+            ListHeaderComponent={this.headerItem}
+            ListFooterComponent={() => <ItemSeparatorComponent />}
           />
         </Content>
+        <FooterWithButtons type="SingleButton" leftButton={backButtonProps} />
       </BaseScreenComponent>
     );
   }
@@ -177,6 +211,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+  navigateBack: () => dispatch(navigateBack()),
   loadAllPsp: (idWallet: string, idPayment: string) => {
     dispatch(
       paymentFetchAllPspsForPaymentId.request({
