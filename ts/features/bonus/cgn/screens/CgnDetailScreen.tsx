@@ -43,6 +43,7 @@ import {
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -87,6 +88,11 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   useActionOnFocus(loadCGN);
 
   const onCardLoadEnd = () => setCardLoading(false);
+
+  useHardwareBackButton(() => {
+    props.goBack();
+    return true;
+  });
 
   const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
   return props.cgnDetails || props.isCgnInfoLoading ? (
