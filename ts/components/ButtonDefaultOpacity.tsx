@@ -1,5 +1,6 @@
 import { Button, NativeBase } from "native-base";
 import * as React from "react";
+import { Insets } from "react-native";
 import {
   State,
   TapGestureHandler,
@@ -12,25 +13,39 @@ import { calculateSlop } from "./core/accessibility";
 const defaultActiveOpacity = 1.0;
 
 type CustomProps = {
+  hasFullHitSlop?: boolean;
   onPressWithGestureHandler?: true;
 };
 type Props = NativeBase.Button & React.Props<Button> & CustomProps;
 
-const smallSlop = calculateSlop(customVariables.btnSmallHeight);
-const xsmallSlop = calculateSlop(customVariables.btnXSmallHeight);
-const defaultSlop = calculateSlop(customVariables.btnHeight);
+const slopsBySize: Record<"small" | "xsmall" | "default", number> = {
+  small: calculateSlop(customVariables.btnSmallHeight),
+  xsmall: calculateSlop(customVariables.btnXSmallHeight),
+  default: calculateSlop(customVariables.btnHeight)
+};
+
 /**
  * This is a temporary solution to extend the touchable area using the existing theme system.
- * @deprecated
  * @param props
  */
-const getSlopForCurrentButton = (props: Props) => {
-  if (props.small) {
-    return smallSlop;
-  } else if (props.xsmall) {
-    return xsmallSlop;
-  }
-  return defaultSlop;
+const getSlopForCurrentButton = (props: Props): Insets => {
+  const slop =
+    slopsBySize[props.small ? "small" : props.xsmall ? "xsmall" : "default"];
+
+  // We've applied a vertical-only hitSlop so far, we don't want to break any existing button
+  const result = {
+    top: slop,
+    bottom: slop
+  };
+
+  // The hasFullHitSlop prop should eventually be deprecated, after testing each button
+  return props.hasFullHitSlop
+    ? {
+        ...result,
+        right: slop,
+        left: slop
+      }
+    : result;
 };
 
 /**
@@ -42,9 +57,10 @@ const getSlopForCurrentButton = (props: Props) => {
  * (this surely happen when a button is used inside a BottomSheet)
  */
 const ButtonDefaultOpacity = (props: Props) => {
-  const slop = getSlopForCurrentButton(props);
+  const hitSlop = getSlopForCurrentButton(props);
   // use the alternative handling only if is request by props AND is android
   const tapGestureRequired = props.onPressWithGestureHandler && !isIos;
+
   const button = (
     <Button
       {...{
@@ -54,7 +70,7 @@ const ButtonDefaultOpacity = (props: Props) => {
       onPress={tapGestureRequired ? undefined : props.onPress}
       accessible={true} // allows with TalkBack the feedback request to touch for button activation
       accessibilityRole={"button"}
-      hitSlop={{ top: slop, bottom: slop }}
+      hitSlop={hitSlop}
     >
       {props.children}
     </Button>

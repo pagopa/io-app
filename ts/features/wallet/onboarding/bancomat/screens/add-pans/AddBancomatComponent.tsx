@@ -50,7 +50,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
       elem => elem.abi === props.pan.abi
     );
     setAbiInfo(abi ?? {});
-  }, [props.currentIndex]);
+  }, [props.pan.abi]);
 
   return (
     <BaseScreenComponent

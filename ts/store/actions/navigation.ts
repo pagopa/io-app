@@ -12,6 +12,7 @@ import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen"
 import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
@@ -28,6 +29,9 @@ import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
+  BPayPaymentMethod,
+  CreditCardPaymentMethod,
+  PrivativePaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
@@ -160,6 +164,11 @@ export const navigateToRemoveAccountSuccess = () =>
     routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
   });
 
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
 export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
@@ -232,6 +241,28 @@ export const navigateToSatispayDetailScreen = (
     params: { satispay }
   });
 
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
+  });
+
+export const navigateToCobadgeDetailScreen = (
+  cobadge: CreditCardPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_COBADGE_DETAIL,
+    params: { cobadge }
+  });
+
+export const navigateToPrivativeDetailScreen = (
+  privative: PrivativePaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    params: { privative }
+  });
+
 export const navigateToPaymentPickPspScreen = (
   params: InferNavigationParams<typeof PickPspScreen>
 ) =>
@@ -272,6 +303,9 @@ export const navigateToWalletHome = (
     params
   });
 
+/**
+ * @deprecated
+ */
 export const navigateToWalletList = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_LIST
@@ -319,6 +353,19 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
+export const navigateToAddCreditCardOutcomeCode = (
+  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    params
+  });
+
+export const navigateToPaymentOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+  });
+
 /**
  * CIE
  */
@@ -339,4 +386,9 @@ export const navigateToCieCardReaderScreen = (
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
+  });
+
+export const navigateToWorkunitGenericFailureScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
   });

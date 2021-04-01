@@ -17,7 +17,6 @@ type OwnProps = Readonly<{
   text2: string;
   text3: string;
   isNew: boolean;
-  isExpired?: boolean;
   isPaid?: boolean;
   onPressItem: () => void;
   onLongPressItem?: () => void;
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   },
   text3SubContainer: { width: `95%` },
   badgeInfo: {
-    borderWidth: 1, 
+    borderWidth: 1,
     borderStyle: "solid",
     width: 65,
     height: 25,
@@ -97,8 +96,8 @@ const styles = StyleSheet.create({
     borderColor: IOColors.red
   },
   badgeInfoPaid: {
-    borderColor: IOColors.aqua, 
-    backgroundColor: IOColors.aqua,
+    borderColor: IOColors.aqua,
+    backgroundColor: IOColors.aqua
   }
 });
 
@@ -149,11 +148,6 @@ export default class DetailedlistItemComponent extends React.PureComponent<
           </View>
 
           <View style={styles.icon}>
-            {this.props.isExpired && (
-              <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
-                <H5 color="red">{I18n.t("messages.badge.expired")}</H5>
-              </Badge>
-            )}
             {this.props.isPaid && (
               <Badge style={[styles.badgeInfo, styles.badgeInfoPaid]}>
                 <H5 color="bluegreyDark">{I18n.t("messages.badge.paid")}</H5>

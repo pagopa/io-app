@@ -11,8 +11,12 @@ import {
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
+import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
+import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -44,6 +48,8 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
+import { CrossSessionsActions } from "./crossSessions";
+import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
 export type Action =
   | AnalyticsActions
@@ -80,7 +86,13 @@ export type Action =
   | BonusActions
   | BpdActions
   | AbiActions
-  | SatispayActions;
+  | BPayActions
+  | CoBadgeActions
+  | PrivativeActions
+  | SatispayActions
+  | CrossSessionsActions
+  | CgnActions
+  | OutcomeCodeActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

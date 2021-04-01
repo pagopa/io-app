@@ -7,12 +7,11 @@ import { PaymentMethod } from "../../../../../../types/pagopa";
 import { getPaymentMethodHash } from "../../../../../../utils/paymentMethod";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../utils/wallet";
 import { EnhancedBpdTransaction } from "../../../components/transactionItem/BpdTransactionItem";
-import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { BpdPaymentMethodActivation } from "../../actions/paymentMethods";
 import { BpdTransaction } from "../../actions/transactions";
 import { bpdEnabledSelector } from "./activation";
 import { bpdPaymentMethodActivationSelector } from "./paymentMethods";
-import { BpdPeriodWithAmount, bpdPeriodsSelector } from "./periods";
+import { bpdPeriodsSelector, BpdPeriodWithInfo } from "./periods";
 import { bpdSelectedPeriodSelector } from "./selectedPeriod";
 import { bpdTransactionsForSelectedPeriod } from "./transactions";
 
@@ -25,11 +24,11 @@ import { bpdTransactionsForSelectedPeriod } from "./transactions";
  * @param bpdEnabled
  */
 const isPeriodAmountWalletVisible = (
-  periodList: ReadonlyArray<BpdPeriodWithAmount>,
-  periodAmount: BpdPeriodWithAmount,
-  bpdEnabled: RemoteValue<boolean, Error>
+  periodList: ReadonlyArray<BpdPeriodWithInfo>,
+  periodAmount: BpdPeriodWithInfo,
+  bpdEnabled: pot.Pot<boolean, Error>
 ) =>
-  isReady(bpdEnabled) &&
+  pot.isSome(bpdEnabled) &&
   ((periodAmount.status === "Active" && bpdEnabled.value) ||
     (periodAmount.status === "Closed" &&
       periodAmount.amount.transactionNumber > 0) ||
@@ -41,7 +40,7 @@ const isPeriodAmountWalletVisible = (
       bpdEnabled.value));
 
 /**
- * Return the {@link BpdPeriodWithAmount} that can be visible in the wallet
+ * Return the {@link BpdPeriodWithInfo} that can be visible in the wallet
  */
 export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
   [bpdPeriodsSelector, bpdEnabledSelector],
@@ -75,13 +74,12 @@ export const bpdPeriodsAmountWalletVisibleSelector = createSelector(
  * @param bpdEnabled
  */
 const isPeriodAmountSnappedVisible = (
-  periodAmount: BpdPeriodWithAmount,
-  bpdEnabled: RemoteValue<boolean, Error>
-) =>
-  periodAmount.status === "Closed" || (isReady(bpdEnabled) && bpdEnabled.value);
+  periodAmount: BpdPeriodWithInfo,
+  bpdEnabled: pot.Pot<boolean, Error>
+) => periodAmount.status === "Closed" || pot.getOrElse(bpdEnabled, false);
 
 /**
- * Return the {@link BpdPeriodWithAmount} that should be visible in the snapped List selector
+ * Return the {@link BpdPeriodWithInfo} that should be visible in the snapped List selector
  */
 export const bpdPeriodsAmountSnappedListSelector = createSelector(
   [bpdPeriodsSelector, bpdEnabledSelector],

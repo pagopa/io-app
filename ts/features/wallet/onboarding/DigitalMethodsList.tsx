@@ -17,6 +17,7 @@ import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
 import { GlobalState } from "../../../store/reducers/types";
 import { walletAddSatispayStart } from "./satispay/store/actions";
+import { walletAddBPayStart } from "./bancomatPay/store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -44,14 +45,15 @@ const getMethods = (props: Props): ReadonlyArray<DigitalPaymentItem> => [
     name: I18n.t("wallet.methods.bancomatPay.name"),
     subtitle: I18n.t("wallet.methods.bancomatPay.description"),
     logo: require("../../../../img/wallet/payment-methods/bancomatpay-logo.png"),
-    implemented: false
+    onPress: props.startBPayOnboarding,
+    implemented: true
   },
   {
     name: I18n.t("wallet.methods.satispay.name"),
     subtitle: I18n.t("wallet.methods.satispay.description"),
     logo: require("../../../../img/wallet/cards-icons/satispay.png"),
     onPress: props.startSatispayOnboarding,
-    implemented: true
+    implemented: false
   },
   {
     name: I18n.t("wallet.methods.paypal.name"),
@@ -85,7 +87,8 @@ const DigitalMethodsList = (props: Props) => (
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startSatispayOnboarding: () => dispatch(walletAddSatispayStart())
+  startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
+  startBPayOnboarding: () => dispatch(walletAddBPayStart())
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

@@ -1,11 +1,13 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";
-import { bottomSheetContent } from "../../../../../utils/bottomSheet";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { BpdTransactionDetailComponent } from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
+import {
+  BpdTransactionDetailComponent,
+  BpdTransactionDetailRepresentation
+} from "../../screens/details/transaction/detail/BpdTransactionDetailComponent";
 import { BpdTransaction } from "../../store/actions/transactions";
 import { BaseBpdTransactionItem } from "./BaseBpdTransactionItem";
 
@@ -17,7 +19,7 @@ export type EnhancedBpdTransaction = {
 } & BpdTransaction;
 
 type Props = {
-  transaction: EnhancedBpdTransaction;
+  transaction: BpdTransactionDetailRepresentation;
 };
 
 /**
@@ -25,27 +27,29 @@ type Props = {
  * TODO: move the get subtitle in the combiner and remove this component?
  * @param transaction
  */
-const getSubtitle = (transaction: BpdTransaction) =>
-  `${localeDateFormat(
-    transaction.trxDate,
-    I18n.t("global.dateFormats.dayMonthWithTime")
-  )} · € ${formatNumberAmount(transaction.amount)} `;
+export const getSubtitle = (transaction: BpdTransaction) => {
+  const isMidNight =
+    transaction.trxDate.getHours() +
+      transaction.trxDate.getMinutes() +
+      transaction.trxDate.getSeconds() ===
+    0;
+  return isMidNight
+    ? `€ ${formatNumberAmount(transaction.amount)} · ${localeDateFormat(
+        transaction.trxDate,
+        I18n.t("global.dateFormats.dayMonthWithoutTime")
+      )} `
+    : `€ ${formatNumberAmount(transaction.amount)} · ${localeDateFormat(
+        transaction.trxDate,
+        I18n.t("global.dateFormats.dayMonthWithTime")
+      )} `;
+};
 
 export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <BpdTransactionDetailComponent transaction={props.transaction} />,
-      I18n.t("bonus.bpd.details.transaction.detail.title"),
-      522,
-      dismiss
-    );
-
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+  const { present: openBottomSheet } = useIOBottomSheet(
+    <BpdTransactionDetailComponent transaction={props.transaction} />,
+    I18n.t("bonus.bpd.details.transaction.detail.title"),
+    522
+  );
 
   return (
     <BaseBpdTransactionItem
@@ -53,7 +57,7 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
       image={props.transaction.image}
       subtitle={getSubtitle(props.transaction)}
       rightText={formatNumberAmount(props.transaction.cashback)}
-      onPress={openModalBox}
+      onPress={openBottomSheet}
     />
   );
 };

@@ -10,6 +10,7 @@ import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethods
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -34,6 +35,9 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS]: {
       screen: ErrorPaymentMethodsScreen
+    },
+    [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
+      screen: IbanCTAEditScreen
     },
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen

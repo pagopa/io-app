@@ -1,59 +1,79 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { ImageSourcePropType } from "react-native";
+import { ImageSourcePropType, ImageURISource } from "react-native";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
-import bPayImage from "../../img/wallet/cards-icons/bPay.png";
-import satispayImage from "../../img/wallet/cards-icons/satispay.png";
-import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
-import {
-  cardIcons,
-  getCardIconFromBrandLogo
-} from "../components/wallet/card/Logo";
-import I18n from "../i18n";
-import { IndexedById } from "../store/helpers/indexer";
-import {
-  BancomatPaymentMethod,
-  isRawBancomat,
-  isRawBPay,
-  isRawCreditCard,
-  isRawSatispay,
-  PaymentMethod,
-  RawBancomatPaymentMethod,
-  RawCreditCardPaymentMethod,
-  RawPaymentMethod,
-  RawSatispayPaymentMethod,
-  SatispayPaymentMethod
-} from "../types/pagopa";
-import { contentRepoUrl } from "../config";
 import {
   Card,
   ValidityStateEnum
 } from "../../definitions/pagopa/walletv2/Card";
+import {
+  PaymentInstrument,
+  ValidityStatusEnum
+} from "../../definitions/pagopa/walletv2/PaymentInstrument";
+import bPayImage from "../../img/wallet/cards-icons/bPay.png";
+import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
+import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import {
+  cardIcons,
+  getCardIconFromBrandLogo
+} from "../components/wallet/card/Logo";
+import { contentRepoUrl } from "../config";
+import I18n from "../i18n";
+import { IndexedById } from "../store/helpers/indexer";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  CreditCardPaymentMethod,
+  isRawBancomat,
+  isRawBPay,
+  isRawCreditCard,
+  isRawPrivative,
+  isRawSatispay,
+  PaymentMethod,
+  PrivativePaymentMethod,
+  RawBancomatPaymentMethod,
+  RawBPayPaymentMethod,
+  RawCreditCardPaymentMethod,
+  RawPaymentMethod,
+  RawPrivativePaymentMethod,
+  RawSatispayPaymentMethod,
+  SatispayPaymentMethod
+} from "../types/pagopa";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
 ): string | undefined => {
-  if (isRawBancomat(pm)) {
-    return pm.info.hashPan;
+  switch (pm.kind) {
+    case "Satispay":
+      return pm.info.uuid;
+    case "BPay":
+      return pm.info.uidHash;
+    case "Bancomat":
+    case "CreditCard":
+    case "Privative":
+      return pm.info.hashPan;
   }
-  if (isRawCreditCard(pm)) {
-    return pm.info.hashPan;
-  }
-  if (isRawSatispay(pm)) {
-    return pm.info.uuid;
-  }
-  if (isRawBPay(pm)) {
-    return pm.info.uidHash;
-  }
-  return undefined;
 };
+export const getTitleFromPaymentInstrument = (
+  paymentInstrument: PaymentInstrument
+) => `${FOUR_UNICODE_CIRCLES} ${paymentInstrument.panPartialNumber ?? ""}`;
 
-export const getTitleFromCard = (creditCard: RawCreditCardPaymentMethod) =>
-  `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber}`;
+export const getTitleFromCard = (
+  creditCard: RawCreditCardPaymentMethod | RawPrivativePaymentMethod
+) => `${FOUR_UNICODE_CIRCLES} ${creditCard.info.blurredNumber ?? ""}`;
 
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
+export const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
+  uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
+});
+
+export const getPrivativeLoyaltyLogoUrl = (
+  abi: string
+): ImageSourcePropType => ({
+  uri: `${contentRepoUrl}/logos/privative/loyalty/${abi}.png`
+});
 /**
  * Choose an image to represent a {@link RawPaymentMethod}
  * @param paymentMethod
@@ -96,7 +116,7 @@ export const getTitleFromPaymentMethod = (
   paymentMethod: RawPaymentMethod,
   abiList: IndexedById<Abi>
 ) => {
-  if (isRawCreditCard(paymentMethod)) {
+  if (isRawCreditCard(paymentMethod) || isRawPrivative(paymentMethod)) {
     return getTitleFromCard(paymentMethod);
   }
   if (isRawBancomat(paymentMethod)) {
@@ -107,9 +127,12 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBPay(paymentMethod)) {
     return (
-      paymentMethod.info.numberObfuscated?.replace(/\*/g, "●") ??
+      fromNullable(paymentMethod.info.instituteCode)
+        .chain(abiCode => fromNullable(abiList[abiCode]))
+        .chain(abi => fromNullable(abi.name))
+        .toUndefined() ??
       paymentMethod.info.bankName ??
-      FOUR_UNICODE_CIRCLES
+      I18n.t("wallet.methods.bancomatPay.name")
     );
   }
   return FOUR_UNICODE_CIRCLES;
@@ -135,6 +158,48 @@ export const enhanceSatispay = (
   icon: getImageFromPaymentMethod(raw)
 });
 
+export const enhanceBPay = (
+  rawBPay: RawBPayPaymentMethod,
+  abiList: IndexedById<Abi>
+): BPayPaymentMethod => ({
+  ...rawBPay,
+  info: {
+    ...rawBPay.info,
+    numberObfuscated: rawBPay.info.numberObfuscated?.replace(/\*/g, "●")
+  },
+  abiInfo: rawBPay.info.instituteCode
+    ? abiList[rawBPay.info.instituteCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawBPay, abiList),
+  icon: getImageFromPaymentMethod(rawBPay)
+});
+
+export const enhanceCreditCard = (
+  rawCreditCard: RawCreditCardPaymentMethod,
+  abiList: IndexedById<Abi>
+): CreditCardPaymentMethod => ({
+  ...rawCreditCard,
+  abiInfo: rawCreditCard.info.issuerAbiCode
+    ? abiList[rawCreditCard.info.issuerAbiCode]
+    : undefined,
+  caption: getTitleFromPaymentMethod(rawCreditCard, abiList),
+  icon: getImageFromPaymentMethod(rawCreditCard)
+});
+
+export const enhancePrivativeCard = (
+  rawPrivative: RawPrivativePaymentMethod,
+  abiList: IndexedById<Abi>
+): PrivativePaymentMethod => ({
+  ...rawPrivative,
+  caption: getTitleFromPaymentMethod(rawPrivative, abiList),
+  icon: rawPrivative.info.issuerAbiCode
+    ? getPrivativeLoyaltyLogoUrl(rawPrivative.info.issuerAbiCode)
+    : cardIcons.UNKNOWN,
+  gdoLogo: rawPrivative.info.issuerAbiCode
+    ? getPrivativeGdoLogoUrl(rawPrivative.info.issuerAbiCode)
+    : undefined
+});
+
 export const enhancePaymentMethod = (
   pm: RawPaymentMethod,
   abiList: IndexedById<Abi>
@@ -143,8 +208,12 @@ export const enhancePaymentMethod = (
     // bancomat need a special handling, we need to include the abi
     case "Bancomat":
       return enhanceBancomat(pm, abiList);
-    case "CreditCard":
     case "BPay":
+      return enhanceBPay(pm, abiList);
+    case "CreditCard":
+      return enhanceCreditCard(pm, abiList);
+    case "Privative":
+      return enhancePrivativeCard(pm, abiList);
     case "Satispay":
       return {
         ...pm,
@@ -156,3 +225,6 @@ export const enhancePaymentMethod = (
 
 export const isBancomatBlocked = (pan: Card) =>
   pan.validityState === ValidityStateEnum.BR;
+
+export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
+  pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;

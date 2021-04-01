@@ -16,6 +16,8 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -23,8 +25,9 @@ import SectionCardComponent, {
   SectionCardStatus
 } from "../../components/wallet/card/SectionCardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
+import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -35,12 +38,14 @@ import {
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { availableBonusTypesSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
-import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
+import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
-import FeaturedCardCarousel from "../../features/wallet/component/FeaturedCardCarousel";
-import WalletV2PreviewCards from "../../features/wallet/component/WalletV2PreviewCards";
+import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
+import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
+import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
+import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -62,7 +67,7 @@ import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { creditCardAttemptionsSelector } from "../../store/reducers/wallet/creditCard";
+import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
   areMoreTransactionsAvailable,
   getTransactionsLoadedLength,
@@ -73,19 +78,15 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
-import {
-  isLoading,
-  isReady,
-  isError as isRemoteValueError
-} from "../../features/bonus/bpd/model/RemoteValue";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { isStrictSome } from "../../utils/pot";
-import { bpdDetailsLoadAll } from "../../features/bonus/bpd/store/actions/details";
 import { showToast } from "../../utils/showToast";
-import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
+import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
+import {
+  cgnDetailSelector,
+  isCgnInformationAvailableSelector
+} from "../../features/bonus/cgn/store/reducers/details";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -227,7 +228,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private loadBonusBpd = () => {
     if (bpdEnabled) {
-      this.props.loadBpdDetails();
+      this.props.loadBpdData();
+    }
+  };
+
+  private loadBonusCgn = () => {
+    if (cgnEnabled) {
+      this.props.loadCgnData();
     }
   };
 
@@ -236,9 +243,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    // FIXME restore loadWallets and loadTransactions see https://www.pivotaltracker.com/story/show/176051000
-    // this.props.loadWallets();
-    // this.props.loadTransactions(this.props.transactionsLoadedLength);
+    if (pot.isNone(this.props.potWallets)) {
+      this.props.loadWallets();
+    }
+
+    // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -270,8 +279,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.state.hasFocus &&
       // error loading: bpd bonus
-      ((!isRemoteValueError(prevProps.bpdActiveBonus) &&
-        isRemoteValueError(this.props.bpdActiveBonus)) ||
+      ((!pot.isError(prevProps.bpdLoadState) &&
+        pot.isError(this.props.bpdLoadState)) ||
         // error loading: bonus vacanze
         (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
           this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
@@ -319,10 +328,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // note: in the BPD case, we are watching for loading on one of several steps
     // so this loading state is very weak
     if (
-      isLoading(this.props.bpdActiveBonus) ||
+      pot.isLoading(this.props.bpdLoadState) ||
       this.props.allActiveBonus.find(
         ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      )
+      ) ||
+      pot.isLoading(this.props.cgnDetails)
     ) {
       return "loading";
     }
@@ -330,7 +340,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     if (
       this.props.allActiveBonus.length === 0 ||
       this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
-      isReady(this.props.bpdActiveBonus)
+      pot.isSome(this.props.bpdLoadState)
     ) {
       return "refresh";
     }
@@ -364,6 +374,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
               if (bonusLoadingStatus !== "loading") {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
+                this.loadBonusCgn();
               }
             }}
             activeBonuses={this.props.allActiveBonus}
@@ -372,6 +383,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
         {bpdEnabled && <BpdCardsInWalletContainer />}
+        {cgnEnabled && <CgnCardInWalletContainer />}
       </View>
     );
   }
@@ -549,11 +561,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           this.newMethodAddedContent
         ) : (
           <>
-            {bpdEnabled && (
-              <FeaturedCardCarousel
-                bvActive={this.props.allActiveBonus.length > 0}
-              />
-            )}
+            {(bpdEnabled || cgnEnabled) && <FeaturedCardCarousel />}
             {transactionContent}
           </>
         )}
@@ -575,6 +583,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
+      (cgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
   }
@@ -585,14 +594,13 @@ const mapStateToProps = (state: GlobalState) => {
     .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
 
-  const potAvailableBonuses = availableBonusTypesSelector(state);
   return {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, []),
+    availableBonusesList: supportedAvailableBonusSelector(state),
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
-    anyCreditCardAttempts: creditCardAttemptionsSelector(state).length > 0,
+    anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
     potTransactions: latestTransactionsSelector(state),
     transactionsLoadedLength: getTransactionsLoadedLength(state),
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
@@ -600,12 +608,15 @@ const mapStateToProps = (state: GlobalState) => {
     readTransactions: transactionsReadSelector(state),
     nav: navSelector(state),
     isPagoPaVersionSupported,
-    bpdActiveBonus: bpdEnabledSelector(state)
+    bpdLoadState: bpdLastUpdateSelector(state),
+    cgnDetails: cgnDetailSelector(state),
+    isCgnInfoAvailable: isCgnInformationAvailableSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBpdDetails: () => dispatch(bpdDetailsLoadAll()),
+  loadBpdData: () => dispatch(bpdAllData.request()),
+  loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isError } from "../../model/RemoteValue";
 import {
   bpdOnboardingCancel,
   bpdOnboardingStart
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (globalState: GlobalState) => ({
   // display the error with the retry only in case of networking errors
-  isLoading: !isError(bpdEnabledSelector(globalState))
+  isLoading: !pot.isError(bpdEnabledSelector(globalState))
 });
 
 export default connect(

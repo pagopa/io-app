@@ -35,7 +35,11 @@ export const InfoScreenStyle = styles;
 
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {
-    return <Text style={styles.body}>{body}</Text>;
+    return (
+      <Text style={styles.body} testID={"infoScreenBody"}>
+        {body}
+      </Text>
+    );
   }
 
   return body;
@@ -53,7 +57,13 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
-      <Text style={styles.title} bold={true} ref={elementRef} accessible={true}>
+      <Text
+        style={styles.title}
+        bold={true}
+        ref={elementRef}
+        accessible={true}
+        testID={"infoScreenTitle"}
+      >
         {props.title}
       </Text>
       <View spacer={true} />

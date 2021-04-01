@@ -12,7 +12,7 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import I18n, { availableTransations } from "../../i18n";
+import I18n, { availableTranslations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 import { preferredLanguageSelector } from "../../store/reducers/persistedPreferences";
@@ -127,7 +127,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
           )}
         >
           <List withContentLateralPadding={true}>
-            {availableTransations.map((lang, index) => {
+            {availableTranslations.map((lang, index) => {
               const isSelectedLanguage = this.isAlreadyPreferred(lang);
               const languageTitle = I18n.t(`locales.${lang}`, {
                 defaultValue: lang

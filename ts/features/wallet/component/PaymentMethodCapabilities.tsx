@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
@@ -14,6 +15,7 @@ import {
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
+import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -60,10 +62,6 @@ const generateCapabilityItems = (paymentMethod: PaymentMethod) =>
  */
 const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(props.paymentMethod);
-  // The capability section is not rendered if there is not at least one capacity
-  if (capabilityItems.length === 0) {
-    return null;
-  }
 
   return (
     <>
@@ -79,6 +77,14 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} />
       {capabilityItems.map(c => c)}
+      {capabilityItems.length > 0 && (
+        <>
+          <View spacer={true} />
+          <ItemSeparatorComponent noPadded={true} />
+        </>
+      )}
+      <View spacer={true} />
+      <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
   );
 };

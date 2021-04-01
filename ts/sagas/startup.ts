@@ -6,6 +6,7 @@ import { NavigationActions, NavigationState } from "react-navigation";
 import {
   call,
   cancel,
+  delay,
   Effect,
   fork,
   put,
@@ -23,6 +24,7 @@ import {
   apiUrlPrefix,
   bonusVacanzeEnabled,
   bpdEnabled,
+  cgnEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -41,11 +43,7 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  removeAccountMotivation,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   idpSelector,
@@ -62,9 +60,9 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { startTimer } from "../utils/timer";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
+import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -72,7 +70,6 @@ import {
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
-  handleRemoveAccount,
   loadProfile,
   watchProfile,
   watchProfileRefreshRequestsSaga,
@@ -104,7 +101,7 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
-const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
+const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -219,7 +216,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
-    yield call(startTimer, WAIT_INITIALIZE_SAGA);
+    yield delay(WAIT_INITIALIZE_SAGA);
     yield put(startApplicationInitialization());
     return;
   }
@@ -262,8 +259,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     backendClient.getSupportToken
   );
 
-  // Sart watching for request of remove profile
-  yield takeEvery(removeAccountMotivation, handleRemoveAccount);
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
@@ -318,6 +313,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (bpdEnabled) {
     // Start watching for actions about bonus bpd
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
+  }
+
+  if (cgnEnabled) {
+    // Start watching for actions about bonus bpd
+    yield fork(watchBonusCgnSaga, sessionToken);
   }
 
   // Load the user metadata

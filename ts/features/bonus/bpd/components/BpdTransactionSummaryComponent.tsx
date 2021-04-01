@@ -1,19 +1,24 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { InfoBox } from "../../../../components/box/InfoBox";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
+import { InfoBox } from "../../../../components/box/InfoBox";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { Link } from "../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../utils/url";
+import Markdown from "../../../../components/ui/Markdown";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { bottomSheetContent } from "../../../../utils/bottomSheet";
 import { localeDateFormat } from "../../../../utils/locale";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import {
+  formatIntegerNumber,
+  formatNumberAmount
+} from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
 
@@ -27,8 +32,11 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center"
-  }
+  },
+  readMore: { marginLeft: 31, marginBottom: 24 }
 });
+
+const readMoreLink = "https://io.italia.it/cashback/acquirer/";
 
 const CSS_STYLE = `
 body {
@@ -37,51 +45,68 @@ body {
 }
 `;
 
-const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
-  props: Props
-) => {
-  const { present, dismiss } = useBottomSheetModal();
+export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
+  const [CTAVisibility, setCTAVisibility] = React.useState(false);
 
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <>
-        <View spacer={true} large={true} />
-        <InfoBox iconName={"io-calendar"} iconSize={32}>
-          <H4 weight={"Regular"}>
-            {I18n.t(
-              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
-            )}
-            <H4>
-              {" "}
-              {I18n.t(
-                "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
-              )}
-            </H4>
-            {I18n.t(
-              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
-            )}
-          </H4>
-        </InfoBox>
-        <View spacer={true} large={true} />
-        <Markdown cssStyle={CSS_STYLE}>
-          {I18n.t(
-            "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
-          )}
-        </Markdown>
-      </>,
-      I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
-      522,
-      dismiss
-    );
-
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
+  const setCTAVisible = () => setCTAVisibility(true);
 
   return (
     <>
-      <TouchableDefaultOpacity style={styles.row} onPress={openModalBox}>
+      <Markdown
+        cssStyle={CSS_STYLE}
+        avoidTextSelection={true}
+        onLoadEnd={setCTAVisible}
+      >
+        {I18n.t(
+          "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
+        )}
+      </Markdown>
+      {CTAVisibility && (
+        <TouchableWithoutFeedback onPress={() => openWebUrl(readMoreLink)}>
+          <Link style={styles.readMore} weight={"SemiBold"}>
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.bottomSheet.readMore"
+            )}
+          </Link>
+        </TouchableWithoutFeedback>
+      )}
+    </>
+  );
+};
+
+const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const { present } = useIOBottomSheet(
+    <>
+      <View spacer={true} large={true} />
+      <InfoBox iconName={"io-calendar"} iconSize={32}>
+        <H4 weight={"Regular"}>
+          {I18n.t(
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text1"
+          )}
+          <H4>
+            {" "}
+            {I18n.t(
+              "bonus.bpd.details.transaction.detail.summary.calendarBlock.text2"
+            )}
+          </H4>
+          {I18n.t(
+            "bonus.bpd.details.transaction.detail.summary.calendarBlock.text3"
+          )}
+        </H4>
+      </InfoBox>
+      <View spacer={true} large={true} />
+
+      <BottomSheetBpdTransactionsBody />
+    </>,
+    I18n.t("bonus.bpd.details.transaction.detail.summary.bottomSheet.title"),
+    600
+  );
+
+  return (
+    <>
+      <TouchableDefaultOpacity style={styles.row} onPress={present}>
         <IconFont name={"io-notice"} size={24} color={IOColors.blue} />
         <View hspacer={true} small={true} />
         <View>
@@ -111,9 +136,16 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text3", {
             defaultValue: I18n.t(
               "bonus.bpd.details.transaction.detail.summary.body.text3.other",
-              { count: props.totalAmount.transactionNumber }
+              {
+                transactions: formatIntegerNumber(
+                  props.totalAmount.transactionNumber
+                )
+              }
             ),
-            count: props.totalAmount.transactionNumber
+            count: props.totalAmount.transactionNumber,
+            transactions: formatIntegerNumber(
+              props.totalAmount.transactionNumber
+            )
           })}
         </H4>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text4")}

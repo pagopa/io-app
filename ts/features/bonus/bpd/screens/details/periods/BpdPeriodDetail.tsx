@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { BpdPeriodWithAmount } from "../../../store/reducers/details/periods";
+import { BpdPeriodWithInfo } from "../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../store/reducers/details/selectedPeriod";
 import BpdActivePeriod from "./BpdActivePeriod";
 import BpdClosedPeriod from "./BpdClosedPeriod";
@@ -13,7 +13,7 @@ import BpdInactivePeriod from "./BpdInactivePeriod";
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const selectPeriodScreen = (period: BpdPeriodWithAmount) => {
+const selectPeriodScreen = (period: BpdPeriodWithInfo) => {
   switch (period.status) {
     case "Active":
       return <BpdActivePeriod />;

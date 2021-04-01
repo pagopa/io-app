@@ -5,7 +5,7 @@ import customVariables from "../../theme/variables";
  * @param height
  */
 export const calculateSlop = (height: number): number => {
-  const additionalArea = customVariables.minTouchableHeight - height;
+  const additionalArea = customVariables.minTouchableAreaSize - height;
   if (additionalArea <= 0) {
     return 0;
   }

@@ -3,20 +3,22 @@ import { Action, combineReducers } from "redux";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import { BpdTransaction } from "../../actions/transactions";
 import bpdActivationReducer, { BpdActivation } from "./activation";
+import { bpdLastUpdateReducer, lastUpdate } from "./lastUpdate";
 import {
   bpdPaymentMethodsReducer,
   BpdPotPaymentMethodActivation
 } from "./paymentMethods";
-import { BpdPeriodWithAmount, bpdPeriodsReducer } from "./periods";
+import { BpdPeriodWithInfo, bpdPeriodsReducer } from "./periods";
 import { bpdSelectedPeriodsReducer } from "./selectedPeriod";
 import { bpdTransactionsReducer } from "./transactions";
 
 export type BpdDetailsState = {
   activation: BpdActivation;
   paymentMethods: IndexedById<BpdPotPaymentMethodActivation>;
-  periods: pot.Pot<IndexedById<BpdPeriodWithAmount>, Error>;
-  selectedPeriod: BpdPeriodWithAmount | null;
+  periods: pot.Pot<IndexedById<BpdPeriodWithInfo>, Error>;
+  selectedPeriod: BpdPeriodWithInfo | null;
   transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
+  lastUpdate: lastUpdate;
 };
 
 const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
@@ -28,7 +30,9 @@ const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
   periods: bpdPeriodsReducer,
   // the current period displayed, selected by the user
   selectedPeriod: bpdSelectedPeriodsReducer,
-  transactions: bpdTransactionsReducer
+  transactions: bpdTransactionsReducer,
+  // the last time we received updated data
+  lastUpdate: bpdLastUpdateReducer
 });
 
 export default bpdDetailsReducer;

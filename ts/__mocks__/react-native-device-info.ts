@@ -3,9 +3,13 @@
  */
 
 const getReadableVersion = jest.fn();
+const getDeviceIdMock = jest.fn();
+getDeviceIdMock.mockReturnValue("");
 
 const DeviceInfo = {
-  getReadableVersion
+  getReadableVersion,
+  getDeviceId: getDeviceIdMock,
+  hasNotch: () => true
 };
 
 export default DeviceInfo;

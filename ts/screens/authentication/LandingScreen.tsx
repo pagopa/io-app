@@ -217,6 +217,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
       : styles.noCie;
     return (
       <BaseScreenComponent
+        appLogo
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={
           isCieSupported ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]

@@ -1,34 +1,14 @@
-import { useBottomSheetModal } from "@gorhom/bottom-sheet";
-import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { bottomSheetContent } from "../../../utils/bottomSheet";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
-import BancomatInformation from "../bancomat/screen/BancomatInformation";
+import bancomatInformationBottomSheet from "../bancomat/utils/bancomatInformationBottomSheet";
 import { onboardingBancomatAddedPansSelector } from "../onboarding/bancomat/store/reducers/addedPans";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../onboarding/cobadge/navigation/action";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-const newBancomatBottomSheet = () => {
-  const { present, dismiss } = useBottomSheetModal();
-
-  const openModalBox = async () => {
-    const bottomSheetProps = await bottomSheetContent(
-      <BancomatInformation onAddPaymentMethod={dismiss} hideInfobox={true} />,
-      I18n.t("wallet.methods.pagobancomat.name"),
-      385,
-      dismiss
-    );
-    present(bottomSheetProps.content, {
-      ...bottomSheetProps.config
-    });
-  };
-  return { present: openModalBox, dismiss };
-};
 
 /**
  * Handle the notification for a new payment method added
@@ -41,7 +21,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
     string
   >("");
 
-  const { present } = newBancomatBottomSheet();
+  const { present } = bancomatInformationBottomSheet(
+    props.startCoBadgeOnboarding
+  );
 
   useActionOnFocus(() => {
     const lastAddedHash = props.addedBancomat.reduce(
@@ -58,7 +40,10 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  startCoBadgeOnboarding: () =>
+    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen({}))
+});
 
 const mapStateToProps = (state: GlobalState) => ({
   addedBancomat: onboardingBancomatAddedPansSelector(state)

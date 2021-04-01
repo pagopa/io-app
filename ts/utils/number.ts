@@ -1,7 +1,7 @@
 import * as t from "io-ts";
 
 /*
- * this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/master/src/number/NumberFromString.ts
+ * this code is a copy from gcanti repository https://gcanti.github.io/io-ts-types/modules/NumberFromString.ts.html
  * this because to avoid node modules conflicts given from using io-ts-types
  * NumberFromStringType is a codec to encode (number -> string) and decode (string -> number)
  */

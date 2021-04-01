@@ -13,7 +13,9 @@ import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
-import { bpdEnabled, contentRepoUrl } from "../config";
+import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
+import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
+import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
@@ -93,17 +95,14 @@ type GetBonusListT = IGetApiRequestType<
 
 const getAvailableBonusesT: GetBonusListT = {
   method: "get",
-  url: () =>
-    bpdEnabled
-      ? "/bonus/bonus_available_v2.json"
-      : "/bonus/bonus_available_v1.json",
+  url: () => "/bonus/bonus_available_v2.json",
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(BonusesAvailable)
 };
 
 type GetAbisListT = IGetApiRequestType<
-  Record<string, unknown>,
+  void,
   never,
   never,
   BasicResponseType<AbiListResponse>
@@ -115,6 +114,34 @@ const getAbisListT: GetAbisListT = {
   query: _ => ({}),
   headers: () => ({}),
   response_decoder: basicResponseDecoder(AbiListResponse)
+};
+
+type GetCoBadgeServicesT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<CoBadgeServices>
+>;
+const getCobadgeServicesT: GetCoBadgeServicesT = {
+  method: "get",
+  url: () => "/status/cobadgeServices.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(CoBadgeServices)
+};
+
+type GetPrivativeServicesT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<PrivativeServices>
+>;
+const getPrivativeServicesT: GetPrivativeServicesT = {
+  method: "get",
+  url: () => "/status/privativeServices.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(PrivativeServices)
 };
 
 /**
@@ -132,6 +159,11 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
-    getAbiList: createFetchRequestForApi(getAbisListT, options)
+    getAbiList: createFetchRequestForApi(getAbisListT, options),
+    getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
+    getPrivativeServices: createFetchRequestForApi(
+      getPrivativeServicesT,
+      options
+    )
   };
 }

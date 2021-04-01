@@ -33,7 +33,12 @@ const styles = StyleSheet.create({
  * @param image
  */
 export const renderInfoRasterImage = (image: ImageSourcePropType) => (
-  <Image source={image} resizeMode={"contain"} style={styles.raster} />
+  <Image
+    source={image}
+    resizeMode={"contain"}
+    style={styles.raster}
+    testID={"rasterImage"}
+  />
 );
 
 export const renderInfoIconImage = (

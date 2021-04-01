@@ -1,4 +1,8 @@
-import { AwardPeriodId, BpdPeriod } from "../../actions/periods";
+import {
+  AwardPeriodId,
+  BpdPeriod,
+  WithAwardPeriodId
+} from "../../actions/periods";
 
 export const closedPeriod: BpdPeriod = {
   awardPeriodId: 0 as AwardPeriodId,
@@ -41,3 +45,8 @@ export const inactivePeriod: BpdPeriod = {
   status: "Inactive",
   superCashbackAmount: 1500
 };
+
+export const withAwardPeriodId = <T extends WithAwardPeriodId>(
+  value: T,
+  newId: AwardPeriodId
+): T => ({ ...value, awardPeriodId: newId });

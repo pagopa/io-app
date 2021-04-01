@@ -20,10 +20,7 @@ import {
   bpdUpsertIban
 } from "../store/actions/iban";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
-import {
-  bpdDetailsLoadAll,
-  bpdLoadActivationStatus
-} from "../store/actions/details";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
   bpdPaymentMethodActivation,
@@ -33,7 +30,7 @@ import {
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void> => {
   switch (action.type) {
     // onboarding
     case getType(bpdEnrollUserToProgram.request):
@@ -50,9 +47,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { bpdEnroll: action.payload.enabled });
     case getType(bpdDeleteUserFromProgram.failure):
     case getType(bpdEnrollUserToProgram.failure):
+    case getType(bpdAllData.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // iban
+    // IBAN
     case getType(bpdIbanInsertionStart):
     case getType(bpdIbanInsertionContinue):
     case getType(bpdIbanInsertionCancel):
@@ -65,6 +63,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, { reason: action.payload.message });
 
     // transactions
+    case getType(bpdTransactionsLoad.failure):
+      return mp.track(action.type, {
+        awardPeriodId: action.payload.awardPeriodId,
+        reason: action.payload.error.message
+      });
     case getType(bpdTransactionsLoad.request):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdTransactionsLoad.success):
@@ -77,8 +80,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         circuitType: action.payload.results.map(r => r.circuitType)
       });
     // CashBack details
-    case getType(bpdTransactionsLoad.failure):
-    case getType(bpdDetailsLoadAll):
+    case getType(bpdAllData.request):
+    case getType(bpdAllData.success):
     case getType(bpdLoadActivationStatus.request):
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):

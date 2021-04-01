@@ -18,6 +18,9 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
+import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
+import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -74,22 +77,31 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import { loadServiceDetail, loadVisibleServices } from "../actions/services";
+import {
+  loadServiceDetail,
+  loadServicesDetail,
+  loadVisibleServices
+} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import {
+  deleteUserDataProcessing,
+  upsertUserDataProcessing
+} from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import {
+  abortRunningPayment,
   paymentAttiva,
   paymentCheck,
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
-  paymentExecutePayment,
+  paymentExecuteStart,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -97,6 +109,7 @@ import {
   fetchTransactionsSuccess
 } from "../actions/wallet/transactions";
 import {
+  addCreditCardWebViewEnd,
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
@@ -107,25 +120,26 @@ import {
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  fetchWalletsFailure,
-  fetchWalletsRequest,
-  fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
+  refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
-import trackBancomatAction from "../../features/wallet/bancomat/analytics/index";
+import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../actions/wallet/outcomeCode";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void | ReadonlyArray<null>> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -181,12 +195,24 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         count: action.payload.data.length,
         total: action.payload.total.getOrElse(-1)
       });
+    // messages
+    case getType(loadMessages.success):
     //
-    // Wallet actions (with properties)
-    //
-    case getType(fetchWalletsSuccess):
+    // wallets success / services load requests
+    case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
+      });
+    // end pay webview Payment (payment + onboarding credit card) actions (with properties)
+    case getType(addCreditCardWebViewEnd):
+    case getType(paymentWebViewEnd):
+      return mp.track(action.type, {
+        exitType: action.payload
+      });
+    case getType(addCreditCardOutcomeCode):
+    case getType(paymentOutcomeCode):
+      return mp.track(action.type, {
+        outCome: action.payload.getOrElse("")
       });
     //
     // Payment actions (with properties)
@@ -210,13 +236,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // by a verifica operation that return a duplicated payment error.
       // Only in the former case we have a transaction and an amount.
       if (action.payload.kind === "COMPLETED") {
-        const amount = action.payload.transaction.amount.amount;
+        const amount = action.payload.transaction?.amount.amount;
         return mp
           .track(action.type, {
             amount,
             kind: action.payload.kind
           })
-          .then(_ => mp.trackCharge(amount));
+          .then(_ => mp.trackCharge(amount ?? -1));
       } else {
         return mp.track(action.type, {
           kind: action.payload.kind
@@ -284,15 +310,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
-    case getType(fetchWalletsFailure):
-    case getType(payCreditCardVerificationFailure):
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
     case getType(paymentFetchPspsForPaymentId.failure):
-    case getType(paymentExecutePayment.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
+    case getType(paymentExecuteStart.failure):
     case getType(updateNotificationInstallationFailure):
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
@@ -302,7 +327,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
-
     // track when a missing municipality is detected
     case getType(contentMunicipalityLoad.failure):
       return mp.track(action.type, {
@@ -345,7 +369,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
     // services
@@ -356,12 +379,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
     // wallet
-    case getType(fetchWalletsRequest):
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(payCreditCardVerificationRequest):
-    case getType(payCreditCardVerificationSuccess):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
@@ -369,7 +389,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
     case getType(fetchTransactionsRequest):
+    case getType(refreshPMTokenWhileAddCreditCard.request):
+    case getType(refreshPMTokenWhileAddCreditCard.success):
     // payment
+    case getType(abortRunningPayment):
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
     case getType(paymentIdPolling.request):
@@ -378,15 +401,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
-
+    case getType(paymentExecuteStart.request):
+    case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentExecutePayment.request):
-    case getType(paymentExecutePayment.success):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
-
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
@@ -416,8 +437,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
+    case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
     case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.success):
       return mp.track(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mp.track(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message
+      });
   }
   return Promise.resolve();
 };
@@ -431,17 +460,21 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   if (mixpanel !== undefined) {
     // call mixpanel tracking only after we have initialized mixpanel with the
     // API token
-    trackAction(mixpanel)(action).then(constNull, constNull);
-    trackBpdAction(mixpanel)(action).then(constNull, constNull);
-    trackBancomatAction(mixpanel)(action).then(constNull, constNull);
-    trackSatispayAction(mixpanel)(action).then(constNull, constNull);
+    void trackAction(mixpanel)(action);
+    void trackBpdAction(mixpanel)(action);
+    void trackBancomatAction(mixpanel)(action);
+    void trackSatispayAction(mixpanel)(action);
+    void trackBPayAction(mixpanel)(action);
+    void trackCoBadgeAction(mixpanel)(action);
+    void trackPrivativeAction(mixpanel)(action);
+    void trackCgnAction(mixpanel)(action);
   }
   return next(action);
 };
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
 */
 export function screenTracking(
   store: MiddlewareAPI

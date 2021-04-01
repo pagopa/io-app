@@ -1,4 +1,10 @@
 // 2 bancomat, 1 credit card. All compliant with pagoPa
+import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
+import {
+  EnableableFunctionsTypeEnum,
+  RawBPayPaymentMethod
+} from "../../../../types/pagopa";
+
 export const walletsV2_1 = {
   data: [
     {
@@ -214,4 +220,28 @@ export const walletsV2_3 = {
       updateDate: "2020-11-20"
     }
   ]
+};
+
+export const rawBPay: RawBPayPaymentMethod = {
+  walletType: WalletTypeEnum.BPay,
+  createDate: "2021-07-08",
+  enableableFunctions: [
+    EnableableFunctionsTypeEnum.FA,
+    EnableableFunctionsTypeEnum.pagoPA,
+    EnableableFunctionsTypeEnum.BPD
+  ],
+  favourite: false,
+  idWallet: 1,
+  info: {
+    bankName: "Denti, Visintin and Galati",
+    instituteCode: "4",
+    numberObfuscated: "+3934****0004",
+    paymentInstruments: [],
+    uidHash:
+      "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004"
+  },
+  onboardingChannel: "I",
+  pagoPA: true,
+  updateDate: "2020-11-20",
+  kind: "BPay"
 };

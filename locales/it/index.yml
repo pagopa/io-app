@@ -1,5 +1,5 @@
 ---
-date: 
+date:
   formats:
     default: "%d/%m/%Y"
     short: "%d %B"
@@ -52,8 +52,10 @@ date:
     - "am"
     - "pm"
 global:
+  you: "TU"
   badges:
     blocked: "Bloccato"
+    onGoing: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -95,12 +97,15 @@ global:
     shortFormat: "%d/%m/%Y"
     fullFormatShortMonthLiteral: "%d %b %Y"
     fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
     numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
@@ -140,6 +145,7 @@ global:
     deactivate: "Disattiva"
     show: "Mostra"
     update: "Aggiorna"
+    findOutMore: "Scopri di più"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -213,7 +219,7 @@ login:
   welcome:
     line1: benvenuto nella tua
     line2: Cittadinanza Digitale
-  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso dovrai effettuare un nuovo login per continuare a utilizzare IO.
+  expiration_info: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, dovrai inserire nuovamente le credenziali per utilizzare IO.
 inbox:
   enableButton: Abilita Inbox
   disableButton: Disabilita Inbox
@@ -282,9 +288,13 @@ profile:
         description: Cancella in modo permanente il tuo account e i tuoi dati personali
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
         alert:
+          activeBonusTitle: Bonus attivi
+          activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
           oldRequest: Hai già richiesto la cancellazione del tuo account.
           oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
           cta:
+            manageBonus: Gestisci bonus
+            continue: Continua
             return: Indietro
             cancel: Annulla l'eliminazione
         info:
@@ -292,7 +302,7 @@ profile:
           cta: Continua
         details:
           body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-          question: Qual'è il motivo della cancellazione?
+          question: Qual è il motivo della cancellazione?
           answer_1: Non ritengo più utile IO
           answer_2: Non mi sento al sicuro su IO
           answer_3: Non ho mai usato l'app
@@ -430,7 +440,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso, ti chiediamo di effettuare una nuova login con SPID o CIE per utilizzare IO.
+      body: Per ragioni di sicurezza, dopo 30 giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -499,8 +509,12 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Vuoi davvero tornare indietro?
+      subtitleHelp: Il PIN è un codice di 8 cifre.
+      subtitleCTA: Dove lo trovo?
+      bottomSheetCTA: Hai dimenticato il PIN?
       contextualHelpTitle: Dove trovo i codici PIN e PUK?
-      contextualHelpBody: "Il codice **PIN** è composto da 8 cifre: \n\n- le prime 4 cifre ti sono state consegnate all'anagrafe;\n- le ultime 4 cifre ti sono state spedite a casa, insieme alla carta d'identità elettronica. \n\nMettile insieme e inseriscile in quest'ordine.\n\n Il codice **PUK** è necessario invece per sbloccare il PIN a seguito di tre tentativi errati. È composto da 8 cifre, e viene rilasciato insieme al PIN. \n\n[Hai dimenticato il PIN/PUK?](https://www.cartaidentita.interno.gov.it/richiesta-di-ristampa/)"
+      contextualHelpBody: !include help/ciePinHelpBody.md
+      contextualHelpCTA: Hai dimenticato il PIN/PUK?
     pinTempLocked:
       header: Entra con CIE
       title: Carta temporaneamente bloccata
@@ -716,14 +730,19 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  abortWebView:
+    title: Vuoi interrompere il pagamento in corso?
+    confirm: Annulla il pagamento
+    cancel: Continua con il pagamento
+    success: Il pagamento è stato annullato correttamente
   errorDetails: Dettagli
-  currentPsp: Il PSP scelto è
+  currentPsp: Il pagamento sarà gestito da
   noPsp: Non hai ancora selezionato un PSP
-  changePsp: Cambia PSP
+  changePsp: Modifica gestore
   IUV: IUV
   IUV_extended: Identificativo Univoco di Versamento
   notice: Avviso
-  noticeCode: Codice avviso
+  noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
@@ -738,6 +757,8 @@ payment:
       enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
+      outcomeCode: Codice esito
+      onlyDate: Data
       paymentAmount: Importo pagamento
       transactionCosts: Costi di transazione
       transactionCode: Codice identificativo della transazione
@@ -751,6 +772,9 @@ payment:
 wallet:
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
+  favourite:
+    setFavoriteTitle: Usa come preferito
+    setFavoriteSubtitle: Quando paghi in app, IO mostra in automatico questo metodo di pagamento
   incoming:
     title: "In arrivo"
     message: "Una prossima versione di IO renderà disponibile anche questo metodo di pagamento"
@@ -766,14 +790,31 @@ wallet:
       dateTime: Data e ora
       detailTitle: Dettaglio
       help: Se hai riscontrato un problema durante l'inserimento di questo metodo di pagamento, scrivi per maggiori informazioni e dettagli
+    details:
+      header: Dettaglio Metodo
   searchAbi:
-    header: Aggiungi PagoBANCOMAT
-    title: Ricerca delle tue carte PagoBANCOMAT
-    description:
-      text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
-      text2: informativa sul trattamento dei dati personali.
-      text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
-      text4: cercando fra quelle disponibili
+    header: Aggiungi {{methodName}}
+    bancomat:
+      title: Ricerca delle tue carte PagoBANCOMAT
+      description:
+        text1: "IO cercherà tutte le carte PagoBANCOMAT associate a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai una carta PagoBANCOMAT attiva, "
+        text4: cercando fra quelle disponibili
+    bpay:
+      title: Ricerca dei tuoi account BANCOMAT Pay
+      description:
+        text1: "IO cercherà tutti gli account BANCOMAT Pay associati a te.\nProseguendo accetti l'"
+        text2: informativa sul trattamento dei dati personali.
+        text3: "Se preferisci, puoi scegliere la banca su cui hai un account BANCOMAT Pay attivo, "
+        text4: cercando fra quelle disponibili
+    cobadge:
+      title: Ricerca delle tue carte con circuito internazionale
+      description:
+        text1: "IO cercherà tutte le carte Maestro, Mastercard, V-Pay e Visa associate a te presso "
+        text2: le banche aderenti al servizio
+        text3: "Per maggiori informazioni consulta l'"
+        text4: informativa sul trattamento dei dati personali.
     bankName: Denominazione della banca
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
@@ -812,18 +853,19 @@ wallet:
         loading: "Stiamo aggiungendo la tua carta PagoBANCOMAT\n\nAttendi qualche secondo..."
         warning: "Se non trovi tutte le carte che possiedi, prova ad aggiungere quella mancante in un secondo momento, selezionando la Banca presso cui hai il tuo conto corrente."
         blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
-      bpd:
-        suggestActivation:
-          title: "Vuoi attivare il Cashback?"
-          body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
-                 Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
-          skip: "No, grazie"
-          confirm: "Info e attivazione"
-        activateNew:
-          title: "Vuoi attivare il Cashback?"
-          body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-          body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-          skip: "Non ora"
+    bPay:
+      headerTitle: "Aggiungi BANCOMAT Pay"
+      loadingSearch: "Stiamo recuperando i tuoi dati BANCOMAT Pay\n\nAttendi qualche secondo"
+      add:
+        label: "Account BANCOMAT Pay {{current}} di {{length}}"
+        screenTitle: "Vuoi aggiungere questo account?"
+      loadingAdd: "Stiamo aggiungendo il tuo account BANCOMAT Pay\n\nAttendi qualche secondo"
+      koTimeout:
+        title: "Impossibile recuperare i tuoi dati"
+        body: "Riprova per favore"
+      koNotFound:
+        title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
+        body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
       headerTitle: "Aggiungi Satispay"
       start:
@@ -842,13 +884,93 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    coBadge:
+      headerTitle: "Aggiungi circuito internazionale"
+      start:
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        koDisabled:
+          title: "La tua banca non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta con circuito internazionale."
+        koUnavailable:
+          title: "Non riusciamo a contattare la tua banca"
+          body: "Siamo al lavoro per risolvere il problema."
+      search:
+        loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
+        koTimeout:
+          title: "Non riusciamo a recuperare le tue carte"
+          body: "Riprova per favore"
+        koNotFound:
+          title: "Spiacenti, non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
+          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
+        koSingleBankNotFound:
+          title: "Spiacenti, non abbiamo trovato nessuna carta su questa banca"
+          body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
+        koServiceError:
+          title: "Non riusciamo a recuperare le tue carte"
+          body: "Riprova più tardi per favore"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        label: "Carta con circuito internazionale {{current}} di {{length}}"
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta la tua banca."
+        warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
+        warning2: "se hai dubbi contatta la tua banca."
+        loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
+      chooseType:
+        title: "La tua carta ti permette di acquistare online?"
+        description: "Questa domanda ci permette di capire meglio com’è fatta la tua carta e aiutarti ad aggiungerla al tuo Portafoglio."
+        path:
+          enabled:
+            title: "Sì, è abilitata agli acquisti online"
+            description: "Verificheremo i dati della carta con la tua banca, di solito via sms o notifica push"
+          disabled:
+            title: "No, la uso solo nei negozi"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+          unknown:
+            title: "Non lo so"
+            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+    privative:
+      headerTitle: "Aggiungi carta supermercato"
+      choosePrivativeIssuer:
+        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        title: "Scegli il marchio della tua carta"
+        body: "Puoi aggiungere soltanto carte che ti permettono di pagare nei supermercati."
+        koDisabled:
+          title: "Questo supermercato non offre ancora questa funzionalità"
+          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
+        koUnavailable:
+          title: "Non riusciamo a contattare il server"
+          body: "Siamo al lavoro per risolvere il problema."
+      addPrivativeCardNumber:
+        title: "Inserisci il numero carta"
+        body: "Digita le cifre riportate sul fronte. IO verificherà se la carta è associata al tuo codice fiscale."
+        disclaimer:
+          text1: "Proseguendo accetti l’"
+          text2: "informativa sul trattamento dei dati personali"
+      search:
+        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
+        koTimeout:
+          title: "Al momento è impossibile verificare la tua carta"
+          body: "Riprova per favore"
+        koNotFound:
+          title: "Spiacenti, c'è un problema con questa carta"
+          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
+          cta:
+            modifyCardNumber: "Modifica numero carta"
+        koServiceError:
+          title: "Al momento è impossibile recuperare la tua carta"
+          body: "Riprova più tardi per favore"
+      add:
+        screenTitle: "Vuoi aggiungere questa carta?"
+        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
+        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata ai fini del Cashback. Contatta il tuo supermercato."
   alert:
-    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate. 
+    supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
-    favourite: Questo metodo di pagamento è già contrassegnato come il tuo preferito, se vuoi cambiarlo devi selezionarne un altro
+    favorite: Per modificare quest'opzione, seleziona un altro metodo dal tuo Portafoglio e impostalo come preferito.
+    amex: I pagamenti con carte American Express, per importi superiori a €1000, non sono al momento possibili
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -877,6 +999,9 @@ wallet:
     satispay:
       successful: Satispay rimosso correttamente
       failed: Impossibile rimuovere Satispay
+    bPay:
+      successful: BancomatPay rimosso correttamente
+      failed: Impossibile rimuovere BancomatPay
     successful: Carta rimossa correttamente
     failed: Impossibile rimuovere la carta
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
@@ -930,20 +1055,17 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info:
-      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      pagoPA.
-    infoBold: Scegli il soggetto economico
+    infoBold: Scegli il soggetto
     info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
-    maxFee: Commissione massima
+    maxFee: Costo di transazione
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
-    goToPay: Conferma e paga
+    goToPay: Paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
     fee: Costi di transazione
@@ -966,11 +1088,22 @@ wallet:
       text: Aggiungi un metodo di pagamento per procedere con il pagamento
     header: Scelta metodo di pagamento
     title: Paga con
-    text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
+    text: Seleziona un metodo dal tuo Portafoglio, oppure aggiungine uno nuovo.
     fetchPspFailure: Errore temporaneo, riprova
     noPspsAvailable: Questo metodo di pagamento non può essere usato
     contextualHelpTitle: Scelta del metodo di pagamento
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
+    pickPaymentMethod:
+      title: "Con quale metodo vuoi pagare?"
+      description: "{{firstElement}} · {{secondElement}}"
+      notAvailable:
+        title: "Metodi non compatibili"
+        arriving:
+          bottomSheetTitle: "Stiamo lavorando per supportare questo metodo"
+          bottomSheetDescription: "Nel frattempo, prova a pagare con un altro metodo. Puoi utilizzare pagoPA anche sulla tua app di pagamenti preferita o sul sito del tuo Ente Creditore."
+        unaccepted:
+          bottomSheetTitle: "Perché non posso pagare con questa carta?"
+          bottomSheetDescription: "Il circuito di questa carta consente di pagare nei punti vendita fisici, ma non online. Se la tua carta è abilitata ai pagamenti online, aggiungila al tuo Portafoglio come 'carta di debito o di credito'."
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
@@ -991,7 +1124,7 @@ wallet:
     fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
     updateInfo:
-      Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
+      pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
@@ -1019,7 +1152,7 @@ wallet:
   transactionFee: Costo operazione
   why: Perché?
   paymentReason: Causale
-  recipient: Destinatario
+  recipient: Ente Creditore
   date: Data
   time: Ora
   psp: Gestore della transazione
@@ -1045,12 +1178,24 @@ wallet:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      pagoPaCapability:
+        title: Pagamenti in app
+        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        active: Attivo
+        arriving: In arrivo
+        incompatible: Non compatibile
+        bottomSheetTitle: Cosa sono i pagamenti in app?
+        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
+        bottomSheetCTA: Scopri di più
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
     digital:
       name: App e strumenti di pagamento digitali
       description: I tuoi strumenti digitali preferiti su IO
+    loyalty:
+      name: Carta di pagamento supermercati
+      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
       description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
@@ -1063,7 +1208,7 @@ wallet:
     bancomatPay:
       name: BANCOMAT Pay
       description: Abbina il tuo account BANCOMAT Pay
-    postepayApp: 
+    postepayApp:
       name: Postepay
       description: la tua app Postepay
     postepay:
@@ -1073,12 +1218,18 @@ wallet:
       name: Paypal
     bancomat:
       name: PagoBANCOMAT
+    cobadge:
+      name: circuito internazionale
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
     labels:
-      holder: Titolare
-      pan: Numero della carta
+      holder:
+        label: Intestatario carta
+        description:
+          base: "Inserisci come riportato sulla carta"
+          error: "Inserisci esattamente come riportato sulla carta"
+      pan: Numero carta
       expirationDate: Data di scadenza
       securityCode: Codice di sicurezza
       securityCode4D: CID (4 cifre)
@@ -1089,15 +1240,19 @@ wallet:
       securityCode: "•••"
       securityCode4D: "••••"
   acceptedCards: Carte accettate
+  missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
+  missingDataText:
+    body: Se non trovi il codice di sicurezza, la tua carta potrebbe non essere abilitata ai pagamenti online. Puoi però aggiungerla ai fini del Cashback, se la tua banca è supportata.
+    cta: Cerca le tue carte
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
     wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo:
-      Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
-      inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
+      Inquadra il codice QR che trovi nell'avviso, oppure
+      inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci tu i dati
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
@@ -1115,7 +1270,7 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
@@ -1144,8 +1299,8 @@ wallet:
         three: ", ma solo presso i punti fisici (POS)."
       debit:
         title: "La tua carta ha più di un logo?"
-        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerla anche come **carta di debito o di credito**, inserendo il numero della carta sul fronte. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
-        addCta: "Aggiungi Carta di Debito/Credito"
+        body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
+        addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
   satispay:
     details:
@@ -1153,12 +1308,53 @@ wallet:
         one: "Satispay"
         two: " non consente ancora di pagare tramite IO"
         three: ": questa funzione verrà abilitata con le prossime versioni dell’app."
+  cobadge:
+    details:
+      card:
+        validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Funzioni Disponibili"
+  outcomeMessage:
+    cta:
+      close: Chiudi
+      visualizeCard: Visualizza carta
+    fallback:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code1:
+      title: "Spiacenti, si è verificato un errore imprevisto"
+      description: "Non è stato addebitato alcun importo."
+    code2:
+      title: "Autorizzazione negata"
+      description: "La tua banca non ha autorizzato l’operazione. Controlla di aver inserito correttamente i vari codici richiesti dalla tua banca."
+    code4:
+      title: "Spiacenti, la sessione è scaduta"
+      description: "Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione."
+    code7:
+      title: "C’è un problema con la tua carta"
+      description: "Non è stato addebitato alcun importo. Per maggiori informazioni, contatta la tua banca."
+    code8:
+      title: "L’operazione è stata annullata"
+    code10:
+      title: "Autorizzazione negata"
+      description: "Probabilmente hai superato il massimale della tua carta. Verifica con la tua banca prima di riprovare."
+    addCreditCard:
+      success:
+        title: "La tua carta è stata aggiunta con successo!"
+    payment:
+      success:
+        title: "Grazie, l’operazione è stata eseguita con successo!"
+        description1: "Abbiamo inviato una ricevuta a"
+        description2: "Puoi trovarla anche nel tuo Portafoglio."
+  abortWebView:
+    title: Vuoi uscire dall'operazione in corso?
+    confirm: Sì, esci
+    cancel: No, continua
+    success: Problemi con l'aggiunta? Contatta la tua banca.
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1171,14 +1367,15 @@ cardComponent:
   expiresOn: Scade il
   expiredCard: CARTA SCADUTA IL
   actions: Azioni
-  setFavourite: Imposta come preferita
-  unsetFavourite: Rimuovi dai preferiti
+  setFavorite: Imposta come preferita
+  unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
+  removeCta: "Elimina questo metodo di pagamento"
 messages:
   accessibility:
     message:
@@ -1218,16 +1415,12 @@ messages:
       addMemo:
         block1: Aggiungi un promemoria per il
         block2: alle
-      expiringAlert:
+      expiringOrValidAlert:
         block1: Questo avviso scade il giorno
-        block2: alle ore
       expiredAlert:
-        expirable:
-          block1: Il pagamento è scaduto alle ore
-          block2: del
-        unexpirable:
-          block: Il pagamento è scaduto. Puoi ancora pagare; se previsto, l'app IO provvederà ad attualizzare l'importo.
-    presctiption:
+        block1: L'avviso è scaduto alle
+        block2: del
+    prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
@@ -1237,6 +1430,7 @@ messages:
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
+    seeNotice: Vedi Avviso
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -1408,6 +1602,7 @@ identification:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
+      sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
     wrongCode: Codice errato
@@ -1460,6 +1655,8 @@ systemsOff:
   closeApp: chiudi l'applicazione e riprova
 contextualHelp:
   title: IO ti aiuto
+  sendScreenshot:
+    cta: Condividi un'istantanea del tuo schermo (screenshot), in modo da rendere più semplice la risoluzione del problema.
   sendPersonalInfo:
     title: Nuova segnalazione
     description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
@@ -1467,6 +1664,8 @@ contextualHelp:
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
+  overrideText:
+    commentFieldHintForQuestion: "Sii il più preciso possibile. Cosa doveva succedere e cosa invece è successo?\nPer quanto possibile, ti invitiamo a non inserire dati sensibili nelle tue segnalazioni"
   contextualHelp:
     title1: Hai bisogno di aiuto?
     descriptionBug: "Se qualcosa **non funziona** come dovrebbe o se vuoi **suggerirci un miglioramento** o una nuova funzionalità, scrivici! Il team di IO ti risponderà direttamente tramite l'app."
@@ -1474,6 +1673,10 @@ instabug:
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
     assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
+bottomSheets:
+  ciePin:
+      title: Dove trovo il mio PIN?
+      content: !include bottomsheets/ciePin.md
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1846,7 +2049,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"Attiva il Cashback\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -1905,7 +2108,23 @@ bonus:
         title: "Ci siamo quasi, attiva il Cashback sui tuoi metodi di pagamento!"
         body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
         cta: "Attiva i metodi di pagamento"
+    suggestActivation:
+      title: "Vuoi attivare il Cashback?"
+      body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
+             Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
+      skip: "No, grazie"
+      confirm: "Info e attivazione"
+    activateOnNewMethods:
+      title: "Vuoi attivare il Cashback?"
+      body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
+      body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
+      skip: "Non ora"
     iban:
+      cta:
+        bpdNotActiveTitle: "attenzione"
+        bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
+        noActivePeriodTitle: "attenzione"
+        noActivePeriodMessage: "non c'è alcun cashback attivo in questo momento."
       iban: "IBAN"
       edit: "Modifica IBAN"
       verify: "Controlla IBAN"
@@ -1943,34 +2162,56 @@ bonus:
           noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
           button: "Imposta IBAN"
         transactionsCountOverview:
-          title: "Transazioni valide"
+          title: "Le tue transazioni"
           of: "su"
           closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
-          currentPeriodKOBody: "Devi aver fatto almeno {{transactions}} transazioni per sbloccare il Cashback che hai accumulato!"
-          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere dalle banche le ultime transazioni. Ancora un po’ di pazienza. Ti avviseremo qui!"
+          currentPeriodKOBody:
+            one: "Devi aver fatto almeno"
+            two: " {{transactions}} transazioni"
+            three: " per sbloccare il Cashback che hai accumulato!"
+          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!"
+          currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
+          currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
+          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
           closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
           closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
+          moneyTransfer: "Entro il {{date}} riceverai il bonifico sull’IBAN che ci hai indicato."
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
-            other: "{{count}} transazioni valide"
+            other: "{{transactions}} transazioni valide"
+        ranking:
+          title: "La tua posizione"
+          notReady:
+            title: "Quando vedrai la classifica Super Cashback?"
+            body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
+                   Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n
+                   Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
+        label:
+          one: "1 transazione"
+          other: "{{transactions}} transazioni"
         title: "Le tue transazioni"
         goToButton: "Dettaglio transazioni"
+        loading: "Stiamo recuperando la lista delle tue transazioni\n\nAttendi qualche secondo..."
+        error:
+          title: "I sistemi stanno impiegando più tempo del previsto"
+          body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
           text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
         detail:
-          empty: 
+          empty:
             text1: "Non ci sono ancora transazioni valide."
             text2: "Controlla di nuovo nei prossimi giorni!"
           summary:
             bottomSheet:
               title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.** [Leggi di più](https://io.italia.it/cashback/acquirer/)"
+              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.**"
+              readMore: "Leggi di più"
             calendarBlock:
-              text1: "Ti informiamo che prima che tu veda la transazione su IO, "
+              text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
             lastUpdated: "Ultima transazione valida: "
@@ -1980,12 +2221,12 @@ bonus:
               text2: "hai totalizzato "
               text3:
                 one: "1 transazione valida "
-                other: "{{count}} transazioni valide "
+                other: "{{transactions}} transazioni valide "
               text4: "e accumulato "
               text5: "un Cashback di "
             milestone:
-              title: "Complimenti, hai ottenuto {{cashbackValue}}"
-              body: "Hai raggiunto il rimborso massimo previsto in questo periodo."
+              title: "Complimenti, hai raggiunto {{cashbackValue}}"
+              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
           title: "Dettaglio della transazione"
           paymentCircuit: "Circuito di pagamento"
           transactionAmount: "Importo transazione"
@@ -1998,7 +2239,7 @@ bonus:
           canceled: "Storno"
       paymentMethods:
         add:
-          cta: "Aggiungi un metodo al cashback"
+          cta: "Aggiungi un metodo al Cashback"
           alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
         noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
         noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
@@ -2034,6 +2275,123 @@ bonus:
           active: Attivo
           closed: Concluso
           inactive: In arrivo
+      superCashback:
+        rankLabel: "{{position}}º utente in classifica"
+        rankTitle: "Classifica Super Cashback"
+        howItWorks:
+          title: "Come funziona?"
+          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
+          status:
+            active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+            closed: "La classifica per questo periodo è chiusa."
+      lastUpdate: Aggiornato alle {{hour}} del {{date}}
+  cgn:
+    name: Carta Giovani Nazionale
+    merchantsList:
+      navigationTitle: Visualizza esercenti
+      screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+    merchantDetail:
+      title:
+        deals: Offerte
+        description: Descrizione
+        services: Servizi
+        hours: Orari
+        validity: Validità
+        discountCode: Codice Sconto
+        conditions: Condizioni
+      cta:
+        label: Vai al sito dell'esercente
+    cta:
+      activeBonus: Attiva la tua Carta Giovani
+      goToDetail: Visualizza la Carta Giovani
+    detail:
+      cta:
+        buyers: Vedi esercenti
+        otp: Genera codice
+        eyca:
+          copy: Copia numero carta EYCA
+          pending: Scopri di più su EYCA
+          bottomSheet: Vedi gli sconti EYCA
+      tos:
+        link: Informativa sul trattamento dei dati personali
+      information:
+        active: "La carta è attiva e può essere usata fino al {{date}}"
+        warning: "Attenzione! "
+        revoked: "Questa carta è stata annullata per {{reason}}"
+        expired: "Questa carta è scaduta il {{date}}"
+      ownership: Chi può usufruire degli sconti?
+      status:
+        title: Carta Giovani Nazionale
+        eyca: Carta EYCA
+        eycaCircuit: Circuito EYCA
+        eycaNumber: Numero carta
+        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
+        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
+        eycaBottomSheetTitle: "Numero di carta EYCA"
+        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nInserendo il numero di carta EYCA sugli e&#8209;commerce o mostrando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei 38 paesi europei aderenti al circuito."
+        badge:
+          active: Attiva
+          revoked: Annullata
+          expired: Scaduta
+        date:
+          activated: Attivata il
+          expired: Scaduta il
+          revoked: Annullata il
+        expiration:
+          cgn: Scadenza CGN
+          eyca: Scadenza EYCA
+    activation:
+      eyca:
+        loading:
+          caption: "Stiamo processando la tua richiesta"
+          subCaption: "Ti preghiamo di attendere."
+        error:
+          title: "Il servizio di EYCA in questo momento non è disponibile."
+          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      loading:
+        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
+        subCaption: "Ti preghiamo di attendere."
+      error:
+        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
+        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ineligible:
+        title: "Siamo spiacenti. Non hai le caratteristiche per attivare la Carta Giovani Nazionale."
+        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+      timeout:
+        title: "Stiamo processando la tua richiesta."
+        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+      alreadyActive:
+        title: "La tua Carta Giovani Nazionale è già attiva!"
+        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+      pending:
+        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
+        body: "Riceverai un messaggio quando sarà attivata."
+      success:
+        title: "Congratulazioni!"
+        body: "La tua Carta Giovani Nazionale è attiva"
+    otp:
+      screen:
+        title: Usa codice sconto
+        cta: Copia codice
+        text1: "Copia questo codice nell'apposito campo sul sito dell'esercente entro"
+        text2: "Una volta scaduto, il codice non è più valido"
+        link: Il codice non funziona?
+        bottomSheet:
+          body:
+            text1: "Alcuni esercenti richiedono l’inserimento di un "
+            text2: "codice sconto statico."
+            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
+            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
+          cta: Vai alla lista esercenti
+      code:
+        title: Il tuo codice sconto
+        validUntil: Valido ancora per
+        minutes:
+          one: 1 minuto
+          other: "{{minutes}} minuti"
+        seconds:
+          one: 1 secondo
+          other: "{{seconds}} secondi"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

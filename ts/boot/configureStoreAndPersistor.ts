@@ -244,7 +244,8 @@ const rootPersistConfig: PersistConfig = {
     "installation",
     "payments",
     "content",
-    "userMetadata"
+    "userMetadata",
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374

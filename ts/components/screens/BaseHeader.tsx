@@ -1,13 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
-import { Ref } from "react";
+import { Ref, FC } from "react";
 import * as React from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
-import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
@@ -21,18 +20,39 @@ import GoBackButton from "../GoBackButton";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
+import I18n from "../../i18n";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
+
+type HelpButtonProps = {
+  onShowHelp: () => void;
+};
 
 const styles = StyleSheet.create({
-  helpButton: {
-    padding: 8
-  },
   noLeft: {
     marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   },
   body: {
     alignItems: "center"
+  },
+  helpButton: {
+    padding: 8
   }
 });
+
+const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
+  <ButtonDefaultOpacity
+    hasFullHitSlop
+    onPress={onShowHelp}
+    transparent={true}
+    accessibilityLabel={I18n.t(
+      "global.accessibility.contextualHelp.open.label"
+    )}
+    style={styles.helpButton}
+    accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
+  >
+    <IconFont name={"io-question"} />
+  </ButtonDefaultOpacity>
+);
 
 export type AccessibilityEvents = {
   avoidNavigationEventsUsage?: boolean; // if true NavigationEvents won't be included and the focus will be done on componentDidMount
@@ -43,11 +63,11 @@ interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
   accessibilityEvents?: AccessibilityEvents;
   accessibilityLabel?: string; // rendered only if it is defined and a screen reader is active
-  dark?: boolean;
+  dark?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   headerTitle?: string;
   backgroundColor?: ColorValue;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
-  primary?: boolean;
+  primary?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
   appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
@@ -61,6 +81,7 @@ interface OwnProps {
     accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
+  titleColor?: IOColorType;
 }
 
 type Props = OwnProps &
@@ -128,14 +149,16 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
   private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
     maybeNotNullyString(label).fold(undefined, l => {
-      const isWhite = this.props.primary || this.props.dark;
+      const { titleColor } = this.props;
       return (
         <Text
           ref={ref}
-          white={isWhite}
           numberOfLines={1}
           accessible={true}
           accessibilityRole={"header"}
+          style={{
+            color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
+          }}
         >
           {l}
         </Text>
@@ -205,25 +228,12 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <InstabugChatsComponent />
         )}
         {onShowHelp && !isSearchEnabled && (
-          <ButtonDefaultOpacity
-            onPress={onShowHelp}
-            style={styles.helpButton}
-            transparent={true}
-            accessibilityLabel={I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )}
-            accessibilityHint={I18n.t(
-              "global.accessibility.contextualHelp.open.hint"
-            )}
-          >
-            <IconFont name={"io-question"} />
-          </ButtonDefaultOpacity>
+          <HelpButton onShowHelp={onShowHelp} />
         )}
 
         {customRightIcon && !isSearchEnabled && (
           <ButtonDefaultOpacity
             onPress={customRightIcon.onPress}
-            style={styles.helpButton}
             transparent={true}
             accessible={customRightIcon.accessibilityLabel !== undefined}
             accessibilityLabel={customRightIcon.accessibilityLabel}

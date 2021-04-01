@@ -6,6 +6,7 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { formatIntegerNumber } from "../../../../utils/stringBuilder";
 
 type Props = {
   date: string;
@@ -45,9 +46,12 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
             {
               defaultValue: I18n.t(
                 "bonus.bpd.details.components.transactionsCountOverview.label.other",
-                { count: props.transactionsNumber }
+                {
+                  transactions: formatIntegerNumber(props.transactionsNumber)
+                }
               ),
-              count: props.transactionsNumber
+              count: props.transactionsNumber,
+              transactions: formatIntegerNumber(props.transactionsNumber)
             }
           )}`}
         </H5>

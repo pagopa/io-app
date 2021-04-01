@@ -38,9 +38,11 @@ module.exports = {
     }
   ),
 
-  resetGenericPassword: jest.fn((options: Options) => {
-    // eslint-disable-next-line
-    delete keychainDB[options.service];
+  resetGenericPassword: jest.fn((options: Options | undefined) => {
+    if (options) {
+      // eslint-disable-next-line
+      delete keychainDB[options.service];
+    }
     return Promise.resolve(true);
   })
 };
