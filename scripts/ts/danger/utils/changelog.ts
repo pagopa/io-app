@@ -1,20 +1,16 @@
-import {
-  getPivotalStories,
-  getPivotalStoryIDs
-} from "danger-plugin-digitalcitizenship/dist/utils";
 import { Either, left, Right, right } from "fp-ts/lib/Either";
 import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
-import { Story, StoryType } from "./types";
+import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
 
-const storyTag = new Map<StoryType, string>([
-  ["feature", "feat"],
-  ["bug", "fix"],
+const storyTag = new Map<GenericTicketType, string>([
+  ["feat", "feat"],
+  ["fix", "fix"],
   ["chore", "chore"]
 ]);
 
-const storyOrder = new Map<StoryType, number>([
-  ["feature", 2],
-  ["bug", 1],
+const storyOrder = new Map<GenericTicketType, number>([
+  ["feat", 2],
+  ["fix", 1],
   ["chore", 0]
 ]);
 
@@ -34,11 +30,11 @@ const allowedScope = new Map<string, string>([
 ]);
 
 // a list of project ids associated with a specific scope
-const projectToScope = new Map<number, string>([
-  [2449547, "Bonus Vacanze"],
-  [2463683, "My Portal"],
-  [2477137, "Bonus Pagamenti Digitali"],
-  [2476636, "Carta Giovani Nazionale"]
+const projectToScope = new Map<string, string>([
+  ["2449547", "Bonus Vacanze"],
+  ["2463683", "My Portal"],
+  ["2477137", "Bonus Pagamenti Digitali"],
+  ["2476636", "Carta Giovani Nazionale"]
 ]);
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
@@ -57,43 +53,31 @@ export const getRawTitle = (title: string): string => {
 };
 
 /**
- * Parse the pull request title, identify the stories id and retrieve the pivotal stories
- * @param prTitle
- */
-export const getPivotalStoriesFromPrTitle = async (
-  prTitle: string
-): Promise<ReadonlyArray<Story>> => {
-  const storyIDs = getPivotalStoryIDs(prTitle);
-  return (await getPivotalStories(storyIDs)).filter(
-    s => s.story_type !== undefined
-  );
-};
-
-/**
  * Return true if all the stories have the same `story_type`
  * @param stories
  */
-export const allStoriesSameType = (stories: ReadonlyArray<Story>): boolean =>
-  stories.every((val, _, arr) => val.story_type === arr[0].story_type);
+export const allStoriesSameType = (
+  stories: ReadonlyArray<GenericTicket>
+): boolean => stories.every((val, _, arr) => val.type === arr[0].type);
 
 /**
  * Calculate the Changelog prefix for the provided stories.
  * @param stories
  */
 export const getChangelogPrefixByStories = (
-  stories: ReadonlyArray<Story>
+  stories: ReadonlyArray<GenericTicket>
 ): Option<string> => {
   // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
-  const storyType = stories.reduce<Option<StoryType>>((acc, val) => {
-    const currentStoryOrder = fromNullable(storyOrder.get(val.story_type));
+  const storyType = stories.reduce<Option<GenericTicketType>>((acc, val) => {
+    const currentStoryOrder = fromNullable(storyOrder.get(val.type));
     const prevStoryOrder = acc.chain(v => fromNullable(storyOrder.get(v)));
 
     if (currentStoryOrder.isSome() && prevStoryOrder.isSome()) {
       return currentStoryOrder.value > prevStoryOrder.value
-        ? some(val.story_type)
+        ? some(val.type)
         : acc;
     } else if (currentStoryOrder.isSome()) {
-      return some(val.story_type);
+      return some(val.type);
     }
     return acc;
   }, none);
@@ -110,14 +94,14 @@ export const getChangelogPrefixByStories = (
  * @param story
  */
 export const getStoryChangelogScope = (
-  story: Story
+  story: GenericTicket
 ): Either<Error, Option<string>> => {
   // try to retrieve the project scope (if any)
-  const maybeProjectScope = fromNullable(projectToScope.get(story.project_id));
+  const maybeProjectScope = fromNullable(projectToScope.get(story.projectId));
   // search for scope labels associated with the story
-  const maybeChangelogScopeTag = story.labels
-    .filter(l => l.name.match(regex))
-    .map(l => l.name.match(regex)!.pop())
+  const maybeChangelogScopeTag = story.tags
+    .filter(l => l.match(regex))
+    .map(l => l.match(regex)!.pop())
     .filter(tag => tag && allowedScope.has(tag));
 
   // multiple scope labels found on the story
@@ -133,7 +117,7 @@ export const getStoryChangelogScope = (
   if (maybeProjectScope.isSome() && maybeChangelogScopeTag.length >= 1) {
     return left(
       new Error(
-        `The story [#${story.id}] have the project_id ${story.project_id} associated with the scope ${maybeProjectScope.value} but also have labels matching the expression \`${regex}\`.\n
+        `The story [#${story.id}] have the project_id ${story.projectId} associated with the scope ${maybeProjectScope.value} but also have labels matching the expression \`${regex}\`.\n
         It is not possible to assign a single scope to this pull request!`
       )
     );
@@ -172,7 +156,7 @@ export const getStoryChangelogScope = (
  * @param stories
  */
 export const getChangelogScope = (
-  stories: ReadonlyArray<Story>
+  stories: ReadonlyArray<GenericTicket>
 ): Either<ReadonlyArray<Error>, Option<string>> => {
   const eitherChangelogScopes = stories.map(getStoryChangelogScope);
 
