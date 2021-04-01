@@ -7,10 +7,14 @@ import {
 } from "../../../navigation/actions";
 import {
   getActivation,
-  handleEycaActivationSaga
+  handleEycaActivationSaga,
+  handleStartActivation
 } from "../../networking/eyca/activation/getEycaActivationSaga";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import { cgnEycaActivationCancel } from "../../../store/actions/eyca/activation";
+import {
+  cgnEycaActivation,
+  cgnEycaActivationCancel
+} from "../../../store/actions/eyca/activation";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
 
@@ -22,7 +26,30 @@ export function* eycaActivationWorker(
   yield put(navigationHistoryPop(1));
 
   const eycaActivation = yield call(getActivation, getEycaActivation);
-  yield call(handleEycaActivationSaga, getEycaActivation, startEycaActivation);
+
+  if (eycaActivation.isRight()) {
+    if (eycaActivation.value === "PROCESSING") {
+      yield call(handleEycaActivationSaga, getEycaActivation);
+    } else {
+      const startActivation = yield call(
+        handleStartActivation,
+        startEycaActivation
+      );
+      // activation not handled error, stop
+      if (startActivation.isLeft()) {
+        yield put(cgnEycaActivation.failure(startActivation.value));
+        return;
+      } else {
+        // could be: ALREADY_ACTIVE, INELIGIBLE
+        if (startActivation.value !== "PROCESSING") {
+          yield put(cgnEycaActivation.success(startActivation.value));
+          return;
+        } else {
+          yield call(handleEycaActivationSaga, getEycaActivation);
+        }
+      }
+    }
+  }
 
   // Activation saga ended, request again the details
   yield put(cgnEycaStatus.request());
