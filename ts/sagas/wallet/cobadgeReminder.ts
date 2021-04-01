@@ -81,7 +81,7 @@ export function* sendAddCobadgeMessageSaga() {
     // - the abi of the bancomat is in the abiConfiguration list
     // - the abi of the bancomant has the status enabled in the abiConfiguration list
     // - there isn't a cobadge card in the wallet of the user with the sami abi
-    const enalbedAbis = bancomatListVisibleInWallet.filter(
+    const enabledAbis = bancomatListVisibleInWallet.filter(
       b =>
         b.info.issuerAbiCode !== undefined &&
         coBadgeAbiConfiguration[b.info.issuerAbiCode] !== undefined &&
@@ -89,7 +89,7 @@ export function* sendAddCobadgeMessageSaga() {
         cobadgeAbis.filter(abi => abi === b.info.issuerAbiCode).length === 0
     );
 
-    if (enalbedAbis.length > 0) {
+    if (enabledAbis.length > 0) {
       yield put(sendAddCobadgeMessage(true));
     } else {
       yield put(sendAddCobadgeMessage(false));
