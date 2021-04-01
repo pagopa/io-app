@@ -28,14 +28,12 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  backToEntrypointPayment,
+  abortRunningPayment,
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentExecuteStart,
-  paymentInitializeState,
   paymentWebViewEnd,
-  PaymentWebViewEndReason,
-  runDeleteActivePaymentSaga
+  PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
@@ -343,13 +341,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchCancelPayment = () => {
-    // on cancel:
-    // navigate to entrypoint of payment or wallet home
-    dispatch(backToEntrypointPayment());
-    // delete the active payment from pagoPA
-    dispatch(runDeleteActivePaymentSaga());
-    // reset the payment state
-    dispatch(paymentInitializeState());
+    dispatch(abortRunningPayment());
     showToast(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"), "success");
   };
   return {

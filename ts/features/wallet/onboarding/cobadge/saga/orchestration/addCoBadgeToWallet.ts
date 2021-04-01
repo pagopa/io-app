@@ -21,6 +21,8 @@ import {
   walletAddCoBadgeFailure
 } from "../../store/actions";
 import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadge";
+import ROUTES from "../../../../../../navigation/routes";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 
 /**
  * Define the workflow that allows the user to add a co-badge card to the wallet.
@@ -57,16 +59,22 @@ export function* addCoBadgeToWalletAndActivateBpd() {
       navigationCurrentRouteSelector
     );
 
-    if (
-      currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
-    ) {
-      yield put(NavigationActions.back());
-      if (res === "completed") {
+    if (currentRoute.isSome()) {
+      if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
+        yield put(navigationHistoryPop(1));
+        yield put(NavigationActions.back());
+      }
+
+      if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+        yield put(NavigationActions.back());
         const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
           navigationCurrentRouteSelector
         );
-        if (newRoute.isSome() && newRoute.value === "WALLET_BANCOMAT_DETAIL") {
+        if (
+          res === "completed" &&
+          newRoute.isSome() &&
+          newRoute.value === "WALLET_BANCOMAT_DETAIL"
+        ) {
           yield put(NavigationActions.back());
         }
       }
