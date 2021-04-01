@@ -84,7 +84,6 @@ export function* sendAddCobadgeMessageSaga() {
     const enabledAbis = bancomatListVisibleInWallet.filter(
       b =>
         b.info.issuerAbiCode !== undefined &&
-        coBadgeAbiConfiguration[b.info.issuerAbiCode] !== undefined &&
         coBadgeAbiConfiguration[b.info.issuerAbiCode] === StatusEnum.enabled &&
         cobadgeAbis.filter(abi => abi === b.info.issuerAbiCode).length === 0
     );
