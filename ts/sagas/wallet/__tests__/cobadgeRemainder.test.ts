@@ -49,8 +49,6 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next()
       .select(bancomatListVisibleInWalletSelector)
       .next(pot.some([aBancomat]))
-      .select(cobadgeListVisibleInWalletSelector)
-      .next(pot.some([aCoBadge]))
       .select(coBadgeAbiConfigurationSelector)
       .next(pot.none)
       .put(loadCoBadgeAbiConfiguration.request())
@@ -62,6 +60,8 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next(getType(loadCoBadgeAbiConfiguration.success))
       .select(coBadgeAbiConfigurationSelector)
       .next(pot.some({ "123": StatusEnum.enabled }))
+      .select(cobadgeListVisibleInWalletSelector)
+      .next(pot.some([aCoBadge]))
       .put(sendAddCobadgeMessage(true));
   });
   it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat, the abi is in the abiConfig and is not enabled", () => {
@@ -69,12 +69,12 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next()
       .select(bancomatListVisibleInWalletSelector)
       .next(pot.some([aBancomat]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
       .select(cobadgeListVisibleInWalletSelector)
       .next(pot.some([aCoBadge]))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
       .put(sendAddCobadgeMessage(false));
   });
   it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat, the abi is not in the abiConfig", () => {
@@ -82,12 +82,12 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next()
       .select(bancomatListVisibleInWalletSelector)
       .next(pot.some([aBancomat]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "789": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "789": StatusEnum.disabled }))
       .select(cobadgeListVisibleInWalletSelector)
       .next(pot.some([aCoBadge]))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "789": StatusEnum.disabled }))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "789": StatusEnum.disabled }))
       .put(sendAddCobadgeMessage(false));
   });
   it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat and there is a co-badge with the same abi", () => {
@@ -95,16 +95,16 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next()
       .select(bancomatListVisibleInWalletSelector)
       .next(pot.some([aBancomat]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
       .select(cobadgeListVisibleInWalletSelector)
       .next(
         pot.some([
           { ...aCoBadge, info: { ...aCoBadge.info, issuerAbiCode: anAbiCode } }
         ])
       )
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
       .put(sendAddCobadgeMessage(false));
   });
   it("should dispatch the sendAddCobadgeMessage action with payload false if there is at least one bancomat but without the issuerAbiCode", () => {
@@ -112,12 +112,12 @@ describe("sendAddCobadgeMessageSaga", () => {
       .next()
       .select(bancomatListVisibleInWalletSelector)
       .next(pot.some([{ ...aBancomat, info: {} }]))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
+      .select(coBadgeAbiConfigurationSelector)
+      .next(pot.some({ "123": StatusEnum.disabled }))
       .select(cobadgeListVisibleInWalletSelector)
       .next(pot.some([aCoBadge]))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
-      .select(coBadgeAbiConfigurationSelector)
-      .next(pot.some({ "123": StatusEnum.disabled }))
       .put(sendAddCobadgeMessage(false));
   });
 });
