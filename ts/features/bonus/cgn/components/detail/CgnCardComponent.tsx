@@ -1,8 +1,9 @@
 import * as React from "react";
 import { View } from "native-base";
 import WebView from "react-native-webview";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -12,7 +13,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import { localeDateFormat } from "../../../../../utils/locale";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
-import cardBg from "../../../../../../img/bonus/cgn/card_mask_1.png";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { playSvg } from "./CardSvgPayload";
 
@@ -23,26 +24,23 @@ type Props = {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: "100%"
+    height: "100%",
+    width: widthPercentageToDP(90),
+    maxWidth: 340
   },
   cgnCard: {
     position: "absolute",
-    width: "100%",
+    alignSelf: "center",
+    width: widthPercentageToDP(90),
+    maxWidth: 340,
     height: 192,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 7
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    zIndex: 7,
-    elevation: 7,
     top: 2
   },
   informationContainer: {
+    width: widthPercentageToDP(90),
+    maxWidth: 340,
     height: "100%",
-    top: Platform.select({ android: -220, default: -190 }),
+    top: -190,
     zIndex: 9,
     elevation: 9
   },
@@ -72,24 +70,12 @@ const styles = StyleSheet.create({
   },
   imageFull: {
     resizeMode: "stretch",
-    height: "100%",
-    zIndex: 8,
-    elevation: 8
-  },
-  upperShadowBox: {
-    marginBottom: -13,
-    borderRadius: 8,
-    borderTopWidth: 13,
-    borderTopColor: "rgba(0,0,0,0.1)",
-    height: 17,
-    width: "100%"
-  },
-  bottomShadowBox: {
-    marginBottom: 6,
-    borderRadius: 8,
-    borderBottomWidth: 15,
-    borderBottomColor: "rgba(0,0,0,0.1)",
-    width: "100%"
+    height: 215,
+    width: widthPercentageToDP(95),
+    maxWidth: 360,
+    top: -5,
+    left: -10,
+    zIndex: 8
   }
 });
 
@@ -146,22 +132,20 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
-      {Platform.OS === "android" && <View style={styles.upperShadowBox} />}
+    <View style={[styles.cgnCard]}>
       <ImageBackground
         source={cardBg}
         imageStyle={[styles.imageFull]}
         style={styles.cardContainer}
       >
         <WebView
-          style={{ borderRadius: 15, top: -1, left: -1 }}
+          style={{ top: -1, left: -1 }}
           onLoadEnd={props.onCardLoadEnd}
           source={{
             html: generatedSvg
           }}
         />
       </ImageBackground>
-      {Platform.OS === "android" && <View style={styles.bottomShadowBox} />}
       <View style={[styles.informationContainer, styles.paddedContentFull]}>
         <View
           style={[

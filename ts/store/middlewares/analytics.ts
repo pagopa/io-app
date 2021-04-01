@@ -89,6 +89,7 @@ import {
 } from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import {
+  abortRunningPayment,
   paymentAttiva,
   paymentCheck,
   paymentCompletedFailure,
@@ -392,6 +393,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(refreshPMTokenWhileAddCreditCard.request):
     case getType(refreshPMTokenWhileAddCreditCard.success):
     // payment
+    case getType(abortRunningPayment):
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
     case getType(paymentIdPolling.request):
