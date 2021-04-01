@@ -26,6 +26,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
   paymentCompletedSuccess,
@@ -403,13 +404,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
 
   const onCancel = () => {
-    // on cancel:
-    // navigate to entrypoint of payment or wallet home
-    dispatch(backToEntrypointPayment());
-    // delete the active payment from pagoPA
-    dispatch(runDeleteActivePaymentSaga());
-    // reset the payment state
-    dispatch(paymentInitializeState());
+    dispatch(abortRunningPayment());
   };
 
   // navigateToMessageDetail: (messageId: string) =>
