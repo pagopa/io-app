@@ -1,12 +1,12 @@
 import * as t from "io-ts";
 
-const JiraIssueType = t.union([
-  t.literal("Epic"),
-  t.literal("Story"),
-  t.literal("Task"),
-  t.literal("Sottotask"),
-  t.literal("Bug")
-]);
+const JiraIssueType = t.keyof({
+  Epic: null,
+  Story: null,
+  Task: null,
+  Sottotask: null,
+  Bug: null
+});
 
 export type JiraIssueType = t.TypeOf<typeof JiraIssueType>;
 
