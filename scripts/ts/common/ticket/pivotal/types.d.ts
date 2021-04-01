@@ -1,7 +1,9 @@
 // TODO: create types for pivotaljs
 
-export type StoryType = "feature" | "bug" | "chore" | "release";
-export type StoryCurrentState =
+import { IUnitTag } from "italia-ts-commons/lib/units";
+
+export type PivotalStoryType = "feature" | "bug" | "chore" | "release";
+export type PivotalStoryCurrentState =
   | "accepted"
   | "delivered"
   | "finished"
@@ -11,7 +13,7 @@ export type StoryCurrentState =
   | "unstarted"
   | "unscheduled";
 
-export type Label = {
+export type PivotalLabel = {
   id: number;
   project_id: number;
   kind: string;
@@ -21,15 +23,17 @@ export type Label = {
   updated_at: string;
 };
 
-export type Story = {
+export type PivotalId = string & IUnitTag<"PivotalId">;
+
+export type PivotalStory = {
   id: string;
-  story_type: StoryType;
+  story_type: PivotalStoryType;
   created_at: string;
   updated_at: string;
   estimate: number;
   name: string;
-  current_state: StoryCurrentState;
+  current_state: PivotalStoryCurrentState;
   url: string;
   project_id: number;
-  labels: ReadonlyArray<Label>;
+  labels: ReadonlyArray<PivotalLabel>;
 };
