@@ -38,6 +38,7 @@ const abiListLoadingError = (
   onRetry: () => void
 ) => (
   <LoadingErrorComponent
+    testID={"abiListLoadingError"}
     isLoading={isLoading}
     loadingCaption={I18n.t("wallet.onboarding.coBadge.start.loading")}
     onAbort={onAbort}

@@ -183,21 +183,26 @@ describe("Test behaviour of the CoBadgeStartScreen", () => {
     // The user should see the unavailable screen
     expect(isUnavailableScreen(testComponent)).toBe(true);
   });
-  it("When receive a configuration with an abi enabled, and the abiList is remoteReady the screen should render CoBadgeChosenBankScreen", () => {
+  it("When receive a configuration with an abi enabled, and the abiList is not remoteReady the screen should render AbiListLoadingError", () => {
     const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
-    console.log("step 1 ------------------------------");
     store.dispatch(
       loadCoBadgeAbiConfiguration.success(abiConfigurationEnabled)
     );
-    // store.dispatch(loadAbi.failure(new Error()));
-    console.log("step 2 ------------------------------");
-    console.log(JSON.stringify(testComponent.toJSON()));
     // if the selected abi is not in the abi list, the user will see a generic text:
     expect(isAbiListLoadingError(testComponent)).toBe(true);
-    console.log("step 3 ------------------------------");
     const bankName = "abiBankName";
     store.dispatch(
       loadAbi.success({ data: [{ abi: abiTestId, name: bankName }] })
+    );
+  });
+  it("When receive a configuration with an abi enabled, and the abiList is remoteReady the screen should render CoBadgeChosenBankScreen", () => {
+    const { store, testComponent } = getInitCoBadgeStartScreen(abiTestId);
+    const bankName = "abiBankName";
+    store.dispatch(
+      loadAbi.success({ data: [{ abi: abiTestId, name: bankName }] })
+    );
+    store.dispatch(
+      loadCoBadgeAbiConfiguration.success(abiConfigurationEnabled)
     );
 
     // if the selected abi is in the abi list,
