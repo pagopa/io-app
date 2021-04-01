@@ -63,7 +63,7 @@ import {
 } from "../../store/actions/wallet/transactions";
 import {
   fetchWalletsRequestWithExpBackoff,
-  runSendAddCobadgeMessageSaga
+  runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { navSelector } from "../../store/reducers/navigationHistory";
@@ -679,7 +679,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   dispatchAllTransactionLoaded: (transactions: ReadonlyArray<Transaction>) =>
     dispatch(fetchTransactionsLoadComplete(transactions)),
-  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeMessageSaga())
+  runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
 
 export default withValidatedPagoPaVersion(

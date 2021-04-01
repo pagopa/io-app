@@ -139,7 +139,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
-  runSendAddCobadgeMessageSaga,
+  runSendAddCobadgeTrackSaga,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled
@@ -916,7 +916,7 @@ export function* watchWalletSaga(
 
   // Check if a user has a bancomat and has not requested a cobadge yet and send
   // the information to mixpanel
-  yield takeLatest(runSendAddCobadgeMessageSaga, sendAddCobadgeMessageSaga);
+  yield takeLatest(runSendAddCobadgeTrackSaga, sendAddCobadgeMessageSaga);
   yield fork(paymentsDeleteUncompletedSaga);
 }
 
