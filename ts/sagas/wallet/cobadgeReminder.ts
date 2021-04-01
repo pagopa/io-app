@@ -85,13 +85,9 @@ export function* sendAddCobadgeMessageSaga() {
       b =>
         b.info.issuerAbiCode !== undefined &&
         coBadgeAbiConfiguration[b.info.issuerAbiCode] === StatusEnum.enabled &&
-        cobadgeAbis.filter(abi => abi === b.info.issuerAbiCode).length === 0
+        !cobadgeAbis.some(abi => abi === b.info.issuerAbiCode)
     );
 
-    if (enabledAbis.length > 0) {
-      yield put(sendAddCobadgeMessage(true));
-    } else {
-      yield put(sendAddCobadgeMessage(false));
-    }
+    yield put(sendAddCobadgeMessage(enabledAbis.length > 0));
   }
 }
