@@ -449,7 +449,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: action.payload.error.message
       });
     case getType(sendAddCobadgeMessage):
-      return mp.track(action.type, { choice: action.payload });
+      return mp.track(action.type, { canAdd: action.payload });
   }
   return Promise.resolve();
 };
