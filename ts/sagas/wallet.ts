@@ -914,7 +914,7 @@ export function* watchWalletSaga(
     );
   }
 
-  // Check if a user has a bancomat and has not request a cobadge yet and send
+  // Check if a user has a bancomat and has not requested a cobadge yet and send
   // the information to mixpanel
   yield takeLatest(runSendAddCobadgeMessageSaga, sendAddCobadgeMessageSaga);
   yield fork(paymentsDeleteUncompletedSaga);
