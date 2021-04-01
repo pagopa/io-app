@@ -27,10 +27,10 @@ import { Psp, Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
-import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Body } from "../../../components/core/typography/Body";
+import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
