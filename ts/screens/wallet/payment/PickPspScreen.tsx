@@ -136,7 +136,7 @@ class PickPspScreen extends React.Component<Props, State> {
               onError={this.onErrorImageLoading}
             />
           ) : (
-            <Body>{item.serviceName}</Body>
+            <Body>{item.businessName}</Body>
           )}
           <View style={styles.feeContainer}>
             <Label>{formatNumberCentsToAmount(item.fixedCost.amount)}</Label>
