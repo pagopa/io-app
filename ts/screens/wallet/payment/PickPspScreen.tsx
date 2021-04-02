@@ -32,9 +32,9 @@ import { showToast } from "../../../utils/showToast";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { navigateBack } from "../../../store/actions/navigation";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { dispatchUpdatePspForWalletAndConfirm } from "./common";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { PspComponent } from "../../../components/PspComponent";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
