@@ -25,15 +25,20 @@ type Props = {
 const styles = StyleSheet.create({
   cardContainer: {
     height: "100%",
-    width: widthPercentageToDP(90)
+    width: widthPercentageToDP(90),
+    maxWidth: 340
   },
   cgnCard: {
     position: "absolute",
-    width: "100%",
+    alignSelf: "center",
+    width: widthPercentageToDP(90),
+    maxWidth: 340,
     height: 192,
     top: 2
   },
   informationContainer: {
+    width: widthPercentageToDP(90),
+    maxWidth: 340,
     height: "100%",
     top: -190,
     zIndex: 9,
@@ -67,8 +72,9 @@ const styles = StyleSheet.create({
     resizeMode: "stretch",
     height: 215,
     width: widthPercentageToDP(95),
+    maxWidth: 360,
     top: -5,
-    left: -13,
+    left: -10,
     zIndex: 8
   }
 });
@@ -126,7 +132,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   return (
-    <View style={[IOStyles.horizontalContentPadding, styles.cgnCard]}>
+    <View style={[styles.cgnCard]}>
       <ImageBackground
         source={cardBg}
         imageStyle={[styles.imageFull]}
