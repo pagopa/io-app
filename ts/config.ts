@@ -53,6 +53,9 @@ export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
 export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
+export const bpdTransactionsPaging: boolean =
+  Config.BPD_TRANSACTIONS_PAGING === "YES";
+
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
 export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
@@ -63,6 +66,7 @@ export const isPlaygroundsEnabled: boolean =
 
 // CGN Feature Flag
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
+export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;

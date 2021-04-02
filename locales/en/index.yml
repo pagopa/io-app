@@ -107,6 +107,7 @@ global:
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -756,6 +757,9 @@ payment:
 wallet:
   wallet: Wallet
   refreshWallet: Refresh the Wallet
+  favourite:
+    setFavoriteTitle: Use as favorite
+    setFavoriteSubtitle: When you pay in-app, IO will automatically show this payment method
   incoming:
     title: "Upcoming"
     message: "This payment method will be available in a future release"
@@ -923,7 +927,7 @@ wallet:
           body: "We are working to solve the problem."
       addPrivativeCardNumber:
         title: "Insert card number"
-        body: "Enter the numbers shown. IO will check if it is associated with your tax code."
+        body: "Enter the numbers shown on the front. IO will check if the card is associated with your tax code."
         disclaimer:
           text1: "By continuing you accept the"
           text2: "information on the processing of personal data"
@@ -950,7 +954,7 @@ wallet:
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app
-    favourite: This method is already set as favourite. To change this, please set another method as favourite.
+    favorite: To change this option, select another method from your Wallet and set it as favorite.
     amex: Payments with American Express cards, for amounts above €1000, are currently not possible.
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
@@ -1068,6 +1072,17 @@ wallet:
     noPspsAvailable: This payment method cannot be used
     contextualHelpTitle: Payment method's choice
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
+    pickPaymentMethod:
+      title: "What method do you want to pay with?"
+      description: "{{firstElement}} · {{secondElement}}"
+      notAvailable:
+        title: "Incompatible methods"
+        arriving:
+          bottomSheetTitle: "We're working to support this method soon"
+          bottomSheetDescription: "Try using another payment method. You can also use pagoPA via your favorite payment app or browsing the website of the payee."
+        unaccepted:
+          bottomSheetTitle: "Why can't I pay with this card?"
+          bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
@@ -1208,7 +1223,9 @@ wallet:
   acceptedCards: Accepted cards
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
-  missingDataText: If you can't find the security code, it's likely your card doesn't support online payments. We're working with your bank to let you add these cards and enroll them for Cashback.
+  missingDataText:
+    body: If you can't find the security code, it's likely your card doesn't support online payments. However, you can add it for Cashback purposes, if your bank is supported.
+    cta: "Search your cards"
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
@@ -1328,8 +1345,8 @@ cardComponent:
   expiresOn: Expires on
   expiredCard: CARD EXPIRED ON
   actions: Actions
-  setFavourite: Set as favourite
-  unsetFavourite: Remove from favourites
+  setFavorite: Set as favourite
+  unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
   neverUsed: Never used
@@ -2007,7 +2024,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: "By pressing \"Request cashback\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
+  termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2285,7 +2302,7 @@ bonus:
         eycaPending: "We're linking your Carta Giovani Nazionale to a EYCA Number."
         eycaError: "We had some issues with EYCA's systems."
         eycaBottomSheetTitle: "EYCA card number"
-        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e-commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
+        eycaDescription: "Until the Until you turn 31, **your National Youth Card is a member of the EYCA circuit** (European Youth Card Association).\n\nBy entering your EYCA card number on e&#8209;commerce or showing your card at participating merchants, you will be able to get discounts and benefits on cultural activities, shopping, transportation, dining and lodging in the 38 European countries participating in the circuit."
         eycaNumber: Card number
         badge:
           active: Active
