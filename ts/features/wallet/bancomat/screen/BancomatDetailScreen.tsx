@@ -64,9 +64,7 @@ const startCoBadge = (props: Props) => {
   const bancomat = props.navigation.getParam("bancomat");
   if (bancomat.info.issuerAbiCode === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR", {
-      issuerAbiCode: bancomat.info.issuerAbiCode
-    });
+    void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR");
   } else {
     props.addCoBadge(bancomat.info.issuerAbiCode);
   }
