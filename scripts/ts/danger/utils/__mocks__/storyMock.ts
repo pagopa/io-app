@@ -1,6 +1,9 @@
-import { Label, Story } from "../types";
+import {
+  PivotalLabel,
+  PivotalStory
+} from "../../../common/ticket/pivotal/types";
 
-export const baseStory: Story = {
+export const baseStory: PivotalStory = {
   id: "123",
   story_type: "bug",
   created_at: "date",
@@ -13,7 +16,7 @@ export const baseStory: Story = {
   labels: []
 };
 
-export const baseLabel: Label = {
+export const baseLabel: PivotalLabel = {
   id: 5,
   project_id: 21,
   kind: "label",
@@ -22,62 +25,62 @@ export const baseLabel: Label = {
   updated_at: "date"
 };
 
-export const scopeLabeliOS: Label = {
+export const scopeLabeliOS: PivotalLabel = {
   ...baseLabel,
   name: "changelog-scope:ios"
 };
 
-export const scopeLabelAndroid: Label = {
+export const scopeLabelAndroid: PivotalLabel = {
   ...baseLabel,
   name: "changelog-scope:android"
 };
 
-export const scopeLabelEpicBpd: Label = {
+export const scopeLabelEpicBpd: PivotalLabel = {
   ...baseLabel,
   name: "epic-bpd"
 };
 
-export const scopeLabelNotAllowed: Label = {
+export const scopeLabelNotAllowed: PivotalLabel = {
   ...baseLabel,
   name: "changelog-scope:not-allowed"
 };
 
-export const bonusVacanzeStory: Story = {
+export const bonusVacanzeStory: PivotalStory = {
   ...baseStory,
   project_id: 2449547
 };
 
-export const baseStoryWithGenericLabel: Story = {
+export const baseStoryWithGenericLabel: PivotalStory = {
   ...baseStory,
   labels: [baseLabel]
 };
 
-export const bonusVacanzeStoryWithScopeLabel: Story = {
+export const bonusVacanzeStoryWithScopeLabel: PivotalStory = {
   ...bonusVacanzeStory,
   labels: [scopeLabeliOS]
 };
 
-export const singleAndroidLabelStory: Story = {
+export const singleAndroidLabelStory: PivotalStory = {
   ...baseStory,
   labels: [scopeLabelAndroid]
 };
 
-export const singleEpicBpdStory: Story = {
+export const singleEpicBpdStory: PivotalStory = {
   ...baseStory,
   labels: [scopeLabelEpicBpd]
 };
 
-export const androidLabelAndOtherStory: Story = {
+export const androidLabelAndOtherStory: PivotalStory = {
   ...baseStory,
   labels: [scopeLabelAndroid, baseLabel]
 };
 
-export const clashScopeLabelStory: Story = {
+export const clashScopeLabelStory: PivotalStory = {
   ...baseStory,
   labels: [scopeLabelAndroid, scopeLabeliOS]
 };
 
-export const scopeLabelNotAllowedStory: Story = {
+export const scopeLabelNotAllowedStory: PivotalStory = {
   ...baseStory,
   labels: [scopeLabelNotAllowed]
 };
