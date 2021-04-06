@@ -59,6 +59,12 @@ export function* getCitizen(
   yield call(executeAndDispatch, findCitizen, bpdLoadActivationStatus);
 }
 
+export function* getCitizenV2(
+  findCitizen: ReturnType<typeof BackendBpdClient>["findV2"]
+): SagaIterator {
+  yield call(executeAndDispatch, findCitizen, bpdLoadActivationStatus);
+}
+
 /**
  * make a request to enroll the citizen to the bpd
  */
