@@ -384,15 +384,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <Text>{I18n.t("services.loading.subtitle")}</Text>
         {/* TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
         <View spacer={true} extralarge={true} />
-        <ButtonDefaultOpacity
-          onPress={this.instabugLogAndOpenReport}
-          style={styles.helpButton}
-        >
-          <IconFont name={"io-bug"} style={styles.helpButtonIcon} />
-          <Text style={styles.helpButtonText}>
-            {I18n.t("instabug.contextualHelp.buttonBug")}
-          </Text>
-        </ButtonDefaultOpacity>
       </View>
     );
   }
