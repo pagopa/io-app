@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix } from "../../../../config";
+import { bpdApiUrlPrefix, bpdTechnicalIban } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -38,7 +38,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield takeLatest(
     bpdLoadActivationStatus.request,
     getCitizen,
-    bpdBackendClient.find
+    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
   );
 
   // enroll citizen to the bpd
