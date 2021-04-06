@@ -30,7 +30,7 @@ type Props = WithTestID<OwnProps> &
 const tos_url =
   "https://io.italia.it/app-content/privacy_circuiti_internazionali.html";
 
-const partecipatingBank_url =
+const participatingBank_url =
   "https://io.italia.it/cashback/carta-non-abilitata-pagamenti-online";
 
 const abiListLoadingError = (
@@ -72,7 +72,7 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
 
   const openPartecipatingBankModal = () => {
     showModal(
-      <TosBonusComponent tos_url={partecipatingBank_url} onClose={hideModal} />
+      <TosBonusComponent tos_url={participatingBank_url} onClose={hideModal} />
     );
   };
 
@@ -102,7 +102,7 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
         methodType={"cobadge"}
         onCancel={props.onCancel}
         onSearch={props.searchAccounts}
-        handlePartecipatingBanksModal={openPartecipatingBankModal}
+        handleParticipatingBanksModal={openPartecipatingBankModal}
         handleTosModal={openTosModal}
         bankName={abiInfo?.name}
       />
