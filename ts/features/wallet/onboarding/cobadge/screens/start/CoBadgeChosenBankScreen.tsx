@@ -18,6 +18,7 @@ import { fold, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { loadAbi } from "../../../bancomat/store/actions";
 import I18n from "../../../../../../i18n";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 
 type OwnProps = {
   abi?: string;
@@ -85,6 +86,9 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
     isReady(props.abiListStatus)
   ) {
     props.onGeneralError("Abi not found in abilist in CoBadgeChosenBankScreen");
+    void mixpanelTrack("COBADGE_CHOSEN_BANK_SCREEN_ABI_NOT_FOUND", {
+      issuerAbiCode: props.abi
+    });
     return null;
   }
 
