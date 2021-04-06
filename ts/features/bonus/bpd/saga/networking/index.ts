@@ -74,6 +74,12 @@ export function* putEnrollCitizen(
   yield call(executeAndDispatch, enrollCitizenIO, bpdEnrollUserToProgram);
 }
 
+export function* putEnrollCitizenV2(
+  enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"]
+): SagaIterator {
+  yield call(executeAndDispatch, enrollCitizenIO, bpdEnrollUserToProgram);
+}
+
 /**
  * make a request to delete citizen from bpd program
  */

@@ -17,7 +17,13 @@ import {
 } from "../store/actions/paymentMethods";
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
-import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import {
+  deleteCitizen,
+  getCitizen,
+  getCitizenV2,
+  putEnrollCitizen,
+  putEnrollCitizenV2
+} from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
@@ -34,19 +40,33 @@ import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOn
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
-  // load citizen details
-  yield takeLatest(
-    bpdLoadActivationStatus.request,
-    getCitizen,
-    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
-  );
-
-  // enroll citizen to the bpd
-  yield takeLatest(
-    bpdEnrollUserToProgram.request,
-    putEnrollCitizen,
-    bpdBackendClient.enrollCitizenIO
-  );
+  if (bpdTechnicalIban) {
+    // load citizen details
+    yield takeLatest(
+      bpdLoadActivationStatus.request,
+      getCitizenV2,
+      bpdBackendClient.findV2
+    );
+    // enroll citizen to the bpd
+    yield takeLatest(
+      bpdEnrollUserToProgram.request,
+      putEnrollCitizenV2,
+      bpdBackendClient.enrollCitizenV2IO
+    );
+  } else {
+    // load citizen details
+    yield takeLatest(
+      bpdLoadActivationStatus.request,
+      getCitizen,
+      bpdBackendClient.find
+    );
+    // enroll citizen to the bpd
+    yield takeLatest(
+      bpdEnrollUserToProgram.request,
+      putEnrollCitizen,
+      bpdBackendClient.enrollCitizenIO
+    );
+  }
 
   // delete citizen from the bpd
   yield takeLatest(
