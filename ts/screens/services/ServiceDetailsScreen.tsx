@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12
   },
   otherSwitchRow: {
-    paddingLeft: 8,
     borderTopColor: customVariables.itemSeparator,
     borderTopWidth: 1 / 3
   },
