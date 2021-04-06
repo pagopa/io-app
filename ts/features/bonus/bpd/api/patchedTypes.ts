@@ -24,3 +24,21 @@ export const PatchedCitizenResource = t.intersection(
 );
 
 export type PatchedCitizenResource = t.TypeOf<typeof PatchedCitizenResource>;
+
+/**
+ * patched version of CitizenV2Resource
+ * - technicalAccount must be optional
+ */
+// required attributes
+const PatchedCitizenV2ResourceO = t.interface({
+  technicalAccount: t.string
+});
+
+export const PatchedCitizenV2Resource = t.intersection(
+  [PatchedCitizenResourceR, PatchedCitizenResourceO, PatchedCitizenV2ResourceO],
+  "PatchedCitizenResource"
+);
+
+export type PatchedCitizenV2Resource = t.TypeOf<
+  typeof PatchedCitizenV2Resource
+>;
