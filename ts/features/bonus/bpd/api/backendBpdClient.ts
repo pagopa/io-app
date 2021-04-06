@@ -43,7 +43,10 @@ import {
 import { fetchPaymentManagerLongTimeout } from "../../../../config";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
-import { PatchedCitizenResource } from "./patchedTypes";
+import {
+  PatchedCitizenResource,
+  PatchedCitizenV2Resource
+} from "./patchedTypes";
 
 const headersProducers = <
   P extends {
@@ -68,6 +71,14 @@ const findT: FindUsingGETTExtra = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: findUsingGETDecoder(PatchedCitizenResource)
+};
+
+const findV2T: FindUsingGETTExtra = {
+  method: "get",
+  url: () => `/bpd/io/citizen/v2`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDecoder(PatchedCitizenV2Resource)
 };
 
 type EnrollmentTTExtra = MapResponseType<
@@ -297,6 +308,7 @@ export function BackendBpdClient(
 
   return {
     find: withBearerToken(createFetchRequestForApi(findT, options)),
+    findV2: withBearerToken(createFetchRequestForApi(findV2T, options)),
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
     ),
