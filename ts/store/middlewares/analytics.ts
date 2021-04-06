@@ -121,7 +121,6 @@ import {
   deleteWalletRequest,
   deleteWalletSuccess,
   refreshPMTokenWhileAddCreditCard,
-  sendAddCobadgeMessage,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
@@ -448,8 +447,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         choice: action.payload.choice,
         reason: action.payload.error.message
       });
-    case getType(sendAddCobadgeMessage):
-      return mp.track(action.type, { canAdd: action.payload });
   }
   return Promise.resolve();
 };

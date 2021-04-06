@@ -15,6 +15,7 @@ import {
   walletAddCoBadgeFailure,
   walletAddCoBadgeStart
 } from "../store/actions";
+import { sendAddCobadgeMessage } from "../../../../../store/actions/wallet/wallets";
 
 export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -51,6 +52,8 @@ export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+    case getType(sendAddCobadgeMessage):
+      return mp.track(action.type, { canAdd: action.payload });
   }
   return Promise.resolve();
 };
