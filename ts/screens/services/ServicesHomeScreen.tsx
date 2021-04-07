@@ -382,8 +382,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
-        {/* TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
-        <View spacer={true} extralarge={true} />
       </View>
     );
   }
