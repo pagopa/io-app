@@ -1,148 +1,144 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
 import * as React from "react";
-import { Card } from "../../../../../../../definitions/cgn/Card";
-import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import I18n from "../../../../../../i18n";
-import { localeDateFormat } from "../../../../../../utils/locale";
+import { Provider } from "react-redux";
+import EycaDetailComponent from "../EycaDetailComponent";
+import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
+import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
+import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
+import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
 import {
-  CardRevoked,
-  StatusEnum as CgnRevokedStatusEnum
-} from "../../../../../../../definitions/cgn/CardRevoked";
-import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
-import CgnStatusDetail from "../CgnStatusDetail";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
+  remoteReady,
+  remoteUndefined
+} from "../../../../../bpd/model/RemoteValue";
+import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
+import { IOColors } from "../../../../../../../components/core/variables/IOColors";
+import I18n from "../../../../../../../i18n";
+import * as urlUtils from "../../../../../../../utils/url";
 
-const cgnStatusActivated: Card = {
-  status: CgnActivatedStatusEnum.ACTIVATED,
-  activation_date: new Date("2020-03-04"),
-  expiration_date: new Date("2037-02-20")
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
+const eycaCardActive: EycaCard = {
+  status: AcivatedStatus.ACTIVATED,
+  card_number: "W413-K096-O814-Z223" as CcdbNumber,
+  activation_date: new Date(Date.now()),
+  expiration_date: new Date(Date.now() + 500000)
 };
 
-const cgnStatusRevoked: Card = {
-  status: CgnRevokedStatusEnum.REVOKED,
-  revocation_date: new Date("2030-02-20"),
-  activation_date: new Date("2020-03-04"),
-  expiration_date: new Date("2037-02-20"),
-  revocation_reason: "A reason to revoke" as CardRevoked["revocation_reason"]
-};
-
-const cgnStatusExpired: Card = {
-  status: CgnExpiredStatusEnum.EXPIRED,
-  activation_date: new Date("2020-03-04"),
-  expiration_date: new Date("2037-02-20")
-};
-
-const cgnStatusPending: Card = {
-  status: CgnPendingStatusEnum.PENDING
+const eycaCardPending: EycaCard = {
+  status: PendingStatus.PENDING
 };
 
 describe("EycaDetailComponent", () => {
-  it("Activated status", () => {
-    const component = render(
-      <CgnStatusDetail cgnDetail={cgnStatusActivated} />
-    );
+  const mockStore = configureMockStore();
+
+  it("Should show EYCA Status component for an Active card", () => {
+    const store = mockStore(mockEYCAState(eycaCardActive));
+    const component = getComponent(store);
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("status-badge")).toHaveTextContent(
+
+    const eycaNumber = component.queryByTestId("eyca-card-number");
+    expect(eycaNumber).not.toBeNull();
+    expect(eycaNumber).toHaveTextContent("");
+
+    const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
+    expect(eycaStatusBadge).not.toBeNull();
+    expect(eycaStatusBadge).toHaveStyle({ backgroundColor: IOColors.aqua });
+
+    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
+    expect(eycaStatusLabel).not.toBeNull();
+    expect(eycaStatusLabel).toHaveStyle({ color: IOColors.bluegreyDark });
+    expect(eycaStatusLabel).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.badge.active")
     );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.aqua
-    });
-    expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.date.activated")
-    );
-    expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusActivated.activation_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
-    expect(component.queryByTestId("expiration-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.expiration.cgn")
-    );
-    expect(component.queryByTestId("expiration-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusActivated.expiration_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
-    expect(component.queryByTestId("revocation-date-label")).toBeNull();
-    expect(component.queryByTestId("revocation-date-value")).toBeNull();
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
   });
 
-  it("Revoked status", () => {
-    const component = render(<CgnStatusDetail cgnDetail={cgnStatusRevoked} />);
+  it("Should show EYCA Pending component for a Pending card", () => {
+    const store = mockStore(mockEYCAState(eycaCardPending, "PROCESSING"));
+    const component = getComponent(store);
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("status-badge")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.badge.revoked")
-    );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.bluegrey
-    });
-    expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.date.activated")
-    );
-    expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusRevoked.activation_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
-    expect(component.queryByTestId("expiration-date-label")).toBeNull();
-    expect(component.queryByTestId("expiration-date-value")).toBeNull();
-    expect(component.queryByTestId("revocation-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.date.revoked")
-    );
-    expect(component.queryByTestId("revocation-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusRevoked.revocation_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
+
+    const eycaNumber = component.queryByTestId("eyca-card-number");
+    expect(eycaNumber).toBeNull();
+
+    const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
+    expect(eycaStatusBadge).toBeNull();
+
+    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
+    expect(eycaStatusLabel).toBeNull();
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).not.toBeNull();
+
+    const pendingButton = component.queryByTestId("eyca-pending-button");
+    expect(pendingButton).not.toBeNull();
+
+    const spy = jest.spyOn(urlUtils, "openWebUrl");
+
+    if (pendingButton !== null) {
+      fireEvent.press(pendingButton);
+      expect(spy).toHaveBeenCalledTimes(1);
+    }
   });
 
-  it("Expired status", () => {
-    const component = render(<CgnStatusDetail cgnDetail={cgnStatusExpired} />);
+  it("Should show EYCA Error component if a card is Pending but activation is in error", () => {
+    const store = mockStore(mockEYCAState(eycaCardPending, "PROCESSING"));
+    const component = getComponent(store);
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("status-badge")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.badge.expired")
-    );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.bluegrey
-    });
-    expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.date.activated")
-    );
-    expect(component.queryByTestId("activation-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusExpired.activation_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
-    expect(component.queryByTestId("expiration-date-label")).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.date.expired")
-    );
-    expect(component.queryByTestId("expiration-date-value")).toHaveTextContent(
-      localeDateFormat(
-        cgnStatusExpired.expiration_date,
-        I18n.t("global.dateFormats.shortFormat")
-      )
-    );
-    expect(component.queryByTestId("revocation-date-label")).toBeNull();
-    expect(component.queryByTestId("revocation-date-value")).toBeNull();
-  });
 
-  it("Pendign status", () => {
-    const component = render(<CgnStatusDetail cgnDetail={cgnStatusPending} />);
-    expect(component).not.toBeNull();
-    expect(component.queryByTestId("status-badge")).toBeNull();
+    const eycaNumber = component.queryByTestId("eyca-card-number");
+    expect(eycaNumber).toBeNull();
 
-    expect(component.queryByTestId("activation-date-label")).toBeNull();
-    expect(component.queryByTestId("activation-date-value")).toBeNull();
-    expect(component.queryByTestId("expiration-date-label")).toBeNull();
-    expect(component.queryByTestId("expiration-date-value")).toBeNull();
-    expect(component.queryByTestId("revocation-date-label")).toBeNull();
-    expect(component.queryByTestId("revocation-date-value")).toBeNull();
+    const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
+    expect(eycaStatusBadge).toBeNull();
+
+    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
+    expect(eycaStatusLabel).toBeNull();
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).not.toBeNull();
+
+    const pendingButton = component.queryByTestId("eyca-pending-button");
+    expect(pendingButton).not.toBeNull();
+
+    const spy = jest.spyOn(urlUtils, "openWebUrl");
+
+    if (pendingButton !== null) {
+      fireEvent.press(pendingButton);
+      expect(spy).toHaveBeenCalledTimes(1);
+    }
   });
 });
+
+const mockEYCAState = (
+  card: EycaCard,
+  activation?: CgnEycaActivationStatus
+) => {
+  const readyCard = remoteReady({ status: "FOUND", card });
+  const eycaActivation = activation ? remoteReady(activation) : remoteUndefined;
+
+  return {
+    bonus: {
+      cgn: {
+        eyca: {
+          details: readyCard,
+          activation: eycaActivation
+        }
+      }
+    }
+  };
+};
+
+const getComponent = (store: any) =>
+  render(
+    <Provider store={store}>
+      <EycaDetailComponent />
+    </Provider>
+  );
