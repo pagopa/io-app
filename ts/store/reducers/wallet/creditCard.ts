@@ -9,7 +9,9 @@ import {
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
   creditCardPaymentNavigationUrls,
-  CreditCardFailure
+  CreditCardFailure,
+  addCreditCardWebViewEnd,
+  AddCreditCardWebViewEndReason
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 import { clearCache } from "../../actions/profile";
@@ -27,6 +29,7 @@ export type CreditCardInsertion = {
     idCreditCard?: number;
     brand?: string;
   };
+  webViewCloseReason?: AddCreditCardWebViewEndReason;
   failureReason?: CreditCardFailure;
   payNavigationUrls?: ReadonlyArray<string>;
   onboardingComplete: boolean;
@@ -137,6 +140,11 @@ const reducer = (
       return updateStateHead(state, attempt => ({
         ...attempt,
         outcomeCode: action.payload.getOrElse("n/a")
+      }));
+    case getType(addCreditCardWebViewEnd):
+      return updateStateHead(state, attempt => ({
+        ...attempt,
+        webViewCloseReason: action.payload
       }));
     case getType(clearCache): {
       return INITIAL_STATE;

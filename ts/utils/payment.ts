@@ -184,6 +184,9 @@ export const getPaymentHistoryDetails = (
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
+  const webViewCloseReason = `- chiusura webview: ${
+    payment.webViewCloseReason ?? "n/a"
+  }`;
   const success = `- pagamento concluso con successo: ${
     payment.success === true ? "si" : "no"
   }`;
@@ -208,6 +211,8 @@ export const getPaymentHistoryDetails = (
     ccp,
     separator,
     success,
+    separator,
+    webViewCloseReason,
     separator,
     outcomeCode,
     separator,
