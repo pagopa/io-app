@@ -17,13 +17,23 @@ import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
-import { Psp, Transaction, Wallet } from "../types/pagopa";
+import {
+  BancomatPaymentMethod,
+  CreditCardPaymentMethod,
+  PrivativePaymentMethod,
+  Psp,
+  Transaction,
+  Wallet
+} from "../types/pagopa";
 import {
   OutcomeCode,
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
-import { formatDateAsReminder } from "./dates";
+import {
+  formatDateAsReminder,
+  getTranslatedShortNumericMonthYear
+} from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
@@ -174,6 +184,9 @@ export const getPaymentHistoryDetails = (
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const codiceAvviso = `- codice avviso: ${getCodiceAvviso(payment.data)}`;
+  const webViewCloseReason = `- chiusura webview: ${
+    payment.webViewCloseReason ?? "n/a"
+  }`;
   const success = `- pagamento concluso con successo: ${
     payment.success === true ? "si" : "no"
   }`;
@@ -198,6 +211,8 @@ export const getPaymentHistoryDetails = (
     ccp,
     separator,
     success,
+    separator,
+    webViewCloseReason,
     separator,
     outcomeCode,
     separator,
@@ -306,4 +321,23 @@ export const getPaymentOutcomeCodeDescription = (
       .map(description => description[getFullLocale()]);
   }
   return none;
+};
+
+export const getPickPaymentMethodDescription = (
+  paymentMethod:
+    | CreditCardPaymentMethod
+    | PrivativePaymentMethod
+    | BancomatPaymentMethod,
+  defaultHolder: string = ""
+) => {
+  const translatedExpireDate = getTranslatedShortNumericMonthYear(
+    paymentMethod.info.expireYear,
+    paymentMethod.info.expireMonth
+  );
+  return translatedExpireDate
+    ? I18n.t("wallet.payWith.pickPaymentMethod.description", {
+        firstElement: translatedExpireDate,
+        secondElement: paymentMethod.info.holder ?? defaultHolder
+      })
+    : fromNullable(paymentMethod.info.holder).getOrElse(defaultHolder);
 };
