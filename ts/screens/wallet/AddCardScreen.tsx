@@ -168,22 +168,18 @@ const AddCardScreen: React.FC<Props> = props => {
   };
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-  const placeholderCard = isScreenReaderEnabled
-    ? ""
-    : I18n.t("wallet.dummyCard.values.pan");
-  const placeholderHolder = isScreenReaderEnabled
-    ? ""
-    : I18n.t("wallet.dummyCard.values.holder");
-  const placeholderDate = isScreenReaderEnabled
-    ? ""
-    : I18n.t("wallet.dummyCard.values.expirationDate");
-  const placeholderSecureCode = isScreenReaderEnabled
-    ? ""
-    : I18n.t(
-        detectedBrand.cvvLength === 4
-          ? "wallet.dummyCard.values.securityCode4D"
-          : "wallet.dummyCard.values.securityCode"
-      );
+  const placeholders = !isScreenReaderEnabled
+    ? {
+        placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
+        placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
+        placeholderDate: I18n.t("wallet.dummyCard.values.expirationDate"),
+        placeholderSecureCode: I18n.t(
+          detectedBrand.cvvLength === 4
+            ? "wallet.dummyCard.values.securityCode4D"
+            : "wallet.dummyCard.values.securityCode"
+        )
+      }
+    : {};
 
   return (
     <BaseScreenComponent
@@ -216,7 +212,7 @@ const AddCardScreen: React.FC<Props> = props => {
             accessibilityHint={I18n.t("wallet.dummyCard.labels.holder.label")}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
-              placeholder: placeholderHolder,
+              placeholder: placeholders.placeholderHolder,
               autoCapitalize: "words",
               keyboardType: "default",
               returnKeyType: "done",
@@ -236,7 +232,7 @@ const AddCardScreen: React.FC<Props> = props => {
             accessibilityHint={I18n.t("wallet.dummyCard.labels.pan")}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
-              placeholder: placeholderCard,
+              placeholder: placeholders.placeholderCard,
               keyboardType: "numeric",
               returnKeyType: "done",
               maxLength: 23,
@@ -269,7 +265,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 accessibilityHint={I18n.t("global.accessibility.date_field")}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
-                  placeholder: placeholderDate,
+                  placeholder: placeholders.placeholderDate,
                   keyboardType: "numeric",
                   returnKeyType: "done",
                   type: "custom",
@@ -303,7 +299,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 )}
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
-                  placeholder: placeholderSecureCode,
+                  placeholder: placeholders.placeholderSecureCode,
                   returnKeyType: "done",
                   maxLength: 4,
                   type: "custom",

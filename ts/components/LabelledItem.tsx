@@ -163,8 +163,8 @@ export class LabelledItem extends React.Component<Props, State> {
           {this.props.type === "masked" ? (
             <TextInputMask
               accessibilityLabel={this.props.accessibilityLabel}
-              accessibilityHint={`${this.props.accessibilityHint}, ${
-                this.props.description ? this.props.description : ""
+              accessibilityHint={`${this.props.accessibilityHint}${
+                this.props.description ? "," + this.props.description : ""
               }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
@@ -179,8 +179,8 @@ export class LabelledItem extends React.Component<Props, State> {
           ) : (
             <Input
               accessibilityLabel={this.props.accessibilityLabel}
-              accessibilityHint={`${this.props.accessibilityHint}, ${
-                this.props.description ? this.props.description : ""
+              accessibilityHint={`${this.props.accessibilityHint}${
+                this.props.description ? "," + this.props.description : ""
               }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
