@@ -118,7 +118,7 @@ const enrollCitizenIOT: EnrollmentTTExtra = {
 };
 const enrollCitizenV2IOT: EnrollmentV2TTExtra = {
   method: "put",
-  url: () => `/bpd/io/citizen`,
+  url: () => `/bpd/io/citizen/v2`,
   query: _ => ({}),
   body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
