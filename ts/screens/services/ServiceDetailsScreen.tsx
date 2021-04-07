@@ -634,9 +634,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           !this.props.isEmailValidated) && (
           <Row style={styles.info}>
             <Text>
-              {emailForwardingDescription}
+              {`${emailForwardingDescription} `}
               <Text link={true} onPress={this.navigateToEmailPreferences}>
-                {` ${emailForwardingLink}`}
+                {emailForwardingLink}
               </Text>
             </Text>
           </Row>
