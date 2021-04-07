@@ -1,3 +1,4 @@
+import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { HPan } from "./paymentMethods";
 import { AwardPeriodId, WithAwardPeriodId } from "./periods";
@@ -35,6 +36,11 @@ export type BpdTransaction = WithAwardPeriodId & {
   circuitType: CircuitType;
 };
 
+export type BpdTransactionId = string & IUnitTag<"BpdTransactionId">;
+
+// TODO: integrate in BpdTransaction after removing the feature flag
+export type BpdTransactionV2 = BpdTransaction & { idTrx: BpdTransactionId };
+
 export type BpdTransactions = WithAwardPeriodId & {
   results: ReadonlyArray<BpdTransaction>;
 };
@@ -51,5 +57,22 @@ export const bpdTransactionsLoad = createAsyncAction(
   "BPD_TRANSACTIONS_SUCCESS",
   "BPD_TRANSACTIONS_FAILURE"
 )<AwardPeriodId, BpdTransactions, BpdTransactionsError>();
+
+type BpdTransactionPageRequestPayload = {
+  period: AwardPeriodId;
+  nextCursor?: string;
+};
+
+export const bpdTransactionsLoadPage = createAsyncAction(
+  "BPD_TRANSACTIONS_PAGE_REQUEST",
+  "BPD_TRANSACTIONS_PAGE_SUCCESS",
+  "BPD_TRANSACTIONS_PAGE_FAILURE"
+)<BpdTransactionPageRequestPayload, unknown, BpdTransactionsError>();
+
+export const bpdTransactionsLoadCountByDay = createAsyncAction(
+  "BPD_TRANSACTIONS_COUNT_BY_DAY_REQUEST",
+  "BPD_TRANSACTIONS_COUNT_BY_DAY_SUCCESS",
+  "BPD_TRANSACTIONS_COUNT_BY_DAY_FAILURE"
+)<AwardPeriodId, unknown, BpdTransactionsError>();
 
 export type BpdTransactionsAction = ActionType<typeof bpdTransactionsLoad>;
