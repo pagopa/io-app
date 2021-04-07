@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.24.0-rc.3](https://github.com/pagopa/io-app/compare/1.24.0-rc.1...1.24.0-rc.3) (2021-04-07)
+
+
+### Features
+
+* [[#175894877](https://www.pivotaltracker.com/story/show/175894877)] refactor pick payment method ([#2926](https://github.com/pagopa/io-app/issues/2926)) ([10a7ec1](https://github.com/pagopa/io-app/commit/10a7ec15a273999c9be96237117565a7b021874e))
+* **Bonus Pagamenti Digitali:** [[#176781159](https://www.pivotaltracker.com/story/show/176781159)] Manage error and loading state for the abi list when start co-badge onboarding workflow ([#2940](https://github.com/pagopa/io-app/issues/2940)) ([b85831f](https://github.com/pagopa/io-app/commit/b85831fe7a6c1029d1b158dc1dcadc87f4ca49a1))
+* **Bonus Pagamenti Digitali:** [[#176925463](https://www.pivotaltracker.com/story/show/176925463)] Tracks action to notify the possibility to add a co-badge to the user ([#2952](https://github.com/pagopa/io-app/issues/2952)) ([d30237b](https://github.com/pagopa/io-app/commit/d30237bdc03765c2099cfe3f613251f8abf9ac6a))
+* **Bonus Pagamenti Digitali:** [[#177434959](https://www.pivotaltracker.com/story/show/177434959)] Start co-badge flow from add credit card screen ([#2931](https://github.com/pagopa/io-app/issues/2931)) ([42ff757](https://github.com/pagopa/io-app/commit/42ff7579f36a23fd95c0af5459eba96f6114bdbf))
+* **Carta Giovani Nazionale:** [[#177479621](https://www.pivotaltracker.com/story/show/177479621)] Disables CGN Feature Flags ([#2937](https://github.com/pagopa/io-app/issues/2937)) ([96ee908](https://github.com/pagopa/io-app/commit/96ee9086851efb55bf129366705a661fb7b94b0f))
+* **Payments:** [[#177548187](https://www.pivotaltracker.com/story/show/177548187)] Add credit card / payment webview closing reason ([#2958](https://github.com/pagopa/io-app/issues/2958)) ([90ef10b](https://github.com/pagopa/io-app/commit/90ef10b50887030c450aee764e95b72973566834))
+
+
+### Bug Fixes
+
+* [[#172097711](https://www.pivotaltracker.com/story/show/172097711),[#172935224](https://www.pivotaltracker.com/story/show/172935224)] On some iOS devices a white screen is shown after biometric authentication ([#2939](https://github.com/pagopa/io-app/issues/2939)) ([5138228](https://github.com/pagopa/io-app/commit/51382281a2c91a200c0ff50eb62a7d03527689b5))
+* **Bonus Pagamenti Digitali:** [[#177511360](https://www.pivotaltracker.com/story/show/177511360)] Wrong rendering of privative loyalty logo in cashback transaction detail bottomsheet [#2946](https://github.com/pagopa/io-app/issues/2946) ([8cc449b](https://github.com/pagopa/io-app/commit/8cc449be0801ecf3b6a9da5c69194f934cc506e3))
+* [[#173031364](https://www.pivotaltracker.com/story/show/173031364)] The request to abort a payment is never sent ([#2933](https://github.com/pagopa/io-app/issues/2933)) ([9b6a940](https://github.com/pagopa/io-app/commit/9b6a940a363354271469c55ef97140e6967f6a07))
+* [[#175535051](https://www.pivotaltracker.com/story/show/175535051)] fixes offset scroller for messages (iphone 7) ([#2791](https://github.com/pagopa/io-app/issues/2791)) ([8c69b54](https://github.com/pagopa/io-app/commit/8c69b54e8f53cc8b09509deb7cb9ed093b4f225d))
+* **Carta Giovani Nazionale:** [[#177485208](https://www.pivotaltracker.com/story/show/177485208)] Hardware back button doesn't work on CGN Detail screen [#2957](https://github.com/pagopa/io-app/issues/2957) ([3864c1b](https://github.com/pagopa/io-app/commit/3864c1ba018b170af284a7415efac9196ddfa7c6))
+* **Carta Giovani Nazionale:** [[#177490914](https://www.pivotaltracker.com/story/show/177490914)] Discount bottom sheet title doesn't break line [#2956](https://github.com/pagopa/io-app/issues/2956) ([ba35c0c](https://github.com/pagopa/io-app/commit/ba35c0ce8a87a8467fefda6328fef2d2520d02cc))
+* **Carta Giovani Nazionale:** [[#177490938](https://www.pivotaltracker.com/story/show/177490938)] Success Screen pictogram results cut on the bottom ([#2938](https://github.com/pagopa/io-app/issues/2938)) ([146a197](https://github.com/pagopa/io-app/commit/146a197a370c3f633665f357247749999acb4156))
+* **Carta Giovani Nazionale:** [[#177577081](https://www.pivotaltracker.com/story/show/177577081)] CGN Card component shows wrong border ([#2950](https://github.com/pagopa/io-app/issues/2950)) ([83da2b0](https://github.com/pagopa/io-app/commit/83da2b0bec2cb267740eaaa8f2e8ab9c66b0f434))
+
+
+### Chores
+
+* [[#177137637](https://www.pivotaltracker.com/story/show/177137637)] Show services status banner in any rendering state ([#2929](https://github.com/pagopa/io-app/issues/2929)) ([e7dd9bb](https://github.com/pagopa/io-app/commit/e7dd9bb31a4733a6fec5bfa9734474c7378cfa71))
+* [[#177288211](https://www.pivotaltracker.com/story/show/177288211)] Move organization logo to the right side for the services item ([#2944](https://github.com/pagopa/io-app/issues/2944)) ([6861ab9](https://github.com/pagopa/io-app/commit/6861ab997a2a7f1a1fdf167ef37b61cae39d2989))
+* [[#177458092](https://www.pivotaltracker.com/story/show/177458092)] Support Jira ticket key in the PR title ([#2935](https://github.com/pagopa/io-app/issues/2935)) ([ff7601a](https://github.com/pagopa/io-app/commit/ff7601aa8dd38e7ed562b9161e906f7a92577dc7))
+* [[#177506546](https://www.pivotaltracker.com/story/show/177506546)] Remove false positive from urls check ([#2941](https://github.com/pagopa/io-app/issues/2941)) ([db6654f](https://github.com/pagopa/io-app/commit/db6654fd7973fcd466e64c6ade44f75e42bc1248))
+* **Bonus Pagamenti Digitali:** [[#177542266](https://www.pivotaltracker.com/story/show/177542266)] Add technical iban feature flag ([#2961](https://github.com/pagopa/io-app/issues/2961)) ([ac6e9ef](https://github.com/pagopa/io-app/commit/ac6e9ef811711a60d8f6cc5733051bb5c2b07788))
+* **Bonus Pagamenti Digitali:** [[#177543860](https://www.pivotaltracker.com/story/show/177543860)] Add transactions paging feature flag ([#2947](https://github.com/pagopa/io-app/issues/2947)) ([2ad3755](https://github.com/pagopa/io-app/commit/2ad37557a4e028d776cfb2f3c9d46b9a6a16ab06))
+* [[#177560562](https://www.pivotaltracker.com/story/show/177560562)] Close NFC dialog when card is successfully read ([#2948](https://github.com/pagopa/io-app/issues/2948)) ([7859770](https://github.com/pagopa/io-app/commit/78597708d61a76ccdbc3dbe9fc8daaa1d6193818))
+
 ## [1.24.0-rc.1](https://github.com/pagopa/io-app/compare/1.24.0-rc.0...1.24.0-rc.1) (2021-03-24)
 
 
