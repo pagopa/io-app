@@ -53,6 +53,8 @@ const InstabugLogger: InstabugLoggerType = {
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
+  // to avoid the creation of a bounce of sessions see https://www.pivotaltracker.com/story/show/177659197
+  Instabug.setSessionProfilerEnabled(false);
   // it seems NetworkLogger.setEnabled(false) turns off all network interceptions
   // this may cause an empty timeline in Reactotron too
   if (!isDevEnv) {
