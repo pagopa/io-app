@@ -9,7 +9,7 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -155,9 +155,9 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         ? getTitleFromCard(selectedWallet.paymentMethod)
         : FOUR_UNICODE_CIRCLES
   });
-  const isExpired = selectedWallet.paymentMethod?.info
-    ? isCardExpired(selectedWallet.paymentMethod.info).getOrElse(false)
-    : false;
+  const isExpired = fromNullable(selectedWallet.paymentMethod?.info)
+    .chain(isCardExpired)
+    .getOrElse(false);
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}

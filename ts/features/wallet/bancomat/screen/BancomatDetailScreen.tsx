@@ -66,13 +66,12 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  */
 const startCoBadge = (props: Props) => {
   const bancomat = props.navigation.getParam("bancomat");
-  if (bancomat.abiInfo?.abi) {
-    props.addCoBadge(bancomat.abiInfo.abi);
-  } else {
+  if (bancomat.info.issuerAbiCode === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
-    void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR", {
-      issuerAbiCode: bancomat.info.issuerAbiCode
-    });
+    // This should never happen. This condition is due to the weakness of the remote specifications 
+    void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR");
+  } else {
+    props.addCoBadge(bancomat.info.issuerAbiCode);
   }
 };
 

@@ -5,7 +5,7 @@ import * as t from "io-ts";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
-import { getLocalePrimary } from "./locale";
+import { getLocalePrimary, localeDateFormat } from "./locale";
 import { ExpireStatus } from "./messages";
 import { NumberFromString } from "./number";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
@@ -156,3 +156,28 @@ export class DateFromISOStringType extends t.Type<Date, string, unknown> {
 }
 
 export const DateFromISOString: DateFromISOStringType = new DateFromISOStringType();
+
+/**
+ *
+ * It provides, given 2 strings that represent the year and the month, a single string in the format
+ * specified by the locales (IT: MM/YY, EN: MM/YY) or undefined if one of the inputs is not provided
+ * @param fullYear
+ * @param month
+ */
+export const getTranslatedShortNumericMonthYear = (
+  fullYear?: string,
+  month?: string
+): string | undefined => {
+  if (!fullYear || !month) {
+    return undefined;
+  }
+  const year = parseInt(fullYear, 10);
+  const indexedMonth = parseInt(month, 10);
+  if (isNaN(year) || isNaN(indexedMonth)) {
+    return undefined;
+  }
+  return localeDateFormat(
+    new Date(year, indexedMonth - 1),
+    I18n.t("global.dateFormats.shortNumericMonthYear")
+  );
+};

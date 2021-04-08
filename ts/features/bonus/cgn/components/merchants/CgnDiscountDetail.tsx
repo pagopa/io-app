@@ -128,7 +128,7 @@ const CgnDiscountDetailHeader = ({ discount }: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
     <CgnDiscountValueBox value={discount.value} small />
     <View hspacer />
-    <H3>{discount.title}</H3>
+    <H3 style={IOStyles.flex}>{discount.title}</H3>
   </View>
 );
 

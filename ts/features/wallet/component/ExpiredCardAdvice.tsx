@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { View } from "native-base";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -26,7 +26,12 @@ const styles = StyleSheet.create({
 
 type Props = { navigateToAddCard: () => void };
 
-const ExpiredCardAdvice: FC<Props> = ({ navigateToAddCard }) => (
+/**
+ * A component to show an info box informing the card is expired and a CTA to add another card
+ * @param navigateToAddCard
+ * @constructor
+ */
+const ExpiredCardAdvice = ({ navigateToAddCard }: Props) => (
   <>
     <InfoBox iconSize={32}>
       <Body>{I18n.t("wallet.expiredCard")}</Body>

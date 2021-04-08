@@ -102,6 +102,7 @@ global:
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
     numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
@@ -1072,6 +1073,17 @@ wallet:
     noPspsAvailable: This payment method cannot be used
     contextualHelpTitle: Payment method's choice
     contextualHelpContent: !include wallet/wallet_pick_payment_method.md
+    pickPaymentMethod:
+      title: "What method do you want to pay with?"
+      description: "{{firstElement}} · {{secondElement}}"
+      notAvailable:
+        title: "Incompatible methods"
+        arriving:
+          bottomSheetTitle: "We're working to support this method soon"
+          bottomSheetDescription: "Try using another payment method. You can also use pagoPA via your favorite payment app or browsing the website of the payee."
+        unaccepted:
+          bottomSheetTitle: "Why can't I pay with this card?"
+          bottomSheetDescription: "This circuit allows you to pay in physical stores, but not online. If your card is enabled for online purchases, add it to your Wallet as a 'debit or credit card'."
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice

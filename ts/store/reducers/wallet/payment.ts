@@ -100,6 +100,10 @@ export const pmSessionTokenSelector = (
 ): RemoteValue<PaymentManagerToken, Error> =>
   state.wallet.payment.pmSessionToken;
 
+export const paymentIdSelector = (
+  state: GlobalState
+): PaymentState["paymentId"] => state.wallet.payment.paymentId;
+
 export const paymentStartPayloadSelector = (
   state: GlobalState
 ): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;

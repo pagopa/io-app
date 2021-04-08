@@ -24,7 +24,9 @@ import {
   paymentCompletedSuccess,
   paymentIdPolling,
   paymentRedirectionUrls,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd,
+  PaymentWebViewEndReason
 } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
@@ -42,6 +44,7 @@ export type PaymentHistory = {
   outcomeCode?: string;
   success?: true;
   payNavigationUrls?: ReadonlyArray<string>;
+  webViewCloseReason?: PaymentWebViewEndReason;
 };
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
@@ -129,6 +132,11 @@ const reducer = (
         payNavigationUrls: action.payload
       };
       return replaceLastItem(state, navigationUrls);
+    case getType(paymentWebViewEnd):
+      return replaceLastItem(state, {
+        ...state[state.length - 1],
+        webViewCloseReason: action.payload
+      });
     case getType(clearCache): {
       return INITIAL_STATE;
     }

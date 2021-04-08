@@ -171,6 +171,7 @@ const isCreditCardDateExpiredOrInvalid = (
         !CreditCardExpirationMonth.is(my[0]) ||
         !CreditCardExpirationYear.is(my[1])
       ) {
+        // date format is invalid
         return some(true);
       }
       return isExpired(my[0], my[1]);
@@ -213,9 +214,9 @@ const AddCardScreen: React.FC<Props> = props => {
     });
   };
 
-  const maybeCreditcardValid = isCreditCardDateExpiredOrInvalid(
+  const maybeCreditcardValidOrExpired = isCreditCardDateExpiredOrInvalid(
     creditCard.expirationDate
-  ).map(s => !s);
+  ).map(v => !v);
 
   const secondaryButtonProps = {
     block: true,
@@ -299,7 +300,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={maybeCreditcardValid.toUndefined()}
+                isValid={maybeCreditcardValidOrExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
                   placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
