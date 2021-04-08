@@ -2,12 +2,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View, H3 } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  StyleSheet,
-  SafeAreaView,
-  ListRenderItemInfo
-} from "react-native";
+import { FlatList, StyleSheet, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -80,14 +75,6 @@ class PickPspScreen extends React.Component<Props> {
     this.props.loadAllPsp(idWallet, idPayment);
   }
 
-  private renderItem = (item: ListRenderItemInfo<Psp>) => (
-    <PspComponent
-      psp={item}
-      pickPsp={this.props.pickPsp}
-      allPsps={this.props.allPsps}
-    />
-  );
-
   private headerItem = (
     <View style={styles.padded}>
       <View style={styles.line1}>
@@ -113,7 +100,7 @@ class PickPspScreen extends React.Component<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["payment"]}
       >
-        <SafeAreaView style={IOStyles.flex}>
+        <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
           <View spacer />
           <View style={styles.padded}>
             <H3>{I18n.t("wallet.pickPsp.title")}</H3>
@@ -130,11 +117,17 @@ class PickPspScreen extends React.Component<Props> {
           </View>
           <View spacer />
           <FlatList
+            testID="pspList"
             ItemSeparatorComponent={() => <ItemSeparatorComponent />}
             removeClippedSubviews={false}
             data={availablePsps}
             keyExtractor={item => item.id.toString()}
-            renderItem={this.renderItem}
+            renderItem={({ item }) => (
+              <PspComponent
+                psp={item}
+                onPress={() => this.props.pickPsp(item.id, this.props.allPsps)}
+              />
+            )}
             ListHeaderComponent={this.headerItem}
             ListFooterComponent={() => <ItemSeparatorComponent />}
           />

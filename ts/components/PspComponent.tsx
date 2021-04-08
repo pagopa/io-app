@@ -1,12 +1,5 @@
 import React, { FC } from "react";
-import {
-  ImageStyle,
-  ListRenderItemInfo,
-  StyleProp,
-  StyleSheet,
-  View,
-  Image
-} from "react-native";
+import { ImageStyle, StyleProp, StyleSheet, View, Image } from "react-native";
 import { useImageResize } from "../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
 import customVariables from "../theme/variables";
 import { Psp } from "../types/pagopa";
@@ -38,41 +31,39 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  psp: ListRenderItemInfo<Psp>;
-  pickPsp: (idPsp: number, psps: ReadonlyArray<Psp>) => any;
-  allPsps: ReadonlyArray<Psp>;
+  psp: Psp;
+  onPress: () => void;
 };
 
-export const PspComponent: FC<Props> = ({ psp, pickPsp, allPsps }) => {
-  const { item } = psp;
-  const imageResize = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, item.logoPSP);
-  const cost = formatNumberCentsToAmount(item.fixedCost.amount);
+export const PspComponent: FC<Props> = ({ psp, onPress }) => {
+  const imgDimensions = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, psp.logoPSP);
+  const cost = formatNumberCentsToAmount(psp.fixedCost.amount);
 
-  const renderImage = imageResize.fold(
-    <Body>{item.businessName}</Body>,
-    size => {
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: size[0],
-        height: size[1],
-        resizeMode: "contain"
-      };
-
-      return (
-        <Image
-          style={imageStyle}
-          resizeMode="contain"
-          source={{ uri: item.logoPSP }}
-        />
-      );
-    }
+  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
+    undefined,
+    imgDim => ({
+      width: imgDim[0],
+      height: imgDim[1],
+      resizeMode: "contain"
+    })
   );
 
-  const onPress = () => pickPsp(item.id, allPsps);
-
   return (
-    <TouchableDefaultOpacity onPress={onPress} style={styles.itemContainer}>
+    <TouchableDefaultOpacity
+      onPress={onPress}
+      style={styles.itemContainer}
+      testID={`psp-${psp.id}`}
+    >
       <View style={styles.line1}>
-        {renderImage}
+        {psp.logoPSP && imageStyle ? (
+          <Image
+            source={{ uri: psp.logoPSP }}
+            style={imageStyle}
+            testID="logoPSP"
+          />
+        ) : (
+          <Body testID="businessName">{psp.businessName}</Body>
+        )}
         <View style={styles.feeContainer}>
           <H4 color="blue">{cost}</H4>
           <IconFont
