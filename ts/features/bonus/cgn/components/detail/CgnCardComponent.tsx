@@ -132,7 +132,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 
   return (
-    <View style={[styles.cgnCard]}>
+    <View style={[styles.cgnCard]} testID={"card-component"}>
       <ImageBackground
         source={cardBg}
         imageStyle={[styles.imageFull]}
@@ -140,6 +140,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       >
         <WebView
           style={{ top: -1, left: -1 }}
+          testID={"background-webview"}
           onLoadEnd={props.onCardLoadEnd}
           source={{
             html: generatedSvg
@@ -160,7 +161,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             </H3>
             <View>
               {props.cgnDetails.status !== "PENDING" && (
-                <H5>
+                <H5 testID={"validity-date"}>
                   {`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
                     props.cgnDetails.expiration_date,
                     I18n.t("global.dateFormats.shortFormat")
