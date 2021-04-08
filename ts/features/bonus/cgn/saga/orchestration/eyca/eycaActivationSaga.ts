@@ -17,6 +17,7 @@ import {
 } from "../../../store/actions/eyca/activation";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
+import { SagaCallReturnType } from "../../../../../../types/utils";
 
 export function* eycaActivationWorker(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
@@ -25,7 +26,10 @@ export function* eycaActivationWorker(
   yield put(navigateToEycaActivationLoading());
   yield put(navigationHistoryPop(1));
 
-  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(getActivation, getEycaActivation);
+  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
+    getActivation,
+    getEycaActivation
+  );
 
   if (eycaActivation.isRight()) {
     if (eycaActivation.value === "PROCESSING") {
