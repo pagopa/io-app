@@ -52,7 +52,7 @@ const reducer = (
 /**
  * return all available bonus: visibile, hidden or experimental
  */
-export const allAvailableBonusTypesSelector = (
+const allAvailableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
