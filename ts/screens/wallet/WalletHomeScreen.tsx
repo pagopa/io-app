@@ -578,7 +578,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         appLogo={true}
         hideHeader={true}
         topContentHeight={this.getHeaderHeight()}
-        hasDynamicSubHeader={true}
+        hasDynamicSubHeader={false}
         topContent={headerContent}
         footerContent={footerContent}
         contextualHelpMarkdown={contextualHelpMarkdown}
