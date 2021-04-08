@@ -1,12 +1,12 @@
 import { View } from "native-base";
 import * as React from "react";
-import { ColorValue, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import IconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   iconName?: string;
-  iconColor?: ColorValue;
+  iconColor?: string;
   iconSize?: number;
   alignedCentral?: boolean;
 };
@@ -43,7 +43,7 @@ export const InfoBox: React.FunctionComponent<Props> = props => {
       <IconFont
         name={iconName}
         size={iconSize}
-        color={iconColor as string}
+        color={iconColor}
         style={styles.icon}
       />
       <View hspacer={true} />
