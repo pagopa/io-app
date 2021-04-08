@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import {
@@ -119,12 +119,14 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
     BASE_IMG_H,
     props.abi?.logoUrl
   );
-  const isBancomatExpired = props.expiringDate
-    ? isExpired(
-        props.expiringDate.getMonth() + 1,
-        props.expiringDate.getFullYear()
-      ).getOrElse(false)
-    : false;
+  const isBancomatExpired = fromNullable(props.expiringDate)
+    .chain(ed =>
+      isExpired(
+        ed.getMonth() + 1, // getMonth() is an integer between 0 and 11
+        ed.getFullYear()
+      )
+    )
+    .getOrElse(false);
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
