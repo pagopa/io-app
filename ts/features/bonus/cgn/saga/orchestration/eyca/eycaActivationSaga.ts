@@ -25,7 +25,7 @@ export function* eycaActivationWorker(
   yield put(navigateToEycaActivationLoading());
   yield put(navigationHistoryPop(1));
 
-  const eycaActivation = yield call(getActivation, getEycaActivation);
+  const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(getActivation, getEycaActivation);
 
   if (eycaActivation.isRight()) {
     if (eycaActivation.value === "PROCESSING") {
