@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12
   },
   otherSwitchRow: {
-    paddingLeft: 8,
     borderTopColor: customVariables.itemSeparator,
     borderTopWidth: 1 / 3
   },
@@ -635,9 +634,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           !this.props.isEmailValidated) && (
           <Row style={styles.info}>
             <Text>
-              {emailForwardingDescription}
+              {`${emailForwardingDescription} `}
               <Text link={true} onPress={this.navigateToEmailPreferences}>
-                {` ${emailForwardingLink}`}
+                {emailForwardingLink}
               </Text>
             </Text>
           </Row>
