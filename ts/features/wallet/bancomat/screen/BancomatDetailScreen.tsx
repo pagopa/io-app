@@ -24,7 +24,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
 import { walletAddBancomatStart } from "../../onboarding/bancomat/store/actions";
 
-import { isCardExpired } from "../../../../utils/payment";
+import { isCardExpired } from "../../../../utils/wallet";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -68,7 +68,7 @@ const startCoBadge = (props: Props) => {
   const bancomat = props.navigation.getParam("bancomat");
   if (bancomat.info.issuerAbiCode === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
-    // This should never happen. This condition is due to the weakness of the remote specifications 
+    // This should never happen. This condition is due to the weakness of the remote specifications
     void mixpanelTrack("BANCOMAT_DETAIL_NO_ABI_ERROR");
   } else {
     props.addCoBadge(bancomat.info.issuerAbiCode);

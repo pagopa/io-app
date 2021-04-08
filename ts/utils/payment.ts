@@ -30,8 +30,10 @@ import {
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import { formatDateAsReminder, getTranslatedShortNumericMonthYear, isExpired } from "./dates";
+import {
+  formatDateAsReminder,
+  getTranslatedShortNumericMonthYear
+} from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
@@ -320,15 +322,6 @@ export const getPaymentOutcomeCodeDescription = (
   }
   return none;
 };
-/**
- * check if card is expired by evaluating expireMonth and expireYear
- * return none if can't valuate if it is expired (month/year undefined or they are not numbers)
- * @param cardInfo
- */
-export function isCardExpired(cardInfo: CardInfo): Option<boolean> {
-  const { expireMonth, expireYear } = cardInfo;
-  return isExpired(expireMonth, expireYear);
-}
 
 export const getPickPaymentMethodDescription = (
   paymentMethod:

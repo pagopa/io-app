@@ -43,7 +43,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 import ExpiredCardAdvice from "../../features/wallet/component/ExpiredCardAdvice";
-import { isCardExpired } from "../../utils/payment";
+import { isCardExpired } from "../../utils/wallet";
 import { navigateToWalletAddCreditCard } from "../../store/actions/navigation";
 
 type NavigationParams = Readonly<{
