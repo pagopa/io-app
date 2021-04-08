@@ -160,6 +160,7 @@ const isCreditCardDateExpiredOrInvalid = (
 ): Option<boolean> =>
   expireDate
     .chain(date => {
+      // split the date in two parts: month, year
       const splitted = date.split("/");
       if (splitted.length !== 2) {
         return none;
