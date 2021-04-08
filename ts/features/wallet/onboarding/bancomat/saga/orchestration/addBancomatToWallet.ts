@@ -54,10 +54,11 @@ export function* addBancomatToWalletAndActivateBpd() {
     const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
       navigationCurrentRouteSelector
     );
-
     if (
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+      ["WALLET_ADD_PAYMENT_METHOD", "WALLET_BANCOMAT_DETAIL"].some(
+        v => v === currentRoute.value
+      )
     ) {
       yield put(NavigationActions.back());
     }
