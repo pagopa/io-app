@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -35,8 +34,8 @@ import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
   isAvailableBonusNoneErrorSelector,
   isAvailableBonusLoadingSelector,
-  allAvailableBonusTypesSelector,
-  experimentalAndVisibleBonus
+  experimentalAndVisibleBonus,
+  supportedAvailableBonusSelector
 } from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
@@ -102,6 +101,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (cgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
     }
+
     const handled = handlersMap.has(item.id_type);
     // if bonus is experimental but there is no handler, it won't be shown
     if (item.visibility === "experimental" && !handled) {
@@ -114,10 +114,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
      */
     const onItemPress = () => {
-      // if the bonus is not active, do nothing
-      if (item.is_active === false) {
-        return;
-      }
       // if the bonus is active ask for app update
       fromNullable(handlersMap.get(item.id_type)).foldL(
         () =>
@@ -208,10 +204,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  availableBonusesList: pot.getOrElse(
-    allAvailableBonusTypesSelector(state),
-    []
-  ),
+  availableBonusesList: supportedAvailableBonusSelector(state),
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state)
