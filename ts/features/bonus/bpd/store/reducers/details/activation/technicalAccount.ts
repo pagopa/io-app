@@ -1,3 +1,4 @@
+import { getType } from "typesafe-actions";
 import {
   remoteError,
   remoteLoading,
@@ -6,7 +7,6 @@ import {
   RemoteValue
 } from "../../../../model/RemoteValue";
 import { Action } from "../../../../../../../store/actions/types";
-import { getType } from "typesafe-actions";
 import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import { bpdUpsertIban } from "../../../actions/iban";
