@@ -43,7 +43,7 @@ describe("EycaDetailComponent", () => {
 
     const eycaNumber = component.queryByTestId("eyca-card-number");
     expect(eycaNumber).not.toBeNull();
-    expect(eycaNumber).toHaveTextContent("");
+    expect(eycaNumber).toHaveTextContent(eycaCardActive.card_number);
 
     const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
     expect(eycaStatusBadge).not.toBeNull();
@@ -58,6 +58,9 @@ describe("EycaDetailComponent", () => {
 
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).toBeNull();
   });
 
   it("Should show EYCA Pending component for a Pending card", () => {
@@ -74,6 +77,9 @@ describe("EycaDetailComponent", () => {
     const eycaStatusLabel = component.queryByTestId("eyca-status-label");
     expect(eycaStatusLabel).toBeNull();
 
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).toBeNull();
+
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).not.toBeNull();
 
@@ -89,7 +95,7 @@ describe("EycaDetailComponent", () => {
   });
 
   it("Should show EYCA Error component if a card is Pending but activation is in error", () => {
-    const store = mockStore(mockEYCAState(eycaCardPending, "PROCESSING"));
+    const store = mockStore(mockEYCAState(eycaCardPending, "ERROR"));
     const component = getComponent(store);
     expect(component).not.toBeNull();
 
@@ -103,25 +109,59 @@ describe("EycaDetailComponent", () => {
     expect(eycaStatusLabel).toBeNull();
 
     const pendingComponent = component.queryByTestId("eyca-pending-component");
-    expect(pendingComponent).not.toBeNull();
+    expect(pendingComponent).toBeNull();
 
     const pendingButton = component.queryByTestId("eyca-pending-button");
-    expect(pendingButton).not.toBeNull();
+    expect(pendingButton).toBeNull();
 
-    const spy = jest.spyOn(urlUtils, "openWebUrl");
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).not.toBeNull();
 
-    if (pendingButton !== null) {
-      fireEvent.press(pendingButton);
-      expect(spy).toHaveBeenCalledTimes(1);
-    }
+    const errorComponentText = component.queryByTestId("eyca-error-text");
+    expect(errorComponentText).not.toBeNull();
+    expect(errorComponentText).toHaveTextContent(
+      I18n.t("bonus.cgn.detail.status.eycaError")
+    );
+  });
+
+  it("Should show EYCA Error component if a card is not available", () => {
+    const store = mockStore(mockEYCAState());
+    const component = getComponent(store);
+    expect(component).not.toBeNull();
+
+    const eycaNumber = component.queryByTestId("eyca-card-number");
+    expect(eycaNumber).toBeNull();
+
+    const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
+    expect(eycaStatusBadge).toBeNull();
+
+    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
+    expect(eycaStatusLabel).toBeNull();
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
+
+    const pendingButton = component.queryByTestId("eyca-pending-button");
+    expect(pendingButton).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).not.toBeNull();
+
+    const errorComponentText = component.queryByTestId("eyca-error-text");
+    expect(errorComponentText).not.toBeNull();
+    expect(errorComponentText).toHaveTextContent(
+      I18n.t("bonus.cgn.detail.status.eycaError")
+    );
   });
 });
 
 const mockEYCAState = (
-  card: EycaCard,
+  card?: EycaCard,
   activation?: CgnEycaActivationStatus
 ) => {
-  const readyCard = remoteReady({ status: "FOUND", card });
+  const readyCard = card
+    ? remoteReady({ status: "FOUND", card })
+    : remoteUndefined;
   const eycaActivation = activation ? remoteReady(activation) : remoteUndefined;
 
   return {
