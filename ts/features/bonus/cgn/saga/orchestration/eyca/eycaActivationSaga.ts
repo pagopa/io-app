@@ -31,7 +31,7 @@ export function* eycaActivationWorker(
     if (eycaActivation.value === "PROCESSING") {
       yield call(handleEycaActivationSaga, getEycaActivation);
     } else {
-      const startActivation = yield call(
+      const startActivation: SagaCallReturnType<typeof handleStartActivation> = yield call(
         handleStartActivation,
         startEycaActivation
       );
