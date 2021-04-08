@@ -29,6 +29,10 @@ import {
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import {
+  FindUsingGETT as FindUsingGETTV2,
+  EnrollmentT as EnrollmentTV2
+} from "../../../../../definitions/bpd/citizen_v2/requestTypes";
+import {
   DeleteUsingDELETET,
   enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,
   EnrollmentPaymentInstrumentIOUsingPUTT,
@@ -69,7 +73,7 @@ type FindUsingGETTExtra = MapResponseType<
 >;
 
 type FindV2UsingGETTExtra = MapResponseType<
-  FindUsingGETT,
+  FindUsingGETTV2,
   200,
   PatchedCitizenV2Resource
 >;
@@ -101,7 +105,7 @@ type EnrollmentTTExtra = MapResponseType<
   PatchedCitizenResource
 >;
 type EnrollmentV2TTExtra = MapResponseType<
-  EnrollmentT,
+  EnrollmentTV2,
   200,
   PatchedCitizenV2Resource
 >;
