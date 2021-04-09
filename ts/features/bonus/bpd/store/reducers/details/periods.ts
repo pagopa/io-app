@@ -13,6 +13,7 @@ import {
   bpdPeriodsAmountLoad,
   WithAwardPeriodId
 } from "../../actions/periods";
+import { BpdPivotTransaction } from "./paginatedTransactions";
 
 // The ranking is ready for a specific period
 export type BpdRankingReady = WithAwardPeriodId & {
@@ -55,6 +56,10 @@ export const isBpdRankingNotReady = (r: BpdRanking): r is BpdRankingNotReady =>
 export type BpdPeriodWithInfo = BpdPeriod & {
   amount: BpdAmount;
   ranking: BpdRanking;
+};
+
+export type BpdPeriodWithInfoV2 = BpdPeriodWithInfo & {
+  pivot: BpdPivotTransaction;
 };
 
 /**

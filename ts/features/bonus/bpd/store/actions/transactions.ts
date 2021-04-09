@@ -1,5 +1,7 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
+import { TrxCountByDayResourceArray } from "../../../../../../definitions/bpd/winning_transactions_v2/TrxCountByDayResourceArray";
+import { WinningTransactionPageResource } from "../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { HPan } from "./paymentMethods";
 import { AwardPeriodId, WithAwardPeriodId } from "./periods";
 
@@ -58,21 +60,35 @@ export const bpdTransactionsLoad = createAsyncAction(
   "BPD_TRANSACTIONS_FAILURE"
 )<AwardPeriodId, BpdTransactions, BpdTransactionsError>();
 
-type BpdTransactionPageRequestPayload = {
-  period: AwardPeriodId;
+type BpdTransactionPageRequestPayload = WithAwardPeriodId & {
   nextCursor?: string;
+};
+
+type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
+  results: WinningTransactionPageResource;
 };
 
 export const bpdTransactionsLoadPage = createAsyncAction(
   "BPD_TRANSACTIONS_PAGE_REQUEST",
   "BPD_TRANSACTIONS_PAGE_SUCCESS",
   "BPD_TRANSACTIONS_PAGE_FAILURE"
-)<BpdTransactionPageRequestPayload, unknown, BpdTransactionsError>();
+)<
+  BpdTransactionPageRequestPayload,
+  BpdTransactionPageSuccessPayload,
+  BpdTransactionsError
+>();
+
+export type TrxCountByDayResource = WithAwardPeriodId & {
+  results: TrxCountByDayResourceArray;
+};
 
 export const bpdTransactionsLoadCountByDay = createAsyncAction(
   "BPD_TRANSACTIONS_COUNT_BY_DAY_REQUEST",
   "BPD_TRANSACTIONS_COUNT_BY_DAY_SUCCESS",
   "BPD_TRANSACTIONS_COUNT_BY_DAY_FAILURE"
-)<AwardPeriodId, unknown, BpdTransactionsError>();
+)<AwardPeriodId, TrxCountByDayResource, BpdTransactionsError>();
 
-export type BpdTransactionsAction = ActionType<typeof bpdTransactionsLoad>;
+export type BpdTransactionsAction =
+  | ActionType<typeof bpdTransactionsLoad>
+  | ActionType<typeof bpdTransactionsLoadPage>
+  | ActionType<typeof bpdTransactionsLoadCountByDay>;
