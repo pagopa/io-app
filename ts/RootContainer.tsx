@@ -15,11 +15,13 @@ import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import {
+  bpdApiSitUrlPrefix,
+  bpdApiUatUrlPrefix,
+  bpdApiUrlPrefix,
   bpdTestOverlay,
   cgnTestOverlay,
   shouldDisplayVersionInfoOverlay
 } from "./config";
-import { BpdTestOverlay } from "./features/bonus/bpd/components/BpdTestOverlay";
 import Navigation from "./navigation";
 import {
   applicationChangeState,
@@ -33,7 +35,6 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import { setLocale } from "./i18n";
 import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
-import { CgnTestOverlay } from "./features/bonus/cgn/components/CgnTestOverlay";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -140,6 +141,13 @@ class RootContainer extends React.PureComponent<Props> {
 
     // if we have no information about the backend, don't force the update
 
+    const bpdEndpointStr =
+      bpdApiUrlPrefix === bpdApiSitUrlPrefix
+        ? "SIT"
+        : bpdApiUrlPrefix === bpdApiUatUrlPrefix
+        ? "UAT"
+        : "PROD";
+
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
@@ -147,10 +155,16 @@ class RootContainer extends React.PureComponent<Props> {
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {cgnTestOverlay && (
-          <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
+          <BetaTestingOverlay
+            title="🛠️ CGN TEST VERSION 🛠️"
+            body={bpdEndpointStr}
+          />
         )}
         {bpdTestOverlay && (
-          <BetaTestingOverlay title="🛠️ BPD TEST VERSION 🛠️" />
+          <BetaTestingOverlay
+            title="🛠️ BPD TEST VERSION 🛠️"
+            body={bpdEndpointStr}
+          />
         )}
         <RootModal />
         <LightModalRoot />

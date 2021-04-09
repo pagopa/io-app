@@ -8,7 +8,6 @@ import { getAppVersion } from "../utils/appVersion";
 import { Label } from "../components/core/typography/Label";
 import { Body } from "../components/core/typography/Body";
 import customVariables from "../theme/variables";
-import { H5 } from "./core/typography/H5";
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -26,7 +25,8 @@ const styles = StyleSheet.create({
   },
   versionText: {
     padding: 2,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: customVariables.colorWhite,
+    textAlign: "center"
   }
 });
 
@@ -45,8 +45,9 @@ export const BetaTestingOverlay: FC<Props> = ({ title, body }): JSX.Element => {
       {isVisible && (
         <TouchableOpacity onPress={handleVisibility}>
           <Label style={styles.versionText}>{title}</Label>
-          <Body style={styles.versionText}>{body}</Body>
-          <H5 style={styles.versionText}>{`${getAppVersion()}`}</H5>
+          <Body style={styles.versionText}>{`${getAppVersion()} ${
+            body ? `- ${body}` : ""
+          }`}</Body>
         </TouchableOpacity>
       )}
     </View>
