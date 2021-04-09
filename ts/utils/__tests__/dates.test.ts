@@ -36,10 +36,12 @@ describe("getExpireStatus", () => {
   });
 
   it("should mark the date as expired since we're passing the last month", () => {
-    const lastMonth = subMonths(new Date(), 1);
-    expect(isExpired(getMonth(lastMonth) + 1, getYear(lastMonth))).toEqual(
-      some(true)
-    );
+    const now = new Date(2020, 1, 1);
+    MockDate.set(now);
+    const aMonthBefore = subMonths(now, 1);
+    expect(
+      isExpired(getMonth(aMonthBefore) + 1, getYear(aMonthBefore))
+    ).toEqual(some(true));
   });
 
   it("should mark the card as valid, not expired", () => {

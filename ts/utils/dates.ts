@@ -1,4 +1,4 @@
-import { compareDesc, endOfMonth, format as dateFnsFormat } from "date-fns";
+import { compareDesc, format as dateFnsFormat } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
@@ -118,11 +118,7 @@ export const isExpired = (
   if (maybeDate.isNone()) {
     return none;
   }
-  // get the last day of the month
-  const date = endOfMonth(
-    `${maybeDate.value.getMonth()}/01/${maybeDate.value.getFullYear()}`
-  );
-  return some(compareDesc(date, new Date()) > 0);
+  return some(compareDesc(maybeDate.value, new Date()) > 0);
 };
 
 /**
