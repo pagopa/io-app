@@ -13,6 +13,8 @@ import {
 import { bpdIbanPrefillSelector } from "../../../store/reducers/details/activation";
 import { isBpdOnboardingOngoing } from "../../../store/reducers/onboarding/ongoing";
 import { IbanInsertionComponent } from "./IbanInsertionComponent";
+import { bpdTechnicalAccountSelector } from "../../../store/reducers/details/activation/technicalAccount";
+import { isReady } from "../../../model/RemoteValue";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -26,7 +28,11 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
     onBack={props.cancel}
     onContinue={props.continue}
     onIbanConfirm={props.submitIban}
-    startIban={props.prefillIban}
+    startIban={
+      isReady(props.technicalAccount) && props.technicalAccount.value
+        ? ""
+        : props.prefillIban
+    }
     cancelText={
       props.onboardingOngoing
         ? I18n.t("global.buttons.skip")
@@ -44,7 +50,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   prefillIban: bpdIbanPrefillSelector(state),
-  onboardingOngoing: isBpdOnboardingOngoing(state)
+  onboardingOngoing: isBpdOnboardingOngoing(state),
+  technicalAccount: bpdTechnicalAccountSelector(state)
 });
 
 export default connect(
