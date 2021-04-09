@@ -11,6 +11,8 @@ import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import { bpdUpsertIban } from "../../../actions/iban";
 import { IbanStatus } from "../../../../saga/networking/patchCitizenIban";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 
 /**
  * This reducer keeps the latest valid technicalAccount (technical IBAN) for the user.
@@ -50,3 +52,16 @@ const technicalAccountReducer = (
 };
 
 export default technicalAccountReducer;
+
+/**
+ * Returns the technical account string to show to the user if he has one
+ * @return {RemoteValue<string | undefined, Error>}
+ */
+export const bpdTechnicalAccountSelector = createSelector<
+  GlobalState,
+  RemoteValue<string | undefined, Error>,
+  RemoteValue<string | undefined, Error>
+>(
+  [(state: GlobalState) => state.bonus.bpd.details.activation.technicalAccount],
+  technicalAccount => technicalAccount
+);
