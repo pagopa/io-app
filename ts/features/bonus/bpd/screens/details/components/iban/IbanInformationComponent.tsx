@@ -6,11 +6,11 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { fold, RemoteValue } from "../../../../model/RemoteValue";
 import { bpdIbanInsertionStart } from "../../../../store/actions/iban";
 import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
+import { bpdTechnicalAccountSelector } from "../../../../store/reducers/details/activation/technicalAccount";
 import {
   BaseIbanInformationComponent,
   BaseIbanProps
 } from "./BaseIbanInformationComponent";
-import { bpdTechnicalAccountSelector } from "../../../../store/reducers/details/activation/technicalAccount";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
