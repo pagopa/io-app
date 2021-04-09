@@ -750,6 +750,7 @@ payment:
   notice: Avviso
   noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
+  paidConfirm: Hai pagato
   details:
     state:
       successful: Concluso

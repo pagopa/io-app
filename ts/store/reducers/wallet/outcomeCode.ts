@@ -145,6 +145,9 @@ export const lastPaymentOutcomeCodeSelector = (
   state: GlobalState
 ): OutcomeCodeState => state.wallet.lastPaymentOutcomeCode;
 
+export const paymentSelector = (state: GlobalState): any =>
+  state.wallet.payment;
+
 // TODO replace with a selector when this data will be into the store
 export const outcomeCodesSelector = (_: GlobalState): OutcomeCodes =>
   OutcomeCodesPrintable();

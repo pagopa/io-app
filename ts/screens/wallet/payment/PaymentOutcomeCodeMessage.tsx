@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
-import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
+import {
+  lastPaymentOutcomeCodeSelector,
+  paymentSelector
+} from "../../../store/reducers/wallet/outcomeCode";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -13,6 +16,7 @@ import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/componen
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { Label } from "../../../components/core/typography/Label";
 import { profileEmailSelector } from "../../../store/reducers/profile";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -25,10 +29,10 @@ const successBody = (emailAddress: string) => (
   </Label>
 );
 
-const successComponent = (emailAddress: string) => (
+const successComponent = (emailAddress: string, amount: string) => (
   <InfoScreenComponent
     image={renderInfoRasterImage(paymentCompleted)}
-    title={I18n.t("wallet.outcomeMessage.payment.success.title")}
+    title={`${I18n.t("payment.paidConfirm")} ${amount}`}
     body={successBody(emailAddress)}
   />
 );
@@ -54,12 +58,21 @@ const successFooter = (onClose: () => void) => (
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
+  const { psps, verifica } = props.payment;
+
+  const totalAmount =
+    (verifica.value.importoSingoloVersamento as number) +
+    (psps.value[0].fixedCost.amount as number);
+
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
       onClose={props.navigateToWalletHome}
       successComponent={() =>
-        successComponent(props.profileEmail.getOrElse(""))
+        successComponent(
+          props.profileEmail.getOrElse(""),
+          formatNumberCentsToAmount(totalAmount, true)
+        )
       }
       successFooter={() => successFooter(props.navigateToWalletHome)}
     />
@@ -72,7 +85,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
-  profileEmail: profileEmailSelector(state)
+  profileEmail: profileEmailSelector(state),
+  payment: paymentSelector(state)
 });
 
 export default connect(
