@@ -22,7 +22,6 @@
  *
  */
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
@@ -40,11 +39,6 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import {
-  instabugLog,
-  openInstabugQuestionReport,
-  TypeLogs
-} from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -55,7 +49,6 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton"
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -334,40 +327,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       outputRange: [0, 1],
       extrapolate: "clamp"
     });
-
-  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  private instabugLogAndOpenReport = () => {
-    this.sendDataToInstabug();
-    openInstabugQuestionReport();
-  };
-  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  private instabugReportTag = "services-loading-error";
-  private sendDataToInstabug() {
-    Instabug.appendTags([this.instabugReportTag]);
-    instabugLog(
-      JSON.stringify(this.props.potUserMetadata),
-      TypeLogs.INFO,
-      "userMetadata"
-    );
-
-    instabugLog(
-      JSON.stringify(this.props.debugONLYServices),
-      TypeLogs.INFO,
-      "services"
-    );
-
-    instabugLog(
-      `isInnerContentRendered=${
-        this.state.isInnerContentRendered
-      }  visibleServicesContentLoadState=${JSON.stringify(
-        this.props.visibleServicesContentLoadState
-      )} loadDataFailure=${JSON.stringify(
-        this.props.loadDataFailure
-      )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
-      TypeLogs.INFO,
-      "Internal component state"
-    );
-  }
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
