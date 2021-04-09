@@ -173,7 +173,7 @@ const isInScope = (
     return true;
   }
 
-  // if service or servicesByScope are Error, the item is not included into the section
+  // if service is in Error, the item is not included into the section
   return pot.getOrElse(
     pot.map(service, s => s.service_metadata?.scope === scope),
     false
