@@ -7,17 +7,11 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import {
-  ScopeEnum,
-  Service as ServiceMetadata
-} from "../../../definitions/content/Service";
-import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
@@ -25,8 +19,7 @@ import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
-  loadServiceMetadata,
-  loadVisibleServicesByScope
+  loadServiceMetadata
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
@@ -43,7 +36,6 @@ export type ContentState = Readonly<{
     byId: ServiceMetadataById;
   };
   municipality: MunicipalityState;
-  servicesByScope: pot.Pot<ServicesByScope, Error>;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
 }>;
 
@@ -66,7 +58,6 @@ export const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  servicesByScope: pot.none,
   contextualHelp: pot.none
 };
 
@@ -85,58 +76,6 @@ export const servicesMetadataByIdSelector = (state: GlobalState) =>
 export const serviceMetadataByIdSelector = (serviceId: string) => (
   state: GlobalState
 ) => servicesMetadataByIdSelector(state)[serviceId];
-
-export const servicesByScopeSelector = (state: GlobalState) =>
-  state.content.servicesByScope;
-
-/**
- * returns true if the given serviceId is contained in the relative scope
- * @param serviceId
- * @param scope
- */
-export const isServiceIdInScopeSelector = (
-  serviceId: ServiceId,
-  scope: ScopeEnum
-) =>
-  createSelector(servicesByScopeSelector, maybeServicesByScope =>
-    pot.getOrElse(
-      pot.map(
-        maybeServicesByScope,
-        sbs => sbs[scope].indexOf(serviceId) !== -1
-      ),
-      false
-    )
-  );
-
-/**
- * returns true if the given service is contained in the relative scope
- * @param service
- * @param scope
- */
-export const isServiceInScopeSelector = (
-  service: ServicePublic,
-  scope: ScopeEnum
-) => isServiceIdInScopeSelector(service.service_id, scope);
-
-/**
- * from the given services returns only these contained in the given scope
- * @param services
- * @param scope
- */
-export const servicesInScopeSelector = (
-  services: ReadonlyArray<ServicePublic>,
-  scope: ScopeEnum
-) =>
-  createSelector(servicesByScopeSelector, maybeServicesByScope =>
-    pot.getOrElse(
-      pot.map(maybeServicesByScope, sbs =>
-        services.filter(service =>
-          sbs[scope].some(sId => sId === service.service_id)
-        )
-      ),
-      []
-    )
-  );
 
 export const contextualHelpDataSelector = (
   state: GlobalState
@@ -261,25 +200,6 @@ export default function content(
           ),
           data: pot.toError(state.municipality.data, action.payload.error)
         }
-      };
-
-    // services by scope
-    case getType(loadVisibleServicesByScope.request):
-      return {
-        ...state,
-        servicesByScope: pot.toLoading(state.servicesByScope)
-      };
-
-    case getType(loadVisibleServicesByScope.success):
-      return {
-        ...state,
-        servicesByScope: pot.some(action.payload)
-      };
-
-    case getType(loadVisibleServicesByScope.failure):
-      return {
-        ...state,
-        servicesByScope: pot.toError(state.servicesByScope, action.payload)
       };
 
     // idps text data

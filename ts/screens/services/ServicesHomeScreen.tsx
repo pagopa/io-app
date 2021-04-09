@@ -58,10 +58,7 @@ import ServicesTab from "../../components/services/ServicesTab";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import {
-  loadServiceMetadata,
-  loadVisibleServicesByScope
-} from "../../store/actions/content";
+import { loadServiceMetadata } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -74,7 +71,6 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
-import { servicesByScopeSelector } from "../../store/reducers/content";
 import {
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
@@ -310,10 +306,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.refreshVisibleServices();
     }
 
-    if (pot.isError(this.props.servicesByScope)) {
-      this.props.refreshServicesByScope();
-    }
-
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
@@ -361,9 +353,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         this.state.isInnerContentRendered
       }  visibleServicesContentLoadState=${JSON.stringify(
         this.props.visibleServicesContentLoadState
-      )} loadDataFailure=${JSON.stringify(
-        this.props.loadDataFailure
-      )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
+      )} loadDataFailure=${JSON.stringify(this.props.loadDataFailure)}`,
       TypeLogs.INFO,
       "Internal component state"
     );
@@ -426,10 +416,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       }
 
       if (
-        (pot.isLoading(prevProps.visibleServicesContentLoadState) &&
-          pot.isError(this.props.visibleServicesContentLoadState)) ||
-        (pot.isLoading(prevProps.servicesByScope) &&
-          pot.isError(this.props.servicesByScope))
+        pot.isLoading(prevProps.visibleServicesContentLoadState) &&
+        pot.isError(this.props.visibleServicesContentLoadState)
       ) {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
         showToast(this.state.toastErrorMessage, "danger");
@@ -657,7 +645,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
     this.props.refreshUserMetadata();
     this.props.refreshVisibleServices();
-    this.props.refreshServicesByScope();
   };
 
   private handleOnScroll = (value: number) => {
@@ -777,16 +764,11 @@ const mapStateToProps = (state: GlobalState) => {
     state
   );
 
-  const servicesByScope = servicesByScopeSelector(state);
-
-  const isLoadingServices =
-    pot.isLoading(visibleServicesContentLoadState) ||
-    pot.isLoading(servicesByScope);
+  const isLoadingServices = pot.isLoading(visibleServicesContentLoadState);
 
   const servicesLoadingFailure =
     !pot.isLoading(potUserMetadata) &&
-    (pot.isError(visibleServicesContentLoadState) ||
-      pot.isError(servicesByScope));
+    pot.isError(visibleServicesContentLoadState);
 
   const loadDataFailure: DataLoadFailure = pot.isError(potUserMetadata)
     ? "userMetadaLoadFailure"
@@ -798,7 +780,6 @@ const mapStateToProps = (state: GlobalState) => {
     debugONLYServices: servicesSelector(state),
     isLoadingServices,
     visibleServicesContentLoadState,
-    servicesByScope,
     loadDataFailure,
     profile: profileSelector(state),
     visibleServices: visibleServicesSelector(state),
@@ -820,7 +801,6 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
-  refreshServicesByScope: () => dispatch(loadVisibleServicesByScope.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
