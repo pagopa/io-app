@@ -71,24 +71,15 @@ export function format(
   );
 }
 
-/**
- * if expireMonth and expireYear are defined and they represent a number
- * return some(true) if the given date is expired compared with now.
- * {@expireYear could be 2 or 4 digits}
- * note: it compares the last day of the month
- * example: 03/21 becomes a comparison between 31/03/2021 and current time
- * @param expireMonth
- * @param expireYear
- */
-export function isExpired(
-  expireMonth: string | number | undefined,
-  expireYear: string | number | undefined
-): Option<boolean> {
+export const dateFromMonthAndYear = (
+  month: string | number | undefined,
+  year: string | number | undefined
+): Option<Date> => {
   // convert month to string (if it is a number) and
   // ensure it is left padded: 2 -> 02
-  const monthStr = (expireMonth ?? "").toString().trim().padStart(2, "0");
+  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
   // eslint-disable-next-line functional/no-let
-  let yearStr = (expireYear ?? "").toString().trim();
+  let yearStr = (year ?? "").toString().trim();
   // check that month is included matches the pattern (01-12)
   if (!CreditCardExpirationMonth.is(monthStr)) {
     return none;
@@ -102,16 +93,37 @@ export function isExpired(
     const now = new Date();
     yearStr = now.getFullYear().toString().substring(0, 2) + yearStr.toString();
   }
-  // check if the built string are valid numbers
-  const month = NumberFromString.decode(monthStr);
-  const year = NumberFromString.decode(yearStr);
-  if (month.isLeft() || year.isLeft()) {
+  const maybeMonth = NumberFromString.decode(monthStr);
+  const maybeYear = NumberFromString.decode(yearStr);
+  if (maybeMonth.isLeft() || maybeYear.isLeft()) {
+    return none;
+  }
+  return some(new Date(maybeYear.value, maybeMonth.value - 1));
+};
+
+/**
+ * if expireMonth and expireYear are defined and they represent a number
+ * return some(true) if the given date is expired compared with now.
+ * {@expireYear could be 2 or 4 digits}
+ * note: it compares the last day of the month
+ * example: 03/21 becomes a comparison between 31/03/2021 and current time
+ * @param expireMonth
+ * @param expireYear
+ */
+export const isExpired = (
+  expireMonth: string | number | undefined,
+  expireYear: string | number | undefined
+): Option<boolean> => {
+  const maybeDate = dateFromMonthAndYear(expireMonth, expireYear);
+  if (maybeDate.isNone()) {
     return none;
   }
   // get the last day of the month
-  const date = endOfMonth(`${month.value}/01/${year.value}`);
+  const date = endOfMonth(
+    `${maybeDate.value.getMonth()}/01/${maybeDate.value.getFullYear()}`
+  );
   return some(compareDesc(date, new Date()) > 0);
-}
+};
 
 /**
  * A function to check if the given date is in the past or in the future.
