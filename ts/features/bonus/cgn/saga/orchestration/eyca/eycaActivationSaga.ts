@@ -19,6 +19,18 @@ import { BackendCGN } from "../../../api/backendCgn";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 
+/**
+ * This saga handles the activation request for an EYCA Card linked to the user's CGN.
+ * This activation flow may be invoked only if the background activation process originated from the Backend
+ * terminated with errors and no EYCA information is available.
+ * First we check the current status of the activation orchestrator and then we follow this logic:
+ * - COMPLETED/ERROR/NOT_FOUND: request for a new activation, then start polling until we have results
+ * - PROCESSING/RUNNING: we start polling waiting for results
+ *
+ * At the end navigate back to CGN detail and request again for EYCA Details
+ * @param getEycaActivation
+ * @param startEycaActivation
+ */
 export function* eycaActivationWorker(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
