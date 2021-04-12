@@ -8,7 +8,7 @@ import {
 import { AwardPeriodId } from "../../../actions/periods";
 import { bpdTransactionsLoadCountByDay } from "../../../actions/transactions";
 
-type BpdTransactionsDayInfo = {
+export type BpdTransactionsDayInfo = {
   trxDate: Date;
   count: number;
 };

@@ -41,7 +41,10 @@ export type BpdTransaction = WithAwardPeriodId & {
 export type BpdTransactionId = string & IUnitTag<"BpdTransactionId">;
 
 // TODO: integrate in BpdTransaction after removing the feature flag
-export type BpdTransactionV2 = BpdTransaction & { idTrx: BpdTransactionId };
+export type BpdTransactionV2 = BpdTransaction & {
+  idTrx: BpdTransactionId;
+  validForCashback: boolean;
+};
 
 export type BpdTransactions = WithAwardPeriodId & {
   results: ReadonlyArray<BpdTransaction>;

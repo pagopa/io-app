@@ -9,11 +9,12 @@ import {
   bpdTransactionsEntityReducer,
   BpdTransactionsEntityState
 } from "./entities";
+import { bpdTransactionsUiReducer, BpdTransactionsUiState } from "./ui";
 
 export type BpdTransactionsV2State = {
   daysInfoByPeriod: IndexedById<BpdTransactionsDaysInfoState>;
   entitiesByPeriod: IndexedById<BpdTransactionsEntityState>;
-  ui: unknown;
+  ui: BpdTransactionsUiState;
 };
 
 export const bpdTransactionsV2Reducer = combineReducers<
@@ -22,5 +23,5 @@ export const bpdTransactionsV2Reducer = combineReducers<
 >({
   daysInfoByPeriod: bpdTransactionsDaysInfoReducer,
   entitiesByPeriod: bpdTransactionsEntityReducer,
-  ui: () => null
+  ui: bpdTransactionsUiReducer
 });

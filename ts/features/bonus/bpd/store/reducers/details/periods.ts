@@ -13,7 +13,7 @@ import {
   bpdPeriodsAmountLoad,
   WithAwardPeriodId
 } from "../../actions/periods";
-import { BpdPivotTransaction } from "./paginatedTransactions";
+import { BpdPivotTransaction } from "./transactionsv2/entities";
 
 // The ranking is ready for a specific period
 export type BpdRankingReady = WithAwardPeriodId & {
