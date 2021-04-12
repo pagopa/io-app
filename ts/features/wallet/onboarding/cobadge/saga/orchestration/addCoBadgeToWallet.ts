@@ -73,7 +73,9 @@ export function* addCoBadgeToWalletAndActivateBpd() {
       if (
         res === "completed" &&
         newRoute.isSome() &&
-        newRoute.value === "WALLET_BANCOMAT_DETAIL"
+        [ROUTES.WALLET_BANCOMAT_DETAIL, ROUTES.WALLET_COBADGE_DETAIL].some(
+          r => r === newRoute.value
+        )
       ) {
         yield put(NavigationActions.back());
       }

@@ -4,7 +4,6 @@ import { ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import DarkLayout from "../../../../components/screens/DarkLayout";
@@ -21,6 +20,7 @@ import CobadgeCard from "../component/CoBadgeCard";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import { isCardExpired } from "../../../../utils/wallet";
 import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
+import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -68,6 +68,7 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     caption: cobadge.caption
   });
   const isCobadgeExpired = isCardExpired(cobadge.info).getOrElse(false);
+  const abiCode = cobadge.info.issuerAbiCode;
   return (
     <DarkLayout
       bounces={false}
@@ -84,13 +85,18 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        {isCobadgeExpired ? (
-          <ExpiredCardAdvice navigateToAddCard={constNull} />
+        {isCobadgeExpired && abiCode ? (
+          <ExpiredCardAdvice
+            navigateToAddCard={() => props.addNewCoBadge(abiCode)}
+          />
         ) : (
-          <PaymentMethodCapabilities paymentMethod={cobadge} />
+          <>
+            <PaymentMethodCapabilities paymentMethod={cobadge} />
+            <View spacer={true} large={true} />
+          </>
         )}
+
         <View spacer={true} />
-        <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
         />
@@ -111,6 +117,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");
         }
+      })
+    ),
+  addNewCoBadge: (abi: string) =>
+    dispatch(
+      navigateToOnboardingCoBadgeChooseTypeStartScreen({
+        abi,
+        legacyAddCreditCardBack: 1
       })
     )
 });
