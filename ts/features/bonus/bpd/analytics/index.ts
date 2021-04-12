@@ -86,7 +86,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type);
     case getType(bpdLoadActivationStatus.success):
       return mp.track(action.type, {
-        enabled: action.payload.enabled
+        enabled: action.payload.enabled,
+        hasTechnicalIban: action.payload.technicalAccount !== undefined
       });
     case getType(bpdLoadActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
