@@ -29,7 +29,7 @@ type Props = WithTestID<{
   navigateToSearchBank?: () => void;
   onCancel: () => void;
   handleTosModal: () => void;
-  handlePartecipatingBanksModal?: () => void;
+  handleParticipatingBanksModal?: () => void;
   bankName?: string;
 }> &
   ReturnType<typeof mapStateToProps> &
@@ -92,7 +92,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             onSearch={props.navigateToSearchBank}
             methodType={props.methodType}
             bankName={props.bankName}
-            openPartecipatingBanksModal={props.handlePartecipatingBanksModal}
+            openParticipatingBanksModal={props.handleParticipatingBanksModal}
             showCircuitLogo={props.methodType === "cobadge"}
           />
         </Content>
