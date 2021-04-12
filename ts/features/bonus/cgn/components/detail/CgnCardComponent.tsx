@@ -169,7 +169,11 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 </H5>
               )}
               {props.currentProfile && (
-                <H3 weight={"Bold"} color={"black"}>
+                <H3
+                  weight={"Bold"}
+                  color={"black"}
+                  testID={"profile-name-surname"}
+                >
                   {props.currentProfile}
                 </H3>
               )}
