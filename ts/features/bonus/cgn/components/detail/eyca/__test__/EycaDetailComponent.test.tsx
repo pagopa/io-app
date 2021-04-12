@@ -7,14 +7,15 @@ import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
-import {
-  remoteReady,
-  remoteUndefined
-} from "../../../../../bpd/model/RemoteValue";
 import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
 import * as urlUtils from "../../../../../../../utils/url";
+import { appReducer } from "../../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../../store/actions/application";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
+import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   useBottomSheetModal: () => ({
@@ -34,10 +35,8 @@ const eycaCardPending: EycaCard = {
 };
 
 describe("EycaDetailComponent", () => {
-  const mockStore = configureMockStore();
-
   it("Should show EYCA Status component for an Active card", () => {
-    const store = mockStore(mockEYCAState(eycaCardActive));
+    const store = mockEYCAState(eycaCardActive);
     const component = getComponent(store);
     expect(component).not.toBeNull();
 
@@ -64,7 +63,7 @@ describe("EycaDetailComponent", () => {
   });
 
   it("Should show EYCA Pending component for a Pending card", () => {
-    const store = mockStore(mockEYCAState(eycaCardPending, "PROCESSING"));
+    const store = mockEYCAState(eycaCardPending, "PROCESSING");
     const component = getComponent(store);
     expect(component).not.toBeNull();
 
@@ -95,7 +94,7 @@ describe("EycaDetailComponent", () => {
   });
 
   it("Should show EYCA Error component if a card is Pending but activation is in error", () => {
-    const store = mockStore(mockEYCAState(eycaCardPending, "ERROR"));
+    const store = mockEYCAState(eycaCardPending, "ERROR");
     const component = getComponent(store);
     expect(component).not.toBeNull();
 
@@ -125,7 +124,7 @@ describe("EycaDetailComponent", () => {
   });
 
   it("Should show EYCA Error component if a card is not available", () => {
-    const store = mockStore(mockEYCAState());
+    const store = mockEYCAState();
     const component = getComponent(store);
     expect(component).not.toBeNull();
 
@@ -159,21 +158,24 @@ const mockEYCAState = (
   card?: EycaCard,
   activation?: CgnEycaActivationStatus
 ) => {
-  const readyCard = card
-    ? remoteReady({ status: "FOUND", card })
-    : remoteUndefined;
-  const eycaActivation = activation ? remoteReady(activation) : remoteUndefined;
-
-  return {
-    bonus: {
-      cgn: {
-        eyca: {
-          details: readyCard,
-          activation: eycaActivation
-        }
-      }
-    }
-  };
+  // eslint-disable-next-line functional/no-let
+  let globalState = appReducer(undefined, applicationChangeState("active"));
+  if (card) {
+    globalState = appReducer(
+      globalState,
+      cgnEycaStatus.success({ status: "FOUND", card })
+    );
+  }
+  if (activation) {
+    globalState = appReducer(
+      globalState,
+      cgnEycaActivation.success(activation)
+    );
+  }
+  const mockStore = configureMockStore<GlobalState>();
+  return mockStore({
+    ...globalState
+  } as GlobalState);
 };
 
 const getComponent = (store: any) =>
