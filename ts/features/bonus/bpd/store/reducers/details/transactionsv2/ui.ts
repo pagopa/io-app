@@ -35,9 +35,21 @@ const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
   );
 
 const combiner = (
-  obj: BpdTransactionsSectionItem,
-  dst: BpdTransactionsSectionItem
-) => _.merge(obj, dst);
+  obj: BpdTransactionsSectionItem | undefined,
+  dst: BpdTransactionsSectionItem | undefined
+): BpdTransactionsSectionItem | undefined => {
+  if (obj !== undefined && dst !== undefined) {
+    return {
+      dayInfoId: dst.dayInfoId,
+      list: obj.list.concat(dst.list)
+    };
+  }
+
+  if (obj === undefined && dst !== undefined) {
+    return dst;
+  }
+  return undefined;
+};
 
 const initState: BpdTransactionsUiState = {
   period: null,

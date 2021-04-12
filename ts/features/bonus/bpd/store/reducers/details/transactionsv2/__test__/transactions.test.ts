@@ -32,13 +32,21 @@ const pageOne: WinningTransactionsOfTheDayResource = {
   ]
 };
 
-// const pageTwo: WinningTransactionsOfTheDayResource = {
-//   date: new Date("2021-01-01"),
-//   transactions: [
-//     { ...transactionTemplate, idTrx: "4" },
-//     { ...transactionTemplate, idTrx: "5" }
-//   ]
-// };
+const pageTwo: WinningTransactionsOfTheDayResource = {
+  date: new Date("2021-01-01"),
+  transactions: [
+    { ...transactionTemplate, idTrx: "4" },
+    { ...transactionTemplate, idTrx: "5" }
+  ]
+};
+
+const pageThree: WinningTransactionsOfTheDayResource = {
+  date: new Date("2021-01-02"),
+  transactions: [
+    { ...transactionTemplate, idTrx: "6" },
+    { ...transactionTemplate, idTrx: "7" }
+  ]
+};
 
 describe("Test BpdTransactionsV2State store", () => {
   it("When the action bpdTransactionsLoadPage.request is dispatched, the store should have the right shape", () => {
@@ -101,6 +109,60 @@ describe("Test BpdTransactionsV2State store", () => {
         expect(entities.byId[x]).toBeDefined();
         expect(entities.byId[x]?.idTrx.toString()).toBe(x);
       });
+    }
+  });
+
+  it("When multiple action bpdTransactionsLoadPage.success are dispatched, the store should have the right shape and add the new data", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(
+      bpdTransactionsLoadPage.success({
+        ...awardPeriodTest,
+        results: {
+          transactions: [pageOne]
+        }
+      })
+    );
+    store.dispatch(
+      bpdTransactionsLoadPage.request({ ...awardPeriodTest, nextCursor: 1 })
+    );
+    store.dispatch(
+      bpdTransactionsLoadPage.success({
+        ...awardPeriodTest,
+        results: {
+          transactions: [pageTwo, pageThree]
+        }
+      })
+    );
+
+    const expectedTrxDayOne = ["1", "2", "3", "4", "5"];
+    const expectedTrxDayTwo = ["6", "7"];
+    const transactionsStore = store.getState().bonus.bpd.details.transactionsV2;
+
+    expect(transactionsStore.ui.sectionItems.kind).toStrictEqual("PotSome");
+
+    expect(transactionsStore.ui.period).toStrictEqual(
+      awardPeriodTest.awardPeriodId
+    );
+
+    if (pot.isSome(transactionsStore.ui.sectionItems)) {
+      const dateIdDayOne = new Date("2021-01-01").toISOString();
+      const dateIdDayTwo = new Date("2021-01-02").toISOString();
+      expect(
+        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.dayInfoId
+      ).toBe(dateIdDayOne);
+      expect(
+        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.dayInfoId
+      ).toBe(dateIdDayTwo);
+
+      expect(
+        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.list
+      ).toStrictEqual(expectedTrxDayOne);
+
+      expect(
+        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.list
+      ).toStrictEqual(expectedTrxDayTwo);
     }
   });
 });

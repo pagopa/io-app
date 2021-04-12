@@ -64,7 +64,7 @@ export const bpdTransactionsLoad = createAsyncAction(
 )<AwardPeriodId, BpdTransactions, BpdTransactionsError>();
 
 type BpdTransactionPageRequestPayload = WithAwardPeriodId & {
-  nextCursor?: string;
+  nextCursor?: number;
 };
 
 type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
