@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import {
   remoteError,
   remoteLoading,
@@ -11,7 +12,6 @@ import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import { bpdUpsertIban } from "../../../actions/iban";
 import { IbanStatus } from "../../../../saga/networking/patchCitizenIban";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 
 /**
