@@ -26,8 +26,8 @@ const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
   page.transactions.reduce(
     (acc, val) => ({
       ...acc,
-      [val.date.toString()]: {
-        dayInfoId: val.date.toString(),
+      [val.date.toISOString()]: {
+        dayInfoId: val.date.toISOString(),
         list: val.transactions.map(trx => trx.idTrx as BpdTransactionId)
       }
     }),

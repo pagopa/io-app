@@ -22,7 +22,7 @@ export type BpdDetailsState = {
   periods: pot.Pot<IndexedById<BpdPeriodWithInfo>, Error>;
   selectedPeriod: BpdPeriodWithInfo | null;
   transactions: IndexedById<pot.Pot<ReadonlyArray<BpdTransaction>, Error>>;
-  transactionsV2: IndexedById<BpdTransactionsV2State>;
+  transactionsV2: BpdTransactionsV2State;
   lastUpdate: lastUpdate;
 };
 

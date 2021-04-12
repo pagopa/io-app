@@ -112,7 +112,7 @@ const updateTransactions = (
 
   return {
     ...state,
-    nextCursor: newPage.nextCursor,
+    nextCursor: newPage.nextCursor ?? null,
     foundPivot,
     byId: { ...state.byId, ...flatTransactions }
   };

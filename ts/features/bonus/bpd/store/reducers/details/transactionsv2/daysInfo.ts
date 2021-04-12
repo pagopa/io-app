@@ -52,7 +52,9 @@ export const bpdTransactionsDaysInfoReducer = (
       return updateById(
         state,
         action.payload.awardPeriodId,
-        pot.some(toIndexed(action.payload.results, x => x.trxDate.toString()))
+        pot.some(
+          toIndexed(action.payload.results, x => x.trxDate.toISOString())
+        )
       );
     case getType(bpdTransactionsLoadCountByDay.failure):
       const periodIdError = action.payload.awardPeriodId;
