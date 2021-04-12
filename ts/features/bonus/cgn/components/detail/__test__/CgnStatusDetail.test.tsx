@@ -133,7 +133,7 @@ describe("CgnStatusDetail", () => {
     expect(component.queryByTestId("revocation-date-value")).toBeNull();
   });
 
-  it("Pendign status", () => {
+  it("Pending status", () => {
     const component = render(<CgnStatusDetail cgnDetail={cgnStatusPending} />);
     expect(component).not.toBeNull();
     expect(component.queryByTestId("status-badge")).toBeNull();
