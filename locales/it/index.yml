@@ -1380,6 +1380,7 @@ cardComponent:
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
+  deleteLoading: Eliminazione metodo di pagamento in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni

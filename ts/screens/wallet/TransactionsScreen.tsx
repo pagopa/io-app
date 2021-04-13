@@ -27,6 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import {
   favoriteWalletIdSelector,
   getFavoriteWalletId,
+  getWalletsById,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -41,6 +42,7 @@ import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -129,6 +131,8 @@ const headerContent = (
 const TransactionsScreen: React.FC<Props> = (props: Props) => {
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
+  const loadingCaption = I18n.t("cardComponent.deleteLoading");
+
   const isFavorite = pot.map(
     props.favoriteWalletId,
     _ => _ === selectedWallet.idWallet
@@ -151,6 +155,9 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         ? getTitleFromCard(selectedWallet.paymentMethod)
         : FOUR_UNICODE_CIRCLES
   });
+
+  const onRetry = () => props.deleteWallet(selectedWallet.idWallet);
+
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -160,6 +167,16 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
       <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
     </ButtonDefaultOpacity>
   );
+
+  if (props.isLoadingDelete)
+    return (
+      <LoadingErrorComponent
+        isLoading={props.isLoadingDelete}
+        loadingCaption={loadingCaption}
+        onRetry={onRetry}
+      />
+    );
+
   return (
     <WalletLayout
       title={I18n.t("wallet.paymentMethod")}
@@ -215,7 +232,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
-  paymentMethods: paymentMethodsSelector(state)
+  paymentMethods: paymentMethodsSelector(state),
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

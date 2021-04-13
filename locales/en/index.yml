@@ -1353,6 +1353,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteLoading: Payment method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
