@@ -17,9 +17,9 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 /**
  * This reducer keeps the latest valid technicalAccount (technical IBAN) for the user.
  * This value can change when:
- * - The application load the first time the value
- * - The user choose to edit / add a new paymentInstrument and the operation is completed with success.
- * - The user choose to unsubscribe from the cashback
+ * - The application loads the first time the value
+ * - The user chooses to edit / add a new paymentInstrument and the operation is completed with success.
+ * - The user chooses to unsubscribe from the cashback
  *
  * If the action `bpdLoadActivationStatus.success` is dispatched after a call to citizen v1 API, so the
  * the technical account data is not available, the state will be remoteUndefined.
