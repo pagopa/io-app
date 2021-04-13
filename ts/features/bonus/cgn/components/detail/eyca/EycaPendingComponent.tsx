@@ -29,7 +29,10 @@ const EYCA_URL = "https://www.eyca.org";
 // Component that informs the user that the EYCA card requested is still in progress
 const EycaStatusDetailsComponent = (props: Props) => (
   <>
-    <View style={[styles.rowBlock, styles.spaced]}>
+    <View
+      style={[styles.rowBlock, styles.spaced]}
+      testID={"eyca-pending-component"}
+    >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
       <IconFont
         name={"io-info"}
@@ -49,6 +52,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
       bordered
       style={{ width: "100%" }}
       onPress={() => openWebUrl(EYCA_URL)}
+      testID={"eyca-pending-button"}
     >
       <Label color={"blue"}>
         {I18n.t("bonus.cgn.detail.cta.eyca.pending")}
