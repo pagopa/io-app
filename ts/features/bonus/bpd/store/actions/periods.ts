@@ -1,9 +1,6 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import {
-  BpdPeriodWithInfo,
-  BpdPeriodWithInfoV2
-} from "../reducers/details/periods";
+import { BpdPeriodWithInfo } from "../reducers/details/periods";
 
 export type AwardPeriodId = number & IUnitTag<"AwardPeriodId">;
 
@@ -52,15 +49,4 @@ export const bpdPeriodsAmountLoad = createAsyncAction(
   "BPD_PERIODS_AMOUNT_FAILURE"
 )<void, ReadonlyArray<BpdPeriodWithInfo>, Error>();
 
-/**
- * Request the period list & amount
- */
-export const bpdPeriodsAmountLoadV2 = createAsyncAction(
-  "BPD_PERIODS_AMOUNT_V2_REQUEST",
-  "BPD_PERIODS_AMOUNT_V2_SUCCESS",
-  "BPD_PERIODS_AMOUNT_V2_FAILURE"
-)<void, ReadonlyArray<BpdPeriodWithInfoV2>, Error>();
-
-export type BpdPeriodsAction =
-  | ActionType<typeof bpdPeriodsAmountLoad>
-  | ActionType<typeof bpdPeriodsAmountLoadV2>;
+export type BpdPeriodsAction = ActionType<typeof bpdPeriodsAmountLoad>;

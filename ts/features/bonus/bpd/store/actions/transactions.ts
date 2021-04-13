@@ -1,8 +1,8 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
 import { TrxCountByDayResourceArray } from "../../../../../../definitions/bpd/winning_transactions_v2/TrxCountByDayResourceArray";
 import { WinningTransactionPageResource } from "../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
+import { BpdPivotTransaction } from "../reducers/details/transactionsv2/entities";
 import { HPan } from "./paymentMethods";
 import { AwardPeriodId, WithAwardPeriodId } from "./periods";
 
@@ -93,7 +93,7 @@ export const bpdTransactionsLoadCountByDay = createAsyncAction(
 )<AwardPeriodId, TrxCountByDayResource, BpdTransactionsError>();
 
 export type TrxMilestonePayload = WithAwardPeriodId & {
-  result: MilestoneResource;
+  result: BpdPivotTransaction;
 };
 
 export const bpdTransactionsLoadMilestone = createAsyncAction(
@@ -105,4 +105,5 @@ export const bpdTransactionsLoadMilestone = createAsyncAction(
 export type BpdTransactionsAction =
   | ActionType<typeof bpdTransactionsLoad>
   | ActionType<typeof bpdTransactionsLoadPage>
-  | ActionType<typeof bpdTransactionsLoadCountByDay>;
+  | ActionType<typeof bpdTransactionsLoadCountByDay>
+  | ActionType<typeof bpdTransactionsLoadMilestone>;

@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { WinningTransactionMilestoneResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionMilestoneResource";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
@@ -7,12 +8,10 @@ import {
   toArray,
   toIndexed
 } from "../../../../../../../store/helpers/indexer";
-import {
-  AwardPeriodId,
-  bpdPeriodsAmountLoadV2
-} from "../../../actions/periods";
+import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
+  bpdTransactionsLoadMilestone,
   bpdTransactionsLoadPage,
   BpdTransactionV2
 } from "../../../actions/transactions";
@@ -23,7 +22,7 @@ export type BpdPivotTransaction = {
 };
 
 export type BpdTransactionsEntityState = {
-  pivot: BpdPivotTransaction | null;
+  pivot: pot.Pot<BpdPivotTransaction | null, Error>;
   byId: IndexedById<BpdTransactionV2>;
   foundPivot: boolean;
 };
@@ -33,7 +32,7 @@ type NormalizedTransactions = {
 };
 
 const initState: BpdTransactionsEntityState = {
-  pivot: null,
+  pivot: pot.none,
   foundPivot: false,
   byId: {}
 };
@@ -96,7 +95,7 @@ const updateTransactions = (
   const flatTransactions = newPage.transactions.reduce<
     IndexedById<BpdTransactionV2>
   >((acc, val) => {
-    const pivot = state.pivot;
+    const pivot = pot.getOrElse(state.pivot, null);
 
     const transactionsNormalized = normalizeCashback(val.transactions, pivot);
     if (!foundPivot && transactionsNormalized.found) {
@@ -129,26 +128,49 @@ export const bpdTransactionsEntityReducer = (
           action.payload.results
         )
       );
-    case getType(bpdPeriodsAmountLoadV2.success):
-      // when receive a new pivot, should refresh any existing transaction
-      // This should never happens but is present in order to avoid inconsistent state
-      return action.payload.reduce((acc, val) => {
-        const periodEntry = getPeriodEntry(state, val.awardPeriodId);
-        const normalizedTransaction = normalizeCashback(
-          toArray(periodEntry.byId),
-          val.pivot
-        );
 
-        return {
-          ...acc,
-          [val.awardPeriodId]: {
-            ...periodEntry,
-            pivot: val.pivot,
-            byId: toIndexed(normalizedTransaction.data, t => t.idTrx),
-            foundPivot: normalizedTransaction.found
-          }
-        };
-      }, state);
+    case getType(bpdTransactionsLoadMilestone.request):
+      const periodMilestoneRequest = getPeriodEntry(state, action.payload);
+      return {
+        ...state,
+        [action.payload]: {
+          ...periodMilestoneRequest,
+          pivot: pot.toLoading(periodMilestoneRequest.pivot)
+        }
+      };
+    case getType(bpdTransactionsLoadMilestone.success):
+      // When receive a new pivot, should refresh any existing transaction
+      // This should never happens but is present in order to avoid inconsistent state
+      const periodMilestoneSuccess = getPeriodEntry(
+        state,
+        action.payload.awardPeriodId
+      );
+      const { data, found } = normalizeCashback(
+        toArray(periodMilestoneSuccess.byId),
+        action.payload.result
+      );
+      return {
+        ...state,
+        [action.payload.awardPeriodId]: {
+          ...periodMilestoneSuccess,
+          pivot: pot.some(action.payload.result),
+          byId: toIndexed(data, t => t.idTrx),
+          foundPivot: found
+        }
+      };
+
+    case getType(bpdTransactionsLoadMilestone.failure):
+      const periodMilestoneFailure = getPeriodEntry(
+        state,
+        action.payload.awardPeriodId
+      );
+      return {
+        ...state,
+        [action.payload.awardPeriodId]: {
+          ...periodMilestoneFailure,
+          pivot: pot.toError(periodMilestoneFailure.pivot, action.payload.error)
+        }
+      };
   }
 
   return state;
