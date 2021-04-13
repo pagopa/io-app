@@ -25,7 +25,6 @@ export type BpdPivotTransaction = {
 export type BpdTransactionsEntityState = {
   pivot: BpdPivotTransaction | null;
   byId: IndexedById<BpdTransactionV2>;
-  nextCursor: number | null;
   foundPivot: boolean;
 };
 type NormalizedTransactions = {
@@ -35,7 +34,6 @@ type NormalizedTransactions = {
 
 const initState: BpdTransactionsEntityState = {
   pivot: null,
-  nextCursor: null,
   foundPivot: false,
   byId: {}
 };
@@ -112,7 +110,6 @@ const updateTransactions = (
 
   return {
     ...state,
-    nextCursor: newPage.nextCursor ?? null,
     foundPivot,
     byId: { ...state.byId, ...flatTransactions }
   };

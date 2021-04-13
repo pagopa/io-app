@@ -93,6 +93,7 @@ describe("Test BpdTransactionsV2State store", () => {
     expect(transactionsStore.ui.period).toStrictEqual(
       awardPeriodTest.awardPeriodId
     );
+    expect(transactionsStore.ui.nextCursor).toBeNull();
 
     const entities =
       transactionsStore.entitiesByPeriod[awardPeriodTest.awardPeriodId];
@@ -100,7 +101,6 @@ describe("Test BpdTransactionsV2State store", () => {
     expect(entities).toBeDefined();
 
     if (entities) {
-      expect(entities.nextCursor).toBeNull();
       expect(entities.foundPivot).toBe(false);
 
       expect(Object.keys(entities.byId).length).toBe(expectedTrxId.length);
@@ -120,6 +120,7 @@ describe("Test BpdTransactionsV2State store", () => {
       bpdTransactionsLoadPage.success({
         ...awardPeriodTest,
         results: {
+          nextCursor: 1,
           transactions: [pageOne]
         }
       })
@@ -131,6 +132,7 @@ describe("Test BpdTransactionsV2State store", () => {
       bpdTransactionsLoadPage.success({
         ...awardPeriodTest,
         results: {
+          nextCursor: 2,
           transactions: [pageTwo, pageThree]
         }
       })
@@ -165,6 +167,8 @@ describe("Test BpdTransactionsV2State store", () => {
       ).toStrictEqual(expectedTrxDayTwo);
     }
 
+    expect(transactionsStore.ui.nextCursor).toBe(2);
+
     const entities =
       transactionsStore.entitiesByPeriod[awardPeriodTest.awardPeriodId];
 
@@ -173,7 +177,6 @@ describe("Test BpdTransactionsV2State store", () => {
     if (entities) {
       const expectedEntitiesId = expectedTrxDayOne.concat(expectedTrxDayTwo);
 
-      expect(entities.nextCursor).toBeNull();
       expect(entities.foundPivot).toBe(false);
 
       expect(Object.keys(entities.byId).length).toBe(expectedEntitiesId.length);

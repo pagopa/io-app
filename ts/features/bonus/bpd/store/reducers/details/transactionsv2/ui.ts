@@ -16,6 +16,7 @@ type BpdTransactionsSectionItem = {
 };
 
 export type BpdTransactionsUiState = {
+  nextCursor: number | null;
   period: AwardPeriodId | null;
   sectionItems: pot.Pot<IndexedById<BpdTransactionsSectionItem>, Error>;
 };
@@ -53,7 +54,8 @@ const combiner = (
 
 const initState: BpdTransactionsUiState = {
   period: null,
-  sectionItems: pot.none
+  sectionItems: pot.none,
+  nextCursor: null
 };
 
 export const bpdTransactionsUiReducer = (
@@ -64,6 +66,7 @@ export const bpdTransactionsUiReducer = (
     case getType(bpdTransactionsLoadPage.request):
       return {
         period: action.payload.awardPeriodId,
+        nextCursor: state.nextCursor,
         sectionItems:
           action.payload.nextCursor === null
             ? pot.noneLoading
@@ -77,6 +80,7 @@ export const bpdTransactionsUiReducer = (
 
       return {
         period: action.payload.awardPeriodId,
+        nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
           _.mergeWith(currentSectionItems, newSectionItems, combiner)
         )
@@ -84,6 +88,7 @@ export const bpdTransactionsUiReducer = (
     case getType(bpdTransactionsLoadPage.failure):
       return {
         period: action.payload.awardPeriodId,
+        nextCursor: state.nextCursor,
         sectionItems: pot.toError(state.sectionItems, action.payload.error)
       };
   }
