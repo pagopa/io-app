@@ -36,7 +36,7 @@ const PatchedCitizenV2ResourceO = t.partial({
 
 export const PatchedCitizenV2Resource = t.intersection(
   [PatchedCitizenResourceR, PatchedCitizenResourceO, PatchedCitizenV2ResourceO],
-  "PatchedCitizenResource"
+  "PatchedCitizenResourceV2"
 );
 
 export type PatchedCitizenV2Resource = t.TypeOf<
