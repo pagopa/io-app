@@ -30,7 +30,7 @@ export type PatchedCitizenResource = t.TypeOf<typeof PatchedCitizenResource>;
  * - technicalAccount must be optional
  */
 // required attributes
-const PatchedCitizenV2ResourceO = t.interface({
+const PatchedCitizenV2ResourceO = t.partial({
   technicalAccount: t.string
 });
 
