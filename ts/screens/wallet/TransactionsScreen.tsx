@@ -168,7 +168,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     </ButtonDefaultOpacity>
   );
 
-  if (props.isLoadingDelete)
+  if (props.isLoadingDelete) {
     return (
       <LoadingErrorComponent
         isLoading={props.isLoadingDelete}
@@ -176,6 +176,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         onRetry={onRetry}
       />
     );
+  }
 
   return (
     <WalletLayout
