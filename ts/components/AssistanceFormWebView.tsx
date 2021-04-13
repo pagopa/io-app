@@ -6,6 +6,7 @@ import { RefreshIndicator } from "./ui/RefreshIndicator";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 
+// TODO: set the right uri
 const URI = "http://localhost:5000/";
 
 const styles = StyleSheet.create({
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/** This component is basically a webview that loads an url showing assistance form */
+/** This component loads an url and show the assistance form */
 const AssistanceForm: FC = () => {
   const [webViewError, setWebViewError] = useState(false);
   const webViewRef = createRef<WebView>();
