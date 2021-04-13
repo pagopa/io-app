@@ -139,6 +139,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
+  runSendAddCobadgeTrackSaga,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
   setWalletSessionEnabled
@@ -184,6 +185,7 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
+import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 
 const successScreenDelay = 2000 as Millisecond;
 /**
@@ -912,6 +914,9 @@ export function* watchWalletSaga(
     );
   }
 
+  // Check if a user has a bancomat and has not requested a cobadge yet and send
+  // the information to mixpanel
+  yield takeLatest(runSendAddCobadgeTrackSaga, sendAddCobadgeMessageSaga);
   yield fork(paymentsDeleteUncompletedSaga);
 }
 
