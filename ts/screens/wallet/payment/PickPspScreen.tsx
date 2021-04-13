@@ -27,7 +27,7 @@ import { showToast } from "../../../utils/showToast";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { navigateBack } from "../../../store/actions/navigation";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { PspComponent } from "../../../components/PspComponent";
+import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
@@ -49,7 +49,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  line1: {
+  header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
@@ -77,7 +77,7 @@ class PickPspScreen extends React.Component<Props> {
 
   private headerItem = (
     <View style={styles.padded}>
-      <View style={styles.line1}>
+      <View style={styles.header}>
         <H5 weight="Regular" color="bluegrey">
           {I18n.t("wallet.pickPsp.provider")}
         </H5>
@@ -131,14 +131,14 @@ class PickPspScreen extends React.Component<Props> {
             ListHeaderComponent={this.headerItem}
             ListFooterComponent={() => <ItemSeparatorComponent />}
           />
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={cancelButtonProps(
+              this.props.navigateBack,
+              I18n.t("global.buttons.back")
+            )}
+          />
         </SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={cancelButtonProps(
-            this.props.navigateBack,
-            I18n.t("global.buttons.back")
-          )}
-        />
       </BaseScreenComponent>
     );
   }

@@ -2,7 +2,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { none, some } from "fp-ts/lib/Option";
 import { Psp } from "../../types/pagopa";
-import { PspComponent } from "../PspComponent";
+import { PspComponent } from "../wallet/payment/PspComponent";
 import * as hooks from "../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
 
 const psp: Psp = {

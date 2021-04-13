@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { ImageStyle, StyleProp, StyleSheet, View, Image } from "react-native";
-import { useImageResize } from "../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
-import customVariables from "../theme/variables";
-import { Psp } from "../types/pagopa";
-import { formatNumberCentsToAmount } from "../utils/stringBuilder";
-import { Body } from "./core/typography/Body";
-import { H4 } from "./core/typography/H4";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import IconFont from "./ui/IconFont";
+import { useImageResize } from "../../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
+import customVariables from "../../../theme/variables";
+import { Psp } from "../../../types/pagopa";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { Body } from "../../core/typography/Body";
+import { H4 } from "../../core/typography/H4";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import IconFont from "../../ui/IconFont";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -55,7 +55,7 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
       testID={`psp-${psp.id}`}
     >
       <View style={styles.line1}>
-        {psp.logoPSP && imageStyle ? (
+        {imageStyle ? (
           <Image
             source={{ uri: psp.logoPSP }}
             style={imageStyle}
