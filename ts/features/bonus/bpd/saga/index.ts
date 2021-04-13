@@ -40,33 +40,18 @@ import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOn
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
-  if (bpdTechnicalIban) {
-    // load citizen details
-    yield takeLatest(
-      bpdLoadActivationStatus.request,
-      getCitizenV2,
-      bpdBackendClient.findV2
-    );
-    // enroll citizen to the bpd
-    yield takeLatest(
-      bpdEnrollUserToProgram.request,
-      putEnrollCitizenV2,
-      bpdBackendClient.enrollCitizenV2IO
-    );
-  } else {
-    // load citizen details
-    yield takeLatest(
-      bpdLoadActivationStatus.request,
-      getCitizen,
-      bpdBackendClient.find
-    );
-    // enroll citizen to the bpd
-    yield takeLatest(
-      bpdEnrollUserToProgram.request,
-      putEnrollCitizen,
-      bpdBackendClient.enrollCitizenIO
-    );
-  }
+  // load citizen details
+  yield takeLatest(
+    bpdLoadActivationStatus.request,
+    bpdTechnicalIban ? getCitizenV2 : getCitizen,
+    bpdBackendClient.findV2
+  );
+  // enroll citizen to the bpd
+  yield takeLatest(
+    bpdEnrollUserToProgram.request,
+    bpdTechnicalIban ? putEnrollCitizenV2 : putEnrollCitizen,
+    bpdBackendClient.enrollCitizenV2IO
+  );
 
   // delete citizen from the bpd
   yield takeLatest(
