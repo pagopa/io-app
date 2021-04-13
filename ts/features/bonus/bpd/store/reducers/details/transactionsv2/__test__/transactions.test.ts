@@ -164,5 +164,24 @@ describe("Test BpdTransactionsV2State store", () => {
         transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.list
       ).toStrictEqual(expectedTrxDayTwo);
     }
+
+    const entities =
+      transactionsStore.entitiesByPeriod[awardPeriodTest.awardPeriodId];
+
+    expect(entities).toBeDefined();
+
+    if (entities) {
+      const expectedEntitiesId = expectedTrxDayOne.concat(expectedTrxDayTwo);
+
+      expect(entities.nextCursor).toBeNull();
+      expect(entities.foundPivot).toBe(false);
+
+      expect(Object.keys(entities.byId).length).toBe(expectedEntitiesId.length);
+
+      expectedEntitiesId.map(x => {
+        expect(entities.byId[x]).toBeDefined();
+        expect(entities.byId[x]?.idTrx.toString()).toBe(x);
+      });
+    }
   });
 });
