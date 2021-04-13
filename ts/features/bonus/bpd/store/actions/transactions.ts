@@ -1,5 +1,6 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
+import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
 import { TrxCountByDayResourceArray } from "../../../../../../definitions/bpd/winning_transactions_v2/TrxCountByDayResourceArray";
 import { WinningTransactionPageResource } from "../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { HPan } from "./paymentMethods";
@@ -90,6 +91,16 @@ export const bpdTransactionsLoadCountByDay = createAsyncAction(
   "BPD_TRANSACTIONS_COUNT_BY_DAY_SUCCESS",
   "BPD_TRANSACTIONS_COUNT_BY_DAY_FAILURE"
 )<AwardPeriodId, TrxCountByDayResource, BpdTransactionsError>();
+
+export type TrxMilestonePayload = WithAwardPeriodId & {
+  result: MilestoneResource;
+};
+
+export const bpdTransactionsLoadMilestone = createAsyncAction(
+  "BPD_TRANSACTIONS_MILESTONE_REQUEST",
+  "BPD_TRANSACTIONS_MILESTONE_SUCCESS",
+  "BPD_TRANSACTIONS_MILESTONE_FAILURE"
+)<AwardPeriodId, TrxMilestonePayload, BpdTransactionsError>();
 
 export type BpdTransactionsAction =
   | ActionType<typeof bpdTransactionsLoad>

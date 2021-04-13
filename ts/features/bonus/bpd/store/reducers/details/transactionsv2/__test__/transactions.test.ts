@@ -62,6 +62,29 @@ describe("Test BpdTransactionsV2State store", () => {
       awardPeriodTest.awardPeriodId
     );
   });
+  it("When the action bpdTransactionsLoadPage.failure is dispatched, the store should have the right shape", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    const testError = new Error("Test Error");
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(
+      bpdTransactionsLoadPage.failure({
+        ...awardPeriodTest,
+        error: new Error("Test Error")
+      })
+    );
+
+    const transactionsStore = store.getState().bonus.bpd.details.transactionsV2;
+
+    expect(transactionsStore.ui.sectionItems).toStrictEqual({
+      error: testError,
+      kind: "PotNoneError"
+    });
+
+    expect(transactionsStore.ui.period).toStrictEqual(
+      awardPeriodTest.awardPeriodId
+    );
+  });
   it("When the action bpdTransactionsLoadPage.success is dispatched, the store should have the right shape", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);

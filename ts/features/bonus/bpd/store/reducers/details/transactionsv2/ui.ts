@@ -68,7 +68,7 @@ export const bpdTransactionsUiReducer = (
         period: action.payload.awardPeriodId,
         nextCursor: state.nextCursor,
         sectionItems:
-          action.payload.nextCursor === null
+          action.payload.awardPeriodId !== state.period
             ? pot.noneLoading
             : pot.toLoading(state.sectionItems)
       };
