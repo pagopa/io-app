@@ -37,7 +37,7 @@ const pageThree: WinningTransactionsOfTheDayResource = {
   date: new Date("2021-01-02"),
   transactions: [
     { ...transactionTemplate, idTrx: "D" },
-    { ...transactionTemplate, idTrx: "E" }
+    { ...transactionTemplate, idTrx: "E", cashback: 15 }
   ]
 };
 
@@ -233,7 +233,7 @@ describe("Test the paginate transaction normalization", () => {
         },
         {
           idTrx: "E",
-          cashback: transactionTemplate.cashback,
+          cashback: 15,
           validForCashback: true
         }
       ];
