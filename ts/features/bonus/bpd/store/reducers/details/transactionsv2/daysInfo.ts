@@ -14,6 +14,7 @@ export type BpdTransactionsDayInfo = {
 };
 
 export type BpdTransactionsDaysInfoState = {
+  // the DaysInfo are requested in bulk for a specific period, for this reason all the IndexedById object is a pot
   byId: pot.Pot<IndexedById<BpdTransactionsDayInfo>, Error>;
 };
 
@@ -21,6 +22,12 @@ const initState: BpdTransactionsDaysInfoState = {
   byId: pot.none
 };
 
+/**
+ * Access to the byId entry for the selected period
+ * @param input
+ * @param period
+ * @param newVal
+ */
 const updateById = (
   input: IndexedById<BpdTransactionsDaysInfoState>,
   period: AwardPeriodId,
@@ -32,10 +39,15 @@ const updateById = (
   }
 });
 
+/**
+ * Get the BpdTransactionsDaysInfoState for a specific period
+ * @param state
+ * @param id
+ */
 const getPeriodEntry = (
   state: IndexedById<BpdTransactionsDaysInfoState>,
   id: AwardPeriodId
-) => state[id] ?? initState;
+): BpdTransactionsDaysInfoState => state[id] ?? initState;
 
 export const bpdTransactionsDaysInfoReducer = (
   state: IndexedById<BpdTransactionsDaysInfoState> = {},

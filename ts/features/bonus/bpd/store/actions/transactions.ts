@@ -39,6 +39,9 @@ export type BpdTransaction = WithAwardPeriodId & {
   circuitType: CircuitType;
 };
 
+/**
+ * Unique Id for BpdTransactions
+ */
 export type BpdTransactionId = string & IUnitTag<"BpdTransactionId">;
 
 // TODO: integrate in BpdTransaction after removing the feature flag
@@ -72,6 +75,9 @@ type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
   results: WinningTransactionPageResource;
 };
 
+/**
+ * Load a page of transactions for a specific period
+ */
 export const bpdTransactionsLoadPage = createAsyncAction(
   "BPD_TRANSACTIONS_PAGE_REQUEST",
   "BPD_TRANSACTIONS_PAGE_SUCCESS",
@@ -86,6 +92,9 @@ export type TrxCountByDayResource = WithAwardPeriodId & {
   results: TrxCountByDayResourceArray;
 };
 
+/**
+ * Load the countByDay stats for a specific period
+ */
 export const bpdTransactionsLoadCountByDay = createAsyncAction(
   "BPD_TRANSACTIONS_COUNT_BY_DAY_REQUEST",
   "BPD_TRANSACTIONS_COUNT_BY_DAY_SUCCESS",
@@ -96,6 +105,9 @@ export type TrxMilestonePayload = WithAwardPeriodId & {
   result: BpdPivotTransaction;
 };
 
+/**
+ * Load the milestone pivot for a specific period
+ */
 export const bpdTransactionsLoadMilestone = createAsyncAction(
   "BPD_TRANSACTIONS_MILESTONE_REQUEST",
   "BPD_TRANSACTIONS_MILESTONE_SUCCESS",

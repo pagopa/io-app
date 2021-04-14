@@ -36,6 +36,7 @@ const bpdDetailsReducer = combineReducers<BpdDetailsState, Action>({
   // the current period displayed, selected by the user
   selectedPeriod: bpdSelectedPeriodsReducer,
   transactions: bpdTransactionsReducer,
+  // TODO: replace with transactions when completed
   transactionsV2: bpdTransactionsV2Reducer,
   // the last time we received updated data
   lastUpdate: bpdLastUpdateReducer
