@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
+import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
 import {
-  lastPaymentOutcomeCodeSelector,
-  paymentSelector
-} from "../../../store/reducers/wallet/outcomeCode";
+  paymentSelector,
+  paymentPspsSelector,
+  paymentVerificaSelector
+} from "../../../store/reducers/wallet/payment";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -32,7 +34,7 @@ const successBody = (emailAddress: string) => (
 const successComponent = (emailAddress: string, amount: string) => (
   <InfoScreenComponent
     image={renderInfoRasterImage(paymentCompleted)}
-    title={`${I18n.t("payment.paidConfirm")} ${amount}`}
+    title={I18n.t("payment.paidConfirm", { amount })}
     body={successBody(emailAddress)}
   />
 );
@@ -58,11 +60,9 @@ const successFooter = (onClose: () => void) => (
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
-  const { psps, verifica } = props.payment;
-
   const totalAmount =
-    (verifica.value.importoSingoloVersamento as number) +
-    (psps.value[0].fixedCost.amount as number);
+    (props.verifica.value.importoSingoloVersamento as number) +
+    (props.psps.value[0].fixedCost.amount as number);
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
@@ -86,7 +86,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
-  payment: paymentSelector(state)
+  payment: paymentSelector(state),
+  psps: paymentPspsSelector(state),
+  verifica: paymentVerificaSelector(state)
 });
 
 export default connect(

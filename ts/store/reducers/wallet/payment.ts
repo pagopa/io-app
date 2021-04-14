@@ -95,6 +95,14 @@ export const isPaymentOngoingSelector = (state: GlobalState) =>
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;
 
+export const paymentSelector = (state: GlobalState) => state.wallet.payment;
+
+export const paymentVerificaSelector = (state: GlobalState) =>
+  state.wallet.payment.verifica;
+
+export const paymentPspsSelector = (state: GlobalState) =>
+  state.wallet.payment.psps;
+
 export const pmSessionTokenSelector = (
   state: GlobalState
 ): RemoteValue<PaymentManagerToken, Error> =>
