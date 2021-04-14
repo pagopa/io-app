@@ -10,14 +10,21 @@ import {
   bpdTransactionsLoadPage
 } from "../../../actions/transactions";
 
+/**
+ * The type that represents a section item that will be rendered with a SectionList.
+ * Each section contains an header (dayInfoId) and a list of trxId (trxList)
+ */
 type BpdTransactionsSectionItem = {
   dayInfoId: string;
-  list: ReadonlyArray<BpdTransactionId>;
+  trxList: ReadonlyArray<BpdTransactionId>;
 };
 
+/**
+ * Describe this store section, dedicated to rendering paginated transactions.
+ */
 export type BpdTransactionsUiState = {
   nextCursor: number | null;
-  period: AwardPeriodId | null;
+  awardPeriodId: AwardPeriodId | null;
   sectionItems: pot.Pot<IndexedById<BpdTransactionsSectionItem>, Error>;
 };
 
@@ -35,14 +42,19 @@ const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
     {}
   );
 
-const combiner = (
+/**
+ * Helper function for mergeWith, in order to merge the inner list of transactions
+ * @param obj
+ * @param dst
+ */
+const customizer = (
   obj: BpdTransactionsSectionItem | undefined,
   dst: BpdTransactionsSectionItem | undefined
 ): BpdTransactionsSectionItem | undefined => {
   if (obj !== undefined && dst !== undefined) {
     return {
       dayInfoId: dst.dayInfoId,
-      list: obj.list.concat(dst.list)
+      trxList: obj.trxList.concat(dst.trxList)
     };
   }
 
@@ -53,7 +65,7 @@ const combiner = (
 };
 
 const initState: BpdTransactionsUiState = {
-  period: null,
+  awardPeriodId: null,
   sectionItems: pot.none,
   nextCursor: null
 };
@@ -65,10 +77,10 @@ export const bpdTransactionsUiReducer = (
   switch (action.type) {
     case getType(bpdTransactionsLoadPage.request):
       return {
-        period: action.payload.awardPeriodId,
+        awardPeriodId: action.payload.awardPeriodId,
         nextCursor: state.nextCursor,
         sectionItems:
-          action.payload.awardPeriodId !== state.period
+          action.payload.awardPeriodId !== state.awardPeriodId
             ? pot.noneLoading
             : pot.toLoading(state.sectionItems)
       };
@@ -79,15 +91,15 @@ export const bpdTransactionsUiReducer = (
       );
 
       return {
-        period: action.payload.awardPeriodId,
+        awardPeriodId: action.payload.awardPeriodId,
         nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
-          _.mergeWith(currentSectionItems, newSectionItems, combiner)
+          _.mergeWith(currentSectionItems, newSectionItems, customizer)
         )
       };
     case getType(bpdTransactionsLoadPage.failure):
       return {
-        period: action.payload.awardPeriodId,
+        awardPeriodId: action.payload.awardPeriodId,
         nextCursor: state.nextCursor,
         sectionItems: pot.toError(state.sectionItems, action.payload.error)
       };

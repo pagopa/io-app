@@ -58,7 +58,7 @@ describe("Test BpdTransactionsV2State store", () => {
 
     expect(transactionsStore.ui.sectionItems).toStrictEqual(pot.noneLoading);
 
-    expect(transactionsStore.ui.period).toStrictEqual(
+    expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
       awardPeriodTest.awardPeriodId
     );
   });
@@ -81,7 +81,7 @@ describe("Test BpdTransactionsV2State store", () => {
       kind: "PotNoneError"
     });
 
-    expect(transactionsStore.ui.period).toStrictEqual(
+    expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
       awardPeriodTest.awardPeriodId
     );
   });
@@ -110,10 +110,10 @@ describe("Test BpdTransactionsV2State store", () => {
       );
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateId]?.list
+        transactionsStore.ui.sectionItems.value[dateId]?.trxList
       ).toStrictEqual(expectedTrxId);
     }
-    expect(transactionsStore.ui.period).toStrictEqual(
+    expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
       awardPeriodTest.awardPeriodId
     );
     expect(transactionsStore.ui.nextCursor).toBeNull();
@@ -167,7 +167,7 @@ describe("Test BpdTransactionsV2State store", () => {
 
     expect(transactionsStore.ui.sectionItems.kind).toStrictEqual("PotSome");
 
-    expect(transactionsStore.ui.period).toStrictEqual(
+    expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
       awardPeriodTest.awardPeriodId
     );
 
@@ -182,11 +182,11 @@ describe("Test BpdTransactionsV2State store", () => {
       ).toBe(dateIdDayTwo);
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.list
+        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.trxList
       ).toStrictEqual(expectedTrxDayOne);
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.list
+        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.trxList
       ).toStrictEqual(expectedTrxDayTwo);
     }
 
