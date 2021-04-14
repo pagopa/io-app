@@ -23,8 +23,8 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
-import BancomatInformation from "./BancomatInformation";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
