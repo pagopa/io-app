@@ -1,27 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
-import { WinningTransactionMilestoneResource } from "../../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionMilestoneResource";
 import { WinningTransactionsOfTheDayResource } from "../../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionsOfTheDayResource";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../../store/reducers";
-import { AwardPeriodId, WithAwardPeriodId } from "../../../../actions/periods";
 import { bpdTransactionsLoadPage } from "../../../../actions/transactions";
-
-const awardPeriodTest: WithAwardPeriodId = {
-  awardPeriodId: 1 as AwardPeriodId
-};
-
-const transactionTemplate: WinningTransactionMilestoneResource = {
-  awardPeriodId: awardPeriodTest.awardPeriodId,
-  idTrx: "1",
-  idTrxIssuer: "idTrxIssuer",
-  idTrxAcquirer: "idTrxIssuer",
-  cashback: 15,
-  hashPan: "hPan",
-  circuitType: "01",
-  trxDate: new Date("2021-01-01"),
-  amount: 150
-};
+import {
+  awardPeriodTemplate,
+  transactionTemplate
+} from "../__mock__/transactions";
 
 const pageOne: WinningTransactionsOfTheDayResource = {
   date: new Date("2021-01-01"),
@@ -52,24 +38,24 @@ describe("Test BpdTransactionsV2State store", () => {
   it("When the action bpdTransactionsLoadPage.request is dispatched, the store should have the right shape", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
 
     const transactionsStore = store.getState().bonus.bpd.details.transactionsV2;
 
     expect(transactionsStore.ui.sectionItems).toStrictEqual(pot.noneLoading);
 
     expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
-      awardPeriodTest.awardPeriodId
+      awardPeriodTemplate.awardPeriodId
     );
   });
   it("When the action bpdTransactionsLoadPage.failure is dispatched, the store should have the right shape", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     const testError = new Error("Test Error");
-    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
     store.dispatch(
       bpdTransactionsLoadPage.failure({
-        ...awardPeriodTest,
+        ...awardPeriodTemplate,
         error: new Error("Test Error")
       })
     );
@@ -82,16 +68,16 @@ describe("Test BpdTransactionsV2State store", () => {
     });
 
     expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
-      awardPeriodTest.awardPeriodId
+      awardPeriodTemplate.awardPeriodId
     );
   });
   it("When the action bpdTransactionsLoadPage.success is dispatched, the store should have the right shape", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
     store.dispatch(
       bpdTransactionsLoadPage.success({
-        ...awardPeriodTest,
+        ...awardPeriodTemplate,
         results: {
           transactions: [pageOne]
         }
@@ -114,12 +100,12 @@ describe("Test BpdTransactionsV2State store", () => {
       ).toStrictEqual(expectedTrxId);
     }
     expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
-      awardPeriodTest.awardPeriodId
+      awardPeriodTemplate.awardPeriodId
     );
     expect(transactionsStore.ui.nextCursor).toBeNull();
 
     const entities =
-      transactionsStore.entitiesByPeriod[awardPeriodTest.awardPeriodId];
+      transactionsStore.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
 
     expect(entities).toBeDefined();
 
@@ -135,13 +121,13 @@ describe("Test BpdTransactionsV2State store", () => {
     }
   });
 
-  it("When multiple action bpdTransactionsLoadPage.success are dispatched, the store should have the right shape and add the new data", () => {
+  it("When multiple action bpdTransactionsLoadPage.success are dispatched, the store should have the right shape and add merge correctly the new data", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTest));
+    store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
     store.dispatch(
       bpdTransactionsLoadPage.success({
-        ...awardPeriodTest,
+        ...awardPeriodTemplate,
         results: {
           nextCursor: 1,
           transactions: [pageOne]
@@ -149,11 +135,11 @@ describe("Test BpdTransactionsV2State store", () => {
       })
     );
     store.dispatch(
-      bpdTransactionsLoadPage.request({ ...awardPeriodTest, nextCursor: 1 })
+      bpdTransactionsLoadPage.request({ ...awardPeriodTemplate, nextCursor: 1 })
     );
     store.dispatch(
       bpdTransactionsLoadPage.success({
-        ...awardPeriodTest,
+        ...awardPeriodTemplate,
         results: {
           nextCursor: 2,
           transactions: [pageTwo, pageThree]
@@ -168,7 +154,7 @@ describe("Test BpdTransactionsV2State store", () => {
     expect(transactionsStore.ui.sectionItems.kind).toStrictEqual("PotSome");
 
     expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
-      awardPeriodTest.awardPeriodId
+      awardPeriodTemplate.awardPeriodId
     );
 
     if (pot.isSome(transactionsStore.ui.sectionItems)) {
@@ -193,7 +179,7 @@ describe("Test BpdTransactionsV2State store", () => {
     expect(transactionsStore.ui.nextCursor).toBe(2);
 
     const entities =
-      transactionsStore.entitiesByPeriod[awardPeriodTest.awardPeriodId];
+      transactionsStore.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
 
     expect(entities).toBeDefined();
 

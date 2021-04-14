@@ -58,13 +58,15 @@ const updatePeriodEntry = (
  * - pivot !== null && found, the cashback transaction has the full value
  * @param transactions
  * @param pivot
+ * @param foundPivot
  */
 const normalizeCashback = (
   transactions: ReadonlyArray<WinningTransactionMilestoneResource>,
-  pivot: BpdPivotTransaction | null
+  pivot: BpdPivotTransaction | null,
+  foundPivot: boolean
 ): NormalizedTransactions => {
   // eslint-disable-next-line functional/no-let
-  let found = false;
+  let found = foundPivot;
   return {
     data: transactions.map(x => {
       if (found || pivot === null) {
@@ -90,14 +92,18 @@ const updateTransactions = (
   newPage: WinningTransactionPageResource
 ): BpdTransactionsEntityState => {
   // eslint-disable-next-line functional/no-let
-  let foundPivot = false;
+  let foundPivot = state.foundPivot;
 
   const flatTransactions = newPage.transactions.reduce<
     IndexedById<BpdTransactionV2>
   >((acc, val) => {
     const pivot = pot.getOrElse(state.pivot, null);
 
-    const transactionsNormalized = normalizeCashback(val.transactions, pivot);
+    const transactionsNormalized = normalizeCashback(
+      val.transactions,
+      pivot,
+      state.foundPivot
+    );
     if (!foundPivot && transactionsNormalized.found) {
       foundPivot = true;
     }
@@ -147,7 +153,8 @@ export const bpdTransactionsEntityReducer = (
       );
       const { data, found } = normalizeCashback(
         toArray(periodMilestoneSuccess.byId),
-        action.payload.result
+        action.payload.result,
+        periodMilestoneSuccess.foundPivot
       );
       return {
         ...state,
