@@ -576,4 +576,4 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
-      - io_check_cie_button_exists_ios
+      # - io_check_cie_button_exists_ios
