@@ -9,7 +9,6 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { fromNullable, none } from "fp-ts/lib/Option";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 
@@ -42,9 +41,6 @@ import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
-import ExpiredCardAdvice from "../../features/wallet/component/ExpiredCardAdvice";
-import { isCardExpired } from "../../utils/wallet";
-import { navigateToWalletAddCreditCard } from "../../store/actions/navigation";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -155,9 +151,6 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         ? getTitleFromCard(selectedWallet.paymentMethod)
         : FOUR_UNICODE_CIRCLES
   });
-  const isExpired = fromNullable(selectedWallet.paymentMethod?.info)
-    .chain(isCardExpired)
-    .getOrElse(false);
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -187,30 +180,24 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         <>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer={true} extralarge={true} />
-            {isExpired ? (
-              <ExpiredCardAdvice navigateToAddCard={props.startAddCreditCard} />
-            ) : (
-              <>
-                <PaymentMethodCapabilities paymentMethod={pm} />
-                <View spacer={true} />
-                <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} large={true} />
-                <FavoritePaymentMethodSwitch
-                  isLoading={
-                    pot.isLoading(props.favoriteWalletRequestStatus) ||
-                    pot.isUpdating(props.favoriteWalletRequestStatus)
-                  }
-                  switchValue={pot.getOrElse(isFavorite, false)}
-                  onValueChange={v =>
-                    handleSetFavourite(v, () =>
-                      props.setFavoriteWallet(pm.idWallet)
-                    )
-                  }
-                />
-                <View spacer={true} />
-                <ItemSeparatorComponent noPadded={true} />
-              </>
-            )}
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <FavoritePaymentMethodSwitch
+              isLoading={
+                pot.isLoading(props.favoriteWalletRequestStatus) ||
+                pot.isUpdating(props.favoriteWalletRequestStatus)
+              }
+              switchValue={pot.getOrElse(isFavorite, false)}
+              onValueChange={v =>
+                handleSetFavourite(v, () =>
+                  props.setFavoriteWallet(pm.idWallet)
+                )
+              }
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} />
             <DeletePaymentMethodButton
               onPress={() =>
@@ -232,12 +219,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startAddCreditCard: () =>
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: none
-      })
-    ),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>

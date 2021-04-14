@@ -1,6 +1,6 @@
 import { Button, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -21,10 +21,6 @@ import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboardi
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import pagoBancomatImage from "../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import ExpiredCardAdvice from "../../component/ExpiredCardAdvice";
-import { walletAddBancomatStart } from "../../onboarding/bancomat/store/actions";
-
-import { isCardExpired } from "../../../../utils/wallet";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -86,8 +82,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
 
-  const maybeExpired = isCardExpired(bancomat.info);
-
   return (
     <DarkLayout
       bounces={false}
@@ -106,20 +100,11 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} />
 
       <View style={IOStyles.horizontalContentPadding}>
-        {maybeExpired.getOrElse(false) ? (
-          <ExpiredCardAdvice navigateToAddCard={props.navigateToAddCard} />
-        ) : (
-          <>
-            <PaymentMethodCapabilities paymentMethod={bancomat} />
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} />
-            <BancomatInformation
-              onAddPaymentMethod={() => startCoBadge(props)}
-            />
-          </>
-        )}
-
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
@@ -131,18 +116,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToAddCard: () => {
-    Alert.alert(
-      I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.title"),
-      I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.body"),
-      [
-        {
-          text: I18n.t("wallet.onboarding.bancomat.pleaseWaitDialog.confirm"),
-          onPress: () => dispatch(walletAddBancomatStart())
-        }
-      ]
-    );
-  },
   // using the legacy action with callback instead of using the redux state to read the results
   // for time reasons...
   deleteWallet: (walletId: number) =>
