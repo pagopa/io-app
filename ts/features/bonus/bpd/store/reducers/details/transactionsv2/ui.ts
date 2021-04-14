@@ -31,12 +31,12 @@ export type BpdTransactionsUiState = {
 const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
   page: WinningTransactionPageResource
 ): IndexedById<BpdTransactionsSectionItem> =>
-  page.transactions.reduce(
+  page.transactions.reduce<IndexedById<BpdTransactionsSectionItem>>(
     (acc, val) => ({
       ...acc,
       [val.date.toISOString()]: {
         dayInfoId: val.date.toISOString(),
-        list: val.transactions.map(trx => trx.idTrx as BpdTransactionId)
+        trxList: val.transactions.map(trx => trx.idTrx as BpdTransactionId)
       }
     }),
     {}
