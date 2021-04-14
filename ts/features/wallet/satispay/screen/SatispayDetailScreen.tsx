@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -11,6 +12,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
@@ -19,6 +21,7 @@ import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import SatispayInformation from "./SatispayInformation";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -65,31 +68,42 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
     caption: I18n.t("wallet.methods.satispay.name")
   });
   return (
-    <DarkLayout
-      bounces={false}
-      contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.card.shortName")}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      <View style={styles.cardContainer}>
-        <SatispayCard />
-      </View>
-      <View spacer={true} extralarge={true} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={satispay} />
-        <View spacer={true} />
-        <SatispayInformation />
-        <View spacer={true} large={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
         />
-      </View>
-      <View spacer={true} extralarge={true} />
-    </DarkLayout>
+      ) : (
+        <DarkLayout
+          bounces={false}
+          contextualHelp={emptyContextualHelp}
+          title={I18n.t("wallet.methods.card.shortName")}
+          faqCategories={["wallet_methods"]}
+          allowGoBack={true}
+          topContent={<View style={styles.headerSpacer} />}
+          gradientHeader={true}
+          hideHeader={true}
+        >
+          <View style={styles.cardContainer}>
+            <SatispayCard />
+          </View>
+          <View spacer={true} extralarge={true} />
+          <View style={IOStyles.horizontalContentPadding}>
+            <PaymentMethodCapabilities paymentMethod={satispay} />
+            <View spacer={true} />
+            <SatispayInformation />
+            <View spacer={true} large={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(satispay.idWallet))
+              }
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+        </DarkLayout>
+      )}
+    </>
   );
 };
 
@@ -111,7 +125,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

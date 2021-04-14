@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Button, View } from "native-base";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
@@ -6,6 +7,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { PrivativePaymentMethod } from "../../../../types/pagopa";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -17,6 +19,7 @@ import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BasePrivativeCard from "../component/card/BasePrivativeCard";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   privative: PrivativePaymentMethod;
@@ -64,36 +67,48 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <DarkLayout
-      bounces={false}
-      contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.creditCard.details.header")}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      <View style={styles.cardContainer}>
-        <BasePrivativeCard
-          loyaltyLogo={privative.icon}
-          caption={privative.caption}
-          gdoLogo={privative.gdoLogo}
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
         />
-      </View>
-      <View spacer={true} extralarge={true} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={privative} />
-        <View spacer={true} />
-        <View spacer={true} large={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(privative.idWallet))}
-        />
-      </View>
-      <View spacer={true} extralarge={true} />
-    </DarkLayout>
+      ) : (
+        <DarkLayout
+          bounces={false}
+          contextualHelp={emptyContextualHelp}
+          title={I18n.t("wallet.creditCard.details.header")}
+          faqCategories={["wallet_methods"]}
+          allowGoBack={true}
+          topContent={<View style={styles.headerSpacer} />}
+          gradientHeader={true}
+          hideHeader={true}
+        >
+          <View style={styles.cardContainer}>
+            <BasePrivativeCard
+              loyaltyLogo={privative.icon}
+              caption={privative.caption}
+              gdoLogo={privative.gdoLogo}
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+          <View style={IOStyles.horizontalContentPadding}>
+            <PaymentMethodCapabilities paymentMethod={privative} />
+            <View spacer={true} />
+            <View spacer={true} large={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(privative.idWallet))
+              }
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+        </DarkLayout>
+      )}
+    </>
   );
 };
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   deleteWallet: (walletId: number) =>
     dispatch(
@@ -110,7 +125,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

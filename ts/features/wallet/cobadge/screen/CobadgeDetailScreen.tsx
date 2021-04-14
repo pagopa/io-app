@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
@@ -8,6 +9,7 @@ import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
@@ -18,6 +20,7 @@ import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
 import CobadgeCard from "../component/CoBadgeCard";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
@@ -65,30 +68,41 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     caption: cobadge.caption
   });
   return (
-    <DarkLayout
-      bounces={false}
-      contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.creditCard.details.header")}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      <View style={styles.cardContainer}>
-        <CobadgeCard enhancedCoBadge={cobadge} />
-      </View>
-      <View spacer={true} extralarge={true} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={cobadge} />
-        <View spacer={true} />
-        <View spacer={true} large={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
         />
-      </View>
-      <View spacer={true} extralarge={true} />
-    </DarkLayout>
+      ) : (
+        <DarkLayout
+          bounces={false}
+          contextualHelp={emptyContextualHelp}
+          title={I18n.t("wallet.creditCard.details.header")}
+          faqCategories={["wallet_methods"]}
+          allowGoBack={true}
+          topContent={<View style={styles.headerSpacer} />}
+          gradientHeader={true}
+          hideHeader={true}
+        >
+          <View style={styles.cardContainer}>
+            <CobadgeCard enhancedCoBadge={cobadge} />
+          </View>
+          <View spacer={true} extralarge={true} />
+          <View style={IOStyles.horizontalContentPadding}>
+            <PaymentMethodCapabilities paymentMethod={cobadge} />
+            <View spacer={true} />
+            <View spacer={true} large={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(cobadge.idWallet))
+              }
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+        </DarkLayout>
+      )}
+    </>
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -107,7 +121,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

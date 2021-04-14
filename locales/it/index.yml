@@ -1311,6 +1311,7 @@ wallet:
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
+      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:

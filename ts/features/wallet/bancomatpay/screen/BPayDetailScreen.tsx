@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -11,6 +12,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
@@ -18,6 +20,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import BPayCard from "../component/BPayCard";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   bPay: BPayPaymentMethod;
@@ -64,34 +67,43 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
     caption: I18n.t("wallet.methods.bancomatPay.name")
   });
   return (
-    <DarkLayout
-      bounces={false}
-      contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.bancomatPay.name")}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-    >
-      <View style={styles.cardContainer}>
-        <BPayCard
-          phone={bPay.info.numberObfuscated}
-          bankName={bPay.caption}
-          abiLogo={bPay.abiInfo?.logoUrl}
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
         />
-      </View>
-      <View spacer={true} extralarge={true} />
-      <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bPay} />
-        <View spacer={true} />
-        <View spacer={true} large={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bPay.idWallet))}
-        />
-      </View>
-      <View spacer={true} extralarge={true} />
-    </DarkLayout>
+      ) : (
+        <DarkLayout
+          bounces={false}
+          contextualHelp={emptyContextualHelp}
+          title={I18n.t("wallet.methods.bancomatPay.name")}
+          faqCategories={["wallet_methods"]}
+          allowGoBack={true}
+          topContent={<View style={styles.headerSpacer} />}
+          gradientHeader={true}
+          hideHeader={true}
+        >
+          <View style={styles.cardContainer}>
+            <BPayCard
+              phone={bPay.info.numberObfuscated}
+              bankName={bPay.caption}
+              abiLogo={bPay.abiInfo?.logoUrl}
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+          <View style={IOStyles.horizontalContentPadding}>
+            <PaymentMethodCapabilities paymentMethod={bPay} />
+            <View spacer={true} />
+            <View spacer={true} large={true} />
+            <UnsubscribeButton
+              onPress={() => present(() => props.deleteWallet(bPay.idWallet))}
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+        </DarkLayout>
+      )}
+    </>
   );
 };
 
@@ -111,6 +123,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BPayDetailScreen);

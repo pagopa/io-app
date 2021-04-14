@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -13,6 +14,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -22,6 +24,7 @@ import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePayment
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
 import BancomatInformation from "./BancomatInformation";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
@@ -82,37 +85,50 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
   return (
-    <DarkLayout
-      bounces={false}
-      title={I18n.t("wallet.methods.card.shortName")}
-      faqCategories={["wallet_methods"]}
-      allowGoBack={true}
-      topContent={<View style={styles.headerSpacer} />}
-      gradientHeader={true}
-      hideHeader={true}
-      contextualHelp={emptyContextualHelp}
-    >
-      <View style={styles.cardContainer}>
-        <BancomatCard enhancedBancomat={bancomat} />
-      </View>
-      <View spacer={true} extralarge={true} />
-      <View spacer={true} />
-
-      <View style={IOStyles.horizontalContentPadding}>
-        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
-        <View spacer={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} />
-        <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
         />
-      </View>
-      <View spacer={true} extralarge={true} />
-    </DarkLayout>
+      ) : (
+        <DarkLayout
+          bounces={false}
+          title={I18n.t("wallet.methods.card.shortName")}
+          faqCategories={["wallet_methods"]}
+          allowGoBack={true}
+          topContent={<View style={styles.headerSpacer} />}
+          gradientHeader={true}
+          hideHeader={true}
+          contextualHelp={emptyContextualHelp}
+        >
+          <View style={styles.cardContainer}>
+            <BancomatCard enhancedBancomat={bancomat} />
+          </View>
+          <View spacer={true} extralarge={true} />
+          <View spacer={true} />
+
+          <View style={IOStyles.horizontalContentPadding}>
+            <BancomatInformation
+              onAddPaymentMethod={() => startCoBadge(props)}
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <PaymentMethodCapabilities paymentMethod={bancomat} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <UnsubscribeButton
+              onPress={() =>
+                present(() => props.deleteWallet(bancomat.idWallet))
+              }
+            />
+          </View>
+          <View spacer={true} extralarge={true} />
+        </DarkLayout>
+      )}
+    </>
   );
 };
 
@@ -141,7 +157,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isLoadingDelete: pot.isLoading(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,
