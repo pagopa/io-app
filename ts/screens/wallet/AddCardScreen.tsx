@@ -45,7 +45,9 @@ import {
   getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
   CreditCardStateKeys,
-  isValidCardHolder
+  isValidCardHolder,
+  CreditCardExpirationYear,
+  CreditCardExpirationMonth
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -163,12 +165,18 @@ const isCreditCardDateExpiredOrInvalid = (
       if (splitted.length !== 2) {
         return none;
       }
+
       return some([splitted[0], splitted[1]]);
     })
     .chain(my => {
-      const maybeExpired = isExpired(my[0], my[1]);
-      // if the input is not valid (maybeExpired->none) return true
-      return maybeExpired.isSome() ? maybeExpired : some(true);
+      // if the input is not in the required format mm/yy
+      if (
+        !CreditCardExpirationMonth.is(my[0]) ||
+        !CreditCardExpirationYear.is(my[1])
+      ) {
+        return some(true);
+      }
+      return isExpired(my[0], my[1]);
     });
 
 const AddCardScreen: React.FC<Props> = props => {
