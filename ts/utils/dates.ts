@@ -80,7 +80,7 @@ export const dateFromMonthAndYear = (
   const monthStr = (month ?? "").toString().trim().padStart(2, "0");
   // eslint-disable-next-line functional/no-let
   let yearStr = (year ?? "").toString().trim();
-  // check that month is included matches the pattern (01-12)
+  // check that month matches the pattern (01-12)
   if (!CreditCardExpirationMonth.is(monthStr)) {
     return none;
   }
