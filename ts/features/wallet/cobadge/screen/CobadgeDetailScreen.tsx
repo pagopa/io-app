@@ -81,8 +81,8 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
         <PaymentMethodCapabilities paymentMethod={cobadge} />
-        <View spacer={true} large={true} />
         <View spacer={true} />
+        <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
         />

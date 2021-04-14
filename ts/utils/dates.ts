@@ -103,7 +103,8 @@ export const dateFromMonthAndYear = (
 
 /**
  * if expireMonth and expireYear are defined and they represent a number
- * return some(true) if the given date is expired compared with now.
+ * return some, with 'true' if the given date is expired compared with now.
+ * return none if the input is not valid
  * {@expireYear could be 2 or 4 digits}
  * note: it compares the last day of the month
  * example: 03/21 becomes a comparison between 31/03/2021 and current time
