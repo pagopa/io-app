@@ -52,7 +52,7 @@ type TransactionTestCheck = {
   validForCashback: boolean;
 };
 
-describe("Test the paginate transaction normalization", () => {
+describe("Test the paginated transaction normalization", () => {
   it("When no pivot is present, the cashback amount should not be normalized", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
