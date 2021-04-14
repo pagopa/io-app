@@ -42,7 +42,7 @@ import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -131,8 +131,6 @@ const headerContent = (
 const TransactionsScreen: React.FC<Props> = (props: Props) => {
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
-  const loadingCaption = I18n.t("cardComponent.deleteLoading");
-
   const isFavorite = pot.map(
     props.favoriteWalletId,
     _ => _ === selectedWallet.idWallet
@@ -156,8 +154,6 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         : FOUR_UNICODE_CIRCLES
   });
 
-  const onRetry = () => props.deleteWallet(selectedWallet.idWallet);
-
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -168,65 +164,64 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     </ButtonDefaultOpacity>
   );
 
-  if (props.isLoadingDelete) {
-    return (
-      <LoadingErrorComponent
-        isLoading={props.isLoadingDelete}
-        loadingCaption={loadingCaption}
-        onRetry={onRetry}
-      />
-    );
-  }
-
   return (
-    <WalletLayout
-      title={I18n.t("wallet.paymentMethod")}
-      allowGoBack={true}
-      topContent={headerContent(
-        selectedWallet,
-        isFavorite,
-        props.setFavoriteWallet,
-        props.deleteWallet
+    <>
+      {props.isLoadingDelete ? (
+        <LoadingSpinnerOverlay
+          isLoading={props.isLoadingDelete}
+          loadingCaption={I18n.t("cardComponent.deleteLoading")}
+        />
+      ) : (
+        <WalletLayout
+          title={I18n.t("wallet.paymentMethod")}
+          allowGoBack={true}
+          topContent={headerContent(
+            selectedWallet,
+            isFavorite,
+            props.setFavoriteWallet,
+            props.deleteWallet
+          )}
+          hideHeader={true}
+          hasDynamicSubHeader={true}
+          topContentHeight={HEADER_HEIGHT}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["wallet_transaction"]}
+        >
+          {pm && (
+            <>
+              <View style={IOStyles.horizontalContentPadding}>
+                <View spacer={true} extralarge={true} />
+                <PaymentMethodCapabilities paymentMethod={pm} />
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} large={true} />
+                <FavoritePaymentMethodSwitch
+                  isLoading={
+                    pot.isLoading(props.favoriteWalletRequestStatus) ||
+                    pot.isUpdating(props.favoriteWalletRequestStatus)
+                  }
+                  switchValue={pot.getOrElse(isFavorite, false)}
+                  onValueChange={v =>
+                    handleSetFavourite(v, () =>
+                      props.setFavoriteWallet(pm.idWallet)
+                    )
+                  }
+                />
+                <View spacer={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} large={true} />
+                <DeletePaymentMethodButton
+                  onPress={() =>
+                    present(() => props.deleteWallet(selectedWallet.idWallet))
+                  }
+                />
+              </View>
+              <EdgeBorderComponent />
+            </>
+          )}
+        </WalletLayout>
       )}
-      hideHeader={true}
-      hasDynamicSubHeader={true}
-      topContentHeight={HEADER_HEIGHT}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet_transaction"]}
-    >
-      {pm && (
-        <>
-          <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} extralarge={true} />
-            <PaymentMethodCapabilities paymentMethod={pm} />
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} large={true} />
-            <FavoritePaymentMethodSwitch
-              isLoading={
-                pot.isLoading(props.favoriteWalletRequestStatus) ||
-                pot.isUpdating(props.favoriteWalletRequestStatus)
-              }
-              switchValue={pot.getOrElse(isFavorite, false)}
-              onValueChange={v =>
-                handleSetFavourite(v, () =>
-                  props.setFavoriteWallet(pm.idWallet)
-                )
-              }
-            />
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} large={true} />
-            <DeletePaymentMethodButton
-              onPress={() =>
-                present(() => props.deleteWallet(selectedWallet.idWallet))
-              }
-            />
-          </View>
-          <EdgeBorderComponent />
-        </>
-      )}
-    </WalletLayout>
+    </>
   );
 };
 
