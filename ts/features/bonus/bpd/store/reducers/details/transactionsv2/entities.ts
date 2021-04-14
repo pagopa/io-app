@@ -54,8 +54,8 @@ const updatePeriodEntry = (
 /**
  * Normalize the cashback amount for the transactions, using as ref the pivot transaction
  * - pivot === null, the user did not reach the max cashback amount and all the transactions are valid
- * - pivot !== null && not found && idTrx === pivot.id, pivot transaction found, all the following transaction are whole value
- * - pivot !== null && found, the cashback transaction has the full value
+ * - pivot !== null && not found && idTrx === pivot.id, pivot transaction found, all the following transaction have the complete value
+ * - pivot !== null && found, the cashback transaction has the complete value
  * @param transactions
  * @param pivot
  * @param foundPivot

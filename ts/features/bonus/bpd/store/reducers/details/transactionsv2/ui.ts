@@ -28,6 +28,10 @@ export type BpdTransactionsUiState = {
   sectionItems: pot.Pot<IndexedById<BpdTransactionsSectionItem>, Error>;
 };
 
+/**
+ * Extract the ids from the received payload
+ * @param page
+ */
 const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
   page: WinningTransactionPageResource
 ): IndexedById<BpdTransactionsSectionItem> =>
