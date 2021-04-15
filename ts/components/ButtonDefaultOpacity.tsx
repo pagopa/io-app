@@ -8,6 +8,7 @@ import {
 } from "react-native-gesture-handler";
 import customVariables from "../theme/variables";
 import { isIos } from "../utils/platform";
+import { useScreenReaderEnabled } from "../utils/accessibility";
 import { calculateSlop } from "./core/accessibility";
 
 const defaultActiveOpacity = 1.0;
@@ -58,8 +59,12 @@ const getSlopForCurrentButton = (props: Props): Insets => {
  */
 const ButtonDefaultOpacity = (props: Props) => {
   const hitSlop = getSlopForCurrentButton(props);
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+
   // use the alternative handling only if is request by props AND is android
-  const tapGestureRequired = props.onPressWithGestureHandler && !isIos;
+  // if the screenReader is active render common button or the button would not be pressable
+  const tapGestureRequired =
+    props.onPressWithGestureHandler && !isIos && !isScreenReaderEnabled;
 
   const button = (
     <Button

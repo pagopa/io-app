@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { Modal } from "react-native";
+import { IOStyles } from "../core/variables/IOStyles";
 
 /**
  * Accessibility version of a BottomSheet including a header and it's content
@@ -14,6 +15,6 @@ export const AccessibilityContent = (
   <Modal>
     <View spacer={true} extralarge={true} />
     {header}
-    {content}
+    <View style={IOStyles.horizontalContentPadding}>{content}</View>
   </Modal>
 );
