@@ -29,6 +29,10 @@ import {
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
 import {
+  FindUsingGETT as FindUsingGETTV2,
+  EnrollmentT as EnrollmentTV2
+} from "../../../../../definitions/bpd/citizen_v2/requestTypes";
+import {
   DeleteUsingDELETET,
   enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,
   EnrollmentPaymentInstrumentIOUsingPUTT,
@@ -43,7 +47,10 @@ import {
 import { fetchPaymentManagerLongTimeout } from "../../../../config";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
-import { PatchedCitizenResource } from "./patchedTypes";
+import {
+  PatchedCitizenResource,
+  PatchedCitizenV2Resource
+} from "./patchedTypes";
 
 const headersProducers = <
   P extends {
@@ -56,12 +63,23 @@ const headersProducers = <
   })) as RequestHeaderProducer<P, "Authorization">;
 
 /* CITIZEN (status, enroll, delete) */
+/**
+ * @deprecated
+ */
 type FindUsingGETTExtra = MapResponseType<
   FindUsingGETT,
   200,
   PatchedCitizenResource
 >;
 
+type FindV2UsingGETTExtra = MapResponseType<
+  FindUsingGETTV2,
+  200,
+  PatchedCitizenV2Resource
+>;
+/**
+ * @deprecated
+ */
 const findT: FindUsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen`,
@@ -70,11 +88,30 @@ const findT: FindUsingGETTExtra = {
   response_decoder: findUsingGETDecoder(PatchedCitizenResource)
 };
 
+const findV2T: FindV2UsingGETTExtra = {
+  method: "get",
+  url: () => `/bpd/io/citizen/v2`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDecoder(PatchedCitizenV2Resource)
+};
+
+/**
+ * @deprecated
+ */
 type EnrollmentTTExtra = MapResponseType<
   EnrollmentT,
   200,
   PatchedCitizenResource
 >;
+type EnrollmentV2TTExtra = MapResponseType<
+  EnrollmentTV2,
+  200,
+  PatchedCitizenV2Resource
+>;
+/**
+ * @deprecated
+ */
 const enrollCitizenIOT: EnrollmentTTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen`,
@@ -82,6 +119,14 @@ const enrollCitizenIOT: EnrollmentTTExtra = {
   body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
   response_decoder: enrollmentDecoder(PatchedCitizenResource)
+};
+const enrollCitizenV2IOT: EnrollmentV2TTExtra = {
+  method: "put",
+  url: () => `/bpd/io/citizen/v2`,
+  query: _ => ({}),
+  body: _ => "",
+  headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
+  response_decoder: enrollmentDecoder(PatchedCitizenV2Resource)
 };
 
 const deleteResponseDecoders = r.composeResponseDecoders(
@@ -296,9 +341,19 @@ export function BackendBpdClient(
   };
 
   return {
+    /**
+     * @deprecated
+     */
     find: withBearerToken(createFetchRequestForApi(findT, options)),
+    findV2: withBearerToken(createFetchRequestForApi(findV2T, options)),
+    /**
+     * @deprecated
+     */
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
+    ),
+    enrollCitizenV2IO: withBearerToken(
+      createFetchRequestForApi(enrollCitizenV2IOT, options)
     ),
     deleteCitizenIO: withBearerToken(
       createFetchRequestForApi(deleteCitizenIOT, options)
