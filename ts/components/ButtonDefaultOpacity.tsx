@@ -62,6 +62,7 @@ const ButtonDefaultOpacity = (props: Props) => {
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
   // use the alternative handling only if is request by props AND is android
+  // if the screenReader is active render common button or the button would not be pressable
   const tapGestureRequired =
     props.onPressWithGestureHandler && !isIos && !isScreenReaderEnabled;
 
