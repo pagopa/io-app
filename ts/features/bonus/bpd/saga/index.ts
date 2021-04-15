@@ -44,13 +44,15 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield takeLatest(
     bpdLoadActivationStatus.request,
     bpdTechnicalIban ? getCitizenV2 : getCitizen,
-    bpdBackendClient.findV2
+    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
   );
   // enroll citizen to the bpd
   yield takeLatest(
     bpdEnrollUserToProgram.request,
     bpdTechnicalIban ? putEnrollCitizenV2 : putEnrollCitizen,
-    bpdBackendClient.enrollCitizenV2IO
+    bpdTechnicalIban
+      ? bpdBackendClient.enrollCitizenV2IO
+      : bpdBackendClient.enrollCitizenIO
   );
 
   // delete citizen from the bpd
