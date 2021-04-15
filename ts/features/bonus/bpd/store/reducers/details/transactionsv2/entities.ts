@@ -104,11 +104,13 @@ const updateTransactions = (
   const flatTransactions = newPage.transactions.reduce<
     IndexedById<BpdTransactionV2>
   >((acc, val) => {
+    // calculate the normalization for the new page
     const transactionsNormalized = normalizeCashback(
       val.transactions,
       pivot,
       state.foundPivot
     );
+    // update the foundPivot
     if (!foundPivot && transactionsNormalized.found) {
       foundPivot = true;
     }
@@ -118,6 +120,7 @@ const updateTransactions = (
     } as IndexedById<BpdTransactionV2>;
   }, {} as IndexedById<BpdTransactionV2>);
 
+  // append the new normalized transactions to the previously calculated and update the foundPivot
   return {
     ...state,
     foundPivot,
