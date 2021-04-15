@@ -341,8 +341,14 @@ export function BackendBpdClient(
   };
 
   return {
+    /**
+     * @deprecated
+     */
     find: withBearerToken(createFetchRequestForApi(findT, options)),
     findV2: withBearerToken(createFetchRequestForApi(findV2T, options)),
+    /**
+     * @deprecated
+     */
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
     ),

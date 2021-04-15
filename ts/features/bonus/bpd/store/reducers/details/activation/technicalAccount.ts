@@ -36,14 +36,12 @@ const technicalAccountReducer = (
     case getType(bpdLoadActivationStatus.request):
       return remoteLoading;
     case getType(bpdLoadActivationStatus.success):
-      return action.payload.technicalAccount
-        ? remoteReady(action.payload.technicalAccount)
-        : remoteUndefined;
+      return remoteReady(action.payload.technicalAccount);
     // Update the effective value only if the upsert is OK or CANT_VERIFY
     case getType(bpdUpsertIban.success):
       return action.payload.status === IbanStatus.OK ||
         action.payload.status === IbanStatus.CANT_VERIFY
-        ? remoteUndefined
+        ? remoteReady(undefined)
         : state;
     case getType(bpdLoadActivationStatus.failure):
       return remoteError(action.payload);
