@@ -100,11 +100,10 @@ const updateTransactions = (
   // eslint-disable-next-line functional/no-let
   let foundPivot = state.foundPivot;
 
+  const pivot = pot.getOrElse(state.pivot, null);
   const flatTransactions = newPage.transactions.reduce<
     IndexedById<BpdTransactionV2>
   >((acc, val) => {
-    const pivot = pot.getOrElse(state.pivot, null);
-
     const transactionsNormalized = normalizeCashback(
       val.transactions,
       pivot,
