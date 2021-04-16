@@ -67,43 +67,37 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
     icon: satispayImage,
     caption: I18n.t("wallet.methods.satispay.name")
   });
-  return (
-    <>
-      {props.isLoadingDelete ? (
-        <LoadingSpinnerOverlay
-          isLoading={props.isLoadingDelete}
-          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+  return props.isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={props.isLoadingDelete}
+      loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+    />
+  ) : (
+    <DarkLayout
+      bounces={false}
+      contextualHelp={emptyContextualHelp}
+      title={I18n.t("wallet.methods.card.shortName")}
+      faqCategories={["wallet_methods"]}
+      allowGoBack={true}
+      topContent={<View style={styles.headerSpacer} />}
+      gradientHeader={true}
+      hideHeader={true}
+    >
+      <View style={styles.cardContainer}>
+        <SatispayCard />
+      </View>
+      <View spacer={true} extralarge={true} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <PaymentMethodCapabilities paymentMethod={satispay} />
+        <View spacer={true} />
+        <SatispayInformation />
+        <View spacer={true} large={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(satispay.idWallet))}
         />
-      ) : (
-        <DarkLayout
-          bounces={false}
-          contextualHelp={emptyContextualHelp}
-          title={I18n.t("wallet.methods.card.shortName")}
-          faqCategories={["wallet_methods"]}
-          allowGoBack={true}
-          topContent={<View style={styles.headerSpacer} />}
-          gradientHeader={true}
-          hideHeader={true}
-        >
-          <View style={styles.cardContainer}>
-            <SatispayCard />
-          </View>
-          <View spacer={true} extralarge={true} />
-          <View style={IOStyles.horizontalContentPadding}>
-            <PaymentMethodCapabilities paymentMethod={satispay} />
-            <View spacer={true} />
-            <SatispayInformation />
-            <View spacer={true} large={true} />
-            <UnsubscribeButton
-              onPress={() =>
-                present(() => props.deleteWallet(satispay.idWallet))
-              }
-            />
-          </View>
-          <View spacer={true} extralarge={true} />
-        </DarkLayout>
-      )}
-    </>
+      </View>
+      <View spacer={true} extralarge={true} />
+    </DarkLayout>
   );
 };
 

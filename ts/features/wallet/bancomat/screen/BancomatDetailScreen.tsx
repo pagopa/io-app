@@ -84,51 +84,43 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
-  return (
-    <>
-      {props.isLoadingDelete ? (
-        <LoadingSpinnerOverlay
-          isLoading={props.isLoadingDelete}
-          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
-        />
-      ) : (
-        <DarkLayout
-          bounces={false}
-          title={I18n.t("wallet.methods.card.shortName")}
-          faqCategories={["wallet_methods"]}
-          allowGoBack={true}
-          topContent={<View style={styles.headerSpacer} />}
-          gradientHeader={true}
-          hideHeader={true}
-          contextualHelp={emptyContextualHelp}
-        >
-          <View style={styles.cardContainer}>
-            <BancomatCard enhancedBancomat={bancomat} />
-          </View>
-          <View spacer={true} extralarge={true} />
-          <View spacer={true} />
+  return props.isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={props.isLoadingDelete}
+      loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+    />
+  ) : (
+    <DarkLayout
+      bounces={false}
+      title={I18n.t("wallet.methods.card.shortName")}
+      faqCategories={["wallet_methods"]}
+      allowGoBack={true}
+      topContent={<View style={styles.headerSpacer} />}
+      gradientHeader={true}
+      hideHeader={true}
+      contextualHelp={emptyContextualHelp}
+    >
+      <View style={styles.cardContainer}>
+        <BancomatCard enhancedBancomat={bancomat} />
+      </View>
+      <View spacer={true} extralarge={true} />
+      <View spacer={true} />
 
-          <View style={IOStyles.horizontalContentPadding}>
-            <BancomatInformation
-              onAddPaymentMethod={() => startCoBadge(props)}
-            />
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} />
-            <PaymentMethodCapabilities paymentMethod={bancomat} />
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} />
-            <UnsubscribeButton
-              onPress={() =>
-                present(() => props.deleteWallet(bancomat.idWallet))
-              }
-            />
-          </View>
-          <View spacer={true} extralarge={true} />
-        </DarkLayout>
-      )}
-    </>
+      <View style={IOStyles.horizontalContentPadding}>
+        <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <View spacer={true} />
+        <ItemSeparatorComponent noPadded={true} />
+        <View spacer={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+        />
+      </View>
+      <View spacer={true} extralarge={true} />
+    </DarkLayout>
   );
 };
 

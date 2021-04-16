@@ -67,42 +67,36 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
     icon: brandLogo,
     caption: cobadge.caption
   });
-  return (
-    <>
-      {props.isLoadingDelete ? (
-        <LoadingSpinnerOverlay
-          isLoading={props.isLoadingDelete}
-          loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+  return props.isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={props.isLoadingDelete}
+      loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+    />
+  ) : (
+    <DarkLayout
+      bounces={false}
+      contextualHelp={emptyContextualHelp}
+      title={I18n.t("wallet.creditCard.details.header")}
+      faqCategories={["wallet_methods"]}
+      allowGoBack={true}
+      topContent={<View style={styles.headerSpacer} />}
+      gradientHeader={true}
+      hideHeader={true}
+    >
+      <View style={styles.cardContainer}>
+        <CobadgeCard enhancedCoBadge={cobadge} />
+      </View>
+      <View spacer={true} extralarge={true} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <PaymentMethodCapabilities paymentMethod={cobadge} />
+        <View spacer={true} />
+        <View spacer={true} large={true} />
+        <UnsubscribeButton
+          onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
         />
-      ) : (
-        <DarkLayout
-          bounces={false}
-          contextualHelp={emptyContextualHelp}
-          title={I18n.t("wallet.creditCard.details.header")}
-          faqCategories={["wallet_methods"]}
-          allowGoBack={true}
-          topContent={<View style={styles.headerSpacer} />}
-          gradientHeader={true}
-          hideHeader={true}
-        >
-          <View style={styles.cardContainer}>
-            <CobadgeCard enhancedCoBadge={cobadge} />
-          </View>
-          <View spacer={true} extralarge={true} />
-          <View style={IOStyles.horizontalContentPadding}>
-            <PaymentMethodCapabilities paymentMethod={cobadge} />
-            <View spacer={true} />
-            <View spacer={true} large={true} />
-            <UnsubscribeButton
-              onPress={() =>
-                present(() => props.deleteWallet(cobadge.idWallet))
-              }
-            />
-          </View>
-          <View spacer={true} extralarge={true} />
-        </DarkLayout>
-      )}
-    </>
+      </View>
+      <View spacer={true} extralarge={true} />
+    </DarkLayout>
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({

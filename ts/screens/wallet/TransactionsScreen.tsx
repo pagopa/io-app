@@ -164,64 +164,60 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     </ButtonDefaultOpacity>
   );
 
-  return (
-    <>
-      {props.isLoadingDelete ? (
-        <LoadingSpinnerOverlay
-          isLoading={props.isLoadingDelete}
-          loadingCaption={I18n.t("cardComponent.deleteLoading")}
-        />
-      ) : (
-        <WalletLayout
-          title={I18n.t("wallet.paymentMethod")}
-          allowGoBack={true}
-          topContent={headerContent(
-            selectedWallet,
-            isFavorite,
-            props.setFavoriteWallet,
-            props.deleteWallet
-          )}
-          hideHeader={true}
-          hasDynamicSubHeader={true}
-          topContentHeight={HEADER_HEIGHT}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["wallet_transaction"]}
-        >
-          {pm && (
-            <>
-              <View style={IOStyles.horizontalContentPadding}>
-                <View spacer={true} extralarge={true} />
-                <PaymentMethodCapabilities paymentMethod={pm} />
-                <View spacer={true} />
-                <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} large={true} />
-                <FavoritePaymentMethodSwitch
-                  isLoading={
-                    pot.isLoading(props.favoriteWalletRequestStatus) ||
-                    pot.isUpdating(props.favoriteWalletRequestStatus)
-                  }
-                  switchValue={pot.getOrElse(isFavorite, false)}
-                  onValueChange={v =>
-                    handleSetFavourite(v, () =>
-                      props.setFavoriteWallet(pm.idWallet)
-                    )
-                  }
-                />
-                <View spacer={true} />
-                <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} large={true} />
-                <DeletePaymentMethodButton
-                  onPress={() =>
-                    present(() => props.deleteWallet(selectedWallet.idWallet))
-                  }
-                />
-              </View>
-              <EdgeBorderComponent />
-            </>
-          )}
-        </WalletLayout>
+  return props.isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={props.isLoadingDelete}
+      loadingCaption={I18n.t("cardComponent.deleteLoading")}
+    />
+  ) : (
+    <WalletLayout
+      title={I18n.t("wallet.paymentMethod")}
+      allowGoBack={true}
+      topContent={headerContent(
+        selectedWallet,
+        isFavorite,
+        props.setFavoriteWallet,
+        props.deleteWallet
       )}
-    </>
+      hideHeader={true}
+      hasDynamicSubHeader={true}
+      topContentHeight={HEADER_HEIGHT}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_transaction"]}
+    >
+      {pm && (
+        <>
+          <View style={IOStyles.horizontalContentPadding}>
+            <View spacer={true} extralarge={true} />
+            <PaymentMethodCapabilities paymentMethod={pm} />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <FavoritePaymentMethodSwitch
+              isLoading={
+                pot.isLoading(props.favoriteWalletRequestStatus) ||
+                pot.isUpdating(props.favoriteWalletRequestStatus)
+              }
+              switchValue={pot.getOrElse(isFavorite, false)}
+              onValueChange={v =>
+                handleSetFavourite(v, () =>
+                  props.setFavoriteWallet(pm.idWallet)
+                )
+              }
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
+            <DeletePaymentMethodButton
+              onPress={() =>
+                present(() => props.deleteWallet(selectedWallet.idWallet))
+              }
+            />
+          </View>
+          <EdgeBorderComponent />
+        </>
+      )}
+    </WalletLayout>
   );
 };
 
