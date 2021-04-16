@@ -72,13 +72,11 @@ const AssistanceForm: FC = () => {
 
   const onAssistanceFormData = (event: WebViewMessageEvent) => {
     const data = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
-    console.log(data);
 
     if (data.isLeft()) return showToast(I18n.t("webView.error.convertMessage"));
 
     // TODO: choose what to do with this data
-    const message = data.value;
-    if (message.type === "SHOW_SUCCESS") console.log(data);
+    console.log(data);
   };
 
   return (
