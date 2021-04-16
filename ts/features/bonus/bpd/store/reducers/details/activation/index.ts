@@ -24,11 +24,13 @@ import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
 } from "./payoffInstrument";
+import technicalAccountReducer from "./technicalAccount";
 
 export type BpdActivation = {
   enabled: pot.Pot<boolean, Error>;
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
+  technicalAccount: RemoteValue<string | undefined, Error>;
 };
 
 /**
@@ -88,7 +90,8 @@ const unsubscriptionReducer = (
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
   payoffInstr: paymentInstrumentReducer,
-  unsubscription: unsubscriptionReducer
+  unsubscription: unsubscriptionReducer,
+  technicalAccount: technicalAccountReducer
 });
 
 /**
