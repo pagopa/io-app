@@ -1,19 +1,19 @@
 import { StyleSheet, View } from "react-native";
 import React, { createRef, FC, useState } from "react";
 import WebView from "react-native-webview";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import { fromNullable } from "fp-ts/lib/Option";
+import I18n from "../i18n";
 import {
   APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../utils/webview";
+import { showToast } from "../utils/showToast";
+import { WebviewMessage } from "../types/WebviewMessage";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
-import { fromNullable } from "fp-ts/lib/Option";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-import { WebviewMessage } from "../types/WebviewMessage";
-import { showToast } from "../utils/showToast";
-import I18n from "../i18n";
 
 // TODO: set the right uri
 const URI = "http://localhost:5000/";
@@ -55,7 +55,9 @@ const AssistanceForm: FC = () => {
   const onReload = () => {
     setHasError(false);
     setLoading(true);
-    if (ref.current) ref.current.reload();
+    if (ref.current) {
+      ref.current.reload();
+    }
   };
 
   const onError = () => {
@@ -71,12 +73,12 @@ const AssistanceForm: FC = () => {
   };
 
   const onAssistanceFormData = (event: WebViewMessageEvent) => {
+    // TODO: choose what to do with form data
     const data = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
-    if (data.isLeft()) return showToast(I18n.t("webView.error.convertMessage"));
-
-    // TODO: choose what to do with this data
-    console.log(data);
+    if (data.isLeft()) {
+      return showToast(I18n.t("webView.error.convertMessage"));
+    }
   };
 
   return (
