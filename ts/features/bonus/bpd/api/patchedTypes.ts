@@ -30,13 +30,13 @@ export type PatchedCitizenResource = t.TypeOf<typeof PatchedCitizenResource>;
  * - technicalAccount must be optional
  */
 // required attributes
-const PatchedCitizenV2ResourceO = t.interface({
+const PatchedCitizenV2ResourceO = t.partial({
   technicalAccount: t.string
 });
 
 export const PatchedCitizenV2Resource = t.intersection(
   [PatchedCitizenResourceR, PatchedCitizenResourceO, PatchedCitizenV2ResourceO],
-  "PatchedCitizenResource"
+  "PatchedCitizenResourceV2"
 );
 
 export type PatchedCitizenV2Resource = t.TypeOf<

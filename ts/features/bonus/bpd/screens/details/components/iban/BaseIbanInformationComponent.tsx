@@ -70,7 +70,7 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
       )}
     </View>
     <View spacer={true} />
-    {/* Also if is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
+    {/* Also if it is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
     {props.iban ? (
       isReady(props.technicalAccount) &&
       props.technicalAccount.value !== undefined ? (
