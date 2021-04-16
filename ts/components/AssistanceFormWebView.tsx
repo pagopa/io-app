@@ -1,10 +1,19 @@
 import { StyleSheet, View } from "react-native";
 import React, { createRef, FC, useState } from "react";
 import WebView from "react-native-webview";
-import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
-import { RefreshIndicator } from "./ui/RefreshIndicator";
+import {
+  APP_EVENT_HANDLER,
+  AVOID_ZOOM_JS,
+  closeInjectedScript
+} from "../utils/webview";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
 import { withLightModalContext } from "./helpers/withLightModalContext";
+import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import { fromNullable } from "fp-ts/lib/Option";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import { WebviewMessage } from "../types/WebviewMessage";
+import { showToast } from "../utils/showToast";
+import I18n from "../i18n";
 
 // TODO: set the right uri
 const URI = "http://localhost:5000/";
@@ -31,45 +40,68 @@ const styles = StyleSheet.create({
   }
 });
 
+const injectedJavascript = closeInjectedScript(
+  AVOID_ZOOM_JS + APP_EVENT_HANDLER
+);
+
 /** This component loads an url and show the assistance form */
 const AssistanceForm: FC = () => {
-  const [webViewError, setWebViewError] = useState(false);
-  const webViewRef = createRef<WebView>();
+  const [loading, setLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const ref = createRef<WebView>();
 
-  const renderLoading = () => (
-    <View style={styles.refreshIndicatorContainer}>
-      <RefreshIndicator />
-    </View>
-  );
+  const onLoadStart = () => setLoading(true);
 
-  const reloadWebView = () => {
-    if (webViewRef.current) {
-      webViewRef.current.reload();
-      setWebViewError(false);
-    }
+  const onReload = () => {
+    setHasError(false);
+    setLoading(true);
+    if (ref.current) ref.current.reload();
   };
 
-  const onError = () => setWebViewError(true);
+  const onError = () => {
+    setHasError(true);
+    setLoading(false);
+  };
+
+  const injectJS = () => {
+    fromNullable(ref.current).map(wv =>
+      wv.injectJavaScript(injectedJavascript)
+    );
+    setLoading(false);
+  };
+
+  const onAssistanceFormData = (event: WebViewMessageEvent) => {
+    const data = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
+    console.log(data);
+
+    if (data.isLeft()) return showToast(I18n.t("webView.error.convertMessage"));
+
+    // TODO: choose what to do with this data
+    const message = data.value;
+    if (message.type === "SHOW_SUCCESS") console.log(data);
+  };
 
   return (
-    <>
-      <WebView
-        ref={webViewRef}
-        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-        style={{ flex: 1 }}
-        textZoom={100}
-        source={{ uri: URI }}
-        onError={onError}
-        renderLoading={renderLoading}
-        startInLoadingState
-        javaScriptEnabled
-      />
-      {webViewError && (
-        <View style={styles.genericError}>
-          <GenericErrorComponent onRetry={reloadWebView} />
+    <LoadingSpinnerOverlay isLoading={loading}>
+      {!hasError && (
+        <View style={{ flex: 1 }}>
+          <WebView
+            ref={ref}
+            source={{ uri: URI }}
+            textZoom={100}
+            onError={onError}
+            onLoadStart={onLoadStart}
+            onLoadEnd={injectJS}
+            onMessage={onAssistanceFormData}
+          />
         </View>
       )}
-    </>
+      {hasError && (
+        <View style={styles.genericError}>
+          <GenericErrorComponent onRetry={onReload} />
+        </View>
+      )}
+    </LoadingSpinnerOverlay>
   );
 };
 
