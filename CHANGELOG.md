@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.2](https://github.com/pagopa/io-app/compare/1.25.0-rc.1...1.25.0-rc.2) (2021-04-19)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177542720](https://www.pivotaltracker.com/story/show/177542720)] Add technical iban information to mixpanel ([#2978](https://github.com/pagopa/io-app/issues/2978)) ([37d2274](https://github.com/pagopa/io-app/commit/37d2274f3627b1cd78e8bc43e79f9a3bbdfcf418)), closes [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335)
+
 ## [1.25.0-rc.1](https://github.com/pagopa/io-app/compare/1.25.0-rc.0...1.25.0-rc.1) (2021-04-19)
 
 
