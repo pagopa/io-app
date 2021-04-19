@@ -13,8 +13,8 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 
 /**
  * It handles the logout loading.
- * It doesn't handle any retry logic because even if the logout API fails
- * the app close the session asymmetrical
+ * It doesn't handle any retry logics because even if the logout API fails
+ * the app closes the session asymmetrical
  * logout success -> session closed client&server
  * logout failure -> app remove all session info from local storage
  */
