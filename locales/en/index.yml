@@ -248,6 +248,7 @@ profile:
   logout:
     menulabel: Logout from IO
     alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    loading: Logout in progress...
     exit: Exit
     cta:
       header: How do you want to quit the app?

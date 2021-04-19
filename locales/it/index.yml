@@ -248,6 +248,7 @@ profile:
   logout:
     menulabel: Esci da IO
     alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    loading: Logout in corso...
     exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
