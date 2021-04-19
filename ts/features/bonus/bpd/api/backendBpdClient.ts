@@ -1,20 +1,7 @@
-import {
-  ApiHeaderJson,
-  composeHeaderProducers,
-  createFetchRequestForApi,
-  MapResponseType
-} from "italia-ts-commons/lib/requests";
+import { createFetchRequestForApi } from "italia-ts-commons/lib/requests";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { PayoffInstrTypeEnum } from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
-import {
-  enrollmentDecoder,
-  findUsingGETDecoder
-} from "../../../../../definitions/bpd/citizen/requestTypes";
-import {
-  EnrollmentT as EnrollmentTV2,
-  FindUsingGETT as FindUsingGETTV2
-} from "../../../../../definitions/bpd/citizen_v2/requestTypes";
 import { fetchPaymentManagerLongTimeout } from "../../../../config";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { awardPeriodsGET } from "./award-period/v1";
@@ -26,8 +13,7 @@ import {
   citizenRankingGET,
   PatchOptions
 } from "./citizen/v1";
-import { bpdHeadersProducers } from "./common";
-import { PatchedCitizenV2Resource } from "./patchedTypes";
+import { citizenV2EnrollPUT, citizenV2FindGET } from "./citizen/v2";
 import {
   paymentInstrumentsDELETE,
   paymentInstrumentsEnrollPUT,
@@ -37,35 +23,6 @@ import {
   winningTransactionsGET,
   winningTransactionsTotalCashbackGET
 } from "./winning-transactions/v1";
-
-type FindV2UsingGETTExtra = MapResponseType<
-  FindUsingGETTV2,
-  200,
-  PatchedCitizenV2Resource
->;
-
-const findV2T: FindV2UsingGETTExtra = {
-  method: "get",
-  url: () => `/bpd/io/citizen/v2`,
-  query: _ => ({}),
-  headers: bpdHeadersProducers(),
-  response_decoder: findUsingGETDecoder(PatchedCitizenV2Resource)
-};
-
-type EnrollmentV2TTExtra = MapResponseType<
-  EnrollmentTV2,
-  200,
-  PatchedCitizenV2Resource
->;
-
-const enrollCitizenV2IOT: EnrollmentV2TTExtra = {
-  method: "put",
-  url: () => `/bpd/io/citizen/v2`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(bpdHeadersProducers(), ApiHeaderJson),
-  response_decoder: enrollmentDecoder(PatchedCitizenV2Resource)
-};
 
 const jsonContentType = "application/json; charset=utf-8";
 
@@ -102,7 +59,9 @@ export function BackendBpdClient(
      * @deprecated
      */
     find: withBearerToken(createFetchRequestForApi(citizenFindGET, options)),
-    findV2: withBearerToken(createFetchRequestForApi(findV2T, options)),
+    findV2: withBearerToken(
+      createFetchRequestForApi(citizenV2FindGET, options)
+    ),
     /**
      * @deprecated
      */
@@ -110,7 +69,7 @@ export function BackendBpdClient(
       createFetchRequestForApi(citizenEnrollPUT, options)
     ),
     enrollCitizenV2IO: withBearerToken(
-      createFetchRequestForApi(enrollCitizenV2IOT, options)
+      createFetchRequestForApi(citizenV2EnrollPUT, options)
     ),
     deleteCitizenIO: withBearerToken(
       createFetchRequestForApi(citizenDELETE, options)

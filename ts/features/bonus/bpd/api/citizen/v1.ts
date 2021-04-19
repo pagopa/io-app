@@ -31,40 +31,6 @@ type FindUsingGETTExtra = MapResponseType<
 /**
  * @deprecated
  */
-type EnrollmentTTExtra = MapResponseType<
-  EnrollmentT,
-  200,
-  PatchedCitizenResource
->;
-
-/* Patch IBAN */
-const PatchIban = t.interface({ validationStatus: t.string });
-type PatchIban = t.TypeOf<typeof PatchIban>;
-
-type finalType =
-  | r.IResponseType<200, PatchIban>
-  | r.IResponseType<401, undefined>
-  | r.IResponseType<404, undefined>
-  | r.IResponseType<400, undefined>
-  | r.IResponseType<500, undefined>;
-
-// these responses code/codec are built from api usage and not from API spec
-type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
-  {
-    readonly Authorization: string;
-    readonly x_request_id?: string;
-  },
-  never,
-  never,
-  | r.IResponseType<204, undefined>
-  | r.IResponseType<401, undefined>
-  | r.IResponseType<404, undefined>
-  | r.IResponseType<500, undefined>
->;
-
-/**
- * @deprecated
- */
 export const citizenFindGET: FindUsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen`,
@@ -72,6 +38,15 @@ export const citizenFindGET: FindUsingGETTExtra = {
   headers: bpdHeadersProducers(),
   response_decoder: findUsingGETDecoder(PatchedCitizenResource)
 };
+
+/**
+ * @deprecated
+ */
+type EnrollmentTTExtra = MapResponseType<
+  EnrollmentT,
+  200,
+  PatchedCitizenResource
+>;
 
 /**
  * @deprecated
@@ -92,6 +67,20 @@ const deleteResponseDecoders = r.composeResponseDecoders(
   ),
   r.constantResponseDecoder<undefined, 404>(404, undefined)
 );
+
+// these responses code/codec are built from api usage and not from API spec
+type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
+  {
+    readonly Authorization: string;
+    readonly x_request_id?: string;
+  },
+  never,
+  never,
+  | r.IResponseType<204, undefined>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
+>;
 
 export const citizenDELETE: DeleteUsingDELETETExtra = {
   method: "delete",
@@ -114,6 +103,17 @@ export type PatchOptions = {
   baseUrl: string;
   fetchApi: typeof fetch;
 };
+
+/* Patch IBAN */
+const PatchIban = t.interface({ validationStatus: t.string });
+type PatchIban = t.TypeOf<typeof PatchIban>;
+
+type finalType =
+  | r.IResponseType<200, PatchIban>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<400, undefined>
+  | r.IResponseType<500, undefined>;
 
 // decoders composition to handle updatePaymentMethod response
 export function patchIbanDecoders<A, O>(type: t.Type<A, O>) {
