@@ -104,11 +104,10 @@ class PickPspScreen extends React.Component<Props> {
           <LoadingErrorComponent
             isLoading={this.props.isLoading}
             onRetry={() => {
-              const idWallet = this.props.navigation
-                .getParam("wallet")
-                .idWallet.toString();
-              const idPayment = this.props.navigation.getParam("idPayment");
-              this.props.loadAllPsp(idWallet, idPayment);
+              this.props.loadAllPsp(
+                this.props.navigation.getParam("wallet").idWallet.toString(),
+                this.props.navigation.getParam("idPayment")
+              );
             }}
             loadingCaption={I18n.t("wallet.pickPsp.loadingPsps")}
           />
