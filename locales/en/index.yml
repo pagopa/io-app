@@ -247,7 +247,7 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Do you want to logout?
-    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
     loading: Logout in progress...
     exit: Exit
     cta:
