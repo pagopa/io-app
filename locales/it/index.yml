@@ -247,7 +247,7 @@ profile:
   unknown: SCONOSCIUTO
   logout:
     menulabel: Vuoi davvero uscire?
-    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
     loading: Logout in corso...
     exit: Esci
     cta:
