@@ -19,6 +19,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * logout failure -> app remove all session info from local storage
  */
 const LogoutScreen = (props: Props) => {
+  // do logout on component mount
   useEffect(() => {
     props.logout();
   }, []);
