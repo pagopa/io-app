@@ -1643,7 +1643,7 @@ instabug:
     buttonBug: Write to the IO team
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
-    assistanceWorkHours: IO assistance is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun and holidays from 8.00 to 13.00
+    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays. 
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2019,7 +2019,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [regulation]({{regulationLink}}) and the [information on the processing of personal data]({{tosUrl}}) of the service."
+  termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]({{tosUrl}})"
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
