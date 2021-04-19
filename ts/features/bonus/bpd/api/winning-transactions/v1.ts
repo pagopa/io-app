@@ -30,7 +30,9 @@ export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
   | r.IResponseType<401, undefined>
   | r.IResponseType<500, undefined>
 >;
-// winning transactions
+/**
+ * @deprecated
+ */
 export const winningTransactionsGET: FindWinningTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ awardPeriodId, hpan }) =>

@@ -90,7 +90,10 @@ export const citizenDELETE: DeleteUsingDELETETExtra = {
   response_decoder: deleteResponseDecoders
 };
 
-/* citizen ranking (super cashback) */
+/**
+ * @deprecated
+ * citizen ranking (super cashback)
+ */
 export const citizenRankingGET: FindRankingUsingGETT = {
   method: "get",
   url: () => `/bpd/io/citizen/ranking`,
