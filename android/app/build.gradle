@@ -130,7 +130,7 @@ android {
     }
     signingConfigs {
         release {
-            if (System.getenv('ITALIAAPP_RELEASE_STORE_FILE')) {
+            if (System.getenv('IO_APP_RELEASE_STORE_FILE')) {
                 storeFile file(System.getenv('IO_APP_RELEASE_STORE_FILE'))
                 storePassword System.getenv('IO_APP_RELEASE_STORE_PASSWORD')
                 keyAlias System.getenv('IO_APP_RELEASE_KEY_ALIAS')
