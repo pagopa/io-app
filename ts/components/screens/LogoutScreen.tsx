@@ -16,7 +16,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * It doesn't handle any retry logics because even if the logout API fails
  * the app closes the session asymmetrical
  * logout success -> session closed client&server
- * logout failure -> app remove all session info from local storage
+ * logout failure -> app removes all session info from local storage
  */
 const LogoutScreen = (props: Props) => {
   // do logout on component mount
