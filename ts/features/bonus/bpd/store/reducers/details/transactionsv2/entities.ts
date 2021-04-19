@@ -54,7 +54,8 @@ const updatePeriodEntry = (
 /**
  * Normalize the cashback amount for the transactions, using as ref the pivot transaction
  * - pivot === null, the user did not reach the max cashback amount and all the transactions are valid
- * - pivot !== null && not found && idTrx === pivot.id, pivot transaction found, all the following transaction have the complete value
+ * - pivot !== null && not found, the transactions have 0 value
+ * - pivot !== null && not found && idTrx === pivot.id, pivot transaction found, the pivot transaction have pivot.amount
  * - pivot !== null && found, the cashback transaction has the complete value
  * @param transactions
  * @param pivot
@@ -87,6 +88,11 @@ const normalizeCashback = (
   };
 };
 
+/**
+ * Add a new page data to BpdTransactionsEntityState for a specific period, updating it
+ * @param state
+ * @param newPage
+ */
 const updateTransactions = (
   state: BpdTransactionsEntityState,
   newPage: WinningTransactionPageResource
@@ -94,16 +100,17 @@ const updateTransactions = (
   // eslint-disable-next-line functional/no-let
   let foundPivot = state.foundPivot;
 
+  const pivot = pot.getOrElse(state.pivot, null);
   const flatTransactions = newPage.transactions.reduce<
     IndexedById<BpdTransactionV2>
   >((acc, val) => {
-    const pivot = pot.getOrElse(state.pivot, null);
-
+    // calculate the normalization for the new page
     const transactionsNormalized = normalizeCashback(
       val.transactions,
       pivot,
       state.foundPivot
     );
+    // update the foundPivot
     if (!foundPivot && transactionsNormalized.found) {
       foundPivot = true;
     }
@@ -113,6 +120,7 @@ const updateTransactions = (
     } as IndexedById<BpdTransactionV2>;
   }, {} as IndexedById<BpdTransactionV2>);
 
+  // append the new normalized transactions to the previously calculated and update the foundPivot
   return {
     ...state,
     foundPivot,

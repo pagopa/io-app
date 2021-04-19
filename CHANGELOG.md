@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.4](https://github.com/pagopa/io-app/compare/1.25.0-rc.3...1.25.0-rc.4) (2021-04-19)
+
+## [1.25.0-rc.3](https://github.com/pagopa/io-app/compare/1.25.0-rc.2...1.25.0-rc.3) (2021-04-19)
+
+## [1.25.0-rc.2](https://github.com/pagopa/io-app/compare/1.25.0-rc.1...1.25.0-rc.2) (2021-04-19)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177542720](https://www.pivotaltracker.com/story/show/177542720)] Add technical iban information to mixpanel ([#2978](https://github.com/pagopa/io-app/issues/2978)) ([37d2274](https://github.com/pagopa/io-app/commit/37d2274f3627b1cd78e8bc43e79f9a3bbdfcf418)), closes [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335)
+
+## [1.25.0-rc.1](https://github.com/pagopa/io-app/compare/1.25.0-rc.0...1.25.0-rc.1) (2021-04-19)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177542335](https://www.pivotaltracker.com/story/show/177542335)] Citizen v2 api integration ([#2969](https://github.com/pagopa/io-app/issues/2969)) ([dd277b7](https://github.com/pagopa/io-app/commit/dd277b78ea380184ad92388b44c254bbb4d47105))
+* **Bonus Pagamenti Digitali:** [[#177542840](https://www.pivotaltracker.com/story/show/177542840)] Show technical IBAN information ([#2974](https://github.com/pagopa/io-app/issues/2974)) ([53d6f86](https://github.com/pagopa/io-app/commit/53d6f86178a6fedecfcbf8ab4cf21f06edd22827)), closes [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335)
+* **Bonus Pagamenti Digitali:** [[#177740790](https://www.pivotaltracker.com/story/show/177740790)] Actions & store definiton for paginated transactions ([#2972](https://github.com/pagopa/io-app/issues/2972)) ([fa958cc](https://github.com/pagopa/io-app/commit/fa958cc7c6a8915293ee59619e4e8e6f013b051a)), closes [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049)
+
+
+### Bug Fixes
+
+* [[#177606620](https://www.pivotaltracker.com/story/show/177606620)] Buttons inside BottomSheets are not pressable on Android ([#2985](https://github.com/pagopa/io-app/issues/2985)) ([3ea895d](https://github.com/pagopa/io-app/commit/3ea895db4208d3fc4561902dfad1fe1da149fe19))
+* [[#177775588](https://www.pivotaltracker.com/story/show/177775588)] Customer care working hours update [#2984](https://github.com/pagopa/io-app/issues/2984) ([aa7add5](https://github.com/pagopa/io-app/commit/aa7add58cf4b0e407ec94a58b89d8a3698809870))
+
 ## [1.25.0-rc.0](https://github.com/pagopa/io-app/compare/1.24.0-rc.8...1.25.0-rc.0) (2021-04-14)
 
 

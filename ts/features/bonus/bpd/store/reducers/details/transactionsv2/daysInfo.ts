@@ -23,7 +23,7 @@ const initState: BpdTransactionsDaysInfoState = {
 };
 
 /**
- * Access to the byId entry for the selected period
+ * Update the byId entry for the selected period
  * @param input
  * @param period
  * @param newVal
