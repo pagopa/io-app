@@ -8,7 +8,7 @@ import check_cie_button_exists_ios as CieBtn
 class CieButtonCheckTest(unittest.TestCase):
     def testPostSlackSuccess(self):
         response = CieBtn.postSlack(
-            token=os.environ.get("IO_APP_SLACK_TOKEN_CHECK_CIE_BTN", None),
+            token=os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None),
             message="Unit Test of check_cie_button_exists_ios.py",
             uri="https://slack.com/api/chat.postMessage",
             channel='#io_status')
@@ -21,7 +21,7 @@ class CieButtonCheckTest(unittest.TestCase):
     def testPostSlackFailure(self):
         # Wrong uri
         response = CieBtn.postSlack(
-            token=os.environ.get("IO_APP_SLACK_TOKEN_CHECK_CIE_BTN", None),
+            token=os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None),
             message="Unit Test of check_cie_button_exists_ios.py",
             uri="https://slack.com/apxxxi/chat.postMessage",
             channel='#io_status')
