@@ -22,7 +22,7 @@ import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 import { H5 } from "../../core/typography/H5";
-import { isExpired } from "../../../utils/dates";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -209,10 +209,9 @@ export default class CardComponent extends React.Component<Props> {
     };
 
     const expirationDate = buildExpirationDate(creditCard);
-    const isCardExpired = isExpired(
-      creditCard.expireMonth,
-      creditCard.expireYear
-    ).getOrElse(false);
+    const isCardExpired = this.props.wallet.paymentMethod
+      ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
+      : false;
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>

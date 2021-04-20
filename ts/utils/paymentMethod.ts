@@ -232,7 +232,7 @@ export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
   pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
 
 export const isPaymentMethodExpired = (
-  pm: PaymentMethod
+  pm: RawPaymentMethod
 ): Either<Error, boolean> => {
   switch (pm.kind) {
     case "BPay":
