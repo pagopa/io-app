@@ -12,7 +12,6 @@ import {
 } from "../../../store/actions/iban";
 import { bpdIbanPrefillSelector } from "../../../store/reducers/details/activation";
 import { isBpdOnboardingOngoing } from "../../../store/reducers/onboarding/ongoing";
-import { isReady } from "../../../model/RemoteValue";
 import { bpdTechnicalAccountSelector } from "../../../store/reducers/details/activation/technicalAccount";
 import { IbanInsertionComponent } from "./IbanInsertionComponent";
 
