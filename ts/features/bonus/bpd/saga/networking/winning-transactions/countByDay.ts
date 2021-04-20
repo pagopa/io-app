@@ -1,12 +1,16 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect } from "redux-saga/effects";
+import { call, Effect, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
-import { TrxCountByDayResource } from "../../../store/actions/transactions";
+import {
+  bpdTransactionsLoadCountByDay,
+  TrxCountByDayResource
+} from "../../../store/actions/transactions";
 
 const mixpanelActionRequest = `BPD_COUNT_BY_DAY_REQUEST`;
 const mixpanelActionSuccess = `BPD_COUNT_BY_DAY_SUCCESS`;
@@ -56,5 +60,36 @@ export function* bpdLoadCountByDay(
       reason: getError(e).message
     });
     return left<Error, TrxCountByDayResource>(getError(e));
+  }
+}
+
+/**
+ * handle the action bpdTransactionsLoadCountByDay.request
+ * @param getCountByDay
+ * @param action
+ */
+export function* handleCountByDay(
+  getCountByDay: ReturnType<
+    typeof BackendBpdClient
+  >["winningTransactionsV2CountByDay"],
+  action: ActionType<typeof bpdTransactionsLoadCountByDay.request>
+) {
+  // get the results
+  const result: SagaCallReturnType<typeof bpdLoadCountByDay> = yield call(
+    bpdLoadCountByDay,
+    getCountByDay,
+    action.payload
+  );
+
+  // dispatch the related action
+  if (result.isRight()) {
+    yield put(bpdTransactionsLoadCountByDay.success(result.value));
+  } else {
+    yield put(
+      bpdTransactionsLoadCountByDay.failure({
+        awardPeriodId: action.payload,
+        error: result.value
+      })
+    );
   }
 }

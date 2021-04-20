@@ -1,7 +1,11 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix, bpdTechnicalIban } from "../../../../config";
+import {
+  bpdApiUrlPrefix,
+  bpdTechnicalIban,
+  bpdTransactionsPaging
+} from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -16,7 +20,10 @@ import {
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
-import { bpdTransactionsLoad } from "../store/actions/transactions";
+import {
+  bpdTransactionsLoad,
+  bpdTransactionsLoadCountByDay
+} from "../store/actions/transactions";
 import {
   deleteCitizen,
   getCitizen,
@@ -32,6 +39,7 @@ import {
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
+import { handleCountByDay } from "./networking/winning-transactions/countByDay";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
@@ -100,6 +108,15 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     loadPeriodsWithInfo,
     bpdBackendClient
   );
+
+  if (bpdTransactionsPaging) {
+    // Load count by day info for a period
+    yield takeEvery(
+      bpdTransactionsLoadCountByDay.request,
+      handleCountByDay,
+      bpdBackendClient.winningTransactionsV2CountByDay
+    );
+  }
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);
