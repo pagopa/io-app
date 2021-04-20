@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
+import { setLocale } from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
@@ -10,8 +11,8 @@ import { OutcomeCode } from "../../../types/outcomeCode";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import OutcomeCodeMessageComponent from "../OutcomeCodeMessageComponent";
 
-const ASuccessComponent = () => <View testID="a-success-component"></View>;
-const ASuccessFooter = () => <View testID="a-success-footer"></View>;
+const ASuccessComponent = () => <View testID="a-success-component" />;
+const ASuccessFooter = () => <View testID="a-success-footer" />;
 const onClose = jest.fn();
 
 describe("OutcomeCodeMessageComponent", () => {
@@ -37,14 +38,19 @@ describe("OutcomeCodeMessageComponent", () => {
 
     expect(component).not.toBeNull();
   });
-  it("should render InfoScreenComponent if outcomeCode status is not equal to success and outcomeCode title is defined", () => {
+  it("should render InfoScreenComponent if outcomeCode status is not equal to success, outcomeCode title and description are defined and showing the right text", () => {
     const outcomeCode = {
       status: "errorTryAgain",
       title: {
-        "en-EN": "Test en",
-        "it-IT": "Test it"
+        "en-EN": "title en",
+        "it-IT": "title it"
+      },
+      description: {
+        "en-EN": "description en",
+        "it-IT": "description it"
       }
     } as OutcomeCode;
+    setLocale("it");
     const { component } = renderComponent(
       outcomeCode,
       ASuccessComponent,
@@ -52,6 +58,10 @@ describe("OutcomeCodeMessageComponent", () => {
     );
 
     expect(component).not.toBeNull();
+    const titleComponent = component.queryByText("title it");
+    expect(titleComponent).toBeTruthy();
+    const descriptionComponent = component.queryByText("description it");
+    expect(descriptionComponent).toBeTruthy();
     expect(component.queryByTestId("InfoScreenComponent")).not.toBeNull();
   });
   it("should render FooterWithButtons if outcomeCode status is equal to errorBlocking", () => {
