@@ -1,14 +1,18 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { call, Effect } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
+import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
+import { BpdTransactionId } from "../../store/actions/transactions";
 import { BpdRankingReady } from "../../store/reducers/details/periods";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { AwardPeriodId } from "../../store/actions/periods";
 import { getError } from "../../../../../utils/errors";
 import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
+import { BpdPivotTransaction } from "../../store/reducers/details/transactionsv2/entities";
 
 // TODO: clean after V1 removal
 const version = bpdTransactionsPaging ? "_V2" : "";
@@ -27,7 +31,11 @@ const convertRankingArray = (
     kind: "ready"
   }));
 
-// Load the ranking for all the periods
+/**
+ * Load the ranking for all the periods
+ * @deprecated TODO: remove after replacing transactions v1
+ * @param getRanking
+ */
 export function* bpdLoadRaking(
   getRanking: ReturnType<typeof BackendBpdClient>["getRanking"]
 ): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
@@ -44,6 +52,74 @@ export function* bpdLoadRaking(
         });
         return right<Error, ReadonlyArray<BpdRankingReady>>(
           convertRankingArray(getRankingResult.value.value)
+        );
+      } else if (getRankingResult.value.status === 404) {
+        void mixpanelTrack(mixpanelActionSuccess, {
+          count: 0
+        });
+        return right<Error, ReadonlyArray<BpdRankingReady>>([]);
+      } else {
+        return left<Error, ReadonlyArray<BpdRankingReady>>(
+          new Error(`response status ${getRankingResult.value.status}`)
+        );
+      }
+    } else {
+      return left<Error, ReadonlyArray<BpdRankingReady>>(
+        new Error(readableReport(getRankingResult.value))
+      );
+    }
+  } catch (e) {
+    void mixpanelTrack(mixpanelActionFailure, {
+      reason: getError(e).message
+    });
+    return left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
+  }
+}
+
+// convert the network payload ranking into the relative app domain model
+const convertRankingArrayV2 = (
+  rankings: CitizenRankingMilestoneResourceArray
+): ReadonlyArray<BpdRankingReady> =>
+  rankings.map<BpdRankingReady>(rr => ({
+    ...rr,
+    awardPeriodId: rr.awardPeriodId as AwardPeriodId,
+    pivot: extractPivot(rr.milestoneResource),
+    kind: "ready"
+  }));
+
+const extractPivot = (
+  mr: MilestoneResource | undefined
+): BpdPivotTransaction | undefined => {
+  if (mr?.idTrxPivot !== undefined && mr?.cashbackNorm !== undefined) {
+    return {
+      amount: mr.cashbackNorm,
+      idTrx: mr.idTrxPivot as BpdTransactionId
+    };
+  }
+  return undefined;
+};
+
+/**
+ * Load the ranking for all the periods
+ * @param getRanking
+ */
+export function* bpdLoadRakingV2(
+  getRanking: ReturnType<typeof BackendBpdClient>["getRankingV2"]
+): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
+  console.log("asdasd");
+  try {
+    void mixpanelTrack(mixpanelActionRequest);
+    const getRankingResult: SagaCallReturnType<typeof getRanking> = yield call(
+      getRanking,
+      {} as any
+    );
+    if (getRankingResult.isRight()) {
+      if (getRankingResult.value.status === 200) {
+        void mixpanelTrack(mixpanelActionSuccess, {
+          count: getRankingResult.value.value?.length
+        });
+        return right<Error, ReadonlyArray<BpdRankingReady>>(
+          convertRankingArrayV2(getRankingResult.value.value)
         );
       } else if (getRankingResult.value.status === 404) {
         void mixpanelTrack(mixpanelActionSuccess, {

@@ -8,11 +8,12 @@ import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import {
   BpdPeriodWithInfo,
   BpdRanking,
-  bpdRankingNotReady
+  bpdRankingNotReady,
+  BpdRankingReady
 } from "../../store/reducers/details/periods";
 import { BpdAmount, BpdAmountError, bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
-import { bpdLoadRaking } from "./ranking";
+import { bpdLoadRaking, bpdLoadRakingV2 } from "./ranking";
 
 /**
  * Load the periods information list and adds the amount and ranking information
@@ -37,9 +38,8 @@ export function* loadPeriodsWithInfo(
   } else {
     const periods = maybePeriods.value;
 
-    const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
-      bpdLoadRaking,
-      // TODO: clean after v1 removal
+    const rankings: Either<Error, ReadonlyArray<BpdRankingReady>> = yield call(
+      bpdTransactionsPaging ? bpdLoadRakingV2 : bpdLoadRaking,
       bpdTransactionsPaging ? bpdClient.getRankingV2 : bpdClient.getRanking
     );
 
