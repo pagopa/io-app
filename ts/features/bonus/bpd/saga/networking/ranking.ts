@@ -1,17 +1,17 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { call, Effect } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { call, Effect } from "redux-saga/effects";
+import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
 import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
 import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getError } from "../../../../../utils/errors";
+import { BackendBpdClient } from "../../api/backendBpdClient";
+import { AwardPeriodId } from "../../store/actions/periods";
 import { BpdTransactionId } from "../../store/actions/transactions";
 import { BpdRankingReady } from "../../store/reducers/details/periods";
-import { BackendBpdClient } from "../../api/backendBpdClient";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { AwardPeriodId } from "../../store/actions/periods";
-import { getError } from "../../../../../utils/errors";
-import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { BpdPivotTransaction } from "../../store/reducers/details/transactionsv2/entities";
 
 // TODO: clean after V1 removal
@@ -106,7 +106,6 @@ const extractPivot = (
 export function* bpdLoadRakingV2(
   getRanking: ReturnType<typeof BackendBpdClient>["getRankingV2"]
 ): Generator<Effect, Either<Error, ReadonlyArray<BpdRankingReady>>, any> {
-  console.log("asdasd");
   try {
     void mixpanelTrack(mixpanelActionRequest);
     const getRankingResult: SagaCallReturnType<typeof getRanking> = yield call(

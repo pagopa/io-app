@@ -1,0 +1,60 @@
+import { Either, left, right } from "fp-ts/lib/Either";
+import { readableReport } from "italia-ts-commons/lib/reporters";
+import { call, Effect } from "redux-saga/effects";
+import { mixpanelTrack } from "../../../../../../mixpanel";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { getError } from "../../../../../../utils/errors";
+import { BackendBpdClient } from "../../../api/backendBpdClient";
+import { AwardPeriodId } from "../../../store/actions/periods";
+import { TrxCountByDayResource } from "../../../store/actions/transactions";
+
+const mixpanelActionRequest = `BPD_COUNT_BY_DAY_REQUEST`;
+const mixpanelActionSuccess = `BPD_COUNT_BY_DAY_SUCCESS`;
+const mixpanelActionFailure = `BPD_COUNT_BY_DAY_FAILURE`;
+
+/**
+ * Load the countByDay for a period
+ * @param getCountByDay
+ * @param awardPeriodId
+ */
+export function* bpdLoadRakingV2(
+  getCountByDay: ReturnType<
+    typeof BackendBpdClient
+  >["winningTransactionsV2CountByDay"],
+  awardPeriodId: AwardPeriodId
+): Generator<
+  Effect,
+  Either<Error, TrxCountByDayResource>,
+  SagaCallReturnType<typeof getCountByDay>
+> {
+  try {
+    void mixpanelTrack(mixpanelActionRequest);
+    const getCountByDayResults = yield call(getCountByDay, {
+      awardPeriodId
+    } as any);
+    if (getCountByDayResults.isRight()) {
+      if (getCountByDayResults.value.status === 200) {
+        void mixpanelTrack(mixpanelActionSuccess, {
+          count: getCountByDayResults.value.value?.length
+        });
+        return right<Error, TrxCountByDayResource>({
+          awardPeriodId,
+          results: getCountByDayResults.value.value
+        });
+      } else {
+        return left<Error, TrxCountByDayResource>(
+          new Error(`response status ${getCountByDayResults.value.status}`)
+        );
+      }
+    } else {
+      return left<Error, TrxCountByDayResource>(
+        new Error(readableReport(getCountByDayResults.value))
+      );
+    }
+  } catch (e) {
+    void mixpanelTrack(mixpanelActionFailure, {
+      reason: getError(e).message
+    });
+    return left<Error, TrxCountByDayResource>(getError(e));
+  }
+}
