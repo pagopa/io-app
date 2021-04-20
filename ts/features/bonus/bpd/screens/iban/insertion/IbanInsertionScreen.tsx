@@ -28,11 +28,7 @@ const IbanInsertionScreen: React.FunctionComponent<Props> = props => (
     onBack={props.cancel}
     onContinue={props.continue}
     onIbanConfirm={props.submitIban}
-    startIban={
-      isReady(props.technicalAccount) && props.technicalAccount.value
-        ? ""
-        : props.prefillIban
-    }
+    startIban={props.prefillIban}
     cancelText={
       props.onboardingOngoing
         ? I18n.t("global.buttons.skip")
