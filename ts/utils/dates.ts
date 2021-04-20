@@ -3,6 +3,7 @@ import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
 import { none, Option, some } from "fp-ts/lib/Option";
+import { Either, left, right } from "fp-ts/lib/Either";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary, localeDateFormat } from "./locale";
@@ -112,12 +113,12 @@ export const dateFromMonthAndYear = (
 export const isExpired = (
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
-): Option<boolean> => {
+): Either<Error, boolean> => {
   const maybeDate = dateFromMonthAndYear(expireMonth, expireYear);
   if (maybeDate.isNone()) {
-    return none;
+    return left(Error("invalid input"));
   }
-  return some(compareDesc(maybeDate.value, new Date()) > 0);
+  return right(compareDesc(maybeDate.value, new Date()) > 0);
 };
 
 /**

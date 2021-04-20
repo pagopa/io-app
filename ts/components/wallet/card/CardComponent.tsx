@@ -21,8 +21,8 @@ import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
-import { isExpired } from "../../../utils/dates";
 import { H5 } from "../../core/typography/H5";
+import { isExpired } from "../../../utils/dates";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -162,7 +162,7 @@ export default class CardComponent extends React.Component<Props> {
                   <MenuOption onSelect={this.handleFavoritePress}>
                     <Text bold={true} style={styles.blueText}>
                       {I18n.t(
-                        pot.getOrElseWithUpdating(isFavorite, false) === true
+                        pot.getOrElseWithUpdating(isFavorite, false)
                           ? "cardComponent.unsetFavorite"
                           : "cardComponent.setFavorite"
                       )}

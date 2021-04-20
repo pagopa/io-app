@@ -19,7 +19,8 @@ import {
   fromPredicate,
   isSome,
   some,
-  none
+  none,
+  fromEither
 } from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
@@ -176,7 +177,7 @@ const isCreditCardDateExpiredOrInvalid = (
       ) {
         return some(true);
       }
-      return isExpired(my[0], my[1]);
+      return fromEither(isExpired(my[0], my[1]));
     });
 
 const AddCardScreen: React.FC<Props> = props => {

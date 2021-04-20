@@ -16,11 +16,11 @@ import { localeDateFormat } from "../../../../utils/locale";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 import { BlurredPan } from "../../component/card/BlurredPan";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
-import { isExpired } from "../../../../utils/dates";
 
 type Props = {
   caption?: string;
   expiringDate?: Date;
+  isExpired?: boolean;
   abi: Abi;
   brandLogo: ImageSourcePropType;
   blocked?: boolean;
@@ -68,10 +68,6 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       resizeMode: "contain"
     })
   );
-  const isCobadgeExpired = isExpired(
-    props.expiringDate ? props.expiringDate.getMonth() - 1 : undefined,
-    props.expiringDate?.getFullYear()
-  ).getOrElse(false);
   return (
     <BaseCardComponent
       topLeftCorner={
@@ -111,8 +107,8 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
             <>
               <View spacer={true} />
               <H5
-                weight={isCobadgeExpired ? "SemiBold" : "Regular"}
-                color={isCobadgeExpired ? "red" : "bluegrey"}
+                weight={props.isExpired ? "SemiBold" : "Regular"}
+                color={props.isExpired ? "red" : "bluegrey"}
                 testID={"expirationDate"}
               >
                 {I18n.t("wallet.cobadge.details.card.validUntil", {

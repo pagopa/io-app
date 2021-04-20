@@ -1,9 +1,6 @@
 import * as t from "io-ts";
 import { Alert } from "react-native";
-import { Option } from "fp-ts/lib/Option";
 import I18n from "../i18n";
-import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import { isExpired } from "./dates";
 /*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
@@ -11,16 +8,6 @@ import { isExpired } from "./dates";
 
 // TODO: unify card representation (multiple part of the application use this)
 export const FOUR_UNICODE_CIRCLES = "●".repeat(4);
-
-/**
- * check if card is expired by evaluating expireMonth and expireYear
- * return some(true) if it is expired, none if it can't evaluate (bad input format)
- * @param cardInfo
- */
-export function isCardExpired(cardInfo: CardInfo): Option<boolean> {
-  const { expireMonth, expireYear } = cardInfo;
-  return isExpired(expireMonth, expireYear);
-}
 
 /**
  * it sanitizes psp tags avoiding no string value and string duplicates

@@ -1,4 +1,4 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import {
@@ -18,11 +18,11 @@ import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import { isExpired } from "../../../../../utils/dates";
 
 type Props = {
   abi: Abi;
   expiringDate?: Date;
+  isExpired?: boolean;
   user: string;
   blocked?: boolean;
 };
@@ -119,14 +119,6 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
     BASE_IMG_H,
     props.abi?.logoUrl
   );
-  const isBancomatExpired = fromNullable(props.expiringDate)
-    .chain(ed =>
-      isExpired(
-        ed.getMonth() + 1, // getMonth() is an integer between 0 and 11
-        ed.getFullYear()
-      )
-    )
-    .getOrElse(false);
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -149,7 +141,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           {props.expiringDate && (
             <H5
-              color={isBancomatExpired ? "red" : "bluegrey"}
+              color={props.isExpired ? "red" : "bluegrey"}
               weight={"SemiBold"}
             >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
               props.expiringDate,
