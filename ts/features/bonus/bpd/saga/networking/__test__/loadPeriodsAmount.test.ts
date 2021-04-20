@@ -31,7 +31,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
@@ -49,7 +50,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
@@ -77,7 +79,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
@@ -106,7 +109,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
@@ -145,7 +149,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
@@ -191,7 +196,8 @@ describe("loadPeriodsAmount, mock networking saga", () => {
     const backendClient = {
       totalCashback: jest.fn(),
       awardPeriods: jest.fn(),
-      getRanking: jest.fn()
+      getRanking: jest.fn(),
+      getRankingV2: jest.fn()
     };
     await expectSaga(loadPeriodsWithInfo, backendClient)
       .provide([
