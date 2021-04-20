@@ -1,6 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { call, Effect } from "redux-saga/effects";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { BpdRankingReady } from "../../store/reducers/details/periods";
 import { BackendBpdClient } from "../../api/backendBpdClient";
@@ -9,9 +10,12 @@ import { AwardPeriodId } from "../../store/actions/periods";
 import { getError } from "../../../../../utils/errors";
 import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 
-const mixpanelActionRequest = "BPD_RANKING_REQUEST";
-const mixpanelActionSuccess = "BPD_RANKING_SUCCESS";
-const mixpanelActionFailure = "BPD_RANKING_FAILURE";
+// TODO: clean after V1 removal
+const version = bpdTransactionsPaging ? "_V2" : "";
+
+const mixpanelActionRequest = `BPD_RANKING${version}_REQUEST`;
+const mixpanelActionSuccess = `BPD_RANKING${version}_SUCCESS`;
+const mixpanelActionFailure = `BPD_RANKING${version}_FAILURE`;
 
 // convert the network payload ranking into the relative app domain model
 const convertRankingArray = (

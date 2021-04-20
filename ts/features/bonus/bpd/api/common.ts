@@ -1,5 +1,8 @@
 import { RequestHeaderProducer } from "italia-ts-commons/lib/requests";
 
+/**
+ * Produce a base header for the BPD API requests
+ */
 export const bpdHeadersProducers = <
   P extends {
     readonly Authorization: string;

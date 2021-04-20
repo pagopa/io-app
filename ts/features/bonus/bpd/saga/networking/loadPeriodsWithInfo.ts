@@ -1,6 +1,7 @@
 import { findFirst } from "fp-ts/lib/Array";
 import { Either, isRight, right } from "fp-ts/lib/Either";
 import { all, call, put } from "redux-saga/effects";
+import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
@@ -21,7 +22,7 @@ import { bpdLoadRaking } from "./ranking";
 export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
-    "awardPeriods" | "totalCashback" | "getRanking"
+    "awardPeriods" | "totalCashback" | "getRanking" | "getRankingV2"
   >
 ) {
   // Request the period list
@@ -38,7 +39,8 @@ export function* loadPeriodsWithInfo(
 
     const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
       bpdLoadRaking,
-      bpdClient.getRanking
+      // TODO: clean after v1 removal
+      bpdTransactionsPaging ? bpdClient.getRankingV2 : bpdClient.getRanking
     );
 
     if (rankings.isLeft()) {
