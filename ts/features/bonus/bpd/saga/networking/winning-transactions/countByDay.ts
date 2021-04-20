@@ -17,7 +17,7 @@ const mixpanelActionFailure = `BPD_COUNT_BY_DAY_FAILURE`;
  * @param getCountByDay
  * @param awardPeriodId
  */
-export function* bpdLoadRakingV2(
+export function* bpdLoadCountByDay(
   getCountByDay: ReturnType<
     typeof BackendBpdClient
   >["winningTransactionsV2CountByDay"],

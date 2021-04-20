@@ -71,7 +71,7 @@ type BpdTransactionPageRequestPayload = WithAwardPeriodId & {
   nextCursor?: number;
 };
 
-type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
+export type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
   results: WinningTransactionPageResource;
 };
 
