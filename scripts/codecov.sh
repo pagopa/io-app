@@ -8,7 +8,7 @@ echo "codecov version: $CODECOV_VERSION"
 CODECOV_SHA=$(head -1 <(curl -s https://raw.githubusercontent.com/codecov/codecov-bash/$CODECOV_VERSION/SHA256SUM))
 COMPUTED_SHA=$(shasum -a 256 $FILENAME)
 if [ "$COMPUTED_SHA" = "$CODECOV_SHA" ]; then
-  echo "sha256 passes validation."
+  echo "sha256 checksum OK"
 else
   VALIDATION_FAILURE=1
 fi
