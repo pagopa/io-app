@@ -1,8 +1,6 @@
-import CameraRoll from "@react-native-community/cameraroll";
-import { fromLeft, TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
-import { PermissionsAndroid, Platform } from "react-native";
+import { tryCatch } from "fp-ts/lib/TaskEither";
+import { Platform } from "react-native";
 import Share from "react-native-share";
-import { hasAndroidPermission } from "./permission";
 
 /**
  * share an url see https://react-native-share.github.io/react-native-share/docs/share-open#supported-options
@@ -34,28 +32,3 @@ export const isShareEnabled = () =>
     ios: true,
     default: false
   });
-
-/**
- * check if write external storage permission is granted, if yes try to save the given uri in the camera roll
- * @param uri
- */
-export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {
-  const hasPermission = tryCatch(
-    () =>
-      hasAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-      ),
-    errorMsg => new Error(String(errorMsg))
-  );
-  const saveImage = tryCatch(
-    () => CameraRoll.save(uri, { type: "photo" }),
-    errorMsg => new Error(String(errorMsg))
-  );
-
-  return hasPermission.chain(hasP => {
-    if (hasP) {
-      return saveImage;
-    }
-    return fromLeft<Error, string>(Error("some error occurred"));
-  });
-};

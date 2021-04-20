@@ -1,7 +1,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Badge, Text, Toast, View } from "native-base";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import {
   Animated,
@@ -31,11 +31,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
-import {
-  isShareEnabled,
-  saveImageToGallery,
-  share
-} from "../../../../utils/share";
+import { isShareEnabled, share } from "../../../../utils/share";
 import { showToast } from "../../../../utils/showToast";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import BonusCardComponent from "../components/BonusCardComponent";
@@ -270,7 +266,6 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
   <View style={styles.rowBlock}>
     {props.firstButton && <FooterButton {...props.firstButton} />}
     {props.secondButton && <FooterButton {...props.secondButton} />}
-    {props.thirdButton && <FooterButton {...props.thirdButton} />}
   </View>
 );
 
@@ -332,33 +327,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       }
     }
   }, [screenShotState.isPrintable]);
-
-  React.useEffect(() => {
-    // if the screenShotUri is defined start saving image and restore default style
-    // show a toast error if something went wrong
-    if (screenShotState.screenShotUri) {
-      saveImageToGallery(`file://${screenShotState.screenShotUri}`)
-        .run()
-        .then(maybeSaved => {
-          maybeSaved.fold(showToastGenericError, () => {
-            Toast.show({
-              text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
-            });
-          });
-        })
-        .catch(showToastGenericError)
-        .finally(() => {
-          // animate fadeOut of flash light animation
-          Animated.timing(backgroundAnimation, {
-            duration: flashAnimation,
-            toValue: 0,
-            useNativeDriver: false,
-            easing: Easing.cubic
-          }).start();
-        });
-      setScreenShotState(screenShortInitialState);
-    }
-  }, [screenShotState.screenShotUri]);
 
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(

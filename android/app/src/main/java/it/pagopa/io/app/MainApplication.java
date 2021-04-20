@@ -12,7 +12,6 @@ import com.facebook.react.ReactApplication;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactnativecommunity.cookies.CookieManagerPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.gantix.JailMonkey.JailMonkeyPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -72,7 +71,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
             new ClipboardPackage(),
             new ReanimatedPackage(),
             new CookieManagerPackage(),
-            new CameraRollPackage(),
             new RNViewShotPackage(),
             new JailMonkeyPackage(),
             new LinearGradientPackage(),

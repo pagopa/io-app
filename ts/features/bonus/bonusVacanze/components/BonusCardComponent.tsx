@@ -213,7 +213,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         </View>
         <View>
           <View
-            style={styles.flexEnd}
+            style={[styles.flexEnd, { zIndex: 2 }]}
             accessible={true}
             importantForAccessibility={"no-hide-descendants"}
             accessibilityElementsHidden={true}
