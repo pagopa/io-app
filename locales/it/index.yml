@@ -1675,7 +1675,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale. 
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?
@@ -2052,7 +2052,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})"
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
