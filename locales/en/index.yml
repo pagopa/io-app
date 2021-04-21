@@ -1341,7 +1341,7 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
