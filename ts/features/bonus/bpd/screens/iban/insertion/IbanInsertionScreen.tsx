@@ -12,7 +12,6 @@ import {
 } from "../../../store/actions/iban";
 import { bpdIbanPrefillSelector } from "../../../store/reducers/details/activation";
 import { isBpdOnboardingOngoing } from "../../../store/reducers/onboarding/ongoing";
-import { bpdTechnicalAccountSelector } from "../../../store/reducers/details/activation/technicalAccount";
 import { IbanInsertionComponent } from "./IbanInsertionComponent";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -45,8 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   prefillIban: bpdIbanPrefillSelector(state),
-  onboardingOngoing: isBpdOnboardingOngoing(state),
-  technicalAccount: bpdTechnicalAccountSelector(state)
+  onboardingOngoing: isBpdOnboardingOngoing(state)
 });
 
 export default connect(
