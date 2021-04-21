@@ -90,7 +90,7 @@ import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayReque
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
-import { getLookUpId } from "../utils/pmLookUpId";
+import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -143,7 +143,7 @@ const ParamAuthorizationBearerHeader = <
   p: P
 ): { Authorization: string; LookUpId?: string } => ({
   Authorization: `Bearer ${p.Bearer}`,
-  ...(p.LookUpId ? { LookUpId: p.LookUpId } : {})
+  ...(p.LookUpId ? { [pmLookupHeaderKey]: p.LookUpId } : {})
 });
 
 const ParamAuthorizationBearerHeaderProducer = <
