@@ -6,6 +6,7 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { fold, RemoteValue } from "../../../../model/RemoteValue";
 import { bpdIbanInsertionStart } from "../../../../store/actions/iban";
 import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
+import { bpdTechnicalAccountSelector } from "../../../../store/reducers/details/activation/technicalAccount";
 import {
   BaseIbanInformationComponent,
   BaseIbanProps
@@ -24,10 +25,9 @@ const LoadingIban = () => <Placeholder.Box width={"100%"} animate={"shine"} />;
  * @constructor
  */
 const RenderRemoteIban = (
-  props: { iban: RemoteValue<string | undefined, Error> } & Omit<
-    BaseIbanProps,
-    "iban"
-  >
+  props: {
+    iban: RemoteValue<string | undefined, Error>;
+  } & Omit<BaseIbanProps, "iban">
 ) =>
   fold(
     props.iban,
@@ -37,6 +37,7 @@ const RenderRemoteIban = (
       <BaseIbanInformationComponent
         onInsertIban={props.onInsertIban}
         iban={value}
+        technicalAccount={props.technicalAccount}
       />
     ),
     _ => null
@@ -53,6 +54,7 @@ const IbanInformationComponent: React.FunctionComponent<Props> = props => (
   <RenderRemoteIban
     iban={props.iban}
     onInsertIban={props.startIbanOnboarding}
+    technicalAccount={props.technicalAccount}
   />
 );
 
@@ -61,7 +63,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  iban: bpdIbanSelector(state)
+  iban: bpdIbanSelector(state),
+  technicalAccount: bpdTechnicalAccountSelector(state)
 });
 
 export default connect(

@@ -10,9 +10,11 @@ import { Monospace } from "../../../../../../../components/core/typography/Monos
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
+import { isReady, RemoteValue } from "../../../../model/RemoteValue";
 
 export type BaseIbanProps = {
   iban: string | undefined;
+  technicalAccount: RemoteValue<string | undefined, Error>;
   onInsertIban: () => void;
 };
 
@@ -49,6 +51,14 @@ const IbanComponent = (props: { iban: string }) => (
   <Monospace>{props.iban}</Monospace>
 );
 
+/**
+ * Display the technical IBAN message
+ * @constructor
+ */
+const TechnicalIbanComponent = (props: { technicalIban: string }) => (
+  <Body>{props.technicalIban}</Body>
+);
+
 export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps> = props => (
   <View style={IOStyles.flex}>
     <View style={styles.row}>
@@ -60,8 +70,14 @@ export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps
       )}
     </View>
     <View spacer={true} />
+    {/* Also if it is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
     {props.iban ? (
-      <IbanComponent iban={props.iban} />
+      isReady(props.technicalAccount) &&
+      props.technicalAccount.value !== undefined ? (
+        <TechnicalIbanComponent technicalIban={props.technicalAccount.value} />
+      ) : (
+        <IbanComponent iban={props.iban} />
+      )
     ) : (
       <NoIbanComponent onPress={props.onInsertIban} />
     )}

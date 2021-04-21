@@ -131,6 +131,8 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           alignItems: "center"
         }}
         onPress={openBS}
+        accessible={true}
+        accessibilityRole={"button"}
       >
         <IconFont
           name="io-plus"
