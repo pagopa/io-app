@@ -1,11 +1,15 @@
-import { addYears, format as dateFnsFormat, isAfter, isBefore } from "date-fns";
+import { addYears, compareDesc, format as dateFnsFormat, isAfter, isBefore } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
+import { none, Option, some } from "fp-ts/lib/Option";
+import { Either, left, right } from "fp-ts/lib/Either";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary, localeDateFormat } from "./locale";
 import { ExpireStatus } from "./messages";
+import { NumberFromString } from "./number";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
@@ -68,18 +72,54 @@ export function format(
   );
 }
 
-export function isExpired(expireMonth: number, expireYear: number): boolean {
-  const today: Date = new Date();
-  const currentMonth: number = today.getMonth() + 1;
-  const currentYear: number = parseInt(
-    today.getFullYear().toString().slice(2),
-    10
-  );
-  return (
-    expireYear < currentYear ||
-    (expireYear === currentYear && expireMonth < currentMonth)
-  );
-}
+export const dateFromMonthAndYear = (
+  month: string | number | undefined,
+  year: string | number | undefined
+): Option<Date> => {
+  // convert month to string (if it is a number) and
+  // ensure it is left padded: 2 -> 02
+  const monthStr = (month ?? "").toString().trim().padStart(2, "0");
+  // eslint-disable-next-line functional/no-let
+  let yearStr = (year ?? "").toString().trim();
+  // check that month matches the pattern (01-12)
+  if (!CreditCardExpirationMonth.is(monthStr)) {
+    return none;
+  }
+  // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
+  if (yearStr.length === 2) {
+    // check that month is included matches the pattern (00-99)
+    if (!CreditCardExpirationYear.is(yearStr)) {
+      return none;
+    }
+    const now = new Date();
+    yearStr = now.getFullYear().toString().substring(0, 2) + yearStr.toString();
+  }
+  const maybeMonth = NumberFromString.decode(monthStr);
+  const maybeYear = NumberFromString.decode(yearStr);
+  if (maybeMonth.isLeft() || maybeYear.isLeft()) {
+    return none;
+  }
+  return some(new Date(maybeYear.value, maybeMonth.value - 1));
+};
+
+/**
+ * if expireMonth and expireYear are defined and they represent a valid date then
+ * return some, with 'true' if the given date is expired compared with now.
+ * return none if the input is not valid
+ * {@expireYear could be 2 or 4 digits}
+ * @param expireMonth
+ * @param expireYear
+ */
+export const isExpired = (
+  expireMonth: string | number | undefined,
+  expireYear: string | number | undefined
+): Either<Error, boolean> => {
+  const maybeDate = dateFromMonthAndYear(expireMonth, expireYear);
+  if (maybeDate.isNone()) {
+    return left(Error("invalid input"));
+  }
+  return right(compareDesc(maybeDate.value, new Date()) > 0);
+};
 
 /**
  * A function to check if the given date is in the past or in the future.
