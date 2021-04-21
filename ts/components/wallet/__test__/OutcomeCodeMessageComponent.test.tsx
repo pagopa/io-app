@@ -1,14 +1,14 @@
-import { View } from "native-base";
 import * as React from "react";
+import { View } from "react-native";
 import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import { setLocale } from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { GlobalState } from "../../../store/reducers/types";
 import { OutcomeCode } from "../../../types/outcomeCode";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import ROUTES from "../../../navigation/routes";
+import { GlobalState } from "../../../store/reducers/types";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
 import OutcomeCodeMessageComponent from "../OutcomeCodeMessageComponent";
 
 const ASuccessComponent = () => <View testID="a-success-component" />;
@@ -16,8 +16,8 @@ const ASuccessFooter = () => <View testID="a-success-footer" />;
 const onClose = jest.fn();
 
 describe("OutcomeCodeMessageComponent", () => {
-  beforeEach(() => jest.useFakeTimers());
-  it("Rendering OutcomeCodeMessageComponent, all the required components should be defined", () => {
+  jest.useFakeTimers();
+  it("should be not null", () => {
     const outcomeCode = { status: "success" } as OutcomeCode;
     const { component } = renderComponent(
       outcomeCode,
@@ -26,6 +26,18 @@ describe("OutcomeCodeMessageComponent", () => {
     );
 
     expect(component).not.toBeNull();
+  });
+  it("should render ASuccessComponent if outcomeCode status is equal to success and prop successComponent has been passed", () => {
+    const outcomeCode = { status: "success" } as OutcomeCode;
+    const { component } = renderComponent(
+      outcomeCode,
+      ASuccessComponent,
+      onClose
+    );
+
+    const successComponent = component.queryByTestId("a-success-component");
+    expect(component).not.toBeNull();
+    expect(successComponent).not.toBeNull();
   });
   it("should render ASuccessFooter if outcomeCode status is equal to success and prop successFooter has been passed", () => {
     const outcomeCode = { status: "success" } as OutcomeCode;
@@ -36,7 +48,9 @@ describe("OutcomeCodeMessageComponent", () => {
       ASuccessFooter
     );
 
+    const successFooter = component.queryByTestId("a-success-footer");
     expect(component).not.toBeNull();
+    expect(successFooter).not.toBeNull();
   });
   it("should render InfoScreenComponent if outcomeCode status is not equal to success, outcomeCode title and description are defined and showing the right text", () => {
     const outcomeCode = {
@@ -105,7 +119,6 @@ const renderComponent = (
       ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
       {},
       store
-    ),
-    store
+    )
   };
 };
