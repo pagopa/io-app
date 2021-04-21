@@ -1054,11 +1054,14 @@ wallet:
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
-    title: Scegli il gestore
-    infoBold: Scegli il soggetto
-    info2: (PSP) che dovrà gestire la tua transazione.
-    link: Per saperne di più
+    headerTitle: "Seleziona un gestore"
+    title: Con quale gestore vuoi pagare?
+    info: Ogni gestore propone un costo di transazione.
+    info2: In questa lista trovi tutti i gestori
+    info2Bold: compatibili con il tuo metodo, anche se non sei loro cliente.
+    provider: Gestore
     maxFee: Costo di transazione
+    loadingPsps: Caricamento gestori in corso...
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
