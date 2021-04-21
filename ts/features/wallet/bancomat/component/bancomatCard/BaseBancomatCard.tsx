@@ -22,6 +22,7 @@ import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useIm
 type Props = {
   abi: Abi;
   expiringDate?: Date;
+  isExpired?: boolean;
   user: string;
   blocked?: boolean;
 };
@@ -118,7 +119,6 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
     BASE_IMG_H,
     props.abi?.logoUrl
   );
-
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -140,9 +140,10 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer={true} />
           {props.expiringDate && (
-            <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
-              "cardComponent.expiresOn"
-            )} ${localeDateFormat(
+            <H5
+              color={props.isExpired ? "red" : "bluegrey"}
+              weight={"SemiBold"}
+            >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
               props.expiringDate,
               I18n.t("global.dateFormats.numericMonthYear")
             )}`}</H5>

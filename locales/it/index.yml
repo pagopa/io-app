@@ -1368,7 +1368,7 @@ saveCard:
 cardComponent:
   validUntil: Valida fino al
   expiresOn: Scade il
-  expiredCard: CARTA SCADUTA IL
+  expiredCard: Carta scaduta il
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
