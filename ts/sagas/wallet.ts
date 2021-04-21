@@ -616,12 +616,6 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(
-    [getType(runStartOrResumeAddCreditCardSaga)],
-    startOrResumeAddCreditCardSaga,
-    pmSessionManager
-  );
-
-  yield takeLatest(
     getType(runStartOrResumePaymentActivationSaga),
     startOrResumePaymentActivationSaga
   );
