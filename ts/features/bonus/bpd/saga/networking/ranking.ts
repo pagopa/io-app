@@ -1,6 +1,8 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as A from "fp-ts/lib/Array";
+import { Either, fromOption, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect } from "redux-saga/effects";
+import { call, Effect, put } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 import { CitizenRankingResourceArray } from "../../../../../../definitions/bpd/citizen/CitizenRankingResourceArray";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
 import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/MilestoneResource";
@@ -10,7 +12,10 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getError } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { AwardPeriodId } from "../../store/actions/periods";
-import { BpdTransactionId } from "../../store/actions/transactions";
+import {
+  BpdTransactionId,
+  bpdTransactionsLoadMilestone
+} from "../../store/actions/transactions";
 import { BpdRankingReady } from "../../store/reducers/details/periods";
 import { BpdPivotTransaction } from "../../store/reducers/details/transactionsv2/entities";
 
@@ -140,5 +145,48 @@ export function* bpdLoadRakingV2(
       reason: getError(e).message
     });
     return left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
+  }
+}
+
+/**
+ * Handle the action bpdTransactionsLoadMilestone.request
+ * @param getRanking
+ * @param action
+ */
+export function* handleLoadMilestone(
+  getRanking: ReturnType<typeof BackendBpdClient>["getRankingV2"],
+  action: ActionType<typeof bpdTransactionsLoadMilestone.request>
+) {
+  // get the results
+  const result: SagaCallReturnType<typeof bpdLoadRakingV2> = yield call(
+    bpdLoadRakingV2,
+    getRanking
+  );
+
+  const extractMilestonePivot = result.chain(x =>
+    fromOption(
+      new Error(`Period ${action.payload} not found in the ranking response`)
+    )(
+      A.findFirst([...x], x => x.awardPeriodId === action.payload).map(
+        x => x.pivot
+      )
+    )
+  );
+
+  // dispatch the related action
+  if (extractMilestonePivot.isRight()) {
+    yield put(
+      bpdTransactionsLoadMilestone.success({
+        awardPeriodId: action.payload,
+        result: extractMilestonePivot.value
+      })
+    );
+  } else {
+    yield put(
+      bpdTransactionsLoadMilestone.failure({
+        awardPeriodId: action.payload,
+        error: extractMilestonePivot.value
+      })
+    );
   }
 }

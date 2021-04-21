@@ -23,6 +23,7 @@ import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import {
   bpdTransactionsLoad,
   bpdTransactionsLoadCountByDay,
+  bpdTransactionsLoadMilestone,
   bpdTransactionsLoadPage
 } from "../store/actions/transactions";
 import {
@@ -39,6 +40,7 @@ import {
   bpdLoadPaymentMethodActivationSaga,
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
+import { handleLoadMilestone } from "./networking/ranking";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleCountByDay } from "./networking/winning-transactions/countByDay";
 import { handleTransactionsPage } from "./networking/winning-transactions/transactionsPage";
@@ -117,6 +119,13 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
       bpdTransactionsLoadCountByDay.request,
       handleCountByDay,
       bpdBackendClient.winningTransactionsV2CountByDay
+    );
+
+    // Load the milestone (pivot) information for a period
+    yield takeEvery(
+      bpdTransactionsLoadMilestone.request,
+      handleLoadMilestone,
+      bpdBackendClient.getRankingV2
     );
 
     // Load a transactions page for a period

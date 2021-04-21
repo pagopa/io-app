@@ -102,7 +102,7 @@ export const bpdTransactionsLoadCountByDay = createAsyncAction(
 )<AwardPeriodId, TrxCountByDayResource, BpdTransactionsError>();
 
 export type TrxMilestonePayload = WithAwardPeriodId & {
-  result: BpdPivotTransaction;
+  result: BpdPivotTransaction | undefined;
 };
 
 /**
