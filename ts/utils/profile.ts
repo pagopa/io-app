@@ -36,6 +36,24 @@ const months: { [k: string]: number } = {
   ["T"]: 12
 };
 
+// Extracts the birth date from the fiscal code string
+export const extractBirthDayFiscalCode = (fiscalCode: FiscalCode): Date => {
+  const tempDay = parseInt(fiscalCode.substring(9, 11), 10);
+
+  const month = months[fiscalCode.charAt(8)];
+  const day = tempDay - 40 > 0 ? tempDay - 40 : tempDay;
+  const tempYear = parseInt(fiscalCode.substring(6, 8), 10);
+
+  // to avoid the century date collision (01 could mean 1901 or 2001)
+  // we assume that if the birth date is grater than a century, the date
+  // refers to the new century
+  const year =
+    tempYear +
+    (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
+
+  return new Date(year, month - 1, day);
+};
+
 // Generate object including data expressed into the given fiscal code
 export function extractFiscalCodeData(
   fiscalCode: FiscalCode,
@@ -73,15 +91,7 @@ export function extractFiscalCodeData(
     };
   }
 
-  const day = tempDay - 40 > 0 ? tempDay - 40 : tempDay;
-  const tempYear = parseInt(fiscalCode.substring(6, 8), 10);
-  // to avoid the century date collision (01 could mean 1901 or 2001)
-  // we assume that if the birth date is grater than a century, the date
-  // refers to the new century
-  const year =
-    tempYear +
-    (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
-  const birthday = new Date(year, month - 1, day);
+  const birthday = extractBirthDayFiscalCode(fiscalCode);
   const birthDate = formatDateAsShortFormat(birthday);
 
   return {

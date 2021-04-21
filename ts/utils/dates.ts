@@ -1,4 +1,4 @@
-import { format as dateFnsFormat } from "date-fns";
+import { addYears, format as dateFnsFormat, isAfter, isBefore } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
 import * as t from "io-ts";
@@ -149,3 +149,19 @@ export const getTranslatedShortNumericMonthYear = (
     I18n.t("global.dateFormats.shortNumericMonthYear")
   );
 };
+
+/**
+ * Returns a comparator of two dates that returns true if
+ * the difference in years is at least the provided value.
+ */
+export const isOlderThan = (years: number) => (dateOfBirth: Date, when: Date) =>
+  isBefore(addYears(dateOfBirth, years), when);
+
+/**
+ * Returns a comparator of two dates that returns true if
+ * the difference in years is at most the provided value.
+ */
+export const isYoungerThan = (years: number) => (
+  dateOfBirth: Date,
+  when: Date
+) => isAfter(addYears(dateOfBirth, years), when);

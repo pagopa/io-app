@@ -1,4 +1,9 @@
-import { formatDateAsShortFormat, getExpireStatus } from "../dates";
+import {
+  formatDateAsShortFormat,
+  getExpireStatus,
+  isOlderThan,
+  isYoungerThan
+} from "../dates";
 import I18n from "../../i18n";
 
 describe("getExpireStatus", () => {
@@ -29,5 +34,37 @@ describe("formatDateAsShortFormat", () => {
 
   toTest.forEach(tt => {
     expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
+  });
+});
+
+describe("isYoungerThan", () => {
+  // [birthDate, compareDate, age, result]
+  const toTest: ReadonlyArray<[Date, Date, number, boolean]> = [
+    [new Date(1970, 0, 1), new Date(2021, 5, 1), 18, false],
+    [new Date(1992, 11, 1), new Date(2005, 0, 1), 13, true],
+    [new Date(1900, 5, 5), new Date(1970, 0, 1), 20, false],
+    [new Date(1900, 13, 55), new Date(1900, 5, 5), 10, true],
+    [new Date("not a date"), new Date(1970, 0, 1), 35, false],
+    [new Date(1970, 0, 1), new Date("some faulty text"), 35, false]
+  ];
+
+  toTest.forEach(tt => {
+    expect(isYoungerThan(tt[2])(tt[0], tt[1])).toEqual(tt[3]);
+  });
+});
+
+describe("isOlderThan", () => {
+  // [birthDate, compareDate, age, result]
+  const toTest: ReadonlyArray<[Date, Date, number, boolean]> = [
+    [new Date(1970, 0, 1), new Date(2021, 5, 1), 18, true],
+    [new Date(1992, 11, 1), new Date(2005, 0, 1), 13, false],
+    [new Date(1900, 5, 5), new Date(1970, 0, 1), 20, true],
+    [new Date(1900, 13, 55), new Date(1900, 5, 5), 10, false],
+    [new Date("not a date"), new Date(1970, 0, 1), 35, false],
+    [new Date(1970, 0, 1), new Date("some faulty text"), 35, false]
+  ];
+
+  toTest.forEach(tt => {
+    expect(isOlderThan(tt[2])(tt[0], tt[1])).toEqual(tt[3]);
   });
 });

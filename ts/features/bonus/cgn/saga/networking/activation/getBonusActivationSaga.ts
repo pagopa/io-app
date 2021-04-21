@@ -1,4 +1,4 @@
-import { call, Effect } from "redux-saga/effects";
+import { call, Effect, select } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -10,6 +10,12 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { getError } from "../../../../../../utils/errors";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { StatusEnum } from "../../../../../../../definitions/cgn/CgnActivationDetail";
+import { profileFiscalCodeSelector } from "../../../../../../store/reducers/profile";
+import { extractBirthDayFiscalCode } from "../../../../../../utils/profile";
+import { isOlderThan, isYoungerThan } from "../../../../../../utils/dates";
+
+const CGN_LOWER_BOUND_AGE = 18;
+const CGN_UPPER_BOUND_AGE = 35;
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
@@ -22,6 +28,7 @@ const statusProgressRecord: Record<403 | 409, CgnActivationProgressEnum> = {
 };
 
 export type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
+type FiscalCodeSelectorType = ReturnType<typeof profileFiscalCodeSelector>;
 
 /**
  * Function that handles the activation of a CGN
@@ -40,6 +47,21 @@ export const cgnActivationSaga = (
 ) =>
   function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
     try {
+      const fiscalCode: FiscalCodeSelectorType = yield select(
+        profileFiscalCodeSelector
+      );
+      if (fiscalCode.isSome()) {
+        const birthDay = extractBirthDayFiscalCode(fiscalCode.value);
+        const today = new Date();
+        if (
+          isYoungerThan(CGN_LOWER_BOUND_AGE)(birthDay, today) ||
+          isOlderThan(CGN_UPPER_BOUND_AGE)(birthDay, today)
+        ) {
+          return cgnActivationStatus.success({
+            status: CgnActivationProgressEnum.INELIGIBLE
+          });
+        }
+      }
       const startCgnActivationResult: SagaCallReturnType<typeof startCgnActivation> = yield call(
         startCgnActivation,
         {}
@@ -108,7 +130,7 @@ export const handleCgnStatusPolling = (
               `CGN Activation status ${cgnActivationResult.value.value.status}`
             );
             break;
-           // activation is still pending skip
+          // activation is still pending skip
           case StatusEnum.PENDING:
             break;
           default:

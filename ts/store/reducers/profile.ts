@@ -18,6 +18,7 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
+import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -42,6 +43,10 @@ export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
     : false
 );
 
+export const getProfileFiscalCode = (
+  user: InitializedProfile
+): Option<FiscalCode> => fromNullable(user.fiscal_code);
+
 export const getProfileEmail = (
   user: InitializedProfile
 ): Option<EmailAddress> => fromNullable(user.email);
@@ -60,6 +65,16 @@ export const profileEmailSelector = createSelector(
   (profile: ProfileState): Option<string> =>
     pot.getOrElse(
       pot.map(profile, p => getProfileEmail(p)),
+      none
+    )
+);
+
+// return the fiscal code if the profile pot is some and its value is of kind InitializedProfile and it has an email
+export const profileFiscalCodeSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<FiscalCode> =>
+    pot.getOrElse(
+      pot.map(profile, p => getProfileFiscalCode(p)),
       none
     )
 );
