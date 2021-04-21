@@ -1,14 +1,12 @@
 /* eslint-disable */
 
 import { Mutex } from "async-mutex";
-import { Function2, Lazy } from "fp-ts/lib/function";
+import { Function1, Lazy } from "fp-ts/lib/function";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { IResponseType } from "italia-ts-commons/lib/requests";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { delayAsync } from "./timer";
-import { LookUpId } from "./pmLookUpId";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 const waitRetry = 8000 as Millisecond;
 /**
@@ -109,12 +107,7 @@ export class SessionManager<T> {
    * the first one, the token, that gets provided by the internal logic.
    */
   public withRefresh<R>(
-    f: Function2<
-      T,
-      LookUpId | undefined,
-      Promise<t.Validation<IResponseType<401, any> | R>>
-    >,
-    lookUpId: LookUpId | undefined = undefined
+    f: Function1<T, Promise<t.Validation<IResponseType<401, any> | R>>>
   ): Lazy<ReturnType<typeof f>> {
     return async () => {
       let count = 0;
@@ -140,9 +133,7 @@ export class SessionManager<T> {
           // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
           continue;
         }
-        RTron.log("lookUpId", lookUpId);
-        RTron.log("this.token", this.token);
-        const response = await f(this.token, lookUpId);
+        const response = await f(this.token);
         // BEWARE: we can cast to any only because we know for sure that f will
         // always return a Promise<IResponseType<A, B>>
         if (response.isRight() && (response.value as any).status === 401) {

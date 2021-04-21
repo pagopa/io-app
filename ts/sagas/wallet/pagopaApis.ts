@@ -47,7 +47,6 @@ import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
-import { newLookUpId } from "../../utils/pmLookUpId";
 
 //
 // Payment Manager APIs
@@ -72,10 +71,7 @@ export function* getWalletsV2(
 ): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
   try {
     void mixpanelTrack("WALLETS_LOAD_REQUEST");
-    const request = pmSessionManager.withRefresh(
-      pagoPaClient.getWalletsV2,
-      newLookUpId()
-    );
+    const request = pmSessionManager.withRefresh(pagoPaClient.getWalletsV2);
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
     if (getResponse.isRight()) {
       if (getResponse.value.status === 200) {

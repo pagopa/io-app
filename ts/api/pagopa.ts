@@ -143,7 +143,7 @@ const ParamAuthorizationBearerHeader = <
   p: P
 ): { Authorization: string; LookUpId?: string } => ({
   Authorization: `Bearer ${p.Bearer}`,
-  LookUpId: p.LookUpId
+  ...(p.LookUpId ? { LookUpId: p.LookUpId } : {})
 });
 
 const ParamAuthorizationBearerHeaderProducer = <
