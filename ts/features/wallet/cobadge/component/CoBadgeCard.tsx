@@ -1,21 +1,11 @@
 import * as React from "react";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { dateFromMonthAndYear } from "../../../../utils/dates";
+import { isPaymentMethodExpired } from "../../../../utils/paymentMethod";
 import BaseCoBadgeCard from "./BaseCoBadgeCard";
 
 type Props = { enhancedCoBadge: CreditCardPaymentMethod };
-
-const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
-  if (!fullYear || !month) {
-    return undefined;
-  }
-  const year = parseInt(fullYear, 10);
-  const indexedMonth = parseInt(month, 10);
-  if (isNaN(year) || isNaN(indexedMonth)) {
-    return undefined;
-  }
-  return new Date(year, indexedMonth - 1);
-};
 
 /**
  * Render a Co-badge card already added to the wallet
@@ -27,10 +17,11 @@ const CoBadgeCard: React.FunctionComponent<Props> = props => {
   return (
     <BaseCoBadgeCard
       abi={props.enhancedCoBadge.abiInfo ?? {}}
-      expiringDate={getExpireDate(
-        props.enhancedCoBadge.info.expireYear,
-        props.enhancedCoBadge.info.expireMonth
-      )}
+      isExpired={isPaymentMethodExpired(props.enhancedCoBadge).getOrElse(false)}
+      expiringDate={dateFromMonthAndYear(
+        props.enhancedCoBadge.info.expireMonth,
+        props.enhancedCoBadge.info.expireYear
+      ).toUndefined()}
       brandLogo={brandLogo}
       caption={props.enhancedCoBadge.caption}
     />
