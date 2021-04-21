@@ -75,7 +75,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      <View style={IOStyles.row}>
+      <View style={styles.row}>
         {/* TODO when available and defined the icon name should be defined through a map of category codes */}
         <IconFont
           name={"io-theater"}
@@ -88,17 +88,28 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         </H5>
       </View>
       <View spacer />
-      <H3>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H3>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.description")}
+      </H3>
       <H4 weight={"Regular"}>{discount.description}</H4>
       <View spacer />
-      <H3>{I18n.t("bonus.cgn.merchantDetail.title.validity")}</H3>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.validity")}
+      </H3>
       <H4 weight={"Regular"}>{discount.validityDescription}</H4>
       {discount.discountCode && (
         <>
           <View spacer small />
-          <H3>{I18n.t("bonus.cgn.merchantDetail.title.discountCode")}</H3>
-          <TouchableWithoutFeedback onPress={handleCopyPress}>
-            <View style={[IOStyles.row, styles.codeContainer]}>
+          <H3 accessible={true} accessibilityRole={"header"}>
+            {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
+          </H3>
+          <TouchableWithoutFeedback
+            onPress={handleCopyPress}
+            accessible={true}
+            accessibilityRole={"button"}
+            accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+          >
+            <View style={[styles.row, styles.codeContainer]}>
               <BaseTypography
                 weight={"Bold"}
                 color={"bluegreyDark"}
@@ -118,7 +129,9 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         </>
       )}
       <View spacer />
-      <H3>{I18n.t("bonus.cgn.merchantDetail.title.conditions")}</H3>
+      <H3 accessible={true} accessibilityRole={"header"}>
+        {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
+      </H3>
       <H4 weight={"Regular"}>{discount.conditions}</H4>
     </View>
   );
