@@ -25,6 +25,7 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  favoriteWalletIdSelector,
   getFavoriteWalletId,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
@@ -39,6 +40,7 @@ import { getTitleFromCard } from "../../utils/paymentMethod";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -128,7 +130,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
   const isFavorite = pot.map(
-    props.favoriteWallet,
+    props.favoriteWalletId,
     _ => _ === selectedWallet.idWallet
   );
 
@@ -149,7 +151,6 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         ? getTitleFromCard(selectedWallet.paymentMethod)
         : FOUR_UNICODE_CIRCLES
   });
-
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -183,6 +184,21 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
+            <FavoritePaymentMethodSwitch
+              isLoading={
+                pot.isLoading(props.favoriteWalletRequestStatus) ||
+                pot.isUpdating(props.favoriteWalletRequestStatus)
+              }
+              switchValue={pot.getOrElse(isFavorite, false)}
+              onValueChange={v =>
+                handleSetFavourite(v, () =>
+                  props.setFavoriteWallet(pm.idWallet)
+                )
+              }
+            />
+            <View spacer={true} />
+            <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} large={true} />
             <DeletePaymentMethodButton
               onPress={() =>
                 present(() => props.deleteWallet(selectedWallet.idWallet))
@@ -197,7 +213,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  favoriteWallet: getFavoriteWalletId(state),
+  favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
+  favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state)
 });
 

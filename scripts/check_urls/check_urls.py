@@ -21,7 +21,7 @@ HEADERS = {
 }
 MAX_TIMEOUT = 20
 global_uris = set()
-SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
@@ -213,7 +213,7 @@ if not run_test and __name__ == '__main__':
                        "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
                        "https://www.trusttechnologies.it/contatti/#form"}
     locales = (abspath(join(dirname(__file__), "../..", "locales")),{})
-    ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),{"testFaker.ts"})
+    ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),{"testFaker.ts","PayWebViewModal.tsx"})
     for directory,black_list in [locales,ts_dir]:
         files_found = scan_directory(directory,black_list,urls_black_list)
         print("find %d files in %s" % (len(files_found.keys()),directory))

@@ -71,7 +71,6 @@ install_node_modules: &install_node_modules
   run:
     name: install npm packages
     command: |
-      echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGE_APP_TOKEN" > ~/.npmrc
       yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
 #
@@ -576,4 +575,4 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
-      - io_check_cie_button_exists_ios
+      # - io_check_cie_button_exists_ios

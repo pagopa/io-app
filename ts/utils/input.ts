@@ -3,7 +3,6 @@ import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
-import { isExpired } from "./dates";
 
 const MIN_PAN_DIGITS = 15;
 const MAX_PAN_DIGITS = 19;
@@ -51,20 +50,6 @@ export const INITIAL_CARD_FORM_STATE: CreditCardState = {
 
 export const isValidPan = (pan: Option<string>) =>
   pan.map(pan => CreditCardPan.is(pan)).toUndefined();
-
-export const isValidExpirationDate = (
-  expirationDate: Option<string>
-): boolean | undefined =>
-  expirationDate
-    .map(expirationDate => {
-      const [expirationMonth, expirationYear] = expirationDate.split("/");
-      return (
-        CreditCardExpirationMonth.is(expirationMonth) &&
-        CreditCardExpirationYear.is(expirationYear) &&
-        !isExpired(Number(expirationMonth), Number(expirationYear))
-      );
-    })
-    .toUndefined();
 
 export const isValidSecurityCode = (
   securityCode: Option<string>

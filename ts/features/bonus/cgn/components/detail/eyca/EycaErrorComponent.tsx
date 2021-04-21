@@ -30,7 +30,10 @@ const INFOBOX_ICON_SIZE = 32;
 // and will give the user the opportunity to request again it's activation
 const EycaErrorComponent = (props: Props) => (
   <>
-    <View style={[styles.rowBlock, styles.spaced]}>
+    <View
+      style={[styles.rowBlock, styles.spaced]}
+      testID={"eyca-error-component"}
+    >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
       <IconFont
         name={"io-info"}
@@ -41,7 +44,9 @@ const EycaErrorComponent = (props: Props) => (
     </View>
     <View spacer />
     <InfoBox iconName={"io-error"} alignedCentral iconSize={INFOBOX_ICON_SIZE}>
-      <H4 weight={"Regular"}>{I18n.t("bonus.cgn.detail.status.eycaError")}</H4>
+      <H4 weight={"Regular"} testID={"eyca-error-text"}>
+        {I18n.t("bonus.cgn.detail.status.eycaError")}
+      </H4>
     </InfoBox>
     <View spacer />
     <ButtonDefaultOpacity
