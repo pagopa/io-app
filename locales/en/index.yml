@@ -1028,11 +1028,14 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the provider
-    infoBold: Choose the Payment Service Provider
-    info2: (PSP) which will have to manage your payment.
-    link: Find out more
+    headerTitle: "Choose the provider"
+    title: Which provider do you want to pay with?
+    info: Each provider proposes a transaction cost.
+    info2: In this list you will find all the providers
+    info2Bold: compatible with your method, even if you are not their client.
+    provider: Provider
     maxFee: Maximum fee
+    loadingPsps: Loading providers in progress...
     onUpdateWalletPspFailure: Operation failed, please retry
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
@@ -1338,7 +1341,7 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
