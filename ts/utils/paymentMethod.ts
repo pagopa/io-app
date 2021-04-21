@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { ImageSourcePropType, ImageURISource } from "react-native";
-import { Either, left } from "fp-ts/lib/Either";
+import { Either, right } from "fp-ts/lib/Either";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
   Card,
@@ -231,16 +231,25 @@ export const isBancomatBlocked = (pan: Card) =>
 export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
   pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
 
+/**
+ * Check if the given payment method is expired
+ * right(true) if it is expired, right(false) if it is still valid
+ * left if expiring date can't be evaluated
+ * @param paymentMethod
+ */
 export const isPaymentMethodExpired = (
-  pm: RawPaymentMethod
+  paymentMethod: RawPaymentMethod
 ): Either<Error, boolean> => {
-  switch (pm.kind) {
+  switch (paymentMethod.kind) {
     case "BPay":
     case "Satispay":
-      return left(Error(`${pm.kind} has no expiring date`));
+      return right(false);
     case "Bancomat":
     case "Privative":
     case "CreditCard":
-      return isExpired(pm.info.expireMonth, pm.info.expireYear);
+      return isExpired(
+        paymentMethod.info.expireMonth,
+        paymentMethod.info.expireYear
+      );
   }
 };
