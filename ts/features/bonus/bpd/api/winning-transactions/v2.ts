@@ -1,11 +1,12 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import * as r from "italia-ts-commons/lib/requests";
 import {
-  findWinningTransactionsUsingGETDefaultDecoder,
-  FindWinningTransactionsUsingGETT,
+  findWinningTransactionsUsingGETDecoder,
   getCountByDayGETDefaultDecoder,
   GetCountByDayGETT
 } from "../../../../../../definitions/bpd/winning_transactions_v2/requestTypes";
 import { bpdHeadersProducers } from "../common";
+import { PatchedWinningTransactionPageResource } from "./patchedWinningTransactionPageResource";
 
 export const winningTransactionsV2CountByDayGET: GetCountByDayGETT = {
   method: "get",
@@ -16,7 +17,26 @@ export const winningTransactionsV2CountByDayGET: GetCountByDayGETT = {
   response_decoder: getCountByDayGETDefaultDecoder()
 };
 
-export const winningTransactionsV2GET: FindWinningTransactionsUsingGETT = {
+/**
+ * We need to use a patched type because the response contains a date-time translated with the codec UTCISODateFromString
+ * that fails to recognize the received format (used instead {@link DateFromISOString})
+ */
+export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
+  {
+    readonly hpan?: string;
+    readonly awardPeriodId: number;
+    readonly limit?: number;
+    readonly nextCursor?: number;
+    readonly Authorization: string;
+  },
+  never,
+  never,
+  | r.IResponseType<200, PatchedWinningTransactionPageResource>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<500, undefined>
+>;
+
+export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT = {
   method: "get",
   url: ({ awardPeriodId, nextCursor }) =>
     `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
@@ -26,5 +46,7 @@ export const winningTransactionsV2GET: FindWinningTransactionsUsingGETT = {
       .getOrElse("")}`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDefaultDecoder()
+  response_decoder: findWinningTransactionsUsingGETDecoder(
+    PatchedWinningTransactionPageResource
+  )
 };
