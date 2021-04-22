@@ -199,6 +199,9 @@ export const OtpCodeComponent = (props: Props) => {
       <TouchableDefaultOpacity
         style={styles.otpContainer}
         onPress={() => clipboardSetStringWithFeedback(props.otp.code)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
       >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>

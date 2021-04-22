@@ -63,7 +63,12 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
-    date_format: DD MMMM YYYY
+    inputLabel: Intestazione
+    description: Descrizione
+    dateField: Due cifre per il mese, due per l'anno
+    threeDigits: 3 cifre	
+    fourDigits: 4 cifre	
+    dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     active: Stato attivo
@@ -1368,7 +1373,7 @@ saveCard:
 cardComponent:
   validUntil: Valida fino al
   expiresOn: Scade il
-  expiredCard: CARTA SCADUTA IL
+  expiredCard: Carta scaduta il
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
@@ -1675,7 +1680,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale. 
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale.
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?
@@ -2289,6 +2294,8 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    accessibility:
+      code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: Visualizza esercenti
