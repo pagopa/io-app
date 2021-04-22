@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.5](https://github.com/pagopa/io-app/compare/1.25.0-rc.4...1.25.0-rc.5) (2021-04-22)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177543245](https://www.pivotaltracker.com/story/show/177543245)] Manage pre-compiled IBAN in technical IBAN case ([#2977](https://github.com/pagopa/io-app/issues/2977)) ([fb5ff74](https://github.com/pagopa/io-app/commit/fb5ff74cfb6f07abe4ce56d2e61bfd6941da065b)), closes [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542840](https://www.pivotaltracker.com/story/show/177542840) [#177542840](https://www.pivotaltracker.com/story/show/177542840) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335) [#177542335](https://www.pivotaltracker.com/story/show/177542335)
+* [[#175800057](https://www.pivotaltracker.com/story/show/175800057),[#176870138](https://www.pivotaltracker.com/story/show/176870138)] Show when credit-card/bancomat/cobadge is expired ([#2982](https://github.com/pagopa/io-app/issues/2982)) ([3dd3c76](https://github.com/pagopa/io-app/commit/3dd3c761f6f176403272d051fda52b8a60a17cc0))
+* [[#177795379](https://www.pivotaltracker.com/story/show/177795379)] Removed assistance form web view component [#2989](https://github.com/pagopa/io-app/issues/2989) ([6885b58](https://github.com/pagopa/io-app/commit/6885b587de107375b44697ce82716bf2c612ed6c))
+
+
+### Bug Fixes
+
+* **Carta Giovani Nazionale:** [[#177777595](https://www.pivotaltracker.com/story/show/177777595)] Accessibility improvements on CGN screens and bottomsheets ([#2992](https://github.com/pagopa/io-app/issues/2992)) ([b4ceda0](https://github.com/pagopa/io-app/commit/b4ceda0cc25cbf4a9952d96f2a550582561e4ccb))
+* [[#177270155](https://www.pivotaltracker.com/story/show/177270155)] Improve accessibility flow on add card screen ([#2942](https://github.com/pagopa/io-app/issues/2942)) ([3eefc1b](https://github.com/pagopa/io-app/commit/3eefc1b91f5c528b6e5343ebf64277bbe2642fca))
+
+
+### Chores
+
+* [[#177560087](https://www.pivotaltracker.com/story/show/177560087)] Changed pick psp screen UI ([#2954](https://github.com/pagopa/io-app/issues/2954)) ([dfe7310](https://github.com/pagopa/io-app/commit/dfe7310c68057194dc0ee1138815d83083f95ee4))
+
 ## [1.25.0-rc.4](https://github.com/pagopa/io-app/compare/1.25.0-rc.3...1.25.0-rc.4) (2021-04-19)
 
 ## [1.25.0-rc.3](https://github.com/pagopa/io-app/compare/1.25.0-rc.2...1.25.0-rc.3) (2021-04-19)
