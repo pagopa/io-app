@@ -1029,11 +1029,14 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the provider
-    infoBold: Choose the Payment Service Provider
-    info2: (PSP) which will have to manage your payment.
-    link: Find out more
+    headerTitle: "Choose the provider"
+    title: Which provider do you want to pay with?
+    info: Each provider proposes a transaction cost.
+    info2: In this list you will find all the providers
+    info2Bold: compatible with your method, even if you are not their client.
+    provider: Provider
     maxFee: Maximum fee
+    loadingPsps: Loading providers in progress...
     onUpdateWalletPspFailure: Operation failed, please retry
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
@@ -1339,7 +1342,7 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
@@ -1644,7 +1647,7 @@ instabug:
     buttonBug: Write to the IO team
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays. 
+    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2257,6 +2260,8 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    accessibility:
+      code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: View merchants
