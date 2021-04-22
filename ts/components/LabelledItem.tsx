@@ -10,6 +10,7 @@
  *       input
  */
 import color from "color";
+import I18n from "i18n-js";
 import { isString } from "lodash";
 import { Input, Item, View } from "native-base";
 import * as React from "react";
@@ -47,6 +48,8 @@ type CommonProp = Readonly<{
   iconStyle?: StyleType;
   focusBorderColor?: string;
   description?: string;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }>;
 
 type State = {
@@ -124,7 +127,14 @@ export class LabelledItem extends React.Component<Props, State> {
     return (
       <View>
         <Item style={styles.noBottomLine}>
-          <H5>{this.props.label}</H5>
+          <H5
+            accessibilityRole="header"
+            accessibilityLabel={`${this.props.label}, ${I18n.t(
+              "global.accessibility.inputLabel"
+            )}`}
+          >
+            {this.props.label}
+          </H5>
         </Item>
         <Item
           style={{
@@ -150,9 +160,12 @@ export class LabelledItem extends React.Component<Props, State> {
             ) : (
               <Image source={this.props.icon} style={this.props.iconStyle} />
             ))}
-
           {this.props.type === "masked" ? (
             <TextInputMask
+              accessibilityLabel={this.props.accessibilityLabel}
+              accessibilityHint={`${this.props.accessibilityHint}${
+                this.props.description ? "," + this.props.description : ""
+              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
@@ -165,6 +178,10 @@ export class LabelledItem extends React.Component<Props, State> {
             />
           ) : (
             <Input
+              accessibilityLabel={this.props.accessibilityLabel}
+              accessibilityHint={`${this.props.accessibilityHint}${
+                this.props.description ? "," + this.props.description : ""
+              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
@@ -178,14 +195,16 @@ export class LabelledItem extends React.Component<Props, State> {
           )}
         </Item>
         {this.props.description && (
-          <Item style={styles.noBottomLine}>
-            <H5
-              weight={"Regular"}
-              color={this.props.isValid === false ? "red" : "bluegreyDark"}
-            >
-              {this.props.description}
-            </H5>
-          </Item>
+          <View importantForAccessibility="no-hide-descendants">
+            <Item style={styles.noBottomLine}>
+              <H5
+                weight={"Regular"}
+                color={this.props.isValid === false ? "red" : "bluegreyDark"}
+              >
+                {this.props.description}
+              </H5>
+            </Item>
+          </View>
         )}
       </View>
     );
