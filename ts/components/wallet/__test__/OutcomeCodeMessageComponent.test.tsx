@@ -19,21 +19,13 @@ describe("OutcomeCodeMessageComponent", () => {
   jest.useFakeTimers();
   it("should be not null", () => {
     const outcomeCode = { status: "success" } as OutcomeCode;
-    const { component } = renderComponent(
-      outcomeCode,
-      ASuccessComponent,
-      onClose
-    );
+    const component = renderComponent(outcomeCode, ASuccessComponent, onClose);
 
     expect(component).not.toBeNull();
   });
   it("should render ASuccessComponent if outcomeCode status is equal to success and prop successComponent has been passed", () => {
     const outcomeCode = { status: "success" } as OutcomeCode;
-    const { component } = renderComponent(
-      outcomeCode,
-      ASuccessComponent,
-      onClose
-    );
+    const component = renderComponent(outcomeCode, ASuccessComponent, onClose);
 
     const successComponent = component.queryByTestId("a-success-component");
     expect(component).not.toBeNull();
@@ -41,7 +33,7 @@ describe("OutcomeCodeMessageComponent", () => {
   });
   it("should render ASuccessFooter if outcomeCode status is equal to success and prop successFooter has been passed", () => {
     const outcomeCode = { status: "success" } as OutcomeCode;
-    const { component } = renderComponent(
+    const component = renderComponent(
       outcomeCode,
       ASuccessComponent,
       onClose,
@@ -65,11 +57,7 @@ describe("OutcomeCodeMessageComponent", () => {
       }
     } as OutcomeCode;
     setLocale("it");
-    const { component } = renderComponent(
-      outcomeCode,
-      ASuccessComponent,
-      onClose
-    );
+    const component = renderComponent(outcomeCode, ASuccessComponent, onClose);
 
     expect(component).not.toBeNull();
     const titleComponent = component.queryByText("title it");
@@ -82,11 +70,7 @@ describe("OutcomeCodeMessageComponent", () => {
     const outcomeCode = {
       status: "errorBlocking"
     } as OutcomeCode;
-    const { component } = renderComponent(
-      outcomeCode,
-      ASuccessComponent,
-      onClose
-    );
+    const component = renderComponent(outcomeCode, ASuccessComponent, onClose);
 
     expect(component).not.toBeNull();
     expect(component.queryByTestId("FooterWithButtons")).not.toBeNull();
@@ -106,19 +90,17 @@ const renderComponent = (
     ...globalState
   } as GlobalState);
 
-  return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => (
-        <OutcomeCodeMessageComponent
-          outcomeCode={outcomeCode}
-          successComponent={successComponent}
-          successFooter={successFooter}
-          onClose={onClose}
-        />
-      ),
-      ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
-      {},
-      store
-    )
-  };
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => (
+      <OutcomeCodeMessageComponent
+        outcomeCode={outcomeCode}
+        successComponent={successComponent}
+        successFooter={successFooter}
+        onClose={onClose}
+      />
+    ),
+    ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    {},
+    store
+  );
 };
