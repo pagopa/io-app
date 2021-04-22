@@ -65,10 +65,10 @@ global:
   accessibility:
     inputLabel: Header
     description: Description
-    date_field: 2 digits for the month, 2 for the year
+    dateField: 2 digits for the month, 2 for the year
     threeDigits: 3 digits	
     fourDigits: 4 digits
-    date_format: MMMM Do YYYY
+    dateFormat: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     active: State active

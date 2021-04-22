@@ -328,7 +328,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 accessibilityLabel={I18n.t(
                   "wallet.dummyCard.labels.expirationDate"
                 )}
-                accessibilityHint={I18n.t("global.accessibility.date_field")}
+                accessibilityHint={I18n.t("global.accessibility.dateField")}
                 isValid={maybeCreditcardValidOrExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
