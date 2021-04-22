@@ -151,7 +151,6 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         ? getTitleFromCard(selectedWallet.paymentMethod)
         : FOUR_UNICODE_CIRCLES
   });
-
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}

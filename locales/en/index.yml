@@ -1341,7 +1341,7 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
@@ -1646,7 +1646,7 @@ instabug:
     buttonBug: Write to the IO team
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays. 
+    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2259,6 +2259,8 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    accessibility:
+      code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: View merchants
