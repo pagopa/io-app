@@ -1,1 +1,2 @@
-Il CVC (per le carte MasterCard) e il CVV (per le carte Visa) sono codici di sicurezza riportati generalmente sul retro della carta di pagamento in prossimità dello spazio riservato alla firma del titolare. Questi codici sono composti tipicamente da 3 cifre, nelle carte Visa e MasterCard.
+È un codice a tre cifre, chiamato CVV o CVS, che puoi trovare sul retro della tua carta.
+Sulle carte American Express il codice (CID) è a quattro cifre ed è posizionato sul fronte.

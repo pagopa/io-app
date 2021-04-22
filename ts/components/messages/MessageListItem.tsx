@@ -2,7 +2,6 @@
  * A component to display the list item in the MessagesHomeScreen
  */
 import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React from "react";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -12,7 +11,11 @@ import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../utils/convertDateToWordDistance";
-import { hasPrescriptionData, messageNeedsCTABar } from "../../utils/messages";
+import {
+  hasPrescriptionData,
+  messageNeedsCTABar,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import MessageListCTABar from "./MessageListCTABar";
 
@@ -39,6 +42,13 @@ const UNKNOWN_SERVICE_DATA = {
 };
 
 class MessageListItem extends React.PureComponent<Props> {
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get paid(): boolean {
+    return this.props.payment !== undefined;
+  }
+
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
   };
@@ -92,6 +102,7 @@ class MessageListItem extends React.PureComponent<Props> {
         onLongPressItem={this.handleLongPress}
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
+        isPaid={this.paid}
         accessible={true}
         accessibilityLabel={this.announceMessage({
           isRead,
@@ -101,7 +112,6 @@ class MessageListItem extends React.PureComponent<Props> {
       >
         {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
           <React.Fragment>
-            <View spacer={true} large={true} />
             <MessageListCTABar
               message={message}
               service={service}

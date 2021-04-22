@@ -40,11 +40,20 @@ type ServiceLoadFailurePayload = {
   service_id: string;
 };
 
+// a specific action used when a requested service is not found
+export const loadServiceDetailNotFound = createStandardAction(
+  "LOAD_SERVICE_DETAIL_NOT_FOUND"
+)<ServiceId>();
 export const loadServiceDetail = createAsyncAction(
   "LOAD_SERVICE_DETAIL_REQUEST",
   "LOAD_SERVICE_DETAIL_SUCCESS",
   "LOAD_SERVICE_DETAIL_FAILURE"
 )<string, ServicePublic, ServiceLoadFailurePayload>();
+
+export const loadServicesDetail = createStandardAction(
+  "LOAD_SERVICES_DETAIL_REQUEST"
+)<ReadonlyArray<string>>();
+
 //
 //  mark service as read
 //
@@ -70,6 +79,8 @@ export type ServicesActions =
   | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadServiceDetail>
+  | ActionType<typeof loadServicesDetail>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
-  | ActionType<typeof showServiceDetails>;
+  | ActionType<typeof showServiceDetails>
+  | ActionType<typeof loadServiceDetailNotFound>;

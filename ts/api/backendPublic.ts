@@ -1,4 +1,3 @@
-import * as t from "io-ts";
 import {
   ApiHeaderJson,
   basicResponseDecoder,
@@ -11,6 +10,7 @@ import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
+import { BackendStatus } from "../types/backendStatus";
 
 type GetServerInfoT = IGetApiRequestType<
   Record<string, unknown>,
@@ -25,19 +25,6 @@ type PostTestLoginT = IPostApiRequestType<
   never,
   BasicResponseType<AccessToken>
 >;
-
-const BackendStatusMessage = t.interface({
-  "it-IT": t.string,
-  "en-EN": t.string
-});
-
-const BackendStatusR = t.interface({
-  is_alive: t.boolean,
-  message: BackendStatusMessage
-});
-
-export const BackendStatus = t.exact(BackendStatusR, "ServerInfo");
-export type BackendStatus = t.TypeOf<typeof BackendStatus>;
 
 type GetStatusT = IGetApiRequestType<
   Record<string, unknown>,

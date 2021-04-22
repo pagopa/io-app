@@ -1,5 +1,5 @@
 /**
- * See {@link https://github.com/greatbsky/react-native-pull}
+ * See {@link https://github.com/greatbsky/react-native-pull }
  * This module exposes 3 component to implements scrollable view with a custom pull-to-refresh animation,
  * it's possible create a custom refresh-control with a view instead the default progress-indicator.
  *

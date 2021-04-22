@@ -1,9 +1,10 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
+  Linking,
   ListRenderItemInfo,
+  Platform,
   SafeAreaView,
   StyleSheet
 } from "react-native";
@@ -17,7 +18,7 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled } from "../../../../config";
+import { bpdEnabled, cgnEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
@@ -28,11 +29,23 @@ import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
-import { availableBonuses } from "../data/availableBonuses";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
-import { availableBonusTypesSelector } from "../store/reducers/availableBonusesTypes";
-import { ID_BONUS_VACANZE_TYPE, ID_BPD_TYPE } from "../utils/bonus";
+import {
+  isAvailableBonusNoneErrorSelector,
+  isAvailableBonusLoadingSelector,
+  experimentalAndVisibleBonus,
+  supportedAvailableBonusSelector
+} from "../store/reducers/availableBonusesTypes";
+import {
+  ID_BONUS_VACANZE_TYPE,
+  ID_BPD_TYPE,
+  ID_CGN_TYPE
+} from "../utils/bonus";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
+import { storeUrl } from "../../../../utils/appVersion";
+import { showToast } from "../../../../utils/showToast";
+import { cgnActivationStart } from "../../cgn/store/actions/activation";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -55,15 +68,23 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 /**
  * This component presents the list of available bonus the user can request
- * if the bonus is already active, the component shows the active bonus item and user can navigate to the bonus detail
- * instead if bonus is not active the user can navigate to the begin of request flow.
+ * Only the visible bonus are shown ('visible' or 'experimental')
+ * - if the bonus handler is set, the relative item performs the handler
+ * - if the bonus handler is not set and the bonus is 'visible':
+ *    - it displays the 'incoming label' within the bonus
+ *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
+ *    - if the bonus is not active at the on press it does nothing
  */
 class AvailableBonusScreen extends React.PureComponent<Props> {
+  private openAppStore = () => {
+    // storeUrl is not a webUrl, try to open it
+    Linking.openURL(storeUrl).catch(() => {
+      showToast(I18n.t("msgErrorUpdateApp"));
+    });
+  };
+
   private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const item = info.item;
-    if (item.hidden === true) {
-      return undefined;
-    }
 
     // only bonus vacanze tap is handled
     const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
@@ -77,12 +98,51 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
     }
 
+    if (cgnEnabled) {
+      handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
+    }
+
+    const handled = handlersMap.has(item.id_type);
+    // if bonus is experimental but there is no handler, it won't be shown
+    if (item.visibility === "experimental" && !handled) {
+      return null;
+    }
+    // when the bonus is visible but this app version cant handle it
+    const isComingSoon = item.visibility === "visible" && !handled;
+    /**
+     * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
+     * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
+     */
+    const onItemPress = () => {
+      // if the bonus is active ask for app update
+      fromNullable(handlersMap.get(item.id_type)).foldL(
+        () =>
+          actionWithAlert({
+            title: I18n.t("titleUpdateAppAlert"),
+            body: I18n.t("messageUpdateAppAlert", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            cancelText: I18n.t("global.buttons.cancel"),
+            confirmText: I18n.t("openStore", {
+              storeName: Platform.select({
+                ios: "App Store",
+                default: "Play Store"
+              })
+            }),
+            onConfirmAction: this.openAppStore
+          }),
+        h => h(item)
+      );
+    };
+
     return (
       <AvailableBonusItem
         bonusItem={item}
-        onPress={() =>
-          fromNullable(handlersMap.get(item.id_type)).map(h => h(item))
-        }
+        onPress={onItemPress}
+        isComingSoon={isComingSoon}
       />
     );
   };
@@ -124,7 +184,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}
-                data={availableBonusesList}
+                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
                 renderItem={this.renderListItem}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
@@ -143,16 +203,12 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const potAvailableBonuses = availableBonusTypesSelector(state);
-  return {
-    // fallback to hardcode data if pot is none
-    availableBonusesList: pot.getOrElse(potAvailableBonuses, availableBonuses),
-    isLoading: pot.isLoading(potAvailableBonuses),
-    // show error only when we have an error and no data to show
-    isError: pot.isNone(potAvailableBonuses) && pot.isError(potAvailableBonuses)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  availableBonusesList: supportedAvailableBonusSelector(state),
+  isLoading: isAvailableBonusLoadingSelector(state),
+  // show error only when we have an error and no data to show
+  isError: isAvailableBonusNoneErrorSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
@@ -162,7 +218,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));
   },
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart())
+  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
+  startCgnActivation: () => dispatch(cgnActivationStart())
 });
 
 export default connect(

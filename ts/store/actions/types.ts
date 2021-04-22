@@ -10,8 +10,13 @@ import {
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
-import { GlobalState } from "../reducers/types";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
+import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
+import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
+import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
+import { GlobalState } from "../reducers/types";
+import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -25,6 +30,7 @@ import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
 import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
+import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
@@ -42,7 +48,8 @@ import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
-import { InternalRouteNavigationActions } from "./internalRouteNavigation";
+import { CrossSessionsActions } from "./crossSessions";
+import { OutcomeCodeActions } from "./wallet/outcomeCode";
 
 export type Action =
   | AnalyticsActions
@@ -78,7 +85,14 @@ export type Action =
   | ProfileEmailValidationAction
   | BonusActions
   | BpdActions
-  | AbiActions;
+  | AbiActions
+  | BPayActions
+  | CoBadgeActions
+  | PrivativeActions
+  | SatispayActions
+  | CrossSessionsActions
+  | CgnActions
+  | OutcomeCodeActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

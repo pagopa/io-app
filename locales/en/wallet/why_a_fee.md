@@ -1,3 +1,6 @@
-In general, by law, the State cannot bear the transaction costs of collecting a tax. Even today, in many cases, the citizen pays commission fees when paying a tax. The most common instrument for paying taxes is the F24. The citizen does not have service costs when he uses it because the State pays these commissions to the banks taking on a system cost. Similarly, some online payment service providers, prior to the advent of pagoPA, offered the public administrations services with cost-absorbing commission.
+Any money transfer (using cash or electronic money) has a cost, which is needed to guarantee you a secure and successful payment.
 
-The pagoPA model in order to allow all digital payment systems to be accredited and in compliance with European PSD2 regulations, exposes different commission fees allowing the citizen the choice. With pagoPA becoming more and more widespread, the market will be regulated downwards, obviously, our task is to monitor the situation, and we are already active from this point of view, discussing with the various suppliers a logic of lowering prices over time.
+Every PSP (Payment Service Provider) has its own transaction fee, depending on its commercial policies and contractual terms.
+
+With pagoPA, these fees are crystal clear and citizens can freely choose the most convenient and cheapest option.
+Please check the amount charged by the PSP before proceeding with the payment.

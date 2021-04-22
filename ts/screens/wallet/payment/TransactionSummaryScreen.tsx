@@ -26,6 +26,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  abortRunningPayment,
   backToEntrypointPayment,
   paymentAttiva,
   paymentCompletedSuccess,
@@ -38,7 +39,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  walletsSelector
+  pagoPaCreditCardWalletV1Selector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
@@ -372,7 +373,8 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
+  const hasWallets =
+    pot.getOrElse(pagoPaCreditCardWalletV1Selector(state), []).length !== 0;
 
   return {
     error,
@@ -402,13 +404,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
 
   const onCancel = () => {
-    // on cancel:
-    // navigate to entrypoint of payment or wallet home
-    dispatch(backToEntrypointPayment());
-    // delete the active payment from pagoPA
-    dispatch(runDeleteActivePaymentSaga());
-    // reset the payment state
-    dispatch(paymentInitializeState());
+    dispatch(abortRunningPayment());
   };
 
   // navigateToMessageDetail: (messageId: string) =>

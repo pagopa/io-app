@@ -1,29 +1,13 @@
 import * as t from "io-ts";
 import { Alert } from "react-native";
 import I18n from "../i18n";
-import { CreditCard } from "../types/pagopa";
-import { isExpired } from "./dates";
-import { NumberFromString } from "./number";
-/* 
+/*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
  */
 
-export const isExpiredCard = (creditCard: CreditCard) => {
-  const decodedValueYear = NumberFromString.decode(creditCard.expireYear);
-  const ccExpireYear = decodedValueYear.isRight()
-    ? decodedValueYear.value
-    : undefined;
-  const decodedValueMonth = NumberFromString.decode(creditCard.expireMonth);
-  const ccExpireMonth = decodedValueMonth.isRight()
-    ? decodedValueMonth.value
-    : undefined;
-  // if we can't decode month or year value, card will be considered as expired
-  if (ccExpireYear === undefined || ccExpireMonth === undefined) {
-    return true;
-  }
-  return isExpired(ccExpireMonth, ccExpireYear);
-};
+// TODO: unify card representation (multiple part of the application use this)
+export const FOUR_UNICODE_CIRCLES = "●".repeat(4);
 
 /**
  * it sanitizes psp tags avoiding no string value and string duplicates
@@ -69,5 +53,5 @@ export const handleSetFavourite = (
     ? callback()
     : Alert.alert(
         I18n.t("global.genericAlert"),
-        I18n.t("wallet.alert.favourite")
+        I18n.t("wallet.alert.favorite")
       );

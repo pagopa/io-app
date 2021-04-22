@@ -8,7 +8,7 @@ import { InitializedProfile } from "../../../../../../../definitions/backend/Ini
 import { Version } from "../../../../../../../definitions/backend/Version";
 import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../../definitions/bonus_vacanze/BonusCode";
-import { mockedBonus } from "../../../mock/mockData";
+import { mockedBonus } from "../../../__mock__/mockData";
 import { ownedActiveOrRedeemedBonus } from "../allActive";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;

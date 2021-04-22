@@ -1,7 +1,8 @@
 import { getType } from "typesafe-actions";
-import { WalletV2 } from "../../../../../../../definitions/pagopa/bancomat/WalletV2";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { RawBancomatPaymentMethod } from "../../../../../../types/pagopa";
 import {
   remoteError,
   remoteLoading,
@@ -9,11 +10,10 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../bonus/bpd/model/RemoteValue";
-import { addBancomatToWallet } from "../actions";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 export type AddingPansState = {
-  addingResult: RemoteValue<WalletV2, Error>;
+  addingResult: RemoteValue<RawBancomatPaymentMethod, Error>;
   selectedPan?: Card;
 };
 
@@ -41,6 +41,8 @@ const addingPansReducer = (
         ...state,
         addingResult: remoteError(action.payload)
       };
+    case getType(walletAddBancomatStart):
+      return initialState;
   }
   return state;
 };
@@ -51,7 +53,7 @@ export const onboardingBancomatChosenPanSelector = (
 
 export const onboardingBancomatAddingResultSelector = (
   state: GlobalState
-): RemoteValue<WalletV2, Error> =>
+): RemoteValue<RawBancomatPaymentMethod, Error> =>
   state.wallet.onboarding.bancomat.addingPans.addingResult;
 
 export default addingPansReducer;

@@ -48,6 +48,30 @@ export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
+// This action is needed because we want to show an alert if a user has some active bonus
+// and he wants to delete his account.
+// In this case ,if the bonuses data are not loaded yet, we use this action to
+// start a saga and request the bonus information.
+export const loadBonusBeforeRemoveAccount = createStandardAction(
+  "LOAD_BONUS_BEFORE_REMOVE_ACCOUNT"
+)<void>();
+
+export enum RemoveAccountMotivationEnum {
+  "UNDEFINED" = "undefined",
+  "NOT_UTILS" = "notUtils",
+  "NOT_SAFE" = "notSafe",
+  "NEVER_USED" = "neverUsed",
+  "OTHERS" = "others"
+}
+
+export type RemoveAccountMotivationPayload = {
+  reason: RemoveAccountMotivationEnum;
+  userText?: string;
+};
+export const removeAccountMotivation = createStandardAction(
+  "REMOVE_ACCOUNT_MOTIVATION"
+)<RemoveAccountMotivationPayload>();
+
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
@@ -57,4 +81,5 @@ export type ProfileActions =
   | ActionType<typeof startEmailValidation>
   | ActionType<typeof acknowledgeOnEmailValidation>
   | ActionType<typeof profileFirstLogin>
-  | ActionType<typeof clearCache>;
+  | ActionType<typeof clearCache>
+  | ActionType<typeof removeAccountMotivation>;

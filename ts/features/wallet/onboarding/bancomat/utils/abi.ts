@@ -1,4 +1,4 @@
-import { Abi } from "../../../../../../definitions/pagopa/bancomat/Abi";
+import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 
 /**
  * This function aims to order the list of Abis returned by the PM in alphabetical order based on his name

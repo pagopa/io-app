@@ -1,18 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Animated, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import { useHardwareBackButton } from "./hooks/useHardwareBackButton";
 
 type Props = {
-  onClose: () => void;
   qrCode: string;
   logo?: string;
   codeToCopy: string;
@@ -20,20 +15,10 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  modalBackdrop: {
-    flex: 1
-  },
   modalBox: {
-    position: "absolute",
-    bottom: 0,
-    height: 466,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16,
+    height: "100%",
     alignSelf: "center",
-    width: "95%",
-    backgroundColor: customVariables.colorWhite,
-    paddingLeft: 16,
-    paddingRight: 13,
+    width: "100%",
     paddingTop: 16
   },
   image: {
@@ -45,21 +30,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  title: {
-    fontSize: 18,
-    color: customVariables.lightGray,
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    lineHeight: customVariables.lineHeightBase
-  },
-  modalClose: {
-    flex: 1,
-    paddingRight: 0,
-    flexDirection: "row",
-    justifyContent: "flex-end"
   },
   codeText: {
     alignSelf: "center",
@@ -84,82 +54,38 @@ const renderQRCode = (base64: string) =>
     <SvgXml xml={s} height={249} width={249} />
   ));
 
-const opacityAnimationDuration = 800 as Millisecond;
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
-  const { onClose, qrCode, codeToDisplay, codeToCopy } = props;
-
-  const [opacity] = React.useState(new Animated.Value(0));
-
-  useHardwareBackButton(() => {
-    onClose();
-    return true;
-  });
-
-  const color = opacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["rgba(0,0,0,0)", "rgba(0,0,0,0.5)"]
-  });
-
-  const modalBackdrop = {
-    backgroundColor: color
-  };
-
-  React.useEffect(() => {
-    Animated.timing(opacity, {
-      useNativeDriver: false,
-      toValue: 1,
-      duration: opacityAnimationDuration
-    }).start();
-  });
+  const { qrCode, codeToDisplay, codeToCopy } = props;
 
   return (
-    <Animated.View style={[styles.modalBackdrop, modalBackdrop]}>
-      <View style={styles.modalBox}>
-        <View style={styles.row}>
-          <Text style={styles.title} semibold={true}>
-            {I18n.t("bonus.bonusVacanze.name")}
+    <View style={styles.modalBox}>
+      <View style={styles.row}>
+        <View>
+          <Text style={styles.uniqueCode}>
+            {I18n.t("bonus.bonusVacanze.uniqueCode")}
           </Text>
-          <ButtonDefaultOpacity
-            style={styles.modalClose}
-            onPress={onClose}
-            transparent={true}
-            accessible={true}
-            accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          >
-            <IconFont
-              name="io-close"
-              color={customVariables.lightGray}
-              style={styles.icon}
-            />
-          </ButtonDefaultOpacity>
-        </View>
-        <View spacer={true} large={true} />
-        <View style={styles.row}>
-          <View>
-            <Text style={styles.uniqueCode}>
-              {I18n.t("bonus.bonusVacanze.uniqueCode")}
+          <View style={styles.row}>
+            <Text style={styles.codeText} bold={true}>
+              {codeToDisplay}
             </Text>
-            <View style={styles.row}>
-              <Text style={styles.codeText} bold={true}>
-                {codeToDisplay}
-              </Text>
-              <View hspacer={true} />
-              <CopyButtonComponent textToCopy={codeToCopy} />
-            </View>
-          </View>
-          {props.logo && (
-            <Image
-              source={{ uri: props.logo }}
-              resizeMode={"contain"}
-              style={styles.bonusLogo}
+            <View hspacer={true} />
+            <CopyButtonComponent
+              textToCopy={codeToCopy}
+              onPressWithGestureHandler={true}
             />
-          )}
+          </View>
         </View>
-        <View spacer={true} extralarge={true} />
-        <View style={styles.image}>{renderQRCode(qrCode)}</View>
+        {props.logo && (
+          <Image
+            source={{ uri: props.logo }}
+            resizeMode={"contain"}
+            style={styles.bonusLogo}
+          />
+        )}
       </View>
-    </Animated.View>
+      <View spacer={true} extralarge={true} />
+      <View style={styles.image}>{renderQRCode(qrCode)}</View>
+    </View>
   );
 };
 

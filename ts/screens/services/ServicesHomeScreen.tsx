@@ -22,7 +22,6 @@
  *
  */
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
@@ -40,11 +39,6 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import {
-  instabugLog,
-  openInstabugBugReport,
-  TypeLogs
-} from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -55,7 +49,6 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton"
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -107,6 +100,9 @@ import {
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
+import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -322,7 +318,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
-    new Animated.Value(0),
     new Animated.Value(0)
   ];
 
@@ -332,40 +327,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       outputRange: [0, 1],
       extrapolate: "clamp"
     });
-
-  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  private instabugLogAndOpenReport = () => {
-    this.sendDataToInstabug();
-    openInstabugBugReport();
-  };
-  /* TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  private instabugReportTag = "services-loading-error";
-  private sendDataToInstabug() {
-    Instabug.appendTags([this.instabugReportTag]);
-    instabugLog(
-      JSON.stringify(this.props.potUserMetadata),
-      TypeLogs.INFO,
-      "userMetadata"
-    );
-
-    instabugLog(
-      JSON.stringify(this.props.debugONLYServices),
-      TypeLogs.INFO,
-      "services"
-    );
-
-    instabugLog(
-      `isInnerContentRendered=${
-        this.state.isInnerContentRendered
-      }  visibleServicesContentLoadState=${JSON.stringify(
-        this.props.visibleServicesContentLoadState
-      )} loadDataFailure=${JSON.stringify(
-        this.props.loadDataFailure
-      )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
-      TypeLogs.INFO,
-      "Internal component state"
-    );
-  }
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
@@ -380,17 +341,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
-        {/* TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
-        <View spacer={true} extralarge={true} />
-        <ButtonDefaultOpacity
-          onPress={this.instabugLogAndOpenReport}
-          style={styles.helpButton}
-        >
-          <IconFont name={"io-bug"} style={styles.helpButtonIcon} />
-          <Text style={styles.helpButtonText}>
-            {I18n.t("instabug.contextualHelp.buttonBug")}
-          </Text>
-        </ButtonDefaultOpacity>
       </View>
     );
   }
@@ -582,7 +532,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { userMetadata } = this.props;
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -596,7 +545,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             faqCategories={["services"]}
-            isSearchAvailable={userMetadata !== undefined}
+            isSearchAvailable={false}
             searchType={"Services"}
           >
             {this.renderErrorContent() ? (
@@ -617,6 +566,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             )}
           </TopScreenComponent>
         </View>
+        <SectionStatusComponent sectionKey={"services"} />
       </KeyboardAvoidingView>
     );
   }
@@ -683,9 +633,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
-      localTabSections,
       nationalTabSections,
-      allTabSections,
       potUserMetadata,
       isLoadingServices
     } = this.props;
@@ -694,77 +642,41 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       pot.isLoading(potUserMetadata) ||
       pot.isUpdating(potUserMetadata);
     return (
-      <AnimatedTabs
-        tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-        tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onScroll={this.handleOnScroll}
-        onChangeTab={this.handleOnChangeTab}
-        initialPage={0}
-      >
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.locals")}
+      <View style={IOStyles.flex}>
+        <AnimatedTabs
+          locked={true}
+          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+          onScroll={this.handleOnScroll}
+          onChangeTab={this.handleOnChangeTab}
+          initialPage={0}
         >
-          <ServicesTab
-            isLocal={true}
-            isAll={false}
-            sections={localTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            updateOrganizationsOfInterestMetadata={
-              this.props.updateOrganizationsOfInterestMetadata
-            }
-            updateToast={() =>
-              this.setState({
-                toastErrorMessage: I18n.t(
-                  "serviceDetail.onUpdateEnabledChannelsFailure"
-                )
-              })
-            }
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[0]}
-          />
-        </Tab>
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.national")}
-        >
-          <ServicesTab
-            isAll={false}
-            sections={nationalTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[1]}
-          />
-        </Tab>
-
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("services.tab.all")}
-        >
-          <ServicesTab
-            isAll={true}
-            sections={allTabSections}
-            isRefreshing={isRefreshing}
-            onRefresh={this.refreshScreenContent}
-            onServiceSelect={this.onServiceSelect}
-            handleOnLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressEnabled}
-            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabScrollOffset={this.animatedTabScrollPositions[2]}
-          />
-        </Tab>
-      </AnimatedTabs>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.national")}
+          >
+            <ServicesTab
+              isAll={false}
+              sections={nationalTabSections}
+              isRefreshing={isRefreshing}
+              onRefresh={this.refreshScreenContent}
+              onServiceSelect={this.onServiceSelect}
+              handleOnLongPressItem={this.handleOnLongPressItem}
+              isLongPressEnabled={this.state.isLongPressEnabled}
+              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+              tabScrollOffset={this.animatedTabScrollPositions[1]}
+            />
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("services.tab.locals")}
+          >
+            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
+          </Tab>
+        </AnimatedTabs>
+      </View>
     );
   };
 }

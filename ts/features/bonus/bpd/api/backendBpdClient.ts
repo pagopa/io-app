@@ -1,3 +1,7 @@
+import { left } from "fp-ts/lib/Either";
+import { fromNullable } from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -5,18 +9,48 @@ import {
   MapResponseType,
   RequestHeaderProducer
 } from "italia-ts-commons/lib/requests";
-import * as t from "io-ts";
-import * as r from "italia-ts-commons/lib/requests";
-import { constNull } from "fp-ts/lib/function";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { Iban } from "../../../../../definitions/backend/Iban";
+import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+
+import {
+  findAllUsingGETDefaultDecoder,
+  FindAllUsingGETT
+} from "../../../../../definitions/bpd/award_periods/requestTypes";
+import {
+  CitizenPatchDTO,
+  PayoffInstrTypeEnum
+} from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
 import {
   enrollmentDecoder,
   EnrollmentT,
+  findRankingUsingGETDefaultDecoder,
+  FindRankingUsingGETT,
   findUsingGETDecoder,
   FindUsingGETT
 } from "../../../../../definitions/bpd/citizen/requestTypes";
-import { Iban } from "../../../../../definitions/backend/Iban";
-import { PatchedCitizenResource } from "./patchedTypes";
+import {
+  FindUsingGETT as FindUsingGETTV2,
+  EnrollmentT as EnrollmentTV2
+} from "../../../../../definitions/bpd/citizen_v2/requestTypes";
+import {
+  DeleteUsingDELETET,
+  enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,
+  EnrollmentPaymentInstrumentIOUsingPUTT,
+  findUsingGETDefaultDecoder,
+  FindUsingGETT as FindPaymentUsingGETT
+} from "../../../../../definitions/bpd/payment/requestTypes";
+import {
+  findWinningTransactionsUsingGETDecoder,
+  getTotalScoreUsingGETDefaultDecoder,
+  GetTotalScoreUsingGETT
+} from "../../../../../definitions/bpd/winning_transactions/requestTypes";
+import { fetchPaymentManagerLongTimeout } from "../../../../config";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { PatchedBpdWinningTransactions } from "../types/PatchedWinningTransactionResource";
+import {
+  PatchedCitizenResource,
+  PatchedCitizenV2Resource
+} from "./patchedTypes";
 
 const headersProducers = <
   P extends {
@@ -28,12 +62,24 @@ const headersProducers = <
     Authorization: `Bearer ${(p as any).Bearer}`
   })) as RequestHeaderProducer<P, "Authorization">;
 
+/* CITIZEN (status, enroll, delete) */
+/**
+ * @deprecated
+ */
 type FindUsingGETTExtra = MapResponseType<
   FindUsingGETT,
   200,
   PatchedCitizenResource
 >;
 
+type FindV2UsingGETTExtra = MapResponseType<
+  FindUsingGETTV2,
+  200,
+  PatchedCitizenV2Resource
+>;
+/**
+ * @deprecated
+ */
 const findT: FindUsingGETTExtra = {
   method: "get",
   url: () => `/bpd/io/citizen`,
@@ -42,11 +88,30 @@ const findT: FindUsingGETTExtra = {
   response_decoder: findUsingGETDecoder(PatchedCitizenResource)
 };
 
+const findV2T: FindV2UsingGETTExtra = {
+  method: "get",
+  url: () => `/bpd/io/citizen/v2`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDecoder(PatchedCitizenV2Resource)
+};
+
+/**
+ * @deprecated
+ */
 type EnrollmentTTExtra = MapResponseType<
   EnrollmentT,
   200,
   PatchedCitizenResource
 >;
+type EnrollmentV2TTExtra = MapResponseType<
+  EnrollmentTV2,
+  200,
+  PatchedCitizenV2Resource
+>;
+/**
+ * @deprecated
+ */
 const enrollCitizenIOT: EnrollmentTTExtra = {
   method: "put",
   url: () => `/bpd/io/citizen`,
@@ -54,6 +119,14 @@ const enrollCitizenIOT: EnrollmentTTExtra = {
   body: _ => "",
   headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
   response_decoder: enrollmentDecoder(PatchedCitizenResource)
+};
+const enrollCitizenV2IOT: EnrollmentV2TTExtra = {
+  method: "put",
+  url: () => `/bpd/io/citizen/v2`,
+  query: _ => ({}),
+  body: _ => "",
+  headers: composeHeaderProducers(headersProducers(), ApiHeaderJson),
+  response_decoder: enrollmentDecoder(PatchedCitizenV2Resource)
 };
 
 const deleteResponseDecoders = r.composeResponseDecoders(
@@ -65,7 +138,6 @@ const deleteResponseDecoders = r.composeResponseDecoders(
 );
 
 // these responses code/codec are built from api usage and not from API spec
-// see https://bpd-dev.portal.azure-api.net/docs/services/bpd-ms-citizen/operations/deleteUsingDELETE
 type DeleteUsingDELETETExtra = r.IDeleteApiRequestType<
   {
     readonly Authorization: string;
@@ -85,6 +157,99 @@ const deleteCitizenIOT: DeleteUsingDELETETExtra = {
   query: _ => ({}),
   headers: headersProducers(),
   response_decoder: deleteResponseDecoders
+};
+
+/* PAYMENT (status, enroll, delete) */
+const findPayment: FindPaymentUsingGETT = {
+  method: "get",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findUsingGETDefaultDecoder()
+};
+
+/* citizen ranking (super cashback) */
+const getRanking: FindRankingUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/citizen/ranking`,
+  query: (_: { awardPeriodId?: string }) => ({}),
+  headers: headersProducers(),
+  response_decoder: findRankingUsingGETDefaultDecoder()
+};
+
+const enrollPayment: EnrollmentPaymentInstrumentIOUsingPUTT = {
+  method: "put",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  body: () => "",
+  headers: composeHeaderProducers(ApiHeaderJson, headersProducers()),
+  response_decoder: enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder()
+};
+
+const deletePaymentResponseDecoders = r.composeResponseDecoders(
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 204>(204, undefined),
+    r.constantResponseDecoder<undefined, 400>(400, undefined)
+  ),
+  r.composeResponseDecoders(
+    r.constantResponseDecoder<undefined, 401>(401, undefined),
+    r.constantResponseDecoder<undefined, 500>(500, undefined)
+  )
+);
+
+const deletePayment: DeleteUsingDELETET = {
+  method: "delete",
+  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: deletePaymentResponseDecoders
+};
+
+/* AWARD PERIODS  */
+const awardPeriods: FindAllUsingGETT = {
+  method: "get",
+  url: () => `/bpd/io/award-periods`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findAllUsingGETDefaultDecoder()
+};
+
+/* TOTAL CASHBACK  */
+const totalCashback: GetTotalScoreUsingGETT = {
+  method: "get",
+  url: ({ awardPeriodId }) =>
+    `/bpd/io/winning-transactions/total-cashback?awardPeriodId=${awardPeriodId}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: getTotalScoreUsingGETDefaultDecoder()
+};
+
+export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
+  {
+    readonly awardPeriodId: number;
+    readonly hpan: string;
+    readonly Authorization: string;
+  },
+  never,
+  never,
+  | r.IResponseType<200, PatchedBpdWinningTransactions>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<500, undefined>
+>;
+// winning transactions
+const winningTransactions: FindWinningTransactionsUsingGETTExtra = {
+  method: "get",
+  url: ({ awardPeriodId, hpan }) =>
+    `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
+      hpan
+    )
+      .map(h => `&hpan=${h}`)
+      .getOrElse("")}`,
+  query: _ => ({}),
+  headers: headersProducers(),
+  response_decoder: findWinningTransactionsUsingGETDecoder(
+    PatchedBpdWinningTransactions
+  )
 };
 
 // decoders composition to handle updatePaymentMethod response
@@ -121,48 +286,39 @@ type finalType =
 // TODO abstract the usage of fetch
 const updatePaymentMethodT = (
   options: Options,
-  fiscalCode: string,
-  iban: { payoffInstr: Iban; payoffInstrType: string },
+  token: string,
+  payload: CitizenPatchDTO,
   headers: Record<string, string>
-): (() => Promise<t.Validation<finalType>>) => () =>
-  new Promise((res, rej) => {
-    withTestToken(options, fiscalCode)
-      .then(tokenResponse => {
-        const testToken = tokenResponse.text();
-        options
-          .fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
-            method: "patch",
-            headers: { ...headers, Authorization: `Bearer ${testToken}` },
-            body: JSON.stringify(iban)
-          })
-          .then(response => {
-            patchIbanDecoders(PatchIban)(response).then(res).catch(rej);
-          })
-          .catch(rej);
-      })
-      .catch(constNull);
+): (() => Promise<t.Validation<finalType>>) => async () => {
+  const response = await options.fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
+    method: "patch",
+    headers: { ...headers, Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload)
   });
+  const decode = await patchIbanDecoders(PatchIban)(response);
+  return (
+    decode ??
+    left([
+      {
+        context: [],
+        value: response
+      }
+    ])
+  );
+};
 
 type Options = {
   baseUrl: string;
   fetchApi: typeof fetch;
 };
 
-// FIX ME !this code must be removed!
-// only for test purpose
-const withTestToken = (options: Options, fiscalCode: string) =>
-  options.fetchApi(
-    `${options.baseUrl}/bpd/pagopa/api/v1/login?fiscalCode=${fiscalCode}`,
-    {
-      method: "post"
-    }
-  );
-
 export function BackendBpdClient(
   baseUrl: string,
-  _: string,
-  fiscalCode: string,
-  fetchApi: typeof fetch = defaultRetryingFetch()
+  token: string,
+  fetchApi: typeof fetch = defaultRetryingFetch(
+    fetchPaymentManagerLongTimeout,
+    0
+  )
 ) {
   const options: Options = {
     baseUrl,
@@ -180,29 +336,61 @@ export function BackendBpdClient(
   const withBearerToken = <P extends extendHeaders, R>(
     f: (p: P) => Promise<R>
   ) => async (po: P): Promise<R> => {
-    const reqTestToken = await withTestToken(options, fiscalCode);
-    const testToken = await reqTestToken.text();
-    const params = Object.assign({ Bearer: testToken }, po) as P;
+    const params = Object.assign({ Bearer: token }, po) as P;
     return f(params);
   };
 
   return {
+    /**
+     * @deprecated
+     */
     find: withBearerToken(createFetchRequestForApi(findT, options)),
+    findV2: withBearerToken(createFetchRequestForApi(findV2T, options)),
+    /**
+     * @deprecated
+     */
     enrollCitizenIO: withBearerToken(
       createFetchRequestForApi(enrollCitizenIOT, options)
+    ),
+    enrollCitizenV2IO: withBearerToken(
+      createFetchRequestForApi(enrollCitizenV2IOT, options)
     ),
     deleteCitizenIO: withBearerToken(
       createFetchRequestForApi(deleteCitizenIOT, options)
     ),
-    updatePaymentMethod: (iban: Iban) =>
+    updatePaymentMethod: (iban: Iban, profile: InitializedProfile) =>
       withBearerToken(
         updatePaymentMethodT(
           options,
-          fiscalCode,
-          // payoffInstrType has IBAN as hardcoded value
-          { payoffInstr: iban, payoffInstrType: "IBAN" },
+          token,
+          {
+            payoffInstr: iban,
+            payoffInstrType: PayoffInstrTypeEnum.IBAN,
+            accountHolderCF: profile.fiscal_code as string,
+            accountHolderName: profile.name,
+            accountHolderSurname: profile.family_name
+          },
           { ["Content-Type"]: jsonContentType }
         )
-      )
+      ),
+    findPayment: withBearerToken(
+      createFetchRequestForApi(findPayment, options)
+    ),
+    enrollPayment: withBearerToken(
+      createFetchRequestForApi(enrollPayment, options)
+    ),
+    deletePayment: withBearerToken(
+      createFetchRequestForApi(deletePayment, options)
+    ),
+    awardPeriods: withBearerToken(
+      createFetchRequestForApi(awardPeriods, options)
+    ),
+    totalCashback: withBearerToken(
+      createFetchRequestForApi(totalCashback, options)
+    ),
+    winningTransactions: withBearerToken(
+      createFetchRequestForApi(winningTransactions, options)
+    ),
+    getRanking: withBearerToken(createFetchRequestForApi(getRanking, options))
   };
 }

@@ -36,6 +36,7 @@ import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
+import SectionStatusComponent from "./SectionStatusComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
@@ -289,46 +290,49 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // show two buttons where the left one is a CTA
     // to edit again the email
     return (
-      <View footer={true}>
-        <BlockButtons
-          type={"SingleButton"}
-          leftButton={{
-            title: this.state.ctaSendEmailValidationText,
-            onPress: this.handleSendEmailValidationButton,
-            light: true,
-            bordered: true,
-            disabled:
-              this.state.isLoading ||
-              this.state.isCtaSentEmailValidationDisabled
-          }}
-        />
-        <View spacer={true} />
-        <BlockButtons
-          type={"TwoButtonsInlineThirdInverted"}
-          leftButton={{
-            block: true,
-            bordered: true,
-            disabled: this.state.isLoading,
-            onPress: () => {
-              if (!isOnboardingCompleted) {
-                this.props.closeModalAndNavigateToEmailInsertScreen();
-                return;
-              }
-              this.props.navigateToEmailInsertScreen();
-            },
-            title: I18n.t("email.edit.title")
-          }}
-          rightButton={{
-            block: true,
-            primary: true,
-            onPress: this.handleOnClose,
-            disabled: this.state.isLoading,
-            title: isOnboardingCompleted
-              ? I18n.t("global.buttons.ok")
-              : I18n.t("global.buttons.continue")
-          }}
-        />
-      </View>
+      <>
+        <SectionStatusComponent sectionKey={"email_validation"} />
+        <View footer={true}>
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: this.state.ctaSendEmailValidationText,
+              onPress: this.handleSendEmailValidationButton,
+              light: true,
+              bordered: true,
+              disabled:
+                this.state.isLoading ||
+                this.state.isCtaSentEmailValidationDisabled
+            }}
+          />
+          <View spacer={true} />
+          <BlockButtons
+            type={"TwoButtonsInlineThirdInverted"}
+            leftButton={{
+              block: true,
+              bordered: true,
+              disabled: this.state.isLoading,
+              onPress: () => {
+                if (!isOnboardingCompleted) {
+                  this.props.closeModalAndNavigateToEmailInsertScreen();
+                  return;
+                }
+                this.props.navigateToEmailInsertScreen();
+              },
+              title: I18n.t("email.edit.title")
+            }}
+            rightButton={{
+              block: true,
+              primary: true,
+              onPress: this.handleOnClose,
+              disabled: this.state.isLoading,
+              title: isOnboardingCompleted
+                ? I18n.t("global.buttons.ok")
+                : I18n.t("global.buttons.continue")
+            }}
+          />
+        </View>
+      </>
     );
   };
 

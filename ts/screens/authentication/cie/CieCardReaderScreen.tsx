@@ -6,11 +6,17 @@
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { AccessibilityInfo, StyleSheet, Vibration } from "react-native";
+import {
+  AccessibilityInfo,
+  Platform,
+  StyleSheet,
+  Vibration
+} from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
@@ -19,8 +25,6 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { cieAuthenticationError } from "../../../store/actions/cie";
-import { ReduxProps } from "../../../store/actions/types";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -29,6 +33,14 @@ import {
   setAccessibilityFocus
 } from "../../../utils/accessibility";
 import { instabugLog, TypeLogs } from "../../../boot/configureInstabug";
+import {
+  cieAuthenticationError,
+  CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
+} from "../../../store/actions/cie";
+import { ReduxProps } from "../../../store/actions/types";
+import { isIos } from "../../../utils/platform";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 
 type NavigationParams = {
   ciePin: string;
@@ -36,8 +48,8 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps> &
-  ReduxProps;
+  ReduxProps &
+  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   padded: {
@@ -52,20 +64,6 @@ export enum ReadingState {
   "waiting_card" = "waiting_card"
 }
 
-// A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Set<CEvent["event"]>([
-  "ON_TAG_DISCOVERED_NOT_CIE",
-  "ON_CARD_PIN_LOCKED",
-  "ON_PIN_ERROR",
-  "PIN_INPUT_ERROR",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "AUTHENTICATION_ERROR",
-  "ON_NO_INTERNET_CONNECTION",
-  "STOP_NFC_ERROR",
-  "START_NFC_ERROR"
-]);
-
 type State = {
   // Get the current status of the card reading
   readingState: ReadingState;
@@ -75,6 +73,41 @@ type State = {
   errorMessage?: string;
   isScreenReaderEnabled: boolean;
 };
+
+type setErrorParameter = {
+  eventReason: CieAuthenticationErrorReason;
+  errorDescription?: string;
+  navigationRoute?: string;
+  navigationParams?: Record<string, unknown>;
+};
+
+// A subset of Cie Events (errors) which is of interest to analytics
+const analyticActions = new Map<CieAuthenticationErrorReason, string>([
+  // Reading interrupted before the sdk complete the reading
+  ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
+  ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
+  [
+    "TAG_ERROR_NFC_NOT_SUPPORTED",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
+  [
+    "ON_TAG_DISCOVERED_NOT_CIE",
+    I18n.t("authentication.cie.card.error.unknownCardContent")
+  ],
+  ["PIN Locked", I18n.t("authentication.cie.card.error.generic")],
+  ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
+  ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
+  ["PIN_INPUT_ERROR", ""],
+  ["CERTIFICATE_EXPIRED", I18n.t("authentication.cie.card.error.generic")],
+  ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
+  ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
+  [
+    "ON_NO_INTERNET_CONNECTION",
+    I18n.t("authentication.cie.card.error.tryAgain")
+  ],
+  ["STOP_NFC_ERROR", ""],
+  ["START_NFC_ERROR", ""]
+]);
 
 const instabugTag = "cie";
 // the timeout we sleep until move to consent form screen when authentication goes well
@@ -92,7 +125,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      /* 
+      /*
       These are the states that can occur when reading the cie (from SDK)
       - waiting_card (we are ready for read ->radar effect)
       - reading (we are reading the card -> progress animation)
@@ -105,6 +138,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       content: I18n.t("authentication.cie.card.layCardMessageFooter"),
       isScreenReaderEnabled: false
     };
+    this.startCieiOS = this.startCieiOS.bind(this);
+    this.startCieAndroid = this.startCieAndroid.bind(this);
   }
 
   get ciePin(): string {
@@ -115,16 +150,25 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("authorizationUri");
   }
 
-  private setError = (
-    errorMessage: string,
-    navigationRoute?: string,
-    navigationParams: Record<string, unknown> = {}
-  ) => {
-    this.dispatchAnalyticEvent(errorMessage);
+  private setError = ({
+    eventReason,
+    errorDescription,
+    navigationRoute,
+    navigationParams = {}
+  }: setErrorParameter) => {
+    const cieDescription =
+      errorDescription ??
+      fromNullable(analyticActions.get(eventReason)).getOrElse("");
+
+    this.dispatchAnalyticEvent({
+      reason: eventReason,
+      cieDescription
+    });
+
     this.setState(
       {
         readingState: ReadingState.error,
-        errorMessage
+        errorMessage: cieDescription
       },
       () => {
         Vibration.vibrate(VIBRATION);
@@ -135,14 +179,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (message: string) => {
-    this.props.dispatch(cieAuthenticationError(Error(message)));
+  private dispatchAnalyticEvent = (error: CieAuthenticationErrorPayload) => {
+    this.props.dispatch(cieAuthenticationError(error));
   };
 
   private handleCieEvent = async (event: CEvent) => {
-    if (analyticActions.has(event.event)) {
-      this.dispatchAnalyticEvent(event.event);
-    }
     instabugLog(event.event, TypeLogs.DEBUG, instabugTag);
     switch (event.event) {
       // Reading starts
@@ -154,51 +195,42 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         }
         break;
 
-      // Reading interrupted before the sdk complete the reading
+      case "Transmission Error":
       case "ON_TAG_LOST":
-        this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
-        break;
-
+      case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
-        this.setError(
-          I18n.t("authentication.cie.card.error.unknownCardContent")
-        );
+      case "AUTHENTICATION_ERROR":
+      case "ON_NO_INTERNET_CONNECTION":
+        this.setError({ eventReason: event.event });
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
+      case "PIN Locked":
       case "ON_CARD_PIN_LOCKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
-        );
-        break;
-
-      case "AUTHENTICATION_ERROR":
-        this.setError(I18n.t("authentication.cie.card.error.generic"));
-        break;
-
-      case "ON_NO_INTERNET_CONNECTION":
-        this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+        });
         break;
 
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        this.setError(
-          I18n.t("authentication.cie.card.error.tryAgain"),
-          ROUTES.CIE_WRONG_PIN_SCREEN,
-          {
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_WRONG_PIN_SCREEN,
+          navigationParams: {
             remainingCount: event.attemptsLeft
           }
-        );
+        });
         break;
 
       // CIE is Expired or Revoked
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
-        this.setError(
-          I18n.t("authentication.cie.card.error.generic"),
-          ROUTES.CIE_EXPIRED_SCREEN
-        );
+        this.setError({
+          eventReason: event.event,
+          navigationRoute: ROUTES.CIE_EXPIRED_SCREEN
+        });
         break;
 
       default:
@@ -228,11 +260,17 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       case ReadingState.error:
         this.setState(
           {
-            title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-            subtitle: I18n.t(
-              "authentication.cie.card.error.readerCardLostHeader"
+            title: I18n.t(
+              isIos
+                ? "authentication.cie.card.error.readerCardLostTitleiOS"
+                : "authentication.cie.card.error.readerCardLostTitle"
             ),
-            content: this.state.errorMessage
+            subtitle: I18n.t(
+              isIos
+                ? "authentication.cie.card.error.readerCardLostHeaderiOS"
+                : "authentication.cie.card.error.readerCardLostHeader"
+            ),
+            content: isIos ? "" : this.state.errorMessage
           },
           this.announceUpdate
         );
@@ -254,9 +292,19 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       default:
         this.setState(
           {
-            title: I18n.t("authentication.cie.card.title"),
-            subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-            content: I18n.t("authentication.cie.card.layCardMessageFooter")
+            title: I18n.t(
+              isIos
+                ? "authentication.cie.card.titleiOS"
+                : "authentication.cie.card.title"
+            ),
+            subtitle: I18n.t(
+              isIos
+                ? "authentication.cie.card.layCardMessageHeaderiOS"
+                : "authentication.cie.card.layCardMessageHeader"
+            ),
+            content: isIos
+              ? ""
+              : I18n.t("authentication.cie.card.layCardMessageFooter")
           },
           this.announceUpdate
         );
@@ -266,10 +314,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
     instabugLog(error.message, TypeLogs.DEBUG, instabugTag);
-    this.setError(error.message);
+    this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
+    if (this.state.readingState === ReadingState.completed) {
+      return;
+    }
     instabugLog("authentication SUCCESS", TypeLogs.DEBUG, instabugTag);
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
@@ -282,12 +333,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         },
         this.state.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+          : // if is iOS don't wait. The thank you page is shown natively
+          Platform.OS === "ios"
+          ? 0
           : WAIT_TIMEOUT_NAVIGATION
       );
     });
   };
 
-  public async componentDidMount() {
+  public async startCieAndroid() {
     cieManager
       .start()
       .then(async () => {
@@ -302,6 +356,32 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       .catch(() => {
         this.setState({ readingState: ReadingState.error });
       });
+  }
+
+  public async startCieiOS() {
+    cieManager.removeAllListeners();
+    cieManager.onEvent(this.handleCieEvent);
+    cieManager.onError(this.handleCieError);
+    cieManager.onSuccess(this.handleCieSuccess);
+    await cieManager.setPin(this.ciePin);
+    cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
+    cieManager
+      .start()
+      .then(async () => {
+        await cieManager.startListeningNFC();
+        this.setState({ readingState: ReadingState.waiting_card });
+      })
+      .catch(() => {
+        this.setState({ readingState: ReadingState.error });
+      });
+  }
+
+  public async componentDidMount() {
+    const startCie = Platform.select({
+      ios: this.startCieiOS,
+      default: this.startCieAndroid
+    });
+    await startCie();
     const srEnabled = await isScreenReaderEnabled();
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
@@ -310,6 +390,36 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private handleOnHeaderFocus = () => {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
+
+  private handleCancel = () => this.props.dispatch(resetToAuthenticationRoute);
+
+  private getFooter = () =>
+    Platform.select({
+      default: (
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            onPress: this.handleCancel,
+            bordered: true,
+            title: I18n.t("global.buttons.cancel")
+          }}
+        />
+      ),
+      ios: (
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          leftButton={{
+            bordered: true,
+            onPress: this.handleCancel,
+            title: I18n.t("global.buttons.cancel")
+          }}
+          rightButton={{
+            onPress: async () => await this.startCieiOS(),
+            title: I18n.t("authentication.cie.nfc.retry")
+          }}
+        />
+      )
+    });
 
   public render(): React.ReactNode {
     return (
@@ -323,21 +433,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           <Text style={styles.padded} ref={this.subTitleRef}>
             {this.state.subtitle}
           </Text>
-          <CieReadingCardAnimation readingState={this.state.readingState} />
+          {!isIos && (
+            <CieReadingCardAnimation readingState={this.state.readingState} />
+          )}
+          {isIos && <View spacer={true} />}
           <Text style={styles.padded} accessible={true}>
             {this.state.content}
           </Text>
         </Content>
-        {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              onPress: this.props.navigation.goBack,
-              cancel: true,
-              title: I18n.t("global.buttons.cancel")
-            }}
-          />
-        )}
+        {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
+          this.getFooter()}
       </TopScreenComponent>
     );
   }

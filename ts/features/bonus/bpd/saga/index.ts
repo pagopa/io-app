@@ -1,52 +1,58 @@
 import { SagaIterator } from "redux-saga";
-import * as pot from "italia-ts-commons/lib/pot";
-import { takeLatest, select } from "redux-saga/effects";
+import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix } from "../../../../config";
-import { profileSelector } from "../../../../store/reducers/profile";
+import { bpdApiUrlPrefix, bpdTechnicalIban } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
-import { bpdLoadActivationStatus } from "../store/actions/details";
+import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
 import {
-  bpdEnrollUserToProgram,
   bpdDeleteUserFromProgram,
+  bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingStart
 } from "../store/actions/onboarding";
-import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import {
+  bpdPaymentMethodActivation,
+  bpdUpdatePaymentMethodActivation
+} from "../store/actions/paymentMethods";
+import { bpdPeriodsAmountLoad } from "../store/actions/periods";
+import { bpdTransactionsLoad } from "../store/actions/transactions";
+import {
+  deleteCitizen,
+  getCitizen,
+  getCitizenV2,
+  putEnrollCitizen,
+  putEnrollCitizenV2
+} from "./networking";
+import { loadBpdData } from "./networking/loadBpdData";
+import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
+import {
+  bpdLoadPaymentMethodActivationSaga,
+  bpdUpdatePaymentMethodActivationSaga
+} from "./networking/paymentMethod";
+import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
-  const profileState: ReturnType<typeof profileSelector> = yield select(
-    profileSelector
-  );
-  const bpdBackendClient = BackendBpdClient(
-    bpdApiUrlPrefix,
-    bpdBearerToken,
-    // FIX ME !this code must be removed!
-    // only for test purpose
-    pot.getOrElse(
-      pot.map(profileState, p => p.fiscal_code as string),
-      ""
-    )
-  );
+  const bpdBackendClient = BackendBpdClient(bpdApiUrlPrefix, bpdBearerToken);
 
   // load citizen details
   yield takeLatest(
     bpdLoadActivationStatus.request,
-    getCitizen,
-    bpdBackendClient.find
+    bpdTechnicalIban ? getCitizenV2 : getCitizen,
+    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
   );
-
   // enroll citizen to the bpd
   yield takeLatest(
     bpdEnrollUserToProgram.request,
-    putEnrollCitizen,
-    bpdBackendClient.enrollCitizenIO
+    bpdTechnicalIban ? putEnrollCitizenV2 : putEnrollCitizen,
+    bpdTechnicalIban
+      ? bpdBackendClient.enrollCitizenV2IO
+      : bpdBackendClient.enrollCitizenIO
   );
 
   // delete citizen from the bpd
@@ -61,6 +67,38 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdUpsertIban.request,
     patchCitizenIban,
     bpdBackendClient.updatePaymentMethod
+  );
+
+  // load bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdPaymentMethodActivation.request,
+    bpdLoadPaymentMethodActivationSaga,
+    bpdBackendClient.findPayment
+  );
+
+  // update bpd activation status for a specific payment method
+  yield takeEvery(
+    bpdUpdatePaymentMethodActivation.request,
+    bpdUpdatePaymentMethodActivationSaga,
+    bpdBackendClient.enrollPayment,
+    bpdBackendClient.deletePayment
+  );
+
+  // prefetch all the bpd data
+  yield takeEvery(bpdAllData.request, loadBpdData);
+
+  // load bpd transactions for a period
+  yield takeEvery(
+    bpdTransactionsLoad.request,
+    bpdLoadTransactionsSaga,
+    bpdBackendClient.winningTransactions
+  );
+
+  // Load bpd periods with amount
+  yield takeEvery(
+    bpdPeriodsAmountLoad.request,
+    loadPeriodsWithInfo,
+    bpdBackendClient
   );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program

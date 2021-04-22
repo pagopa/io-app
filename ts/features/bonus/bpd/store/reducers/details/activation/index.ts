@@ -1,8 +1,12 @@
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
+  getValue,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -12,15 +16,23 @@ import {
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import {
   bpdDeleteUserFromProgram,
-  bpdEnrollUserToProgram
+  bpdEnrollUserToProgram,
+  bpdUnsubscribeCompleted,
+  bpdUnsubscribeFailure
 } from "../../../actions/onboarding";
 import paymentInstrumentReducer, {
+  bpdUpsertIbanSelector,
   PayoffInstrumentType
 } from "./payoffInstrument";
+import technicalAccountReducer, {
+  bpdTechnicalAccountSelector
+} from "./technicalAccount";
 
 export type BpdActivation = {
-  enabled: RemoteValue<boolean, Error>;
+  enabled: pot.Pot<boolean, Error>;
   payoffInstr: PayoffInstrumentType;
+  unsubscription: RemoteValue<true, Error>;
+  technicalAccount: RemoteValue<string | undefined, Error>;
 };
 
 /**
@@ -32,30 +44,56 @@ export type BpdActivation = {
  * @param state
  * @param action
  */
-// TODO: integrate with the unsubscribe
+// TODO: check if the logic is ok
 const enabledReducer = (
-  state: RemoteValue<boolean, Error> = remoteUndefined,
+  state: pot.Pot<boolean, Error> = pot.none,
   action: Action
-): RemoteValue<boolean, Error> => {
+): pot.Pot<boolean, Error> => {
   switch (action.type) {
     case getType(bpdLoadActivationStatus.request):
     case getType(bpdEnrollUserToProgram.request):
-      return remoteLoading;
+      return pot.toLoading(state);
     case getType(bpdLoadActivationStatus.success):
     case getType(bpdEnrollUserToProgram.success):
-      return remoteReady(action.payload.enabled);
+      return pot.some(action.payload.enabled);
     case getType(bpdDeleteUserFromProgram.success):
-      return remoteReady(false);
+      return pot.none;
     case getType(bpdLoadActivationStatus.failure):
     case getType(bpdEnrollUserToProgram.failure):
+      return pot.toError(state, action.payload);
+  }
+  return state;
+};
+
+/**
+ * Keep the state of "unsubscribe" from bpd outcome
+ * @param state
+ * @param action
+ */
+const unsubscriptionReducer = (
+  state: RemoteValue<true, Error> = remoteUndefined,
+  action: Action
+): RemoteValue<true, Error> => {
+  switch (action.type) {
+    case getType(bpdDeleteUserFromProgram.request):
+      return remoteLoading;
+    case getType(bpdDeleteUserFromProgram.success):
+      return remoteReady(true);
+    case getType(bpdDeleteUserFromProgram.failure):
       return remoteError(action.payload);
+    // reset the state when return to wallet
+    case getType(bpdUnsubscribeCompleted):
+    case getType(bpdUnsubscribeFailure):
+      return remoteUndefined;
   }
   return state;
 };
 
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
-  payoffInstr: paymentInstrumentReducer
+  payoffInstr: paymentInstrumentReducer,
+  unsubscription: unsubscriptionReducer,
+  technicalAccount: technicalAccountReducer
 });
 
 /**
@@ -64,6 +102,45 @@ const bpdActivationReducer = combineReducers<BpdActivation, Action>({
  */
 export const bpdEnabledSelector = (
   state: GlobalState
-): RemoteValue<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+): pot.Pot<boolean, Error> => state.bonus.bpd.details.activation.enabled;
+
+/**
+ * Return the Iban that the user has entered to receive the cashback amount
+ * @return {RemoteValue<string | undefined, Error>}
+ */
+export const bpdIbanSelector = createSelector<
+  GlobalState,
+  RemoteValue<string | undefined, Error>,
+  RemoteValue<string | undefined, Error>
+>(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.activation.payoffInstr.enrolledValue
+  ],
+  iban => iban
+);
+
+/**
+ * Return the unsubscription state, memoized
+ */
+export const bpdUnsubscriptionSelector = createSelector(
+  [(state: GlobalState) => state.bonus.bpd.details.activation.unsubscription],
+  unsubscription => unsubscription
+);
+
+/**
+ * Return the prefill text based on the iban upsert or iban inserted by user
+ * if the user tried to add a new iban (upsertIban.value !== undefined) return that iban
+ * else try to return the actual iban getValue(iban)
+ *
+ */
+export const bpdIbanPrefillSelector = createSelector(
+  [bpdIbanSelector, bpdUpsertIbanSelector, bpdTechnicalAccountSelector],
+  (iban, upsertIban, technicalAccount): string =>
+    fromNullable(upsertIban.value as string)
+      .alt(fromNullable(getValue(technicalAccount)).map(_ => ""))
+      .alt(fromNullable(getValue(iban)))
+      .getOrElse("")
+);
 
 export default bpdActivationReducer;

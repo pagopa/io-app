@@ -23,10 +23,7 @@ import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderCo
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
-import {
-  BottomTopAnimation,
-  LightModalContextInterface
-} from "../../../../components/ui/LightModal";
+import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
@@ -66,6 +63,7 @@ import {
 } from "../utils/bonus";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -399,18 +397,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   };
 
-  const openModalBox = () => {
-    const modalBox = (
-      <QrModalBox
-        codeToDisplay={getBonusCodeFormatted(bonus)}
-        codeToCopy={bonus.id}
-        onClose={props.hideModal}
-        qrCode={qrCode[QR_CODE_MIME_TYPE]}
-        logo={props.logo}
-      />
-    );
-    props.showAnimatedModal(modalBox, BottomTopAnimation);
-  };
+  const { present: openModalBox } = useIOBottomSheet(
+    <QrModalBox
+      codeToDisplay={getBonusCodeFormatted(bonus)}
+      codeToCopy={bonus.id}
+      qrCode={qrCode[QR_CODE_MIME_TYPE]}
+      logo={props.logo}
+    />,
+    I18n.t("bonus.bonusVacanze.name"),
+    466
+  );
 
   const handleShare = () =>
     shareQR(

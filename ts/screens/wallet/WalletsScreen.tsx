@@ -15,7 +15,6 @@ import {
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -26,7 +25,6 @@ import I18n from "../../i18n";
 import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome,
-  navigateToWalletList,
   navigateToWalletTransactionsScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -38,8 +36,9 @@ import {
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  creditCardWalletV1Selector,
   getFavoriteWalletId,
-  walletsSelector
+  pagoPaCreditCardWalletV1Selector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
@@ -75,13 +74,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.walletList.contextualHelpContent"
 };
 
-class WalletsScreen extends React.Component<Props> {
-  private renderWallet = (info: ListRenderItemInfo<Wallet>) => {
+/**
+ * A legacy screen that should be removed
+ * @param props
+ * @constructor
+ * @deprecated This screen should not be used anymore
+ */
+const WalletsScreen: React.FunctionComponent<Props> = (props: Props) => {
+  React.useEffect(() => {
+    props.loadWallets();
+  }, []);
+
+  const renderWallet = (info: ListRenderItemInfo<Wallet>) => {
     const item = info.item;
-    const isFavorite = pot.map(
-      this.props.favoriteWallet,
-      _ => _ === item.idWallet
-    );
+    const isFavorite = pot.map(props.favoriteWallet, _ => _ === item.idWallet);
     return (
       <CardComponent
         type="Full"
@@ -89,84 +95,76 @@ class WalletsScreen extends React.Component<Props> {
         isFavorite={isFavorite}
         onSetFavorite={(willBeFavorite: boolean) =>
           handleSetFavourite(willBeFavorite, () =>
-            this.props.setFavoriteWallet(item.idWallet)
+            props.setFavoriteWallet(item.idWallet)
           )
         }
-        onDelete={() => this.props.deleteWallet(item.idWallet)}
-        mainAction={this.props.navigateToWalletTransactionsScreen}
+        onDelete={() => props.deleteWallet(item.idWallet)}
+        mainAction={props.navigateToWalletTransactionsScreen}
       />
     );
   };
 
-  private topContent() {
-    return (
-      <React.Fragment>
-        <View spacer={true} large={true} />
-        <View style={styles.headerContainer}>
-          <Left>
-            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-          </Left>
-          <Right>
-            <AddPaymentMethodButton
-              onPress={() =>
-                this.props.navigateToWalletAddPaymentMethod(
-                  getCurrentRouteKey(this.props.nav)
-                )
-              }
-            />
-          </Right>
-        </View>
-        <View spacer={true} large={true} />
-      </React.Fragment>
-    );
-  }
-
-  public render(): React.ReactNode {
-    const { favoriteWallet } = this.props;
-    const walletsRefreshControl = (
-      <RefreshControl
-        onRefresh={() => {
-          this.props.loadWallets();
-        }}
-        refreshing={false}
-        tintColor={"transparent"}
-      />
-    );
-
-    return (
-      <WalletLayout
-        title={I18n.t("wallet.paymentMethods")}
-        topContent={this.topContent()}
-        allowGoBack={true}
-        hideHeader={true}
-        contentStyle={styles.brandDarkGrayBg}
-        hasDynamicSubHeader={false}
-        refreshControl={walletsRefreshControl}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet", "wallet_methods"]}
-      >
-        <View style={styles.padded}>
-          <FlatList
-            removeClippedSubviews={false}
-            data={this.props.wallets}
-            renderItem={this.renderWallet}
-            keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
-            extraData={{ favoriteWallet }}
-            ItemSeparatorComponent={() => <View spacer={true} large={true} />}
+  const topContent = () => (
+    <React.Fragment>
+      <View spacer={true} large={true} />
+      <View style={styles.headerContainer}>
+        <Left>
+          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+        </Left>
+        <Right>
+          <AddPaymentMethodButton
+            onPress={() =>
+              props.navigateToWalletAddPaymentMethod(
+                getCurrentRouteKey(props.nav)
+              )
+            }
           />
-        </View>
-        <EdgeBorderComponent />
-      </WalletLayout>
-    );
-  }
-}
+        </Right>
+      </View>
+      <View spacer={true} large={true} />
+    </React.Fragment>
+  );
+
+  const { favoriteWallet } = props;
+  const walletsRefreshControl = (
+    <RefreshControl
+      onRefresh={props.loadWallets}
+      refreshing={false}
+      tintColor={"transparent"}
+    />
+  );
+
+  return (
+    <WalletLayout
+      title={I18n.t("wallet.paymentMethods")}
+      topContent={topContent()}
+      allowGoBack={true}
+      hideHeader={true}
+      contentStyle={styles.brandDarkGrayBg}
+      hasDynamicSubHeader={false}
+      refreshControl={walletsRefreshControl}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet", "wallet_methods"]}
+    >
+      <View style={styles.padded}>
+        <FlatList
+          removeClippedSubviews={false}
+          data={props.wallets}
+          renderItem={renderWallet}
+          keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
+          extraData={{ favoriteWallet }}
+          ItemSeparatorComponent={() => <View spacer={true} large={true} />}
+        />
+      </View>
+      <EdgeBorderComponent />
+    </WalletLayout>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = walletsSelector(state);
+  const potWallets = pagoPaCreditCardWalletV1Selector(state);
   return {
-    wallets: pot
-      .getOrElse(potWallets, [])
-      .filter(w => w.type === TypeEnum.CREDIT_CARD),
+    wallets: pot.getOrElse(creditCardWalletV1Selector(state), []),
     isLoading: pot.isLoading(potWallets),
     favoriteWallet: getFavoriteWalletId(state),
     nav: navSelector(state)
@@ -177,6 +175,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequest()),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
+  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   navigateToWalletAddPaymentMethod: (key?: string) =>
@@ -189,9 +188,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         walletId,
         onSuccess: action => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          if (action.payload.length > 0) {
-            dispatch(navigateToWalletList());
-          } else {
+          if (action.payload.length === 0) {
             dispatch(navigateToWalletHome());
           }
         },

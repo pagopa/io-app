@@ -4,7 +4,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import { Animated, Platform, StyleSheet, View } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProps
@@ -42,6 +42,8 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -201,79 +203,82 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       updateMessagesArchivedState
     } = this.props;
     return (
-      <AnimatedTabs
-        tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-        tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onScroll={this.handleOnTabsScroll}
-        onChangeTab={this.handleOnChangeTab}
-        initialPage={0}
-      >
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("messages.tab.inbox")}
+      <View style={IOStyles.flex}>
+        <AnimatedTabs
+          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+          onScroll={this.handleOnTabsScroll}
+          onChangeTab={this.handleOnChangeTab}
+          initialPage={0}
         >
-          <MessagesInbox
-            currentTab={this.state.currentTab}
-            messagesState={lexicallyOrderedMessagesState}
-            servicesById={servicesById}
-            paymentsByRptId={paymentsByRptId}
-            onRefresh={this.onRefreshMessages}
-            setMessagesArchivedState={updateMessagesArchivedState}
-            navigateToMessageDetail={navigateToMessageDetail}
-            animated={{
-              onScroll: Animated.event([
-                {
-                  nativeEvent: {
-                    contentOffset: { y: this.animatedTabScrollPositions[0] }
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("messages.tab.inbox")}
+          >
+            <MessagesInbox
+              currentTab={this.state.currentTab}
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              onRefresh={this.onRefreshMessages}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
+              animated={{
+                onScroll: Animated.event([
+                  {
+                    nativeEvent: {
+                      contentOffset: { y: this.animatedTabScrollPositions[0] }
+                    }
                   }
-                }
-              ]),
-              scrollEventThrottle: 8
-            }}
-          />
-        </Tab>
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("messages.tab.deadlines")}
-        >
-          <MessagesDeadlines
-            currentTab={this.state.currentTab}
-            messagesState={lexicallyOrderedMessagesState}
-            servicesById={servicesById}
-            paymentsByRptId={paymentsByRptId}
-            setMessagesArchivedState={updateMessagesArchivedState}
-            navigateToMessageDetail={navigateToMessageDetail}
-          />
-        </Tab>
+                ]),
+                scrollEventThrottle: 8
+              }}
+            />
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("messages.tab.deadlines")}
+          >
+            <MessagesDeadlines
+              currentTab={this.state.currentTab}
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
+            />
+          </Tab>
 
-        <Tab
-          activeTextStyle={styles.activeTextStyle}
-          textStyle={styles.textStyle}
-          heading={I18n.t("messages.tab.archive")}
-        >
-          <MessagesArchive
-            currentTab={this.state.currentTab}
-            messagesState={lexicallyOrderedMessagesState}
-            servicesById={servicesById}
-            paymentsByRptId={paymentsByRptId}
-            onRefresh={this.onRefreshMessages}
-            setMessagesArchivedState={updateMessagesArchivedState}
-            navigateToMessageDetail={navigateToMessageDetail}
-            animated={{
-              onScroll: Animated.event([
-                {
-                  nativeEvent: {
-                    contentOffset: { y: this.animatedTabScrollPositions[2] }
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("messages.tab.archive")}
+          >
+            <MessagesArchive
+              currentTab={this.state.currentTab}
+              messagesState={lexicallyOrderedMessagesState}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              onRefresh={this.onRefreshMessages}
+              setMessagesArchivedState={updateMessagesArchivedState}
+              navigateToMessageDetail={navigateToMessageDetail}
+              animated={{
+                onScroll: Animated.event([
+                  {
+                    nativeEvent: {
+                      contentOffset: { y: this.animatedTabScrollPositions[2] }
+                    }
                   }
-                }
-              ]),
-              scrollEventThrottle: 8
-            }}
-          />
-        </Tab>
-      </AnimatedTabs>
+                ]),
+                scrollEventThrottle: 8
+              }}
+            />
+          </Tab>
+        </AnimatedTabs>
+        <SectionStatusComponent sectionKey={"messages"} />
+      </View>
     );
   };
 

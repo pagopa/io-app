@@ -13,34 +13,31 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
+import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
-import { isExpiredCard } from "../../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
+import { H5 } from "../../core/typography/H5";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-
-// TODO: the "*" character renders differently (i.e. a larger circle) on
-// some devices @https://www.pivotaltracker.com/story/show/159231780
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
 interface BaseProps {
   wallet: Wallet;
 }
 
 interface FullCommonProps extends BaseProps {
-  isFavorite?: pot.Pot<boolean, string>;
+  isFavorite?: pot.Pot<boolean, Error>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
   extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
-  showPsp?: boolean;
 }
 
 interface FullProps extends FullCommonProps {
@@ -113,7 +110,7 @@ export default class CardComponent extends React.Component<Props> {
     if (
       this.props.type === "Preview" ||
       this.props.type === "Picking" ||
-      (this.props.type === "Full" && this.props.showPsp)
+      this.props.type === "Full"
     ) {
       const { wallet } = this.props;
       return (
@@ -123,7 +120,7 @@ export default class CardComponent extends React.Component<Props> {
       );
     }
 
-    if (this.props.type === "Full" || this.props.type === "Header") {
+    if (this.props.type === "Header") {
       const {
         hideFavoriteIcon,
         isFavorite,
@@ -137,7 +134,7 @@ export default class CardComponent extends React.Component<Props> {
           {!hideFavoriteIcon && isFavorite !== undefined && (
             <IconFont
               name={
-                pot.getOrElseWithUpdating(isFavorite, false) === true
+                pot.getOrElseWithUpdating(isFavorite, false)
                   ? "io-filled-star"
                   : "io-empty-star"
               }
@@ -165,9 +162,9 @@ export default class CardComponent extends React.Component<Props> {
                   <MenuOption onSelect={this.handleFavoritePress}>
                     <Text bold={true} style={styles.blueText}>
                       {I18n.t(
-                        pot.getOrElseWithUpdating(isFavorite, false) === true
-                          ? "cardComponent.unsetFavourite"
-                          : "cardComponent.setFavourite"
+                        pot.getOrElseWithUpdating(isFavorite, false)
+                          ? "cardComponent.unsetFavorite"
+                          : "cardComponent.setFavorite"
                       )}
                     </Text>
                   </MenuOption>
@@ -191,56 +188,36 @@ export default class CardComponent extends React.Component<Props> {
   }
 
   private renderBody(creditCard: CreditCard) {
-    const { type, wallet } = this.props;
-
-    const getBodyIcon = () => {
-      if (
-        this.props.type === "Picking" ||
-        (this.props.type === "Full" && this.props.showPsp)
-      ) {
-        return wallet.psp ? (
-          <View style={[styles.cardPsp]}>
-            <Logo
-              item={creditCard}
-              pspLogo={wallet.psp.logoPSP}
-              imageStyle={styles.pspLogo}
-            />
-          </View>
-        ) : (
-          <View style={[styles.cardPsp]}>
-            <Logo />
-          </View>
-        );
-      }
-      return (
-        <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
-          <Logo item={creditCard} />
-        </View>
-      );
-    };
+    const { type } = this.props;
 
     if (type === "Preview") {
       return null;
     }
+    // Right icon, basically needed for the sole "Header" variant
+    const getBodyIcon = () => {
+      switch (type) {
+        case "Picking":
+        case "Full":
+          return null;
+        case "Header":
+          return (
+            <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
+              <Logo item={creditCard} />
+            </View>
+          );
+      }
+    };
 
     const expirationDate = buildExpirationDate(creditCard);
-    const isExpired = isExpiredCard(creditCard);
+    const isCardExpired = this.props.wallet.paymentMethod
+      ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
+      : false;
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <Text
-            style={[
-              CreditCardStyles.textStyle,
-              !isExpired
-                ? CreditCardStyles.smallTextStyle
-                : CreditCardStyles.expiredTextStyle
-            ]}
-          >
-            {!isExpired
-              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
-              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
-          </Text>
-
+          <H5 color={isCardExpired ? "red" : "bluegrey"} weight={"SemiBold"}>
+            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+          </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
             {creditCard.holder.toUpperCase()}
           </Text>
@@ -292,23 +269,28 @@ export default class CardComponent extends React.Component<Props> {
     const hasFlatBottom =
       this.props.type === "Preview" || this.props.type === "Header";
 
+    const isHeader = this.props.type === "Header";
+
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+        style={[
+          styles.card,
+          styles.cardShadow,
+          hasFlatBottom ? styles.flatBottom : undefined,
+          isHeader && styles.cardHeader
+        ]}
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
-              <Text style={[CreditCardStyles.smallTextStyle]}>
-                {`${HIDDEN_CREDITCARD_NUMBERS}`}
-              </Text>
-              <Text style={[CreditCardStyles.largeTextStyle]}>
-                {`${wallet.creditCard.pan.slice(-4)}`}
-              </Text>
+              <BlurredPan>
+                {`${FOUR_UNICODE_CIRCLES} ${wallet.creditCard.pan.slice(-4)}`}
+              </BlurredPan>
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>
           {hasFlatBottom && <View spacer={true} />}
+          {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>
         {this.renderFooterRow()}

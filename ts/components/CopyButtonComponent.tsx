@@ -1,14 +1,17 @@
-import I18n from "i18n-js";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import customVariables from "../theme/variables";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { IOColors } from "./core/variables/IOColors";
 
 type Props = Readonly<{
   textToCopy: string;
+  onPressWithGestureHandler?: true;
 }>;
 
 const styles = StyleSheet.create({
@@ -22,22 +25,55 @@ const styles = StyleSheet.create({
   },
   text: {
     ...makeFontStyleObject(Platform.select, customVariables.textNormalWeight),
-    color: customVariables.brandPrimary,
     paddingLeft: 0,
     paddingRight: 0
+  },
+  colorBlue: {
+    color: IOColors.blue
+  },
+  colorWhite: {
+    color: IOColors.white
   }
 });
 
-export default function CopyButtonComponent(props: Props) {
+const FEEDBACK_MS = 4000 as Millisecond;
+
+const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
+  const [isTap, setIsTap] = React.useState(false);
+  const timerRetry = React.useRef<number | undefined>(undefined);
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRetry.current);
+    },
+    []
+  );
+
+  const handlePress = () => {
+    setIsTap(true);
+    clipboardSetStringWithFeedback(props.textToCopy);
+    // eslint-disable-next-line functional/immutable-data
+    timerRetry.current = setTimeout(() => setIsTap(false), FEEDBACK_MS);
+  };
+
   return (
     <ButtonDefaultOpacity
-      onPress={() => clipboardSetStringWithFeedback(props.textToCopy)}
+      onPress={handlePress}
       style={styles.button}
-      bordered={true}
+      bordered={!isTap}
+      primary={isTap}
+      onPressWithGestureHandler={props.onPressWithGestureHandler}
     >
-      <Text style={styles.text} small={true}>
-        {I18n.t("clipboard.copyText")}
+      <Text
+        style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}
+        small={true}
+      >
+        {isTap
+          ? I18n.t("clipboard.copyFeedbackButton")
+          : I18n.t("clipboard.copyText")}
       </Text>
     </ButtonDefaultOpacity>
   );
-}
+};
+
+export default CopyButtonComponent;

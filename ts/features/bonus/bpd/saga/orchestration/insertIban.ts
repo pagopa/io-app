@@ -1,16 +1,25 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import { navigateToBpdIbanInsertion } from "../../navigation/action/iban";
-import { navigateToBpdOnboardingNoPaymentMethods } from "../../navigation/action/onboarding";
+import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
+import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
+import { hasFunctionEnabled } from "../../../../../utils/walletv2";
+import {
+  navigateToBpdIbanInsertion,
+  navigateToBpdOnboardingEnrollPaymentMethod,
+  navigateToBpdOnboardingErrorPaymentMethods,
+  navigateToBpdOnboardingNoPaymentMethods
+} from "../../navigation/actions";
 import BPD_ROUTES from "../../navigation/routes";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionContinue
 } from "../../store/actions/iban";
+import { bpdOnboardingCompleted } from "../../store/actions/onboarding";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
 
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
@@ -51,8 +60,30 @@ export function* bpdIbanInsertionWorker() {
     yield put(NavigationActions.back());
   } else {
     if (onboardingOngoing) {
-      yield put(navigateToBpdOnboardingNoPaymentMethods());
-      navigationHistoryPop(1);
+      const paymentMethods: ReturnType<typeof paymentMethodsSelector> = yield select(
+        paymentMethodsSelector
+      );
+
+      // Error while loading the wallet, display a message that informs the user about the error
+      if (paymentMethods.kind === "PotNoneError") {
+        yield put(navigateToBpdOnboardingErrorPaymentMethods());
+        yield put(navigationHistoryPop(1));
+        yield put(bpdOnboardingCompleted());
+        return;
+      }
+
+      const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
+        pot.map(paymentMethods, pm =>
+          pm.some(p => hasFunctionEnabled(p, EnableableFunctionsTypeEnum.BPD))
+        ),
+        false
+      );
+      const nextAction = hasAtLeastOnePaymentMethodWithBpd
+        ? navigateToBpdOnboardingEnrollPaymentMethod()
+        : navigateToBpdOnboardingNoPaymentMethods();
+      yield put(nextAction);
+      yield put(navigationHistoryPop(1));
+      yield put(bpdOnboardingCompleted());
     } else {
       yield put(NavigationActions.back());
     }

@@ -1,12 +1,13 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import * as pot from "italia-ts-commons/lib/pot";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import { bpdUpsertIban, IbanUpsertResult } from "../../store/actions/iban";
-
+import { profileSelector } from "../../../../../store/reducers/profile";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 // representation of iban status
 export enum IbanStatus {
   "OK" = "OK",
@@ -19,8 +20,7 @@ export enum IbanStatus {
 const ibanStatusMapping: Map<string, IbanStatus> = new Map<string, IbanStatus>([
   ["OK", IbanStatus.OK],
   ["KO", IbanStatus.NOT_OWNED],
-  ["UNKNOWN_PSP", IbanStatus.CANT_VERIFY],
-  ["NOT_VALID", IbanStatus.NOT_VALID]
+  ["UNKNOWN_PSP", IbanStatus.CANT_VERIFY]
 ]);
 
 const successCases = new Set<IbanStatus>([
@@ -54,10 +54,17 @@ export function* patchCitizenIban(
   action: ActionType<typeof bpdUpsertIban.request>
 ) {
   try {
+    const profileState: ReturnType<typeof profileSelector> = yield select(
+      profileSelector
+    );
+    if (pot.isNone(profileState)) {
+      // it should never happen
+      throw new Error(`profile is None`);
+    }
     const iban: Iban = action.payload;
     const updatePaymentMethodResult: SagaCallReturnType<ReturnType<
       typeof updatePaymentMethod
-    >> = yield call(updatePaymentMethod(iban), {});
+    >> = yield call(updatePaymentMethod(iban, profileState.value), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {
@@ -83,7 +90,7 @@ export function* patchCitizenIban(
         `response status ${updatePaymentMethodResult.value.status}`
       );
     } else {
-      throw new Error(readableReport(updatePaymentMethodResult.value));
+      throw new Error(readablePrivacyReport(updatePaymentMethodResult.value));
     }
   } catch (e) {
     yield put(bpdUpsertIban.failure(e));

@@ -1,3 +1,4 @@
+import { none } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -8,8 +9,13 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { navigateToWalletHome } from "../../../../../store/actions/navigation";
+import {
+  navigateToWalletAddPaymentMethod,
+  navigateToWalletHome
+} from "../../../../../store/actions/navigation";
+import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -26,7 +32,11 @@ const loadLocales = () => ({
 const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props => {
   const { headerTitle, skip, addMethod, title, body } = loadLocales();
   return (
-    <BaseScreenComponent goBack={false} headerTitle={headerTitle}>
+    <BaseScreenComponent
+      goBack={false}
+      headerTitle={headerTitle}
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <View spacer={true} large={true} />
@@ -35,7 +45,7 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props =>
           <Body>{body}</Body>
         </View>
         <FooterTwoButtons
-          onRight={props.skip}
+          onRight={props.addPaymentMethod}
           onCancel={props.skip}
           rightText={addMethod}
           leftText={skip}
@@ -46,7 +56,15 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> = props =>
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(navigateToWalletHome())
+  skip: () => {
+    dispatch(navigationHistoryPop(1));
+    dispatch(navigateToWalletHome());
+  },
+  addPaymentMethod: () => {
+    dispatch(navigationHistoryPop(1));
+    dispatch(navigateToWalletHome());
+    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
+  }
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

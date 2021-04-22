@@ -17,10 +17,11 @@ import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { getBrightness, setBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 
-type Props = Readonly<{
+export type Props = Readonly<{
   onCancel: () => void;
   profile: InitializedProfile;
   municipality: pot.Pot<Municipality, Error>;
@@ -52,93 +53,137 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
-  Props
-> {
-  private scrollTimeout?: number;
-  private ScrollVewRef = React.createRef<ScrollView>();
+const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
 
-  private handleBackPress = () => {
-    this.props.onCancel();
+const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  // eslint-disable-next-line functional/no-let
+  let scrollTimeout: number | undefined;
+
+  const ScrollViewRef = React.createRef<ScrollView>();
+
+  const handleBackPress = () => {
+    // On backpress the component gets unmounted, so the brightness is restored by the
+    // cleanup function
+    props.onCancel();
     return true;
   };
 
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-    // if there is an active timeout, clear it!
-    if (this.scrollTimeout !== undefined) {
-      clearTimeout(this.scrollTimeout);
-      // eslint-disable-next-line
-      this.scrollTimeout = undefined;
-    }
-  }
-
-  private scrollToEnd = () => {
-    if (this.props.showBackSide && this.ScrollVewRef.current) {
+  const scrollToEnd = () => {
+    if (props.showBackSide && ScrollViewRef.current) {
       // dalay the scroll to end command to wait until the ingress animation is completed
       // eslint-disable-next-line
-      this.scrollTimeout = setTimeout(() => {
-        if (this.ScrollVewRef.current) {
-          this.ScrollVewRef.current.scrollToEnd({ animated: true });
+      scrollTimeout = setTimeout(() => {
+        if (ScrollViewRef.current) {
+          ScrollViewRef.current.scrollToEnd({ animated: true });
         }
       }, 300);
     }
   };
 
-  public render() {
-    return (
-      <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
-        <AppHeader noLeft={true} dark={true}>
-          <Body />
-        </AppHeader>
-        <StatusBar
-          backgroundColor={customVariables.brandDarkGray}
-          barStyle={"light-content"}
-        />
-        <ScrollView
-          style={styles.content}
-          ref={this.ScrollVewRef}
-          onLayout={this.scrollToEnd}
-        >
-          <View style={styles.headerSpacer} />
-          <View spacer={true} />
-          <View>
-            <FiscalCodeComponent
-              type={"Landscape"}
-              profile={this.props.profile}
-              getBackSide={false}
-              municipality={this.props.municipality}
-            />
-          </View>
+  React.useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+      // if there is an active timeout, clear it!
+      if (scrollTimeout !== undefined) {
+        clearTimeout(scrollTimeout);
+        // eslint-disable-next-line
+        scrollTimeout = undefined;
+      }
+    };
+  }, []);
 
-          <View spacer={true} />
+  // Brightness effect manager
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/no-let
+    let myBrightness: number | undefined;
 
+    const myBrightF = async () => {
+      myBrightness = await getBrightness()
+        .fold(
+          () => undefined,
+          _ => _
+        )
+        .run();
+    };
+
+    const mySetBrightF = async () => {
+      await myBrightF();
+      if (myBrightness) {
+        await setBrightness(HIGH_BRIGHTNESS).run();
+      }
+    };
+
+    const finishedSet = mySetBrightF();
+
+    return () => {
+      const restoreDeviceBrightnessF = async () => {
+        await finishedSet;
+        if (myBrightness) {
+          await setBrightness(myBrightness)
+            .fold(
+              () => undefined,
+              _ => _
+            )
+            .run();
+        }
+      };
+      void restoreDeviceBrightnessF();
+    };
+  }, []);
+
+  return (
+    <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
+      <AppHeader noLeft={true} dark={true}>
+        <Body />
+      </AppHeader>
+      <StatusBar
+        backgroundColor={customVariables.brandDarkGray}
+        barStyle={"light-content"}
+      />
+      <ScrollView
+        style={styles.content}
+        ref={ScrollViewRef}
+        onLayout={scrollToEnd}
+      >
+        <View style={styles.headerSpacer} />
+        <View spacer={true} />
+        <View>
           <FiscalCodeComponent
             type={"Landscape"}
-            profile={this.props.profile}
-            getBackSide={true}
-            municipality={this.props.municipality}
+            profile={props.profile}
+            getBackSide={false}
+            municipality={props.municipality}
           />
-
-          <View spacer={true} large={true} />
-          <View spacer={true} large={true} />
-        </ScrollView>
-        <View style={styles.closeButton}>
-          <Button
-            transparent={true}
-            onPress={this.props.onCancel}
-            accessible={true}
-            accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          >
-            <IconFont name="io-close" color={customVariables.colorWhite} />
-          </Button>
         </View>
-      </Container>
-    );
-  }
-}
+
+        <View spacer={true} />
+
+        <FiscalCodeComponent
+          type={"Landscape"}
+          profile={props.profile}
+          getBackSide={true}
+          municipality={props.municipality}
+        />
+
+        <View spacer={true} large={true} />
+        <View spacer={true} large={true} />
+      </ScrollView>
+      <View style={styles.closeButton}>
+        <Button
+          transparent={true}
+          onPress={props.onCancel}
+          accessible={true}
+          accessibilityRole={"button"}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        >
+          <IconFont name="io-close" color={customVariables.colorWhite} />
+        </Button>
+      </View>
+    </Container>
+  );
+};
+
+export default FiscalCodeLandscapeOverlay;

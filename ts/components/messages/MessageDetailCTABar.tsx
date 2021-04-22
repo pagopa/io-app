@@ -2,15 +2,21 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import DeviceInfo from "react-native-device-info";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { loadServiceMetadata } from "../../store/actions/content";
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
-import { getCTA, isExpired, paymentExpirationInfo } from "../../utils/messages";
+import {
+  getCTA,
+  isExpirable,
+  isExpired,
+  paymentExpirationInfo
+} from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
@@ -28,7 +34,8 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingBottom: Platform.OS === 'ios' && DeviceInfo.hasNotch() ? 28 : 15,
   }
 });
 
@@ -48,8 +55,12 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
+  get isPaymentExpirable() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
   get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, info => isExpired(info));
+    return this.paymentExpirationInfo.fold(false, isExpired);
   }
 
   get dueDate() {
@@ -74,6 +85,10 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     if (this.paid) {
+      return null;
+    }
+    // the payment is expired and it is not valid (can't pay after due date)
+    if (this.isPaymentExpired && this.isPaymentExpirable) {
       return null;
     }
     // The button is displayed if the payment has an expiration date in the future

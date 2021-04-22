@@ -13,6 +13,7 @@ import { EligibilityRequestProgressEnum } from "../store/reducers/eligibility";
 
 export const ID_BONUS_VACANZE_TYPE = 1;
 export const ID_BPD_TYPE = 2;
+export const ID_CGN_TYPE = 3;
 
 // return true if the bonus is active
 export const isBonusActive = (bonus: BonusActivationWithQrCode) =>

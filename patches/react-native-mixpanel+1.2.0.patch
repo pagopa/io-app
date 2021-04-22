@@ -1,7 +1,6 @@
 diff --git a/node_modules/react-native-mixpanel/.DS_Store b/node_modules/react-native-mixpanel/.DS_Store
 new file mode 100644
-index 0000000..ca63693
-Binary files /dev/null and b/node_modules/react-native-mixpanel/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m b/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
 index 8564911..2e332b0 100644
 --- a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
@@ -73,3 +72,16 @@ index 6239e11..a7352d4 100644
          // Get lifecycle notifications to flush mixpanel on pause or destroy
          reactContext.addLifecycleEventListener(this);
      }
+diff --git a/node_modules/react-native-mixpanel/index.d.ts b/node_modules/react-native-mixpanel/index.d.ts
+index c00ae8c..df23b29 100644
+--- a/node_modules/react-native-mixpanel/index.d.ts
++++ b/node_modules/react-native-mixpanel/index.d.ts
+@@ -5,7 +5,7 @@ declare module 'react-native-mixpanel' {
+     initialize(): Promise<void>
+     getDistinctId(): Promise<string>
+     getSuperProperty(propertyName: string): Promise<any>
+-    track(event: string, properties?: Object): Promise<void>
++    track(event: string, properties?: {[key: string]: unknown}): Promise<void>
+     flush(): Promise<void>
+     disableIpAddressGeolocalization(): Promise<void>
+     alias(alias: string, oldDistinctID?: string): Promise<void>

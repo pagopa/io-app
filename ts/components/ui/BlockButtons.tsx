@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnButtonProps = {
+  onPressWithGestureHandler?: true;
   title: string;
   buttonFontSize?: number;
   iconName?: string;

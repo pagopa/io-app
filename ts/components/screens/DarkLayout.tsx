@@ -46,6 +46,7 @@ type Props = Readonly<{
   customGoBack?: React.ReactNode;
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
+  footerFullWidth?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -66,7 +67,7 @@ export default class DarkLayout extends React.Component<Props> {
   }
 
   private screenContent() {
-    const wrapper = (childer: React.ReactNode) =>
+    const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
         <LinearGradient
           colors={[customVariables.brandDarkGray, "#42484F"]}
@@ -76,7 +77,7 @@ export default class DarkLayout extends React.Component<Props> {
               : styles.headerContents
           }
         >
-          {childer}
+          {children}
         </LinearGradient>
       ) : (
         <View
@@ -87,7 +88,7 @@ export default class DarkLayout extends React.Component<Props> {
             { backgroundColor: customVariables.brandDarkGray }
           ]}
         >
-          {childer}
+          {children}
         </View>
       );
     return (
@@ -115,6 +116,7 @@ export default class DarkLayout extends React.Component<Props> {
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         faqCategories={this.props.faqCategories}
+        titleColor={"white"}
       >
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
@@ -150,6 +152,7 @@ export default class DarkLayout extends React.Component<Props> {
             {this.screenContent()}
           </ScreenContent>
         )}
+        {this.props.footerFullWidth}
         {this.props.footerContent && (
           <View footer={true}>{this.props.footerContent}</View>
         )}

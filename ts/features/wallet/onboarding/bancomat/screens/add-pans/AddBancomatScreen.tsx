@@ -22,12 +22,14 @@ import {
   onboardingBancomatAddingResultSelector,
   onboardingBancomatChosenPanSelector
 } from "../../store/reducers/addingPans";
-import { Card } from "../../../../../../../definitions/pagopa/bancomat/Card";
+import { Card } from "../../../../../../../definitions/pagopa/walletv2/Card";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import AddBancomatComponent from "./AddBancomatComponent";
 import LoadAddBancomatComponent from "./LoadAddBancomatComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  Pick<React.ComponentProps<typeof BaseScreenComponent>, "contextualHelp">;
 
 type NextAction = {
   index: number;
@@ -50,7 +52,7 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
     // call onCompleted when the end of pans has been reached
     // and the adding phase has been completed (or it was skipped step)
     if (
-      currentIndex >= props.pans.length &&
+      currentIndex >= props.cards.length &&
       (currentAction.skip || props.isAddingReady)
     ) {
       props.onCompleted();
@@ -63,13 +65,13 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const handleOnContinue = () => {
-    if (currentIndex < props.pans.length) {
-      props.addBancomat(props.pans[currentIndex]);
+    if (currentIndex < props.cards.length) {
+      props.addBancomat(props.cards[currentIndex]);
     }
     nextPan(false);
   };
 
-  const currentPan = index(currentIndex, [...props.pans]);
+  const currentPan = index(currentIndex, [...props.cards]);
 
   return props.loading || props.isAddingResultError ? (
     <LoadAddBancomatComponent
@@ -81,10 +83,11 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
     <AddBancomatComponent
       pan={currentPan.value}
       profile={props.profile}
-      pansNumber={props.pans.length}
+      pansNumber={props.cards.length}
       currentIndex={currentIndex}
       handleContinue={handleOnContinue}
       handleSkip={() => nextPan(true)}
+      contextualHelp={props.contextualHelp}
     />
   ) : null; // this should not happen
 };
@@ -100,13 +103,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const remotePans = onboardingBancomatFoundPansSelector(state);
   const addingResult = onboardingBancomatAddingResultSelector(state);
+  const cards = fromNullable(getValueOrElse(remotePans, undefined))
+    .map(p => p.cards)
+    .getOrElse([]);
   return {
     isAddingReady: isReady(addingResult),
     loading: isLoading(addingResult),
     isAddingResultError: isError(addingResult),
     remotePans,
     selectedPan: onboardingBancomatChosenPanSelector(state),
-    pans: getValueOrElse(remotePans, []),
+    cards,
     profile: pot.toUndefined(profileSelector(state))
   };
 };

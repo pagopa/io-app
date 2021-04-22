@@ -7,7 +7,11 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
-import { logoutFailure, logoutSuccess } from "../actions/authentication";
+import {
+  logoutFailure,
+  logoutSuccess,
+  sessionExpired
+} from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
@@ -16,7 +20,9 @@ import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import cieReducer from "./cie";
-import contentReducer from "./content";
+import contentReducer, {
+  initialContentState as contentInitialContentState
+} from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
@@ -32,6 +38,7 @@ import paymentsReducer from "./payments";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
+import crossSessionsReducer from "./crossSessions";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
@@ -122,13 +129,19 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   installation: installationReducer,
   payments: paymentsReducer,
   content: contentReducer,
-  emailValidation: emailValidationReducer
+  emailValidation: emailValidationReducer,
+  crossSessions: crossSessionsReducer
 });
 
 export function createRootReducer(
   persistConfigs: ReadonlyArray<PersistConfig>
 ) {
   return (state: GlobalState | undefined, action: Action): GlobalState => {
+    if (isActionOf(sessionExpired, action)) {
+      persistConfigs.forEach(
+        pc => pc.key === "wallets" && purgeStoredState(pc)
+      );
+    }
     // despite logout fails the user must be logged out
     if (
       isActionOf(logoutFailure, action) ||
@@ -151,11 +164,22 @@ export function createRootReducer(
           ? ({
               // eslint-disable-next-line no-underscore-dangle
               authentication: { _persist: state.authentication._persist },
-              // data should be kept cross multiple sessions
+              // data should be kept across multiple sessions
               entities: {
+                services: state.entities.services,
+                organizations: state.entities.organizations,
                 messagesStatus: state.entities.messagesStatus,
                 paymentByRptId: state.entities.paymentByRptId,
-                calendarEvents: state.entities.calendarEvents
+                calendarEvents: state.entities.calendarEvents,
+                transactionsRead: state.entities.transactionsRead
+              },
+              // backend status must be kept
+              backendStatus: state.backendStatus,
+              crossSessions: state.crossSessions,
+              // keep servicesMetadata from content section
+              content: {
+                ...contentInitialContentState,
+                servicesMetadata: state.content.servicesMetadata
               }
             } as GlobalState)
           : state;

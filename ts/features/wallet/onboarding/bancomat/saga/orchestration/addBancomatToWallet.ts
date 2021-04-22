@@ -1,18 +1,26 @@
-import { call, put } from "redux-saga/effects";
+import { NavigationActions } from "react-navigation";
+import { call, put, select } from "redux-saga/effects";
 import {
-  ESagaResult,
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateToOnboardingBancomatChooseBank } from "../../navigation/action";
+import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
+import {
+  navigateToActivateBpdOnNewBancomat,
+  navigateToOnboardingBancomatSearchStartScreen
+} from "../../navigation/action";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../../navigation/routes";
 import {
   walletAddBancomatBack,
   walletAddBancomatCancel,
-  walletAddBancomatCompleted
+  walletAddBancomatCompleted,
+  walletAddBancomatFailure
 } from "../../store/actions";
+import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
+import ROUTES from "../../../../../../navigation/routes";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -23,24 +31,50 @@ import {
  */
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBancomatChooseBank(),
-    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.CHOOSE_BANK,
+    startScreenNavigation: navigateToOnboardingBancomatSearchStartScreen(),
+    startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
-    cancel: walletAddBancomatCancel
+    cancel: walletAddBancomatCancel,
+    failure: walletAddBancomatFailure
   });
 }
 
 /**
- * A saga that invokes the addition of a bancomat workflow {@link bancomatWorkUnit} and return
- * to the wallet after the insertion.
+ * Chain the add bancomat to wallet with "activate bpd on the new bancomat"
  */
-export function* addBancomatToWalletGeneric() {
+export function* addBancomatToWalletAndActivateBpd() {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
     bancomatWorkUnit
   );
-  if (res !== ESagaResult.Back) {
-    yield put(navigateToWalletHome());
+  if (res !== "back") {
+    // integration with the legacy "Add a payment"
+    // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
+    // This shouldn't happens if all the workflow will use the executeWorkUnit
+    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+      navigationCurrentRouteSelector
+    );
+    if (
+      currentRoute.isSome() &&
+      currentRoute.value === ROUTES.WALLET_ADD_PAYMENT_METHOD
+    ) {
+      yield put(NavigationActions.back());
+    }
+  }
+
+  if (res === "completed") {
+    // refresh wallets list
+    yield put(fetchWalletsRequest());
+    // read the new added bancomat
+    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
+      onboardingBancomatAddedPansSelector
+    );
+
+    yield call(
+      activateBpdOnNewPaymentMethods,
+      bancomatAdded,
+      navigateToActivateBpdOnNewBancomat()
+    );
   }
 }

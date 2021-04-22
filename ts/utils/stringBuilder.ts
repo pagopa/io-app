@@ -19,6 +19,23 @@ export const formatNumberAmount = (
 ): string =>
   I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
+    delimiter: I18n.t("global.localization.delimiterSeparator"),
+    separator: I18n.t("global.localization.decimalSeparator"),
+    format: displayCurrency ? "€ %n" : "%n"
+  });
+
+/**
+ * Converts in a localized value/amount removing the decimal part after the decimal separator
+ * @param amount
+ * @param displayCurrency
+ */
+export const formatNumberWithNoDigits = (
+  amount: number,
+  displayCurrency: boolean = false
+): string =>
+  I18n.toCurrency(amount, {
+    precision: 0,
+    delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator"),
     format: displayCurrency ? "€ %n" : "%n"
   });
@@ -30,3 +47,15 @@ export const formatNumberCentsToAmount = (
 
 export const buildExpirationDate = (creditCard: CreditCard): string =>
   `${creditCard.expireMonth}/${creditCard.expireYear}`;
+
+/**
+ * Format a number in a integer representation, removing all the decimal and adding the
+ * delimiter
+ * @param amount
+ */
+export const formatIntegerNumber = (amount: number): string =>
+  I18n.toNumber(amount, {
+    precision: 0,
+    delimiter: I18n.t("global.localization.delimiterSeparator"),
+    separator: I18n.t("global.localization.decimalSeparator")
+  });

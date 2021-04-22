@@ -7,6 +7,7 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
   idpSelected,
+  loadSupportToken,
   loginSuccess,
   logoutFailure,
   logoutSuccess,
@@ -16,6 +17,14 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../features/bonus/bpd/model/RemoteValue";
+import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
@@ -47,12 +56,14 @@ export type LoggedInWithoutSessionInfo = Readonly<{
   sessionToken: SessionToken;
 }>;
 
+export type SupportTokenState = RemoteValue<SupportToken, Error>;
 // The user is logged in and we also have all session info
 export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
   sessionInfo: PublicSession;
+  supportToken?: SupportTokenState;
 }>;
 
 export type LogoutRequested = Readonly<{
@@ -137,6 +148,11 @@ export const sessionInfoSelector = (state: GlobalState) =>
     ? some(state.authentication.sessionInfo)
     : none;
 
+export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.supportToken ?? remoteUndefined
+    : remoteUndefined;
+
 export const tokenFromNameSelector = (
   tokenName: TokenName
 ): ((state: GlobalState) => Option<string>) =>
@@ -167,9 +183,11 @@ export const idpSelector = ({
 }: GlobalState): Option<IdentityProvider> =>
   matchWithIdp(authentication, none, ({ idp }) => some(idp));
 
+// eslint-disable-next-line complexity
 const reducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AuthenticationState => {
   if (isActionOf(idpSelected, action) && !isLoggedIn(state)) {
     // Save the selected IDP in the state
@@ -179,6 +197,36 @@ const reducer = (
         kind: "LoggedOutWithIdp",
         idp: action.payload
       }
+    };
+  }
+
+  if (
+    isActionOf(loadSupportToken.request, action) &&
+    isLoggedInWithSessionInfo(state)
+  ) {
+    return {
+      ...state,
+      supportToken: remoteLoading
+    };
+  }
+
+  if (
+    isActionOf(loadSupportToken.success, action) &&
+    isLoggedInWithSessionInfo(state)
+  ) {
+    return {
+      ...state,
+      supportToken: remoteReady(action.payload)
+    };
+  }
+
+  if (
+    isActionOf(loadSupportToken.failure, action) &&
+    isLoggedInWithSessionInfo(state)
+  ) {
+    return {
+      ...state,
+      supportToken: remoteError(action.payload)
     };
   }
 

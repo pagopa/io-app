@@ -1,5 +1,5 @@
 import { Toast } from "native-base";
-import { Clipboard } from "react-native";
+import Clipboard from "@react-native-community/clipboard";
 
 import I18n from "../i18n";
 
@@ -8,6 +8,7 @@ import I18n from "../i18n";
  */
 export const clipboardSetStringWithFeedback = (text: string) => {
   Clipboard.setString(text);
+
   Toast.show({
     text: I18n.t("clipboard.copyFeedback")
   });

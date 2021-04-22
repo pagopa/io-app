@@ -1,5 +1,6 @@
 /**
  * Experimental type used for represent an async load from remote source with a simpler structure than the pot
+ * Use this when you need to load a remote value one shot that shouldn't be updated later
  */
 import { fromNullable } from "fp-ts/lib/Option";
 
@@ -59,3 +60,26 @@ export const remoteError = <E>(e: E): RemoteError<E> => ({
   kind: "error",
   error: e
 });
+
+export const fold = <T, E, B>(
+  rm: RemoteValue<T, E>,
+  onUndefined: () => B,
+  onLoading: () => B,
+  onReady: (value: T) => B,
+  onError: (error: E) => B
+): B => {
+  switch (rm.kind) {
+    case "undefined": {
+      return onUndefined();
+    }
+    case "loading": {
+      return onLoading();
+    }
+    case "ready": {
+      return onReady(rm.value);
+    }
+    case "error": {
+      return onError(rm.error);
+    }
+  }
+};

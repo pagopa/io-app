@@ -21,14 +21,14 @@ HEADERS = {
 }
 MAX_TIMEOUT = 20
 global_uris = set()
-SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/services.yml",
-                      "https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
-                      "https://assets.cdn.io.italia.it/contextualhelp/data.json"]
+remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
+                      "https://assets.cdn.io.italia.it/contextualhelp/data.json",
+                      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/status/backend.json"]
 
 
 class IOUrl(object):
@@ -44,40 +44,56 @@ class IOUrl(object):
         self.has_error = True
 
 
-def scan_directory(path, exts={'*.ts'}):
+def scan_directory(path, file_black_list, urls_black_list, exts={'*.ts*'}):
     """
       Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
       :param path: directory to scan
-      :param ext: file extension to retrieve
-      :return: a list of all file matching the given extension
+      :param file_black_list: a set of files to exclude from scanning
+      :param urls_black_list: a set of urls to exclude from scanning
+      :param exts: file extension to retrieve
+      :return: a dictionary containing all uris found
     """
     path = path[:-1] if path[-1] == "/" else path
     files = []
     for ext in exts:
         files.extend(list(Path(path).rglob(ext)))
-    return readFile(files)
+    to_remove = []
+    # exclude test files
+    for f in files:
+        name = basename(f)
+        if name.endswith("test.ts") or name.endswith("test.tsx") or name in file_black_list:
+            to_remove.append(f)
+    for tr in to_remove:
+        files.remove(tr)
+    return readFile(files,urls_black_list)
 
 
-def extract_uris(text):
+def extract_uris(text,urls_black_list = []):
     extractor = URLExtract()
     urls = set(extractor.find_urls(text))
-    urls = set(map(lambda r : r.replace(")",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
-    return urls
+    urls = list(map(lambda r : r.replace(")","").replace("}",""),filter(lambda r : r.startswith("http") or r.startswith("www"), urls)))
+    urls_set = set(filter(lambda f: f not in urls_black_list, urls))
+    return urls_set
 
 
-def readFile(files):
+def readFile(files, urls_black_list):
     """
     Reads the collection of files passed as parameter and returns the set of uris found inside all the files
     :param files: an iterable of file paths
-    :return: a set contain all uri found
+    :return: a dictionary containing all uris found (the key is the uri the value is the list of files where it is found)
     """
-    uri_set = set()
+    uri_map = {}
     for path in files:
         with open(path, 'r') as f:
             content = f.read()
             uris = extract_uris(content)
-            uri_set = uri_set.union(uris)
-    return uri_set
+            uris = list(filter(lambda f: f not in urls_black_list,uris))
+            for u in uris:
+                if u in uri_map:
+                    uri_map[u].append(basename(str(path)))
+                else:
+                    uri_map[u] = [basename(str(path))]
+    return uri_map
 
 
 def load_remote_content(uri):
@@ -192,13 +208,21 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
-    locales = abspath(join(dirname(__file__), "../..", "locales"))
-    all_uris = list(map(lambda u: IOUrl(u, basename(locales)), scan_directory(locales)))
+    all_uris = []
+    urls_black_list = {"https://assets.cdn.io.italia.it",
+                       "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
+                       "https://www.trusttechnologies.it/contatti/#form"}
+    locales = (abspath(join(dirname(__file__), "../..", "locales")),{})
+    ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),{"testFaker.ts","PayWebViewModal.tsx"})
+    for directory,black_list in [locales,ts_dir]:
+        files_found = scan_directory(directory,black_list,urls_black_list)
+        print("find %d files in %s" % (len(files_found.keys()),directory))
+        all_uris.extend(list(map(lambda kv: IOUrl(kv[0], "|".join(kv[1])), files_found.items())))
     print("scanning remote resources...")
     for ru in remote_content_uri:
         c = load_remote_content(ru)
         if c is not None:
-            uris = extract_uris(c)
+            uris = extract_uris(c,urls_black_list)
             all_uris.extend(list(map(lambda u: IOUrl(u, basename(ru)), uris)))
     pool = Pool(cpu_count())
     invalid_uri_processing = []
@@ -269,5 +293,8 @@ if run_test:
 
     test5 = extract_uris("bla bla http://www.google.it")
     assert len(test5) == 1
+
+    test6 = extract_uris("bla bla http://www.google.it", ["http://www.google.it"])
+    assert len(test6) == 0
 
     print("all tests passed")

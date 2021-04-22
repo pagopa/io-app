@@ -1,15 +1,22 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import {
   CreditCard,
   NullableWallet,
   PaymentManagerToken,
-  PayRequest,
-  TransactionResponse,
   Wallet,
   WalletResponse
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
+
+// this action load wallets following a backoff retry strategy
+export const fetchWalletsRequestWithExpBackoff = createStandardAction(
+  "WALLETS_LOAD_BACKOFF_REQUEST"
+)();
 
 export const fetchWalletsRequest = createStandardAction(
   "WALLETS_LOAD_REQUEST"
@@ -35,6 +42,11 @@ export const addWalletCreditCardRequest = createStandardAction(
   "WALLET_ADD_CREDITCARD_REQUEST"
 )<AddWalletCreditCardRequestPayload>();
 
+// this action follows a backoff retry strategy
+export const addWalletCreditCardWithBackoffRetryRequest = createStandardAction(
+  "WALLET_ADD_CREDITCARD_WITH_BACKOFF_REQUEST"
+)<AddWalletCreditCardRequestPayload>();
+
 export const addWalletCreditCardSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_SUCCESS"
 )<WalletResponse>();
@@ -45,26 +57,22 @@ export const addWalletNewCreditCardSuccess = createStandardAction(
   "WALLET_ADD_NEW_CREDITCARD_SUCCESS"
 )();
 
+export const addWalletNewCreditCardFailure = createStandardAction(
+  "WALLET_ADD_NEW_CREDITCARD_FAILURE"
+)();
+
+export type CreditCardFailure =
+  | {
+      kind: "GENERIC_ERROR";
+      reason: string;
+    }
+  | {
+      kind: "ALREADY_EXISTS";
+    };
+
 export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
-)<"GENERIC_ERROR" | "ALREADY_EXISTS">();
-
-type PayCreditCardVerificationRequestPayload = Readonly<{
-  payRequest: PayRequest;
-  language?: string;
-}>;
-
-export const payCreditCardVerificationRequest = createStandardAction(
-  "WALLET_ADD_CREDITCARD_VERIFICATION_REQUEST"
-)<PayCreditCardVerificationRequestPayload>();
-
-export const payCreditCardVerificationSuccess = createStandardAction(
-  "WALLET_ADD_CREDITCARD_VERIFICATION_SUCCESS"
-)<TransactionResponse>();
-
-export const payCreditCardVerificationFailure = createStandardAction(
-  "WALLET_ADD_CREDITCARD_VERIFICATION_FAILURE"
-)<Error>();
+)<CreditCardFailure>();
 
 type CreditCardCheckout3dsRequestPayload = Readonly<{
   urlCheckout3ds: string;
@@ -78,6 +86,11 @@ export const creditCardCheckout3dsRequest = createStandardAction(
 export const creditCardCheckout3dsSuccess = createStandardAction(
   "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
 )<string>();
+
+// used to accumulate all the urls browsed into the pay webview
+export const creditCardPaymentNavigationUrls = createStandardAction(
+  "CREDITCARD_PAYMENT_NAVIGATION_URLS"
+)<ReadonlyArray<string>>();
 
 type DeleteWalletRequestPayload = Readonly<{
   walletId: number;
@@ -125,12 +138,40 @@ export const runStartOrResumeAddCreditCardSaga = createStandardAction(
   "RUN_ADD_CREDIT_CARD_SAGA"
 )<StartOrResumeAddCreditCardSagaPayload>();
 
+/**
+ * user wants to pay
+ * - request: we know the idWallet, we need a fresh PM session token
+ * - success: we got a fresh PM session token
+ * - failure: we can't get a fresh PM session token
+ */
+export const refreshPMTokenWhileAddCreditCard = createAsyncAction(
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_REQUEST",
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_SUCCESS",
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_FAILURE"
+)<{ idWallet: number }, PaymentManagerToken, Error>();
+
+export type AddCreditCardWebViewEndReason = "USER_ABORT" | "EXIT_PATH";
+// event fired when the paywebview ends its challenge (used to reset pmSessionToken)
+export const addCreditCardWebViewEnd = createStandardAction(
+  "ADD_CREDIT_CARD_WEB_VIEW_END"
+)<AddCreditCardWebViewEndReason>();
+
+export const runSendAddCobadgeTrackSaga = createStandardAction(
+  "RUN_SEND_ADD_COBADGE_MESSAGE_SAGA"
+)();
+
+export const sendAddCobadgeMessage = createStandardAction(
+  "SEND_ADD_COBADGE_MESSAGE"
+)<boolean>();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
   | ActionType<typeof fetchWalletsFailure>
   | ActionType<typeof deleteWalletRequest>
   | ActionType<typeof deleteWalletSuccess>
+  | ActionType<typeof addCreditCardWebViewEnd>
+  | ActionType<typeof refreshPMTokenWhileAddCreditCard>
   | ActionType<typeof deleteWalletFailure>
   | ActionType<typeof setFavouriteWalletRequest>
   | ActionType<typeof setFavouriteWalletSuccess>
@@ -138,12 +179,15 @@ export type WalletsActions =
   | ActionType<typeof runStartOrResumeAddCreditCardSaga>
   | ActionType<typeof addWalletCreditCardInit>
   | ActionType<typeof addWalletCreditCardRequest>
+  | ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
   | ActionType<typeof addWalletCreditCardSuccess>
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
-  | ActionType<typeof payCreditCardVerificationRequest>
-  | ActionType<typeof payCreditCardVerificationSuccess>
-  | ActionType<typeof payCreditCardVerificationFailure>
+  | ActionType<typeof addWalletNewCreditCardFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
   | ActionType<typeof creditCardCheckout3dsSuccess>
-  | ActionType<typeof setWalletSessionEnabled>;
+  | ActionType<typeof setWalletSessionEnabled>
+  | ActionType<typeof creditCardPaymentNavigationUrls>
+  | ActionType<typeof fetchWalletsRequestWithExpBackoff>
+  | ActionType<typeof runSendAddCobadgeTrackSaga>
+  | ActionType<typeof sendAddCobadgeMessage>;

@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Body } from "../../components/core/typography/Body";
+import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ShowroomSection } from "./ShowroomSection";
 
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
 export const OthersShowroom = () => (
   <ShowroomSection title={"Others"}>
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+      <Label>{"<InfoBox />"}</Label>
       <InfoBox>
         <Body>
           Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod

@@ -1,11 +1,16 @@
 import { createStackNavigator } from "react-navigation";
+import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
+import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
+import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
 import DeclarationScreen from "../screens/onboarding/declaration/DeclarationScreen";
-import { EnrollPaymentMethodsScreen } from "../screens/onboarding/EnrollPaymentMethodsScreen";
+import EnrollPaymentMethodsScreen from "../screens/onboarding/EnrollPaymentMethodsScreen";
+import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethodsScreen";
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
+import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -28,8 +33,23 @@ const BpdNavigator = createStackNavigator(
     [BPD_ROUTES.ONBOARDING.NO_PAYMENT_METHODS]: {
       screen: NoPaymentMethodsAvailableScreen
     },
+    [BPD_ROUTES.ONBOARDING.ERROR_PAYMENT_METHODS]: {
+      screen: ErrorPaymentMethodsScreen
+    },
+    [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
+      screen: IbanCTAEditScreen
+    },
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
+    },
+    [BPD_ROUTES.DETAILS]: {
+      screen: BpdDetailsScreen
+    },
+    [BPD_ROUTES.TRANSACTIONS]: {
+      screen: BpdTransactionsScreen
+    },
+    [BPD_ROUTES.CTA_START_BPD]: {
+      screen: CtaLandingScreen
     }
   },
   {
