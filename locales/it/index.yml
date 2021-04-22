@@ -63,7 +63,12 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
-    date_format: DD MMMM YYYY
+    inputLabel: Intestazione
+    description: Descrizione
+    dateField: Due cifre per il mese, due per l'anno
+    threeDigits: 3 cifre	
+    fourDigits: 4 cifre	
+    dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     active: Stato attivo
