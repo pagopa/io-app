@@ -24,11 +24,15 @@ import paymentInstrumentReducer, {
   bpdUpsertIbanSelector,
   PayoffInstrumentType
 } from "./payoffInstrument";
+import technicalAccountReducer, {
+  bpdTechnicalAccountSelector
+} from "./technicalAccount";
 
 export type BpdActivation = {
   enabled: pot.Pot<boolean, Error>;
   payoffInstr: PayoffInstrumentType;
   unsubscription: RemoteValue<true, Error>;
+  technicalAccount: RemoteValue<string | undefined, Error>;
 };
 
 /**
@@ -88,7 +92,8 @@ const unsubscriptionReducer = (
 const bpdActivationReducer = combineReducers<BpdActivation, Action>({
   enabled: enabledReducer,
   payoffInstr: paymentInstrumentReducer,
-  unsubscription: unsubscriptionReducer
+  unsubscription: unsubscriptionReducer,
+  technicalAccount: technicalAccountReducer
 });
 
 /**
@@ -130,11 +135,12 @@ export const bpdUnsubscriptionSelector = createSelector(
  *
  */
 export const bpdIbanPrefillSelector = createSelector(
-  [bpdIbanSelector, bpdUpsertIbanSelector],
-  (iban, upsertIban): string =>
-    fromNullable(upsertIban.value as string).getOrElse(
-      fromNullable(getValue(iban)).getOrElse("")
-    )
+  [bpdIbanSelector, bpdUpsertIbanSelector, bpdTechnicalAccountSelector],
+  (iban, upsertIban, technicalAccount): string =>
+    fromNullable(upsertIban.value as string)
+      .alt(fromNullable(getValue(technicalAccount)).map(_ => ""))
+      .alt(fromNullable(getValue(iban)))
+      .getOrElse("")
 );
 
 export default bpdActivationReducer;

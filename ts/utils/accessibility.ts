@@ -59,7 +59,7 @@ export const isScreenReaderEnabled = async (): Promise<boolean> => {
     () => AccessibilityInfo.isScreenReaderEnabled(),
     errorMsg => new Error(String(errorMsg))
   ).run();
-  return maybeReaderEnabled.getOrElse(false);
+  return Promise.resolve(true);
 };
 
 // return the state of the screen reader when the caller component is mounted

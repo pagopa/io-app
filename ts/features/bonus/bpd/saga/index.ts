@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix } from "../../../../config";
+import { bpdApiUrlPrefix, bpdTechnicalIban } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -17,7 +17,13 @@ import {
 } from "../store/actions/paymentMethods";
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import { bpdTransactionsLoad } from "../store/actions/transactions";
-import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import {
+  deleteCitizen,
+  getCitizen,
+  getCitizenV2,
+  putEnrollCitizen,
+  putEnrollCitizenV2
+} from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
@@ -37,15 +43,16 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // load citizen details
   yield takeLatest(
     bpdLoadActivationStatus.request,
-    getCitizen,
-    bpdBackendClient.find
+    bpdTechnicalIban ? getCitizenV2 : getCitizen,
+    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
   );
-
   // enroll citizen to the bpd
   yield takeLatest(
     bpdEnrollUserToProgram.request,
-    putEnrollCitizen,
-    bpdBackendClient.enrollCitizenIO
+    bpdTechnicalIban ? putEnrollCitizenV2 : putEnrollCitizen,
+    bpdTechnicalIban
+      ? bpdBackendClient.enrollCitizenV2IO
+      : bpdBackendClient.enrollCitizenIO
   );
 
   // delete citizen from the bpd

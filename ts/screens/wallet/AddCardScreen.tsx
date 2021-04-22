@@ -13,7 +13,15 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { isNone, Option, fromPredicate, isSome } from "fp-ts/lib/Option";
+import {
+  isNone,
+  Option,
+  fromPredicate,
+  isSome,
+  some,
+  none,
+  fromEither
+} from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -33,13 +41,14 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import {
   isValidPan,
-  isValidExpirationDate,
   isValidSecurityCode,
   CreditCardState,
   getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
   CreditCardStateKeys,
-  isValidCardHolder
+  isValidCardHolder,
+  CreditCardExpirationYear,
+  CreditCardExpirationMonth
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -53,6 +62,8 @@ import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
+import { isExpired } from "../../utils/dates";
+import { isTestEnv } from "../../utils/environment";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { Label } from "../../components/core/typography/Label";
@@ -145,6 +156,32 @@ const primaryButtonPropsFromState = (
   );
 };
 
+// return some(true) if the date is invalid or expired
+// none if it can't be evaluated
+const isCreditCardDateExpiredOrInvalid = (
+  expireDate: Option<string>
+): Option<boolean> =>
+  expireDate
+    .chain(date => {
+      // split the date in two parts: month, year
+      const splitted = date.split("/");
+      if (splitted.length !== 2) {
+        return none;
+      }
+
+      return some([splitted[0], splitted[1]]);
+    })
+    .chain(my => {
+      // if the input is not in the required format mm/yy
+      if (
+        !CreditCardExpirationMonth.is(my[0]) ||
+        !CreditCardExpirationYear.is(my[1])
+      ) {
+        return some(true);
+      }
+      return fromEither(isExpired(my[0], my[1]));
+    });
+
 const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
@@ -181,6 +218,10 @@ const AddCardScreen: React.FC<Props> = props => {
       [key]: fromPredicate((value: string) => value.length > 0)(value)
     });
   };
+
+  const maybeCreditcardValidOrExpired = isCreditCardDateExpiredOrInvalid(
+    creditCard.expirationDate
+  ).map(v => !v);
 
   const secondaryButtonProps = {
     block: true,
@@ -280,11 +321,11 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={isValidExpirationDate(creditCard.expirationDate)}
                 accessibilityLabel={I18n.t(
                   "wallet.dummyCard.labels.expirationDate"
                 )}
                 accessibilityHint={I18n.t("global.accessibility.date_field")}
+                isValid={maybeCreditcardValidOrExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
                   placeholder: placeholders.placeholderDate,
@@ -390,3 +431,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
+// keep encapsulation strong
+export const testableAddCardScreen = isTestEnv
+  ? { isCreditCardDateExpiredOrInvalid }
+  : undefined;

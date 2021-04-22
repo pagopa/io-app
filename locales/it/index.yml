@@ -1059,11 +1059,14 @@ wallet:
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
-    title: Scegli il gestore
-    infoBold: Scegli il soggetto
-    info2: (PSP) che dovrà gestire la tua transazione.
-    link: Per saperne di più
+    headerTitle: "Seleziona un gestore"
+    title: Con quale gestore vuoi pagare?
+    info: Ogni gestore propone un costo di transazione.
+    info2: In questa lista trovi tutti i gestori
+    info2Bold: compatibili con il tuo metodo, anche se non sei loro cliente.
+    provider: Gestore
     maxFee: Costo di transazione
+    loadingPsps: Caricamento gestori in corso...
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
@@ -1370,7 +1373,7 @@ saveCard:
 cardComponent:
   validUntil: Valida fino al
   expiresOn: Scade il
-  expiredCard: CARTA SCADUTA IL
+  expiredCard: Carta scaduta il
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
@@ -1677,7 +1680,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8.00 alle 20.00; sabato, domenica e giorni festivi dalle ore 8.00 alle 13.00
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale.
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?
@@ -2054,7 +2057,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [guida]({{regulationLink}}) e l'[informativa sul trattamento dei dati personali]({{tosUrl}}) del servizio."
+  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})"
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -2291,6 +2294,8 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    accessibility:
+      code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: Visualizza esercenti

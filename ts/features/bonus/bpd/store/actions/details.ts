@@ -8,6 +8,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 export type BpdActivationPayload = {
   enabled: boolean;
   payoffInstr: string | undefined;
+  technicalAccount?: string;
 };
 
 /**
