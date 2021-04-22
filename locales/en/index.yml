@@ -63,7 +63,12 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
-    date_format: MMMM Do YYYY
+    inputLabel: Header
+    description: Description
+    dateField: 2 digits for the month, 2 for the year
+    threeDigits: 3 digits	
+    fourDigits: 4 digits
+    dateFormat: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     active: State active
