@@ -2,7 +2,7 @@
  * This screen presents a summary on the credit card after the user
  * inserted the data required to save a new card
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
@@ -60,6 +60,7 @@ import {
   isLoading as isRemoteLoading,
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
+import { getLookUpId, pmLookupHeaderKey } from "../../utils/pmLookUpId";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
@@ -288,7 +289,14 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         {payWebViewPayload && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
-            formData={payWebViewPayload.formData}
+            formData={{
+              ...payWebViewPayload.formData,
+              ...fromNullable(getLookUpId()).fold<
+                Record<string, string | number>
+              >({}, id => ({
+                [pmLookupHeaderKey]: id
+              }))
+            }}
             finishPathName={webViewExitPathName}
             onFinish={(maybeCode, navigationUrls) => {
               this.props.dispatchCreditCardPaymentNavigationUrls(
