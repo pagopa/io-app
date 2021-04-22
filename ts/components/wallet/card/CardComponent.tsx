@@ -18,9 +18,11 @@ import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
-import { FOUR_UNICODE_CIRCLES, isExpiredCard } from "../../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
+import { H5 } from "../../core/typography/H5";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -132,7 +134,7 @@ export default class CardComponent extends React.Component<Props> {
           {!hideFavoriteIcon && isFavorite !== undefined && (
             <IconFont
               name={
-                pot.getOrElseWithUpdating(isFavorite, false) === true
+                pot.getOrElseWithUpdating(isFavorite, false)
                   ? "io-filled-star"
                   : "io-empty-star"
               }
@@ -160,7 +162,7 @@ export default class CardComponent extends React.Component<Props> {
                   <MenuOption onSelect={this.handleFavoritePress}>
                     <Text bold={true} style={styles.blueText}>
                       {I18n.t(
-                        pot.getOrElseWithUpdating(isFavorite, false) === true
+                        pot.getOrElseWithUpdating(isFavorite, false)
                           ? "cardComponent.unsetFavorite"
                           : "cardComponent.setFavorite"
                       )}
@@ -207,23 +209,15 @@ export default class CardComponent extends React.Component<Props> {
     };
 
     const expirationDate = buildExpirationDate(creditCard);
-    const isExpired = isExpiredCard(creditCard);
+    const isCardExpired = this.props.wallet.paymentMethod
+      ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
+      : false;
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <Text
-            style={[
-              CreditCardStyles.textStyle,
-              !isExpired
-                ? CreditCardStyles.smallTextStyle
-                : CreditCardStyles.expiredTextStyle
-            ]}
-          >
-            {!isExpired
-              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
-              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
-          </Text>
-
+          <H5 color={isCardExpired ? "red" : "bluegrey"} weight={"SemiBold"}>
+            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+          </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
             {creditCard.holder.toUpperCase()}
           </Text>
