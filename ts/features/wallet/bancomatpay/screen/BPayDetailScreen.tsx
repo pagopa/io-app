@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -12,7 +11,6 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
@@ -60,15 +58,17 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const bPay: BPayPaymentMethod = props.navigation.getParam("bPay");
 
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: bPayImage,
     caption: I18n.t("wallet.methods.bancomatPay.name")
   });
-  return props.isLoadingDelete ? (
+  return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={props.isLoadingDelete}
+      isLoading={isLoadingDelete}
       loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
     />
   ) : (
@@ -95,7 +95,12 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bPay.idWallet))}
+          onPress={() =>
+            present(() => {
+              props.deleteWallet(bPay.idWallet);
+              setIsLoadingDelete(true);
+            })
+          }
         />
       </View>
       <View spacer={true} extralarge={true} />
@@ -119,8 +124,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  isLoadingDelete: pot.isLoading(getWalletsById(state))
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BPayDetailScreen);

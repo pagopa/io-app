@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Button, View } from "native-base";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
@@ -7,7 +6,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { PrivativePaymentMethod } from "../../../../types/pagopa";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -58,6 +56,8 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const privative: PrivativePaymentMethod = props.navigation.getParam(
     "privative"
   );
@@ -66,9 +66,9 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
     caption: privative.caption
   });
 
-  return props.isLoadingDelete ? (
+  return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={props.isLoadingDelete}
+      isLoading={isLoadingDelete}
       loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
     />
   ) : (
@@ -95,7 +95,12 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(privative.idWallet))}
+          onPress={() =>
+            present(() => {
+              props.deleteWallet(privative.idWallet);
+              setIsLoadingDelete(true);
+            })
+          }
         />
       </View>
       <View spacer={true} extralarge={true} />
@@ -119,9 +124,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  isLoadingDelete: pot.isLoading(getWalletsById(state))
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

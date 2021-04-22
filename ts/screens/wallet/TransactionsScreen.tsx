@@ -27,7 +27,6 @@ import { GlobalState } from "../../store/reducers/types";
 import {
   favoriteWalletIdSelector,
   getFavoriteWalletId,
-  getWalletsById,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -129,6 +128,8 @@ const headerContent = (
 );
 
 const TransactionsScreen: React.FC<Props> = (props: Props) => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
   const isFavorite = pot.map(
@@ -164,9 +165,9 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     </ButtonDefaultOpacity>
   );
 
-  return props.isLoadingDelete ? (
+  return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={props.isLoadingDelete}
+      isLoading={isLoadingDelete}
       loadingCaption={I18n.t("cardComponent.deleteLoading")}
     />
   ) : (
@@ -209,9 +210,12 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
             <DeletePaymentMethodButton
-              onPress={() =>
-                present(() => props.deleteWallet(selectedWallet.idWallet))
-              }
+              onPress={() => {
+                present(() => {
+                  props.deleteWallet(selectedWallet.idWallet);
+                  setIsLoadingDelete(true);
+                });
+              }}
             />
           </View>
           <EdgeBorderComponent />
@@ -224,8 +228,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
-  paymentMethods: paymentMethodsSelector(state),
-  isLoadingDelete: pot.isLoading(getWalletsById(state))
+  paymentMethods: paymentMethodsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

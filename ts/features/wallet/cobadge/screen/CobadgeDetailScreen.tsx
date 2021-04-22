@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
@@ -9,7 +8,6 @@ import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
@@ -61,15 +59,17 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
  * @constructor
  */
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
   const brandLogo = getCardIconFromBrandLogo(cobadge.info);
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: brandLogo,
     caption: cobadge.caption
   });
-  return props.isLoadingDelete ? (
+  return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={props.isLoadingDelete}
+      isLoading={isLoadingDelete}
       loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
     />
   ) : (
@@ -92,7 +92,12 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(cobadge.idWallet))}
+          onPress={() =>
+            present(() => {
+              props.deleteWallet(cobadge.idWallet);
+              setIsLoadingDelete(true);
+            })
+          }
         />
       </View>
       <View spacer={true} extralarge={true} />
@@ -115,9 +120,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  isLoadingDelete: pot.isLoading(getWalletsById(state))
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,
