@@ -9,7 +9,7 @@ import { MilestoneResource } from "../../../../../../definitions/bpd/citizen_v2/
 import { bpdTransactionsPaging } from "../../../../../config";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { getError } from "../../../../../utils/errors";
+import { getError, getNetworkErrorMessage } from "../../../../../utils/errors";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { AwardPeriodId } from "../../store/actions/periods";
 import {
@@ -142,7 +142,7 @@ export function* bpdLoadRakingV2(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
-      reason: getError(e).message
+      reason: getNetworkErrorMessage(e)
     });
     return left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
   }
