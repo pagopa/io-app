@@ -20,7 +20,9 @@ import LoadTransactions from "../LoadTransactions";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const AtLeastOneTransactionRouter = (props: Props) => {
+const AtLeastOneTransactionRouter = (
+  props: Props
+): React.ReactElement | null => {
   useEffect(() => {
     if (props.selectedPeriod) {
       props.loadRequiredData(props.selectedPeriod.awardPeriodId);
@@ -51,9 +53,7 @@ const AtLeastOneTransactionRouter = (props: Props) => {
  * @param props
  * @constructor
  */
-const BpdTransactionsRouterScreen = (
-  props: Props
-): React.ReactElement | null => {
+const BpdTransactionsRouterScreen = (props: Props): React.ReactElement => {
   const atLeastOneTransaction =
     (props.selectedPeriod?.amount.transactionNumber ?? 0) > 0;
 

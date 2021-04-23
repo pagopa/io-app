@@ -2,7 +2,7 @@ import { createStackNavigator } from "react-navigation";
 import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
-import BpdTransactionsScreenV2 from "../screens/details/transaction/v2/BpdTransactionsScreenV2";
+import BpdTransactionsRouterScreen from "../screens/details/transaction/v2/BpdTransactionsRouterScreen";
 import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
@@ -49,7 +49,7 @@ const BpdNavigator = createStackNavigator(
     },
     [BPD_ROUTES.TRANSACTIONS]: {
       screen: bpdTransactionsPaging
-        ? BpdTransactionsScreenV2
+        ? BpdTransactionsRouterScreen
         : BpdTransactionsScreen
     },
     [BPD_ROUTES.CTA_START_BPD]: {
