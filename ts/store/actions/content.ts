@@ -2,7 +2,6 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { ServiceMetadataState } from "../reducers/content";
 
@@ -39,12 +38,6 @@ export const contentMunicipalityLoad = createAsyncAction(
   MunicipalityFailure
 >();
 
-export const loadVisibleServicesByScope = createAsyncAction(
-  "LOAD_VISIBLE_SERVICES_BY_SCOPE_REQUEST",
-  "LOAD_VISIBLE_SERVICES_BY_SCOPE_SUCCESS",
-  "LOAD_VISIBLE_SERVICES_BY_SCOPE_FAILURE"
-)<void, ServicesByScope, Error>();
-
 export const loadContextualHelpData = createAsyncAction(
   "LOAD_CONTEXTUAL_HELP_TEXT_DATA_REQUEST",
   "LOAD_CONTEXTUAL_HELP_TEXT_DATA_SUCCESS",
@@ -54,5 +47,4 @@ export const loadContextualHelpData = createAsyncAction(
 export type ContentActions =
   | ActionType<typeof loadServiceMetadata>
   | ActionType<typeof contentMunicipalityLoad>
-  | ActionType<typeof loadContextualHelpData>
-  | ActionType<typeof loadVisibleServicesByScope>;
+  | ActionType<typeof loadContextualHelpData>;

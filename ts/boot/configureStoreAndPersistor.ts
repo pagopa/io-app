@@ -215,7 +215,6 @@ const migrations: MigrationManifest = {
     const newContent: ContentState = {
       servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
-      servicesByScope: content.servicesByScope,
       contextualHelp: pot.none
     };
     return {
