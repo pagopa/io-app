@@ -427,7 +427,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         >
           {isValidatingTask
             ? I18n.t("identification.titleValidation")
-            : `${I18n.t("identification.title")} ${this.props.profileName}!`}
+            : this.props.profileName
+            ? `${I18n.t("identification.titleProfileName", {
+                profileName: this.props.profileName
+              })}`
+            : I18n.t("identification.title")}
         </Text>
         <Text
           alignCenter={true}
