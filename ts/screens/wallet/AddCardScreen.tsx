@@ -61,12 +61,14 @@ import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
 import { isExpired } from "../../utils/dates";
 import { isTestEnv } from "../../utils/environment";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { isIos } from "../../utils/platform";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -142,7 +144,8 @@ const primaryButtonPropsFromState = (
   return card.fold<BlockButtonProps>(
     {
       ...baseButtonProps,
-      disabled: true
+      disabled: true,
+      accessibilityRole: "button"
     },
     c => ({
       ...baseButtonProps,
@@ -228,6 +231,23 @@ const AddCardScreen: React.FC<Props> = props => {
     title: I18n.t("global.buttons.back")
   };
 
+  const isScreenReaderEnabled = useScreenReaderEnabled();
+  const placeholders =
+    // TODO accessibility improvements work only for Android
+    // see https://www.pivotaltracker.com/story/show/177270155/comments/223678495
+    !isScreenReaderEnabled || isIos
+      ? {
+          placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
+          placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
+          placeholderDate: I18n.t("wallet.dummyCard.values.expirationDate"),
+          placeholderSecureCode: I18n.t(
+            detectedBrand.cvvLength === 4
+              ? "wallet.dummyCard.values.securityCode4D"
+              : "wallet.dummyCard.values.securityCode"
+          )
+        }
+      : {};
+
   return (
     <BaseScreenComponent
       shouldAskForScreenshotWithInitialValue={false}
@@ -256,9 +276,10 @@ const AddCardScreen: React.FC<Props> = props => {
                 ? undefined
                 : isValidCardHolder(creditCard.holder)
             }
+            accessibilityHint={I18n.t("wallet.dummyCard.labels.holder.label")}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              placeholder: placeholders.placeholderHolder,
               autoCapitalize: "words",
               keyboardType: "default",
               returnKeyType: "done",
@@ -275,9 +296,10 @@ const AddCardScreen: React.FC<Props> = props => {
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
             isValid={isValidPan(creditCard.pan)}
+            accessibilityHint={I18n.t("wallet.dummyCard.labels.pan")}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.pan"),
+              placeholder: placeholders.placeholderCard,
               keyboardType: "numeric",
               returnKeyType: "done",
               maxLength: 23,
@@ -303,10 +325,14 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
+                accessibilityLabel={I18n.t(
+                  "wallet.dummyCard.labels.expirationDate"
+                )}
+                accessibilityHint={I18n.t("global.accessibility.dateField")}
                 isValid={maybeCreditcardValidOrExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
-                  placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
+                  placeholder: placeholders.placeholderDate,
                   keyboardType: "numeric",
                   returnKeyType: "done",
                   type: "custom",
@@ -328,13 +354,19 @@ const AddCardScreen: React.FC<Props> = props => {
                 )}
                 icon="io-lucchetto"
                 isValid={isValidSecurityCode(creditCard.securityCode)}
+                accessibilityLabel={I18n.t(
+                  detectedBrand.cvvLength === 4
+                    ? "wallet.dummyCard.labels.securityCode4D"
+                    : "wallet.dummyCard.labels.securityCode"
+                )}
+                accessibilityHint={I18n.t(
+                  detectedBrand.cvvLength === 4
+                    ? "global.accessibility.fourDigits"
+                    : "global.accessibility.threeDigits"
+                )}
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
-                  placeholder: I18n.t(
-                    detectedBrand.cvvLength === 4
-                      ? "wallet.dummyCard.values.securityCode4D"
-                      : "wallet.dummyCard.values.securityCode"
-                  ),
+                  placeholder: placeholders.placeholderSecureCode,
                   returnKeyType: "done",
                   maxLength: 4,
                   type: "custom",
@@ -352,12 +384,22 @@ const AddCardScreen: React.FC<Props> = props => {
           {!isSome(inPayment) && (
             <>
               <View spacer={true} />
-              <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+              <Link
+                accessibilityRole="link"
+                accessibilityLabel={I18n.t("wallet.missingDataCTA")}
+                onPress={present}
+              >
+                {I18n.t("wallet.missingDataCTA")}
+              </Link>
             </>
           )}
           <View spacer />
 
-          <Link onPress={openSupportedCardsPage}>
+          <Link
+            accessibilityRole="link"
+            accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
+            onPress={openSupportedCardsPage}
+          >
             {I18n.t("wallet.openAcceptedCardsPageCTA")}
           </Link>
         </Content>
