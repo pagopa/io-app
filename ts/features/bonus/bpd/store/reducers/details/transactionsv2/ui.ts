@@ -1,14 +1,19 @@
-import { getType } from "typesafe-actions";
+import { fromNullable, none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { Action } from "../../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../../store/helpers/indexer";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
-  bpdTransactionsLoadPage
+  bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData
 } from "../../../actions/transactions";
+import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 /**
  * The type that represents a section item that will be rendered with a SectionList.
@@ -25,6 +30,7 @@ type BpdTransactionsSectionItem = {
 export type BpdTransactionsUiState = {
   nextCursor: number | null;
   awardPeriodId: AwardPeriodId | null;
+  requiredDataLoaded: pot.Pot<true, Error>;
   sectionItems: pot.Pot<IndexedById<BpdTransactionsSectionItem>, Error>;
 };
 
@@ -71,6 +77,7 @@ const customizer = (
 const initState: BpdTransactionsUiState = {
   awardPeriodId: null,
   sectionItems: pot.none,
+  requiredDataLoaded: pot.none,
   nextCursor: null
 };
 
@@ -81,8 +88,8 @@ export const bpdTransactionsUiReducer = (
   switch (action.type) {
     case getType(bpdTransactionsLoadPage.request):
       return {
+        ...state,
         awardPeriodId: action.payload.awardPeriodId,
-        nextCursor: state.nextCursor,
         sectionItems:
           action.payload.awardPeriodId !== state.awardPeriodId
             ? pot.noneLoading
@@ -95,6 +102,7 @@ export const bpdTransactionsUiReducer = (
       );
 
       return {
+        ...state,
         awardPeriodId: action.payload.awardPeriodId,
         nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
@@ -103,11 +111,58 @@ export const bpdTransactionsUiReducer = (
       };
     case getType(bpdTransactionsLoadPage.failure):
       return {
+        ...state,
         awardPeriodId: action.payload.awardPeriodId,
         nextCursor: state.nextCursor,
         sectionItems: pot.toError(state.sectionItems, action.payload.error)
+      };
+
+    case getType(bpdTransactionsLoadRequiredData.request):
+      return {
+        // If the request data are from a different period, clean the state
+        ...(action.payload !== state.awardPeriodId ? initState : state),
+        requiredDataLoaded: pot.toLoading(state.requiredDataLoaded)
+      };
+    case getType(bpdTransactionsLoadRequiredData.success):
+      return {
+        ...state,
+        requiredDataLoaded: pot.some(true)
+      };
+    case getType(bpdTransactionsLoadRequiredData.failure):
+      return {
+        ...state,
+        requiredDataLoaded: pot.toError(
+          state.requiredDataLoaded,
+          action.payload.error
+        )
       };
   }
 
   return state;
 };
+
+/**
+ * Return the remote state for all the required data to load the transaction screen.
+ * Return always pot.none if the selectedPeriod is different from the local currentPeriod (a different period is chosen, need to reload)
+ */
+export const bpdTransactionsRequiredDataLoadState = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.requiredDataLoaded,
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.awardPeriodId,
+    bpdSelectedPeriodSelector
+  ],
+  (
+    potRequiredData,
+    currentPeriodId,
+    maybeSelectedPeriod
+  ): pot.Pot<true, Error> =>
+    fromNullable(maybeSelectedPeriod)
+      .chain(selectedPeriod =>
+        selectedPeriod.awardPeriodId === currentPeriodId
+          ? some(potRequiredData)
+          : none
+      )
+      .getOrElse(pot.none)
+);

@@ -206,11 +206,11 @@ export const bpdTransactionsPivotForSelectedPeriodSelector = createSelector(
   ],
   (
     bpdTransactionsEntity,
-    selectedPeriod
+    maybeSelectedPeriod
   ): pot.Pot<BpdPivotTransaction | null, Error> =>
-    fromNullable(selectedPeriod)
-      .chain(periodId =>
-        fromNullable(bpdTransactionsEntity[periodId.awardPeriodId])
+    fromNullable(maybeSelectedPeriod)
+      .chain(selectedPeriod =>
+        fromNullable(bpdTransactionsEntity[selectedPeriod.awardPeriodId])
       )
       .map(x => x.pivot)
       .getOrElse(pot.none)
