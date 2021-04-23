@@ -1,6 +1,9 @@
 import { createStackNavigator } from "react-navigation";
+import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
+import BpdTransactionsScreenV2 from "../screens/details/transaction/v2/BpdTransactionsScreenV2";
+import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
@@ -10,7 +13,6 @@ import ErrorPaymentMethodsScreen from "../screens/onboarding/ErrorPaymentMethods
 import LoadActivateBpdScreen from "../screens/onboarding/LoadActivateBpdScreen";
 import LoadBpdActivationStatus from "../screens/onboarding/LoadBpdActivationStatus";
 import NoPaymentMethodsAvailableScreen from "../screens/onboarding/NoPaymentMethodsAvailableScreen";
-import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import BPD_ROUTES from "./routes";
 
 const BpdNavigator = createStackNavigator(
@@ -46,7 +48,9 @@ const BpdNavigator = createStackNavigator(
       screen: BpdDetailsScreen
     },
     [BPD_ROUTES.TRANSACTIONS]: {
-      screen: BpdTransactionsScreen
+      screen: bpdTransactionsPaging
+        ? BpdTransactionsScreenV2
+        : BpdTransactionsScreen
     },
     [BPD_ROUTES.CTA_START_BPD]: {
       screen: CtaLandingScreen

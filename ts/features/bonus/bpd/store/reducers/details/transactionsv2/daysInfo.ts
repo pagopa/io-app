@@ -1,12 +1,17 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../../store/actions/types";
 import {
   IndexedById,
+  toArray,
   toIndexed
 } from "../../../../../../../store/helpers/indexer";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../actions/periods";
 import { bpdTransactionsLoadCountByDay } from "../../../actions/transactions";
+import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 export type BpdTransactionsDayInfo = {
   trxDate: Date;
@@ -81,3 +86,26 @@ export const bpdTransactionsDaysInfoReducer = (
   }
   return state;
 };
+
+/**
+ * Return the pot.Pot<ReadonlyArray<BpdTransactionsDayInfo>, Error>, for the selected period
+ */
+export const bpdDaysInfoForSelectedPeriodSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.daysInfoByPeriod,
+    bpdSelectedPeriodSelector
+  ],
+  (
+    daysInfoByPeriod,
+    selectedPeriod
+  ): pot.Pot<ReadonlyArray<BpdTransactionsDayInfo>, Error> =>
+    pot.map(
+      fromNullable(selectedPeriod)
+        .chain(periodId =>
+          fromNullable(daysInfoByPeriod[periodId.awardPeriodId]?.byId)
+        )
+        .getOrElse(pot.none),
+      byId => toArray(byId)
+    )
+);

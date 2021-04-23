@@ -24,7 +24,8 @@ import {
   bpdTransactionsLoad,
   bpdTransactionsLoadCountByDay,
   bpdTransactionsLoadMilestone,
-  bpdTransactionsLoadPage
+  bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
 import {
   deleteCitizen,
@@ -43,6 +44,7 @@ import {
 import { handleLoadMilestone } from "./networking/ranking";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleCountByDay } from "./networking/winning-transactions/countByDay";
+import { handleTransactionsLoadRequiredData } from "./networking/winning-transactions/loadTransactionsRequiredData";
 import { handleTransactionsPage } from "./networking/winning-transactions/transactionsPage";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
@@ -133,6 +135,12 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
       bpdTransactionsLoadPage.request,
       handleTransactionsPage,
       bpdBackendClient.winningTransactionsV2
+    );
+
+    // Load a transactions page for a period
+    yield takeEvery(
+      bpdTransactionsLoadRequiredData.request,
+      handleTransactionsLoadRequiredData
     );
   }
 

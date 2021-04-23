@@ -54,7 +54,7 @@ export type BpdTransactions = WithAwardPeriodId & {
   results: ReadonlyArray<BpdTransaction>;
 };
 
-type BpdTransactionsError = WithAwardPeriodId & {
+export type BpdTransactionsError = WithAwardPeriodId & {
   error: Error;
 };
 
@@ -114,8 +114,18 @@ export const bpdTransactionsLoadMilestone = createAsyncAction(
   "BPD_TRANSACTIONS_MILESTONE_FAILURE"
 )<AwardPeriodId, TrxMilestonePayload, BpdTransactionsError>();
 
+/**
+ * Load the required data to render the transaction screen
+ */
+export const bpdTransactionsLoadRequiredData = createAsyncAction(
+  "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_REQUEST",
+  "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_SUCCESS",
+  "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_FAILURE"
+)<AwardPeriodId, void, BpdTransactionsError>();
+
 export type BpdTransactionsAction =
   | ActionType<typeof bpdTransactionsLoad>
   | ActionType<typeof bpdTransactionsLoadPage>
   | ActionType<typeof bpdTransactionsLoadCountByDay>
-  | ActionType<typeof bpdTransactionsLoadMilestone>;
+  | ActionType<typeof bpdTransactionsLoadMilestone>
+  | ActionType<typeof bpdTransactionsLoadRequiredData>;

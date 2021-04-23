@@ -1,4 +1,6 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { WinningTransactionMilestoneResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionMilestoneResource";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
@@ -8,6 +10,7 @@ import {
   toArray,
   toIndexed
 } from "../../../../../../../store/helpers/indexer";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
@@ -15,6 +18,7 @@ import {
   bpdTransactionsLoadPage,
   BpdTransactionV2
 } from "../../../actions/transactions";
+import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 export type BpdPivotTransaction = {
   idTrx: BpdTransactionId;
@@ -190,3 +194,24 @@ export const bpdTransactionsEntityReducer = (
 
   return state;
 };
+
+/**
+ * Return the pot.Pot<BpdPivotTransaction | null, Error>,  for the selected period
+ */
+export const bpdTransactionsPivotForSelectedPeriodSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.entitiesByPeriod,
+    bpdSelectedPeriodSelector
+  ],
+  (
+    bpdTransactionsEntity,
+    selectedPeriod
+  ): pot.Pot<BpdPivotTransaction | null, Error> =>
+    fromNullable(selectedPeriod)
+      .chain(periodId =>
+        fromNullable(bpdTransactionsEntity[periodId.awardPeriodId])
+      )
+      .map(x => x.pivot)
+      .getOrElse(pot.none)
+);
