@@ -1597,9 +1597,9 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Sblocca l'app
+  title: Ciao
   titleValidation: Conferma l'operazione
-  subtitleCode: inserisci il codice di sblocco
+  subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
