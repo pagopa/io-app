@@ -22,11 +22,11 @@ import { OrganizationName } from "../../../../../../definitions/backend/Organiza
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../../../definitions/backend/ServiceName";
 import { ServiceTuple } from "../../../../../../definitions/backend/ServiceTuple";
-import { ServicesByScope } from "../../../../../../definitions/content/ServicesByScope";
 import { UserMetadataState } from "../../../userMetadata";
 import { OrganizationsState } from "../../organizations";
 import { ServicesByIdState } from "../servicesById";
 import { VisibleServicesState } from "../visibleServices";
+import { ServiceScopeEnum } from "../../../../../../definitions/backend/ServiceScope";
 
 const customPotUserMetadata: UserMetadataState = pot.some({
   version: 1,
@@ -45,7 +45,10 @@ const customServices: ServicesState = {
       organization_name: "organization2" as OrganizationName,
       service_id: "21" as ServiceId,
       service_name: "service1" as ServiceName,
-      version: 1
+      version: 1,
+      service_metadata: {
+        scope: ServiceScopeEnum.LOCAL
+      }
     }),
     ["22"]: undefined,
     ["31"]: pot.someLoading({
@@ -63,7 +66,10 @@ const customServices: ServicesState = {
         organization_name: "organization4" as OrganizationName,
         service_id: "41" as ServiceId,
         service_name: "service1" as ServiceName,
-        version: 1
+        version: 1,
+        service_metadata: {
+          scope: ServiceScopeEnum.LOCAL
+        }
       },
       Error("Generic error")
     ),
@@ -147,11 +153,6 @@ const customOrganizations: OrganizationsState = {
   }
 };
 
-const customServicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
-  LOCAL: ["21", "41"],
-  NATIONAL: []
-});
-
 const localServices: ReadonlyArray<ServicesSectionState> = [
   {
     organizationName: customOrganizations.nameByFiscalCode["2"] as string,
@@ -183,8 +184,7 @@ describe("nationalServicesSectionsSelector", () => {
     expect(
       nationalServicesSectionsSelector.resultFunc(
         customServices,
-        customOrganizations.nameByFiscalCode,
-        customServicesByScope
+        customOrganizations.nameByFiscalCode
       )
     ).toStrictEqual(nationalServices);
   });
@@ -195,8 +195,7 @@ describe("localServicesSectionsSelector", () => {
     expect(
       localServicesSectionsSelector.resultFunc(
         customServices,
-        customOrganizations.nameByFiscalCode,
-        customServicesByScope
+        customOrganizations.nameByFiscalCode
       )
     ).toStrictEqual(localServices);
   });
@@ -208,7 +207,6 @@ describe("notSelectedServicesSectionsSelector", () => {
       notSelectedServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
-        customServicesByScope,
         [""]
       )
     ).toStrictEqual([
@@ -233,15 +231,10 @@ describe("notSelectedServicesSectionsSelector", () => {
 
 describe("notSelectedServicesSectionsSelector", () => {
   it("should return all the visible services with scope equal to both NATIONAL and LOCAL not included in organizationsOfInterest", () => {
-    const servicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
-      LOCAL: ["43"],
-      NATIONAL: ["21"]
-    });
     expect(
       notSelectedServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
-        servicesByScope,
         ["4", "5"] // this organization has the same name of another organization (id:6)
       )
     ).toStrictEqual([
