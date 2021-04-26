@@ -20,7 +20,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 const successBody = (emailAddress: string) => (
   <Label weight={"Regular"} color={"bluegrey"} style={{ textAlign: "center" }}>
     {I18n.t("wallet.outcomeMessage.payment.success.description1")}
-    <Label weight={"Bold"} color={"bluegrey"}>{` ${emailAddress}\n`}</Label>
+    <Label weight={"Bold"} color={"bluegrey"}>{`\n${emailAddress}\n`}</Label>
     {I18n.t("wallet.outcomeMessage.payment.success.description2")}
   </Label>
 );
