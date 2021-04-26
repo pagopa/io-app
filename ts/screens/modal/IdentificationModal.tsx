@@ -425,11 +425,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessible={true}
           ref={this.headerRef}
         >
-          {isValidatingTask
-            ? I18n.t("identification.titleValidation")
-            : `${I18n.t("identification.title", {
-                profileName: this.props.profileName || ""
-              })}`}
+          {isValidatingTask && I18n.t("identification.titleValidation")}
+          {!isValidatingTask &&
+            this.props.profileName &&
+            `${I18n.t("identification.titleProfileName", {
+              profileName: this.props.profileName
+            })}`}
+          {!isValidatingTask &&
+            !this.props.profileName &&
+            I18n.t("identification.title")}
         </Text>
         <Text
           alignCenter={true}
