@@ -58,6 +58,7 @@ const convertTransactions = (
 
 /**
  * Networking code to request the transactions for a specified period.
+ * @deprecated TODO: remove along with bpdTransactionsPaging FF
  * @param winningTransactions
  * @param action
  */
