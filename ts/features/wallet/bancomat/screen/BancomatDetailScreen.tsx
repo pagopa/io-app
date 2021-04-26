@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -14,6 +15,7 @@ import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
@@ -84,6 +86,13 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
+
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
       isLoading={isLoadingDelete}
@@ -153,8 +162,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     )
 });
-
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  hasErrorDelete: pot.isError(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

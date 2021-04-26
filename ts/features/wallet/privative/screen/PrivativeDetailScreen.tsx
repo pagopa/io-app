@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Button, View } from "native-base";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
@@ -6,6 +7,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { PrivativePaymentMethod } from "../../../../types/pagopa";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -66,6 +68,12 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
     caption: privative.caption
   });
 
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
       isLoading={isLoadingDelete}
@@ -124,7 +132,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  hasErrorDelete: pot.isError(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

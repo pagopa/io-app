@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -11,6 +12,7 @@ import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
@@ -67,6 +69,13 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
     icon: satispayImage,
     caption: I18n.t("wallet.methods.satispay.name")
   });
+
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
       isLoading={isLoadingDelete}
@@ -124,7 +133,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  hasErrorDelete: pot.isError(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,

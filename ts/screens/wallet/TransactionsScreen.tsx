@@ -27,6 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import {
   favoriteWalletIdSelector,
   getFavoriteWalletId,
+  getWalletsById,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -155,6 +156,12 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         : FOUR_UNICODE_CIRCLES
   });
 
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -228,7 +235,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
-  paymentMethods: paymentMethodsSelector(state)
+  paymentMethods: paymentMethodsSelector(state),
+  hasErrorDelete: pot.isError(getWalletsById(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
