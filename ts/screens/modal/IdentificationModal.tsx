@@ -97,6 +97,11 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     lineHeight: 22
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%"
   }
 });
 
@@ -334,6 +339,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private onLogout = () => {
+    Alert.alert(
+      I18n.t("identification.logout"),
+      I18n.t("identification.logoutPopupDescription"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel")
+        },
+        {
+          text: I18n.t("profile.logout.exit"),
+          onPress: this.props.onIdentificationForceLogout
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
   private renderErrorDescription = () =>
     maybeNotNullyString(this.getCodeInsertionStatus()).fold(undefined, des => (
       <Text
@@ -465,7 +487,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={!isValidatingTask}>
+          <Content
+            primary={!isValidatingTask}
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
             {renderHeader()}
             {this.renderErrorDescription()}
             <Pinpad
@@ -502,6 +527,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />
+            {!isValidatingTask && (
+              <View style={styles.bottomContainer}>
+                <Text onPress={this.onLogout} alignCenter underlined white>
+                  Logout
+                </Text>
+              </View>
+            )}
           </Content>
         </BaseScreenComponent>
       </Modal>
