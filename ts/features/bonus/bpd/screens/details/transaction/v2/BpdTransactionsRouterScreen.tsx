@@ -7,21 +7,20 @@ import { navigateToWorkunitGenericFailureScreen } from "../../../../../../../sto
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/transactions";
-import {
-  atLeastOnePaymentMethodHasBpdEnabledSelector,
-  paymentMethodsWithActivationStatusSelector
-} from "../../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdTransactionsRequiredDataLoadStateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
-import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
-import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 import LoadTransactions from "../LoadTransactions";
 import BpdAvailableTransactionsScreenV2 from "./BpdAvailableTransactionsScreenV2";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const AtLeastOneTransactionRouter = (
+/**
+ * V2 version of the screen, makes sure that all essential data for viewing transactions is loaded
+ * @param props
+ * @constructor
+ */
+const BpdTransactionsRouterScreen = (
   props: Props
 ): React.ReactElement | null => {
   useEffect(() => {
@@ -40,39 +39,10 @@ const AtLeastOneTransactionRouter = (
     // TODO: add error
     _ => null,
     _ => <BpdAvailableTransactionsScreenV2 />,
-    _ => null,
-    (_, __) => null,
+    _ => <LoadTransactions />,
+    (_, __) => <LoadTransactions />,
     _ => null
   );
-};
-
-/**
- * V2 version of the screen, makes sure that all essential data for viewing transactions is loaded
- * - currentPeriod.amount.transactionCount === 0 && !noPaymentMethodWithCashback enabled: NoPaymentMethodAreActiveWarning
- * - currentPeriod.amount.transactionCount === 0 && atLeastOnePaymentMethodWithCashback enabled: BpdEmptyTransactionsList
- * - currentPeriod.amount.transactionCount > 0: loadRequiredData and display TransactionList
- * @param props
- * @constructor
- */
-const BpdTransactionsRouterScreen = (props: Props): React.ReactElement => {
-  const atLeastOneTransaction =
-    (props.selectedPeriod?.amount.transactionNumber ?? 0) > 0;
-
-  // If the user have at least one transaction, try to load the required data to display the transactions
-  if (atLeastOneTransaction) {
-    return <AtLeastOneTransactionRouter {...props} />;
-  }
-  // The user doesn't have a single transaction, we have two alternative screen
-  else {
-    const noPaymentMethodActive =
-      !props.atLeastOnePaymentMethodActive &&
-      pot.isSome(props.potWallets) &&
-      props.potWallets.value.length > 0;
-    if (noPaymentMethodActive) {
-      return <NoPaymentMethodAreActiveWarning />;
-    }
-    return <BpdEmptyTransactionsList />;
-  }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -84,11 +54,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   transactionsRequiredData: bpdTransactionsRequiredDataLoadStateSelector(state),
-  selectedPeriod: bpdSelectedPeriodSelector(state),
-  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
-    state
-  ),
-  potWallets: paymentMethodsWithActivationStatusSelector(state)
+  selectedPeriod: bpdSelectedPeriodSelector(state)
 });
 
 export default connect(
