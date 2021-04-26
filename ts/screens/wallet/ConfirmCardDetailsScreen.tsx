@@ -233,6 +233,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       ? walletsInErrorContent
       : creditCardErrorContent;
 
+    const formData = payWebViewPayload
+      ? {
+          ...payWebViewPayload.formData,
+          // add the lookup id if is available
+          ...fromNullable(getLookUpId()).fold<Record<string, string | number>>(
+            {},
+            id => ({
+              [pmLookupHeaderKey]: id
+            })
+          )
+        }
+      : {};
+
     const noErrorContent = (
       <>
         <Content noPadded={true} style={styles.paddedLR}>
@@ -289,14 +302,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         {payWebViewPayload && (
           <PayWebViewModal
             postUri={urlPrefix + payUrlSuffix}
-            formData={{
-              ...payWebViewPayload.formData,
-              ...fromNullable(getLookUpId()).fold<
-                Record<string, string | number>
-              >({}, id => ({
-                [pmLookupHeaderKey]: id
-              }))
-            }}
+            formData={formData}
             finishPathName={webViewExitPathName}
             onFinish={(maybeCode, navigationUrls) => {
               this.props.dispatchCreditCardPaymentNavigationUrls(
