@@ -19,6 +19,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import IconFont from "../../components/ui/IconFont";
+import { H3 } from "../../components/core/typography/H3";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import SectionCardComponent, {
@@ -440,9 +441,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       >
         {renderHelp && this.renderHelpMessage()}
         <View spacer={true} large={true} />
-        <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
+        <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
-        </Text>
+        </H3>
         <View spacer={true} />
         <ButtonDefaultOpacity
           block={true}
