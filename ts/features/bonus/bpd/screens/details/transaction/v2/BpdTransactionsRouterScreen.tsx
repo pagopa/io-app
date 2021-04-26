@@ -12,7 +12,7 @@ import {
   paymentMethodsWithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
-import { bpdTransactionsRequiredDataLoadState } from "../../../../store/reducers/details/transactionsv2/ui";
+import { bpdTransactionsRequiredDataLoadStateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
 import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 import LoadTransactions from "../LoadTransactions";
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  transactionsRequiredData: bpdTransactionsRequiredDataLoadState(state),
+  transactionsRequiredData: bpdTransactionsRequiredDataLoadStateSelector(state),
   selectedPeriod: bpdSelectedPeriodSelector(state),
   atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
     state

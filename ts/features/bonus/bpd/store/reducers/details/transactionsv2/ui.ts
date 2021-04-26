@@ -1,4 +1,5 @@
-import { fromNullable, none, some } from "fp-ts/lib/Option";
+import { head } from "fp-ts/lib/Array";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
 import { createSelector } from "reselect";
@@ -32,6 +33,8 @@ export type BpdTransactionsUiState = {
   awardPeriodId: AwardPeriodId | null;
   requiredDataLoaded: pot.Pot<true, Error>;
   sectionItems: pot.Pot<IndexedById<BpdTransactionsSectionItem>, Error>;
+  // Is the date of the first transaction of the first page (aka: the most recent transaction date)
+  lastTransactionDate: Date | null;
 };
 
 /**
@@ -78,7 +81,8 @@ const initState: BpdTransactionsUiState = {
   awardPeriodId: null,
   sectionItems: pot.none,
   requiredDataLoaded: pot.none,
-  nextCursor: null
+  nextCursor: null,
+  lastTransactionDate: null
 };
 
 export const bpdTransactionsUiReducer = (
@@ -103,6 +107,13 @@ export const bpdTransactionsUiReducer = (
 
       return {
         ...state,
+        // If lastTransactionDate is null, pick the first transaction date
+        lastTransactionDate:
+          state.lastTransactionDate ??
+          head([...action.payload.results.transactions])
+            .chain(x => head([...x.transactions]))
+            .map(y => y.trxDate)
+            .toNullable(),
         awardPeriodId: action.payload.awardPeriodId,
         nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
@@ -145,7 +156,7 @@ export const bpdTransactionsUiReducer = (
  * Return the remote state for all the required data to load the transaction screen.
  * Return always pot.none if the selectedPeriod is different from the local currentPeriod (a different period is chosen, need to reload)
  */
-export const bpdTransactionsRequiredDataLoadState = createSelector(
+export const bpdTransactionsRequiredDataLoadStateSelector = createSelector(
   [
     (state: GlobalState) =>
       state.bonus.bpd.details.transactionsV2.ui.requiredDataLoaded,
@@ -165,4 +176,12 @@ export const bpdTransactionsRequiredDataLoadState = createSelector(
           : none
       )
       .getOrElse(pot.none)
+);
+
+export const bpdLastTransactionUpdateSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.lastTransactionDate
+  ],
+  (lastTransactionDate): Option<Date> => fromNullable(lastTransactionDate)
 );
