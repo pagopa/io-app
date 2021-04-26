@@ -2,7 +2,6 @@ import { SagaIterator } from "redux-saga";
 import { fork, put, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import { loadVisibleServicesByScope } from "../../store/actions/content";
 import {
   loadServiceDetail,
   loadVisibleServices
@@ -40,15 +39,10 @@ export function* watchLoadServicesSaga(
   // TODO: it could be implemented in a forked saga being canceled as soon as
   // isFirstServiceLoadCOmpleted is true (https://redux-saga.js.org/docs/advanced/TaskCancellation.html)
   yield takeEvery(
-    [
-      getType(loadServiceDetail.success),
-      getType(loadVisibleServicesByScope.success)
-    ],
+    getType(loadServiceDetail.success),
     handleFirstVisibleServiceLoadSaga
   );
 
   // Load/refresh services content
   yield put(loadVisibleServices.request());
-  // Load/refresh refresh services scope list
-  yield put(loadVisibleServicesByScope.request());
 }

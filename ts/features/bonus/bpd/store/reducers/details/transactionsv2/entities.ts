@@ -161,14 +161,14 @@ export const bpdTransactionsEntityReducer = (
       );
       const { data, found } = normalizeCashback(
         toArray(periodMilestoneSuccess.byId),
-        action.payload.result,
+        action.payload.result ?? null,
         periodMilestoneSuccess.foundPivot
       );
       return {
         ...state,
         [action.payload.awardPeriodId]: {
           ...periodMilestoneSuccess,
-          pivot: pot.some(action.payload.result),
+          pivot: pot.some(action.payload.result ?? null),
           byId: toIndexed(data, t => t.idTrx),
           foundPivot: found
         }
