@@ -16,6 +16,7 @@ import { bpdTransactionsRequiredDataLoadStateSelector } from "../../../../store/
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
 import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 import LoadTransactions from "../LoadTransactions";
+import BpdAvailableTransactionsScreenV2 from "./BpdAvailableTransactionsScreenV2";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -38,7 +39,7 @@ const AtLeastOneTransactionRouter = (
     _ => <LoadTransactions />,
     // TODO: add error
     _ => null,
-    _ => null,
+    _ => <BpdAvailableTransactionsScreenV2 />,
     _ => null,
     (_, __) => null,
     _ => null

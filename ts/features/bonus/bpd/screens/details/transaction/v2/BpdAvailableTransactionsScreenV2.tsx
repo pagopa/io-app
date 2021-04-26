@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -11,8 +12,14 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import { localeDateFormat } from "../../../../../../../utils/locale";
 import BpdTransactionSummaryComponent from "../../../../components/BpdTransactionSummaryComponent";
+import {
+  atLeastOnePaymentMethodHasBpdEnabledSelector,
+  paymentMethodsWithActivationStatusSelector
+} from "../../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdLastTransactionUpdateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
+import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
+import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -51,6 +58,22 @@ const BpdAvailableTransactionsScreenV2 = (props: Props): React.ReactElement => {
               </>
             )}
           </View>
+          {props.selectedPeriod &&
+            (props.selectedPeriod.amount.transactionNumber > 0 ? (
+              <View>
+                <H1>Transactions List!</H1>
+              </View>
+            ) : !props.atLeastOnePaymentMethodActive &&
+              pot.isSome(props.potWallets) &&
+              props.potWallets.value.length > 0 ? (
+              <View style={IOStyles.horizontalContentPadding}>
+                <NoPaymentMethodAreActiveWarning />
+              </View>
+            ) : (
+              <View style={IOStyles.horizontalContentPadding}>
+                <BpdEmptyTransactionsList />
+              </View>
+            ))}
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
@@ -61,7 +84,11 @@ const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
   selectedPeriod: bpdSelectedPeriodSelector(state),
-  maybeLastUpdateDate: bpdLastTransactionUpdateSelector(state)
+  maybeLastUpdateDate: bpdLastTransactionUpdateSelector(state),
+  potWallets: paymentMethodsWithActivationStatusSelector(state),
+  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
+    state
+  )
 });
 
 export default connect(
