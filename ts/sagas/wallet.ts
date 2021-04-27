@@ -105,6 +105,7 @@ import {
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
+  paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
@@ -968,6 +969,15 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
         })
       );
     }
+  });
+
+  yield takeEvery(getType(paymentInitializeState), function* () {
+    newLookUpId();
+    yield take([
+      getType(paymentCompletedSuccess),
+      getType(runDeleteActivePaymentSaga)
+    ]);
+    resetLookUpId();
   });
 }
 

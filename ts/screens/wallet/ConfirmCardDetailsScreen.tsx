@@ -60,7 +60,7 @@ import {
   isLoading as isRemoteLoading,
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
-import { getLookUpId, pmLookupHeaderKey } from "../../utils/pmLookUpId";
+import { getLookUpIdPO } from "../../utils/pmLookUpId";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type NavigationParams = Readonly<{
@@ -233,18 +233,12 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       ? walletsInErrorContent
       : creditCardErrorContent;
 
-    const formData = payWebViewPayload
-      ? {
-          ...payWebViewPayload.formData,
-          // add the lookup id if is available
-          ...fromNullable(getLookUpId()).fold<Record<string, string | number>>(
-            {},
-            id => ({
-              [pmLookupHeaderKey]: id
-            })
-          )
-        }
-      : {};
+    const formData = fromNullable(payWebViewPayload?.formData)
+      .map<Record<string, string | number>>(payload => ({
+        ...payload,
+        ...getLookUpIdPO()
+      }))
+      .getOrElse({});
 
     const noErrorContent = (
       <>
