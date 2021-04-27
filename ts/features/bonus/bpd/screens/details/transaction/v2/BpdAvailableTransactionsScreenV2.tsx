@@ -20,6 +20,7 @@ import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/se
 import { bpdLastTransactionUpdateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
 import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
+import TransactionsSectionList from "./TransactionsSectionList";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -60,9 +61,9 @@ const BpdAvailableTransactionsScreenV2 = (props: Props): React.ReactElement => {
           </View>
           {props.selectedPeriod &&
             (props.selectedPeriod.amount.transactionNumber > 0 ? (
-              <View>
-                <H1>Transactions List!</H1>
-              </View>
+              <>
+                <TransactionsSectionList />
+              </>
             ) : !props.atLeastOnePaymentMethodActive &&
               pot.isSome(props.potWallets) &&
               props.potWallets.value.length > 0 ? (

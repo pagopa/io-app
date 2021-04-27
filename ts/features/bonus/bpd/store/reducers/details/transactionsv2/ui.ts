@@ -6,13 +6,17 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { Action } from "../../../../../../../store/actions/types";
-import { IndexedById } from "../../../../../../../store/helpers/indexer";
+import {
+  IndexedById,
+  toArray
+} from "../../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
   bpdTransactionsLoadPage,
-  bpdTransactionsLoadRequiredData
+  bpdTransactionsLoadRequiredData,
+  BpdTransactionV2
 } from "../../../actions/transactions";
 import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
@@ -22,7 +26,7 @@ import { bpdSelectedPeriodSelector } from "../selectedPeriod";
  */
 type BpdTransactionsSectionItem = {
   dayInfoId: string;
-  trxList: ReadonlyArray<BpdTransactionId>;
+  data: ReadonlyArray<BpdTransactionId>;
 };
 
 /**
@@ -49,7 +53,7 @@ const fromWinningTransactionPageResourceToBpdTransactionsSectionItem = (
       ...acc,
       [val.date.toISOString()]: {
         dayInfoId: val.date.toISOString(),
-        trxList: val.transactions.map(trx => trx.idTrx as BpdTransactionId)
+        data: val.transactions.map(trx => trx.idTrx as BpdTransactionId)
       }
     }),
     {}
@@ -67,7 +71,7 @@ const customizer = (
   if (obj !== undefined && dst !== undefined) {
     return {
       dayInfoId: dst.dayInfoId,
-      trxList: obj.trxList.concat(dst.trxList)
+      data: obj.data.concat(dst.data)
     };
   }
 
@@ -178,10 +182,42 @@ export const bpdTransactionsRequiredDataLoadStateSelector = createSelector(
       .getOrElse(pot.none)
 );
 
+/**
+ * Return the {@link Date} of the most recent transaction
+ */
 export const bpdLastTransactionUpdateSelector = createSelector(
   [
     (state: GlobalState) =>
       state.bonus.bpd.details.transactionsV2.ui.lastTransactionDate
   ],
   (lastTransactionDate): Option<Date> => fromNullable(lastTransactionDate)
+);
+
+/**
+ * Return the {@link Date} of the most recent transaction
+ */
+export const bpdTransactionsSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.sectionItems
+  ],
+  (sectionItems): pot.Pot<ReadonlyArray<BpdTransactionsSectionItem>, Error> =>
+    pot.map(sectionItems, si => toArray(si))
+);
+
+/**
+ * Return the {@link Date} of the most recent transaction
+ */
+export const bpdTransactionByIdSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.awardPeriodId,
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.entitiesByPeriod,
+    (_: GlobalState, trxId: BpdTransactionId) => trxId
+  ],
+  (awardPeriodId, entitiesByPeriod, trxId): Option<BpdTransactionV2> =>
+    fromNullable(awardPeriodId).chain(periodId =>
+      fromNullable(entitiesByPeriod[periodId]?.byId[trxId])
+    )
 );
