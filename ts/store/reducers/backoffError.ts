@@ -26,8 +26,8 @@ import { GlobalState } from "./types";
  * 1 - the success action that is considered to delete the previous backoff delay
  */
 const monitoredActions: ReadonlyArray<[
-  PayloadAC<any, any>,
-  PayloadAC<any, any>
+  failureAction: PayloadAC<any, any>,
+  successAction: PayloadAC<any, any>
 ]> = [
   [addWalletCreditCardFailure, addWalletCreditCardSuccess],
   [fetchTransactionsFailure, fetchTransactionsSuccess],
