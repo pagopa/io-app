@@ -13,6 +13,7 @@ import {
   bpdPeriodsAmountLoad,
   WithAwardPeriodId
 } from "../../actions/periods";
+import { BpdPivotTransaction } from "./transactionsv2/entities";
 
 // The ranking is ready for a specific period
 export type BpdRankingReady = WithAwardPeriodId & {
@@ -27,6 +28,8 @@ export type BpdRankingReady = WithAwardPeriodId & {
   minTransactionNumber: number;
   // number of transactions made by the citizen for the period
   transactionNumber: number;
+  // new v2 field, containing the trx pivot information
+  pivot?: BpdPivotTransaction;
 };
 
 // The ranking is still not ready for a period (eg. a period is just started
