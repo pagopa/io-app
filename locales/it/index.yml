@@ -1601,8 +1601,10 @@ identification:
   title: Ciao!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
-  logout: Non sei {{profileName}}
-  logoutPopupDescription: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
+  logout: Esci
+  logoutProfileName: Non sei {{profileName}}?
+  logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"

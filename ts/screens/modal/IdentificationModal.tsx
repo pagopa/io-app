@@ -341,14 +341,22 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   private onLogout = () => {
     Alert.alert(
-      I18n.t("identification.logout"),
-      I18n.t("identification.logoutPopupDescription"),
+      this.props.profileName
+        ? I18n.t("identification.logoutProfileName", {
+            profileName: this.props.profileName
+          })
+        : I18n.t("identification.logout"),
+      this.props.profileName
+        ? I18n.t("identification.logoutDescriptionProfileName", {
+            profileName: this.props.profileName
+          })
+        : I18n.t("identification.logoutDescription"),
       [
         {
           text: I18n.t("global.buttons.cancel")
         },
         {
-          text: I18n.t("profile.logout.exit"),
+          text: I18n.t("global.buttons.continue"),
           onPress: this.props.onIdentificationForceLogout
         }
       ],
@@ -529,8 +537,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             <View spacer={true} large={true} />
             {!isValidatingTask && (
               <View style={styles.bottomContainer}>
-                <Text onPress={this.onLogout} alignCenter underlined white>
-                  Logout
+                <Text onPress={this.onLogout} alignCenter underlined white bold>
+                  {this.props.profileName
+                    ? I18n.t("identification.logoutProfileName", {
+                        profileName: this.props.profileName
+                      })
+                    : I18n.t("identification.logout")}
                 </Text>
               </View>
             )}
