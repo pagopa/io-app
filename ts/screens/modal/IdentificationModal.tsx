@@ -538,11 +538,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {!isValidatingTask && (
               <View style={styles.bottomContainer}>
                 <Text onPress={this.onLogout} alignCenter underlined white bold>
-                  {this.props.profileName
-                    ? I18n.t("identification.logoutProfileName", {
-                        profileName: this.props.profileName
+                  {fromNullable(this.props.profileName).fold(
+                    I18n.t("identification.logout"),
+                    pN =>
+                      I18n.t("identification.logoutProfileName", {
+                        profileName: pN
                       })
-                    : I18n.t("identification.logout")}
+                  )}
                 </Text>
               </View>
             )}
