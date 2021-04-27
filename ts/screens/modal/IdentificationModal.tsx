@@ -353,7 +353,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         : I18n.t("identification.logoutDescription"),
       [
         {
-          text: I18n.t("global.buttons.cancel")
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
         },
         {
           text: I18n.t("global.buttons.continue"),
