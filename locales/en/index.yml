@@ -1511,8 +1511,8 @@ send_email_messages:
       label: Disable for all services
       info: You will not receive email messages anymore
     enable_all:
-      label: Enable for all services
-      info: Every message will be forwarded to your email, if the service allows it
+      label: Enable for all active services
+      info: Every message will be forwarded to your email, if allowed by the service
     by_service:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
@@ -1567,9 +1567,10 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Unlock the app
+  title: Hi!
+  titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
-  subtitleCode: enter the unlock code
+  subtitleCode: Enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:

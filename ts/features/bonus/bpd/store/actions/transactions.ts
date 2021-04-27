@@ -71,7 +71,7 @@ type BpdTransactionPageRequestPayload = WithAwardPeriodId & {
   nextCursor?: number;
 };
 
-type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
+export type BpdTransactionPageSuccessPayload = WithAwardPeriodId & {
   results: WinningTransactionPageResource;
 };
 
@@ -102,7 +102,7 @@ export const bpdTransactionsLoadCountByDay = createAsyncAction(
 )<AwardPeriodId, TrxCountByDayResource, BpdTransactionsError>();
 
 export type TrxMilestonePayload = WithAwardPeriodId & {
-  result: BpdPivotTransaction;
+  result: BpdPivotTransaction | undefined;
 };
 
 /**

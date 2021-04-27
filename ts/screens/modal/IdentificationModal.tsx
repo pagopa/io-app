@@ -31,6 +31,7 @@ import {
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
+import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -424,11 +425,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessible={true}
           ref={this.headerRef}
         >
-          {I18n.t(
-            isValidatingTask
-              ? "identification.titleValidation"
-              : "identification.title"
-          )}
+          {isValidatingTask
+            ? I18n.t("identification.titleValidation")
+            : fromNullable(this.props.profileName).fold(
+                I18n.t("identification.title"),
+                pN =>
+                  I18n.t("identification.titleProfileName", {
+                    profileName: pN
+                  })
+              )}
         </Text>
         <Text
           alignCenter={true}
@@ -588,7 +593,8 @@ const mapStateToProps = (state: GlobalState) => ({
   identificationProgressState: progressSelector(state),
   identificationFailState: identificationFailSelector(state),
   isFingerprintEnabled: isFingerprintEnabledSelector(state),
-  appState: appCurrentStateSelector(state)
+  appState: appCurrentStateSelector(state),
+  profileName: profileNameSelector(state)
 });
 
 export default connect(
