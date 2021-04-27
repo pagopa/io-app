@@ -39,8 +39,8 @@ const monitoredActions: ReadonlyArray<[
 const failureActions = monitoredActions.map(ma => ma[0]);
 const successActions = monitoredActions.map(ma => ma[1]);
 
-const failureActionTypes = failureActions.map(getType);
-const successActionTypes = successActions.map(getType);
+export const failureActionTypes = () => failureActions.map(getType);
+export const successActionTypes = () => successActions.map(getType);
 export type FailureActions = typeof failureActions[number];
 
 export type BackoffErrorState = {
@@ -51,14 +51,17 @@ export type BackoffErrorState = {
 };
 
 const defaultState: BackoffErrorState = {};
-const backOffExpLimitAttempts = 4;
-const backOffBase = 2;
+export const backoffConfig = () => ({
+  maxAttempts: 4,
+  base: 2,
+  mul: 1000
+});
+
 const reducer = (
   state: BackoffErrorState = defaultState,
   action: Action
 ): BackoffErrorState => {
-  const failure = failureActionTypes.find(a => a === action.type);
-
+  const failure = failureActionTypes().find(a => a === action.type);
   if (failure) {
     return {
       ...state,
@@ -66,14 +69,14 @@ const reducer = (
         lastUpdate: new Date(),
         attempts: Math.min(
           (state[failure]?.attempts ?? 0) + 1,
-          backOffExpLimitAttempts
+          backoffConfig().maxAttempts
         )
       }
     };
   }
-  const successIndex = successActionTypes.indexOf(action.type);
+  const successIndex = successActionTypes().indexOf(action.type);
   // the failure type is that one at the same index of success type
-  const keyToRemove = index(successIndex, failureActionTypes);
+  const keyToRemove = index(successIndex, failureActionTypes());
   if (keyToRemove.isSome() && keyToRemove.value in state) {
     // remove the previous record
     return _.omit(state, keyToRemove.value);
@@ -88,7 +91,10 @@ export const backOffWaitingTime = (state: GlobalState) => (
   fromNullable(state.backoffError[getType(failure)]).fold(
     0 as Millisecond,
     lastError => {
-      const wait = Math.pow(backOffBase, lastError.attempts) * 1000;
+      const wait =
+        Math.pow(backoffConfig().base, lastError.attempts) *
+        backoffConfig().mul;
+      // if the last attempt is older that wait -> no wait
       return (new Date().getTime() - lastError.lastUpdate.getTime() < wait
         ? wait
         : 0) as Millisecond;
