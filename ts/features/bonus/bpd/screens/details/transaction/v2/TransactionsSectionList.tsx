@@ -19,7 +19,6 @@ import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
   paymentMethodsWithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
-import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import {
   bpdLastTransactionUpdateSelector,
@@ -64,19 +63,17 @@ const TransactionsHeader = (
 
 const TransactionsEmpty = (
   props: Pick<Props, "potWallets" | "atLeastOnePaymentMethodActive">
-) =>
-  !props.atLeastOnePaymentMethodActive &&
-  pot.isSome(props.potWallets) &&
-  props.potWallets.value.length > 0 ? (
-    <View style={IOStyles.horizontalContentPadding}>
+) => (
+  <View style={IOStyles.horizontalContentPadding}>
+    {!props.atLeastOnePaymentMethodActive &&
+    pot.isSome(props.potWallets) &&
+    props.potWallets.value.length > 0 ? (
       <NoPaymentMethodAreActiveWarning />
-    </View>
-  ) : (
-    <View style={IOStyles.horizontalContentPadding}>
+    ) : (
       <BpdEmptyTransactionsList />
-    </View>
-  );
-
+    )}
+  </View>
+);
 const TransactionsSectionList = (props: Props): React.ReactElement => {
   const isError = pot.isError(props.potTransactions);
   const isLoading = pot.isLoading(props.potTransactions);
