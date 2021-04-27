@@ -1567,7 +1567,7 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Unlock the app
+  title: Hi!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   subtitleCode: Enter the unlock code
