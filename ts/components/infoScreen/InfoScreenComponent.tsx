@@ -53,7 +53,7 @@ const renderNode = (body: string | React.ReactNode) => {
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
   const elementRef = React.createRef<View>();
   return (
-    <View style={styles.main}>
+    <View style={styles.main} testID="InfoScreenComponent">
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />

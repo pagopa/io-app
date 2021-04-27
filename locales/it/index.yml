@@ -1542,7 +1542,7 @@ send_email_messages:
       label: Disabilita per tutti i servizi
       info: Non riceverai più messaggi via email
     enable_all:
-      label: Abilita per tutti i servizi
+      label: Abilita per tutti i servizi attivi
       info: Ogni messaggio sarà inoltrato alla tua email, se il servizio lo consente
     by_service:
       label: Scegli servizio per servizio
