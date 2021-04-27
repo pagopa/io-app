@@ -4,20 +4,20 @@ import { getType } from "typesafe-actions";
 import _ from "lodash";
 import { PayloadAC } from "typesafe-actions/dist/type-helpers";
 import { index } from "fp-ts/lib/Array";
-import { Action } from "../../actions/types";
+import { Action } from "../actions/types";
 import {
   fetchTransactionsFailure,
   fetchTransactionsSuccess
-} from "../../actions/wallet/transactions";
+} from "../actions/wallet/transactions";
 import {
   addWalletCreditCardFailure,
   addWalletCreditCardSuccess,
   fetchWalletsFailure,
   fetchWalletsSuccess
-} from "../../actions/wallet/wallets";
-import { GlobalState } from "../types";
-import { bpdLoadActivationStatus } from "../../../features/bonus/bpd/store/actions/details";
-import { bpdPeriodsAmountLoad } from "../../../features/bonus/bpd/store/actions/periods";
+} from "../actions/wallet/wallets";
+import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/details";
+import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
+import { GlobalState } from "./types";
 
 /**
  * list of monitored actions
@@ -43,20 +43,20 @@ const failureActionTypes = failureActions.map(getType);
 const successActionTypes = successActions.map(getType);
 export type FailureActions = typeof failureActions[number];
 
-export type LastRequestErrorState = {
+export type BackoffErrorState = {
   [key: string]: {
     lastUpdate: Date;
     attempts: number;
   };
 };
 
-const defaultState: LastRequestErrorState = {};
+const defaultState: BackoffErrorState = {};
 const backOffExpLimitAttempts = 4;
 const backOffBase = 2;
 const reducer = (
-  state: LastRequestErrorState = defaultState,
+  state: BackoffErrorState = defaultState,
   action: Action
-): LastRequestErrorState => {
+): BackoffErrorState => {
   const failure = failureActionTypes.find(a => a === action.type);
 
   if (failure) {
@@ -85,7 +85,7 @@ const reducer = (
 export const backOffWaitingTime = (state: GlobalState) => (
   failure: FailureActions
 ): Millisecond =>
-  fromNullable(state.wallet.lastRequestError[getType(failure)]).fold(
+  fromNullable(state.backoffError[getType(failure)]).fold(
     0 as Millisecond,
     lastError => {
       const wait = Math.pow(backOffBase, lastError.attempts) * 1000;
