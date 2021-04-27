@@ -14,28 +14,24 @@ import TransactionsSectionList from "./TransactionsSectionList";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => {
-  const a = "";
-
-  return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("bonus.bpd.title")}
-      contextualHelp={emptyContextualHelp}
+const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => (
+  <BaseScreenComponent
+    goBack={true}
+    headerTitle={I18n.t("bonus.bpd.title")}
+    contextualHelp={emptyContextualHelp}
+  >
+    <SafeAreaView
+      style={IOStyles.flex}
+      testID={"BpdAvailableTransactionsScreen"}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"BpdAvailableTransactionsScreen"}
-      >
-        <View spacer={true} />
-        <View style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
-        </View>
-        <TransactionsSectionList />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+      <View spacer={true} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
+      </View>
+      <TransactionsSectionList />
+    </SafeAreaView>
+  </BaseScreenComponent>
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 

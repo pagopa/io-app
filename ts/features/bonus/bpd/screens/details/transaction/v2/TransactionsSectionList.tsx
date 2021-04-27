@@ -1,7 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { SectionList, SectionListRenderItemInfo } from "react-native";
+import {
+  ActivityIndicator,
+  SectionList,
+  SectionListRenderItemInfo
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
@@ -23,6 +27,7 @@ import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/se
 import {
   bpdLastTransactionUpdateSelector,
   bpdTransactionByIdSelector,
+  bpdTransactionsGetNextCursor,
   bpdTransactionsSelector
 } from "../../../../store/reducers/details/transactionsv2/ui";
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
@@ -74,8 +79,22 @@ const TransactionsEmpty = (
     )}
   </View>
 );
+
+const FooterLoading = () => (
+  <>
+    <View spacer={true} />
+    <ActivityIndicator
+      color={"black"}
+      accessible={false}
+      importantForAccessibility={"no-hide-descendants"}
+      accessibilityElementsHidden={true}
+      testID={"activityIndicator"}
+    />
+  </>
+);
+
 const TransactionsSectionList = (props: Props): React.ReactElement => {
-  const isError = pot.isError(props.potTransactions);
+  // const isError = pot.isError(props.potTransactions);
   const isLoading = pot.isLoading(props.potTransactions);
   const transactions = pot.getOrElse(props.potTransactions, []);
 
@@ -85,10 +104,17 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
       // onEndReached={() => props.loadNextPage(2 as AwardPeriodId, 1)},
       ListHeaderComponent={<TransactionsHeader {...props} />}
       ListEmptyComponent={<TransactionsEmpty {...props} />}
+      ListFooterComponent={isLoading && <FooterLoading />}
       onEndReached={() => {
-        console.log("LOAD");
+        if (props.selectedPeriod && props.nextCursor && !isLoading) {
+          props.loadNextPage(
+            props.selectedPeriod.awardPeriodId,
+            props.nextCursor
+          );
+        }
+        // console.log("LOAD");
       }}
-      onEndReachedThreshold={0.1}
+      onEndReachedThreshold={0.2}
       scrollEnabled={true}
       stickySectionHeadersEnabled={true}
       sections={transactions}
@@ -111,6 +137,7 @@ const mapStateToProps = (state: GlobalState) => ({
     state
   ),
   potTransactions: bpdTransactionsSelector(state),
+  nextCursor: bpdTransactionsGetNextCursor(state),
   bpdTransactionByIdSelector: (trxId: BpdTransactionId) =>
     bpdTransactionByIdSelector(state, trxId)
 });

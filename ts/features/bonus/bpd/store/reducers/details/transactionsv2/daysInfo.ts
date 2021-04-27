@@ -10,7 +10,10 @@ import {
 } from "../../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../actions/periods";
-import { bpdTransactionsLoadCountByDay } from "../../../actions/transactions";
+import {
+  bpdTransactionsLoadCountByDay,
+  bpdTransactionsLoadRequiredData
+} from "../../../actions/transactions";
 import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 export type BpdTransactionsDayInfo = {
@@ -59,6 +62,8 @@ export const bpdTransactionsDaysInfoReducer = (
   action: Action
 ): IndexedById<BpdTransactionsDaysInfoState> => {
   switch (action.type) {
+    case getType(bpdTransactionsLoadRequiredData.request):
+      return {};
     case getType(bpdTransactionsLoadCountByDay.request):
       return updateById(
         state,

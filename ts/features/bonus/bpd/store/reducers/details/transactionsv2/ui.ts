@@ -5,19 +5,23 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
+import { cardIcons } from "../../../../../../../components/wallet/card/Logo";
 import { Action } from "../../../../../../../store/actions/types";
 import {
   IndexedById,
   toArray
 } from "../../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { paymentMethodsSelector } from "../../../../../../../store/reducers/wallet/wallets";
+import { FOUR_UNICODE_CIRCLES } from "../../../../../../../utils/wallet";
+import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
   bpdTransactionsLoadPage,
-  bpdTransactionsLoadRequiredData,
-  BpdTransactionV2
+  bpdTransactionsLoadRequiredData
 } from "../../../actions/transactions";
+import { pickPaymentMethodFromHashpan } from "../combiner";
 import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 /**
@@ -133,11 +137,12 @@ export const bpdTransactionsUiReducer = (
       };
 
     case getType(bpdTransactionsLoadRequiredData.request):
-      return {
-        // If the request data are from a different period, clean the state
-        ...(action.payload !== state.awardPeriodId ? initState : state),
-        requiredDataLoaded: pot.toLoading(state.requiredDataLoaded)
-      };
+      return initState;
+    // return {
+    //   // If the request data are from a different period, clean the state
+    //   ...(action.payload !== state.awardPeriodId ? initState : state),
+    //   requiredDataLoaded: pot.toLoading(state.requiredDataLoaded)
+    // };
     case getType(bpdTransactionsLoadRequiredData.success):
       return {
         ...state,
@@ -205,6 +210,13 @@ export const bpdTransactionsSelector = createSelector(
     pot.map(sectionItems, si => toArray(si))
 );
 
+export const bpdTransactionsGetNextCursor = createSelector(
+  [
+    (state: GlobalState) => state.bonus.bpd.details.transactionsV2.ui.nextCursor
+  ],
+  cursor => cursor
+);
+
 /**
  * Return the {@link Date} of the most recent transaction
  */
@@ -214,10 +226,28 @@ export const bpdTransactionByIdSelector = createSelector(
       state.bonus.bpd.details.transactionsV2.ui.awardPeriodId,
     (state: GlobalState) =>
       state.bonus.bpd.details.transactionsV2.entitiesByPeriod,
+    paymentMethodsSelector,
+    bpdSelectedPeriodSelector,
     (_: GlobalState, trxId: BpdTransactionId) => trxId
   ],
-  (awardPeriodId, entitiesByPeriod, trxId): Option<BpdTransactionV2> =>
+  (
+    awardPeriodId,
+    entitiesByPeriod,
+    paymentMethods,
+    selectedPeriod,
+    trxId
+  ): Option<EnhancedBpdTransaction> =>
     fromNullable(awardPeriodId).chain(periodId =>
-      fromNullable(entitiesByPeriod[periodId]?.byId[trxId])
+      fromNullable(entitiesByPeriod[periodId]?.byId[trxId]).map(trx => ({
+        ...trx,
+        image: pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods)
+          .map(pm => pm.icon)
+          .getOrElse(cardIcons.UNKNOWN),
+        title: pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods)
+          .map(pm => pm.caption)
+          .getOrElse(FOUR_UNICODE_CIRCLES),
+        keyId: trx.idTrx,
+        maxCashbackForTransactionAmount: selectedPeriod?.maxTransactionCashback
+      }))
     )
 );

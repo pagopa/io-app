@@ -16,6 +16,7 @@ import {
   BpdTransactionId,
   bpdTransactionsLoadMilestone,
   bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData,
   BpdTransactionV2
 } from "../../../actions/transactions";
 import { bpdSelectedPeriodSelector } from "../selectedPeriod";
@@ -137,6 +138,8 @@ export const bpdTransactionsEntityReducer = (
   action: Action
 ): IndexedById<BpdTransactionsEntityState> => {
   switch (action.type) {
+    case getType(bpdTransactionsLoadRequiredData.request):
+      return {};
     case getType(bpdTransactionsLoadPage.success):
       return updatePeriodEntry(
         state,
