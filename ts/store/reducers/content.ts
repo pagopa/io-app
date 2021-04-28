@@ -19,11 +19,21 @@ import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
+  loadIdps,
   loadServiceMetadata
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import {
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../features/bonus/bpd/model/RemoteValue";
+import { Idps } from "../../../definitions/content/Idps";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -37,6 +47,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
+  idps: RemoteValue<Idps, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -58,7 +69,8 @@ export const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  contextualHelp: pot.none
+  contextualHelp: pot.none,
+  idps: remoteUndefined
 };
 
 // Selectors
@@ -80,6 +92,12 @@ export const serviceMetadataByIdSelector = (serviceId: string) => (
 export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
+
+export const idpsSelector = createSelector(
+  contentSelector,
+  (content: ContentState): Idps | undefined =>
+    isReady(content.idps) ? content.idps.value : undefined
+);
 
 /**
  * return an option with Idp contextual help data if they are loaded and defined
@@ -202,7 +220,7 @@ export default function content(
         }
       };
 
-    // idps text data
+    // contextualHelp text data
     case getType(loadContextualHelpData.request):
       return {
         ...state,
@@ -221,11 +239,31 @@ export default function content(
         contextualHelp: pot.toError(state.contextualHelp, action.payload)
       };
 
+    // idps data
+    case getType(loadIdps.request):
+      return {
+        ...state,
+        idps: remoteLoading
+      };
+
+    case getType(loadIdps.success):
+      return {
+        ...state,
+        idps: remoteReady(action.payload)
+      };
+
+    case getType(loadIdps.failure):
+      return {
+        ...state,
+        idps: remoteError(action.payload)
+      };
+
     case getType(clearCache):
       return {
         ...state,
         municipality: { ...initialContentState.municipality },
-        contextualHelp: { ...initialContentState.contextualHelp }
+        contextualHelp: { ...initialContentState.contextualHelp },
+        idps: { ...initialContentState.idps }
       };
 
     case getType(removeServiceTuples): {

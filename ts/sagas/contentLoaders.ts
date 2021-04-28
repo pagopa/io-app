@@ -17,11 +17,12 @@ import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
+  loadIdps,
   loadServiceMetadata
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
@@ -183,6 +184,27 @@ function* watchLoadContextualHelp(): SagaIterator {
   }
 }
 
+/**
+ * A saga that watches for and executes requests to load idps data
+ */
+function* watchLoadIdps(
+  getIdps: ReturnType<typeof ContentClient>["getIdps"]
+): SagaIterator {
+  try {
+    const response: SagaCallReturnType<typeof getIdps> = yield call(getIdps);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(loadIdps.success(response.value.value));
+        return;
+      }
+      throw Error(`response status ${response.value.status}`);
+    }
+    throw Error(readableReport(response.value));
+  } catch (e) {
+    yield put(loadIdps.failure(e));
+  }
+}
+
 // handle available list loading
 function* handleLoadAvailableBonus(
   getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
@@ -225,10 +247,20 @@ export function* watchContentSaga() {
     watchLoadContextualHelp
   );
 
+  // Watch idps data loading request
+  yield takeLatest(
+    getType(loadIdps.request),
+    watchLoadIdps,
+    contentClient.getIdps
+  );
+
   // Load content related to the contextual help body
   yield put(loadContextualHelpData.request());
 
-  if (bonusVacanzeEnabled || bpdEnabled) {
+  // Load content related to the idps buttons
+  yield put(loadIdps.request());
+
+  if (bonusVacanzeEnabled || bpdEnabled || cgnEnabled) {
     // available bonus list request
     yield takeLatest(
       getType(loadAvailableBonuses.request),
