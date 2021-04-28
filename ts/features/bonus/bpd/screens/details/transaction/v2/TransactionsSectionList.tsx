@@ -113,7 +113,6 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
   const isLoading = pot.isLoading(props.potTransactions);
   const transactions = pot.getOrElse(props.potTransactions, []);
 
-  console.log("rendere");
   useEffect(() => {
     if (isError) {
       showToast(I18n.t("global.genericError"), "danger");
