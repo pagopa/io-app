@@ -26,6 +26,8 @@ const BpdTransactionsRouterScreen = (
 ): React.ReactElement | null => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [unexpectedError, setUnexpectedError] = useState(false);
+
+  // Refresh the transactions required data when the screen is open
   useEffect(() => {
     if (props.selectedPeriod) {
       setFirstLoadingRequest(true);
@@ -36,12 +38,12 @@ const BpdTransactionsRouterScreen = (
     }
   }, []);
 
-  // handling unexpected error
+  // Handling unexpected error
   if (unexpectedError) {
     return <WorkunitGenericFailure />;
   }
 
-  // we want to be sure that before rendering the pot state, a first load request has been sent
+  // We want to be sure that before rendering the pot state, a first load request has been sent
   if (!firstLoadingRequest) {
     return <LoadTransactions />;
   }

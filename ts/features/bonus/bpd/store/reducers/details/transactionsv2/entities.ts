@@ -11,6 +11,8 @@ import {
   toIndexed
 } from "../../../../../../../store/helpers/indexer";
 import { GlobalState } from "../../../../../../../store/reducers/types";
+import { convertCircuitTypeCode } from "../../../../saga/networking/transactions";
+import { HPan } from "../../../actions/paymentMethods";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
@@ -75,19 +77,29 @@ const normalizeCashback = (
   let found = foundPivot;
   return {
     data: transactions.map(x => {
+      // prepare the base BpdTransactionV2, with the right types
+      const trxV2WithCircuit: BpdTransactionV2 = {
+        ...x,
+        circuitType: convertCircuitTypeCode(x.circuitType),
+        awardPeriodId: x.awardPeriodId as AwardPeriodId,
+        hashPan: x.hashPan as HPan,
+        validForCashback: false,
+        idTrx: x.idTrx as BpdTransactionId
+      };
+
       if (found || pivot === null) {
-        return { ...x, validForCashback: true } as BpdTransactionV2;
+        return { ...trxV2WithCircuit, validForCashback: true };
       }
       if (x.idTrx === pivot.idTrx) {
         found = true;
         return {
-          ...x,
+          ...trxV2WithCircuit,
           cashback: pivot.amount,
           validForCashback: true
-        } as BpdTransactionV2;
+        };
       }
 
-      return { ...x, cashback: 0, validForCashback: false } as BpdTransactionV2;
+      return { ...trxV2WithCircuit, cashback: 0, validForCashback: false };
     }),
     found
   };

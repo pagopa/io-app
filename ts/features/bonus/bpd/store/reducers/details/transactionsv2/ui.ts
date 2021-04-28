@@ -14,7 +14,6 @@ import {
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { paymentMethodsSelector } from "../../../../../../../store/reducers/wallet/wallets";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../../utils/wallet";
-import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionDetailRepresentation } from "../../../../screens/details/transaction/detail/BpdTransactionDetailComponent";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
