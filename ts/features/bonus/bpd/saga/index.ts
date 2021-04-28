@@ -137,7 +137,7 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
       bpdBackendClient.winningTransactionsV2
     );
 
-    // Load a transactions page for a period
+    // Load all the required transactions data, for a period
     yield takeEvery(
       bpdTransactionsLoadRequiredData.request,
       handleTransactionsLoadRequiredData
