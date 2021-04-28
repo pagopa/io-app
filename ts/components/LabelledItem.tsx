@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
+  },
+  textInputMask: {
+    fontFamily: "Titillium Web"
   }
 });
 
@@ -175,6 +178,7 @@ export class LabelledItem extends React.Component<Props, State> {
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
               testID={`${this.props.testID}InputMask`}
+              style={styles.textInputMask}
             />
           ) : (
             <Input
