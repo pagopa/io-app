@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -113,4 +113,26 @@ export const bpdDaysInfoForSelectedPeriodSelector = createSelector(
         .getOrElse(pot.none),
       byId => toArray(byId)
     )
+);
+
+/**
+ * From id to Option<BpdTransactionsDayInfo>
+ */
+export const bpdDaysInfoByIdSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.ui.awardPeriodId,
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.daysInfoByPeriod,
+    (_: GlobalState, daysInfoId: string) => daysInfoId
+  ],
+  (
+    awardPeriodId,
+    daysInfoByPeriod,
+    daysInfoId
+  ): Option<BpdTransactionsDayInfo> =>
+    fromNullable(awardPeriodId)
+      .chain(periodId => fromNullable(daysInfoByPeriod[periodId]?.byId))
+      .chain(pot.toOption)
+      .chain(daysInfoById => fromNullable(daysInfoById[daysInfoId]))
 );

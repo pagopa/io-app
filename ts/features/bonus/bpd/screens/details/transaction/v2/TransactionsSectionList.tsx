@@ -1,10 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
-import { useEffect } from "react";
 import * as React from "react";
+import { useEffect } from "react";
 import {
   ActivityIndicator,
   SectionList,
+  SectionListData,
   SectionListRenderItemInfo
 } from "react-native";
 import { connect } from "react-redux";
@@ -14,6 +15,7 @@ import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { localeDateFormat } from "../../../../../../../utils/locale";
 import { showToast } from "../../../../../../../utils/showToast";
+import BaseDailyTransactionHeader from "../../../../components/BaseDailyTransactionHeader";
 import BpdTransactionSummaryComponent from "../../../../components/BpdTransactionSummaryComponent";
 import { BpdTransactionItem } from "../../../../components/transactionItem/BpdTransactionItem";
 import { AwardPeriodId } from "../../../../store/actions/periods";
@@ -26,6 +28,7 @@ import {
   paymentMethodsWithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
+import { bpdDaysInfoByIdSelector } from "../../../../store/reducers/details/transactionsv2/daysInfo";
 import {
   bpdLastTransactionUpdateSelector,
   bpdTransactionByIdSelector,
@@ -37,6 +40,22 @@ import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const renderSectionHeader = (
+  info: { section: SectionListData<BpdTransactionId> },
+  props: Props
+) =>
+  props
+    .bpdDaysInfoByIdSelector(info.section.dayInfoId)
+    .fold(null, daysInfo => (
+      <BaseDailyTransactionHeader
+        date={localeDateFormat(
+          daysInfo.trxDate,
+          I18n.t("global.dateFormats.dayFullMonth")
+        )}
+        transactionsNumber={daysInfo.count}
+      />
+    ));
 
 const renderItem = (
   trxId: SectionListRenderItemInfo<BpdTransactionId>,
@@ -121,8 +140,7 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
 
   return (
     <SectionList
-      // renderSectionHeader={renderSectionHeader}
-      // onEndReached={() => props.loadNextPage(2 as AwardPeriodId, 1)},
+      renderSectionHeader={info => renderSectionHeader(info, props)}
       ListHeaderComponent={<TransactionsHeader {...props} />}
       ListEmptyComponent={<TransactionsEmpty {...props} />}
       ListFooterComponent={isLoading && <FooterLoading />}
@@ -159,7 +177,8 @@ const mapStateToProps = (state: GlobalState) => ({
   potTransactions: bpdTransactionsSelector(state),
   nextCursor: bpdTransactionsGetNextCursor(state),
   bpdTransactionByIdSelector: (trxId: BpdTransactionId) =>
-    bpdTransactionByIdSelector(state, trxId)
+    bpdTransactionByIdSelector(state, trxId),
+  bpdDaysInfoByIdSelector: (id: string) => bpdDaysInfoByIdSelector(state, id)
 });
 
 export default connect(
