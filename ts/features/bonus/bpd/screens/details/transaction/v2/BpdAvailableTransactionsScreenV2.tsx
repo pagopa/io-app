@@ -11,9 +11,6 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
 import TransactionsSectionList from "./TransactionsSectionList";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
 const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => (
   <BaseScreenComponent
     goBack={true}
