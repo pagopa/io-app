@@ -39,12 +39,16 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const renderItem = (
   trxId: SectionListRenderItemInfo<BpdTransactionId>,
   props: Props
-) =>
-  props.bpdTransactionByIdSelector(trxId.item).fold(
-    () => <></>,
-    trx => <BpdTransactionItem transaction={trx} />
-  );
+): React.ReactElement | null =>
+  props
+    .bpdTransactionByIdSelector(trxId.item)
+    .fold(null, trx => <BpdTransactionItem transaction={trx} />);
 
+/**
+ * The header of the transactions list
+ * @param props
+ * @constructor
+ */
 const TransactionsHeader = (
   props: Pick<Props, "selectedPeriod" | "maybeLastUpdateDate">
 ) => (
@@ -66,6 +70,11 @@ const TransactionsHeader = (
   </View>
 );
 
+/**
+ * This component is rendered when no transactions are available
+ * @param props
+ * @constructor
+ */
 const TransactionsEmpty = (
   props: Pick<Props, "potWallets" | "atLeastOnePaymentMethodActive">
 ) => (
@@ -80,6 +89,10 @@ const TransactionsEmpty = (
   </View>
 );
 
+/**
+ * Loading item, placed in the footer during the loading of the next page
+ * @constructor
+ */
 const FooterLoading = () => (
   <>
     <View spacer={true} />
@@ -112,7 +125,6 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
             props.nextCursor
           );
         }
-        // console.log("LOAD");
       }}
       onEndReachedThreshold={0.2}
       scrollEnabled={true}
