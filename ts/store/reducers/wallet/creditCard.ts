@@ -35,7 +35,7 @@ export type CreditCardInsertion = {
   payNavigationUrls?: ReadonlyArray<string>;
   onboardingComplete: boolean;
   outcomeCode?: string;
-  loockupId?: string;
+  lookupId?: string;
 };
 
 // The state is modeled as a stack on which the last element is added at the head
@@ -106,7 +106,7 @@ const reducer = (
           expireMonth: c.expireMonth,
           expireYear: c.expireYear,
           onboardingComplete: false,
-          loockupId: getLookUpId()
+          lookupId: getLookUpId()
         };
         return trimState([requestedAttempt, ...newState]);
       });
