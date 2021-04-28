@@ -2,7 +2,7 @@
  * A component to show the fiscal code fac-simile in Landscape
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Body, Button, Container, Content, Right, View } from "native-base";
+import { Body, Button, Container, Right, View } from "native-base";
 import * as React from "react";
 import { BackHandler, ScrollView, StatusBar, StyleSheet } from "react-native";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -40,7 +40,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   // eslint-disable-next-line functional/no-let
   let scrollTimeout: number | undefined;
 
-  const ContentRef = React.createRef<ScrollView>();
+  const ScrollViewRef = React.createRef<ScrollView>();
 
   const handleBackPress = () => {
     // On backpress the component gets unmounted, so the brightness is restored by the
@@ -50,12 +50,12 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
   };
 
   const scrollToEnd = () => {
-    if (props.showBackSide && ContentRef.current) {
+    if (props.showBackSide && ScrollViewRef.current) {
       // dalay the scroll to end command to wait until the ingress animation is completed
       // eslint-disable-next-line
       scrollTimeout = setTimeout(() => {
-        if (ContentRef.current) {
-          ContentRef.current.scrollToEnd({ animated: true });
+        if (ScrollViewRef.current) {
+          ScrollViewRef.current.scrollToEnd({ animated: true });
         }
       }, 300);
     }
@@ -133,7 +133,11 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
         backgroundColor={customVariables.brandDarkGray}
         barStyle={"light-content"}
       />
-      <Content onLayout={scrollToEnd} ref={ContentRef} style={styles.content}>
+      <ScrollView
+        onLayout={scrollToEnd}
+        ref={ScrollViewRef}
+        style={styles.content}
+      >
         <View style={styles.headerSpacer} />
         <View spacer={true} />
         <View>
@@ -156,7 +160,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
 
         <View spacer={true} large={true} />
         <View spacer={true} large={true} />
-      </Content>
+      </ScrollView>
     </Container>
   );
 };
