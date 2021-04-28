@@ -973,7 +973,7 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
 
   /**
    * create and destroy the PM lookUpID through the payment flow
-   * more details https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/135693522/PM+-+tracking+delle+chiamate+di+rete#Effettuare-un-pagamento
+   * more details https://www.pivotaltracker.com/story/show/177132354
    */
   yield takeEvery(getType(paymentInitializeState), function* () {
     newLookUpId();
