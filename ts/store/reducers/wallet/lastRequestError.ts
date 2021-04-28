@@ -4,6 +4,7 @@ import { getType } from "typesafe-actions";
 import _ from "lodash";
 import { PayloadAC } from "typesafe-actions/dist/type-helpers";
 import { index } from "fp-ts/lib/Array";
+import { bpdTransactionsLoadPage } from "../../../features/bonus/bpd/store/actions/transactions";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
@@ -33,7 +34,8 @@ const monitoredActions: ReadonlyArray<[
   [fetchTransactionsFailure, fetchTransactionsSuccess],
   [fetchWalletsFailure, fetchWalletsSuccess],
   [bpdLoadActivationStatus.failure, bpdLoadActivationStatus.success],
-  [bpdPeriodsAmountLoad.failure, bpdPeriodsAmountLoad.success]
+  [bpdPeriodsAmountLoad.failure, bpdPeriodsAmountLoad.success],
+  [bpdTransactionsLoadPage.failure, bpdTransactionsLoadPage.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);

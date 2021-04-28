@@ -1,10 +1,11 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put } from "redux-saga/effects";
+import { call, delay, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getError } from "../../../../../../utils/errors";
+import { getBackoffTime } from "../../../../../../utils/saga";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
@@ -79,6 +80,14 @@ export function* handleTransactionsPage(
   >["winningTransactionsV2"],
   action: ActionType<typeof bpdTransactionsLoadPage.request>
 ) {
+  const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
+    getBackoffTime,
+    bpdTransactionsLoadPage.failure
+  );
+  if (loadPeriodsBackOff > 0) {
+    yield delay(loadPeriodsBackOff);
+  }
+
   // get the results
   const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> = yield call(
     bpdLoadTransactionsPage,

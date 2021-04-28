@@ -1,5 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
+import { useEffect } from "react";
 import * as React from "react";
 import {
   ActivityIndicator,
@@ -12,6 +13,7 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { localeDateFormat } from "../../../../../../../utils/locale";
+import { showToast } from "../../../../../../../utils/showToast";
 import BpdTransactionSummaryComponent from "../../../../components/BpdTransactionSummaryComponent";
 import { BpdTransactionItem } from "../../../../components/transactionItem/BpdTransactionItem";
 import { AwardPeriodId } from "../../../../store/actions/periods";
@@ -107,9 +109,16 @@ const FooterLoading = () => (
 );
 
 const TransactionsSectionList = (props: Props): React.ReactElement => {
-  // const isError = pot.isError(props.potTransactions);
+  const isError = pot.isError(props.potTransactions);
   const isLoading = pot.isLoading(props.potTransactions);
   const transactions = pot.getOrElse(props.potTransactions, []);
+
+  console.log("rendere");
+  useEffect(() => {
+    if (isError) {
+      showToast(I18n.t("global.genericError"), "danger");
+    }
+  }, [isError]);
 
   return (
     <SectionList

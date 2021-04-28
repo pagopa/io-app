@@ -1,8 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import WorkunitGenericFailure from "../../../../../../../components/error/WorkunitGenericFailure";
 import { navigateToWorkunitGenericFailureScreen } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../../store/actions/periods";
@@ -23,14 +24,28 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const BpdTransactionsRouterScreen = (
   props: Props
 ): React.ReactElement | null => {
+  const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
+  const [unexpectedError, setUnexpectedError] = useState(false);
   useEffect(() => {
     if (props.selectedPeriod) {
+      setFirstLoadingRequest(true);
       props.loadRequiredData(props.selectedPeriod.awardPeriodId);
     } else {
       // This should never happens
-      props.navigateToErrorFallback();
+      setUnexpectedError(true);
     }
   }, []);
+
+  // handling unexpected error
+  if (unexpectedError) {
+    return <WorkunitGenericFailure />;
+  }
+
+  // we want to be sure that before rendering the pot state, a first load request has been sent
+  if (!firstLoadingRequest) {
+    return <LoadTransactions />;
+  }
+
   return pot.fold(
     props.transactionsRequiredData,
     () => <LoadTransactions />,
