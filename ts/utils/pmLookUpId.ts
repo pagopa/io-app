@@ -10,6 +10,7 @@ export type LookUpId = string | undefined;
 let pmLookUpId: LookUpId;
 export const pmLookupHeaderKey = "Request-Id";
 export const getLookUpId = (): LookUpId => pmLookUpId;
+// return the lookupID inside a plain object where the key is pmLookupHeaderKey
 export const getLookUpIdPO = (): Record<string, string> =>
   fromNullable(getLookUpId()).fold<Record<string, string>>({}, id => ({
     [pmLookupHeaderKey]: id
