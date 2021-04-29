@@ -11,7 +11,7 @@ import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/trans
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdTransactionsRequiredDataLoadStateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
 import LoadTransactions from "../LoadTransactions";
-import BpdAvailableTransactionsScreenV2 from "./BpdAvailableTransactionsScreenV2";
+import { TransactionsUnavailableV2 } from "./TransactionsUnavailableV2";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -54,11 +54,11 @@ const BpdTransactionsRouterScreen = (
     () => <LoadTransactions />,
     _ => <LoadTransactions />,
     // TODO: add error
-    _ => null,
-    _ => <BpdAvailableTransactionsScreenV2 />,
+    _ => <TransactionsUnavailableV2 />,
+    _ => <TransactionsUnavailableV2 />,
     _ => <LoadTransactions />,
     (_, __) => <LoadTransactions />,
-    _ => null
+    _ => <TransactionsUnavailableV2 />
   );
 };
 

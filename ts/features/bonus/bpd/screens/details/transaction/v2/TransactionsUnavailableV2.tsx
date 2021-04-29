@@ -1,11 +1,11 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import image from "../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../../i18n";
+import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
+import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
+import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../../i18n";
 
 export type Props = Pick<
   React.ComponentProps<typeof BaseScreenComponent>,
@@ -20,10 +20,10 @@ const loadLocales = () => ({
 
 /**
  * This screen informs the user that there are problems retrieving the transactions list.
- * @deprecated
+ * Replace TransactionsUnavailable, adding also the retry button
  * @constructor
  */
-const TransactionsUnavailable: React.FunctionComponent<Props> = props => {
+export const TransactionsUnavailableV2: React.FunctionComponent<Props> = props => {
   const { headerTitle, title, body } = loadLocales();
 
   return (
@@ -42,5 +42,3 @@ const TransactionsUnavailable: React.FunctionComponent<Props> = props => {
     </BaseScreenComponent>
   );
 };
-
-export default TransactionsUnavailable;
