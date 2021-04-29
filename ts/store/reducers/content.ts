@@ -34,8 +34,10 @@ import {
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { Idps } from "../../../definitions/content/Idps";
+import { IdpEntry } from "../../../definitions/content/IdpEntry";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
+import { idps } from "./__mock__/idps";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -95,8 +97,8 @@ export const contextualHelpDataSelector = (
 
 export const idpsSelector = createSelector(
   contentSelector,
-  (content: ContentState): Idps | undefined =>
-    isReady(content.idps) ? content.idps.value : undefined
+  (content: ContentState): ReadonlyArray<IdpEntry> =>
+    isReady(content.idps) ? content.idps.value.items : idps
 );
 
 /**
@@ -262,8 +264,7 @@ export default function content(
       return {
         ...state,
         municipality: { ...initialContentState.municipality },
-        contextualHelp: { ...initialContentState.contextualHelp },
-        idps: { ...initialContentState.idps }
+        contextualHelp: { ...initialContentState.contextualHelp }
       };
 
     case getType(removeServiceTuples): {

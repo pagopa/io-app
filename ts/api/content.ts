@@ -130,7 +130,7 @@ const getPrivativeServicesT: GetPrivativeServicesT = {
 };
 
 type GetIdpsListT = IGetApiRequestType<
-  Record<string, unknown>,
+  void,
   never,
   never,
   BasicResponseType<Idps>

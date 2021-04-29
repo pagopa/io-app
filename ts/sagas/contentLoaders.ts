@@ -191,15 +191,18 @@ function* watchLoadIdps(
   getIdps: ReturnType<typeof ContentClient>["getIdps"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof getIdps> = yield call(getIdps);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield put(loadIdps.success(response.value.value));
+    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield call(
+      getIdps
+    );
+    if (idpsListResponse.isRight()) {
+      if (idpsListResponse.value.status === 200) {
+        yield put(loadIdps.success(idpsListResponse.value.value));
         return;
       }
-      throw Error(`response status ${response.value.status}`);
+      throw Error(`response status ${idpsListResponse.value.status}`);
+    } else {
+      throw Error(readableReport(idpsListResponse.value));
     }
-    throw Error(readableReport(response.value));
   } catch (e) {
     yield put(loadIdps.failure(e));
   }
