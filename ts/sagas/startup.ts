@@ -29,7 +29,6 @@ import {
   pagoPaApiUrlPrefixTest
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
-import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
@@ -63,6 +62,7 @@ import { deletePin, getPin } from "../utils/keychain";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
+import { IdpEntry } from "../../definitions/content/IdpEntry";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -239,7 +239,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield put(clearCache());
   }
 
-  const maybeIdp: Option<IdentityProvider> = yield select(idpSelector);
+  const maybeIdp: Option<IdpEntry> = yield select(idpSelector);
 
   setInstabugProfileAttributes(maybeIdp);
 

@@ -105,15 +105,16 @@ export const idpsSelector = createSelector(
  * return an option with Idp contextual help data if they are loaded and defined
  * @param id
  */
-export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
+export const idpContextualHelpDataFromIdSelector = (id: IdpEntry["id"]) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getLocalePrimaryWithFallback();
-          return fromNullable(
-            data[locale] !== undefined ? data[locale].idps[id] : undefined
+
+          return fromNullable(data[locale]).fold(none, l =>
+            fromNullable(l.idps[id as IdentityProviderId])
           );
         }),
         none
