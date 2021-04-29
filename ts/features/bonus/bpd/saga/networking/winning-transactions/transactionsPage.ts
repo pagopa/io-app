@@ -4,13 +4,17 @@ import { call, delay, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { getBackoffTime } from "../../../../../../utils/backoffError";
+import {
+  getBackoffTime,
+  waitBackoffError
+} from "../../../../../../utils/backoffError";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
   BpdTransactionPageSuccessPayload,
-  bpdTransactionsLoadPage
+  bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData
 } from "../../../store/actions/transactions";
 
 const mixpanelActionRequest = `BPD_TRANSACTIONS_PAGE_REQUEST`;
@@ -80,14 +84,7 @@ export function* handleTransactionsPage(
   >["winningTransactionsV2"],
   action: ActionType<typeof bpdTransactionsLoadPage.request>
 ) {
-  const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
-    getBackoffTime,
-    bpdTransactionsLoadPage.failure
-  );
-  if (loadPeriodsBackOff > 0) {
-    yield delay(loadPeriodsBackOff);
-  }
-
+  yield call(waitBackoffError, bpdTransactionsLoadPage.failure);
   // get the results
   const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> = yield call(
     bpdLoadTransactionsPage,

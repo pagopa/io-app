@@ -2,6 +2,7 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { call, Effect, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
   BpdTransactionsError,
@@ -21,6 +22,8 @@ import {
 export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
 ): Generator<Effect, Either<BpdTransactionsError, true>, any> {
+  yield call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
+
   // First request the Milestone Pivot
   yield put(bpdTransactionsLoadMilestone.request(periodId));
 
