@@ -17,6 +17,7 @@ import { Showroom } from "../screens/showroom/Showroom";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
+import LogoutScreen from "../components/screens/LogoutScreen";
 import ROUTES from "./routes";
 
 /**
@@ -47,6 +48,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PREFERENCES_LANGUAGE]: {
       screen: LanguagesPreferencesScreen
+    },
+    [ROUTES.PROFILE_LOGOUT]: {
+      screen: LogoutScreen
     },
     [ROUTES.PROFILE_FISCAL_CODE]: {
       screen: FiscalCodeScreen
