@@ -25,6 +25,7 @@ import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
+import { makeFontStyleObject } from "./core/fonts";
 import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   textInputMask: {
-    fontFamily: "Titillium Web"
+    ...makeFontStyleObject("Regular")
   }
 });
 
