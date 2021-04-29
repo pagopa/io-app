@@ -1,5 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import _ from "lodash";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import I18n from "../../../../../i18n";

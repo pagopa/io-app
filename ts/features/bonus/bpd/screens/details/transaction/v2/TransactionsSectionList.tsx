@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -161,7 +160,6 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
       ListFooterComponent={isLoading && <FooterLoading />}
       onEndReached={() => {
         if (props.selectedPeriod && props.nextCursor && !isLoading) {
-          console.log("new load");
           props.loadNextPage(
             props.selectedPeriod.awardPeriodId,
             props.nextCursor
