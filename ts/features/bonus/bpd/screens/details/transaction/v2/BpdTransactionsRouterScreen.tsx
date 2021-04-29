@@ -11,7 +11,8 @@ import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/trans
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdTransactionsRequiredDataLoadStateSelector } from "../../../../store/reducers/details/transactionsv2/ui";
 import LoadTransactions from "../LoadTransactions";
-import { TransactionsUnavailableV2 } from "./TransactionsUnavailableV2";
+import BpdAvailableTransactionsScreenV2 from "./BpdAvailableTransactionsScreenV2";
+import TransactionsUnavailableV2 from "./TransactionsUnavailableV2";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -26,6 +27,8 @@ const BpdTransactionsRouterScreen = (
 ): React.ReactElement | null => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [unexpectedError, setUnexpectedError] = useState(false);
+
+  console.log(props.transactionsRequiredData);
 
   // Refresh the transactions required data when the screen is open
   useEffect(() => {
@@ -53,9 +56,8 @@ const BpdTransactionsRouterScreen = (
     () => <LoadTransactions />,
     () => <LoadTransactions />,
     _ => <LoadTransactions />,
-    // TODO: add error
     _ => <TransactionsUnavailableV2 />,
-    _ => <TransactionsUnavailableV2 />,
+    _ => <BpdAvailableTransactionsScreenV2 />,
     _ => <LoadTransactions />,
     (_, __) => <LoadTransactions />,
     _ => <TransactionsUnavailableV2 />

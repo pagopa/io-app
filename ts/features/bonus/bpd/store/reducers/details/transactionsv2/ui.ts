@@ -101,7 +101,6 @@ export const bpdTransactionsUiReducer = (
     case getType(bpdTransactionsLoadPage.request):
       return {
         ...state,
-        awardPeriodId: action.payload.awardPeriodId,
         sectionItems:
           action.payload.awardPeriodId !== state.awardPeriodId
             ? pot.noneLoading
@@ -122,7 +121,6 @@ export const bpdTransactionsUiReducer = (
             .chain(x => head([...x.transactions]))
             .map(y => y.trxDate)
             .toNullable(),
-        awardPeriodId: action.payload.awardPeriodId,
         nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
           _.mergeWith(currentSectionItems, newSectionItems, customizer)
@@ -131,13 +129,12 @@ export const bpdTransactionsUiReducer = (
     case getType(bpdTransactionsLoadPage.failure):
       return {
         ...state,
-        awardPeriodId: action.payload.awardPeriodId,
         nextCursor: state.nextCursor,
         sectionItems: pot.toError(state.sectionItems, action.payload.error)
       };
 
     case getType(bpdTransactionsLoadRequiredData.request):
-      return initState;
+      return { ...initState, awardPeriodId: action.payload };
     // return {
     //   // If the request data are from a different period, clean the state
     //   ...(action.payload !== state.awardPeriodId ? initState : state),
