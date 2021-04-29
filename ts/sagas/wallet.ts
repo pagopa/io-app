@@ -163,7 +163,6 @@ import { isTestEnv } from "../utils/environment";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { getTitleFromCard } from "../utils/paymentMethod";
-import { backoffWait } from "../utils/saga";
 import { SessionManager } from "../utils/SessionManager";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
@@ -187,6 +186,7 @@ import {
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
+import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 
 const successScreenDelay = 2000 as Millisecond;
@@ -643,7 +643,7 @@ export function* watchWalletSaga(
   yield takeLatest(getType(fetchTransactionsRequestWithExpBackoff), function* (
     action: ActionType<typeof fetchTransactionsRequestWithExpBackoff>
   ) {
-    yield call(backoffWait, fetchTransactionsFailure);
+    yield call(waitBackoffError, fetchTransactionsFailure);
     yield put(fetchTransactionsRequest(action.payload));
   });
 
@@ -677,7 +677,7 @@ export function* watchWalletSaga(
   );
 
   yield takeLatest(getType(fetchWalletsRequestWithExpBackoff), function* () {
-    yield call(backoffWait, fetchWalletsFailure);
+    yield call(waitBackoffError, fetchWalletsFailure);
     yield put(fetchWalletsRequest());
   });
 
@@ -700,7 +700,7 @@ export function* watchWalletSaga(
     function* (
       action: ActionType<typeof addWalletCreditCardWithBackoffRetryRequest>
     ) {
-      yield call(backoffWait, addWalletCreditCardFailure);
+      yield call(waitBackoffError, addWalletCreditCardFailure);
       yield put(addWalletCreditCardRequest(action.payload));
     }
   );
