@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.6](https://github.com/pagopa/io-app/compare/1.25.0-rc.5...1.25.0-rc.6) (2021-04-28)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#177543882](https://www.pivotaltracker.com/story/show/177543882)] Add paginated transactions networking logic ([#2983](https://github.com/pagopa/io-app/issues/2983)) ([f64d21f](https://github.com/pagopa/io-app/commit/f64d21f7ff34041f7407b86941c1e86570fb72f8)), closes [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049) [#177544049](https://www.pivotaltracker.com/story/show/177544049)
+* [[#177760591](https://www.pivotaltracker.com/story/show/177760591)] Added profile name on identification modal ([#2996](https://github.com/pagopa/io-app/issues/2996)) ([c85c1c3](https://github.com/pagopa/io-app/commit/c85c1c30a2fafaa428e4bbeff24891415e55c583)), closes [#177058553](https://www.pivotaltracker.com/story/show/177058553)
+* [[IRS-3](https://pagopa.atlassian.net/browse/IRS-3)] Services preferences copy update [#3000](https://github.com/pagopa/io-app/issues/3000) ([1f15c9f](https://github.com/pagopa/io-app/commit/1f15c9f5820be608064698ddf7d94a7073239fde))
+
+
+### Bug Fixes
+
+* [[#177001144](https://www.pivotaltracker.com/story/show/177001144)] Changed latest transactions label when transactions are hidden ([#2999](https://github.com/pagopa/io-app/issues/2999)) ([b76e092](https://github.com/pagopa/io-app/commit/b76e092807221f876297bb8531f35c93f05332cb))
+* [[#177536180](https://www.pivotaltracker.com/story/show/177536180)] The logout delay is not handled ([#2990](https://github.com/pagopa/io-app/issues/2990)) ([27b5f52](https://github.com/pagopa/io-app/commit/27b5f52352b3b180f071f915854eb21b1c180341))
+
+
+### Chores
+
+* [[#177058553](https://www.pivotaltracker.com/story/show/177058553)] Added outcome code message component test ([#2991](https://github.com/pagopa/io-app/issues/2991)) ([f79695c](https://github.com/pagopa/io-app/commit/f79695c0564702f7b7b141d958a7c4bb02236638))
+* [[#177696948](https://www.pivotaltracker.com/story/show/177696948)] Remove Services by scope API ([#2973](https://github.com/pagopa/io-app/issues/2973)) ([dc64bfc](https://github.com/pagopa/io-app/commit/dc64bfc2b07c703463636f6d2846360d48b6a0c6))
+* [[#177698138](https://www.pivotaltracker.com/story/show/177698138)] Remove services by scope tests ([#2998](https://github.com/pagopa/io-app/issues/2998)) ([c33aee9](https://github.com/pagopa/io-app/commit/c33aee98139039cef96aa679c10f9459bd48d36d))
+* [[#177795910](https://www.pivotaltracker.com/story/show/177795910)] Add codecov checksum ([#2988](https://github.com/pagopa/io-app/issues/2988)) ([613b983](https://github.com/pagopa/io-app/commit/613b983989fe2212066c0e82a57d760eba73dde9))
+
 ## [1.25.0-rc.5](https://github.com/pagopa/io-app/compare/1.25.0-rc.4...1.25.0-rc.5) (2021-04-22)
 
 
