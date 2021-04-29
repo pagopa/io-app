@@ -84,7 +84,8 @@ const normalizeCashback = (
         awardPeriodId: x.awardPeriodId as AwardPeriodId,
         hashPan: x.hashPan as HPan,
         validForCashback: false,
-        idTrx: x.idTrx as BpdTransactionId
+        idTrx: x.idTrx as BpdTransactionId,
+        isPivot: false
       };
 
       if (found || pivot === null) {
@@ -95,7 +96,8 @@ const normalizeCashback = (
         return {
           ...trxV2WithCircuit,
           cashback: pivot.amount,
-          validForCashback: true
+          validForCashback: true,
+          isPivot: true
         };
       }
 

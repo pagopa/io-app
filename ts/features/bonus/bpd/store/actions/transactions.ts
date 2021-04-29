@@ -48,6 +48,7 @@ export type BpdTransactionId = string & IUnitTag<"BpdTransactionId">;
 export type BpdTransactionV2 = BpdTransaction & {
   idTrx: BpdTransactionId;
   validForCashback: boolean;
+  isPivot: boolean;
 };
 
 export type BpdTransactions = WithAwardPeriodId & {

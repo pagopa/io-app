@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -10,6 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { H1 } from "../../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -36,6 +38,7 @@ import {
   bpdTransactionsSelector
 } from "../../../../store/reducers/details/transactionsv2/ui";
 import { NoPaymentMethodAreActiveWarning } from "../BpdAvailableTransactionsScreen";
+import BpdCashbackMilestoneComponent from "../BpdCashbackMilestoneComponent";
 import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -43,6 +46,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const renderSectionHeader = (
   info: { section: SectionListData<BpdTransactionId> },
+  // we need to pass props as argument because with the current react-redux version useSelect cannot be used
   props: Props
 ) =>
   props
@@ -59,11 +63,22 @@ const renderSectionHeader = (
 
 const renderItem = (
   trxId: SectionListRenderItemInfo<BpdTransactionId>,
+  // we need to pass props as argument because with the current react-redux version useSelect cannot be used
   props: Props
 ): React.ReactElement | null =>
-  props
-    .bpdTransactionByIdSelector(trxId.item)
-    .fold(null, trx => <BpdTransactionItem transaction={trx} />);
+  props.bpdTransactionByIdSelector(trxId.item).fold(null, trx => (
+    <>
+      {trx.isPivot && (
+        <BpdCashbackMilestoneComponent
+          cashbackValue={fromNullable(props.selectedPeriod).fold(
+            0,
+            p => p.maxPeriodCashback
+          )}
+        />
+      )}
+      <BpdTransactionItem transaction={trx} />
+    </>
+  ));
 
 /**
  * The header of the transactions list
@@ -146,6 +161,7 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
       ListFooterComponent={isLoading && <FooterLoading />}
       onEndReached={() => {
         if (props.selectedPeriod && props.nextCursor && !isLoading) {
+          console.log("new load");
           props.loadNextPage(
             props.selectedPeriod.awardPeriodId,
             props.nextCursor

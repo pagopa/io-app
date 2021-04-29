@@ -14,7 +14,7 @@ import {
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { paymentMethodsSelector } from "../../../../../../../store/reducers/wallet/wallets";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../../utils/wallet";
-import { BpdTransactionDetailRepresentation } from "../../../../screens/details/transaction/detail/BpdTransactionDetailComponent";
+import { BpdTransactionDetailRepresentationV2 } from "../../../../screens/details/transaction/detail/BpdTransactionDetailComponent";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
@@ -236,7 +236,7 @@ export const bpdTransactionByIdSelector = createSelector(
     paymentMethods,
     selectedPeriod,
     trxId
-  ): Option<BpdTransactionDetailRepresentation> =>
+  ): Option<BpdTransactionDetailRepresentationV2> =>
     fromNullable(awardPeriodId).chain(periodId =>
       fromNullable(entitiesByPeriod[periodId]?.byId[trxId]).map(trx => ({
         ...trx,
