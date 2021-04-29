@@ -60,7 +60,7 @@ async function addTasksUrls() {
   // read changelog
   const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
 
-  const updatedContent = await [
+  const updatedChangelog = await [
     // Add pivotal stories url
     replacePivotalStories,
     // Add jira ticket url
@@ -72,7 +72,7 @@ async function addTasksUrls() {
     Promise.resolve(rawChangelog)
   );
   // write the new modified changelog
-  fs.writeFileSync("CHANGELOG.md", updatedContent);
+  fs.writeFileSync("CHANGELOG.md", updatedChangelog);
 }
 
 async function replacePivotalStories(content) {
