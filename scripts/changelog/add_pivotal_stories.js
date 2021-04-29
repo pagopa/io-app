@@ -58,7 +58,7 @@ async function cleanCloses(content) {
 
 async function addTasksUrls() {
   // read changelog
-  const rawChangelog = fs.readFileSync("../../CHANGELOG.md").toString("utf8");
+  const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
 
   const updatedContent = await [
     // Add pivotal stories url
@@ -72,7 +72,7 @@ async function addTasksUrls() {
     Promise.resolve(rawChangelog)
   );
   // write the new modified changelog
-  fs.writeFileSync("../../CHANGELOG.md", updatedContent);
+  fs.writeFileSync("CHANGELOG.md", updatedContent);
 }
 
 async function replacePivotalStories(content) {
