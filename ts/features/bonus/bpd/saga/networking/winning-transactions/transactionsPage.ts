@@ -1,20 +1,16 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, delay, Effect, put } from "redux-saga/effects";
+import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import {
-  getBackoffTime,
-  waitBackoffError
-} from "../../../../../../utils/backoffError";
+import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
 import {
   BpdTransactionPageSuccessPayload,
-  bpdTransactionsLoadPage,
-  bpdTransactionsLoadRequiredData
+  bpdTransactionsLoadPage
 } from "../../../store/actions/transactions";
 
 const mixpanelActionRequest = `BPD_TRANSACTIONS_PAGE_REQUEST`;
