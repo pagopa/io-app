@@ -46,17 +46,33 @@ async function replaceJiraStories(content) {
   return await replaceAsync(content, jiraTagRegex, addJiraUrl);
 }
 
+/**
+ * replace the changelog content by removing the repetition of "closes [#idPivotalorJiraStory](url)"
+ * @param content
+ * @return {Promise<string>}
+ */
+async function cleanCloses(content) {
+  const closesRegex = /,\s+closes(\s+\[((#\d+)|[A-Z0-9]+-\d+)\]\(.*\))+/gm;
+  return await replaceAsync(content, closesRegex, () => Promise.resolve(""));
+}
+
 async function addTasksUrls() {
   // read changelog
-  const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
+  const rawChangelog = fs.readFileSync("../../CHANGELOG.md").toString("utf8");
 
-  // Add pivotal stories url
-  const withPivotalStories = await replacePivotalStories(rawChangelog);
-  // Add jira ticket url
-  const withJiraStories = await replaceJiraStories(withPivotalStories);
-
+  const updatedContent = await [
+    // Add pivotal stories url
+    replacePivotalStories,
+    // Add jira ticket url
+    replaceJiraStories,
+    // clean closes
+    cleanCloses
+  ].reduce(
+    (promiseChain, currentTask) => promiseChain.then(currentTask),
+    Promise.resolve(rawChangelog)
+  );
   // write the new modified changelog
-  fs.writeFileSync("CHANGELOG.md", withJiraStories);
+  fs.writeFileSync("../../CHANGELOG.md", updatedContent);
 }
 
 async function replacePivotalStories(content) {
