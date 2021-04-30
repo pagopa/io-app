@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import WorkunitGenericFailure from "../../../../../../../components/error/WorkunitGenericFailure";
-import { navigateToWorkunitGenericFailureScreen } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/transactions";
@@ -64,9 +63,7 @@ const BpdTransactionsRouterScreen = (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadRequiredData: (periodId: AwardPeriodId) =>
-    dispatch(bpdTransactionsLoadRequiredData.request(periodId)),
-  navigateToErrorFallback: () =>
-    dispatch(navigateToWorkunitGenericFailureScreen())
+    dispatch(bpdTransactionsLoadRequiredData.request(periodId))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

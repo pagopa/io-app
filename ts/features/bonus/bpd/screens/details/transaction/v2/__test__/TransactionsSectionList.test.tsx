@@ -101,7 +101,7 @@ it("When the transactions list length is > 0, should render the transactions lis
   store.dispatch(
     bpdTransactionsLoadCountByDay.success({
       awardPeriodId: activePeriod.awardPeriodId,
-      results: [{ trxDate, count: 1 }]
+      results: [{ trxDate, count: 2 }]
     })
   );
   store.dispatch(
@@ -114,7 +114,13 @@ it("When the transactions list length is > 0, should render the transactions lis
       awardPeriodId: activePeriod.awardPeriodId,
       results: {
         transactions: [
-          { date: trxDate, transactions: [{ ...transactionTemplate }] }
+          {
+            date: trxDate,
+            transactions: [
+              { ...transactionTemplate },
+              { ...transactionTemplate, idTrx: "2" }
+            ]
+          }
         ]
       }
     })
@@ -129,7 +135,7 @@ it("When the transactions list length is > 0, should render the transactions lis
     testComponent.queryAllByTestId("BaseDailyTransactionHeader").length
   ).toBe(1);
   expect(testComponent.queryAllByTestId("BaseBpdTransactionItem").length).toBe(
-    1
+    2
   );
 });
 
