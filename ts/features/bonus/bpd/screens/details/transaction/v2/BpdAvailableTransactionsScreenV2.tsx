@@ -16,7 +16,7 @@ export const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => (
   >
     <SafeAreaView
       style={IOStyles.flex}
-      testID={"BpdAvailableTransactionsScreen"}
+      testID={"BpdAvailableTransactionsScreenV2"}
     >
       <View spacer={true} />
       <View style={IOStyles.horizontalContentPadding}>

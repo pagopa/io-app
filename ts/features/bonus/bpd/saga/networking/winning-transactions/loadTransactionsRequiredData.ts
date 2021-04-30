@@ -96,7 +96,7 @@ export function* handleTransactionsLoadRequiredData(
   );
 
   if (result.isRight()) {
-    yield put(bpdTransactionsLoadRequiredData.success());
+    yield put(bpdTransactionsLoadRequiredData.success(action.payload));
   } else {
     yield put(bpdTransactionsLoadRequiredData.failure(result.value));
   }

@@ -1,7 +1,9 @@
+import { fireEvent } from "@testing-library/react-native";
 import * as pot from "italia-ts-commons/lib/pot";
+import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
-import * as React from "react";
+import I18n from "../../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
@@ -11,8 +13,8 @@ import { AwardPeriodId } from "../../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../../store/actions/transactions";
 import { eligibleAmount } from "../../../../../store/reducers/__mock__/amount";
 import { activePeriod } from "../../../../../store/reducers/__mock__/periods";
-import BpdTransactionsRouterScreen from "../BpdTransactionsRouterScreen";
 import { readyRanking } from "../../../../../store/reducers/__mock__/ranking";
+import BpdTransactionsRouterScreen from "../BpdTransactionsRouterScreen";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()
@@ -45,6 +47,36 @@ describe("Test BpdTransactionsRouterScreen behaviour and states", () => {
     );
     expect(
       testComponent.queryByTestId("TransactionUnavailableV2")
+    ).not.toBeNull();
+
+    const retryButton = testComponent.queryByText(
+      I18n.t("global.buttons.retry")
+    );
+
+    expect(retryButton).not.toBeNull();
+
+    if (retryButton !== null) {
+      // tap retry button
+      fireEvent.press(retryButton);
+      // the component changes to load
+      expect(testComponent.queryByTestId("LoadTransactions")).not.toBeNull();
+      // the retry is successful
+      store.dispatch(
+        bpdTransactionsLoadRequiredData.success(1 as AwardPeriodId)
+      );
+      // the component is updated
+      expect(
+        testComponent.queryByTestId("BpdAvailableTransactionsScreenV2")
+      ).not.toBeNull();
+    }
+  });
+  it("With a success should render the BpdAvailableTransactionsScreenV2 screen", () => {
+    const store = getStateWithBpdInitialized();
+    const testComponent = renderComponent(store);
+    expect(testComponent.queryByTestId("LoadTransactions")).not.toBeNull();
+    store.dispatch(bpdTransactionsLoadRequiredData.success(1 as AwardPeriodId));
+    expect(
+      testComponent.queryByTestId("BpdAvailableTransactionsScreenV2")
     ).not.toBeNull();
   });
 });

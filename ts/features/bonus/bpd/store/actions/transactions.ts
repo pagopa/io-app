@@ -122,7 +122,7 @@ export const bpdTransactionsLoadRequiredData = createAsyncAction(
   "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_REQUEST",
   "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_SUCCESS",
   "BPD_TRANSACTIONS_LOAD_REQUIRED_DATA_FAILURE"
-)<AwardPeriodId, void, BpdTransactionsError>();
+)<AwardPeriodId, AwardPeriodId, BpdTransactionsError>();
 
 export type BpdTransactionsAction =
   | ActionType<typeof bpdTransactionsLoad>
