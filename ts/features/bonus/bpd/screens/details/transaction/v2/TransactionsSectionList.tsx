@@ -113,7 +113,7 @@ const TransactionsHeader = (
 const TransactionsEmpty = (
   props: Pick<Props, "potWallets" | "atLeastOnePaymentMethodActive">
 ) => (
-  <View style={IOStyles.horizontalContentPadding}>
+  <View style={IOStyles.horizontalContentPadding} testID={"TransactionsEmpty"}>
     {!props.atLeastOnePaymentMethodActive &&
     pot.isSome(props.potWallets) &&
     props.potWallets.value.length > 0 ? (
@@ -154,6 +154,7 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
 
   return (
     <SectionList
+      testID={"TransactionsSectionList"}
       renderSectionHeader={info => renderSectionHeader(info, props)}
       ListHeaderComponent={<TransactionsHeader {...props} />}
       ListEmptyComponent={<TransactionsEmpty {...props} />}
