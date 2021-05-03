@@ -32,7 +32,6 @@ import { bpdLastUpdateSelector } from "../../../../store/reducers/details/lastUp
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdDaysInfoByIdSelector } from "../../../../store/reducers/details/transactionsv2/daysInfo";
 import {
-  bpdLastTransactionUpdateSelector,
   bpdTransactionByIdSelector,
   bpdTransactionsGetNextCursor,
   bpdTransactionsSelector
