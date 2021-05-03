@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import WorkunitGenericFailure from "../../../../../../../components/error/WorkunitGenericFailure";
+import { mixpanelTrack } from "../../../../../../../mixpanel";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/transactions";
@@ -40,6 +41,7 @@ const BpdTransactionsRouterScreen = (
 
   // Handling unexpected error
   if (unexpectedError) {
+    void mixpanelTrack("BPD_TRANSACTIONS_SCREEN_UNEXPECTED_ERROR");
     return <WorkunitGenericFailure />;
   }
 
