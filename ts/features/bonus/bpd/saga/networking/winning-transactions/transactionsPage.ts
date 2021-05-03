@@ -35,7 +35,7 @@ export function* bpdLoadTransactionsPage(
   SagaCallReturnType<typeof getTransactionPage>
 > {
   try {
-    void mixpanelTrack(mixpanelActionRequest);
+    void mixpanelTrack(mixpanelActionRequest, { awardPeriodId, cursor });
     const getTransactionsPageResults = yield call(getTransactionPage, {
       awardPeriodId,
       nextCursor: cursor
@@ -43,6 +43,8 @@ export function* bpdLoadTransactionsPage(
     if (getTransactionsPageResults.isRight()) {
       if (getTransactionsPageResults.value.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
+          awardPeriodId,
+          cursor,
           count: getTransactionsPageResults.value.value?.transactions.length
         });
         return right<Error, BpdTransactionPageSuccessPayload>({
@@ -63,6 +65,8 @@ export function* bpdLoadTransactionsPage(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
+      awardPeriodId,
+      cursor,
       reason: getError(e).message
     });
     return left<Error, BpdTransactionPageSuccessPayload>(getError(e));

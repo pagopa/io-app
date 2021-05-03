@@ -32,13 +32,14 @@ export function* bpdLoadCountByDay(
   SagaCallReturnType<typeof getCountByDay>
 > {
   try {
-    void mixpanelTrack(mixpanelActionRequest);
+    void mixpanelTrack(mixpanelActionRequest, { awardPeriodId });
     const getCountByDayResults = yield call(getCountByDay, {
       awardPeriodId
     } as any);
     if (getCountByDayResults.isRight()) {
       if (getCountByDayResults.value.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
+          awardPeriodId,
           count: getCountByDayResults.value.value?.length
         });
         return right<Error, TrxCountByDayResource>({
@@ -57,6 +58,7 @@ export function* bpdLoadCountByDay(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
+      awardPeriodId,
       reason: getError(e).message
     });
     return left<Error, TrxCountByDayResource>(getError(e));
