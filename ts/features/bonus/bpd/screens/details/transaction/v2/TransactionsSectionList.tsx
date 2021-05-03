@@ -28,6 +28,7 @@ import {
   atLeastOnePaymentMethodHasBpdEnabledSelector,
   paymentMethodsWithActivationStatusSelector
 } from "../../../../store/reducers/details/combiner";
+import { bpdLastUpdateSelector } from "../../../../store/reducers/details/lastUpdate";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
 import { bpdDaysInfoByIdSelector } from "../../../../store/reducers/details/transactionsv2/daysInfo";
 import {
@@ -89,7 +90,7 @@ const TransactionsHeader = (
 ) => (
   <View style={IOStyles.horizontalContentPadding}>
     <View spacer={true} />
-    {props.selectedPeriod && props.maybeLastUpdateDate.isSome() && (
+    {props.selectedPeriod && pot.isSome(props.maybeLastUpdateDate) && (
       <>
         <BpdTransactionSummaryComponent
           lastUpdateDate={localeDateFormat(
@@ -184,7 +185,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   selectedPeriod: bpdSelectedPeriodSelector(state),
-  maybeLastUpdateDate: bpdLastTransactionUpdateSelector(state),
+  maybeLastUpdateDate: bpdLastUpdateSelector(state),
   potWallets: paymentMethodsWithActivationStatusSelector(state),
   atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
     state
