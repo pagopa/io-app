@@ -101,7 +101,11 @@ const styles = StyleSheet.create({
   bottomContainer: {
     position: "absolute",
     bottom: 0,
-    width: "100%"
+    alignSelf: "center"
+  },
+  contentContainerStyle: {
+    flexGrow: 1,
+    padding: customVariables.contentPadding
   }
 });
 
@@ -498,7 +502,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           />
           <Content
             primary={!isValidatingTask}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={styles.contentContainerStyle}
+            noPadded
           >
             {renderHeader()}
             {this.renderErrorDescription()}
