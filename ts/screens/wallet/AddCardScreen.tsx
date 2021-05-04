@@ -68,7 +68,6 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { isIos } from "../../utils/platform";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -232,21 +231,18 @@ const AddCardScreen: React.FC<Props> = props => {
   };
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-  const placeholders =
-    // TODO accessibility improvements work only for Android
-    // see https://www.pivotaltracker.com/story/show/177270155/comments/223678495
-    !isScreenReaderEnabled || isIos
-      ? {
-          placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
-          placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
-          placeholderDate: I18n.t("wallet.dummyCard.values.expirationDate"),
-          placeholderSecureCode: I18n.t(
-            detectedBrand.cvvLength === 4
-              ? "wallet.dummyCard.values.securityCode4D"
-              : "wallet.dummyCard.values.securityCode"
-          )
-        }
-      : {};
+  const placeholders = !isScreenReaderEnabled
+    ? {
+        placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
+        placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
+        placeholderDate: I18n.t("wallet.dummyCard.values.expirationDate"),
+        placeholderSecureCode: I18n.t(
+          detectedBrand.cvvLength === 4
+            ? "wallet.dummyCard.values.securityCode4D"
+            : "wallet.dummyCard.values.securityCode"
+        )
+      }
+    : {};
 
   return (
     <BaseScreenComponent
