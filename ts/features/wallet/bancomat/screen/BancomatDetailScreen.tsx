@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -14,6 +15,7 @@ import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
@@ -21,6 +23,7 @@ import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BancomatInformation from "./BancomatInformation";
 
 type NavigationParams = Readonly<{
@@ -76,12 +79,26 @@ const startCoBadge = (props: Props) => {
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const bancomat: BancomatPaymentMethod = props.navigation.getParam("bancomat");
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: pagoBancomatImage,
     caption: bancomat.abiInfo?.name ?? I18n.t("wallet.methods.bancomat.name")
   });
-  return (
+
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
+  return isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={isLoadingDelete}
+      loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+    />
+  ) : (
     <DarkLayout
       bounces={false}
       title={I18n.t("wallet.methods.card.shortName")}
@@ -108,7 +125,12 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <UnsubscribeButton
-          onPress={() => present(() => props.deleteWallet(bancomat.idWallet))}
+          onPress={() =>
+            present(() => {
+              props.deleteWallet(bancomat.idWallet);
+              setIsLoadingDelete(true);
+            })
+          }
         />
       </View>
       <View spacer={true} extralarge={true} />
@@ -140,8 +162,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     )
 });
-
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  hasErrorDelete: pot.isError(getWalletsById(state))
+});
 
 export default connect(
   mapStateToProps,
