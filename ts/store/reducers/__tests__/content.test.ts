@@ -7,7 +7,7 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { ContentState, idpsSelector } from "../content";
 import { idps } from "../__mock__/idps";
-import { IdpEntry } from "../../../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../../../definitions/content/SpidIdp";
 
 const state: ContentState = {
   servicesMetadata: {
@@ -46,7 +46,7 @@ describe("idps selector", () => {
     expect(idpsSelector.resultFunc(stateWithErrors)).toStrictEqual(idps);
   });
 
-  const someIdps: ReadonlyArray<IdpEntry> = [
+  const someIdps: ReadonlyArray<SpidIdp> = [
     {
       id: "spid_id_1",
       name: "Spid ID 1",

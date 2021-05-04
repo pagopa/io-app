@@ -24,7 +24,7 @@ import {
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
-import { IdpEntry } from "../../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
@@ -45,14 +45,14 @@ type LoggedOutWithoutIdp = Readonly<{
 // The user is logged out but has already selected an IDP
 export type LoggedOutWithIdp = Readonly<{
   kind: "LoggedOutWithIdp";
-  idp: IdpEntry;
+  idp: SpidIdp;
   reason: LoggedOutReason;
 }>;
 
 // The user is logged in but we still have to request the addition session info to the Backend
 export type LoggedInWithoutSessionInfo = Readonly<{
   kind: "LoggedInWithoutSessionInfo";
-  idp: IdpEntry;
+  idp: SpidIdp;
   sessionToken: SessionToken;
 }>;
 
@@ -60,7 +60,7 @@ export type SupportTokenState = RemoteValue<SupportToken, Error>;
 // The user is logged in and we also have all session info
 export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
-  idp: IdpEntry;
+  idp: SpidIdp;
   sessionToken: SessionToken;
   sessionInfo: PublicSession;
   supportToken?: SupportTokenState;
@@ -68,7 +68,7 @@ export type LoggedInWithSessionInfo = Readonly<{
 
 export type LogoutRequested = Readonly<{
   kind: "LogoutRequested";
-  idp: IdpEntry;
+  idp: SpidIdp;
   reason: LoggedOutReason;
 }>;
 
@@ -178,9 +178,7 @@ function matchWithIdp<O>(
   return whenWithIdp(state);
 }
 
-export const idpSelector = ({
-  authentication
-}: GlobalState): Option<IdpEntry> =>
+export const idpSelector = ({ authentication }: GlobalState): Option<SpidIdp> =>
   matchWithIdp(authentication, none, ({ idp }) => some(idp));
 
 // eslint-disable-next-line complexity

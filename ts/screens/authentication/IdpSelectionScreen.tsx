@@ -18,7 +18,7 @@ import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
 import { GlobalState } from "../../store/reducers/types";
 import { idpsSelector } from "../../store/reducers/content";
-import { IdpEntry } from "../../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { testIdp } from "../../store/reducers/__mock__/idps";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -53,7 +53,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
     this.state = { counter: 0 };
   }
 
-  private onIdpSelected = (idp: IdpEntry) => {
+  private onIdpSelected = (idp: SpidIdp) => {
     const { counter } = this.state;
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
@@ -119,7 +119,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedIdp: (idp: IdpEntry) => dispatch(idpSelected(idp))
+  setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IdpSelectionScreen);

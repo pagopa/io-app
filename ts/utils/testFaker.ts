@@ -23,7 +23,7 @@ import {
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
-import { IdpEntry } from "../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 const validCreditCard: CreditCard = {
@@ -235,7 +235,7 @@ export const AuthSeq: ReadonlyArray<Action> = [
     logo: "http://placeimg.com/640/480/some",
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  } as IdpEntry),
+  } as SpidIdp),
   loginSuccess(
     "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken
   ),

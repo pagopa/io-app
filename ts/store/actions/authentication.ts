@@ -13,7 +13,7 @@ import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
-import { IdpEntry } from "../../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -28,7 +28,7 @@ export type CheckSessionResult = {
   isSessionValid: boolean;
 };
 
-export const idpSelected = createStandardAction("IDP_SELECTED")<IdpEntry>();
+export const idpSelected = createStandardAction("IDP_SELECTED")<SpidIdp>();
 
 export const testLoginRequest = createStandardAction("TEST_LOGIN_REQUEST")<
   PasswordLogin

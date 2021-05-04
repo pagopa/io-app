@@ -4,7 +4,7 @@ import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { ServiceMetadataState } from "../reducers/content";
-import { Idps } from "../../../definitions/content/Idps";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
 
 // TODO: check if response with code !== 200 can mean different errors.
 // If false, the failure payload could be just the serviceID as before
@@ -49,7 +49,7 @@ export const loadIdps = createAsyncAction(
   "LOAD_IDPS_REQUEST",
   "LOAD_IDPS_SUCCESS",
   "LOAD_IDPS_FAILURE"
-)<void, Idps, Error>();
+)<void, SpidIdps, Error>();
 
 export type ContentActions =
   | ActionType<typeof loadServiceMetadata>

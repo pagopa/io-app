@@ -62,7 +62,7 @@ import { deletePin, getPin } from "../utils/keychain";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import I18n from "../i18n";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { IdpEntry } from "../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -239,7 +239,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield put(clearCache());
   }
 
-  const maybeIdp: Option<IdpEntry> = yield select(idpSelector);
+  const maybeIdp: Option<SpidIdp> = yield select(idpSelector);
 
   setInstabugProfileAttributes(maybeIdp);
 

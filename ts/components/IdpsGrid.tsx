@@ -7,14 +7,14 @@ import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { Button } from "native-base";
 import variables from "../theme/variables";
-import { IdpEntry } from "../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<IdpEntry>;
+  idps: ReadonlyArray<SpidIdp>;
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (_: IdpEntry) => void;
+  onIdpSelected: (_: SpidIdp) => void;
   testID?: string;
 };
 
@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (idp: IdpEntry): string => idp.id;
+const keyExtractor = (idp: SpidIdp): string => idp.id;
 
 const renderItem = (props: Props) => (
-  info: ListRenderItemInfo<IdpEntry>
+  info: ListRenderItemInfo<SpidIdp>
 ): React.ReactElement => {
   const { onIdpSelected } = props;
   const { item } = info;

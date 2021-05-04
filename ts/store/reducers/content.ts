@@ -33,8 +33,8 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
-import { Idps } from "../../../definitions/content/Idps";
-import { IdpEntry } from "../../../definitions/content/IdpEntry";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 import { idps } from "./__mock__/idps";
@@ -49,7 +49,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
-  idps: RemoteValue<Idps, Error>;
+  idps: RemoteValue<SpidIdps, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -97,7 +97,7 @@ export const contextualHelpDataSelector = (
 
 export const idpsSelector = createSelector(
   contentSelector,
-  (content: ContentState): ReadonlyArray<IdpEntry> =>
+  (content: ContentState): ReadonlyArray<SpidIdp> =>
     isReady(content.idps) ? content.idps.value.items : idps
 );
 
@@ -105,7 +105,7 @@ export const idpsSelector = createSelector(
  * return an option with Idp contextual help data if they are loaded and defined
  * @param id
  */
-export const idpContextualHelpDataFromIdSelector = (id: IdpEntry["id"]) =>
+export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>

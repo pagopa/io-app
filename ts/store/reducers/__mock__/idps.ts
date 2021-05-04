@@ -1,9 +1,9 @@
-import { IdpEntry } from "../../../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../../../definitions/content/SpidIdp";
 
 // since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
 // It is used has a placeholder to handle taps count on it and open when
 // taps count threadshold is reached (see https://www.pivotaltracker.com/story/show/172082895)
-export const testIdp: IdpEntry = {
+export const testIdp: SpidIdp = {
   id: "test",
   name: "Test",
   logo:
@@ -13,7 +13,7 @@ export const testIdp: IdpEntry = {
   isTestIdp: true
 };
 
-export const idps: ReadonlyArray<IdpEntry> = [
+export const idps: ReadonlyArray<SpidIdp> = [
   {
     id: "arubaid",
     name: "Aruba",

@@ -19,7 +19,7 @@ import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
-import { Idps } from "../../definitions/content/Idps";
+import { SpidIdps } from "../../definitions/content/SpidIdps";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -133,7 +133,7 @@ type GetIdpsListT = IGetApiRequestType<
   void,
   never,
   never,
-  BasicResponseType<Idps>
+  BasicResponseType<SpidIdps>
 >;
 
 const getIdpsT: GetIdpsListT = {
@@ -141,7 +141,7 @@ const getIdpsT: GetIdpsListT = {
   url: () => "/spid/idps/list.json",
   query: _ => ({}),
   headers: () => ({}),
-  response_decoder: basicResponseDecoder(Idps)
+  response_decoder: basicResponseDecoder(SpidIdps)
 };
 /**
  * A client for the static content

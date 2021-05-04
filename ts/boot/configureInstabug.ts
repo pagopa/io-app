@@ -12,7 +12,7 @@ import variables from "../theme/variables";
 import { getAppVersion } from "../utils/appVersion";
 import { isDevEnv } from "../utils/environment";
 import { SupportToken } from "../../definitions/backend/SupportToken";
-import { IdpEntry } from "../../definitions/content/IdpEntry";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
@@ -118,8 +118,8 @@ export const setInstabugUserAttribute = (
   Instabug.setUserAttribute(attributeKey, attributeValue);
 };
 
-export const setInstabugProfileAttributes = (maybeIdp: Option<IdpEntry>) => {
-  maybeIdp.fold(undefined, (idp: IdpEntry) =>
+export const setInstabugProfileAttributes = (maybeIdp: Option<SpidIdp>) => {
+  maybeIdp.fold(undefined, (idp: SpidIdp) =>
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
 };
