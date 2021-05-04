@@ -2209,6 +2209,7 @@ bonus:
         error:
           title: "I sistemi stanno impiegando più tempo del previsto"
           body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
+          pageLoading: "Non riusciamo a recuperare le transazioni, riprova per piacere."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
