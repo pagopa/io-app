@@ -114,74 +114,77 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
 
   return (
     <View>
-      <Item style={styles.noBottomLine}>
-        <H5
-          accessibilityRole="header"
-          accessibilityLabel={`${props.label}, ${I18n.t(
-            "global.accessibility.inputLabel"
-          )}`}
-        >
-          {props.label}
-        </H5>
-      </Item>
-      <Item
-        style={{
-          ...styles.bottomLine,
-          borderColor:
-            hasFocus && isEmpty
-              ? variables.itemBorderDefaultColor
-              : props.focusBorderColor
-        }}
-        error={props.isValid === undefined ? false : !props.isValid}
-        success={props.isValid === undefined ? false : props.isValid}
+      <View
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
       >
-        {props.icon &&
-          (isString(props.icon) ? (
-            <IconFont
-              size={variables.iconSize3}
-              color={variables.brandDarkGray}
-              name={props.icon}
-              style={props.iconStyle}
+        <Item style={styles.noBottomLine}>
+          <H5>{props.label}</H5>
+        </Item>
+      </View>
+      <View accessible={true}>
+        <Item
+          style={{
+            ...styles.bottomLine,
+            borderColor:
+              hasFocus && isEmpty
+                ? variables.itemBorderDefaultColor
+                : props.focusBorderColor
+          }}
+          error={props.isValid === undefined ? false : !props.isValid}
+          success={props.isValid === undefined ? false : props.isValid}
+        >
+          {props.icon &&
+            (isString(props.icon) ? (
+              <IconFont
+                size={variables.iconSize3}
+                color={variables.brandDarkGray}
+                name={props.icon}
+                style={props.iconStyle}
+              />
+            ) : (
+              <Image source={props.icon} style={props.iconStyle} />
+            ))}
+          {props.type === "masked" ? (
+            <TextInputMask
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityHint={`${props.accessibilityHint}${
+                props.description ? "," + props.description : ""
+              }`}
+              placeholderTextColor={color(variables.brandGray)
+                .darken(0.2)
+                .string()}
+              underlineColorAndroid="transparent"
+              {...props.inputMaskProps}
+              onChangeText={handleOnMaskedChangeText}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}InputMask`}
             />
           ) : (
-            <Image source={props.icon} style={props.iconStyle} />
-          ))}
-        {props.type === "masked" ? (
-          <TextInputMask
-            accessibilityLabel={props.accessibilityLabel}
-            accessibilityHint={`${props.accessibilityHint}${
-              props.description ? "," + props.description : ""
-            }`}
-            placeholderTextColor={color(variables.brandGray)
-              .darken(0.2)
-              .string()}
-            underlineColorAndroid="transparent"
-            {...props.inputMaskProps}
-            onChangeText={handleOnMaskedChangeText}
-            onFocus={handleOnFocus}
-            onBlur={handleOnBlur}
-            testID={`${props.testID}InputMask`}
-          />
-        ) : (
-          <Input
-            accessibilityLabel={props.accessibilityLabel}
-            accessibilityHint={`${props.accessibilityHint}${
-              props.description ? "," + props.description : ""
-            }`}
-            placeholderTextColor={color(variables.brandGray)
-              .darken(0.2)
-              .string()}
-            underlineColorAndroid="transparent"
-            {...props.inputProps}
-            onChangeText={handleOnChangeText}
-            onFocus={handleOnFocus}
-            onBlur={handleOnBlur}
-            testID={`${props.testID}Input`}
-          />
-        )}
-      </Item>
+            <Input
+              accessibilityLabel={props.accessibilityLabel}
+              accessibilityHint={`${props.accessibilityHint}${
+                props.description ? "," + props.description : ""
+              }`}
+              placeholderTextColor={color(variables.brandGray)
+                .darken(0.2)
+                .string()}
+              underlineColorAndroid="transparent"
+              {...props.inputProps}
+              onChangeText={handleOnChangeText}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}Input`}
+            />
+          )}
+        </Item>
+      </View>
       {props.description && (
-        <View importantForAccessibility="no-hide-descendants">
+        <View
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden={true}
+        >
           <Item style={styles.noBottomLine}>
             <H5
               weight={"Regular"}
