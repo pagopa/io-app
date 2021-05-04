@@ -43,13 +43,16 @@ import BpdEmptyTransactionsList from "../BpdEmptyTransactionsList";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const renderSectionHeader = (
-  info: { section: SectionListData<BpdTransactionId> },
+type HeaderProps = Props & {
+  info: { section: SectionListData<BpdTransactionId> };
+};
+
+const RenderSectionHeaderBase = (
   // we need to pass props as argument because with the current react-redux version useSelect cannot be used
-  props: Props
+  props: HeaderProps
 ) =>
   props
-    .bpdDaysInfoByIdSelector(info.section.dayInfoId)
+    .bpdDaysInfoByIdSelector(props.info.section.dayInfoId)
     .fold(null, daysInfo => (
       <BaseDailyTransactionHeader
         date={localeDateFormat(
@@ -60,12 +63,25 @@ const renderSectionHeader = (
       />
     ));
 
-const renderItem = (
-  trxId: SectionListRenderItemInfo<BpdTransactionId>,
+/**
+ * In order to optimize the rendering of the item, we use the dayInfo as unique identifier to avoid to redraw the component.
+ * The dayInfo data cannot change while consulting the list and we use this information to avoid a deep comparison
+ */
+export const RenderSectionHeader = React.memo(
+  RenderSectionHeaderBase,
+  (prev: HeaderProps, curr: HeaderProps) =>
+    prev.info.section.dayInfo === curr.info.section.dayInfo
+);
+
+type ItemProps = Props & {
+  trxId: SectionListRenderItemInfo<BpdTransactionId>;
+};
+
+const RenderItemBase = (
   // we need to pass props as argument because with the current react-redux version useSelect cannot be used
-  props: Props
+  props: ItemProps
 ): React.ReactElement | null =>
-  props.bpdTransactionByIdSelector(trxId.item).fold(null, trx => (
+  props.bpdTransactionByIdSelector(props.trxId.item).fold(null, trx => (
     <>
       {trx.isPivot && (
         <BpdCashbackMilestoneComponent
@@ -78,6 +94,15 @@ const renderItem = (
       <BpdTransactionItem transaction={trx} />
     </>
   ));
+
+/**
+ * In order to optimize the rendering of the item, we use the keyId as unique identifier to avoid to redraw the component.
+ * The trx data cannot change while consulting the list and we use this information to avoid a deep comparison
+ */
+export const RenderItem = React.memo(
+  RenderItemBase,
+  (prev: ItemProps, curr: ItemProps) => prev.trxId.item === curr.trxId.item
+);
 
 /**
  * The header of the transactions list
@@ -155,7 +180,9 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
   return (
     <SectionList
       testID={"TransactionsSectionList"}
-      renderSectionHeader={info => renderSectionHeader(info, props)}
+      renderSectionHeader={info => (
+        <RenderSectionHeader {...props} info={info} />
+      )}
       ListHeaderComponent={<TransactionsHeader {...props} />}
       ListEmptyComponent={<TransactionsEmpty {...props} />}
       ListFooterComponent={isLoading && <FooterLoading />}
@@ -167,11 +194,10 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
           );
         }
       }}
-      onEndReachedThreshold={0.2}
       scrollEnabled={true}
       stickySectionHeadersEnabled={true}
       sections={transactions}
-      renderItem={ri => renderItem(ri, props)}
+      renderItem={ri => <RenderItem {...props} trxId={ri} />}
       keyExtractor={t => t}
     />
   );

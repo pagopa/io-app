@@ -44,12 +44,13 @@ export const getSubtitle = (transaction: BpdTransaction) => {
       )} `;
 };
 
-const BpdTransactionItemBase: React.FunctionComponent<Props> = props => {
+export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
   const { present: openBottomSheet } = useIOBottomSheet(
     <BpdTransactionDetailComponent transaction={props.transaction} />,
     I18n.t("bonus.bpd.details.transaction.detail.title"),
     522
   );
+  // console.log("render" + props.transaction.keyId);
 
   return (
     <BaseBpdTransactionItem
@@ -61,13 +62,3 @@ const BpdTransactionItemBase: React.FunctionComponent<Props> = props => {
     />
   );
 };
-
-/**
- * In order to optimize the rendering of the item, we use the keyId as unique identifier to avoid to redraw the component.
- * The trx data cannot change while consulting the list and we use this information to avoid a props deep comparison
- */
-export const BpdTransactionItem = React.memo(
-  BpdTransactionItemBase,
-  (prev: Props, curr: Props) =>
-    prev.transaction.keyId === curr.transaction.keyId
-);
