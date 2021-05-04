@@ -173,7 +173,10 @@ const TransactionsSectionList = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     if (isError) {
-      showToast(I18n.t("global.genericError"), "danger");
+      showToast(
+        I18n.t("bonus.bpd.details.transaction.error.pageLoading"),
+        "danger"
+      );
     }
   }, [isError]);
 

@@ -50,7 +50,6 @@ export const BpdTransactionItem: React.FunctionComponent<Props> = props => {
     I18n.t("bonus.bpd.details.transaction.detail.title"),
     522
   );
-  // console.log("render" + props.transaction.keyId);
 
   return (
     <BaseBpdTransactionItem

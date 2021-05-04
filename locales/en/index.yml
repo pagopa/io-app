@@ -2179,6 +2179,7 @@ bonus:
         error:
           title: "Systems are taking longer than expected"
           body: "We're currently unable to retrieve your transactions. Don't worry! The list will be available again soon."
+          pageLoading: "We're unable to retrieve your transactions, please try again."
         noPaymentMethod:
           text1: "You must activate "
           text2: "at least one payment method "
