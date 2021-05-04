@@ -64,6 +64,7 @@ global:
     moreInfo: more info
   accessibility:
     inputLabel: "{{header}}, Header"
+    textField: "{{inputLabel}}, text field"
     description: Description
     dateField: 2 digits for the month, 2 for the year
     threeDigits: 3 digits

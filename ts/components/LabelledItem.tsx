@@ -49,8 +49,8 @@ type CommonProp = Readonly<{
   iconStyle?: StyleType;
   focusBorderColor?: string;
   description?: string;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
+  inputAccessibilityLabel?: string;
+  inputAccessibilityHint?: string;
 }>;
 
 type Props = WithTestID<CommonProp> &
@@ -124,7 +124,14 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
           <H5>{props.label}</H5>
         </Item>
       </View>
-      <View accessible={true}>
+
+      <View
+        accessible={true}
+        accessibilityLabel={I18n.t("global.accessibility.textField", {
+          inputLabel: props.inputAccessibilityLabel
+        })}
+        accessibilityHint={props.inputAccessibilityHint}
+      >
         <Item
           style={{
             ...styles.bottomLine,
@@ -149,9 +156,6 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             ))}
           {props.type === "masked" ? (
             <TextInputMask
-              accessibilityHint={`${props.accessibilityHint}${
-                props.description ? "," + props.description : ""
-              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
@@ -164,10 +168,6 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             />
           ) : (
             <Input
-              accessibilityLabel={props.accessibilityLabel}
-              accessibilityHint={`${props.accessibilityHint}${
-                props.description ? "," + props.description : ""
-              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
