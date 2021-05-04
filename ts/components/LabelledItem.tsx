@@ -10,7 +10,6 @@
  *       input
  */
 import color from "color";
-import I18n from "i18n-js";
 import { isString } from "lodash";
 import { Input, Item, View } from "native-base";
 import * as React from "react";
@@ -28,6 +27,7 @@ import { WithTestID } from "../types/WithTestID";
 import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
+import I18n from "../i18n";
 import { useState } from "react";
 
 const styles = StyleSheet.create({
@@ -115,8 +115,10 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
   return (
     <View>
       <View
-        importantForAccessibility="no-hide-descendants"
-        accessibilityElementsHidden={true}
+        accessibilityLabel={I18n.t("global.accessibility.inputLabel", {
+          header: props.label
+        })}
+        accessible={true}
       >
         <Item style={styles.noBottomLine}>
           <H5>{props.label}</H5>
@@ -147,7 +149,6 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             ))}
           {props.type === "masked" ? (
             <TextInputMask
-              accessibilityLabel={props.accessibilityLabel}
               accessibilityHint={`${props.accessibilityHint}${
                 props.description ? "," + props.description : ""
               }`}

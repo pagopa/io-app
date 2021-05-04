@@ -63,11 +63,11 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
-    inputLabel: Intestazione
+    inputLabel: "{{header}}, Intestazione"
     description: Descrizione
     dateField: Due cifre per il mese, due per l'anno
-    threeDigits: 3 cifre	
-    fourDigits: 4 cifre	
+    threeDigits: 3 cifre
+    fourDigits: 4 cifre
     dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
