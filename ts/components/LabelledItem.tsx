@@ -115,10 +115,8 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
   return (
     <View>
       <View
-        accessibilityLabel={I18n.t("global.accessibility.inputLabel", {
-          header: props.label
-        })}
-        accessible={true}
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
       >
         <Item style={styles.noBottomLine}>
           <H5>{props.label}</H5>
@@ -128,7 +126,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
       <View
         accessible={true}
         accessibilityLabel={I18n.t("global.accessibility.textField", {
-          inputLabel: props.inputAccessibilityLabel
+          inputLabel: props.inputAccessibilityLabel ?? ""
         })}
         accessibilityHint={props.inputAccessibilityHint}
       >
