@@ -6,6 +6,7 @@ import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     position: "absolute",
-    bottom: 0,
+    bottom: 20,
     alignSelf: "center"
   },
   contentContainerStyle: {
@@ -552,7 +553,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             <View spacer={true} large={true} />
             {!isValidatingTask && (
               <View style={styles.bottomContainer}>
-                <Text onPress={this.onLogout} alignCenter underlined white bold>
+                <Link onPress={this.onLogout} weight="Bold" color="white">
                   {fromNullable(this.props.profileName).fold(
                     I18n.t("identification.logout"),
                     pN =>
@@ -560,7 +561,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                         profileName: pN
                       })
                   )}
-                </Text>
+                </Link>
               </View>
             )}
           </Content>
