@@ -23,7 +23,6 @@ import {
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
-import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
@@ -71,6 +70,7 @@ type Props = WithTestID<CommonProp> &
       }>
   );
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const LabelledItem: React.FC<Props> = (props: Props) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hasFocus, setHasFocus] = useState(false);
@@ -124,7 +124,6 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
       ? variables.itemBorderDefaultColor
       : props.focusBorderColor;
   const isValid = props.isValid === undefined ? false : props.isValid;
-
   return (
     <View>
       <View
@@ -151,18 +150,18 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
           error={!isValid}
           success={isValid}
         >
-          {fromNullable(props.icon).map(i =>
-            isString(i) ? (
+          {props.icon &&
+            (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
                 color={variables.brandDarkGray}
-                name={i}
+                name={props.icon}
                 style={props.iconStyle}
               />
             ) : (
-              <Image source={i} style={props.iconStyle} />
-            )
-          )}
+              <Image source={props.icon} style={props.iconStyle} />
+            ))}
+
           {props.type === "masked" ? (
             <TextInputMask
               placeholderTextColor={color(variables.brandGray)
@@ -191,7 +190,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
           )}
         </Item>
       </View>
-      {fromNullable(props.description).map(d => (
+      {props.description && (
         <View
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
@@ -199,11 +198,11 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
         >
           <Item style={styles.noBottomLine}>
             <H5 weight={"Regular"} color={descriptionColor}>
-              {d}
+              {props.description}
             </H5>
           </Item>
         </View>
-      ))}
+      )}
     </View>
   );
 };
