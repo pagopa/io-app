@@ -1573,6 +1573,10 @@ identification:
   title: Hi!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
+  logout: Logout
+  logoutProfileName: Not {{profileName}}?
+  logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
   subtitleCode: Enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the Face ID or enter the unlock code
