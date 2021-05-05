@@ -2194,7 +2194,7 @@ bonus:
               readMore: "Read more"
             calendarBlock:
               text1: "Please note that before you'll see the transaction on IO,"
-              text2: "it usually takes up 3 working days"
+              text2: "it usually takes up to 3 working days"
               text3: "."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
