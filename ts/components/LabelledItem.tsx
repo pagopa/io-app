@@ -13,23 +13,24 @@ import color from "color";
 import { isString } from "lodash";
 import { Input, Item, View } from "native-base";
 import * as React from "react";
+import { useState } from "react";
 import {
-  StyleSheet,
-  TextInputProps,
   Image,
   ImageSourcePropType,
-  ImageStyle
+  ImageStyle,
+  StyleSheet,
+  TextInputProps
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
+import { fromNullable } from "fp-ts/lib/Option";
+import I18n from "../i18n";
 import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
 import { makeFontStyleObject } from "./core/fonts";
 import { H5 } from "./core/typography/H5";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
-import I18n from "../i18n";
-import { useState } from "react";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -116,6 +117,14 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
     setHasFocus(false);
   };
 
+  const descriptionColor = props.isValid === false ? "red" : "bluegreyDark";
+  const accessibilityLabel = props.accessibilityLabel ?? "";
+  const inputBorderColor =
+    hasFocus && isEmpty
+      ? variables.itemBorderDefaultColor
+      : props.focusBorderColor;
+  const isValid = props.isValid === undefined ? false : props.isValid;
+
   return (
     <View>
       <View
@@ -130,32 +139,30 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
       <View
         accessible={true}
         accessibilityLabel={I18n.t("global.accessibility.textField", {
-          inputLabel: props.accessibilityLabel ?? ""
+          inputLabel: accessibilityLabel
         })}
         accessibilityHint={props.accessibilityHint}
       >
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor:
-              hasFocus && isEmpty
-                ? variables.itemBorderDefaultColor
-                : props.focusBorderColor
+            borderColor: inputBorderColor
           }}
-          error={props.isValid === undefined ? false : !props.isValid}
-          success={props.isValid === undefined ? false : props.isValid}
+          error={!isValid}
+          success={isValid}
         >
-          {props.icon &&
-            (isString(props.icon) ? (
+          {fromNullable(props.icon).map(i =>
+            isString(i) ? (
               <IconFont
                 size={variables.iconSize3}
                 color={variables.brandDarkGray}
-                name={props.icon}
+                name={i}
                 style={props.iconStyle}
               />
             ) : (
-              <Image source={props.icon} style={props.iconStyle} />
-            ))}
+              <Image source={i} style={props.iconStyle} />
+            )
+          )}
           {props.type === "masked" ? (
             <TextInputMask
               placeholderTextColor={color(variables.brandGray)
@@ -184,21 +191,19 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
           )}
         </Item>
       </View>
-      {props.description && (
+      {fromNullable(props.description).map(d => (
         <View
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
+          key={"description"}
         >
           <Item style={styles.noBottomLine}>
-            <H5
-              weight={"Regular"}
-              color={props.isValid === false ? "red" : "bluegreyDark"}
-            >
-              {props.description}
+            <H5 weight={"Regular"} color={descriptionColor}>
+              {d}
             </H5>
           </Item>
         </View>
-      )}
+      ))}
     </View>
   );
 };
