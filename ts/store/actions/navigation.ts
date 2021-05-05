@@ -159,6 +159,11 @@ export const navigateToLanguagePreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
   });
 
+export const navigateToLogout = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_LOGOUT
+  });
+
 export const navigateToRemoveAccountSuccess = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS

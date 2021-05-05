@@ -45,6 +45,7 @@ import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 import internalRouteNavigationReducer from "./internalRouteNavigation";
+import backoffErrorReducer from "./backoffError";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -87,6 +88,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   network: networkReducer,
+  backoffError: backoffErrorReducer,
   nav: navigationReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
