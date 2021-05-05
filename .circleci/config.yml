@@ -21,7 +21,7 @@ release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
 
 # android builds
 defaults_android: &defaults_android
@@ -120,7 +120,7 @@ jobs:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
               yarn test $TEST
-      - run: "bash <(curl -s https://codecov.io/bash)"
+      - run: ./scripts/codecov.sh
     parallelism: 8
 
   # Runs Danger checks on PR

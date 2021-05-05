@@ -20,6 +20,7 @@ import {
   walletAddBancomatFailure
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
+import ROUTES from "../../../../../../navigation/routes";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -54,10 +55,9 @@ export function* addBancomatToWalletAndActivateBpd() {
     const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
       navigationCurrentRouteSelector
     );
-
     if (
       currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_PAYMENT_METHOD"
+      currentRoute.value === ROUTES.WALLET_ADD_PAYMENT_METHOD
     ) {
       yield put(NavigationActions.back());
     }

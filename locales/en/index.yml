@@ -63,7 +63,12 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
-    date_format: MMMM Do YYYY
+    inputLabel: Header
+    description: Description
+    dateField: 2 digits for the month, 2 for the year
+    threeDigits: 3 digits	
+    fourDigits: 4 digits
+    dateFormat: MMMM Do YYYY
     expanded: Expanded paragraph
     collapsed: Collapsed paragraph
     active: State active
@@ -246,8 +251,9 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Logout from IO
-    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    menulabel: Do you want to logout?
+    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
+    loading: Logout in progress...
     exit: Exit
     cta:
       header: How do you want to quit the app?
@@ -1028,11 +1034,14 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
-    title: Choose the provider
-    infoBold: Choose the Payment Service Provider
-    info2: (PSP) which will have to manage your payment.
-    link: Find out more
+    headerTitle: "Choose the provider"
+    title: Which provider do you want to pay with?
+    info: Each provider proposes a transaction cost.
+    info2: In this list you will find all the providers
+    info2Bold: compatible with your method, even if you are not their client.
+    provider: Provider
     maxFee: Maximum fee
+    loadingPsps: Loading providers in progress...
     onUpdateWalletPspFailure: Operation failed, please retry
     contextualHelpTitle: Select a provider
     contextualHelpContent: !include pick_psp.md
@@ -1277,6 +1286,7 @@ wallet:
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
       removeCta: "Delete this payment method"
+      deleteLoading: Payment method deletion in progress
   satispay:
     details:
       infobox:
@@ -1338,12 +1348,13 @@ saveCard:
 cardComponent:
   validUntil: Valid until
   expiresOn: Expires on
-  expiredCard: CARD EXPIRED ON
+  expiredCard: Card expired on
   actions: Actions
   setFavorite: Set as favourite
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteLoading: Payment method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1503,8 +1514,8 @@ send_email_messages:
       label: Disable for all services
       info: You will not receive email messages anymore
     enable_all:
-      label: Enable for all services
-      info: Every message will be forwarded to your email, if the service allows it
+      label: Enable for all active services
+      info: Every message will be forwarded to your email, if allowed by the service
     by_service:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
@@ -1559,9 +1570,10 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Unlock the app
+  title: Hi!
+  titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
-  subtitleCode: enter the unlock code
+  subtitleCode: Enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
@@ -1643,7 +1655,7 @@ instabug:
     buttonBug: Write to the IO team
     descriptionChat: "Only if you want to **reopen a past report**, to request additional information or add details, click below."
     buttonChat: Reopen a report
-    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays. 
+    assistanceWorkHours: IO support is available on Mon-Fri from 8.00 to 20.00; on Sat-Sun from 8.00 to 13.00. Support is closed on national holidays.
 bottomSheets:
   ciePin:
       title: "Where can I find my PIN?"
@@ -2182,7 +2194,7 @@ bonus:
               readMore: "Read more"
             calendarBlock:
               text1: "Please note that before you'll see the transaction on IO,"
-              text2: "it usually takes up 3 working days"
+              text2: "it usually takes up to 3 working days"
               text3: "."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?
@@ -2256,6 +2268,8 @@ bonus:
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
+    accessibility:
+      code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: View merchants

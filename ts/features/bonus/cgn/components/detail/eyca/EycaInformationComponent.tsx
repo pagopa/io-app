@@ -18,7 +18,7 @@ const EycaInformationComponent: React.FunctionComponent = () => {
   return (
     <View>
       <View spacer />
-      <View style={{ flex: 1 }}>
+      <View>
         <Markdown avoidTextSelection onLoadEnd={() => setMarkdownloaded(true)}>
           {I18n.t("bonus.cgn.detail.status.eycaDescription")}
         </Markdown>

@@ -63,7 +63,12 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
-    date_format: DD MMMM YYYY
+    inputLabel: Intestazione
+    description: Descrizione
+    dateField: Due cifre per il mese, due per l'anno
+    threeDigits: 3 cifre	
+    fourDigits: 4 cifre	
+    dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
     active: Stato attivo
@@ -246,8 +251,9 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da IO
-    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    menulabel: Vuoi davvero uscire?
+    alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
+    loading: Logout in corso...
     exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
@@ -1054,11 +1060,14 @@ wallet:
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
-    title: Scegli il gestore
-    infoBold: Scegli il soggetto
-    info2: (PSP) che dovrà gestire la tua transazione.
-    link: Per saperne di più
+    headerTitle: "Seleziona un gestore"
+    title: Con quale gestore vuoi pagare?
+    info: Ogni gestore propone un costo di transazione.
+    info2: In questa lista trovi tutti i gestori
+    info2Bold: compatibili con il tuo metodo, anche se non sei loro cliente.
+    provider: Gestore
     maxFee: Costo di transazione
+    loadingPsps: Caricamento gestori in corso...
     onUpdateWalletPspFailure: Operazione fallita, riprova
     contextualHelpTitle: Scelta del gestore
     contextualHelpContent: !include pick_psp.md
@@ -1302,6 +1311,7 @@ wallet:
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
+      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:
@@ -1365,12 +1375,13 @@ saveCard:
 cardComponent:
   validUntil: Valida fino al
   expiresOn: Scade il
-  expiredCard: CARTA SCADUTA IL
+  expiredCard: Carta scaduta il
   actions: Azioni
   setFavorite: Imposta come preferita
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
+  deleteLoading: Eliminazione metodo di pagamento in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
@@ -1533,7 +1544,7 @@ send_email_messages:
       label: Disabilita per tutti i servizi
       info: Non riceverai più messaggi via email
     enable_all:
-      label: Abilita per tutti i servizi
+      label: Abilita per tutti i servizi attivi
       info: Ogni messaggio sarà inoltrato alla tua email, se il servizio lo consente
     by_service:
       label: Scegli servizio per servizio
@@ -1589,9 +1600,10 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Sblocca l'app
+  title: Ciao!
+  titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
-  subtitleCode: inserisci il codice di sblocco
+  subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
@@ -1672,7 +1684,7 @@ instabug:
     buttonBug: Scrivi al team di IO
     descriptionChat: "Solo se vuoi **riaprire una segnalazione passata**, per chiedere informazioni aggiuntive o aggiungere dettagli, clicca qui sotto."
     buttonChat: Riapri una segnalazione
-    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale. 
+    assistanceWorkHours: L'assistenza di IO è disponibile dal lunedì al venerdì dalle ore 8 alle 20; sabato, domenica dalle ore 8 alle 13. Sono esclusi i giorni di festività nazionale.
 bottomSheets:
   ciePin:
       title: Dove trovo il mio PIN?
@@ -2286,6 +2298,8 @@ bonus:
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
+    accessibility:
+      code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     merchantsList:
       navigationTitle: Visualizza esercenti

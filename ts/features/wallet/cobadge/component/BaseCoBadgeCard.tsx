@@ -20,6 +20,7 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 type Props = {
   caption?: string;
   expiringDate?: Date;
+  isExpired?: boolean;
   abi: Abi;
   brandLogo: ImageSourcePropType;
   blocked?: boolean;
@@ -106,8 +107,8 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
             <>
               <View spacer={true} />
               <H5
-                weight={"Regular"}
-                color={"bluegrey"}
+                weight={props.isExpired ? "SemiBold" : "Regular"}
+                color={props.isExpired ? "red" : "bluegrey"}
                 testID={"expirationDate"}
               >
                 {I18n.t("wallet.cobadge.details.card.validUntil", {
