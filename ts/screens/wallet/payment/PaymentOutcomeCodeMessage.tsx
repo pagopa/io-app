@@ -1,11 +1,11 @@
 import React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
 import {
-  paymentSelector,
   paymentPspsSelector,
   paymentVerificaSelector
 } from "../../../store/reducers/wallet/payment";
@@ -31,10 +31,14 @@ const successBody = (emailAddress: string) => (
   </Label>
 );
 
-const successComponent = (emailAddress: string, amount: string) => (
+const successComponent = (emailAddress: string, amount?: string) => (
   <InfoScreenComponent
     image={renderInfoRasterImage(paymentCompleted)}
-    title={I18n.t("payment.paidConfirm", { amount })}
+    title={
+      amount
+        ? I18n.t("payment.paidConfirm", { amount })
+        : I18n.t("wallet.outcomeMessage.payment.success.title")
+    }
     body={successBody(emailAddress)}
   />
 );
@@ -60,20 +64,26 @@ const successFooter = (onClose: () => void) => (
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
 
-  const totalAmount =
-    (props.verifica.value.importoSingoloVersamento as number) +
-    (props.psps.value[0].fixedCost.amount as number);
+  const renderSuccessComponent = () => {
+    if (pot.isSome(props.verifica) && pot.isSome(props.psps)) {
+      const totalAmount =
+        (props.verifica.value.importoSingoloVersamento as number) +
+        (props.psps.value[0].fixedCost.amount as number);
+
+      return successComponent(
+        props.profileEmail.getOrElse(""),
+        formatNumberCentsToAmount(totalAmount, true)
+      );
+    } else {
+      return successComponent(props.profileEmail.getOrElse(""));
+    }
+  };
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
       onClose={props.navigateToWalletHome}
-      successComponent={() =>
-        successComponent(
-          props.profileEmail.getOrElse(""),
-          formatNumberCentsToAmount(totalAmount, true)
-        )
-      }
+      successComponent={renderSuccessComponent}
       successFooter={() => successFooter(props.navigateToWalletHome)}
     />
   ) : null;
@@ -86,7 +96,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => ({
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
-  payment: paymentSelector(state),
   psps: paymentPspsSelector(state),
   verifica: paymentVerificaSelector(state)
 });

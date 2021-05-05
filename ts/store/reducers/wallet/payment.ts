@@ -1,5 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
@@ -95,13 +96,18 @@ export const isPaymentOngoingSelector = (state: GlobalState) =>
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;
 
-export const paymentSelector = (state: GlobalState) => state.wallet.payment;
+const paymentSelector = (state: GlobalState): PaymentState =>
+  state.wallet.payment;
 
-export const paymentVerificaSelector = (state: GlobalState) =>
-  state.wallet.payment.verifica;
+export const paymentVerificaSelector = createSelector(
+  paymentSelector,
+  (payment: PaymentState): PaymentState["verifica"] => payment.verifica
+);
 
-export const paymentPspsSelector = (state: GlobalState) =>
-  state.wallet.payment.psps;
+export const paymentPspsSelector = createSelector(
+  paymentSelector,
+  (payment: PaymentState): PaymentState["psps"] => payment.psps
+);
 
 export const pmSessionTokenSelector = (
   state: GlobalState
