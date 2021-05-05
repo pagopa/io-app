@@ -17,7 +17,7 @@ describe("Test how the transaction subtitle changes with different timestamps", 
       trxDate: new Date("2100-12-17T00:00"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard"
+      circuitType: "Mastercard / Maestro"
     };
 
     expect(getSubtitle(myTransaction)).toMatch("€ 87.79 · 17 Dec ");
@@ -36,7 +36,7 @@ describe("Test how the transaction subtitle changes with different timestamps", 
       trxDate: new Date("2100-12-19T12:39"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard"
+      circuitType: "Mastercard / Maestro"
     };
 
     expect(getSubtitle(myTransaction)).toMatch("€ 100,000.79 · 19 Dec, 12:39 ");

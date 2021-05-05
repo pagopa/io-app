@@ -213,7 +213,7 @@ describe("Test the paginated transaction normalization", () => {
         },
         {
           idTrx: "A",
-          cashback: templateMilestone.result.amount,
+          cashback: templateMilestone.result?.amount ?? 0,
           validForCashback: true
         },
         {

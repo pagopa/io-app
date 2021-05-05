@@ -1,4 +1,5 @@
 import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
+import MockDate from "mockdate";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
@@ -7,10 +8,10 @@ import {
   CreditCardState,
   getCreditCardFromState,
   isValidCardHolder,
-  isValidExpirationDate,
   isValidPan,
   isValidSecurityCode
 } from "../input";
+import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [
@@ -98,16 +99,65 @@ describe("CreditCardExpirationYear", () => {
 });
 
 describe("CreditCardExpirationDate", () => {
-  it("should accept a valid expiration date", () => {
-    expect(isValidExpirationDate(some("03/27"))).toBeTruthy();
+  MockDate.set("2020-01-01");
+  it("should be false since it is not expired", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/20"))
+    ).toEqual(some(false));
   });
 
-  it("should reject an invalid expiration date", () => {
-    expect(isValidExpirationDate(some("3/27"))).toBeFalsy();
+  it("should be true since it is expired", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("12/19"))
+    ).toEqual(some(true));
   });
 
-  it("should be undefined", () => {
-    expect(isValidExpirationDate(none)).not.toBeDefined();
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("aa/bb"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("1/b"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("3/21"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("03/2"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("a/27"))
+    ).toEqual(some(true));
+  });
+
+  it("should be true since it is not in a valid format", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01/"))
+    ).toEqual(some(true));
+  });
+
+  it("should be none since it is incomplete", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(some("01"))
+    ).toEqual(none);
+  });
+
+  it("should be none", () => {
+    expect(
+      testableAddCardScreen?.isCreditCardDateExpiredOrInvalid!(none)
+    ).toEqual(none);
   });
 });
 

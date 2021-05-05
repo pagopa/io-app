@@ -68,7 +68,9 @@ const CgnOtpScreen: React.FunctionComponent<Props> = (props: Props) => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={[IOStyles.flex]} bounces={false}>
             <View style={IOStyles.horizontalContentPadding}>
-              <H1>{I18n.t("bonus.cgn.otp.screen.title")}</H1>
+              <H1 accessible={true} accessibilityRole={"header"}>
+                {I18n.t("bonus.cgn.otp.screen.title")}
+              </H1>
               {isReady(props.otp) && (
                 <OtpCodeComponent
                   otp={props.otp.value}

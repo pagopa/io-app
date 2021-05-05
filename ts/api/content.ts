@@ -12,7 +12,6 @@ import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { contentRepoUrl } from "../config";
@@ -54,21 +53,6 @@ const getMunicipalityT: GetMunicipalityT = {
   query: _ => ({}),
   headers: _ => ({}),
   response_decoder: basicResponseDecoder(MunicipalityMedadata)
-};
-
-type GetServicesByScopeT = IGetApiRequestType<
-  void,
-  never,
-  never,
-  BasicResponseType<ServicesByScope>
->;
-
-const getServicesByScopeT: GetServicesByScopeT = {
-  method: "get",
-  url: () => `/services/servicesByScope.json`,
-  query: _ => ({}),
-  headers: _ => ({}),
-  response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
 type GetContextualHelpT = IGetApiRequestType<
@@ -157,7 +141,6 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getBonusAvailable: createFetchRequestForApi(getAvailableBonusesT, options),
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
-    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
     getAbiList: createFetchRequestForApi(getAbisListT, options),
     getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),

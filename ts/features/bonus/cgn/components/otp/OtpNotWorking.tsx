@@ -7,7 +7,6 @@ import {
 } from "../../../../../utils/bottomSheet";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../components/core/typography/Label";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H4 } from "../../../../../components/core/typography/H4";
 
 type Props = {
@@ -17,20 +16,18 @@ type Props = {
 const OtpNotWorking = (props: Props) => (
   <>
     <View spacer />
-    <View style={IOStyles.flex}>
-      <H4 weight={"Regular"}>
-        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text1")}
-        <H4>{I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text2")}</H4>
-      </H4>
-      <View spacer />
-      <H4 weight={"Regular"}>
-        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text3")}
-      </H4>
-      <View spacer />
-      <H4 weight={"Regular"}>
-        {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text4")}
-      </H4>
-    </View>
+    <H4 weight={"Regular"}>
+      {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text1")}
+      <H4>{I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text2")}</H4>
+    </H4>
+    <View spacer />
+    <H4 weight={"Regular"}>
+      {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text3")}
+    </H4>
+    <View spacer />
+    <H4 weight={"Regular"}>
+      {I18n.t("bonus.cgn.otp.screen.bottomSheet.body.text4")}
+    </H4>
     <View spacer={true} />
     <ButtonDefaultOpacity
       style={{ width: "100%" }}

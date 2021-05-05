@@ -27,6 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import {
   favoriteWalletIdSelector,
   getFavoriteWalletId,
+  getWalletsById,
   paymentMethodsSelector
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -41,6 +42,7 @@ import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -127,6 +129,8 @@ const headerContent = (
 );
 
 const TransactionsScreen: React.FC<Props> = (props: Props) => {
+  const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
+
   const selectedWallet = props.navigation.getParam("selectedWallet");
 
   const isFavorite = pot.map(
@@ -152,6 +156,12 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
         : FOUR_UNICODE_CIRCLES
   });
 
+  React.useEffect(() => {
+    if (props.hasErrorDelete) {
+      setIsLoadingDelete(false);
+    }
+  }, [props.hasErrorDelete]);
+
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
       bordered={true}
@@ -161,7 +171,13 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
       <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
     </ButtonDefaultOpacity>
   );
-  return (
+
+  return isLoadingDelete ? (
+    <LoadingSpinnerOverlay
+      isLoading={isLoadingDelete}
+      loadingCaption={I18n.t("cardComponent.deleteLoading")}
+    />
+  ) : (
     <WalletLayout
       title={I18n.t("wallet.paymentMethod")}
       allowGoBack={true}
@@ -202,7 +218,10 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <DeletePaymentMethodButton
               onPress={() =>
-                present(() => props.deleteWallet(selectedWallet.idWallet))
+                present(() => {
+                  props.deleteWallet(selectedWallet.idWallet);
+                  setIsLoadingDelete(true);
+                })
               }
             />
           </View>
@@ -216,7 +235,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
-  paymentMethods: paymentMethodsSelector(state)
+  paymentMethods: paymentMethodsSelector(state),
+  hasErrorDelete: pot.isError(getWalletsById(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
