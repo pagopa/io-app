@@ -10,9 +10,9 @@ import {
 } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
-import { getBackoffTime } from "../../../../../utils/saga";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { isTestEnv } from "../../../../../utils/environment";
+import { getBackoffTime } from "../../../../../utils/backoffError";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time

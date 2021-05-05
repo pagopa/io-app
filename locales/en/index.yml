@@ -251,8 +251,9 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Logout from IO
-    alertMessage: Are you sure you want to quit? The next time you log in you will need a new login with CIE or SPID.
+    menulabel: Do you want to logout?
+    alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
+    loading: Logout in progress...
     exit: Exit
     cta:
       header: How do you want to quit the app?
@@ -1285,6 +1286,7 @@ wallet:
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
       removeCta: "Delete this payment method"
+      deleteLoading: Payment method deletion in progress
   satispay:
     details:
       infobox:
@@ -1352,6 +1354,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
+  deleteLoading: Payment method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions

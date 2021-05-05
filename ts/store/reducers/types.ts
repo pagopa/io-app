@@ -29,6 +29,7 @@ import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 import { InternalRouteNavigationState } from "./internalRouteNavigation";
 import { CrossSessionsState } from "./crossSessions";
+import { BackoffErrorState } from "./backoffError";
 
 type NetworkState = Readonly<{
   isConnected: boolean;
@@ -45,6 +46,7 @@ export type GlobalState = Readonly<{
   instabug: InstabugUnreadMessagesState;
   nav: NavigationState;
   network: NetworkState;
+  backoffError: BackoffErrorState;
   notifications: NotificationsState;
   onboarding: OnboardingState;
   profile: ProfileState;
