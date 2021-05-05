@@ -155,10 +155,7 @@ class RootContainer extends React.PureComponent<Props> {
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {cgnTestOverlay && (
-          <BetaTestingOverlay
-            title="🛠️ CGN TEST VERSION 🛠️"
-            body={bpdEndpointStr}
-          />
+          <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
         )}
         {bpdTestOverlay && (
           <BetaTestingOverlay
