@@ -272,7 +272,9 @@ const AddCardScreen: React.FC<Props> = props => {
                 ? undefined
                 : isValidCardHolder(creditCard.holder)
             }
-            accessibilityHint={I18n.t("wallet.dummyCard.labels.holder.label")}
+            accessibilityLabel={`${I18n.t(
+              "wallet.dummyCard.labels.holder.label"
+            )}, ${I18n.t("wallet.dummyCard.labels.holder.description.base")}`}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
               placeholder: placeholders.placeholderHolder,
@@ -292,7 +294,6 @@ const AddCardScreen: React.FC<Props> = props => {
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
             isValid={isValidPan(creditCard.pan)}
-            accessibilityHint={I18n.t("wallet.dummyCard.labels.pan")}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
               placeholder: placeholders.placeholderCard,
@@ -311,6 +312,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
               }
             }}
+            accessibilityLabel={I18n.t("wallet.dummyCard.labels.pan")}
             testID={"pan"}
           />
 
@@ -321,10 +323,9 @@ const AddCardScreen: React.FC<Props> = props => {
                 type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                accessibilityLabel={I18n.t(
+                accessibilityLabel={`${I18n.t(
                   "wallet.dummyCard.labels.expirationDate"
-                )}
-                accessibilityHint={I18n.t("global.accessibility.dateField")}
+                )}, ${I18n.t("global.accessibility.dateField")}`}
                 isValid={maybeCreditcardValidOrExpired.toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
@@ -350,16 +351,15 @@ const AddCardScreen: React.FC<Props> = props => {
                 )}
                 icon="io-lucchetto"
                 isValid={isValidSecurityCode(creditCard.securityCode)}
-                accessibilityLabel={I18n.t(
+                accessibilityLabel={
                   detectedBrand.cvvLength === 4
-                    ? "wallet.dummyCard.labels.securityCode4D"
-                    : "wallet.dummyCard.labels.securityCode"
-                )}
-                accessibilityHint={I18n.t(
-                  detectedBrand.cvvLength === 4
-                    ? "global.accessibility.fourDigits"
-                    : "global.accessibility.threeDigits"
-                )}
+                    ? `${I18n.t(
+                        "wallet.dummyCard.labels.securityCode4D"
+                      )}, ${I18n.t("global.accessibility.fourDigits")}`
+                    : `${I18n.t(
+                        "wallet.dummyCard.labels.securityCode"
+                      )}, ${I18n.t("global.accessibility.threeDigits")}`
+                }
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
                   placeholder: placeholders.placeholderSecureCode,
