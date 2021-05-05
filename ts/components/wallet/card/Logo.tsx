@@ -28,7 +28,8 @@ const cardMapIcon: { [key in string]: any } = {
   carta_diners: require("../../../../img/wallet/cards-icons/diners.png"),
   carta_visaelectron: require("../../../../img/wallet/cards-icons/visa-electron.png"),
   carta_poste: require("../../../../img/wallet/cards-icons/postepay.png"),
-  carta_maestro: require("../../../../img/wallet/cards-icons/maestro.png")
+  carta_maestro: require("../../../../img/wallet/cards-icons/maestro.png"),
+  carta_vpay: require("../../../../img/wallet/cards-icons/vPay.png")
 };
 
 import defaultCardIcon from "../../../../img/wallet/cards-icons/unknown.png";
