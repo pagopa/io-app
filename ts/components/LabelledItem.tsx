@@ -49,8 +49,8 @@ type CommonProp = Readonly<{
   iconStyle?: StyleType;
   focusBorderColor?: string;
   description?: string;
-  inputAccessibilityLabel?: string;
-  inputAccessibilityHint?: string;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 }>;
 
 type Props = WithTestID<CommonProp> &
@@ -126,9 +126,9 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
       <View
         accessible={true}
         accessibilityLabel={I18n.t("global.accessibility.textField", {
-          inputLabel: props.inputAccessibilityLabel ?? ""
+          inputLabel: props.accessibilityLabel ?? ""
         })}
-        accessibilityHint={props.inputAccessibilityHint}
+        accessibilityHint={props.accessibilityHint}
       >
         <Item
           style={{
