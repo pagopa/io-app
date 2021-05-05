@@ -343,18 +343,27 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private loadAlertTexts = (
+    profileName: string | undefined
+  ): [string, string] =>
+    fromNullable(profileName).fold(
+      [
+        I18n.t("identification.logout"),
+        I18n.t("identification.logoutDescription")
+      ],
+      pn => [
+        I18n.t("identification.logoutProfileName", {
+          profileName: pn
+        }),
+        I18n.t("identification.logoutDescriptionProfileName", {
+          profileName: pn
+        })
+      ]
+    );
+
   private onLogout = () => {
     Alert.alert(
-      this.props.profileName
-        ? I18n.t("identification.logoutProfileName", {
-            profileName: this.props.profileName
-          })
-        : I18n.t("identification.logout"),
-      this.props.profileName
-        ? I18n.t("identification.logoutDescriptionProfileName", {
-            profileName: this.props.profileName
-          })
-        : I18n.t("identification.logoutDescription"),
+      ...this.loadAlertTexts(this.props.profileName),
       [
         {
           text: I18n.t("global.buttons.cancel"),
