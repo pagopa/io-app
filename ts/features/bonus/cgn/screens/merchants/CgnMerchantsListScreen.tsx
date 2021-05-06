@@ -1,28 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-  FlatList,
-  Keyboard,
-  ListRenderItemInfo,
-  SafeAreaView
-} from "react-native";
-import { Input, Item, View } from "native-base";
-import { debounce } from "lodash";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Platform, SafeAreaView, StyleSheet } from "react-native";
+import { Tab, Tabs, View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import CgnMerchantListItem from "../../components/merchants/CgnMerchantListItem";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
 import { availableMerchants } from "../../__mock__/availableMerchants";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import customVariables from "../../../../../theme/variables";
+import { makeFontStyleObject } from "../../../../../theme/fonts";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { H1 } from "../../../../../components/core/typography/H1";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -33,7 +24,31 @@ export type TmpMerchantType = {
   location: string;
 };
 
-const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarUnderline: {
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  tabBarUnderlineActive: {
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap eachother, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
+    backgroundColor: customVariables.contentPrimaryBackground
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
+  },
+  textStyle: {
+    color: customVariables.brandDarkGray
+  }
+});
 
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
@@ -43,44 +58,10 @@ const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const [searchValue, setSearchValue] = React.useState("");
-  const [merchantList, setMerchantsList] = React.useState(props.merchants);
-
-  const performSearch = (
-    text: string,
-    merchantList: ReadonlyArray<TmpMerchantType>
-  ) => {
-    // if search text is empty, restore the whole list
-    if (text.length === 0) {
-      setMerchantsList(props.merchants);
-      return;
-    }
-    const resultList = merchantList.filter(
-      m => m.name.toLowerCase().indexOf(text.toLowerCase()) > -1
-    );
-    setMerchantsList(resultList);
-  };
-
-  const debounceRef = React.useRef(debounce(performSearch, DEBOUNCE_SEARCH));
-
-  React.useEffect(() => {
-    debounceRef.current(searchValue, props.merchants);
-  }, [searchValue, props.merchants]);
-
   const onItemPress = () => {
     // TODO Add the dispatch of merchant selected when the complete workflow is available
     props.navigateToMerchantDetail();
-    Keyboard.dismiss();
   };
-
-  const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
-    <CgnMerchantListItem
-      category={listItem.item.category}
-      name={listItem.item.name}
-      location={listItem.item.location}
-      onPress={onItemPress}
-    />
-  );
 
   return (
     <BaseScreenComponent
@@ -89,33 +70,33 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-          <Item>
-            <Input
-              value={searchValue}
-              autoFocus={true}
-              onChangeText={setSearchValue}
-              placeholderTextColor={IOColors.bluegreyLight}
-              placeholder={I18n.t("global.buttons.search")}
+        <Tabs
+          locked={true}
+          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+          initialPage={0}
+        >
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("bonus.cgn.merchantsList.online")}
+          >
+            <CgnMerchantsListView
+              merchantList={props.merchants}
+              onItemPress={onItemPress}
             />
-            <IconFont name="io-search" color={IOColors.bluegrey} />
-          </Item>
-          <View spacer />
-          <FlatList
-            scrollEnabled={true}
-            data={merchantList}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent noPadded={true} />
-            )}
-            renderItem={renderListItem}
-            keyExtractor={c => `${c.name}-${c.category}`}
-            keyboardShouldPersistTaps={"handled"}
-            ListFooterComponent={
-              merchantList.length > 0 && <EdgeBorderComponent />
-            }
-          />
-        </View>
+          </Tab>
+          <Tab
+            activeTextStyle={styles.activeTextStyle}
+            textStyle={styles.textStyle}
+            heading={I18n.t("bonus.cgn.merchantsList.places")}
+          >
+            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+              {/* TODO PLACEHOLDER HERE GOES THE MAP */}
+              <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
+            </View>
+          </Tab>
+        </Tabs>
       </SafeAreaView>
     </BaseScreenComponent>
   );
