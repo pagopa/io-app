@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.9](https://github.com/pagopa/io-app/compare/1.25.0-rc.8...1.25.0-rc.9) (2021-05-06)
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#178052788](https://www.pivotaltracker.com/story/show/178052788)] Enable bpd paginated transactions ([#3025](https://github.com/pagopa/io-app/issues/3025)) ([8cdc901](https://github.com/pagopa/io-app/commit/8cdc901ea5c9c592d06376af071cbc9af9a12e75))
+
 ## [1.25.0-rc.8](https://github.com/pagopa/io-app/compare/1.25.0-rc.7...1.25.0-rc.8) (2021-05-06)
 
 
