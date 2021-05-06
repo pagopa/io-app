@@ -22,6 +22,7 @@ import {
 export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
 ): Generator<Effect, Either<BpdTransactionsError, true>, any> {
+  // We check if there is a failure on the whole loadTransactionsRequiredData block
   yield call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
 
   // First request the Milestone Pivot
