@@ -2201,7 +2201,7 @@ bonus:
               text1: "Please note that before you'll see the transaction on IO,"
               text2: "it usually takes up to 3 working days"
               text3: "."
-            lastUpdated: "Latest valid transaction: "
+            lastUpdated: "Latest update: "
             link: Anything missing?
             body:
               text1: "During the phase "
