@@ -1,4 +1,6 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { WinningTransactionMilestoneResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionMilestoneResource";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
@@ -8,13 +10,18 @@ import {
   toArray,
   toIndexed
 } from "../../../../../../../store/helpers/indexer";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { convertCircuitTypeCode } from "../../../../saga/networking/transactions";
+import { HPan } from "../../../actions/paymentMethods";
 import { AwardPeriodId } from "../../../actions/periods";
 import {
   BpdTransactionId,
   bpdTransactionsLoadMilestone,
   bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData,
   BpdTransactionV2
 } from "../../../actions/transactions";
+import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 export type BpdPivotTransaction = {
   idTrx: BpdTransactionId;
@@ -70,19 +77,31 @@ const normalizeCashback = (
   let found = foundPivot;
   return {
     data: transactions.map(x => {
+      // prepare the base BpdTransactionV2, with the right types
+      const trxV2WithCircuit: BpdTransactionV2 = {
+        ...x,
+        circuitType: convertCircuitTypeCode(x.circuitType),
+        awardPeriodId: x.awardPeriodId as AwardPeriodId,
+        hashPan: x.hashPan as HPan,
+        validForCashback: false,
+        idTrx: x.idTrx as BpdTransactionId,
+        isPivot: false
+      };
+
       if (found || pivot === null) {
-        return { ...x, validForCashback: true } as BpdTransactionV2;
+        return { ...trxV2WithCircuit, validForCashback: true };
       }
       if (x.idTrx === pivot.idTrx) {
         found = true;
         return {
-          ...x,
+          ...trxV2WithCircuit,
           cashback: pivot.amount,
-          validForCashback: true
-        } as BpdTransactionV2;
+          validForCashback: true,
+          isPivot: true
+        };
       }
 
-      return { ...x, cashback: 0, validForCashback: false } as BpdTransactionV2;
+      return { ...trxV2WithCircuit, cashback: 0, validForCashback: false };
     }),
     found
   };
@@ -133,6 +152,8 @@ export const bpdTransactionsEntityReducer = (
   action: Action
 ): IndexedById<BpdTransactionsEntityState> => {
   switch (action.type) {
+    case getType(bpdTransactionsLoadRequiredData.request):
+      return {};
     case getType(bpdTransactionsLoadPage.success):
       return updatePeriodEntry(
         state,
@@ -190,3 +211,24 @@ export const bpdTransactionsEntityReducer = (
 
   return state;
 };
+
+/**
+ * Return the pot.Pot<BpdPivotTransaction | null, Error>,  for the selected period
+ */
+export const bpdTransactionsPivotForSelectedPeriodSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.bpd.details.transactionsV2.entitiesByPeriod,
+    bpdSelectedPeriodSelector
+  ],
+  (
+    bpdTransactionsEntity,
+    maybeSelectedPeriod
+  ): pot.Pot<BpdPivotTransaction | null, Error> =>
+    fromNullable(maybeSelectedPeriod)
+      .chain(selectedPeriod =>
+        fromNullable(bpdTransactionsEntity[selectedPeriod.awardPeriodId])
+      )
+      .map(x => x.pivot)
+      .getOrElse(pot.none)
+);

@@ -4,6 +4,7 @@ import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
@@ -79,6 +80,7 @@ export function* handleTransactionsPage(
   >["winningTransactionsV2"],
   action: ActionType<typeof bpdTransactionsLoadPage.request>
 ) {
+  yield call(waitBackoffError, bpdTransactionsLoadPage.failure);
   // get the results
   const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> = yield call(
     bpdLoadTransactionsPage,
