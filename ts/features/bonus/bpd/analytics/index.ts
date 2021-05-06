@@ -19,7 +19,10 @@ import {
   bpdIbanInsertionStart,
   bpdUpsertIban
 } from "../store/actions/iban";
-import { bpdTransactionsLoad } from "../store/actions/transactions";
+import {
+  bpdTransactionsLoad,
+  bpdTransactionsLoadRequiredData
+} from "../store/actions/transactions";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdSelectPeriod } from "../store/actions/selectedPeriod";
 import {
@@ -64,11 +67,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // transactions
     case getType(bpdTransactionsLoad.failure):
+    case getType(bpdTransactionsLoadRequiredData.failure):
       return mp.track(action.type, {
         awardPeriodId: action.payload.awardPeriodId,
         reason: action.payload.error.message
       });
     case getType(bpdTransactionsLoad.request):
+    case getType(bpdTransactionsLoadRequiredData.request):
+    case getType(bpdTransactionsLoadRequiredData.success):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdTransactionsLoad.success):
       return mp.track(action.type, {

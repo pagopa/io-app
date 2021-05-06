@@ -53,7 +53,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
   >
     <ShadowBox>
       {/* The base row */}
-      <View style={styles.baseRow}>
+      <View style={styles.baseRow} testID={"BaseBpdTransactionItem"}>
         {/* The left side of the row (icon, space, top text, bottom text */}
         <View style={styles.leftRow}>
           <Image source={props.image} style={styles.cardIcon} />
