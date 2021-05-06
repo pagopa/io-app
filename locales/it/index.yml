@@ -2231,7 +2231,7 @@ bonus:
               text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
-            lastUpdated: "Ultima transazione valida: "
+            lastUpdated: "Ultimo aggiornamento: "
             link: "Manca qualcosa?"
             body:
               text1: "Nel periodo "
