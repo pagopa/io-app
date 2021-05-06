@@ -194,7 +194,7 @@ export const bpdLastTransactionUpdateSelector = createSelector(
 );
 
 /**
- * Return the {@link Date} of the most recent transaction
+ * Return the Pot List of BpdTransactionsSectionItem
  */
 export const bpdTransactionsSelector = createSelector(
   [
