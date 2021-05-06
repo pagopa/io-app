@@ -57,8 +57,10 @@ export function* eycaActivationWorker(
         return;
       } else {
         // could be: ALREADY_ACTIVE, INELIGIBLE
-        if (startActivation.value !== "PROCESSING") {
+        if (["ALREADY_ACTIVE", "INELIGIBLE"].some(v => v === startActivation.value)) {
           yield put(cgnEycaActivation.success(startActivation.value));
+          yield put(navigateToCgnDetails());
+          yield put(navigationHistoryPop(1));
           return;
         } else {
           yield call(handleEycaActivationSaga, getEycaActivation);

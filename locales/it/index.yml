@@ -1311,6 +1311,7 @@ wallet:
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
+      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:
@@ -1380,6 +1381,7 @@ cardComponent:
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
+  deleteLoading: Eliminazione metodo di pagamento in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
@@ -1601,6 +1603,10 @@ identification:
   title: Ciao!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
+  logout: Esci
+  logoutProfileName: Non sei {{profileName}}?
+  logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
