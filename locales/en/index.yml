@@ -1573,6 +1573,10 @@ identification:
   title: Hi!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
+  logout: Logout
+  logoutProfileName: Not {{profileName}}?
+  logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
   subtitleCode: Enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the Face ID or enter the unlock code
@@ -2195,7 +2199,7 @@ bonus:
               readMore: "Read more"
             calendarBlock:
               text1: "Please note that before you'll see the transaction on IO,"
-              text2: "it usually takes up 3 working days"
+              text2: "it usually takes up to 3 working days"
               text3: "."
             lastUpdated: "Latest valid transaction: "
             link: Anything missing?

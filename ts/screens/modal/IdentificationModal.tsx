@@ -6,6 +6,7 @@ import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -97,6 +98,15 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     lineHeight: 22
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center"
+  },
+  contentContainerStyle: {
+    flexGrow: 1,
+    padding: customVariables.contentPadding
   }
 });
 
@@ -334,6 +344,41 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private loadAlertTexts = (
+    profileName: string | undefined
+  ): [string, string] =>
+    fromNullable(profileName).fold(
+      [
+        I18n.t("identification.logout"),
+        I18n.t("identification.logoutDescription")
+      ],
+      pn => [
+        I18n.t("identification.logoutProfileName", {
+          profileName: pn
+        }),
+        I18n.t("identification.logoutDescriptionProfileName", {
+          profileName: pn
+        })
+      ]
+    );
+
+  private onLogout = () => {
+    Alert.alert(
+      ...this.loadAlertTexts(this.props.profileName),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.continue"),
+          onPress: this.props.onIdentificationForceLogout
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
   private renderErrorDescription = () =>
     maybeNotNullyString(this.getCodeInsertionStatus()).fold(undefined, des => (
       <Text
@@ -465,7 +510,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={!isValidatingTask}>
+          <Content
+            primary={!isValidatingTask}
+            contentContainerStyle={styles.contentContainerStyle}
+            noPadded
+          >
             {renderHeader()}
             {this.renderErrorDescription()}
             <Pinpad
@@ -502,6 +551,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />
+            {!isValidatingTask && (
+              <View style={styles.bottomContainer}>
+                <Link onPress={this.onLogout} weight="Bold" color="white">
+                  {fromNullable(this.props.profileName).fold(
+                    I18n.t("identification.logout"),
+                    pN =>
+                      I18n.t("identification.logoutProfileName", {
+                        profileName: pN
+                      })
+                  )}
+                </Link>
+              </View>
+            )}
           </Content>
         </BaseScreenComponent>
       </Modal>
