@@ -1,7 +1,8 @@
 import * as React from "react";
+import { useContext } from "react";
 import { connect } from "react-redux";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import { Tab, Tabs, View } from "native-base";
+import { Body, Container, Right, Tab, Tabs, View } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -14,6 +15,13 @@ import customVariables from "../../../../../theme/variables";
 import { makeFontStyleObject } from "../../../../../theme/fonts";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { H1 } from "../../../../../components/core/typography/H1";
+import {
+  BottomTopAnimation,
+  LightModalContext
+} from "../../../../../components/ui/LightModal";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import IconFont from "../../../../../components/ui/IconFont";
+import AppHeader from "../../../../../components/ui/AppHeader";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -58,6 +66,8 @@ const styles = StyleSheet.create({
 const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+
   const onItemPress = () => {
     // TODO Add the dispatch of merchant selected when the complete workflow is available
     props.navigateToMerchantDetail();
@@ -68,6 +78,28 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
+      isSearchAvailable={true}
+      onSearch={() =>
+        showAnimatedModal(
+          <Container>
+            <AppHeader noLeft={true}>
+              <Body />
+              <Right>
+                <ButtonDefaultOpacity onPress={hideModal} transparent={true}>
+                  <IconFont name="io-close" />
+                </ButtonDefaultOpacity>
+              </Right>
+            </AppHeader>
+            <SafeAreaView style={IOStyles.flex}>
+              <CgnMerchantsListView
+                merchantList={props.merchants}
+                onItemPress={onItemPress}
+              />
+            </SafeAreaView>
+          </Container>,
+          BottomTopAnimation
+        )
+      }
     >
       <SafeAreaView style={IOStyles.flex}>
         <Tabs

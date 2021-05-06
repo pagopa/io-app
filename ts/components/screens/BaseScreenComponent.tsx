@@ -14,13 +14,13 @@ import * as React from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
+  defaultAttachmentTypeConfiguration,
+  DefaultReportAttachmentTypeConfiguration,
+  instabugLog,
   openInstabugQuestionReport,
   openInstabugReplies,
-  DefaultReportAttachmentTypeConfiguration,
   setInstabugSupportTokenAttribute,
-  TypeLogs,
-  instabugLog,
-  defaultAttachmentTypeConfiguration
+  TypeLogs
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -60,6 +60,7 @@ interface OwnProps {
   isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
+  onSearch?: () => void;
 
   // As of now, the following prop is propagated through 4 levels
   // to finally display a checkbox in SendSupportRequestOptions
@@ -239,6 +240,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       headerBackgroundColor,
       primary,
       isSearchAvailable,
+      onSearch,
       searchType,
       customRightIcon,
       customGoBack,
@@ -292,6 +294,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }
           isSearchAvailable={isSearchAvailable}
+          onSearch={onSearch}
           searchType={searchType}
           body={headerBody}
           appLogo={appLogo}

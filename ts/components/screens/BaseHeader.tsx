@@ -1,8 +1,8 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Body, Left, Right, Text, View } from "native-base";
-import { Ref, FC } from "react";
 import * as React from "react";
+import { FC, Ref } from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
@@ -73,6 +73,7 @@ interface OwnProps {
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
   isSearchAvailable?: boolean;
+  onSearch?: () => void;
   showInstabugChat?: boolean;
   searchType?: SearchType;
   customRightIcon?: {
@@ -217,13 +218,16 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       onShowHelp,
       isSearchAvailable,
       searchType,
+      onSearch,
       showInstabugChat,
       customRightIcon
     } = this.props;
 
     return (
       <Right>
-        {isSearchAvailable && <SearchButton searchType={searchType} />}
+        {isSearchAvailable && (
+          <SearchButton searchType={searchType} onSearch={onSearch} />
+        )}
         {!isSearchEnabled && showInstabugChat !== false && (
           <InstabugChatsComponent />
         )}
