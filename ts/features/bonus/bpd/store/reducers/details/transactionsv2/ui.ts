@@ -26,7 +26,7 @@ import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 /**
  * The type that represents a section item that will be rendered with a SectionList.
- * Each section contains an header (dayInfoId) and a list of trxId (trxList)
+ * Each section contains an header (dayInfoId) and a list of trxId (data)
  */
 export type BpdTransactionsSectionItem = {
   dayInfoId: string;
