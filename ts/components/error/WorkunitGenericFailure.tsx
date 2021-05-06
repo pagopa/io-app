@@ -29,7 +29,7 @@ const WorkunitGenericFailure = (props: Props): React.ReactElement => {
   const { headerTitle, title, close } = loadLocales();
   return (
     <BaseScreenComponent headerTitle={headerTitle} goBack={true}>
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"WorkunitGenericFailure"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

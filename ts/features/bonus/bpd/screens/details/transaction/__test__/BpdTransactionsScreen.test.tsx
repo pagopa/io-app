@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Action, createStore } from "redux";
 import { NavigationParams } from "react-navigation";
-import { View } from "native-base";
 import * as pot from "italia-ts-commons/lib/pot";
 import BpdTransactionsScreen from "../BpdTransactionsScreen";
 import { appReducer } from "../../../../../../../store/reducers";
@@ -21,8 +20,6 @@ import {
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import { navigateToBpdDetails } from "../../../../navigation/actions";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
-import * as BpdTransactionItem from "../../../../components/transactionItem/BpdTransactionItem";
-import * as BpdTransactionSummaryComponent from "../../../../components/BpdTransactionSummaryComponent";
 
 // Be sure that navigation is unmocked
 jest.unmock("react-navigation");
@@ -350,56 +347,6 @@ describe("BpdTransactionsScreen", () => {
     ).toBeNull();
     lastUpdateSpy.mockRestore();
     transactionsSpy.mockRestore();
-  });
-  it("should show the BpdAvailableTransactionsScreen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.some", () => {
-    jest
-      .spyOn(BpdTransactionItem, "BpdTransactionItem")
-      .mockReturnValue(<View></View>);
-    jest
-      .spyOn(BpdTransactionSummaryComponent, "default")
-      .mockReturnValue(<View></View>);
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
-      bpdAllData.request(),
-      bpdAllData.success(),
-      bpdTransactionsLoad.request(1 as AwardPeriodId),
-      bpdTransactionsLoad.success({
-        awardPeriodId: 1 as AwardPeriodId,
-        results: [
-          {
-            amount: 0.7114042004081611,
-            awardPeriodId: 1 as AwardPeriodId,
-            cashback: 0.5640133257839899,
-            circuitType: "Unknown",
-            hashPan: "hashPan",
-            idTrxAcquirer: "idTrxAcquirer",
-            idTrxIssuer: "idTrxIssuer",
-            trxDate: new Date()
-          } as BpdTransaction
-        ]
-      } as BpdTransactions)
-    ];
-
-    const finalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => <BpdTransactionsScreen />,
-      ROUTES.WALLET_BPAY_DETAIL,
-      {},
-      createStore(appReducer, finalState as any)
-    );
-
-    expect(component).toBeDefined();
-    expect(
-      component.queryByTestId("BpdAvailableTransactionsScreen")
-    ).toBeTruthy();
-    expect(component.queryByTestId("LoadTransactions")).toBeNull();
-    expect(component.queryByTestId("TransactionUnavailable")).toBeNull();
   });
   it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.someLoading", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [

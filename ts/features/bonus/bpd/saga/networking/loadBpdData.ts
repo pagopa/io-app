@@ -1,6 +1,10 @@
 import { select, take } from "redux-saga-test-plan/matchers";
 import { all, call, delay, put } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+import { bpdTransactionsPaging } from "../../../../../config";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getBackoffTime } from "../../../../../utils/backoffError";
+import { isTestEnv } from "../../../../../utils/environment";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
 import { isReady } from "../../model/RemoteValue";
@@ -10,9 +14,6 @@ import {
 } from "../../store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import { bpdTransactionsLoad } from "../../store/actions/transactions";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { isTestEnv } from "../../../../../utils/environment";
-import { getBackoffTime } from "../../../../../utils/backoffError";
 
 /**
  * retrieve possible backoff waiting time and if there is, wait that time
@@ -86,11 +87,16 @@ export function* loadBpdData() {
       yield put(bpdAllData.success());
 
       // Prefetch the transactions list foreach required period (optional, can fail)
-      yield all(
-        periods.payload
-          .filter(p => p.status !== "Inactive")
-          .map(period => put(bpdTransactionsLoad.request(period.awardPeriodId)))
-      );
+      // TODO: Remove after cleaning code v1
+      if (!bpdTransactionsPaging) {
+        yield all(
+          periods.payload
+            .filter(p => p.status !== "Inactive")
+            .map(period =>
+              put(bpdTransactionsLoad.request(period.awardPeriodId))
+            )
+        );
+      }
     } else {
       // The load of all the required bpd data is failed
       yield put(bpdAllData.failure(periods.payload));
