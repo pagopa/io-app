@@ -26,7 +26,7 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
 >([
   ["00", "PagoBancomat"],
   ["01", "Visa"],
-  ["02", "Mastercard"],
+  ["02", "Mastercard / Maestro"],
   ["03", "Amex"],
   ["04", "JCB"],
   ["05", "UnionPay"],

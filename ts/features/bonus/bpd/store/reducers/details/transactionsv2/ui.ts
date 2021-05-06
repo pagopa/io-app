@@ -26,7 +26,7 @@ import { bpdSelectedPeriodSelector } from "../selectedPeriod";
 
 /**
  * The type that represents a section item that will be rendered with a SectionList.
- * Each section contains an header (dayInfoId) and a list of trxId (trxList)
+ * Each section contains an header (dayInfoId) and a list of trxId (data)
  */
 export type BpdTransactionsSectionItem = {
   dayInfoId: string;
@@ -194,7 +194,7 @@ export const bpdLastTransactionUpdateSelector = createSelector(
 );
 
 /**
- * Return the {@link Date} of the most recent transaction
+ * Return the Pot List of BpdTransactionsSectionItem
  */
 export const bpdTransactionsSelector = createSelector(
   [

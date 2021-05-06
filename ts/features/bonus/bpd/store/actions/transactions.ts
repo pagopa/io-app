@@ -10,7 +10,7 @@ import { AwardPeriodId, WithAwardPeriodId } from "./periods";
 export type CircuitType =
   | "PagoBancomat"
   | "Visa"
-  | "Mastercard"
+  | "Mastercard / Maestro"
   | "Amex"
   | "JCB"
   | "UnionPay"
