@@ -29,6 +29,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { mixpanelTrack } from "../../../mixpanel";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -67,6 +68,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class PickPspScreen extends React.Component<Props> {
   public componentDidMount() {
+    void mixpanelTrack("PICK_PSP_SCREEN");
     // load all psp in order to offer to the user the complete psps list
     const idWallet = this.props.navigation
       .getParam("wallet")
