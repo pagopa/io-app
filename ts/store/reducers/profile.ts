@@ -84,7 +84,7 @@ export const profileNameSurnameSelector = createSelector(
   profileSelector,
   (profile: ProfileState): string | undefined =>
     pot.getOrElse(
-      pot.map(profile, p => `${p.name} ${p.family_name}`),
+      pot.map(profile, p => capitalize(`${p.name} ${p.family_name}`)),
       undefined
     )
 );
