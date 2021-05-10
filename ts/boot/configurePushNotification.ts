@@ -39,7 +39,7 @@ function configurePushNotifications() {
   PushNotification.createChannel(
     {
       channelId: "io_default_notification_channel",
-      channelName: "io_default_notification_channel",
+      channelName: "IO default notification channel",
       playSound: true,
       soundName: "default",
       importance: 4,
