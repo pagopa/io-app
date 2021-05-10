@@ -12,6 +12,7 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
+import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserCoBadge } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
@@ -98,6 +99,9 @@ const SearchAvailableCoBadgeScreen = (
   useEffect(() => {
     props.search(props.abiSelected);
   }, []);
+
+  useHardwareBackButton(() => true);
+
   const coBadgeFound = props.coBadgeFound;
 
   if (isReady(coBadgeFound)) {
