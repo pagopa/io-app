@@ -2,21 +2,21 @@
  * Set the basic PushNotification configuration
  */
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { constNull } from "fp-ts/lib/function";
 import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
-import { constNull } from "fp-ts/lib/function";
 import { store } from "../App";
-import { debugRemotePushNotification, gcmSenderId } from "../config";
+import { debugRemotePushNotification } from "../config";
+import { setMixpanelPushNotificationToken } from "../mixpanel";
 import { loadMessages } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isDevEnv } from "../utils/environment";
-import { setMixpanelPushNotificationToken } from "../mixpanel";
 
 /**
  * Helper type used to validate the notification payload.
@@ -34,6 +34,20 @@ function configurePushNotifications() {
   if (isDevEnv) {
     return;
   }
+
+  // Create the default channel used for IO notifications, the callback return false if the channel already exists
+  PushNotification.createChannel(
+    {
+      channelId: "io_default_notification_channel",
+      channelName: "io_default_notification_channel",
+      playSound: true,
+      soundName: "default",
+      importance: 4,
+      vibrate: true
+    },
+    constNull
+  );
+
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {
@@ -83,10 +97,7 @@ function configurePushNotifications() {
 
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);
-    },
-
-    // GCM Sender ID
-    senderID: gcmSenderId
+    }
   });
 }
 

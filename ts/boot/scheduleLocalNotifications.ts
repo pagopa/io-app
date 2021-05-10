@@ -45,6 +45,6 @@ export const scheduleLocalNotificationsAccessSpid = () => {
  */
 export const removeScheduledNotificationAccessSpid = () => {
   PushNotification.cancelLocalNotifications({
-    tag: FIRST_ACCESS_SPID_TAG
+    id: FIRST_ACCESS_SPID_TAG
   });
 };
