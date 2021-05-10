@@ -35,7 +35,7 @@ function configurePushNotifications() {
     return;
   }
 
-  // Create the default channel used for IO notifications, the callback return false if the channel already exists
+  // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
     {
       channelId: "io_default_notification_channel",
