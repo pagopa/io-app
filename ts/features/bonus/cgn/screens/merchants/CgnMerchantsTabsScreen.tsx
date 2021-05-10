@@ -1,7 +1,9 @@
 import * as React from "react";
+import { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { Tab, Tabs, View } from "native-base";
+import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -14,6 +16,13 @@ import customVariables from "../../../../../theme/variables";
 import { makeFontStyleObject } from "../../../../../theme/fonts";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { H1 } from "../../../../../components/core/typography/H1";
+import {
+  BottomTopAnimation,
+  LightModalContext
+} from "../../../../../components/ui/LightModal";
+import CgnMerchantsFilters from "../../components/merchants/CgnMerchantsFilters";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -58,22 +67,41 @@ const styles = StyleSheet.create({
 const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+  const [selectedTab, setSelectedTab] = useState<"online" | "places">("online");
+
   const onItemPress = () => {
     // TODO Add the dispatch of merchant selected when the complete workflow is available
     props.navigateToMerchantDetail();
   };
+
+  const openFiltersModal = () =>
+    showAnimatedModal(
+      // TODO replace onConfirm function when the search functionalities are defined
+      <CgnMerchantsFilters
+        onClose={hideModal}
+        onConfirm={constNull}
+        isLocal={selectedTab === "places"}
+      />,
+      BottomTopAnimation
+    );
 
   return (
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
+      isSearchAvailable={true}
+      onSearch={openFiltersModal}
     >
       <SafeAreaView style={IOStyles.flex}>
         <Tabs
           locked={true}
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+          onChangeTab={(e: any) => {
+            setSelectedTab(e.i === 1 ? "places" : "online");
+          }}
           initialPage={0}
         >
           <Tab
@@ -97,6 +125,13 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             </View>
           </Tab>
         </Tabs>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(
+            openFiltersModal,
+            I18n.t("bonus.cgn.merchantsList.cta.filter")
+          )}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );

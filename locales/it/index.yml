@@ -2311,6 +2311,22 @@ bonus:
       places: Luoghi
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      cta:
+        filter: Filtra
+      filter:
+        title: Filtra esercenti
+        inputPlaceholder: Cerca negozio, teatro o altro
+        orderTitle: Visualizza
+        categories: Categorie
+        cta:
+          cancel: Rimuovi
+          confirm:
+            zero: Applica filtri
+            one: Applica filtri ({{count}})
+            other: Applica filtri ({{count}})
+        order:
+          byDistance: Per vicinanza alla tua posizione
+          byName: Ordine alfabetico
     merchantDetail:
       title:
         deals: Offerte
@@ -2322,6 +2338,15 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+      categories:
+        theater: teatro, cinema e spettacolo
+        travel: viaggi
+        mobility: carsharing e mobilità
+        telco: telefonia, servizi internet
+        book: libri, audiolibri, e-book
+        museum: musei, gallerie, parchi
+        sport: sport
+        health: salute e benessere
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani

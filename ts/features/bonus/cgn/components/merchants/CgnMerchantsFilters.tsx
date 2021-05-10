@@ -1,0 +1,172 @@
+import * as React from "react";
+import { useState } from "react";
+import { Body, Container, Input, Item, Left, Right, View } from "native-base";
+import {
+  FlatList,
+  Keyboard,
+  ListRenderItemInfo,
+  SafeAreaView,
+  ScrollView
+} from "react-native";
+import AppHeader from "../../../../../components/ui/AppHeader";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import IconFont from "../../../../../components/ui/IconFont";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { categories, Category, orders, OrderType } from "../../utils/filters";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import CategoryCheckbox from "./search/CategoryCheckbox";
+import OrderOption from "./search/OrderOption";
+
+type Props = {
+  onClose: () => void;
+  onConfirm: () => void;
+  isLocal: boolean;
+};
+
+const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [checkedCategories, setCheckedCategories] = useState<
+    ReadonlyArray<string>
+  >([]);
+
+  const [selectedOrder, setSelectedOrder] = useState<string>(orders[0].value);
+
+  const onCheckBoxPress = (value: string) => {
+    if (checkedCategories.indexOf(value) !== -1) {
+      setCheckedCategories(checkedCategories.filter(c => c !== value));
+    } else {
+      setCheckedCategories([...checkedCategories, value]);
+    }
+    Keyboard.dismiss();
+  };
+
+  const onOrderSelect = (value: string) => {
+    setSelectedOrder(value);
+    Keyboard.dismiss();
+  };
+
+  const onRemoveButton = () => {
+    setSearchValue("");
+    setSelectedOrder(orders[0].value);
+    setCheckedCategories([]);
+    props.onClose();
+  };
+
+  const onConfirmButton = () => {
+    props.onConfirm();
+  };
+
+  const selectedFilters =
+    checkedCategories.length + (searchValue.length > 0 ? 1 : 0);
+
+  return (
+    <Container>
+      <AppHeader>
+        <Left />
+        <Body style={{ alignItems: "center" }}>
+          <H5 weight={"SemiBold"} color={"bluegrey"}>
+            {I18n.t("bonus.cgn.merchantsList.filter.title")}
+          </H5>
+        </Body>
+        <Right>
+          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
+            <IconFont name="io-close" />
+          </ButtonDefaultOpacity>
+        </Right>
+      </AppHeader>
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={[IOStyles.flex]} bounces={false}>
+          <View style={IOStyles.horizontalContentPadding}>
+            <Item>
+              <Input
+                value={searchValue}
+                autoFocus={true}
+                onChangeText={setSearchValue}
+                placeholderTextColor={IOColors.bluegreyLight}
+                placeholder={I18n.t(
+                  "bonus.cgn.merchantsList.filter.inputPlaceholder"
+                )}
+              />
+              <IconFont name="io-search" color={IOColors.bluegrey} />
+            </Item>
+            <View spacer large />
+            <H2>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H2>
+            <View spacer small />
+            <FlatList
+              data={categories}
+              keyExtractor={cat => cat.type}
+              keyboardShouldPersistTaps={"handled"}
+              ItemSeparatorComponent={() => (
+                <ItemSeparatorComponent noPadded={true} />
+              )}
+              renderItem={(listItem: ListRenderItemInfo<Category>) => (
+                <CategoryCheckbox
+                  text={I18n.t(listItem.item.nameKey)}
+                  value={listItem.item.type}
+                  checked={checkedCategories.indexOf(listItem.item.type) !== -1}
+                  onPress={onCheckBoxPress}
+                  icon={listItem.item.icon}
+                />
+              )}
+            />
+            <View spacer large />
+            {props.isLocal && (
+              <>
+                <H2>{I18n.t("bonus.cgn.merchantsList.filter.orderTitle")}</H2>
+                <View spacer small />
+                <FlatList
+                  data={orders}
+                  keyExtractor={ord => ord.value}
+                  keyboardShouldPersistTaps={"handled"}
+                  ItemSeparatorComponent={() => (
+                    <ItemSeparatorComponent noPadded={true} />
+                  )}
+                  renderItem={(listItem: ListRenderItemInfo<OrderType>) => (
+                    <OrderOption
+                      text={I18n.t(listItem.item.label)}
+                      value={listItem.item.value}
+                      checked={
+                        selectedOrder.indexOf(listItem.item.value) !== -1
+                      }
+                      onPress={onOrderSelect}
+                    />
+                  )}
+                />
+              </>
+            )}
+          </View>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={cancelButtonProps(
+            onRemoveButton,
+            I18n.t("bonus.cgn.merchantsList.filter.cta.cancel")
+          )}
+          rightButton={confirmButtonProps(
+            onConfirmButton,
+            I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
+              defaultValue: I18n.t(
+                "bonus.cgn.merchantsList.filter.cta.confirm.other",
+                {
+                  count: selectedFilters
+                }
+              ),
+              count: selectedFilters
+            })
+          )}
+        />
+      </SafeAreaView>
+    </Container>
+  );
+};
+
+export default CgnMerchantsFilters;
