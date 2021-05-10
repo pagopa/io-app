@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.9](https://github.com/pagopa/io-app/compare/1.25.0-rc.8...1.25.0-rc.9) (2021-05-06)
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[#178052788](https://www.pivotaltracker.com/story/show/178052788)] Enable bpd paginated transactions ([#3025](https://github.com/pagopa/io-app/issues/3025)) ([8cdc901](https://github.com/pagopa/io-app/commit/8cdc901ea5c9c592d06376af071cbc9af9a12e75))
+
+## [1.25.0-rc.8](https://github.com/pagopa/io-app/compare/1.25.0-rc.7...1.25.0-rc.8) (2021-05-06)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176997427](https://www.pivotaltracker.com/story/show/176997427)] Added V-PAY logo for cobadge and credit card ([#3018](https://github.com/pagopa/io-app/issues/3018)) ([deef18d](https://github.com/pagopa/io-app/commit/deef18d9d711f7ffb505bd6f1cbb93632f654852))
+* **Bonus Pagamenti Digitali:** [[#177544049](https://www.pivotaltracker.com/story/show/177544049),[#177852497](https://www.pivotaltracker.com/story/show/177852497)] Added paginated loading for cashback transactions ([#2995](https://github.com/pagopa/io-app/issues/2995)) ([c0fe7c0](https://github.com/pagopa/io-app/commit/c0fe7c053ab330368ade89161bdd7d86790f0d44))
+* **Bonus Pagamenti Digitali:** [[#177544138](https://www.pivotaltracker.com/story/show/177544138)] Add mixpanel tracking for paginated transaction ([#3012](https://github.com/pagopa/io-app/issues/3012)) ([949d69f](https://github.com/pagopa/io-app/commit/949d69f57faf0e63c7188d80813c66df5d77c23e))
+* **Bonus Pagamenti Digitali:** [[#177965778](https://www.pivotaltracker.com/story/show/177965778)] Change "last valid transition" to "last update" in transactions screen ([#3010](https://github.com/pagopa/io-app/issues/3010)) ([1d49dd7](https://github.com/pagopa/io-app/commit/1d49dd7a14bab9685e2b7577dc306227eecca2be))
+
 ## [1.25.0-rc.7](https://github.com/pagopa/io-app/compare/1.25.0-rc.6...1.25.0-rc.7) (2021-05-05)
 
 

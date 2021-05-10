@@ -29,6 +29,7 @@ export const CardLogoPreview: React.FunctionComponent<Props> = props => (
         source={props.image}
         style={styles.cardLogo}
         testID={"cardImage"}
+        resizeMode="contain"
       />
     }
   />
