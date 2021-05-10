@@ -96,7 +96,7 @@ describe("Test BpdTransactionsV2State store", () => {
       );
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateId]?.trxList
+        transactionsStore.ui.sectionItems.value[dateId]?.data
       ).toStrictEqual(expectedTrxId);
     }
     expect(transactionsStore.ui.awardPeriodId).toStrictEqual(
@@ -168,11 +168,11 @@ describe("Test BpdTransactionsV2State store", () => {
       ).toBe(dateIdDayTwo);
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.trxList
+        transactionsStore.ui.sectionItems.value[dateIdDayOne]?.data
       ).toStrictEqual(expectedTrxDayOne);
 
       expect(
-        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.trxList
+        transactionsStore.ui.sectionItems.value[dateIdDayTwo]?.data
       ).toStrictEqual(expectedTrxDayTwo);
     }
 

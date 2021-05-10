@@ -21,7 +21,7 @@ const baseTransaction: BpdTransactionDetailRepresentation = {
   trxDate: new Date("2100-12-17T00:00"),
   keyId: "xxxxxxxxx",
   cashback: 8.779,
-  circuitType: "Mastercard",
+  circuitType: "Mastercard / Maestro",
   validForCashback: true
 };
 
@@ -39,7 +39,7 @@ describe("Test Transaction Timestamp", () => {
       trxDate: new Date("2100-12-17T00:00"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard",
+      circuitType: "Mastercard / Maestro",
       validForCashback: true
     };
 
@@ -68,7 +68,7 @@ describe("Test Transaction Timestamp", () => {
       trxDate: new Date("2100-12-17T01:00"),
       keyId: "xxxxxxxxx",
       cashback: 8.779,
-      circuitType: "Mastercard",
+      circuitType: "Mastercard / Maestro",
       validForCashback: true
     };
 

@@ -14,10 +14,17 @@ import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
+/**
+ * @deprecated
+ */
 export type BpdTransactionDetailRepresentation = EnhancedBpdTransaction & {
   // false if the transaction is not valid for the cashback (eg: the user has
   // already reached the maximum cashback value for the period )
   validForCashback: boolean;
+};
+
+export type BpdTransactionDetailRepresentationV2 = BpdTransactionDetailRepresentation & {
+  isPivot: boolean;
 };
 
 type Props = { transaction: BpdTransactionDetailRepresentation };
