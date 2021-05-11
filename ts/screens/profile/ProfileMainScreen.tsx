@@ -27,16 +27,10 @@ import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled, shufflePinPadOnPayment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { identificationRequest } from "../../store/actions/identification";
-import {
-  preferencesExperimentalFeaturesSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled
-} from "../../store/actions/persistedPreferences";
+import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
 import { updatePin } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -53,6 +47,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { navigateToLogout } from "../../store/actions/navigation";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -394,17 +389,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               <SectionHeaderComponent
                 sectionHeader={I18n.t("profile.main.developersSectionHeader")}
               />
-
-              {
-                // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994)
-                // It could be useful when new experimental features will be available
-                /*
-                  this.developerListItem(
-                  I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-                  this.props.isExperimentalFeaturesEnabled,
-                  this.onExperimentalFeaturesToggle
-                ) */
-              }
               {isPlaygroundsEnabled && (
                 <>
                   <ListItemComponent
@@ -538,14 +522,11 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // hard-logout
-  logout: () => dispatch(logoutRequest({ keepUserData: false })),
+  logout: () => dispatch(navigateToLogout()),
   requestIdentificationAndResetPin: () => {
     const onSuccess = () => dispatch(updatePin());
 
@@ -569,9 +550,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
-  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
-    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
+  dispatchSessionExpired: () => dispatch(sessionExpired())
 });
 
 export default connect(

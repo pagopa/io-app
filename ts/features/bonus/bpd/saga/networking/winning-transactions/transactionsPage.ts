@@ -4,6 +4,7 @@ import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import { SagaCallReturnType } from "../../../../../../types/utils";
+import { waitBackoffError } from "../../../../../../utils/backoffError";
 import { getError } from "../../../../../../utils/errors";
 import { BackendBpdClient } from "../../../api/backendBpdClient";
 import { AwardPeriodId } from "../../../store/actions/periods";
@@ -34,7 +35,7 @@ export function* bpdLoadTransactionsPage(
   SagaCallReturnType<typeof getTransactionPage>
 > {
   try {
-    void mixpanelTrack(mixpanelActionRequest);
+    void mixpanelTrack(mixpanelActionRequest, { awardPeriodId, cursor });
     const getTransactionsPageResults = yield call(getTransactionPage, {
       awardPeriodId,
       nextCursor: cursor
@@ -42,6 +43,8 @@ export function* bpdLoadTransactionsPage(
     if (getTransactionsPageResults.isRight()) {
       if (getTransactionsPageResults.value.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
+          awardPeriodId,
+          cursor,
           count: getTransactionsPageResults.value.value?.transactions.length
         });
         return right<Error, BpdTransactionPageSuccessPayload>({
@@ -62,6 +65,8 @@ export function* bpdLoadTransactionsPage(
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
+      awardPeriodId,
+      cursor,
       reason: getError(e).message
     });
     return left<Error, BpdTransactionPageSuccessPayload>(getError(e));
@@ -79,6 +84,7 @@ export function* handleTransactionsPage(
   >["winningTransactionsV2"],
   action: ActionType<typeof bpdTransactionsLoadPage.request>
 ) {
+  yield call(waitBackoffError, bpdTransactionsLoadPage.failure);
   // get the results
   const result: SagaCallReturnType<typeof bpdLoadTransactionsPage> = yield call(
     bpdLoadTransactionsPage,

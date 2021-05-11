@@ -251,8 +251,9 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da IO
-    alertMessage: Sei sicuro di voler uscire? Al prossimo accesso sarà necessario un nuovo login con CIE o SPID.
+    menulabel: Vuoi davvero uscire?
+    alertMessage: Al prossimo accesso sarà necessario autenticarti con CIE o SPID.
+    loading: Logout in corso...
     exit: Esci
     cta:
       header: Come vuoi uscire dall'app?
@@ -1310,6 +1311,7 @@ wallet:
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
       removeCta: "Elimina questo metodo di pagamento"
+      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:
@@ -1379,6 +1381,7 @@ cardComponent:
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
+  deleteLoading: Eliminazione metodo di pagamento in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
@@ -1600,6 +1603,10 @@ identification:
   title: Ciao!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
+  logout: Esci
+  logoutProfileName: Non sei {{profileName}}?
+  logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
@@ -1614,7 +1621,7 @@ identification:
       sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
-    wrongCode: Codice errato
+    wrongCode: Riprova
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
     tooManyAttempts: Troppi tentativi di inserimento errati.
@@ -2206,6 +2213,7 @@ bonus:
         error:
           title: "I sistemi stanno impiegando più tempo del previsto"
           body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
+          pageLoading: "Non riusciamo a recuperare le transazioni, riprova per piacere."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
@@ -2223,7 +2231,7 @@ bonus:
               text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
-            lastUpdated: "Ultima transazione valida: "
+            lastUpdated: "Ultimo aggiornamento: "
             link: "Manca qualcosa?"
             body:
               text1: "Nel periodo "

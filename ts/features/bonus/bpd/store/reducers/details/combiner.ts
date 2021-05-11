@@ -96,7 +96,7 @@ export const bpdPeriodsAmountSnappedListSelector = createSelector(
  * @param hashPan
  * @param potPaymentMethods
  */
-const pickPaymentMethodFromHashpan = (
+export const pickPaymentMethodFromHashpan = (
   hashPan: string,
   potPaymentMethods: pot.Pot<ReadonlyArray<PaymentMethod>, Error>
 ): Option<PaymentMethod> =>

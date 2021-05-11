@@ -26,7 +26,7 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
 >([
   ["00", "PagoBancomat"],
   ["01", "Visa"],
-  ["02", "Mastercard"],
+  ["02", "Mastercard / Maestro"],
   ["03", "Amex"],
   ["04", "JCB"],
   ["05", "UnionPay"],
@@ -37,6 +37,9 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
   ["10", "Private"]
 ]);
 
+export const convertCircuitTypeCode = (code: string): CircuitType =>
+  fromNullable(mapNetworkCircuitType.get(code)).getOrElse("Unknown");
+
 // convert a network payload amount into the relative app domain model
 const convertTransactions = (
   networkTransactions: BpdWinningTransactions,
@@ -46,9 +49,7 @@ const convertTransactions = (
     ...nt,
     hashPan: nt.hashPan as HPan,
     awardPeriodId,
-    circuitType: fromNullable(
-      mapNetworkCircuitType.get(nt.circuitType)
-    ).getOrElse("Unknown")
+    circuitType: convertCircuitTypeCode(nt.circuitType)
   }));
   return {
     results,
