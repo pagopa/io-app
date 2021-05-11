@@ -2,8 +2,8 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import { flip } from "fp-ts/lib/function";
-import { fromNullable } from "fp-ts/lib/Option";
+import {flip} from "fp-ts/lib/function";
+import {fromNullable} from "fp-ts/lib/Option";
 
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
@@ -21,9 +21,9 @@ import {
   RequestHeaders,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+import {Omit} from "italia-ts-commons/lib/types";
 import _ from "lodash";
-import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
+import {BancomatCardsRequest} from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
@@ -90,6 +90,7 @@ import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayReque
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
+import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -136,10 +137,13 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
   TransactionListResponse
 >;
 
-const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
+const ParamAuthorizationBearerHeader = <
+  P extends { readonly Bearer: string; readonly LookUpId?: string }
+>(
   p: P
-): RequestHeaders<"Authorization"> => ({
-  Authorization: `Bearer ${p.Bearer}`
+): { Authorization: string; LookUpId?: string } => ({
+  Authorization: `Bearer ${p.Bearer}`,
+  ...(p.LookUpId ? { [pmLookupHeaderKey]: p.LookUpId } : {})
 });
 
 const ParamAuthorizationBearerHeaderProducer = <
@@ -579,12 +583,18 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
 
-const withPaymentManagerToken = <P extends { Bearer: string }, R>(
+const withPaymentManagerToken = <
+  P extends { Bearer: string; LookUpId?: string },
+  R
+>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
   po: Omit<P, "Bearer">
 ): Promise<R> => {
-  const params = Object.assign({ Bearer: String(token) }, po) as P;
+  const params = Object.assign(
+    { Bearer: String(token), LookUpId: getLookUpId() },
+    po
+  ) as P;
   return f(params);
 };
 
