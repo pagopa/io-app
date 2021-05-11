@@ -2,8 +2,8 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
-import {flip} from "fp-ts/lib/function";
-import {fromNullable} from "fp-ts/lib/Option";
+import { flip } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
@@ -21,9 +21,9 @@ import {
   RequestHeaders,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
-import {Omit} from "italia-ts-commons/lib/types";
+import { Omit } from "italia-ts-commons/lib/types";
 import _ from "lodash";
-import {BancomatCardsRequest} from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
+import { BancomatCardsRequest } from "../../definitions/pagopa/walletv2/BancomatCardsRequest";
 import {
   AddWalletSatispayUsingPOSTT,
   addWalletsBancomatCardUsingPOSTDecoder,
