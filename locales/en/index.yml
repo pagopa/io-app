@@ -2285,7 +2285,12 @@ bonus:
         filter: Filter
       filter:
         title: Filter merchants
+        searchTitle: Find by name
         inputPlaceholder: Find store, theatre or other
+        addressTitle: Find by address
+        addressPlaceholder: Find address
+        sliderLabel: Distance to be searched
+        sliderUnit: Km
         orderTitle: View
         categories: Categories
         cta:

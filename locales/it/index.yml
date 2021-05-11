@@ -2315,7 +2315,12 @@ bonus:
         filter: Filtra
       filter:
         title: Filtra esercenti
+        searchTitle: Cerca per nome
         inputPlaceholder: Cerca negozio, teatro o altro
+        addressTitle: Cerca per indirizzo
+        addressPlaceholder: Cerca indirizzo
+        sliderLabel: Distanza entro cui cercare
+        sliderUnit: Km
         orderTitle: Visualizza
         categories: Categorie
         cta:

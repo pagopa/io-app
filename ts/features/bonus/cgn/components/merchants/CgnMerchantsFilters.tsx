@@ -25,6 +25,7 @@ import {
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import CategoryCheckbox from "./search/CategoryCheckbox";
 import OrderOption from "./search/OrderOption";
+import { DistanceSlider } from "./search/DistanceSlider";
 
 type Props = {
   onClose: () => void;
@@ -34,11 +35,14 @@ type Props = {
 
 const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
   const [checkedCategories, setCheckedCategories] = useState<
     ReadonlyArray<string>
   >([]);
 
   const [selectedOrder, setSelectedOrder] = useState<string>(orders[0].value);
+
+  const [distance, setDistance] = useState<number>(20);
 
   const onCheckBoxPress = (value: string) => {
     if (checkedCategories.indexOf(value) !== -1) {
@@ -86,6 +90,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
           <View style={IOStyles.horizontalContentPadding}>
+            <H2>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H2>
             <Item>
               <Input
                 value={searchValue}
@@ -99,6 +104,30 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
               <IconFont name="io-search" color={IOColors.bluegrey} />
             </Item>
             <View spacer large />
+            {props.isLocal && (
+              <>
+                <H2>{I18n.t("bonus.cgn.merchantsList.filter.addressTitle")}</H2>
+                <Item>
+                  <Input
+                    value={address}
+                    autoFocus={true}
+                    onChangeText={setAddress}
+                    placeholderTextColor={IOColors.bluegreyLight}
+                    placeholder={I18n.t(
+                      "bonus.cgn.merchantsList.filter.addressPlaceholder"
+                    )}
+                  />
+                  <IconFont name="io-place" color={IOColors.bluegrey} />
+                </Item>
+                <View spacer />
+                <DistanceSlider
+                  value={distance}
+                  onValueChange={setDistance}
+                  disabled={address.length === 0}
+                />
+                <View spacer large />
+              </>
+            )}
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H2>
             <View spacer small />
             <FlatList
