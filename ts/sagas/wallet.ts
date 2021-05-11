@@ -411,7 +411,6 @@ function* startOrResumeAddCreditCardSaga(
       if (action.payload.onFailure) {
         action.payload.onFailure(e.message);
       }
-      return;
     }
     break;
   }
