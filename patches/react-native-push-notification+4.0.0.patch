@@ -1,3 +1,14 @@
+diff --git a/node_modules/react-native-push-notification/android/build.gradle b/node_modules/react-native-push-notification/android/build.gradle
+index 141fec0..38a57c3 100644
+--- a/node_modules/react-native-push-notification/android/build.gradle
++++ b/node_modules/react-native-push-notification/android/build.gradle
+@@ -53,5 +53,5 @@ dependencies {
+     implementation "$appCompatLibName:$supportLibVersion"
+     implementation 'com.facebook.react:react-native:+'
+     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+-    implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '+')}"
++    implementation "com.google.firebase:firebase-messaging:${safeExtGet('firebaseMessagingVersion', '21.1.0')}"
+ }
 diff --git a/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java b/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
 index 13402c1..624f60a 100644
 --- a/node_modules/react-native-push-notification/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
