@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.10](https://github.com/pagopa/io-app/compare/1.25.0-rc.9...1.25.0-rc.10) (2021-05-12)
+
+
+### Features
+
+* [[#178036707](https://www.pivotaltracker.com/story/show/178036707)] Added profile name capitalization ([#3028](https://github.com/pagopa/io-app/issues/3028)) ([cc7ef36](https://github.com/pagopa/io-app/commit/cc7ef36220574f5805f951bafa518e4f5985198e))
+
+
+### Bug Fixes
+
+* [[#178070799](https://www.pivotaltracker.com/story/show/178070799)] Allow the addition of Diners cards ([#3039](https://github.com/pagopa/io-app/issues/3039)) ([d0f20f4](https://github.com/pagopa/io-app/commit/d0f20f4aba3195a506244be1eb657f456a7aca34))
+* [[#178094151](https://www.pivotaltracker.com/story/show/178094151)] Xcode 12.5 iOS build breaks ([#3035](https://github.com/pagopa/io-app/issues/3035)) ([b1dbd7c](https://github.com/pagopa/io-app/commit/b1dbd7c8ed4f96ec1c5d7aec044330ef86d182ae))
+* [[#178129966](https://www.pivotaltracker.com/story/show/178129966)] Cannot deploy a develop build on physical device [#3040](https://github.com/pagopa/io-app/issues/3040) ([6cdc6b4](https://github.com/pagopa/io-app/commit/6cdc6b450b068b24a4d988ac5c446ba83b782a39))
+
+
+### Chores
+
+* [[#177132354](https://www.pivotaltracker.com/story/show/177132354)] Add lookupID for PM observability ([#3004](https://github.com/pagopa/io-app/issues/3004)) ([e19f73f](https://github.com/pagopa/io-app/commit/e19f73ffbff0d907286a6ba2b33a909f059847ac))
+* [[#178106274](https://www.pivotaltracker.com/story/show/178106274)] Remove legacy backend status endpoint ([#3038](https://github.com/pagopa/io-app/issues/3038)) ([d258d46](https://github.com/pagopa/io-app/commit/d258d461749187a2a0140d145d27bd41eeefce44))
+
 ## [1.25.0-rc.9](https://github.com/pagopa/io-app/compare/1.25.0-rc.8...1.25.0-rc.9) (2021-05-06)
 
 
