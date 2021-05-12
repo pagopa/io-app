@@ -66,8 +66,8 @@ global:
     inputLabel: Intestazione
     description: Descrizione
     dateField: Due cifre per il mese, due per l'anno
-    threeDigits: 3 cifre	
-    fourDigits: 4 cifre	
+    threeDigits: 3 cifre
+    fourDigits: 4 cifre
     dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
@@ -2306,6 +2306,7 @@ bonus:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
+    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
