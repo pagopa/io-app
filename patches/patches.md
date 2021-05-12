@@ -67,4 +67,4 @@ Created on **12/08/2020**
 Created on **10/05/2021**
 
 #### Reason:
-- Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) 
+- Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
