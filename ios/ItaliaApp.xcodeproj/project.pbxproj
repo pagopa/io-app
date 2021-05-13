@@ -109,7 +109,7 @@
 		F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09FEB0E231818E3007071DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ItaliaApp/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F09FEB3D231818F0007071DB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ItaliaApp/it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		F59A254C3B094E5BAC231D2D /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
+		F59A254C3B094E5BAC231D2D /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -322,7 +322,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = QWLSX4D6KP;
+						DevelopmentTeam = M2X5YQ4BJ7;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -791,7 +791,7 @@
 			baseConfigurationReference = 1DE434F7662456C56AE365DA /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = QWLSX4D6KP;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -842,8 +842,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 9;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -866,7 +866,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development it.pagopa.app.io";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -882,9 +882,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
