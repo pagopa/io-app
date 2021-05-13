@@ -19,6 +19,7 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -70,11 +71,16 @@ export const profileEmailSelector = createSelector(
  */
 export const profileNameSelector = createSelector(
   profileSelector,
-  (profile: ProfileState): string | undefined =>
-    pot.getOrElse(
-      pot.map(profile, p => capitalize(p.name)),
+  (profile: ProfileState): string | undefined => {
+    RTron.log(profile);
+    return pot.getOrElse(
+      pot.map(profile, p => {
+        RTron.log("MAP profile", p);
+        return capitalize(p.name);
+      }),
       undefined
-    )
+    );
+  }
 );
 
 /**
@@ -164,8 +170,10 @@ const reducer = (
     //
 
     case getType(profileUpsert.request):
-      // eslint-disable-next-line
-      return pot.toUpdating(state, action.payload as any);
+      if (!pot.isSome(state)) {
+        return state;
+      }
+      return pot.toUpdating(state, { ...state.value, ...action.payload });
 
     case getType(profileUpsert.success):
       if (pot.isSome(state)) {
