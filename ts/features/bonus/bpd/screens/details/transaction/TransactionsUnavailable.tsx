@@ -20,6 +20,7 @@ const loadLocales = () => ({
 
 /**
  * This screen informs the user that there are problems retrieving the transactions list.
+ * @deprecated
  * @constructor
  */
 const TransactionsUnavailable: React.FunctionComponent<Props> = props => {

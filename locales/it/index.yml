@@ -1604,6 +1604,10 @@ identification:
   title: Ciao!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
+  logout: Esci
+  logoutProfileName: Non sei {{profileName}}?
+  logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   subtitleCode: Inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
@@ -1618,7 +1622,7 @@ identification:
       sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
-    wrongCode: Codice errato
+    wrongCode: Riprova
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
     tooManyAttempts: Troppi tentativi di inserimento errati.
@@ -2210,6 +2214,7 @@ bonus:
         error:
           title: "I sistemi stanno impiegando più tempo del previsto"
           body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
+          pageLoading: "Non riusciamo a recuperare le transazioni, riprova per piacere."
         noPaymentMethod:
           text1: "Devi attivare "
           text2: "almeno un metodo di pagamento "
@@ -2227,7 +2232,7 @@ bonus:
               text1: "Ti informiamo che prima che tu veda la transazione su IO,"
               text2: "possono passare in media 3 giorni lavorativi"
               text3: "."
-            lastUpdated: "Ultima transazione valida: "
+            lastUpdated: "Ultimo aggiornamento: "
             link: "Manca qualcosa?"
             body:
               text1: "Nel periodo "

@@ -197,7 +197,7 @@ const renderSectionHeader = (info: {
 );
 
 export const NoPaymentMethodAreActiveWarning = () => (
-  <View>
+  <View testID={"NoPaymentMethodAreActiveWarning"}>
     <InfoBox iconName={"io-warning"}>
       <H4 weight={"Regular"}>
         {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text1")}
