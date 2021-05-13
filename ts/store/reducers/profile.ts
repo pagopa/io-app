@@ -19,7 +19,6 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -71,16 +70,11 @@ export const profileEmailSelector = createSelector(
  */
 export const profileNameSelector = createSelector(
   profileSelector,
-  (profile: ProfileState): string | undefined => {
-    RTron.log(profile);
-    return pot.getOrElse(
-      pot.map(profile, p => {
-        RTron.log("MAP profile", p);
-        return capitalize(p.name);
-      }),
+  (profile: ProfileState): string | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => capitalize(p.name)),
       undefined
-    );
-  }
+    )
 );
 
 /**
