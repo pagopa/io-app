@@ -63,7 +63,7 @@ Created on **12/08/2020**
 #### Reason:
 - Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
 
-### react-native-push-notification+7.2.3
+### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
 #### Reason:
