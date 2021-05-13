@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.11](https://github.com/pagopa/io-app/compare/1.25.0-rc.10...1.25.0-rc.11) (2021-05-13)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#178020445](https://www.pivotaltracker.com/story/show/178020445)] Implements Tabs for CGN merchant list to show online and places merchants ([#3024](https://github.com/pagopa/io-app/issues/3024)) ([b4a440b](https://github.com/pagopa/io-app/commit/b4a440bfd889b060d0c98d9cb6d7adca974c33cc))
+
+
+### Bug Fixes
+
+* [[#178141300](https://www.pivotaltracker.com/story/show/178141300)] Profile reducer has a wrong someUpdating state ([#3043](https://github.com/pagopa/io-app/issues/3043)) ([ed9e3c2](https://github.com/pagopa/io-app/commit/ed9e3c2133fe2e941e613cbc20cb33efd7ecfd54))
+
+
+### Chores
+
+* [[#174150612](https://www.pivotaltracker.com/story/show/174150612)] Upgrade react-native-push-notification ([#3036](https://github.com/pagopa/io-app/issues/3036)) ([4fdff96](https://github.com/pagopa/io-app/commit/4fdff96005b7a24c894077d8f8d56caf8e8f7a43))
+
 ## [1.25.0-rc.10](https://github.com/pagopa/io-app/compare/1.25.0-rc.9...1.25.0-rc.10) (2021-05-12)
 
 
