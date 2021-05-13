@@ -10809,10 +10809,10 @@ react-native-progress-circle@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-native-progress-circle/-/react-native-progress-circle-2.1.0.tgz#62bdf31c76962d10c5c14446b61ff7d05cf0d0ec"
   integrity sha512-VP0s92bgbTMQy4hQzPU4LlGyFj3z5u7i1HYFG8/yzXXfGkX1cxKS4xOlE+OTaObWC99w7Bodi3h8R7En2nQPYw==
 
-react-native-push-notification@^7.2.3:
-  version "7.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.2.3.tgz#e5efa0d48bfa27ad0cab538ba859b5f2cd21b684"
-  integrity sha512-MWwzGXGD22vQ35roDWBQ4EJl1jS4kuuAAdxqe2C88gULgzT6rQkR9wszl5b5K+hIWqve50qg4zJoSgarr//2KA==
+react-native-push-notification@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-7.3.1.tgz#1495feacd25169b998446dcf7b448a197ae5dca0"
+  integrity sha512-5kSKPvDU23uZRmzgKTsGhbwGNvB2tidu1VnInBHP53ZD0VEPSBl5fbpuTfHH98ED+Gp1SCcT2/e6bJWkIspKvg==
 
 react-native-qrcode-scanner@^1.5.3:
   version "1.5.3"
