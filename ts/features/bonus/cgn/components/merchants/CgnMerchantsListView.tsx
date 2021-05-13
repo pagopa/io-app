@@ -12,6 +12,7 @@ type Props = {
   onItemPress: () => void;
 };
 
+// Component that renders the list of merchants as a FlatList
 const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
   const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
     <CgnMerchantListItem
