@@ -11,18 +11,12 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { availableMerchants } from "../../__mock__/availableMerchants";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import customVariables from "../../../../../theme/variables";
-import { makeFontStyleObject } from "../../../../../theme/fonts";
+import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { H1 } from "../../../../../components/core/typography/H1";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-export type TmpMerchantType = {
-  name: string;
-  category: string;
-  location: string;
-};
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -40,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.contentPrimaryBackground
   },
   activeTextStyle: {
-    ...makeFontStyleObject(Platform.select, "600"),
+    ...makeFontStyleObject("SemiBold"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
     fontWeight: Platform.OS === "android" ? "normal" : "bold",
     color: customVariables.brandPrimary
@@ -71,7 +65,6 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
     >
       <SafeAreaView style={IOStyles.flex}>
         <Tabs
-          locked={true}
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           initialPage={0}
