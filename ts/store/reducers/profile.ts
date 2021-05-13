@@ -164,8 +164,10 @@ const reducer = (
     //
 
     case getType(profileUpsert.request):
-      // eslint-disable-next-line
-      return pot.toUpdating(state, action.payload as any);
+      if (!pot.isSome(state)) {
+        return state;
+      }
+      return pot.toUpdating(state, { ...state.value, ...action.payload });
 
     case getType(profileUpsert.success):
       if (pot.isSome(state)) {
