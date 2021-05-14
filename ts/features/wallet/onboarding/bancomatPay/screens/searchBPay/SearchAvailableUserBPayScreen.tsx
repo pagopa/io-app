@@ -10,7 +10,7 @@ import {
   isReady
 } from "../../../../../bonus/bpd/model/RemoteValue";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
-import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { avoidHardwareBackButton } from "../../../../../../utils/avoidHardwareBackButton";
 import AddBPayScreen from "../add-account/AddBPayScreen";
 import BPayKoNotFound from "./BPayKoNotFound";
 import BPayKoTimeout from "./BPayKoTimeout";
@@ -24,7 +24,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const SearchAvailableUserBPayScreen = (props: Props): React.ReactElement => {
-  useHardwareBackButton(() => true);
+  avoidHardwareBackButton();
 
   const bPayAccounts = props.bPayAccounts;
   const noBPayFound = isReady(bPayAccounts) && bPayAccounts.value.length === 0;
