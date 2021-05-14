@@ -28,7 +28,6 @@ export const scheduleLocalNotificationsAccessSpid = () => {
     twoMonthsFromPrev,
     sixMonthsFromPrev
   ];
-
   localNotificationDates.forEach((scheduledDate: Date) =>
     PushNotification.localNotificationSchedule({
       title: I18n.t("global.localNotifications.spidLogin.title"),
@@ -44,7 +43,24 @@ export const scheduleLocalNotificationsAccessSpid = () => {
  * Remove all the local notifications relating to authentication with spid
  */
 export const removeScheduledNotificationAccessSpid = () => {
-  PushNotification.cancelLocalNotifications({
-    id: FIRST_ACCESS_SPID_TAG
-  });
+  /**
+   * With the current library version (7.3.1) seems that cancelLocalNotifications doesn't work.
+   *
+   * eg. example code that doesn't work:
+   *
+   *   PushNotification.getScheduledLocalNotifications(x =>
+   * x
+   * .filter(notification => notification.data.tag === FIRST_ACCESS_SPID_TAG)
+   * .forEach(firstAccessNotification => {
+   *      PushNotification.cancelLocalNotifications({
+   *        id: firstAccessNotification.id.toString()
+   *      });
+   *    })
+   * );
+   *
+   * At the moment the "first access spid" is the only kind of scheduled notification and for this reason
+   * it is safe to use PushNotification.cancelAllLocalNotifications();
+   * If we add more scheduled notifications, we need to investigate why cancelLocalNotifications doesn't work
+   */
+  PushNotification.cancelAllLocalNotifications();
 };
