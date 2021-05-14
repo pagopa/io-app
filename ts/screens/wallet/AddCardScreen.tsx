@@ -182,6 +182,37 @@ const isCreditCardDateExpiredOrInvalid = (
       return fromEither(isExpired(my[0], my[1]));
     });
 
+const maybeCreditcardValidOrExpired = (
+  creditCard: CreditCardState
+): Option<boolean> =>
+  isCreditCardDateExpiredOrInvalid(creditCard.expirationDate).map(v => !v);
+
+const getAccessiblityLabels = (creditCard: CreditCardState) => ({
+  cardHolder:
+    isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
+      ? I18n.t("wallet.dummyCard.accessibility.holder.base")
+      : I18n.t("wallet.dummyCard.accessibility.holder.error"),
+  pan:
+    isNone(creditCard.pan) || isValidPan(creditCard.pan)
+      ? I18n.t("wallet.dummyCard.accessibility.pan.base")
+      : I18n.t("wallet.dummyCard.accessibility.pan.error"),
+  expirationDate:
+    isNone(maybeCreditcardValidOrExpired(creditCard)) ||
+    maybeCreditcardValidOrExpired(creditCard).toUndefined()
+      ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
+      : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
+  securityCode3D:
+    isNone(creditCard.securityCode) ||
+    isValidSecurityCode(creditCard.securityCode)
+      ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
+      : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
+  securityCode4D:
+    isNone(creditCard.securityCode) ||
+    isValidSecurityCode(creditCard.securityCode)
+      ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
+      : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
+});
+
 const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
@@ -219,10 +250,6 @@ const AddCardScreen: React.FC<Props> = props => {
     });
   };
 
-  const maybeCreditcardValidOrExpired = isCreditCardDateExpiredOrInvalid(
-    creditCard.expirationDate
-  ).map(v => !v);
-
   const secondaryButtonProps = {
     block: true,
     bordered: true,
@@ -231,7 +258,7 @@ const AddCardScreen: React.FC<Props> = props => {
   };
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
-  const placeholders = !isScreenReaderEnabled
+  const placeholders = isScreenReaderEnabled
     ? {
         placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
         placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
@@ -244,31 +271,7 @@ const AddCardScreen: React.FC<Props> = props => {
       }
     : {};
 
-  const accessiblityLabels = {
-    cardHolder:
-      isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
-        ? I18n.t("wallet.dummyCard.accessibility.holder.base")
-        : I18n.t("wallet.dummyCard.accessibility.holder.error"),
-    pan:
-      isNone(creditCard.pan) || isValidPan(creditCard.pan)
-        ? I18n.t("wallet.dummyCard.accessibility.pan.base")
-        : I18n.t("wallet.dummyCard.accessibility.pan.error"),
-    expirationDate:
-      isNone(maybeCreditcardValidOrExpired) ||
-      maybeCreditcardValidOrExpired.toUndefined()
-        ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
-        : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
-    securityCode3D:
-      isNone(creditCard.securityCode) ||
-      isValidSecurityCode(creditCard.securityCode)
-        ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
-        : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
-    securityCode4D:
-      isNone(creditCard.securityCode) ||
-      isValidSecurityCode(creditCard.securityCode)
-        ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
-        : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
-  };
+  const accessiblityLabels = getAccessiblityLabels(creditCard);
 
   return (
     <BaseScreenComponent
@@ -348,7 +351,9 @@ const AddCardScreen: React.FC<Props> = props => {
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
                 accessibilityLabel={accessiblityLabels.expirationDate}
-                isValid={maybeCreditcardValidOrExpired.toUndefined()}
+                isValid={maybeCreditcardValidOrExpired(
+                  creditCard
+                ).toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
                   placeholder: placeholders.placeholderDate,
