@@ -257,7 +257,7 @@ const AddCardScreen: React.FC<Props> = props => {
     title: I18n.t("global.buttons.back")
   };
 
-  const isScreenReaderEnabled = useScreenReaderEnabled();
+  const isScreenReaderEnabled = !useScreenReaderEnabled();
   const placeholders = isScreenReaderEnabled
     ? {
         placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
