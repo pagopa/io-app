@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandDarkGray,
     paddingHorizontal: customVariables.contentPadding,
     paddingTop: 0
-  },
-  headerSpacer: {
-    height: customVariables.appHeaderHeight
   }
 });
 
@@ -138,7 +135,6 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
         ref={ScrollViewRef}
         style={styles.content}
       >
-        <View style={styles.headerSpacer} />
         <View spacer={true} />
         <View>
           <FiscalCodeComponent
