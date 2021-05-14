@@ -2295,6 +2295,8 @@ bonus:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     merchantsList:
+      online: Online
+      places: Places
       navigationTitle: View merchants
       screenTitle: Select the merchant where you want to buy something
     merchantDetail:

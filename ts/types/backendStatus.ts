@@ -56,7 +56,9 @@ export type Sections = t.TypeOf<typeof Sections>;
 const Config = t.interface({
   // bpd_ranking is legacy, don't use it anymore see https://www.pivotaltracker.com/story/show/176498731
   bpd_ranking: t.boolean,
-  bpd_ranking_v2: t.boolean
+  bpd_ranking_v2: t.boolean,
+  // CGN flag to define which version of merchants list to display. If true it displays the version based on tabs
+  cgn_merchants_v2: t.boolean
 });
 
 export type Config = t.TypeOf<typeof Config>;

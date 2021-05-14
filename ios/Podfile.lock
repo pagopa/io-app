@@ -371,8 +371,8 @@ PODS:
     - React
   - RNCClipboard (1.5.0):
     - React-Core
-  - RNCPushNotificationIOS (1.4.0):
-    - React
+  - RNCPushNotificationIOS (1.8.0):
+    - React-Core
   - RNDeviceInfo (5.6.4):
     - React
   - RNFS (2.16.6):
@@ -718,7 +718,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
   RNCClipboard: c7abea1baea58adca5c1f29e56dd5261837b4892
-  RNCPushNotificationIOS: dc1c0c6aa18a128df123598149f42e848d26a4ac
+  RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: a576aac2f2927eb7e0058a27dad811c8e7cd1474
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
