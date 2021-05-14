@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.12](https://github.com/pagopa/io-app/compare/1.25.0-rc.11...1.25.0-rc.12) (2021-05-14)
+
+
+### Bug Fixes
+
+* [[#178155677](https://www.pivotaltracker.com/story/show/178155677)] Local scheduled notification aren't canceled after login with SPID / CIE ([#3045](https://github.com/pagopa/io-app/issues/3045)) ([e3a5f2b](https://github.com/pagopa/io-app/commit/e3a5f2bbf9466f6d9ae5a8a09474079b1be78d62))
+
 ## [1.25.0-rc.11](https://github.com/pagopa/io-app/compare/1.25.0-rc.10...1.25.0-rc.11) (2021-05-13)
 
 
