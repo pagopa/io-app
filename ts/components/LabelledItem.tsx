@@ -124,6 +124,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
       ? variables.itemBorderDefaultColor
       : props.focusBorderColor;
   const isValid = props.isValid === undefined ? false : props.isValid;
+  const isNotValid = props.isValid === undefined ? false : !props.isValid;
   return (
     <View>
       <View
@@ -147,7 +148,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             ...styles.bottomLine,
             borderColor: inputBorderColor
           }}
-          error={!isValid}
+          error={isNotValid}
           success={isValid}
         >
           {props.icon &&
