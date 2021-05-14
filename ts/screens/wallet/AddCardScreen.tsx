@@ -249,18 +249,25 @@ const AddCardScreen: React.FC<Props> = props => {
       isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
         ? I18n.t("wallet.dummyCard.accessibility.holder.base")
         : I18n.t("wallet.dummyCard.accessibility.holder.error"),
-    pan: isValidPan(creditCard.pan)
-      ? I18n.t("wallet.dummyCard.accessibility.pan.base")
-      : I18n.t("wallet.dummyCard.accessibility.pan.error"),
-    expirationDate: maybeCreditcardValidOrExpired.toUndefined()
-      ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
-      : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
-    securityCode3D: isValidSecurityCode(creditCard.securityCode)
-      ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
-      : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
-    securityCode4D: isValidSecurityCode(creditCard.securityCode)
-      ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
-      : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
+    pan:
+      isNone(creditCard.pan) || isValidPan(creditCard.pan)
+        ? I18n.t("wallet.dummyCard.accessibility.pan.base")
+        : I18n.t("wallet.dummyCard.accessibility.pan.error"),
+    expirationDate:
+      isNone(maybeCreditcardValidOrExpired) ||
+      maybeCreditcardValidOrExpired.toUndefined()
+        ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
+        : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
+    securityCode3D:
+      isNone(creditCard.securityCode) ||
+      isValidSecurityCode(creditCard.securityCode)
+        ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
+        : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
+    securityCode4D:
+      isNone(creditCard.securityCode) ||
+      isValidSecurityCode(creditCard.securityCode)
+        ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
+        : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
   };
 
   return (
