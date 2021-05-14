@@ -20,7 +20,7 @@ import { isDevEnv } from "../utils/environment";
 
 /**
  * Helper type used to validate the notification payload.
- * The message_id can be in different places depending on the platform.
+ * The message_id can be in different places depending on the  platform.
  */
 const NotificationPayload = t.partial({
   message_id: NonEmptyString,
