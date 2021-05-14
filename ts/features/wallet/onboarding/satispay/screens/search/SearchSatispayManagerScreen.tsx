@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { RawSatispayPaymentMethod } from "../../../../../../types/pagopa";
 import { isTimeoutError } from "../../../../../../utils/errors";
+import { avoidHardwareBackButton } from "../../../../../../utils/avoidHardwareBackButton";
 import {
   isError,
   isLoading,
@@ -23,7 +24,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const SearchSatispayManagerScreen: React.FunctionComponent<Props> = props => {
+  avoidHardwareBackButton();
+
   const satispay = props.foundSatispay;
+
   if (isError(satispay) && isTimeoutError(satispay.error)) {
     return <SatispayKoTimeout />;
   }
