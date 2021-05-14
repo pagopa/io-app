@@ -1225,6 +1225,23 @@ wallet:
       expirationDate: mm/yy
       securityCode: "•••"
       securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Card holder, enter as shown on the card."
+        error: "Card holder. Please, do not use accented letters."
+      pan:
+        base: "Card number."
+        error: "Card number. Please, enter at least 14 digits."
+      expirationDate:
+        base: "Expiration date, 2 digits for the month, 2 for the year."
+        error: "Expiration date, 2 digits for the month, 2 for the year. Please, enter a valid date."
+      securityCode:
+        3D:
+          base: "Card security code, 3 digits."
+          error: "Card security code. Please, enter 3 digits."
+        4D:
+          base: "CIN, 4 digits."
+          error: "CIN. Please, enter 4 digits."
   acceptedCards: Accepted cards
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards

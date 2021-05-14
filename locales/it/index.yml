@@ -1249,6 +1249,23 @@ wallet:
       expirationDate: mm/aa
       securityCode: "•••"
       securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Intestatario carta, inserisci come riportato sulla carta."
+        error: "Intestatario carta. Per favore, non utilizzare lettere accentate."
+      pan:
+        base: "Numero carta."
+        error: "Numero carta. Per favore, inserisci almeno 14 cifre."
+      expirationDate:
+        base: "Data di scadenza, due cifre per il mese, due per l’anno."
+        error: "Data di scadenza, due cifre per il mese, due per l’anno. Per favore, inserisci una data valida."
+      securityCode:
+        3D:
+          base: "Codice di sicurezza, 3 cifre."
+          error: "Codice di sicurezza. Per favore, inserisci 3 cifre."
+        4D:
+          base: "CID, 4 cifre."
+          error: "Codice CID. Per favore, inserisci 4 cifre."
   acceptedCards: Carte accettate
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
