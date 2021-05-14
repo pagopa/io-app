@@ -105,7 +105,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     this.state = {
       identificationByPinState: "unstarted",
-      identificationByBiometryState: "failure",
+      identificationByBiometryState: "unstarted",
       biometryAuthAvailable: true,
       canInsertPinTooManyAttempts: this.props.identificationFailState.isNone()
     };
