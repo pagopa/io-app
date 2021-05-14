@@ -6,7 +6,10 @@
 import React, { useState } from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationInjectedProps,
+  NavigationNavigateAction
+} from "react-navigation";
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
@@ -128,7 +131,7 @@ const openSupportedCardsPage = (): void => {
 
 const primaryButtonPropsFromState = (
   state: CreditCardState,
-  onNavigate: (card: CreditCard) => void
+  onNavigate: (card: CreditCard) => NavigationNavigateAction
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
   const baseButtonProps = {
     block: true,
@@ -148,6 +151,7 @@ const primaryButtonPropsFromState = (
       ...baseButtonProps,
       disabled: false,
       onPress: () => {
+        Keyboard.dismiss();
         onNavigate(c);
       }
     })
@@ -420,16 +424,14 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
   addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateBack: () => dispatch(navigateBack()),
-  navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) => {
-    Keyboard.dismiss();
+  navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(
       navigateToWalletConfirmCardDetails({
         creditCard,
         inPayment: props.navigation.getParam("inPayment"),
         keyFrom: props.navigation.getParam("keyFrom")
       })
-    );
-  }
+    )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
