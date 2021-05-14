@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   NavigationInjectedProps,
@@ -150,6 +150,7 @@ const primaryButtonPropsFromState = (
       ...baseButtonProps,
       disabled: false,
       onPress: () => {
+        Keyboard.dismiss();
         onNavigate(c);
       }
     })
