@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.12](https://github.com/pagopa/io-app/compare/1.25.0-rc.11...1.25.0-rc.12) (2021-05-14)
+
+
+### Bug Fixes
+
+* [[#178155677](https://www.pivotaltracker.com/story/show/178155677)] Local scheduled notification aren't canceled after login with SPID / CIE ([#3045](https://github.com/pagopa/io-app/issues/3045)) ([e3a5f2b](https://github.com/pagopa/io-app/commit/e3a5f2bbf9466f6d9ae5a8a09474079b1be78d62))
+
+## [1.25.0-rc.11](https://github.com/pagopa/io-app/compare/1.25.0-rc.10...1.25.0-rc.11) (2021-05-13)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#178020445](https://www.pivotaltracker.com/story/show/178020445)] Implements Tabs for CGN merchant list to show online and places merchants ([#3024](https://github.com/pagopa/io-app/issues/3024)) ([b4a440b](https://github.com/pagopa/io-app/commit/b4a440bfd889b060d0c98d9cb6d7adca974c33cc))
+
+
+### Bug Fixes
+
+* [[#178141300](https://www.pivotaltracker.com/story/show/178141300)] Profile reducer has a wrong someUpdating state ([#3043](https://github.com/pagopa/io-app/issues/3043)) ([ed9e3c2](https://github.com/pagopa/io-app/commit/ed9e3c2133fe2e941e613cbc20cb33efd7ecfd54))
+
+
+### Chores
+
+* [[#174150612](https://www.pivotaltracker.com/story/show/174150612)] Upgrade react-native-push-notification ([#3036](https://github.com/pagopa/io-app/issues/3036)) ([4fdff96](https://github.com/pagopa/io-app/commit/4fdff96005b7a24c894077d8f8d56caf8e8f7a43))
+
+## [1.25.0-rc.10](https://github.com/pagopa/io-app/compare/1.25.0-rc.9...1.25.0-rc.10) (2021-05-12)
+
+
+### Features
+
+* [[#178036707](https://www.pivotaltracker.com/story/show/178036707)] Added profile name capitalization ([#3028](https://github.com/pagopa/io-app/issues/3028)) ([cc7ef36](https://github.com/pagopa/io-app/commit/cc7ef36220574f5805f951bafa518e4f5985198e))
+
+
+### Bug Fixes
+
+* [[#178070799](https://www.pivotaltracker.com/story/show/178070799)] Allow the addition of Diners cards ([#3039](https://github.com/pagopa/io-app/issues/3039)) ([d0f20f4](https://github.com/pagopa/io-app/commit/d0f20f4aba3195a506244be1eb657f456a7aca34))
+* [[#178094151](https://www.pivotaltracker.com/story/show/178094151)] Xcode 12.5 iOS build breaks ([#3035](https://github.com/pagopa/io-app/issues/3035)) ([b1dbd7c](https://github.com/pagopa/io-app/commit/b1dbd7c8ed4f96ec1c5d7aec044330ef86d182ae))
+* [[#178129966](https://www.pivotaltracker.com/story/show/178129966)] Cannot deploy a develop build on physical device [#3040](https://github.com/pagopa/io-app/issues/3040) ([6cdc6b4](https://github.com/pagopa/io-app/commit/6cdc6b450b068b24a4d988ac5c446ba83b782a39))
+
+
+### Chores
+
+* [[#177132354](https://www.pivotaltracker.com/story/show/177132354)] Add lookupID for PM observability ([#3004](https://github.com/pagopa/io-app/issues/3004)) ([e19f73f](https://github.com/pagopa/io-app/commit/e19f73ffbff0d907286a6ba2b33a909f059847ac))
+* [[#178106274](https://www.pivotaltracker.com/story/show/178106274)] Remove legacy backend status endpoint ([#3038](https://github.com/pagopa/io-app/issues/3038)) ([d258d46](https://github.com/pagopa/io-app/commit/d258d461749187a2a0140d145d27bd41eeefce44))
+
 ## [1.25.0-rc.9](https://github.com/pagopa/io-app/compare/1.25.0-rc.8...1.25.0-rc.9) (2021-05-06)
 
 

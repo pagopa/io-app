@@ -29,7 +29,8 @@ import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
   navigateToCgnDetailsOtp,
-  navigateToCgnMerchantsList
+  navigateToCgnMerchantsList,
+  navigateToCgnMerchantsTabs
 } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
@@ -44,6 +45,7 @@ import GenericErrorComponent from "../../../../components/screens/GenericErrorCo
 import { navigateBack } from "../../../../store/actions/navigation";
 import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { configSelector } from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -149,7 +151,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <FooterWithButtons
             type={"TwoButtonsInlineHalf"}
             leftButton={cancelButtonProps(
-              props.navigateToMerchants,
+              props.isMerchantV2Enabled
+                ? props.navigateToMerchantsTabs
+                : props.navigateToMerchantsList,
               I18n.t("bonus.cgn.detail.cta.buyers")
             )}
             rightButton={confirmButtonProps(
@@ -173,6 +177,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
+  isMerchantV2Enabled: configSelector("cgn_merchants_v2")(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
   eycaDetails: eycaDetailSelector(state)
 });
@@ -181,7 +186,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(navigateBack()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToMerchantsList: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToMerchantsTabs: () => dispatch(navigateToCgnMerchantsTabs()),
   navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 

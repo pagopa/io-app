@@ -43,13 +43,6 @@ Created on **30/07/2020**
 - Integrate the pr https://github.com/GeekyAnts/NativeBase/pull/3200 waiting the official release. (remove this patch after the release)
 - Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
 
-### react-native-push-notification+4.0.0
-Created on **03/08/2020**
-
-#### Reason:
-- Revert the change to the notification parser to allows compatibility to the legacy GCM format used atm. (revert the change https://github.com/zo0r/react-native-push-notification/pull/1212 )
-also discussed here https://github.com/zo0r/react-native-push-notification/issues/1452.
-The new notification format should follow https://firebase.google.com/docs/cloud-messaging/http-server-ref, https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
 
 ### react-native-i18n+2.0.15
 Created on **05/08/2020**
@@ -69,3 +62,9 @@ Created on **12/08/2020**
 
 #### Reason:
 - Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
+
+### react-native-push-notification+7.3.1
+Created on **10/05/2021**
+
+#### Reason:
+- Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
