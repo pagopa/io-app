@@ -44,7 +44,7 @@ export const scheduleLocalNotificationsAccessSpid = () => {
  */
 export const removeScheduledNotificationAccessSpid = () => {
   /**
-   * With the current library version seems that cancelLocalNotifications doesn't work.
+   * With the current library version (7.3.1) seems that cancelLocalNotifications doesn't work.
    *
    * eg. example code that doesn't work:
    *
@@ -59,7 +59,7 @@ export const removeScheduledNotificationAccessSpid = () => {
    * );
    *
    * At the moment the "first access spid" is the only kind of scheduled notification and for this reason
-   * is safe to use PushNotification.cancelAllLocalNotifications();
+   * it is safe to use PushNotification.cancelAllLocalNotifications();
    * If we add more scheduled notifications, we need to investigate why cancelLocalNotifications doesn't work
    */
   PushNotification.cancelAllLocalNotifications();
