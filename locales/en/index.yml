@@ -66,7 +66,7 @@ global:
     inputLabel: Header
     description: Description
     dateField: 2 digits for the month, 2 for the year
-    threeDigits: 3 digits	
+    threeDigits: 3 digits
     fourDigits: 4 digits
     dateFormat: MMMM Do YYYY
     expanded: Expanded paragraph
@@ -2278,6 +2278,8 @@ bonus:
       code: By pressing the item you will copy the code
     name: Carta Giovani Nazionale
     merchantsList:
+      online: Online
+      places: Places
       navigationTitle: View merchants
       screenTitle: Select the merchant where you want to buy something
     merchantDetail:

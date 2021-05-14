@@ -166,6 +166,10 @@ export const withBpdRankingConfig = (
   ...baseState,
   status: baseState.status.map(s => ({
     ...s,
-    config: { bpd_ranking: newConfig, bpd_ranking_v2: newConfig }
+    config: {
+      bpd_ranking: newConfig,
+      bpd_ranking_v2: newConfig,
+      cgn_merchants_v2: newConfig
+    }
   }))
 });

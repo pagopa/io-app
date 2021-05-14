@@ -12,6 +12,7 @@ import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
 import CgnOtpScreen from "../screens/CgnOtpScreen";
 import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
+import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 
 import CGN_ROUTES from "./routes";
 
@@ -43,6 +44,9 @@ const CgnNavigator = createStackNavigator(
     },
     [CGN_ROUTES.MERCHANTS.LIST]: {
       screen: MerchantsListScreen
+    },
+    [CGN_ROUTES.MERCHANTS.TABS]: {
+      screen: CgnMerchantsTabsScreen
     },
     [CGN_ROUTES.MERCHANTS.DETAIL]: {
       screen: CgnMerchantDetailScreen
