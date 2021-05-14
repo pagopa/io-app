@@ -45,7 +45,7 @@ export function CdnBackendStatusClient(
   const getStatusT: GetStatusT = {
     method: "get",
     // to avoid response caching
-    url: () => `backend.json?ms=${new Date().getTime()}`,
+    url: () => `status/backend.json?ms=${new Date().getTime()}`,
     query: _ => ({}),
     headers: () => ({}),
     response_decoder: basicResponseDecoder(BackendStatus)
