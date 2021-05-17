@@ -141,36 +141,35 @@ export default class TransactionsList extends React.Component<Props, State> {
     }
 
     return (
-      <ButtonDefaultOpacity
-        style={styles.moreButton}
-        bordered={true}
-        disabled={this.state.loadingMore}
-        onPress={() => {
-          this.setState({ loadingMore: true }, () =>
-            this.props.onLoadMoreTransactions()
-          );
-        }}
-      >
-        <Text>
-          {I18n.t(
-            // change the button text if we are loading another slice of transactions
-            this.state.loadingMore
-              ? "wallet.transacionsLoadingMore"
-              : "wallet.transactionsLoadMore"
-          )}
-        </Text>
-      </ButtonDefaultOpacity>
+      <View>
+        <ButtonDefaultOpacity
+          style={styles.moreButton}
+          bordered={true}
+          disabled={this.state.loadingMore}
+          onPress={() => {
+            this.setState({ loadingMore: true }, () =>
+              this.props.onLoadMoreTransactions()
+            );
+          }}
+        >
+          <Text>
+            {I18n.t(
+              // change the button text if we are loading another slice of transactions
+              this.state.loadingMore
+                ? "wallet.transacionsLoadingMore"
+                : "wallet.transactionsLoadMore"
+            )}
+          </Text>
+        </ButtonDefaultOpacity>
+        <EdgeBorderComponent />
+      </View>
     );
   };
 
   public render(): React.ReactNode {
     const { ListEmptyComponent } = this.props;
-
     // first loading
-    if (
-      this.state.loadingMore === false &&
-      pot.isLoading(this.props.transactions)
-    ) {
+    if (!this.state.loadingMore && pot.isLoading(this.props.transactions)) {
       return (
         <BoxedRefreshIndicator
           white={true}
@@ -182,7 +181,9 @@ export default class TransactionsList extends React.Component<Props, State> {
       this.props.transactions,
       []
     );
-    return transactions.length === 0 && ListEmptyComponent ? (
+    return transactions.length === 0 &&
+      !this.props.areMoreTransactionsAvailable &&
+      ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
       <Content scrollEnabled={false} style={styles.whiteContent}>
