@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import { Tab, Tabs, View } from "native-base";
+import { Tab, Tabs } from "native-base";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -13,7 +13,8 @@ import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import customVariables from "../../../../../theme/variables";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
-import { H1 } from "../../../../../components/core/typography/H1";
+// import { H1 } from "../../../../../components/core/typography/H1";
+import CgnMerchantsMap from "../../components/merchants/CgnMerchantsMap";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -84,10 +85,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             textStyle={styles.textStyle}
             heading={I18n.t("bonus.cgn.merchantsList.places")}
           >
-            <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-              {/* TODO PLACEHOLDER HERE GOES THE MAP */}
-              <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
-            </View>
+            <CgnMerchantsMap merchants={[]} />
           </Tab>
         </Tabs>
       </SafeAreaView>
