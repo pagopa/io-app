@@ -3,36 +3,58 @@
 /**
  * A saga that manages the Wallet.
  */
-import {isSome, none, Option, some} from "fp-ts/lib/Option";
+import { isSome, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
-import {DeferredPromise} from "italia-ts-commons/lib/promises";
-import {Millisecond} from "italia-ts-commons/lib/units";
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
-import {call, delay, Effect, fork, put, select, take, takeEvery, takeLatest} from "redux-saga/effects";
-import {ActionType, getType, isActionOf} from "typesafe-actions";
+import {
+  call,
+  delay,
+  Effect,
+  fork,
+  put,
+  select,
+  take,
+  takeEvery,
+  takeLatest
+} from "redux-saga/effects";
+import { ActionType, getType, isActionOf } from "typesafe-actions";
 
-import {TypeEnum} from "../../definitions/pagopa/Wallet";
-import {BackendClient} from "../api/backend";
-import {ContentClient} from "../api/content";
-import {PaymentManagerClient} from "../api/pagopa";
-import {getCardIconFromBrandLogo} from "../components/wallet/card/Logo";
-import {apiUrlPrefix, bpdEnabled, fetchPagoPaTimeout, fetchPaymentManagerLongTimeout} from "../config";
-import {bpdEnabledSelector} from "../features/bonus/bpd/store/reducers/details/activation";
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
+import { BackendClient } from "../api/backend";
+import { ContentClient } from "../api/content";
+import { PaymentManagerClient } from "../api/pagopa";
+import { getCardIconFromBrandLogo } from "../components/wallet/card/Logo";
+import {
+  apiUrlPrefix,
+  bpdEnabled,
+  fetchPagoPaTimeout,
+  fetchPaymentManagerLongTimeout
+} from "../config";
+import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
   navigateToActivateBpdOnNewCreditCard,
   navigateToSuggestBpdActivation
 } from "../features/wallet/onboarding/bancomat/navigation/action";
-import {handleAddPan, handleLoadAbi, handleLoadPans} from "../features/wallet/onboarding/bancomat/saga/networking";
-import {addBancomatToWalletAndActivateBpd} from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
+import {
+  handleAddPan,
+  handleLoadAbi,
+  handleLoadPans
+} from "../features/wallet/onboarding/bancomat/saga/networking";
+import { addBancomatToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomat/saga/orchestration/addBancomatToWallet";
 import {
   addBancomatToWallet,
   loadAbi,
   searchUserPans,
   walletAddBancomatStart
 } from "../features/wallet/onboarding/bancomat/store/actions";
-import {handleAddpayToWallet, handleSearchUserBPay} from "../features/wallet/onboarding/bancomatPay/saga/networking";
-import {addBPayToWalletAndActivateBpd} from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import {
+  handleAddpayToWallet,
+  handleSearchUserBPay
+} from "../features/wallet/onboarding/bancomatPay/saga/networking";
+import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
 import {
   addBPayToWallet,
   searchUserBPay,
@@ -43,17 +65,17 @@ import {
   handleLoadCoBadgeConfiguration,
   handleSearchUserCoBadge
 } from "../features/wallet/onboarding/cobadge/saga/networking";
-import {addCoBadgeToWalletAndActivateBpd} from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
+import { addCoBadgeToWalletAndActivateBpd } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
   searchUserCoBadge,
   walletAddCoBadgeStart
 } from "../features/wallet/onboarding/cobadge/store/actions";
-import {handleAddPrivativeToWallet} from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
-import {handleSearchUserPrivative} from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
-import {handleLoadPrivativeConfiguration} from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
-import {addPrivativeToWalletAndActivateBpd} from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
+import { handleAddPrivativeToWallet } from "../features/wallet/onboarding/privative/saga/networking/handleAddPrivativeToWallet";
+import { handleSearchUserPrivative } from "../features/wallet/onboarding/privative/saga/networking/handleSearchUserPrivative";
+import { handleLoadPrivativeConfiguration } from "../features/wallet/onboarding/privative/saga/networking/loadPrivativeConfiguration";
+import { addPrivativeToWalletAndActivateBpd } from "../features/wallet/onboarding/privative/saga/orchestration/addPrivativeToWallet";
 import {
   addPrivativeToWallet,
   loadPrivativeIssuers,
@@ -64,17 +86,20 @@ import {
   handleAddUserSatispayToWallet,
   handleSearchUserSatispay
 } from "../features/wallet/onboarding/satispay/saga/networking";
-import {addSatispayToWalletAndActivateBpd} from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
+import { addSatispayToWalletAndActivateBpd } from "../features/wallet/onboarding/satispay/saga/orchestration/addSatispayToWallet";
 import {
   addSatispayToWallet,
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
 import ROUTES from "../navigation/routes";
-import {navigateBack, navigateToWalletHome} from "../store/actions/navigation";
-import {navigationHistoryPop} from "../store/actions/navigationHistory";
-import {profileLoadSuccess, profileUpsert} from "../store/actions/profile";
-import {addCreditCardOutcomeCode} from "../store/actions/wallet/outcomeCode";
+import {
+  navigateBack,
+  navigateToWalletHome
+} from "../store/actions/navigation";
+import { navigationHistoryPop } from "../store/actions/navigationHistory";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
@@ -120,22 +145,27 @@ import {
   setFavouriteWalletRequest,
   setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
-import {getTransactionsRead} from "../store/reducers/entities/readTransactions";
-import {isProfileEmailValidatedSelector} from "../store/reducers/profile";
-import {GlobalState} from "../store/reducers/types";
-import {lastPaymentOutcomeCodeSelector} from "../store/reducers/wallet/outcomeCode";
-import {getAllWallets} from "../store/reducers/wallet/wallets";
+import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { GlobalState } from "../store/reducers/types";
+import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
+import { getAllWallets } from "../store/reducers/wallet/wallets";
 
-import {EnableableFunctionsTypeEnum, isRawCreditCard, NullableWallet, PaymentManagerToken} from "../types/pagopa";
-import {SessionToken} from "../types/SessionToken";
-import {isTestEnv} from "../utils/environment";
+import {
+  EnableableFunctionsTypeEnum,
+  isRawCreditCard,
+  NullableWallet,
+  PaymentManagerToken
+} from "../types/pagopa";
+import { SessionToken } from "../types/SessionToken";
+import { isTestEnv } from "../utils/environment";
 
-import {defaultRetryingFetch} from "../utils/fetch";
-import {getCurrentRouteKey, getCurrentRouteName} from "../utils/navigation";
-import {getTitleFromCard} from "../utils/paymentMethod";
-import {SessionManager} from "../utils/SessionManager";
-import {hasFunctionEnabled} from "../utils/walletv2";
-import {paymentsDeleteUncompletedSaga} from "./payments";
+import { defaultRetryingFetch } from "../utils/fetch";
+import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { getTitleFromCard } from "../utils/paymentMethod";
+import { SessionManager } from "../utils/SessionManager";
+import { hasFunctionEnabled } from "../utils/walletv2";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
@@ -154,13 +184,12 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import {paymentIdSelector} from "../store/reducers/wallet/payment";
-import {sendAddCobadgeMessageSaga} from "./wallet/cobadgeReminder";
-import {waitBackoffError} from "../utils/backoffError";
-import {newLookUpId, resetLookUpId} from "../utils/pmLookUpId";
+import { paymentIdSelector } from "../store/reducers/wallet/payment";
+import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
+import { waitBackoffError } from "../utils/backoffError";
+import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 
 const successScreenDelay = 2000 as Millisecond;
-
 /**
  * This saga manages the flow for adding a new card.
  *
