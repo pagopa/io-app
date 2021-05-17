@@ -730,6 +730,7 @@ payment:
   notice: Notice
   noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
+  paidConfirm: You paid {{amount}}
   details:
     state:
       successful: Successful
