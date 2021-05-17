@@ -4,11 +4,11 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect, fork, put, select } from "redux-saga/effects";
 import { CdnBackendStatusClient } from "../api/backendPublic";
-import { backendStatusUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
+import { contentRepoUrl } from "../config";
 
 const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (60 * 1000) as Millisecond;
 const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
@@ -69,6 +69,6 @@ export function* backendStatusWatcherLoop(
 }
 
 export default function* root(): IterableIterator<Effect> {
-  const cdnBackendClient = CdnBackendStatusClient(backendStatusUrl);
+  const cdnBackendClient = CdnBackendStatusClient(contentRepoUrl);
   yield fork(backendStatusWatcherLoop, cdnBackendClient.getStatus);
 }
