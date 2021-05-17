@@ -141,7 +141,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <CategoryCheckbox
                   text={I18n.t(listItem.item.nameKey)}
                   value={listItem.item.type}
-                  checked={checkedCategories.indexOf(listItem.item.type) !== -1}
+                  checked={checkedCategories.some(listItem.item.type)}
                   onPress={onCheckBoxPress}
                   icon={listItem.item.icon}
                 />
@@ -164,7 +164,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                       text={I18n.t(listItem.item.label)}
                       value={listItem.item.value}
                       checked={
-                        selectedOrder.indexOf(listItem.item.value) !== -1
+                        selectedOrder.some(listItem.item.value)
                       }
                       onPress={onOrderSelect}
                     />
