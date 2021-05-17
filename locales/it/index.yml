@@ -66,8 +66,8 @@ global:
     inputLabel: Intestazione
     description: Descrizione
     dateField: Due cifre per il mese, due per l'anno
-    threeDigits: 3 cifre	
-    fourDigits: 4 cifre	
+    threeDigits: 3 cifre
+    fourDigits: 4 cifre
     dateFormat: DD MMMM YYYY
     expanded: Paragrafo espanso
     collapsed: Paragrafo chiuso
@@ -750,6 +750,7 @@ payment:
   notice: Avviso
   noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
+  paidConfirm: Hai pagato {{amount}}
   details:
     state:
       successful: Concluso
@@ -2307,6 +2308,8 @@ bonus:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
     merchantsList:
+      online: Online
+      places: Luoghi
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
     merchantDetail:
