@@ -86,7 +86,7 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     onPress: props.startAddPrivative,
     status: props.navigation.getParam("inPayment").isNone()
       ? "implemented"
-      : "incoming"
+      : "notImplemented"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
