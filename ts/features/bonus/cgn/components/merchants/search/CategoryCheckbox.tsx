@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { ListItem, View } from "native-base";
 import * as React from "react";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
@@ -14,12 +14,13 @@ type Props = {
 };
 
 const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
-  <View
+  <ListItem
     style={{
       flexDirection: "row",
       justifyContent: "space-between",
       paddingVertical: 12
     }}
+    onPress={() => onPress(value)}
   >
     <View style={{ flexDirection: "row" }}>
       <IconFont name={icon} size={22} color={IOColors.bluegrey} />
@@ -27,7 +28,7 @@ const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
       <H4 weight={"Regular"}>{text.toUpperCase()}</H4>
     </View>
     <RawCheckBox checked={checked} onPress={() => onPress(value)} />
-  </View>
+  </ListItem>
 );
 
 export default CategoryCheckbox;

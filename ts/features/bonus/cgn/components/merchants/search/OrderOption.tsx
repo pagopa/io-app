@@ -1,8 +1,8 @@
 import * as React from "react";
+import { ListItem } from "native-base";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   text: string;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const OrderOption = ({ text, value, onPress, checked }: Props) => (
-  <TouchableDefaultOpacity
+  <ListItem
     style={{
       flexDirection: "row",
       justifyContent: "space-between",
@@ -28,7 +28,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
       size={22}
       color={checked ? IOColors.blue : IOColors.bluegrey}
     />
-  </TouchableDefaultOpacity>
+  </ListItem>
 );
 
 export default OrderOption;
