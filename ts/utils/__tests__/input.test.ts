@@ -12,6 +12,7 @@ import {
   isValidSecurityCode
 } from "../input";
 import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
+import { right } from "fp-ts/lib/Either";
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [
@@ -236,17 +237,13 @@ describe("getCreditCardFromState", () => {
   const aValidSecurityCode = "123";
   const anInvalidSecurityCode = "1";
   it.each`
-    pan                   | expirationDate                   | securityCode                   | holder
-    ${none}               | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${none}                          | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${none}                        | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${none}
-    ${some(anInvalidPan)} | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(anInvalidExpirationDate)} | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
-    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
+    pan                | expirationDate                | securityCode                | holder
+    ${none}            | ${some(aValidExpirationDate)} | ${some(aValidSecurityCode)} | ${some(aValidCardHolder)}
+    ${some(aValidPan)} | ${none}                       | ${some(aValidSecurityCode)} | ${some(aValidCardHolder)}
+    ${some(aValidPan)} | ${some(aValidExpirationDate)} | ${none}                     | ${some(aValidCardHolder)}
+    ${some(aValidPan)} | ${some(aValidExpirationDate)} | ${some(aValidSecurityCode)} | ${none}
   `(
-    "should return none if at least one field of the credit card is none or is invalid",
+    "should return left<undefined> if at least one field of the credit card is none or is invalid",
     async ({ pan, expirationDate, securityCode, holder }) => {
       const cardState: CreditCardState = {
         pan,
@@ -254,7 +251,30 @@ describe("getCreditCardFromState", () => {
         securityCode,
         holder
       };
-      expect(getCreditCardFromState(cardState)).toBe(none);
+      expect(getCreditCardFromState(cardState).isLeft()).toBeTruthy();
+      expect(getCreditCardFromState(cardState).value).toBe(undefined);
+    }
+  );
+
+  it.each`
+    pan                   | expirationDate                   | securityCode                   | holder
+    ${some(anInvalidPan)} | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(anInvalidExpirationDate)} | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
+  `(
+    "should return left<string> if at least one field of the credit card is invalid",
+    async ({ pan, expirationDate, securityCode, holder }) => {
+      const cardState: CreditCardState = {
+        pan,
+        expirationDate,
+        securityCode,
+        holder
+      };
+      expect(getCreditCardFromState(cardState).isLeft()).toBeTruthy();
+      expect(
+        typeof getCreditCardFromState(cardState).value === "string"
+      ).toBeTruthy();
     }
   );
 
@@ -279,7 +299,7 @@ describe("getCreditCardFromState", () => {
         holder: aValidCardHolder
       };
       expect(getCreditCardFromState(cardState)).toStrictEqual(
-        some(expectedCreditCard)
+        right(expectedCreditCard)
       );
     }
   });
