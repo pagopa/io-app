@@ -1,4 +1,5 @@
 import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
+import { right } from "fp-ts/lib/Either";
 import MockDate from "mockdate";
 import {
   CreditCardCVC,
@@ -12,7 +13,6 @@ import {
   isValidSecurityCode
 } from "../input";
 import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
-import { right } from "fp-ts/lib/Either";
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [

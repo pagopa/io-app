@@ -1,9 +1,9 @@
 import { Option, none } from "fp-ts/lib/Option";
+import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
-import { Either, left, right } from "fp-ts/lib/Either";
 import I18n from "../i18n";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 
@@ -70,7 +70,7 @@ export type CreditCardState = Readonly<{
 
 export type CreditCardStateKeys = keyof CreditCardState;
 
-//TODO: update this function including all the form errors when fp-ts will be updated.
+// TODO: update this function including all the form errors when fp-ts will be updated.
 // Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**
  * @param state A pending credit card state objects, containing the card's components.
