@@ -1,8 +1,11 @@
-import { Option, none, some } from "fp-ts/lib/Option";
+import { Option, none } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
+import { Either, left, right } from "fp-ts/lib/Either";
+import I18n from "../i18n";
+import { CreditCardDetector, SupportedBrand } from "./creditCard";
 
 const MIN_PAN_DIGITS = 14;
 const MAX_PAN_DIGITS = 19;
@@ -73,7 +76,7 @@ export type CreditCardStateKeys = keyof CreditCardState;
  */
 export function getCreditCardFromState(
   state: CreditCardState
-): Option<CreditCard> {
+): Either<string | undefined, CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
     pan.isNone() ||
@@ -81,12 +84,16 @@ export function getCreditCardFromState(
     securityCode.isNone() ||
     holder.isNone()
   ) {
-    return none;
+    return left(undefined);
+  }
+
+  if (!isValidCardHolder(holder)) {
+    return left(I18n.t("wallet.dummyCard.labels.holder.label"));
   }
 
   if (!CreditCardPan.is(pan.value)) {
     // invalid pan
-    return none;
+    return left(I18n.t("wallet.dummyCard.labels.pan"));
   }
 
   const [expirationMonth, expirationYear] = expirationDate.value.split("/");
@@ -96,16 +103,22 @@ export function getCreditCardFromState(
     !CreditCardExpirationYear.is(expirationYear)
   ) {
     // invalid date
-    return none;
+    return left(I18n.t("wallet.dummyCard.labels.expirationDate"));
   }
 
   if (!CreditCardCVC.is(securityCode.value)) {
-    // invalid cvc
-    return none;
-  }
+    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+      securityCode
+    );
 
-  if (!isValidCardHolder(holder)) {
-    return none;
+    // invalid cvc
+    return left(
+      I18n.t(
+        detectedBrand.cvvLength === 4
+          ? "wallet.dummyCard.labels.securityCode4D"
+          : "wallet.dummyCard.labels.securityCode"
+      )
+    );
   }
 
   const card: CreditCard = {
@@ -116,7 +129,7 @@ export function getCreditCardFromState(
     securityCode: securityCode.value
   };
 
-  return some(card);
+  return right(card);
 }
 
 /**
