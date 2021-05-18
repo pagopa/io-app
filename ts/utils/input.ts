@@ -70,6 +70,8 @@ export type CreditCardState = Readonly<{
 
 export type CreditCardStateKeys = keyof CreditCardState;
 
+//TODO: update this function including all the form errors when fp-ts will be updated.
+// Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**
  * @param state A pending credit card state objects, containing the card's components.
  * @returns A fp-ts Option containing a valid CreditCard object, if possible
