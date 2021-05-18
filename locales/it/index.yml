@@ -1264,7 +1264,7 @@ wallet:
       Inquadra il codice QR che trovi nell'avviso, oppure
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci tu i dati
-    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    enroll_cta: L'uso della fotocamera è presente su questo dispositivo ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
