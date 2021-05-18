@@ -1,11 +1,11 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
-import { constNull } from "fp-ts/lib/function";
+import {constNull} from "fp-ts/lib/function";
 import DeviceInfo from "react-native-device-info";
-import { sha256 } from "react-native-sha256";
-import { NavigationActions } from "react-navigation";
-import { getType } from "typesafe-actions";
-import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import {sha256} from "react-native-sha256";
+import {NavigationActions} from "react-navigation";
+import {getType} from "typesafe-actions";
+import {setInstabugUserAttribute} from "../../boot/configureInstabug";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest,
@@ -18,17 +18,17 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
-import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
-import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
-import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
-import { mixpanel } from "../../mixpanel";
-import { getCurrentRouteName } from "../../utils/navigation";
+import {trackBPayAction} from "../../features/wallet/onboarding/bancomatPay/analytics";
+import {trackCoBadgeAction} from "../../features/wallet/onboarding/cobadge/analytics";
+import {trackPrivativeAction} from "../../features/wallet/onboarding/privative/analytics";
+import {mixpanel} from "../../mixpanel";
+import {getCurrentRouteName} from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted,
   analyticsOnboardingStarted
 } from "../actions/analytics";
-import { applicationChangeState } from "../actions/application";
+import {applicationChangeState} from "../actions/application";
 import {
   idpLoginUrlChanged,
   idpSelected,
@@ -41,12 +41,9 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { cieAuthenticationError } from "../actions/cie";
-import {
-  contentMunicipalityLoad,
-  loadServiceMetadata
-} from "../actions/content";
-import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
+import {cieAuthenticationError} from "../actions/cie";
+import {contentMunicipalityLoad, loadServiceMetadata} from "../actions/content";
+import {instabugReportClosed, instabugReportOpened} from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
@@ -56,19 +53,10 @@ import {
   identificationStart,
   identificationSuccess
 } from "../actions/identification";
-import {
-  loadMessage,
-  loadMessages,
-  loadMessagesCancel,
-  removeMessages,
-  setMessageReadState
-} from "../actions/messages";
-import {
-  updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
-} from "../actions/notifications";
-import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess, updatePin } from "../actions/pinset";
+import {loadMessage, loadMessages, loadMessagesCancel, removeMessages, setMessageReadState} from "../actions/messages";
+import {updateNotificationInstallationFailure, updateNotificationsInstallationToken} from "../actions/notifications";
+import {tosAccepted} from "../actions/onboarding";
+import {createPinSuccess, updatePin} from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -76,18 +64,11 @@ import {
   profileUpsert,
   removeAccountMotivation
 } from "../actions/profile";
-import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import {
-  loadServiceDetail,
-  loadServicesDetail,
-  loadVisibleServices
-} from "../actions/services";
-import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import {
-  deleteUserDataProcessing,
-  upsertUserDataProcessing
-} from "../actions/userDataProcessing";
-import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
+import {profileEmailValidationChanged} from "../actions/profileEmailValidationChange";
+import {loadServiceDetail, loadServicesDetail, loadVisibleServices} from "../actions/services";
+import {Action, Dispatch, MiddlewareAPI} from "../actions/types";
+import {deleteUserDataProcessing, upsertUserDataProcessing} from "../actions/userDataProcessing";
+import {userMetadataLoad, userMetadataUpsert} from "../actions/userMetadata";
 import {
   abortRunningPayment,
   paymentAttiva,
@@ -134,6 +115,7 @@ import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
+import { trackContentAction } from "./contentAnalytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -468,6 +450,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
+    void trackContentAction(mixpanel)(action);
   }
   return next(action);
 };
