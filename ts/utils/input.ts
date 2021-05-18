@@ -74,7 +74,8 @@ export type CreditCardStateKeys = keyof CreditCardState;
 // Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**
  * @param state A pending credit card state objects, containing the card's components.
- * @returns A fp-ts Option containing a valid CreditCard object, if possible
+ * @returns A fp-ts Either containing a valid CreditCard object if right or if it's left undefined if at least one field is none
+ * or the label of the first invalid field.
  */
 export function getCreditCardFromState(
   state: CreditCardState
