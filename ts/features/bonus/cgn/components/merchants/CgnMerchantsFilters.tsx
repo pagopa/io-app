@@ -64,7 +64,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
 
   const onRemoveButton = () => {
     setSearchValue("");
-    setSelectedOrder(orders[0].value);
+    setSelectedOrder(orders.distance.value);
     setCheckedCategories([]);
     props.onClose();
   };
@@ -94,7 +94,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             <Item>
               <Input
                 value={searchValue}
-                autoFocus={true}
                 onChangeText={setSearchValue}
                 placeholderTextColor={IOColors.bluegreyLight}
                 placeholder={I18n.t(
@@ -110,7 +109,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <Item>
                   <Input
                     value={address}
-                    autoFocus={true}
                     onChangeText={setAddress}
                     placeholderTextColor={IOColors.bluegreyLight}
                     placeholder={I18n.t(
@@ -133,7 +131,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             <FlatList
               data={categories}
               keyExtractor={cat => cat.type}
-              keyboardShouldPersistTaps={"handled"}
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent noPadded={true} />
               )}
@@ -146,6 +143,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                   icon={listItem.item.icon}
                 />
               )}
+              keyboardShouldPersistTaps={"handled"}
             />
             <View spacer large />
             {props.isLocal && (
@@ -155,7 +153,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <FlatList
                   data={_.values(orders)}
                   keyExtractor={ord => ord.value}
-                  keyboardShouldPersistTaps={"handled"}
                   ItemSeparatorComponent={() => (
                     <ItemSeparatorComponent noPadded={true} />
                   )}
@@ -167,6 +164,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                       onPress={onOrderSelect}
                     />
                   )}
+                  keyboardShouldPersistTaps={"handled"}
                 />
               </>
             )}
