@@ -359,6 +359,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     );
   };
 
+  // The generic "Try again" message appears if you make a mistake
+  // in entering the unlock code or in case of failed biometric authentication.
+  // If you fail to write the unlock code more than 4 times you should see
+  // "Try again. Number of remaining attempts". In case of failed biometric identification
+  // the message is displayed when you open the app by holding the "wrong finger" on the biometric iPhone sensor.
   private getErrorText = () => {
     const textTryAgain = I18n.t("global.genericRetry");
 
