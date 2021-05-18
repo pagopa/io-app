@@ -64,13 +64,24 @@ export type OrderType = {
   value: string;
 };
 
-export const orders: ReadonlyArray<OrderType> = [
-  {
+// export const orders: ReadonlyArray<OrderType> = [
+//   {
+//     label: "bonus.cgn.merchantsList.filter.order.byDistance",
+//     value: "distance"
+//   },
+//   {
+//     label: "bonus.cgn.merchantsList.filter.order.byName",
+//     value: "alphabetical"
+//   }
+// ];
+
+export const orders: Record<string, OrderType> = {
+  distance: {
     label: "bonus.cgn.merchantsList.filter.order.byDistance",
     value: "distance"
   },
-  {
+  name: {
     label: "bonus.cgn.merchantsList.filter.order.byName",
     value: "alphabetical"
   }
-];
+};

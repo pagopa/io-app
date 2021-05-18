@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import _ from "lodash";
 import { Body, Container, Input, Item, Left, Right, View } from "native-base";
 import {
   FlatList,
@@ -40,16 +41,19 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
     ReadonlyArray<string>
   >([]);
 
-  const [selectedOrder, setSelectedOrder] = useState<string>(orders[0].value);
+  const [selectedOrder, setSelectedOrder] = useState<string>(
+    orders.distance.value
+  );
 
   const [distance, setDistance] = useState<number>(20);
 
   const onCheckBoxPress = (value: string) => {
-    if (checkedCategories.indexOf(value) !== -1) {
-      setCheckedCategories(checkedCategories.filter(c => c !== value));
-    } else {
-      setCheckedCategories([...checkedCategories, value]);
-    }
+    const filteredCategories = checkedCategories.filter(c => c !== value);
+    setCheckedCategories(
+      checkedCategories.length !== filteredCategories.length
+        ? filteredCategories
+        : [...checkedCategories, value]
+    );
     Keyboard.dismiss();
   };
 
@@ -63,10 +67,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
     setSelectedOrder(orders[0].value);
     setCheckedCategories([]);
     props.onClose();
-  };
-
-  const onConfirmButton = () => {
-    props.onConfirm();
   };
 
   const selectedFilters =
@@ -141,7 +141,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <CategoryCheckbox
                   text={I18n.t(listItem.item.nameKey)}
                   value={listItem.item.type}
-                  checked={checkedCategories.some(listItem.item.type)}
+                  checked={checkedCategories.includes(listItem.item.type)}
                   onPress={onCheckBoxPress}
                   icon={listItem.item.icon}
                 />
@@ -153,7 +153,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                 <H2>{I18n.t("bonus.cgn.merchantsList.filter.orderTitle")}</H2>
                 <View spacer small />
                 <FlatList
-                  data={orders}
+                  data={_.values(orders)}
                   keyExtractor={ord => ord.value}
                   keyboardShouldPersistTaps={"handled"}
                   ItemSeparatorComponent={() => (
@@ -163,9 +163,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                     <OrderOption
                       text={I18n.t(listItem.item.label)}
                       value={listItem.item.value}
-                      checked={
-                        selectedOrder.some(listItem.item.value)
-                      }
+                      checked={selectedOrder.includes(listItem.item.value)}
                       onPress={onOrderSelect}
                     />
                   )}
@@ -181,7 +179,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             I18n.t("bonus.cgn.merchantsList.filter.cta.cancel")
           )}
           rightButton={confirmButtonProps(
-            onConfirmButton,
+            props.onConfirm,
             I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
               defaultValue: I18n.t(
                 "bonus.cgn.merchantsList.filter.cta.confirm.other",

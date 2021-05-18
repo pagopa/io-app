@@ -14,6 +14,7 @@ type Props = {
 const MAX_VALUE = 40;
 const MIN_VALUE = 1;
 
+// Component used to filter the available CGN Merchants based on distance from a selected point
 export const DistanceSlider = (props: Props) => (
   <>
     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
