@@ -141,11 +141,22 @@ const primaryButtonPropsFromState = (
   const card = getCreditCardFromState(state);
 
   return card.fold<BlockButtonProps>(
-    {
-      ...baseButtonProps,
-      disabled: true,
-      accessibilityRole: "button"
-    },
+    (e: string | undefined) =>
+      e === undefined
+        ? {
+            ...baseButtonProps,
+            disabled: true,
+            accessibilityRole: "button"
+          }
+        : {
+            ...baseButtonProps,
+            disabled: true,
+            accessibilityRole: "button",
+            accessibilityLabel: I18n.t(
+              "wallet.dummyCard.accessibility.button.error",
+              { field: e }
+            )
+          },
     c => ({
       ...baseButtonProps,
       disabled: false,

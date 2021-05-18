@@ -1267,6 +1267,8 @@ wallet:
         4D:
           base: "CID, 4 cifre"
           error: "Codice CID. Per favore, inserisci 4 cifre"
+      button:
+        error: "Per continuare per favore correggi il campo {{field}}"
   acceptedCards: Carte accettate
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
