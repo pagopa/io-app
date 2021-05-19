@@ -87,8 +87,8 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
    * handle input on change text
    */
   const handleOnChangeText = (text: string) => {
-    if (props.type === "text" && props.inputProps.onChangeText) {
-      props.inputProps.onChangeText(text);
+    if (props.type === "text") {
+      props.inputProps.onChangeText?.(text);
     }
     checkInputIsEmpty(text);
   };
@@ -97,8 +97,8 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
    * handle masked input on change text
    */
   const handleOnMaskedChangeText = (formatted: string, text?: string) => {
-    if (props.type === "masked" && props.inputMaskProps.onChangeText) {
-      props.inputMaskProps.onChangeText(formatted, text);
+    if (props.type === "masked") {
+      props.inputMaskProps.onChangeText?.(formatted, text);
     }
     checkInputIsEmpty(text);
   };
