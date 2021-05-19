@@ -236,34 +236,19 @@ describe("getCreditCardFromState", () => {
   const anInvalidExpirationDate = "99/9";
   const aValidSecurityCode = "123";
   const anInvalidSecurityCode = "1";
-  it.each`
-    pan                | expirationDate                | securityCode                | holder
-    ${none}            | ${some(aValidExpirationDate)} | ${some(aValidSecurityCode)} | ${some(aValidCardHolder)}
-    ${some(aValidPan)} | ${none}                       | ${some(aValidSecurityCode)} | ${some(aValidCardHolder)}
-    ${some(aValidPan)} | ${some(aValidExpirationDate)} | ${none}                     | ${some(aValidCardHolder)}
-    ${some(aValidPan)} | ${some(aValidExpirationDate)} | ${some(aValidSecurityCode)} | ${none}
-  `(
-    "should return left<undefined> if at least one field of the credit card is none or is invalid",
-    async ({ pan, expirationDate, securityCode, holder }) => {
-      const cardState: CreditCardState = {
-        pan,
-        expirationDate,
-        securityCode,
-        holder
-      };
-      expect(getCreditCardFromState(cardState).isLeft()).toBeTruthy();
-      expect(getCreditCardFromState(cardState).value).toBe(undefined);
-    }
-  );
 
   it.each`
     pan                   | expirationDate                   | securityCode                   | holder
+    ${none}               | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${none}                          | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${none}                        | ${some(aValidCardHolder)}
+    ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${none}
     ${some(anInvalidPan)} | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
     ${some(aValidPan)}    | ${some(anInvalidExpirationDate)} | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
     ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
     ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
   `(
-    "should return left<string> if at least one field of the credit card is invalid",
+    "should return left<string> if at least one field of the credit card is none or is invalid",
     async ({ pan, expirationDate, securityCode, holder }) => {
       const cardState: CreditCardState = {
         pan,
