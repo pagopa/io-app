@@ -1244,7 +1244,8 @@ wallet:
           base: "CIN, 4 digits"
           error: "CIN. Please, enter 4 digits"
       button:
-        error: "To continue, please fix the {{field}} field"
+        fieldError: "To continue, please fix the {{field}} field"
+        missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards

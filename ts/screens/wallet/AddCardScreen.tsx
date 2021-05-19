@@ -147,10 +147,6 @@ const primaryButtonPropsFromState = (
       disabled: true,
       accessibilityRole: "button",
       accessibilityLabel: e
-        ? I18n.t("wallet.dummyCard.accessibility.button.error", {
-            field: e
-          })
-        : undefined
     }),
     c => ({
       ...baseButtonProps,

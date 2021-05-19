@@ -79,7 +79,7 @@ export type CreditCardStateKeys = keyof CreditCardState;
  */
 export function getCreditCardFromState(
   state: CreditCardState
-): Either<string | undefined, CreditCard> {
+): Either<string, CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
     pan.isNone() ||
@@ -87,16 +87,24 @@ export function getCreditCardFromState(
     securityCode.isNone() ||
     holder.isNone()
   ) {
-    return left(undefined);
+    return left(I18n.t("wallet.dummyCard.accessibility.button.missingFields"));
   }
 
   if (!isValidCardHolder(holder)) {
-    return left(I18n.t("wallet.dummyCard.labels.holder.label"));
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.holder.label")
+      })
+    );
   }
 
   if (!CreditCardPan.is(pan.value)) {
     // invalid pan
-    return left(I18n.t("wallet.dummyCard.labels.pan"));
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.pan")
+      })
+    );
   }
 
   const [expirationMonth, expirationYear] = expirationDate.value.split("/");
@@ -106,7 +114,11 @@ export function getCreditCardFromState(
     !CreditCardExpirationYear.is(expirationYear)
   ) {
     // invalid date
-    return left(I18n.t("wallet.dummyCard.labels.expirationDate"));
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.expirationDate")
+      })
+    );
   }
 
   if (!CreditCardCVC.is(securityCode.value)) {
@@ -116,11 +128,13 @@ export function getCreditCardFromState(
 
     // invalid cvc
     return left(
-      I18n.t(
-        detectedBrand.cvvLength === 4
-          ? "wallet.dummyCard.labels.securityCode4D"
-          : "wallet.dummyCard.labels.securityCode"
-      )
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t(
+          detectedBrand.cvvLength === 4
+            ? "wallet.dummyCard.labels.securityCode4D"
+            : "wallet.dummyCard.labels.securityCode"
+        )
+      })
     );
   }
 
