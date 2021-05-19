@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.14](https://github.com/pagopa/io-app/compare/1.25.0-rc.13...1.25.0-rc.14) (2021-05-19)
+
+
+### Bug Fixes
+
+* [[#177270155](https://www.pivotaltracker.com/story/show/177270155)] Fix accessibility for ios in add credit card screen ([#3020](https://github.com/pagopa/io-app/issues/3020)) ([a60db57](https://github.com/pagopa/io-app/commit/a60db57092efeda649506a6b4c13f3276912f287))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-64](https://pagopa.atlassian.net/browse/IAC-64)] Disable paginated transaction feature flag [#3055](https://github.com/pagopa/io-app/issues/3055) ([9e4b9a1](https://github.com/pagopa/io-app/commit/9e4b9a1f97a391df7f9d48c7c8031fafb6759a2e))
+* [[#178065380](https://www.pivotaltracker.com/story/show/178065380)] Replaced failed identification text ([#3044](https://github.com/pagopa/io-app/issues/3044)) ([bb81939](https://github.com/pagopa/io-app/commit/bb819391c8fbe291f5db923e4c1dcd3b6849b57c))
+
 ## [1.25.0-rc.13](https://github.com/pagopa/io-app/compare/1.25.0-rc.12...1.25.0-rc.13) (2021-05-18)
 
 
