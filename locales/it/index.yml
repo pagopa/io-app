@@ -1256,7 +1256,7 @@ wallet:
         error: "Intestatario carta. Per favore, non utilizzare lettere accentate"
       pan:
         base: "Numero carta"
-        error: "Numero carta. Per favore, inserisci almeno 14 cifre"
+        error: "Numero carta. Per favore, inserisci almeno {{minLength}} cifre"
       expirationDate:
         base: "Data di scadenza, due cifre per il mese, due per l’anno"
         error: "Data di scadenza, due cifre per il mese, due per l’anno. Per favore, inserisci una data valida"

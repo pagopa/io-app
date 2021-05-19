@@ -48,7 +48,8 @@ import {
   CreditCardStateKeys,
   isValidCardHolder,
   CreditCardExpirationYear,
-  CreditCardExpirationMonth
+  CreditCardExpirationMonth,
+  MIN_PAN_DIGITS
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
@@ -201,7 +202,9 @@ const getAccessiblityLabels = (creditCard: CreditCardState) => ({
   pan:
     isNone(creditCard.pan) || isValidPan(creditCard.pan)
       ? I18n.t("wallet.dummyCard.accessibility.pan.base")
-      : I18n.t("wallet.dummyCard.accessibility.pan.error"),
+      : I18n.t("wallet.dummyCard.accessibility.pan.error", {
+          minLength: MIN_PAN_DIGITS
+        }),
   expirationDate:
     isNone(maybeCreditcardValidOrExpired(creditCard)) ||
     maybeCreditcardValidOrExpired(creditCard).toUndefined()
@@ -264,7 +267,7 @@ const AddCardScreen: React.FC<Props> = props => {
   };
 
   const isScreenReaderEnabled = !useScreenReaderEnabled();
-  const placeholders = !isScreenReaderEnabled
+  const placeholders = isScreenReaderEnabled
     ? {
         placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
         placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),

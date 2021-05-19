@@ -1232,7 +1232,7 @@ wallet:
         error: "Card holder. Please, do not use accented letters"
       pan:
         base: "Card number"
-        error: "Card number. Please, enter at least 14 digits"
+        error: "Card number. Please, enter at least {{minLength}} digits"
       expirationDate:
         base: "Expiration date, 2 digits for the month, 2 for the year"
         error: "Expiration date, 2 digits for the month, 2 for the year. Please, enter a valid date"
