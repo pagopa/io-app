@@ -17,7 +17,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const renderBody = (first: string, second: string, third: string) => (
-  <Text style={InfoScreenStyle.body}>
+  <Text>
     {first}
     <Text style={InfoScreenStyle.bold}>{second}</Text>
     {third}

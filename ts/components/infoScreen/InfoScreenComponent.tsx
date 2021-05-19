@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  title: {
+    textAlign: "center",
+    fontSize: 20
+  },
+  textAlignCenter: {
+    textAlign: "center"
+  },
   bold: {
     fontWeight: "bold"
   }
@@ -30,7 +37,11 @@ export const InfoScreenStyle = styles;
 
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {
-    return <Body testID="infoScreenBody">{body}</Body>;
+    return (
+      <Body testID="infoScreenBody" style={styles.textAlignCenter}>
+        {body}
+      </Body>
+    );
   }
 
   return body;
@@ -49,7 +60,12 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
-      <H2 testID="infoScreenTitle" accessible ref={elementRef}>
+      <H2
+        testID="infoScreenTitle"
+        accessible
+        ref={elementRef}
+        style={styles.textAlignCenter}
+      >
         {props.title}
       </H2>
       <View spacer={true} />
