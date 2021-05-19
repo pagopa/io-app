@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0-rc.13](https://github.com/pagopa/io-app/compare/1.25.0-rc.12...1.25.0-rc.13) (2021-05-18)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[#176801780](https://www.pivotaltracker.com/story/show/176801780)] Avoid Android hardware go back on add payment method ([#3034](https://github.com/pagopa/io-app/issues/3034)) ([323d368](https://github.com/pagopa/io-app/commit/323d368c0e3748ed33d293335b24ada9118256a3))
+* [[#177058404](https://www.pivotaltracker.com/story/show/177058404)] Implement amount information on payment success screen ([#2975](https://github.com/pagopa/io-app/issues/2975)) ([56160af](https://github.com/pagopa/io-app/commit/56160af3cbbfc07d679d44ff7654fe1fa771e9e1))
+
+
+### Bug Fixes
+
+* [[#178157694](https://www.pivotaltracker.com/story/show/178157694)] No transactions done even if there are ([#3046](https://github.com/pagopa/io-app/issues/3046)) ([3871a33](https://github.com/pagopa/io-app/commit/3871a336cd34751b67d140bbb638930107aabe02))
+* **Bonus Pagamenti Digitali:** [[IAC-57](https://pagopa.atlassian.net/browse/IAC-57)] Privative displayed as incoming when adding a new payment method during a payment [#3049](https://github.com/pagopa/io-app/issues/3049) ([055795a](https://github.com/pagopa/io-app/commit/055795a33788e6f64912f257cfa4c110f7259e38))
+* [[#177534705](https://www.pivotaltracker.com/story/show/177534705)] Fixed header with close button that causes press problems ([#3006](https://github.com/pagopa/io-app/issues/3006)) ([c2f2dc1](https://github.com/pagopa/io-app/commit/c2f2dc1c031ab07f4b5440fe333a9fbd30bb24c0))
+* **Payments:** [[#176919872](https://www.pivotaltracker.com/story/show/176919872)] Dismiss keyboard on create credit card ([#3030](https://github.com/pagopa/io-app/issues/3030)) ([e95c621](https://github.com/pagopa/io-app/commit/e95c621b8095f51d6b8622f5ee5734691653edda))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-62](https://pagopa.atlassian.net/browse/IAC-62)] Add changelog scope for cashback jira project [#3050](https://github.com/pagopa/io-app/issues/3050) ([4c96f51](https://github.com/pagopa/io-app/commit/4c96f51aa671fecf651abf6ed033a70ca6c5ce48))
+* **deps:** bump hosted-git-info from 2.8.8 to 2.8.9 ([#3032](https://github.com/pagopa/io-app/issues/3032)) ([b3da6a4](https://github.com/pagopa/io-app/commit/b3da6a407c0151ecd73ce4ba28b4717e09040d2c))
+* **deps:** bump lodash from 4.17.20 to 4.17.21 [#3031](https://github.com/pagopa/io-app/issues/3031) ([2f951f0](https://github.com/pagopa/io-app/commit/2f951f0b71e3b6640c358a55eab0f51085e03c85))
+
+## [1.25.0-rc.12](https://github.com/pagopa/io-app/compare/1.25.0-rc.11...1.25.0-rc.12) (2021-05-14)
+
+
+### Bug Fixes
+
+* [[#178155677](https://www.pivotaltracker.com/story/show/178155677)] Local scheduled notification aren't canceled after login with SPID / CIE ([#3045](https://github.com/pagopa/io-app/issues/3045)) ([e3a5f2b](https://github.com/pagopa/io-app/commit/e3a5f2bbf9466f6d9ae5a8a09474079b1be78d62))
+
 ## [1.25.0-rc.11](https://github.com/pagopa/io-app/compare/1.25.0-rc.10...1.25.0-rc.11) (2021-05-13)
 
 
