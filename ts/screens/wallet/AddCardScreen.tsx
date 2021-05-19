@@ -141,22 +141,16 @@ const primaryButtonPropsFromState = (
   const card = getCreditCardFromState(state);
 
   return card.fold<BlockButtonProps>(
-    (e: string | undefined) =>
-      e === undefined
-        ? {
-            ...baseButtonProps,
-            disabled: true,
-            accessibilityRole: "button"
-          }
-        : {
-            ...baseButtonProps,
-            disabled: true,
-            accessibilityRole: "button",
-            accessibilityLabel: I18n.t(
-              "wallet.dummyCard.accessibility.button.error",
-              { field: e }
-            )
-          },
+    (e: string | undefined) => ({
+      ...baseButtonProps,
+      disabled: true,
+      accessibilityRole: "button",
+      accessibilityLabel: e
+        ? I18n.t("wallet.dummyCard.accessibility.button.error", {
+            field: e
+          })
+        : undefined
+    }),
     c => ({
       ...baseButtonProps,
       disabled: false,
@@ -270,7 +264,7 @@ const AddCardScreen: React.FC<Props> = props => {
   };
 
   const isScreenReaderEnabled = !useScreenReaderEnabled();
-  const placeholders = isScreenReaderEnabled
+  const placeholders = !isScreenReaderEnabled
     ? {
         placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
         placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
