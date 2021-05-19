@@ -88,7 +88,11 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Right>
       </AppHeader>
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.flex]} bounces={false}>
+        <ScrollView
+          style={[IOStyles.flex]}
+          bounces={false}
+          keyboardShouldPersistTaps={"handled"}
+        >
           <View style={IOStyles.horizontalContentPadding}>
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H2>
             <Item>
