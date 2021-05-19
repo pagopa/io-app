@@ -25,7 +25,6 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  favoriteWalletIdSelector,
   getFavoriteWalletId,
   getWalletsById,
   paymentMethodsSelector
@@ -203,8 +202,8 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} large={true} />
             <FavoritePaymentMethodSwitch
               isLoading={
-                pot.isLoading(props.favoriteWalletRequestStatus) ||
-                pot.isUpdating(props.favoriteWalletRequestStatus)
+                pot.isLoading(props.favoriteWalletId) ||
+                pot.isUpdating(props.favoriteWalletId)
               }
               switchValue={pot.getOrElse(isFavorite, false)}
               onValueChange={v =>
@@ -233,7 +232,6 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state),
   hasErrorDelete: pot.isError(getWalletsById(state))
