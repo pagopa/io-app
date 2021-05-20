@@ -63,7 +63,8 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
-    inputLabel: Header
+    inputLabel: "{{header}}, Header"
+    textField: "{{inputLabel}}, text field"
     description: Description
     dateField: 2 digits for the month, 2 for the year
     threeDigits: 3 digits
@@ -122,6 +123,7 @@ global:
   genericThanks: Thank you
   genericShare: Share
   genericSave: Save
+  genericRetry: Try again
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -730,6 +732,7 @@ payment:
   notice: Notice
   noticeCode: Notice code
   recipientFiscalCode: Recipient fiscal code
+  paidConfirm: You paid {{amount}}
   details:
     state:
       successful: Successful
@@ -1224,6 +1227,26 @@ wallet:
       expirationDate: mm/yy
       securityCode: "•••"
       securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Card holder, enter as shown on the card"
+        error: "Card holder. Please, do not use accented letters"
+      pan:
+        base: "Card number"
+        error: "Card number. Please, enter at least {{minLength}} digits"
+      expirationDate:
+        base: "Expiration date, 2 digits for the month, 2 for the year"
+        error: "Expiration date, 2 digits for the month, 2 for the year. Please, enter a valid date"
+      securityCode:
+        3D:
+          base: "Card security code, 3 digits"
+          error: "Card security code. Please, enter 3 digits"
+        4D:
+          base: "CIN, 4 digits"
+          error: "CIN. Please, enter 4 digits"
+      button:
+        fieldError: "To continue, please fix the {{field}} field"
+        missingFields: "To continue, please fill out all fields"
   acceptedCards: Accepted cards
   missingDataCTA: Are you missing some data?
   openAcceptedCardsPageCTA: Learn more about accepted cards
@@ -1238,7 +1261,7 @@ wallet:
     cameraUsageInfo: Scan the QR Code on the payment notice, or
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter the data
-    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
@@ -1581,7 +1604,6 @@ identification:
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
-    failure: Identification failed
     fingerprintType: Fingerprint
     title: Biometric identification
     popup:
@@ -1591,7 +1613,6 @@ identification:
       sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
       fallbackLabel: Use the unlock code
   fail:
-    wrongCode: Try again
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
     tooManyAttempts: Too many attempts.

@@ -63,7 +63,8 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
-    inputLabel: Intestazione
+    inputLabel: "{{header}}, Intestazione"
+    textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
     dateField: Due cifre per il mese, due per l'anno
     threeDigits: 3 cifre
@@ -122,6 +123,7 @@ global:
   genericThanks: Grazie
   genericShare: Condividi
   genericSave: Salva
+  genericRetry: Riprova
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -750,6 +752,7 @@ payment:
   notice: Avviso
   noticeCode: Codice Avviso
   recipientFiscalCode: Codice fiscale beneficiario
+  paidConfirm: Hai pagato {{amount}}
   details:
     state:
       successful: Concluso
@@ -1248,6 +1251,26 @@ wallet:
       expirationDate: mm/aa
       securityCode: "•••"
       securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Intestatario carta, inserisci come riportato sulla carta"
+        error: "Intestatario carta. Per favore, non utilizzare lettere accentate"
+      pan:
+        base: "Numero carta"
+        error: "Numero carta. Per favore, inserisci almeno {{minLength}} cifre"
+      expirationDate:
+        base: "Data di scadenza, due cifre per il mese, due per l’anno"
+        error: "Data di scadenza, due cifre per il mese, due per l’anno. Per favore, inserisci una data valida"
+      securityCode:
+        3D:
+          base: "Codice di sicurezza, 3 cifre"
+          error: "Codice di sicurezza. Per favore, inserisci 3 cifre"
+        4D:
+          base: "CID, 4 cifre"
+          error: "Codice CID. Per favore, inserisci 4 cifre"
+      button:
+        fieldError: "Per continuare per favore correggi il campo {{field}}"
+        missingFields: "Per continuare, compila tutti i campi"
   acceptedCards: Carte accettate
   missingDataCTA: Ti manca qualche dato?
   openAcceptedCardsPageCTA: Scopri le carte accettate
@@ -1263,7 +1286,7 @@ wallet:
       Inquadra il codice QR che trovi nell'avviso, oppure
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci tu i dati
-    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
@@ -1611,7 +1634,6 @@ identification:
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
-    failure: Identificazione fallita
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
     popup:
@@ -1621,7 +1643,6 @@ identification:
       sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
       fallbackLabel: Usa il codice di sblocco
   fail:
-    wrongCode: Riprova
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
     tooManyAttempts: Troppi tentativi di inserimento errati.
