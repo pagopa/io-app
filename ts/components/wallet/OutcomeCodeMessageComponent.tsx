@@ -20,15 +20,15 @@ type OwnProp = {
   successComponent: React.FC;
   onClose: () => void;
   successFooter?: React.FC;
-  onContinue?: () => void;
+  onLearnMore?: () => void;
 };
 type Props = OwnProp;
 
 const blockingFooterWithButton = (
   onClose: () => void,
-  onContinue: (() => void) | undefined
+  onLearnMore: (() => void) | undefined
 ) =>
-  onContinue ? (
+  onLearnMore ? (
     <FooterWithButtons
       type={"TwoButtonsInlineThird"}
       leftButton={cancelButtonProps(
@@ -36,7 +36,7 @@ const blockingFooterWithButton = (
         I18n.t("wallet.outcomeMessage.cta.close")
       )}
       rightButton={confirmButtonProps(
-        onContinue,
+        onLearnMore,
         I18n.t("wallet.outcomeMessage.cta.learnMore")
       )}
     />
@@ -92,7 +92,7 @@ const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
               />
             )}
             {props.outcomeCode.status === "errorBlocking" &&
-              blockingFooterWithButton(props.onClose, props.onContinue)}
+              blockingFooterWithButton(props.onClose, props.onLearnMore)}
           </>
         )}
       </SafeAreaView>
