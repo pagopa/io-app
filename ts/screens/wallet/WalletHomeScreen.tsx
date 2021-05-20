@@ -457,6 +457,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           <Text primary={true}>{I18n.t("wallet.transactionsShow")}</Text>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
+        <View spacer={true} />
       </Content>
     );
   }
@@ -473,6 +474,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             source={require("../../../img/messages/empty-transaction-list-icon.png")}
           />
         </View>
+        <EdgeBorderComponent />
       </Content>
     );
   }
