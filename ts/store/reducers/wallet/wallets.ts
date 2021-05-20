@@ -345,11 +345,10 @@ const reducer = (
       const wallets = isOfType(getType(paymentUpdateWalletPsp.success), action)
         ? action.payload.wallets
         : action.payload;
-      const newState = {
+      return {
         ...state,
         walletById: pot.some(toIndexed(wallets, _ => _.idWallet))
       };
-      return { ...newState };
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
