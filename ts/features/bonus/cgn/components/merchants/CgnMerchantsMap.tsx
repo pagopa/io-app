@@ -33,22 +33,24 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
   const [region, setRegion] = useState<Region | undefined>();
 
   useEffect(() => {
-    RNLocation.configure({ distanceFilter: 0.5 });
-
-    getCurrentLocation()
-      .run()
-      .then(maybeLocation => {
-        maybeLocation.map(location => {
-          fromNullable(location).map(l => {
-            setRegion({
-              latitude: l.latitude,
-              longitude: l.longitude,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05
+    RNLocation.configure({ distanceFilter: 0.5 })
+      .then(() =>
+        getCurrentLocation()
+          .run()
+          .then(maybeLocation => {
+            maybeLocation.map(location => {
+              fromNullable(location).map(l => {
+                setRegion({
+                  latitude: l.latitude,
+                  longitude: l.longitude,
+                  latitudeDelta: 0.05,
+                  longitudeDelta: 0.05
+                });
+              });
             });
-          });
-        });
-      })
+          })
+          .catch(showToastGenericError)
+      )
       .catch(showToastGenericError);
   }, []);
 
