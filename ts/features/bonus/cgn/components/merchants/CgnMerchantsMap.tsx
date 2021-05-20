@@ -38,8 +38,8 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
     getCurrentLocation()
       .run()
       .then(maybeLocation => {
-        maybeLocation.fold(showToastGenericError, location => {
-          fromNullable(location).foldL(showToastGenericError, l => {
+        maybeLocation.map(location => {
+          fromNullable(location).map(l => {
             setRegion({
               latitude: l.latitude,
               longitude: l.longitude,
