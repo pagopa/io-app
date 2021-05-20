@@ -10,19 +10,20 @@
  *       input
  */
 import color from "color";
-import I18n from "i18n-js";
 import { isString } from "lodash";
 import { Input, Item, View } from "native-base";
 import * as React from "react";
+import { useState } from "react";
 import {
-  StyleSheet,
-  TextInputProps,
   Image,
   ImageSourcePropType,
-  ImageStyle
+  ImageStyle,
+  StyleSheet,
+  TextInputProps
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
+import I18n from "../i18n";
 import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
 import { makeFontStyleObject } from "./core/fonts";
@@ -56,11 +57,6 @@ type CommonProp = Readonly<{
   accessibilityHint?: string;
 }>;
 
-type State = {
-  isEmpty: boolean;
-  hasFocus: boolean;
-};
-
 type Props = WithTestID<CommonProp> &
   (
     | Readonly<{
@@ -74,144 +70,140 @@ type Props = WithTestID<CommonProp> &
       }>
   );
 
-export class LabelledItem extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { isEmpty: true, hasFocus: false };
-  }
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export const LabelledItem: React.FC<Props> = (props: Props) => {
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [hasFocus, setHasFocus] = useState(false);
 
   /**
    * check if the input is empty and set the value in the state
    */
-  private checkInputIsEmpty = (text?: string) => {
-    const isEmpty = text === undefined || text.length === 0;
-    if (isEmpty !== this.state.isEmpty) {
-      this.setState({ isEmpty });
-    }
+  const checkInputIsEmpty = (text?: string) => {
+    const isInputEmpty = text === undefined || text.length === 0;
+    setIsEmpty(isInputEmpty);
   };
 
   /**
    * handle input on change text
    */
-  private handleOnChangeText = (text: string) => {
-    if (this.props.type === "text" && this.props.inputProps.onChangeText) {
-      this.props.inputProps.onChangeText(text);
+  const handleOnChangeText = (text: string) => {
+    if (props.type === "text") {
+      props.inputProps.onChangeText?.(text);
     }
-    this.checkInputIsEmpty(text);
+    checkInputIsEmpty(text);
   };
 
   /**
    * handle masked input on change text
    */
-  private handleOnMaskedChangeText = (formatted: string, text?: string) => {
-    if (
-      this.props.type === "masked" &&
-      this.props.inputMaskProps.onChangeText
-    ) {
-      this.props.inputMaskProps.onChangeText(formatted, text);
+  const handleOnMaskedChangeText = (formatted: string, text?: string) => {
+    if (props.type === "masked") {
+      props.inputMaskProps.onChangeText?.(formatted, text);
     }
-    this.checkInputIsEmpty(text);
+    checkInputIsEmpty(text);
   };
 
   /**
    * keep track if input (or masked input) gains focus
    */
-  private handleOnFocus = () => {
-    this.setState({ hasFocus: true });
+  const handleOnFocus = () => {
+    setHasFocus(true);
   };
 
   /**
    * keep track if input (or masked input) loses focus
    */
-  private handleOnBlur = () => {
-    this.setState({ hasFocus: false });
+  const handleOnBlur = () => {
+    setHasFocus(false);
   };
 
-  public render() {
-    return (
-      <View>
+  const descriptionColor = props.isValid === false ? "red" : "bluegreyDark";
+  const accessibilityLabel = props.accessibilityLabel ?? "";
+  const inputBorderColor =
+    hasFocus && isEmpty
+      ? variables.itemBorderDefaultColor
+      : props.focusBorderColor;
+  const isValid = props.isValid === undefined ? false : props.isValid;
+  const isNotValid = props.isValid === undefined ? false : !props.isValid;
+  return (
+    <View>
+      <View
+        importantForAccessibility="no-hide-descendants"
+        accessibilityElementsHidden={true}
+      >
         <Item style={styles.noBottomLine}>
-          <H5
-            accessibilityRole="header"
-            accessibilityLabel={`${this.props.label}, ${I18n.t(
-              "global.accessibility.inputLabel"
-            )}`}
-          >
-            {this.props.label}
-          </H5>
+          <H5>{props.label}</H5>
         </Item>
+      </View>
+
+      <View
+        accessible={true}
+        accessibilityLabel={I18n.t("global.accessibility.textField", {
+          inputLabel: accessibilityLabel
+        })}
+        accessibilityHint={props.accessibilityHint}
+      >
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor:
-              this.state.hasFocus && this.state.isEmpty
-                ? variables.itemBorderDefaultColor
-                : this.props.focusBorderColor
+            borderColor: inputBorderColor
           }}
-          error={this.props.isValid === undefined ? false : !this.props.isValid}
-          success={
-            this.props.isValid === undefined ? false : this.props.isValid
-          }
+          error={isNotValid}
+          success={isValid}
         >
-          {this.props.icon &&
-            (isString(this.props.icon) ? (
+          {props.icon &&
+            (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
                 color={variables.brandDarkGray}
-                name={this.props.icon}
-                style={this.props.iconStyle}
+                name={props.icon}
+                style={props.iconStyle}
               />
             ) : (
-              <Image source={this.props.icon} style={this.props.iconStyle} />
+              <Image source={props.icon} style={props.iconStyle} />
             ))}
-          {this.props.type === "masked" ? (
+
+          {props.type === "masked" ? (
             <TextInputMask
-              accessibilityLabel={this.props.accessibilityLabel}
-              accessibilityHint={`${this.props.accessibilityHint}${
-                this.props.description ? "," + this.props.description : ""
-              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
               underlineColorAndroid="transparent"
-              {...this.props.inputMaskProps}
-              onChangeText={this.handleOnMaskedChangeText}
-              onFocus={this.handleOnFocus}
-              onBlur={this.handleOnBlur}
-              testID={`${this.props.testID}InputMask`}
               style={styles.textInputMask}
+              {...props.inputMaskProps}
+              onChangeText={handleOnMaskedChangeText}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}InputMask`}
             />
           ) : (
             <Input
-              accessibilityLabel={this.props.accessibilityLabel}
-              accessibilityHint={`${this.props.accessibilityHint}${
-                this.props.description ? "," + this.props.description : ""
-              }`}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
               underlineColorAndroid="transparent"
-              {...this.props.inputProps}
-              onChangeText={this.handleOnChangeText}
-              onFocus={this.handleOnFocus}
-              onBlur={this.handleOnBlur}
-              testID={`${this.props.testID}Input`}
+              {...props.inputProps}
+              onChangeText={handleOnChangeText}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}Input`}
             />
           )}
         </Item>
-        {this.props.description && (
-          <View importantForAccessibility="no-hide-descendants">
-            <Item style={styles.noBottomLine}>
-              <H5
-                weight={"Regular"}
-                color={this.props.isValid === false ? "red" : "bluegreyDark"}
-              >
-                {this.props.description}
-              </H5>
-            </Item>
-          </View>
-        )}
       </View>
-    );
-  }
-}
+      {props.description && (
+        <View
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden={true}
+          key={"description"}
+        >
+          <Item style={styles.noBottomLine}>
+            <H5 weight={"Regular"} color={descriptionColor}>
+              {props.description}
+            </H5>
+          </Item>
+        </View>
+      )}
+    </View>
+  );
+};
