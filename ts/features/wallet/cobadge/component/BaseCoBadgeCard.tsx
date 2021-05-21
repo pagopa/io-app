@@ -108,7 +108,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View spacer={true} />
               <H5
                 weight={props.isExpired ? "SemiBold" : "Regular"}
-                color={props.isExpired ? "red" : "bluegrey"}
+                color={props.isExpired ? "red" : "bluegreyDark"}
                 testID={"expirationDate"}
               >
                 {I18n.t("wallet.cobadge.details.card.validUntil", {

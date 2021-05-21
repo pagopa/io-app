@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    textAlign: "center",
     paddingTop: cameraTextOverlapping
   },
 
@@ -88,22 +87,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
-    height: screenWidth,
     width: screenWidth
   },
 
   notAuthorizedContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    alignSelf: "stretch",
+    marginBottom: 14
   },
   notAuthorizedText: {
-    textAlign: "justify",
     marginBottom: 25
   },
   notAuthorizedBtn: {
     flex: 1,
-    alignSelf: "center"
+    alignSelf: "stretch"
   }
 });
 
