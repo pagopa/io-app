@@ -6,8 +6,9 @@ import {
   remoteUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import { ContentState, idpsSelector } from "../content";
-import { idps } from "../__mock__/idps";
 import { SpidIdp } from "../../../../definitions/content/SpidIdp";
+import { idps as mockedIdps } from "../__mock__/idps";
+import { idps } from "../../../utils/idps";
 
 const state: ContentState = {
   servicesMetadata: {
@@ -23,11 +24,11 @@ const state: ContentState = {
 describe("idps selector", () => {
   const contentState: ContentState = {
     ...state,
-    idps: remoteReady({ items: idps })
+    idps: remoteReady({ items: mockedIdps })
   };
 
   it("should return the list of Idps available", () => {
-    expect(idpsSelector.resultFunc(contentState)).toStrictEqual(idps);
+    expect(idpsSelector.resultFunc(contentState)).toStrictEqual(mockedIdps);
   });
 
   const stateWithNoIdps: ContentState = {
@@ -51,14 +52,12 @@ describe("idps selector", () => {
       id: "spid_id_1",
       name: "Spid ID 1",
       logo: "http://placeimg.com/640/480/technics",
-      entityID: "spid_id_1",
       profileUrl: "http://someuri.com"
     },
     {
       id: "spid_id_2",
       name: "Spid ID 2",
       logo: "http://placeimg.com/640/480/some",
-      entityID: "spid_id_2",
       profileUrl: "https://someuri.com"
     }
   ];

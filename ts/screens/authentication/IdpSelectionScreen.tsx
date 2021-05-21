@@ -19,7 +19,7 @@ import variables from "../../theme/variables";
 import { GlobalState } from "../../store/reducers/types";
 import { idpsSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { testIdp } from "../../store/reducers/__mock__/idps";
+import { testIdp } from "../../utils/idps";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &

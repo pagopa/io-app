@@ -29,10 +29,10 @@ import {
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
 import {SpidIdps} from "../../../definitions/content/SpidIdps";
-import {SpidIdp} from "../../../definitions/content/SpidIdp";
-import {navSelector} from "./navigationHistory";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { idps } from "../../utils/idps";
+import { navSelector } from "./navigationHistory";
 import {GlobalState} from "./types";
-import {idps} from "./__mock__/idps";
 
 /**
  * Stores useful content such as services and organizations metadata,
