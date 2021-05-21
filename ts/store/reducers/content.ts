@@ -19,7 +19,7 @@ import {getCurrentRouteName} from "../../utils/navigation";
 import {contentMunicipalityLoad, loadContextualHelpData, loadIdps, loadServiceMetadata} from "../actions/content";
 import {clearCache} from "../actions/profile";
 import {removeServiceTuples} from "../actions/services";
-import {Action} from "../actions/types";
+import { Action } from "../actions/types";
 import {
   isReady,
   remoteError,
@@ -28,11 +28,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
-import {SpidIdps} from "../../../definitions/content/SpidIdps";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { idps } from "../../utils/idps";
 import { navSelector } from "./navigationHistory";
-import {GlobalState} from "./types";
+import { GlobalState } from "./types";
 
 /**
  * Stores useful content such as services and organizations metadata,
