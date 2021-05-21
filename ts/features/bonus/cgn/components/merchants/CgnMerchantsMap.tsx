@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 const INITIAL_REGION: Region = {
   latitude: 41.8738679,
   longitude: 12.7197622,
-  latitudeDelta: 19.772,
+  latitudeDelta: 13.772,
   longitudeDelta: 12.4326
 };
 
@@ -33,24 +33,22 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
   const [region, setRegion] = useState<Region | undefined>();
 
   useEffect(() => {
-    RNLocation.configure({ distanceFilter: 0.5 })
-      .then(() =>
-        getCurrentLocation()
-          .run()
-          .then(maybeLocation => {
-            maybeLocation.map(location => {
-              fromNullable(location).map(l => {
-                setRegion({
-                  latitude: l.latitude,
-                  longitude: l.longitude,
-                  latitudeDelta: 0.05,
-                  longitudeDelta: 0.05
-                });
-              });
+    RNLocation.configure({ distanceFilter: 0.5 });
+
+    getCurrentLocation()
+      .run()
+      .then(maybeLocation => {
+        maybeLocation.map(location => {
+          fromNullable(location).map(l => {
+            setRegion({
+              latitude: l.latitude,
+              longitude: l.longitude,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05
             });
-          })
-          .catch(showToastGenericError)
-      )
+          });
+        });
+      })
       .catch(showToastGenericError);
   }, []);
 
@@ -61,6 +59,9 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
         style={styles.map}
         showsUserLocation={true}
         showsMyLocationButton={true}
+        onRegionChangeComplete={(r: Region) => {
+          console.log(r);
+        }}
         region={region}
         initialRegion={INITIAL_REGION}
       />
