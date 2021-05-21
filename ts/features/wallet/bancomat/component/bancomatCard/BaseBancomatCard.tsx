@@ -141,7 +141,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           <View spacer={true} />
           {props.expiringDate && (
             <H5
-              color={props.isExpired ? "red" : "bluegrey"}
+              color={props.isExpired ? "red" : "bluegreyDark"}
               weight={"SemiBold"}
             >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
               props.expiringDate,
