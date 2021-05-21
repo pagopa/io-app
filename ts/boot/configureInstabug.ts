@@ -120,7 +120,7 @@ export const setInstabugUserAttribute = (
 
 export const setInstabugProfileAttributes = (maybeIdp: Option<SpidIdp>) => {
   maybeIdp.fold(undefined, (idp: SpidIdp) =>
-    setInstabugUserAttribute("identityProvider", idp.entityID)
+    setInstabugUserAttribute("identityProvider", idp.id)
   );
 };
 
