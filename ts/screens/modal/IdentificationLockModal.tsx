@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const wrongCodeText = I18n.t("identification.fail.wrongCode");
+const wrongCodeText = I18n.t("global.genericRetry");
 const waitMessageText = I18n.t("identification.fail.waitMessage");
 const tooManyAttemptsText = I18n.t("identification.fail.tooManyAttempts");
 
