@@ -59,9 +59,6 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
         style={styles.map}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        onRegionChangeComplete={(r: Region) => {
-          console.log(r);
-        }}
         region={region}
         initialRegion={INITIAL_REGION}
       />
