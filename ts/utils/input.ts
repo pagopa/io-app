@@ -1,10 +1,13 @@
-import { Option, none, some } from "fp-ts/lib/Option";
+import { Option, none } from "fp-ts/lib/Option";
+import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "italia-ts-commons/lib/strings";
 import { CreditCard } from "../types/pagopa";
+import I18n from "../i18n";
+import { CreditCardDetector, SupportedBrand } from "./creditCard";
 
-const MIN_PAN_DIGITS = 14;
+export const MIN_PAN_DIGITS = 14;
 const MAX_PAN_DIGITS = 19;
 
 /**
@@ -67,13 +70,16 @@ export type CreditCardState = Readonly<{
 
 export type CreditCardStateKeys = keyof CreditCardState;
 
+// TODO: update this function including all the form errors when fp-ts will be updated.
+// Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**
  * @param state A pending credit card state objects, containing the card's components.
- * @returns A fp-ts Option containing a valid CreditCard object, if possible
+ * @returns A fp-ts Either containing a valid CreditCard object if right or if it's left undefined if at least one field is none
+ * or the label of the first invalid field.
  */
 export function getCreditCardFromState(
   state: CreditCardState
-): Option<CreditCard> {
+): Either<string, CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
     pan.isNone() ||
@@ -81,12 +87,24 @@ export function getCreditCardFromState(
     securityCode.isNone() ||
     holder.isNone()
   ) {
-    return none;
+    return left(I18n.t("wallet.dummyCard.accessibility.button.missingFields"));
+  }
+
+  if (!isValidCardHolder(holder)) {
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.holder.label")
+      })
+    );
   }
 
   if (!CreditCardPan.is(pan.value)) {
     // invalid pan
-    return none;
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.pan")
+      })
+    );
   }
 
   const [expirationMonth, expirationYear] = expirationDate.value.split("/");
@@ -96,16 +114,28 @@ export function getCreditCardFromState(
     !CreditCardExpirationYear.is(expirationYear)
   ) {
     // invalid date
-    return none;
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t("wallet.dummyCard.labels.expirationDate")
+      })
+    );
   }
 
   if (!CreditCardCVC.is(securityCode.value)) {
-    // invalid cvc
-    return none;
-  }
+    const detectedBrand: SupportedBrand = CreditCardDetector.validate(
+      securityCode
+    );
 
-  if (!isValidCardHolder(holder)) {
-    return none;
+    // invalid cvc
+    return left(
+      I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
+        field: I18n.t(
+          detectedBrand.cvvLength === 4
+            ? "wallet.dummyCard.labels.securityCode4D"
+            : "wallet.dummyCard.labels.securityCode"
+        )
+      })
+    );
   }
 
   const card: CreditCard = {
@@ -116,7 +146,7 @@ export function getCreditCardFromState(
     securityCode: securityCode.value
   };
 
-  return some(card);
+  return right(card);
 }
 
 /**
