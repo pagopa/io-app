@@ -25,6 +25,7 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  creditCardWalletV1Selector,
   favoriteWalletIdSelector,
   getFavoriteWalletId,
   getWalletsById,
@@ -43,6 +44,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import GoBackButton from "../../components/GoBackButton";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -145,6 +147,7 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
     ),
     undefined
   );
+
   const { present } = useRemovePaymentMethodBottomSheet({
     icon: selectedWallet.creditCard
       ? getCardIconFromBrandLogo(selectedWallet.creditCard)
@@ -161,6 +164,10 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
       setIsLoadingDelete(false);
     }
   }, [props.hasErrorDelete]);
+
+  const customGoBack = selectedWallet.navigateToWalletHome
+    ? selectedWallet.navigateToWalletHome
+    : false;
 
   const DeletePaymentMethodButton = (props: { onPress?: () => void }) => (
     <ButtonDefaultOpacity
@@ -192,6 +199,9 @@ const TransactionsScreen: React.FC<Props> = (props: Props) => {
       topContentHeight={HEADER_HEIGHT}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["wallet_transaction"]}
+      customGoBack={
+        <GoBackButton testID={"back-button"} onPress={customGoBack} white />
+      }
     >
       {pm && (
         <>
@@ -236,7 +246,8 @@ const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletRequestStatus: favoriteWalletIdSelector(state),
   favoriteWalletId: getFavoriteWalletId(state),
   paymentMethods: paymentMethodsSelector(state),
-  hasErrorDelete: pot.isError(getWalletsById(state))
+  hasErrorDelete: pot.isError(getWalletsById(state)),
+  wallets: pot.getOrElse(creditCardWalletV1Selector(state), [])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

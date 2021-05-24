@@ -1,7 +1,8 @@
 import { View } from "native-base";
 import * as React from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, NavigationNavigateAction } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -14,8 +15,16 @@ import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymen
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { areAnyPaymentMethodsActiveSelector } from "../../../../../bonus/bpd/store/reducers/details/paymentMethods";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import {
+  navigateToWalletTransactionsScreen,
+  navigateToWalletHome
+} from "../../../../../../store/actions/navigation";
+import { creditCardWalletV1Selector } from "../../../../../../store/reducers/wallet/wallets";
 
 type OwnProps = {
+  navigateToWalletTransactionsScreen: (
+    selectedWallet: ReadonlyArray<PaymentMethod>
+  ) => NavigationNavigateAction;
   paymentMethods: ReadonlyArray<PaymentMethod>;
   title: string;
 };
@@ -39,8 +48,20 @@ const loadLocales = () => ({
  * right button button is enabled when at least one payment method is BPD active
  * @param props
  */
-const getFooter = (props: Props) => {
+
+type NavigationProps = {
+  navigateToWalletHome: () => void;
+};
+
+type NewProps = {
+  paymentMethods: NavigationProps & Props;
+};
+
+type ExtendedProps = Props & NewProps;
+
+const getFooter = (props: ExtendedProps) => {
   const { continueStr, skip } = loadLocales();
+
   const notNowButtonProps = {
     primary: false,
     bordered: true,
@@ -52,7 +73,8 @@ const getFooter = (props: Props) => {
     block: true,
     primary: true,
     disabled: !props.areAnyPaymentMethodsActive,
-    onPress: props.skip,
+    onPress: () =>
+      props.navigateToWalletTransactionsScreen(props.paymentMethods),
     title: continueStr
   };
   return (
@@ -66,6 +88,20 @@ const getFooter = (props: Props) => {
 
 const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
   const { title, body1, body2 } = loadLocales();
+
+  const pm = props.wallets.find(
+    method => method.idWallet === props.paymentMethods[0].idWallet
+  );
+
+  const navigateToWalletHomeScreen = () => props.navigateToWalletHome();
+
+  const payload = {
+    ...props,
+    paymentMethods: {
+      ...pm,
+      navigateToWalletHome: navigateToWalletHomeScreen
+    }
+  };
 
   return (
     <BaseScreenComponent
@@ -85,20 +121,25 @@ const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = prop
             <Body>{body2}</Body>
           </View>
         </ScrollView>
-        {getFooter(props)}
+        {getFooter(payload)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(NavigationActions.back())
+  skip: () => dispatch(NavigationActions.back()),
+  navigateToWalletTransactionsScreen: (
+    selectedWallet: ReadonlyArray<PaymentMethod>
+  ) => dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
+  navigateToWalletHome: () => dispatch(navigateToWalletHome())
 });
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
   areAnyPaymentMethodsActive: areAnyPaymentMethodsActiveSelector(
     props.paymentMethods
-  )(state)
+  )(state),
+  wallets: pot.getOrElse(creditCardWalletV1Selector(state), [])
 });
 
 export default connect(

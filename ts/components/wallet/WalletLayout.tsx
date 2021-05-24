@@ -39,6 +39,7 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
+  customGoBack?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -130,6 +131,7 @@ export default class WalletLayout extends React.Component<Props> {
         faqCategories={this.props.faqCategories}
         gradientHeader={this.props.gradientHeader}
         headerPaddingMin={this.props.headerPaddingMin}
+        customGoBack={this.props.customGoBack}
       >
         {this.props.children}
       </DarkLayout>
