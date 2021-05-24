@@ -223,10 +223,11 @@ export const bPayListSelector = createSelector(
  *
  * @param pm
  */
-export const isVisibleInWallet = (pm: PaymentMethod) =>
-  pm.onboardingChannel === "IO" ||
-  pm.onboardingChannel === "WISP" ||
-  pm.onboardingChannel === undefined;
+const visibleOnboardingChannels = ["IO", "WISP", undefined];
+export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
+  visibleOnboardingChannels.some(
+    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
+  );
 
 /**
  * Return a credit card list visible in the wallet
