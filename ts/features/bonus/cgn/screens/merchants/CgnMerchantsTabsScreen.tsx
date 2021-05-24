@@ -85,8 +85,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
-      isSearchAvailable={true}
-      onSearch={openFiltersModal}
+      isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
     >
       <SafeAreaView style={IOStyles.flex}>
         <Tabs

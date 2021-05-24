@@ -10,8 +10,6 @@ interface OwnProps {
   accessibilityLabel?: string;
   onAccessibilityNavigationHeaderFocus?: () => void;
   headerTitle?: string;
-  isSearchAvailable?: boolean;
-  searchType?: SearchType;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -50,7 +48,6 @@ class TopScreenComponent extends React.PureComponent<Props> {
       contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
-      searchType,
       customRightIcon,
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
@@ -74,7 +71,6 @@ class TopScreenComponent extends React.PureComponent<Props> {
         faqCategories={faqCategories}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
-        searchType={searchType}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}

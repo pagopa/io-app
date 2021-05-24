@@ -60,7 +60,6 @@ interface OwnProps {
   isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
-  onSearch?: () => void;
 
   // As of now, the following prop is propagated through 4 levels
   // to finally display a checkbox in SendSupportRequestOptions
@@ -240,8 +239,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       headerBackgroundColor,
       primary,
       isSearchAvailable,
-      onSearch,
-      searchType,
       customRightIcon,
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
@@ -294,8 +291,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }
           isSearchAvailable={isSearchAvailable}
-          onSearch={onSearch}
-          searchType={searchType}
           body={headerBody}
           appLogo={appLogo}
           customRightIcon={customRightIcon}

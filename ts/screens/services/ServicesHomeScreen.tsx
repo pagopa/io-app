@@ -535,8 +535,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             faqCategories={["services"]}
-            isSearchAvailable={false}
-            searchType={"Services"}
           >
             {this.renderErrorContent() ? (
               this.renderErrorContent()

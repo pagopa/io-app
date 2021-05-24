@@ -25,7 +25,7 @@ export type SearchType = "Messages" | "Services";
 interface OwnProps {
   color?: string;
   searchType?: SearchType;
-  onSearch?: () => void;
+  onSearchTap?: () => void;
 }
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
@@ -83,9 +83,9 @@ class SearchButton extends React.Component<Props, State> {
   }
 
   private handleSearchPress = () => {
-    const { onSearch } = this.props;
+    const { onSearchTap } = this.props;
 
-    fromNullable(onSearch).foldL(
+    fromNullable(onSearchTap).foldL(
       () => {
         const { searchText } = this.state;
         this.setState({
@@ -94,7 +94,7 @@ class SearchButton extends React.Component<Props, State> {
         this.props.dispatchSearchText(searchText);
         this.props.dispatchSearchEnabled(true);
       },
-      os => os()
+      ost => ost()
     );
   };
 

@@ -72,10 +72,12 @@ interface OwnProps {
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
-  isSearchAvailable?: boolean;
-  onSearch?: () => void;
+  isSearchAvailable?: {
+    enabled: true;
+    searchType?: SearchType;
+    onSearchTap?: () => void;
+  };
   showInstabugChat?: boolean;
-  searchType?: SearchType;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
@@ -217,16 +219,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      searchType,
-      onSearch,
       showInstabugChat,
       customRightIcon
     } = this.props;
 
     return (
       <Right>
-        {isSearchAvailable && (
-          <SearchButton searchType={searchType} onSearch={onSearch} />
+        {isSearchAvailable?.enabled && (
+          <SearchButton
+            searchType={isSearchAvailable.searchType}
+            onSearchTap={isSearchAvailable.onSearchTap}
+          />
         )}
         {!isSearchEnabled && showInstabugChat !== false && (
           <InstabugChatsComponent />
