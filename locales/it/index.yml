@@ -441,6 +441,9 @@ profile:
         popup:
           title: Consenti l’accesso al sensore biometrico
           description: Tocca ‘Impostazioni’ e consenti ad IO di utilizzare il sensore biometrico del tuo dispositivo.
+      forward:
+        contextualHelpTitle: Come gestire l'inoltro dei messaggi
+        contextualHelpContent: !include profile/profile_data_email_forward.md
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO. 
@@ -473,10 +476,13 @@ profile:
     spid_email:
       contextualHelpTitle: Questa preferenza è impostata nel tuo profilo SPID
       contextualHelpContent: !include profile/profile_preferences_spid_email.md
+<<<<<<< HEAD
     email:
       forward:
         contextualHelpTitle: Come gestire l'inoltro dei messaggi
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
+=======
+>>>>>>> [#178212350] Added profile data screen
     calendar:
       contextualHelpTitle: Cos'è il tuo calendario preferito
       contextualHelpContent: !include profile/profile_preferences_calendar.md

@@ -441,6 +441,9 @@ profile:
         popup:
           title: Allow access to the biometric sensor
           description: Tap 'Settings' and allow IO to use the biometric sensor of your device.
+      forward:
+        contextualHelpTitle: How to handle message forwarding
+        contextualHelpContent: !include profile/profile_data_email_forward.md
   preferences:
     title: Preferences
     subtitle: These settings allow you to customize the IO app experience.
@@ -473,10 +476,13 @@ profile:
     spid_email:
       contextualHelpTitle: This setting is set up on your SPID profile
       contextualHelpContent: !include profile/profile_preferences_spid_email.md
+<<<<<<< HEAD
     email:
       forward:
         contextualHelpTitle: How to handle message forwarding
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
+=======
+>>>>>>> [#178212350] Added profile data screen
     calendar:
       contextualHelpTitle: What is your favorite calendar
       contextualHelpContent: !include profile/profile_preferences_calendar.md
