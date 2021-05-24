@@ -215,7 +215,10 @@ export default class CardComponent extends React.Component<Props> {
     return (
       <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <H5 color={isCardExpired ? "red" : "bluegrey"} weight={"SemiBold"}>
+          <H5
+            color={isCardExpired ? "red" : "bluegreyDark"}
+            weight={"SemiBold"}
+          >
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
