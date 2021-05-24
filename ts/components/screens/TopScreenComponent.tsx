@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { SearchType } from "../search/SearchButton";
 import { IOColorType } from "../core/variables/IOColors";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
@@ -26,7 +25,8 @@ type BaseScreenComponentProps =
   | "contextualHelp"
   | "contextualHelpMarkdown"
   | "headerBody"
-  | "customGoBack";
+  | "customGoBack"
+  | "isSearchAvailable";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;

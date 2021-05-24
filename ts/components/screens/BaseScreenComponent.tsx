@@ -57,7 +57,11 @@ interface OwnProps {
   headerBody?: React.ReactNode;
   headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
-  isSearchAvailable?: boolean;
+  isSearchAvailable?: {
+    enabled: true;
+    searchType?: SearchType;
+    onSearchTap?: () => void;
+  };
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 
