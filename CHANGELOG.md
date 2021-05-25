@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.0](https://github.com/pagopa/io-app/compare/1.25.0-rc.14...1.26.0-rc.0) (2021-05-25)
+
+
+### Features
+
+* [[#176409590](https://www.pivotaltracker.com/story/show/176409590)] Removed favoriteWalletId from Redux store ([#3054](https://github.com/pagopa/io-app/issues/3054)) ([cd22427](https://github.com/pagopa/io-app/commit/cd22427a7ef6ebdcc6969c027d0d900c97cec690))
+* [[#178230437](https://www.pivotaltracker.com/story/show/178230437)] Changed valid until color [#3058](https://github.com/pagopa/io-app/issues/3058) ([84748ca](https://github.com/pagopa/io-app/commit/84748ca1e7303f0d4fdf1ddbe11d92ef849ec734))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[IAC-66](https://pagopa.atlassian.net/browse/IAC-66)] Wrong normalization of cashback amount when the pivot transaction is in a different day but in the same page ([#3061](https://github.com/pagopa/io-app/issues/3061)) ([688ddb4](https://github.com/pagopa/io-app/commit/688ddb43f1364ce4263e534296bb079da1273513))
+* [[#176538461](https://www.pivotaltracker.com/story/show/176538461)] Fix broken ScanQrCodeScreen layout ([#3051](https://github.com/pagopa/io-app/issues/3051)) ([1b1aa13](https://github.com/pagopa/io-app/commit/1b1aa13caaeb4f98f34ba646d274a4b983e77fda))
+* [[#178243533](https://www.pivotaltracker.com/story/show/178243533)] Fix cards not visible during payment ([#3060](https://github.com/pagopa/io-app/issues/3060)) ([4bb6b3e](https://github.com/pagopa/io-app/commit/4bb6b3e50345379b71c4449252c49516bb383cf6))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-70](https://pagopa.atlassian.net/browse/IAC-70)] Write-off copy update [#3063](https://github.com/pagopa/io-app/issues/3063) ([58a00eb](https://github.com/pagopa/io-app/commit/58a00eb738a840c9d0f73818bd049d6983d799c6))
+* [[#177058428](https://www.pivotaltracker.com/story/show/177058428)] Changed native base Text with typography components in thank you page screens ([#3053](https://github.com/pagopa/io-app/issues/3053)) ([198718f](https://github.com/pagopa/io-app/commit/198718fbee0d88c9048e74936cc56aa48f373729))
+* **Sicilia Vola:** [[IASV-1](https://pagopa.atlassian.net/browse/IASV-1)] Add Sicilia Vola Id for title generation and changelog  ([#3056](https://github.com/pagopa/io-app/issues/3056)) ([f4947ab](https://github.com/pagopa/io-app/commit/f4947ab5da34adb644de5f662b682b1df182c5f4))
+
 ## [1.25.0-rc.14](https://github.com/pagopa/io-app/compare/1.25.0-rc.13...1.25.0-rc.14) (2021-05-19)
 
 
