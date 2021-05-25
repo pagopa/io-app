@@ -11,6 +11,7 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
+import { ComponentProps } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
@@ -57,11 +58,6 @@ interface OwnProps {
   headerBody?: React.ReactNode;
   headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
-  isSearchAvailable?: {
-    enabled: true;
-    searchType?: SearchType;
-    onSearchTap?: () => void;
-  };
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 
@@ -71,8 +67,8 @@ interface OwnProps {
 }
 
 type Props = OwnProps &
-  React.ComponentProps<typeof BaseHeader> &
-  Pick<React.ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
+  ComponentProps<typeof BaseHeader> &
+  Pick<ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
   shouldAttachScreenshotToIBRequest: boolean | undefined;

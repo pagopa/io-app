@@ -25,6 +25,7 @@ export type SearchType = "Messages" | "Services";
 interface OwnProps {
   color?: string;
   searchType?: SearchType;
+  // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
   onSearchTap?: () => void;
 }
 

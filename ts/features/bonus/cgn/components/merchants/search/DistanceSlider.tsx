@@ -34,9 +34,7 @@ export const DistanceSlider = (props: Props) => (
       maximumValue={MAX_VALUE}
       value={props.value}
       step={1}
-      onValueChange={(value: number) => {
-        props.onValueChange(value);
-      }}
+      onValueChange={props.onValueChange}
       minimumTrackTintColor={
         props.disabled ? IOColors.bluegreyDark : IOColors.blue
       }
