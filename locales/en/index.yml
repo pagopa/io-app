@@ -2243,8 +2243,8 @@ bonus:
           issuerId: "Issuer transaction ID"
           maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
           maxCashbackForPeriodWarning: "You have already reached the maximum refund for this phase."
-          canceledOperationWarning: "This transaction is a refund, so the related cashback has been deducted."
-          canceled: "Refund"
+          canceledOperationWarning: "This transaction is a write-off, meaning it invalidates a transaction that had been previously recognized."
+          canceled: "Write-off"
       paymentMethods:
         add:
           cta: "Add a method to Cashback"

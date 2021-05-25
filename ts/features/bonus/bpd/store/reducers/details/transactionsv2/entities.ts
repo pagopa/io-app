@@ -127,7 +127,7 @@ const updateTransactions = (
     const transactionsNormalized = normalizeCashback(
       val.transactions,
       pivot,
-      state.foundPivot
+      foundPivot
     );
     // update the foundPivot
     if (!foundPivot && transactionsNormalized.found) {
