@@ -2273,7 +2273,7 @@ bonus:
           issuerId: "ID transazione Issuer"
           maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
           maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo Cashback."
+          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata riconosciuta in precedenza."
           canceled: "Storno"
       paymentMethods:
         add:
