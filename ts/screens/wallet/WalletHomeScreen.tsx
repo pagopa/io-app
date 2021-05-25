@@ -631,6 +631,9 @@ const mapStateToProps = (state: GlobalState) => {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: supportedAvailableBonusSelector(state),
+    // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
+    //  available for display in the wallet, so the cards added with the APP or with the WISP.
+    //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,

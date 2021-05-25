@@ -1,9 +1,11 @@
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { Body } from "../core/typography/Body";
+import { H2 } from "../core/typography/H2";
 
 type Props = {
   image: React.ReactNode;
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20
   },
-  body: {
+  textAlignCenter: {
     textAlign: "center"
   },
   bold: {
@@ -36,9 +38,9 @@ export const InfoScreenStyle = styles;
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {
     return (
-      <Text style={styles.body} testID={"infoScreenBody"}>
+      <Body testID="infoScreenBody" style={styles.textAlignCenter}>
         {body}
-      </Text>
+      </Body>
     );
   }
 
@@ -51,21 +53,21 @@ const renderNode = (body: string | React.ReactNode) => {
  * @constructor
  */
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
-  const elementRef = React.createRef<View>();
+  const elementRef = React.createRef<Text>();
+
   return (
     <View style={styles.main} testID="InfoScreenComponent">
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <View spacer={true} large={true} />
-      <Text
-        style={styles.title}
-        bold={true}
+      <H2
+        testID="infoScreenTitle"
+        accessible
         ref={elementRef}
-        accessible={true}
-        testID={"infoScreenTitle"}
+        style={styles.textAlignCenter}
       >
         {props.title}
-      </Text>
+      </H2>
       <View spacer={true} />
       {renderNode(props.body)}
     </View>
