@@ -33,7 +33,7 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
   const [region, setRegion] = useState<Region | undefined>();
 
   useEffect(() => {
-    RNLocation.configure({ distanceFilter: 0.5 });
+    void RNLocation.configure({ distanceFilter: 0.5 });
 
     getCurrentLocation()
       .run()
