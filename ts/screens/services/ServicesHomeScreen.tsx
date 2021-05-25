@@ -254,12 +254,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
       .length;
 
-    return disabledServices === Object.keys(currentTabServicesChannels).length;
+    return (
+      disabledServices > 0 &&
+      disabledServices === Object.keys(currentTabServicesChannels).length
+    );
   };
 
   private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
       const enableServices = this.areAllServicesInboxChannelDisabled();
+
       const isLongPressEnabled = !this.state.isLongPressEnabled;
       const currentTabServicesId = this.props.tabsServicesId[
         this.state.currentTab
@@ -467,7 +471,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onPress={this.handleOnLongPressItem}
         style={styles.buttonBar}
       >
-        <Text>{I18n.t("services.close")}</Text>
+        <Text>{I18n.t("global.buttons.cancel")}</Text>
       </ButtonDefaultOpacity>
       <ButtonDefaultOpacity
         block={true}
@@ -478,7 +482,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             this.showAlertOnDisableServices(
               I18n.t("services.disableAllTitle"),
               I18n.t("services.disableAllMsg"),
-              () => this.disableOrEnableTabServices()
+              this.disableOrEnableTabServices
             );
           } else {
             this.disableOrEnableTabServices();
@@ -705,8 +709,8 @@ const mapStateToProps = (state: GlobalState) => {
     );
 
   const tabsServicesId: { [k: number]: ReadonlyArray<string> } = {
-    [0]: getTabSevicesId(localTabSections),
-    [1]: getTabSevicesId(nationalTabSections),
+    [0]: getTabSevicesId(nationalTabSections),
+    [1]: getTabSevicesId(localTabSections),
     [2]: getTabSevicesId(allTabSections)
   };
 
