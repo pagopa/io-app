@@ -477,12 +477,18 @@ profile:
       contextualHelpTitle: Questa preferenza è impostata nel tuo profilo SPID
       contextualHelpContent: !include profile/profile_preferences_spid_email.md
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> [#178212350] Added security screen
     email:
       forward:
         contextualHelpTitle: Come gestire l'inoltro dei messaggi
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
+<<<<<<< HEAD
 =======
 >>>>>>> [#178212350] Added profile data screen
+=======
+>>>>>>> [#178212350] Added security screen
     calendar:
       contextualHelpTitle: Cos'è il tuo calendario preferito
       contextualHelpContent: !include profile/profile_preferences_calendar.md
@@ -1634,6 +1640,13 @@ notifications:
 biometric_recognition:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
+<<<<<<< HEAD
+=======
+  switchLabel: Attiva il riconoscimento biometrico
+  enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+  enroll_btnLabel: Vai alle impostazioni
+  needed_to_disable: Riconoscimento richiesto per disabilitare
+>>>>>>> [#178212350] Added security screen
 send_email_messages:
   title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
