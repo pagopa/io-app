@@ -40,12 +40,24 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
   const [checkedCategories, setCheckedCategories] = useState<
     ReadonlyArray<string>
   >([]);
-
+  const [distance, setDistance] = useState<number>(20);
   const [selectedOrder, setSelectedOrder] = useState<string>(
     orders.distance.value
   );
 
-  const [distance, setDistance] = useState<number>(20);
+  const onOrderSelect = (value: string) => {
+    setSelectedOrder(value);
+    Keyboard.dismiss();
+  };
+
+  const renderOrderItem = (listItem: ListRenderItemInfo<OrderType>) => (
+    <OrderOption
+      text={I18n.t(listItem.item.label)}
+      value={listItem.item.value}
+      checked={selectedOrder.includes(listItem.item.value)}
+      onPress={onOrderSelect}
+    />
+  );
 
   const onCheckBoxPress = (value: string) => {
     const filteredCategories = checkedCategories.filter(c => c !== value);
@@ -57,10 +69,15 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
     Keyboard.dismiss();
   };
 
-  const onOrderSelect = (value: string) => {
-    setSelectedOrder(value);
-    Keyboard.dismiss();
-  };
+  const renderCategoryItem = (listItem: ListRenderItemInfo<Category>) => (
+    <CategoryCheckbox
+      text={I18n.t(listItem.item.nameKey)}
+      value={listItem.item.type}
+      checked={checkedCategories.includes(listItem.item.type)}
+      onPress={onCheckBoxPress}
+      icon={listItem.item.icon}
+    />
+  );
 
   const onRemoveButton = () => {
     setSearchValue("");
@@ -138,15 +155,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent noPadded={true} />
               )}
-              renderItem={(listItem: ListRenderItemInfo<Category>) => (
-                <CategoryCheckbox
-                  text={I18n.t(listItem.item.nameKey)}
-                  value={listItem.item.type}
-                  checked={checkedCategories.includes(listItem.item.type)}
-                  onPress={onCheckBoxPress}
-                  icon={listItem.item.icon}
-                />
-              )}
+              renderItem={renderCategoryItem}
               keyboardShouldPersistTaps={"handled"}
             />
             <View spacer large />
@@ -160,14 +169,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                   ItemSeparatorComponent={() => (
                     <ItemSeparatorComponent noPadded={true} />
                   )}
-                  renderItem={(listItem: ListRenderItemInfo<OrderType>) => (
-                    <OrderOption
-                      text={I18n.t(listItem.item.label)}
-                      value={listItem.item.value}
-                      checked={selectedOrder.includes(listItem.item.value)}
-                      onPress={onOrderSelect}
-                    />
-                  )}
+                  renderItem={renderOrderItem}
                   keyboardShouldPersistTaps={"handled"}
                 />
               </>
