@@ -2302,6 +2302,27 @@ bonus:
       places: Places
       navigationTitle: View merchants
       screenTitle: Select the merchant where you want to buy something
+      cta:
+        filter: Filter
+      filter:
+        title: Filter merchants
+        searchTitle: Find by name
+        inputPlaceholder: Find store, theater or other
+        addressTitle: Find by address
+        addressPlaceholder: Find address
+        sliderLabel: Distance to be searched
+        sliderUnit: Km
+        orderTitle: View
+        categories: Categories
+        cta:
+          cancel: Remove
+          confirm:
+            zero: Apply filters
+            one: Apply filters ({{count}})
+            other: Apply filters ({{count}})
+        order:
+          byDistance: By proximity to your location
+          byName: Alphabetical order
     merchantDetail:
       title:
         deals: Discounts
@@ -2313,6 +2334,15 @@ bonus:
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+      categories:
+        theater: theater, cinema and entertainment
+        travel: travel
+        mobility: carsharing and mobility
+        telco: telecommunications, internet services
+        book: books, audiobooks, e-books
+        museum: museums, galleries, parks
+        sport: sport
+        health: health and wellness
     cta:
       activeBonus: Activate your Carta Giovani
       goToDetail: View your Carta Giovani
