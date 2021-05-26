@@ -40,7 +40,8 @@ const loadLocales = () => ({
   cta: I18n.t("wallet.onboarding.satispay.start.cta")
 });
 
-const disclaimerLink = "https://io.italia.it/app-content/privacy_satispay.html";
+// FIXME add the suffix "/app-content/privacy_satispay.html" once the url will be published
+const disclaimerLink = "https://io.italia.it/";
 
 /**
  * Entrypoint for the satispay onboarding. The user can choose to start the search or
