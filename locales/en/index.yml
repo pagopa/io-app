@@ -2307,7 +2307,7 @@ bonus:
       filter:
         title: Filter merchants
         searchTitle: Find by name
-        inputPlaceholder: Find store, theatre or other
+        inputPlaceholder: Find store, theater or other
         addressTitle: Find by address
         addressPlaceholder: Find address
         sliderLabel: Distance to be searched
@@ -2335,7 +2335,7 @@ bonus:
       cta:
         label: Navigate to merchant website
       categories:
-        theater: theatre, cinema and entertainment
+        theater: theater, cinema and entertainment
         travel: travel
         mobility: carsharing and mobility
         telco: telecommunications, internet services
