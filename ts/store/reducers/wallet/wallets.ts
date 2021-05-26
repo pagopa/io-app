@@ -48,8 +48,6 @@ import {
   fetchWalletsRequest,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
-  setFavouriteWalletFailure,
-  setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
@@ -58,7 +56,6 @@ import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
-  favoriteWalletId: pot.Pot<Wallet["idWallet"], string>;
   creditCardAddWallet: PotFromActions<
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
@@ -69,7 +66,6 @@ export type PersistedWalletsState = WalletsState & PersistPartial;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
-  favoriteWalletId: pot.none,
   creditCardAddWallet: pot.none
 };
 
@@ -96,10 +92,6 @@ export const getFavoriteWalletId = createSelector(
       wx => values(wx).find(w => w.favourite === true)?.idWallet
     )
 );
-
-// return the pot representing the updating request of a favourite payment method
-export const favoriteWalletIdSelector = (state: GlobalState) =>
-  state.wallet.wallets.favoriteWalletId;
 
 export const getFavoriteWallet = createSelector(
   [getFavoriteWalletId, getWalletsById],
@@ -223,11 +215,19 @@ export const bPayListSelector = createSelector(
 
 /**
  * return true if the payment method is visible in the wallet (the onboardingChannel
- * is IO or WISP)
+ * is IO or WISP) or if the onboardingChannel is undefined.
+ * We choose to show cards with onboardingChannel undefined to ensure backward compatibility
+ * with cards inserted before the field was added.
+ * Explicitly handling the undefined is a conservative choice, as the field should be an enum (IO, WISP, EXT)
+ * but it is a string and therefore we cannot be sure that incorrect data will not arrive.
+ *
  * @param pm
  */
-export const isVisibleInWallet = (pm: PaymentMethod) =>
-  pm.onboardingChannel === "IO" || pm.onboardingChannel === "WISP";
+const visibleOnboardingChannels = ["IO", "WISP", undefined];
+export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
+  visibleOnboardingChannels.some(
+    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
+  );
 
 /**
  * Return a credit card list visible in the wallet
@@ -344,7 +344,6 @@ const reducer = (
     case getType(deleteWalletRequest):
       return {
         ...state,
-        favoriteWalletId: pot.toLoading(state.favoriteWalletId),
         walletById: pot.toLoading(state.walletById)
       };
 
@@ -354,17 +353,9 @@ const reducer = (
       const wallets = isOfType(getType(paymentUpdateWalletPsp.success), action)
         ? action.payload.wallets
         : action.payload;
-      const favouriteWallet = wallets.find(_ => _.favourite === true);
-      const newState = {
+      return {
         ...state,
         walletById: pot.some(toIndexed(wallets, _ => _.idWallet))
-      };
-      return {
-        ...newState,
-        favoriteWalletId:
-          favouriteWallet !== undefined
-            ? pot.some(favouriteWallet.idWallet)
-            : pot.none
       };
 
     case getType(fetchWalletsFailure):
@@ -372,10 +363,6 @@ const reducer = (
     case getType(paymentUpdateWalletPsp.failure):
       return {
         ...state,
-        favoriteWalletId: pot.toError(
-          state.favoriteWalletId,
-          action.payload.message
-        ),
         walletById: pot.toError(state.walletById, action.payload)
       };
 
@@ -383,21 +370,11 @@ const reducer = (
     // set favourite wallet
     //
 
-    case getType(setFavouriteWalletRequest):
-      return {
-        ...state,
-        favoriteWalletId:
-          action.payload === undefined
-            ? pot.none
-            : pot.toUpdating(state.favoriteWalletId, action.payload)
-      };
-
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
       // corresponding Wallet in walletById.
       return {
         ...state,
-        favoriteWalletId: pot.some(action.payload.idWallet),
         walletById: pot.map(state.walletById, walletsById =>
           _.keys(walletsById).reduce<IndexedById<Wallet>>(
             (acc, val) =>
@@ -411,15 +388,6 @@ const reducer = (
               } as IndexedById<Wallet>),
             {}
           )
-        )
-      };
-
-    case getType(setFavouriteWalletFailure):
-      return {
-        ...state,
-        favoriteWalletId: pot.toError(
-          state.favoriteWalletId,
-          action.payload.message
         )
       };
 

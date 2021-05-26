@@ -134,6 +134,7 @@ import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
+import { trackContentAction } from "./contentAnalytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -472,6 +473,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
+    void trackContentAction(mixpanel)(action);
   }
   return next(action);
 };
