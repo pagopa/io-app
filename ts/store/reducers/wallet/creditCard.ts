@@ -4,14 +4,14 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { index, take, takeEnd } from "fp-ts/lib/Array";
 import { createSelector } from "reselect";
 import {
+  addCreditCardWebViewEnd,
+  AddCreditCardWebViewEndReason,
   addWalletCreditCardFailure,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
   addWalletNewCreditCardSuccess,
-  creditCardPaymentNavigationUrls,
   CreditCardFailure,
-  addCreditCardWebViewEnd,
-  AddCreditCardWebViewEndReason
+  creditCardPaymentNavigationUrls
 } from "../../actions/wallet/wallets";
 import { Action } from "../../actions/types";
 import { clearCache } from "../../actions/profile";

@@ -19,11 +19,23 @@ import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
+  loadIdps,
   loadServiceMetadata
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import {
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../features/bonus/bpd/model/RemoteValue";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { idps } from "../../utils/idps";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -37,6 +49,7 @@ export type ContentState = Readonly<{
   };
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
+  idps: RemoteValue<SpidIdps, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -58,7 +71,8 @@ export const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  contextualHelp: pot.none
+  contextualHelp: pot.none,
+  idps: remoteUndefined
 };
 
 // Selectors
@@ -81,19 +95,26 @@ export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
 
+export const idpsSelector = createSelector(
+  contentSelector,
+  (content: ContentState): ReadonlyArray<SpidIdp> =>
+    isReady(content.idps) ? content.idps.value.items : idps
+);
+
 /**
  * return an option with Idp contextual help data if they are loaded and defined
  * @param id
  */
-export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
+export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getLocalePrimaryWithFallback();
-          return fromNullable(
-            data[locale] !== undefined ? data[locale].idps[id] : undefined
+
+          return fromNullable(data[locale]).chain(l =>
+            fromNullable(l.idps[id as IdentityProviderId])
           );
         }),
         none
@@ -202,7 +223,7 @@ export default function content(
         }
       };
 
-    // idps text data
+    // contextualHelp text data
     case getType(loadContextualHelpData.request):
       return {
         ...state,
@@ -219,6 +240,25 @@ export default function content(
       return {
         ...state,
         contextualHelp: pot.toError(state.contextualHelp, action.payload)
+      };
+
+    // idps data
+    case getType(loadIdps.request):
+      return {
+        ...state,
+        idps: remoteLoading
+      };
+
+    case getType(loadIdps.success):
+      return {
+        ...state,
+        idps: remoteReady(action.payload)
+      };
+
+    case getType(loadIdps.failure):
+      return {
+        ...state,
+        idps: remoteError(action.payload)
       };
 
     case getType(clearCache):
