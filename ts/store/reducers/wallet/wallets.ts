@@ -215,11 +215,19 @@ export const bPayListSelector = createSelector(
 
 /**
  * return true if the payment method is visible in the wallet (the onboardingChannel
- * is IO or WISP)
+ * is IO or WISP) or if the onboardingChannel is undefined.
+ * We choose to show cards with onboardingChannel undefined to ensure backward compatibility
+ * with cards inserted before the field was added.
+ * Explicitly handling the undefined is a conservative choice, as the field should be an enum (IO, WISP, EXT)
+ * but it is a string and therefore we cannot be sure that incorrect data will not arrive.
+ *
  * @param pm
  */
-export const isVisibleInWallet = (pm: PaymentMethod) =>
-  pm.onboardingChannel === "IO" || pm.onboardingChannel === "WISP";
+const visibleOnboardingChannels = ["IO", "WISP", undefined];
+export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
+  visibleOnboardingChannels.some(
+    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
+  );
 
 /**
  * Return a credit card list visible in the wallet

@@ -203,6 +203,33 @@ describe("PickPaymentMethodScreen", () => {
 
     expect(availablePaymentMethodList).not.toBeNull();
   });
+
+  it("should show a credit card if the field onboardingChannel is undefined", () => {
+    const indexedWalletById = toIndexed(
+      [{ ...aCreditCard, onboardingChannel: undefined }].map(
+        convertWalletV2toWalletV1
+      ),
+      pm => pm.idWallet
+    );
+
+    store = mockStore({
+      ...globalState,
+      wallet: {
+        ...globalState.wallet,
+        wallets: {
+          ...globalState.wallet.wallets,
+          walletById: pot.some(indexedWalletById)
+        }
+      }
+    });
+
+    const component = renderPickPaymentMethodScreen(store);
+    const availablePaymentMethodList = component.queryByTestId(
+      "availablePaymentMethodList"
+    );
+
+    expect(availablePaymentMethodList).not.toBeNull();
+  });
 });
 
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>

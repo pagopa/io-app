@@ -14,6 +14,7 @@ export const IOColors = asIOColors({
   white: "#FFFFFF",
   bluegreyDark: "#17324D",
   bluegrey: "#5C6F82",
+  grey: "#909DA8",
   bluegreyLight: "#CCD4DC",
   greyLight: "#E6E9F2",
   greyUltralight: "#FCFDFF",
