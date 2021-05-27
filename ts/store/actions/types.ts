@@ -50,6 +50,7 @@ import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { CrossSessionsActions } from "./crossSessions";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 
 export type Action =
   | AnalyticsActions
@@ -92,7 +93,8 @@ export type Action =
   | SatispayActions
   | CrossSessionsActions
   | CgnActions
-  | OutcomeCodeActions;
+  | OutcomeCodeActions
+  | SvActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
