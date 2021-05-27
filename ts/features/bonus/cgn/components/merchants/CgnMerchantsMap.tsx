@@ -1,7 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { View } from "native-base";
-import MapView, { LatLng, PROVIDER_DEFAULT, Region } from "react-native-maps";
+import MapView, {
+  LatLng,
+  MapEvent,
+  PROVIDER_DEFAULT,
+  Region
+} from "react-native-maps";
 import RNLocation from "react-native-location";
 import { StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -44,6 +49,7 @@ const markers: ReadonlyArray<LatLng> = [
 const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
   const [region, setRegion] = useState<Region | undefined>();
   const [marks, setMarks] = useState<typeof markers>([]);
+  const [selectedMark, setSelectedMark] = useState<number | undefined>();
 
   useEffect(() => {
     void RNLocation.configure({ distanceFilter: 0.5 });
@@ -67,6 +73,12 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
     setMarks(markers);
   }, []);
 
+  const handleMapPress = (e: MapEvent) => {
+    if (e.nativeEvent.action !== "marker-press") {
+      setSelectedMark(undefined);
+    }
+  };
+
   return (
     <View style={IOStyles.flex}>
       <MapView
@@ -76,9 +88,17 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
         showsMyLocationButton={true}
         region={region}
         initialRegion={INITIAL_REGION}
+        onPress={handleMapPress}
+        onRegionChangeComplete={(region: Region) => setRegion(region)}
       >
         {marks.map((m, i) => (
-          <CgnMerchantMarker coordinate={m} key={i} />
+          <CgnMerchantMarker
+            coordinate={m}
+            key={i}
+            category={"theater"}
+            selected={selectedMark === i}
+            onMarkPress={() => setSelectedMark(i)}
+          />
         ))}
       </MapView>
     </View>
