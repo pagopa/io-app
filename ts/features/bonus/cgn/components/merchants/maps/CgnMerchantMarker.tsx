@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
 
 const ICON_SIZE = 22;
 
+/**
+ * Custom component to display a marker position on map for the related merchant showing it's category icon
+ * @param props
+ * @constructor
+ */
 const CgnMerchantMarker: React.FunctionComponent<Props> = (props: Props) => {
   const iconName = useMemo(
     () => fromNullable(categoryIconMap.get(props.category)),

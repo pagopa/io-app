@@ -35,7 +35,8 @@ const INITIAL_REGION: Region = {
 
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 
-const markers: ReadonlyArray<LatLng> = [
+// TODO Remove when connecting to real merchants array
+const temporaryMarkers: ReadonlyArray<LatLng> = [
   {
     latitude: 41.8448049,
     longitude: 12.4908194
@@ -48,7 +49,7 @@ const markers: ReadonlyArray<LatLng> = [
 
 const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
   const [region, setRegion] = useState<Region | undefined>();
-  const [marks, setMarks] = useState<typeof markers>([]);
+  const [marks, setMarks] = useState<typeof temporaryMarkers>([]);
   const [selectedMark, setSelectedMark] = useState<number | undefined>();
 
   useEffect(() => {
@@ -70,7 +71,8 @@ const CgnMerchantsMap: React.FunctionComponent<Props> = (_: Props) => {
       })
       .catch(showToastGenericError);
 
-    setMarks(markers);
+    // TODO Remove when connecting to real merchants array
+    setMarks(temporaryMarkers);
   }, []);
 
   const handleMapPress = (e: MapEvent) => {
