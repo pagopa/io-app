@@ -471,7 +471,7 @@ If you have a macOS system, you can follow both the tutorial for iOS and for And
 As a first step,  copy the sample configuration for the app.
 
 ```
-$ cp .env.example .env
+$ cp .env.production .env
 ```
 
 You need to edit it to match your environment. Here is a still NOT complete table of the environment variables you can set (check the comments in the file for more informations)ç
