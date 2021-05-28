@@ -9,6 +9,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { delayAsync } from "./timer";
 
 const waitRetry = 8000 as Millisecond;
+
 /**
  * Provides the logic for caching and updating a session token by wrapping
  * concurrent functions that need the token and may detect expired tokens.

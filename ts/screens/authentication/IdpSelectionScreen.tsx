@@ -13,97 +13,23 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import I18n from "../../i18n";
-import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
+import { GlobalState } from "../../store/reducers/types";
+import { idpsSelector } from "../../store/reducers/content";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { testIdp } from "../../utils/idps";
 
-type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationScreenProps;
 
 type State = Readonly<{
   counter: number;
 }>;
 
-// since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
-// It is used has a placeholder to handle taps count on it and open when
-// taps count threadshold is reached (see https://www.pivotaltracker.com/story/show/172082895)
-const testIdp: IdentityProvider = {
-  id: "test",
-  name: "Test",
-  logo: require("../../../img/spid.png"),
-  entityID: "test-login",
-  profileUrl: "",
-  isTestIdp: true
-};
-
 const TAPS_TO_OPEN_TESTIDP = 5;
-
-const idps: ReadonlyArray<IdentityProvider> = [
-  {
-    id: "arubaid",
-    name: "Aruba",
-    logo: require("../../../img/spid-idp-arubaid.png"),
-    entityID: "arubaid",
-    profileUrl: "http://selfcarespid.aruba.it"
-  },
-  {
-    id: "infocertid",
-    name: "Infocert",
-    logo: require("../../../img/spid-idp-infocertid.png"),
-    entityID: "infocertid",
-    profileUrl: "https://my.infocert.it/selfcare"
-  },
-  {
-    id: "intesaid",
-    name: "Intesa",
-    logo: require("../../../img/spid-idp-intesaid.png"),
-    entityID: "intesaid",
-    profileUrl: "https://spid.intesa.it"
-  },
-  {
-    id: "lepidaid",
-    name: "Lepida",
-    logo: require("../../../img/spid-idp-lepidaid.png"),
-    entityID: "lepidaid",
-    profileUrl: "https://id.lepida.it/"
-  },
-  {
-    id: "namirialid",
-    name: "Namirial",
-    logo: require("../../../img/spid-idp-namirialid.png"),
-    entityID: "namirialid",
-    profileUrl: "https://idp.namirialtsp.com/idp"
-  },
-  {
-    id: "posteid",
-    name: "Poste",
-    logo: require("../../../img/spid-idp-posteid.png"),
-    entityID: "posteid",
-    profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  },
-  {
-    id: "sielteid",
-    name: "Sielte",
-    logo: require("../../../img/spid-idp-sielteid.png"),
-    entityID: "sielteid",
-    profileUrl: "https://myid.sieltecloud.it/profile/"
-  },
-  {
-    id: "spiditalia",
-    name: "SPIDItalia Register.it",
-    logo: require("../../../img/spid-idp-spiditalia.png"),
-    entityID: "spiditalia",
-    profileUrl: "https://spid.register.it"
-  },
-  {
-    id: "timid",
-    name: "Telecom Italia",
-    logo: require("../../../img/spid-idp-timid.png"),
-    entityID: "timid",
-    profileUrl: "https://id.tim.it/identity/private/"
-  },
-  testIdp
-];
 
 const styles = StyleSheet.create({
   gridContainer: {
@@ -127,7 +53,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
     this.state = { counter: 0 };
   }
 
-  private onIdpSelected = (idp: IdentityProvider) => {
+  private onIdpSelected = (idp: SpidIdp) => {
     const { counter } = this.state;
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
@@ -160,7 +86,11 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
-            <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
+            <IdpsGrid
+              idps={[...this.props.idps, testIdp]}
+              onIdpSelected={this.onIdpSelected}
+            />
+
             <View spacer={true} />
             <ButtonDefaultOpacity
               block={true}
@@ -184,8 +114,12 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
+const mapStateToProps = (state: GlobalState) => ({
+  idps: idpsSelector(state)
 });
 
-export default connect(undefined, mapDispatchToProps)(IdpSelectionScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IdpSelectionScreen);
