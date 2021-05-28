@@ -1,11 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import {
-  FlatList,
-  Keyboard,
-  ListRenderItemInfo,
-  SafeAreaView
-} from "react-native";
+import { Keyboard, SafeAreaView } from "react-native";
 import { Input, Item, View } from "native-base";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -15,14 +10,11 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import CgnMerchantListItem from "../../components/merchants/CgnMerchantListItem";
+import { availableMerchants } from "../../__mock__/availableMerchants";
+import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
-import { availableMerchants } from "../../__mock__/availableMerchants";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
-import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -34,7 +26,6 @@ export type TmpMerchantType = {
 };
 
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
-
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
@@ -73,15 +64,6 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     Keyboard.dismiss();
   };
 
-  const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
-    <CgnMerchantListItem
-      category={listItem.item.category}
-      name={listItem.item.name}
-      location={listItem.item.location}
-      onPress={onItemPress}
-    />
-  );
-
   return (
     <BaseScreenComponent
       goBack
@@ -89,7 +71,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+        <View style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
           <Item>
             <Input
@@ -99,23 +81,12 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
               placeholderTextColor={IOColors.bluegreyLight}
               placeholder={I18n.t("global.buttons.search")}
             />
-            <IconFont name="io-search" color={IOColors.bluegrey} />
           </Item>
-          <View spacer />
-          <FlatList
-            scrollEnabled={true}
-            data={merchantList}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent noPadded={true} />
-            )}
-            renderItem={renderListItem}
-            keyExtractor={c => `${c.name}-${c.category}`}
-            keyboardShouldPersistTaps={"handled"}
-            ListFooterComponent={
-              merchantList.length > 0 && <EdgeBorderComponent />
-            }
-          />
         </View>
+        <CgnMerchantsListView
+          merchantList={merchantList}
+          onItemPress={onItemPress}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
   );

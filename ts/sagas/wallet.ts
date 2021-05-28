@@ -190,6 +190,7 @@ import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 
 const successScreenDelay = 2000 as Millisecond;
+
 /**
  * This saga manages the flow for adding a new card.
  *
@@ -366,7 +367,7 @@ function* startOrResumeAddCreditCardSaga(
                     }
                     // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
                     // this pop could be easily break when this flow is entered by other points
-                    // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
+                    // different from the current ones
                     yield put(navigationHistoryPop(4));
                     break;
                   }

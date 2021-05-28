@@ -457,6 +457,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           <Text primary={true}>{I18n.t("wallet.transactionsShow")}</Text>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
+        <View spacer={true} />
       </Content>
     );
   }
@@ -473,6 +474,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             source={require("../../../img/messages/empty-transaction-list-icon.png")}
           />
         </View>
+        <EdgeBorderComponent />
       </Content>
     );
   }
@@ -629,6 +631,9 @@ const mapStateToProps = (state: GlobalState) => {
     periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
     allActiveBonus: allBonusActiveSelector(state),
     availableBonusesList: supportedAvailableBonusSelector(state),
+    // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
+    //  available for display in the wallet, so the cards added with the APP or with the WISP.
+    //  But it leverage on the assumption that the meaning of pagoPA === true is the same of onboardingChannel !== "EXT"
     potWallets: pagoPaCreditCardWalletV1Selector(state),
     anyHistoryPayments: paymentsHistorySelector(state).length > 0,
     anyCreditCardAttempts: creditCardAttemptsSelector(state).length > 0,
