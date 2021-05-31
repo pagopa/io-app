@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
-import { euCovidCertByAuthCodeReducer } from "./byId";
+import { euCovidCertByAuthCodeReducer } from "./byAuthCode";
 
 export type EuCovidCertState = {
   byAuthCode: IndexedById<pot.Pot<EUCovidCertificateResponse, Error>>;
