@@ -9,7 +9,7 @@ import {
 /**
  * The user requests the EU Covid certificate, starting from the auth_code
  */
-export const EuCovidCertificateGet = createAsyncAction(
+export const euCovidCertificateGet = createAsyncAction(
   "EUCOVIDCERT_REQUEST",
   "EUCOVIDCERT_SUCCESS",
   "EUCOVIDCERT_FAILURE"
@@ -19,4 +19,4 @@ export const EuCovidCertificateGet = createAsyncAction(
   WithEUCovidCertAuthCode<GenericError>
 >();
 
-export type EuCovidCertActions = ActionType<typeof EuCovidCertificateGet>;
+export type EuCovidCertActions = ActionType<typeof euCovidCertificateGet>;

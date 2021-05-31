@@ -25,10 +25,12 @@ import {
   bonusVacanzeEnabled,
   bpdEnabled,
   cgnEnabled,
+  euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
+import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
@@ -311,13 +313,18 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   }
 
   if (bpdEnabled) {
-    // Start watching for actions about bonus bpd
+    // Start watching for bpd actions
     yield fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (cgnEnabled) {
-    // Start watching for actions about bonus bpd
+    // Start watching for cgn actions
     yield fork(watchBonusCgnSaga, sessionToken);
+  }
+
+  if (euCovidCertificateEnabled) {
+    // Start watching for EU Covid Certificate actions
+    yield fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
   // Load the user metadata
