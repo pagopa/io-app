@@ -1,7 +1,7 @@
+import { Action, combineReducers } from "redux";
 import svVoucherGenerationReducer, {
   VoucherGenerationState
 } from "./voucherGeneration";
-import { Action, combineReducers } from "redux";
 
 export type SvState = {
   voucherGeneration: VoucherGenerationState;

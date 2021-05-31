@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
 import { none, Option } from "fp-ts/lib/Option";
+import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
 
 export type VoucherGenerationState = {

@@ -17,6 +17,7 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
+import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -50,7 +51,6 @@ import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { CrossSessionsActions } from "./crossSessions";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
-import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 
 export type Action =
   | AnalyticsActions
