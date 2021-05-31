@@ -59,13 +59,7 @@ ${ticketList
  * @param errors
  */
 const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
-  errors.map(e =>
-    warn(
-      `There was an error retrieving a ticket: ${
-        e instanceof Error ? e.message : e.map(x => x.message)
-      }`
-    )
-  );
+  errors.map(e => warn(`There was an error retrieving a ticket: ${e}`));
 };
 
 /**
