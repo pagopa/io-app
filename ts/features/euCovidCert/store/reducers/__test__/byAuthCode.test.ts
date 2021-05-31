@@ -9,6 +9,7 @@ import {
   WithEUCovidCertAuthCode
 } from "../../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../../actions";
+import { euCovidCertificateFromAuthCodeSelector } from "../byAuthCode";
 
 const authCode = "authCode1" as EUCovidCertificateAuthCode;
 const mockResponseSuccess: EUCovidCertificateResponse = {
@@ -26,6 +27,9 @@ describe("Test byAuthCode reducer behaviour", () => {
   it("Initial state should be pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.euCovidCert.byAuthCode).toStrictEqual({});
+    expect(
+      euCovidCertificateFromAuthCodeSelector(globalState, authCode)
+    ).toStrictEqual(pot.none);
   });
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -35,6 +39,9 @@ describe("Test byAuthCode reducer behaviour", () => {
     const byAuthCode = store.getState().features.euCovidCert.byAuthCode;
 
     expect(byAuthCode[authCode]).toStrictEqual(pot.noneLoading);
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
+    ).toStrictEqual(pot.noneLoading);
   });
   it("Should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -45,17 +52,26 @@ describe("Test byAuthCode reducer behaviour", () => {
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
     ).toStrictEqual(pot.some(mockResponseSuccess));
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
+    ).toStrictEqual(pot.some(mockResponseSuccess));
 
     store.dispatch(euCovidCertificateGet.request(authCode));
 
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
     ).toStrictEqual(pot.someLoading(mockResponseSuccess));
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
+    ).toStrictEqual(pot.someLoading(mockResponseSuccess));
 
     store.dispatch(euCovidCertificateGet.failure(mockFailure));
 
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
+    ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure.value));
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
     ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure.value));
   });
   it("Should be pot.noneError after the failure action", () => {
@@ -67,16 +83,25 @@ describe("Test byAuthCode reducer behaviour", () => {
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
     ).toStrictEqual(pot.noneError(mockFailure.value));
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
+    ).toStrictEqual(pot.noneError(mockFailure.value));
 
     store.dispatch(euCovidCertificateGet.request(authCode));
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
+    ).toStrictEqual(pot.noneLoading);
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
     ).toStrictEqual(pot.noneLoading);
 
     store.dispatch(euCovidCertificateGet.success(mockResponseSuccess));
 
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
+    ).toStrictEqual(pot.some(mockResponseSuccess));
+    expect(
+      euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
     ).toStrictEqual(pot.some(mockResponseSuccess));
   });
 });

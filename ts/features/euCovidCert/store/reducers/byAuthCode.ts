@@ -1,4 +1,6 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
@@ -7,6 +9,8 @@ import {
   toLoading,
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
+import { GlobalState } from "../../../../store/reducers/types";
+import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
 
@@ -34,3 +38,15 @@ export const euCovidCertByAuthCodeReducer = (
 
   return state;
 };
+
+/**
+ * From authCode to EUCovidCertificateResponse
+ */
+export const euCovidCertificateFromAuthCodeSelector = createSelector(
+  [
+    (state: GlobalState) => state.features.euCovidCert.byAuthCode,
+    (_: GlobalState, authCode: EUCovidCertificateAuthCode) => authCode
+  ],
+  (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, Error> =>
+    fromNullable(byAuthCode[authCode]).getOrElse(pot.none)
+);
