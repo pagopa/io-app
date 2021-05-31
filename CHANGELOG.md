@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.1](https://github.com/pagopa/io-app/compare/1.26.0-rc.0...1.26.0-rc.1) (2021-05-28)
+
+
+### Features
+
+* [[#177558088](https://www.pivotaltracker.com/story/show/177558088)] Idps data for selection grid is now loaded from CDN ([#3008](https://github.com/pagopa/io-app/issues/3008)) ([3752586](https://github.com/pagopa/io-app/commit/37525863f8bd5b668f0db220a5c070093f519ad6))
+* **Carta Giovani Nazionale:** [[#178020526](https://www.pivotaltracker.com/story/show/178020526)] Implements components to filter on merchants search ([#3033](https://github.com/pagopa/io-app/issues/3033)) ([0d7c7cb](https://github.com/pagopa/io-app/commit/0d7c7cb8d02490f5c7eaeaacd1500f635406422f))
+
+
+### Bug Fixes
+
+* [[#177478372](https://www.pivotaltracker.com/story/show/177478372)] Multiple enable/disable services doesn't work ([#3052](https://github.com/pagopa/io-app/issues/3052)) ([60371e5](https://github.com/pagopa/io-app/commit/60371e5868ff32245caea0c36c5dbf594f72a339))
+* [[#178166915](https://www.pivotaltracker.com/story/show/178166915)] Fix the problem of setting the security code after reinstalling the app on IOS ([#3069](https://github.com/pagopa/io-app/issues/3069)) ([343248b](https://github.com/pagopa/io-app/commit/343248b218bfccb07648e258be1a85251a909cc2))
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-4](https://pagopa.atlassian.net/browse/IAGP-4)] Add EU covid certificate feature flag ([#3071](https://github.com/pagopa/io-app/issues/3071)) ([fdd2077](https://github.com/pagopa/io-app/commit/fdd207704a65f4a2473d74d276e94540fc1d4659))
+* **Green Pass:** [[IAGP-1](https://pagopa.atlassian.net/browse/IAGP-1)] Add "Green Pass" to changelog scope [#3066](https://github.com/pagopa/io-app/issues/3066) ([9bce3d3](https://github.com/pagopa/io-app/commit/9bce3d35b215c1cc992d6777f9ed77921fa2615b))
+* [[#178297319](https://www.pivotaltracker.com/story/show/178297319)] Fixes broken urls [#3065](https://github.com/pagopa/io-app/issues/3065) ([7ec0418](https://github.com/pagopa/io-app/commit/7ec04189838fa9d7e5e848d40c6e09892b418421))
+
 ## [1.26.0-rc.0](https://github.com/pagopa/io-app/compare/1.25.0-rc.14...1.26.0-rc.0) (2021-05-25)
 
 ### Features
