@@ -329,8 +329,11 @@ function* checkStoreHashedFiscalCode(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
-  // the current logged user has a different fiscal code from the stored hashed one
-  if (checkIsDifferentFiscalCode === true) {
+  // the current logged user has a different fiscal code from the stored hashed one or there isn't a stored one
+  if (
+    checkIsDifferentFiscalCode === true ||
+    checkIsDifferentFiscalCode === undefined
+  ) {
     // delete current store pin
     yield call(deletePin);
     yield put(differentProfileLoggedIn());
