@@ -91,33 +91,26 @@ describe("watchProfile", () => {
       .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
       .run());
 
-  it("checkStoreHashedFiscalCode should not dispatch newProfileLoggedIn action - empty store", () =>
-    expectSaga(
-      profileSagaTestable!.checkStoreHashedFiscalCode,
-      profileLoadSuccess(mockedProfile)
-    )
-      .withState({
-        ...globalState,
-        crossSessions: { hashedFiscalCode: undefined }
-      })
-      .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-      .not.put(differentProfileLoggedIn())
-      .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
-      .run());
-
-  it("checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action", () =>
-    expectSaga(
-      profileSagaTestable!.checkStoreHashedFiscalCode,
-      profileLoadSuccess(mockedProfile)
-    )
-      .withState({
-        ...globalState,
-        crossSessions: {
-          hashedFiscalCode: hash(`${mockedProfile.fiscal_code}xxx`)
-        }
-      })
-      .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-      .put(differentProfileLoggedIn())
-      .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
-      .run());
+  it.each`
+    state          | storedFiscalCode
+    ${"different"} | ${hash(`${mockedProfile.fiscal_code}xxx`)}
+    ${"undefined"} | ${undefined}
+  `(
+    "checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action if the stored hashed fiscal code is $state",
+    async ({ storedFiscalCode }) =>
+      expectSaga(
+        profileSagaTestable!.checkStoreHashedFiscalCode,
+        profileLoadSuccess(mockedProfile)
+      )
+        .withState({
+          ...globalState,
+          crossSessions: {
+            hashedFiscalCode: storedFiscalCode
+          }
+        })
+        .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
+        .put(differentProfileLoggedIn())
+        .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
+        .run()
+  );
 });

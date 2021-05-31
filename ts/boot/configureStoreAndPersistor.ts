@@ -31,6 +31,7 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { isDevEnv } from "../utils/environment";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import { configureReactotron } from "./configureRectotron";
 
 /**
@@ -215,7 +216,8 @@ const migrations: MigrationManifest = {
     const newContent: ContentState = {
       servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
-      contextualHelp: pot.none
+      contextualHelp: pot.none,
+      idps: remoteUndefined
     };
     return {
       ...state,

@@ -2274,7 +2274,7 @@ bonus:
           issuerId: "ID transazione Issuer"
           maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
           maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è un rimborso, perciò è stato decurtato il relativo Cashback."
+          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata riconosciuta in precedenza."
           canceled: "Storno"
       paymentMethods:
         add:
@@ -2333,6 +2333,27 @@ bonus:
       places: Luoghi
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      cta:
+        filter: Filtra
+      filter:
+        title: Filtra esercenti
+        searchTitle: Cerca per nome
+        inputPlaceholder: Cerca negozio, teatro o altro
+        addressTitle: Cerca per indirizzo
+        addressPlaceholder: Cerca indirizzo
+        sliderLabel: Distanza entro cui cercare
+        sliderUnit: Km
+        orderTitle: Visualizza
+        categories: Categorie
+        cta:
+          cancel: Rimuovi
+          confirm:
+            zero: Applica filtri
+            one: Applica filtri ({{count}})
+            other: Applica filtri ({{count}})
+        order:
+          byDistance: Per vicinanza alla tua posizione
+          byName: Ordine alfabetico
     merchantDetail:
       title:
         deals: Offerte
@@ -2344,6 +2365,15 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+      categories:
+        theater: teatro, cinema e spettacolo
+        travel: viaggi
+        mobility: carsharing e mobilità
+        telco: telefonia, servizi internet
+        book: libri, audiolibri, e-book
+        museum: musei, gallerie, parchi
+        sport: sport
+        health: salute e benessere
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani

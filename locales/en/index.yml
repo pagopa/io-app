@@ -2244,8 +2244,8 @@ bonus:
           issuerId: "Issuer transaction ID"
           maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
           maxCashbackForPeriodWarning: "You have already reached the maximum refund for this phase."
-          canceledOperationWarning: "This transaction is a refund, so the related cashback has been deducted."
-          canceled: "Refund"
+          canceledOperationWarning: "This transaction is a write-off, meaning it invalidates a transaction that had been previously recognized."
+          canceled: "Write-off"
       paymentMethods:
         add:
           cta: "Add a method to Cashback"
@@ -2303,6 +2303,27 @@ bonus:
       places: Places
       navigationTitle: View merchants
       screenTitle: Select the merchant where you want to buy something
+      cta:
+        filter: Filter
+      filter:
+        title: Filter merchants
+        searchTitle: Find by name
+        inputPlaceholder: Find store, theater or other
+        addressTitle: Find by address
+        addressPlaceholder: Find address
+        sliderLabel: Distance to be searched
+        sliderUnit: Km
+        orderTitle: View
+        categories: Categories
+        cta:
+          cancel: Remove
+          confirm:
+            zero: Apply filters
+            one: Apply filters ({{count}})
+            other: Apply filters ({{count}})
+        order:
+          byDistance: By proximity to your location
+          byName: Alphabetical order
     merchantDetail:
       title:
         deals: Discounts
@@ -2314,6 +2335,15 @@ bonus:
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+      categories:
+        theater: theater, cinema and entertainment
+        travel: travel
+        mobility: carsharing and mobility
+        telco: telecommunications, internet services
+        book: books, audiobooks, e-books
+        museum: museums, galleries, parks
+        sport: sport
+        health: health and wellness
     cta:
       activeBonus: Activate your Carta Giovani
       goToDetail: View your Carta Giovani
