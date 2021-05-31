@@ -149,6 +149,14 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "cobadge",
         "en-EN": "cobadge"
       }
+    },
+    euCovidCert: {
+      is_visible: false,
+      level: "warning",
+      message: {
+        "it-IT": "euCovidCert banner test",
+        "en-EN": "euCovidCert banner test"
+      }
     }
   }
 };
