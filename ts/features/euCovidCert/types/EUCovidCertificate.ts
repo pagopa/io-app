@@ -1,6 +1,15 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
 
+/**
+ * The unique ID of a EU Covid Certificate
+ */
 type EUCovidCertificateId = string & IUnitTag<"EUCovidCertificateId">;
+
+/**
+ * The auth code used to request the EU Covid Certificate, received via message
+ */
+export type EUCovidCertificateAuthCode = string &
+  IUnitTag<"EUCovidCertificateAuthCode">;
 
 type BaseCertificate = {
   id: EUCovidCertificateId;

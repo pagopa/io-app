@@ -7,6 +7,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
+import { featuresReducer } from "../../features/common/store/reducers";
 import {
   logoutFailure,
   logoutSuccess,
@@ -100,6 +101,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
+  features: featuresReducer,
   internalRouteNavigation: internalRouteNavigationReducer,
   //
   // persisted state

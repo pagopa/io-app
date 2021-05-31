@@ -1,4 +1,7 @@
-import { EUCovidCertificate } from "./EUCovidCertificate";
+import {
+  EUCovidCertificate,
+  EUCovidCertificateAuthCode
+} from "./EUCovidCertificate";
 
 type EUCovidCertificateResponseSuccess = {
   kind: "success";
@@ -48,8 +51,15 @@ type EUCovidCertificateResponseFailure =
   | EUCovidCertificateResponseTemporarilyNotAvailable;
 
 /**
+ * Bind the response with the initial authCode
+ */
+export type WithEUCovidCertAuthCode<T> = T & {
+  authCode: EUCovidCertificateAuthCode;
+};
+
+/**
  * This type represents all the possible remote responses
  */
-export type EUCovidCertificateResponse =
-  | EUCovidCertificateResponseSuccess
-  | EUCovidCertificateResponseFailure;
+export type EUCovidCertificateResponse = WithEUCovidCertAuthCode<
+  EUCovidCertificateResponseSuccess | EUCovidCertificateResponseFailure
+>;
