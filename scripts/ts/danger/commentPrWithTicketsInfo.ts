@@ -62,8 +62,9 @@ const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
   errors.map(e =>
     warn(
       `There was an error retrieving a ticket: ${
-        Array.isArray(e) ? e.map(x => x.value) : e.message
-      }`
+        Array.isArray(e) ? e.map(x => x.value).join(", ") : e.message
+      }
+       ${Array.isArray(e) ? e.map(x => x.message).join("- ") : e.message}`
     )
   );
 };
