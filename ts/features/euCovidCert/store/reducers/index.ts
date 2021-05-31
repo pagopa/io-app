@@ -3,12 +3,13 @@ import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
-import { euCovidCertByIdReducer } from "./byId";
+import { euCovidCertByAuthCodeReducer } from "./byId";
 
 export type EuCovidCertState = {
-  byId: IndexedById<pot.Pot<EUCovidCertificateResponse, Error>>;
+  byAuthCode: IndexedById<pot.Pot<EUCovidCertificateResponse, Error>>;
 };
 
 export const euCovidCertReducer = combineReducers<EuCovidCertState, Action>({
-  byId: euCovidCertByIdReducer
+  // save, using the AuthCode as key the the pot.Pot<EUCovidCertificateResponse, Error> response
+  byAuthCode: euCovidCertByAuthCodeReducer
 });
