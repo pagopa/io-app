@@ -14,6 +14,11 @@ type EuCovidCertByIdState = IndexedById<
   pot.Pot<EUCovidCertificateResponse, Error>
 >;
 
+/**
+ * Store the EU Certificate response status based on the AuthCode used to issue the request
+ * @param state
+ * @param action
+ */
 export const euCovidCertByAuthCodeReducer = (
   state: EuCovidCertByIdState = {},
   action: Action
