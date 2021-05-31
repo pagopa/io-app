@@ -21,7 +21,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://http://www.google.com",
     right({
-      scheme: "http",
+      schema: "http",
       url: "http://www.google.com",
       value: "//www.google.com"
     })
@@ -29,7 +29,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://https://www.google.com",
     right({
-      scheme: "https",
+      schema: "https",
       url: "https://www.google.com",
       value: "//www.google.com"
     })
@@ -37,7 +37,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://copy:123text456",
     right({
-      scheme: "copy",
+      schema: "copy",
       url: "copy:123text456",
       value: "123text456"
     })
@@ -45,7 +45,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://sms:123456",
     right({
-      scheme: "sms",
+      schema: "sms",
       url: "sms:123456",
       value: "123456"
     })
@@ -53,7 +53,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://tel:123456",
     right({
-      scheme: "tel",
+      schema: "tel",
       url: "tel:123456",
       value: "123456"
     })
@@ -61,7 +61,7 @@ const loadingCases: ReadonlyArray<[
   [
     "iohandledlink://mailto:name.surname@email.com",
     right({
-      scheme: "mailto",
+      schema: "mailto",
       url: "mailto:name.surname@email.com",
       value: "name.surname@email.com"
     })

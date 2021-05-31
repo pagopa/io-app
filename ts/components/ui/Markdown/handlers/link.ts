@@ -16,7 +16,7 @@ export const isIoInternalLink = (href: string): boolean =>
 
 export const CustomHandledLink = t.interface({
   url: t.string,
-  scheme: t.keyof({
+  schema: t.keyof({
     /* handled by Linking of React Native - see https://reactnative.dev/docs/linking#built-in-url-schemes */
     http: null,
     https: null,
@@ -47,9 +47,9 @@ export const deriveCustomHandledLink = (
       new RegExp(IO_CUSTOM_HANDLED_PRESS_PREFIX, "ig"),
       ""
     );
-    const [scheme, value] = cleanedLink.split(":");
+    const [schema, value] = cleanedLink.split(":");
     const maybeCustomHandledLink = CustomHandledLink.decode({
-      scheme,
+      schema,
       value,
       url: cleanedLink
     });
