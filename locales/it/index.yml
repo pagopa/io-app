@@ -2320,7 +2320,7 @@ bonus:
           title: "Come funziona?"
           body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
           status:
-            active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+            active: "**La classifica cambia ogni giorno.** Riceverai un messaggio quando verrà consolidata."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:

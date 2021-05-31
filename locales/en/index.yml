@@ -2290,7 +2290,7 @@ bonus:
           title: "How does it work?"
           body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
           status:
-            active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+            active: "**The ranking changes every day.** You'll receive a message when it's going to be consolidated."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
