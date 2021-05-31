@@ -11,7 +11,7 @@ type EUCovidCertificateId = string & IUnitTag<"EUCovidCertificateId">;
 export type EUCovidCertificateAuthCode = string &
   IUnitTag<"EUCovidCertificateAuthCode">;
 
-type BaseCertificate = {
+type WithEUCovidCertificateId<T> = T & {
   id: EUCovidCertificateId;
 };
 
@@ -39,9 +39,6 @@ type RevokedCertificate = {
 /**
  * This type represents the EU Covid Certificate with the different states & data
  */
-export type EUCovidCertificate = (
-  | ValidCertificate
-  | ExpiredCertificate
-  | RevokedCertificate
-) &
-  BaseCertificate;
+export type EUCovidCertificate = WithEUCovidCertificateId<
+  ValidCertificate | ExpiredCertificate | RevokedCertificate
+>;
