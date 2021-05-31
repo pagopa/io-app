@@ -1,6 +1,6 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import { isLeft, isRight } from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
+import { Errors, Is } from "io-ts";
 import { GenericTicket, GenericTicketType } from "../common/ticket/types";
 import { GenericTicketRetrievalResults } from "./utils/titleParser";
 
@@ -59,7 +59,9 @@ ${ticketList
  * @param errors
  */
 const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
-  errors.map(e => warn(`There was an error retrieving a ticket: ${e}`));
+  errors.map(e =>
+    warn(`There was an error retrieving a ticket: ${Array.isArray(e)}`)
+  );
 };
 
 /**
