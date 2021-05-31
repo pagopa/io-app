@@ -44,8 +44,6 @@ import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walle
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
 import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
-import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
-import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
@@ -662,10 +660,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () =>
-    dispatch(
-      euCovidCertificateGet.request("asd" as EUCovidCertificateAuthCode)
-    ),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(
