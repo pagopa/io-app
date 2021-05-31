@@ -468,10 +468,10 @@ If you have a macOS system, you can follow both the tutorial for iOS and for And
 
 #### App build configuration
 
-As a first step,  copy the sample configuration for the app.
+As a first step, if you want to run the app in production mode, set the production configuration.
 
 ```
-$ cp .env.example .env
+$ cp .env.production .env
 ```
 
 You need to edit it to match your environment. Here is a still NOT complete table of the environment variables you can set (check the comments in the file for more informations)ç
