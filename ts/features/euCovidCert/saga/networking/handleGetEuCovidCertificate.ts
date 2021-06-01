@@ -27,8 +27,18 @@ const mapKinds = new Map<number, EUCovidCertificateResponseFailure["kind"]>([
 
 // convert a failure response to the logical app representation of it
 const convertFailure = (status: number): EUCovidCertificateResponseFailure => {
-  const kind = mapKinds.get(status) ?? "genericError";
-  return { kind };
+  const kind = mapKinds.get(status);
+  return fromNullable(kind).foldL(
+    () => {
+      // track the conversion failure
+      void mixpanelTrack("EUCOVIDCERT_CONVERT_FAILURE_ERROR", {
+        status
+      });
+      // fallback to generic error
+      return { kind: "genericError" };
+    },
+    k => ({ kind: k })
+  );
 };
 
 // convert a success response to the logical app representation of it
@@ -63,7 +73,7 @@ const convertSuccess = (
   return fromNullable(getCertificate()).foldL<EUCovidCertificateResponse>(
     () => {
       // track the conversion failure
-      void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_FAILURE", {
+      void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_ERROR", {
         status: certificate.status
       });
       return { kind: "genericError", authCode };

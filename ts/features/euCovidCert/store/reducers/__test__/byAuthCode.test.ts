@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { GenericError } from "../../../../../utils/errors";
+import { getGenericError, NetworkError } from "../../../../../utils/errors";
 import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
 import {
   EUCovidCertificateResponse,
@@ -17,10 +17,9 @@ const mockResponseSuccess: EUCovidCertificateResponse = {
   kind: "notFound"
 };
 
-const mockFailure: WithEUCovidCertAuthCode<GenericError> = {
+const mockFailure: WithEUCovidCertAuthCode<NetworkError> = {
   authCode,
-  kind: "generic",
-  value: new Error("A generic error")
+  ...getGenericError(new Error("A generic error"))
 };
 
 describe("Test byAuthCode reducer & selector behaviour", () => {
@@ -69,10 +68,10 @@ describe("Test byAuthCode reducer & selector behaviour", () => {
 
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
-    ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure.value));
+    ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure));
     expect(
       euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
-    ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure.value));
+    ).toStrictEqual(pot.someError(mockResponseSuccess, mockFailure));
   });
   it("Should be pot.noneError after the failure action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -82,10 +81,10 @@ describe("Test byAuthCode reducer & selector behaviour", () => {
 
     expect(
       store.getState().features.euCovidCert.byAuthCode[authCode]
-    ).toStrictEqual(pot.noneError(mockFailure.value));
+    ).toStrictEqual(pot.noneError(mockFailure));
     expect(
       euCovidCertificateFromAuthCodeSelector(store.getState(), authCode)
-    ).toStrictEqual(pot.noneError(mockFailure.value));
+    ).toStrictEqual(pot.noneError(mockFailure));
 
     store.dispatch(euCovidCertificateGet.request(authCode));
     expect(
