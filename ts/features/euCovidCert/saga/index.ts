@@ -1,4 +1,3 @@
-// watch all events about bpd
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "redux-saga/effects";
 import { euCovidCertificateGet } from "../store/actions";
