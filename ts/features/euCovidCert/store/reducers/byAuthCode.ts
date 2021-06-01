@@ -1,4 +1,4 @@
-import { pot } from "italia-ts-commons";
+import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";

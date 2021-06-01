@@ -77,8 +77,8 @@ export const handleCtaAction = (
     );
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
-    if (maybeHandledAction.isSome()) {
-      Linking.openURL(maybeHandledAction.value).catch(() => 0);
+    if (maybeHandledAction.isRight()) {
+      Linking.openURL(maybeHandledAction.value.url).catch(() => 0);
     }
   }
 };
@@ -291,12 +291,9 @@ export const isCtaActionValid = (
       .map(f => f(serviceMetadata))
       .getOrElse(true);
   }
-  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   // check if it is a custom action (it should be composed in a specific format)
-  if (maybeCustomHandledAction.isSome()) {
-    return true;
-  }
-  return false;
+  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
+  return maybeCustomHandledAction.isRight();
 };
 
 /**
