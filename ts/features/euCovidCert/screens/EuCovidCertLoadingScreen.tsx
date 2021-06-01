@@ -7,7 +7,7 @@ import { GlobalState } from "../../../store/reducers/types";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const ValidCertificateScreen = (_: Props): React.ReactElement => <View />;
+const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => <View />;
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (_: GlobalState) => ({});
@@ -15,4 +15,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ValidCertificateScreen);
+)(EuCovidCertLoadingScreen);

@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect } from "react";
 import { NavigationInjectedProps } from "react-navigation";
@@ -7,6 +8,15 @@ import { GlobalState } from "../../../store/reducers/types";
 import { euCovidCertificateGet } from "../store/actions";
 import { euCovidCertificateFromAuthCodeSelector } from "../store/reducers/byAuthCode";
 import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
+import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
+import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
+import EuCovidCertRevokedScreen from "./EuCovidCertRevokedScreen";
+import EuCovidCertValidScreen from "./EuCovidCertValidScreen";
+import EuCovidCertGenericErrorKoScreen from "./ko/EuCovidCertGenericErrorKoScreen";
+import EuCovidCertNotFoundKoScreen from "./ko/EuCovidCertNotFoundKoScreen";
+import EuCovidCertNotOperationalKoScreen from "./ko/EuCovidCertNotOperationalKoScreen";
+import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporarilyNotAvailableKoScreen";
+import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
 
 type NavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
@@ -15,6 +25,34 @@ type NavigationParams = Readonly<{
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   NavigationInjectedProps<NavigationParams>;
+
+/**
+ * Return the right screen based on the response value
+ * @param response
+ */
+const routeEuCovidResponse = (
+  response: EUCovidCertificateResponse
+): React.ReactElement => {
+  switch (response.kind) {
+    case "genericError":
+      return <EuCovidCertGenericErrorKoScreen />;
+    case "notFound":
+      return <EuCovidCertNotFoundKoScreen />;
+    case "notOperational":
+      return <EuCovidCertNotOperationalKoScreen />;
+    case "temporarilyNotAvailable":
+      return <EuCovidCertTemporarilyNotAvailableKoScreen />;
+    case "wrongFormat":
+      return <EuCovidCertWrongFormatKoScreen />;
+    case "success":
+      switch (response.value.kind) {
+        case "valid":
+          return <EuCovidCertValidScreen />;
+        case "revoked":
+          return <EuCovidCertRevokedScreen />;
+      }
+  }
+};
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
@@ -33,7 +71,18 @@ const EuCovidCertificateRouterScreen = (
     }
   }, []);
 
-  return null;
+  // handle with the fold the remote state and with routeEuCovidResponse the different response values
+  return pot.fold(
+    props.euCovidCertificateResponse(authCode),
+    () => <EuCovidCertLoadingScreen />,
+    () => <EuCovidCertLoadingScreen />,
+    _ => <EuCovidCertLoadingScreen />,
+    _ => <EuCovidCertGenericErrorKoScreen />,
+    response => routeEuCovidResponse(response),
+    _ => <EuCovidCertLoadingScreen />,
+    (_, __) => <EuCovidCertLoadingScreen />,
+    _ => <EuCovidCertGenericErrorKoScreen />
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

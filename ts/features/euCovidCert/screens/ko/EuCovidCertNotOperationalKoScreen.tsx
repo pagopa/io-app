@@ -7,7 +7,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const WrongFormatKoScreen = (_: Props): React.ReactElement => <View />;
+const EuCovidCertNotOperationalKoScreen = (_: Props): React.ReactElement => (
+  <View />
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (_: GlobalState) => ({});
@@ -15,4 +17,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WrongFormatKoScreen);
+)(EuCovidCertNotOperationalKoScreen);
