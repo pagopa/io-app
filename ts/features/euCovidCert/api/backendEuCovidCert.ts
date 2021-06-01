@@ -19,11 +19,11 @@ const getCertificate: GetCertificateT = {
   url: () => "/api/v1/eucovidcert/certificate",
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
-  body: p => JSON.stringify(p),
+  body: p => JSON.stringify(p.getCertificateParams),
   response_decoder: getCertificateDefaultDecoder()
 };
 
-export const BackendEuCovidClient = (
+export const BackendEuCovidCertClient = (
   baseUrl: string,
   token: SessionToken,
   fetchApi: typeof fetch = defaultRetryingFetch()

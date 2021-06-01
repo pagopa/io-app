@@ -12,7 +12,7 @@ export type EUCovidCertificateAuthCode = string &
   IUnitTag<"EUCovidCertificateAuthCode">;
 
 type WithEUCovidCertificateId<T> = T & {
-  id: EUCovidCertificateId;
+  id: EUCovidCertificateId | undefined;
 };
 
 type QRCode = {
@@ -23,8 +23,8 @@ type QRCode = {
 type ValidCertificate = {
   kind: "valid";
   qrCode: QRCode;
-  markdownPreview: string;
-  markdownDetails: string;
+  markdownPreview?: string;
+  markdownDetails?: string;
 };
 
 type ExpiredCertificate = {
@@ -33,7 +33,8 @@ type ExpiredCertificate = {
 
 type RevokedCertificate = {
   kind: "revoked";
-  revokedOn: Date;
+  revokedOn: Date | undefined;
+  revokedReason: string | undefined;
 };
 
 /**
