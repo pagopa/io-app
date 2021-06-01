@@ -47,6 +47,6 @@ export const euCovidCertificateFromAuthCodeSelector = createSelector(
     (state: GlobalState) => state.features.euCovidCert.byAuthCode,
     (_: GlobalState, authCode: EUCovidCertificateAuthCode) => authCode
   ],
-  (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, Error> =>
+  (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, NetworkError> =>
     byAuthCode[authCode] ?? pot.none
 );
