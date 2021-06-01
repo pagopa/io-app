@@ -68,7 +68,7 @@ const isHttp = (url: string): boolean => {
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };
 
-const taskLinking = (url: string) =>
+export const taskLinking = (url: string) =>
   TE.tryCatch(
     () => Linking.openURL(url),
     _ => `cannot open url ${url}`
