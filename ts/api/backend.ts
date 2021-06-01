@@ -55,7 +55,10 @@ import {
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
-import { withBearerToken as withToken } from "../utils/api";
+import {
+  tokenHeaderProducer,
+  withBearerToken as withToken
+} from "../utils/api";
 
 /**
  * We will retry for as many times when polling for a payment ID.
