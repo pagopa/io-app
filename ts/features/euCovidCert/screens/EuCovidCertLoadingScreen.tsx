@@ -1,17 +1,45 @@
+import { View } from "native-base";
 import * as React from "react";
+import { ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../components/core/typography/H1";
+import { Body } from "../../../components/core/typography/Body";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { GlobalState } from "../../../store/reducers/types";
+import I18n from "../../../i18n";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const euActivityIndicator = (
+  <ActivityIndicator
+    color={"black"}
+    accessible={false}
+    importantForAccessibility={"no-hide-descendants"}
+    accessibilityElementsHidden={true}
+  />
+);
+
 const EuCovidCertLoadingScreen = (_: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertLoadingScreen"}
-    content={<H1>TMPEuCovidCertLoadingScreen</H1>}
+    content={
+      <View>
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} extralarge={true} />
+        <InfoScreenComponent
+          image={euActivityIndicator}
+          title={I18n.t("features.euCovidCertificate.loading.title")}
+          body={
+            <Body>
+              {I18n.t("features.euCovidCertificate.loading.subtitle")}
+            </Body>
+          }
+        />
+      </View>
+    }
   />
 );
 
