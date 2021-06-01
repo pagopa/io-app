@@ -12,6 +12,7 @@ const EuCovidCertTemporarilyNotAvailableKoScreen = (
   _: Props
 ): React.ReactElement => (
   <BaseEuCovidCertificateLayout
+    testID={"EuCovidCertTemporarilyNotAvailableKoScreen"}
     content={<H1>TMPEuCovidCertTemporarilyNotAvailableKoScreen</H1>}
   />
 );

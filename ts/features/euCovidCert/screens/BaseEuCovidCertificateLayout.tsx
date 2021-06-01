@@ -6,14 +6,15 @@ import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { WithTestID } from "../../../types/WithTestID";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import image from "../../../../img/features/euCovidCert/eu-flag.png";
 import I18n from "../../../i18n";
 
-type Props = {
+type Props = WithTestID<{
   content: React.ReactElement;
   footer?: React.ReactElement;
-};
+}>;
 
 const styles = StyleSheet.create({
   row: { flexDirection: "row", justifyContent: "space-between" },
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
 });
 
 const Header = () => (
-  <View>
+  <>
     <View style={styles.row}>
       <H1 style={IOStyles.flex}>
         {I18n.t("features.euCovidCertificate.common.title")}
@@ -33,7 +34,7 @@ const Header = () => (
       <Image source={image} style={styles.euFlag} />
     </View>
     <H2>{I18n.t("features.euCovidCertificate.common.subtitle")}</H2>
-  </View>
+  </>
 );
 
 export const BaseEuCovidCertificateLayout = (props: Props) => (

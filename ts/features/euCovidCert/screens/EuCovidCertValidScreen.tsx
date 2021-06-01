@@ -9,7 +9,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const EuCovidCertValidScreen = (_: Props): React.ReactElement => (
-  <BaseEuCovidCertificateLayout content={<H1>TMPEuCovidCertValidScreen</H1>} />
+  <BaseEuCovidCertificateLayout
+    testID={"EuCovidCertValidScreen"}
+    content={<H1>TMPEuCovidCertValidScreen</H1>}
+  />
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({});
