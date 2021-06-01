@@ -1,5 +1,5 @@
 import { some } from "fp-ts/lib/Option";
-import { pot } from "italia-ts-commons";
+import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType, getType } from "typesafe-actions";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";

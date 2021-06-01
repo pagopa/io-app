@@ -1,4 +1,4 @@
-import { pot } from "italia-ts-commons";
+import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
