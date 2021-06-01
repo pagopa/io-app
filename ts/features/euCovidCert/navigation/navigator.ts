@@ -1,11 +1,11 @@
 import { createStackNavigator } from "react-navigation";
-import LoadBpdActivationStatus from "../../bonus/bpd/screens/onboarding/LoadBpdActivationStatus";
+import EuCovidCertificateRouterScreen from "../screens/EuCovidCertificateRouterScreen";
 import EUCOVIDCERT_ROUTES from "./routes";
 
 const EuCovidCertNavigator = createStackNavigator(
   {
     [EUCOVIDCERT_ROUTES.DETAILS]: {
-      screen: LoadBpdActivationStatus
+      screen: EuCovidCertificateRouterScreen
     }
   },
   {
