@@ -23,7 +23,7 @@ const getCertificate: GetCertificateT = {
   response_decoder: getCertificateDefaultDecoder()
 };
 
-// dedicated client for eu covid to handle API communications
+// client for eu covid to handle API communications
 export const BackendEuCovidCertClient = (
   baseUrl: string,
   token: SessionToken,

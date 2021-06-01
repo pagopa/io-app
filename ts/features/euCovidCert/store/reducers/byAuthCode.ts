@@ -12,10 +12,10 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
-import { NetworkError } from "../../../../utils/errors";
+import { getNetworkErrorMessage } from "../../../../utils/errors";
 
 type EuCovidCertByIdState = IndexedById<
-  pot.Pot<EUCovidCertificateResponse, NetworkError>
+  pot.Pot<EUCovidCertificateResponse, Error>
 >;
 
 /**
@@ -33,7 +33,11 @@ export const euCovidCertByAuthCodeReducer = (
     case getType(euCovidCertificateGet.success):
       return toSome(action.payload.authCode, state, action.payload);
     case getType(euCovidCertificateGet.failure):
-      return toError(action.payload.authCode, state, action.payload);
+      return toError(
+        action.payload.authCode,
+        state,
+        new Error(getNetworkErrorMessage(action.payload))
+      );
   }
 
   return state;
@@ -47,6 +51,6 @@ export const euCovidCertificateFromAuthCodeSelector = createSelector(
     (state: GlobalState) => state.features.euCovidCert.byAuthCode,
     (_: GlobalState, authCode: EUCovidCertificateAuthCode) => authCode
   ],
-  (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, NetworkError> =>
+  (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, Error> =>
     byAuthCode[authCode] ?? pot.none
 );

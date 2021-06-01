@@ -34,7 +34,6 @@ type ExpiredCertificate = {
 type RevokedCertificate = {
   kind: "revoked";
   revokedOn: Date | undefined;
-  revokedReason: string | undefined;
 };
 
 /**
