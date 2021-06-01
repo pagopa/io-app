@@ -1,4 +1,4 @@
-import { delay, put } from "redux-saga/effects";
+import { delay, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { euCovidCertificateGet } from "../../store/actions";
 
@@ -8,7 +8,7 @@ import { euCovidCertificateGet } from "../../store/actions";
  */
 export function* handleGetEuCovidCertificate(
   action: ActionType<typeof euCovidCertificateGet.request>
-) {
+): Generator<Effect, void> {
   // TODO: add networking logic
   yield delay(500);
   yield put(
