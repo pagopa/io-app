@@ -99,7 +99,7 @@ export function* handleGetEuCovidCertificate(
     );
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
-        // handle success
+        // handled success
         yield put(
           euCovidCertificateGet.success(
             convertSuccess(getCertificateResult.value.value, authCode)
