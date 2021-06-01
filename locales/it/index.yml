@@ -2327,6 +2327,7 @@ bonus:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
+    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
       online: Online
       places: Luoghi
