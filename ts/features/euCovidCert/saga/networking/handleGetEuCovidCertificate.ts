@@ -62,7 +62,7 @@ const convertSuccess = (
   };
   return fromNullable(getCertificate()).foldL<EUCovidCertificateResponse>(
     () => {
-      // track this failure
+      // track the conversion failure
       void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_FAILURE", {
         status: certificate.status
       });
