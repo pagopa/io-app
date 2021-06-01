@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
+import { getError } from "../../../../utils/errors";
 
 type EuCovidCertByIdState = IndexedById<
   pot.Pot<EUCovidCertificateResponse, Error>
@@ -32,7 +33,7 @@ export const euCovidCertByAuthCodeReducer = (
     case getType(euCovidCertificateGet.success):
       return toSome(action.payload.authCode, state, action.payload);
     case getType(euCovidCertificateGet.failure):
-      return toError(action.payload.authCode, state, action.payload.value);
+      return toError(action.payload.authCode, state, getError(action.payload));
   }
 
   return state;
