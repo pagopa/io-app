@@ -23,7 +23,7 @@ const mockFailure: WithEUCovidCertAuthCode<GenericError> = {
   value: new Error("A generic error")
 };
 
-describe("Test byAuthCode reducer behaviour", () => {
+describe("Test byAuthCode reducer & selector behaviour", () => {
   it("Initial state should be pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.euCovidCert.byAuthCode).toStrictEqual({});

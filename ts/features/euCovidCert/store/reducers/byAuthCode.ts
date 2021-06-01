@@ -1,4 +1,3 @@
-import { fromNullable } from "fp-ts/lib/Option";
 import { pot } from "italia-ts-commons";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -48,5 +47,5 @@ export const euCovidCertificateFromAuthCodeSelector = createSelector(
     (_: GlobalState, authCode: EUCovidCertificateAuthCode) => authCode
   ],
   (byAuthCode, authCode): pot.Pot<EUCovidCertificateResponse, Error> =>
-    fromNullable(byAuthCode[authCode]).getOrElse(pot.none)
+    byAuthCode[authCode] ?? pot.none
 );
