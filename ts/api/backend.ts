@@ -11,12 +11,9 @@ import {
   ioResponseDecoder as ioD,
   IPostApiRequestType,
   IResponseType,
-  RequestHeaderProducer,
-  RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Omit } from "italia-ts-commons/lib/types";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
@@ -58,6 +55,7 @@ import {
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import { withBearerToken as withToken } from "../utils/api";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -117,14 +115,6 @@ export type LogoutT = IPostApiRequestType<
   BaseResponseType<SuccessResponse>
 >;
 
-function ParamAuthorizationBearerHeaderProducer<
-  P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
-}
-
 //
 // Create client
 //
@@ -139,8 +129,6 @@ export function BackendClient(
     baseUrl,
     fetchApi
   };
-
-  const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
   const getSessionT: GetSessionStateT = {
     method: "get",
@@ -376,16 +364,7 @@ export function BackendClient(
     query: () => ({}),
     response_decoder: getSupportTokenDefaultDecoder()
   };
-
-  // withBearerToken injects the field 'Baerer' with value token into the parameter P
-  // of the f function
-  const withBearerToken = <P extends { Bearer: string }, R>(
-    f: (p: P) => Promise<R>
-  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign({ Bearer: String(token) }, po) as P;
-    return f(params);
-  };
-
+  const withBearerToken = withToken(token);
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
     getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
