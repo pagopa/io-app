@@ -112,7 +112,7 @@ const cases: ReadonlyArray<[
     euCovidCertificateGet.success({ kind: "temporarilyNotAvailable", authCode })
   ],
   [
-    left(new Error("cant parse")),
+    left(new Error("cannot parse")),
     euCovidCertificateGet.failure({
       ...getGenericError(new Error("cant parse")),
       authCode
