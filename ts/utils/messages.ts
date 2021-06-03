@@ -27,6 +27,7 @@ import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link
 import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import ROUTES from "../navigation/routes";
+import { MessageContentEu_covid_cert } from "../../definitions/backend/MessageContent";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -321,3 +322,8 @@ export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
   fromPredicate((t: string) => FM.test(t))(markdown)
     .map(m => FM(m).body)
     .getOrElse(markdown as string);
+
+// type guard for eu covid cert content
+export const hasEUCovidCertificate = (
+  euCovidCert: MessageContentEu_covid_cert | undefined
+): euCovidCert is MessageContentEu_covid_cert => euCovidCert !== undefined;
