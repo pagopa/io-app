@@ -30,8 +30,8 @@ const revokedCertificate: RevokedCertificate = {
 const validCertificate: ValidCertificate = {
   id: "validCertificateId",
   status: ValidStatus.valid,
-  info: "## info markdown\n\n[A LINK](https://www.google.com)\n\n### END",
-  detail: "## detail markdown\n\n[A LINK](https://www.google.com)\n\n### END",
+  info: "## info markdown",
+  detail: "## detail markdown",
   qr_code: {
     mime_type: Mime_typeEnum["image/png"],
     content: "iVBOw"
