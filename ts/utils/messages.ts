@@ -330,6 +330,3 @@ export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
 export const hasEUCovidCertificate = (
   euCovidCert: MessageContentEu_covid_cert | undefined
 ): euCovidCert is MessageContentEu_covid_cert => euCovidCert !== undefined;
-
-export const hasEUCovidCertificate2 = (content: MessageContent): boolean =>
-  hasEUCovidCertificate(content.eu_covid_cert);
