@@ -12,12 +12,9 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import {
   cleanMarkdownFromCTAs,
-  hasEUCovidCertificate,
-  hasEUCovidCertificate2,
   paymentExpirationInfo
 } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -86,13 +83,6 @@ export default class MessageDetailComponent extends React.PureComponent<
   constructor(props: Props) {
     super(props);
     this.state = { isContentLoadCompleted: false };
-  }
-
-  public componentDidMount() {
-    if (hasEUCovidCertificate2(this.props.message.content)) {
-      const { auth_code: authCode } = this.props.message.content.eu_covid_cert;
-      console.log(authCode);
-    }
   }
 
   private onMarkdownLoadEnd = () => {
