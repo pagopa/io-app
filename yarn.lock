@@ -1943,9 +1943,9 @@
   integrity sha512-+i7s0Fw5NmqB1I8DdFX0nN+ypCiLgc+JhBQglHOyreXhiNeGRKYhiqS+AGK23x6/qP00rMsqvZHtxN3g0xCGyg==
 
 "@pagopa/ts-commons@^9.4.0":
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-9.4.1.tgz#cc2c1c08c84fb6fa55a99c506227b8c2dcc69c01"
-  integrity sha512-wA/eInP9l0vPovR4+50vpVxHdUr/el0xUrJ0LoRJv6qAErS9NzGIDwyg4ZjW6SHxDGzN4PpIFSb0QFki27wswg==
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-9.4.0.tgz#680ba8a43db4c0397e6c4e8f9cfd3d758cc0b30c"
+  integrity sha512-eLuyLQPQsQArCHTfcLhtES8dan6GaJ99AfqbyZS8VsyZxuOZ0lyCZkFQBdd9QlmGUHXiEpLVjVEz+uXcGSnLUg==
   dependencies:
     abort-controller "^3.0.0"
     agentkeepalive "^4.1.2"
