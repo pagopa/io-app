@@ -77,6 +77,13 @@ const cases: ReadonlyArray<[
     })
   ],
   [
+    right({
+      status: 200,
+      value: ({ kind: "strangeKind" } as unknown) as Certificate
+    }), // should not never happen
+    euCovidCertificateGet.success({ kind: "genericError", authCode })
+  ],
+  [
     right({ status: 401 }),
     euCovidCertificateGet.success({ kind: "genericError", authCode })
   ],
