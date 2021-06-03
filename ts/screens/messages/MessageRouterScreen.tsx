@@ -22,6 +22,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   NavigationInjectedProps<InferNavigationParams<typeof MessageDetailScreen>>;
 
+/**
+ * In order to have the final CreatedMessageWithContentAndAttachments, these conditions should be verified:
+ * - props.allMessages should be pot.some
+ * - messageId should be in props.allMessages
+ * - props.messageState(messageId) should be defined and pot.some
+ * @param props
+ */
 const getLoadingState = (
   props: Props
 ): pot.Pot<
@@ -29,7 +36,6 @@ const getLoadingState = (
   string | undefined
 > => {
   const messageId = props.navigation.getParam("messageId");
-  // const messageId = "wrong";
   if (!isStrictSome(props.allMessages)) {
     return pot.map(props.allMessages, _ => undefined);
   }
@@ -43,6 +49,11 @@ const getLoadingState = (
   return messageState.message;
 };
 
+/**
+ * Choose the screen where to navigate, based on the message.content.eu_covid_cert
+ * @param message
+ * @param props
+ */
 const navigateToScreenHandler = (
   message: CreatedMessageWithContentAndAttachments,
   props: Props
@@ -58,7 +69,10 @@ const navigateToScreenHandler = (
 };
 
 const MessageRouterScreen = (props: Props): React.ReactElement => {
+  // the graphical state of the loading
   const [isLoading, setIsLoading] = useState(true);
+  // used to automatically dispatch loadMessages if the pot is not some at the first rendering
+  // (avoid displaying error at the first frame)
   const [isFirstRendering, setFirstRendering] = useState(true);
   const loadingState = getLoadingState(props);
 
