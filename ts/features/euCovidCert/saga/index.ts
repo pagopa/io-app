@@ -15,7 +15,7 @@ export function* watchEUCovidCertificateSaga(
 ): SagaIterator {
   const euCovidCertClient = BackendEuCovidCertClient(apiUrlPrefix, bearerToken);
 
-  // handle the request of eu covid cert
+  // handle the request of getting eu covid cert
   yield takeLatest(
     euCovidCertificateGet.request,
     handleGetEuCovidCertificate,

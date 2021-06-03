@@ -1,11 +1,11 @@
-// withBearerToken injects the field 'Bearer' with value token into the parameter P
-// of the f function
 import { Omit } from "italia-ts-commons/lib/types";
 import {
   RequestHeaderProducer,
   RequestHeaders
 } from "italia-ts-commons/lib/requests";
 
+// withBearerToken injects the field 'Bearer' with value token into the parameter P
+// of the f function
 export const withBearerToken = (token: string) => <
   P extends { Bearer: string },
   R
