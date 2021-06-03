@@ -8,13 +8,14 @@ import {
   EUCovidCertificateResponse,
   EUCovidCertificateResponseFailure
 } from "../../types/EUCovidCertificateResponse";
-import { getNetworkError } from "../../../../utils/errors";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
 import {
   EUCovidCertificate,
   EUCovidCertificateAuthCode
 } from "../../types/EUCovidCertificate";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 
 const mapKinds = new Map<number, EUCovidCertificateResponseFailure["kind"]>([
   [400, "wrongFormat"],
@@ -113,6 +114,15 @@ export function* handleGetEuCovidCertificate(
           })
         );
       }
+    } else {
+      yield put(
+        euCovidCertificateGet.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(getCertificateResult.value))
+          ),
+          authCode
+        })
+      );
     }
   } catch (e) {
     yield put(
