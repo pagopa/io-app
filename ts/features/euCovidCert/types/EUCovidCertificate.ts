@@ -29,6 +29,8 @@ type ValidCertificate = {
 
 type RevokedCertificate = {
   kind: "revoked";
+  // TODO: markdown containing information about the certificate revocation, should be linked with the API data when updated
+  revokeInfo?: string;
   revokedOn: Date;
 };
 
