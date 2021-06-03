@@ -1613,12 +1613,15 @@ biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
 >>>>>>> [#178212350] Added security screen
+=======
+>>>>>>> [#178212350] Moved biometric recognition inside security screen
 send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to

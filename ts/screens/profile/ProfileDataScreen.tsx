@@ -12,6 +12,7 @@ import {
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
@@ -63,6 +64,7 @@ const ProfileDataScreen: React.FC<Props> = ({
             onPress={onPressEmail}
             testID="insert-or-edit-email"
           />
+          <EdgeBorderComponent />
         </List>
       </ScreenContent>
     </TopScreenComponent>
