@@ -74,6 +74,7 @@ global:
     collapsed: Paragrafo chiuso
     active: Stato attivo
     inactive: Stato non attivo
+    linkHint: Attivando questo elemento verrai reindirizzato sul browser del dispositivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto

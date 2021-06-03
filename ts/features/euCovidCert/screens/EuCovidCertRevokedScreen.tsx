@@ -33,7 +33,11 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
       }
       title={I18n.t("features.euCovidCertificate.revoked.title")}
       body={
-        <Link onPress={() => openWebUrl(URL_MORE)}>
+        <Link
+          accessibilityRole={"link"}
+          accessibilityHint={I18n.t("global.accessibility.linkHint")}
+          onPress={() => openWebUrl(URL_MORE)}
+        >
           {I18n.t("features.euCovidCertificate.common.learnMore")}
         </Link>
       }
