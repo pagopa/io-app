@@ -98,7 +98,7 @@ export function* handleGetEuCovidCertificate(
         );
         return;
       }
-      // not handled error
+      // not handled error codes
       yield put(
         euCovidCertificateGet.failure({
           ...getGenericError(
