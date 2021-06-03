@@ -17,29 +17,11 @@ import {
 import { mixpanelTrack } from "../../../../mixpanel";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 
-const mapKinds = new Map<number, EUCovidCertificateResponseFailure["kind"]>([
-  [400, "wrongFormat"],
-  [401, "genericError"],
-  [403, "notFound"],
-  [410, "notOperational"],
-  [500, "genericError"],
-  [504, "temporarilyNotAvailable"]
-]);
-
-// convert a failure response to the logical app representation of it
-const convertFailure = (status: number): EUCovidCertificateResponseFailure => {
-  const kind = mapKinds.get(status);
-  return fromNullable(kind).foldL(
-    () => {
-      // track the conversion failure
-      void mixpanelTrack("EUCOVIDCERT_CONVERT_FAILURE_ERROR", {
-        status
-      });
-      // fallback to generic error
-      return { kind: "genericError" };
-    },
-    k => ({ kind: k })
-  );
+const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
+  400: "wrongFormat",
+  403: "notFound",
+  410: "notOperational",
+  504: "temporarilyNotAvailable"
 };
 
 // convert a success response to the logical app representation of it
@@ -76,7 +58,7 @@ const convertSuccess = (
       void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_ERROR", {
         status: certificate.status
       });
-      return { kind: "genericError", authCode };
+      return { kind: "wrongFormat", authCode };
     },
     value => ({ kind: "success", value, authCode })
   );
@@ -105,16 +87,30 @@ export function* handleGetEuCovidCertificate(
             convertSuccess(getCertificateResult.value.value, authCode)
           )
         );
-      } else {
-        // handled failure
+        return;
+      }
+      if (mapKinds[getCertificateResult.value.status] !== undefined) {
         yield put(
           euCovidCertificateGet.success({
-            ...convertFailure(getCertificateResult.value.status),
+            kind: mapKinds[getCertificateResult.value.status],
             authCode
           })
         );
+        return;
       }
+      // not handled error
+      yield put(
+        euCovidCertificateGet.failure({
+          ...getGenericError(
+            new Error(
+              `response status code ${getCertificateResult.value.status}`
+            )
+          ),
+          authCode
+        })
+      );
     } else {
+      // cannot decode response
       yield put(
         euCovidCertificateGet.failure({
           ...getGenericError(
