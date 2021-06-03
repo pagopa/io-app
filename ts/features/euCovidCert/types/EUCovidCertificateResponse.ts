@@ -3,7 +3,7 @@ import {
   EUCovidCertificateAuthCode
 } from "./EUCovidCertificate";
 
-type EUCovidCertificateResponseSuccess = {
+export type EUCovidCertificateResponseSuccess = {
   kind: "success";
   value: EUCovidCertificate;
 };
@@ -43,7 +43,7 @@ type EUCovidCertificateResponseTemporarilyNotAvailable = {
   kind: "temporarilyNotAvailable";
 };
 
-type EUCovidCertificateResponseFailure =
+export type EUCovidCertificateResponseFailure =
   | EUCovidCertificateResponseNotFound
   | EUCovidCertificateResponseWrongFormat
   | EUCovidCertificateResponseGenericError
