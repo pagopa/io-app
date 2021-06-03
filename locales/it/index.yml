@@ -2465,6 +2465,35 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
+features:
+  euCovidCertificate:
+    common:
+      title: "Certificazione verde COVID-19"
+      subtitle: "EU Digital Covid Certificate"
+    loading:
+      title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
+      subtitle: "Attendi per favore"
+    valid:
+      placeholder: "TMP"
+    revoked:
+      title: "TMP"
+      subtitle: "TMP"
+    ko:
+      genericError:
+        title: "TMP"
+        subtitle: "TMP"
+      notFound:
+        title: "TMP"
+        subtitle: "TMP"
+      notOperational:
+        title: "TMP"
+        subtitle: "TMP"
+      temporarilyNotAvailable:
+        title: "TMP"
+        subtitle: "TMP"
+      wrongFormat:
+        title: "TMP"
+        subtitle: "TMP"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

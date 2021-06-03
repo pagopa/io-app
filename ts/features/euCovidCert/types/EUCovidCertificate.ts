@@ -12,7 +12,7 @@ export type EUCovidCertificateAuthCode = string &
   IUnitTag<"EUCovidCertificateAuthCode">;
 
 type WithEUCovidCertificateId<T> = T & {
-  id: EUCovidCertificateId | undefined;
+  id: EUCovidCertificateId;
 };
 
 type QRCode = {
@@ -27,18 +27,16 @@ type ValidCertificate = {
   markdownDetails?: string;
 };
 
-type ExpiredCertificate = {
-  kind: "expired";
-};
-
 type RevokedCertificate = {
   kind: "revoked";
-  revokedOn: Date | undefined;
+  // TODO: markdown containing information about the certificate revocation, should be linked with the API data when updated
+  revokeInfo?: string;
+  revokedOn: Date;
 };
 
 /**
  * This type represents the EU Covid Certificate with the different states & data
  */
 export type EUCovidCertificate = WithEUCovidCertificateId<
-  ValidCertificate | ExpiredCertificate | RevokedCertificate
+  ValidCertificate | RevokedCertificate
 >;
