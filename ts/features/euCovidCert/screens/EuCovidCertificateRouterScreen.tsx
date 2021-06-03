@@ -64,7 +64,7 @@ const routeEuCovidResponse = (
  * - the response is "potSome" and the certificate is not a SuccessResponse
  * @param response
  */
-const needLoading = (response: pot.Pot<EUCovidCertificateResponse, Error>) =>
+const loadRequired = (response: pot.Pot<EUCovidCertificateResponse, Error>) =>
   !isStrictSome(response) ||
   !isEuCovidCertificateSuccessResponse(response.value);
 
@@ -80,7 +80,7 @@ const EuCovidCertificateRouterScreen = (
   const authCode = props.navigation.getParam("authCode");
 
   useEffect(() => {
-    if (needLoading(props.euCovidCertificateResponse(authCode))) {
+    if (loadRequired(props.euCovidCertificateResponse(authCode))) {
       props.loadCertificate(authCode);
     }
   }, []);
