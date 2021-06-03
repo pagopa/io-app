@@ -1,9 +1,9 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
@@ -59,22 +59,21 @@ const navigateToScreenHandler = (
 
 const MessageRouterScreen = (props: Props): React.ReactElement => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isFirstRendering, setFirstRendering] = useState(true);
   const loadingState = getLoadingState(props);
-
-  useEffect(() => {
-    if (isStrictSome(loadingState) && loadingState.value !== undefined) {
-      navigateToScreenHandler(loadingState.value, props);
-    }
-    // first component mount, if not some, refresh the data
-    props.loadMessages();
-    setIsLoading(true);
-  }, []);
 
   useEffect(() => {
     // all the messages data are ready, no need to reload
     if (isStrictSome(loadingState) && loadingState.value !== undefined) {
       navigateToScreenHandler(loadingState.value, props);
     }
+    if (isFirstRendering) {
+      props.loadMessages();
+      setIsLoading(true);
+      setFirstRendering(false);
+      return;
+    }
+
     pot.fold(
       loadingState,
       () => setIsLoading(true),
