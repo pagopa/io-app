@@ -2470,13 +2470,14 @@ features:
     common:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
+      learnMore: "Per saperne di più"
     loading:
       title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
       subtitle: "Attendi per favore"
     valid:
       placeholder: "TMP"
     revoked:
-      title: "TMP"
+      title: "Questo certificato non è più valido"
       subtitle: "TMP"
     ko:
       genericError:
