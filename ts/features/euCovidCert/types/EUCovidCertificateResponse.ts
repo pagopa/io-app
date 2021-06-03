@@ -63,3 +63,8 @@ export type WithEUCovidCertAuthCode<T> = T & {
 export type EUCovidCertificateResponse = WithEUCovidCertAuthCode<
   EUCovidCertificateResponseSuccess | EUCovidCertificateResponseFailure
 >;
+
+export const isEuCovidCertificateSuccessResponse = (
+  r: EUCovidCertificateResponse
+): r is WithEUCovidCertAuthCode<EUCovidCertificateResponseSuccess> =>
+  r.kind === "success";

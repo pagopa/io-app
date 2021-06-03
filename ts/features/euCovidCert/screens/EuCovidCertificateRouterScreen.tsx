@@ -5,10 +5,14 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../store/reducers/types";
+import { isStrictSome } from "../../../utils/pot";
 import { euCovidCertificateGet } from "../store/actions";
 import { euCovidCertificateFromAuthCodeSelector } from "../store/reducers/byAuthCode";
 import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
-import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
+import {
+  EUCovidCertificateResponse,
+  isEuCovidCertificateSuccessResponse
+} from "../types/EUCovidCertificateResponse";
 import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
 import EuCovidCertRevokedScreen from "./EuCovidCertRevokedScreen";
 import EuCovidCertValidScreen from "./EuCovidCertValidScreen";
@@ -55,6 +59,16 @@ const routeEuCovidResponse = (
 };
 
 /**
+ * The data should be loaded or refreshed if:
+ * - the response is not "potSome"
+ * - the response is "potSome" and the certificate is not a SuccessResponse
+ * @param response
+ */
+const needLoading = (response: pot.Pot<EUCovidCertificateResponse, Error>) =>
+  !isStrictSome(response) ||
+  !isEuCovidCertificateSuccessResponse(response.value);
+
+/**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
  * and dispatch the rendering, based on the results of the certificate received
  * @constructor
@@ -66,7 +80,7 @@ const EuCovidCertificateRouterScreen = (
   const authCode = props.navigation.getParam("authCode");
 
   useEffect(() => {
-    if (props.euCovidCertificateResponse(authCode).kind !== "PotSome") {
+    if (needLoading(props.euCovidCertificateResponse(authCode))) {
       props.loadCertificate(authCode);
     }
   }, []);
