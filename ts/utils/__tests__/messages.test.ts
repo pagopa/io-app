@@ -14,7 +14,6 @@ import {
   getCTA,
   getMessagePaymentExpirationInfo,
   getServiceCTA,
-  hasEUCovidCertificate,
   isCtaActionValid,
   MaybePotMetadata,
   MessagePaymentExpirationInfo,
@@ -89,14 +88,6 @@ const messageWithContentWithoutDueDate = {
 const messageWithContent = {
   ...messageWithContentWithoutDueDate,
   content: { ...messageWithContentWithoutDueDate.content, due_date: new Date() }
-};
-
-const messageWithContendAndEUCovidCert = {
-  ...messageWithContent,
-  content: {
-    ...messageWithContent.content,
-    eu_covid_cert: { auth_code: "123" }
-  }
 };
 
 const messageInvalidAfterDueDate = {
@@ -511,42 +502,6 @@ describe("paymentExpirationInfo", () => {
       expect(expirationInfo.value).toBeInstanceOf(
         {} as MessagePaymentExpirationInfo
       );
-    }
-  });
-});
-
-describe("hasEUCovidCertificate", () => {
-  it("should be false", () => {
-    expect(
-      hasEUCovidCertificate(messageWithoutPaymentData.content.eu_covid_cert)
-    ).toBeFalsy();
-  });
-  it("should be false", () => {
-    expect(
-      hasEUCovidCertificate(
-        messageWithContentWithoutDueDate.content.eu_covid_cert
-      )
-    ).toBeFalsy();
-  });
-  it("should be false", () => {
-    expect(
-      hasEUCovidCertificate(messageWithContent.content.eu_covid_cert)
-    ).toBeFalsy();
-  });
-  it("should be true", () => {
-    expect(
-      hasEUCovidCertificate(
-        messageWithContendAndEUCovidCert.content.eu_covid_cert
-      )
-    ).toBeTruthy();
-    if (
-      hasEUCovidCertificate(
-        messageWithContendAndEUCovidCert.content.eu_covid_cert
-      )
-    ) {
-      expect(
-        messageWithContendAndEUCovidCert.content.eu_covid_cert.auth_code
-      ).toEqual("123");
     }
   });
 });

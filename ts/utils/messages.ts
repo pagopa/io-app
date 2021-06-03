@@ -322,8 +322,3 @@ export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
   fromPredicate((t: string) => FM.test(t))(markdown)
     .map(m => FM(m).body)
     .getOrElse(markdown as string);
-
-// type guard for eu covid cert content
-export const hasEUCovidCertificate = (
-  euCovidCert: MessageContentEu_covid_cert | undefined
-): euCovidCert is MessageContentEu_covid_cert => euCovidCert !== undefined;
