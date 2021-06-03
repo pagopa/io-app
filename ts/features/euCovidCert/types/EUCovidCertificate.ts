@@ -23,16 +23,14 @@ type QRCode = {
 type ValidCertificate = {
   kind: "valid";
   qrCode: QRCode;
-  markdownPreview: string;
-  markdownDetails: string;
-};
-
-type ExpiredCertificate = {
-  kind: "expired";
+  markdownPreview?: string;
+  markdownDetails?: string;
 };
 
 type RevokedCertificate = {
   kind: "revoked";
+  // TODO: markdown containing information about the certificate revocation, should be linked with the API data when updated
+  revokeInfo?: string;
   revokedOn: Date;
 };
 
@@ -40,5 +38,5 @@ type RevokedCertificate = {
  * This type represents the EU Covid Certificate with the different states & data
  */
 export type EUCovidCertificate = WithEUCovidCertificateId<
-  ValidCertificate | ExpiredCertificate | RevokedCertificate
+  ValidCertificate | RevokedCertificate
 >;
