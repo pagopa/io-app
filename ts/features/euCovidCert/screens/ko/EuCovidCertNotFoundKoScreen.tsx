@@ -11,7 +11,7 @@ import doubtImage from "../../../../../img/pictograms/doubt.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { H4 } from "../../../../components/core/typography/H4";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import { currentAuthCodeSelector } from "../../store/reducers/currentAuthCode";
+import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -78,7 +78,7 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
 
 const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
   // Handling unexpected error
-  if (props.currentAuthCode === null) {
+  if (props.euCovidCertCurrent === null) {
     void mixpanelTrack("EUCOVIDCERT_UNEXPECTED_ERROR");
     return <WorkunitGenericFailure />;
   }
@@ -88,8 +88,8 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
       testID={"EuCovidCertNotFoundKoScreen"}
       content={
         <EuCovidCertNotFoundKoComponent
-          currentAuthCode={props.currentAuthCode}
-          messageId={"1235"}
+          currentAuthCode={props.euCovidCertCurrent.authCode}
+          messageId={props.euCovidCertCurrent.messageId}
         />
       }
       footer={
@@ -105,7 +105,7 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
-  currentAuthCode: currentAuthCodeSelector(state)
+  euCovidCertCurrent: euCovidCertCurrentSelector(state)
 });
 
 export default connect(

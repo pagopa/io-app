@@ -32,7 +32,8 @@ export const currentReducer = (
 /**
  * currentAuthCode selector
  */
-export const currentAuthCodeSelector = createSelector(
-  [(state: GlobalState) => state.features.euCovidCert.currentAuthCode],
-  (currentAuthCode): EUCovidCertificateAuthCode | null => currentAuthCode
+export const euCovidCertCurrentSelector = createSelector(
+  [(state: GlobalState) => state.features.euCovidCert.current],
+  (euCovidCertCurrent): EuCovidCertCurrentSelectedState | null =>
+    euCovidCertCurrent
 );
