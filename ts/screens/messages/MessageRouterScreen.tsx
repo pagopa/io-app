@@ -79,7 +79,6 @@ const navigateToScreenHandler = (
 };
 
 const MessageRouterScreen = (props: Props): React.ReactElement => {
-  // the graphical state of the loading
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const [isFirstRendering, setFirstRendering] = useState(true);
