@@ -1,22 +1,103 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H1 } from "../../../../components/core/typography/H1";
+import { Image, StyleSheet } from "react-native";
+import { View } from "native-base";
+import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import doubtImage from "../../../../../img/pictograms/doubt.png";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import { H4 } from "../../../../components/core/typography/H4";
+import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
+import { euCovidCertificateFromAuthCodeSelector } from "../../store/reducers/byAuthCode";
+import { currentAuthCodeSelector } from "../../store/reducers/currentAuthCode";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import { mixpanelTrack } from "../../../../mixpanel";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const EuCovidCertNotFoundKoScreen = (_: Props): React.ReactElement => (
-  <BaseEuCovidCertificateLayout
-    testID={"EuCovidCertNotFoundKoScreen"}
-    content={<H1>TMPEuCovidCertNotFoundKoScreen</H1>}
-  />
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  }
+});
+
+const CopyWithTitleItem: React.FC<{ title: string; toCopy: string }> = ({
+  title,
+  toCopy
+}) => (
+  <>
+    <View>
+      <H4 weight={"Regular"}>{title}</H4>
+    </View>
+    <View style={styles.row}>
+      <H4 weight={"Bold"}>{toCopy}</H4>
+      <CopyButtonComponent textToCopy={toCopy} />
+    </View>
+  </>
 );
 
+const EuCovidCertNotFoundKoComponent: React.FC<{
+  currentAuthCode: EUCovidCertificateAuthCode;
+  messageId: string;
+}> = ({ currentAuthCode, messageId }) => (
+  <>
+    <InfoScreenComponent
+      image={
+        <Image
+          source={doubtImage}
+          importantForAccessibility={"no"}
+          accessibilityElementsHidden={true}
+          style={{ width: 104, height: 104, resizeMode: "contain" }}
+        />
+      }
+      title={I18n.t("features.euCovidCertificate.ko.notFound.title")}
+    />
+    <H4 weight={"Regular"}>
+      {"Potrebbero esserti richiesti questi dati per approfondire il problema:"}
+    </H4>
+    <View spacer={true} />
+    <CopyWithTitleItem
+      title={"Codice di autorizzazione"}
+      toCopy={currentAuthCode}
+    />
+    <View spacer={true} />
+    <CopyWithTitleItem
+      title={"Identificativo del messaggio"}
+      toCopy={messageId}
+    />
+  </>
+);
+
+const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
+  // Handling unexpected error
+  if (props.currentAuthCode === null) {
+    void mixpanelTrack("EUCOVIDCERT_UNEXPECTED_ERROR");
+    return <WorkunitGenericFailure />;
+  }
+
+  return (
+    <BaseEuCovidCertificateLayout
+      testID={"EuCovidCertNotFoundKoScreen"}
+      content={
+        <EuCovidCertNotFoundKoComponent
+          currentAuthCode={props.currentAuthCode}
+          messageId={"1235"}
+        />
+      }
+    />
+  );
+};
 const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  euCovidCertificateResponse: (authCode: EUCovidCertificateAuthCode) =>
+    euCovidCertificateFromAuthCodeSelector(state, authCode),
+  currentAuthCode: currentAuthCodeSelector(state)
+});
 
 export default connect(
   mapStateToProps,
