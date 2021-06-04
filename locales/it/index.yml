@@ -74,6 +74,7 @@ global:
     collapsed: Paragrafo chiuso
     active: Stato attivo
     inactive: Stato non attivo
+    linkHint: Attivando questo elemento verrai reindirizzato sul browser del dispositivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
@@ -2470,13 +2471,14 @@ features:
     common:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
+      learnMore: "Per saperne di più"
     loading:
       title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
       subtitle: "Attendi per favore"
     valid:
       placeholder: "TMP"
     revoked:
-      title: "TMP"
+      title: "Questo certificato non è più valido"
       subtitle: "TMP"
     ko:
       genericError:
@@ -2489,8 +2491,8 @@ features:
         title: "TMP"
         subtitle: "TMP"
       temporarilyNotAvailable:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Il servizio è temporaneamente non disponibile"
+        subtitle: "Ti preghiamo di riprovare più tardi"
       wrongFormat:
         title: "TMP"
         subtitle: "TMP"
