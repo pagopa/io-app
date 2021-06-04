@@ -22,7 +22,7 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
-import { ViewEUCovidButton } from "../../features/euCovidCert/component/ViewEUCovidButton";
+import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
