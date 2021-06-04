@@ -1,13 +1,7 @@
 import { View } from "native-base";
-import { useRef } from "react";
 import * as React from "react";
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text
-} from "react-native";
+import { useRef } from "react";
+import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import image from "../../../../img/features/euCovidCert/eu-flag.png";
 import { H1 } from "../../../components/core/typography/H1";
@@ -46,7 +40,7 @@ const Header = React.forwardRef<View>((_, ref) => (
 ));
 
 export const BaseEuCovidCertificateLayout = (props: Props) => {
-  const elementRef = useRef<Text>(null);
+  const elementRef = useRef<View>(null);
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
