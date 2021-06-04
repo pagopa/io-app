@@ -74,6 +74,7 @@ global:
     collapsed: Collapsed paragraph
     active: State active
     inactive: State inactive
+    linkHint: Activating this item you will be redirected to the web browser of your device
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -2442,13 +2443,14 @@ features:
     common:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
+      learnMore: "Find out more"
     loading:
       title: "We are loading your certificate data from the National Platform of the Ministry of Health"
       subtitle: "Please wait"
     valid:
       placeholder: "TMP"
     revoked:
-      title: "TMP"
+      title: "This certificate is no longer valid"
       subtitle: "TMP"
     ko:
       genericError:
@@ -2458,11 +2460,11 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notOperational:
-        title: "TMP"
+        title: "The european COVID certificate is not currently operational"
         subtitle: "TMP"
       temporarilyNotAvailable:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "The service is temporarily unavailable"
+        subtitle: "Please try again later"
       wrongFormat:
         title: "TMP"
         subtitle: "TMP"
