@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.4](https://github.com/pagopa/io-app/compare/1.26.0-rc.3...1.26.0-rc.4) (2021-06-04)
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-40](https://pagopa.atlassian.net/browse/IAGP-40)] Add backoff waiting time on getCertificate error ([#3084](https://github.com/pagopa/io-app/issues/3084)) ([4f4716f](https://github.com/pagopa/io-app/commit/4f4716f5c5dab42a6271f1247781d9c3a483751d))
+
 ## [1.26.0-rc.3](https://github.com/pagopa/io-app/compare/1.26.0-rc.2...1.26.0-rc.3) (2021-06-04)
 
 
