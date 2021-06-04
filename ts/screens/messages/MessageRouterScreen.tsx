@@ -89,6 +89,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
     // all the messages data are ready, exit condition, navigate to the right screen
     if (isStrictSome(loadingState) && loadingState.value !== undefined) {
       navigateToScreenHandler(loadingState.value, props);
+      return;
     }
     if (isFirstRendering) {
       props.loadMessages();
