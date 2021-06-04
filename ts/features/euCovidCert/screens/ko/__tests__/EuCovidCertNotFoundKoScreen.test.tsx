@@ -20,7 +20,7 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
   it("Should show the WorkunitGenericFailure and should send the mixpanel event if euCovidCertCurrentSelector return null", () => {
     const spyMixpanelTrack = jest.spyOn(mixpanelTrack, "mixpanelTrack");
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const notFoundScreen = renderComponent(globalState).component;
+    const notFoundScreen = renderComponent(globalState);
 
     expect(
       notFoundScreen.queryByTestId("WorkunitGenericFailure")
@@ -42,7 +42,7 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
           current: { messageId: aMessageId, authCode: anAuthCode }
         }
       }
-    }).component;
+    });
     const requestAssistanceButton = notFoundScreen.queryByText(
       i18n.t("features.euCovidCertificate.ko.notFound.cta")
     );
@@ -67,13 +67,10 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 
-  return {
-    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      EuCovidCertNotFoundKoScreen,
-      EUCOVIDCERT_ROUTES.DETAILS,
-      { messageId: "messageId" },
-      store
-    ),
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    EuCovidCertNotFoundKoScreen,
+    EUCOVIDCERT_ROUTES.DETAILS,
+    {},
     store
-  };
+  );
 };
