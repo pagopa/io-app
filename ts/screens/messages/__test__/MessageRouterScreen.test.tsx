@@ -97,9 +97,6 @@ const euCovidCertActions = [
       authCode: "eu_covid_cert",
       messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
     }
-  },
-  {
-    type: "MESSAGES_LOAD_REQUEST"
   }
 ];
 
@@ -113,9 +110,6 @@ const standardMessageActions = [
     },
     routeName: "MESSAGE_DETAIL",
     type: "Navigation/NAVIGATE"
-  },
-  {
-    type: "MESSAGES_LOAD_REQUEST"
   }
 ];
 
