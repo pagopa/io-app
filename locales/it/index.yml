@@ -2491,8 +2491,8 @@ features:
         title: "Il certificato europeo Covid non è attualmente operativo"
         subtitle: "TMP"
       temporarilyNotAvailable:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Il servizio è temporaneamente non disponibile"
+        subtitle: "Ti preghiamo di riprovare più tardi"
       wrongFormat:
         title: "TMP"
         subtitle: "TMP"
