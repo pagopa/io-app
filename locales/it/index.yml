@@ -2483,7 +2483,7 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notFound:
-        title: "TMP"
+        title: "Sembra che il certificato non \nesista: contatta l’assistenza"
         subtitle: "TMP"
       notOperational:
         title: "TMP"
