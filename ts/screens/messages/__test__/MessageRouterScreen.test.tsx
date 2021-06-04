@@ -153,7 +153,6 @@ describe("Test MessageRouterScreen", () => {
     });
 
     // eslint-disable-next-line no-console
-    console.log(routerScreen.store.getActions());
 
     expect(routerScreen.store.getActions()).toEqual(standardMessageActions);
   });
