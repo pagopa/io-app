@@ -1,15 +1,23 @@
 import { View } from "native-base";
+import { useRef } from "react";
 import * as React from "react";
-import { Image, SafeAreaView, ScrollView } from "react-native";
-import { StyleSheet } from "react-native";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text
+} from "react-native";
+import { NavigationEvents } from "react-navigation";
+import image from "../../../../img/features/euCovidCert/eu-flag.png";
 import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { WithTestID } from "../../../types/WithTestID";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import image from "../../../../img/features/euCovidCert/eu-flag.png";
 import I18n from "../../../i18n";
+import { WithTestID } from "../../../types/WithTestID";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 
 type Props = WithTestID<{
   content: React.ReactElement;
@@ -25,9 +33,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const Header = () => (
+const Header = React.forwardRef<View>((_, ref) => (
   <>
-    <View style={styles.row}>
+    <View style={styles.row} ref={ref}>
       <H1 style={IOStyles.flex}>
         {I18n.t("features.euCovidCertificate.common.title")}
       </H1>
@@ -35,16 +43,23 @@ const Header = () => (
     </View>
     <H2>{I18n.t("features.euCovidCertificate.common.subtitle")}</H2>
   </>
-);
+));
 
-export const BaseEuCovidCertificateLayout = (props: Props) => (
-  <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-    <SafeAreaView style={IOStyles.flex} testID={"BaseEuCovidCertificateLayout"}>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <Header />
-        {props.content}
-      </ScrollView>
-      {props.footer}
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+export const BaseEuCovidCertificateLayout = (props: Props) => {
+  const elementRef = useRef<Text>(null);
+  return (
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"BaseEuCovidCertificateLayout"}
+      >
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <Header ref={elementRef} />
+          {props.content}
+        </ScrollView>
+        {props.footer}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
