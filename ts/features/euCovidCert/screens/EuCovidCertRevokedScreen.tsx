@@ -10,13 +10,11 @@ import revokedImage from "../../../../img/features/euCovidCert/certificate_revok
 import Markdown from "../../../components/ui/Markdown";
 import { Link } from "../../../components/core/typography/Link";
 import { openWebUrl } from "../../../utils/url";
+import { euCovidCertificateUrl } from "../../../urls";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & { revokeInfo?: string };
-
-// FIXME update the link when provided
-const URL_MORE = "https://io.italia.it";
 
 const EuCovidCertRevokedContentComponent = (props: Props) => (
   <>
@@ -36,7 +34,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
         <Link
           accessibilityRole={"link"}
           accessibilityHint={I18n.t("global.accessibility.linkHint")}
-          onPress={() => openWebUrl(URL_MORE)}
+          onPress={() => openWebUrl(euCovidCertificateUrl)}
         >
           {I18n.t("features.euCovidCertificate.common.learnMore")}
         </Link>

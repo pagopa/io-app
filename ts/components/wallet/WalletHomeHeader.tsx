@@ -22,6 +22,8 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { IOStyles } from "../core/variables/IOStyles";
+import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
+import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -130,7 +132,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
           flexDirection: "row",
           alignItems: "center"
         }}
-        onPress={openBS}
+        onPress={props.navigateToEucovid}
         accessible={true}
         accessibilityRole={"button"}
       >
@@ -155,7 +157,13 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen())
+  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
+  navigateToEucovid: () =>
+    dispatch(
+      navigateToEuCovidCertificateDetailScreen(
+        "authCode" as EUCovidCertificateAuthCode
+      )
+    )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletHomeHeader);
