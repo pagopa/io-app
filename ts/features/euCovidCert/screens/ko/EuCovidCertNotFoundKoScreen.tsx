@@ -15,6 +15,10 @@ import { euCovidCertificateFromAuthCodeSelector } from "../../store/reducers/byA
 import { currentAuthCodeSelector } from "../../store/reducers/currentAuthCode";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { openWebUrl } from "../../../../utils/url";
+import { euCovidCertificateUrl } from "../../../../urls";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -87,6 +91,14 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
         <EuCovidCertNotFoundKoComponent
           currentAuthCode={props.currentAuthCode}
           messageId={"1235"}
+        />
+      }
+      footer={
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(() =>
+            openWebUrl(euCovidCertificateUrl)
+          )}
         />
       }
     />
