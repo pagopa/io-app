@@ -1,15 +1,15 @@
-import { GlobalState } from "../../../../../store/reducers/types";
 import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
+import { NavigationParams } from "react-navigation";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import { NavigationParams } from "react-navigation";
 import EuCovidCertNotFoundKoScreen from "../EuCovidCertNotFoundKoScreen";
 import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as mixpanelTrack from "../../../../../mixpanel";
 import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
 import i18n from "../../../../../i18n";
-import { fireEvent } from "@testing-library/react-native";
 import * as openWebUrl from "../../../../../utils/url";
 
 const aMessageId = "123";

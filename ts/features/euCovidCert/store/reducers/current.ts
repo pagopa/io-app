@@ -1,8 +1,8 @@
+import { createSelector } from "reselect";
 import { NavigationActions } from "react-navigation";
 import { Action } from "../../../../store/actions/types";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 
 export type EuCovidCertCurrentSelectedState = {
