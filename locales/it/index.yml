@@ -2491,6 +2491,7 @@ features:
       notFound:
         title: "Sembra che il certificato non \nesista: contatta l’assistenza"
         subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"
+        cta: "Contatta l'assistenza"
       notOperational:
         title: "Il certificato europeo Covid non è attualmente operativo"
         subtitle: "TMP"

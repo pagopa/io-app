@@ -18,6 +18,7 @@ import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/butto
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { openWebUrl } from "../../../../utils/url";
 import { euCovidCertificateUrl } from "../../../../urls";
+import i18n from "../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -29,16 +30,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const CopyWithTitleItem: React.FC<{ title: string; toCopy: string }> = ({
-  title,
-  toCopy
-}) => (
+const CopyWithTitleItem: React.FC<{
+  title: string;
+  toCopy: string;
+  testId?: string;
+}> = ({ title, toCopy, testId }) => (
   <>
     <View>
       <H4 weight={"Regular"}>{title}</H4>
     </View>
     <View style={styles.row}>
-      <H4 weight={"Bold"}>{toCopy}</H4>
+      <H4 weight={"Bold"} testID={`${testId}ToCopy`}>
+        {toCopy}
+      </H4>
       <CopyButtonComponent textToCopy={toCopy} />
     </View>
   </>
@@ -56,6 +60,7 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
           style={{ width: 104, height: 104, resizeMode: "contain" }}
+          testID={"doubtImage"}
         />
       }
       title={I18n.t("features.euCovidCertificate.ko.notFound.title")}
@@ -67,11 +72,13 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.authorizationCode")}
       toCopy={currentAuthCode}
+      testId={"authorizationCode"}
     />
     <View spacer={true} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.messageIdentifier")}
       toCopy={messageId}
+      testId={"messageIdentifier"}
     />
   </>
 );
@@ -95,8 +102,9 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
       footer={
         <FooterWithButtons
           type={"SingleButton"}
-          leftButton={confirmButtonProps(() =>
-            openWebUrl(euCovidCertificateUrl)
+          leftButton={confirmButtonProps(
+            () => openWebUrl(euCovidCertificateUrl),
+            i18n.t("features.euCovidCertificate.ko.notFound.cta")
           )}
         />
       }
