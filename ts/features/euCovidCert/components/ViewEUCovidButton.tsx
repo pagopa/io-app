@@ -3,11 +3,13 @@ import IconFont from "../../../components/ui/IconFont";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import I18n from "../../../i18n";
 
 type Props = {
   onPress?: () => void;
 };
 
+// "View" button with qrCode icon
 export const ViewEUCovidButton = (props: Props) => (
   <ButtonDefaultOpacity
     onPress={props.onPress}
@@ -20,7 +22,7 @@ export const ViewEUCovidButton = (props: Props) => (
       color={"white"}
       style={{ marginLeft: 2, marginBottom: 4, height: 21 }}
     >
-      {"Visualizza"}
+      {I18n.t("features.euCovidCertificate.listitem.cta")}
     </Label>
   </ButtonDefaultOpacity>
 );
