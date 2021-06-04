@@ -1,11 +1,15 @@
 import { createStackNavigator } from "react-navigation";
 import EuCovidCertificateRouterScreen from "../screens/EuCovidCertificateRouterScreen";
+import { EuCovidCertQrCodeFullScreen } from "../screens/EuCovidCertQrCodeFullScreen";
 import EUCOVIDCERT_ROUTES from "./routes";
 
 const EuCovidCertNavigator = createStackNavigator(
   {
     [EUCOVIDCERT_ROUTES.DETAILS]: {
       screen: EuCovidCertificateRouterScreen
+    },
+    [EUCOVIDCERT_ROUTES.QRCODE]: {
+      screen: EuCovidCertQrCodeFullScreen
     }
   },
   {

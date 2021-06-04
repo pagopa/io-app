@@ -10,3 +10,11 @@ export const navigateToEuCovidCertificateDetailScreen = (
     routeName: EUCOVIDCERT_ROUTES.DETAILS,
     params: { authCode, messageId }
   });
+
+export const navigateToEuCovidCertificateQrCodeFullScreen = (
+  qrCodeContent: string
+) =>
+  NavigationActions.navigate({
+    routeName: EUCOVIDCERT_ROUTES.QRCODE,
+    params: { qrCodeContent }
+  });
