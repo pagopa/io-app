@@ -178,7 +178,7 @@ function* startAndHandleIdentificationResult(
       // Remove the pending message from the notification state
       yield put(clearNotificationPendingMessage());
 
-      // Navigate to message details screen
+      // Navigate to message router screen
       yield put(navigateToMessageRouterScreen({ messageId }));
     }
   }
