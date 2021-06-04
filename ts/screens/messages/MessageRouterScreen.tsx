@@ -68,7 +68,7 @@ const navigateToScreenHandler = (
   message: CreatedMessageWithContentAndAttachments,
   props: Props
 ) => {
-  if (message.content.eu_covid_cert !== undefined) {
+  if (euCovidCertificateEnabled && message.content.eu_covid_cert !== undefined) {
     props.navigateToEuCovidCertificate(
       message.content.eu_covid_cert.auth_code as EUCovidCertificateAuthCode,
       message.id
