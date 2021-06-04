@@ -64,7 +64,8 @@ const convertSuccess = (
         return {
           kind: "revoked",
           id: certificate.id as EUCovidCertificate["id"],
-          revokedOn: certificate.revoked_on
+          revokedOn: certificate.revoked_on,
+          revokeInfo: certificate.revoke_reason
         };
       default:
         return undefined;
