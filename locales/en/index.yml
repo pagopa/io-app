@@ -2437,7 +2437,7 @@ bonus:
           other: "{{seconds}} seconds"
 features:
   euCovidCertificate:
-    listitem:
+    listItem:
       cta: "View"
     common:
       title: "Certificazione verde COVID-19"

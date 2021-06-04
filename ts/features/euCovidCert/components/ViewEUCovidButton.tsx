@@ -29,7 +29,7 @@ export const ViewEUCovidButton = (props: Props) => (
   >
     <IconFont name={"io-qr"} color={IOColors.white} />
     <Label color={"white"} style={styles.label}>
-      {I18n.t("features.euCovidCertificate.listitem.cta")}
+      {I18n.t("features.euCovidCertificate.listItem.cta")}
     </Label>
   </ButtonDefaultOpacity>
 );
