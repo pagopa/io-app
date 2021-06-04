@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.3](https://github.com/pagopa/io-app/compare/1.26.0-rc.2...1.26.0-rc.3) (2021-06-04)
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-38](https://pagopa.atlassian.net/browse/IAGP-38)] Handle message routing ([#3085](https://github.com/pagopa/io-app/issues/3085)) ([bd107c9](https://github.com/pagopa/io-app/commit/bd107c932339d36569ea51ed570f0b2435f7a730))
+
 ## [1.26.0-rc.2](https://github.com/pagopa/io-app/compare/1.26.0-rc.1...1.26.0-rc.2) (2021-06-04)
 
 
