@@ -456,7 +456,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Remove the pending message from the notification state
     yield put(clearNotificationPendingMessage());
 
-    // Navigate to message details screen
+    // Navigate to message router screen
     yield put(navigateToMessageRouterScreen({ messageId }));
     // Push the MAIN navigator in the history to handle the back button
     const navigationState: NavigationState = yield select(
