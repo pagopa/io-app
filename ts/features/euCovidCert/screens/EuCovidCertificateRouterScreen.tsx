@@ -38,8 +38,6 @@ const routeEuCovidResponse = (
   response: EUCovidCertificateResponse
 ): React.ReactElement => {
   switch (response.kind) {
-    case "genericError":
-      return <EuCovidCertGenericErrorKoScreen />;
     case "notFound":
       return <EuCovidCertNotFoundKoScreen />;
     case "notOperational":
