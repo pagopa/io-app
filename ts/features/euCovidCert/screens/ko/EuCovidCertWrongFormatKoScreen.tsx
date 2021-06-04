@@ -92,7 +92,7 @@ const EuCovidCertWrongFormatKoScreen = (props: Props): React.ReactElement => {
 
   return (
     <BaseEuCovidCertificateLayout
-      testID={"EuCovidCertNotFoundKoScreen"}
+      testID={"EuCovidCertWrongFormatKoScreen"}
       content={
         <EuCovidCertWrongFormatKoComponent
           currentAuthCode={props.euCovidCertCurrent.authCode}
