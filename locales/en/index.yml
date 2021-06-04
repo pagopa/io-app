@@ -2458,7 +2458,7 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notOperational:
-        title: "TMP"
+        title: "The european COVID certificate is not currently operational"
         subtitle: "TMP"
       temporarilyNotAvailable:
         title: "The service is temporarily unavailable"
