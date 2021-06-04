@@ -20,7 +20,7 @@ type QRCode = {
   content: string;
 };
 
-type ValidCertificate = {
+export type ValidCertificate = {
   kind: "valid";
   qrCode: QRCode;
   markdownPreview?: string;

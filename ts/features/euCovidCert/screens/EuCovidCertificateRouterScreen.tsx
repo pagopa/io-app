@@ -49,7 +49,7 @@ const routeEuCovidResponse = (
     case "success":
       switch (response.value.kind) {
         case "valid":
-          return <EuCovidCertValidScreen />;
+          return <EuCovidCertValidScreen validCertificate={response.value} />;
         case "revoked":
           return (
             <EuCovidCertRevokedScreen revokeInfo={response.value.revokeInfo} />
