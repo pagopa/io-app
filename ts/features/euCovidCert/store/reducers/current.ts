@@ -5,14 +5,24 @@ import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export const currentAuthCodeReducer = (
-  state: EUCovidCertificateAuthCode | null = null,
+export type EuCovidCertCurrentSelectedState = {
+  authCode: EUCovidCertificateAuthCode;
+  messageId: string;
+};
+
+export const currentReducer = (
+  state: EuCovidCertCurrentSelectedState | null = null,
   action: Action
-): EUCovidCertificateAuthCode | null => {
+): EuCovidCertCurrentSelectedState | null => {
   switch (action.type) {
     case NavigationActions.NAVIGATE:
       if (action.routeName === EUCOVIDCERT_ROUTES.DETAILS) {
-        return action.params?.authCode ?? null;
+        return action.params
+          ? {
+              authCode: action.params.authCode,
+              messageId: action.params.messageId
+            }
+          : null;
       }
   }
 

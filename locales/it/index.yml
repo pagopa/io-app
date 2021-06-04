@@ -2468,6 +2468,8 @@ bonus:
           other: "{{seconds}} secondi"
 features:
   euCovidCertificate:
+    listItem:
+      cta: "Visualizza"
     common:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
@@ -2490,7 +2492,7 @@ features:
         title: "Sembra che il certificato non \nesista: contatta l’assistenza"
         subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"
       notOperational:
-        title: "TMP"
+        title: "Il certificato europeo Covid non è attualmente operativo"
         subtitle: "TMP"
       temporarilyNotAvailable:
         title: "Il servizio è temporaneamente non disponibile"
