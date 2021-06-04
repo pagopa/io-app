@@ -12,7 +12,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { euCovidCertificateEnabled } from "../../../config";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { loadMessage, loadMessages } from "../../../store/actions/messages";
