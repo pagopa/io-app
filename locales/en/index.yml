@@ -2442,6 +2442,8 @@ features:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
       learnMore: "Find out more"
+      authorizationCode: "Authorization code"
+      messageIdentifier: "Message identifier"
     loading:
       title: "We are loading your certificate data from the National Platform of the Ministry of Health"
       subtitle: "Please wait"
@@ -2455,8 +2457,8 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notFound:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "The certificate does not appear to exist - contact support"
+        subtitle: "You may be asked for this data to investigate the problem:"
       notOperational:
         title: "TMP"
         subtitle: "TMP"

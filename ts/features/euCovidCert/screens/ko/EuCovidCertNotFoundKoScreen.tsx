@@ -11,7 +11,6 @@ import doubtImage from "../../../../../img/pictograms/doubt.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { H4 } from "../../../../components/core/typography/H4";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import { euCovidCertificateFromAuthCodeSelector } from "../../store/reducers/byAuthCode";
 import { currentAuthCodeSelector } from "../../store/reducers/currentAuthCode";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -62,16 +61,16 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
       title={I18n.t("features.euCovidCertificate.ko.notFound.title")}
     />
     <H4 weight={"Regular"}>
-      {"Potrebbero esserti richiesti questi dati per approfondire il problema:"}
+      {I18n.t("features.euCovidCertificate.ko.notFound.subtitle")}
     </H4>
     <View spacer={true} />
     <CopyWithTitleItem
-      title={"Codice di autorizzazione"}
+      title={I18n.t("features.euCovidCertificate.common.authorizationCode")}
       toCopy={currentAuthCode}
     />
     <View spacer={true} />
     <CopyWithTitleItem
-      title={"Identificativo del messaggio"}
+      title={I18n.t("features.euCovidCertificate.common.messageIdentifier")}
       toCopy={messageId}
     />
   </>
@@ -106,8 +105,6 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
-  euCovidCertificateResponse: (authCode: EUCovidCertificateAuthCode) =>
-    euCovidCertificateFromAuthCodeSelector(state, authCode),
   currentAuthCode: currentAuthCodeSelector(state)
 });
 

@@ -2472,6 +2472,8 @@ features:
       title: "Certificazione verde COVID-19"
       subtitle: "EU Digital Covid Certificate"
       learnMore: "Per saperne di più"
+      authorizationCode: "Codice di autorizzazione"
+      messageIdentifier: "Identificativo del messaggio"
     loading:
       title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
       subtitle: "Attendi per favore"
@@ -2486,7 +2488,7 @@ features:
         subtitle: "TMP"
       notFound:
         title: "Sembra che il certificato non \nesista: contatta l’assistenza"
-        subtitle: "TMP"
+        subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"
       notOperational:
         title: "TMP"
         subtitle: "TMP"
