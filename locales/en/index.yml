@@ -423,13 +423,20 @@ profile:
     showroom: UI Showroom
   data:
     title: Your data
-    subtitle: Review your information.
+    subtitle: Here you will find your personal and contact data used by the IO app.
     list:
       email: Email address
       need_validate: To be validated
+      nameSurname: Name and surname
+      spid:
+        headerTitle: SPID data
+        email: SPID email
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
+    spid_email:
+      contextualHelpTitle: This data is set in your SPID profile
+      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
@@ -453,7 +460,6 @@ profile:
       service_contact: Use of services
       spid_email: SPID email
       wip: In progress
-      mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
       preferred_calendar:
@@ -473,6 +479,7 @@ profile:
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
+<<<<<<< HEAD
     spid_email:
       contextualHelpTitle: This setting is set up on your SPID profile
       contextualHelpContent: !include profile/profile_preferences_spid_email.md
@@ -480,6 +487,8 @@ profile:
 <<<<<<< HEAD
 =======
 >>>>>>> [#178212350] Added security screen
+=======
+>>>>>>> [#178212417] Added profile data on one screen
     email:
       forward:
         contextualHelpTitle: How to handle message forwarding
