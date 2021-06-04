@@ -8,9 +8,7 @@ import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../i18n";
 import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
-import { euCovidCertificateUrl } from "../../../../urls";
-import { openWebUrl } from "../../../../utils/url";
-import { Link } from "../../../../components/core/typography/Link";
+import EuCovidCertLearnMoreLink from "../../components/EuCovidCertLearnMoreLink";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -29,15 +27,7 @@ const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
         />
       }
       title={I18n.t("features.euCovidCertificate.ko.notOperational.title")}
-      body={
-        <Link
-          accessibilityRole={"link"}
-          accessibilityHint={I18n.t("global.accessibility.linkHint")}
-          onPress={() => openWebUrl(euCovidCertificateUrl)}
-        >
-          {I18n.t("features.euCovidCertificate.common.learnMore")}
-        </Link>
-      }
+      body={<EuCovidCertLearnMoreLink />}
     />
   </>
 );
