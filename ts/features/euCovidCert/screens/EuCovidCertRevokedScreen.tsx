@@ -8,11 +8,10 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import I18n from "../../../i18n";
 import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import Markdown from "../../../components/ui/Markdown";
-import { Link } from "../../../components/core/typography/Link";
-import { openWebUrl, taskLinking } from "../../../utils/url";
-import { euCovidCertificateUrl } from "../../../urls";
+import { taskLinking } from "../../../utils/url";
 import { deriveCustomHandledLink } from "../../../components/ui/Markdown/handlers/link";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -32,15 +31,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
         />
       }
       title={I18n.t("features.euCovidCertificate.revoked.title")}
-      body={
-        <Link
-          accessibilityRole={"link"}
-          accessibilityHint={I18n.t("global.accessibility.linkHint")}
-          onPress={() => openWebUrl(euCovidCertificateUrl)}
-        >
-          {I18n.t("features.euCovidCertificate.common.learnMore")}
-        </Link>
-      }
+      body={<EuCovidCertLearnMoreLink />}
     />
     <View spacer />
     {props.revokeInfo && (
