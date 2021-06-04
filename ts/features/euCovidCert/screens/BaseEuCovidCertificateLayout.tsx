@@ -27,29 +27,35 @@ const styles = StyleSheet.create({
   }
 });
 
-const Header = React.forwardRef<View>((_, ref) => (
+const Header = () => (
   <>
-    <View style={styles.row} ref={ref}>
+    <View style={styles.row}>
       <H1 style={IOStyles.flex}>
         {I18n.t("features.euCovidCertificate.common.title")}
       </H1>
-      <Image source={image} style={styles.euFlag} />
+      <Image
+        source={image}
+        style={styles.euFlag}
+        importantForAccessibility={"no"}
+        accessibilityElementsHidden={true}
+      />
     </View>
     <H2>{I18n.t("features.euCovidCertificate.common.subtitle")}</H2>
   </>
-));
+);
 
 export const BaseEuCovidCertificateLayout = (props: Props) => {
-  const elementRef = useRef<View>(null);
+  const elementRef = useRef(null);
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
         testID={"BaseEuCovidCertificateLayout"}
+        ref={elementRef}
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <Header ref={elementRef} />
+          <Header />
           {props.content}
         </ScrollView>
         {props.footer}
