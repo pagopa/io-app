@@ -81,15 +81,21 @@ const cases: ReadonlyArray<[
       status: 200,
       value: ({ kind: "strangeKind" } as unknown) as Certificate
     }), // should not never happen
-    euCovidCertificateGet.success({ kind: "genericError", authCode })
+    euCovidCertificateGet.success({ kind: "wrongFormat", authCode })
   ],
   [
     right({ status: 401 }),
-    euCovidCertificateGet.success({ kind: "genericError", authCode })
+    euCovidCertificateGet.failure({
+      ...getGenericError(new Error(`response status code 401`)),
+      authCode
+    })
   ],
   [
     right({ status: 600 }), // unexpected code
-    euCovidCertificateGet.success({ kind: "genericError", authCode })
+    euCovidCertificateGet.failure({
+      ...getGenericError(new Error(`response status code 600`)),
+      authCode
+    })
   ],
   [
     right({ status: 400 }),
@@ -105,7 +111,10 @@ const cases: ReadonlyArray<[
   ],
   [
     right({ status: 500 }),
-    euCovidCertificateGet.success({ kind: "genericError", authCode })
+    euCovidCertificateGet.failure({
+      ...getGenericError(new Error(`response status code 500`)),
+      authCode
+    })
   ],
   [
     right({ status: 504 }),
