@@ -7,6 +7,7 @@ import {
 } from "italia-ts-commons/lib/strings";
 import _ from "lodash";
 import { NavigationParams } from "react-navigation";
+import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
@@ -131,7 +132,7 @@ describe("Test MessageRouterScreen", () => {
   it("With the messages allIds pot.some and byId some, default message, the navigation to MESSAGE_DETAIL should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const routerScreen = renderComponent({
+    const routerScreen = renderComponentMockStore({
       ...globalState,
       entities: {
         ...globalState.entities,
@@ -156,7 +157,7 @@ describe("Test MessageRouterScreen", () => {
   it("With the messages allIds pot.some and byId some, EU Covid message, the navigation to EUCOVIDCERT_DETAILS should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const routerScreen = renderComponent({
+    const routerScreen = renderComponentMockStore({
       ...globalState,
       entities: {
         ...globalState.entities,
@@ -198,7 +199,6 @@ describe("Test MessageRouterScreen", () => {
   });
   it("With the messages allIds pot.noneError, the screen should be loading", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-
     const routerScreen = renderComponent({
       ...globalState,
       entities: {
@@ -212,18 +212,32 @@ describe("Test MessageRouterScreen", () => {
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
-    ).toBeNull();
+    ).not.toBeNull();
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentError")
-    ).not.toBeNull();
+    ).toBeNull();
   });
 });
 
-const renderComponent = (state: GlobalState) => {
+const renderComponentMockStore = (state: GlobalState) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({
     ...state
   } as GlobalState);
+
+  return {
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+      MessageRouterScreen,
+      ROUTES.MESSAGE_ROUTER,
+      { messageId: "messageId" },
+      store
+    ),
+    store
+  };
+};
+
+const renderComponent = (state: GlobalState) => {
+  const store = createStore(appReducer, state as any);
 
   return {
     component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(

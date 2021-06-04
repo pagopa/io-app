@@ -9,6 +9,7 @@ import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/compone
 import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
 import { loadMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
@@ -37,13 +38,22 @@ const getLoadingState = (
 > => {
   const messageId = props.navigation.getParam("messageId");
   if (!isStrictSome(props.allMessages)) {
+    void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
+      reason: "all Messages is not some"
+    });
     return pot.map(props.allMessages, _ => undefined);
   }
   if (!props.allMessages.value.some(id => id === messageId)) {
+    void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
+      reason: "id not in list"
+    });
     return pot.noneError(`Cannot found ${messageId} in messages list`);
   }
   const messageState = props.messageState(messageId);
   if (messageState === undefined) {
+    void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
+      reason: "MessageState is undefined"
+    });
     return pot.noneError("MessageState is undefined");
   }
   return messageState.message;
@@ -70,35 +80,21 @@ const navigateToScreenHandler = (
 
 const MessageRouterScreen = (props: Props): React.ReactElement => {
   // the graphical state of the loading
-  const [isLoading, setIsLoading] = useState(true);
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const [isFirstRendering, setFirstRendering] = useState(true);
   const loadingState = getLoadingState(props);
+  const isLoading = !pot.isError(loadingState);
 
   useEffect(() => {
-    // all the messages data are ready, no need to reload
+    // all the messages data are ready, exit condition, navigate to the right screen
     if (isStrictSome(loadingState) && loadingState.value !== undefined) {
       navigateToScreenHandler(loadingState.value, props);
     }
     if (isFirstRendering) {
       props.loadMessages();
-      setIsLoading(true);
       setFirstRendering(false);
-      return;
     }
-
-    pot.fold(
-      loadingState,
-      () => setIsLoading(true),
-      () => setIsLoading(true),
-      _ => setIsLoading(true),
-      _ => setIsLoading(false),
-      _ => setIsLoading(false),
-      _ => setIsLoading(true),
-      (_, __) => setIsLoading(true),
-      _ => setIsLoading(false)
-    );
   }, [loadingState]);
 
   return (
@@ -107,7 +103,6 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
       loadingCaption={I18n.t("messageDetails.loadingText")}
       onAbort={props.cancel}
       onRetry={() => {
-        setIsLoading(true);
         props.loadMessages();
       }}
     />
