@@ -15,6 +15,7 @@ import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
+import { loadMessage, loadMessages } from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
@@ -28,32 +29,34 @@ const mockMeta: CreatedMessageWithoutContent = {
   time_to_live: 3600 as TimeToLiveSeconds
 };
 
-const mockMessage: pot.Pot<
+const mockMessage: CreatedMessageWithContentAndAttachments = {
+  content: {
+    subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
+    markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+      80,
+      10001
+    >,
+    due_date: new Date(),
+    payment_data: {
+      amount: 1 as PaymentAmount,
+      notice_number: "002718270840468918" as string &
+        IPatternStringTag<"^[0123][0-9]{17}$">,
+      invalid_after_due_date: true
+    }
+  },
+  created_at: new Date(),
+  fiscal_code: "AAABBB05S09I422L" as FiscalCode,
+  id: "01DQQGBXWSCNNY44CH2QZ95PIO",
+  sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
+  time_to_live: 3600 as TimeToLiveSeconds
+};
+
+const mockPotMessage: pot.Pot<
   CreatedMessageWithContentAndAttachments,
   string | undefined
 > = {
   kind: "PotSome",
-  value: {
-    content: {
-      subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-      markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-        80,
-        10001
-      >,
-      due_date: new Date(),
-      payment_data: {
-        amount: 1 as PaymentAmount,
-        notice_number: "002718270840468918" as string &
-          IPatternStringTag<"^[0123][0-9]{17}$">,
-        invalid_after_due_date: true
-      }
-    },
-    created_at: new Date(),
-    fiscal_code: "AAABBB05S09I422L" as FiscalCode,
-    id: "01DQQGBXWSCNNY44CH2QZ95PIO",
-    sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
-    time_to_live: 3600 as TimeToLiveSeconds
-  }
+  value: mockMessage
 };
 
 const mockEUCovidMessage: pot.Pot<
@@ -142,7 +145,7 @@ describe("Test MessageRouterScreen", () => {
           byId: {
             messageId: {
               meta: mockMeta,
-              message: mockMessage
+              message: mockPotMessage
             }
           }
         }
@@ -285,6 +288,51 @@ describe("Test MessageRouterScreen", () => {
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentError")
     ).toBeNull();
+  });
+
+  it("With the starting loading state, after receiving a loadMessages.failure, should display the error screen", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent(globalState);
+
+    routerScreen.store.dispatch(loadMessages.failure(new Error("An error")));
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).not.toBeNull();
+  });
+
+  it("With the starting loading state, after receiving a loadMessage.failure for the selected message, should display the error screen", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent(globalState);
+
+    routerScreen.store.dispatch(loadMessages.success(["messageId"]));
+    routerScreen.store.dispatch(
+      loadMessage.failure({ id: "messageId", error: new Error("An error") })
+    );
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).not.toBeNull();
+  });
+
+  it("With the starting loading state, after receiving a loadMessaged.success but without the selected messageId, should display the error screen", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent(globalState);
+
+    routerScreen.store.dispatch(loadMessages.success(["notMessageId"]));
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).not.toBeNull();
   });
 });
 
