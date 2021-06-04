@@ -2499,8 +2499,9 @@ features:
         title: "Il servizio è temporaneamente non disponibile"
         subtitle: "Ti preghiamo di riprovare più tardi"
       wrongFormat:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
+        subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"
+        cta: "Contatta l'assistenza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

@@ -2459,7 +2459,7 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notFound:
-        title: "The certificate does not appear to exist - contact support"
+        title: "The certificate does not appear to \nexist: contact support"
         subtitle: "You may be asked for this data to investigate the problem:"
         cta: "Contact support"
       notOperational:
@@ -2469,8 +2469,9 @@ features:
         title: "The service is temporarily unavailable"
         subtitle: "Please try again later"
       wrongFormat:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "This certificate cannot be \nrecovered: contact support"
+        subtitle: "You may be asked for this data to investigate the problem:"
+        cta: "Contact support"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
