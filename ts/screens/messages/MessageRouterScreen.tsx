@@ -5,6 +5,7 @@ import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { euCovidCertificateEnabled } from "../../config";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
@@ -68,7 +69,10 @@ const navigateToScreenHandler = (
   message: CreatedMessageWithContentAndAttachments,
   props: Props
 ) => {
-  if (euCovidCertificateEnabled && message.content.eu_covid_cert !== undefined) {
+  if (
+    euCovidCertificateEnabled &&
+    message.content.eu_covid_cert !== undefined
+  ) {
     props.navigateToEuCovidCertificate(
       message.content.eu_covid_cert.auth_code as EUCovidCertificateAuthCode,
       message.id

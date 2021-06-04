@@ -5,7 +5,6 @@ import {
   NonEmptyString,
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
-import _ from "lodash";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
@@ -13,6 +12,7 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import { euCovidCertificateEnabled } from "../../../config";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { loadMessage, loadMessages } from "../../../store/actions/messages";
@@ -113,6 +113,8 @@ const standardMessageActions = [
   }
 ];
 
+jest.mock("../../../config", () => ({ euCovidCertificateEnabled: true }));
+
 describe("Test MessageRouterScreen", () => {
   jest.useFakeTimers();
   it("With the default state, the screen should be loading", () => {
@@ -150,7 +152,7 @@ describe("Test MessageRouterScreen", () => {
 
     expect(routerScreen.store.getActions()).toEqual(standardMessageActions);
   });
-  it("With the messages allIds pot.some and byId some, EU Covid message, the navigation to EUCOVIDCERT_DETAILS should be dispatched", () => {
+  it("With the euCovidCertificate feature flag enabled, messages allIds pot.some and byId some, EU Covid message, the navigation to EUCOVIDCERT_DETAILS should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
     const routerScreen = renderComponentMockStore({
