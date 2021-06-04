@@ -2488,10 +2488,10 @@ features:
         title: "TMP"
         subtitle: "TMP"
       notOperational:
-        title: "TMP"
+        title: "Il certificato europeo Covid non è attualmente operativo"
         subtitle: "TMP"
       temporarilyNotAvailable:
-        title: "Il certificato europeo Covid non è attualmente operativo"
+        title: "TMP"
         subtitle: "TMP"
       wrongFormat:
         title: "TMP"
