@@ -102,9 +102,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.loadingText")}
       onAbort={props.cancel}
-      onRetry={() => {
-        props.loadMessages();
-      }}
+      onRetry={props.loadMessages}
     />
   );
 };
