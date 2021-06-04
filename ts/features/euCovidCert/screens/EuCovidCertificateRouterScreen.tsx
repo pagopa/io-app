@@ -87,6 +87,7 @@ const EuCovidCertificateRouterScreen = (
     }
   }, []);
 
+  // TODO: set message read
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
   return pot.fold(
     props.euCovidCertificateResponse(authCode),
