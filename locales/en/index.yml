@@ -2461,8 +2461,8 @@ features:
         title: "TMP"
         subtitle: "TMP"
       temporarilyNotAvailable:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "The service is temporarily unavailable"
+        subtitle: "Please try again later"
       wrongFormat:
         title: "TMP"
         subtitle: "TMP"
