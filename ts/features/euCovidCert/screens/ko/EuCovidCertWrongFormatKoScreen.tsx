@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { GlobalState } from "../../../../store/reducers/types";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { Image, StyleSheet } from "react-native";
 import { View } from "native-base";
+import { GlobalState } from "../../../../store/reducers/types";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { H4 } from "../../../../components/core/typography/H4";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
