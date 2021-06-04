@@ -217,6 +217,75 @@ describe("Test MessageRouterScreen", () => {
       routerScreen.component.queryByTestId("LoadingErrorComponentError")
     ).toBeNull();
   });
+
+  it("With the messages allIds pot.some and messageId not in list, the screen should be loading", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent({
+      ...globalState,
+      entities: {
+        ...globalState.entities,
+        messages: {
+          ...globalState.entities.messages,
+          allIds: pot.some(["notMessageId"])
+        }
+      }
+    });
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).not.toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).toBeNull();
+  });
+
+  it("With the messages allIds pot.some, messageId in list but no data in byId, the screen should be loading", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent({
+      ...globalState,
+      entities: {
+        ...globalState.entities,
+        messages: {
+          ...globalState.entities.messages,
+          allIds: pot.some(["messageId"])
+        }
+      }
+    });
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).not.toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).toBeNull();
+  });
+
+  it("With the messages allIds pot.some, messageId in list but byId have pot.error, the screen should be loading", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const routerScreen = renderComponent({
+      ...globalState,
+      entities: {
+        ...globalState.entities,
+        messages: {
+          ...globalState.entities.messages,
+          allIds: pot.some(["messageId"]),
+          byId: {
+            messageId: {
+              meta: mockMeta,
+              message: pot.noneError("Error")
+            }
+          }
+        }
+      }
+    });
+
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
+    ).not.toBeNull();
+    expect(
+      routerScreen.component.queryByTestId("LoadingErrorComponentError")
+    ).toBeNull();
+  });
 });
 
 const renderComponentMockStore = (state: GlobalState) => {
