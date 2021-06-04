@@ -97,10 +97,11 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 
   private renderEUCovidViewCTA() {
-    if (this.props.message.content.eu_covid_cert === undefined) {
-      return null;
-    }
-    return <ViewEUCovidButton onPress={this.props.onEUCovidCTAPress} />;
+    return (
+      this.props.message.content.eu_covid_cert && (
+        <ViewEUCovidButton onPress={this.props.onEUCovidCTAPress} />
+      )
+    );
   }
 
   private renderCalendarIcon = () => {
