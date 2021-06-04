@@ -32,16 +32,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const getLoadingState = (
   props: Props
-): pot.Pot<
-  CreatedMessageWithContentAndAttachments | undefined,
-  string | undefined
-> => {
+): pot.Pot<CreatedMessageWithContentAndAttachments, string | undefined> => {
   const messageId = props.navigation.getParam("messageId");
   if (!isStrictSome(props.allMessages)) {
     void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
       reason: "all Messages is not some"
     });
-    return pot.map(props.allMessages, _ => undefined);
+    return pot.noneError("all Messages is not some");
   }
   if (!props.allMessages.value.some(id => id === messageId)) {
     void mixpanelTrack("MESSAGE_ROUTING_FAILURE", {
@@ -87,7 +84,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     // all the messages data are ready, exit condition, navigate to the right screen
-    if (isStrictSome(loadingState) && loadingState.value !== undefined) {
+    if (isStrictSome(loadingState)) {
       navigateToScreenHandler(loadingState.value, props);
     }
     if (isFirstRendering) {
