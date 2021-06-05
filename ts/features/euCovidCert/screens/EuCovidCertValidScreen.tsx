@@ -101,7 +101,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToQrCodeFullScreen: (qrCodeContent: string) =>
-    dispatch(navigateToEuCovidCertificateQrCodeFullScreen(qrCodeContent))
+    dispatch(navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent }))
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

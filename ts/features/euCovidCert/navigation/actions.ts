@@ -1,20 +1,21 @@
 import { NavigationActions } from "react-navigation";
-import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
+import { InferNavigationParams } from "../../../types/react";
+import EuCovidCertificateRouterScreen from "../screens/EuCovidCertificateRouterScreen";
+import { EuCovidCertQrCodeFullScreen } from "../screens/EuCovidCertQrCodeFullScreen";
 import EUCOVIDCERT_ROUTES from "./routes";
 
 export const navigateToEuCovidCertificateDetailScreen = (
-  authCode: EUCovidCertificateAuthCode,
-  messageId: string
+  params: InferNavigationParams<typeof EuCovidCertificateRouterScreen>
 ) =>
   NavigationActions.navigate({
     routeName: EUCOVIDCERT_ROUTES.DETAILS,
-    params: { authCode, messageId }
+    params
   });
 
 export const navigateToEuCovidCertificateQrCodeFullScreen = (
-  qrCodeContent: string
+  params: InferNavigationParams<typeof EuCovidCertQrCodeFullScreen>
 ) =>
   NavigationActions.navigate({
     routeName: EUCOVIDCERT_ROUTES.QRCODE,
-    params: { qrCodeContent }
+    params
   });
