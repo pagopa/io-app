@@ -21,14 +21,14 @@ import { Mime_typeEnum } from "../../../../../../definitions/eu_covid_cert/QRCod
 import { getGenericError } from "../../../../../utils/errors";
 
 const revokedCertificate: RevokedCertificate = {
-  id: "revokedCertificateId",
+  uvci: "revokedCertificateId",
   status: StatusEnum.revoked,
-  revoke_reason: "the revoked reason",
+  revoke_info: "the revoked reason",
   revoked_on: new Date()
 };
 
 const validCertificate: ValidCertificate = {
-  id: "validCertificateId",
+  uvci: "validCertificateId",
   status: ValidStatus.valid,
   info: "## info markdown",
   detail: "## detail markdown",
@@ -53,7 +53,7 @@ const cases: ReadonlyArray<[
       kind: "success",
       value: {
         kind: "revoked",
-        id: revokedCertificate.id as EUCovidCertificate["id"],
+        id: revokedCertificate.uvci as EUCovidCertificate["id"],
         revokedOn: revokedCertificate.revoked_on
       },
       authCode
@@ -65,7 +65,7 @@ const cases: ReadonlyArray<[
       kind: "success",
       value: {
         kind: "valid",
-        id: validCertificate.id as EUCovidCertificate["id"],
+        id: validCertificate.uvci as EUCovidCertificate["id"],
         qrCode: {
           mimeType: validCertificate.qr_code.mime_type,
           content: validCertificate.qr_code.content
