@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
   }
 });
 
+// TODO: remove when adding the save feature https://pagopa.atlassian.net/browse/IAGP-37
+const isSaveEnabled = false;
+
 export const EuCovidCertMarkdownDetailsScreen = (
   props: NavigationInjectedProps<NavigationParams>
 ): React.ReactElement => {
@@ -46,7 +49,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
           <MarkdownHandleCustomLink onLoadEnd={activateCTA}>
             {props.navigation.getParam("markdownDetails")}
           </MarkdownHandleCustomLink>
-          {loadComplete && (
+          {loadComplete && isSaveEnabled && (
             <>
               <ButtonDefaultOpacity style={styles.save}>
                 <Label color={"white"}>

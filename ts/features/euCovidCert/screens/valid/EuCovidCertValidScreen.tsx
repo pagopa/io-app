@@ -1,3 +1,4 @@
+import { constNull } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
@@ -77,7 +78,8 @@ type FooterProps = Props & {};
 
 const Footer = (props: FooterProps): React.ReactElement => {
   const saveButton = confirmButtonProps(
-    () => console.log("save"),
+    // TODO: add save function with https://pagopa.atlassian.net/browse/IAGP-17
+    constNull,
     I18n.t("global.genericSave")
   );
   const markdownDetails = props.validCertificate.markdownDetails;
