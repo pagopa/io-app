@@ -2452,6 +2452,8 @@ features:
       accessibility:
         qrCode: "QR Code"
         hint: "Display the QR Code in full screen"
+      markdownDetails:
+        headerTitle: "Certificate Details"
     revoked:
       title: "This certificate is no longer valid"
       subtitle: "TMP"

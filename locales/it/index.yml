@@ -2482,6 +2482,8 @@ features:
       accessibility:
         qrCode: "QR Code"
         hint: "Visualizza il QR Code a tutto schermo"
+      markdownDetails:
+        headerTitle: "Dettagli del certificato"
     revoked:
       title: "Questo certificato non è più valido"
       subtitle: "TMP"

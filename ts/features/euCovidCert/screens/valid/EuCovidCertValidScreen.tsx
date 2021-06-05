@@ -12,7 +12,10 @@ import {
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
-import { navigateToEuCovidCertificateQrCodeFullScreen } from "../../navigation/actions";
+import {
+  navigateToEuCovidCertificateMarkdownDetailsScreen,
+  navigateToEuCovidCertificateQrCodeFullScreen
+} from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
@@ -77,11 +80,13 @@ const Footer = (props: FooterProps): React.ReactElement => {
     () => console.log("save"),
     I18n.t("global.genericSave")
   );
-  return props.validCertificate.markdownDetails ? (
+  const markdownDetails = props.validCertificate.markdownDetails;
+
+  return markdownDetails ? (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
       leftButton={cancelButtonProps(
-        () => console.log("details"),
+        () => props.navigateToMarkdown(markdownDetails),
         I18n.t("global.buttons.details")
       )}
       rightButton={saveButton}
@@ -101,7 +106,11 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToQrCodeFullScreen: (qrCodeContent: string) =>
-    dispatch(navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent }))
+    dispatch(navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent })),
+  navigateToMarkdown: (markdownDetails: string) =>
+    dispatch(
+      navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
+    )
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
