@@ -10,6 +10,7 @@ export const MarkdownHandleCustomLink = (
   props: React.ComponentProps<typeof Markdown>
 ): React.ReactElement => (
   <Markdown
+    {...props}
     onLinkClicked={(link: string) => {
       deriveCustomHandledLink(link).map(hl => {
         if (hl.schema === "copy") {
