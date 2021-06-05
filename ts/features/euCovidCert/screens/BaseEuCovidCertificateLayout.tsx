@@ -54,7 +54,10 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
         testID={"BaseEuCovidCertificateLayout"}
         ref={elementRef}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView
+          style={[IOStyles.horizontalContentPadding]}
+          testID={props.testID}
+        >
           <Header />
           {props.content}
         </ScrollView>
