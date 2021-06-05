@@ -16,7 +16,7 @@ import {
 } from "../types/EUCovidCertificateResponse";
 import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
 import EuCovidCertRevokedScreen from "./EuCovidCertRevokedScreen";
-import EuCovidCertValidScreen from "./EuCovidCertValidScreen";
+import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 import EuCovidCertGenericErrorKoScreen from "./ko/EuCovidCertGenericErrorKoScreen";
 import EuCovidCertNotFoundKoScreen from "./ko/EuCovidCertNotFoundKoScreen";
 import EuCovidCertNotOperationalKoScreen from "./ko/EuCovidCertNotOperationalKoScreen";

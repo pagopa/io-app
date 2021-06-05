@@ -8,12 +8,12 @@ import {
   StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import I18n from "../../../i18n";
-import { useMaxBrightness } from "../../../utils/brightness";
-import { cancelButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { useMaxBrightness } from "../../../../utils/brightness";
+import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 type NavigationParams = Readonly<{
   qrCodeContent: string;

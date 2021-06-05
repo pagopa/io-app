@@ -3,18 +3,18 @@ import * as React from "react";
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import I18n from "../../../i18n";
-import { GlobalState } from "../../../store/reducers/types";
-import themeVariables from "../../../theme/variables";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import themeVariables from "../../../../theme/variables";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
-import { navigateToEuCovidCertificateQrCodeFullScreen } from "../navigation/actions";
-import { ValidCertificate } from "../types/EUCovidCertificate";
-import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
+} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
+import { navigateToEuCovidCertificateQrCodeFullScreen } from "../../navigation/actions";
+import { ValidCertificate } from "../../types/EUCovidCertificate";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
