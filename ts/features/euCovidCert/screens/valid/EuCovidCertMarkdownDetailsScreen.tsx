@@ -1,3 +1,4 @@
+import { View } from "native-base";
 import { useState } from "react";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -46,13 +47,16 @@ export const EuCovidCertMarkdownDetailsScreen = (
             {props.navigation.getParam("markdownDetails")}
           </MarkdownHandleCustomLink>
           {loadComplete && (
-            <ButtonDefaultOpacity style={styles.save}>
-              <Label color={"white"}>
-                {I18n.t(
-                  "features.euCovidCertificate.valid.markdownDetails.save"
-                )}
-              </Label>
-            </ButtonDefaultOpacity>
+            <>
+              <ButtonDefaultOpacity style={styles.save}>
+                <Label color={"white"}>
+                  {I18n.t(
+                    "features.euCovidCertificate.valid.markdownDetails.save"
+                  )}
+                </Label>
+              </ButtonDefaultOpacity>
+              <View spacer={true} />
+            </>
           )}
         </ScrollView>
         <FooterWithButtons
