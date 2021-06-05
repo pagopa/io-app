@@ -2454,6 +2454,7 @@ features:
         hint: "Display the QR Code in full screen"
       markdownDetails:
         headerTitle: "Certificate Details"
+        save: "Save the details as an image"
     revoked:
       title: "This certificate is no longer valid"
       subtitle: "TMP"

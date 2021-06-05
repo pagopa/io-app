@@ -2484,6 +2484,7 @@ features:
         hint: "Visualizza il QR Code a tutto schermo"
       markdownDetails:
         headerTitle: "Dettagli del certificato"
+        save: "Salva i dettagli come immagine"
     revoked:
       title: "Questo certificato non è più valido"
       subtitle: "TMP"
