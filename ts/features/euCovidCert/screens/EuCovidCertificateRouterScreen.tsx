@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
 import { isStrictSome } from "../../../utils/pot";
 import { euCovidCertificateGet } from "../store/actions";
@@ -24,6 +25,7 @@ import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen"
 
 type NavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
+  messageId: string;
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -78,14 +80,17 @@ const EuCovidCertificateRouterScreen = (
   props: Props
 ): React.ReactElement | null => {
   const authCode = props.navigation.getParam("authCode");
+  const messageId = props.navigation.getParam("messageId");
 
   useEffect(() => {
+    // At the first rendering, set the message to read
+    props.setMessageRead(messageId);
+    // check if a load is required
     if (loadRequired(props.euCovidCertificateResponse(authCode))) {
       props.loadCertificate(authCode);
     }
   }, []);
 
-  // TODO: set message read
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
   return pot.fold(
     props.euCovidCertificateResponse(authCode),
@@ -102,7 +107,9 @@ const EuCovidCertificateRouterScreen = (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
-    dispatch(euCovidCertificateGet.request(authCode))
+    dispatch(euCovidCertificateGet.request(authCode)),
+  setMessageRead: (messageId: string) =>
+    dispatch(setMessageReadState(messageId, true))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

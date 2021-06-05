@@ -74,14 +74,14 @@ type FooterProps = Props & {};
 
 const Footer = (props: FooterProps): React.ReactElement => {
   const saveButton = confirmButtonProps(
-    () => console.log("confirm"),
+    () => console.log("save"),
     I18n.t("global.genericSave")
   );
   return props.validCertificate.markdownDetails ? (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
       leftButton={cancelButtonProps(
-        () => console.log("cancel"),
+        () => console.log("details"),
         I18n.t("global.buttons.details")
       )}
       rightButton={saveButton}
