@@ -41,6 +41,7 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
       <TouchableOpacity
+        testID={"QRCode"}
         accessible={true}
         accessibilityRole={"imagebutton"}
         accessibilityLabel={I18n.t(
@@ -65,7 +66,7 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
     )}
     {props.validCertificate.markdownPreview && (
       <>
-        <MarkdownHandleCustomLink>
+        <MarkdownHandleCustomLink testID={"markdownPreview"}>
           {props.validCertificate.markdownPreview}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
