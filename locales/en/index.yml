@@ -154,6 +154,7 @@ global:
     show: "Show"
     update: "Update"
     findOutMore: "Find out more"
+    details: "Details"
   navigator:
     messages: messages
     wallet: wallet
@@ -2448,7 +2449,9 @@ features:
       title: "We are loading your certificate data from the National Platform of the Ministry of Health"
       subtitle: "Please wait"
     valid:
-      placeholder: "TMP"
+      accessibility:
+        qrCode: "QR Code"
+        hint: "Display the QR Code in full screen"
     revoked:
       title: "This certificate is no longer valid"
       subtitle: "TMP"

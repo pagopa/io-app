@@ -1,24 +1,16 @@
 import { View } from "native-base";
-import { useContext } from "react";
 import * as React from "react";
-import {
-  Dimensions,
-  Image,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { LightModalContext } from "../../../components/ui/LightModal";
+import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import themeVariables from "../../../theme/variables";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../bonus/bonusVacanze/components/TosBonusComponent";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { navigateToEuCovidCertificateQrCodeFullScreen } from "../navigation/actions";
 import { ValidCertificate } from "../types/EUCovidCertificate";
@@ -30,7 +22,7 @@ type OwnProps = {
 
 const styles = StyleSheet.create({
   qrCode: {
-    // TODO: it's preferable to use useWindowDimensions, but we need to upgrade react native
+    // TODO: it's preferable to use the hook useWindowDimensions, but we need to upgrade react native
     width: Dimensions.get("window").width - themeVariables.contentPadding * 2,
     height: Dimensions.get("window").width - themeVariables.contentPadding * 2,
     flex: 1
@@ -45,6 +37,14 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
       <TouchableOpacity
+        accessible={true}
+        accessibilityRole={"imagebutton"}
+        accessibilityLabel={I18n.t(
+          "features.euCovidCertificate.valid.accessibility.qrCode"
+        )}
+        accessibilityHint={I18n.t(
+          "features.euCovidCertificate.valid.accessibility.hint"
+        )}
         onPress={() =>
           props.navigateToQrCodeFullScreen(
             props.validCertificate.qrCode.content
@@ -72,19 +72,24 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
 
 type FooterProps = Props & {};
 
-const Footer = (props: FooterProps): React.ReactElement =>
-  props.validCertificate.markdownDetails ? (
+const Footer = (props: FooterProps): React.ReactElement => {
+  const saveButton = confirmButtonProps(
+    () => console.log("confirm"),
+    I18n.t("global.genericSave")
+  );
+  return props.validCertificate.markdownDetails ? (
     <FooterWithButtons
       type={"TwoButtonsInlineHalf"}
-      leftButton={cancelButtonProps(() => console.log("cancel"))}
-      rightButton={confirmButtonProps(() => console.log("confirm"))}
+      leftButton={cancelButtonProps(
+        () => console.log("cancel"),
+        I18n.t("global.buttons.details")
+      )}
+      rightButton={saveButton}
     />
   ) : (
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={confirmButtonProps(console.log("confirm"))}
-    />
+    <FooterWithButtons type={"SingleButton"} leftButton={saveButton} />
   );
+};
 
 const EuCovidCertValidScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
