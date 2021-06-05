@@ -74,9 +74,7 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
   </View>
 );
 
-type FooterProps = Props & {};
-
-const Footer = (props: FooterProps): React.ReactElement => {
+const Footer = (props: Props): React.ReactElement => {
   const saveButton = confirmButtonProps(
     // TODO: add save function with https://pagopa.atlassian.net/browse/IAGP-17
     constNull,
