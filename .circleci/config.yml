@@ -115,10 +115,6 @@ jobs:
       # Generate models and locales
       - run: yarn generate:all
 
-      - run:
-          name: Install JUnit coverage reporter
-          command: yarn add --dev jest-junit
-
       # Run tests
       - run:
           command: |
