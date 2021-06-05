@@ -34,7 +34,7 @@ const convertSuccess = (
       case "valid":
         return {
           kind: "valid",
-          id: certificate.id as EUCovidCertificate["id"],
+          id: certificate.uvci as EUCovidCertificate["id"],
           qrCode: {
             mimeType: certificate.qr_code.mime_type,
             content: certificate.qr_code.content
@@ -45,10 +45,9 @@ const convertSuccess = (
       case "revoked":
         return {
           kind: "revoked",
-          id: certificate.id as EUCovidCertificate["id"],
+          id: certificate.uvci as EUCovidCertificate["id"],
           revokedOn: certificate.revoked_on,
-          // TODO: update with certificate.revoke_info when specs are updated
-          revokeInfo: certificate.revoke_reason
+          revokeInfo: certificate.revoke_info
         };
       default:
         return undefined;
