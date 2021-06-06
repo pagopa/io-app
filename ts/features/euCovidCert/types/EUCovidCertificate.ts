@@ -33,7 +33,7 @@ export type RevokedCertificate = WithEUCovidCertificateId & {
   revokedOn?: Date;
 };
 
-type ExpiredCertificate = {
+type ExpiredCertificate = WithEUCovidCertificateId & {
   kind: "expired";
   expiredInfo?: string;
 };
@@ -41,4 +41,7 @@ type ExpiredCertificate = {
 /**
  * This type represents the EU Covid Certificate with the different states & data
  */
-export type EUCovidCertificate = ValidCertificate | RevokedCertificate;
+export type EUCovidCertificate =
+  | ValidCertificate
+  | RevokedCertificate
+  | ExpiredCertificate;
