@@ -29,14 +29,18 @@ type ValidCertificate = {
 
 type RevokedCertificate = {
   kind: "revoked";
-  // TODO: markdown containing information about the certificate revocation, should be linked with the API data when updated
   revokeInfo?: string;
   revokedOn?: Date;
+};
+
+type ExpiredCertificate = {
+  kind: "expired";
+  expiredInfo?: string;
 };
 
 /**
  * This type represents the EU Covid Certificate with the different states & data
  */
 export type EUCovidCertificate = WithEUCovidCertificateId<
-  ValidCertificate | RevokedCertificate
+  ValidCertificate | RevokedCertificate | ExpiredCertificate
 >;
