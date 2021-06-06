@@ -2487,7 +2487,8 @@ features:
         save: "Salva i dettagli come immagine"
     revoked:
       title: "Questo certificato non è più valido"
-      subtitle: "TMP"
+    expired:
+      title: "Questo certifcato è scaduto"
     ko:
       genericError:
         title: "TMP"
