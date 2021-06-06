@@ -14,7 +14,7 @@ export const currentReducer = (
 ): EuCovidCertCurrentSelectedState | null => {
   switch (action.type) {
     case NavigationActions.NAVIGATE:
-      if (action.routeName === EUCOVIDCERT_ROUTES.DETAILS) {
+      if (action.routeName === EUCOVIDCERT_ROUTES.CERTIFICATE) {
         return action.params
           ? {
               authCode: action.params.authCode,
