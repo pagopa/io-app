@@ -12,6 +12,7 @@ import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import SectionStatusComponent from "../../../components/SectionStatusComponent";
 
 type Props = WithTestID<{
   content: React.ReactElement;
@@ -61,6 +62,7 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
           <Header />
           {props.content}
         </ScrollView>
+        <SectionStatusComponent sectionKey={"euCovidCert"} />
         {props.footer}
       </SafeAreaView>
     </BaseScreenComponent>

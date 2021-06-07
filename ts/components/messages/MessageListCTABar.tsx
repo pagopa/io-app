@@ -23,6 +23,7 @@ import {
 } from "../../utils/messages";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
+import { euCovidCertificateEnabled } from "../../config";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -98,6 +99,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
 
   private renderEUCovidViewCTA() {
     return (
+      euCovidCertificateEnabled &&
       this.props.message.content.eu_covid_cert && (
         <ViewEUCovidButton onPress={this.props.onEUCovidCTAPress} />
       )
