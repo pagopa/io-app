@@ -9,7 +9,7 @@ import { H4 } from "../../../../components/core/typography/H4";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import wrongFormatImage from "../../../../../img/messages/error-message-detail-icon.png";
+import wrongFormatImage from "../../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
