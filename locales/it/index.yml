@@ -2469,6 +2469,9 @@ bonus:
           other: "{{seconds}} secondi"
 features:
   euCovidCertificate:
+    save:
+      noPermission: "Sembra che l'app non ha i permessi per salvare immagini nella galleria. Controlla le impostazioni."
+      ok: "L'immagine è stata salvata nella tua galleria immagini"
     listItem:
       cta: "Visualizza"
     common:

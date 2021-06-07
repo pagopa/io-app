@@ -1,37 +1,85 @@
-import { View } from "native-base";
+import { Toast, View } from "native-base";
 import { useState } from "react";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { StyleSheet } from "react-native";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
+import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
+import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
+import { showToast } from "../../../../utils/showToast";
+import { saveImageToGallery } from "../../../../utils/share";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
 }>;
 
 const styles = StyleSheet.create({
-  save: {
-    width: "100%"
+  viewShot: {
+    flex: 1,
+    backgroundColor: "white"
   }
 });
 
-// TODO: remove when adding the save feature https://pagopa.atlassian.net/browse/IAGP-37
-const isSaveEnabled = false;
-
+const showToastError = (error: string = I18n.t("global.genericError")) =>
+  showToast(error);
+const screenShotOption: CaptureOptions = { format: "jpg", quality: 1.0 };
 export const EuCovidCertMarkdownDetailsScreen = (
   props: NavigationInjectedProps<NavigationParams>
 ): React.ReactElement => {
   const [loadComplete, setLoadComplete] = useState(false);
+  const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
   const activateCTA = () => setLoadComplete(true);
+  const screenShotRef = React.createRef<ViewShot>();
+  React.useEffect(() => {
+    if (isCapturingScreenShoot) {
+      saveScreenShoot();
+    }
+  }, [isCapturingScreenShoot]);
+
+  const saveScreenShoot = () => {
+    const screenShot = screenShotRef.current;
+    if (screenShot === null || screenShot.capture === undefined) {
+      showToastError();
+      setIsCapturingScreenShoot(false);
+      return;
+    }
+    screenShot
+      .capture()
+      .then(screenShotUri => {
+        saveImageToGallery(`file://${screenShotUri}`)
+          .run()
+          .then(maybeSaved => {
+            maybeSaved.fold(
+              () =>
+                showToastError(
+                  I18n.t("features.euCovidCertificate.save.noPermission")
+                ),
+              () => {
+                Toast.show({
+                  text: I18n.t("features.euCovidCertificate.save.ok")
+                });
+              }
+            );
+          })
+          .catch(showToastError);
+      })
+      .catch(() => {
+        showToastError();
+      })
+      .finally(() => {
+        setIsCapturingScreenShoot(false);
+      });
+  };
+  const onPressSaveImage = () => setIsCapturingScreenShoot(true);
 
   return (
     <BaseScreenComponent
@@ -41,35 +89,47 @@ export const EuCovidCertMarkdownDetailsScreen = (
       )}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"EuCovidCertQrCodeFullScreen"}
+      <ViewShot
+        ref={screenShotRef}
+        style={styles.viewShot}
+        options={screenShotOption}
       >
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <MarkdownHandleCustomLink onLoadEnd={activateCTA}>
-            {props.navigation.getParam("markdownDetails")}
-          </MarkdownHandleCustomLink>
-          {loadComplete && isSaveEnabled && (
+        <SafeAreaView
+          style={IOStyles.flex}
+          testID={"EuCovidCertQrCodeFullScreen"}
+        >
+          <ScrollView style={IOStyles.horizontalContentPadding}>
+            <MarkdownHandleCustomLink onLoadEnd={activateCTA}>
+              {props.navigation.getParam("markdownDetails")}
+            </MarkdownHandleCustomLink>
+            <EdgeBorderComponent />
+          </ScrollView>
+          {!isCapturingScreenShoot && (
             <>
-              <ButtonDefaultOpacity style={styles.save}>
-                <Label color={"white"}>
-                  {I18n.t(
-                    "features.euCovidCertificate.valid.markdownDetails.save"
-                  )}
-                </Label>
-              </ButtonDefaultOpacity>
-              <View spacer={true} />
+              {loadComplete && (
+                <View style={{ marginBottom: -16 }}>
+                  <FooterWithButtons
+                    type={"SingleButton"}
+                    leftButton={confirmButtonProps(
+                      onPressSaveImage,
+                      I18n.t(
+                        "features.euCovidCertificate.valid.markdownDetails.save"
+                      )
+                    )}
+                  />
+                </View>
+              )}
+              <FooterWithButtons
+                type={"SingleButton"}
+                leftButton={cancelButtonProps(
+                  () => props.navigation.goBack(),
+                  I18n.t("global.buttons.close")
+                )}
+              />
             </>
           )}
-        </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            () => props.navigation.goBack(),
-            I18n.t("global.buttons.close")
-          )}
-        />
-      </SafeAreaView>
+        </SafeAreaView>
+      </ViewShot>
     </BaseScreenComponent>
   );
 };
