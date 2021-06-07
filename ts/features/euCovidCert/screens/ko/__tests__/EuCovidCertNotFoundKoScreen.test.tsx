@@ -69,7 +69,7 @@ const renderComponent = (state: GlobalState) => {
 
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     EuCovidCertNotFoundKoScreen,
-    EUCOVIDCERT_ROUTES.DETAILS,
+    EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store
   );
