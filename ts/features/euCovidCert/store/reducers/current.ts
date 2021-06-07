@@ -1,5 +1,7 @@
 import { NavigationActions } from "react-navigation";
+import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 
@@ -26,3 +28,12 @@ export const currentReducer = (
 
   return state;
 };
+
+/**
+ * currentAuthCode selector
+ */
+export const euCovidCertCurrentSelector = createSelector(
+  [(state: GlobalState) => state.features.euCovidCert.current],
+  (euCovidCertCurrent): EuCovidCertCurrentSelectedState | null =>
+    euCovidCertCurrent
+);
