@@ -1,9 +1,7 @@
 import { Toast, View } from "native-base";
 import * as React from "react";
 import {
-  Animated,
   Dimensions,
-  Easing,
   Image,
   StyleProp,
   StyleSheet,
@@ -14,7 +12,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CaptureOptions } from "react-native-view-shot";
 import { useState } from "react";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -39,6 +36,10 @@ import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { showToast } from "../../../../utils/showToast";
 import { captureScreenShoot } from "../../utils/screenshoot";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -213,43 +214,26 @@ const screenShotOption: CaptureOptions = {
   format: "jpg",
   quality: 1.0
 };
-const flashAnimation = 240 as Millisecond;
 const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
-  const screenShotViewContainerRef = React.createRef<View>();
+  const screenShotViewContainer = React.createRef<View>();
+  const [flashAnimationState, setFlashAnimationState] = useState<
+    FlashAnimationState
+  >();
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
-  const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
-  const backgroundInterpolation = backgroundAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
-  });
   React.useEffect(() => {
     if (isCapturingScreenShoot) {
-      fadeIn();
+      setFlashAnimationState("fadeIn");
     }
   }, [isCapturingScreenShoot]);
-  const fadeOut = () =>
-    Animated.timing(backgroundAnimation, {
-      duration: flashAnimation,
-      toValue: 0,
-      useNativeDriver: false,
-      easing: Easing.cubic
-    }).start();
 
-  const fadeIn = () =>
-    Animated.timing(backgroundAnimation, {
-      duration: flashAnimation,
-      toValue: 1,
-      useNativeDriver: false,
-      easing: Easing.cubic
-    }).start(saveScreenShoot);
   const saveScreenShoot = () => {
     // it should not never happen
-    if (screenShotViewContainerRef.current === null) {
+    if (screenShotViewContainer.current === null) {
       showToastError();
       return;
     }
     captureScreenShoot(
-      screenShotViewContainerRef,
+      screenShotViewContainer,
       screenShotOption,
       () =>
         Toast.show({
@@ -257,7 +241,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
         }),
       undefined,
       () => {
-        fadeOut();
+        setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
       }
     );
@@ -266,7 +250,12 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     <BaseEuCovidCertificateLayout
       testID={"EuCovidCertValidScreen"}
       content={
-        <View ref={screenShotViewContainerRef} style={[IOStyles.flex]}>
+        <View
+          collapsable={false}
+          ref={screenShotViewContainer}
+          style={[IOStyles.flex]}
+        >
+          {/* add extra space and padding while capturing the screenshot */}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
             {...props}
@@ -282,10 +271,9 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       footer={
         <>
           <Footer {...props} onSave={() => setIsCapturingScreenShoot(true)} />
-          {/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */}
-          <Animated.View
-            pointerEvents={"none"}
-            style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
+          <FlashAnimatedComponent
+            state={flashAnimationState}
+            onFadeInCompleted={saveScreenShoot}
           />
         </>
       }

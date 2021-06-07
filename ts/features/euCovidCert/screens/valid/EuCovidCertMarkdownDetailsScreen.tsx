@@ -1,17 +1,9 @@
 import { Toast, View } from "native-base";
 import { useState } from "react";
 import * as React from "react";
-import {
-  Animated,
-  Dimensions,
-  Easing,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { CaptureOptions } from "react-native-view-shot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -23,6 +15,10 @@ import { showToast } from "../../../../utils/showToast";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { captureScreenShoot } from "../../utils/screenshoot";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
@@ -55,41 +51,22 @@ const screenShotOption: CaptureOptions = {
   format: "jpg",
   quality: 1.0
 };
-const flashAnimation = 240 as Millisecond;
 
 export const EuCovidCertMarkdownDetailsScreen = (
   props: NavigationInjectedProps<NavigationParams>
 ): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
-  const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
-  const backgroundInterpolation = backgroundAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
-  });
+  const [flashAnimationState, setFlashAnimationState] = useState<
+    FlashAnimationState
+  >();
   const screenShotViewContainerRef = React.createRef<View>();
 
   React.useEffect(() => {
     if (isCapturingScreenShoot) {
-      fadeIn();
+      setFlashAnimationState("fadeIn");
     }
   }, [isCapturingScreenShoot]);
-
-  const fadeOut = () =>
-    Animated.timing(backgroundAnimation, {
-      duration: flashAnimation,
-      toValue: 0,
-      useNativeDriver: false,
-      easing: Easing.cubic
-    }).start();
-
-  const fadeIn = () =>
-    Animated.timing(backgroundAnimation, {
-      duration: flashAnimation,
-      toValue: 1,
-      useNativeDriver: false,
-      easing: Easing.cubic
-    }).start(saveScreenShoot);
 
   const saveScreenShoot = () => {
     // it should not never happen
@@ -108,7 +85,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
       undefined,
       () => {
         setIsCapturingScreenShoot(false);
-        fadeOut();
+        setFlashAnimationState("fadeOut");
       }
     );
   };
@@ -176,10 +153,9 @@ export const EuCovidCertMarkdownDetailsScreen = (
         )}
       </SafeAreaView>
 
-      {/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */}
-      <Animated.View
-        pointerEvents={"none"}
-        style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
+      <FlashAnimatedComponent
+        state={flashAnimationState}
+        onFadeInCompleted={saveScreenShoot}
       />
     </BaseScreenComponent>
   );
