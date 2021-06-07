@@ -52,9 +52,6 @@ describe("Test EuCovidCertificateRouterScreen", () => {
       })
     );
 
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(render.component.toJSON()));
-
     expect(
       render.component.queryByTestId("EuCovidCertGenericErrorKoScreen")
     ).not.toBeNull();
@@ -105,7 +102,19 @@ describe("Test EuCovidCertificateRouterScreen", () => {
 
   it("With a notFound response, the loading screen should be rendered EuCovidCertNotFoundKoScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        euCovidCert: {
+          ...globalState.features.euCovidCert,
+          current: {
+            messageId: "123",
+            authCode: "123" as EUCovidCertificateAuthCode
+          }
+        }
+      }
+    } as any);
     const render = renderComponent(store);
 
     expect(
