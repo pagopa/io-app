@@ -1,6 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
+import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
 import { handleGetEuCovidCertificate } from "../handleGetEuCovidCertificate";
 import { appReducer } from "../../../../../store/reducers";
 import { euCovidCertificateGet } from "../../../store/actions";
@@ -8,7 +9,6 @@ import {
   EUCovidCertificate,
   EUCovidCertificateAuthCode
 } from "../../../types/EUCovidCertificate";
-import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
 import {
   RevokedCertificate,
   StatusEnum
