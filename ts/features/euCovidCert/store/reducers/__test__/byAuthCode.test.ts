@@ -236,5 +236,23 @@ describe("Test byAuthCode reducer & selector behaviour", () => {
     expect(
       euCovidCertificateShouldBeLoadedSelector(store.getState(), authCode)
     ).toBeTruthy();
+
+    store.dispatch(euCovidCertificateGet.request(authCode));
+    store.dispatch(euCovidCertificateGet.success(mockResponseSuccess));
+
+    expect(
+      euCovidCertificateShouldBeLoadedSelector(store.getState(), authCode)
+    ).toBeFalsy();
+
+    MockDate.set("2021-06-10T15:30:00");
+
+    expect(
+      euCovidCertificateShouldBeLoadedSelector(store.getState(), authCode)
+    ).toBeFalsy();
+
+    MockDate.set("2021-06-10T16:00:00");
+    expect(
+      euCovidCertificateShouldBeLoadedSelector(store.getState(), authCode)
+    ).toBeTruthy();
   });
 });
