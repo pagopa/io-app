@@ -71,7 +71,7 @@ const renderComponent = (state: GlobalState) => {
 
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
     EuCovidCertWrongFormatKoScreen,
-    EUCOVIDCERT_ROUTES.DETAILS,
+    EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store
   );
