@@ -46,7 +46,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
 
   const scrollToEnd = () => {
     if (props.showBackSide && ScrollViewRef.current) {
-      // dalay the scroll to end command to wait until the ingress animation is completed
+      // delay the scroll to end command to wait until the ingress animation is completed
       // eslint-disable-next-line
       scrollTimeout = setTimeout(() => {
         if (ScrollViewRef.current) {
