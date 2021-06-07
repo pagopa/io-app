@@ -73,7 +73,6 @@ const EuCovidCertificateRouterScreen = (
 ): React.ReactElement | null => {
   const authCode = props.navigation.getParam("authCode");
   const messageId = props.navigation.getParam("messageId");
-  console.log("rendering");
 
   useEffect(() => {
     // At the first rendering, set the message to read
