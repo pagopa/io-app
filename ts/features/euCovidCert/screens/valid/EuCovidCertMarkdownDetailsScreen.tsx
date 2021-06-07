@@ -10,7 +10,7 @@ import {
   StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { CaptureOptions, captureRef } from "react-native-view-shot";
+import { CaptureOptions } from "react-native-view-shot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -20,9 +20,9 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { showToast } from "../../../../utils/showToast";
-import { saveImageToGallery } from "../../../../utils/share";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
+import { captureScreenShoot } from "../../utils/screenshoot";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
@@ -98,34 +98,19 @@ export const EuCovidCertMarkdownDetailsScreen = (
       setIsCapturingScreenShoot(false);
       return;
     }
-    captureRef(screenShotViewContainerRef, screenShotOption)
-      .then(screenShotUri => {
-        saveImageToGallery(`file://${screenShotUri}`)
-          .run()
-          .then(maybeSaved => {
-            maybeSaved.fold(
-              () =>
-                // no permission error
-                showToastError(
-                  I18n.t("features.euCovidCertificate.save.noPermission")
-                ),
-              () => {
-                // success
-                Toast.show({
-                  text: I18n.t("features.euCovidCertificate.save.ok")
-                });
-              }
-            );
-          })
-          .catch(showToastError);
-      })
-      .catch(() => {
-        showToastError();
-      })
-      .finally(() => {
+    captureScreenShoot(
+      screenShotViewContainerRef,
+      screenShotOption,
+      () =>
+        Toast.show({
+          text: I18n.t("features.euCovidCertificate.save.ok")
+        }),
+      undefined,
+      () => {
         setIsCapturingScreenShoot(false);
         fadeOut();
-      });
+      }
+    );
   };
   // show button when markdown is loaded and it is not capturing the screenshot
   const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;

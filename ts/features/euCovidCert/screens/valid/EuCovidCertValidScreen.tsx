@@ -1,8 +1,20 @@
-import { View } from "native-base";
+import { Toast, View } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Image,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { CaptureOptions } from "react-native-view-shot";
+import { useState } from "react";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -25,8 +37,8 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { share } from "../../../../utils/share";
 import { showToast } from "../../../../utils/showToast";
+import { captureScreenShoot } from "../../utils/screenshoot";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -54,6 +66,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between"
+  },
+  hover: {
+    minWidth: "100%",
+    minHeight: "100%",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
@@ -61,7 +83,12 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
+type EuCovidCertValidComponentProps = Props & {
+  markdownWebViewStyle?: StyleProp<ViewStyle>;
+};
+const EuCovidCertValidComponent = (
+  props: EuCovidCertValidComponentProps
+): React.ReactElement => (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
       <TouchableOpacity
@@ -90,7 +117,11 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
     )}
     {props.validCertificate.markdownPreview && (
       <>
-        <MarkdownHandleCustomLink testID={"markdownPreview"}>
+        <MarkdownHandleCustomLink
+          webViewStyle={props.markdownWebViewStyle}
+          testID={"markdownPreview"}
+          extraBodyHeight={60}
+        >
           {props.validCertificate.markdownPreview}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
@@ -129,14 +160,8 @@ const addBottomSheetItem = (config: {
   </ButtonDefaultOpacity>
 );
 
-const Footer = (props: Props): React.ReactElement => {
-  const saveQRCode = async () => {
-    const shared = await share(
-      `data:image/png;base64,${props.validCertificate.qrCode.content}`
-    ).run();
-    shared.mapLeft(_ => showToastError());
-  };
-
+type FooterProps = Props & { onSave: () => void };
+const Footer = (props: FooterProps): React.ReactElement => {
   const { present: presentBottomSheet, dismiss } = useIOBottomSheet(
     <View>
       {addBottomSheetItem({
@@ -147,7 +172,7 @@ const Footer = (props: Props): React.ReactElement => {
           "features.euCovidCertificate.save.bottomSheet.saveAsImage.subTitle"
         ),
         onPress: () => {
-          void saveQRCode();
+          props.onSave();
           dismiss();
         }
       })}
@@ -183,13 +208,90 @@ const Footer = (props: Props): React.ReactElement => {
   );
 };
 
-const EuCovidCertValidScreen = (props: Props): React.ReactElement => (
-  <BaseEuCovidCertificateLayout
-    testID={"EuCovidCertValidScreen"}
-    content={<EuCovidCertValidComponent {...props} />}
-    footer={<Footer {...props} />}
-  />
-);
+const screenShotOption: CaptureOptions = {
+  width: Dimensions.get("window").width,
+  format: "jpg",
+  quality: 1.0
+};
+const flashAnimation = 240 as Millisecond;
+const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
+  const screenShotViewContainerRef = React.createRef<View>();
+  const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
+  const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
+  const backgroundInterpolation = backgroundAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
+  });
+  React.useEffect(() => {
+    if (isCapturingScreenShoot) {
+      fadeIn();
+    }
+  }, [isCapturingScreenShoot]);
+  const fadeOut = () =>
+    Animated.timing(backgroundAnimation, {
+      duration: flashAnimation,
+      toValue: 0,
+      useNativeDriver: false,
+      easing: Easing.cubic
+    }).start();
+
+  const fadeIn = () =>
+    Animated.timing(backgroundAnimation, {
+      duration: flashAnimation,
+      toValue: 1,
+      useNativeDriver: false,
+      easing: Easing.cubic
+    }).start(saveScreenShoot);
+  const saveScreenShoot = () => {
+    // it should not never happen
+    if (screenShotViewContainerRef.current === null) {
+      showToastError();
+      return;
+    }
+    captureScreenShoot(
+      screenShotViewContainerRef,
+      screenShotOption,
+      () =>
+        Toast.show({
+          text: I18n.t("features.euCovidCertificate.save.ok")
+        }),
+      undefined,
+      () => {
+        fadeOut();
+        setIsCapturingScreenShoot(false);
+      }
+    );
+  };
+  return (
+    <BaseEuCovidCertificateLayout
+      testID={"EuCovidCertValidScreen"}
+      content={
+        <View ref={screenShotViewContainerRef} style={[IOStyles.flex]}>
+          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          <EuCovidCertValidComponent
+            {...props}
+            markdownWebViewStyle={
+              isCapturingScreenShoot
+                ? IOStyles.horizontalContentPadding
+                : undefined
+            }
+          />
+          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+        </View>
+      }
+      footer={
+        <>
+          <Footer {...props} onSave={() => setIsCapturingScreenShoot(true)} />
+          {/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */}
+          <Animated.View
+            pointerEvents={"none"}
+            style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
+          />
+        </>
+      }
+    />
+  );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToQrCodeFullScreen: (qrCodeContent: string) =>
