@@ -13,16 +13,17 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-const flashAnimation = 240 as Millisecond;
-export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
-
-/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */
-export const FlashAnimatedComponent = (props: {
+type Props = {
   state: FlashAnimationState;
   animationDuration?: Millisecond;
   onFadeInCompleted?: () => void;
   onFadeOutCompleted?: () => void;
-}) => {
+};
+const flashAnimation = 240 as Millisecond;
+export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
+
+/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */
+export const FlashAnimatedComponent = (props: Props) => {
   const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
   const backgroundInterpolation = backgroundAnimation.interpolate({
     inputRange: [0, 1],
@@ -43,6 +44,7 @@ export const FlashAnimatedComponent = (props: {
       useNativeDriver: false,
       easing: Easing.cubic
     }).start(() => props.onFadeInCompleted?.());
+
   React.useEffect(() => {
     if (props.state) {
       switch (props.state) {
