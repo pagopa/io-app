@@ -128,7 +128,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
         fadeOut();
       });
   };
-  // show button when markdown is loaded and it is not taking the screenhot
+  // show button when markdown is loaded and it is not capturing the screenshot
   const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;
   return (
     <BaseScreenComponent
@@ -154,7 +154,8 @@ export const EuCovidCertMarkdownDetailsScreen = (
                 : undefined
             ]}
           >
-            {/* add an extra top space to add padding on screenshot  */}
+            {/* add an extra top and bottom (as extra height in the markdown component)
+            space to add padding on screenshot  */}
             {isCapturingScreenShoot && <View large={true} spacer={true} />}
             <MarkdownHandleCustomLink
               extraBodyHeight={60}
@@ -191,7 +192,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
         )}
       </SafeAreaView>
 
-      {/* top layout animated when screenshot is captured (save button) to simulate flash effect */}
+      {/* an overlay layout animated when screenshot is captured to simulate flash effect */}
       <Animated.View
         pointerEvents={"none"}
         style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
