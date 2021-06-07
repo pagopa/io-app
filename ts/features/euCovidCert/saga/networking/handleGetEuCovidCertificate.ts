@@ -1,21 +1,21 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
-import { euCovidCertificateGet } from "../../store/actions";
-import { BackendEuCovidCertClient } from "../../api/backendEuCovidCert";
-import { SagaCallReturnType } from "../../../../types/utils";
-import {
-  EUCovidCertificateResponse,
-  EUCovidCertificateResponseFailure
-} from "../../types/EUCovidCertificateResponse";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
+import { mixpanelTrack } from "../../../../mixpanel";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
+import { BackendEuCovidCertClient } from "../../api/backendEuCovidCert";
+import { euCovidCertificateGet } from "../../store/actions";
 import {
   EUCovidCertificate,
   EUCovidCertificateAuthCode
 } from "../../types/EUCovidCertificate";
-import { mixpanelTrack } from "../../../../mixpanel";
-import { readablePrivacyReport } from "../../../../utils/reporters";
+import {
+  EUCovidCertificateResponse,
+  EUCovidCertificateResponseFailure
+} from "../../types/EUCovidCertificateResponse";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -47,7 +47,13 @@ const convertSuccess = (
           kind: "revoked",
           id: certificate.uvci as EUCovidCertificate["id"],
           revokedOn: certificate.revoked_on,
-          revokeInfo: certificate.revoke_info
+          revokeInfo: certificate.info
+        };
+      case "expired":
+        return {
+          kind: "expired",
+          id: certificate.uvci as EUCovidCertificate["id"],
+          expiredInfo: certificate.info
         };
       default:
         return undefined;

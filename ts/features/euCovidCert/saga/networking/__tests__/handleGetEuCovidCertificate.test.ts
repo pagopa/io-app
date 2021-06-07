@@ -23,7 +23,7 @@ import { getGenericError } from "../../../../../utils/errors";
 const revokedCertificate: RevokedCertificate = {
   uvci: "revokedCertificateId",
   status: StatusEnum.revoked,
-  revoke_info: "the revoked reason",
+  info: "the revoked reason",
   revoked_on: new Date()
 };
 
