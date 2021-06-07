@@ -3,7 +3,7 @@ import * as React from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
+import expiredImage from "../../../../img/features/euCovidCert/certificate_expired.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
@@ -12,35 +12,41 @@ import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & { revokeInfo?: string };
+  ReturnType<typeof mapStateToProps> & { expiredInfo?: string };
 
-const EuCovidCertRevokedContentComponent = (props: Props) => (
+const EuCovidCertExpiredContentComponent = (props: Props) => (
   <>
     <View spacer extralarge />
     <View spacer extralarge />
     <InfoScreenComponent
       image={
         <Image
-          source={revokedImage}
+          source={expiredImage}
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
-          style={{ width: 104, height: 104, resizeMode: "contain" }}
+          style={{ width: 120, height: 118, resizeMode: "contain" }}
         />
       }
-      title={I18n.t("features.euCovidCertificate.revoked.title")}
+      title={I18n.t("features.euCovidCertificate.expired.title")}
       body={<EuCovidCertLearnMoreLink />}
     />
     <View spacer />
-    {props.revokeInfo && (
-      <MarkdownHandleCustomLink>{props.revokeInfo}</MarkdownHandleCustomLink>
+    {props.expiredInfo && (
+      <MarkdownHandleCustomLink>{props.expiredInfo}</MarkdownHandleCustomLink>
     )}
   </>
 );
 
-const EuCovidCertRevokedScreen = (props: Props): React.ReactElement => (
+/**
+ * TODO: this screen is identical to EuCovidCertRevokedScreen but but it is still being finalized and could change a lot.
+ * If it remains so, do a refactoring to unify common behaviors
+ * @param props
+ * @constructor
+ */
+const EuCovidCertExpiredScreen = (props: Props): React.ReactElement => (
   <BaseEuCovidCertificateLayout
-    testID={"EuCovidCertRevokedScreen"}
-    content={<EuCovidCertRevokedContentComponent {...props} />}
+    testID={"EuCovidCertExpiredScreen"}
+    content={<EuCovidCertExpiredContentComponent {...props} />}
   />
 );
 
@@ -50,4 +56,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EuCovidCertRevokedScreen);
+)(EuCovidCertExpiredScreen);
