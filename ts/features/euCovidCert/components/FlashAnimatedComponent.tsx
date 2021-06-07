@@ -19,7 +19,7 @@ type Props = {
   onFadeInCompleted?: () => void;
   onFadeOutCompleted?: () => void;
 };
-const flashAnimation = 240 as Millisecond;
+const defaultAnimationDuration = 240 as Millisecond;
 export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
 
 /* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */
@@ -31,7 +31,7 @@ export const FlashAnimatedComponent = (props: Props) => {
   });
   const fadeOut = () =>
     Animated.timing(backgroundAnimation, {
-      duration: props.animationDuration ?? flashAnimation,
+      duration: props.animationDuration ?? defaultAnimationDuration,
       toValue: 0,
       useNativeDriver: false,
       easing: Easing.cubic
@@ -39,7 +39,7 @@ export const FlashAnimatedComponent = (props: Props) => {
 
   const fadeIn = () =>
     Animated.timing(backgroundAnimation, {
-      duration: props.animationDuration ?? flashAnimation,
+      duration: props.animationDuration ?? defaultAnimationDuration,
       toValue: 1,
       useNativeDriver: false,
       easing: Easing.cubic
