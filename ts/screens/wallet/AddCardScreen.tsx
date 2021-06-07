@@ -313,7 +313,8 @@ const AddCardScreen: React.FC<Props> = props => {
               autoCapitalize: "words",
               keyboardType: "default",
               returnKeyType: "done",
-              onChangeText: (value: string) => updateState("holder", value)
+              onChangeText: (value: string) => updateState("holder", value),
+              disabled: true
             }}
             testID={"cardHolder"}
           />

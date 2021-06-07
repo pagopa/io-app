@@ -28,6 +28,7 @@ import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
 import { makeFontStyleObject } from "./core/fonts";
 import { H5 } from "./core/typography/H5";
+import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
 
@@ -57,6 +58,10 @@ type CommonProp = Readonly<{
   accessibilityHint?: string;
 }>;
 
+interface InputProps extends TextInputProps {
+  disabled?: boolean;
+}
+
 type Props = WithTestID<CommonProp> &
   (
     | Readonly<{
@@ -66,7 +71,7 @@ type Props = WithTestID<CommonProp> &
       }>
     | Readonly<{
         type: "text";
-        inputProps: TextInputProps;
+        inputProps: InputProps;
       }>
   );
 
@@ -117,12 +122,24 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
     setHasFocus(false);
   };
 
-  const descriptionColor = props.isValid === false ? "red" : "bluegreyDark";
+  const onSetInputBorderColor = () => {
+    if (props.type === "text" && props.inputProps.disabled) {
+      return IOColors.greyLight;
+    }
+    if (hasFocus && isEmpty) {
+      return variables.itemBorderDefaultColor;
+    }
+
+    return props.focusBorderColor;
+  };
+
+  const descriptionColor =
+    props.type === "text" && props.inputProps.disabled
+      ? "bluegreyLight"
+      : props.isValid === false
+      ? "red"
+      : "bluegreyDark";
   const accessibilityLabel = props.accessibilityLabel ?? "";
-  const inputBorderColor =
-    hasFocus && isEmpty
-      ? variables.itemBorderDefaultColor
-      : props.focusBorderColor;
   const isValid = props.isValid === undefined ? false : props.isValid;
   const isNotValid = props.isValid === undefined ? false : !props.isValid;
   return (
@@ -132,7 +149,15 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
         accessibilityElementsHidden={true}
       >
         <Item style={styles.noBottomLine}>
-          <H5>{props.label}</H5>
+          <H5
+            color={
+              props.type === "text" && props.inputProps.disabled
+                ? "bluegreyLight"
+                : "bluegreyDark"
+            }
+          >
+            {props.label}
+          </H5>
         </Item>
       </View>
 
@@ -146,7 +171,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: inputBorderColor
+            borderColor: onSetInputBorderColor()
           }}
           error={isNotValid}
           success={isValid}
@@ -155,7 +180,11 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
-                color={variables.brandDarkGray}
+                color={
+                  props.type === "text" && props.inputProps.disabled
+                    ? IOColors.bluegreyLight
+                    : variables.brandDarkGray
+                }
                 name={props.icon}
                 style={props.iconStyle}
               />
@@ -178,15 +207,18 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
             />
           ) : (
             <Input
-              placeholderTextColor={color(variables.brandGray)
-                .darken(0.2)
-                .string()}
+              placeholderTextColor={
+                props.type === "text" && props.inputProps.disabled
+                  ? color(IOColors.bluegreyLight).string()
+                  : color(variables.brandDarkGray).darken(0.2).string()
+              }
               underlineColorAndroid="transparent"
               {...props.inputProps}
               onChangeText={handleOnChangeText}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}Input`}
+              disabled={props.inputProps.disabled}
             />
           )}
         </Item>
