@@ -12,7 +12,7 @@ export type EUCovidCertificateAuthCode = string &
   IUnitTag<"EUCovidCertificateAuthCode">;
 
 type WithEUCovidCertificateId = {
-  id: EUCovidCertificateId;
+  id?: EUCovidCertificateId;
 };
 
 type QRCode = {
