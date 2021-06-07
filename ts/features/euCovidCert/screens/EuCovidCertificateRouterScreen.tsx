@@ -14,6 +14,7 @@ import {
   EUCovidCertificateResponse,
   isEuCovidCertificateSuccessResponse
 } from "../types/EUCovidCertificateResponse";
+import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
 import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
 import EuCovidCertRevokedScreen from "./EuCovidCertRevokedScreen";
 import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
@@ -56,6 +57,8 @@ const routeEuCovidResponse = (
           return (
             <EuCovidCertRevokedScreen revokeInfo={response.value.revokeInfo} />
           );
+        case "expired":
+          return <EuCovidCertExpiredScreen />;
       }
   }
 };

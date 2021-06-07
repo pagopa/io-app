@@ -2245,7 +2245,7 @@ bonus:
           issuerId: "Issuer transaction ID"
           maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
           maxCashbackForPeriodWarning: "You have already reached the maximum refund for this phase."
-          canceledOperationWarning: "This transaction is a write-off, meaning it invalidates a transaction that had been previously recognized."
+          canceledOperationWarning: "This transaction is a write-off, meaning it cancels a transaction that was previously made."
           canceled: "Write-off"
       paymentMethods:
         add:
@@ -2466,7 +2466,8 @@ features:
         save: "Save the details as an image"
     revoked:
       title: "This certificate is no longer valid"
-      subtitle: "TMP"
+    expired:
+      title: "This certificate has expired"
     ko:
       genericError:
         title: "Your certificate data could not be retrieved: please try again"

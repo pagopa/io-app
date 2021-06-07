@@ -2275,7 +2275,7 @@ bonus:
           issuerId: "ID transazione Issuer"
           maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
           maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata riconosciuta in precedenza."
+          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza."
           canceled: "Storno"
       paymentMethods:
         add:
@@ -2496,7 +2496,8 @@ features:
         save: "Salva i dettagli come immagine"
     revoked:
       title: "Questo certificato non è più valido"
-      subtitle: "TMP"
+    expired:
+      title: "Questo certifcato è scaduto"
     ko:
       genericError:
         title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
