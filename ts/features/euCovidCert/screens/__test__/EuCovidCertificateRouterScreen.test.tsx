@@ -4,6 +4,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { navigateToEuCovidCertificateDetailScreen } from "../../navigation/actions";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { euCovidCertificateGet } from "../../store/actions";
 import {
@@ -29,6 +30,14 @@ describe("Test EuCovidCertificateRouterScreen", () => {
   it("With a failure, the loading screen should be rendered EuCovidCertGenericErrorKoScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
+
+    store.dispatch(
+      navigateToEuCovidCertificateDetailScreen({
+        authCode,
+        messageId: "messageId"
+      })
+    );
+
     const render = renderComponent(store);
 
     expect(
@@ -42,6 +51,9 @@ describe("Test EuCovidCertificateRouterScreen", () => {
         value: new Error("An error")
       })
     );
+
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(render.component.toJSON()));
 
     expect(
       render.component.queryByTestId("EuCovidCertGenericErrorKoScreen")
