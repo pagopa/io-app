@@ -50,7 +50,7 @@ const Footer = (props: FooterProps) => (
 );
 
 const EuCovidCertGenericErrorKoScreen = (props: Props): React.ReactElement => {
-  // read from the store the authCode for the current certificate ad create the refresh callback
+  // read from the store the authCode for the current certificate and create the refresh callback
   const authCode = props.currentCertificate?.authCode;
   const reloadCertificate = authCode ? () => props.reload(authCode) : undefined;
 

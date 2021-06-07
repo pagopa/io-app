@@ -1,17 +1,14 @@
+import { View } from "native-base";
 import * as React from "react";
+import { Image } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Image } from "react-native";
-import { Toast, View } from "native-base";
-import { GlobalState } from "../../../store/reducers/types";
+import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
-import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
-import Markdown from "../../../components/ui/Markdown";
-import { taskLinking } from "../../../utils/url";
-import { deriveCustomHandledLink } from "../../../components/ui/Markdown/handlers/link";
-import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { GlobalState } from "../../../store/reducers/types";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
+import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -35,26 +32,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
     />
     <View spacer />
     {props.revokeInfo && (
-      <Markdown
-        onLinkClicked={(link: string) => {
-          deriveCustomHandledLink(link).map(hl => {
-            if (hl.schema === "copy") {
-              clipboardSetStringWithFeedback(hl.value);
-              return;
-            }
-            taskLinking(hl.url)
-              .run()
-              .catch(_ =>
-                Toast.show({
-                  text: I18n.t("global.genericError"),
-                  type: "danger"
-                })
-              );
-          });
-        }}
-      >
-        {props.revokeInfo}
-      </Markdown>
+      <MarkdownHandleCustomLink>{props.revokeInfo}</MarkdownHandleCustomLink>
     )}
   </>
 );
