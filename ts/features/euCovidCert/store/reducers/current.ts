@@ -1,5 +1,5 @@
-import { NavigationActions } from "react-navigation";
 import { createSelector } from "reselect";
+import { NavigationActions } from "react-navigation";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
