@@ -101,6 +101,34 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
+const addBottomSheetItem = (config: {
+  title: string;
+  subTitle: string;
+  onPress: () => void;
+}) => (
+  <ButtonDefaultOpacity
+    onPress={() => {
+      config.onPress();
+    }}
+    style={styles.container}
+    onPressWithGestureHandler={true}
+  >
+    <View style={styles.flexColumn}>
+      <View style={styles.row}>
+        <View style={IOStyles.flex}>
+          <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+            {config.title}
+          </H3>
+          <H5 color={"bluegrey"} weight={"Regular"}>
+            {config.subTitle}
+          </H5>
+        </View>
+        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+      </View>
+    </View>
+  </ButtonDefaultOpacity>
+);
+
 const Footer = (props: Props): React.ReactElement => {
   const saveQRCode = async () => {
     const shared = await share(
@@ -108,44 +136,20 @@ const Footer = (props: Props): React.ReactElement => {
     ).run();
     shared.mapLeft(_ => showToastError());
   };
-  const addItem = (config: {
-    title: string;
-    subTitle: string;
-    onPress: () => void;
-  }) => (
-    <ButtonDefaultOpacity
-      onPress={() => {
-        config.onPress();
-        dismiss();
-      }}
-      style={styles.container}
-      onPressWithGestureHandler={true}
-    >
-      <View style={styles.flexColumn}>
-        <View style={styles.row}>
-          <View style={IOStyles.flex}>
-            <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-              {config.title}
-            </H3>
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {config.subTitle}
-            </H5>
-          </View>
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
-        </View>
-      </View>
-    </ButtonDefaultOpacity>
-  );
-  const { present, dismiss } = useIOBottomSheet(
+
+  const { present: presentBottomSheet, dismiss } = useIOBottomSheet(
     <View>
-      {addItem({
+      {addBottomSheetItem({
         title: I18n.t(
           "features.euCovidCertificate.save.bottomSheet.saveAsImage.title"
         ),
         subTitle: I18n.t(
           "features.euCovidCertificate.save.bottomSheet.saveAsImage.subTitle"
         ),
-        onPress: saveQRCode
+        onPress: () => {
+          void saveQRCode();
+          dismiss();
+        }
       })}
     </View>,
     <View style={IOStyles.flex}>
@@ -160,8 +164,7 @@ const Footer = (props: Props): React.ReactElement => {
   );
 
   const saveButton = confirmButtonProps(
-    // TODO: add save function with https://pagopa.atlassian.net/browse/IAGP-17
-    present,
+    presentBottomSheet,
     I18n.t("global.genericSave")
   );
   const markdownDetails = props.validCertificate.markdownDetails;
