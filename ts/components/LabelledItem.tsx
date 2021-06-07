@@ -210,7 +210,7 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
               placeholderTextColor={
                 props.type === "text" && props.inputProps.disabled
                   ? color(IOColors.bluegreyLight).string()
-                  : color(variables.brandDarkGray).darken(0.2).string()
+                  : color(variables.brandGray).darken(0.2).string()
               }
               underlineColorAndroid="transparent"
               {...props.inputProps}
