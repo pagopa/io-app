@@ -18,6 +18,7 @@ import {
   isActivationResponseTrackable,
   isEligibilityResponseTrackable
 } from "../../features/bonus/bonusVacanze/utils/bonus";
+import { trackEuCovidCertificateActions } from "../../features/euCovidCert/analytics";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
@@ -470,6 +471,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
 };
