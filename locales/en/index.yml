@@ -2466,7 +2466,7 @@ features:
         title: "Your certificate data could not be retrieved: please try again"
         subtitle: "This could be due to a temporary problem."
       notFound:
-        title: "The certificate does not appear to \nexist: contact support"
+        title: "It seems that the certificate does not \nexist: contact support"
         subtitle: "You may be asked for this data to investigate the problem:"
         cta: "Contact support"
       notOperational:
@@ -2476,7 +2476,7 @@ features:
         title: "The service is temporarily unavailable"
         subtitle: "Please try again later"
       wrongFormat:
-        title: "This certificate cannot be \nrecovered: contact support"
+        title: "This certificate cannot be \nretrieved: contact support"
         subtitle: "You may be asked for this data to investigate the problem:"
         cta: "Contact support"
 webView:
