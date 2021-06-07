@@ -2457,7 +2457,8 @@ features:
         save: "Save the details as an image"
     revoked:
       title: "This certificate is no longer valid"
-      subtitle: "TMP"
+    expired:
+      title: "This certificate has expired"
     ko:
       genericError:
         title: "Your certificate data could not be retrieved: please try again"
