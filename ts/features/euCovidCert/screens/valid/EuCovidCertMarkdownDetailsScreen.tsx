@@ -31,16 +31,6 @@ const styles = StyleSheet.create({
   },
   save: {
     width: "100%"
-  },
-  hover: {
-    minWidth: "100%",
-    minHeight: "100%",
-    bottom: 0,
-    left: 0,
-    top: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center"
   }
 });
 
