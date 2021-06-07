@@ -139,9 +139,7 @@ const addBottomSheetItem = (config: {
   onPress: () => void;
 }) => (
   <ButtonDefaultOpacity
-    onPress={() => {
-      config.onPress();
-    }}
+    onPress={config.onPress}
     style={styles.container}
     onPressWithGestureHandler={true}
   >

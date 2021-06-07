@@ -5,6 +5,14 @@ import { saveImageToGallery } from "../../../utils/share";
 import I18n from "../../../i18n";
 import { showToast } from "../../../utils/showToast";
 
+/**
+ * utility to save a screenshot as image in the device camera roll
+ * @param viewRef the view you want to export as image
+ * @param options screenshot options
+ * @param onSuccess invoked on success
+ * @param onError invoken on error
+ * @param onEnd always invoked onSuccess/onError
+ */
 export const captureScreenShoot = <T>(
   viewRef: number | ReactInstance | RefObject<T>,
   options?: CaptureOptions,
