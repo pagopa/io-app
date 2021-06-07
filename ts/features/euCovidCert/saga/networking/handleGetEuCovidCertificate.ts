@@ -82,7 +82,7 @@ export function* handleGetEuCovidCertificate(
   action: ActionType<typeof euCovidCertificateGet.request>
 ) {
   const authCode = action.payload;
-  const preferredLanguage = getFullLocale();
+  const preferredLanguage = getFullLocale().replace("-", "_");
 
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> = yield call(
