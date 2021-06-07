@@ -16,6 +16,7 @@ import {
   EUCovidCertificateResponse,
   EUCovidCertificateResponseFailure
 } from "../../types/EUCovidCertificateResponse";
+import { getFullLocale } from "../../../../utils/locale";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -81,10 +82,17 @@ export function* handleGetEuCovidCertificate(
   action: ActionType<typeof euCovidCertificateGet.request>
 ) {
   const authCode = action.payload;
+  const preferredLanguage = getFullLocale();
+
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> = yield call(
       getCertificate,
-      { getCertificateParams: { auth_code: authCode } }
+      {
+        getCertificateParams: {
+          auth_code: authCode,
+          preferred_languages: [preferredLanguage]
+        }
+      }
     );
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
