@@ -52,9 +52,6 @@ describe("Test EuCovidCertificateRouterScreen", () => {
       })
     );
 
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(render.component.toJSON()));
-
     expect(
       render.component.queryByTestId("EuCovidCertGenericErrorKoScreen")
     ).not.toBeNull();
