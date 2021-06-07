@@ -154,6 +154,7 @@ global:
     show: "Mostra"
     update: "Aggiorna"
     findOutMore: "Scopri di più"
+    details: "Dettagli"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -2480,14 +2481,19 @@ features:
       title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
       subtitle: "Attendi per favore"
     valid:
-      placeholder: "TMP"
+      accessibility:
+        qrCode: "QR Code"
+        hint: "Visualizza il QR Code a tutto schermo"
+      markdownDetails:
+        headerTitle: "Dettagli del certificato"
+        save: "Salva i dettagli come immagine"
     revoked:
       title: "Questo certificato non è più valido"
       subtitle: "TMP"
     ko:
       genericError:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
+        subtitle: "Protrebbe essere dovuto ad un problema temporaneo."
       notFound:
         title: "Sembra che il certificato non \nesista: contatta l’assistenza"
         subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"
