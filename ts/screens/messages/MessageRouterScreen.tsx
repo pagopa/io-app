@@ -123,7 +123,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     messageId: string
   ) => {
     dispatch(NavigationActions.back());
-    dispatch(navigateToEuCovidCertificateDetailScreen(authCode, messageId));
+    dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
   }
 });
 const mapStateToProps = (state: GlobalState) => ({

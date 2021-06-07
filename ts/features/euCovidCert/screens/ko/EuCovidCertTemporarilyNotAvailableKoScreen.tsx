@@ -12,7 +12,7 @@ import I18n from "../../../../i18n";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const EuCovidCertTemporailyNotAvailableComponent = (): React.ReactElement => (
+const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
   <>
     <View spacer extralarge />
     <View spacer extralarge />
@@ -40,7 +40,7 @@ const EuCovidCertTemporarilyNotAvailableKoScreen = (
 ): React.ReactElement => (
   <BaseEuCovidCertificateLayout
     testID={"EuCovidCertTemporarilyNotAvailableKoScreen"}
-    content={<EuCovidCertTemporailyNotAvailableComponent />}
+    content={<EuCovidCertTemporarilyNotAvailableComponent />}
   />
 );
 

@@ -91,7 +91,7 @@ const euCovidCertActions = [
   { type: "Navigation/BACK" },
   {
     type: "Navigation/NAVIGATE",
-    routeName: "EUCOVIDCERT_DETAILS",
+    routeName: "EUCOVIDCERT_CERTIFICATE",
     params: {
       authCode: "eu_covid_cert",
       messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
