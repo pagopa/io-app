@@ -2486,8 +2486,8 @@ features:
       subtitle: "TMP"
     ko:
       genericError:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
+        subtitle: "Protrebbe essere dovuto ad un problema temporaneo."
       notFound:
         title: "Sembra che il certificato non \nesista: contatta l’assistenza"
         subtitle: "Potrebbero esserti richiesti questi dati per approfondire il problema:"

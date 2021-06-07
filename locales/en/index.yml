@@ -2456,8 +2456,8 @@ features:
       subtitle: "TMP"
     ko:
       genericError:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Your certificate data could not be retrieved: please try again"
+        subtitle: "This could be due to a temporary problem."
       notFound:
         title: "The certificate does not appear to exist - contact support"
         subtitle: "You may be asked for this data to investigate the problem:"
