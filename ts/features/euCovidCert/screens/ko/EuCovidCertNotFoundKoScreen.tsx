@@ -7,7 +7,7 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
-import doubtImage from "../../../../../img/pictograms/doubt.png";
+import doubtImage from "../../../../../img/features/euCovidCert/certificate_not_found.png";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { H4 } from "../../../../components/core/typography/H4";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
