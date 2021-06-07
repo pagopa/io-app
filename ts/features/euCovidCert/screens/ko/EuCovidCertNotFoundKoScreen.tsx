@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  shrink: {
+    flexShrink: 1
   }
 });
 
@@ -40,9 +43,10 @@ const CopyWithTitleItem: React.FC<{
       <H4 weight={"Regular"}>{title}</H4>
     </View>
     <View style={styles.row}>
-      <H4 weight={"Bold"} testID={`${testId}ToCopy`}>
+      <H4 weight={"Bold"} testID={`${testId}ToCopy`} style={styles.shrink}>
         {toCopy}
       </H4>
+      <View hspacer={true} />
       <CopyButtonComponent textToCopy={toCopy} />
     </View>
   </>
