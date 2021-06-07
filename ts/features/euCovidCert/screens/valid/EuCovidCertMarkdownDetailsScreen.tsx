@@ -55,7 +55,6 @@ const screenShotOption: CaptureOptions = {
   format: "jpg",
   quality: 1.0
 };
-// screenshot option and state
 const flashAnimation = 240 as Millisecond;
 
 export const EuCovidCertMarkdownDetailsScreen = (
@@ -68,7 +67,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
-  const viewRef = React.createRef<View>();
+  const screenShotViewContainerRef = React.createRef<View>();
 
   React.useEffect(() => {
     if (isCapturingScreenShoot) {
@@ -92,26 +91,26 @@ export const EuCovidCertMarkdownDetailsScreen = (
       easing: Easing.cubic
     }).start(saveScreenShoot);
 
-  const onPressSaveImage = () => setIsCapturingScreenShoot(true);
-
   const saveScreenShoot = () => {
     // it should not never happen
-    if (viewRef.current === null) {
+    if (screenShotViewContainerRef.current === null) {
       showToastError();
       setIsCapturingScreenShoot(false);
       return;
     }
-    captureRef(viewRef, screenShotOption)
+    captureRef(screenShotViewContainerRef, screenShotOption)
       .then(screenShotUri => {
         saveImageToGallery(`file://${screenShotUri}`)
           .run()
           .then(maybeSaved => {
             maybeSaved.fold(
               () =>
+                // no permission error
                 showToastError(
                   I18n.t("features.euCovidCertificate.save.noPermission")
                 ),
               () => {
+                // success
                 Toast.show({
                   text: I18n.t("features.euCovidCertificate.save.ok")
                 });
@@ -143,10 +142,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
         testID={"EuCovidCertQrCodeFullScreen"}
       >
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          {/* add an extra padding while taking the screenshot */}
+          {/* add an extra padding while capturing the screenshot */}
           <View
             collapsable={false}
-            ref={viewRef}
+            ref={screenShotViewContainerRef}
             style={[
               styles.viewShot,
               isCapturingScreenShoot
@@ -155,7 +154,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
             ]}
           >
             {/* add an extra top and bottom (as extra height in the markdown component)
-            space to add padding on screenshot  */}
+            margin while capturing the screenshot  */}
             {isCapturingScreenShoot && <View large={true} spacer={true} />}
             <MarkdownHandleCustomLink
               extraBodyHeight={60}
@@ -168,7 +167,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
                 <View spacer={true} />
                 <ButtonDefaultOpacity
                   style={styles.save}
-                  onPress={onPressSaveImage}
+                  onPress={() => setIsCapturingScreenShoot(true)}
                 >
                   <Label color={"white"}>
                     {I18n.t(
@@ -192,7 +191,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
         )}
       </SafeAreaView>
 
-      {/* an overlay layout animated when screenshot is captured to simulate flash effect */}
+      {/* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */}
       <Animated.View
         pointerEvents={"none"}
         style={[styles.hover, { backgroundColor: backgroundInterpolation }]}
