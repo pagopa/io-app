@@ -1,13 +1,13 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
-import { IndexedById } from "../../../../store/helpers/indexer";
-import { EUCovidCertificateResponse } from "../../types/EUCovidCertificateResponse";
-import { euCovidCertByAuthCodeReducer } from "./byAuthCode";
+import {
+  euCovidCertByAuthCodeReducer,
+  EuCovidCertByIdState
+} from "./byAuthCode";
 import { currentReducer, EuCovidCertCurrentSelectedState } from "./current";
 
 export type EuCovidCertState = {
-  byAuthCode: IndexedById<pot.Pot<EUCovidCertificateResponse, Error>>;
+  byAuthCode: EuCovidCertByIdState;
   current: EuCovidCertCurrentSelectedState | null;
 };
 
