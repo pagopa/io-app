@@ -1,5 +1,6 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable } from "fp-ts/lib/Option";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -16,6 +17,8 @@ import {
   EUCovidCertificateResponse,
   EUCovidCertificateResponseFailure
 } from "../../types/EUCovidCertificateResponse";
+import { profileSelector } from "../../../../store/reducers/profile";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -81,10 +84,23 @@ export function* handleGetEuCovidCertificate(
   action: ActionType<typeof euCovidCertificateGet.request>
 ) {
   const authCode = action.payload;
+
+  const profile: ReturnType<typeof profileSelector> = yield select(
+    profileSelector
+  );
+
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> = yield call(
       getCertificate,
-      { getCertificateParams: { auth_code: authCode } }
+      {
+        getCertificateParams: {
+          auth_code: authCode,
+          preferred_languages: pot.getOrElse(
+            pot.mapNullable(profile, p => p.preferred_languages),
+            [PreferredLanguageEnum.it_IT]
+          )
+        }
+      }
     );
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
