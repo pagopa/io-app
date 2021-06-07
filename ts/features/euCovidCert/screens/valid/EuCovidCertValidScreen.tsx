@@ -64,10 +64,10 @@ const EuCovidCertValidComponent = (props: Props): React.ReactElement => (
         />
       </TouchableOpacity>
     )}
-    {props.validCertificate.markdownPreview && (
+    {props.validCertificate.markdownInfo && (
       <>
         <MarkdownHandleCustomLink testID={"markdownPreview"}>
-          {props.validCertificate.markdownPreview}
+          {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
       </>
