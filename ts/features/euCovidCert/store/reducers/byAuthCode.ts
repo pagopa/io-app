@@ -19,7 +19,7 @@ import {
 } from "../../types/EUCovidCertificateResponse";
 import { euCovidCertificateGet } from "../actions";
 
-type EUCovidCertificateResponseWithTimestamp = EUCovidCertificateResponse & {
+export type EUCovidCertificateResponseWithTimestamp = EUCovidCertificateResponse & {
   lastUpdate: Date;
 };
 
@@ -71,7 +71,7 @@ export const euCovidCertificateFromAuthCodeSelector = createSelector(
 );
 
 // 1h
-const ttlTime: Millisecond = (60 * 1000) as Millisecond;
+const ttlTime: Millisecond = (60 * 60 * 1000) as Millisecond;
 
 /**
  * Return true when the remote data should be reloaded:
