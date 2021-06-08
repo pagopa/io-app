@@ -1,5 +1,6 @@
 import { Toast, View } from "native-base";
 import * as React from "react";
+import { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -8,12 +9,12 @@ import {
   TouchableOpacity,
   ViewStyle
 } from "react-native";
+import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { CaptureOptions } from "react-native-view-shot";
-import { useState } from "react";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
 import {
@@ -109,13 +110,13 @@ const EuCovidCertValidComponent = (
         />
       </TouchableOpacity>
     )}
-    {props.validCertificate.markdownPreview && (
+    {props.validCertificate.markdownInfo && (
       <View style={props.markdownWebViewStyle}>
         <MarkdownHandleCustomLink
           testID={"markdownPreview"}
           extraBodyHeight={60}
         >
-          {props.validCertificate.markdownPreview}
+          {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
       </View>
@@ -268,7 +269,13 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       }
       footer={
         <>
-          <Footer {...props} onSave={() => setIsCapturingScreenShoot(true)} />
+          <Footer
+            {...props}
+            onSave={() => {
+              void mixpanelTrack("EUCOVIDCERT_SAVE_QRCODE");
+              setIsCapturingScreenShoot(true);
+            }}
+          />
           {/* this view must be the last one, since it must be drawn on top of all */}
           <FlashAnimatedComponent
             state={flashAnimationState}

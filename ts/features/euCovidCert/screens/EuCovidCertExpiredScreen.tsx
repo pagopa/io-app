@@ -32,7 +32,9 @@ const EuCovidCertExpiredContentComponent = (props: Props) => (
     />
     <View spacer />
     {props.expiredInfo && (
-      <MarkdownHandleCustomLink>{props.expiredInfo}</MarkdownHandleCustomLink>
+      <MarkdownHandleCustomLink extraBodyHeight={60}>
+        {props.expiredInfo}
+      </MarkdownHandleCustomLink>
     )}
   </>
 );

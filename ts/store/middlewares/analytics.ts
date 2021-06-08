@@ -128,6 +128,7 @@ import {
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
@@ -470,6 +471,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
 };

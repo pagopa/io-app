@@ -54,10 +54,16 @@ const routeEuCovidResponse = (
           return <EuCovidCertValidScreen validCertificate={response.value} />;
         case "revoked":
           return (
-            <EuCovidCertRevokedScreen revokeInfo={response.value.revokeInfo} />
+            <EuCovidCertRevokedScreen
+              revokeInfo={response.value.markdownInfo}
+            />
           );
         case "expired":
-          return <EuCovidCertExpiredScreen />;
+          return (
+            <EuCovidCertExpiredScreen
+              expiredInfo={response.value.markdownInfo}
+            />
+          );
       }
   }
 };
