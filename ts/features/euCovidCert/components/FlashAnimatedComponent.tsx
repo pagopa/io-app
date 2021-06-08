@@ -25,25 +25,34 @@ export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
 /* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */
 export const FlashAnimatedComponent = (props: Props) => {
   const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
+  const animation = React.useRef<Animated.CompositeAnimation>();
   const backgroundInterpolation = backgroundAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
-  const fadeOut = () =>
-    Animated.timing(backgroundAnimation, {
+  const fadeOut = () => {
+    animation.current?.stop();
+    // eslint-disable-next-line functional/immutable-data
+    animation.current = Animated.timing(backgroundAnimation, {
       duration: props.animationDuration ?? defaultAnimationDuration,
       toValue: 0,
       useNativeDriver: false,
       easing: Easing.cubic
-    }).start(() => props.onFadeOutCompleted?.());
+    });
+    animation.current.start(() => props.onFadeOutCompleted?.());
+  };
 
-  const fadeIn = () =>
-    Animated.timing(backgroundAnimation, {
+  const fadeIn = () => {
+    animation.current?.stop();
+    // eslint-disable-next-line functional/immutable-data
+    animation.current = Animated.timing(backgroundAnimation, {
       duration: props.animationDuration ?? defaultAnimationDuration,
       toValue: 1,
       useNativeDriver: false,
       easing: Easing.cubic
-    }).start(() => props.onFadeInCompleted?.());
+    });
+    animation.current.start(() => props.onFadeInCompleted?.());
+  };
 
   React.useEffect(() => {
     if (props.state) {
@@ -56,6 +65,9 @@ export const FlashAnimatedComponent = (props: Props) => {
           break;
       }
     }
+    return () => {
+      animation.current?.stop();
+    };
   }, [props.state]);
   return (
     <Animated.View
