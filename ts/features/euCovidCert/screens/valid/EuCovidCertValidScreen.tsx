@@ -149,6 +149,8 @@ const addBottomSheetItem = (config: {
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
       </View>
     </View>
+    <View spacer={true} large={true} />
+    <View spacer={true} large={true} />
   </ButtonDefaultOpacity>
 );
 
@@ -176,8 +178,10 @@ const Footer = (props: FooterProps): React.ReactElement => {
       <H5 color={"bluegrey"} weight={"Regular"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H5>
+      <View spacer={true} />
+      <View spacer={true} />
     </View>,
-    260
+    320
   );
 
   const saveButton = confirmButtonProps(
