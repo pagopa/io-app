@@ -12,28 +12,15 @@ import {
 import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { showToast } from "../../../../utils/showToast";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import {
-  FlashAnimatedComponent,
-  FlashAnimationState
-} from "../../components/FlashAnimatedComponent";
-
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
@@ -123,7 +110,7 @@ const EuCovidCertValidComponent = (
         />
       </TouchableOpacity>
     )}
-    {props.validCertificate.markdownPreview && (
+    {props.validCertificate.markdownInfo && (
       <View style={props.markdownWebViewStyle}>
         <MarkdownHandleCustomLink
           testID={"markdownPreview"}
