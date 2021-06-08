@@ -23,19 +23,19 @@ type QRCode = {
 export type ValidCertificate = WithEUCovidCertificateId & {
   kind: "valid";
   qrCode: QRCode;
-  markdownPreview?: string;
+  markdownInfo?: string;
   markdownDetails?: string;
 };
 
 export type RevokedCertificate = WithEUCovidCertificateId & {
   kind: "revoked";
-  revokeInfo?: string;
+  markdownInfo?: string;
   revokedOn?: Date;
 };
 
 type ExpiredCertificate = WithEUCovidCertificateId & {
   kind: "expired";
-  expiredInfo?: string;
+  markdownInfo?: string;
 };
 
 /**

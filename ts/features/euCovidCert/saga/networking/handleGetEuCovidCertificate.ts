@@ -42,7 +42,7 @@ const convertSuccess = (
             mimeType: certificate.qr_code.mime_type,
             content: certificate.qr_code.content
           },
-          markdownPreview: certificate.info,
+          markdownInfo: certificate.info,
           markdownDetails: certificate.detail
         };
       case "revoked":
@@ -50,13 +50,13 @@ const convertSuccess = (
           kind: "revoked",
           id: certificate.uvci as EUCovidCertificate["id"],
           revokedOn: certificate.revoked_on,
-          revokeInfo: certificate.info
+          markdownInfo: certificate.info
         };
       case "expired":
         return {
           kind: "expired",
           id: certificate.uvci as EUCovidCertificate["id"],
-          expiredInfo: certificate.info
+          markdownInfo: certificate.info
         };
       default:
         return undefined;
