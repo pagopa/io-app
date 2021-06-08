@@ -20,6 +20,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
@@ -261,7 +262,13 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       }
       footer={
         <>
-          <Footer {...props} onSave={() => setIsCapturingScreenShoot(true)} />
+          <Footer
+            {...props}
+            onSave={() => {
+              void mixpanelTrack("EUCOVIDCERT_SAVE_QRCODE");
+              setIsCapturingScreenShoot(true);
+            }}
+          />
           {/* this view must be the last one, since it must be drawn on top of all */}
           <FlashAnimatedComponent
             state={flashAnimationState}

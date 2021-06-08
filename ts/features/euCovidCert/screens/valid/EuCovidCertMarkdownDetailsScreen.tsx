@@ -8,6 +8,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
@@ -121,7 +122,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
                 <View spacer={true} />
                 <ButtonDefaultOpacity
                   style={styles.save}
-                  onPress={() => setIsCapturingScreenShoot(true)}
+                  onPress={() => {
+                    void mixpanelTrack("EUCOVIDCERT_SAVE_MARKDOWN_DETAILS");
+                    setIsCapturingScreenShoot(true);
+                  }}
                 >
                   <Label color={"white"}>
                     {I18n.t(
