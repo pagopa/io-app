@@ -30,25 +30,25 @@ const trackEuCovidCertificateActions = (mp: NonNullable<typeof mixpanel>) => (
 
 const trackEuCovidCertificateGetSuccessResponse = (
   response: EUCovidCertificateResponse
-): Record<string, unknown> | undefined => {
-  const containsInfo = isEuCovidCertificateSuccessResponse(response)
-    ? response.value.markdownInfo !== undefined
-    : false;
+): Record<string, unknown> => {
+  if (!isEuCovidCertificateSuccessResponse(response)) {
+    return {
+      containsInfo: false,
+      containsDetails: false,
+      qrCodeLength: undefined,
+      responseType: response.kind
+    };
+  }
+  const containsInfo = response.value.markdownInfo !== undefined;
   const containsDetails =
-    isEuCovidCertificateSuccessResponse(response) &&
     response.value.kind === "valid"
       ? response.value.markdownDetails !== undefined
       : false;
-
   const qrCodeLength =
-    isEuCovidCertificateSuccessResponse(response) &&
     response.value.kind === "valid"
       ? response.value.qrCode.content.length
       : undefined;
-
-  const responseType =
-    response.kind === "success" ? response.value.kind : response.kind;
-
+  const responseType = response.value.kind;
   return {
     containsInfo,
     containsDetails,
