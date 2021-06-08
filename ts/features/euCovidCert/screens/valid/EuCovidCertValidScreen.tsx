@@ -32,6 +32,7 @@ import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
+
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,

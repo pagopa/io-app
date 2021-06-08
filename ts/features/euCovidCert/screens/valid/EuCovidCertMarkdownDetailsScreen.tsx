@@ -10,15 +10,15 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import { showToast } from "../../../../utils/showToast";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
 import { captureScreenShoot } from "../../utils/screenshoot";
-import {
-  FlashAnimatedComponent,
-  FlashAnimationState
-} from "../../components/FlashAnimatedComponent";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
