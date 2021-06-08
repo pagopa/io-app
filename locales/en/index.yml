@@ -2440,20 +2440,20 @@ bonus:
 features:
   euCovidCertificate:
     save:
-      noPermission: "It seems that the app does not have permissions to save images in the gallery. Check your settings."
+      noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
       ok: "The information has been saved as an image in your gallery"
       bottomSheet:
         title: "Save the certificate"
-        subTitle: "You will be able to show the QR code of the certificate directly from your device, even if there is no connection."
+        subTitle: "You will be able to show the QR code of the certificate without opening IO app, even when you're offline."
         saveAsImage:
-          title: "Save as an image in the gallery"
-          subTitle: "You will find the QR code among the images on your device"
+          title: "Add it to your gallery"
+          subTitle: "Save the QR code as an image on your device"
     listItem:
       cta: "View"
     common:
       title: "Certificazione verde COVID-19"
-      subtitle: "EU Digital Covid Certificate"
-      learnMore: "Find out more"
+      subtitle: "EU Digital COVID Certificate"
+      learnMore: "Learn more"
       authorizationCode: "Authorization code"
       messageIdentifier: "Message identifier"
     loading:
@@ -2465,28 +2465,28 @@ features:
         hint: "Display the QR Code in full screen"
       markdownDetails:
         headerTitle: "Certificate Details"
-        save: "Save the details as an image"
+        save: "Save as an image"
     revoked:
       title: "This certificate is no longer valid"
     expired:
       title: "This certificate has expired"
     ko:
       genericError:
-        title: "Your certificate data could not be retrieved: please try again"
+        title: "Your certificate data could not be retrieved"
         subtitle: "This could be due to a temporary problem."
       notFound:
-        title: "It seems that the certificate does not \nexist: contact support"
-        subtitle: "You may be asked for this data to investigate the problem:"
+        title: "It seems that the certificate does not exist"
+        subtitle: "Helpful details for support:"
         cta: "Contact support"
       notOperational:
-        title: "The european COVID certificate is not currently operational"
+        title: "The EU Digital COVID Certificate is not currently operational"
         subtitle: "TMP"
       temporarilyNotAvailable:
         title: "The service is temporarily unavailable"
         subtitle: "Please try again later"
       wrongFormat:
-        title: "This certificate cannot be \nretrieved: contact support"
-        subtitle: "You may be asked for this data to investigate the problem:"
+        title: "This certificate cannot be retrieved"
+        subtitle: "Helpful details for support:"
         cta: "Contact support"
 webView:
   error:
