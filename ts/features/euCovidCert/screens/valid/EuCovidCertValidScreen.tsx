@@ -245,7 +245,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           ref={screenShotViewContainer}
           style={[IOStyles.flex]}
         >
-          {/* add extra space and padding while capturing the screenshot */}
+          {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
             {...props}
@@ -261,6 +261,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       footer={
         <>
           <Footer {...props} onSave={() => setIsCapturingScreenShoot(true)} />
+          {/* this view must be the last one, since it must be drawn on top of all */}
           <FlashAnimatedComponent
             state={flashAnimationState}
             onFadeInCompleted={saveScreenShoot}

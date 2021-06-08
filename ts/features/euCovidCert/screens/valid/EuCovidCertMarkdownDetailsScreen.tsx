@@ -144,7 +144,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
           />
         )}
       </SafeAreaView>
-
+      {/* this view must be the last one, since it must be drawn on top of all */}
       <FlashAnimatedComponent
         state={flashAnimationState}
         onFadeInCompleted={saveScreenShoot}
