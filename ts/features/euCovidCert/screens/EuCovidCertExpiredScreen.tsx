@@ -14,28 +14,33 @@ import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & { expiredInfo?: string };
 
-const EuCovidCertExpiredContentComponent = (props: Props) => (
-  <>
-    <View spacer extralarge />
-    <View spacer extralarge />
-    <InfoScreenComponent
-      image={
-        <Image
-          source={expiredImage}
-          importantForAccessibility={"no"}
-          accessibilityElementsHidden={true}
-          style={{ width: 120, height: 118, resizeMode: "contain" }}
-        />
-      }
-      title={I18n.t("features.euCovidCertificate.expired.title")}
-      body={<EuCovidCertLearnMoreLink />}
-    />
-    <View spacer />
-    {props.expiredInfo && (
-      <MarkdownHandleCustomLink>{props.expiredInfo}</MarkdownHandleCustomLink>
-    )}
-  </>
-);
+const EuCovidCertExpiredContentComponent = (props: Props) => {
+  console.log(props.expiredInfo);
+  return (
+    <>
+      <View spacer extralarge />
+      <View spacer extralarge />
+      <InfoScreenComponent
+        image={
+          <Image
+            source={expiredImage}
+            importantForAccessibility={"no"}
+            accessibilityElementsHidden={true}
+            style={{ width: 120, height: 118, resizeMode: "contain" }}
+          />
+        }
+        title={I18n.t("features.euCovidCertificate.expired.title")}
+        body={<EuCovidCertLearnMoreLink />}
+      />
+      <View spacer />
+      {props.expiredInfo && (
+        <MarkdownHandleCustomLink extraBodyHeight={60}>
+          {props.expiredInfo}
+        </MarkdownHandleCustomLink>
+      )}
+    </>
+  );
+};
 
 /**
  * TODO: this screen is identical to EuCovidCertRevokedScreen but but it is still being finalized and could change a lot.
