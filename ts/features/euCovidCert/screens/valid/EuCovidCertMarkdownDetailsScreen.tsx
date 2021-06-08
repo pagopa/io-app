@@ -67,19 +67,19 @@ export const EuCovidCertMarkdownDetailsScreen = (
       setIsCapturingScreenShoot(false);
       return;
     }
-    captureScreenShoot(
-      screenShotViewContainerRef,
-      screenShotOption,
-      () =>
+    captureScreenShoot(screenShotViewContainerRef, screenShotOption, {
+      onSuccess: () =>
         Toast.show({
           text: I18n.t("features.euCovidCertificate.save.ok")
         }),
-      () => Toast.show({ text: I18n.t("global.genericError") }),
-      () => {
-        setIsCapturingScreenShoot(false);
+      onNoPermissions: () =>
+        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onEnd: () => {
         setFlashAnimationState("fadeOut");
+        setIsCapturingScreenShoot(false);
       }
-    );
+    });
   };
   // show button when markdown is loaded and it is not capturing the screenshot
   const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;

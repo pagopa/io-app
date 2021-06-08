@@ -222,19 +222,19 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
       showToastError();
       return;
     }
-    captureScreenShoot(
-      screenShotViewContainer,
-      screenShotOption,
-      () =>
+    captureScreenShoot(screenShotViewContainer, screenShotOption, {
+      onSuccess: () =>
         Toast.show({
           text: I18n.t("features.euCovidCertificate.save.ok")
         }),
-      () => Toast.show({ text: I18n.t("global.genericError") }),
-      () => {
+      onNoPermissions: () =>
+        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
       }
-    );
+    });
   };
   return (
     <BaseEuCovidCertificateLayout
