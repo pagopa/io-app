@@ -2476,8 +2476,8 @@ features:
         title: "Salva il certificato"
         subTitle: "Potrai mostrare il QR code del certificato senza aprire app IO, anche in assenza di connessione."
         saveAsImage:
-          title: "Aggiungi alla galleria fotografica"
-          subTitle: "Salva il QR code come immagine nel tuo dispositivo"
+          title: "Salva come immagine nella galleria"
+          subTitle: "Troverai il QR code fra le immagini presenti sul tuo dispositivo"
     listItem:
       cta: "Visualizza"
     common:
@@ -2495,18 +2495,18 @@ features:
         hint: "Visualizza il QR Code a tutto schermo"
       markdownDetails:
         headerTitle: "Dettagli del certificato"
-        save: "Salva come immagine"
+        save: "Salva i dettagli"
     revoked:
       title: "Questo certificato \nnon è più valido"
     expired:
       title: "Questo certifcato è scaduto"
     ko:
       genericError:
-        title: "Non è stato possibile recuperare i dati del tuo certificato"
-        subtitle: "Protrebbe essere dovuto ad un problema temporaneo."
+        title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
+        subtitle: "Potrebbe essere dovuto ad un problema temporaneo."
       notFound:
-        title: "Sembra che il certificato \nnon esista"
-        subtitle: "Dati utili per l'assistenza:"
+        title: "Sembra che il certificato non \nesista: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
       notOperational:
         title: "La Certificazione verde COVID-19 non è attualmente operativa"
@@ -2515,8 +2515,8 @@ features:
         title: "Il servizio è temporaneamente non disponibile"
         subtitle: "Ti preghiamo di riprovare più tardi"
       wrongFormat:
-        title: "Non è possibile recuperare \nquesto certificato"
-        subtitle: "Dati utili per l'assistenza:"
+        title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
         cta: "Contatta l'assistenza"
 webView:
   error:
