@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.4](https://github.com/pagopa/io-app/compare/1.26.0-rc.3...1.26.0-rc.4) (2021-06-04)
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-40](https://pagopa.atlassian.net/browse/IAGP-40)] Add backoff waiting time on getCertificate error ([#3084](https://github.com/pagopa/io-app/issues/3084)) ([4f4716f](https://github.com/pagopa/io-app/commit/4f4716f5c5dab42a6271f1247781d9c3a483751d))
+
+## [1.26.0-rc.3](https://github.com/pagopa/io-app/compare/1.26.0-rc.2...1.26.0-rc.3) (2021-06-04)
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-38](https://pagopa.atlassian.net/browse/IAGP-38)] Handle message routing ([#3085](https://github.com/pagopa/io-app/issues/3085)) ([bd107c9](https://github.com/pagopa/io-app/commit/bd107c932339d36569ea51ed570f0b2435f7a730))
+
+## [1.26.0-rc.2](https://github.com/pagopa/io-app/compare/1.26.0-rc.1...1.26.0-rc.2) (2021-06-04)
+
+
+### Features
+
+* **EU Covid Certificate:** [[IAGP-21](https://pagopa.atlassian.net/browse/IAGP-21)] Implements Covid Certificate Revoked Component ([#3083](https://github.com/pagopa/io-app/issues/3083)) ([cabfd7f](https://github.com/pagopa/io-app/commit/cabfd7fa10827bb17871451b69d0204c70af7e71))
+* **EU Covid Certificate:** [[IAGP-24](https://pagopa.atlassian.net/browse/IAGP-24)] Implements NotOperarional screen for EUCovidCert ([#3088](https://github.com/pagopa/io-app/issues/3088)) ([e65f5ad](https://github.com/pagopa/io-app/commit/e65f5ada1992514b5c123af338d5b5604047b050))
+* **EU Covid Certificate:** [[IAGP-26](https://pagopa.atlassian.net/browse/IAGP-26)] Implements TemporarilyUnavailable screen component [#3087](https://github.com/pagopa/io-app/issues/3087) ([a3e2a2d](https://github.com/pagopa/io-app/commit/a3e2a2dbd21a53e24edf3198d7a7ad881b8f8c16))
+* **EU Covid Certificate:** [[IAGP-31](https://pagopa.atlassian.net/browse/IAGP-31)] Add "View" CTA on EuCovidCert Message list item ([#3086](https://github.com/pagopa/io-app/issues/3086)) ([0066ce8](https://github.com/pagopa/io-app/commit/0066ce8516ad03748d6979e32becb4bf4183c3ce))
+* **EU Covid Certificate:** [[IAGP-34](https://pagopa.atlassian.net/browse/IAGP-34),[IA-6](https://pagopa.atlassian.net/browse/IA-6)] Add COPY as supported schema in iohandledlink ([#3077](https://github.com/pagopa/io-app/issues/3077)) ([69a2049](https://github.com/pagopa/io-app/commit/69a20491e7caacac711c6a05593c54c131f70e9b))
+* **EU Covid Certificate:** [[IAGP-36](https://pagopa.atlassian.net/browse/IAGP-36)] Add euCovidCert as new section status ([#3073](https://github.com/pagopa/io-app/issues/3073)) ([9a2e3ed](https://github.com/pagopa/io-app/commit/9a2e3ed07cf1a2e57e3255f625eb4ac290b1869f))
+
+
+### Chores
+
+* **Carta Giovani Nazionale:** [[#178127305](https://www.pivotaltracker.com/story/show/178127305)] Adds Department name and Eyca Logo on card component ([#3042](https://github.com/pagopa/io-app/issues/3042)) ([c8c9267](https://github.com/pagopa/io-app/commit/c8c92675e1ba3b151e6e42fd3a4975c0e4e6eafb))
+* **EU Covid Certificate:** [[IAGP-10](https://pagopa.atlassian.net/browse/IAGP-10),[IAGP-12](https://pagopa.atlassian.net/browse/IAGP-12)] Update Message spec with EUCovidCert ([#3081](https://github.com/pagopa/io-app/issues/3081)) ([dd83c65](https://github.com/pagopa/io-app/commit/dd83c656719b86b7f544e49239c8f808b0c4e859))
+* **EU Covid Certificate:** [[IAGP-5](https://pagopa.atlassian.net/browse/IAGP-5)] Types, actions & store for EU Covid Certificate ([#3076](https://github.com/pagopa/io-app/issues/3076)) ([4a04070](https://github.com/pagopa/io-app/commit/4a040706a8bea52d37185a89ed99548a70293922))
+* **EU Covid Certificate:** [[IAGP-6](https://pagopa.atlassian.net/browse/IAGP-6)] Added screens layout, routing and navigation ([#3079](https://github.com/pagopa/io-app/issues/3079)) ([72d0dc7](https://github.com/pagopa/io-app/commit/72d0dc7d048fe3196791f33d70a87e2bd36590f4))
+* **EU Covid Certificate:** [[IAGP-9](https://pagopa.atlassian.net/browse/IAGP-9)] Add getCertificate API network logic ([#3078](https://github.com/pagopa/io-app/issues/3078)) ([20b93cd](https://github.com/pagopa/io-app/commit/20b93cd054519907916873e46f0638ac99232384))
+
 ## [1.26.0-rc.1](https://github.com/pagopa/io-app/compare/1.26.0-rc.0...1.26.0-rc.1) (2021-05-28)
 
 

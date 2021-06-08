@@ -3,7 +3,7 @@ import {
   EUCovidCertificateAuthCode
 } from "./EUCovidCertificate";
 
-type EUCovidCertificateResponseSuccess = {
+export type EUCovidCertificateResponseSuccess = {
   kind: "success";
   value: EUCovidCertificate;
 };
@@ -23,13 +23,6 @@ type EUCovidCertificateResponseWrongFormat = {
 };
 
 /**
- * A generic error response was received (500, others, generic error)
- */
-type EUCovidCertificateResponseGenericError = {
-  kind: "genericError";
-};
-
-/**
  * The EU Covid certificate service is not operational (410)
  */
 type EUCovidCertificateResponseNotOperational = {
@@ -43,10 +36,9 @@ type EUCovidCertificateResponseTemporarilyNotAvailable = {
   kind: "temporarilyNotAvailable";
 };
 
-type EUCovidCertificateResponseFailure =
+export type EUCovidCertificateResponseFailure =
   | EUCovidCertificateResponseNotFound
   | EUCovidCertificateResponseWrongFormat
-  | EUCovidCertificateResponseGenericError
   | EUCovidCertificateResponseNotOperational
   | EUCovidCertificateResponseTemporarilyNotAvailable;
 
@@ -63,3 +55,8 @@ export type WithEUCovidCertAuthCode<T> = T & {
 export type EUCovidCertificateResponse = WithEUCovidCertAuthCode<
   EUCovidCertificateResponseSuccess | EUCovidCertificateResponseFailure
 >;
+
+export const isEuCovidCertificateSuccessResponse = (
+  r: EUCovidCertificateResponse
+): r is WithEUCovidCertAuthCode<EUCovidCertificateResponseSuccess> =>
+  r.kind === "success";

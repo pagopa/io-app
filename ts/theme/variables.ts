@@ -7,11 +7,11 @@
 
 /* eslint-disable no-invalid-this */
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import {Millisecond} from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
-import { Platform } from "react-native";
-import { FontWeight, makeFontStyleObject } from "./fonts";
-import { ThemeSimpleValue } from "./types";
+import {Platform} from "react-native";
+import {FontWeight, makeFontStyleObject} from "./fonts";
+import {ThemeSimpleValue} from "./types";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
@@ -55,7 +55,7 @@ const customVariables = Object.assign(materialVariables, {
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
   brandMildGray: "#C7D1D9",
-  brandDarkGray: "#5C6F82",
+  brandDarkGray: "#475A6D",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
@@ -270,7 +270,7 @@ const customVariables = Object.assign(materialVariables, {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: "#5C6F82",
+  textColor: "#475A6D",
   textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
@@ -301,7 +301,7 @@ const customVariables = Object.assign(materialVariables, {
   tabDefaultBg: "#FFFFFF",
   tabUnderlineColor: "#F6F6F6",
   tabUnderlineHeight: 2,
-  topTabBarTextColor: "#5C6F82",
+  topTabBarTextColor: "#475A6D",
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
@@ -313,7 +313,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82",
+  unselectedColor: "#475A6D",
 
   // Checkbox
   checkboxDefaultColor: "transparent"

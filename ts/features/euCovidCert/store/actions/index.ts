@@ -1,10 +1,7 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
-import { GenericError } from "../../../../utils/errors";
-import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import {
-  EUCovidCertificateResponse,
-  WithEUCovidCertAuthCode
-} from "../../types/EUCovidCertificateResponse";
+import {ActionType, createAsyncAction} from "typesafe-actions";
+import {NetworkError} from "../../../../utils/errors";
+import {EUCovidCertificateAuthCode} from "../../types/EUCovidCertificate";
+import {EUCovidCertificateResponse, WithEUCovidCertAuthCode} from "../../types/EUCovidCertificateResponse";
 
 /**
  * The user requests the EU Covid certificate, starting from the auth_code
@@ -16,7 +13,7 @@ export const euCovidCertificateGet = createAsyncAction(
 )<
   EUCovidCertificateAuthCode,
   EUCovidCertificateResponse,
-  WithEUCovidCertAuthCode<GenericError>
+  WithEUCovidCertAuthCode<NetworkError>
 >();
 
 export type EuCovidCertActions = ActionType<typeof euCovidCertificateGet>;

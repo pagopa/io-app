@@ -1,23 +1,14 @@
-import { compareAsc, startOfDay } from "date-fns";
-import { none, Option, some } from "fp-ts/lib/Option";
+import {compareAsc, startOfDay} from "date-fns";
+import {none, Option, some} from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  FiscalCode,
-  IPatternStringTag,
-  WithinRangeString
-} from "italia-ts-commons/lib/strings";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
-import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { MessagesStateAndStatus } from "../../../store/reducers/entities/messages";
-import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
-import {
-  isFakeItem,
-  MessageAgendaItem,
-  MessageAgendaSection,
-  Sections
-} from "../MessageAgenda";
-import { getLastDeadlineId, getNextDeadlineId } from "../MessagesDeadlines";
+import {FiscalCode, IPatternStringTag, NonEmptyString, WithinRangeString} from "italia-ts-commons/lib/strings";
+import {Tuple2} from "italia-ts-commons/lib/tuples";
+import {PaymentAmount} from "../../../../definitions/backend/PaymentAmount";
+import {TimeToLiveSeconds} from "../../../../definitions/backend/TimeToLiveSeconds";
+import {MessagesStateAndStatus} from "../../../store/reducers/entities/messages";
+import {isCreatedMessageWithContentAndDueDate} from "../../../types/CreatedMessageWithContentAndDueDate";
+import {isFakeItem, MessageAgendaItem, MessageAgendaSection, Sections} from "../MessageAgenda";
+import {getLastDeadlineId, getNextDeadlineId} from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
@@ -130,7 +121,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         created_at: setDate(-1, 12),
         fiscal_code: fiscalCode,
         id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
-        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
         time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: true,
@@ -152,7 +143,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           created_at: setDate(-1, 12),
           fiscal_code: fiscalCode,
           id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
-          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
           time_to_live: 3600 as TimeToLiveSeconds
         }
       }
@@ -162,7 +153,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         created_at: setDate(0, 3),
         fiscal_code: fiscalCode,
         id: "01DQQGBXWSCNNY44CH2QZ95J7A",
-        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
         time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: false,
@@ -187,7 +178,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           created_at: setDate(0, 3),
           fiscal_code: fiscalCode,
           id: "01DQQGBXWSCNNY44CH2QZ95J7A",
-          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
           time_to_live: 3600 as TimeToLiveSeconds
         }
       }
@@ -197,7 +188,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         created_at: setDate(1, 12),
         fiscal_code: fiscalCode,
         id: "01DQQGBXWSCNNY44CH2QZ95PIO",
-        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
         time_to_live: 3600 as TimeToLiveSeconds
       },
       isRead: false,
@@ -222,7 +213,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
           created_at: setDate(1, 12),
           fiscal_code: fiscalCode,
           id: "01DQQGBXWSCNNY44CH2QZ95PIO",
-          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
           time_to_live: 3600 as TimeToLiveSeconds
         }
       }

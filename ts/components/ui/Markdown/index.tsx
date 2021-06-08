@@ -1,8 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
-import { AppState, AppStateStatus } from "react-native";
 import {
   ActivityIndicator,
+  AppState,
+  AppStateStatus,
   InteractionManager,
   LayoutAnimation,
   Platform,
@@ -20,6 +21,7 @@ import { filterXSS } from "xss";
 import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
+import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { handleLinkMessage } from "./handlers/link";
@@ -205,7 +207,7 @@ type OwnProps = {
   letUserZoom?: boolean;
 };
 
-type Props = OwnProps & ReduxProps;
+type Props = WithTestID<OwnProps> & ReduxProps;
 
 type State = {
   html?: string;
@@ -307,6 +309,7 @@ class Markdown extends React.PureComponent<Props, State> {
       <React.Fragment>
         {isLoading && (
           <ActivityIndicator
+            testID={this.props.testID}
             size={"large"}
             color={customVariables.brandPrimary}
             animating={true}
@@ -324,6 +327,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                testID={this.props.testID}
                 accessible={false}
                 key={this.state.webviewKey}
                 textZoom={100}

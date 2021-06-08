@@ -1,10 +1,10 @@
-import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
-import { ApplicationState } from "../../store/actions/application";
-import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
-import { clearNotificationPendingMessage } from "../../store/actions/notifications";
-import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
-import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
+import {SagaIterator} from "redux-saga";
+import {put, select} from "redux-saga/effects";
+import {ApplicationState} from "../../store/actions/application";
+import {navigateToMessageRouterScreen} from "../../store/actions/navigation";
+import {clearNotificationPendingMessage} from "../../store/actions/notifications";
+import {pendingMessageStateSelector} from "../../store/reducers/notifications/pendingMessage";
+import {isPaymentOngoingSelector} from "../../store/reducers/wallet/payment";
 
 /**
  * Check if the user presses on a notification and redirect to the
@@ -37,7 +37,7 @@ export function* watchNotificationSaga(
       yield put(clearNotificationPendingMessage());
 
       // Navigate to message details screen
-      yield put(navigateToMessageDetailScreenAction({ messageId }));
+      yield put(navigateToMessageRouterScreen({ messageId }));
     }
   }
 }

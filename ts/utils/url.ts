@@ -1,9 +1,10 @@
-import { constNull, pipe } from "fp-ts/lib/function";
+import {constNull, pipe} from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
-import { Linking } from "react-native";
-import { clipboardSetStringWithFeedback } from "./clipboard";
-import { openMaps } from "./openMaps";
-import { splitAndTakeFirst } from "./strings";
+import {Linking} from "react-native";
+import {clipboardSetStringWithFeedback} from "./clipboard";
+import {openMaps} from "./openMaps";
+import {splitAndTakeFirst} from "./strings";
+
 /**
  * Generic utilities for url parsing
  */
@@ -68,7 +69,7 @@ const isHttp = (url: string): boolean => {
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };
 
-const taskLinking = (url: string) =>
+export const taskLinking = (url: string) =>
   TE.tryCatch(
     () => Linking.openURL(url),
     _ => `cannot open url ${url}`
