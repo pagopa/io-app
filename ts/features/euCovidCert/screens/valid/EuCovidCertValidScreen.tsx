@@ -26,7 +26,10 @@ import {
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import {
+  BaseEuCovidCertificateLayout,
+  Header
+} from "../BaseEuCovidCertificateLayout";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -107,16 +110,15 @@ const EuCovidCertValidComponent = (
       </TouchableOpacity>
     )}
     {props.validCertificate.markdownPreview && (
-      <>
+      <View style={props.markdownWebViewStyle}>
         <MarkdownHandleCustomLink
-          webViewStyle={props.markdownWebViewStyle}
           testID={"markdownPreview"}
           extraBodyHeight={60}
         >
           {props.validCertificate.markdownPreview}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
-      </>
+      </View>
     )}
   </View>
 );
@@ -246,6 +248,12 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           style={[IOStyles.flex]}
         >
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
+          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          {isCapturingScreenShoot && (
+            <View style={IOStyles.horizontalContentPadding}>
+              <Header />
+            </View>
+          )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
             {...props}

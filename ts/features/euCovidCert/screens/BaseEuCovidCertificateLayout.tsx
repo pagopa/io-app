@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Header = () => (
+export const Header = () => (
   <>
     <View style={styles.row}>
       <H1 style={IOStyles.flex}>
