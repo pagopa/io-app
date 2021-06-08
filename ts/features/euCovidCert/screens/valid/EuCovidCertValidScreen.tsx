@@ -44,6 +44,7 @@ import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
+import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -80,6 +81,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 type EuCovidCertValidComponentProps = Props & {
   markdownWebViewStyle?: StyleProp<ViewStyle>;
+  messageId?: string;
 };
 const EuCovidCertValidComponent = (
   props: EuCovidCertValidComponentProps
@@ -107,6 +109,11 @@ const EuCovidCertValidComponent = (
             uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
           }}
           style={styles.qrCode}
+          onError={() => {
+            void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
+              messageId: props.messageId
+            });
+          }}
         />
       </TouchableOpacity>
     )}
@@ -257,6 +264,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
+            messageId={props.euCovidCert?.messageId}
             {...props}
             markdownWebViewStyle={
               isCapturingScreenShoot
@@ -295,7 +303,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
     )
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  euCovidCert: euCovidCertCurrentSelector(state)
+});
 
 export default connect(
   mapStateToProps,
