@@ -210,6 +210,8 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
   React.useEffect(() => {
     if (isCapturingScreenShoot) {
+      // at the end of fadeIn animation, the views inside screenShotViewContainerRef
+      // will be captured in an screenshot image
       setFlashAnimationState("fadeIn");
     }
   }, [isCapturingScreenShoot]);
