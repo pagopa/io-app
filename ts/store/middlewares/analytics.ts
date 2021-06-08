@@ -425,7 +425,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(loadMessage.success):
       return mp.track(action.type, {
-        isEuCovidCertificate: action.payload.content.eu_covid_cert !== undefined
+        ecc: action.payload.content.eu_covid_cert !== undefined
       });
 
     // bonus vacanze
