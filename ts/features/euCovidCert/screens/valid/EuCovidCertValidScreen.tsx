@@ -12,38 +12,39 @@ import {
 import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { showToast } from "../../../../utils/showToast";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import {
-  FlashAnimatedComponent,
-  FlashAnimationState
-} from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
-import { captureScreenShoot } from "../../utils/screenshoot";
 import {
   BaseEuCovidCertificateLayout,
   Header
 } from "../BaseEuCovidCertificateLayout";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { H3 } from "../../../../components/core/typography/H3";
+import { H5 } from "../../../../components/core/typography/H5";
+import IconFont from "../../../../components/ui/IconFont";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { showToast } from "../../../../utils/showToast";
+import { captureScreenShoot } from "../../utils/screenshoot";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
+import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -80,6 +81,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 type EuCovidCertValidComponentProps = Props & {
   markdownWebViewStyle?: StyleProp<ViewStyle>;
+  messageId?: string;
 };
 const EuCovidCertValidComponent = (
   props: EuCovidCertValidComponentProps
@@ -107,6 +109,11 @@ const EuCovidCertValidComponent = (
             uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
           }}
           style={styles.qrCode}
+          onError={() => {
+            void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
+              messageId: props.messageId
+            });
+          }}
         />
       </TouchableOpacity>
     )}
@@ -259,6 +266,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
+            messageId={props.euCovidCert?.messageId}
             {...props}
             markdownWebViewStyle={
               isCapturingScreenShoot
@@ -297,7 +305,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
     )
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  euCovidCert: euCovidCertCurrentSelector(state)
+});
 
 export default connect(
   mapStateToProps,
