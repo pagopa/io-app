@@ -2441,7 +2441,7 @@ features:
   euCovidCertificate:
     save:
       noPermission: "It seems that the app does not have permissions to save images. Please check your device settings."
-      ok: "The information has been saved as an image in your gallery"
+      ok: "The information has been saved as an image in your device gallery"
       bottomSheet:
         title: "Save the certificate"
         subTitle: "You will be able to show the QR code of the certificate without opening IO app, even when you're offline."

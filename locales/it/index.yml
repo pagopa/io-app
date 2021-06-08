@@ -2471,7 +2471,7 @@ features:
   euCovidCertificate:
     save:
       noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
-      ok: "Le informazioni sono state salvate come immagine nella tua galleria fotografica"
+      ok: "Le informazioni sono state salvate come immagine nella galleria del tuo dispositivo"
       bottomSheet:
         title: "Salva il certificato"
         subTitle: "Potrai mostrare il QR code del certificato senza aprire app IO, anche in assenza di connessione."
