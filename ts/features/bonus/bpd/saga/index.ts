@@ -29,7 +29,6 @@ import {
 } from "../store/actions/transactions";
 import {
   deleteCitizen,
-  getCitizen,
   getCitizenV2,
   putEnrollCitizen,
   putEnrollCitizenV2
@@ -57,8 +56,8 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // load citizen details
   yield takeLatest(
     bpdLoadActivationStatus.request,
-    bpdTechnicalIban ? getCitizenV2 : getCitizen,
-    bpdTechnicalIban ? bpdBackendClient.findV2 : bpdBackendClient.find
+    getCitizenV2,
+    bpdBackendClient.findV2
   );
   // enroll citizen to the bpd
   yield takeLatest(

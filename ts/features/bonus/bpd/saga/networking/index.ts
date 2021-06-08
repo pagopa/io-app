@@ -10,9 +10,7 @@ import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 
 export function* executeAndDispatch(
-  remoteCall:
-    | ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
-    | ReturnType<typeof BackendBpdClient>["find"],
+  remoteCall: ReturnType<typeof BackendBpdClient>["enrollCitizenIO"],
   action: typeof bpdEnrollUserToProgram | typeof bpdLoadActivationStatus
 ) {
   try {
@@ -95,16 +93,6 @@ export function* executeAndDispatchV2(
   } catch (e) {
     yield put(action.failure(e));
   }
-}
-
-/**
- * make a request to get the citizen status
- * @deprecated
- */
-export function* getCitizen(
-  findCitizen: ReturnType<typeof BackendBpdClient>["find"]
-): SagaIterator {
-  yield call(executeAndDispatch, findCitizen, bpdLoadActivationStatus);
 }
 
 export function* getCitizenV2(

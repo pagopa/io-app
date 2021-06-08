@@ -8,7 +8,6 @@ import { awardPeriodsGET } from "./award-period/v1";
 import {
   citizenDELETE,
   citizenEnrollPUT,
-  citizenFindGET,
   citizenPaymentMethodPATCH,
   citizenRankingGET,
   PatchOptions
@@ -63,10 +62,6 @@ export function BackendBpdClient(
   };
 
   return {
-    /**
-     * @deprecated
-     */
-    find: withBearerToken(createFetchRequestForApi(citizenFindGET, options)),
     findV2: withBearerToken(
       createFetchRequestForApi(citizenV2FindGET, options)
     ),
