@@ -2465,7 +2465,7 @@ features:
         hint: "Display the QR Code in full screen"
       markdownDetails:
         headerTitle: "Certificate Details"
-        save: "Save as an image"
+        save: "Save details"
     revoked:
       title: "This certificate is no longer valid"
     expired:
@@ -2476,7 +2476,7 @@ features:
         subtitle: "This could be due to a temporary problem."
       notFound:
         title: "It seems that the certificate does not exist"
-        subtitle: "Helpful details for support:"
+        subtitle: "Details to receive support:"
         cta: "Contact support"
       notOperational:
         title: "The EU Digital COVID Certificate is not currently operational"
@@ -2486,7 +2486,7 @@ features:
         subtitle: "Please try again later"
       wrongFormat:
         title: "This certificate cannot be retrieved"
-        subtitle: "Helpful details for support:"
+        subtitle: "Details to receive support:"
         cta: "Contact support"
 webView:
   error:
