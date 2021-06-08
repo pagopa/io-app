@@ -2475,7 +2475,7 @@ features:
         title: "Your certificate data could not be retrieved: please try again"
         subtitle: "This could be due to a temporary problem."
       notFound:
-        title: "It seems that the certificate does not exist"
+        title: "It seems that the certificate does not \nexist: contact support"
         subtitle: "Details to receive support:"
         cta: "Contact support"
       notOperational:
