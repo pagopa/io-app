@@ -229,7 +229,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
         Toast.show({
           text: I18n.t("features.euCovidCertificate.save.ok")
         }),
-      undefined,
+      () => Toast.show({ text: I18n.t("global.genericError") }),
       () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);

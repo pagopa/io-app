@@ -1,5 +1,4 @@
 import { CaptureOptions, captureRef } from "react-native-view-shot";
-import { Toast } from "native-base";
 import { ReactInstance, RefObject } from "react";
 import { saveImageToGallery } from "../../../utils/share";
 import I18n from "../../../i18n";
@@ -17,8 +16,7 @@ export const captureScreenShoot = <T>(
   viewRef: number | ReactInstance | RefObject<T>,
   options?: CaptureOptions,
   onSuccess?: () => void,
-  onError: () => void = () =>
-    Toast.show({ text: I18n.t("global.genericError") }),
+  onError?: () => void,
   onEnd?: () => void
 ) =>
   void captureRef(viewRef, options)
@@ -41,6 +39,4 @@ export const captureScreenShoot = <T>(
         .catch(onError);
     })
     .catch(onError)
-    .finally(() => {
-      onEnd?.();
-    });
+    .finally(onEnd);

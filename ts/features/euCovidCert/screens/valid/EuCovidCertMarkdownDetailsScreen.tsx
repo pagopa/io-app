@@ -74,7 +74,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
         Toast.show({
           text: I18n.t("features.euCovidCertificate.save.ok")
         }),
-      undefined,
+      () => Toast.show({ text: I18n.t("global.genericError") }),
       () => {
         setIsCapturingScreenShoot(false);
         setFlashAnimationState("fadeOut");
