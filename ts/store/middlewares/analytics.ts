@@ -372,7 +372,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.request):
     case getType(loadMessagesCancel):
-    case getType(loadMessage.success):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
@@ -423,6 +422,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(cancelBonusVacanzeRequest):
     case getType(storeEligibilityRequestId):
       return mp.track(action.type);
+
+    case getType(loadMessage.success):
+      return mp.track(action.type, {
+        ecc: action.payload.content.eu_covid_cert !== undefined
+      });
 
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
