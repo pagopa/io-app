@@ -1,4 +1,4 @@
-import { Toast, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -12,21 +12,34 @@ import {
 import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { H3 } from "../../../../components/core/typography/H3";
+import { H5 } from "../../../../components/core/typography/H5";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { showToast } from "../../../../utils/showToast";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
+import { captureScreenShoot } from "../../utils/screenshoot";
 import {
   BaseEuCovidCertificateLayout,
   Header
@@ -156,6 +169,8 @@ const addBottomSheetItem = (config: {
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
       </View>
     </View>
+    <View spacer={true} large={true} />
+    <View spacer={true} large={true} />
   </ButtonDefaultOpacity>
 );
 
@@ -183,8 +198,10 @@ const Footer = (props: FooterProps): React.ReactElement => {
       <H5 color={"bluegrey"} weight={"Regular"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H5>
+      <View spacer={true} />
+      <View spacer={true} />
     </View>,
-    260
+    320
   );
 
   const saveButton = confirmButtonProps(
@@ -234,12 +251,10 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     }
     captureScreenShoot(screenShotViewContainer, screenShotOption, {
       onSuccess: () =>
-        Toast.show({
-          text: I18n.t("features.euCovidCertificate.save.ok")
-        }),
+        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>
         showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onError: () => showToast(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
