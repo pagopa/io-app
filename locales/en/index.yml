@@ -2446,8 +2446,8 @@ features:
         title: "Save the certificate"
         subTitle: "You will be able to show the QR code of the certificate without opening IO app, even when you're offline."
         saveAsImage:
-          title: "Add it to your gallery"
-          subTitle: "Save the QR code as an image on your device"
+          title: "Save as an image in the gallery"
+          subTitle: "You will find the QR code in your device gallery"
     listItem:
       cta: "View"
     common:
