@@ -70,12 +70,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
     }
     captureScreenShoot(screenShotViewContainerRef, screenShotOption, {
       onSuccess: () =>
-        Toast.show({
-          text: I18n.t("features.euCovidCertificate.save.ok")
-        }),
+        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>
         showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onError: () => showToast(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
