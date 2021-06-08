@@ -246,7 +246,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
         <View
           collapsable={false}
           ref={screenShotViewContainer}
-          style={[IOStyles.flex]}
+          style={[IOStyles.flex, { backgroundColor: IOColors.white }]}
         >
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
