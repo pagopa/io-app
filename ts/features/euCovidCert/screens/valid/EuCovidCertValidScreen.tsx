@@ -1,5 +1,6 @@
 import { Toast, View } from "native-base";
 import * as React from "react";
+import { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -8,38 +9,37 @@ import {
   TouchableOpacity,
   ViewStyle
 } from "react-native";
+import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { CaptureOptions } from "react-native-view-shot";
-import { useState } from "react";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { H3 } from "../../../../components/core/typography/H3";
+import { H5 } from "../../../../components/core/typography/H5";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { showToast } from "../../../../utils/showToast";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
 import {
   navigateToEuCovidCertificateMarkdownDetailsScreen,
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H3 } from "../../../../components/core/typography/H3";
-import { H5 } from "../../../../components/core/typography/H5";
-import IconFont from "../../../../components/ui/IconFont";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { showToast } from "../../../../utils/showToast";
 import { captureScreenShoot } from "../../utils/screenshoot";
-import {
-  FlashAnimatedComponent,
-  FlashAnimationState
-} from "../../components/FlashAnimatedComponent";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -113,7 +113,7 @@ const EuCovidCertValidComponent = (
           testID={"markdownPreview"}
           extraBodyHeight={60}
         >
-          {props.validCertificate.markdownPreview}
+          {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
       </>
