@@ -1,11 +1,9 @@
-import { View } from "native-base";
+import { Toast, View } from "native-base";
 import { useState } from "react";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { StyleSheet } from "react-native";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
+import { CaptureOptions } from "react-native-view-shot";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -13,26 +11,78 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
+import { showToast } from "../../../../utils/showToast";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../components/core/typography/Label";
+import { captureScreenShoot } from "../../utils/screenshoot";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
 }>;
 
 const styles = StyleSheet.create({
+  viewShot: {
+    flex: 1,
+    backgroundColor: "white"
+  },
   save: {
     width: "100%"
   }
 });
 
-// TODO: remove when adding the save feature https://pagopa.atlassian.net/browse/IAGP-37
-const isSaveEnabled = false;
+const showToastError = (error: string = I18n.t("global.genericError")) =>
+  showToast(error);
+const screenShotOption: CaptureOptions = {
+  width: Dimensions.get("window").width,
+  format: "jpg",
+  quality: 1.0
+};
 
 export const EuCovidCertMarkdownDetailsScreen = (
   props: NavigationInjectedProps<NavigationParams>
 ): React.ReactElement => {
-  const [loadComplete, setLoadComplete] = useState(false);
-  const activateCTA = () => setLoadComplete(true);
+  const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
+  const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
+  const [flashAnimationState, setFlashAnimationState] = useState<
+    FlashAnimationState
+  >();
+  const screenShotViewContainerRef = React.createRef<View>();
 
+  React.useEffect(() => {
+    if (isCapturingScreenShoot) {
+      // at the end of fadeIn animation, the views inside screenShotViewContainerRef
+      // will be captured in an screenshot image
+      setFlashAnimationState("fadeIn");
+    }
+  }, [isCapturingScreenShoot]);
+
+  const saveScreenShoot = () => {
+    // it should not never happen
+    if (screenShotViewContainerRef.current === null) {
+      showToastError();
+      setIsCapturingScreenShoot(false);
+      return;
+    }
+    captureScreenShoot(screenShotViewContainerRef, screenShotOption, {
+      onSuccess: () =>
+        Toast.show({
+          text: I18n.t("features.euCovidCertificate.save.ok")
+        }),
+      onNoPermissions: () =>
+        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onEnd: () => {
+        setFlashAnimationState("fadeOut");
+        setIsCapturingScreenShoot(false);
+      }
+    });
+  };
+  // show button when markdown is loaded and it is not capturing the screenshot
+  const canShowButton = !isCapturingScreenShoot && loadMarkdownComplete;
   return (
     <BaseScreenComponent
       goBack={true}
@@ -46,30 +96,59 @@ export const EuCovidCertMarkdownDetailsScreen = (
         testID={"EuCovidCertQrCodeFullScreen"}
       >
         <ScrollView style={IOStyles.horizontalContentPadding}>
-          <MarkdownHandleCustomLink onLoadEnd={activateCTA}>
-            {props.navigation.getParam("markdownDetails")}
-          </MarkdownHandleCustomLink>
-          {loadComplete && isSaveEnabled && (
-            <>
-              <ButtonDefaultOpacity style={styles.save}>
-                <Label color={"white"}>
-                  {I18n.t(
-                    "features.euCovidCertificate.valid.markdownDetails.save"
-                  )}
-                </Label>
-              </ButtonDefaultOpacity>
-              <View spacer={true} />
-            </>
-          )}
+          {/* add an extra padding while capturing the screenshot */}
+          <View
+            collapsable={false}
+            ref={screenShotViewContainerRef}
+            style={[
+              styles.viewShot,
+              isCapturingScreenShoot
+                ? IOStyles.horizontalContentPadding
+                : undefined
+            ]}
+          >
+            {/* add an extra top and bottom (as extra height in the markdown component)
+            margin while capturing the screenshot  */}
+            {isCapturingScreenShoot && <View large={true} spacer={true} />}
+            <MarkdownHandleCustomLink
+              extraBodyHeight={60}
+              onLoadEnd={() => setLoadMarkdownComplete(true)}
+            >
+              {props.navigation.getParam("markdownDetails")}
+            </MarkdownHandleCustomLink>
+            {canShowButton && (
+              <>
+                <View spacer={true} />
+                <ButtonDefaultOpacity
+                  style={styles.save}
+                  onPress={() => setIsCapturingScreenShoot(true)}
+                >
+                  <Label color={"white"}>
+                    {I18n.t(
+                      "features.euCovidCertificate.valid.markdownDetails.save"
+                    )}
+                  </Label>
+                </ButtonDefaultOpacity>
+                <View spacer={true} />
+              </>
+            )}
+          </View>
         </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            () => props.navigation.goBack(),
-            I18n.t("global.buttons.close")
-          )}
-        />
+        {canShowButton && (
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={cancelButtonProps(
+              () => props.navigation.goBack(),
+              I18n.t("global.buttons.close")
+            )}
+          />
+        )}
       </SafeAreaView>
+      {/* this view must be the last one, since it must be drawn on top of all */}
+      <FlashAnimatedComponent
+        state={flashAnimationState}
+        onFadeInCompleted={saveScreenShoot}
+      />
     </BaseScreenComponent>
   );
 };
