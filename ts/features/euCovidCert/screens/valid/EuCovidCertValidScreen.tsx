@@ -40,8 +40,23 @@ import {
   navigateToEuCovidCertificateQrCodeFullScreen
 } from "../../navigation/actions";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
+import {
+  BaseEuCovidCertificateLayout,
+  Header
+} from "../BaseEuCovidCertificateLayout";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { H3 } from "../../../../components/core/typography/H3";
+import { H5 } from "../../../../components/core/typography/H5";
+import IconFont from "../../../../components/ui/IconFont";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { showToast } from "../../../../utils/showToast";
 import { captureScreenShoot } from "../../utils/screenshoot";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import {
+  FlashAnimatedComponent,
+  FlashAnimationState
+} from "../../components/FlashAnimatedComponent";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -108,17 +123,16 @@ const EuCovidCertValidComponent = (
         />
       </TouchableOpacity>
     )}
-    {props.validCertificate.markdownInfo && (
-      <>
+    {props.validCertificate.markdownPreview && (
+      <View style={props.markdownWebViewStyle}>
         <MarkdownHandleCustomLink
-          webViewStyle={props.markdownWebViewStyle}
           testID={"markdownPreview"}
           extraBodyHeight={60}
         >
           {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
-      </>
+      </View>
     )}
   </View>
 );
@@ -248,6 +262,12 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           style={[IOStyles.flex]}
         >
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
+          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          {isCapturingScreenShoot && (
+            <View style={IOStyles.horizontalContentPadding}>
+              <Header />
+            </View>
+          )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
             {...props}
