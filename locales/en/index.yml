@@ -1269,7 +1269,7 @@ wallet:
       message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
-      message: IO needs access your images to save or load codes and screenshots
+      message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
       buttonText:
         settings: Enable permissions
         cancel: Cancel
