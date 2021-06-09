@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0-rc.5](https://github.com/pagopa/io-app/compare/1.26.0-rc.4...1.26.0-rc.5) (2021-06-08)
+
+
+### Features
+
+* **EU Covid Certificate:** [[IAGP-16](https://pagopa.atlassian.net/browse/IAGP-16),[IAGP-19](https://pagopa.atlassian.net/browse/IAGP-19),[IAGP-33](https://pagopa.atlassian.net/browse/IAGP-33)] Display of valid certificate, full-screen QR code and additional textual details  ([#3094](https://github.com/pagopa/io-app/issues/3094)) ([b971c70](https://github.com/pagopa/io-app/commit/b971c707b796a7c0e5b88e85b723c00228cb1032))
+* **EU Covid Certificate:** [[IAGP-17](https://pagopa.atlassian.net/browse/IAGP-17),[IAGP-37](https://pagopa.atlassian.net/browse/IAGP-37)] Save QRCode and certificate details as image ([#3103](https://github.com/pagopa/io-app/issues/3103)) ([b4eff4c](https://github.com/pagopa/io-app/commit/b4eff4cba83bd71def44c87b51f39bb80d375092))
+* **EU Covid Certificate:** [[IAGP-2](https://pagopa.atlassian.net/browse/IAGP-2)] Introduces the SectionStatusComponent on BaseEuCovidCertificateLayout component ([#3101](https://github.com/pagopa/io-app/issues/3101)) ([8195eee](https://github.com/pagopa/io-app/commit/8195eee50545a3fe5ab2b28328b77d3880cfb3a8))
+* **EU Covid Certificate:** [[IAGP-20](https://pagopa.atlassian.net/browse/IAGP-20)] Expired certificate screen ([#3096](https://github.com/pagopa/io-app/issues/3096)) ([60cd893](https://github.com/pagopa/io-app/commit/60cd8936783914cadd9f606024808012d0d2e5ad))
+* **EU Covid Certificate:** [[IAGP-22](https://pagopa.atlassian.net/browse/IAGP-22)] Certificate not found screen ([#3091](https://github.com/pagopa/io-app/issues/3091)) ([f03375d](https://github.com/pagopa/io-app/commit/f03375d9991f3de35b5443ce41b4768d32106f8e))
+* **EU Covid Certificate:** [[IAGP-23](https://pagopa.atlassian.net/browse/IAGP-23)] Added generic error screen in case of networking errors, 500 error or other unmanaged response code  ([#3095](https://github.com/pagopa/io-app/issues/3095)) ([e0a17ab](https://github.com/pagopa/io-app/commit/e0a17aba69f76783cf86ad5c1d9a40e16321b4ab))
+* **EU Covid Certificate:** [[IAGP-35](https://pagopa.atlassian.net/browse/IAGP-35)] Certificate in wrong format ([#3093](https://github.com/pagopa/io-app/issues/3093)) ([4ce8668](https://github.com/pagopa/io-app/commit/4ce8668424c96ed3e751ccb145a1145064ad52cf))
+
+
+### Bug Fixes
+
+* **EU Covid Certificate:** [[IAGP-48](https://pagopa.atlassian.net/browse/IAGP-48)] Adds preferredLanguage parameter to certificate detail API request  ([#3105](https://github.com/pagopa/io-app/issues/3105)) ([337a889](https://github.com/pagopa/io-app/commit/337a88930e533c27f1489c775a24b1d6065bdd87))
+* **EU Covid Certificate:** getCertificate request payload is in a wrong format ([#3117](https://github.com/pagopa/io-app/issues/3117)) ([c520611](https://github.com/pagopa/io-app/commit/c5206117d1612f67b2cb35249fe17d0cf68398f2))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-71](https://pagopa.atlassian.net/browse/IAC-71)] Added Venpay logo ([#3098](https://github.com/pagopa/io-app/issues/3098)) ([354d816](https://github.com/pagopa/io-app/commit/354d8167415f5f5049fc03a7e48a68841afc4e03))
+* **EU Covid Certificate:** [[IAGP-27](https://pagopa.atlassian.net/browse/IAGP-27)] Add mixpanel tracking ([#3109](https://github.com/pagopa/io-app/issues/3109)) ([f97b59a](https://github.com/pagopa/io-app/commit/f97b59a0a52a701abde30c515f24c0d919b6a17f))
+* **EU Covid Certificate:** [[IAGP-39](https://pagopa.atlassian.net/browse/IAGP-39)] Update specs with the latest tag version [#3111](https://github.com/pagopa/io-app/issues/3111) ([a345426](https://github.com/pagopa/io-app/commit/a345426515bdc938487f512f52e93146f9d8b0c4))
+* **EU Covid Certificate:** [[IAGP-43](https://pagopa.atlassian.net/browse/IAGP-43)] Update API spec ([#3089](https://github.com/pagopa/io-app/issues/3089)) ([f34e001](https://github.com/pagopa/io-app/commit/f34e001fe39ce40b9aa8f021737b741dfb6c90e3))
+* **EU Covid Certificate:** [[IAGP-44](https://pagopa.atlassian.net/browse/IAGP-44)] Update api specs and add the "expired" state [#3102](https://github.com/pagopa/io-app/issues/3102) ([0eb9eb6](https://github.com/pagopa/io-app/commit/0eb9eb6b581f31831c46d83808cb16e4372e89ff))
+* **EU Covid Certificate:** [[IAGP-45](https://pagopa.atlassian.net/browse/IAGP-45)] Make ActivityIndicator bigger [#3099](https://github.com/pagopa/io-app/issues/3099) ([8ba833a](https://github.com/pagopa/io-app/commit/8ba833ac76d58e5d6f6665fc5e93f859d8e231e5))
+* **EU Covid Certificate:** [[IAGP-46](https://pagopa.atlassian.net/browse/IAGP-46)] Prevent the Covid CERT CTA if FF is disabled [#3100](https://github.com/pagopa/io-app/issues/3100) ([58068bf](https://github.com/pagopa/io-app/commit/58068bf9a3e58a917cf7c3561909ff5fde410203))
+* **EU Covid Certificate:** [[IAGP-47](https://pagopa.atlassian.net/browse/IAGP-47)] Change the ttl of the volatile cache ([#3104](https://github.com/pagopa/io-app/issues/3104)) ([721213b](https://github.com/pagopa/io-app/commit/721213b08d55deeba44c3f18e49cfec01e5fd0cc))
+* **EU Covid Certificate:** [[IAGP-49](https://pagopa.atlassian.net/browse/IAGP-49)] Add certificate expired test case [#3106](https://github.com/pagopa/io-app/issues/3106) ([452edf4](https://github.com/pagopa/io-app/commit/452edf4b5c59db4649faf907dc280829d7f1c1d0))
+* **EU Covid Certificate:** [[IAGP-50](https://pagopa.atlassian.net/browse/IAGP-50)] Enable EuCovidCert feature flag [#3112](https://github.com/pagopa/io-app/issues/3112) ([1c1bd2d](https://github.com/pagopa/io-app/commit/1c1bd2dea20ed2714cf42c973ab7090d09548a8f))
+* **EU Covid Certificate:** [[IAGP-51](https://pagopa.atlassian.net/browse/IAGP-51)] Track eucovidcert message ([#3114](https://github.com/pagopa/io-app/issues/3114)) ([29bbd6d](https://github.com/pagopa/io-app/commit/29bbd6d2bc31cb1446dd61ac94c3051b3419d1aa))
+* **EU Covid Certificate:** [[IAGP-52](https://pagopa.atlassian.net/browse/IAGP-52)] Copy check ([#3115](https://github.com/pagopa/io-app/issues/3115)) ([49cf58c](https://github.com/pagopa/io-app/commit/49cf58cb2fd21675d179f3c510003aa76cc7cbb9))
+* **EU Covid Certificate:** [[IAGP-53](https://pagopa.atlassian.net/browse/IAGP-53)] Graphical refinements ([#3116](https://github.com/pagopa/io-app/issues/3116)) ([f91f2ee](https://github.com/pagopa/io-app/commit/f91f2ee3252d6a11c1c447451d170627f3711f2c))
+* [[#178393622](https://www.pivotaltracker.com/story/show/178393622)] Changed [#5](https://github.com/pagopa/io-app/issues/5)C6F82 color to [#475](https://github.com/pagopa/io-app/issues/475)A6D ([#3092](https://github.com/pagopa/io-app/issues/3092)) ([98a6046](https://github.com/pagopa/io-app/commit/98a60464e5faf1ca2e604a9f3a5ea2f3ac8ec477)), closes [#5C6F82](https://github.com/pagopa/io-app/issues/5C6F82) [#475A6](https://github.com/pagopa/io-app/issues/475A6) [#5C6F82](https://github.com/pagopa/io-app/issues/5C6F82) [#475A6](https://github.com/pagopa/io-app/issues/475A6)
+
 ## [1.26.0-rc.4](https://github.com/pagopa/io-app/compare/1.26.0-rc.3...1.26.0-rc.4) (2021-06-04)
 
 

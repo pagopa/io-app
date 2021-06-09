@@ -32,7 +32,9 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
     />
     <View spacer />
     {props.revokeInfo && (
-      <MarkdownHandleCustomLink>{props.revokeInfo}</MarkdownHandleCustomLink>
+      <MarkdownHandleCustomLink extraBodyHeight={60}>
+        {props.revokeInfo}
+      </MarkdownHandleCustomLink>
     )}
   </>
 );
