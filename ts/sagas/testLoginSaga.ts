@@ -1,16 +1,20 @@
-import {left} from "fp-ts/lib/Either";
+import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import {readableReport} from "italia-ts-commons/lib/reporters";
-import {BasicResponseType} from "italia-ts-commons/lib/requests";
-import {call, Effect, put, takeLatest} from "redux-saga/effects";
-import {ActionType, getType} from "typesafe-actions";
-import {AccessToken} from "../../definitions/backend/AccessToken";
-import {PasswordLogin} from "../../definitions/backend/PasswordLogin";
-import {BackendPublicClient} from "../api/backendPublic";
-import {apiUrlPrefix} from "../config";
-import {loginFailure, loginSuccess, testLoginRequest} from "../store/actions/authentication";
-import {SessionToken} from "../types/SessionToken";
-import {SagaCallReturnType} from "../types/utils";
+import { readableReport } from "italia-ts-commons/lib/reporters";
+import { BasicResponseType } from "italia-ts-commons/lib/requests";
+import { call, Effect, put, takeLatest } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
+import { AccessToken } from "../../definitions/backend/AccessToken";
+import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
+import { BackendPublicClient } from "../api/backendPublic";
+import { apiUrlPrefix } from "../config";
+import {
+  loginFailure,
+  loginSuccess,
+  testLoginRequest
+} from "../store/actions/authentication";
+import { SessionToken } from "../types/SessionToken";
+import { SagaCallReturnType } from "../types/utils";
 
 // Started by redux action
 function* handleTestLogin({

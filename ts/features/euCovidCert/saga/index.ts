@@ -1,12 +1,12 @@
-import {SagaIterator} from "redux-saga";
-import {call, takeLatest} from "redux-saga/effects";
-import {ActionType} from "typesafe-actions";
-import {euCovidCertificateGet} from "../store/actions";
-import {BackendEuCovidCertClient} from "../api/backendEuCovidCert";
-import {apiUrlPrefix} from "../../../config";
-import {SessionToken} from "../../../types/SessionToken";
-import {waitBackoffError} from "../../../utils/backoffError";
-import {handleGetEuCovidCertificate} from "./networking/handleGetEuCovidCertificate";
+import { SagaIterator } from "redux-saga";
+import { call, takeLatest } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { euCovidCertificateGet } from "../store/actions";
+import { BackendEuCovidCertClient } from "../api/backendEuCovidCert";
+import { apiUrlPrefix } from "../../../config";
+import { SessionToken } from "../../../types/SessionToken";
+import { waitBackoffError } from "../../../utils/backoffError";
+import { handleGetEuCovidCertificate } from "./networking/handleGetEuCovidCertificate";
 
 /**
  * Handle the EU Covid Certificate requests

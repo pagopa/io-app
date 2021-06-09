@@ -1,4 +1,4 @@
-import {ColorValue} from "react-native";
+import { ColorValue } from "react-native";
 
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {

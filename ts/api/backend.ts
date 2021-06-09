@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 
-import {DeferredPromise} from "italia-ts-commons/lib/promises";
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
@@ -13,10 +13,10 @@ import {
   IResponseType,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-import {Tuple2} from "italia-ts-commons/lib/tuples";
-import {Millisecond} from "italia-ts-commons/lib/units";
-import {InitializedProfile} from "../../definitions/backend/InitializedProfile";
-import {ProblemJson} from "../../definitions/backend/ProblemJson";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
   AbortUserDataProcessingT,
   activatePaymentDefaultDecoder,
@@ -53,9 +53,12 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
-import {SessionToken} from "../types/SessionToken";
-import {constantPollingFetch, defaultRetryingFetch} from "../utils/fetch";
-import {tokenHeaderProducer, withBearerToken as withToken} from "../utils/api";
+import { SessionToken } from "../types/SessionToken";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import {
+  tokenHeaderProducer,
+  withBearerToken as withToken
+} from "../utils/api";
 
 /**
  * We will retry for as many times when polling for a payment ID.

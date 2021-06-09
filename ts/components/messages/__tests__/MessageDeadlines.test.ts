@@ -1,14 +1,24 @@
-import {compareAsc, startOfDay} from "date-fns";
-import {none, Option, some} from "fp-ts/lib/Option";
+import { compareAsc, startOfDay } from "date-fns";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {FiscalCode, IPatternStringTag, NonEmptyString, WithinRangeString} from "italia-ts-commons/lib/strings";
-import {Tuple2} from "italia-ts-commons/lib/tuples";
-import {PaymentAmount} from "../../../../definitions/backend/PaymentAmount";
-import {TimeToLiveSeconds} from "../../../../definitions/backend/TimeToLiveSeconds";
-import {MessagesStateAndStatus} from "../../../store/reducers/entities/messages";
-import {isCreatedMessageWithContentAndDueDate} from "../../../types/CreatedMessageWithContentAndDueDate";
-import {isFakeItem, MessageAgendaItem, MessageAgendaSection, Sections} from "../MessageAgenda";
-import {getLastDeadlineId, getNextDeadlineId} from "../MessagesDeadlines";
+import {
+  FiscalCode,
+  IPatternStringTag,
+  NonEmptyString,
+  WithinRangeString
+} from "italia-ts-commons/lib/strings";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import { MessagesStateAndStatus } from "../../../store/reducers/entities/messages";
+import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
+import {
+  isFakeItem,
+  MessageAgendaItem,
+  MessageAgendaSection,
+  Sections
+} from "../MessageAgenda";
+import { getLastDeadlineId, getNextDeadlineId } from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
