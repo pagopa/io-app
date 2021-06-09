@@ -77,7 +77,7 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>IO needs access to the Photos to scan QR codes</string>
+    <string>to save or load codes and screenshots </string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>UIAppFonts</key>

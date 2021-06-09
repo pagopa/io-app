@@ -1294,7 +1294,7 @@ wallet:
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
-      message: IO ha bisogno di accedere alle foto per scansionare i codici QR
+      message: IO ha bisogno di accedere alle tue immagini per salvare o caricare codici e screenshot
       buttonText:
         settings: Abilita permessi
         cancel: Annulla
