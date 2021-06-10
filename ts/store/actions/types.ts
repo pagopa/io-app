@@ -10,6 +10,7 @@ import {
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
+import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
@@ -93,7 +94,8 @@ export type Action =
   | SatispayActions
   | CrossSessionsActions
   | CgnActions
-  | OutcomeCodeActions
+  | EuCovidCertActions
+  | OutcomeCodeActions;
   | SvActions;
 
 export type Dispatch = DispatchAPI<Action>;
