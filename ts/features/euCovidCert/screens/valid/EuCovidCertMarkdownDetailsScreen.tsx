@@ -1,24 +1,24 @@
-import { Toast, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
 import { CaptureOptions } from "react-native-view-shot";
+import { NavigationInjectedProps } from "react-navigation";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../utils/showToast";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
-import { showToast } from "../../../../utils/showToast";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
 import { captureScreenShoot } from "../../utils/screenshoot";
 
 type NavigationParams = Readonly<{
@@ -70,12 +70,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
     }
     captureScreenShoot(screenShotViewContainerRef, screenShotOption, {
       onSuccess: () =>
-        Toast.show({
-          text: I18n.t("features.euCovidCertificate.save.ok")
-        }),
+        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>
         showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onError: () => showToast(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
