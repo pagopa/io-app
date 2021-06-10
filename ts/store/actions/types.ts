@@ -95,7 +95,7 @@ export type Action =
   | CrossSessionsActions
   | CgnActions
   | EuCovidCertActions
-  | OutcomeCodeActions;
+  | OutcomeCodeActions
   | SvActions;
 
 export type Dispatch = DispatchAPI<Action>;
