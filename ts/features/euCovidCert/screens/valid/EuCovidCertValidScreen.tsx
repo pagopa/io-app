@@ -1,4 +1,4 @@
-import { Toast, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -44,6 +44,7 @@ import {
   FlashAnimatedComponent,
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
+import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -80,6 +81,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 type EuCovidCertValidComponentProps = Props & {
   markdownWebViewStyle?: StyleProp<ViewStyle>;
+  messageId?: string;
 };
 const EuCovidCertValidComponent = (
   props: EuCovidCertValidComponentProps
@@ -107,6 +109,11 @@ const EuCovidCertValidComponent = (
             uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
           }}
           style={styles.qrCode}
+          onError={() => {
+            void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
+              messageId: props.messageId
+            });
+          }}
         />
       </TouchableOpacity>
     )}
@@ -149,6 +156,8 @@ const addBottomSheetItem = (config: {
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
       </View>
     </View>
+    <View spacer={true} large={true} />
+    <View spacer={true} large={true} />
   </ButtonDefaultOpacity>
 );
 
@@ -176,8 +185,10 @@ const Footer = (props: FooterProps): React.ReactElement => {
       <H5 color={"bluegrey"} weight={"Regular"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H5>
+      <View spacer={true} />
+      <View spacer={true} />
     </View>,
-    260
+    320
   );
 
   const saveButton = confirmButtonProps(
@@ -227,12 +238,10 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     }
     captureScreenShoot(screenShotViewContainer, screenShotOption, {
       onSuccess: () =>
-        Toast.show({
-          text: I18n.t("features.euCovidCertificate.save.ok")
-        }),
+        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
       onNoPermissions: () =>
         showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => Toast.show({ text: I18n.t("global.genericError") }),
+      onError: () => showToast(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);
@@ -257,6 +266,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           )}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           <EuCovidCertValidComponent
+            messageId={props.euCovidCert?.messageId}
             {...props}
             markdownWebViewStyle={
               isCapturingScreenShoot
@@ -295,7 +305,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
     )
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  euCovidCert: euCovidCertCurrentSelector(state)
+});
 
 export default connect(
   mapStateToProps,
