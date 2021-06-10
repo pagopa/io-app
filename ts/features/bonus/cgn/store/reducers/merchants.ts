@@ -118,3 +118,11 @@ export const cgnMerchantsAllSelector = createSelector(
       ? [...onlineMerchants.value, ...offlineMerchants.value]
       : []
 );
+
+export const cgnSelectedMerchantSelector = createSelector(
+  cgnMerchantsSelector,
+  merchantsState =>
+    isReady(merchantsState.selectedMerchant)
+      ? merchantsState.selectedMerchant.value
+      : undefined
+);

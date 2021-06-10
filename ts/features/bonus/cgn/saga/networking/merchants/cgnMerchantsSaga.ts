@@ -4,21 +4,23 @@ import { BackendCgnMerchants } from "../../../api/backendCgnMerchants";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   cgnOfflineMerchants,
-  cgnOnlineMerchants
+  cgnOnlineMerchants,
+  cgnSelectedMerchant
 } from "../../../store/actions/merchants";
-import { OnlineMerchants } from "../../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { getNetworkError } from "../../../../../../utils/errors";
-import { OfflineMerchants } from "../../../../../../../definitions/cgn/merchants/OfflineMerchants";
 
 export function* cgnOnlineMerchantsSaga(
   getOnlineMerchants: ReturnType<
     typeof BackendCgnMerchants
-  >["getOnlineMerchants"]
+  >["getOnlineMerchants"],
+  cgnOnlineMerchantRequest: ReturnType<typeof cgnOnlineMerchants.request>
 ) {
   try {
     const onlineMerchantsResult: SagaCallReturnType<typeof getOnlineMerchants> = yield call(
       getOnlineMerchants,
-      {}
+      {
+        onlineMerchantSearchRequest: cgnOnlineMerchantRequest.payload
+      }
     );
 
     if (onlineMerchantsResult.isLeft()) {
@@ -31,44 +33,30 @@ export function* cgnOnlineMerchantsSaga(
       return;
     }
 
-    if (
-      onlineMerchantsResult.isRight() &&
-      OnlineMerchants.is(onlineMerchantsResult.value.value)
-    ) {
+    if (onlineMerchantsResult.value.status === 200) {
       yield put(
         cgnOnlineMerchants.success(onlineMerchantsResult.value.value.items)
       );
+      return;
     }
+
+    throw new Error(`Response in status ${onlineMerchantsResult.value.status}`);
   } catch (e) {
     yield put(cgnOnlineMerchants.failure(getNetworkError(e)));
   }
 }
 
-const OFFLINE_TEMP_BOUNDINGBOX = {
-  userCoordinates: {
-    latitude: 41.827701462326985,
-    longitude: 12.66444625336996
-  },
-  boundingBox: {
-    coordinates: {
-      latitude: 34.845459548,
-      longitude: 6.5232427904
-    },
-    deltaLatitude: 6.9822419143,
-    deltaLongitude: 6.141203463
-  }
-};
-
 export function* cgnOfflineMerchantsSaga(
   getOfflineMerchants: ReturnType<
     typeof BackendCgnMerchants
-  >["getOfflineMerchants"]
+  >["getOfflineMerchants"],
+  cgnOfflineMerchantRequest: ReturnType<typeof cgnOfflineMerchants.request>
 ) {
   try {
     const offlineMerchantsResult: SagaCallReturnType<typeof getOfflineMerchants> = yield call(
       getOfflineMerchants,
       {
-        offlineMerchantSearchRequest: OFFLINE_TEMP_BOUNDINGBOX
+        offlineMerchantSearchRequest: cgnOfflineMerchantRequest.payload
       }
     );
 
@@ -82,15 +70,47 @@ export function* cgnOfflineMerchantsSaga(
       return;
     }
 
-    if (
-      offlineMerchantsResult.isRight() &&
-      OfflineMerchants.is(offlineMerchantsResult.value.value)
-    ) {
+    if (offlineMerchantsResult.value.status === 200) {
       yield put(
         cgnOfflineMerchants.success(offlineMerchantsResult.value.value.items)
       );
+      return;
     }
+
+    throw new Error(
+      `Response in status ${offlineMerchantsResult.value.status}`
+    );
   } catch (e) {
     yield put(cgnOfflineMerchants.failure(getNetworkError(e)));
+  }
+}
+
+export function* cgnMerchantDetail(
+  getMerchant: ReturnType<typeof BackendCgnMerchants>["getMerchant"],
+  merchantSelected: ReturnType<typeof cgnSelectedMerchant["request"]>
+) {
+  try {
+    const merchantDetailResult: SagaCallReturnType<typeof getMerchant> = yield call(
+      getMerchant,
+      { merchantId: merchantSelected.payload }
+    );
+    if (merchantDetailResult.isLeft()) {
+      yield put(
+        cgnSelectedMerchant.failure({
+          kind: "generic",
+          value: new Error(readableReport(merchantDetailResult.value))
+        })
+      );
+      return;
+    }
+
+    if (merchantDetailResult.value.status === 200) {
+      yield put(cgnSelectedMerchant.success(merchantDetailResult.value.value));
+      return;
+    }
+
+    throw new Error(`Response in status ${merchantDetailResult.value.status}`);
+  } catch (e) {
+    yield put(cgnSelectedMerchant.failure(getNetworkError(e)));
   }
 }

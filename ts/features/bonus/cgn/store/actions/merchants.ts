@@ -3,26 +3,26 @@ import { NetworkError } from "../../../../../utils/errors";
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { OfflineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OfflineMerchantSearchRequest";
+import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/merchants/OnlineMerchantSearchRequest";
 
 /**
  * get and handle list of online merchants conventioned with CGN
- * TODO request action should contain filtering options
  */
 export const cgnOnlineMerchants = createAsyncAction(
   "CGN_ONLINE_MERCHANTS_REQUEST",
   "CGN_ONLINE_MERCHANTS_SUCCESS",
   "CGN_ONLINE_MERCHANTS_FAILURE"
-)<void, OnlineMerchants["items"], NetworkError>();
+)<OnlineMerchantSearchRequest, OnlineMerchants["items"], NetworkError>();
 
 /**
  * get and handle list of online merchants conventioned with CGN
- * TODO request action should contain filtering options
  */
 export const cgnOfflineMerchants = createAsyncAction(
   "CGN_OFFLINE_MERCHANTS_REQUEST",
   "CGN_OFFLINE_MERCHANTS_SUCCESS",
   "CGN_OFFLINE_MERCHANTS_FAILURE"
-)<void, OfflineMerchants["items"], NetworkError>();
+)<OfflineMerchantSearchRequest, OfflineMerchants["items"], NetworkError>();
 
 export const cgnSelectedMerchant = createAsyncAction(
   "CGN_SELECTED_MERCHANT_REQUEST",

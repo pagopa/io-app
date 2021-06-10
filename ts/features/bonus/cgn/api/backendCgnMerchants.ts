@@ -18,7 +18,7 @@ import {
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
-const BASE_URL = "/api/v1/cgn-operator-search/";
+const BASE_URL = "/api/v1/cgn-operator-search";
 
 const getOnlineMerchants: GetOnlineMerchantsT = {
   method: "post",
