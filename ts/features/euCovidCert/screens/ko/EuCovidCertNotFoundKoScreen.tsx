@@ -4,7 +4,6 @@ import { Dispatch } from "redux";
 import { Image, StyleSheet } from "react-native";
 import { View } from "native-base";
 import I18n from "../../../../i18n";
-import i18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
@@ -108,7 +107,7 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
           type={"SingleButton"}
           leftButton={confirmButtonProps(
             () => openWebUrl(euCovidCertificateUrl),
-            i18n.t("features.euCovidCertificate.ko.notFound.cta")
+            I18n.t("features.euCovidCertificate.ko.notFound.cta")
           )}
         />
       }
