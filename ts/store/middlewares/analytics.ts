@@ -42,7 +42,10 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
-import { contentMunicipalityLoad, loadServiceMetadata } from "../actions/content";
+import {
+  contentMunicipalityLoad,
+  loadServiceMetadata
+} from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -60,7 +63,10 @@ import {
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
-import { updateNotificationInstallationFailure, updateNotificationsInstallationToken } from "../actions/notifications";
+import {
+  updateNotificationInstallationFailure,
+  updateNotificationsInstallationToken
+} from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess, updatePin } from "../actions/pinset";
 import {
@@ -71,9 +77,16 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import { loadServiceDetail, loadServicesDetail, loadVisibleServices } from "../actions/services";
+import {
+  loadServiceDetail,
+  loadServicesDetail,
+  loadVisibleServices
+} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
-import { deleteUserDataProcessing, upsertUserDataProcessing } from "../actions/userDataProcessing";
+import {
+  deleteUserDataProcessing,
+  upsertUserDataProcessing
+} from "../actions/userDataProcessing";
 import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import {
   abortRunningPayment,
