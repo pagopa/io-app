@@ -52,6 +52,7 @@ const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
+ * This is the v1 of the merchants visualization for CGN discount, offline and online merchants are mixed together
  * @param props
  * @constructor
  */
@@ -63,6 +64,8 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     ReadonlyArray<MerchantsAll>
   >([]);
 
+  // Mixes online and offline merchants to render on the same list
+  // merchants are sorted by name
   const merchantsAll = useMemo(() => {
     const onlineMerchants = isReady(props.onlineMerchants)
       ? props.onlineMerchants.value
@@ -112,7 +115,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     Keyboard.dismiss();
   };
 
-  return isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+  return isReady(props.onlineMerchants) && isReady(props.offlineMerchants) ? (
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
