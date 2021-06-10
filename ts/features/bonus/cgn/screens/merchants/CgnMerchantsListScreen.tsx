@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useMemo } from "react";
 import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
 import { Input, Item, View } from "native-base";
@@ -47,6 +48,8 @@ const OFFLINE_FIXED_BOUNDINGBOX = {
 };
 
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
+
+type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
@@ -57,12 +60,28 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 ) => {
   const [searchValue, setSearchValue] = React.useState("");
   const [merchantList, setMerchantsList] = React.useState<
-    ReadonlyArray<OfflineMerchant | OnlineMerchant>
+    ReadonlyArray<MerchantsAll>
   >([]);
+
+  const merchantsAll = useMemo(() => {
+    const onlineMerchants = isReady(props.onlineMerchants)
+      ? props.onlineMerchants.value
+      : [];
+    const offlineMerchants = isReady(props.offlineMerchants)
+      ? props.offlineMerchants.value
+      : [];
+
+    return [
+      ...offlineMerchants,
+      ...onlineMerchants
+    ].sort((m1: MerchantsAll, m2: MerchantsAll) =>
+      m1.name > m2.name ? 1 : -1
+    );
+  }, [props.onlineMerchants, props.offlineMerchants]);
 
   const performSearch = (
     text: string,
-    merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>
+    merchantList: ReadonlyArray<MerchantsAll>
   ) => {
     // if search text is empty, restore the whole list
     if (text.length === 0) {
@@ -78,16 +97,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const debounceRef = React.useRef(debounce(performSearch, DEBOUNCE_SEARCH));
 
   React.useEffect(() => {
-    const onlineMerchants = isReady(props.onlineMerchants)
-      ? props.onlineMerchants.value
-      : [];
-    const offlineMerchants = isReady(props.offlineMerchants)
-      ? props.offlineMerchants.value
-      : [];
-
-    const initialList = [...offlineMerchants, ...onlineMerchants];
-
-    debounceRef.current(searchValue, initialList);
+    debounceRef.current(searchValue, merchantsAll);
   }, [searchValue, props.onlineMerchants, props.offlineMerchants]);
 
   const initLoadingLists = () => {
