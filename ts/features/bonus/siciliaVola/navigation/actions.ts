@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
-import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../wallet/onboarding/privative/navigation/routes";
+import SV_ROUTES from "./routes";
 
-export const navigateToOnboardingPrivativeChooseIssuerScreen = () =>
+export const navigateToSvCheckStatusRouterScreen = () =>
   NavigationActions.navigate({
-    routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_ISSUER
+    routeName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   });
