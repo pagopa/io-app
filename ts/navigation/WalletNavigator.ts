@@ -44,6 +44,8 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
+import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
+import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
@@ -168,11 +170,18 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
+const svConfigMap = {
+  [SV_ROUTES.MAIN]: {
+    screen: SvNavigator
+  }
+};
+
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
   ...bpdConfigMap,
-  ...cgnConfigMap
+  ...cgnConfigMap,
+  ...svConfigMap
 };
 
 /**
