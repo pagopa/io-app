@@ -102,6 +102,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -321,6 +322,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Start watching for cgn actions
     yield fork(watchBonusCgnSaga, sessionToken);
   }
+
+  // Start watching for sv actions
+  yield fork(watchBonusSvSaga);
 
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions

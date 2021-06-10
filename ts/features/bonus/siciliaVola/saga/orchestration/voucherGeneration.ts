@@ -1,10 +1,17 @@
 import { call } from "redux-saga/effects";
-import { executeWorkUnit } from "../../../../../sagas/workUnit";
+import {
+  executeWorkUnit,
+  withResetNavigationStack
+} from "../../../../../sagas/workUnit";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
-  svGenerateVoucherCompleted
+  svGenerateVoucherCompleted,
+  svGenerateVoucherFailure
 } from "../../store/actions/voucherGeneration";
+import SV_ROUTES from "../../navigation/routes";
+import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
+import { SagaIterator } from "redux-saga";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.
@@ -15,10 +22,18 @@ import {
  */
 function* svVoucherGenerationWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingPrivativeChooseBrandScreen(),
-    startScreenName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.CHOOSE_BRAND,
+    startScreenNavigation: navigateToSvCheckStatusRouterScreen(),
+    startScreenName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS,
     complete: svGenerateVoucherCompleted,
     back: svGenerateVoucherBack,
-    cancel: svGenerateVoucherCancel
+    cancel: svGenerateVoucherCancel,
+    failure: svGenerateVoucherFailure
   });
+}
+
+/**
+ * This saga handles the SV activation workflow
+ */
+export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
+  yield call(withResetNavigationStack, svVoucherGenerationWorkUnit);
 }
