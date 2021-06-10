@@ -32,7 +32,7 @@ export const svGenerateVoucherBack = createStandardAction(
  * The workflow fails
  */
 export const svGenerateVoucherFailure = createStandardAction(
-  "WALLET_ONBOARDING_PRIVATIVE_FAILURE"
+  "SV_GENERATE_VOUCHER_FAILURE"
 )<string>();
 
 export type SvVoucherGenerationActions =
