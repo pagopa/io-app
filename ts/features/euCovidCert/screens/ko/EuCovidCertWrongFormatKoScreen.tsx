@@ -11,7 +11,6 @@ import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import wrongFormatImage from "../../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import I18n from "../../../../i18n";
-import i18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -108,7 +107,7 @@ const EuCovidCertWrongFormatKoScreen = (props: Props): React.ReactElement => {
           type={"SingleButton"}
           leftButton={confirmButtonProps(
             () => openWebUrl(euCovidCertificateUrl),
-            i18n.t("features.euCovidCertificate.ko.wrongFormat.cta")
+            I18n.t("features.euCovidCertificate.ko.wrongFormat.cta")
           )}
         />
       }
