@@ -45,6 +45,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               />
               <View hspacer small />
               <View style={IOStyles.flex}>
+                {/* FIXME properly handle multiple categories on discount */}
                 <H5 weight={"SemiBold"} color={"bluegrey"}>
                   {discount.productCategories[0].toLocaleUpperCase()}
                 </H5>

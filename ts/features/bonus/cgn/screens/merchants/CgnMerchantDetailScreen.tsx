@@ -61,17 +61,19 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
-          <View style={{ paddingHorizontal: 16 }}>
-            <Image
-              source={{ uri: merchantDetail.value.imageUrl }}
-              style={{
-                width: "100%",
-                height: 230,
-                resizeMode: "cover",
-                borderRadius: 12
-              }}
-            />
-          </View>
+          {merchantDetail.value.imageUrl && (
+            <View style={{ paddingHorizontal: 16 }}>
+              <Image
+                source={{ uri: merchantDetail.value.imageUrl }}
+                style={{
+                  width: "100%",
+                  height: 230,
+                  resizeMode: "cover",
+                  borderRadius: 12
+                }}
+              />
+            </View>
+          )}
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer large />
             <H1>{merchantDetail.value.name}</H1>
