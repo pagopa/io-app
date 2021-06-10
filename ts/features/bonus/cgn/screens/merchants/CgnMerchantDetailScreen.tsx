@@ -28,6 +28,8 @@ import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -45,21 +47,23 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     <CgnMerchantDiscountItem discount={item} />
   );
 
-  useEffect(() => {
+  const loadMerchantDetail = () => {
     props.requestMerchantDetail(props.navigation.getParam("merchantID"));
-  }, []);
+  };
 
-  return merchantDetail ? (
+  useEffect(loadMerchantDetail, []);
+
+  return isReady(merchantDetail) ? (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={merchantDetail.name}
+      headerTitle={merchantDetail.value.name}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.flex]} bounces={false}>
           <View style={{ paddingHorizontal: 16 }}>
             <Image
-              source={{ uri: merchantDetail.imageUrl }}
+              source={{ uri: merchantDetail.value.imageUrl }}
               style={{
                 width: "100%",
                 height: 230,
@@ -70,10 +74,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
           </View>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer large />
-            <H1>{merchantDetail.name}</H1>
+            <H1>{merchantDetail.value.name}</H1>
             <H4 weight={"Regular"}>
-              {fromNullable(merchantDetail.addresses).fold(
-                merchantDetail.websiteUrl,
+              {fromNullable(merchantDetail.value.addresses).fold(
+                merchantDetail.value.websiteUrl,
                 addresses => addresses[0].full_address
               )}
             </H4>
@@ -81,21 +85,15 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
             <View spacer small />
             <FlatList
-              data={merchantDetail.discounts}
+              data={merchantDetail.value.discounts}
               renderItem={renderDiscountListItem}
             />
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
-            <H4 weight={"Regular"}>{merchantDetail.description}</H4>
-            {/* <View spacer large /> */}
-            {/* <H2>{I18n.t("bonus.cgn.merchantDetail.title.services")}</H2> */}
-            {/* <H4 weight={"Regular"}>{merchantDetail.}</H4> */}
-            {/* <View spacer large /> */}
-            {/* <H2>{I18n.t("bonus.cgn.merchantDetail.title.hours")}</H2> */}
-            {/* <H4 weight={"Regular"}>{merchantDetail.workingHours}</H4> */}
+            <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
             <View spacer large />
           </View>
         </ScrollView>
-        {fromNullable(merchantDetail.websiteUrl).map(url => (
+        {fromNullable(merchantDetail.value.websiteUrl).fold(<></>, url => (
           // eslint-disable-next-line react/jsx-key
           <FooterWithButtons
             type={"SingleButton"}
@@ -108,7 +106,11 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       </SafeAreaView>
     </BaseScreenComponent>
   ) : (
-    <></>
+    <LoadingErrorComponent
+      isLoading={isLoading(merchantDetail)}
+      loadingCaption={I18n.t("global.remoteStates.loading")}
+      onRetry={loadMerchantDetail}
+    />
   );
 };
 

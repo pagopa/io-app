@@ -129,10 +129,14 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         </>
       )}
       <View spacer />
-      <H3 accessible={true} accessibilityRole={"header"}>
-        {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
-      </H3>
-      <H4 weight={"Regular"}>{discount.condition}</H4>
+      {discount.condition && (
+        <>
+          <H3 accessible={true} accessibilityRole={"header"}>
+            {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
+          </H3>
+          <H4 weight={"Regular"}>{discount.condition}</H4>
+        </>
+      )}
     </View>
   );
 };

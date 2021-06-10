@@ -9,7 +9,6 @@ import {
   cgnSelectedMerchant
 } from "../actions/merchants";
 import {
-  isReady,
   remoteError,
   remoteLoading,
   remoteReady,
@@ -19,8 +18,6 @@ import {
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
 import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 
 export type CgnMerchantsState = {
   onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
@@ -108,21 +105,7 @@ export const cgnOfflineMerchantsSelector = createSelector(
   merchantsState => merchantsState.offlineMerchants
 );
 
-export const cgnMerchantsAllSelector = createSelector(
-  [cgnOnlineMerchantsSelector, cgnOfflineMerchantsSelector],
-  (
-    onlineMerchants: CgnMerchantsState["onlineMerchants"],
-    offlineMerchants: CgnMerchantsState["offlineMerchants"]
-  ): ReadonlyArray<OfflineMerchant | OnlineMerchant> =>
-    isReady(onlineMerchants) && isReady(offlineMerchants)
-      ? [...onlineMerchants.value, ...offlineMerchants.value]
-      : []
-);
-
 export const cgnSelectedMerchantSelector = createSelector(
   cgnMerchantsSelector,
-  merchantsState =>
-    isReady(merchantsState.selectedMerchant)
-      ? merchantsState.selectedMerchant.value
-      : undefined
+  merchantsState => merchantsState.selectedMerchant
 );

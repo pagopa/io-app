@@ -16,7 +16,6 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import {
-  cgnMerchantsAllSelector,
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
@@ -26,6 +25,8 @@ import {
   cgnOfflineMerchants,
   cgnOnlineMerchants
 } from "../../store/actions/merchants";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -65,7 +66,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   ) => {
     // if search text is empty, restore the whole list
     if (text.length === 0) {
-      setMerchantsList(props.merchants);
+      setMerchantsList(merchantList);
       return;
     }
     const resultList = merchantList.filter(
@@ -77,21 +78,31 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const debounceRef = React.useRef(debounce(performSearch, DEBOUNCE_SEARCH));
 
   React.useEffect(() => {
-    setMerchantsList(props.merchants);
-    debounceRef.current(searchValue, props.merchants);
-  }, [searchValue, props.merchants]);
+    const onlineMerchants = isReady(props.onlineMerchants)
+      ? props.onlineMerchants.value
+      : [];
+    const offlineMerchants = isReady(props.offlineMerchants)
+      ? props.offlineMerchants.value
+      : [];
 
-  React.useEffect(() => {
+    const initialList = [...offlineMerchants, ...onlineMerchants];
+
+    debounceRef.current(searchValue, initialList);
+  }, [searchValue, props.onlineMerchants, props.offlineMerchants]);
+
+  const initLoadingLists = () => {
     props.requestOfflineMerchants();
     props.requestOnlineMerchants();
-  }, []);
+  };
+
+  React.useEffect(initLoadingLists, []);
 
   const onItemPress = (id: Merchant["id"]) => {
     props.navigateToMerchantDetail(id);
     Keyboard.dismiss();
   };
 
-  return (
+  return isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
@@ -116,13 +127,20 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
         />
       </SafeAreaView>
     </BaseScreenComponent>
+  ) : (
+    <LoadingErrorComponent
+      isLoading={
+        isLoading(props.offlineMerchants) || isLoading(props.onlineMerchants)
+      }
+      loadingCaption={I18n.t("global.remoteStates.loading")}
+      onRetry={initLoadingLists}
+    />
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  isOnlineMerchantsLoading: cgnOnlineMerchantsSelector(state),
-  isOfflineMerchantsLoading: cgnOfflineMerchantsSelector(state),
-  merchants: cgnMerchantsAllSelector(state)
+  onlineMerchants: cgnOnlineMerchantsSelector(state),
+  offlineMerchants: cgnOfflineMerchantsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
