@@ -1,5 +1,8 @@
-import {Omit} from "italia-ts-commons/lib/types";
-import {RequestHeaderProducer, RequestHeaders} from "italia-ts-commons/lib/requests";
+import { Omit } from "italia-ts-commons/lib/types";
+import {
+  RequestHeaderProducer,
+  RequestHeaders
+} from "italia-ts-commons/lib/requests";
 
 // withBearerToken injects the field 'Bearer' with value token into the parameter P
 // of the f function
