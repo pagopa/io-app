@@ -1,7 +1,6 @@
 import { Animated, Easing, StyleSheet } from "react-native";
 import * as React from "react";
 import { Millisecond } from "italia-ts-commons/lib/units";
-
 const styles = StyleSheet.create({
   hover: {
     minWidth: "100%",

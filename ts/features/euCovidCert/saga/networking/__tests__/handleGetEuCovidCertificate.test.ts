@@ -14,8 +14,8 @@ import {
   StatusEnum
 } from "../../../../../../definitions/eu_covid_cert/RevokedCertificate";
 import {
-  StatusEnum as ValidStatus,
-  ValidCertificate
+  ValidCertificate,
+  StatusEnum as ValidStatus
 } from "../../../../../../definitions/eu_covid_cert/ValidCertificate";
 import { Mime_typeEnum } from "../../../../../../definitions/eu_covid_cert/QRCode";
 import { getGenericError } from "../../../../../utils/errors";
