@@ -4,7 +4,6 @@ import { Linking } from "react-native";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
-
 /**
  * Generic utilities for url parsing
  */
