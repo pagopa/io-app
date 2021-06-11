@@ -48,7 +48,11 @@ export const Header = () => (
 export const BaseEuCovidCertificateLayout = (props: Props) => {
   const elementRef = useRef(null);
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <BaseScreenComponent
+      goBack={true}
+      contextualHelp={emptyContextualHelp}
+      shouldAskForScreenshotWithInitialValue={false}
+    >
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
