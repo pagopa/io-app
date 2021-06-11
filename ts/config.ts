@@ -67,6 +67,13 @@ export const isPlaygroundsEnabled: boolean =
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
 export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
+// EU Covid Certificate feature flag
+export const euCovidCertificateEnabled: boolean =
+  Config.EU_COVID_CERT_ENABLED === "YES";
+
+// SiciliaVola Feature Flag
+export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 

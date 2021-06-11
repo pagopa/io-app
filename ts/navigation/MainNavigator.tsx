@@ -119,11 +119,6 @@ const navigation = createBottomTabNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
     },
-    // FIXME: Documents are temporarily disabled during the experimental phase
-    // see https://www.pivotaltracker.com/story/show/159490857
-    // [ROUTES.DOCUMENTS_HOME]: {
-    //   screen: PlaceholderScreen
-    // },
     [ROUTES.SERVICES_NAVIGATOR]: {
       screen: ServicesNavigator
     },
