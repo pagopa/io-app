@@ -74,6 +74,9 @@ body {
   color: ${customVariables.textColor};
   font-size: ${customVariables.fontSize1}px;
   font-family: 'Titillium Web';
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
