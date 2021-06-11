@@ -75,7 +75,6 @@ body {
   font-size: ${customVariables.fontSize1}px;
   font-family: 'Titillium Web';
   overflow-wrap: break-word;
-  word-wrap: break-word;
   hyphens: auto;
 }
 
