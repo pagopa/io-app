@@ -30,7 +30,8 @@ import {
   cgnEnabled,
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest
+  pagoPaApiUrlPrefixTest,
+  svEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -323,8 +324,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield fork(watchBonusCgnSaga, sessionToken);
   }
 
-  // Start watching for sv actions
-  yield fork(watchBonusSvSaga);
+  if (svEnabled) {
+    // Start watching for sv actions
+    yield fork(watchBonusSvSaga);
+  }
 
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions

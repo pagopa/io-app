@@ -1,5 +1,10 @@
 import { createStackNavigator } from "react-navigation";
-import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import {
+  bonusVacanzeEnabled,
+  bpdEnabled,
+  cgnEnabled,
+  svEnabled
+} from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
@@ -170,11 +175,13 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
-const svConfigMap = {
-  [SV_ROUTES.MAIN]: {
-    screen: SvNavigator
-  }
-};
+const svConfigMap = svEnabled
+  ? {
+      [SV_ROUTES.MAIN]: {
+        screen: SvNavigator
+      }
+    }
+  : {};
 
 const routeConfig = {
   ...baseRouteConfigMap,
