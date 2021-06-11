@@ -12,16 +12,20 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { IconProps } from "react-native-vector-icons/Icon";
+import { connect } from "react-redux";
+import ROUTES from "../../navigation/routes";
+import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
+import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
+import AnimatedScreenContent from "./AnimatedScreenContent";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -47,6 +51,9 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
+  navigationCurrentRouteSelector?: ReturnType<
+    typeof navigationCurrentRouteSelector
+  >;
 }>;
 
 const styles = StyleSheet.create({
@@ -58,7 +65,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class DarkLayout extends React.Component<Props> {
+class DarkLayout extends React.Component<Props> {
   public componentDidMount() {
     setStatusBarColorAndBackground(
       "light-content",
@@ -104,6 +111,15 @@ export default class DarkLayout extends React.Component<Props> {
     );
   }
   public render() {
+    const currentRouteValue: ReturnType<typeof navigationCurrentRouteSelector> = this
+      .props.navigationCurrentRouteSelector;
+
+    const isTabBarVisible =
+      currentRouteValue.value === ROUTES.MESSAGES_HOME ||
+      currentRouteValue.value === ROUTES.WALLET_HOME ||
+      currentRouteValue.value === ROUTES.SERVICES_HOME ||
+      currentRouteValue.value === ROUTES.PROFILE_MAIN;
+
     return (
       <TopScreenComponent
         accessibilityLabel={this.props.accessibilityLabel}
@@ -154,9 +170,20 @@ export default class DarkLayout extends React.Component<Props> {
         )}
         {this.props.footerFullWidth}
         {this.props.footerContent && (
-          <View footer={true}>{this.props.footerContent}</View>
+          <View
+            footer={true}
+            style={!isTabBarVisible ? { paddingBottom: 30 } : {}}
+          >
+            {this.props.footerContent}
+          </View>
         )}
       </TopScreenComponent>
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  navigationCurrentRouteSelector: navigationCurrentRouteSelector(state)
+});
+
+export default connect(mapStateToProps)(DarkLayout);
