@@ -368,8 +368,7 @@ profile:
   preferences:
     title: Preferenze
     subtitle:
-      Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-      Amministrazione.
+      Personalizza la tua esperienza in app
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
