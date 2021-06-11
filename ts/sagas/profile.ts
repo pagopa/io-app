@@ -103,7 +103,7 @@ function* createOrUpdateProfileSaga(
   );
 
   if (pot.isNone(profileState)) {
-    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
+    // something's wrong, we don't even have an AuthenticatedProfile meaning
     // the user didn't yet authenticated: ignore this upsert request.
     return;
   }
