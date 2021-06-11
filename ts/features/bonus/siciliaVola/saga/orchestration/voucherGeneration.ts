@@ -1,4 +1,5 @@
 import { call } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -11,7 +12,6 @@ import {
 } from "../../store/actions/voucherGeneration";
 import SV_ROUTES from "../../navigation/routes";
 import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
-import { SagaIterator } from "redux-saga";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.

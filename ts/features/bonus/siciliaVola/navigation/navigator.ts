@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation";
-import SV_ROUTES from "./routes";
 import CheckStatusRouterScreen from "../screens/voucherGeneration/CheckStatusRouterScreen";
+import SV_ROUTES from "./routes";
 
 const SvNavigator = createStackNavigator(
   {

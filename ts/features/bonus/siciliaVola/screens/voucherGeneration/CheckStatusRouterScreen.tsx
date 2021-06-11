@@ -1,15 +1,15 @@
 import * as React from "react";
+import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { SafeAreaView } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { useRef } from "react";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { NavigationEvents } from "react-navigation";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { SafeAreaView } from "react-native";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   svGenerateVoucherBack,

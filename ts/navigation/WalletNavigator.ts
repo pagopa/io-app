@@ -48,9 +48,9 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
-import ROUTES from "./routes";
 import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
+import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {

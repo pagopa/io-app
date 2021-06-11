@@ -66,6 +66,7 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -103,7 +104,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
