@@ -33,6 +33,7 @@
   - [Who develops the app?](#who-develops-the-app)
   - [Can I use the app?](#can-i-use-the-app)
   - [How can I help you?](#how-can-i-help-you)
+  - [What permissions are used by the IO app?](#what-permissions-are-used-by-the-io-app)
 - [Main technologies used](#main-technologies-used)
 - [Architecture](#architecture)
   - [SPID Authentication](#spid-authentication)
@@ -89,6 +90,16 @@ Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platform
 [Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
 If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
+
+### What permissions are used by the IO app?
+
+| Permission                        | Usage                                                                   |
+| --------------------------------- | ---------------------------------------------------------------------   |
+| Calendar                          | Request access to a user’s calendar data to save reminders              |
+| Camera                            | Request access to the device camera, used to scan codes and documents   |
+| Face ID                           | Request permission to use biometric authentication                      |
+| Fingerprint                       | Request permission to use fingerprint sensor for authentication         |
+| Photo Library                     | Request access to the user’s photo library used to save captured images |
 
 ## Main technologies used
 
