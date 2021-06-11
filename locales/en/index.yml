@@ -287,7 +287,7 @@ profile:
       cleared: The cache has been cleared.
     preferences:
       title: Preferences
-      description: Manage app internal preferences
+      description: Customize your app experience
     privacy:
       title: Information and conditions of use
       description: Your rights and obligations when using IO
