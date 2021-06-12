@@ -55,6 +55,8 @@ type State = {
  * The icon has a badge if there are unread messages from the assistance
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
+  private _isMounted = false;
+  
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -64,9 +66,16 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
+    this._isMounted = true;
     Replies.hasChats(hasChats => {
-      this.setState({ hasChats });
+      if (this._isMounted) {
+        this.setState({ hasChats });
+      }
     });
+  }
+
+  public componentWillUnmount() {
+    this._isMounted = false;
   }
 
   private handleIBChatPress = () => {
