@@ -48,6 +48,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 type State = {
   instabugReportType: Option<BugReporting.reportType>;
   hasChats: boolean;
+  isMounted: boolean;
 };
 
 /**
@@ -55,27 +56,28 @@ type State = {
  * The icon has a badge if there are unread messages from the assistance
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
-  private _isMounted = false;
   
   constructor(props: Props) {
     super(props);
     this.state = {
       instabugReportType: none,
-      hasChats: false
+      hasChats: false,
+      isMounted: false
     };
   }
 
   public componentDidMount() {
-    this._isMounted = true;
+    this.setState({ isMounted: true });
+
     Replies.hasChats(hasChats => {
-      if (this._isMounted) {
+      if (this.state.isMounted) {
         this.setState({ hasChats });
       }
     });
   }
 
   public componentWillUnmount() {
-    this._isMounted = false;
+    this.setState({ isMounted: false });
   }
 
   private handleIBChatPress = () => {
