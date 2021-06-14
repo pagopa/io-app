@@ -185,7 +185,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (!this.state.isMounted) {
+    const isPrevCurrentSameState =
+      prevProps.profile.kind === this.props.profile.kind;
+    // do nothing if prev profile is in the same state of the current
+    if (!this.state.isMounted || isPrevCurrentSameState) {
       return;
     }
     // if we were updating the profile

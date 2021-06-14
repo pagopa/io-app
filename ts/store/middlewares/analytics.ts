@@ -128,6 +128,7 @@ import {
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
 import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
@@ -371,7 +372,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.request):
     case getType(loadMessagesCancel):
-    case getType(loadMessage.success):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
@@ -427,6 +427,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         count: action.payload.length
       });
+
+    case getType(loadMessage.success):
+      return mp.track(action.type, {
+        ecc: action.payload.content.eu_covid_cert !== undefined
+      });
+
     // bonus vacanze
     case getType(checkBonusVacanzeEligibility.success):
       if (isEligibilityResponseTrackable(action.payload)) {
@@ -474,6 +480,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
 };

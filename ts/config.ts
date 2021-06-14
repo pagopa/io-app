@@ -71,6 +71,9 @@ export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
+// SiciliaVola Feature Flag
+export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
 
