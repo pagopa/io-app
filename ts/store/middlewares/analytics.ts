@@ -1,8 +1,5 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
-import { constNull } from "fp-ts/lib/function";
-import DeviceInfo from "react-native-device-info";
-import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
@@ -157,23 +154,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_IDP_ID: action.payload.id,
         SPID_IDP_NAME: action.payload.name
       });
-    case getType(profileLoadSuccess):
-      // as soon as we have the user fiscal code, attach the mixpanel
-      // session to the hashed fiscal code of the user
-      const fiscalnumber = action.payload.fiscal_code;
-
-      // Re-identify the user using the hashed fiscal code.
-      // It's important the flow order and the order in which the arguments are passed to the
-      // mp.alias function because the second argument is the 'Main ID' for mixpanel so the events
-      // will be showned in the Main ID page.
-      const identifyAndAlias = sha256(fiscalnumber).then(hash =>
-        mp.identify(hash).then(() => mp.alias(DeviceInfo.getUniqueId(), hash))
-      );
-
-      return Promise.all([
-        mp.track(action.type).then(constNull, constNull),
-        identifyAndAlias.then(constNull, constNull)
-      ]);
 
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
@@ -354,6 +334,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadSuccess):
     // userMetadata
     case getType(userMetadataUpsert.request):
     case getType(userMetadataUpsert.success):
