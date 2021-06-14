@@ -10,7 +10,6 @@ import {
   loadAllBonusActivations,
   loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { isActivationResponseTrackable } from "../../features/bonus/bonusVacanze/utils/bonus";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
@@ -403,6 +402,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
+    case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
     // bonus vacanze
     case getType(loadAllBonusActivations.request):
@@ -410,11 +410,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
-
-    case getType(loadMessage.success):
-      return mp.track(action.type, {
-        ecc: action.payload.content.eu_covid_cert !== undefined
-      });
 
     case getType(deleteUserDataProcessing.request):
       return mp.track(action.type, { choice: action.payload });
