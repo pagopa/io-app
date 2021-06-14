@@ -49,7 +49,7 @@ const renderItem = (props: Props) => (
 ): React.ReactElement => {
   const { onIdpSelected } = props;
   const { item } = info;
-  console.log(item.localLogo);
+
   const onPress = () => onIdpSelected(item);
   if (item.isTestIdp === true) {
     return (
