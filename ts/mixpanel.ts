@@ -4,6 +4,7 @@ import { Appearance, Platform } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
+import { isAndroid, isIos } from "./utils/platform";
 
 // eslint-disable-next-line
 export let mixpanel: MixpanelInstance | undefined;
@@ -24,7 +25,12 @@ initializeMixPanel()
 
 const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
-  await mp.disableIpAddressGeolocalization();
+  // on iOS it can be deactivate by invoking a SDK method
+  // on Android it can be done adding an extra config in AndroidManifest
+  // see https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection
+  if (isIos) {
+    await mp.disableIpAddressGeolocalization();
+  }
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale: DeviceInfo.getFontScaleSync(),
@@ -38,10 +44,10 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 
 export const setMixpanelPushNotificationToken = (token: string) => {
   if (mixpanel) {
-    if (Platform.OS === "ios") {
+    if (isIos) {
       return mixpanel.addPushDeviceToken(token);
     }
-    if (Platform.OS === "android") {
+    if (isAndroid) {
       return mixpanel.setPushRegistrationId(token);
     }
   }
