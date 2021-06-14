@@ -405,3 +405,16 @@ export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
   });
+
+/**
+ * SPID
+ */
+export const navigateToSPIDTestIDP = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_TEST
+  });
+
+export const navigateToSPIDLogin = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+  });
