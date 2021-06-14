@@ -70,6 +70,7 @@ import {
   watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
+import { initMixpanel } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
@@ -120,6 +121,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
+
+  yield call(initMixpanel);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> = yield select(

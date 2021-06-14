@@ -134,7 +134,7 @@ export const persistedPreferencesSelector = (state: GlobalState) =>
 export const continueWithRootOrJailbreakSelector = (state: GlobalState) =>
   state.persistedPreferences.continueWithRootOrJailbreak;
 
-export const isMixpanelEnabled = (state: GlobalState) =>
+export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
   state.persistedPreferences.isMixpanelEnabled;
 
 // returns the preferred language as an Option from the persisted store
