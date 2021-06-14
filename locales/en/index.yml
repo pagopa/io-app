@@ -1032,6 +1032,9 @@ wallet:
     loadWalletsErrorTitle: Systems are taking longer than expected
     loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
+  challenge3ds:
+    title: Payment's confirmation
+    subtitle: Your bank requires you to confirm your identity. Should you have any issues, please contact your bank.
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
