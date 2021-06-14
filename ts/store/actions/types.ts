@@ -18,6 +18,7 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
+import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -94,7 +95,8 @@ export type Action =
   | CrossSessionsActions
   | CgnActions
   | EuCovidCertActions
-  | OutcomeCodeActions;
+  | OutcomeCodeActions
+  | SvActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
