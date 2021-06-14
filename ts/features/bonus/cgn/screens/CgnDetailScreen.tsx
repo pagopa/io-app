@@ -36,15 +36,11 @@ import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import {
-  eycaDetailSelector,
-  EycaDetailsState,
-  EycaDetailStatus
-} from "../store/reducers/eyca/details";
+import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { navigateBack } from "../../../../store/actions/navigation";
-import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { canEycaCardBeShown } from "../utils/eyca";
 import { configSelector } from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -53,26 +49,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 const HEADER_BACKGROUND_COLOR = "#C2DBEC";
 const GRADIENT_END_COLOR = "#94C0DD";
 
-// return true if the EYCA details component can be shown
-const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
-  if (isLoading(card)) {
-    return true;
-  }
-  const evaluateReady = (status: EycaDetailStatus): boolean => {
-    switch (status) {
-      case "FOUND":
-      case "NOT_FOUND":
-      case "ERROR":
-        return true;
-      case "INELIGIBLE":
-        return false;
-    }
-  };
-  if (isReady(card)) {
-    return evaluateReady(card.value.status);
-  }
-  return false;
-};
 /**
  * Screen to display all the information about the active CGN
  */
@@ -97,6 +73,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   });
 
   const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
+
   return props.cgnDetails || props.isCgnInfoLoading ? (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent

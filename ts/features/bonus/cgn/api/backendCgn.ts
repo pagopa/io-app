@@ -5,7 +5,6 @@ import {
   RequestHeaderProducer,
   RequestHeaders
 } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   generateOtpDefaultDecoder,
@@ -23,6 +22,7 @@ import {
   startEycaActivationDefaultDecoder,
   StartEycaActivationT
 } from "../../../../../definitions/cgn/requestTypes";
+import { withBearerToken as withToken } from "../../../../utils/api";
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
@@ -107,16 +107,7 @@ export function BackendCGN(
     baseUrl,
     fetchApi
   };
-
-  // withBearerToken injects the field 'Bearer' with value token into the parameter P
-  // of the f function
-  const withBearerToken = <P extends { Bearer: string }, R>(
-    f: (p: P) => Promise<R>
-  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign({ Bearer: String(token) }, po) as P;
-    return f(params);
-  };
-
+  const withBearerToken = withToken(token);
   return {
     startCgnActivation: withBearerToken(
       createFetchRequestForApi(startCgnActivation, options)
