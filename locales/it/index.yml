@@ -368,8 +368,7 @@ profile:
   preferences:
     title: Preferenze
     subtitle:
-      Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-      Amministrazione.
+      Personalizza la tua esperienza in app
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
@@ -2469,12 +2468,23 @@ bonus:
           other: "{{seconds}} secondi"
 features:
   euCovidCertificate:
+    save:
+      noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
+      ok: "L'immagine è stata salvata nella galleria del tuo dispositivo"
+      bottomSheet:
+        title: "Salva il certificato"
+        subTitle: "Potrai mostrare il QR code del certificato senza aprire app IO, anche in assenza di connessione."
+        saveAsImage:
+          title: "Salva come immagine nella galleria"
+          subTitle: "Troverai il QR code fra le immagini presenti sul tuo dispositivo"
     listItem:
       cta: "Visualizza"
     common:
       title: "Certificazione verde COVID-19"
-      subtitle: "EU Digital Covid Certificate"
+      subtitle: "EU Digital COVID Certificate"
       learnMore: "Per saperne di più"
+      authorizationCode: "Codice di autorizzazione"
+      messageIdentifier: "Identificativo del messaggio"
     loading:
       title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
       subtitle: "Attendi per favore"
@@ -2484,27 +2494,29 @@ features:
         hint: "Visualizza il QR Code a tutto schermo"
       markdownDetails:
         headerTitle: "Dettagli del certificato"
-        save: "Salva i dettagli come immagine"
+        save: "Salva i dettagli"
     revoked:
-      title: "Questo certificato non è più valido"
+      title: "Questo certificato \nnon è più valido"
     expired:
       title: "Questo certifcato è scaduto"
     ko:
       genericError:
         title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
-        subtitle: "Protrebbe essere dovuto ad un problema temporaneo."
+        subtitle: "Potrebbe essere dovuto ad un problema temporaneo."
       notFound:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Sembra che il certificato non \nesista: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
+        cta: "Contatta l'assistenza"
       notOperational:
-        title: "Il certificato europeo Covid non è attualmente operativo"
+        title: "La Certificazione verde COVID-19 non è attualmente operativa"
         subtitle: "TMP"
       temporarilyNotAvailable:
         title: "Il servizio è temporaneamente non disponibile"
         subtitle: "Ti preghiamo di riprovare più tardi"
       wrongFormat:
-        title: "TMP"
-        subtitle: "TMP"
+        title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
+        cta: "Contatta l'assistenza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

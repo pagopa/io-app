@@ -12,6 +12,7 @@ import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import SectionStatusComponent from "../../../components/SectionStatusComponent";
 
 type Props = WithTestID<{
   content: React.ReactElement;
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Header = () => (
+export const Header = () => (
   <>
     <View style={styles.row}>
       <H1 style={IOStyles.flex}>
@@ -47,7 +48,11 @@ const Header = () => (
 export const BaseEuCovidCertificateLayout = (props: Props) => {
   const elementRef = useRef(null);
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <BaseScreenComponent
+      goBack={true}
+      contextualHelp={emptyContextualHelp}
+      shouldAskForScreenshotWithInitialValue={false}
+    >
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
@@ -61,6 +66,7 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
           <Header />
           {props.content}
         </ScrollView>
+        <SectionStatusComponent sectionKey={"euCovidCert"} />
         {props.footer}
       </SafeAreaView>
     </BaseScreenComponent>

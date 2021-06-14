@@ -14,6 +14,12 @@ import {
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import EuCovidCertificateRouterScreen from "../EuCovidCertificateRouterScreen";
 
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
 const authCode = "authCode" as EUCovidCertificateAuthCode;
 
 describe("Test EuCovidCertificateRouterScreen", () => {
@@ -51,9 +57,6 @@ describe("Test EuCovidCertificateRouterScreen", () => {
         value: new Error("An error")
       })
     );
-
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(render.component.toJSON()));
 
     expect(
       render.component.queryByTestId("EuCovidCertGenericErrorKoScreen")
@@ -105,7 +108,19 @@ describe("Test EuCovidCertificateRouterScreen", () => {
 
   it("With a notFound response, the loading screen should be rendered EuCovidCertNotFoundKoScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        euCovidCert: {
+          ...globalState.features.euCovidCert,
+          current: {
+            messageId: "123",
+            authCode: "123" as EUCovidCertificateAuthCode
+          }
+        }
+      }
+    } as any);
     const render = renderComponent(store);
 
     expect(
@@ -169,7 +184,19 @@ describe("Test EuCovidCertificateRouterScreen", () => {
   });
   it("With a wrongFormat response, the loading screen should be rendered EuCovidCertWrongFormatKoScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        euCovidCert: {
+          ...globalState.features.euCovidCert,
+          current: {
+            messageId: "123",
+            authCode: "123" as EUCovidCertificateAuthCode
+          }
+        }
+      }
+    } as any);
     const render = renderComponent(store);
 
     expect(

@@ -1,6 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
+import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
 import { handleGetEuCovidCertificate } from "../handleGetEuCovidCertificate";
 import { appReducer } from "../../../../../store/reducers";
 import { euCovidCertificateGet } from "../../../store/actions";
@@ -8,7 +9,6 @@ import {
   EUCovidCertificate,
   EUCovidCertificateAuthCode
 } from "../../../types/EUCovidCertificate";
-import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
 import {
   RevokedCertificate,
   StatusEnum
@@ -19,12 +19,22 @@ import {
 } from "../../../../../../definitions/eu_covid_cert/ValidCertificate";
 import { Mime_typeEnum } from "../../../../../../definitions/eu_covid_cert/QRCode";
 import { getGenericError } from "../../../../../utils/errors";
+import {
+  ExpiredCertificate,
+  StatusEnum as ExpiredStatus
+} from "../../../../../../definitions/eu_covid_cert/ExpiredCertificate";
 
 const revokedCertificate: RevokedCertificate = {
   uvci: "revokedCertificateId",
   status: StatusEnum.revoked,
   info: "the revoked reason",
   revoked_on: new Date()
+};
+
+const expiredCertificate: ExpiredCertificate = {
+  uvci: "expiredCertificateId",
+  status: ExpiredStatus.expired,
+  info: "the expired reason"
 };
 
 const validCertificate: ValidCertificate = {
@@ -60,6 +70,18 @@ const cases: ReadonlyArray<[
     })
   ],
   [
+    right({ status: 200, value: expiredCertificate }),
+    euCovidCertificateGet.success({
+      kind: "success",
+      value: {
+        kind: "expired",
+        id: expiredCertificate.uvci as EUCovidCertificate["id"],
+        markdownInfo: expiredCertificate.info
+      },
+      authCode
+    })
+  ],
+  [
     right({ status: 200, value: validCertificate }),
     euCovidCertificateGet.success({
       kind: "success",
@@ -70,7 +92,7 @@ const cases: ReadonlyArray<[
           mimeType: validCertificate.qr_code.mime_type,
           content: validCertificate.qr_code.content
         },
-        markdownPreview: validCertificate.info,
+        markdownInfo: validCertificate.info,
         markdownDetails: validCertificate.detail
       },
       authCode

@@ -33,7 +33,10 @@ export const EuCovidCertQrCodeFullScreen = (
 ): React.ReactElement => {
   useMaxBrightness();
   return (
-    <BaseScreenComponent goBack={true}>
+    <BaseScreenComponent
+      goBack={true}
+      shouldAskForScreenshotWithInitialValue={false}
+    >
       <SafeAreaView
         style={IOStyles.flex}
         testID={"EuCovidCertQrCodeFullScreen"}

@@ -6,23 +6,22 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
-import { isStrictSome } from "../../../utils/pot";
 import { euCovidCertificateGet } from "../store/actions";
-import { euCovidCertificateFromAuthCodeSelector } from "../store/reducers/byAuthCode";
-import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
 import {
-  EUCovidCertificateResponse,
-  isEuCovidCertificateSuccessResponse
-} from "../types/EUCovidCertificateResponse";
+  euCovidCertificateFromAuthCodeSelector,
+  euCovidCertificateShouldBeLoadedSelector
+} from "../store/reducers/byAuthCode";
+import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
+import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
 import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
 import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
 import EuCovidCertRevokedScreen from "./EuCovidCertRevokedScreen";
-import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 import EuCovidCertGenericErrorKoScreen from "./ko/EuCovidCertGenericErrorKoScreen";
 import EuCovidCertNotFoundKoScreen from "./ko/EuCovidCertNotFoundKoScreen";
 import EuCovidCertNotOperationalKoScreen from "./ko/EuCovidCertNotOperationalKoScreen";
 import EuCovidCertTemporarilyNotAvailableKoScreen from "./ko/EuCovidCertTemporarilyNotAvailableKoScreen";
 import EuCovidCertWrongFormatKoScreen from "./ko/EuCovidCertWrongFormatKoScreen";
+import EuCovidCertValidScreen from "./valid/EuCovidCertValidScreen";
 
 type NavigationParams = Readonly<{
   authCode: EUCovidCertificateAuthCode;
@@ -55,23 +54,19 @@ const routeEuCovidResponse = (
           return <EuCovidCertValidScreen validCertificate={response.value} />;
         case "revoked":
           return (
-            <EuCovidCertRevokedScreen revokeInfo={response.value.revokeInfo} />
+            <EuCovidCertRevokedScreen
+              revokeInfo={response.value.markdownInfo}
+            />
           );
         case "expired":
-          return <EuCovidCertExpiredScreen />;
+          return (
+            <EuCovidCertExpiredScreen
+              expiredInfo={response.value.markdownInfo}
+            />
+          );
       }
   }
 };
-
-/**
- * The data should be loaded or refreshed if:
- * - the response is not "potSome"
- * - the response is "potSome" and the certificate is not a SuccessResponse
- * @param response
- */
-const loadRequired = (response: pot.Pot<EUCovidCertificateResponse, Error>) =>
-  !isStrictSome(response) ||
-  !isEuCovidCertificateSuccessResponse(response.value);
 
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
@@ -89,7 +84,7 @@ const EuCovidCertificateRouterScreen = (
     // At the first rendering, set the message to read
     props.setMessageRead(messageId);
     // check if a load is required
-    if (loadRequired(props.euCovidCertificateResponse(authCode))) {
+    if (props.shouldBeLoaded(authCode)) {
       props.loadCertificate(authCode);
     }
   }, []);
@@ -116,6 +111,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
+  shouldBeLoaded: (authCode: EUCovidCertificateAuthCode) =>
+    euCovidCertificateShouldBeLoadedSelector(state, authCode),
   euCovidCertificateResponse: (authCode: EUCovidCertificateAuthCode) =>
     euCovidCertificateFromAuthCodeSelector(state, authCode)
 });
