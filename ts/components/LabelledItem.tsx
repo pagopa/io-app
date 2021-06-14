@@ -23,6 +23,7 @@ import {
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IconProps } from "react-native-vector-icons/Icon";
+import { NavigationEvents } from "react-navigation";
 import I18n from "../i18n";
 import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
@@ -47,15 +48,24 @@ const styles = StyleSheet.create({
 type StyleType = IconProps["style"] & ImageStyle;
 
 type CommonProp = Readonly<{
-  label: string;
+  label?: string;
   icon?: string | ImageSourcePropType;
-  isValid?: boolean;
+  iconPosition?: "left" | "right";
   iconStyle?: StyleType;
+  iconColor?: string;
+  isValid?: boolean;
   focusBorderColor?: string;
   description?: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
+  accessibilityLabelIcon?: string;
+  onPressIcon?: () => void;
+  hasNavigationEvents?: boolean;
 }>;
+
+interface InputProps extends TextInputProps {
+  disabled?: boolean;
+}
 
 type Props = WithTestID<CommonProp> &
   (
@@ -66,12 +76,15 @@ type Props = WithTestID<CommonProp> &
       }>
     | Readonly<{
         type: "text";
-        inputProps: TextInputProps;
+        inputProps: InputProps;
       }>
   );
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export const LabelledItem: React.FC<Props> = (props: Props) => {
+export const LabelledItem: React.FC<Props> = ({
+  iconPosition = "left",
+  ...props
+}: // eslint-disable-next-line sonarjs/cognitive-complexity
+Props) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hasFocus, setHasFocus] = useState(false);
 
@@ -127,14 +140,16 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
   const isNotValid = props.isValid === undefined ? false : !props.isValid;
   return (
     <View>
-      <View
-        importantForAccessibility="no-hide-descendants"
-        accessibilityElementsHidden={true}
-      >
-        <Item style={styles.noBottomLine}>
-          <H5>{props.label}</H5>
-        </Item>
-      </View>
+      {props.label && (
+        <View
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden={true}
+        >
+          <Item style={styles.noBottomLine}>
+            <H5>{props.label}</H5>
+          </Item>
+        </View>
+      )}
 
       <View
         accessible={true}
@@ -151,13 +166,23 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
           error={isNotValid}
           success={isValid}
         >
+          {props.hasNavigationEvents && (
+            <NavigationEvents onWillBlur={props.onPressIcon} />
+          )}
+
           {props.icon &&
+            iconPosition === "left" &&
             (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
-                color={variables.brandDarkGray}
+                color={
+                  props.iconColor ? props.iconColor : variables.brandDarkGray
+                }
                 name={props.icon}
                 style={props.iconStyle}
+                onPress={props.onPressIcon}
+                accessible
+                accessibilityLabel={props.accessibilityLabelIcon}
               />
             ) : (
               <Image source={props.icon} style={props.iconStyle} />
@@ -187,8 +212,27 @@ export const LabelledItem: React.FC<Props> = (props: Props) => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}Input`}
+              disabled={props.inputProps.disabled}
             />
           )}
+
+          {props.icon &&
+            iconPosition === "right" &&
+            (isString(props.icon) ? (
+              <IconFont
+                size={variables.iconSize3}
+                color={
+                  props.iconColor ? props.iconColor : variables.brandDarkGray
+                }
+                name={props.icon}
+                style={props.iconStyle}
+                onPress={props.onPressIcon}
+                accessible
+                accessibilityLabel={props.accessibilityLabelIcon}
+              />
+            ) : (
+              <Image source={props.icon} style={props.iconStyle} />
+            ))}
         </Item>
       </View>
       {props.description && (
