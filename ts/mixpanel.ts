@@ -1,6 +1,6 @@
+import { Appearance } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
-import { Appearance } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
@@ -12,18 +12,20 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-const initializeMixPanel = async () => {
+export const initializeMixPanel = async () => {
+  console.log("initializeMixPanel START");
+  if (mixpanel !== undefined) {
+    return;
+  }
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
   await setupMixpanel(mixpanel);
+  console.log("initializeMixPanel END");
 };
 
-initializeMixPanel()
-  .then()
-  .catch(() => 0);
-
 const setupMixpanel = async (mp: MixpanelInstance) => {
+  console.log("setupMixpanel");
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
   // on iOS it can be deactivate by invoking a SDK method
   // on Android it can be done adding an extra config in AndroidManifest
@@ -40,6 +42,14 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
+};
+
+export const optOut = async () => {
+  if (mixpanel) {
+    await mixpanel.flush();
+    mixpanel = undefined;
+  }
+  return Promise.resolve();
 };
 
 export const setMixpanelPushNotificationToken = (token: string) => {

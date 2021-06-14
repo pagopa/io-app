@@ -7,6 +7,7 @@ import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { Locales } from "../../../locales/locales";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   continueWithRootOrJailbreak,
   customEmailChannelSetEnabled,
@@ -106,6 +107,13 @@ export default function preferencesReducer(
     return {
       ...state,
       continueWithRootOrJailbreak: action.payload
+    };
+  }
+
+  if (isActionOf(setMixpanelEnabled, action)) {
+    return {
+      ...state,
+      isMixpanelEnabled: action.payload
     };
   }
 
