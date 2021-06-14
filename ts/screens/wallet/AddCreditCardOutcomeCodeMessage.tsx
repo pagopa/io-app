@@ -7,7 +7,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
 import {
   navigateToWalletHome,
-  navigateToWalletTransactionsScreen
+  navigateToWalletPaymentMethodDetailScreen
 } from "../../store/actions/navigation";
 import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMessageComponent";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
@@ -53,7 +53,7 @@ const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToCreditCardDetails: (selectedWallet: Wallet) =>
-    dispatch(navigateToWalletTransactionsScreen({ selectedWallet }))
+    dispatch(navigateToWalletPaymentMethodDetailScreen({ selectedWallet }))
 });
 
 const mapStateToProps = (state: GlobalState) => ({
