@@ -346,40 +346,40 @@ profile:
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
-        title: "Usage data"
+        title: "Data analytics"
         listItem:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
         screen:
-          title: "Your usage data"
-          description: "Help the IO team to monitor the functioning of the app and provide you with adequate assistance in case of problems."
+          title: "Data analytics"
+          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
           why:
-            description: "IO collects only the information strictly necessary for the functioning of the services offered"
+            description: "IO collects only the information strictly necessary to monitor the performance of the offered services"
             cta: "Why?"
           security:
-            description: "We take security measures to protect your data and, where possible, we pseudonymize it"
-            cta: "Find out more"
+            description: "We take security measures to protect your data and pseudonymise it where possible"
+            cta: "Learn more"
           gdpr:
-            description: "The IO team collaborates with suppliers in compliance with the rules set by the GDPR"
-            cta: "See supplier list"
+            description: "The IO team works with suppliers in accordance with GDPR regulations"
+            cta: "See our suppliers"
           additionalInformation:
-            description: "For more information, read"
-            cta: "the Privacy Policy and the Terms and Conditions of Use"
-          profileSettings: "You can change this choice at any time in Profile> Preferences"
+            description: "For more information, please read"
+            cta: "the Privacy Policy and Terms and Conditions"
+          profileSettings: "You can change this choice anytime in Profile > Preferences"
           cta:
             shareData: "Share data"
-            dontShareData: "Do not share data"
-            dontShare: "Do not share"
+            dontShareData: "Don’t share data"
+            dontShare: "Don’t share"
           confirmToast: "Preferences updated!"
         alert:
-          title: "You are not giving IO permission to collect your usage data"
-          body: "If you confirm this option, the IO team will not always be able to provide you with all the assistance you need in case of problems."
+          title: "You are not giving IO consent to collect your usage data"
+          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
         whyBottomSheet:
           title: "For what purposes do we collect your data?"
-          body: "**IO does not collect data for marketing purposes.** \nThe tracking tools we use allow us to record data relating to your use of the app, to provide you with a better service and assist you in case of problems."
+          body: "**IO does not collect data for marketing purposes.** We use tracking tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
         securityBottomSheet:
-          title: "What is pseudonymization?"
-          body: "It is the processing of personal data in such a way that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and subject to technical and organizational measures intended to ensure that such personal data are not attributed to an identified or identifiable natural person. "
+          title: "What does pseudonymisation mean?"
+          body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
     appInfo:
       title: About IO
       description: Learn more about the IO app

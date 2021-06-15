@@ -4,7 +4,6 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
-import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
