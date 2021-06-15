@@ -42,6 +42,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
+import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageRouterScreen,
@@ -70,7 +71,7 @@ import {
   watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
-import { initMixpanel } from "./mixpanel";
+import { handleSetMixpanelEnabled, initMixpanel } from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
@@ -123,6 +124,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield put(previousInstallationDataDeleteSuccess());
 
   yield call(initMixpanel);
+  yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> = yield select(
