@@ -119,7 +119,7 @@ export default function preferencesReducer(
   }
 
   // if the current user is different from the previous
-  // reset the mixpanel preference
+  // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
     return {
       ...state,
