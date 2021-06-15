@@ -345,6 +345,10 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        listItem:
+          title: "Condividi i dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
