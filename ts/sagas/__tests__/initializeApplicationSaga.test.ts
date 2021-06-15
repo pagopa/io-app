@@ -19,6 +19,7 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
+import { initMixpanel } from "../mixpanel";
 import {
   loadProfile,
   watchProfile,
@@ -62,6 +63,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(previousInstallationDataDeleteSuccess())
       .next()
+      .call(initMixpanel)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, none)
@@ -86,6 +89,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(previousInstallationDataDeleteSuccess())
       .next()
+      .call(initMixpanel)
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, none)
@@ -106,6 +111,8 @@ describe("initializeApplicationSaga", () => {
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .call(initMixpanel)
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
