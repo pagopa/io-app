@@ -7,11 +7,10 @@ import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
 import { ioSuppliersUrl } from "../../../urls";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
-import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { openWebUrl } from "../../../utils/url";
+import { privacyUrl } from "../../../config";
 
 type MarkdownProps = {
   body: string;
@@ -27,7 +26,6 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 );
 
 export const ShareDataComponent = (): React.ReactElement => {
-  const navigator = useNavigationContext();
   const whyBottomSheet = useIOBottomSheet(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
@@ -100,7 +98,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Link onPress={() => navigator.navigate(ROUTES.PROFILE_PRIVACY)}>
+        <Link onPress={() => openWebUrl(privacyUrl)}>
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}

@@ -19,12 +19,15 @@ import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   const confirmOptOut = useConfirmOptOutBottomSheet();
+
+  useHardwareBackButton(() => true);
 
   const optOutAction = () =>
     confirmOptOut.present(() => {
@@ -33,7 +36,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      customGoBack={<View />}
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
       contextualHelp={emptyContextualHelp}
     >
