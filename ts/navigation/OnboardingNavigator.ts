@@ -13,11 +13,11 @@ import ROUTES from "./routes";
  */
 const navigator = createStackNavigator(
   {
-    [ROUTES.ONBOARDING_TOS]: {
-      screen: TosScreen
-    },
     [ROUTES.ONBOARDING_SHARE_DATA]: {
       screen: OnboardingShareDataScreen
+    },
+    [ROUTES.ONBOARDING_TOS]: {
+      screen: TosScreen
     },
     [ROUTES.ONBOARDING_PIN]: {
       screen: PinScreen

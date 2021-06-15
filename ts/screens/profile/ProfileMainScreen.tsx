@@ -9,6 +9,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../components/ContextualHelp";
@@ -48,6 +49,8 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
+import { RTron } from "../../boot/configureStoreAndPersistor";
+import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -116,7 +119,35 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
+  private addLocalNoticationCustomCommand() {
+    RTron?.onCustomCommand({
+      title: "Mixpanel Enabled",
+      command: "enabled",
+      description: "Mixpanel Enabled",
+      handler: constNull
+    });
+
+    RTron?.onCustomCommand({
+      title: "Mixpanel Disabled",
+      command: "disabled",
+      description: "Mixpanel Disabled",
+      handler: () => {
+        this.props.setMixpanel(false);
+      }
+    });
+
+    RTron?.onCustomCommand({
+      title: "Mixpanel Empty",
+      command: "empty",
+      description: "Mixpanel Empty",
+      handler: () => {
+        this.props.setMixpanel(null);
+      }
+    });
+  }
+
   public componentDidMount() {
+    this.addLocalNoticationCustomCommand();
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
@@ -526,6 +557,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setMixpanel: (value: boolean | null) => {
+    dispatch(setMixpanelEnabled(value));
+  },
   logout: () => dispatch(navigateToLogout()),
   requestIdentificationAndResetPin: () => {
     const onSuccess = () => dispatch(updatePin());

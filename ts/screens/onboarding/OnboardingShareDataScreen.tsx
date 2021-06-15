@@ -25,12 +25,15 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const confirmOptOut = useConfirmOptOutBottomSheet();
+  const { present: confirmOptOut, dismiss } = useConfirmOptOutBottomSheet();
 
-  useHardwareBackButton(() => true);
+  useHardwareBackButton(() => {
+    dismiss();
+    return true;
+  });
 
   const optOutAction = () =>
-    confirmOptOut.present(() => {
+    confirmOptOut(() => {
       props.setMixpanelEnabled(false);
     });
 
