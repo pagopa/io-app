@@ -1,4 +1,3 @@
-import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
