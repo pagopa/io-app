@@ -289,9 +289,9 @@ profile:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
-      title: Privacy e condizioni d'uso
+      title: Privacy e Condizioni d'uso
       description: I tuoi diritti e obblighi nell’uso di IO
-      subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account
@@ -336,8 +336,8 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Informativa e condizioni d'uso
-        description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
+        title: Informativa e Condizioni d'uso
+        description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
         infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
@@ -345,6 +345,48 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Dati di utilizzo"
+        listItem:
+          title: "Condividi i dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
+        screen:
+          title: "I tuoi dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          why:
+            description:
+              one: "IO raccoglie solo le informazioni "
+              two: "strettamente necessarie "
+              three: "per il funzionamento dei servizi offerti"
+            cta: "Perché?"
+          security:
+            description:
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
+              two: "pseudonimizziamo"
+            cta: "Scopri di più"
+          gdpr:
+            description:
+              one: "Il team di IO collabora con fornitori in conformità con le "
+              two: "norme previste dal GDPR"
+            cta: "Vedi elenco fornitori"
+          additionalInformation:
+            description: "Per maggiori informazioni, leggi "
+            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          cta:
+            shareData: "Condividi dati"
+            dontShareData: "Non condividere dati"
+            dontShare: "Non condividere"
+          confirmToast: "Preferenze aggiornate!"
+        alert:
+          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
+          body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
+        whyBottomSheet:
+          title: "Per quali finalità raccogliamo i tuoi dati?"
+          body: "**IO non raccoglie dati per finalità di marketing.**  \nGli strumenti di tracciamento che utilizziamo ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+        securityBottomSheet:
+          title: "Cos’è la pseudonimizzazione?"
+          body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
