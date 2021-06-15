@@ -1,8 +1,7 @@
-import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Body, Content, Input, Item, Right, View } from "native-base";
+import { Body, Content, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
@@ -13,7 +12,6 @@ import {
   StyleSheet
 } from "react-native";
 import I18n from "../i18n";
-import variables from "../theme/variables";
 import customVariables from "../theme/variables";
 import { areSetEqual } from "../utils/options";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";

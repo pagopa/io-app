@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Input, Item, Label, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
@@ -31,12 +31,6 @@ import { withKeyboard } from "../../utils/keyboard";
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  noLeftMargin: {
-    marginLeft: 0
-  }
-});
 
 const getMotivationItems = (): ReadonlyArray<{
   label: string;
