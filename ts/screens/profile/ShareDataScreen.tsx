@@ -14,8 +14,10 @@ import ROUTES from "../../navigation/routes";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
+import { ioSuppliersUrl } from "../../urls";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
+import { openWebUrl } from "../../utils/url";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -48,7 +50,9 @@ const ShareDataComponent = () => {
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description")}
         </Body>
-        <Link>{I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}</Link>
+        <Link onPress={() => openWebUrl(ioSuppliersUrl)}>
+          {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
+        </Link>
       </InfoBox>
       <View spacer={true} />
       <Body>
