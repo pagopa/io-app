@@ -16,7 +16,7 @@ type MarkdownProps = {
   body: string;
 };
 
-export const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
+const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
   <View>
     <View spacer={true} />
     <View style={{ flex: 1 }}>

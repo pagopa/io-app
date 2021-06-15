@@ -16,16 +16,28 @@ import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
+import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
 import { ShareDataComponent } from "./components/ShareDataComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const ShareDataScreen = (props: Props): React.ReactElement => {
+  const confirmOptOut = useConfirmOptOutBottomSheet();
   const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
+
+  const optOutAction = () =>
+    confirmOptOut.present(() => {
+      props.setMixpanelEnabled(false);
+      showToast(
+        I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
+        "success"
+      );
+    });
+
   const buttonProps = isMixpanelEnabled
     ? cancelButtonProps(
-        constNull,
+        optOutAction,
         I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
       )
     : confirmButtonProps(() => {
