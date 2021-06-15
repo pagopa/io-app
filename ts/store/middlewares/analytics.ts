@@ -52,6 +52,7 @@ import {
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
@@ -401,6 +402,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         choice: action.payload.choice,
         reason: action.payload.error.message
+      });
+    case getType(setMixpanelEnabled):
+      return mp.track(action.type, {
+        value: action.payload
       });
   }
   return Promise.resolve();
