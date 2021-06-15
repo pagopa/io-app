@@ -289,7 +289,7 @@ profile:
       title: Preferences
       description: Customize your app experience
     privacy:
-      title: Information and conditions of use
+      title: Information and Terms of Service
       description: Your rights and obligations when using IO
       subtitle: Here you find information on the legal conditions and on the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
@@ -336,8 +336,8 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy policy
-        description: See the Privacy policy and the conditions of use of IO
+        title: Privacy Policy and Terms of Service
+        description: See the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
         infobox: It is necessary to read and accept the Terms and Conditions
