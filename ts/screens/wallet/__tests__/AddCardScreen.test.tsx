@@ -11,6 +11,7 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen from "../AddCardScreen";
 import { isValidCardHolder } from "../../../utils/input";
 import { InferNavigationParams } from "../../../types/react";
+import { luhnValidateCCN, validateCVV } from "../../../utils/card";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -24,9 +25,11 @@ jest.mock("react-native-share", () => ({
 }));
 
 const aValidCardHolder = "Mario Rossi";
-const aValidPan = "1234 5678 9123 4568";
+const aValidPan = "4916916025914971";
+const aValidAmexPan = "374623599297410";
 const aValidExpirationDate = "12/99";
 const aValidSecurityCode = "123";
+const aValidAmexSecurityCode = "1234";
 
 const anInvalidCardHolder = "Màriò Ròssì";
 describe("AddCardScreen", () => {
@@ -40,7 +43,7 @@ describe("AddCardScreen", () => {
     expect(continueButton).toBeDisabled();
   });
 
-  it("should show the continue button active if all fields are correctly filled", () => {
+  it("should show the continue button active if all fields are correctly filled with non amex card", () => {
     const component = getComponent();
     const cardHolderInput = component.queryByTestId("cardHolderInput");
     const panInputMask = component.queryByTestId("panInputMask");
@@ -71,6 +74,39 @@ describe("AddCardScreen", () => {
 
     expect(continueButton).not.toBeDisabled();
   });
+
+  it("should show the continue button active if all fields are correctly filled with amex card", () => {
+    const component = getComponent();
+    const cardHolderInput = component.queryByTestId("cardHolderInput");
+    const panInputMask = component.queryByTestId("panInputMask");
+    const expirationDateInput = component.queryByTestId(
+      "expirationDateInputMask"
+    );
+    const securityCodeInput = component.queryByTestId("securityCodeInputMask");
+    const continueButton = component.queryByText(
+      I18n.t("global.buttons.continue")
+    );
+
+    expect(cardHolderInput).not.toBeNull();
+    expect(panInputMask).not.toBeNull();
+    expect(expirationDateInput).not.toBeNull();
+    expect(securityCodeInput).not.toBeNull();
+
+    if (
+      cardHolderInput &&
+      panInputMask &&
+      expirationDateInput &&
+      securityCodeInput
+    ) {
+      fireEvent.changeText(panInputMask, aValidAmexPan);
+      fireEvent.changeText(expirationDateInput, aValidExpirationDate);
+      fireEvent.changeText(securityCodeInput, aValidAmexSecurityCode);
+      fireEvent.changeText(cardHolderInput, aValidCardHolder);
+    }
+
+    expect(continueButton).not.toBeDisabled();
+  });
+
   it("should show the continue button disabled if the cardHolder is invalid", () => {
     const component = getComponent();
     const cardHolderInput = component.queryByTestId("cardHolderInput");
@@ -102,6 +138,91 @@ describe("AddCardScreen", () => {
     expect(isValidCardHolder(some(anInvalidCardHolder))).toBeFalsy();
     expect(errorMessage).not.toBeNull();
     expect(continueButton).toBeDisabled();
+  });
+
+  it("should show validated with real non-amex card and if cvv is by 3 digits", () => {
+    const component = getComponent();
+    const cardPan = component.queryByTestId("panInputMask");
+    const cardCvv = component.queryByTestId("securityCode");
+
+    if (cardPan && cardCvv) {
+      fireEvent.changeText(cardPan, aValidPan);
+      fireEvent.changeText(cardCvv, aValidSecurityCode);
+    }
+
+    const isCardNumberValid = luhnValidateCCN(aValidPan);
+    const isCvvValidation = validateCVV(aValidPan, aValidSecurityCode);
+
+    expect(isCardNumberValid).toBe(true);
+    expect(isCvvValidation).toBe(true);
+  });
+
+  it("should show not validated with real non-amex card and if cvv is by 4 digits", () => {
+    const component = getComponent();
+    const cardPan = component.queryByTestId("panInputMask");
+    const cardCvv = component.queryByTestId("securityCode");
+
+    if (cardPan && cardCvv) {
+      fireEvent.changeText(cardPan, aValidPan);
+      fireEvent.changeText(cardCvv, aValidSecurityCode);
+    }
+
+    const isCardNumberValid = luhnValidateCCN(aValidPan);
+    const isCvvValidation = validateCVV(aValidPan, aValidAmexSecurityCode);
+
+    expect(isCardNumberValid).toBe(true);
+    expect(isCvvValidation).toBe(false);
+  });
+
+  it("should show not validated with real amex card and if cvv is by 3 digits", () => {
+    const component = getComponent();
+    const cardPan = component.queryByTestId("panInputMask");
+    const cardCvv = component.queryByTestId("securityCode");
+
+    if (cardPan && cardCvv) {
+      fireEvent.changeText(cardPan, aValidPan);
+      fireEvent.changeText(cardCvv, aValidSecurityCode);
+    }
+
+    const isCardNumberValid = luhnValidateCCN(aValidAmexPan);
+    const isCvvValidation = validateCVV(aValidAmexPan, aValidSecurityCode);
+
+    expect(isCardNumberValid).toBe(true);
+    expect(isCvvValidation).toBe(false);
+  });
+
+  it("should show validated with real amex card and if cvv is by 4 digits", () => {
+    const component = getComponent();
+    const cardPan = component.queryByTestId("panInputMask");
+    const cardCvv = component.queryByTestId("securityCode");
+
+    if (cardPan && cardCvv) {
+      fireEvent.changeText(cardPan, aValidPan);
+      fireEvent.changeText(cardCvv, aValidSecurityCode);
+    }
+
+    const isCardNumberValid = luhnValidateCCN(aValidAmexPan);
+    const isCvvValidation = validateCVV(aValidAmexPan, aValidAmexSecurityCode);
+
+    expect(isCardNumberValid).toBe(true);
+    expect(isCvvValidation).toBe(true);
+  });
+
+  it("should show validated with real non-amex card and if cvv is by 3 digits", () => {
+    const component = getComponent();
+    const cardPan = component.queryByTestId("panInputMask");
+    const cardCvv = component.queryByTestId("securityCode");
+
+    if (cardPan && cardCvv) {
+      fireEvent.changeText(cardPan, aValidPan);
+      fireEvent.changeText(cardCvv, aValidSecurityCode);
+    }
+
+    const isCardNumberValid = luhnValidateCCN(aValidPan);
+    const isCvvValidation = validateCVV(aValidPan, aValidSecurityCode);
+
+    expect(isCardNumberValid).toBe(true);
+    expect(isCvvValidation).toBe(true);
   });
 });
 

@@ -141,8 +141,8 @@ const primaryButtonPropsFromState = (
   };
 
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
-    state.pan.getOrElse("") as string,
-    state.securityCode.getOrElse("") as string
+    state.pan.getOrElse(""),
+    state.securityCode.getOrElse("")
   );
 
   const card = getCreditCardFromState(state);
@@ -254,6 +254,11 @@ const AddCardScreen: React.FC<Props> = props => {
     creditCard.pan
   );
 
+  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
+    creditCard.pan.getOrElse(""),
+    creditCard.securityCode.getOrElse("")
+  );
+
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
@@ -283,11 +288,6 @@ const AddCardScreen: React.FC<Props> = props => {
     : {};
 
   const accessiblityLabels = getAccessiblityLabels(creditCard);
-
-  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
-    creditCard.pan.getOrElse(""),
-    creditCard.securityCode.getOrElse("")
-  );
 
   return (
     <BaseScreenComponent
@@ -336,9 +336,7 @@ const AddCardScreen: React.FC<Props> = props => {
             label={I18n.t("wallet.dummyCard.labels.pan")}
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
-            isValid={
-              creditCard.pan.getOrElse("") ? isCardNumberValid : undefined
-            }
+            isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
               placeholder: placeholders.placeholderCard,

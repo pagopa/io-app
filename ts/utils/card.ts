@@ -32,6 +32,7 @@ export const luhnValidateCCN = (creditCard: string): boolean => {
 
   // apply the luhn algorithm to the number of the cc
   const luhnSum = cardNumbers
+    .slice()
     .reverse()
     .map((number, index) => {
       if (index % 2 !== 0) {
@@ -47,8 +48,6 @@ export const luhnValidateCCN = (creditCard: string): boolean => {
     .reduce(sumNumbers, 0);
   return luhnSum % 10 === 0;
 };
-
-//345358040629095
 
 export const validateCVV = (creditCard: string, cvv: string): boolean => {
   if (isAmexCard.test(creditCard)) {
