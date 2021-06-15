@@ -346,9 +346,40 @@ profile:
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
+        title: "Usage data"
         listItem:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
+        screen:
+          title: "Your usage data"
+          description: "Help the IO team to monitor the functioning of the app and provide you with adequate assistance in case of problems."
+          why:
+            description: "IO collects only the information strictly necessary for the functioning of the services offered"
+            cta: "Why?"
+          security:
+            description: "We take security measures to protect your data and, where possible, we pseudonymize it"
+            cta: "Find out more"
+          gdpr:
+            description: "The IO team collaborates with suppliers in compliance with the rules set by the GDPR"
+            cta: "See supplier list"
+          additionalInformation:
+            description: "For more information, read"
+            cta: "the Privacy Policy and the Terms and Conditions of Use"
+          profileSettings: "You can change this choice at any time in Profile> Preferences"
+          cta:
+            shareData: "Share data"
+            dontShareData: "Do not share data"
+            dontShare: "Do not share"
+          confirmToast: "Preferences updated!"
+        alert:
+          title: "You are not giving IO permission to collect your usage data"
+          body: "If you confirm this option, the IO team will not always be able to provide you with all the assistance you need in case of problems."
+        whyBottomSheet:
+          title: "For what purposes do we collect your data?"
+          body: "IO does not collect data for marketing purposes. \ n The tracking tools we use allow us to record data relating to your use of the app, to provide you with a better service and assist you in case of problems."
+        security:
+          title: "What is pseudonymization?"
+          body: "It is the processing of personal data in such a way that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and subject to technical and organizational measures intended to ensure that such personal data are not attributed to an identified or identifiable natural person. "
     appInfo:
       title: About IO
       description: Learn more about the IO app

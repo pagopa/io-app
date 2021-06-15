@@ -346,9 +346,40 @@ profile:
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
+        title: "Dati di utilizzo"
         listItem:
           title: "Condividi i dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
+        screen:
+          title: "I tuoi dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          why:
+            description: "IO raccoglie solo le informazioni strettamente necessarie per il funzionamento dei servizi offerti"
+            cta: "Perché?"
+          security:
+            description: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li pseudonimizziamo"
+            cta: "Scopri di più"
+          gdpr:
+            description: "Il team di IO collabora con fornitori in conformità con le norme previste dal GDPR"
+            cta: "Vedi elenco fornitori"
+          additionalInformation:
+            description: "Per maggiori informazioni, leggi "
+            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          cta:
+            shareData: "Condividi dati"
+            dontShareData: "Non condividere dati"
+            dontShare: "Non condividere"
+          confirmToast: "Preferenze aggiornate!"
+        alert:
+          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
+          body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
+        whyBottomSheet:
+          title: "Per quali finalità raccogliamo i tuoi dati?"
+          body: "IO non raccoglie dati per finalità di marketing.\n Gli strumenti di tracciamento che utillizziamo ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+        security:
+          title: "Cos’è la pseudonimizzazione?"
+          body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
