@@ -43,7 +43,7 @@ describe("persistedPreferences reducer/selectors", () => {
       sessionInvalid()
     ].forEach(action => {
       noChangesState = appReducer(noChangesState, action);
-      // it has to match the last state
+      // it has to match the last set value
       expect(isMixpanelEnabled(notEnabledState)).toBeFalsy();
     });
 
