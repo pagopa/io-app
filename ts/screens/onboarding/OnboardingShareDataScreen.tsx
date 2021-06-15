@@ -16,7 +16,6 @@ import {
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { GlobalState } from "../../store/reducers/types";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
@@ -41,7 +40,6 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       customGoBack={<View />}
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
-      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
