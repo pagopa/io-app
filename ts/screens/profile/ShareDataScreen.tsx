@@ -13,7 +13,6 @@ import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
 import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
 import { ShareDataComponent } from "./components/ShareDataComponent";
@@ -51,7 +50,6 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
-      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>

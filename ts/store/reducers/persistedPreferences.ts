@@ -37,7 +37,7 @@ export type PersistedPreferencesState = Readonly<{
   isMixpanelEnabled: boolean | null;
 }>;
 
-const initialPreferencesState: PersistedPreferencesState = {
+export const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
   preferredLanguage: undefined,

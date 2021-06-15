@@ -16,26 +16,30 @@ import {
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { GlobalState } from "../../store/reducers/types";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
-  const confirmOptOut = useConfirmOptOutBottomSheet();
+  const { present: confirmOptOut, dismiss } = useConfirmOptOutBottomSheet();
+
+  useHardwareBackButton(() => {
+    dismiss();
+    return true;
+  });
 
   const optOutAction = () =>
-    confirmOptOut.present(() => {
+    confirmOptOut(() => {
       props.setMixpanelEnabled(false);
     });
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      customGoBack={<View />}
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
-      contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>

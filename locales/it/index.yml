@@ -346,7 +346,7 @@ profile:
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
-        title: "Dati di utilizzo"
+        title: "Privacy"
         listItem:
           title: "Condividi i dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app"

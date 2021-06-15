@@ -71,7 +71,11 @@ import {
   watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
-import { handleSetMixpanelEnabled, initMixpanel } from "./mixpanel";
+import {
+  askMixpanelOptIn,
+  handleSetMixpanelEnabled,
+  initMixpanel
+} from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
@@ -279,6 +283,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
+    // check if the user expressed preference about mixpanel, if not ask for it
+    yield call(askMixpanelOptIn);
+
     storedPin = yield call(checkConfiguredPinSaga);
 
     yield call(checkAcknowledgedFingerprintSaga);
@@ -304,6 +311,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       }
       // Ask to accept ToS if there is a new available version
       yield call(checkAcceptedTosSaga, userProfile);
+
+      // check if the user expressed preference about mixpanel, if not ask for it
+      yield call(askMixpanelOptIn);
 
       // Stop the watchAbortOnboardingSaga
       yield cancel(watchAbortOnboardingSagaTask);
