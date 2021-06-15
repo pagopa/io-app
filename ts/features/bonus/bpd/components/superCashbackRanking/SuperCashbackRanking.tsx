@@ -9,15 +9,11 @@ import Markdown from "../../../../../components/ui/Markdown";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { localeDateFormat } from "../../../../../utils/locale";
 import {
   formatIntegerNumber,
   formatNumberWithNoDigits
 } from "../../../../../utils/stringBuilder";
-import {
-  BpdPeriodWithInfo,
-  isBpdRankingReady
-} from "../../store/reducers/details/periods";
+import { isBpdRankingReady } from "../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 import { isInGracePeriod } from "../../utils/dates";
 import { LastPositionItem } from "./LastPositionItem";
@@ -69,13 +65,6 @@ body {
   color: ${IOColors.bluegreyDark}
 }
 `;
-
-const calculateEndDate = (selectedPeriod: BpdPeriodWithInfo): string => {
-  const endDate = new Date(selectedPeriod.endDate.getTime());
-  endDate.setDate(endDate.getDate() + selectedPeriod.gracePeriod);
-
-  return localeDateFormat(endDate, I18n.t("global.dateFormats.shortFormat"));
-};
 
 const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
   props: Props
