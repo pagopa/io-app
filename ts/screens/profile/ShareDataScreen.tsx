@@ -1,3 +1,4 @@
+import { constNull } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -9,6 +10,11 @@ import { H1 } from "../../components/core/typography/H1";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
@@ -17,6 +23,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { ioSuppliersUrl } from "../../urls";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
+import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -75,20 +82,36 @@ const ShareDataComponent = () => {
   );
 };
 
-const ShareDataScreen = (props: Props): React.ReactElement => (
-  <BaseScreenComponent
-    goBack={true}
-    headerTitle={I18n.t("profile.main.privacy.shareData.title")}
-    contextualHelp={emptyContextualHelp}
-  >
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <ShareDataComponent />
-      </ScrollView>
-      {/* {props.footer} */}
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+const ShareDataScreen = (props: Props): React.ReactElement => {
+  const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
+  const buttonProps = isMixpanelEnabled
+    ? cancelButtonProps(
+        constNull,
+        I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
+      )
+    : confirmButtonProps(() => {
+        props.setMixpanelEnabled(true);
+        showToast(
+          I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
+          "success"
+        );
+      }, I18n.t("profile.main.privacy.shareData.screen.cta.shareData"));
+
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("profile.main.privacy.shareData.title")}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <ShareDataComponent />
+        </ScrollView>
+        <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setMixpanelEnabled: (newValue: boolean) =>
