@@ -336,7 +336,7 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy Policy and Terms of Service
+        title: Privacy & Terms
         description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
