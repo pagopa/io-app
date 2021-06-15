@@ -6,7 +6,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
  * - false to terminate
  */
 export const setMixpanelEnabled = createStandardAction("MIXPANEL_SET_ENABLED")<
-  boolean | null
+  boolean
 >();
 
 type MixpanelActionsTypes = typeof setMixpanelEnabled;
