@@ -13,7 +13,6 @@ export let mixpanel: MixpanelInstance | undefined;
  * Initialize mixpanel at start
  */
 export const initializeMixPanel = async () => {
-  console.log("initializeMixPanel START");
   if (mixpanel !== undefined) {
     return;
   }
@@ -21,11 +20,9 @@ export const initializeMixPanel = async () => {
   await privateInstance.initialize();
   mixpanel = privateInstance;
   await setupMixpanel(mixpanel);
-  console.log("initializeMixPanel END");
 };
 
 const setupMixpanel = async (mp: MixpanelInstance) => {
-  console.log("setupMixpanel");
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
   // on iOS it can be deactivate by invoking a SDK method
   // on Android it can be done adding an extra config in AndroidManifest
