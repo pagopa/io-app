@@ -1,4 +1,4 @@
-import { call, Effect, select, takeLatest } from "redux-saga/effects";
+import { call, Effect, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { initializeMixPanel, optOut } from "../mixpanel";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
@@ -13,11 +13,9 @@ export function* initMixpanel(): Generator<Effect, void, boolean> {
     // initialize mixpanel
     yield call(initializeMixPanel);
   }
-
-  yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 }
 
-function* handleSetMixpanelEnabled(
+export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
