@@ -354,13 +354,20 @@ profile:
           title: "Data analytics"
           description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
           why:
-            description: "IO collects only the information strictly necessary to monitor the performance of the offered services"
+            description:
+              one: "IO collects only the information "
+              two: "strictly necessary "
+              three: "to monitor the performance of the offered services"
             cta: "Why?"
           security:
-            description: "We take security measures to protect your data and pseudonymise it where possible"
+            description:
+              one: "We take security measures to protect your data and "
+              two: "pseudonymise it where possible"
             cta: "Learn more"
           gdpr:
-            description: "The IO team works with suppliers in accordance with GDPR regulations"
+            description:
+              one: "The IO team works with suppliers in accordance with "
+              two: "GDPR regulations"
             cta: "See our suppliers"
           additionalInformation:
             description: "For more information, please read"

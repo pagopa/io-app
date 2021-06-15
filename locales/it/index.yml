@@ -354,13 +354,20 @@ profile:
           title: "I tuoi dati di utilizzo"
           description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
           why:
-            description: "IO raccoglie solo le informazioni strettamente necessarie per il funzionamento dei servizi offerti"
+            description:
+              one: "IO raccoglie solo le informazioni "
+              two: "strettamente necessarie "
+              three: "per il funzionamento dei servizi offerti"
             cta: "Perché?"
           security:
-            description: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li pseudonimizziamo"
+            description:
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
+              two: "pseudonimizziamo"
             cta: "Scopri di più"
           gdpr:
-            description: "Il team di IO collabora con fornitori in conformità con le norme previste dal GDPR"
+            description:
+              one: "Il team di IO collabora con fornitori in conformità con le "
+              two: "norme previste dal GDPR"
             cta: "Vedi elenco fornitori"
           additionalInformation:
             description: "Per maggiori informazioni, leggi "

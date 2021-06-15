@@ -3,6 +3,7 @@ import * as React from "react";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
+import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
@@ -50,7 +51,15 @@ export const ShareDataComponent = (): React.ReactElement => {
       <View spacer={true} />
       <InfoBox iconName={"io-analytics"}>
         <Body>
-          {I18n.t("profile.main.privacy.shareData.screen.why.description")}
+          {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
+          <Label color={"bluegrey"}>
+            {I18n.t(
+              "profile.main.privacy.shareData.screen.why.description.two"
+            )}
+          </Label>
+          {I18n.t(
+            "profile.main.privacy.shareData.screen.why.description.three"
+          )}
         </Body>
         <Link onPress={whyBottomSheet.present}>
           {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
@@ -59,7 +68,14 @@ export const ShareDataComponent = (): React.ReactElement => {
       <View spacer={true} />
       <InfoBox iconName={"ShowFalse"}>
         <Body>
-          {I18n.t("profile.main.privacy.shareData.screen.security.description")}
+          {I18n.t(
+            "profile.main.privacy.shareData.screen.security.description.one"
+          )}
+          <Label color={"bluegrey"}>
+            {I18n.t(
+              "profile.main.privacy.shareData.screen.security.description.two"
+            )}
+          </Label>
         </Body>
         <Link onPress={securityBottomSheet.present}>
           {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
@@ -68,7 +84,12 @@ export const ShareDataComponent = (): React.ReactElement => {
       <View spacer={true} />
       <InfoBox iconName={"io-fornitori"}>
         <Body>
-          {I18n.t("profile.main.privacy.shareData.screen.gdpr.description")}
+          {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
+          <Label color={"bluegrey"}>
+            {I18n.t(
+              "profile.main.privacy.shareData.screen.gdpr.description.two"
+            )}
+          </Label>
         </Body>
         <Link onPress={() => openWebUrl(ioSuppliersUrl)}>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
