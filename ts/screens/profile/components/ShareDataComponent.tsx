@@ -66,7 +66,7 @@ export const ShareDataComponent = (): React.ReactElement => {
         </Link>
       </InfoBox>
       <View spacer={true} />
-      <InfoBox iconName={"ShowFalse"}>
+      <InfoBox iconName={"io-eye-off"}>
         <Body>
           {I18n.t(
             "profile.main.privacy.shareData.screen.security.description.one"
