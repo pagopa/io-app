@@ -32,14 +32,14 @@ export const ShareDataComponent = (): React.ReactElement => {
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
     />,
     I18n.t("profile.main.privacy.shareData.whyBottomSheet.title"),
-    375
+    350
   );
   const securityBottomSheet = useIOBottomSheet(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.securityBottomSheet.body")}
     />,
     I18n.t("profile.main.privacy.shareData.securityBottomSheet.title"),
-    375
+    400
   );
 
   return (
