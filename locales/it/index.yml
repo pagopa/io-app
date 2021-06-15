@@ -383,7 +383,7 @@ profile:
           body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
         whyBottomSheet:
           title: "Per quali finalità raccogliamo i tuoi dati?"
-          body: "**IO non raccoglie dati per finalità di marketing.** \nGli strumenti di tracciamento che utillizziamo ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+          body: "**IO non raccoglie dati per finalità di marketing.**  \nGli strumenti di tracciamento che utillizziamo ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
         securityBottomSheet:
           title: "Cos’è la pseudonimizzazione?"
           body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
