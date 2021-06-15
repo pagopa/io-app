@@ -346,12 +346,12 @@ profile:
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
       shareData:
-        title: "Data analytics"
+        title: "Your usage data"
         listItem:
           title: "Share usage data"
           description: "Help the IO team to monitor the functioning of the app"
         screen:
-          title: "Data analytics"
+          title: "Your usage data"
           description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
           why:
             description:
@@ -366,9 +366,9 @@ profile:
             cta: "Learn more"
           gdpr:
             description:
-              one: "The IO team works with suppliers in accordance with "
+              one: "The IO team works with other providers in accordance with "
               two: "GDPR regulations"
-            cta: "See our suppliers"
+            cta: "See our providers"
           additionalInformation:
             description: "For more information, please read"
             cta: "the Privacy Policy and Terms and Conditions"
