@@ -345,6 +345,48 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Your usage data"
+        listItem:
+          title: "Share usage data"
+          description: "Help the IO team to monitor the functioning of the app"
+        screen:
+          title: "Your usage data"
+          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          why:
+            description:
+              one: "IO collects only the information "
+              two: "strictly necessary "
+              three: "to monitor the performance of the services provided to you"
+            cta: "Why?"
+          security:
+            description:
+              one: "We take security measures to protect your data and "
+              two: "pseudonymise it where possible"
+            cta: "Learn more"
+          gdpr:
+            description:
+              one: "The IO team works with other providers in accordance with "
+              two: "GDPR regulations"
+            cta: "See our providers"
+          additionalInformation:
+            description: "For more information, please read"
+            cta: "the Privacy Policy and Terms and Conditions"
+          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          cta:
+            shareData: "Share data"
+            dontShareData: "Don’t share data"
+            dontShare: "Don’t share"
+          confirmToast: "Preferences updated!"
+        alert:
+          title: "You are not giving IO consent to collect your usage data"
+          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+        whyBottomSheet:
+          title: "For what purposes do we collect your data?"
+          body: "**IO does not collect data for marketing purposes.**  \nWe use tracking tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+        securityBottomSheet:
+          title: "What does pseudonymisation mean?"
+          body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
     appInfo:
       title: About IO
       description: Learn more about the IO app
