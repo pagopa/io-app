@@ -45,8 +45,8 @@ const upperCaseAndNoBlanks = (text: string) =>
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState(props.startIban ?? "");
-  const isInvalidIban = iban.length > 0 && Iban.decode(iban).isLeft();
-  const userCanContinue = !isInvalidIban && iban.length > 0;
+  const isValidIban = iban.length > 0 && Iban.decode(iban).isRight();
+  const userCanContinue = isValidIban && iban.length > 0;
   const {
     headerTitle,
     title,
@@ -76,7 +76,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <H5>{ibanDescription}</H5>
             <LabelledItem
               type="text"
-              isValid={!iban ? undefined : isInvalidIban}
+              isValid={!iban ? undefined : isValidIban}
               inputProps={{
                 value: iban,
                 autoCapitalize: "characters",
