@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -21,7 +20,7 @@ import { useNavigationContext } from "../../utils/hooks/useOnFocus";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const ShareDataComponent = (navProps: NavigationScreenProps) => {
+const ShareDataComponent = () => {
   const navigator = useNavigationContext();
   return (
     <>
@@ -29,14 +28,14 @@ const ShareDataComponent = (navProps: NavigationScreenProps) => {
       <View spacer={true} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <View spacer={true} />
-      <InfoBox>
+      <InfoBox iconName={"io-analytics"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.why.description")}
         </Body>
         <Link>{I18n.t("profile.main.privacy.shareData.screen.why.cta")}</Link>
       </InfoBox>
       <View spacer={true} />
-      <InfoBox>
+      <InfoBox iconName={"ShowFalse"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.security.description")}
         </Body>
@@ -45,7 +44,7 @@ const ShareDataComponent = (navProps: NavigationScreenProps) => {
         </Link>
       </InfoBox>
       <View spacer={true} />
-      <InfoBox>
+      <InfoBox iconName={"io-fornitori"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description")}
         </Body>
