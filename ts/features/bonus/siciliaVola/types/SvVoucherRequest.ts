@@ -23,6 +23,23 @@ type University = {
   municipality: Municipality;
 };
 
+type Company = {
+  businessName: string;
+  vat: string;
+  state: State;
+  region: Region;
+  province: Province;
+  municipality: Municipality;
+};
+
+type Hospital = {
+  hospitalName: string;
+  state: State;
+  region: Region;
+  province: Province;
+  municipality: Municipality;
+};
+
 export type DisableVoucherRequest = {
   category: "disable";
   departureDate?: Date;
@@ -36,6 +53,26 @@ export type StudentVoucherRequest = {
   arriveDate?: Date;
 };
 
-export type VoucherRequest = DisableVoucherRequest | StudentVoucherRequest;
+export type WorkerVoucherRequest = {
+  category: "worker";
+  subThresholdIncome: boolean;
+  company?: Company;
+  departureDate?: Date;
+  arriveDate?: Date;
+};
+
+export type SickVoucherRequest = {
+  category: "sick";
+  subThresholdIncome: boolean;
+  hospital?: Hospital;
+  departureDate?: Date;
+  arriveDate?: Date;
+};
+
+export type VoucherRequest =
+  | DisableVoucherRequest
+  | StudentVoucherRequest
+  | WorkerVoucherRequest
+  | SickVoucherRequest;
 
 export type Category = VoucherRequest["category"];
