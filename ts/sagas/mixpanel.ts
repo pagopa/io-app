@@ -1,6 +1,6 @@
 import { call, Effect, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { initializeMixPanel, optOut } from "../mixpanel";
+import { optInMixpanel, optOutMixpanel } from "../mixpanel";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 
@@ -11,7 +11,7 @@ export function* initMixpanel(): Generator<Effect, void, boolean> {
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
-    yield call(initializeMixPanel);
+    yield call(optInMixpanel);
   }
 }
 
@@ -19,8 +19,8 @@ export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
-    yield call(initializeMixPanel);
+    yield call(optInMixpanel);
   } else {
-    yield call(optOut);
+    yield call(optOutMixpanel);
   }
 }
