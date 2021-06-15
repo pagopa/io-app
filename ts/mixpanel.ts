@@ -41,7 +41,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   await mp.identify(DeviceInfo.getUniqueId());
 };
 
-export const optOut = async () => {
+export const terminateMixpanel = async () => {
   if (mixpanel) {
     await mixpanel.flush();
     mixpanel = undefined;
