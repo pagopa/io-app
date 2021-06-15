@@ -357,7 +357,7 @@ profile:
             description:
               one: "IO collects only the information "
               two: "strictly necessary "
-              three: "to monitor the performance of the offered services"
+              three: "to monitor the performance of the services provided to you"
             cta: "Why?"
           security:
             description:
