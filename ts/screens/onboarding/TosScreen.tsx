@@ -39,7 +39,6 @@ type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
-  scrollEnd: boolean;
 };
 
 import brokenLinkImage from "../../../img/broken-link.png";
@@ -109,7 +108,7 @@ class TosScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     // it start with loading webview
-    this.state = { isLoading: true, hasError: false, scrollEnd: false };
+    this.state = { isLoading: true, hasError: false };
   }
 
   public componentDidUpdate() {
