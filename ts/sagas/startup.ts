@@ -127,7 +127,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
 
+  // check if mixpanel could be initialized
   yield call(initMixpanel);
+  // listen for mixpanel enabling events
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // Get last logged in Profile from the state
