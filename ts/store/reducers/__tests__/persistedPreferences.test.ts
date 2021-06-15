@@ -10,6 +10,7 @@ import {
   sessionInvalid
 } from "../../actions/authentication";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { clearCache } from "../../actions/profile";
 
 describe("persistedPreferences reducer/selectors", () => {
   it("should be reset mixpanel preference only on differentProfileLoggedIn action ", () => {
@@ -40,7 +41,8 @@ describe("persistedPreferences reducer/selectors", () => {
       logoutSuccess({ keepUserData: true }),
       logoutSuccess({ keepUserData: false }),
       sessionExpired(),
-      sessionInvalid()
+      sessionInvalid(),
+      clearCache()
     ].forEach(action => {
       noChangesState = appReducer(noChangesState, action);
       // it has to match the last set value
