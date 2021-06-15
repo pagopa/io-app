@@ -289,7 +289,7 @@ profile:
       title: Preferences
       description: Customize your app experience
     privacy:
-      title: Information and Terms of Service
+      title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
       subtitle: Here you find information on the legal conditions and on the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
