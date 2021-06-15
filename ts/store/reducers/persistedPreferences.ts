@@ -118,7 +118,7 @@ export default function preferencesReducer(
     };
   }
 
-  // if the current user is different from the previous
+  // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
     return {
