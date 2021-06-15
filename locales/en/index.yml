@@ -376,8 +376,8 @@ profile:
           body: "If you confirm this option, the IO team will not always be able to provide you with all the assistance you need in case of problems."
         whyBottomSheet:
           title: "For what purposes do we collect your data?"
-          body: "IO does not collect data for marketing purposes. \ n The tracking tools we use allow us to record data relating to your use of the app, to provide you with a better service and assist you in case of problems."
-        security:
+          body: "**IO does not collect data for marketing purposes.** \nThe tracking tools we use allow us to record data relating to your use of the app, to provide you with a better service and assist you in case of problems."
+        securityBottomSheet:
           title: "What is pseudonymization?"
           body: "It is the processing of personal data in such a way that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and subject to technical and organizational measures intended to ensure that such personal data are not attributed to an identified or identifiable natural person. "
     appInfo:
