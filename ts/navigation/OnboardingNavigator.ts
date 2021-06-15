@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
+import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
 import ROUTES from "./routes";
@@ -14,6 +15,9 @@ const navigator = createStackNavigator(
   {
     [ROUTES.ONBOARDING_TOS]: {
       screen: TosScreen
+    },
+    [ROUTES.ONBOARDING_SHARE_DATA]: {
+      screen: OnboardingShareDataScreen
     },
     [ROUTES.ONBOARDING_PIN]: {
       screen: PinScreen
