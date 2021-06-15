@@ -105,12 +105,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
           props.selectedPeriod.gracePeriod
         ) ? (
           <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
-            {I18n.t(
-              "bonus.bpd.details.superCashback.howItWorks.status.active",
-              {
-                endDate: calculateEndDate(props.selectedPeriod)
-              }
-            )}
+            {I18n.t("bonus.bpd.details.superCashback.howItWorks.status.active")}
           </Markdown>
         ) : (
           <H4 weight={"Bold"}>
