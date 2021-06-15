@@ -20,6 +20,7 @@ import {
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
+import { differentProfileLoggedIn } from "../actions/crossSessions";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -114,6 +115,15 @@ export default function preferencesReducer(
     return {
       ...state,
       isMixpanelEnabled: action.payload
+    };
+  }
+
+  // if the current user is different from the previous
+  // reset the mixpanel preference
+  if (isActionOf(differentProfileLoggedIn, action)) {
+    return {
+      ...state,
+      isMixpanelEnabled: null
     };
   }
 
