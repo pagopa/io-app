@@ -12,7 +12,7 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-export const optInMixpanel = async () => {
+export const initializeMixPanel = async () => {
   if (mixpanel !== undefined) {
     return;
   }
@@ -41,7 +41,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   await mp.identify(DeviceInfo.getUniqueId());
 };
 
-export const optOutMixpanel = async () => {
+export const terminateMixpanel = async () => {
   if (mixpanel) {
     await mixpanel.flush();
     mixpanel = undefined;
