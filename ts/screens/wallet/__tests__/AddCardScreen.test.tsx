@@ -140,23 +140,6 @@ describe("AddCardScreen", () => {
     expect(continueButton).toBeDisabled();
   });
 
-  it("should show validated with real non-amex card and if cvv is by 3 digits", () => {
-    const component = getComponent();
-    const cardPan = component.queryByTestId("panInputMask");
-    const cardCvv = component.queryByTestId("securityCode");
-
-    if (cardPan && cardCvv) {
-      fireEvent.changeText(cardPan, aValidPan);
-      fireEvent.changeText(cardCvv, aValidSecurityCode);
-    }
-
-    const isCardNumberValid = luhnValidateCCN(aValidPan);
-    const isCvvValidation = validateCVV(aValidPan, aValidSecurityCode);
-
-    expect(isCardNumberValid).toBe(true);
-    expect(isCvvValidation).toBe(true);
-  });
-
   it("should show not validated with real non-amex card and if cvv is by 4 digits", () => {
     const component = getComponent();
     const cardPan = component.queryByTestId("panInputMask");
