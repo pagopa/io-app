@@ -86,6 +86,10 @@ class MessageDetailData extends React.PureComponent<Props> {
   };
 
   public render() {
+    const serviceName = pot.getOrElse(this.props.serviceDetail, undefined)
+      ?.service_name;
+    const textToCopy = `${serviceName} - ${this.props.message.id}`;
+
     return (
       <View style={styles.container}>
         <Text>
@@ -127,7 +131,7 @@ class MessageDetailData extends React.PureComponent<Props> {
                 <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
                   this.props.message.id
                 }`}</Text>
-                <CopyButtonComponent textToCopy={this.props.message.id} />
+                <CopyButtonComponent textToCopy={textToCopy} />
               </View>
               <View spacer={true} />
             </React.Fragment>
