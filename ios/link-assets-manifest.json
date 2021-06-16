@@ -46,8 +46,12 @@
       "sha1": "f81d3a5f38c6bda1fb3547bf91fe0b68b54066c5"
     },
     {
+      "path": "assets/fonts/io-icon-font/.DS_Store",
+      "sha1": "e04404d4d5745fc9f18dd5095422229022964536"
+    },
+    {
       "path": "assets/fonts/io-icon-font/io-icon-font.ttf",
-      "sha1": "91e528917653352b2b5d72562b31e1bc69a97416"
+      "sha1": "89f1dc6b2cf7006f20483dde41c99a8f66df1fbe"
     },
     {
       "path": "assets/fonts/Ionicons/Ionicons.ttf",
