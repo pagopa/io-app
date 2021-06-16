@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0-rc.0](https://github.com/pagopa/io-app/compare/1.26.0-rc.6...1.27.0-rc.0) (2021-06-16)
+
+
+### Features
+
+* [[IA-27](https://pagopa.atlassian.net/browse/IA-27),[IA-28](https://pagopa.atlassian.net/browse/IA-28)] Ask opt-in preference while onboarding or when user is logged in ([#3145](https://github.com/pagopa/io-app/issues/3145)) ([b5dd615](https://github.com/pagopa/io-app/commit/b5dd615b67fdbc589f0d74f5af5d4f7619c1f021))
+* [[IA-29](https://pagopa.atlassian.net/browse/IA-29)] Add privacy settings in profile section ([#3146](https://github.com/pagopa/io-app/issues/3146)) ([30ff409](https://github.com/pagopa/io-app/commit/30ff409a9a2da2356ca0ec65ba6907f9b27aaf13))
+
+
+### Chores
+
+* [[IA-39](https://pagopa.atlassian.net/browse/IA-39)] Copy update ([#3152](https://github.com/pagopa/io-app/issues/3152)) ([7e36763](https://github.com/pagopa/io-app/commit/7e3676399f0b9325368cec64dd4ef8b351fd2cb6))
+* **Redesign Servizi:** [[IARS-3](https://pagopa.atlassian.net/browse/IARS-3)] Adds Redesign Servizi to Changelog scopes ([#3150](https://github.com/pagopa/io-app/issues/3150)) ([fac69fa](https://github.com/pagopa/io-app/commit/fac69fa0c02489d034be0b32e9214919976014c6))
+* [[IA-36](https://pagopa.atlassian.net/browse/IA-36)] Copy update ([#3151](https://github.com/pagopa/io-app/issues/3151)) ([69d0923](https://github.com/pagopa/io-app/commit/69d0923ff3b80c910d92e35252e6d394f378af11))
+* **Bonus Pagamenti Digitali:** [[IAC-80](https://pagopa.atlassian.net/browse/IAC-80)] Supercashback copy update ([#3148](https://github.com/pagopa/io-app/issues/3148)) ([970014e](https://github.com/pagopa/io-app/commit/970014e80b4851ffa0f4a1ae92f37e3bcc2e1756))
+* [[IA-30](https://pagopa.atlassian.net/browse/IA-30)] Refactoring for mixpanel integration ([#3141](https://github.com/pagopa/io-app/issues/3141)) ([2d16049](https://github.com/pagopa/io-app/commit/2d16049bcab0ce116b8820dc6a7d17ddcd5103e5))
+* [[IA-32](https://pagopa.atlassian.net/browse/IA-32)] Open ToS links in external browser ([#3142](https://github.com/pagopa/io-app/issues/3142)) ([a7e8947](https://github.com/pagopa/io-app/commit/a7e8947bbb5db788db58f91b1660ee8f4a60c52b))
+* [[IA-33](https://pagopa.atlassian.net/browse/IA-33)] Reset opt-in choice on differentProfileLoggedIn event ([#3144](https://github.com/pagopa/io-app/issues/3144)) ([06dc021](https://github.com/pagopa/io-app/commit/06dc02166a276d1c12b4a1d87832ba03d19e51e1))
+* [[IA-34](https://pagopa.atlassian.net/browse/IA-34)] New copy ([#3147](https://github.com/pagopa/io-app/issues/3147)) ([5c01fdf](https://github.com/pagopa/io-app/commit/5c01fdf6e8d4305f7ddff96c0c19e851a9e90f5c))
+
 ## [1.26.0-rc.6](https://github.com/pagopa/io-app/compare/1.26.0-rc.5...1.26.0-rc.6) (2021-06-14)
 
 
