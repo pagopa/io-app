@@ -36,7 +36,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     appReadableVersion: getAppVersion(),
     colorScheme: Appearance.getColorScheme()
   });
-
+  await mp.optInTracking();
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
 };
@@ -44,6 +44,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 export const terminateMixpanel = async () => {
   if (mixpanel) {
     await mixpanel.flush();
+    await mixpanel.optOutTracking();
     mixpanel = undefined;
   }
   return Promise.resolve();
