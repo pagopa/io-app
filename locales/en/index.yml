@@ -382,8 +382,8 @@ profile:
           title: "You are not giving IO consent to collect your usage data"
           body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
         whyBottomSheet:
-          title: "For what purposes do we collect your data?"
-          body: "**IO does not collect data for marketing purposes.**  \nWe use tracking tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+          title: "For what purposes do we collect information?"
+          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
         securityBottomSheet:
           title: "What does pseudonymisation mean?"
           body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
