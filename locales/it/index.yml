@@ -356,7 +356,7 @@ profile:
           why:
             description:
               one: "IO raccoglie solo le informazioni "
-              two: "strettamente necessarie "
+              two: "necessarie "
               three: "per il funzionamento dei servizi offerti"
             cta: "Perché?"
           security:
