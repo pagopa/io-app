@@ -24,6 +24,7 @@ export const initializeMixPanel = async () => {
 
 const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
+  await mp.optInTracking();
   // on iOS it can be deactivate by invoking a SDK method
   // on Android it can be done adding an extra config in AndroidManifest
   // see https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection
@@ -36,7 +37,6 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     appReadableVersion: getAppVersion(),
     colorScheme: Appearance.getColorScheme()
   });
-
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
 };
@@ -44,6 +44,7 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
 export const terminateMixpanel = async () => {
   if (mixpanel) {
     await mixpanel.flush();
+    await mixpanel.optOutTracking();
     mixpanel = undefined;
   }
   return Promise.resolve();
