@@ -1,16 +1,27 @@
 import { getType } from "typesafe-actions";
 import { none, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
+import { VoucherRequest } from "../../types/SvVoucherRequest";
+import { IndexedById } from "../../../../../store/helpers/indexer";
 
 export type VoucherGenerationState = {
-  residenceInSicily: Option<boolean>;
-  category: Option<number>;
+  voucherRequest: Option<VoucherRequest>;
+  availableDestination: pot.Pot<ReadonlyArray<string>, Error>;
+  availableState: pot.Pot<IndexedById<string>, Error>;
+  availableRegion: pot.Pot<IndexedById<string>, Error>;
+  availableProvince: pot.Pot<IndexedById<string>, Error>;
+  availableMunicipality: pot.Pot<IndexedById<string>, Error>;
 };
 
 export const INITIAL_STATE: VoucherGenerationState = {
-  residenceInSicily: none,
-  category: none
+  voucherRequest: none,
+  availableDestination: pot.none,
+  availableState: pot.none,
+  availableRegion: pot.none,
+  availableProvince: pot.none,
+  availableMunicipality: pot.none
 };
 
 const reducer = (
