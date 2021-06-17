@@ -111,14 +111,15 @@ class DarkLayout extends React.Component<Props> {
     );
   }
   public render() {
-    const currentRouteValue: ReturnType<typeof navigationCurrentRouteSelector> = this
-      .props.navigationCurrentRouteSelector;
+    const currentRouteValue = this.props.navigationCurrentRouteSelector?.getOrElse(
+      ""
+    );
 
     const isTabBarVisible =
-      currentRouteValue.value === ROUTES.MESSAGES_HOME ||
-      currentRouteValue.value === ROUTES.WALLET_HOME ||
-      currentRouteValue.value === ROUTES.SERVICES_HOME ||
-      currentRouteValue.value === ROUTES.PROFILE_MAIN;
+      currentRouteValue === ROUTES.MESSAGES_HOME ||
+      currentRouteValue === ROUTES.WALLET_HOME ||
+      currentRouteValue === ROUTES.SERVICES_HOME ||
+      currentRouteValue === ROUTES.PROFILE_MAIN;
 
     return (
       <TopScreenComponent
