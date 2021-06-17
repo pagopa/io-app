@@ -20,7 +20,7 @@ export type VoucherGenerationState = {
   availableMunicipality: pot.Pot<IndexedById<string>, Error>;
 };
 
-export const INITIAL_STATE: VoucherGenerationState = {
+const INITIAL_STATE: VoucherGenerationState = {
   voucherRequest: none,
   voucherGenerated: pot.none,
   availableDestination: pot.none,
