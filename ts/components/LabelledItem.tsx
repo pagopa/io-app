@@ -29,6 +29,7 @@ import variables from "../theme/variables";
 import { WithTestID } from "../types/WithTestID";
 import { makeFontStyleObject } from "./core/fonts";
 import { H5 } from "./core/typography/H5";
+import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import TextInputMask from "./ui/MaskedInput";
 
@@ -88,6 +89,32 @@ Props) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hasFocus, setHasFocus] = useState(false);
 
+  const isDisabledTextInput =
+    props.type === "text" && props.inputProps.disabled;
+  const descriptionColor = isDisabledTextInput
+    ? "bluegreyLight"
+    : props.isValid === false
+    ? "red"
+    : "bluegreyDark";
+  const iconColor = isDisabledTextInput
+    ? IOColors.bluegreyLight
+    : variables.brandDarkGray;
+  const accessibilityLabel = props.accessibilityLabel ?? "";
+  const isValid = props.isValid === undefined ? false : props.isValid;
+  const isNotValid = props.isValid === undefined ? false : !props.isValid;
+
+  const onSetInputBorderColor = () => {
+    if (isDisabledTextInput) {
+      return IOColors.greyLight;
+    }
+
+    if (hasFocus && isEmpty) {
+      return variables.itemBorderDefaultColor;
+    }
+
+    return props.focusBorderColor;
+  };
+
   /**
    * check if the input is empty and set the value in the state
    */
@@ -130,14 +157,6 @@ Props) => {
     setHasFocus(false);
   };
 
-  const descriptionColor = props.isValid === false ? "red" : "bluegreyDark";
-  const accessibilityLabel = props.accessibilityLabel ?? "";
-  const inputBorderColor =
-    hasFocus && isEmpty
-      ? variables.itemBorderDefaultColor
-      : props.focusBorderColor;
-  const isValid = props.isValid === undefined ? false : props.isValid;
-  const isNotValid = props.isValid === undefined ? false : !props.isValid;
   return (
     <View>
       {props.label && (
@@ -146,7 +165,9 @@ Props) => {
           accessibilityElementsHidden={true}
         >
           <Item style={styles.noBottomLine}>
-            <H5>{props.label}</H5>
+            <H5 color={isDisabledTextInput ? "bluegreyLight" : "bluegreyDark"}>
+              {props.label}
+            </H5>
           </Item>
         </View>
       )}
@@ -161,7 +182,7 @@ Props) => {
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: inputBorderColor
+            borderColor: onSetInputBorderColor()
           }}
           error={isNotValid}
           success={isValid}
@@ -175,13 +196,10 @@ Props) => {
             (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
-                color={
-                  props.iconColor ? props.iconColor : variables.brandDarkGray
-                }
+                color={iconColor}
                 name={props.icon}
                 style={props.iconStyle}
                 onPress={props.onPressIcon}
-                accessible
                 accessibilityLabel={props.accessibilityLabelIcon}
               />
             ) : (
@@ -203,9 +221,11 @@ Props) => {
             />
           ) : (
             <Input
-              placeholderTextColor={color(variables.brandGray)
-                .darken(0.2)
-                .string()}
+              placeholderTextColor={
+                isDisabledTextInput
+                  ? color(IOColors.bluegreyLight).string()
+                  : color(variables.brandGray).darken(0.2).string()
+              }
               underlineColorAndroid="transparent"
               {...props.inputProps}
               onChangeText={handleOnChangeText}
@@ -221,13 +241,10 @@ Props) => {
             (isString(props.icon) ? (
               <IconFont
                 size={variables.iconSize3}
-                color={
-                  props.iconColor ? props.iconColor : variables.brandDarkGray
-                }
+                color={iconColor}
                 name={props.icon}
                 style={props.iconStyle}
                 onPress={props.onPressIcon}
-                accessible
                 accessibilityLabel={props.accessibilityLabelIcon}
               />
             ) : (
