@@ -86,9 +86,10 @@ class MessageDetailData extends React.PureComponent<Props> {
   };
 
   public render() {
-    const serviceName = pot.getOrElse(this.props.serviceDetail, undefined)
-      ?.service_name;
-    const textToCopy = `${serviceName} - ${this.props.message.id}`;
+    const textToCopy: string = pot
+      .toOption(this.props.serviceDetail)
+      .map(({ service_name }) => `${service_name} - ${this.props.message.id}`)
+      .getOrElse(this.props.message.id);
 
     return (
       <View style={styles.container}>
