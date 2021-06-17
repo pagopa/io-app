@@ -1,8 +1,11 @@
 import { getType } from "typesafe-actions";
-import { none, Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
-import { svGenerateVoucherStart } from "../actions/voucherGeneration";
+import {
+  svGenerateVoucherSelectCategory,
+  svGenerateVoucherStart
+} from "../actions/voucherGeneration";
 import {
   AvailableDestination,
   VoucherRequest
@@ -37,6 +40,13 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
+    case getType(svGenerateVoucherSelectCategory):
+      return {
+        ...state,
+        voucherRequest: some({
+          category: action.payload
+        })
+      };
   }
 
   return state;

@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -35,9 +36,17 @@ export const svGenerateVoucherFailure = createStandardAction(
   "SV_GENERATE_VOUCHER_FAILURE"
 )<string>();
 
+/**
+ * First step of the voucher generation: category selection
+ */
+export const svGenerateVoucherSelectCategory = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_CATEGORY"
+)<SvBeneficiaryCategory>();
+
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
   | ActionType<typeof svGenerateVoucherCompleted>
   | ActionType<typeof svGenerateVoucherBack>
   | ActionType<typeof svGenerateVoucherCancel>
-  | ActionType<typeof svGenerateVoucherFailure>;
+  | ActionType<typeof svGenerateVoucherFailure>
+  | ActionType<typeof svGenerateVoucherSelectCategory>;
