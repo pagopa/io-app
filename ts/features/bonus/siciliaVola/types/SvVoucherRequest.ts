@@ -76,3 +76,5 @@ export type VoucherRequest =
   | SickVoucherRequest;
 
 export type Category = VoucherRequest["category"];
+
+export type AvailableDestination = ReadonlyArray<string>;
