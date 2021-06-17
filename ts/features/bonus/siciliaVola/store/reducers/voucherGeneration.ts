@@ -3,12 +3,17 @@ import { none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
-import { VoucherRequest } from "../../types/SvVoucherRequest";
+import {
+  AvailableDestination,
+  VoucherRequest
+} from "../../types/SvVoucherRequest";
 import { IndexedById } from "../../../../../store/helpers/indexer";
+import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
 
 export type VoucherGenerationState = {
   voucherRequest: Option<VoucherRequest>;
-  availableDestination: pot.Pot<ReadonlyArray<string>, Error>;
+  voucherGenerated: pot.Pot<SvVoucherGeneratedResponse, Error>;
+  availableDestination: pot.Pot<AvailableDestination, Error>;
   availableState: pot.Pot<IndexedById<string>, Error>;
   availableRegion: pot.Pot<IndexedById<string>, Error>;
   availableProvince: pot.Pot<IndexedById<string>, Error>;
@@ -17,6 +22,7 @@ export type VoucherGenerationState = {
 
 export const INITIAL_STATE: VoucherGenerationState = {
   voucherRequest: none,
+  voucherGenerated: pot.none,
   availableDestination: pot.none,
   availableState: pot.none,
   availableRegion: pot.none,
