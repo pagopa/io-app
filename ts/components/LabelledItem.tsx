@@ -55,7 +55,6 @@ type CommonProp = Readonly<{
   iconStyle?: StyleType;
   iconColor?: string;
   isValid?: boolean;
-  focusBorderColor?: string;
   description?: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
@@ -112,7 +111,7 @@ Props) => {
       return variables.itemBorderDefaultColor;
     }
 
-    return props.focusBorderColor;
+    return IOColors.bluegreyLight;
   };
 
   /**
