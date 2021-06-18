@@ -4,6 +4,7 @@ import WebView from "react-native-webview";
 import I18n from "../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 
 type Props = {
   shouldFooterRender: boolean;
@@ -25,7 +26,9 @@ const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
         onError={props.handleError}
         source={{ uri: props.url }}
         onMessage={props.handleWebViewMessage}
-        injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+        injectedJavaScript={closeInjectedScript(
+          AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
+        )}
       />
     </View>
     {props.shouldFooterRender && (

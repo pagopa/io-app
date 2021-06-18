@@ -103,9 +103,6 @@ describe("Test EUCovidCertificateValidScreen", () => {
       }
     ]);
 
-    // eslint-disable-next-line no-console
-    console.log(store.getActions());
-
     expect(render.component.queryByTestId("markdownPreview")).not.toBeNull();
   });
 });
