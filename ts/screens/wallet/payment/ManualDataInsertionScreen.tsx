@@ -149,13 +149,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Form>
               <LabelledItem
                 type="text"
-                isValid={
-                  isNone(this.state.paymentNoticeNumber)
-                    ? undefined
-                    : this.state.paymentNoticeNumber
-                        .map(isRight)
-                        .getOrElse(false)
-                }
+                isValid={this.state.paymentNoticeNumber
+                  .map<true | false | undefined>(e =>
+                    e.fold(
+                      _ => false,
+                      _ => true
+                    )
+                  )
+                  .getOrElse(undefined)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
                   keyboardType: "numeric",
