@@ -114,7 +114,7 @@ Because different platform have different types of Permissions below we have two
 | WRITE_CALENDAR                   | Allows an application to write the user's calendar data                                                               |
 | READ_EXTERNAL_STORAGE            | Allows an application to read from external storage                                                                   |
 | WRITE_EXTERNAL_STORAGE           | Allows an application to write to external storage                                                                    |
-| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for a faster identification                                                 |
+| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification                                                 |
 
 Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
 
