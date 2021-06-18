@@ -43,10 +43,18 @@ export const svGenerateVoucherSelectCategory = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_CATEGORY"
 )<SvBeneficiaryCategory>();
 
+/**
+ * First step of the voucher generation: category selection
+ */
+export const svGenerateVoucherSubThresholdIncome = createStandardAction(
+  "SV_GENERATE_VOUCHER_SUB_THRESHOLD_INCOME"
+)<boolean>();
+
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
   | ActionType<typeof svGenerateVoucherCompleted>
   | ActionType<typeof svGenerateVoucherBack>
   | ActionType<typeof svGenerateVoucherCancel>
   | ActionType<typeof svGenerateVoucherFailure>
-  | ActionType<typeof svGenerateVoucherSelectCategory>;
+  | ActionType<typeof svGenerateVoucherSelectCategory>
+  | ActionType<typeof svGenerateVoucherSubThresholdIncome>;
