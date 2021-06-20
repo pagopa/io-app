@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0-rc.0](https://github.com/pagopa/io-app/compare/1.27.0-rc.0...1.28.0-rc.0) (2021-06-20)
+
+
+### Bug Fixes
+
+* [[#178110273](https://www.pivotaltracker.com/story/show/178110273)] Fix margin on contact support button for small device ([#3107](https://github.com/pagopa/io-app/issues/3107)) ([8357a0d](https://github.com/pagopa/io-app/commit/8357a0d1d242e4b3b3ca2bf218de66924f81d7af))
+* [[IA-40](https://pagopa.atlassian.net/browse/IA-40)] In "your data" screen, missing bottomsheet content when the screen reader is enabled [#3154](https://github.com/pagopa/io-app/issues/3154) ([6a47421](https://github.com/pagopa/io-app/commit/6a47421cb659673af2e6f34733f3733f73afb631))
+
+
+### Chores
+
+* [[IA-19](https://pagopa.atlassian.net/browse/IA-19)] When copy id message is missing service name ([#3153](https://github.com/pagopa/io-app/issues/3153)) ([6a691d7](https://github.com/pagopa/io-app/commit/6a691d7da8eb2161fdfd296ba6cbb9c3315c1aa4))
+
 ## [1.27.0-rc.0](https://github.com/pagopa/io-app/compare/1.26.0-rc.6...1.27.0-rc.0) (2021-06-16)
 
 
