@@ -36,7 +36,9 @@ import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
-import persistedPreferencesReducer from "./persistedPreferences";
+import persistedPreferencesReducer, {
+  initialPreferencesState
+} from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import crossSessionsReducer from "./crossSessions";
@@ -184,6 +186,11 @@ export function createRootReducer(
               content: {
                 ...contentInitialContentState,
                 servicesMetadata: state.content.servicesMetadata
+              },
+              // isMixpanelEnabled must be kept
+              persistedPreferences: {
+                ...initialPreferencesState,
+                isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
               }
             } as GlobalState)
           : state;

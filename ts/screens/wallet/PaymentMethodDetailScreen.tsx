@@ -1,7 +1,3 @@
-/**
- * This screen dispalys a list of transactions
- * from a specific credit card
- */
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -127,7 +123,7 @@ const headerContent = (
   </>
 );
 
-const TransactionsScreen: React.FC<Props> = (props: Props) => {
+const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
   const selectedWallet = props.navigation.getParam("selectedWallet");
@@ -255,4 +251,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentMethodDetailScreen);
