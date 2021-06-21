@@ -263,7 +263,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private idResetTap?: number;
 
-  // When tapped 5 time activate the debug mode of the application.
+  // When tapped 5 times activate the debug mode of the application.
   // If more than two seconds pass between taps, the counter is reset
   private onTapAppVersion = () => {
     if (this.idResetTap) {
@@ -302,17 +302,125 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  public render() {
+  private renderDeveloperSection() {
     const {
-      navigation,
       backendInfo,
+      dispatchSessionExpired,
+      isDebugModeEnabled,
+      isPagoPATestEnabled,
+      navigation,
+      notificationId,
+      notificationToken,
       sessionToken,
       walletToken,
-      notificationToken,
-      notificationId
+      setDebugModeEnabled
     } = this.props;
-
     const { deviceUniqueId } = this.state;
+
+    return (
+      <React.Fragment>
+        <SectionHeaderComponent
+          sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+        />
+        {isPlaygroundsEnabled && (
+          <>
+            <ListItemComponent
+              title={"MyPortal Web Playground"}
+              onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
+            />
+            <ListItemComponent
+              title={"Markdown Playground"}
+              onPress={() => navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)}
+            />
+          </>
+        )}
+
+        {/* Showroom */}
+        <ListItemComponent
+          title={I18n.t("profile.main.showroom")}
+          onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
+          isFirstItem={true}
+        />
+
+        {this.developerListItem(
+          I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+          isPagoPATestEnabled,
+          this.onPagoPAEnvironmentToggle,
+          I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.debugMode"),
+          isDebugModeEnabled,
+          setDebugModeEnabled
+        )}
+        {isDebugModeEnabled && (
+          <React.Fragment>
+            {backendInfo &&
+              this.debugListItem(
+                `${I18n.t("profile.main.backendVersion")} ${
+                  backendInfo.version
+                }`,
+                () => clipboardSetStringWithFeedback(backendInfo.version),
+                false
+              )}
+
+            {isDevEnv &&
+              sessionToken &&
+              this.debugListItem(
+                `Session Token ${sessionToken}`,
+                () => clipboardSetStringWithFeedback(sessionToken),
+                false
+              )}
+
+            {isDevEnv &&
+              walletToken &&
+              this.debugListItem(
+                `Wallet token ${walletToken}`,
+                () => clipboardSetStringWithFeedback(walletToken),
+                false
+              )}
+
+            {isDevEnv &&
+              this.debugListItem(
+                `Notification ID ${notificationId.slice(0, 6)}`,
+                () => clipboardSetStringWithFeedback(notificationId),
+                false
+              )}
+
+            {isDevEnv &&
+              notificationToken &&
+              this.debugListItem(
+                `Notification token ${notificationToken.slice(0, 6)}`,
+                () => clipboardSetStringWithFeedback(notificationToken),
+                false
+              )}
+
+            {isDevEnv &&
+              this.debugListItem(
+                `Device unique ID ${deviceUniqueId}`,
+                () => clipboardSetStringWithFeedback(deviceUniqueId),
+                false
+              )}
+
+            {this.debugListItem(
+              I18n.t("profile.main.cache.clear"),
+              this.handleClearCachePress,
+              true
+            )}
+
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.forgetCurrentSession"),
+                dispatchSessionExpired,
+                true
+              )}
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    );
+  }
+  public render() {
+    const { navigation } = this.props;
 
     const showInformationModal = (
       title: TranslationKeys,
@@ -387,107 +495,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           )}
 
           {/* Developers Section */}
-          {(this.props.isDebugModeEnabled || isDevEnv) && (
-            <React.Fragment>
-              <SectionHeaderComponent
-                sectionHeader={I18n.t("profile.main.developersSectionHeader")}
-              />
-              {isPlaygroundsEnabled && (
-                <>
-                  <ListItemComponent
-                    title={"MyPortal Web Playground"}
-                    onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
-                  />
-                  <ListItemComponent
-                    title={"Markdown Playground"}
-                    onPress={() =>
-                      navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)
-                    }
-                  />
-                </>
-              )}
-              {/* Showroom */}
-              <ListItemComponent
-                title={I18n.t("profile.main.showroom")}
-                onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
-                isFirstItem={true}
-              />
-              {this.developerListItem(
-                I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-                this.props.isPagoPATestEnabled,
-                this.onPagoPAEnvironmentToggle,
-                I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-              )}
-              {this.developerListItem(
-                I18n.t("profile.main.debugMode"),
-                this.props.isDebugModeEnabled,
-                this.props.setDebugModeEnabled
-              )}
-              {this.props.isDebugModeEnabled && (
-                <React.Fragment>
-                  {backendInfo &&
-                    this.debugListItem(
-                      `${I18n.t("profile.main.backendVersion")} ${
-                        backendInfo.version
-                      }`,
-                      () => clipboardSetStringWithFeedback(backendInfo.version),
-                      false
-                    )}
-
-                  {isDevEnv &&
-                    sessionToken &&
-                    this.debugListItem(
-                      `Session Token ${sessionToken}`,
-                      () => clipboardSetStringWithFeedback(sessionToken),
-                      false
-                    )}
-
-                  {isDevEnv &&
-                    walletToken &&
-                    this.debugListItem(
-                      `Wallet token ${walletToken}`,
-                      () => clipboardSetStringWithFeedback(walletToken),
-                      false
-                    )}
-
-                  {isDevEnv &&
-                    this.debugListItem(
-                      `Notification ID ${notificationId.slice(0, 6)}`,
-                      () => clipboardSetStringWithFeedback(notificationId),
-                      false
-                    )}
-
-                  {isDevEnv &&
-                    notificationToken &&
-                    this.debugListItem(
-                      `Notification token ${notificationToken.slice(0, 6)}`,
-                      () => clipboardSetStringWithFeedback(notificationToken),
-                      false
-                    )}
-
-                  {isDevEnv &&
-                    this.debugListItem(
-                      `Device unique ID ${deviceUniqueId}`,
-                      () => clipboardSetStringWithFeedback(deviceUniqueId),
-                      false
-                    )}
-
-                  {this.debugListItem(
-                    I18n.t("profile.main.cache.clear"),
-                    this.handleClearCachePress,
-                    true
-                  )}
-
-                  {isDevEnv &&
-                    this.debugListItem(
-                      I18n.t("profile.main.forgetCurrentSession"),
-                      this.props.dispatchSessionExpired,
-                      true
-                    )}
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          )}
+          {(this.props.isDebugModeEnabled || isDevEnv) &&
+            this.renderDeveloperSection()}
 
           {/* end list */}
           <EdgeBorderComponent />
