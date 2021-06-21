@@ -48,6 +48,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
+import DeviceInfo from "react-native-device-info";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -60,6 +61,7 @@ type Props = OwnProps &
 
 type State = {
   tapsOnAppVersion: number;
+  deviceUniqueId: string;
 };
 
 const styles = StyleSheet.create({
@@ -111,7 +113,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      tapsOnAppVersion: 0
+      tapsOnAppVersion: 0,
+      deviceUniqueId: DeviceInfo.getUniqueId()
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -310,6 +313,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId
     } = this.props;
 
+    const { deviceUniqueId } = this.state;
+
     const showInformationModal = (
       title: TranslationKeys,
       body: TranslationKeys
@@ -459,6 +464,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     this.debugListItem(
                       `Notification token ${notificationToken.slice(0, 6)}`,
                       () => clipboardSetStringWithFeedback(notificationToken),
+                      false
+                    )}
+
+                  {isDevEnv &&
+                    this.debugListItem(
+                      `Device unique ID ${deviceUniqueId}`,
+                      () => clipboardSetStringWithFeedback(deviceUniqueId),
                       false
                     )}
 
