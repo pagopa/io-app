@@ -1,10 +1,13 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import LadyBug from "../../../img/test/faceID.svg";
+import FaceID from "../../../img/test/faceID.svg";
+import Fingerprint from "../../../img/test/fingerprint.svg";
+import Analytics from "../../../img/test/analytics.svg";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ShowroomSection } from "./ShowroomSection";
 
@@ -34,7 +37,21 @@ export const OthersShowroom = () => (
     <Label>{"Svg"}</Label>
     <View spacer={true} />
     <View spacer={true} />
-    <LadyBug width={150} height={150} />
+    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+      <FaceID width={32} height={32} />
+      <FaceID width={64} height={64} />
+      <FaceID width={128} height={128} />
+    </View>
+    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+      <Fingerprint width={32} height={32} />
+      <Fingerprint width={64} height={64} />
+      <Fingerprint width={128} height={128} />
+    </View>
+    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+      <Analytics width={32} height={32} fill={IOColors.aqua} />
+      <Analytics width={64} height={64} fill={IOColors.red} />
+      <Analytics width={128} height={128} fill={IOColors.orange} />
+    </View>
     <View spacer={true} extralarge={true} />
   </ShowroomSection>
 );
