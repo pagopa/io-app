@@ -1,7 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import FaceID from "../../../img/test/faceID.svg";
+import AlphaChannel from "../../../img/test/alphaChannel.svg";
 import Fingerprint from "../../../img/test/fingerprint.svg";
 import Analytics from "../../../img/test/analytics.svg";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -38,14 +38,14 @@ export const OthersShowroom = () => (
     <View spacer={true} />
     <View spacer={true} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <FaceID width={32} height={32} />
-      <FaceID width={64} height={64} />
-      <FaceID width={128} height={128} />
-    </View>
-    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
       <Fingerprint width={32} height={32} />
       <Fingerprint width={64} height={64} />
       <Fingerprint width={128} height={128} />
+    </View>
+    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+      <AlphaChannel width={32} height={32} />
+      <AlphaChannel width={64} height={64} />
+      <AlphaChannel width={128} height={128} />
     </View>
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
       <Analytics width={32} height={32} fill={IOColors.aqua} />
