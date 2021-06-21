@@ -37,7 +37,8 @@ const projectToScope = new Map<string, string>([
   ["IAC", "Bonus Pagamenti Digitali"],
   ["2476636", "Carta Giovani Nazionale"],
   ["IASV", "Sicilia Vola"],
-  ["IAGP", "EU Covid Certificate"]
+  ["IAGP", "EU Covid Certificate"],
+  ["IARS", "Redesign Servizi"]
 ]);
 
 const cleanChangelogRegex = /^(fix(\(.+\))?!?: |feat(\(.+\))?!?: |chore(\(.+\))?!?: )?(.*)$/;
