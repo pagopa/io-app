@@ -6,6 +6,7 @@ import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
+import OnboardingServicesContactScreen from "../screens/onboarding/OnboardingServicesContactScreen";
 import ROUTES from "./routes";
 
 /**
@@ -15,6 +16,9 @@ const navigator = createStackNavigator(
   {
     [ROUTES.ONBOARDING_SHARE_DATA]: {
       screen: OnboardingShareDataScreen
+    },
+    [ROUTES.ONBOARDING_SERVICES_CONTACT]: {
+      screen: OnboardingServicesContactScreen
     },
     [ROUTES.ONBOARDING_TOS]: {
       screen: TosScreen

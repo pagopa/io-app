@@ -28,7 +28,8 @@ import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen,
-  navigateToLanguagePreferenceScreen
+  navigateToLanguagePreferenceScreen,
+  navigateToServiceContactPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
@@ -247,6 +248,12 @@ class PreferencesScreen extends React.Component<Props, State> {
             />
 
             <ListItemComponent
+              title={I18n.t("profile.preferences.list.service_contact")}
+              subTitle={" "}
+              onPress={this.props.navigateToServiceContactPreferenceScreen}
+            />
+
+            <ListItemComponent
               title={I18n.t("send_email_messages.title")}
               subTitle={this.getEmailForwardPreferencesSubtitle()}
               onPress={this.props.navigateToEmailForwardingPreferenceScreen}
@@ -308,6 +315,8 @@ function mapStateToProps(state: GlobalState) {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
+  navigateToServiceContactPreferenceScreen: () =>
+    dispatch(navigateToServiceContactPreferenceScreen()),
   navigateToEmailForwardingPreferenceScreen: () =>
     dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
