@@ -2,6 +2,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -48,7 +49,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
-import DeviceInfo from "react-native-device-info";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -126,7 +126,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         "light-content",
         customVariables.brandDarkGray
       );
-    }); // eslint-disable-line
+    });
   }
 
   public componentWillUnmount() {
@@ -278,7 +278,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       this.setState({ tapsOnAppVersion: 0 });
       Toast.show({ text: I18n.t("profile.main.developerModeOn") });
     } else {
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       this.idResetTap = setInterval(
         this.resetAppTapCounter,
         RESET_COUNTER_TIMEOUT
@@ -302,7 +302,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  // eslint-disable-next-line
   public render() {
     const {
       navigation,
@@ -328,7 +327,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
-    // eslint-disable
     const screenContent = () => (
       <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
         <NavigationEvents onWillFocus={this.scrollToTop} />
