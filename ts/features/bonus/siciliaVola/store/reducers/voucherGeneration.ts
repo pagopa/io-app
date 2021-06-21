@@ -4,7 +4,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import {
   svGenerateVoucherSelectCategory,
-  svGenerateVoucherStart
+  svGenerateVoucherStart,
+  svGenerateVoucherSubThresholdIncome
 } from "../actions/voucherGeneration";
 import {
   AvailableDestination,
@@ -33,6 +34,17 @@ const INITIAL_STATE: VoucherGenerationState = {
   availableMunicipality: pot.none
 };
 
+const updateSubThresholdIncome = (
+  state: Option<VoucherRequest>,
+  subThresholdIncome: boolean
+): Option<VoucherRequest> =>
+  state.fold(state, vR => {
+    if (vR.category === "worker" || vR.category === "sick") {
+      return some({ ...vR, subThresholdIncome: subThresholdIncome });
+    }
+    return state;
+  });
+
 const reducer = (
   state: VoucherGenerationState = INITIAL_STATE,
   action: Action
@@ -46,6 +58,14 @@ const reducer = (
         voucherRequest: some({
           category: action.payload
         })
+      };
+    case getType(svGenerateVoucherSubThresholdIncome):
+      return {
+        ...state,
+        voucherRequest: updateSubThresholdIncome(
+          state.voucherRequest,
+          action.payload
+        )
       };
   }
 
