@@ -1,5 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import {
+  Company,
   SvBeneficiaryCategory,
   University
 } from "../../types/SvVoucherRequest";
@@ -52,9 +53,15 @@ export const svGenerateVoucherSelectCategory = createStandardAction(
 export const svGenerateVoucherSubThresholdIncome = createStandardAction(
   "SV_GENERATE_VOUCHER_SUB_THRESHOLD_INCOME"
 )<boolean>();
+/**
+ * Step for worker, to indicate his company data
+ */
+export const svGenerateVoucherSelectCompany = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_COMPANY"
+)<Company>();
 
 /**
- * Step for student, to indicate his university
+ * Step for student, to indicate his university data
  */
 export const svGenerateVoucherSelectUniversity = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_UNIVERSITY"
@@ -68,4 +75,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherFailure>
   | ActionType<typeof svGenerateVoucherSelectCategory>
   | ActionType<typeof svGenerateVoucherSubThresholdIncome>
-  | ActionType<typeof svGenerateVoucherSelectUniversity>;
+  | ActionType<typeof svGenerateVoucherSelectUniversity>
+  | ActionType<typeof svGenerateVoucherSelectCompany>;

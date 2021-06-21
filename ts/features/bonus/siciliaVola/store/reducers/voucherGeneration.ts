@@ -4,12 +4,14 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import {
   svGenerateVoucherSelectCategory,
+  svGenerateVoucherSelectCompany,
   svGenerateVoucherSelectUniversity,
   svGenerateVoucherStart,
   svGenerateVoucherSubThresholdIncome
 } from "../actions/voucherGeneration";
 import {
   AvailableDestination,
+  Company,
   University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
@@ -58,6 +60,17 @@ const updateUniversity = (
     return state;
   });
 
+const updateCompany = (
+  state: Option<VoucherRequest>,
+  company: Company
+): Option<VoucherRequest> =>
+  state.fold(state, vR => {
+    if (vR.category === "worker") {
+      return some({ ...vR, company });
+    }
+    return state;
+  });
+
 const reducer = (
   state: VoucherGenerationState = INITIAL_STATE,
   action: Action
@@ -79,6 +92,11 @@ const reducer = (
           state.voucherRequest,
           action.payload
         )
+      };
+    case getType(svGenerateVoucherSelectCompany):
+      return {
+        ...state,
+        voucherRequest: updateCompany(state.voucherRequest, action.payload)
       };
     case getType(svGenerateVoucherSelectUniversity):
       return {
