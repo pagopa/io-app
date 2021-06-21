@@ -12,7 +12,7 @@ module.exports = {
     "node_modules/(?!(jest-)?react-native|react-navigation|@react-navigation|react-navigation-redux-helpers|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|rn-placeholder|jsbarcode|@pagopa/react-native-cie|react-native-share|jail-monkey|@react-native-community/art|@react-native-community/push-notification-ios|@react-native-community/cameraroll|@codler)"
   ],
   moduleNameMapper: {
-    "\\.svg": "<rootDir>/__mocks__/svgMock.js"
+    "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
   globals: {
     "ts-jest": {
