@@ -62,15 +62,15 @@ const ProfileDataScreen: React.FC<Props> = ({
         </View>
         <View spacer />
         <List withContentLateralPadding>
-          {/* Edit email */}
+          {/* Insert or edit email */}
           <ListItemComponent
-            title={I18n.t("profile.preferences.list.email")}
+            title={I18n.t("profile.data.list.email")}
             subTitle={profileEmail.getOrElse(
               I18n.t("global.remoteStates.notAvailable")
             )}
             titleBadge={
               !isEmailValidated
-                ? I18n.t("profile.preferences.list.need_validate")
+                ? I18n.t("profile.data.list.need_validate")
                 : undefined
             }
             onPress={onPressEmail}

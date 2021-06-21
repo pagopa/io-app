@@ -199,7 +199,6 @@ class PreferencesScreen extends React.Component<Props> {
               subTitle={this.getEmailForwardPreferencesSubtitle()}
               onPress={this.props.navigateToEmailForwardingPreferenceScreen}
             />
-
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
               subTitle={language}
