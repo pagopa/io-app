@@ -4,11 +4,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import {
   svGenerateVoucherSelectCategory,
+  svGenerateVoucherSelectUniversity,
   svGenerateVoucherStart,
   svGenerateVoucherSubThresholdIncome
 } from "../actions/voucherGeneration";
 import {
   AvailableDestination,
+  University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { IndexedById } from "../../../../../store/helpers/indexer";
@@ -45,6 +47,17 @@ const updateSubThresholdIncome = (
     return state;
   });
 
+const updateUniversity = (
+  state: Option<VoucherRequest>,
+  university: University
+): Option<VoucherRequest> =>
+  state.fold(state, vR => {
+    if (vR.category === "student") {
+      return some({ ...vR, university });
+    }
+    return state;
+  });
+
 const reducer = (
   state: VoucherGenerationState = INITIAL_STATE,
   action: Action
@@ -66,6 +79,11 @@ const reducer = (
           state.voucherRequest,
           action.payload
         )
+      };
+    case getType(svGenerateVoucherSelectUniversity):
+      return {
+        ...state,
+        voucherRequest: updateUniversity(state.voucherRequest, action.payload)
       };
   }
 

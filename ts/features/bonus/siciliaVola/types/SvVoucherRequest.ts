@@ -1,21 +1,21 @@
 type State = {
   id: number;
-  name: string;
+  name?: string;
 };
 type Region = {
   id: number;
-  name: string;
+  name?: string;
 };
 type Province = {
   id: number;
-  name: string;
+  name?: string;
 };
 
 type Municipality = {
   id: number;
-  name: string;
+  name?: string;
 };
-type University = {
+export type University = {
   universityName: string;
   state: State;
   region: Region;
@@ -23,7 +23,7 @@ type University = {
   municipality: Municipality;
 };
 
-type Company = {
+export type Company = {
   businessName: string;
   vat: string;
   state: State;
@@ -32,7 +32,7 @@ type Company = {
   municipality: Municipality;
 };
 
-type Hospital = {
+export type Hospital = {
   hospitalName: string;
   state: State;
   region: Region;

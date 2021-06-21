@@ -1,5 +1,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import {
+  SvBeneficiaryCategory,
+  University
+} from "../../types/SvVoucherRequest";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -44,11 +47,18 @@ export const svGenerateVoucherSelectCategory = createStandardAction(
 )<SvBeneficiaryCategory>();
 
 /**
- * First step of the voucher generation: category selection
+ * Step for worker or sick, to confirm that the annual income is under the threshold limit
  */
 export const svGenerateVoucherSubThresholdIncome = createStandardAction(
   "SV_GENERATE_VOUCHER_SUB_THRESHOLD_INCOME"
 )<boolean>();
+
+/**
+ * Step for student, to indicate his university
+ */
+export const svGenerateVoucherSelectUniversity = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_UNIVERSITY"
+)<University>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
@@ -57,4 +67,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherCancel>
   | ActionType<typeof svGenerateVoucherFailure>
   | ActionType<typeof svGenerateVoucherSelectCategory>
-  | ActionType<typeof svGenerateVoucherSubThresholdIncome>;
+  | ActionType<typeof svGenerateVoucherSubThresholdIncome>
+  | ActionType<typeof svGenerateVoucherSelectUniversity>;
