@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, SafeAreaView, ScrollView } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { makeFontStyleObject } from "../../../../../../components/core/fonts";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -76,7 +77,9 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <H5>{ibanDescription}</H5>
             <LabelledItem
               type="text"
-              isValid={!iban ? undefined : isValidIban}
+              isValid={fromNullable(iban).fold(undefined, _ =>
+                Iban.decode(iban).isRight()
+              )}
               inputProps={{
                 value: iban,
                 autoCapitalize: "characters",
