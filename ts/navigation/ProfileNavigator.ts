@@ -19,7 +19,7 @@ import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen"
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import ServicesContactScreen from "../screens/profile/ServicesContactScreen";
+import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ROUTES from "./routes";
 
 /**
@@ -45,8 +45,8 @@ const ProfileNavigator = createStackNavigator(
     [ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
     },
-    [ROUTES.PROFILE_PREFERENCES_SERVICES_CONTACT]: {
-      screen: ServicesContactScreen
+    [ROUTES.PROFILE_PREFERENCES_SERVICES]: {
+      screen: ServicesPreferenceScreen
     },
     [ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING]: {
       screen: EmailForwardingScreen

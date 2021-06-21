@@ -7,7 +7,7 @@ import { H5 } from "../../components/core/typography/H5";
 import { IOColors } from "../../components/core/variables/IOColors";
 import I18n from "../../i18n";
 
-const OnboardingServicesContactScreen = (): React.ReactElement => (
+const OnboardingServicesPreferenceScreen = (): React.ReactElement => (
   <BaseScreenComponent contextualHelp={emptyContextualHelp}>
     <ServicesContactComponent />
     <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
@@ -18,4 +18,4 @@ const OnboardingServicesContactScreen = (): React.ReactElement => (
   </BaseScreenComponent>
 );
 
-export default OnboardingServicesContactScreen;
+export default OnboardingServicesPreferenceScreen;

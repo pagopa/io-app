@@ -5,7 +5,7 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 
-const ServicesContactScreen = (): React.ReactElement => (
+const ServicesPreferenceScreen = (): React.ReactElement => (
   <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
     <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
       <ServicesContactComponent />
@@ -13,4 +13,4 @@ const ServicesContactScreen = (): React.ReactElement => (
   </BaseScreenComponent>
 );
 
-export default ServicesContactScreen;
+export default ServicesPreferenceScreen;
