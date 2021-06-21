@@ -6,19 +6,19 @@
  * - send a request to export all his data (receiving them by email)
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { List } from "native-base";
+import { List, Content, View } from "native-base";
 import * as React from "react";
-import { Alert, AlertButton } from "react-native";
+import { Alert, AlertButton, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { H1 } from "../../components/core/typography/H1";
+import { H4 } from "../../components/core/typography/H4";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -31,7 +31,14 @@ import {
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
+import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: customVariables.contentPadding
+  }
+});
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -184,13 +191,15 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         goBack={this.props.navigation.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
-        headerTitle={I18n.t("profile.main.title")}
       >
-        <ScreenContent
-          title={I18n.t("profile.main.privacy.title")}
-          subtitle={I18n.t("profile.main.privacy.subtitle")}
-          bounces={false}
-        >
+        <Content noPadded>
+          <View style={styles.container}>
+            <H1>{I18n.t("profile.main.privacy.title")}</H1>
+            <H4 color="bluegrey" weight="Regular">
+              {I18n.t("profile.main.privacy.subtitle")}
+            </H4>
+          </View>
+          <View spacer />
           <List withContentLateralPadding={true}>
             {/* Privacy Policy */}
             <ListItemComponent
@@ -263,9 +272,8 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
-            <EdgeBorderComponent />
           </List>
-        </ScreenContent>
+        </Content>
       </TopScreenComponent>
     ));
     return (
