@@ -250,6 +250,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             />
 
             {servicesRedesignEnabled && (
+              // TODO subtitle should show the selected option on profile
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.service_contact")}
                 subTitle={I18n.t("services.optIn.preferences.unavailable")}
