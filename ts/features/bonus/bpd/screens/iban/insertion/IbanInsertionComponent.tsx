@@ -77,8 +77,9 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <H5>{ibanDescription}</H5>
             <LabelledItem
               type="text"
-              isValid={fromNullable(iban).fold(undefined, _ =>
-                Iban.decode(iban).isRight()
+              isValid={fromNullable(iban ? iban : undefined).fold(
+                undefined,
+                _ => Iban.decode(iban).isRight()
               )}
               inputProps={{
                 value: iban,
