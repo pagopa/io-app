@@ -53,7 +53,6 @@ export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
-export const bpdTechnicalIban: boolean = Config.BPD_TECHNICAL_IBAN === "YES";
 
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
