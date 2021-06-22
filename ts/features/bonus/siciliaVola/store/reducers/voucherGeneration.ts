@@ -5,6 +5,7 @@ import { Action } from "../../../../../store/actions/types";
 import {
   FlightsDate,
   svGenerateVoucherAvailableDestination,
+  svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherSelectCategory,
   svGenerateVoucherSelectCompany,
   svGenerateVoucherSelectFlightsDate,
@@ -150,7 +151,6 @@ const reducer = (
         ...state,
         voucherRequest: updateFlightsDate(state.voucherRequest, action.payload)
       };
-
     case getType(svGenerateVoucherAvailableDestination.request):
       return {
         ...state,
@@ -168,6 +168,21 @@ const reducer = (
           state.availableDestination,
           action.payload
         )
+      };
+    case getType(svGenerateVoucherGeneratedVoucher.request):
+      return {
+        ...state,
+        voucherGenerated: pot.toLoading(state.voucherGenerated)
+      };
+    case getType(svGenerateVoucherGeneratedVoucher.success):
+      return {
+        ...state,
+        voucherGenerated: pot.some(action.payload)
+      };
+    case getType(svGenerateVoucherGeneratedVoucher.failure):
+      return {
+        ...state,
+        voucherGenerated: pot.toError(state.voucherGenerated, action.payload)
       };
   }
 

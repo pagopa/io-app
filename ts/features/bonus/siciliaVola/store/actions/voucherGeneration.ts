@@ -11,6 +11,7 @@ import {
   University
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
+import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -103,6 +104,15 @@ export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
 )<void, AvailableDestination, NetworkError>();
 
+/**
+ * get and handle the generated voucher
+ */
+export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
+  "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_REQUEST",
+  "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_SUCCESS",
+  "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_FAILURE"
+)<void, SvVoucherGeneratedResponse, NetworkError>();
+
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
   | ActionType<typeof svGenerateVoucherCompleted>
@@ -115,4 +125,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherSelectCompany>
   | ActionType<typeof svGenerateVoucherSelectHospital>
   | ActionType<typeof svGenerateVoucherSelectFlightsDate>
-  | ActionType<typeof svGenerateVoucherAvailableDestination>;
+  | ActionType<typeof svGenerateVoucherAvailableDestination>
+  | ActionType<typeof svGenerateVoucherGeneratedVoucher>;
