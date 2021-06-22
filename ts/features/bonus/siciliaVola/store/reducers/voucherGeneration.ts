@@ -16,7 +16,7 @@ import {
   svGenerateVoucherSelectHospital,
   svGenerateVoucherSelectUniversity,
   svGenerateVoucherStart,
-  svGenerateVoucherSubThresholdIncome
+  svGenerateVoucherUnderThresholdIncome
 } from "../actions/voucherGeneration";
 import {
   AvailableDestination,
@@ -53,13 +53,13 @@ const INITIAL_STATE: VoucherGenerationState = {
   availableMunicipality: pot.none
 };
 
-const updateSubThresholdIncome = (
+const updateUnderThresholdIncome = (
   state: Option<VoucherRequest>,
-  subThresholdIncome: boolean
+  underThresholdIncome: boolean
 ): Option<VoucherRequest> =>
   state.fold(state, vR => {
     if (vR.category === "worker" || vR.category === "sick") {
-      return some({ ...vR, subThresholdIncome: subThresholdIncome });
+      return some({ ...vR, underThresholdIncome });
     }
     return state;
   });
@@ -130,10 +130,10 @@ const reducer = (
           category: action.payload
         })
       };
-    case getType(svGenerateVoucherSubThresholdIncome):
+    case getType(svGenerateVoucherUnderThresholdIncome):
       return {
         ...state,
-        voucherRequest: updateSubThresholdIncome(
+        voucherRequest: updateUnderThresholdIncome(
           state.voucherRequest,
           action.payload
         )

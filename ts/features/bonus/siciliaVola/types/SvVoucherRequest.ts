@@ -55,7 +55,7 @@ export type StudentVoucherRequest = {
 
 export type WorkerVoucherRequest = {
   category: "worker";
-  subThresholdIncome?: boolean;
+  underThresholdIncome?: boolean;
   company?: Company;
   departureDate?: Date;
   returnDate?: Date;
@@ -63,7 +63,7 @@ export type WorkerVoucherRequest = {
 
 export type SickVoucherRequest = {
   category: "sick";
-  subThresholdIncome?: boolean;
+  underThresholdIncome?: boolean;
   hospital?: Hospital;
   departureDate?: Date;
   returnDate?: Date;

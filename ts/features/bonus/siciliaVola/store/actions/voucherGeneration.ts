@@ -62,8 +62,8 @@ export const svGenerateVoucherSelectCategory = createStandardAction(
 /**
  * Step for worker or sick, to confirm that the annual income is under the threshold limit
  */
-export const svGenerateVoucherSubThresholdIncome = createStandardAction(
-  "SV_GENERATE_VOUCHER_SUB_THRESHOLD_INCOME"
+export const svGenerateVoucherUnderThresholdIncome = createStandardAction(
+  "SV_GENERATE_VOUCHER_UNDER_THRESHOLD_INCOME"
 )<boolean>();
 
 /**
@@ -160,7 +160,7 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherCancel>
   | ActionType<typeof svGenerateVoucherFailure>
   | ActionType<typeof svGenerateVoucherSelectCategory>
-  | ActionType<typeof svGenerateVoucherSubThresholdIncome>
+  | ActionType<typeof svGenerateVoucherUnderThresholdIncome>
   | ActionType<typeof svGenerateVoucherSelectUniversity>
   | ActionType<typeof svGenerateVoucherSelectCompany>
   | ActionType<typeof svGenerateVoucherSelectHospital>
