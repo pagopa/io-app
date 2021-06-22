@@ -43,14 +43,14 @@ export type Hospital = {
 export type DisableVoucherRequest = {
   category: "disable";
   departureDate?: Date;
-  arriveDate?: Date;
+  returnDate?: Date;
 };
 
 export type StudentVoucherRequest = {
   category: "student";
   university?: University;
   departureDate?: Date;
-  arriveDate?: Date;
+  returnDate?: Date;
 };
 
 export type WorkerVoucherRequest = {
@@ -58,7 +58,7 @@ export type WorkerVoucherRequest = {
   subThresholdIncome?: boolean;
   company?: Company;
   departureDate?: Date;
-  arriveDate?: Date;
+  returnDate?: Date;
 };
 
 export type SickVoucherRequest = {
@@ -66,7 +66,7 @@ export type SickVoucherRequest = {
   subThresholdIncome?: boolean;
   hospital?: Hospital;
   departureDate?: Date;
-  arriveDate?: Date;
+  returnDate?: Date;
 };
 
 export type VoucherRequest =

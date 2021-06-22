@@ -3,8 +3,12 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import {
+  FlightsDate,
+  svGenerateVoucherAvailableDestination,
   svGenerateVoucherSelectCategory,
   svGenerateVoucherSelectCompany,
+  svGenerateVoucherSelectFlightsDate,
+  svGenerateVoucherSelectHospital,
   svGenerateVoucherSelectUniversity,
   svGenerateVoucherStart,
   svGenerateVoucherSubThresholdIncome
@@ -12,20 +16,22 @@ import {
 import {
   AvailableDestination,
   Company,
+  Hospital,
   University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { IndexedById } from "../../../../../store/helpers/indexer";
 import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
+import { NetworkError } from "../../../../../utils/errors";
 
 export type VoucherGenerationState = {
   voucherRequest: Option<VoucherRequest>;
-  voucherGenerated: pot.Pot<SvVoucherGeneratedResponse, Error>;
-  availableDestination: pot.Pot<AvailableDestination, Error>;
-  availableState: pot.Pot<IndexedById<string>, Error>;
-  availableRegion: pot.Pot<IndexedById<string>, Error>;
-  availableProvince: pot.Pot<IndexedById<string>, Error>;
-  availableMunicipality: pot.Pot<IndexedById<string>, Error>;
+  voucherGenerated: pot.Pot<SvVoucherGeneratedResponse, NetworkError>;
+  availableDestination: pot.Pot<AvailableDestination, NetworkError>;
+  availableState: pot.Pot<IndexedById<string>, NetworkError>;
+  availableRegion: pot.Pot<IndexedById<string>, NetworkError>;
+  availableProvince: pot.Pot<IndexedById<string>, NetworkError>;
+  availableMunicipality: pot.Pot<IndexedById<string>, NetworkError>;
 };
 
 const INITIAL_STATE: VoucherGenerationState = {
@@ -71,6 +77,36 @@ const updateCompany = (
     return state;
   });
 
+const updateHospital = (
+  state: Option<VoucherRequest>,
+  hospital: Hospital
+): Option<VoucherRequest> =>
+  state.fold(state, vR => {
+    if (vR.category === "sick") {
+      return some({ ...vR, hospital });
+    }
+    return state;
+  });
+
+const updateFlightsDate = (
+  state: Option<VoucherRequest>,
+  flightsDate: FlightsDate
+): Option<VoucherRequest> =>
+  state.fold(state, vR => {
+    if (
+      vR.category === "student" ||
+      vR.category === "worker" ||
+      vR.category === "sick"
+    ) {
+      return some({
+        ...vR,
+        departureDate: flightsDate.departureDate,
+        returnDate: flightsDate.returnDate
+      });
+    }
+    return state;
+  });
+
 const reducer = (
   state: VoucherGenerationState = INITIAL_STATE,
   action: Action
@@ -98,10 +134,40 @@ const reducer = (
         ...state,
         voucherRequest: updateCompany(state.voucherRequest, action.payload)
       };
+    case getType(svGenerateVoucherSelectHospital):
+      return {
+        ...state,
+        voucherRequest: updateHospital(state.voucherRequest, action.payload)
+      };
     case getType(svGenerateVoucherSelectUniversity):
       return {
         ...state,
         voucherRequest: updateUniversity(state.voucherRequest, action.payload)
+      };
+
+    case getType(svGenerateVoucherSelectFlightsDate):
+      return {
+        ...state,
+        voucherRequest: updateFlightsDate(state.voucherRequest, action.payload)
+      };
+
+    case getType(svGenerateVoucherAvailableDestination.request):
+      return {
+        ...state,
+        availableDestination: pot.toLoading(state.availableDestination)
+      };
+    case getType(svGenerateVoucherAvailableDestination.success):
+      return {
+        ...state,
+        availableDestination: pot.some(action.payload)
+      };
+    case getType(svGenerateVoucherAvailableDestination.failure):
+      return {
+        ...state,
+        availableDestination: pot.toError(
+          state.availableDestination,
+          action.payload
+        )
       };
   }
 

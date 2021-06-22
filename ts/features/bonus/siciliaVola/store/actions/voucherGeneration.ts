@@ -1,9 +1,16 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
 import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
+import {
+  AvailableDestination,
   Company,
+  Hospital,
   SvBeneficiaryCategory,
   University
 } from "../../types/SvVoucherRequest";
+import { NetworkError } from "../../../../../utils/errors";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -53,6 +60,7 @@ export const svGenerateVoucherSelectCategory = createStandardAction(
 export const svGenerateVoucherSubThresholdIncome = createStandardAction(
   "SV_GENERATE_VOUCHER_SUB_THRESHOLD_INCOME"
 )<boolean>();
+
 /**
  * Step for worker, to indicate his company data
  */
@@ -61,11 +69,39 @@ export const svGenerateVoucherSelectCompany = createStandardAction(
 )<Company>();
 
 /**
+ * Step for sick, to indicate the hospital data
+ */
+export const svGenerateVoucherSelectHospital = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_HOSPITAL"
+)<Hospital>();
+
+/**
  * Step for student, to indicate his university data
  */
 export const svGenerateVoucherSelectUniversity = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_UNIVERSITY"
 )<University>();
+
+export type FlightsDate = {
+  departureDate: Date;
+  returnDate?: Date;
+};
+
+/**
+ * Step for student, worker and sick to indicate the departure and the return date
+ */
+export const svGenerateVoucherSelectFlightsDate = createStandardAction(
+  "SV_GENERATE_VOUCHER_SELECT_FLIGHTS_DATE"
+)<FlightsDate>();
+
+/**
+ * get and handle available destination for a voucher request
+ */
+export const svGenerateVoucherAvailableDestination = createAsyncAction(
+  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
+  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
+  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
+)<void, AvailableDestination, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
@@ -76,4 +112,7 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherSelectCategory>
   | ActionType<typeof svGenerateVoucherSubThresholdIncome>
   | ActionType<typeof svGenerateVoucherSelectUniversity>
-  | ActionType<typeof svGenerateVoucherSelectCompany>;
+  | ActionType<typeof svGenerateVoucherSelectCompany>
+  | ActionType<typeof svGenerateVoucherSelectHospital>
+  | ActionType<typeof svGenerateVoucherSelectFlightsDate>
+  | ActionType<typeof svGenerateVoucherAvailableDestination>;
