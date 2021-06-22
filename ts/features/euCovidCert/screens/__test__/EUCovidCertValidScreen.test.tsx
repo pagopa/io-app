@@ -18,6 +18,12 @@ import {
 import { ValidCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertValidScreen from "../valid/EuCovidCertValidScreen";
 
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
 describe("Test EUCovidCertificateValidScreen", () => {
   jest.useFakeTimers();
   it("With baseValidCertificate, the details button and the preview markdown shouldn't be rendered", () => {
@@ -96,9 +102,6 @@ describe("Test EUCovidCertificateValidScreen", () => {
         type: "Navigation/NAVIGATE"
       }
     ]);
-
-    // eslint-disable-next-line no-console
-    console.log(store.getActions());
 
     expect(render.component.queryByTestId("markdownPreview")).not.toBeNull();
   });

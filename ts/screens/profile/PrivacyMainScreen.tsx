@@ -205,6 +205,19 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               }
               useExtendedSubTitle={true}
             />
+            {/* Share data */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.shareData.listItem.title")}
+              subTitle={I18n.t(
+                "profile.main.privacy.shareData.listItem.description"
+              )}
+              onPress={() =>
+                this.props.navigation.navigate(
+                  ROUTES.PROFILE_PRIVACY_SHARE_DATA
+                )
+              }
+              useExtendedSubTitle={true}
+            />
 
             {/* Export your data */}
             <ListItemComponent

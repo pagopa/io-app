@@ -76,7 +76,7 @@ const cases: ReadonlyArray<[
       value: {
         kind: "expired",
         id: expiredCertificate.uvci as EUCovidCertificate["id"],
-        expiredInfo: expiredCertificate.info
+        markdownInfo: expiredCertificate.info
       },
       authCode
     })
@@ -92,7 +92,7 @@ const cases: ReadonlyArray<[
           mimeType: validCertificate.qr_code.mime_type,
           content: validCertificate.qr_code.content
         },
-        markdownPreview: validCertificate.info,
+        markdownInfo: validCertificate.info,
         markdownDetails: validCertificate.detail
       },
       authCode

@@ -25,7 +25,7 @@ import I18n from "../../i18n";
 import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletHome,
-  navigateToWalletTransactionsScreen
+  navigateToWalletPaymentMethodDetailScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -99,7 +99,7 @@ const WalletsScreen: React.FunctionComponent<Props> = (props: Props) => {
           )
         }
         onDelete={() => props.deleteWallet(item.idWallet)}
-        mainAction={props.navigateToWalletTransactionsScreen}
+        mainAction={props.navigateToWalletPaymentMethodDetailScreen}
       />
     );
   };
@@ -173,8 +173,8 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequest()),
-  navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
-    dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
+  navigateToWalletPaymentMethodDetailScreen: (selectedWallet: Wallet) =>
+    dispatch(navigateToWalletPaymentMethodDetailScreen({ selectedWallet })),
   navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),

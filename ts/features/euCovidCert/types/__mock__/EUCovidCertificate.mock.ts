@@ -8,7 +8,7 @@ export const revokedCertificate: RevokedCertificate = {
   id: "id" as EUCovidCertificateId,
   kind: "revoked",
   revokedOn: new Date(),
-  revokeInfo: "Markdown info"
+  markdownInfo: "Markdown info"
 };
 
 export const baseValidCertificate: ValidCertificate = {
@@ -24,7 +24,7 @@ export const baseValidCertificate: ValidCertificate = {
 export const completeValidCertificate: ValidCertificate = {
   ...baseValidCertificate,
   markdownDetails: "markdownDetails",
-  markdownPreview: "markdownPreview"
+  markdownInfo: "markdownPreview"
 };
 
 export const validCertificateWithoutPreview: ValidCertificate = {
@@ -34,5 +34,5 @@ export const validCertificateWithoutPreview: ValidCertificate = {
 
 export const validCertificateWithoutDetails: ValidCertificate = {
   ...baseValidCertificate,
-  markdownPreview: "markdownPreview"
+  markdownInfo: "markdownPreview"
 };
