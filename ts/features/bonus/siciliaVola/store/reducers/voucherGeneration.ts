@@ -5,6 +5,10 @@ import { Action } from "../../../../../store/actions/types";
 import {
   FlightsDate,
   svGenerateVoucherAvailableDestination,
+  svGenerateVoucherAvailableMunicipality,
+  svGenerateVoucherAvailableProvince,
+  svGenerateVoucherAvailableRegion,
+  svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherSelectCategory,
   svGenerateVoucherSelectCompany,
@@ -18,10 +22,14 @@ import {
   AvailableDestination,
   Company,
   Hospital,
+  Municipality,
+  Province,
+  Region,
+  State,
   University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
-import { IndexedById } from "../../../../../store/helpers/indexer";
+import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
 import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
 import { NetworkError } from "../../../../../utils/errors";
 
@@ -29,10 +37,10 @@ export type VoucherGenerationState = {
   voucherRequest: Option<VoucherRequest>;
   voucherGenerated: pot.Pot<SvVoucherGeneratedResponse, NetworkError>;
   availableDestination: pot.Pot<AvailableDestination, NetworkError>;
-  availableState: pot.Pot<IndexedById<string>, NetworkError>;
-  availableRegion: pot.Pot<IndexedById<string>, NetworkError>;
-  availableProvince: pot.Pot<IndexedById<string>, NetworkError>;
-  availableMunicipality: pot.Pot<IndexedById<string>, NetworkError>;
+  availableState: pot.Pot<IndexedById<State>, NetworkError>;
+  availableRegion: pot.Pot<IndexedById<Region>, NetworkError>;
+  availableProvince: pot.Pot<IndexedById<Province>, NetworkError>;
+  availableMunicipality: pot.Pot<IndexedById<Municipality>, NetworkError>;
 };
 
 const INITIAL_STATE: VoucherGenerationState = {
@@ -183,6 +191,75 @@ const reducer = (
       return {
         ...state,
         voucherGenerated: pot.toError(state.voucherGenerated, action.payload)
+      };
+    case getType(svGenerateVoucherAvailableState.request):
+      return {
+        ...state,
+        availableState: pot.toLoading(state.availableState),
+        availableRegion: pot.none,
+        availableProvince: pot.none,
+        availableMunicipality: pot.none
+      };
+    case getType(svGenerateVoucherAvailableState.success):
+      return {
+        ...state,
+        availableState: pot.some(toIndexed(action.payload, s => s.id))
+      };
+    case getType(svGenerateVoucherAvailableState.failure):
+      return {
+        ...state,
+        availableState: pot.toError(state.availableState, action.payload)
+      };
+    case getType(svGenerateVoucherAvailableRegion.request):
+      return {
+        ...state,
+        availableRegion: pot.toLoading(state.availableRegion),
+        availableProvince: pot.none,
+        availableMunicipality: pot.none
+      };
+    case getType(svGenerateVoucherAvailableRegion.success):
+      return {
+        ...state,
+        availableRegion: pot.some(toIndexed(action.payload, r => r.id))
+      };
+    case getType(svGenerateVoucherAvailableRegion.failure):
+      return {
+        ...state,
+        availableRegion: pot.toError(state.availableRegion, action.payload)
+      };
+    case getType(svGenerateVoucherAvailableProvince.request):
+      return {
+        ...state,
+        availableProvince: pot.toLoading(state.availableProvince),
+        availableMunicipality: pot.none
+      };
+    case getType(svGenerateVoucherAvailableProvince.success):
+      return {
+        ...state,
+        availableProvince: pot.some(toIndexed(action.payload, p => p.id))
+      };
+    case getType(svGenerateVoucherAvailableProvince.failure):
+      return {
+        ...state,
+        availableProvince: pot.toError(state.availableProvince, action.payload)
+      };
+    case getType(svGenerateVoucherAvailableMunicipality.request):
+      return {
+        ...state,
+        availableMunicipality: pot.toLoading(state.availableMunicipality)
+      };
+    case getType(svGenerateVoucherAvailableMunicipality.success):
+      return {
+        ...state,
+        availableMunicipality: pot.some(toIndexed(action.payload, m => m.id))
+      };
+    case getType(svGenerateVoucherAvailableMunicipality.failure):
+      return {
+        ...state,
+        availableMunicipality: pot.toError(
+          state.availableMunicipality,
+          action.payload
+        )
       };
   }
 

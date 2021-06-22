@@ -1,17 +1,17 @@
-type State = {
+export type State = {
   id: number;
   name?: string;
 };
-type Region = {
+export type Region = {
   id: number;
   name?: string;
 };
-type Province = {
+export type Province = {
   id: number;
   name?: string;
 };
 
-type Municipality = {
+export type Municipality = {
   id: number;
   name?: string;
 };
