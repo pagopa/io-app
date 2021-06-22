@@ -6,23 +6,21 @@ import { H1 } from "../../../components/core/typography/H1";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
+import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
-import { privacyUrl } from "../../../config";
 
 type MarkdownProps = {
   body: string;
 };
 
 const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
-  <View>
+  <>
     <View spacer={true} />
-    <View style={{ flex: 1 }}>
-      <Markdown avoidTextSelection={true}>{props.body}</Markdown>
-    </View>
-  </View>
+    <Markdown avoidTextSelection={true}>{props.body}</Markdown>
+  </>
 );
 
 export const ShareDataComponent = (): React.ReactElement => {
