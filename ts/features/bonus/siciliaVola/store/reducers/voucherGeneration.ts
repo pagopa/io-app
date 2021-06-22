@@ -1,32 +1,22 @@
 import { getType } from "typesafe-actions";
-import { none, Option, some } from "fp-ts/lib/Option";
+import { none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import {
-  FlightsDate,
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableProvince,
   svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
-  svGenerateVoucherSelectCategory,
-  svGenerateVoucherSelectCompany,
-  svGenerateVoucherSelectFlightsDate,
-  svGenerateVoucherSelectHospital,
-  svGenerateVoucherSelectUniversity,
-  svGenerateVoucherStart,
-  svGenerateVoucherUnderThresholdIncome
+  svGenerateVoucherStart
 } from "../actions/voucherGeneration";
 import {
   AvailableDestination,
-  Company,
-  Hospital,
   Municipality,
   Province,
   Region,
   State,
-  University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
@@ -53,69 +43,6 @@ const INITIAL_STATE: VoucherGenerationState = {
   availableMunicipality: pot.none
 };
 
-const updateUnderThresholdIncome = (
-  state: Option<VoucherRequest>,
-  underThresholdIncome: boolean
-): Option<VoucherRequest> =>
-  state.fold(state, vR => {
-    if (vR.category === "worker" || vR.category === "sick") {
-      return some({ ...vR, underThresholdIncome });
-    }
-    return state;
-  });
-
-const updateUniversity = (
-  state: Option<VoucherRequest>,
-  university: University
-): Option<VoucherRequest> =>
-  state.fold(state, vR => {
-    if (vR.category === "student") {
-      return some({ ...vR, university });
-    }
-    return state;
-  });
-
-const updateCompany = (
-  state: Option<VoucherRequest>,
-  company: Company
-): Option<VoucherRequest> =>
-  state.fold(state, vR => {
-    if (vR.category === "worker") {
-      return some({ ...vR, company });
-    }
-    return state;
-  });
-
-const updateHospital = (
-  state: Option<VoucherRequest>,
-  hospital: Hospital
-): Option<VoucherRequest> =>
-  state.fold(state, vR => {
-    if (vR.category === "sick") {
-      return some({ ...vR, hospital });
-    }
-    return state;
-  });
-
-const updateFlightsDate = (
-  state: Option<VoucherRequest>,
-  flightsDate: FlightsDate
-): Option<VoucherRequest> =>
-  state.fold(state, vR => {
-    if (
-      vR.category === "student" ||
-      vR.category === "worker" ||
-      vR.category === "sick"
-    ) {
-      return some({
-        ...vR,
-        departureDate: flightsDate.departureDate,
-        returnDate: flightsDate.returnDate
-      });
-    }
-    return state;
-  });
-
 const reducer = (
   state: VoucherGenerationState = INITIAL_STATE,
   action: Action
@@ -123,42 +50,7 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
-    case getType(svGenerateVoucherSelectCategory):
-      return {
-        ...state,
-        voucherRequest: some({
-          category: action.payload
-        })
-      };
-    case getType(svGenerateVoucherUnderThresholdIncome):
-      return {
-        ...state,
-        voucherRequest: updateUnderThresholdIncome(
-          state.voucherRequest,
-          action.payload
-        )
-      };
-    case getType(svGenerateVoucherSelectCompany):
-      return {
-        ...state,
-        voucherRequest: updateCompany(state.voucherRequest, action.payload)
-      };
-    case getType(svGenerateVoucherSelectHospital):
-      return {
-        ...state,
-        voucherRequest: updateHospital(state.voucherRequest, action.payload)
-      };
-    case getType(svGenerateVoucherSelectUniversity):
-      return {
-        ...state,
-        voucherRequest: updateUniversity(state.voucherRequest, action.payload)
-      };
 
-    case getType(svGenerateVoucherSelectFlightsDate):
-      return {
-        ...state,
-        voucherRequest: updateFlightsDate(state.voucherRequest, action.payload)
-      };
     case getType(svGenerateVoucherAvailableDestination.request):
       return {
         ...state,
