@@ -1583,17 +1583,17 @@ send_email_messages:
       info: You will not receive email messages anymore
     enable_all:
       label: Enable for all active services
-      info: Every message will be forwarded to your epreferencesmail, if allowed by the service
+      info: Every message will be forwarded to your email, if allowed by the service
     by_service:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
   optIn:
     preferences:
-      title: "How do you want to use the services on IO?"
-      body: "IO is simple because you don't have to do anything: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
+      title: "How do you want to use services on IO?"
+      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
       quickConfig:
-        title: "Use quick configuration"
+        title: "Use quick setup"
         body:
           text1: "Keep all services active, only those who have something important to tell you will contact you."
           text2: "You can always deactivate services that do not interest you."
