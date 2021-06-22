@@ -252,7 +252,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             {servicesRedesignEnabled && (
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.service_contact")}
-                subTitle={" "}
+                subTitle={I18n.t("services.optIn.preferences.unavailable")}
                 onPress={this.props.navigateToServiceContactPreferenceScreen}
               />
             )}
