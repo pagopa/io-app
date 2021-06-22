@@ -84,6 +84,8 @@ const ServicesContactComponent = (_: Props): React.ReactElement => {
       <Body>{I18n.t("services.optIn.preferences.body")}</Body>
       <View spacer large />
       <FlatList
+        style={{ flexGrow: 0 }}
+        scrollEnabled={false}
         data={options}
         renderItem={renderListItem}
         keyExtractor={o => o.key}
