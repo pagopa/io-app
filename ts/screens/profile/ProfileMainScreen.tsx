@@ -382,7 +382,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
             {isDevEnv &&
               this.debugListItem(
-                `Notification ID ${notificationId.slice(0, 6)}`,
+                `Notification ID ${notificationId}`,
                 () => clipboardSetStringWithFeedback(notificationId),
                 false
               )}
@@ -390,7 +390,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             {isDevEnv &&
               notificationToken &&
               this.debugListItem(
-                `Notification token ${notificationToken.slice(0, 6)}`,
+                `Notification token ${notificationToken}`,
                 () => clipboardSetStringWithFeedback(notificationToken),
                 false
               )}
