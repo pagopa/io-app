@@ -8,11 +8,11 @@ import Instabug, {
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
-import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import { getAppVersion } from "../utils/appVersion";
 import { isDevEnv } from "../utils/environment";
 import { SupportToken } from "../../definitions/backend/SupportToken";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
@@ -118,11 +118,9 @@ export const setInstabugUserAttribute = (
   Instabug.setUserAttribute(attributeKey, attributeValue);
 };
 
-export const setInstabugProfileAttributes = (
-  maybeIdp: Option<IdentityProvider>
-) => {
-  maybeIdp.fold(undefined, (idp: IdentityProvider) =>
-    setInstabugUserAttribute("identityProvider", idp.entityID)
+export const setInstabugProfileAttributes = (maybeIdp: Option<SpidIdp>) => {
+  maybeIdp.fold(undefined, (idp: SpidIdp) =>
+    setInstabugUserAttribute("identityProvider", idp.id)
   );
 };
 

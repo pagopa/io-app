@@ -31,12 +31,13 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { isDevEnv } from "../utils/environment";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 14;
+const CURRENT_REDUX_STORE_VERSION = 15;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -215,11 +216,22 @@ const migrations: MigrationManifest = {
     const newContent: ContentState = {
       servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
-      contextualHelp: pot.none
+      contextualHelp: pot.none,
+      idps: remoteUndefined
     };
     return {
       ...state,
       content: newContent
+    };
+  },
+  // Version 15
+  // added isMixpanelEnabled
+  "15": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
     };
   }
 };

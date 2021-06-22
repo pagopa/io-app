@@ -3,7 +3,7 @@ import debounce from "lodash/debounce";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { Input, Item } from "native-base";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
@@ -25,6 +25,8 @@ export type SearchType = "Messages" | "Services";
 interface OwnProps {
   color?: string;
   searchType?: SearchType;
+  // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
+  onSearchTap?: () => void;
 }
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
@@ -82,12 +84,19 @@ class SearchButton extends React.Component<Props, State> {
   }
 
   private handleSearchPress = () => {
-    const { searchText } = this.state;
-    this.setState({
-      searchText: some("")
-    });
-    this.props.dispatchSearchText(searchText);
-    this.props.dispatchSearchEnabled(true);
+    const { onSearchTap } = this.props;
+
+    fromNullable(onSearchTap).foldL(
+      () => {
+        const { searchText } = this.state;
+        this.setState({
+          searchText: some("")
+        });
+        this.props.dispatchSearchText(searchText);
+        this.props.dispatchSearchEnabled(true);
+      },
+      ost => ost()
+    );
   };
 
   private onSearchTextChange = (text: string) => {

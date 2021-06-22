@@ -11,16 +11,17 @@ import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
+import { ComponentProps } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import {
+  defaultAttachmentTypeConfiguration,
+  DefaultReportAttachmentTypeConfiguration,
+  instabugLog,
   openInstabugQuestionReport,
   openInstabugReplies,
-  DefaultReportAttachmentTypeConfiguration,
   setInstabugSupportTokenAttribute,
-  TypeLogs,
-  instabugLog,
-  defaultAttachmentTypeConfiguration
+  TypeLogs
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -57,7 +58,6 @@ interface OwnProps {
   headerBody?: React.ReactNode;
   headerBackgroundColor?: ColorValue;
   appLogo?: boolean;
-  isSearchAvailable?: boolean;
   searchType?: SearchType;
   reportAttachmentTypes?: DefaultReportAttachmentTypeConfiguration;
 
@@ -67,8 +67,8 @@ interface OwnProps {
 }
 
 type Props = OwnProps &
-  React.ComponentProps<typeof BaseHeader> &
-  Pick<React.ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
+  ComponentProps<typeof BaseHeader> &
+  Pick<ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
   shouldAttachScreenshotToIBRequest: boolean | undefined;
@@ -222,7 +222,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
     // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
     const customHandledLink = deriveCustomHandledLink(url);
-    customHandledLink.map(link => handleItemOnPress(link)());
+    customHandledLink.map(link => handleItemOnPress(link.url)());
   };
 
   public render() {
@@ -239,7 +239,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       headerBackgroundColor,
       primary,
       isSearchAvailable,
-      searchType,
       customRightIcon,
       customGoBack,
       onAccessibilityNavigationHeaderFocus,
@@ -292,7 +291,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }
           isSearchAvailable={isSearchAvailable}
-          searchType={searchType}
           body={headerBody}
           appLogo={appLogo}
           customRightIcon={customRightIcon}

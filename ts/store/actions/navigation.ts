@@ -25,7 +25,7 @@ import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import PaymentMethodDetailScreen from "../../screens/wallet/PaymentMethodDetailScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
@@ -123,6 +123,14 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
+export const navigateToMessageRouterScreen = (
+  params: InferNavigationParams<typeof MessageDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_ROUTER,
+    params
+  });
+
 /**
  * Service
  */
@@ -178,6 +186,11 @@ export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
 });
+
+export const navigateToPrivacyShareData = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+  });
 /**
  * Wallet & Payments
  */
@@ -222,11 +235,11 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletTransactionsScreen = (
-  params: InferNavigationParams<typeof TransactionsScreen>
+export const navigateToWalletPaymentMethodDetailScreen = (
+  params: InferNavigationParams<typeof PaymentMethodDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
+    routeName: ROUTES.WALLET_PAYMENT_METHOD_DETAIL,
     params
   });
 

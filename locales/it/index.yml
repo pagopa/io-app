@@ -74,6 +74,7 @@ global:
     collapsed: Paragrafo chiuso
     active: Stato attivo
     inactive: Stato non attivo
+    linkHint: Attivando questo elemento verrai reindirizzato sul browser del dispositivo
     activityIndicator:
       label: Caricamento in corso
       hint: Attendi il caricamento del contenuto
@@ -153,6 +154,7 @@ global:
     show: "Mostra"
     update: "Aggiorna"
     findOutMore: "Scopri di più"
+    details: "Dettagli"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -287,9 +289,9 @@ profile:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
-      title: Privacy e condizioni d'uso
+      title: Privacy e Condizioni d'uso
       description: I tuoi diritti e obblighi nell’uso di IO
-      subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Elimina il tuo account
@@ -334,8 +336,8 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Informativa e condizioni d'uso
-        description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
+        title: Informativa e Condizioni d'uso
+        description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: Abbiamo aggiornato la nostra Informativa e i Termini e condizioni d'uso
         infobox: È necessario prendere visione e accettare l'Informativa ed i Termini e condizioni d'uso
@@ -343,6 +345,48 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Privacy"
+        listItem:
+          title: "Condividi i dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
+        screen:
+          title: "I tuoi dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          why:
+            description:
+              one: "IO raccoglie solo le informazioni "
+              two: "necessarie "
+              three: "per il funzionamento dei servizi offerti"
+            cta: "Perché?"
+          security:
+            description:
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati e, ove possibile, li "
+              two: "pseudonimizziamo"
+            cta: "Scopri di più"
+          gdpr:
+            description:
+              one: "Il team di IO collabora con fornitori in conformità con le "
+              two: "norme previste dal GDPR"
+            cta: "Vedi elenco fornitori"
+          additionalInformation:
+            description: "Per maggiori informazioni, leggi "
+            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          cta:
+            shareData: "Condividi dati"
+            dontShareData: "Non condividere dati"
+            dontShare: "Non condividere"
+          confirmToast: "Preferenze aggiornate!"
+        alert:
+          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
+          body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
+        whyBottomSheet:
+          title: "Per quali finalità raccogliamo informazioni?"
+          body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+        securityBottomSheet:
+          title: "Cos’è la pseudonimizzazione?"
+          body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
     appInfo:
       title: Informazioni su IO
       description: Per saperne di più sull'app IO
@@ -366,8 +410,7 @@ profile:
   preferences:
     title: Preferenze
     subtitle:
-      Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-      Amministrazione.
+      Personalizza la tua esperienza in app
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
@@ -1292,7 +1335,7 @@ wallet:
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
-      message: IO ha bisogno di accedere alle foto per scansionare i codici QR
+      message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
       buttonText:
         settings: Abilita permessi
         cancel: Annulla
@@ -2273,7 +2316,7 @@ bonus:
           issuerId: "ID transazione Issuer"
           maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
           maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata riconosciuta in precedenza."
+          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza."
           canceled: "Storno"
       paymentMethods:
         add:
@@ -2320,18 +2363,40 @@ bonus:
           title: "Come funziona?"
           body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
           status:
-            active: "**La classifica cambia ogni giorno.** Quella definitiva sarà visualizzata il {{endDate}}."
+            active: "**La classifica cambia ogni giorno.** Riceverai un messaggio quando verrà consolidata."
             closed: "La classifica per questo periodo è chiusa."
       lastUpdate: Aggiornato alle {{hour}} del {{date}}
   cgn:
     accessibility:
       code: Premendo l'elemento copierai il codice
     name: Carta Giovani Nazionale
+    departmentName: Dipartimento per le politiche giovanili e il servizio civile universale
     merchantsList:
       online: Online
       places: Luoghi
       navigationTitle: Visualizza esercenti
       screenTitle: Seleziona l’esercente presso cui vuoi effettuare il tuo acquisto
+      cta:
+        filter: Filtra
+      filter:
+        title: Filtra esercenti
+        searchTitle: Cerca per nome
+        inputPlaceholder: Cerca negozio, teatro o altro
+        addressTitle: Cerca per indirizzo
+        addressPlaceholder: Cerca indirizzo
+        sliderLabel: Distanza entro cui cercare
+        sliderUnit: Km
+        orderTitle: Visualizza
+        categories: Categorie
+        cta:
+          cancel: Rimuovi
+          confirm:
+            zero: Applica filtri
+            one: Applica filtri ({{count}})
+            other: Applica filtri ({{count}})
+        order:
+          byDistance: Per vicinanza alla tua posizione
+          byName: Ordine alfabetico
     merchantDetail:
       title:
         deals: Offerte
@@ -2343,6 +2408,15 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+      categories:
+        theater: teatro, cinema e spettacolo
+        travel: viaggi
+        mobility: carsharing e mobilità
+        telco: telefonia, servizi internet
+        book: libri, audiolibri, e-book
+        museum: musei, gallerie, parchi
+        sport: sport
+        health: salute e benessere
     cta:
       activeBonus: Attiva la tua Carta Giovani
       goToDetail: Visualizza la Carta Giovani
@@ -2434,6 +2508,57 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
+features:
+  euCovidCertificate:
+    save:
+      noPermission: "Sembra che l'app non abbia i permessi per salvare immagini. Controlla le impostazioni del tuo dispositivo."
+      ok: "L'immagine è stata salvata nella galleria del tuo dispositivo"
+      bottomSheet:
+        title: "Salva il certificato"
+        subTitle: "Potrai mostrare il QR code del certificato senza aprire app IO, anche in assenza di connessione."
+        saveAsImage:
+          title: "Salva come immagine nella galleria"
+          subTitle: "Troverai il QR code fra le immagini presenti sul tuo dispositivo"
+    listItem:
+      cta: "Visualizza"
+    common:
+      title: "Certificazione verde COVID-19"
+      subtitle: "EU Digital COVID Certificate"
+      learnMore: "Per saperne di più"
+      authorizationCode: "Codice di autorizzazione"
+      messageIdentifier: "Identificativo del messaggio"
+    loading:
+      title: "Stiamo caricando i dati del tuo certificato dalla Piattaforma Nazionale del Ministero della Salute"
+      subtitle: "Attendi per favore"
+    valid:
+      accessibility:
+        qrCode: "QR Code"
+        hint: "Visualizza il QR Code a tutto schermo"
+      markdownDetails:
+        headerTitle: "Dettagli del certificato"
+        save: "Salva i dettagli"
+    revoked:
+      title: "Questo certificato \nnon è più valido"
+    expired:
+      title: "Questo certifcato è scaduto"
+    ko:
+      genericError:
+        title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
+        subtitle: "Potrebbe essere dovuto ad un problema temporaneo."
+      notFound:
+        title: "Sembra che il certificato non \nesista: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
+        cta: "Contatta l'assistenza"
+      notOperational:
+        title: "La Certificazione verde COVID-19 non è attualmente operativa"
+        subtitle: "TMP"
+      temporarilyNotAvailable:
+        title: "Il servizio è temporaneamente non disponibile"
+        subtitle: "Ti preghiamo di riprovare più tardi"
+      wrongFormat:
+        title: "Non è possibile recuperare questo \ncertificato: contatta l’assistenza"
+        subtitle: "Dati utili per ricevere assistenza:"
+        cta: "Contatta l'assistenza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

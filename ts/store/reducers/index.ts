@@ -7,6 +7,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
+import { featuresReducer } from "../../features/common/store/reducers";
 import {
   logoutFailure,
   logoutSuccess,
@@ -35,7 +36,9 @@ import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
-import persistedPreferencesReducer from "./persistedPreferences";
+import persistedPreferencesReducer, {
+  initialPreferencesState
+} from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import crossSessionsReducer from "./crossSessions";
@@ -100,6 +103,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
+  features: featuresReducer,
   internalRouteNavigation: internalRouteNavigationReducer,
   //
   // persisted state
@@ -182,6 +186,11 @@ export function createRootReducer(
               content: {
                 ...contentInitialContentState,
                 servicesMetadata: state.content.servicesMetadata
+              },
+              // isMixpanelEnabled must be kept
+              persistedPreferences: {
+                ...initialPreferencesState,
+                isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
               }
             } as GlobalState)
           : state;
