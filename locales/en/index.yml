@@ -2276,7 +2276,7 @@ bonus:
                 one: "1 valid transaction "
                 other: "{{transactions}} valid transactions "
               text4: "and collected "
-              text5: "a cashback of "
+              text5: "a refund of "
             milestone:
               title: "Congratulation, you reached {{cashbackValue}}"
               body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"

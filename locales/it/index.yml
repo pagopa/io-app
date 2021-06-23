@@ -2305,7 +2305,7 @@ bonus:
                 one: "1 transazione valida "
                 other: "{{transactions}} transazioni valide "
               text4: "e accumulato "
-              text5: "un Cashback di "
+              text5: "un rimborso di "
             milestone:
               title: "Complimenti, hai raggiunto {{cashbackValue}}"
               body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
