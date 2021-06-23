@@ -53,25 +53,8 @@ const SecurityScreen: FC<Props> = ({
     );
   }, []);
 
-  // FIXME: on IOS add this function onPress ListItemComponent if user refused
-  // biometric permission on the first time the app is opened
-  // const onPressBiometricRecognition = () => {
-  //   Alert.alert(
-  //     I18n.t("profile.security.list.biometric_recognition.popup.title"),
-  //     I18n.t("profile.security.list.biometric_recognition.popup.description"),
-  //     [
-  //       {
-  //         text: I18n.t("global.buttons.cancel"),
-  //         style: "cancel"
-  //       },
-  //       {
-  //         text: I18n.t("global.buttons.settings"),
-  //         onPress: openAppSecuritySettings
-  //       }
-  //     ],
-  //     { cancelable: true }
-  //   );
-  // };
+  // FIXME: Add alert if user refused IOS biometric permission on
+  // the first time the app is opened: https://pagopa.atlassian.net/browse/IA-67
 
   const setBiometricPreference = (biometricPreference: boolean): void => {
     if (biometricPreference) {
@@ -119,8 +102,6 @@ const SecurityScreen: FC<Props> = ({
             onPress={requestIdentificationAndResetPin}
           />
           {/* Enable/disable biometric authentication */}
-          {/* FIXME: on IOS disabled switch and onPress add onPressBiometricRecognition function 
-          if user refused biometric permission on the first time the app is opened */}
           {isFingerprintAvailable && (
             <ListItemComponent
               title={I18n.t(
