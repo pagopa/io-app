@@ -34,6 +34,7 @@ import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
 import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
+import { MixpanelActions } from "./mixpanel";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
@@ -62,6 +63,7 @@ export type Action =
   | BackendInfoActions
   | DeepLinkActions
   | MessagesActions
+  | MixpanelActions
   | NavigationActions
   | NotificationsActions
   | PinSetActions

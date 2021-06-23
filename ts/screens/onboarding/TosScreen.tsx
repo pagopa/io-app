@@ -39,10 +39,10 @@ type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
-  scrollEnd: boolean;
 };
 
 import brokenLinkImage from "../../../img/broken-link.png";
+import { openWebUrl } from "../../utils/url";
 
 const styles = StyleSheet.create({
   alert: {
@@ -108,7 +108,7 @@ class TosScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     // it start with loading webview
-    this.state = { isLoading: true, hasError: false, scrollEnd: false };
+    this.state = { isLoading: true, hasError: false };
   }
 
   public componentDidUpdate() {
@@ -126,7 +126,7 @@ class TosScreen extends React.PureComponent<Props, State> {
   };
 
   private renderError = () => {
-    if (this.state.hasError === false) {
+    if (!this.state.hasError) {
       return null;
     }
     return (
@@ -153,22 +153,12 @@ class TosScreen extends React.PureComponent<Props, State> {
   };
 
   // A function that handles message sent by the WebView component
-  private handleWebViewMessage = (event: WebViewMessageEvent) => {
-    if (this.state.scrollEnd) {
-      return;
-    }
-
-    // We validate the format of the message with a dedicated codec
-    const messageOrErrors = WebViewMessage.decode(
-      JSON.parse(event.nativeEvent.data)
-    );
-
-    messageOrErrors.map(message => {
-      if (message.type === "SCROLL_END_MESSAGE") {
-        this.setState({ scrollEnd: true });
+  private handleWebViewMessage = (event: WebViewMessageEvent) =>
+    WebViewMessage.decode(JSON.parse(event.nativeEvent.data)).map(m => {
+      if (m.type === "LINK_MESSAGE") {
+        void openWebUrl(m.payload.href);
       }
     });
-  };
 
   public render() {
     const { dispatch } = this.props;
