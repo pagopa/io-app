@@ -1604,7 +1604,7 @@ services:
           text1: "All services will be deactivated and you will have to enable them one by one to receive messages."
         bottomSheet:
           title: "Do you really want to activate services one by one?"
-          body: "**On IO you will only be contacted by the services that have something important to tell you** \n\nIf you choose this option, you will need to activate the services you are interest in manually. All new services will not be active and will not be able to contact you."
+          body: "**On IO you will only be contacted by the services that have something important to tell you** If you choose this option, you will need to activate the services you are interest in manually. All new services will not be active and will not be able to contact you."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
