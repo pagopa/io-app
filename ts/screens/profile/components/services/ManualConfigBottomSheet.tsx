@@ -46,11 +46,11 @@ const ManualConfigConfirm = ({
 export const useManualConfigBottomSheet = () => {
   const { present, dismiss } = useIOBottomSheetRaw(350);
 
-  const openModalBox = (confirmChoose: () => void) =>
+  const openModalBox = (onConfirm: () => void) =>
     present(
       <ManualConfigConfirm
         onConfirm={() => {
-          confirmChoose();
+          onConfirm();
           dismiss();
         }}
         onCancel={dismiss}
