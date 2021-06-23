@@ -42,6 +42,7 @@
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
       android:value="true"/>
 
+
     <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
       android:resource="@color/white"/>
 
@@ -72,6 +73,14 @@
 
     <!-- END Required by react-native-push-notification -->
 
+    <!-- Mixpanel -->
+
+    <meta-data android:name="com.mixpanel.android.MPConfig.UseIpAddressForGeolocation"
+               android:value="false" />
+    <!-- disable A/B testing see https://pagopa.atlassian.net/browse/IA-42 -->
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableGestureBindingUI" android:value="true" />
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableEmulatorBindingUI" android:value="true" />
+
     <!-- START Required by mixpanel push notification -->
     <service
       android:name="com.mixpanel.android.mpmetrics.MixpanelFCMMessagingService"
@@ -83,6 +92,8 @@
     </service>
 
     <!-- END Required by mixpanel push notification  -->
+
+    <!-- END Mixpanel -->
 
 
     <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
