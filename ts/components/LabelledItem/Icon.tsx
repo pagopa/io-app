@@ -6,7 +6,7 @@ import IconFont from "../ui/IconFont";
 import variables from "../../theme/variables";
 
 // Style type must be generalized so as to support both text icons and image icons
-type StyleType = IconProps["style"] & ImageStyle;
+export type StyleType = IconProps["style"] & ImageStyle;
 
 type Props = {
   icon?: string | ImageSourcePropType;

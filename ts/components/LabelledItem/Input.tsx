@@ -18,22 +18,22 @@ type CommonProp = Readonly<{
   setHasFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }>;
 
-interface InputProps extends TextInputProps {
+interface TextInputAdditionalProps extends TextInputProps {
   disabled?: boolean;
 }
 
-type Props = WithTestID<CommonProp> &
-  (
-    | Readonly<{
-        type: "masked";
-        inputMaskProps: TextInputMaskProps &
-          React.ComponentPropsWithRef<typeof TextInputMask>;
-      }>
-    | Readonly<{
-        type: "text";
-        inputProps: InputProps;
-      }>
-  );
+export type InputProps =
+  | Readonly<{
+      type: "masked";
+      inputMaskProps: TextInputMaskProps &
+        React.ComponentPropsWithRef<typeof TextInputMask>;
+    }>
+  | Readonly<{
+      type: "text";
+      inputProps: TextInputAdditionalProps;
+    }>;
+
+type Props = WithTestID<CommonProp> & InputProps;
 
 export const Input: React.FC<Props> = (props: Props): React.ReactElement => {
   /**

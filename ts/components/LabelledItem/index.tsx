@@ -12,22 +12,14 @@
 import { Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import {
-  ImageSourcePropType,
-  ImageStyle,
-  StyleSheet,
-  TextInputProps
-} from "react-native";
-import { TextInputMaskProps } from "react-native-masked-text";
-import { IconProps } from "react-native-vector-icons/Icon";
+import { ImageSourcePropType, StyleSheet } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 import { H5 } from "../core/typography/H5";
-import TextInputMask from "../ui/MaskedInput";
-import { Icon } from "./Icon";
-import { Input } from "./Input";
+import { Icon, StyleType } from "./Icon";
+import { Input, InputProps } from "./Input";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -37,9 +29,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   }
 });
-
-// Style type must be generalized so as to support both text icons and image icons
-type StyleType = IconProps["style"] & ImageStyle;
 
 type CommonProp = Readonly<{
   label?: string;
@@ -57,22 +46,7 @@ type CommonProp = Readonly<{
   hasNavigationEvents?: boolean;
 }>;
 
-interface InputProps extends TextInputProps {
-  disabled?: boolean;
-}
-
-type Props = WithTestID<CommonProp> &
-  (
-    | Readonly<{
-        type: "masked";
-        inputMaskProps: TextInputMaskProps &
-          React.ComponentPropsWithRef<typeof TextInputMask>;
-      }>
-    | Readonly<{
-        type: "text";
-        inputProps: InputProps;
-      }>
-  );
+type Props = WithTestID<CommonProp> & InputProps;
 
 export const LabelledItem: React.FC<Props> = ({
   iconPosition = "left",
