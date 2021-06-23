@@ -3,16 +3,24 @@ import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import { getType } from "typesafe-actions";
-import { svGenerateVoucherGeneratedVoucher } from "../actions/voucherGeneration";
+import {
+  svGenerateVoucherGeneratedVoucher,
+  svGenerateVoucherStart
+} from "../actions/voucherGeneration";
 
-const INITIAL_STATE: pot.Pot<SvVoucherGeneratedResponse, NetworkError> =
-  pot.none;
+export type VoucherGeneratedState = pot.Pot<
+  SvVoucherGeneratedResponse,
+  NetworkError
+>;
+const INITIAL_STATE: VoucherGeneratedState = pot.none;
 
 const reducer = (
-  state: pot.Pot<SvVoucherGeneratedResponse, NetworkError> = INITIAL_STATE,
+  state: VoucherGeneratedState = INITIAL_STATE,
   action: Action
-): pot.Pot<SvVoucherGeneratedResponse, NetworkError> => {
+): VoucherGeneratedState => {
   switch (action.type) {
+    case getType(svGenerateVoucherStart):
+      return INITIAL_STATE;
     case getType(svGenerateVoucherGeneratedVoucher.request):
       return pot.toLoading(state);
 

@@ -133,7 +133,7 @@ export const svGenerateVoucherAvailableRegion = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_FAILURE"
-)<void, ReadonlyArray<Region>, NetworkError>();
+)<State, ReadonlyArray<Region>, NetworkError>();
 
 /**
  * get and handle the available state
@@ -142,7 +142,7 @@ export const svGenerateVoucherAvailableProvince = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_FAILURE"
-)<void, ReadonlyArray<Province>, NetworkError>();
+)<Region, ReadonlyArray<Province>, NetworkError>();
 
 /**
  * get and handle the available state
@@ -151,7 +151,7 @@ export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_FAILURE"
-)<void, ReadonlyArray<Municipality>, NetworkError>();
+)<Province, ReadonlyArray<Municipality>, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>

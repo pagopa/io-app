@@ -18,7 +18,8 @@ import {
 import { Action } from "../../../../../store/actions/types";
 import { getType } from "typesafe-actions";
 
-const INITIAL_STATE: Option<VoucherRequest> = none;
+export type VoucherRequestState = Option<VoucherRequest>;
+const INITIAL_STATE: VoucherRequestState = none;
 
 /**
  * Utils needed to update only the under threshold value
@@ -26,9 +27,9 @@ const INITIAL_STATE: Option<VoucherRequest> = none;
  * @param underThresholdIncome
  */
 const updateUnderThresholdIncome = (
-  state: Option<VoucherRequest>,
+  state: VoucherRequestState,
   underThresholdIncome: boolean
-): Option<VoucherRequest> =>
+): VoucherRequestState =>
   state.fold(state, vR => {
     if (vR.category === "worker" || vR.category === "sick") {
       return some({ ...vR, underThresholdIncome });
@@ -42,9 +43,9 @@ const updateUnderThresholdIncome = (
  * @param university
  */
 const updateUniversity = (
-  state: Option<VoucherRequest>,
+  state: VoucherRequestState,
   university: University
-): Option<VoucherRequest> =>
+): VoucherRequestState =>
   state.fold(state, vR => {
     if (vR.category === "student") {
       return some({ ...vR, university });
@@ -58,9 +59,9 @@ const updateUniversity = (
  * @param company
  */
 const updateCompany = (
-  state: Option<VoucherRequest>,
+  state: VoucherRequestState,
   company: Company
-): Option<VoucherRequest> =>
+): VoucherRequestState =>
   state.fold(state, vR => {
     if (vR.category === "worker") {
       return some({ ...vR, company });
@@ -74,9 +75,9 @@ const updateCompany = (
  * @param hospital
  */
 const updateHospital = (
-  state: Option<VoucherRequest>,
+  state: VoucherRequestState,
   hospital: Hospital
-): Option<VoucherRequest> =>
+): VoucherRequestState =>
   state.fold(state, vR => {
     if (vR.category === "sick") {
       return some({ ...vR, hospital });
@@ -90,9 +91,9 @@ const updateHospital = (
  * @param flightsDate
  */
 const updateFlightsDate = (
-  state: Option<VoucherRequest>,
+  state: VoucherRequestState,
   flightsDate: FlightsDate
-): Option<VoucherRequest> =>
+): VoucherRequestState =>
   state.fold(state, vR => {
     if (
       vR.category === "student" ||
@@ -109,9 +110,9 @@ const updateFlightsDate = (
   });
 
 const reducer = (
-  state: Option<VoucherRequest> = INITIAL_STATE,
+  state: VoucherRequestState = INITIAL_STATE,
   action: Action
-): Option<VoucherRequest> => {
+): VoucherRequestState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
