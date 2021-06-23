@@ -1099,6 +1099,9 @@ wallet:
     loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
     loadWalletsErrorBody: Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.
     loadingAlert: Sto verificando le informazioni della tua carta...
+  challenge3ds:
+    title: Verifica del pagamento
+    subtitle: L’emittente della tua carta ha bisogno di verificare la tua identità. Se riscontri problemi, contatta la tua banca.
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
