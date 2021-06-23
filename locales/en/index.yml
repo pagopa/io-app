@@ -417,7 +417,7 @@ profile:
       biometric_recognition_status:
         enabled: Enabled
         disabled: Disabled
-      service_contact: Service management
+      service_contact: Use of services
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
