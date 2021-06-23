@@ -12,7 +12,8 @@ import {
   Region,
   State,
   SvBeneficiaryCategory,
-  University
+  University,
+  VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
@@ -115,7 +116,7 @@ export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
   "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_REQUEST",
   "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_SUCCESS",
   "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_FAILURE"
-)<void, SvVoucherGeneratedResponse, NetworkError>();
+)<VoucherRequest, SvVoucherGeneratedResponse, NetworkError>();
 
 /**
  * get and handle the available state
