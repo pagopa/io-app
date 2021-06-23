@@ -9,7 +9,7 @@ import variables from "../../theme/variables";
 export type StyleType = IconProps["style"] & ImageStyle;
 
 type Props = {
-  icon?: string | ImageSourcePropType;
+  icon: string | ImageSourcePropType;
   iconColor?: string;
   iconStyle?: StyleType;
   accessibilityLabelIcon?: string;
@@ -24,18 +24,17 @@ export const Icon: React.FC<Props> = ({
   accessibilityLabelIcon
 }): React.ReactElement => (
   <>
-    {icon &&
-      (isString(icon) ? (
-        <IconFont
-          size={variables.iconSize3}
-          color={iconColor ? iconColor : variables.brandDarkGray}
-          name={icon}
-          style={iconStyle}
-          onPress={onPress}
-          accessibilityLabel={accessibilityLabelIcon}
-        />
-      ) : (
-        <Image source={icon} style={iconStyle} />
-      ))}
+    {isString(icon) ? (
+      <IconFont
+        size={variables.iconSize3}
+        color={iconColor ? iconColor : variables.brandDarkGray}
+        name={icon}
+        style={iconStyle}
+        onPress={onPress}
+        accessibilityLabel={accessibilityLabelIcon}
+      />
+    ) : (
+      <Image source={icon} style={iconStyle} />
+    )}
   </>
 );

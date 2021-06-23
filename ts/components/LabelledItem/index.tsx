@@ -96,7 +96,7 @@ export const LabelledItem: React.FC<Props> = ({
             <NavigationEvents onWillBlur={props.onPress} />
           )}
 
-          {iconPosition === "left" && (
+          {iconPosition === "left" && props.icon && (
             <Icon
               icon={props.icon}
               iconColor={props.iconColor}
@@ -108,7 +108,7 @@ export const LabelledItem: React.FC<Props> = ({
 
           <Input setHasFocus={setHasFocus} setIsEmpty={setIsEmpty} {...props} />
 
-          {iconPosition === "right" && (
+          {iconPosition === "right" && props.icon && (
             <Icon
               icon={props.icon}
               iconColor={props.iconColor}

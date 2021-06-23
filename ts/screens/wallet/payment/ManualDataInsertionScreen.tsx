@@ -14,7 +14,7 @@ import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { isRight } from "fp-ts/lib/Either";
-import { fromEither, isNone, none, Option, some } from "fp-ts/lib/Option";
+import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -41,6 +41,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { validateOptionalEither } from "../../../utils/validateOptionalEither";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -147,14 +148,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Form>
               <LabelledItem
                 type="text"
-                isValid={this.state.paymentNoticeNumber
-                  .map<true | false | undefined>(e =>
-                    e.fold(
-                      _ => false,
-                      _ => true
-                    )
-                  )
-                  .getOrElse(undefined)}
+                isValid={validateOptionalEither(this.state.paymentNoticeNumber)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
                   keyboardType: "numeric",
@@ -171,13 +165,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               />
               <LabelledItem
                 type="text"
-                isValid={
-                  isNone(this.state.organizationFiscalCode)
-                    ? undefined
-                    : this.state.organizationFiscalCode
-                        .map(isRight)
-                        .getOrElse(false)
-                }
+                isValid={validateOptionalEither(
+                  this.state.organizationFiscalCode
+                )}
                 label={I18n.t("wallet.insertManually.entityCode")}
                 inputProps={{
                   keyboardType: "numeric",
