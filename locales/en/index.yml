@@ -1074,6 +1074,9 @@ wallet:
     loadWalletsErrorTitle: Systems are taking longer than expected
     loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
+  challenge3ds:
+    title: Payment verification
+    subtitle: Your card issuer requires you to confirm your identity. Should you have any issues, please contact your bank.
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -2223,10 +2226,11 @@ bonus:
           currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
-          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
-          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
-          closedPeriodMaxAmount: "it's the highest refund possible!"
-          moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
+          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. You will receive a message when the operation is completed."
+          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to a refund of € {{amount}}"
+          closedPeriodMaxAmount: ", the highest refund possible"
+          closedPeriodSuperCashback: ", including € {{amount}} of Super Cashback"
+          moneyTransfer: "You will receive a message when the transfer will be performed on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction"
@@ -2275,7 +2279,7 @@ bonus:
                 one: "1 valid transaction "
                 other: "{{transactions}} valid transactions "
               text4: "and collected "
-              text5: "a cashback of "
+              text5: "a refund of "
             milestone:
               title: "Congratulation, you reached {{cashbackValue}}"
               body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
