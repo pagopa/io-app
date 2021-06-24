@@ -1,18 +1,20 @@
 import WebView from "react-native-webview";
 import React from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View, Text } from "react-native";
 import _ from "lodash";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import uuid from "uuid/v4";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isTestEnv } from "../../utils/environment";
 import I18n from "../../i18n";
-import { ScreenContentHeader } from "../screens/ScreenContentHeader";
+import { InfoBox } from "../../components/box/InfoBox";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = {
   // the uri to send the form data thought POST
@@ -42,6 +44,8 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
+  description: { color: IOColors.bluegreyDark, fontSize: 14 },
   refreshIndicatorContainer: {
     position: "absolute",
     left: 0,
@@ -169,10 +173,21 @@ export const PayWebViewModal = (props: Props) => {
         contextualHelp={emptyContextualHelp}
         headerTitle={props.modalHeaderTitle}
       >
-        <ScreenContentHeader
-          title={I18n.t("wallet.challenge3ds.title")}
-          subtitle={I18n.t("wallet.challenge3ds.subtitle")}
-        />
+        <View
+          style={styles.descriptionContainer}
+          testID={"PayWebViewModal-description"}
+        >
+          <InfoBox
+            iconName={"io-info"}
+            iconColor={IOColors.bluegreyDark}
+            iconSize={22}
+          >
+            <Text style={styles.description}>
+              {I18n.t("wallet.challenge3ds.description")}
+            </Text>
+          </InfoBox>
+        </View>
+
         <WebView
           textZoom={100}
           source={{
