@@ -21,7 +21,9 @@ type Props = ReturnType<typeof mapStateToProps> &
 const OnboardingServicesPreferenceScreen = (
   props: Props
 ): React.ReactElement => (
-  <BaseScreenComponent contextualHelp={emptyContextualHelp}>
+  <BaseScreenComponent 
+    contextualHelp={emptyContextualHelp} 
+	  headerTitle={I18n.t("profile.preferences.list.service_contact")>
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <ServicesContactComponent />
