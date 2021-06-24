@@ -45,7 +45,13 @@ type Props = {
 
 const styles = StyleSheet.create({
   descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
-  description: { color: IOColors.bluegreyDark, fontSize: 14 },
+  description: {
+    color: IOColors.bluegreyDark,
+    fontSize: 14,
+    fontFamily: "Titillium Web",
+    fontWeight: "400",
+    lineHeight: 18
+  },
   refreshIndicatorContainer: {
     position: "absolute",
     left: 0,
@@ -180,7 +186,7 @@ export const PayWebViewModal = (props: Props) => {
           <InfoBox
             iconName={"io-info"}
             iconColor={IOColors.bluegreyDark}
-            iconSize={22}
+            iconSize={24}
           >
             <Text style={styles.description}>
               {I18n.t("wallet.challenge3ds.description")}
