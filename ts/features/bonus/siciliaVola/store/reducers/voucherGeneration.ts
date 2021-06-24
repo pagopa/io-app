@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import { Action } from "../../../../../store/actions/types";
 import voucherGeneratedReducer, {
   VoucherGeneratedState
@@ -6,7 +7,6 @@ import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
 import availableDestinationReducer, {
   AvailableDestinationState
 } from "./availableDestination";
-import { combineReducers } from "redux";
 import availableStateReducer, { AvailableStateState } from "./availableState";
 import availableRegionReducer, {
   AvailableRegionState

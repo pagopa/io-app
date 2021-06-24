@@ -1,9 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
 import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
 import { State } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
-import { getType } from "typesafe-actions";
 import {
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart

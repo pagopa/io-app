@@ -1,4 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
+import { getType } from "typesafe-actions";
 import {
   Company,
   Hospital,
@@ -16,7 +17,6 @@ import {
   svGenerateVoucherUnderThresholdIncome
 } from "../actions/voucherGeneration";
 import { Action } from "../../../../../store/actions/types";
-import { getType } from "typesafe-actions";
 
 export type VoucherRequestState = Option<VoucherRequest>;
 const INITIAL_STATE: VoucherRequestState = none;

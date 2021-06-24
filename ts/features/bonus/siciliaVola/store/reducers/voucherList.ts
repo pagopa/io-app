@@ -1,7 +1,7 @@
-import { Action } from "../../../../../store/actions/types";
-import { getType } from "typesafe-actions";
-import { svGenerateVoucherStart } from "../actions/voucherGeneration";
 import * as pot from "italia-ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
+import { Action } from "../../../../../store/actions/types";
+import { svGenerateVoucherStart } from "../actions/voucherGeneration";
 import { SvVoucher } from "../../types/svVoucher";
 import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
 import { svVoucherListGet } from "../actions/voucherList";

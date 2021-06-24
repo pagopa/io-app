@@ -1,7 +1,7 @@
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherStart

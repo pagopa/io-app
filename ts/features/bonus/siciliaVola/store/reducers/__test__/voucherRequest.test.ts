@@ -1,7 +1,7 @@
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
 import { createStore } from "redux";
 import { none, some } from "fp-ts/lib/Option";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   FlightsDate,
   svGenerateVoucherSelectCategory,
