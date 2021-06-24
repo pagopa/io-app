@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
@@ -21,9 +22,10 @@ type Props = ReturnType<typeof mapStateToProps> &
 const OnboardingServicesPreferenceScreen = (
   props: Props
 ): React.ReactElement => (
-  <BaseScreenComponent 
-    contextualHelp={emptyContextualHelp} 
-	  headerTitle={I18n.t("profile.preferences.list.service_contact")>
+  <BaseScreenComponent
+    contextualHelp={emptyContextualHelp}
+    headerTitle={I18n.t("profile.preferences.list.service_contact")}
+  >
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <ServicesContactComponent />
