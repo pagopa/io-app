@@ -40,7 +40,7 @@ import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSumma
 import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
-import TransactionsScreen from "../screens/wallet/TransactionsScreen";
+import PaymentMethodDetailScreen from "../screens/wallet/PaymentMethodDetailScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
@@ -58,8 +58,8 @@ const baseRouteConfigMap = {
   [ROUTES.WALLET_TRANSACTION_DETAILS]: {
     screen: TransactionDetailsScreen
   },
-  [ROUTES.WALLET_CARD_TRANSACTIONS]: {
-    screen: TransactionsScreen
+  [ROUTES.WALLET_PAYMENT_METHOD_DETAIL]: {
+    screen: PaymentMethodDetailScreen
   },
   [ROUTES.WALLET_BANCOMAT_DETAIL]: {
     screen: BancomatDetailScreen

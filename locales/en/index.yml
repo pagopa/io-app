@@ -289,9 +289,9 @@ profile:
       title: Preferences
       description: Customize your app experience
     privacy:
-      title: Information and conditions of use
+      title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
-      subtitle: Here you find information on the legal conditions and on the processing of your personal data.
+      subtitle: In this section you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
@@ -336,8 +336,8 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy policy
-        description: See the Privacy policy and the conditions of use of IO
+        title: Privacy & Terms
+        description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
         infobox: It is necessary to read and accept the Terms and Conditions
@@ -345,6 +345,48 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Privacy"
+        listItem:
+          title: "Share usage data"
+          description: "Help the IO team to monitor the functioning of the app"
+        screen:
+          title: "Your usage data"
+          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          why:
+            description:
+              one: "IO collects only the information "
+              two: "necessary "
+              three: "to monitor the performance of the services provided to you"
+            cta: "Why?"
+          security:
+            description:
+              one: "We take security measures to protect your data and "
+              two: "pseudonymise it where possible"
+            cta: "Learn more"
+          gdpr:
+            description:
+              one: "The IO team works with other providers in accordance with "
+              two: "GDPR regulations"
+            cta: "See our providers"
+          additionalInformation:
+            description: "For more information, please read"
+            cta: "the Privacy Policy and Terms and Conditions"
+          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          cta:
+            shareData: "Share data"
+            dontShareData: "Don’t share data"
+            dontShare: "Don’t share"
+          confirmToast: "Preferences updated!"
+        alert:
+          title: "You are not giving IO consent to collect your usage data"
+          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+        whyBottomSheet:
+          title: "For what purposes do we collect information?"
+          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+        securityBottomSheet:
+          title: "What does pseudonymisation mean?"
+          body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
     appInfo:
       title: About IO
       description: Learn more about the IO app
@@ -375,6 +417,7 @@ profile:
       biometric_recognition_status:
         enabled: Enabled
         disabled: Disabled
+      service_contact: Service management
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
@@ -1032,6 +1075,9 @@ wallet:
     loadWalletsErrorTitle: Systems are taking longer than expected
     loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
+  challenge3ds:
+    title: Payment verification
+    subtitle: Your card issuer requires you to confirm your identity. Should you have any issues, please contact your bank.
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -1269,7 +1315,7 @@ wallet:
       message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
-      message: IO needs access to the Photos to scan QR codes
+      message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
       buttonText:
         settings: Enable permissions
         cancel: Cancel
@@ -1545,6 +1591,20 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  optIn:
+    preferences:
+      unavailable: "Not defined"
+      title: "How do you want to use services on IO?"
+      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
+      quickConfig:
+        title: "Use quick setup"
+        body:
+          text1: "Keep all services active, only those who have something important to tell you will contact you."
+          text2: "You can always deactivate services that do not interest you."
+      manualConfig:
+        title: "Configure manually"
+        body:
+          text1: "All services will be deactivated and you will have to enable them one by one to receive messages."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
@@ -2181,10 +2241,11 @@ bonus:
           currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
-          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
-          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
-          closedPeriodMaxAmount: "it's the highest refund possible!"
-          moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
+          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. You will receive a message when the operation is completed."
+          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to a refund of € {{amount}}"
+          closedPeriodMaxAmount: ", the highest refund possible"
+          closedPeriodSuperCashback: ", including € {{amount}} of Super Cashback"
+          moneyTransfer: "You will receive a message when the transfer will be performed on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction"
@@ -2233,7 +2294,7 @@ bonus:
                 one: "1 valid transaction "
                 other: "{{transactions}} valid transactions "
               text4: "and collected "
-              text5: "a cashback of "
+              text5: "a refund of "
             milestone:
               title: "Congratulation, you reached {{cashbackValue}}"
               body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
@@ -2292,7 +2353,7 @@ bonus:
           title: "How does it work?"
           body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
           status:
-            active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+            active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:

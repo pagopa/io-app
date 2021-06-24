@@ -35,8 +35,7 @@ const trackEuCovidCertificateGetSuccessResponse = (
     return {
       containsInfo: false,
       containsDetails: false,
-      qrCodeLength: undefined,
-      responseType: response.kind
+      qrCodeLength: undefined
     };
   }
   const containsInfo = response.value.markdownInfo !== undefined;
@@ -48,12 +47,10 @@ const trackEuCovidCertificateGetSuccessResponse = (
     response.value.kind === "valid"
       ? response.value.qrCode.content.length
       : undefined;
-  const responseType = response.value.kind;
   return {
     containsInfo,
     containsDetails,
-    qrCodeLength,
-    responseType
+    qrCodeLength
   };
 };
 
