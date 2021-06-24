@@ -425,6 +425,7 @@ profile:
       wip: In elaborazione
       language: Lingua
       digitalDomicile: Domicilio digitale
+      service_contact: Gestione servizi
       preferred_calendar:
         title: Calendario preferito
         not_selected: Non Selezionato
@@ -1619,6 +1620,20 @@ send_email_messages:
       label: Scegli servizio per servizio
       info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
+  optIn:
+    preferences:
+      unavailable: "Non selezionato"
+      title: "Come vuoi utilizzare i servizi su IO?"
+      body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio. In alternativa, puoi attivare i servizi uno ad uno."
+      quickConfig:
+        title: "Usa configurazione rapida"
+        body:
+          text1: "Mantieni tutti i servizi attivi, ti contatteranno solo quelli che hanno qualcosa di importante da dirti."
+          text2: "Potrai sempre disattivare i servizi che non ti interessano."
+      manualConfig:
+        title: "Configura manualmente"
+        body:
+          text1: "Tutti i servizi verranno disattivati e dovrai abilitarli uno a uno per ricevere messaggi."
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi

@@ -417,6 +417,7 @@ profile:
       biometric_recognition_status:
         enabled: Enabled
         disabled: Disabled
+      service_contact: Service management
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
@@ -1590,6 +1591,20 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  optIn:
+    preferences:
+      unavailable: "Not defined"
+      title: "How do you want to use services on IO?"
+      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
+      quickConfig:
+        title: "Use quick setup"
+        body:
+          text1: "Keep all services active, only those who have something important to tell you will contact you."
+          text2: "You can always deactivate services that do not interest you."
+      manualConfig:
+        title: "Configure manually"
+        body:
+          text1: "All services will be deactivated and you will have to enable them one by one to receive messages."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section

@@ -157,6 +157,11 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
   });
 
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
+  });
+
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
