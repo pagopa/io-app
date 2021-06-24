@@ -9,9 +9,13 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { PaginatedServiceTupleCollection } from "../../../../definitions/backend/PaginatedServiceTupleCollection";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import {
+  loadServicePreference,
+  upsertServicePreference
+} from "./servicePreference";
 
 //
 // service loading at startup
@@ -83,4 +87,6 @@ export type ServicesActions =
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>
-  | ActionType<typeof loadServiceDetailNotFound>;
+  | ActionType<typeof loadServiceDetailNotFound>
+  | ActionType<typeof loadServicePreference>
+  | ActionType<typeof upsertServicePreference>;
