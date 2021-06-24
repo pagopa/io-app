@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0-rc.1](https://github.com/pagopa/io-app/compare/1.28.0-rc.0...1.28.0-rc.1) (2021-06-23)
+
+
+### Features
+
+* **Payments:** [[#178212517](https://www.pivotaltracker.com/story/show/178212517)] Show information about 3DS verification ([#3135](https://github.com/pagopa/io-app/issues/3135)) ([e088498](https://github.com/pagopa/io-app/commit/e088498863afdcbe8cd259fefae28d9016ce4ece))
+* [[IAI-17](https://pagopa.atlassian.net/browse/IAI-17)] Render local svg files ([#3158](https://github.com/pagopa/io-app/issues/3158)) ([b895c92](https://github.com/pagopa/io-app/commit/b895c92dd46ce209312d02955ca56d0de485b611))
+
+
+### Bug Fixes
+
+* [[IA-23](https://pagopa.atlassian.net/browse/IA-23)] added isMounted to check mounted state ([#3134](https://github.com/pagopa/io-app/issues/3134)) ([6c30715](https://github.com/pagopa/io-app/commit/6c307153db291e7763a1a0379c72edf3a08e4a98))
+* **EU Covid Certificate:** [[IAGP-57](https://pagopa.atlassian.net/browse/IAGP-57)] Change locales for photolibrary permission ([#3120](https://github.com/pagopa/io-app/issues/3120)) ([4ef3e8c](https://github.com/pagopa/io-app/commit/4ef3e8c672abd876af5dbefe2f0922b3a605e1b2))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-82](https://pagopa.atlassian.net/browse/IAC-82)] Graphical review for cashback states ([#3166](https://github.com/pagopa/io-app/issues/3166)) ([14891f6](https://github.com/pagopa/io-app/commit/14891f6239e454892e28e616f6a301bad21c4bdf))
+* [[IA-41](https://pagopa.atlassian.net/browse/IA-41)] Expose the unique device ID and let the developer copy it to the clipboard ([#3159](https://github.com/pagopa/io-app/issues/3159)) ([4aa1aea](https://github.com/pagopa/io-app/commit/4aa1aea4206b5523f1e2683ca4bd29eb2843497b))
+* [[IA-42](https://pagopa.atlassian.net/browse/IA-42)] Disable A/B testing ([#3160](https://github.com/pagopa/io-app/issues/3160)) ([2bb7d82](https://github.com/pagopa/io-app/commit/2bb7d82690273e29e900a4f48312e66ae7513106))
+* **Bonus Pagamenti Digitali:** [[IAC-7](https://pagopa.atlassian.net/browse/IAC-7)] Remove technical iban feature flag ([#3113](https://github.com/pagopa/io-app/issues/3113)) ([d468faf](https://github.com/pagopa/io-app/commit/d468faf52f7683c407afaca78d075e2d7a147195))
+* **EU Covid Certificate:** [[IAGP-65](https://pagopa.atlassian.net/browse/IAGP-65)] Add top and bottom qrcode spacing [#3161](https://github.com/pagopa/io-app/issues/3161) ([d960d55](https://github.com/pagopa/io-app/commit/d960d55f3ee339ba892685d4046bdc762a403c97))
+
 ## [1.28.0-rc.0](https://github.com/pagopa/io-app/compare/1.27.0-rc.0...1.28.0-rc.0) (2021-06-20)
 
 

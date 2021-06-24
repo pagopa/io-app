@@ -2,14 +2,17 @@ diff --git a/node_modules/react-native-mixpanel/.DS_Store b/node_modules/react-n
 new file mode 100644
 index 0000000..e69de29
 diff --git a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m b/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
-index 8564911..2e332b0 100644
+index 8564911..8a158db 100644
 --- a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
 +++ b/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
-@@ -46,7 +46,9 @@ -(Mixpanel*) getInstance: (NSString *)name {
+@@ -46,7 +46,12 @@ -(Mixpanel*) getInstance: (NSString *)name {
                                                    trackCrashes:trackCrashes
                                           automaticPushTracking:automaticPushTracking
                                         optOutTrackingByDefault:optOutTrackingByDefault];
 -
++        // disable A/B testing see https://pagopa.atlassian.net/browse/IA-42
++        [instance setEnableVisualABTestAndCodeless: NO];
++        instance.enableVisualABTestAndCodeless=NO;
 +        // need to change mixpanel endpoint due to saving data in EU zone
 +        // see https://www.pivotaltracker.com/story/show/171600487
 +        instance.serverURL = @"https://api-eu.mixpanel.com";
