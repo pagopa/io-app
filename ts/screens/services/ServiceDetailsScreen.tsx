@@ -60,6 +60,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { capitalize, maybeNotNullyString } from "../../utils/strings";
 import { handleItemOnPress, ItemAction } from "../../utils/url";
+import ContactPreferencesToggle from "../../components/services/ContactPreferencesToggles/ContactPreferencesToggle";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -664,9 +665,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <Grid>
             <OrganizationHeader service={service} />
             <View spacer={true} large={true} />
+            {/* begin */}
             {this.getInboxSwitchRow()}
             {this.getPushSwitchRow()}
             {this.getEmailSwitchRow()}
+            {/* end */}
           </Grid>
 
           <View spacer={true} large={true} />
