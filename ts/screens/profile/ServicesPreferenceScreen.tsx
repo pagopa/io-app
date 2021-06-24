@@ -22,7 +22,11 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       : props.onSelect();
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <BaseScreenComponent
+      goBack={true}
+      contextualHelp={emptyContextualHelp}
+      headerTitle={I18n.t("profile.preferences.list.service_contact")}
+    >
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         <ServicesContactComponent onSelectOption={onSelectAction} />
       </ScrollView>

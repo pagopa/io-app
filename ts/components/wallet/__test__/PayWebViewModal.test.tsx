@@ -1,5 +1,17 @@
+import React from "react";
+import { NavigationParams } from "react-navigation";
 import URLParse from "url-parse";
-import { testableGetFinishAndOutcome } from "../PayWebViewModal";
+import { createStore } from "redux";
+import {
+  PayWebViewModal,
+  testableGetFinishAndOutcome
+} from "../PayWebViewModal";
+import { applicationChangeState } from "../../../store/actions/application";
+import { GlobalState } from "../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { appReducer } from "../../../store/reducers";
+import ROUTES from "../../../navigation/routes";
+import I18n from "../../../i18n";
 
 const loadingCases: ReadonlyArray<[
   url: string,
@@ -53,3 +65,38 @@ describe("getFinishAndOutcome", () => {
     }
   );
 });
+
+describe("PayWebViewModal component", () => {
+  jest.useFakeTimers();
+
+  it("should render the title", () => {
+    const component = renderComponent();
+    const title = component.getByTestId("screen-content-header-title");
+    expect(title).toHaveTextContent(I18n.t("wallet.challenge3ds.title"));
+  });
+
+  it("should render the subtitle", () => {
+    const component = renderComponent();
+    const subtitle = component.getByTestId("screen-content-header-subtitle");
+    expect(subtitle).toHaveTextContent(I18n.t("wallet.challenge3ds.subtitle"));
+  });
+});
+
+function renderComponent() {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => (
+      <PayWebViewModal
+        postUri={"where.to.post"}
+        formData={{}}
+        finishPathName={"end"}
+        outcomeQueryparamName={"a query"}
+        onFinish={_ => undefined}
+        onGoBack={() => undefined}
+      />
+    ),
+    ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
+    {},
+    createStore(appReducer, globalState as any)
+  );
+}

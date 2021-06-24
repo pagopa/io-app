@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
+import { View } from "native-base";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
@@ -42,6 +43,7 @@ const OnboardingServicesPreferenceScreen = (
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>
           </InfoBox>
+          <View spacer={true} />
         </ScrollView>
         <FooterWithButtons
           type={"SingleButton"}
