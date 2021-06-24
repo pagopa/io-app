@@ -6,7 +6,9 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 
 const ServicesPreferenceScreen = (): React.ReactElement => (
-  <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+  <BaseScreenComponent goBack={true} 
+  contextualHelp={emptyContextualHelp} 
+  headerTitle={I18n.t("profile.preferences.list.service_contact")>
     <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
       <ServicesContactComponent />
     </ScrollView>

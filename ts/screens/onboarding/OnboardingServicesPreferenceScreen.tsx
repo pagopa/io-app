@@ -30,6 +30,7 @@ const OnboardingServicesPreferenceScreen = (
             {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
           </H5>
         </InfoBox>
+        <View spacer={true} />
       </ScrollView>
       <FooterWithButtons
         type={"SingleButton"}
