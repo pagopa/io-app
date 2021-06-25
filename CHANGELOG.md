@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0-rc.4](https://github.com/pagopa/io-app/compare/1.28.0-rc.3...1.28.0-rc.4) (2021-06-25)
+
+
+### Chores
+
+* [[IA-69](https://pagopa.atlassian.net/browse/IA-69)] Remove title, update description and tests ([#3169](https://github.com/pagopa/io-app/issues/3169)) ([51e0ff0](https://github.com/pagopa/io-app/commit/51e0ff0ed4789304e2944b94a8213f63616c08fd))
+
 ## [1.28.0-rc.3](https://github.com/pagopa/io-app/compare/1.28.0-rc.2...1.28.0-rc.3) (2021-06-25)
 
 
