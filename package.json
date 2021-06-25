@@ -88,6 +88,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
+    "detox": "^18.18.1",
     "fp-ts": "1.12.0",
     "front-matter": "^4.0.2",
     "hoist-non-react-statics": "^3.0.1",
@@ -259,7 +260,7 @@
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone 6, iOS 10.3"
+        "name": "iPhone 11, iOS 14.5"
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
