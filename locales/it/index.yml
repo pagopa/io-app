@@ -425,6 +425,7 @@ profile:
       wip: In elaborazione
       language: Lingua
       digitalDomicile: Domicilio digitale
+      service_contact: Gestione servizi
       preferred_calendar:
         title: Calendario preferito
         not_selected: Non Selezionato
@@ -1099,6 +1100,9 @@ wallet:
     loadWalletsErrorTitle: I sistemi stanno impiegando più tempo del previsto
     loadWalletsErrorBody: Non abbiamo ricevuto risposta dai sistemi di sicurezza, ma la tua carta potrebbe essere stata aggiunta. Aggiorna il tuo portafoglio prima di riprovare.
     loadingAlert: Sto verificando le informazioni della tua carta...
+  challenge3ds:
+    title: Verifica del pagamento
+    subtitle: L’emittente della tua carta ha bisogno di verificare la tua identità. Se riscontri problemi, contatta la tua banca.
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
@@ -1616,6 +1620,20 @@ send_email_messages:
       label: Scegli servizio per servizio
       info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
+  optIn:
+    preferences:
+      unavailable: "Non selezionato"
+      title: "Come vuoi utilizzare i servizi su IO?"
+      body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio. In alternativa, puoi attivare i servizi uno ad uno."
+      quickConfig:
+        title: "Usa configurazione rapida"
+        body:
+          text1: "Mantieni tutti i servizi attivi, ti contatteranno solo quelli che hanno qualcosa di importante da dirti."
+          text2: "Potrai sempre disattivare i servizi che non ti interessano."
+      manualConfig:
+        title: "Configura manualmente"
+        body:
+          text1: "Tutti i servizi verranno disattivati e dovrai abilitarli uno a uno per ricevere messaggi."
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
@@ -2252,10 +2270,11 @@ bonus:
           currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!"
           currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
           currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
-          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Entro il {{endGracePeriodDate}} potrai vedere il calcolo definitivo."
-          closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto a € {{amount}} di Cashback"
-          closedPeriodMaxAmount: "è il massimo del rimborso possibile!"
-          moneyTransfer: "Entro il {{date}} riceverai il bonifico sull’IBAN che ci hai indicato."
+          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Riceverai un messaggio quando l'operazione verrà completata."
+          closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto ad un rimborso di € {{amount}}"
+          closedPeriodMaxAmount: ", il massimo del rimborso possibile"
+          closedPeriodSuperCashback: ", di cui € {{amount}} di Super Cashback"
+          moneyTransfer: "Riceverai un messaggio quando verrà effettuato il bonifico all'IBAN da te scelto."
           inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
           label:
             one: "1 transazione valida"
@@ -2304,7 +2323,7 @@ bonus:
                 one: "1 transazione valida "
                 other: "{{transactions}} transazioni valide "
               text4: "e accumulato "
-              text5: "un Cashback di "
+              text5: "un rimborso di "
             milestone:
               title: "Complimenti, hai raggiunto {{cashbackValue}}"
               body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"

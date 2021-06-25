@@ -11,6 +11,8 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isTestEnv } from "../../utils/environment";
+import I18n from "../../i18n";
+import { ScreenContentHeader } from "../screens/ScreenContentHeader";
 
 type Props = {
   // the uri to send the form data thought POST
@@ -167,6 +169,10 @@ export const PayWebViewModal = (props: Props) => {
         contextualHelp={emptyContextualHelp}
         headerTitle={props.modalHeaderTitle}
       >
+        <ScreenContentHeader
+          title={I18n.t("wallet.challenge3ds.title")}
+          subtitle={I18n.t("wallet.challenge3ds.subtitle")}
+        />
         <WebView
           textZoom={100}
           source={{
