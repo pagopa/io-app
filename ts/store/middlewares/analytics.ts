@@ -458,11 +458,16 @@ export function screenTracking(
       if (nextScreen) {
         setInstabugUserAttribute("activeScreen", nextScreen);
       }
+      // track only those event that are not included in the blacklist
       if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
         void mixpanel.track("SCREEN_CHANGE_V2", {
           SCREEN_NAME: nextScreen
         });
       }
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
     }
     return result;
   };
