@@ -1,6 +1,6 @@
 import WebView from "react-native-webview";
 import React from "react";
-import { Modal, StyleSheet, View, Text } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import _ from "lodash";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import uuid from "uuid/v4";
@@ -15,6 +15,7 @@ import { isTestEnv } from "../../utils/environment";
 import I18n from "../../i18n";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { Label } from "../../components/core/typography/Label";
 
 type Props = {
   // the uri to send the form data thought POST
@@ -45,13 +46,6 @@ type Props = {
 
 const styles = StyleSheet.create({
   descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
-  description: {
-    color: IOColors.bluegreyDark,
-    fontSize: 14,
-    fontFamily: "Titillium Web",
-    fontWeight: "400",
-    lineHeight: 18
-  },
   refreshIndicatorContainer: {
     position: "absolute",
     left: 0,
@@ -188,9 +182,9 @@ export const PayWebViewModal = (props: Props) => {
             iconColor={IOColors.bluegreyDark}
             iconSize={24}
           >
-            <Text style={styles.description}>
+            <Label weight={"Regular"} color={"bluegrey"}>
               {I18n.t("wallet.challenge3ds.description")}
-            </Text>
+            </Label>
           </InfoBox>
         </View>
 
