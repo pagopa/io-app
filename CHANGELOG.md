@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0-rc.2](https://github.com/pagopa/io-app/compare/1.28.0-rc.1...1.28.0-rc.2) (2021-06-25)
+
+
+### Features
+
+* **Redesign Servizi:** [[IARS-2](https://pagopa.atlassian.net/browse/IARS-2)] Introduces the services contact preference screen ([#3163](https://github.com/pagopa/io-app/issues/3163)) ([63c6ff7](https://github.com/pagopa/io-app/commit/63c6ff7dfd0d1cc9037aca445452ff9aaf3f4edd))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [IAC-75, IA-70] Fix spacing area in darklayout button footer for iphone 12 ([#3133](https://github.com/pagopa/io-app/issues/3133)) ([91e6292](https://github.com/pagopa/io-app/commit/91e6292c1d23414198968001403da96da6e3d12c))
+
+
+### Chores
+
+* [[IA-62](https://pagopa.atlassian.net/browse/IA-62)] Add SCREEN_CHANGE_V2 event ([#3171](https://github.com/pagopa/io-app/issues/3171)) ([b2a378e](https://github.com/pagopa/io-app/commit/b2a378edc857e1100a1d6c3e67c8f7dcbec211be))
+
 ## [1.28.0-rc.1](https://github.com/pagopa/io-app/compare/1.28.0-rc.0...1.28.0-rc.1) (2021-06-23)
 
 
