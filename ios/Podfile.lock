@@ -395,7 +395,7 @@ PODS:
     - React
   - RNShare (3.7.0):
     - React
-  - RNSVG (12.1.0):
+  - RNSVG (12.1.1):
     - React
   - RNVectorIcons (7.0.0):
     - React
@@ -735,7 +735,7 @@ SPEC CHECKSUMS:
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
-  RNSVG: ce9d996113475209013317e48b05c21ee988d42e
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598

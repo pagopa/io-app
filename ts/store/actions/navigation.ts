@@ -157,6 +157,11 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
   });
 
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
+  });
+
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
@@ -186,6 +191,11 @@ export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
 });
+
+export const navigateToPrivacyShareData = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+  });
 /**
  * Wallet & Payments
  */

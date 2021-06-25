@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import LogoutScreen from "../components/screens/LogoutScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
@@ -8,16 +9,17 @@ import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScr
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
+import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
+import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
+import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
+import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
-import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
-import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
-import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen";
-import LogoutScreen from "../components/screens/LogoutScreen";
+import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ROUTES from "./routes";
 
 /**
@@ -34,11 +36,17 @@ const ProfileNavigator = createStackNavigator(
     [ROUTES.PROFILE_PRIVACY]: {
       screen: TosScreen
     },
+    [ROUTES.PROFILE_PRIVACY_SHARE_DATA]: {
+      screen: ShareDataScreen
+    },
     [ROUTES.PROFILE_PREFERENCES_HOME]: {
       screen: PreferencesScreen
     },
     [ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
+    },
+    [ROUTES.PROFILE_PREFERENCES_SERVICES]: {
+      screen: ServicesPreferenceScreen
     },
     [ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING]: {
       screen: EmailForwardingScreen
