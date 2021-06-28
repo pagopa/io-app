@@ -665,17 +665,19 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         <Content>
           <Grid>
             <OrganizationHeader service={service} />
-            <View spacer={true} large={true} />
-            {servicesRedesignEnabled ? (
-              <ContactPreferencesToggles />
-            ) : (
-              <>
-                {this.getInboxSwitchRow()}
-                {this.getPushSwitchRow()}
-                {this.getEmailSwitchRow()}
-              </>
-            )}
           </Grid>
+          <View spacer={true} large={true} />
+          {servicesRedesignEnabled ? (
+            <ContactPreferencesToggles
+              channels={this.service.available_notification_channels}
+            />
+          ) : (
+            <>
+              {this.getInboxSwitchRow()}
+              {this.getPushSwitchRow()}
+              {this.getEmailSwitchRow()}
+            </>
+          )}
 
           <View spacer={true} large={true} />
           {this.renderItems(potServiceMetadata)}

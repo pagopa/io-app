@@ -1,54 +1,45 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
-import EmailSwitchRow from "./EmailSwitchRow";
-import PushSwitchRow from "./PushSwitchRow";
-import InboxSwitchRow from "./InboxSwitchRow";
+import I18n from "../../../i18n";
+import ItemSeparatorComponent from "../../ItemSeparatorComponent";
+import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
+import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox";
 
-type Props = ReturnType<typeof mapStateToProps>;
+type Props = {
+  channels?: ReadonlyArray<NotificationChannelEnum>;
+} & ReturnType<typeof mapStateToProps>;
 
-const ContactPreferencesToggle: React.FC<Props> = (_props: Props) => {
-  // data from state
-  //  const isUpdatingProfile = false;
-  const profileVersion: NonNegativeInteger = 1 as NonNegativeInteger;
-
+const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   // functions from actions
-  const navigateToEmailPreferences: () => void = () => undefined;
   const onValueChange: (item: Item, value: boolean) => void = (_item, _value) =>
     undefined;
 
-  // local states
   /*
-   *  we should find a better representation for the state
+   *  TODO State should be removed when data will be available from store
    */
   const [inboxSwitched, setInboxSwitched] = useState(true);
   const [pushSwitched, setPushSwitched] = useState(true);
   const [emailSwitched, setEmailSwitched] = useState(true);
 
-  // inbox props, derived or read from state
-  const hasInbox = true;
   const onInboxValueChange = (value: boolean) => {
     onValueChange("inbox", value);
     setInboxSwitched(value);
   };
 
-  // push notifications props, derived or read from state
-  const hasWebHookChannel = true;
+  const hasChannel = (channel: NotificationChannelEnum) =>
+    fromNullable(props.channels)
+      .map(anc => anc.indexOf(channel) !== -1)
+      .getOrElse(true);
 
   const onPushValueChange = (value: boolean) => {
     onValueChange("push", value);
     setPushSwitched(value);
   };
-
-  // email props, derived or read from state
-  const hasEmailChannel = true;
-  const isEmailEnabled = true;
-  const isEmailValidated = true;
-  const isEmailGloballyDisabled = false;
 
   const onEmailValueChange = (value: boolean) => {
     onValueChange("email", value);
@@ -57,44 +48,41 @@ const ContactPreferencesToggle: React.FC<Props> = (_props: Props) => {
 
   return (
     <>
-      {hasInbox && (
-        <InboxSwitchRow
-          disabled={false}
-          locked={false}
-          onValueChange={onInboxValueChange}
-          switched={inboxSwitched}
-          version={profileVersion}
-        />
-      )}
-      {hasWebHookChannel && (
-        <PushSwitchRow
-          disabled={false}
-          locked={false}
-          onValueChange={onPushValueChange}
-          switched={pushSwitched}
-          version={profileVersion}
-        />
+      <PreferenceToggleRow
+        label={
+          inboxSwitched
+            ? I18n.t("services.serviceIsEnabled")
+            : I18n.t("services.serviceNotEnabled")
+        }
+        onPress={onInboxValueChange}
+        value={inboxSwitched}
+      />
+      <ItemSeparatorComponent noPadded />
+      {hasChannel(NotificationChannelEnum.WEBHOOK) && (
+        <>
+          <PreferenceToggleRow
+            label={I18n.t("services.pushNotifications")}
+            onPress={onPushValueChange}
+            value={pushSwitched}
+          />
+          <ItemSeparatorComponent noPadded />
+        </>
       )}
 
-      {hasEmailChannel && (
-        <EmailSwitchRow
-          disabled={false}
-          enabled={isEmailEnabled}
-          goToPreferences={navigateToEmailPreferences}
-          locked={isEmailGloballyDisabled}
-          onValueChange={onEmailValueChange}
-          showInfoBox={false}
-          switched={emailSwitched}
-          validated={isEmailValidated}
-          version={profileVersion}
-        />
+      {hasChannel(NotificationChannelEnum.EMAIL) && (
+        <>
+          <PreferenceToggleRow
+            label={I18n.t("services.emailForwarding")}
+            onPress={onEmailValueChange}
+            value={emailSwitched}
+          />
+          <ItemSeparatorComponent noPadded />
+        </>
       )}
     </>
   );
 };
 
-const mapStateToProps = (_state: GlobalState) => {
-  return {};
-};
+const mapStateToProps = (_state: GlobalState) => ({});
 
 export default connect(mapStateToProps)(ContactPreferencesToggle);
