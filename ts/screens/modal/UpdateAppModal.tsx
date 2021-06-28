@@ -3,10 +3,9 @@
  *
  */
 
-import React, { FC, useCallback, useEffect, useState } from "react";
-
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Container, H2, Text, View } from "native-base";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
   Image,
@@ -15,15 +14,14 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
+import updateIcon from "../../../img/icons/update-icon.png";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import { mixpanelTrack } from "../../mixpanel";
 import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import updateIcon from "../../../img/icons/update-icon.png";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../utils/url";
 
