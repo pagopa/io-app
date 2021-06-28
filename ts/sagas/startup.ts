@@ -31,7 +31,8 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  svEnabled
+  svEnabled,
+  servicesRedesignEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -110,6 +111,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { askServicesOptin } from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -293,6 +295,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield call(checkAcknowledgedFingerprintSaga);
 
     yield call(checkAcknowledgedEmailSaga, userProfile);
+
+    if (servicesRedesignEnabled) {
+      // TODO the saga should be called even for already loggedIn users without the preference set
+      yield call(askServicesOptin);
+    }
 
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);

@@ -157,6 +157,11 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
   });
 
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
+  });
+
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
@@ -409,4 +414,17 @@ export const navigateToCieCardReaderScreen = (
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+  });
+
+/**
+ * SPID
+ */
+export const navigateToSPIDTestIDP = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_TEST
+  });
+
+export const navigateToSPIDLogin = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
   });

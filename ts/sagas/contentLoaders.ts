@@ -260,9 +260,6 @@ export function* watchContentSaga() {
   // Load content related to the contextual help body
   yield put(loadContextualHelpData.request());
 
-  // Load content related to the idps buttons
-  yield put(loadIdps.request());
-
   if (bonusVacanzeEnabled || bpdEnabled || cgnEnabled) {
     // available bonus list request
     yield takeLatest(
