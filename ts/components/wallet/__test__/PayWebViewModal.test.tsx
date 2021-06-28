@@ -69,16 +69,27 @@ describe("getFinishAndOutcome", () => {
 describe("PayWebViewModal component", () => {
   jest.useFakeTimers();
 
-  it("should render the title", () => {
+  it("should render the screen's header", () => {
     const component = renderComponent();
-    const title = component.getByTestId("screen-content-header-title");
-    expect(title).toHaveTextContent(I18n.t("wallet.challenge3ds.title"));
+    expect(
+      component.getByText(I18n.t("wallet.challenge3ds.header"))
+    ).toBeDefined();
   });
 
-  it("should render the subtitle", () => {
+  it("should render the info message", () => {
     const component = renderComponent();
-    const subtitle = component.getByTestId("screen-content-header-subtitle");
-    expect(subtitle).toHaveTextContent(I18n.t("wallet.challenge3ds.subtitle"));
+    expect(
+      component.getByText(I18n.t("wallet.challenge3ds.description"))
+    ).toBeDefined();
+  });
+
+  it("should render the info icon", () => {
+    const component = renderComponent();
+    expect(
+      component
+        .getByTestId("PayWebViewModal-description")
+        .find(node => node.props.iconName === "io-info")
+    ).toBeDefined();
   });
 });
 
@@ -93,6 +104,7 @@ function renderComponent() {
         outcomeQueryparamName={"a query"}
         onFinish={_ => undefined}
         onGoBack={() => undefined}
+        modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
       />
     ),
     ROUTES.WALLET_CHECKOUT_3DS_SCREEN,

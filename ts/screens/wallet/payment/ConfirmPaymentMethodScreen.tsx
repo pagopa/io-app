@@ -323,6 +323,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
           onFinish={handlePaymentOutcome}
           outcomeQueryparamName={webViewOutcomeParamName}
           onGoBack={handlePayWebviewGoBack}
+          modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
         />
       )}
     </BaseScreenComponent>
