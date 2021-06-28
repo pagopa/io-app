@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, put, takeEvery } from "redux-saga/effects";
+import { fork, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
@@ -11,7 +11,13 @@ import {
   watchServicesDetailLoadSaga
 } from "../startup/loadServiceDetailRequestHandler";
 import { loadVisibleServicesRequestHandler } from "../startup/loadVisibleServicesHandler";
+import {
+  loadServicePreference,
+  upsertServicePreference
+} from "../../store/actions/services/servicePreference";
 import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLoadSaga";
+import { handleGetServicePreference } from "./servicePreference/handleGetServicePreferenceSaga";
+import { handleUpsertServicePreference } from "./servicePreference/handleUpsertServicePreferenceSaga";
 
 /**
  * A saga for managing requests to load/refresh services data from backend
@@ -33,6 +39,26 @@ export function* watchLoadServicesSaga(
     backendClient.getService
   );
 
+  // handle the load of service preference request
+  // TODO Add backend client when defined
+  yield takeLatest(
+    getType(loadServicePreference.request),
+    handleGetServicePreference
+  );
+
+  // handle the upsert request for the current service
+  // TODO Add backend client when defined
+  yield takeLatest(
+    getType(upsertServicePreference.request),
+    handleUpsertServicePreference
+  );
+
+  // handle the single load service request
+  yield takeEvery(
+    getType(loadServiceDetail.request),
+    loadServiceDetailRequestHandler,
+    backendClient.getService
+  );
   // start a watcher to handle the load of services details in a bunch (i.e when visible services are loaded)
   yield fork(watchServicesDetailLoadSaga, backendClient.getService);
 

@@ -1,5 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Action } from "../../../actions/types";
 import {
   loadServicePreference,
@@ -9,6 +11,7 @@ import { ServicePreferenceResponse } from "../../../../types/services/ServicePre
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import { IndexedById } from "../../../helpers/indexer";
 import { toError, toLoading, toSome, toUpdating } from "../../IndexedByIdPot";
+import { GlobalState } from "../../types";
 
 export type ServicePreferenceState = IndexedById<
   pot.Pot<ServicePreferenceResponse, Error>
@@ -28,8 +31,7 @@ const servicePreferenceReducer = (
         value: {
           inbox: action.payload.inbox,
           notifications: action.payload.notifications,
-          email: action.payload.email,
-          version: action.payload.version
+          email: action.payload.email
         }
       });
     case getType(loadServicePreference.success):
@@ -47,3 +49,14 @@ const servicePreferenceReducer = (
 };
 
 export default servicePreferenceReducer;
+
+export const servicePreferenceSelector = (
+  state: GlobalState
+): ServicePreferenceState => state.entities.services.servicePreference;
+
+export const servicePreferenceByIDSelector = (id: string) =>
+  createSelector(
+    servicePreferenceSelector,
+    (spById): pot.Pot<ServicePreferenceResponse, Error> =>
+      fromNullable(spById[id]).fold(pot.none, potSp => potSp)
+  );

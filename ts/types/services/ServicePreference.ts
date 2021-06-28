@@ -12,5 +12,4 @@ export type ServicePreference = {
   inbox: boolean;
   notifications: boolean;
   email: boolean;
-  version: number;
 };

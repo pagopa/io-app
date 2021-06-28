@@ -38,8 +38,17 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
+import {
+  currentServiceSelectedReducer,
+  CurrentServiceSelectedState
+} from "./currentService";
+import servicePreferenceReducer, {
+  ServicePreferenceState
+} from "./servicePreference";
 
 export type ServicesState = Readonly<{
+  current: CurrentServiceSelectedState | null;
+  servicePreference: ServicePreferenceState;
   byId: ServicesByIdState;
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
   visible: VisibleServicesState;
@@ -54,6 +63,8 @@ export type ServicesSectionState = Readonly<{
 }>;
 
 const reducer = combineReducers<ServicesState, Action>({
+  servicePreference: servicePreferenceReducer,
+  current: currentServiceSelectedReducer,
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
