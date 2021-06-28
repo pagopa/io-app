@@ -76,7 +76,10 @@ const endGracePeriod = (period: BpdPeriod) => {
  */
 const enhanceOkText = (props: Props): Option<string> => {
   // the user earned the super cashback
-  if (props.period.amount.totalCashback >= props.period.superCashbackAmount) {
+  if (
+    props.period.superCashbackAmount > 0 &&
+    props.period.amount.totalCashback >= props.period.superCashbackAmount
+  ) {
     return some(
       I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodSuperCashback",
