@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 
-import { GlobalState } from "../../store/reducers/types";
+import { GlobalState } from "../../../store/reducers/types";
 import EmailSwitchRow from "./EmailSwitchRow";
 import PushSwitchRow from "./PushSwitchRow";
 import InboxSwitchRow from "./InboxSwitchRow";
@@ -13,7 +13,7 @@ type Props = ReturnType<typeof mapStateToProps>;
 
 const ContactPreferencesToggle: React.FC<Props> = (_props: Props) => {
   // data from state
-  const isUpdatingProfile = false;
+  //  const isUpdatingProfile = false;
   const profileVersion: NonNegativeInteger = 1 as NonNegativeInteger;
 
   // functions from actions

@@ -33,6 +33,7 @@ const InboxSwitchRow: React.FC<Props> = ({
       value={switched}
       disabled={disabled}
       onValueChange={onValueChange}
+      testID={"InboxSwitchRow-switch"}
     />
   </Row>
 );

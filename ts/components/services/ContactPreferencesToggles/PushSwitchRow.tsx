@@ -30,6 +30,7 @@ const PushSwitchRow: React.FC<Props> = ({
       key={`switch-push-${version}`}
       value={switched}
       disabled={disabled}
+      testID={"PushSwitchRow-switch"}
       onValueChange={onValueChange}
     />
   </Row>
