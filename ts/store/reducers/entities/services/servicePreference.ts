@@ -1,7 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Action } from "../../../actions/types";
 import {
   loadServicePreference,
@@ -17,6 +16,7 @@ export type ServicePreferenceState = IndexedById<
   pot.Pot<ServicePreferenceResponse, Error>
 >;
 
+// Reducer to handle specific service contact preferences (inbox, push, emails)
 const servicePreferenceReducer = (
   state: ServicePreferenceState = {},
   action: Action
@@ -25,14 +25,12 @@ const servicePreferenceReducer = (
     case getType(loadServicePreference.request):
       return toLoading(action.payload, state);
     case getType(upsertServicePreference.request):
-      return toUpdating(action.payload.id, state, {
-        id: action.payload.id,
+      const { id, ...payload } = action.payload;
+
+      return toUpdating(id, state, {
+        id,
         kind: "success",
-        value: {
-          inbox: action.payload.inbox,
-          notifications: action.payload.notifications,
-          email: action.payload.email
-        }
+        value: payload
       });
     case getType(loadServicePreference.success):
     case getType(upsertServicePreference.success):
@@ -58,5 +56,5 @@ export const servicePreferenceByIDSelector = (id: string) =>
   createSelector(
     servicePreferenceSelector,
     (spById): pot.Pot<ServicePreferenceResponse, Error> =>
-      fromNullable(spById[id]).fold(pot.none, potSp => potSp)
+      spById[id] ?? pot.none
   );

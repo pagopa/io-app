@@ -56,12 +56,6 @@ export function* watchLoadServicesSaga(
     );
   }
 
-  // handle the single load service request
-  yield takeEvery(
-    getType(loadServiceDetail.request),
-    loadServiceDetailRequestHandler,
-    backendClient.getService
-  );
   // start a watcher to handle the load of services details in a bunch (i.e when visible services are loaded)
   yield fork(watchServicesDetailLoadSaga, backendClient.getService);
 
