@@ -1,11 +1,12 @@
-import { ServiceID, ServicePreference } from "./ServicePreference";
+import { EnabledChannels } from "../../utils/profile";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 /**
- * Type representing success case by API responses
+ * Type representing service preference successfully loaded
  */
 type ServicePreferenceResponseSuccess = {
   kind: "success";
-  value: ServicePreference;
+  value: EnabledChannels;
 };
 
 /**
@@ -41,7 +42,7 @@ type ServicePreferenceResponseFailure =
  * Bind the response with the id of the service
  */
 export type WithServiceID<T> = T & {
-  id: ServiceID;
+  id: ServiceId;
 };
 
 /**
