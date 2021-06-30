@@ -131,7 +131,11 @@ export const LabelledItem: React.FC<Props> = ({
           key={"description"}
         >
           <Item style={styles.noBottomLine}>
-            <H5 weight={"Regular"} color={descriptionColor}>
+            <H5
+              weight={"Regular"}
+              color={descriptionColor}
+              testID="H5-description"
+            >
               {props.description}
             </H5>
           </Item>

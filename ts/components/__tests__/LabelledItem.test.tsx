@@ -26,6 +26,7 @@ const onPress = jest.fn();
 const icon = "io-place";
 const iconPosition = "left";
 const testID = "Text";
+const description = "description text";
 
 describe("Test LabelledItem", () => {
   it("should be not null", () => {
@@ -34,10 +35,12 @@ describe("Test LabelledItem", () => {
     expect(component).not.toBeNull();
   });
   it("should render label if is defined", () => {
-    const component = renderComponent({ ...textInputProps, label: "label" });
+    const label = "label text";
+    const component = renderComponent({ ...textInputProps, label });
 
     expect(component).not.toBeNull();
     expect(component.queryByTestId("label")).not.toBeNull();
+    expect(component.queryByText(label)).toBeTruthy();
   });
   it("should render NavigationEvents if hasNavigationEvents is true and onPress is defined", () => {
     const component = renderComponent({
@@ -72,11 +75,12 @@ describe("Test LabelledItem", () => {
   it("should render description if is defined", () => {
     const component = renderComponent({
       ...textInputProps,
-      description: "description"
+      description
     });
 
     expect(component).not.toBeNull();
     expect(component.queryByTestId("description")).not.toBeNull();
+    expect(component.queryByText(description)).toBeTruthy();
   });
   it("should render TextInputMask if type is equal to masked", () => {
     const component = renderComponent({
@@ -136,6 +140,32 @@ describe("Test LabelledItem", () => {
     expect(iconFontComponent).not.toBeNull();
     fireEvent.press(iconFontComponent);
     expect(onPress).toHaveBeenCalled();
+  });
+  it("should have red description color if isValid is false", () => {
+    const component = renderComponent({
+      ...textInputProps,
+      description,
+      isValid: false
+    });
+
+    expect(component).not.toBeNull();
+    expect(component.queryByTestId("description")).not.toBeNull();
+    expect(component.queryByText(description)).toBeTruthy();
+    expect(component.getByTestId("H5-description").props.color).toBe("red");
+  });
+  it("should have bluegreyDark description color if isValid is true", () => {
+    const component = renderComponent({
+      ...textInputProps,
+      description,
+      isValid: true
+    });
+
+    expect(component).not.toBeNull();
+    expect(component.queryByTestId("description")).not.toBeNull();
+    expect(component.queryByText(description)).toBeTruthy();
+    expect(component.getByTestId("H5-description").props.color).toBe(
+      "bluegreyDark"
+    );
   });
 });
 
