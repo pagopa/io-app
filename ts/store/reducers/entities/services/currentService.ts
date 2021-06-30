@@ -1,12 +1,12 @@
-import { NavigationActions } from "react-navigation";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { Action } from "../../../actions/types";
-import ROUTES from "../../../../navigation/routes";
 import { GlobalState } from "../../types";
-import { ServiceID } from "../../../../types/services/ServicePreference";
+import { currentSelectedService } from "../../../actions/services";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type CurrentServiceSelectedState = {
-  serviceID: ServiceID;
+  serviceID: ServiceId;
 };
 
 export const currentServiceSelectedReducer = (
@@ -14,16 +14,11 @@ export const currentServiceSelectedReducer = (
   action: Action
 ): CurrentServiceSelectedState | null => {
   switch (action.type) {
-    case NavigationActions.NAVIGATE:
-      if (action.routeName === ROUTES.SERVICE_DETAIL) {
-        return action.params
-          ? {
-              serviceID: action.params.service.service_id
-            }
-          : null;
-      }
+    case getType(currentSelectedService):
+      return {
+        serviceID: action.payload
+      };
   }
-
   return state;
 };
 
@@ -31,6 +26,6 @@ export const currentServiceSelectedReducer = (
  * current serviceID selector
  */
 export const serviceIDCurrentSelector = createSelector(
-  [(state: GlobalState) => state.entities.services.current],
+  [(state: GlobalState) => state.entities.services.currentSelectedService],
   (serviceID): CurrentServiceSelectedState | null => serviceID
 );
