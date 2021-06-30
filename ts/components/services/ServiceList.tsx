@@ -21,7 +21,6 @@ import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
 
@@ -148,7 +147,6 @@ class ServiceList extends React.Component<Props> {
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

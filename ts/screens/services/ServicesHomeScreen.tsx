@@ -101,6 +101,7 @@ import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { servicesRedesignEnabled } from "../../config";
+import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -621,6 +622,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
+        {servicesRedesignEnabled && <ServicePreferenceSummary />}
       </View>
     );
   };

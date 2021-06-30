@@ -1593,6 +1593,7 @@ send_email_messages:
 services:
   optIn:
     preferences:
+      choiceLabel: "You chose the"
       unavailable: "Not defined"
       title: "How do you want to use services on IO?"
       body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
