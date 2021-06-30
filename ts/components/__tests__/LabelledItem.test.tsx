@@ -167,6 +167,17 @@ describe("Test LabelledItem", () => {
       "bluegreyDark"
     );
   });
+  it("should have the correct borderColor if focusBorderColor is defined", () => {
+    const focusBorderColor = "red";
+    const component = renderComponent({ ...textInputProps, focusBorderColor });
+
+    expect(component).not.toBeNull();
+    const itemComponent = component.getByTestId("Item");
+    expect(itemComponent).not.toBeNull();
+    expect(itemComponent).toHaveStyle({
+      borderColor: focusBorderColor
+    });
+  });
 });
 
 const renderComponent = (props: Props) => render(<LabelledItem {...props} />);

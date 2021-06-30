@@ -92,6 +92,7 @@ export const LabelledItem: React.FC<Props> = ({
           }}
           error={isNotValid}
           success={isValid}
+          testID="Item"
         >
           {props.hasNavigationEvents && props.onPress && (
             <NavigationEvents
