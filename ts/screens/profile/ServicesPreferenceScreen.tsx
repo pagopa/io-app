@@ -7,6 +7,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
+import I18n from "../../i18n";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
 
