@@ -39,6 +39,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
@@ -262,6 +263,22 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
+  private handleOnLongPressItem = () => {
+    if (!this.props.isSearchEnabled) {
+      const enableServices = this.areAllServicesInboxChannelDisabled();
+
+      const isLongPressEnabled = !this.state.isLongPressEnabled;
+      const currentTabServicesId = this.props.tabsServicesId[
+        this.state.currentTab
+      ];
+      this.setState({
+        isLongPressEnabled,
+        currentTabServicesId,
+        enableServices
+      });
+    }
+  };
+
   /**
    * if we are displaying the loading screen and we got no errors on loading
    * data, then we can show the content
@@ -434,6 +451,56 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
+  // This method enable or disable services and update the enableServices props
+  private disableOrEnableTabServices = () => {
+    const { profile } = this.props;
+    if (pot.isUpdating(profile)) {
+      return;
+    }
+    const { currentTabServicesId, enableServices } = this.state;
+    this.props.disableOrEnableServices(
+      currentTabServicesId,
+      profile,
+      enableServices
+    );
+    this.setState({ enableServices: !enableServices });
+  };
+
+  private renderLongPressFooterButtons = () => (
+    <View style={styles.varBar}>
+      <ButtonDefaultOpacity
+        block={true}
+        bordered={true}
+        onPress={this.handleOnLongPressItem}
+        style={styles.buttonBar}
+      >
+        <Text>{I18n.t("global.buttons.cancel")}</Text>
+      </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        block={true}
+        primary={true}
+        style={styles.buttonBar}
+        onPress={() => {
+          if (!this.props.wasServiceAlertDisplayedOnce) {
+            this.showAlertOnDisableServices(
+              I18n.t("services.disableAllTitle"),
+              I18n.t("services.disableAllMsg"),
+              this.disableOrEnableTabServices
+            );
+          } else {
+            this.disableOrEnableTabServices();
+          }
+        }}
+      >
+        <Text>
+          {this.state.enableServices
+            ? I18n.t("services.enableAll")
+            : I18n.t("services.disableAll")}
+        </Text>
+      </ButtonDefaultOpacity>
+    </View>
+  );
+
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -488,7 +555,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {servicesRedesignEnabled && <ServicesHomeButton />}
+                {servicesRedesignEnabled ? (
+                  <ServicesHomeButton />
+                ) : (
+                  this.state.isLongPressEnabled &&
+                  this.renderLongPressFooterButtons()
+                )}
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -588,6 +660,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
+              handleOnLongPressItem={this.handleOnLongPressItem}
+              isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />

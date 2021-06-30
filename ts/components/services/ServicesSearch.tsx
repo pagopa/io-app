@@ -154,6 +154,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
+        isLongPressEnabled={false}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />
