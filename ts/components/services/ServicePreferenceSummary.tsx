@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import { InfoBox } from "../box/InfoBox";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
@@ -21,9 +20,8 @@ const mapChoiceLabel = new Map<string, string>([
 ]);
 
 const getChoiceLabel = (status: string) =>
-    mapChoiceLabel.get(status) ??
-  I18n.t("services.optIn.preferences.unavailable")
-  );
+  mapChoiceLabel.get(status) ??
+  I18n.t("services.optIn.preferences.unavailable");
 
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
   // FIXME Replace the string with the current preference option saved on profile

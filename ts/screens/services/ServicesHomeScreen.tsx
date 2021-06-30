@@ -38,6 +38,7 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -660,7 +661,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
+              handleOnLongPressItem={
+                servicesRedesignEnabled ? this.handleOnLongPressItem : constNull
+              }
               isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
