@@ -9,7 +9,8 @@ import { Dispatch } from "../../store/actions/types";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const ServicesHomeButton = (props: Props): React.ReactElement => (
+// this component shows two CTA to enable or disable services
+const ServicesEnablingFooter = (props: Props): React.ReactElement => (
   <FooterWithButtons
     type={"TwoButtonsInlineHalf"}
     leftButton={{

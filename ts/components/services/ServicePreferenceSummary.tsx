@@ -21,8 +21,8 @@ const mapChoiceLabel = new Map<string, string>([
 ]);
 
 const getChoiceLabel = (status: string) =>
-  fromNullable(mapChoiceLabel.get(status)).getOrElse(
-    I18n.t("services.optIn.preferences.unavailable")
+    mapChoiceLabel.get(status) ??
+  I18n.t("services.optIn.preferences.unavailable")
   );
 
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
