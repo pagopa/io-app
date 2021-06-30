@@ -38,8 +38,8 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
@@ -99,6 +99,8 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { servicesRedesignEnabled } from "../../config";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -258,22 +260,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       disabledServices > 0 &&
       disabledServices === Object.keys(currentTabServicesChannels).length
     );
-  };
-
-  private handleOnLongPressItem = () => {
-    if (!this.props.isSearchEnabled) {
-      const enableServices = this.areAllServicesInboxChannelDisabled();
-
-      const isLongPressEnabled = !this.state.isLongPressEnabled;
-      const currentTabServicesId = this.props.tabsServicesId[
-        this.state.currentTab
-      ];
-      this.setState({
-        isLongPressEnabled,
-        currentTabServicesId,
-        enableServices
-      });
-    }
   };
 
   /**
@@ -448,55 +434,26 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  // This method enable or disable services and update the enableServices props
-  private disableOrEnableTabServices = () => {
-    const { profile } = this.props;
-    if (pot.isUpdating(profile)) {
-      return;
-    }
-    const { currentTabServicesId, enableServices } = this.state;
-    this.props.disableOrEnableServices(
-      currentTabServicesId,
-      profile,
-      enableServices
-    );
-    this.setState({ enableServices: !enableServices });
-  };
-
-  private renderLongPressFooterButtons = () => (
-    <View style={styles.varBar}>
-      <ButtonDefaultOpacity
-        block={true}
-        bordered={true}
-        onPress={this.handleOnLongPressItem}
-        style={styles.buttonBar}
-      >
-        <Text>{I18n.t("global.buttons.cancel")}</Text>
-      </ButtonDefaultOpacity>
-      <ButtonDefaultOpacity
-        block={true}
-        primary={true}
-        style={styles.buttonBar}
-        onPress={() => {
-          if (!this.props.wasServiceAlertDisplayedOnce) {
-            this.showAlertOnDisableServices(
-              I18n.t("services.disableAllTitle"),
-              I18n.t("services.disableAllMsg"),
-              this.disableOrEnableTabServices
-            );
-          } else {
-            this.disableOrEnableTabServices();
-          }
+  private renderFooterButtons = () =>
+    // TODO Add the handlers when available
+    servicesRedesignEnabled && (
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        leftButton={{
+          title: I18n.t("services.disableAll"),
+          onPress: constNull,
+          bordered: true,
+          light: true
+          // style
         }}
-      >
-        <Text>
-          {this.state.enableServices
-            ? I18n.t("services.enableAll")
-            : I18n.t("services.disableAll")}
-        </Text>
-      </ButtonDefaultOpacity>
-    </View>
-  );
+        rightButton={{
+          title: I18n.t("services.enableAll"),
+          onPress: constNull,
+          bordered: true,
+          light: true
+        }}
+      />
+    );
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -552,8 +509,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {this.state.isLongPressEnabled &&
-                  this.renderLongPressFooterButtons()}
+                {this.renderFooterButtons()}
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -653,8 +609,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
-              isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />

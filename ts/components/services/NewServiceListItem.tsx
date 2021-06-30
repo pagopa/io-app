@@ -19,12 +19,10 @@ type Props = Readonly<{
   onSelect: (service: ServicePublic) => void;
   isRead: boolean;
   hideSeparator: boolean;
-  onLongPress?: () => void;
   onItemSwitchValueChanged?: (
     services: ReadonlyArray<ServicePublic>,
     value: boolean
   ) => void;
-  isLongPressEnabled: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -116,11 +114,9 @@ export default class NewServiceListItem extends React.PureComponent<
     const { switchValue } = this.state;
     const potService = this.props.item;
 
-    const onPress = !this.props.isLongPressEnabled
-      ? pot.toUndefined(
-          pot.map(potService, service => () => this.props.onSelect(service))
-        )
-      : undefined;
+    const onPress = pot.toUndefined(
+      pot.map(potService, service => () => this.props.onSelect(service))
+    );
 
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
@@ -133,7 +129,6 @@ export default class NewServiceListItem extends React.PureComponent<
         title={serviceName}
         hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
         onPress={onPress}
-        onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
         isItemDisabled={!switchValue}
@@ -141,7 +136,6 @@ export default class NewServiceListItem extends React.PureComponent<
         switchValue={switchValue}
         switchDisabled={pot.isUpdating(this.props.profile)}
         keySwitch={this.getServiceKey(potService)}
-        isLongPressEnabled={this.props.isLongPressEnabled}
       />
     );
   }
