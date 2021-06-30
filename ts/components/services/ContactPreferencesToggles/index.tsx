@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-
 import { fromNullable } from "fp-ts/lib/Option";
+
 import { GlobalState } from "../../../store/reducers/types";
 import I18n from "../../../i18n";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -56,6 +56,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         }
         onPress={onInboxValueChange}
         value={inboxSwitched}
+        testID={"contact-preferences-inbox-switch"}
       />
       <ItemSeparatorComponent noPadded />
       {hasChannel(NotificationChannelEnum.WEBHOOK) && (
@@ -64,6 +65,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
             label={I18n.t("services.pushNotifications")}
             onPress={onPushValueChange}
             value={pushSwitched}
+            testID={"contact-preferences-webhook-switch"}
           />
           <ItemSeparatorComponent noPadded />
         </>
@@ -75,6 +77,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
             label={I18n.t("services.emailForwarding")}
             onPress={onEmailValueChange}
             value={emailSwitched}
+            testID={"contact-preferences-email-switch"}
           />
           <ItemSeparatorComponent noPadded />
         </>
