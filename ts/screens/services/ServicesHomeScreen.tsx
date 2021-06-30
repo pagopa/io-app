@@ -38,7 +38,6 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -99,9 +98,9 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { servicesRedesignEnabled } from "../../config";
 import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
+import ServicesHomeButton from "../../components/services/ServicesHomeButton";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -435,27 +434,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  private renderFooterButtons = () =>
-    // TODO Add the handlers when available
-    servicesRedesignEnabled && (
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={{
-          title: I18n.t("services.disableAll"),
-          onPress: constNull,
-          bordered: true,
-          light: true
-          // style
-        }}
-        rightButton={{
-          title: I18n.t("services.enableAll"),
-          onPress: constNull,
-          bordered: true,
-          light: true
-        }}
-      />
-    );
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -510,7 +488,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {this.renderFooterButtons()}
+                {servicesRedesignEnabled && <ServicesHomeButton />}
               </React.Fragment>
             )}
           </TopScreenComponent>

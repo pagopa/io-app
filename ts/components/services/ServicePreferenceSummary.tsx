@@ -1,6 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
+import { fromNullable } from "fp-ts/lib/Option";
 import { InfoBox } from "../box/InfoBox";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
@@ -14,6 +15,16 @@ import { navigateToServicePreferenceScreen } from "../../store/actions/navigatio
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const mapChoiceLabel = new Map<string, string>([
+  ["AUTO", I18n.t("services.optIn.preferences.quickConfig.value")],
+  ["MANUAL", I18n.t("services.optIn.preferences.manualConfig.value")]
+]);
+
+const getChoiceLabel = (status: string) =>
+  fromNullable(mapChoiceLabel.get(status)).getOrElse(
+    I18n.t("services.optIn.preferences.unavailable")
+  );
+
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
   // FIXME Replace the string with the current preference option saved on profile
   <View style={IOStyles.horizontalContentPadding}>
@@ -21,7 +32,7 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
     <InfoBox iconName={"io-info"} iconColor={IOColors.bluegrey} iconSize={24}>
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
-      )} ${I18n.t("services.optIn.preferences.choiceLabel")}`}</H5>
+      )} ${getChoiceLabel(props.serviceOption)}`}</H5>
       <Link onPress={props.navigateToServicePreference}>
         {I18n.t("serviceDetail.updatePreferences")}
       </Link>
@@ -30,7 +41,10 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
   </View>
 );
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (_: GlobalState) => ({
+  // FIXME Service option should be taken from profile
+  serviceOption: "MANUAL"
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServicePreference: () =>

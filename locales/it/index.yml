@@ -1627,11 +1627,13 @@ services:
       title: "Come vuoi utilizzare i servizi su IO?"
       body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio. In alternativa, puoi attivare i servizi uno ad uno."
       quickConfig:
+        value: "configurazione rapida"
         title: "Usa configurazione rapida"
         body:
           text1: "Mantieni tutti i servizi attivi, ti contatteranno solo quelli che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare i servizi che non ti interessano."
       manualConfig:
+        value: "configurazione manuale"
         title: "Configura manualmente"
         body:
           text1: "Tutti i servizi verranno disattivati e dovrai abilitarli uno a uno per ricevere messaggi."
