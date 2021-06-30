@@ -46,7 +46,7 @@ type CommonProp = Readonly<{
   hasNavigationEvents?: boolean;
 }>;
 
-type Props = WithTestID<CommonProp> & InputProps;
+export type Props = WithTestID<CommonProp> & InputProps;
 
 export const LabelledItem: React.FC<Props> = ({
   iconPosition = "left",
@@ -68,6 +68,7 @@ export const LabelledItem: React.FC<Props> = ({
     <View>
       {props.label && (
         <View
+          testID="label"
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
         >
@@ -93,7 +94,10 @@ export const LabelledItem: React.FC<Props> = ({
           success={isValid}
         >
           {props.hasNavigationEvents && props.onPress && (
-            <NavigationEvents onWillBlur={props.onPress} />
+            <NavigationEvents
+              onWillBlur={props.onPress}
+              testID="NavigationEvents"
+            />
           )}
 
           {iconPosition === "left" && props.icon && (
@@ -121,6 +125,7 @@ export const LabelledItem: React.FC<Props> = ({
       </View>
       {props.description && (
         <View
+          testID="description"
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
           key={"description"}

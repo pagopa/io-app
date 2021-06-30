@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ImageSourcePropType, ImageStyle, Image } from "react-native";
+import { ImageSourcePropType, ImageStyle, Image, View } from "react-native";
 import { isString } from "lodash";
 import { IconProps } from "react-native-vector-icons/Icon";
 import IconFont from "../ui/IconFont";
@@ -23,7 +23,7 @@ export const Icon: React.FC<Props> = ({
   onPress,
   accessibilityLabelIcon
 }): React.ReactElement => (
-  <>
+  <View testID="Icon">
     {isString(icon) ? (
       <IconFont
         size={variables.iconSize3}
@@ -36,5 +36,5 @@ export const Icon: React.FC<Props> = ({
     ) : (
       <Image source={icon} style={iconStyle} />
     )}
-  </>
+  </View>
 );
