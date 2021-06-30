@@ -30,7 +30,7 @@ export const currentServiceSelectedReducer = (
 /**
  * current serviceID selector
  */
-export const euCovidCertCurrentSelector = createSelector(
+export const serviceIDCurrentSelector = createSelector(
   [(state: GlobalState) => state.entities.services.current],
   (serviceID): CurrentServiceSelectedState | null => serviceID
 );
