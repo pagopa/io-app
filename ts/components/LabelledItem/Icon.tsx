@@ -32,9 +32,10 @@ export const Icon: React.FC<Props> = ({
         style={iconStyle}
         onPress={onPress}
         accessibilityLabel={accessibilityLabelIcon}
+        testID="IconFont"
       />
     ) : (
-      <Image source={icon} style={iconStyle} />
+      <Image source={icon} style={iconStyle} testID="Image" />
     )}
   </View>
 );
