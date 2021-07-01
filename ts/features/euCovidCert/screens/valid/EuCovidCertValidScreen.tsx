@@ -88,34 +88,38 @@ const EuCovidCertValidComponent = (
 ): React.ReactElement => (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
-      <TouchableOpacity
-        testID={"QRCode"}
-        accessible={true}
-        accessibilityRole={"imagebutton"}
-        accessibilityLabel={I18n.t(
-          "features.euCovidCertificate.valid.accessibility.qrCode"
-        )}
-        accessibilityHint={I18n.t(
-          "features.euCovidCertificate.valid.accessibility.hint"
-        )}
-        onPress={() =>
-          props.navigateToQrCodeFullScreen(
-            props.validCertificate.qrCode.content
-          )
-        }
-      >
-        <Image
-          source={{
-            uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
-          }}
-          style={styles.qrCode}
-          onError={() => {
-            void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
-              messageId: props.messageId
-            });
-          }}
-        />
-      </TouchableOpacity>
+      <>
+        <View spacer={true} />
+        <TouchableOpacity
+          testID={"QRCode"}
+          accessible={true}
+          accessibilityRole={"imagebutton"}
+          accessibilityLabel={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.qrCode"
+          )}
+          accessibilityHint={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.hint"
+          )}
+          onPress={() =>
+            props.navigateToQrCodeFullScreen(
+              props.validCertificate.qrCode.content
+            )
+          }
+        >
+          <Image
+            source={{
+              uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
+            }}
+            style={styles.qrCode}
+            onError={() => {
+              void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
+                messageId: props.messageId
+              });
+            }}
+          />
+        </TouchableOpacity>
+        <View spacer={true} />
+      </>
     )}
     {props.validCertificate.markdownInfo && (
       <View style={props.markdownWebViewStyle}>

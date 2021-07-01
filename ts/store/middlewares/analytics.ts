@@ -125,6 +125,7 @@ import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
+import { noAnalyticsRoutes } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 // eslint-disable-next-line complexity
@@ -457,14 +458,16 @@ export function screenTracking(
       if (nextScreen) {
         setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      mixpanel
-        .track("SCREEN_CHANGE", {
+      // track only those events that are not included in the blacklist
+      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+        void mixpanel.track("SCREEN_CHANGE_V2", {
           SCREEN_NAME: nextScreen
-        })
-        .then(
-          () => 0,
-          () => 0
-        );
+        });
+      }
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
     }
     return result;
   };
