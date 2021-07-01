@@ -7,10 +7,6 @@ import {
   upsertServicePreference
 } from "../../../../actions/services/servicePreference";
 import {
-  ServiceID,
-  ServicePreference
-} from "../../../../../types/services/ServicePreference";
-import {
   ServicePreferenceResponse,
   WithServiceID
 } from "../../../../../types/services/ServicePreferenceResponse";
@@ -19,25 +15,27 @@ import {
   getNetworkErrorMessage,
   NetworkError
 } from "../../../../../utils/errors";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { EnabledChannels } from "../../../../../utils/profile";
 
-const initialState: ServicePreferenceState = {};
+const initialState: ServicePreferenceState = pot.none;
 
 describe("servicePreferenceReducer", () => {
   it("should handle the load request of servicePreference", () => {
-    const action = loadServicePreference.request("s1" as ServiceID);
+    const action = loadServicePreference.request("s1" as ServiceId);
 
     const updatedState = servicePreferenceReducer(initialState, action);
 
-    expect(updatedState).toMatchObject({ s1: pot.noneLoading });
+    expect(updatedState).toMatchObject(pot.noneLoading);
   });
 
   it("should handle the success load of servicePreference", () => {
     const servicePreferenceResponse: ServicePreferenceResponse = {
-      id: "s1" as ServiceID,
+      id: "s1" as ServiceId,
       kind: "success",
       value: {
         inbox: true,
-        notifications: true,
+        push: true,
         email: false
       }
     };
@@ -46,28 +44,24 @@ describe("servicePreferenceReducer", () => {
 
     const updatedState = servicePreferenceReducer(initialState, action);
 
-    expect(updatedState).toMatchObject({
-      s1: pot.some(servicePreferenceResponse)
-    });
+    expect(updatedState).toMatchObject(pot.some(servicePreferenceResponse));
   });
 
   it("should handle the updating request and success case of servicePreference", () => {
-    const state: ServicePreferenceState = {
-      s1: pot.some({
-        id: "s1" as ServiceID,
-        kind: "success",
-        value: {
-          inbox: true,
-          notifications: true,
-          email: false
-        }
-      })
-    };
+    const state: ServicePreferenceState = pot.some({
+      id: "s1" as ServiceId,
+      kind: "success",
+      value: {
+        inbox: true,
+        push: true,
+        email: false
+      }
+    });
 
-    const updatingResponse: WithServiceID<ServicePreference> = {
-      id: "s1" as ServiceID,
+    const updatingResponse: WithServiceID<EnabledChannels> = {
+      id: "s1" as ServiceId,
       inbox: true,
-      notifications: true,
+      push: true,
       email: true
     };
 
@@ -75,58 +69,47 @@ describe("servicePreferenceReducer", () => {
 
     const updatingState = servicePreferenceReducer(state, requestUpsert);
 
-    expect(updatingState).toMatchObject({
-      s1: pot.someUpdating(
-        {
-          id: "s1" as ServiceID,
-          kind: "success",
-          value: {
-            inbox: true,
-            notifications: true,
-            email: false
-          }
-        },
-        {
-          id: "s1" as ServiceID,
-          kind: "success",
-          value: {
-            inbox: true,
-            notifications: true,
-            email: true
-          }
+    expect(updatingState).toMatchObject(
+      pot.someUpdating(state.value, {
+        id: "s1" as ServiceId,
+        kind: "success",
+        value: {
+          inbox: true,
+          push: true,
+          email: true
         }
-      )
-    });
+      })
+    );
 
     const successUpsert = upsertServicePreference.success({
-      id: "s1" as ServiceID,
+      id: "s1" as ServiceId,
       kind: "success",
       value: {
         inbox: true,
-        notifications: true,
+        push: true,
         email: true
       }
     });
 
     const updatedState = servicePreferenceReducer(state, successUpsert);
 
-    expect(updatedState).toMatchObject({
-      s1: pot.some({
-        id: "s1" as ServiceID,
+    expect(updatedState).toMatchObject(
+      pot.some({
+        id: "s1" as ServiceId,
         kind: "success",
         value: {
           inbox: true,
-          notifications: true,
+          push: true,
           email: true
         }
       })
-    });
+    );
   });
 });
 
 it("should handle the error load of servicePreference", () => {
   const servicePreferenceError: WithServiceID<NetworkError> = {
-    id: "s1" as ServiceID,
+    id: "s1" as ServiceId,
     ...getNetworkError(new Error("GenericError"))
   };
 
