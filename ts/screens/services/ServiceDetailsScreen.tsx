@@ -60,6 +60,8 @@ import {
 import { showToast } from "../../utils/showToast";
 import { capitalize, maybeNotNullyString } from "../../utils/strings";
 import { handleItemOnPress, ItemAction } from "../../utils/url";
+import { servicesRedesignEnabled } from "../../config";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -663,11 +665,19 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         <Content>
           <Grid>
             <OrganizationHeader service={service} />
-            <View spacer={true} large={true} />
-            {this.getInboxSwitchRow()}
-            {this.getPushSwitchRow()}
-            {this.getEmailSwitchRow()}
           </Grid>
+          <View spacer={true} large={true} />
+          {servicesRedesignEnabled ? (
+            <ContactPreferencesToggles
+              channels={this.service.available_notification_channels}
+            />
+          ) : (
+            <>
+              {this.getInboxSwitchRow()}
+              {this.getPushSwitchRow()}
+              {this.getEmailSwitchRow()}
+            </>
+          )}
 
           <View spacer={true} large={true} />
           {this.renderItems(potServiceMetadata)}
