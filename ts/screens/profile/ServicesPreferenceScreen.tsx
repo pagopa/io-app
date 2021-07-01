@@ -1,15 +1,17 @@
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { connect } from "react-redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import I18n from "../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { profileUpsert } from "../../store/actions/profile";
+import { profileSelector } from "../../store/reducers/profile";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
 
@@ -49,7 +51,12 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => {
+  const profile = profileSelector(state);
+  return {
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
@@ -59,4 +66,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ServicesPreferenceScreen);
+)(withLoadingSpinner(ServicesPreferenceScreen));
