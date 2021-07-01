@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { constNull } from "fp-ts/lib/function";
 import { View } from "native-base";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
@@ -15,34 +16,43 @@ import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props
-): React.ReactElement => (
-  <BaseScreenComponent
-    contextualHelp={emptyContextualHelp}
-    headerTitle={I18n.t("profile.preferences.list.service_contact")}
-  >
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-        <ServicesContactComponent />
-        <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
-          <H5 color={"bluegrey"} weight={"Regular"}>
-            {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
-          </H5>
-        </InfoBox>
-        <View spacer={true} />
-      </ScrollView>
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={confirmButtonProps(props.onContinue)}
-      />
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+): React.ReactElement => {
+  const { present: confirmManualConfig } = useManualConfigBottomSheet();
+
+  const onConfirmAction = (keyOption: string) => {
+    if (keyOption === "manual") {
+      return confirmManualConfig(props.onContinue);
+    }
+    return constNull();
+  };
+
+  return (
+    <BaseScreenComponent contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+          <ServicesContactComponent onSelectOption={onConfirmAction} />
+          <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+            <H5 color={"bluegrey"} weight={"Regular"}>
+              {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
+            </H5>
+          </InfoBox>
+          <View spacer={true} />
+        </ScrollView>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={confirmButtonProps(props.onContinue)}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = (_: GlobalState) => ({});
 
