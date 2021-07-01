@@ -8,15 +8,12 @@ export function* handleUpsertServicePreference(
 ) {
   yield delay(100);
 
+  const { id, ...payload } = action.payload;
   yield put(
     upsertServicePreference.success({
-      id: action.payload.id,
+      id,
       kind: "success",
-      value: {
-        inbox: action.payload.inbox,
-        notifications: action.payload.notifications,
-        email: action.payload.email
-      }
+      value: payload
     })
   );
 }
