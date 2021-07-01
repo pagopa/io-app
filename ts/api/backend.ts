@@ -28,6 +28,8 @@ import {
   getPaymentInfoDefaultDecoder,
   GetPaymentInfoT,
   getServiceDefaultDecoder,
+  getServicePreferencesDefaultDecoder,
+  GetServicePreferencesT,
   GetServiceT,
   getSessionStateDefaultDecoder,
   GetSessionStateT,
@@ -48,6 +50,8 @@ import {
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
+  upsertServicePreferencesDefaultDecoder,
+  UpsertServicePreferencesT,
   upsertUserDataProcessingDefaultDecoder,
   UpsertUserDataProcessingT,
   upsertUserMetadataDefaultDecoder,
@@ -147,6 +151,23 @@ export function BackendClient(
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getServiceDefaultDecoder()
+  };
+
+  const getServicePreferenceT: GetServicePreferencesT = {
+    method: "get",
+    url: params => `/api/v1/services/${params.service_id}/preferences`,
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getServicePreferencesDefaultDecoder()
+  };
+
+  const upsertServicePreferenceT: UpsertServicePreferencesT = {
+    method: "post",
+    url: params => `/api/v1/services/${params.service_id}/preferences`,
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    query: _ => ({}),
+    body: body => JSON.stringify(body.servicePreference),
+    response_decoder: upsertServicePreferencesDefaultDecoder()
   };
 
   const getVisibleServicesT: GetVisibleServicesT = {
@@ -371,6 +392,12 @@ export function BackendClient(
   return {
     getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
     getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
+    getServicePreference: withBearerToken(
+      createFetchRequestForApi(getServicePreferenceT, options)
+    ),
+    upsertServicePreference: withBearerToken(
+      createFetchRequestForApi(upsertServicePreferenceT, options)
+    ),
     getVisibleServices: withBearerToken(
       createFetchRequestForApi(getVisibleServicesT, options)
     ),

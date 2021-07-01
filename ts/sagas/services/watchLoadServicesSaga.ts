@@ -45,14 +45,16 @@ export function* watchLoadServicesSaga(
     // TODO Add backend client when defined
     yield takeLatest(
       getType(loadServicePreference.request),
-      handleGetServicePreference
+      handleGetServicePreference,
+      backendClient.getServicePreference
     );
 
     // handle the upsert request for the current service
     // TODO Add backend client when defined
     yield takeLatest(
       getType(upsertServicePreference.request),
-      handleUpsertServicePreference
+      handleUpsertServicePreference,
+      backendClient.upsertServicePreference
     );
   }
 
