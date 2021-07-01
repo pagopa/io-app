@@ -37,7 +37,7 @@ const customPotUserMetadata: UserMetadataState = pot.some({
 });
 
 const customServices: ServicesState = {
-  servicePreference: {},
+  servicePreference: pot.none,
   currentSelectedService: null,
   byId: {
     ["11"]: pot.noneError(Error()),
