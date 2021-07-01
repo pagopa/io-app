@@ -662,7 +662,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
               handleOnLongPressItem={
-                servicesRedesignEnabled ? this.handleOnLongPressItem : constNull
+                servicesRedesignEnabled ? constNull : this.handleOnLongPressItem
               }
               isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
