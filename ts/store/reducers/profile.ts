@@ -190,6 +190,8 @@ const reducer = (
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
             accepted_tos_version: newProfile.accepted_tos_version,
+            service_preferences_settings:
+              newProfile.service_preferences_settings,
             version: 0
           });
         }
@@ -210,6 +212,8 @@ const reducer = (
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
             accepted_tos_version: newProfile.accepted_tos_version,
+            service_preferences_settings:
+              newProfile.service_preferences_settings,
             version: newProfile.version
           });
         }

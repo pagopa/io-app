@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
+import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -19,7 +20,7 @@ import { profileSelector } from "../../../../store/reducers/profile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 
 type Props = {
-  onSelectOption: (optionKey: string) => void;
+  onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
   hasAlreadyOnboarded?: true;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -63,7 +64,9 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
               justifyContent: "space-between"
             }
           ]}
-          onPress={() => props.onSelectOption(item.mode)}
+          onPress={() =>
+            isSelected ? constNull : props.onSelectMode(item.mode)
+          }
         >
           <View style={IOStyles.flex}>
             <H4>{item.title}</H4>
