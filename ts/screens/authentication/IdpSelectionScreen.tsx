@@ -56,10 +56,11 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
       setCounter(newValue);
+    } else {
+      props.setSelectedIdp(idp);
+      instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
+      props.navigateToIdpSelection();
     }
-    props.setSelectedIdp(idp);
-    instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
-    props.navigateToIdpSelection();
   };
 
   useEffect(() => {

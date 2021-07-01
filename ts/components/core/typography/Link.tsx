@@ -22,6 +22,7 @@ const fontSize = 16;
  */
 export const Link: React.FunctionComponent<OwnProps> = props =>
   typographyFactory<AllowedWeight, AllowedColors>({
+    accessibilityRole: props.onPress ? "link" : undefined,
     ...props,
     defaultWeight: "SemiBold",
     defaultColor: "blue",

@@ -426,5 +426,5 @@ export const navigateToSPIDTestIDP = () =>
 
 export const navigateToSPIDLogin = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+    routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
   });
