@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0-rc.0](https://github.com/pagopa/io-app/compare/1.28.0-rc.4...1.29.0-rc.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* [[IA-11](https://pagopa.atlassian.net/browse/IA-11),[IA-22](https://pagopa.atlassian.net/browse/IA-22)] IDPS list is requested only when trying to login with SPID ([#3136](https://github.com/pagopa/io-app/issues/3136)) ([22b8452](https://github.com/pagopa/io-app/commit/22b8452c643a9649ea8619234a55cafb0b72768d))
+* [[IA-73](https://pagopa.atlassian.net/browse/IA-73)] Can't login with SPID due to wrong navigation route ([#3175](https://github.com/pagopa/io-app/issues/3175)) ([529380d](https://github.com/pagopa/io-app/commit/529380d1b9ecee35ec917acc87874faa59ea9db6))
+
+## [1.28.0-rc.4](https://github.com/pagopa/io-app/compare/1.28.0-rc.3...1.28.0-rc.4) (2021-06-25)
+
+
+### Chores
+
+* [[IA-69](https://pagopa.atlassian.net/browse/IA-69)] Remove title, update description and tests ([#3169](https://github.com/pagopa/io-app/issues/3169)) ([51e0ff0](https://github.com/pagopa/io-app/commit/51e0ff0ed4789304e2944b94a8213f63616c08fd))
+
+## [1.28.0-rc.3](https://github.com/pagopa/io-app/compare/1.28.0-rc.2...1.28.0-rc.3) (2021-06-25)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[IAC-84](https://pagopa.atlassian.net/browse/IAC-84)] Wrong textual representation when superCashbackAmount === 0 for a period [#3172](https://github.com/pagopa/io-app/issues/3172) ([d0836c0](https://github.com/pagopa/io-app/commit/d0836c0bb43043cca402adfd93f5a9f4c1820197))
+
+## [1.28.0-rc.2](https://github.com/pagopa/io-app/compare/1.28.0-rc.1...1.28.0-rc.2) (2021-06-25)
+
+
+### Features
+
+* **Redesign Servizi:** [[IARS-2](https://pagopa.atlassian.net/browse/IARS-2)] Introduces the services contact preference screen ([#3163](https://github.com/pagopa/io-app/issues/3163)) ([63c6ff7](https://github.com/pagopa/io-app/commit/63c6ff7dfd0d1cc9037aca445452ff9aaf3f4edd))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [IAC-75, IA-70] Fix spacing area in darklayout button footer for iphone 12 ([#3133](https://github.com/pagopa/io-app/issues/3133)) ([91e6292](https://github.com/pagopa/io-app/commit/91e6292c1d23414198968001403da96da6e3d12c))
+
+
+### Chores
+
+* [[IA-62](https://pagopa.atlassian.net/browse/IA-62)] Add SCREEN_CHANGE_V2 event ([#3171](https://github.com/pagopa/io-app/issues/3171)) ([b2a378e](https://github.com/pagopa/io-app/commit/b2a378edc857e1100a1d6c3e67c8f7dcbec211be))
+
 ## [1.28.0-rc.1](https://github.com/pagopa/io-app/compare/1.28.0-rc.0...1.28.0-rc.1) (2021-06-23)
 
 
