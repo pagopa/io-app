@@ -9,6 +9,7 @@ import Markdown from "../../../components/ui/Markdown";
 import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
+import { useScreenReaderEnabled } from "../../../utils/accessibility";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
@@ -24,6 +25,7 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 );
 
 export const ShareDataComponent = (): React.ReactElement => {
+  const isScreenReaderEnabled = useScreenReaderEnabled();
   const whyBottomSheet = useIOBottomSheet(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
@@ -57,7 +59,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             "profile.main.privacy.shareData.screen.why.description.three"
           )}
         </Body>
-        <Link onPress={whyBottomSheet.present}>
+        <Link onPress={whyBottomSheet.present} accessibilityRole="link">
           {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
         </Link>
       </InfoBox>
@@ -73,7 +75,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link onPress={securityBottomSheet.present}>
+        <Link onPress={securityBottomSheet.present} accessibilityRole="link">
           {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
         </Link>
       </InfoBox>
@@ -87,16 +89,32 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link onPress={() => openWebUrl(ioSuppliersUrl)}>
+        <Link
+          onPress={() => openWebUrl(ioSuppliersUrl)}
+          accessibilityRole="link"
+        >
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
         </Link>
       </InfoBox>
       <View spacer={true} />
-      <Body>
+      <Body
+        accessibilityRole="link"
+        onPress={() => {
+          if (isScreenReaderEnabled) {
+            openWebUrl(privacyUrl);
+          }
+        }}
+      >
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Link onPress={() => openWebUrl(privacyUrl)}>
+        <Link
+          onPress={() => {
+            if (!isScreenReaderEnabled) {
+              openWebUrl(privacyUrl);
+            }
+          }}
+        >
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
