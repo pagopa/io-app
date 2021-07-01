@@ -79,7 +79,7 @@ export const removeServiceTuples = createStandardAction(
   "SERVICES_REMOVE_TUPLES"
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
-// Store the current serviceId to get current data
+// User selects a service to view its details
 export const currentSelectedService = createStandardAction(
   "CURRENT_SELECTED_SERVICE"
 )<ServiceId>();
