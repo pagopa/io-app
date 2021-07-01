@@ -109,7 +109,10 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { askServicesOptin } from "./services/servicesOptinSaga";
+import {
+  askOldUsersServicesOptin,
+  askServicesOptin
+} from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -322,6 +325,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // check if the user expressed preference about mixpanel, if not ask for it
       yield call(askMixpanelOptIn);
 
+      if (servicesRedesignEnabled) {
+        // TODO the saga should be called even for already loggedIn users without the preference set
+        yield call(askOldUsersServicesOptin);
+      }
+
       // Stop the watchAbortOnboardingSaga
       yield cancel(watchAbortOnboardingSagaTask);
     }
@@ -479,7 +487,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     // Remove the pending message from the notification state
     yield put(clearNotificationPendingMessage());
-
     // Navigate to message router screen
     yield put(navigateToMessageRouterScreen({ messageId }));
     // Push the MAIN navigator in the history to handle the back button

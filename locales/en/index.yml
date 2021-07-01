@@ -1593,6 +1593,11 @@ send_email_messages:
 services:
   optIn:
     preferences:
+      completed:
+        title: "Preferences saved!"
+        body: "You can always see the list of available services in the Services section of the app"
+        cta: "Check available services"
+      oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
       title: "How do you want to use services on IO?"

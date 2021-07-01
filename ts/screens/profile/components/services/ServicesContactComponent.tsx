@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { View } from "native-base";
-import { FlatList, ListRenderItemInfo } from "react-native";
-import { useState } from "react";
+import { Badge, View } from "native-base";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -15,6 +15,7 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
+import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 
 type Props = {
   hasAlreadyOnboarded?: true;
@@ -27,6 +28,14 @@ type ContactOption = {
   description1: string;
   description2?: string;
 };
+
+const styles = StyleSheet.create({
+  badge: {
+    alignSelf: "flex-start",
+    backgroundColor: IOColors.blue,
+    height: 18
+  }
+});
 
 const options: ReadonlyArray<ContactOption> = [
   {
@@ -42,8 +51,12 @@ const options: ReadonlyArray<ContactOption> = [
   }
 ];
 
-const ServicesContactComponent = (_: Props): React.ReactElement => {
+const ServicesContactComponent = (props: Props): React.ReactElement => {
   const [selected, setSelected] = useState<string | undefined>();
+
+  useEffect(() => {
+    setSelected(props.hasAlreadyOnboarded ? "quick" : undefined);
+  }, [props.hasAlreadyOnboarded]);
 
   const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => (
     <>
@@ -57,6 +70,17 @@ const ServicesContactComponent = (_: Props): React.ReactElement => {
         onPress={() => setSelected(item.key)}
       >
         <View style={IOStyles.flex}>
+          {props.hasAlreadyOnboarded && item.key === "quick" && (
+            <Badge style={[styles.badge]}>
+              <BaseTypography
+                weight={"SemiBold"}
+                color={"white"}
+                style={{ fontSize: 12 }}
+              >
+                {I18n.t("services.optIn.preferences.oldUsersBadge")}
+              </BaseTypography>
+            </Badge>
+          )}
           <H4>{item.title}</H4>
           <H5 weight={"Regular"}>
             {item.description1}
