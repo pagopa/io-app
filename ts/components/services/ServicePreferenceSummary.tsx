@@ -31,7 +31,10 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
       )} ${getChoiceLabel(props.serviceOption)}`}</H5>
-      <Link onPress={props.navigateToServicePreference}>
+      <Link
+        onPress={props.navigateToServicePreference}
+        accessibilityRole={"button"}
+      >
         {I18n.t("serviceDetail.updatePreferences")}
       </Link>
     </InfoBox>
