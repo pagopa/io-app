@@ -1624,7 +1624,7 @@ services:
     preferences:
       completed:
         title: "Preferenze salvate!"
-        body: "Potrai sermpre vedere la lista dei servizi disponibili nella sezione Servizi dell’app"
+        body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
         cta: "Vedi i servizi disponibili"
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"

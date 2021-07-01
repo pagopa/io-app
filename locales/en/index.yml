@@ -1595,7 +1595,7 @@ services:
     preferences:
       completed:
         title: "Preferences saved!"
-        body: "You can always see the list of available services in the Services section of the app"
+        body: "You can always see the list of available services by visiting the Services section."
         cta: "Check available services"
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
