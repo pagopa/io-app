@@ -103,6 +103,7 @@ import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import { servicesRedesignEnabled } from "../../config";
 import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
