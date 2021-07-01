@@ -677,7 +677,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
-        {servicesRedesignEnabled && <ServicePreferenceSummary />}
       </View>
     );
   };
