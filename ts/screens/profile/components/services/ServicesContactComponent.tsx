@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { FlatList, ListRenderItemInfo } from "react-native";
-import { useState } from "react";
+import * as pot from "italia-ts-commons/lib/pot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -15,6 +15,8 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
+import { profileSelector } from "../../../../store/reducers/profile";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 
 type Props = {
   onSelectOption: (optionKey: string) => void;
@@ -24,7 +26,7 @@ type Props = {
 
 type ContactOption = {
   title: string;
-  key: string;
+  mode: ServicesPreferencesModeEnum;
   description1: string;
   description2?: string;
 };
@@ -32,54 +34,58 @@ type ContactOption = {
 const options: ReadonlyArray<ContactOption> = [
   {
     title: I18n.t("services.optIn.preferences.quickConfig.title"),
-    key: "quick",
+    mode: ServicesPreferencesModeEnum.AUTO,
     description1: I18n.t("services.optIn.preferences.quickConfig.body.text1"),
     description2: I18n.t("services.optIn.preferences.quickConfig.body.text2")
   },
   {
     title: I18n.t("services.optIn.preferences.manualConfig.title"),
-    key: "manual",
+    mode: ServicesPreferencesModeEnum.MANUAL,
     description1: I18n.t("services.optIn.preferences.manualConfig.body.text1")
   }
 ];
 
 const ServicesContactComponent = (props: Props): React.ReactElement => {
-  const [selected, setSelected] = useState<string | undefined>();
-
-  const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => (
-    <>
-      <TouchableDefaultOpacity
-        style={[
-          IOStyles.row,
-          {
-            justifyContent: "space-between"
-          }
-        ]}
-        onPress={() => {
-          setSelected(item.key);
-          props.onSelectOption(item.key);
-        }}
-      >
-        <View style={IOStyles.flex}>
-          <H4>{item.title}</H4>
-          <H5 weight={"Regular"}>
-            {item.description1}
-            {item.description2 && <H5>{` ${item.description2}`}</H5>}
-          </H5>
-        </View>
-        <View hspacer large />
-        <IconFont
-          name={selected === item.key ? "io-radio-on" : "io-radio-off"}
-          color={IOColors.blue}
-          size={28}
-          style={{ alignSelf: "flex-start" }}
-        />
-      </TouchableDefaultOpacity>
-      <View spacer />
-      <ItemSeparatorComponent noPadded />
-      <View spacer />
-    </>
-  );
+  const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => {
+    const isSelected = pot.getOrElse(
+      pot.map(
+        props.profile,
+        p => p.service_preferences_settings?.mode === item.mode
+      ),
+      false
+    );
+    return (
+      <>
+        <TouchableDefaultOpacity
+          style={[
+            IOStyles.row,
+            {
+              justifyContent: "space-between"
+            }
+          ]}
+          onPress={() => props.onSelectOption(item.mode)}
+        >
+          <View style={IOStyles.flex}>
+            <H4>{item.title}</H4>
+            <H5 weight={"Regular"}>
+              {item.description1}
+              {item.description2 && <H5>{` ${item.description2}`}</H5>}
+            </H5>
+          </View>
+          <View hspacer large />
+          <IconFont
+            name={isSelected ? "io-radio-on" : "io-radio-off"}
+            color={IOColors.blue}
+            size={28}
+            style={{ alignSelf: "flex-start" }}
+          />
+        </TouchableDefaultOpacity>
+        <View spacer />
+        <ItemSeparatorComponent noPadded />
+        <View spacer />
+      </>
+    );
+  };
 
   return (
     <>
@@ -92,13 +98,15 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
         scrollEnabled={false}
         data={options}
         renderItem={renderListItem}
-        keyExtractor={o => o.key}
+        keyExtractor={o => o.mode}
       />
     </>
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  profile: profileSelector(state)
+});
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
