@@ -1,4 +1,3 @@
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -7,12 +6,12 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type CurrentServiceSelectedState = {
   serviceID: ServiceId;
-};
+} | null;
 
 export const currentServiceSelectedReducer = (
-  state: CurrentServiceSelectedState | null = null,
+  state: CurrentServiceSelectedState = null,
   action: Action
-): CurrentServiceSelectedState | null => {
+): CurrentServiceSelectedState => {
   switch (action.type) {
     case getType(currentSelectedService):
       return {
@@ -25,7 +24,7 @@ export const currentServiceSelectedReducer = (
 /**
  * current serviceID selector
  */
-export const serviceIDCurrentSelector = createSelector(
-  [(state: GlobalState) => state.entities.services.currentSelectedService],
-  (serviceID): CurrentServiceSelectedState | null => serviceID
-);
+export const serviceIDCurrentSelector = (
+  state: GlobalState
+): CurrentServiceSelectedState =>
+  state.entities.services.currentSelectedService;
