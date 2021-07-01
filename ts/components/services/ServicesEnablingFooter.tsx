@@ -36,4 +36,7 @@ const mapDispatchToProps = (_: Dispatch) => ({
   disableAll: constNull
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ServicesHomeButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServicesEnablingFooter);

@@ -102,7 +102,7 @@ import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import { servicesRedesignEnabled } from "../../config";
 import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
-import ServicesHomeButton from "../../components/services/ServicesHomeButton";
+import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -557,7 +557,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                 />
                 {this.renderInnerContent()}
                 {servicesRedesignEnabled ? (
-                  <ServicesHomeButton />
+                  <ServicesEnablingFooter />
                 ) : (
                   this.state.isLongPressEnabled &&
                   this.renderLongPressFooterButtons()
