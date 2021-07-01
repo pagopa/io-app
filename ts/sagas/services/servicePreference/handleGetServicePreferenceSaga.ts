@@ -8,13 +8,15 @@ export function* handleGetServicePreference(
 ) {
   yield delay(100);
 
-  const { id, ...payload } = action.payload;
-
   yield put(
     loadServicePreference.success({
-      id,
+      id: action.payload,
       kind: "success",
-      value: payload
+      value: {
+        inbox: true,
+        push: true,
+        email: true
+      }
     })
   );
 }
