@@ -102,8 +102,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import { servicesRedesignEnabled } from "../../config";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
 import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
@@ -682,7 +680,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
-        {servicesRedesignEnabled && <ServicePreferenceSummary />}
       </View>
     );
   };
