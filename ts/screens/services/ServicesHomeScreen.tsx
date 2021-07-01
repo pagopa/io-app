@@ -57,6 +57,7 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
+  currentSelectedService,
   loadVisibleServices,
   showServiceDetails
 } from "../../store/actions/services";
@@ -102,6 +103,7 @@ import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import { servicesRedesignEnabled } from "../../config";
 import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -383,6 +385,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   private onServiceSelect = (service: ServicePublic) => {
+    if (servicesRedesignEnabled) {
+      this.props.setSelectedService(service.service_id);
+    }
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
@@ -760,6 +765,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setSelectedService: (id: ServiceId) => dispatch(currentSelectedService(id)),
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
