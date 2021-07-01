@@ -117,7 +117,7 @@ it("should handle the error load of servicePreference", () => {
 
   const updatedState = servicePreferenceReducer(initialState, action);
 
-  expect(updatedState).toMatchObject({
-    s1: pot.noneError(new Error(getNetworkErrorMessage(servicePreferenceError)))
-  });
+  expect(updatedState).toMatchObject(
+    pot.noneError(new Error(getNetworkErrorMessage(servicePreferenceError)))
+  );
 });
