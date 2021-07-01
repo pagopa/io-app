@@ -38,6 +38,7 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -99,6 +100,9 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
+import { servicesRedesignEnabled } from "../../config";
+import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
+import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -552,8 +556,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {this.state.isLongPressEnabled &&
-                  this.renderLongPressFooterButtons()}
+                {servicesRedesignEnabled ? (
+                  <ServicesEnablingFooter />
+                ) : (
+                  this.state.isLongPressEnabled &&
+                  this.renderLongPressFooterButtons()
+                )}
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -653,7 +661,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
+              handleOnLongPressItem={
+                servicesRedesignEnabled ? constNull : this.handleOnLongPressItem
+              }
               isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
@@ -667,6 +677,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>
+        {servicesRedesignEnabled && <ServicePreferenceSummary />}
       </View>
     );
   };
