@@ -57,6 +57,12 @@ const reducer = (
 
 export default reducer;
 
+export const isAliveSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.activation.isAlive],
+  (isAlive: pot.Pot<boolean, NetworkError>): pot.Pot<boolean, NetworkError> =>
+    isAlive
+);
+
 export const tosAcceptedSelector = createSelector(
   [(state: GlobalState) => state.bonus.sv.activation.tosAccepted],
   (
