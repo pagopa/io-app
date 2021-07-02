@@ -64,6 +64,8 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
               justifyContent: "space-between"
             }
           ]}
+          accessibilityRole={"radio"}
+          accessibilityState={{ checked: isSelected }}
           onPress={() =>
             // do nothing if it is the current mode set
             isSelected ? constNull : props.onSelectMode(item.mode)

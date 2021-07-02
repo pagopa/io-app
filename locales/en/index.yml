@@ -1597,21 +1597,21 @@ services:
       choiceLabel: "You chose the"
       unavailable: "Not defined"
       title: "How do you want to use services on IO?"
-      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message. Alternatively, you can activate services one by one."
+      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
       quickConfig:
         value: "quick setup"
         title: "Use quick setup"
         body:
-          text1: "Keep all services active, only those who have something important to tell you will contact you."
-          text2: "You can always deactivate services that do not interest you."
+          text1: "Only the services which have something important to tell you will contact you."
+          text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "manual setup"
         title: "Configure manually"
         body:
-          text1: "All services will be deactivated and you will have to enable them one by one to receive messages."
+          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
         bottomSheet:
-          title: "Do you really want to activate services one by one?"
-          body: "**On IO you will only be contacted by the services that have something important to tell you.** If you choose this option, you will need to activate the services you are interest in manually. All new services will not be active and will not be able to contact you."
+          title: "Do you really want to setup services one by one?"
+          body: "**On IO you will only be contacted by the services that have something important to tell you.** If you choose this option, you will need to setup the services you are interest in manually. All the services that will come in future will not be able to contact you."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
