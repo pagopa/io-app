@@ -129,7 +129,7 @@ export const profileServicePreferencesModeSelector = createSelector(
   profileSelector,
   (profile: ProfileState): ServicesPreferencesModeEnum | undefined =>
     pot.getOrElse(
-      pot.map(profile, p => p.service_preferences_settings?.mode),
+      pot.map(profile, p => p.service_preferences_settings.mode),
       undefined
     )
 );
