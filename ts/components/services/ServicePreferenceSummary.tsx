@@ -32,8 +32,8 @@ export const mapServicesPreferenceModeLabel: Record<
 };
 
 /**
- * Display the current service preference mode set in the profile and link to navigate
- * to a screen to update it
+ * Display the current services preference mode set in the profile
+ * Display a link to navigate to a screen to update the service preference mode
  * @param props
  * @constructor
  */

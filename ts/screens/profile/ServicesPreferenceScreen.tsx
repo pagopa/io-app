@@ -20,8 +20,8 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
- * Display the current profile preference about services (auto or manual)
- * User can update his/her choice
+ * Display the current profile services preference mode (auto or manual)
+ * User can update his/her mode
  * @param props
  * @constructor
  */

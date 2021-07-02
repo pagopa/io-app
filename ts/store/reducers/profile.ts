@@ -124,7 +124,7 @@ export const hasProfileEmailSelector = createSelector(
     )
 );
 
-// return the service preference mode if it is set
+// return the profile services preference mode
 export const profileServicePreferencesModeSelector = createSelector(
   profileSelector,
   (profile: ProfileState): ServicesPreferencesModeEnum | undefined =>

@@ -15,7 +15,7 @@ import { profileUpsert } from "../../store/actions/profile";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-// this component shows two CTA to enable or disable services
+// this component shows a CTA to enable or disable services preference mode
 const ServicesEnablingFooter = (props: Props): React.ReactElement => {
   const modeManual = {
     mode: ServicesPreferencesModeEnum.MANUAL,
