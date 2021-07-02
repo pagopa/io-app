@@ -19,6 +19,7 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -120,6 +121,16 @@ export const hasProfileEmailSelector = createSelector(
     pot.getOrElse(
       pot.map(profile, p => hasProfileEmail(p)),
       false
+    )
+);
+
+// return the service preference mode if it is set
+export const profileServicePreferencesModeSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): ServicesPreferencesModeEnum | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.service_preferences_settings?.mode),
+      undefined
     )
 );
 

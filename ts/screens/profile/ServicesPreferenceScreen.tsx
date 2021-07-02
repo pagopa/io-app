@@ -12,6 +12,7 @@ import { ServicesPreferencesModeEnum } from "../../../definitions/backend/Servic
 import { profileUpsert } from "../../store/actions/profile";
 import { profileSelector } from "../../store/reducers/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { showToast } from "../../utils/showToast";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
 
@@ -20,12 +21,23 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 /**
  * Display the current profile preference about services (auto or manual)
- * User can change it and update his/her profile
+ * User can update his/her choice
  * @param props
  * @constructor
  */
 const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   const { present: confirmManualConfig } = useManualConfigBottomSheet();
+  const [prevPotProfile, setPrevPotProfile] = React.useState<
+    typeof props.potProfile
+  >(props.potProfile);
+  React.useEffect(() => {
+    // show error toast only when the profile updating fails
+    // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
+    if (!pot.isError(prevPotProfile) && pot.isError(props.potProfile)) {
+      showToast(I18n.t("global.genericError"));
+    }
+    setPrevPotProfile(props.potProfile);
+  }, [props.potProfile]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
@@ -54,7 +66,8 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => {
   const profile = profileSelector(state);
   return {
-    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
+    potProfile: profile
   };
 };
 
