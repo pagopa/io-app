@@ -39,7 +39,7 @@ const PreferenceToggleRow = ({
 }: Props): React.ReactElement => (
   <View style={[styles.row]}>
     <View style={IOStyles.flex}>
-      <H4 weight={"Regular"} color={"bluegreyDark"}>
+      <H4 weight={"Regular"} color={"bluegreyDark"} testID={`${testID}-label`}>
         {label}
       </H4>
     </View>
@@ -51,9 +51,11 @@ const PreferenceToggleRow = ({
         disabled={disabled}
       />
     )}
-    {isLoading && !isError && <ActivityIndicator />}
+    {isLoading && !isError && (
+      <ActivityIndicator testID={`${testID}-loading`} />
+    )}
     {!isLoading && isError && (
-      <TouchableDefaultOpacity onPress={onReload}>
+      <TouchableDefaultOpacity onPress={onReload} testID={`${testID}-reload`}>
         <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
       </TouchableDefaultOpacity>
     )}
