@@ -1,6 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { createSelector } from "reselect";
 import { Action } from "../../../actions/types";
 import {
   loadServicePreference,
@@ -9,7 +8,6 @@ import {
 import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import { GlobalState } from "../../types";
-import { isStrictSome } from "../../../../utils/pot";
 
 export type ServicePreferenceState = pot.Pot<ServicePreferenceResponse, Error>;
 
@@ -48,9 +46,3 @@ export default servicePreferenceReducer;
 export const servicePreferenceSelector = (
   state: GlobalState
 ): ServicePreferenceState => state.entities.services.servicePreference;
-
-export const servicePreferenceSelectorValue = createSelector(
-  servicePreferenceSelector,
-  (sp: ServicePreferenceState): ServicePreferenceResponse | undefined =>
-    isStrictSome(sp) ? sp.value : undefined
-);

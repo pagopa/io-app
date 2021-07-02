@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import * as pot from "italia-ts-commons/lib/pot";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 
@@ -7,14 +8,21 @@ import I18n from "../../../i18n";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
 import { Dispatch } from "../../../store/actions/types";
-import { servicePreferenceSelectorValue } from "../../../store/reducers/entities/services/servicePreference";
+import {
+  servicePreferenceSelector,
+  ServicePreferenceState
+} from "../../../store/reducers/entities/services/servicePreference";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   loadServicePreference,
   upsertServicePreference
 } from "../../../store/actions/services/servicePreference";
 import { serviceIDCurrentSelector } from "../../../store/reducers/entities/services/currentService";
-import { ServicePreference } from "../../../types/services/ServicePreferenceResponse";
+import {
+  isServicePreferenceResponseSuccess,
+  ServicePreference
+} from "../../../types/services/ServicePreferenceResponse";
+import { isStrictSome } from "../../../utils/pot";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox";
@@ -24,105 +32,139 @@ type Props = {
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
+const hasChannel = (
+  channel: NotificationChannelEnum,
+  channels?: ReadonlyArray<NotificationChannelEnum>
+) =>
+  fromNullable(channels)
+    .map(anc => anc.indexOf(channel) !== -1)
+    .getOrElse(true);
+
 const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
-  useEffect(() => {
+  const { isLoading, isError } = props;
+
+  const loadPreferences = () => {
     if (props.currentService !== null) {
       props.loadServicePreference(props.currentService.serviceID);
     }
-  }, []);
+  };
+
+  useEffect(loadPreferences, []);
 
   const onValueChange = (value: boolean, type: Item) => {
     if (
-      props.servicePreference &&
-      props.servicePreference.kind === "success" &&
+      isStrictSome(props.servicePreferenceStatus) &&
+      isServicePreferenceResponseSuccess(props.servicePreferenceStatus.value) &&
       props.currentService !== null
     ) {
       switch (type) {
         case "inbox":
           props.upsertServicePreference(props.currentService.serviceID, {
             inbox: value,
-            push: value ? props.servicePreference.value.push : false,
-            email: value ? props.servicePreference.value.email : false,
-            settings_version: props.servicePreference.value.settings_version
+            push: value
+              ? props.servicePreferenceStatus.value.value.push
+              : false,
+            email: value
+              ? props.servicePreferenceStatus.value.value.email
+              : false,
+            settings_version:
+              props.servicePreferenceStatus.value.value.settings_version
           });
           return;
         case "push":
           props.upsertServicePreference(props.currentService.serviceID, {
-            inbox: props.servicePreference.value.inbox,
-            push: value,
-            email: props.servicePreference.value.email,
-            settings_version: props.servicePreference.value.settings_version
+            ...props.servicePreferenceStatus.value.value,
+            push: value
           });
           return;
         case "email":
           props.upsertServicePreference(props.currentService.serviceID, {
-            inbox: props.servicePreference.value.inbox,
-            push: props.servicePreference.value.push,
-            email: value,
-            settings_version: props.servicePreference.value.settings_version
+            ...props.servicePreferenceStatus.value.value,
+            email: value
           });
           return;
       }
     }
   };
 
-  const hasChannel = (channel: NotificationChannelEnum) =>
-    fromNullable(props.channels)
-      .map(anc => anc.indexOf(channel) !== -1)
-      .getOrElse(true);
+  const getValueOrFalse = (
+    potServicePreference: ServicePreferenceState,
+    key: Item
+  ): boolean => {
+    if (
+      isStrictSome(potServicePreference) &&
+      isServicePreferenceResponseSuccess(potServicePreference.value)
+    ) {
+      return potServicePreference.value.value[key];
+    }
+    return false;
+  };
 
-  return props.servicePreference &&
-    props.servicePreference.kind === "success" ? (
+  return (
     <>
       <PreferenceToggleRow
         label={
-          props.servicePreference.value.inbox
+          getValueOrFalse(props.servicePreferenceStatus, "inbox")
             ? I18n.t("services.serviceIsEnabled")
             : I18n.t("services.serviceNotEnabled")
         }
         onPress={(value: boolean) => onValueChange(value, "inbox")}
-        isLoading={true}
-        isError={false}
-        value={props.servicePreference?.value.inbox}
+        isLoading={isLoading}
+        isError={isError}
+        onReload={loadPreferences}
+        value={getValueOrFalse(props.servicePreferenceStatus, "inbox")}
         testID={"contact-preferences-inbox-switch"}
       />
       <ItemSeparatorComponent noPadded />
-      {hasChannel(NotificationChannelEnum.WEBHOOK) && (
+      {hasChannel(NotificationChannelEnum.WEBHOOK, props.channels) && (
         <>
           <PreferenceToggleRow
             label={I18n.t("services.pushNotifications")}
             onPress={(value: boolean) => onValueChange(value, "push")}
-            value={props.servicePreference.value.push}
-            isLoading={false}
-            isError={true}
+            value={getValueOrFalse(props.servicePreferenceStatus, "push")}
+            isLoading={isLoading}
+            isError={isError}
+            onReload={loadPreferences}
             testID={"contact-preferences-webhook-switch"}
           />
           <ItemSeparatorComponent noPadded />
         </>
       )}
 
-      {/* {hasChannel(NotificationChannelEnum.EMAIL) && ( */}
+      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && ( */}
       {/*  <> */}
       {/*    <PreferenceToggleRow */}
       {/*      label={I18n.t("services.emailForwarding")} */}
       {/*      onPress={(value: boolean) => onValueChange(value, "email")} */}
-      {/*      value={emailSwitched} */}
+      {/*      value={getValueOrFalse(props.servicePreferenceStatus, "email")} */}
+      {/*      onReload={loadPreferences} */}
       {/*      testID={"contact-preferences-email-switch"} */}
       {/*    /> */}
       {/*    <ItemSeparatorComponent noPadded /> */}
       {/*  </> */}
       {/* )} */}
     </>
-  ) : (
-    <></>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  servicePreference: servicePreferenceSelectorValue(state),
-  currentService: serviceIDCurrentSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const servicePreferenceStatus = servicePreferenceSelector(state);
+  const isLoading =
+    pot.isLoading(servicePreferenceStatus) ||
+    pot.isUpdating(servicePreferenceStatus);
+
+  const isError =
+    pot.isError(servicePreferenceStatus) ||
+    (isStrictSome(servicePreferenceStatus) &&
+      servicePreferenceStatus.value.kind !== "success");
+
+  return {
+    isLoading,
+    isError,
+    servicePreferenceStatus,
+    currentService: serviceIDCurrentSelector(state)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   upsertServicePreference: (id: ServiceId, sp: ServicePreference) =>

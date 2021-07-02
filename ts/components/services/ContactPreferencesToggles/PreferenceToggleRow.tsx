@@ -5,6 +5,7 @@ import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
 import IconFont from "../../ui/IconFont";
 import { IOColors } from "../../core/variables/IOColors";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
 type Props = {
   label: string;
@@ -12,6 +13,7 @@ type Props = {
   value: boolean;
   isLoading: boolean;
   isError: boolean;
+  onReload: () => void;
   testID?: string;
 };
 
@@ -30,6 +32,7 @@ const PreferenceToggleRow = ({
   value,
   isLoading,
   isError,
+  onReload,
   testID = "preference-toggle-row"
 }: Props): React.ReactElement => (
   <View style={[styles.row]}>
@@ -43,7 +46,9 @@ const PreferenceToggleRow = ({
     )}
     {isLoading && !isError && <ActivityIndicator />}
     {!isLoading && isError && (
-      <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
+      <TouchableDefaultOpacity onPress={onReload}>
+        <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
+      </TouchableDefaultOpacity>
     )}
   </View>
 );
