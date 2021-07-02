@@ -11,9 +11,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
-import { H3 } from "../../components/core/typography/H3";
 import { H4 } from "../../components/core/typography/H4";
-import Switch from "../../components/ui/Switch";
 import { updatePin } from "../../store/actions/pinset";
 import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
@@ -21,25 +19,11 @@ import { authenticateConfig } from "../../utils/biometric";
 import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import customVariables from "../../theme/variables";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
 
 const styles = StyleSheet.create({
   containerScreenTitle: {
     paddingHorizontal: customVariables.contentPadding
-  },
-  containerBiometricAuth: {
-    paddingVertical: 16,
-    borderBottomWidth: 0.5,
-    borderColor: customVariables.itemSeparator,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  containerBiometricAuthTitle: {
-    flexDirection: "column",
-    paddingRight: 24
-  },
-  switch: {
-    marginTop: 0,
-    marginBottom: 0
   }
 });
 
@@ -56,6 +40,7 @@ const SecurityScreen: FC<Props> = ({
   requestIdentificationAndResetPin,
   setFingerprintPreference
 }): React.ReactElement => {
+  const isScreenReaderEnabled = useScreenReaderEnabled();
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
 
   useEffect(() => {
@@ -97,6 +82,12 @@ const SecurityScreen: FC<Props> = ({
       );
   };
 
+  const onPressBiometricRecognitionItem = () => {
+    if (isScreenReaderEnabled) {
+      setBiometricPreference(!isFingerprintEnabled);
+    }
+  };
+
   return (
     <TopScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -120,23 +111,20 @@ const SecurityScreen: FC<Props> = ({
           />
           {/* Enable/disable biometric authentication */}
           {isFingerprintAvailable && (
-            <View style={styles.containerBiometricAuth}>
-              <View style={styles.containerBiometricAuthTitle} accessible>
-                <H3 numberOfLines={2}>
-                  {I18n.t("profile.security.list.biometric_recognition.title")}
-                </H3>
-                <H4 numberOfLines={1} color="bluegrey" weight="Regular">
-                  {I18n.t(
-                    "profile.security.list.biometric_recognition.subtitle"
-                  )}
-                </H4>
-              </View>
-              <Switch
-                value={isFingerprintEnabled}
-                onValueChange={setBiometricPreference}
-                style={styles.switch}
-              />
-            </View>
+            <ListItemComponent
+              title={I18n.t(
+                "profile.security.list.biometric_recognition.title"
+              )}
+              subTitle={I18n.t(
+                "profile.security.list.biometric_recognition.subtitle"
+              )}
+              onSwitchValueChanged={setBiometricPreference}
+              switchValue={isFingerprintEnabled}
+              isLongPressEnabled
+              accessibilityState={{ checked: isFingerprintEnabled }}
+              accessibilityRole="switch"
+              onPress={onPressBiometricRecognitionItem}
+            />
           )}
         </List>
       </Content>
