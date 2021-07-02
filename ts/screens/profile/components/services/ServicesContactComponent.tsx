@@ -68,6 +68,8 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             justifyContent: "space-between"
           }
         ]}
+        accessibilityRole={"radio"}
+        accessibilityState={{ checked: selected === item.key }}
         onPress={() => {
           setSelected(item.key);
           props.onSelectOption(item.key);
