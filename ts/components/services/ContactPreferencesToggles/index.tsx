@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
-
 import { GlobalState } from "../../../store/reducers/types";
 import I18n from "../../../i18n";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -23,6 +22,7 @@ import {
   ServicePreference
 } from "../../../types/services/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
+import { showToast } from "../../../utils/showToast";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox";
@@ -51,39 +51,22 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
 
   useEffect(loadPreferences, []);
 
+  useEffect(() => {
+    if (isError) {
+      showToast("error");
+    }
+  }, [isError]);
+
   const onValueChange = (value: boolean, type: Item) => {
     if (
       isStrictSome(props.servicePreferenceStatus) &&
       isServicePreferenceResponseSuccess(props.servicePreferenceStatus.value) &&
       props.currentService !== null
     ) {
-      switch (type) {
-        case "inbox":
-          props.upsertServicePreference(props.currentService.serviceID, {
-            inbox: value,
-            push: value
-              ? props.servicePreferenceStatus.value.value.push
-              : false,
-            email: value
-              ? props.servicePreferenceStatus.value.value.email
-              : false,
-            settings_version:
-              props.servicePreferenceStatus.value.value.settings_version
-          });
-          return;
-        case "push":
-          props.upsertServicePreference(props.currentService.serviceID, {
-            ...props.servicePreferenceStatus.value.value,
-            push: value
-          });
-          return;
-        case "email":
-          props.upsertServicePreference(props.currentService.serviceID, {
-            ...props.servicePreferenceStatus.value.value,
-            email: value
-          });
-          return;
-      }
+      props.upsertServicePreference(props.currentService.serviceID, {
+        ...props.servicePreferenceStatus.value.value,
+        [type]: value
+      });
     }
   };
 
@@ -124,6 +107,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
             value={getValueOrFalse(props.servicePreferenceStatus, "push")}
             isLoading={isLoading}
             isError={isError}
+            disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")}
             onReload={loadPreferences}
             testID={"contact-preferences-webhook-switch"}
           />
@@ -131,18 +115,21 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         </>
       )}
 
-      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && ( */}
-      {/*  <> */}
-      {/*    <PreferenceToggleRow */}
-      {/*      label={I18n.t("services.emailForwarding")} */}
-      {/*      onPress={(value: boolean) => onValueChange(value, "email")} */}
-      {/*      value={getValueOrFalse(props.servicePreferenceStatus, "email")} */}
-      {/*      onReload={loadPreferences} */}
-      {/*      testID={"contact-preferences-email-switch"} */}
-      {/*    /> */}
-      {/*    <ItemSeparatorComponent noPadded /> */}
-      {/*  </> */}
-      {/* )} */}
+      {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && (
+        <>
+          <PreferenceToggleRow
+            label={I18n.t("services.emailForwarding")}
+            onPress={(value: boolean) => onValueChange(value, "email")}
+            value={getValueOrFalse(props.servicePreferenceStatus, "email")}
+            onReload={loadPreferences}
+            isLoading={isLoading}
+            isError={isError}
+            disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")}
+            testID={"contact-preferences-email-switch"}
+          />
+          <ItemSeparatorComponent noPadded />
+        </>
+      )}
     </>
   );
 };

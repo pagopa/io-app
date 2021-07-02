@@ -15,17 +15,19 @@ export function* handleUpsertServicePreference(
   action: ActionType<typeof upsertServicePreference.request>
 ) {
   try {
+    const updatingPreference: ServicePreference = {
+      is_inbox_enabled: action.payload.inbox,
+      is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
+      is_email_enabled: action.payload.inbox ? action.payload.email : false,
+      settings_version: action.payload
+        .settings_version as ServicePreference["settings_version"]
+    };
+
     const response: SagaCallReturnType<typeof upsertServicePreferences> = yield call(
       upsertServicePreferences,
       {
         service_id: action.payload.id,
-        servicePreference: {
-          is_inbox_enabled: action.payload.inbox,
-          is_webhook_enabled: action.payload.push,
-          is_email_enabled: action.payload.email,
-          settings_version: action.payload
-            .settings_version as ServicePreference["settings_version"]
-        }
+        servicePreference: updatingPreference
       }
     );
 

@@ -14,6 +14,7 @@ type Props = {
   isLoading: boolean;
   isError: boolean;
   onReload: () => void;
+  disabled?: boolean;
   testID?: string;
 };
 
@@ -33,6 +34,7 @@ const PreferenceToggleRow = ({
   isLoading,
   isError,
   onReload,
+  disabled,
   testID = "preference-toggle-row"
 }: Props): React.ReactElement => (
   <View style={[styles.row]}>
@@ -42,7 +44,12 @@ const PreferenceToggleRow = ({
       </H4>
     </View>
     {!isLoading && !isError && (
-      <Switch value={value} onValueChange={onPress} testID={testID} />
+      <Switch
+        value={value}
+        onValueChange={onPress}
+        testID={testID}
+        disabled={disabled}
+      />
     )}
     {isLoading && !isError && <ActivityIndicator />}
     {!isLoading && isError && (
