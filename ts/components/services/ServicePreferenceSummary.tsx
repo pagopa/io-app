@@ -16,7 +16,10 @@ import { profileServicePreferencesModeSelector } from "../../store/reducers/prof
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-export const mapPreferenceLabel: Record<ServicesPreferencesModeEnum, string> = {
+export const mapServicesPreferenceModeLabel: Record<
+  ServicesPreferencesModeEnum,
+  string
+> = {
   [ServicesPreferencesModeEnum.AUTO]: I18n.t(
     "services.optIn.preferences.quickConfig.value"
   ),
@@ -41,7 +44,7 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
       )} ${
-        mapPreferenceLabel[
+        mapServicesPreferenceModeLabel[
           props.profileServicePreferenceMode ??
             ServicesPreferencesModeEnum.LEGACY
         ]

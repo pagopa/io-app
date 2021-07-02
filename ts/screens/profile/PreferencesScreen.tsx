@@ -58,7 +58,7 @@ import {
 } from "../../utils/locale";
 import { servicesRedesignEnabled } from "../../config";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { mapPreferenceLabel } from "../../components/services/ServicePreferenceSummary";
+import { mapServicesPreferenceModeLabel } from "../../components/services/ServicePreferenceSummary";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -257,7 +257,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.service_contact")}
                 subTitle={
-                  mapPreferenceLabel[
+                  mapServicesPreferenceModeLabel[
                     this.props.profileServicePreferenceMode ??
                       ServicesPreferencesModeEnum.LEGACY
                   ]
