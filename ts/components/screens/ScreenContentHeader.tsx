@@ -80,7 +80,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { subtitle, subtitleLink, dark, icon, iconFont } = this.props;
+    const { subtitle, subtitleLink, dark, icon, iconFont, title } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
@@ -93,14 +93,21 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
         >
           <View spacer={true} />
           <ScreenHeader
-            heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
+            heading={
+              <H3
+                testID={"screen-content-header-title"}
+                style={dark && styles.white}
+              >
+                {title}
+              </H3>
+            }
             icon={icon}
             iconFont={iconFont}
             dark={dark}
           />
           {subtitle && (
             <View style={styles.subheaderContainer}>
-              <Text>{subtitle}</Text>
+              <Text testID={"screen-content-header-subtitle"}>{subtitle}</Text>
               {subtitleLink}
               <View spacer={true} large={true} />
             </View>
