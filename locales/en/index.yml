@@ -417,7 +417,7 @@ profile:
       biometric_recognition_status:
         enabled: Enabled
         disabled: Disabled
-      service_contact: Service management
+      service_contact: Use of services
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
@@ -853,6 +853,7 @@ wallet:
     noName: Name unavailable
     loading: Loading bank list...
   accessibility:
+    addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
       payment:
@@ -1613,6 +1614,9 @@ services:
         title: "Configure manually"
         body:
           text1: "All services will be deactivated and you will have to enable them one by one to receive messages."
+        bottomSheet:
+          title: "Do you really want to activate services one by one?"
+          body: "**On IO you will only be contacted by the services that have something important to tell you.** If you choose this option, you will need to activate the services you are interest in manually. All new services will not be active and will not be able to contact you."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section

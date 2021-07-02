@@ -18,6 +18,7 @@ import I18n from "../../../../i18n";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 
 type Props = {
+  onSelectOption: (optionKey: string) => void;
   hasAlreadyOnboarded?: true;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -67,7 +68,10 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             justifyContent: "space-between"
           }
         ]}
-        onPress={() => setSelected(item.key)}
+        onPress={() => {
+          setSelected(item.key);
+          props.onSelectOption(item.key);
+        }}
       >
         <View style={IOStyles.flex}>
           {props.hasAlreadyOnboarded && item.key === "quick" && (
