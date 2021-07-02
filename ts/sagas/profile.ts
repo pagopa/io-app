@@ -53,6 +53,7 @@ import {
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -115,6 +116,8 @@ function* createOrUpdateProfileSaga(
   // FIXME: perhaps this is responsibility of the caller?
   const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
+        service_preferences_settings:
+          currentProfile.service_preferences_settings,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         is_email_validated: currentProfile.is_email_validated || false,
@@ -127,6 +130,9 @@ function* createOrUpdateProfileSaga(
         ...action.payload
       }
     : {
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.LEGACY
+        },
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,

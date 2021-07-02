@@ -15,9 +15,13 @@ import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile: InitializedProfile = {
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.AUTO
+    },
     has_profile: false,
     is_email_enabled: true,
     is_inbox_enabled: true,

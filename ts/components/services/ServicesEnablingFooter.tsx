@@ -18,14 +18,16 @@ type Props = ReturnType<typeof mapStateToProps> &
 // this component shows a CTA to enable or disable services preference mode
 const ServicesEnablingFooter = (props: Props): React.ReactElement => {
   const modeManual = {
-    mode: ServicesPreferencesModeEnum.MANUAL,
-    title: I18n.t("services.disableAll")
+    title: I18n.t("services.disableAll"),
+    action: () =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
   };
   const modeAuto = {
-    mode: ServicesPreferencesModeEnum.AUTO,
+    action: () =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.AUTO),
     title: I18n.t("services.enableAll")
   };
-  const modeToUpdate =
+  const buttonConfig =
     props.profileServicePreferenceMode === ServicesPreferencesModeEnum.AUTO
       ? modeManual
       : modeAuto;
@@ -36,8 +38,8 @@ const ServicesEnablingFooter = (props: Props): React.ReactElement => {
       leftButton={{
         title: props.isLoading
           ? I18n.t("services.updatingServiceMode")
-          : modeToUpdate.title,
-        onPress: () => props.onServicePreferenceSelected(modeToUpdate.mode),
+          : buttonConfig.title,
+        onPress: buttonConfig.action,
         disabled: props.isLoading,
         bordered: true,
         light: true
