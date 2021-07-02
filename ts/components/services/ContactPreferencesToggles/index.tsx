@@ -100,6 +100,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
       />
       <ItemSeparatorComponent noPadded />
       {hasChannel(NotificationChannelEnum.WEBHOOK, props.channels) && (
+        // toggle is disabled if the inbox value is false to prevent inconsistent data
         <>
           <PreferenceToggleRow
             label={I18n.t("services.pushNotifications")}
@@ -115,21 +116,22 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         </>
       )}
 
-      {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && (
-        <>
-          <PreferenceToggleRow
-            label={I18n.t("services.emailForwarding")}
-            onPress={(value: boolean) => onValueChange(value, "email")}
-            value={getValueOrFalse(props.servicePreferenceStatus, "email")}
-            onReload={loadPreferences}
-            isLoading={isLoading}
-            isError={isError}
-            disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")}
-            testID={"contact-preferences-email-switch"}
-          />
-          <ItemSeparatorComponent noPadded />
-        </>
-      )}
+      {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
+      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && ( */}
+      {/*  <> */}
+      {/*    <PreferenceToggleRow */}
+      {/*      label={I18n.t("services.emailForwarding")} */}
+      {/*      onPress={(value: boolean) => onValueChange(value, "email")} */}
+      {/*      value={getValueOrFalse(props.servicePreferenceStatus, "email")} */}
+      {/*      onReload={loadPreferences} */}
+      {/*      isLoading={isLoading} */}
+      {/*      isError={isError} */}
+      {/*      disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")} */}
+      {/*      testID={"contact-preferences-email-switch"} */}
+      {/*    /> */}
+      {/*    <ItemSeparatorComponent noPadded /> */}
+      {/*  </> */}
+      {/* )} */}
     </>
   );
 };

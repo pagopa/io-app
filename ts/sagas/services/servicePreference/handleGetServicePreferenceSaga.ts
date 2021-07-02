@@ -1,11 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { BackendClient } from "../../../api/backend";
 import { SagaCallReturnType } from "../../../types/utils";
-import { getNetworkError } from "../../../utils/errors";
+import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { ServicePreferenceResponseFailure } from "../../../types/services/ServicePreferenceResponse";
+import { readablePrivacyReport } from "../../../utils/reporters";
 
 export const mapKinds: Record<
   number,
@@ -16,6 +16,11 @@ export const mapKinds: Record<
   429: "tooManyRequests"
 };
 
+/**
+ * saga to handle the load of service preferences for a specific service
+ * @param getServicePreference
+ * @param action
+ */
 export function* handleGetServicePreference(
   getServicePreference: ReturnType<
     typeof BackendClient
@@ -28,36 +33,48 @@ export function* handleGetServicePreference(
       { service_id: action.payload }
     );
 
-    if (response.isLeft()) {
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(
+          loadServicePreference.success({
+            id: action.payload,
+            kind: "success",
+            value: {
+              inbox: response.value.value.is_inbox_enabled,
+              push: response.value.value.is_webhook_enabled,
+              email: response.value.value.is_email_enabled,
+              settings_version: response.value.value.settings_version
+            }
+          })
+        );
+        return;
+      }
+
+      if (mapKinds[response.value.status] !== undefined) {
+        yield put(
+          loadServicePreference.success({
+            id: action.payload,
+            kind: mapKinds[response.value.status]
+          })
+        );
+        return;
+      }
+      // not handled error codes
       yield put(
         loadServicePreference.failure({
           id: action.payload,
-          kind: "generic",
-          value: new Error(readableReport(response.value))
+          ...getGenericError(
+            new Error(`response status code ${response.value.status}`)
+          )
         })
       );
       return;
     }
-    if (response.value.status === 200) {
-      yield put(
-        loadServicePreference.success({
-          id: action.payload,
-          kind: "success",
-          value: {
-            inbox: response.value.value.is_inbox_enabled,
-            push: response.value.value.is_webhook_enabled,
-            email: response.value.value.is_email_enabled,
-            settings_version: response.value.value.settings_version
-          }
-        })
-      );
-      return;
-    }
-
+    // cannot decode response
     yield put(
-      loadServicePreference.success({
+      loadServicePreference.failure({
         id: action.payload,
-        kind: mapKinds[response.value.status]
+        ...getGenericError(new Error(readablePrivacyReport(response.value)))
       })
     );
   } catch (e) {
