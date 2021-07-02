@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Alert } from "react-native";
 import FooterWithButtons from "../ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
@@ -12,32 +11,21 @@ import {
 } from "../../store/reducers/profile";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { profileUpsert } from "../../store/actions/profile";
+import { useManualConfigBottomSheet } from "../../screens/profile/components/services/ManualConfigBottomSheet";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 // this component shows a CTA to set services preference mode to MANUAL or AUTO
 const ServicesEnablingFooter = (props: Props): React.ReactElement => {
+  const { present: confirmManualConfig } = useManualConfigBottomSheet();
   const modeManual = {
     title: I18n.t("services.disableAll"),
-    action: () =>
-      Alert.alert(
-        I18n.t("services.disableAllAlert.title"),
-        I18n.t("services.disableAllAlert.message"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel")
-          },
-          {
-            text: I18n.t("services.disableAllAlert.cta"),
-            style: "destructive",
-            onPress: () =>
-              props.onServicePreferenceSelected(
-                ServicesPreferencesModeEnum.MANUAL
-              )
-          }
-        ]
-      )
+    action: () => {
+      void confirmManualConfig(() =>
+        props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+      );
+    }
   };
   const modeAuto = {
     action: () =>
