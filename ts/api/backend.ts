@@ -59,8 +59,6 @@ import {
   tokenHeaderProducer,
   withBearerToken as withToken
 } from "../utils/api";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
-import { servicesRedesignEnabled } from "../config";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -175,50 +173,12 @@ export function BackendClient(
     response_decoder: getUserMessageDefaultDecoder()
   };
 
-  const getUserProfileMigrationDecoder = <A, O>(type: t.Type<A, O>) =>
-    r.composeResponseDecoders(
-      r.composeResponseDecoders(
-        r.composeResponseDecoders(
-          r.composeResponseDecoders(
-            r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(
-              200,
-              type,
-              payload => ({
-                ...payload,
-                service_preferences_settings: {
-                  mode: ServicesPreferencesModeEnum.AUTO
-                }
-              })
-            ),
-            r.ioResponseDecoder<
-              400,
-              typeof ProblemJson["_A"],
-              typeof ProblemJson["_O"]
-            >(400, ProblemJson)
-          ),
-          r.constantResponseDecoder<undefined, 401>(401, undefined)
-        ),
-        r.ioResponseDecoder<
-          429,
-          typeof ProblemJson["_A"],
-          typeof ProblemJson["_O"]
-        >(429, ProblemJson)
-      ),
-      r.ioResponseDecoder<
-        500,
-        typeof ProblemJson["_A"],
-        typeof ProblemJson["_O"]
-      >(500, ProblemJson)
-    );
-
   const getProfileT: GetUserProfileT = {
     method: "get",
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: servicesRedesignEnabled
-      ? getUserProfileMigrationDecoder(InitializedProfile)
-      : getUserProfileDecoder(InitializedProfile)
+    response_decoder: getUserProfileDecoder(InitializedProfile)
   };
 
   const createOrUpdateProfileT: UpdateProfileT = {
