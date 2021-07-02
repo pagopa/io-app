@@ -122,6 +122,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
       )}
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
+      {/* TODO this option should be reintegrated once option will supported back from backend */}
       {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && ( */}
       {/*  <> */}
       {/*    <PreferenceToggleRow */}

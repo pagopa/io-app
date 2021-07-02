@@ -22,6 +22,7 @@ describe("ContactPreferencesToggles component", () => {
       expect(
         component.getByTestId("contact-preferences-webhook-switch")
       ).toBeDefined();
+      // TODO this option should be reintegrated once option will supported back from backend
       // expect(
       //   component.getByTestId("contact-preferences-email-switch")
       // ).toBeDefined();
@@ -60,6 +61,7 @@ describe("ContactPreferencesToggles component", () => {
       expect(
         component.getByTestId("contact-preferences-webhook-switch")
       ).toBeDefined();
+      // TODO this option should be reintegrated once option will supported back from backend
       // expect(
       //   component.getByTestId("contact-preferences-email-switch")
       // ).toBeDefined();
