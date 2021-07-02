@@ -91,11 +91,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   return (
     <>
       <PreferenceToggleRow
-        label={
-          getValueOrFalse(props.servicePreferenceStatus, "inbox")
-            ? I18n.t("services.serviceIsEnabled")
-            : I18n.t("services.serviceNotEnabled")
-        }
+        label={I18n.t("services.serviceIsEnabled")}
         onPress={(value: boolean) => onValueChange(value, "inbox")}
         isLoading={isLoading}
         isError={isError}
@@ -104,26 +100,26 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         testID={"contact-preferences-inbox-switch"}
       />
       <ItemSeparatorComponent noPadded />
-      {hasChannel(NotificationChannelEnum.WEBHOOK, props.channels) && (
-        // toggle is disabled if the inbox value is false to prevent inconsistent data
-        <>
-          <PreferenceToggleRow
-            label={I18n.t("services.pushNotifications")}
-            onPress={(value: boolean) => onValueChange(value, "push")}
-            value={getValueOrFalse(props.servicePreferenceStatus, "push")}
-            isLoading={isLoading}
-            isError={isError}
-            disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")}
-            onReload={loadPreferences}
-            testID={"contact-preferences-webhook-switch"}
-          />
-          <ItemSeparatorComponent noPadded />
-        </>
-      )}
+      {hasChannel(NotificationChannelEnum.WEBHOOK, props.channels) &&
+        getValueOrFalse(props.servicePreferenceStatus, "inbox") && (
+          // toggle is disabled if the inbox value is false to prevent inconsistent data
+          <>
+            <PreferenceToggleRow
+              label={I18n.t("services.pushNotifications")}
+              onPress={(value: boolean) => onValueChange(value, "push")}
+              value={getValueOrFalse(props.servicePreferenceStatus, "push")}
+              isLoading={isLoading}
+              isError={isError}
+              onReload={loadPreferences}
+              testID={"contact-preferences-webhook-switch"}
+            />
+            <ItemSeparatorComponent noPadded />
+          </>
+        )}
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
       {/* TODO this option should be reintegrated once option will supported back from backend */}
-      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && ( */}
+      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && getValueOrFalse(props.servicePreferenceStatus, "inbox") && ( */}
       {/*  <> */}
       {/*    <PreferenceToggleRow */}
       {/*      label={I18n.t("services.emailForwarding")} */}
@@ -132,7 +128,6 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
       {/*      onReload={loadPreferences} */}
       {/*      isLoading={isLoading} */}
       {/*      isError={isError} */}
-      {/*      disabled={!getValueOrFalse(props.servicePreferenceStatus, "inbox")} */}
       {/*      testID={"contact-preferences-email-switch"} */}
       {/*    /> */}
       {/*    <ItemSeparatorComponent noPadded /> */}

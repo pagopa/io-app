@@ -1645,10 +1645,10 @@ services:
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Il servizio è attivo
+  serviceIsEnabled: Contattarti in app
   serviceNotEnabled: Il servizio non è attivo
-  pushNotifications: Notifiche push
-  emailForwarding: Inoltro via email
+  pushNotifications: Inviarti notifiche push
+  emailForwarding: Inviarti e-mail
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
@@ -1679,6 +1679,8 @@ services:
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
+  contacts:
+    title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
   contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."

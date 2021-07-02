@@ -1616,10 +1616,10 @@ services:
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: The service is enabled
+  serviceIsEnabled: Contact you in app
   serviceNotEnabled: The service is not enabled
-  pushNotifications: Push Notifications
-  emailForwarding: Email forwarding
+  pushNotifications: Send you push notifications
+  emailForwarding: Send you e-mail
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also
@@ -1650,6 +1650,8 @@ services:
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
+  contacts:
+    title: "This service can:"
   headerTitle: "Service details"
   contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
