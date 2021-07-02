@@ -58,6 +58,7 @@ import {
 } from "../../utils/locale";
 import { servicesRedesignEnabled } from "../../config";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { mapPreferenceLabel } from "../../components/services/ServicePreferenceSummary";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -80,18 +81,6 @@ const INITIAL_STATE: State = {
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
   body: "profile.preferences.contextualHelpContent"
-};
-
-const mapPreferenceLabel: Record<ServicesPreferencesModeEnum, string> = {
-  [ServicesPreferencesModeEnum.AUTO]: I18n.t(
-    "services.optIn.preferences.quickConfig.value"
-  ),
-  [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
-    "services.optIn.preferences.manualConfig.value"
-  ),
-  [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
-    "services.optIn.preferences.unavailable"
-  )
 };
 
 /**
