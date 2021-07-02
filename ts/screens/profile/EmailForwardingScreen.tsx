@@ -34,6 +34,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
+import { servicesRedesignEnabled } from "../../config";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -168,24 +169,26 @@ class EmailForwardingScreen extends React.Component<Props, State> {
               }
             )}
             {/* CASE BY CASE */}
-            {renderListItem(
-              I18n.t("send_email_messages.options.by_service.label"),
-              I18n.t("send_email_messages.options.by_service.info"),
-              this.props.isEmailEnabled &&
-                this.props.isCustomEmailChannelEnabled,
-              // Enable custom set of the email notification for each visible service
-              () => {
-                if (this.state.isLoading) {
-                  return;
-                }
-                this.setState(
-                  { isCustomChannelEnabledChoice: true, isLoading: true },
-                  () => {
-                    this.props.setEmailChannel(true);
+            {/* This option will be temporary disabled until the feature will be integrated by a proper backend integration */}
+            {!servicesRedesignEnabled &&
+              renderListItem(
+                I18n.t("send_email_messages.options.by_service.label"),
+                I18n.t("send_email_messages.options.by_service.info"),
+                this.props.isEmailEnabled &&
+                  this.props.isCustomEmailChannelEnabled,
+                // Enable custom set of the email notification for each visible service
+                () => {
+                  if (this.state.isLoading) {
+                    return;
                   }
-                );
-              }
-            )}
+                  this.setState(
+                    { isCustomChannelEnabledChoice: true, isLoading: true },
+                    () => {
+                      this.props.setEmailChannel(true);
+                    }
+                  );
+                }
+              )}
 
             <EdgeBorderComponent />
           </List>
