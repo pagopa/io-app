@@ -51,7 +51,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
     const isSelected = pot.getOrElse(
       pot.map(
         props.profile,
-        p => p.service_preferences_settings?.mode === item.mode
+        p => p.service_preferences_settings.mode === item.mode
       ),
       false
     );
@@ -65,6 +65,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             }
           ]}
           onPress={() =>
+            // do nothing if it is the current mode set
             isSelected ? constNull : props.onSelectMode(item.mode)
           }
         >
