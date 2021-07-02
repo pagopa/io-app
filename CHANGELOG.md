@@ -2,6 +2,118 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0-rc.0](https://github.com/pagopa/io-app/compare/1.28.0-rc.4...1.29.0-rc.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* [[IA-11](https://pagopa.atlassian.net/browse/IA-11),[IA-22](https://pagopa.atlassian.net/browse/IA-22)] IDPS list is requested only when trying to login with SPID ([#3136](https://github.com/pagopa/io-app/issues/3136)) ([22b8452](https://github.com/pagopa/io-app/commit/22b8452c643a9649ea8619234a55cafb0b72768d))
+* [[IA-73](https://pagopa.atlassian.net/browse/IA-73)] Can't login with SPID due to wrong navigation route ([#3175](https://github.com/pagopa/io-app/issues/3175)) ([529380d](https://github.com/pagopa/io-app/commit/529380d1b9ecee35ec917acc87874faa59ea9db6))
+
+## [1.28.0-rc.4](https://github.com/pagopa/io-app/compare/1.28.0-rc.3...1.28.0-rc.4) (2021-06-25)
+
+
+### Chores
+
+* [[IA-69](https://pagopa.atlassian.net/browse/IA-69)] Remove title, update description and tests ([#3169](https://github.com/pagopa/io-app/issues/3169)) ([51e0ff0](https://github.com/pagopa/io-app/commit/51e0ff0ed4789304e2944b94a8213f63616c08fd))
+
+## [1.28.0-rc.3](https://github.com/pagopa/io-app/compare/1.28.0-rc.2...1.28.0-rc.3) (2021-06-25)
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [[IAC-84](https://pagopa.atlassian.net/browse/IAC-84)] Wrong textual representation when superCashbackAmount === 0 for a period [#3172](https://github.com/pagopa/io-app/issues/3172) ([d0836c0](https://github.com/pagopa/io-app/commit/d0836c0bb43043cca402adfd93f5a9f4c1820197))
+
+## [1.28.0-rc.2](https://github.com/pagopa/io-app/compare/1.28.0-rc.1...1.28.0-rc.2) (2021-06-25)
+
+
+### Features
+
+* **Redesign Servizi:** [[IARS-2](https://pagopa.atlassian.net/browse/IARS-2)] Introduces the services contact preference screen ([#3163](https://github.com/pagopa/io-app/issues/3163)) ([63c6ff7](https://github.com/pagopa/io-app/commit/63c6ff7dfd0d1cc9037aca445452ff9aaf3f4edd))
+
+
+### Bug Fixes
+
+* **Bonus Pagamenti Digitali:** [IAC-75, IA-70] Fix spacing area in darklayout button footer for iphone 12 ([#3133](https://github.com/pagopa/io-app/issues/3133)) ([91e6292](https://github.com/pagopa/io-app/commit/91e6292c1d23414198968001403da96da6e3d12c))
+
+
+### Chores
+
+* [[IA-62](https://pagopa.atlassian.net/browse/IA-62)] Add SCREEN_CHANGE_V2 event ([#3171](https://github.com/pagopa/io-app/issues/3171)) ([b2a378e](https://github.com/pagopa/io-app/commit/b2a378edc857e1100a1d6c3e67c8f7dcbec211be))
+
+## [1.28.0-rc.1](https://github.com/pagopa/io-app/compare/1.28.0-rc.0...1.28.0-rc.1) (2021-06-23)
+
+
+### Features
+
+* **Payments:** [[#178212517](https://www.pivotaltracker.com/story/show/178212517)] Show information about 3DS verification ([#3135](https://github.com/pagopa/io-app/issues/3135)) ([e088498](https://github.com/pagopa/io-app/commit/e088498863afdcbe8cd259fefae28d9016ce4ece))
+* [[IAI-17](https://pagopa.atlassian.net/browse/IAI-17)] Render local svg files ([#3158](https://github.com/pagopa/io-app/issues/3158)) ([b895c92](https://github.com/pagopa/io-app/commit/b895c92dd46ce209312d02955ca56d0de485b611))
+
+
+### Bug Fixes
+
+* [[IA-23](https://pagopa.atlassian.net/browse/IA-23)] added isMounted to check mounted state ([#3134](https://github.com/pagopa/io-app/issues/3134)) ([6c30715](https://github.com/pagopa/io-app/commit/6c307153db291e7763a1a0379c72edf3a08e4a98))
+* **EU Covid Certificate:** [[IAGP-57](https://pagopa.atlassian.net/browse/IAGP-57)] Change locales for photolibrary permission ([#3120](https://github.com/pagopa/io-app/issues/3120)) ([4ef3e8c](https://github.com/pagopa/io-app/commit/4ef3e8c672abd876af5dbefe2f0922b3a605e1b2))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-82](https://pagopa.atlassian.net/browse/IAC-82)] Graphical review for cashback states ([#3166](https://github.com/pagopa/io-app/issues/3166)) ([14891f6](https://github.com/pagopa/io-app/commit/14891f6239e454892e28e616f6a301bad21c4bdf))
+* [[IA-41](https://pagopa.atlassian.net/browse/IA-41)] Expose the unique device ID and let the developer copy it to the clipboard ([#3159](https://github.com/pagopa/io-app/issues/3159)) ([4aa1aea](https://github.com/pagopa/io-app/commit/4aa1aea4206b5523f1e2683ca4bd29eb2843497b))
+* [[IA-42](https://pagopa.atlassian.net/browse/IA-42)] Disable A/B testing ([#3160](https://github.com/pagopa/io-app/issues/3160)) ([2bb7d82](https://github.com/pagopa/io-app/commit/2bb7d82690273e29e900a4f48312e66ae7513106))
+* **Bonus Pagamenti Digitali:** [[IAC-7](https://pagopa.atlassian.net/browse/IAC-7)] Remove technical iban feature flag ([#3113](https://github.com/pagopa/io-app/issues/3113)) ([d468faf](https://github.com/pagopa/io-app/commit/d468faf52f7683c407afaca78d075e2d7a147195))
+* **EU Covid Certificate:** [[IAGP-65](https://pagopa.atlassian.net/browse/IAGP-65)] Add top and bottom qrcode spacing [#3161](https://github.com/pagopa/io-app/issues/3161) ([d960d55](https://github.com/pagopa/io-app/commit/d960d55f3ee339ba892685d4046bdc762a403c97))
+
+## [1.28.0-rc.0](https://github.com/pagopa/io-app/compare/1.27.0-rc.0...1.28.0-rc.0) (2021-06-20)
+
+
+### Bug Fixes
+
+* [[#178110273](https://www.pivotaltracker.com/story/show/178110273)] Fix margin on contact support button for small device ([#3107](https://github.com/pagopa/io-app/issues/3107)) ([8357a0d](https://github.com/pagopa/io-app/commit/8357a0d1d242e4b3b3ca2bf218de66924f81d7af))
+* [[IA-40](https://pagopa.atlassian.net/browse/IA-40)] In "your data" screen, missing bottomsheet content when the screen reader is enabled [#3154](https://github.com/pagopa/io-app/issues/3154) ([6a47421](https://github.com/pagopa/io-app/commit/6a47421cb659673af2e6f34733f3733f73afb631))
+
+
+### Chores
+
+* [[IA-19](https://pagopa.atlassian.net/browse/IA-19)] When copy id message is missing service name ([#3153](https://github.com/pagopa/io-app/issues/3153)) ([6a691d7](https://github.com/pagopa/io-app/commit/6a691d7da8eb2161fdfd296ba6cbb9c3315c1aa4))
+
+## [1.27.0-rc.0](https://github.com/pagopa/io-app/compare/1.26.0-rc.6...1.27.0-rc.0) (2021-06-16)
+
+
+### Features
+
+* [[IA-27](https://pagopa.atlassian.net/browse/IA-27),[IA-28](https://pagopa.atlassian.net/browse/IA-28)] Ask opt-in preference while onboarding or when user is logged in ([#3145](https://github.com/pagopa/io-app/issues/3145)) ([b5dd615](https://github.com/pagopa/io-app/commit/b5dd615b67fdbc589f0d74f5af5d4f7619c1f021))
+* [[IA-29](https://pagopa.atlassian.net/browse/IA-29)] Add privacy settings in profile section ([#3146](https://github.com/pagopa/io-app/issues/3146)) ([30ff409](https://github.com/pagopa/io-app/commit/30ff409a9a2da2356ca0ec65ba6907f9b27aaf13))
+
+
+### Chores
+
+* [[IA-39](https://pagopa.atlassian.net/browse/IA-39)] Copy update ([#3152](https://github.com/pagopa/io-app/issues/3152)) ([7e36763](https://github.com/pagopa/io-app/commit/7e3676399f0b9325368cec64dd4ef8b351fd2cb6))
+* **Redesign Servizi:** [[IARS-3](https://pagopa.atlassian.net/browse/IARS-3)] Adds Redesign Servizi to Changelog scopes ([#3150](https://github.com/pagopa/io-app/issues/3150)) ([fac69fa](https://github.com/pagopa/io-app/commit/fac69fa0c02489d034be0b32e9214919976014c6))
+* [[IA-36](https://pagopa.atlassian.net/browse/IA-36)] Copy update ([#3151](https://github.com/pagopa/io-app/issues/3151)) ([69d0923](https://github.com/pagopa/io-app/commit/69d0923ff3b80c910d92e35252e6d394f378af11))
+* **Bonus Pagamenti Digitali:** [[IAC-80](https://pagopa.atlassian.net/browse/IAC-80)] Supercashback copy update ([#3148](https://github.com/pagopa/io-app/issues/3148)) ([970014e](https://github.com/pagopa/io-app/commit/970014e80b4851ffa0f4a1ae92f37e3bcc2e1756))
+* [[IA-30](https://pagopa.atlassian.net/browse/IA-30)] Refactoring for mixpanel integration ([#3141](https://github.com/pagopa/io-app/issues/3141)) ([2d16049](https://github.com/pagopa/io-app/commit/2d16049bcab0ce116b8820dc6a7d17ddcd5103e5))
+* [[IA-32](https://pagopa.atlassian.net/browse/IA-32)] Open ToS links in external browser ([#3142](https://github.com/pagopa/io-app/issues/3142)) ([a7e8947](https://github.com/pagopa/io-app/commit/a7e8947bbb5db788db58f91b1660ee8f4a60c52b))
+* [[IA-33](https://pagopa.atlassian.net/browse/IA-33)] Reset opt-in choice on differentProfileLoggedIn event ([#3144](https://github.com/pagopa/io-app/issues/3144)) ([06dc021](https://github.com/pagopa/io-app/commit/06dc02166a276d1c12b4a1d87832ba03d19e51e1))
+* [[IA-34](https://pagopa.atlassian.net/browse/IA-34)] New copy ([#3147](https://github.com/pagopa/io-app/issues/3147)) ([5c01fdf](https://github.com/pagopa/io-app/commit/5c01fdf6e8d4305f7ddff96c0c19e851a9e90f5c))
+
+## [1.26.0-rc.6](https://github.com/pagopa/io-app/compare/1.26.0-rc.5...1.26.0-rc.6) (2021-06-14)
+
+
+### Bug Fixes
+
+* **EU Covid Certificate:** [[IAGP-56](https://pagopa.atlassian.net/browse/IAGP-56)] Add overflow wrap for markdown component ([#3127](https://github.com/pagopa/io-app/issues/3127)) ([eec0959](https://github.com/pagopa/io-app/commit/eec095963a51689476772e405a0fc7f87eab5ca4))
+* [[IA-3](https://pagopa.atlassian.net/browse/IA-3)] Error swallowing on upsert email API fault code ([#3119](https://github.com/pagopa/io-app/issues/3119)) ([cbeb096](https://github.com/pagopa/io-app/commit/cbeb096c08c84723b6d705ba747f2b82043a0641))
+
+
+### Chores
+
+* **EU Covid Certificate:** [[IAGP-61](https://pagopa.atlassian.net/browse/IAGP-61)] Add shouldAskForScreenshotWithInitialValue [#3130](https://github.com/pagopa/io-app/issues/3130) ([85ddfff](https://github.com/pagopa/io-app/commit/85ddffffcbfcdefc2ef53fa7d36fcaf36509a887))
+* **Sicilia Vola:** [[IASV-3](https://pagopa.atlassian.net/browse/IASV-3)] Add SiciliaVola feature flag ([#3124](https://github.com/pagopa/io-app/issues/3124)) ([4f8a345](https://github.com/pagopa/io-app/commit/4f8a345763b7ea1d080d3eb08d34a0575aa3a0dc))
+* **Sicilia Vola:** [[IASV-5](https://pagopa.atlassian.net/browse/IASV-5)] Add sicilia vola actions, store & reducer placeholders ([#3074](https://github.com/pagopa/io-app/issues/3074)) ([d9e8e99](https://github.com/pagopa/io-app/commit/d9e8e99ef5a31948799a10168605ab4113d5da14))
+* [[IA-18](https://pagopa.atlassian.net/browse/IA-18)] Update README [#3122](https://github.com/pagopa/io-app/issues/3122) ([42dcb40](https://github.com/pagopa/io-app/commit/42dcb408d0d69eb82328eddefbf026a38c183077))
+* [[IA-20](https://pagopa.atlassian.net/browse/IA-20)] Copy update [#3125](https://github.com/pagopa/io-app/issues/3125) ([2f00896](https://github.com/pagopa/io-app/commit/2f008961669f7c9dcb701c6a6c06aa4ade26d12c))
+
 ## [1.26.0-rc.5](https://github.com/pagopa/io-app/compare/1.26.0-rc.4...1.26.0-rc.5) (2021-06-08)
 
 

@@ -9,9 +9,13 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { PaginatedServiceTupleCollection } from "../../../../definitions/backend/PaginatedServiceTupleCollection";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import {
+  loadServicePreference,
+  upsertServicePreference
+} from "./servicePreference";
 
 //
 // service loading at startup
@@ -75,6 +79,11 @@ export const removeServiceTuples = createStandardAction(
   "SERVICES_REMOVE_TUPLES"
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
+// User selects a service to view its details
+export const currentSelectedService = createStandardAction(
+  "CURRENT_SELECTED_SERVICE"
+)<ServiceId>();
+
 export type ServicesActions =
   | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
@@ -83,4 +92,7 @@ export type ServicesActions =
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>
-  | ActionType<typeof loadServiceDetailNotFound>;
+  | ActionType<typeof loadServiceDetailNotFound>
+  | ActionType<typeof loadServicePreference>
+  | ActionType<typeof currentSelectedService>
+  | ActionType<typeof upsertServicePreference>;

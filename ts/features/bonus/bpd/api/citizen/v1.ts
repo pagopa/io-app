@@ -1,64 +1,12 @@
 import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as r from "italia-ts-commons/lib/requests";
-import {
-  ApiHeaderJson,
-  composeHeaderProducers,
-  MapResponseType
-} from "italia-ts-commons/lib/requests";
 import { CitizenPatchDTO } from "../../../../../../definitions/bpd/citizen/CitizenPatchDTO";
 import {
-  enrollmentDecoder,
-  EnrollmentT,
   findRankingUsingGETDefaultDecoder,
-  FindRankingUsingGETT,
-  findUsingGETDecoder,
-  FindUsingGETT
+  FindRankingUsingGETT
 } from "../../../../../../definitions/bpd/citizen/requestTypes";
 import { bpdHeadersProducers } from "../common";
-import { PatchedCitizenResource } from "../patchedTypes";
-
-/* CITIZEN (status, enroll, delete) */
-/**
- * @deprecated
- */
-type FindUsingGETTExtra = MapResponseType<
-  FindUsingGETT,
-  200,
-  PatchedCitizenResource
->;
-
-/**
- * @deprecated
- */
-export const citizenFindGET: FindUsingGETTExtra = {
-  method: "get",
-  url: () => `/bpd/io/citizen`,
-  query: _ => ({}),
-  headers: bpdHeadersProducers(),
-  response_decoder: findUsingGETDecoder(PatchedCitizenResource)
-};
-
-/**
- * @deprecated
- */
-type EnrollmentTTExtra = MapResponseType<
-  EnrollmentT,
-  200,
-  PatchedCitizenResource
->;
-
-/**
- * @deprecated
- */
-export const citizenEnrollPUT: EnrollmentTTExtra = {
-  method: "put",
-  url: () => `/bpd/io/citizen`,
-  query: _ => ({}),
-  body: _ => "",
-  headers: composeHeaderProducers(bpdHeadersProducers(), ApiHeaderJson),
-  response_decoder: enrollmentDecoder(PatchedCitizenResource)
-};
 
 const deleteResponseDecoders = r.composeResponseDecoders(
   r.composeResponseDecoders(

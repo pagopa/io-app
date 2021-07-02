@@ -1,8 +1,5 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
-import { constNull } from "fp-ts/lib/function";
-import DeviceInfo from "react-native-device-info";
-import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
@@ -55,6 +52,7 @@ import {
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
@@ -127,6 +125,7 @@ import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
+import { noAnalyticsRoutes } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 // eslint-disable-next-line complexity
@@ -157,23 +156,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_IDP_ID: action.payload.id,
         SPID_IDP_NAME: action.payload.name
       });
-    case getType(profileLoadSuccess):
-      // as soon as we have the user fiscal code, attach the mixpanel
-      // session to the hashed fiscal code of the user
-      const fiscalnumber = action.payload.fiscal_code;
-
-      // Re-identify the user using the hashed fiscal code.
-      // It's important the flow order and the order in which the arguments are passed to the
-      // mp.alias function because the second argument is the 'Main ID' for mixpanel so the events
-      // will be showned in the Main ID page.
-      const identifyAndAlias = sha256(fiscalnumber).then(hash =>
-        mp.identify(hash).then(() => mp.alias(DeviceInfo.getUniqueId(), hash))
-      );
-
-      return Promise.all([
-        mp.track(action.type).then(constNull, constNull),
-        identifyAndAlias.then(constNull, constNull)
-      ]);
 
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
@@ -354,6 +336,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadSuccess):
     // userMetadata
     case getType(userMetadataUpsert.request):
     case getType(userMetadataUpsert.success):
@@ -421,6 +404,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         choice: action.payload.choice,
         reason: action.payload.error.message
       });
+    case getType(setMixpanelEnabled):
+      return mp.track(action.type, {
+        value: action.payload
+      });
   }
   return Promise.resolve();
 };
@@ -471,14 +458,16 @@ export function screenTracking(
       if (nextScreen) {
         setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      mixpanel
-        .track("SCREEN_CHANGE", {
+      // track only those events that are not included in the blacklist
+      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+        void mixpanel.track("SCREEN_CHANGE_V2", {
           SCREEN_NAME: nextScreen
-        })
-        .then(
-          () => 0,
-          () => 0
-        );
+        });
+      }
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
     }
     return result;
   };
