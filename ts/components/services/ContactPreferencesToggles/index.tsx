@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
@@ -42,6 +42,7 @@ const hasChannel = (
 
 const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const { isLoading, isError } = props;
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const loadPreferences = () => {
     if (props.currentService !== null) {
@@ -52,8 +53,12 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   useEffect(loadPreferences, []);
 
   useEffect(() => {
-    if (isError) {
-      showToast("error");
+    if (!isFirstRender) {
+      if (isError) {
+        showToast(I18n.t("global.genericError"));
+      }
+    } else {
+      setIsFirstRender(false);
     }
   }, [isError]);
 

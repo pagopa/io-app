@@ -22,9 +22,9 @@ describe("ContactPreferencesToggles component", () => {
       expect(
         component.getByTestId("contact-preferences-webhook-switch")
       ).toBeDefined();
-      expect(
-        component.getByTestId("contact-preferences-email-switch")
-      ).toBeDefined();
+      // expect(
+      //   component.getByTestId("contact-preferences-email-switch")
+      // ).toBeDefined();
     });
   });
 
@@ -60,9 +60,9 @@ describe("ContactPreferencesToggles component", () => {
       expect(
         component.getByTestId("contact-preferences-webhook-switch")
       ).toBeDefined();
-      expect(
-        component.getByTestId("contact-preferences-email-switch")
-      ).toBeDefined();
+      // expect(
+      //   component.getByTestId("contact-preferences-email-switch")
+      // ).toBeDefined();
     });
   });
 });

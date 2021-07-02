@@ -40,12 +40,16 @@ describe("PreferenceToggleRow component", () => {
 function renderComponent(
   options: Partial<Parameters<typeof PreferenceToggleRow>[0]>
 ) {
+  const onPress = jest.fn();
+  const onReload = jest.fn();
   return render(
     <PreferenceToggleRow
       label="default label"
       value={true}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onPress={() => {}}
+      isLoading={false}
+      isError={false}
+      onPress={onPress}
+      onReload={onReload}
       {...options}
     />
   );
