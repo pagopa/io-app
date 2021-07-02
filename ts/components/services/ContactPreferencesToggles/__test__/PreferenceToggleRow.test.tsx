@@ -47,6 +47,7 @@ describe("PreferenceToggleRow component", () => {
       expect(
         component.getByTestId("preference-toggle-row-loading")
       ).toBeDefined();
+      expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("should display reload button", () => {
@@ -63,6 +64,7 @@ describe("PreferenceToggleRow component", () => {
       expect(reloadComponent).toBeDefined();
       fireEvent.press(reloadComponent);
       expect(spy).toHaveBeenCalledTimes(1);
+      expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("should display switch disabled", () => {
@@ -76,6 +78,7 @@ describe("PreferenceToggleRow component", () => {
       const switchComponent = component.getByRole("switch");
       expect(switchComponent).toBeDefined();
       expect(switchComponent).toBeDisabled();
+      expect(component.toJSON()).toMatchSnapshot();
     });
   });
 });

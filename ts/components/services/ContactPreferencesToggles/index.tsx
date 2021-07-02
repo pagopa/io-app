@@ -40,6 +40,19 @@ const hasChannel = (
     .map(anc => anc.indexOf(channel) !== -1)
     .getOrElse(true);
 
+const getValueOrFalse = (
+  potServicePreference: ServicePreferenceState,
+  key: Item
+): boolean => {
+  if (
+    isStrictSome(potServicePreference) &&
+    isServicePreferenceResponseSuccess(potServicePreference.value)
+  ) {
+    return potServicePreference.value.value[key];
+  }
+  return false;
+};
+
 const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const { isLoading, isError } = props;
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -73,19 +86,6 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         [type]: value
       });
     }
-  };
-
-  const getValueOrFalse = (
-    potServicePreference: ServicePreferenceState,
-    key: Item
-  ): boolean => {
-    if (
-      isStrictSome(potServicePreference) &&
-      isServicePreferenceResponseSuccess(potServicePreference.value)
-    ) {
-      return potServicePreference.value.value[key];
-    }
-    return false;
   };
 
   return (
