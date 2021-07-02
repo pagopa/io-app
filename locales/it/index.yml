@@ -1672,8 +1672,8 @@ services:
   loading:
     title: Sto caricando l'elenco dei servizi
     subtitle: attendi qualche secondo...
-  enableAll: Attiva tutti
-  disableAll: Disattiva tutti
+  enableAll: Usa configurazione rapida
+  disableAll: Usa configurazione manuale
   updatingServiceMode: aggiornamento
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
