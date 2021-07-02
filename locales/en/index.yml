@@ -63,6 +63,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
     description: Description

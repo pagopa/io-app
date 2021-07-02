@@ -63,6 +63,7 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    reload: "Ricarica"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
