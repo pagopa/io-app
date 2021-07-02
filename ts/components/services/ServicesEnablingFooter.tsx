@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Alert } from "react-native";
 import FooterWithButtons from "../ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
@@ -20,7 +21,23 @@ const ServicesEnablingFooter = (props: Props): React.ReactElement => {
   const modeManual = {
     title: I18n.t("services.disableAll"),
     action: () =>
-      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+      Alert.alert(
+        I18n.t("services.disableAllAlert.title"),
+        I18n.t("services.disableAllAlert.message"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel")
+          },
+          {
+            text: I18n.t("services.disableAllAlert.cta"),
+            style: "destructive",
+            onPress: () =>
+              props.onServicePreferenceSelected(
+                ServicesPreferencesModeEnum.MANUAL
+              )
+          }
+        ]
+      )
   };
   const modeAuto = {
     action: () =>

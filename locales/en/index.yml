@@ -1645,6 +1645,10 @@ services:
   enableAll: Enable all
   updatingServiceMode: updating
   disableAll: Disable all
+  disableAllAlert:
+    cta: Disable
+    title: Do you really want to disable all national and local services?
+    message: All new services will no longer be able to send you messages. You will have to manually configure the services that interest you.
   disableAllTitle: "Do you really want to disable all the services?"
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close

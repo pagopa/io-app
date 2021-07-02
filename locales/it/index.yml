@@ -1674,6 +1674,10 @@ services:
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
   updatingServiceMode: aggiornamento
+  disableAllAlert:
+    cta: Disattiva
+    title: Vuoi disattivare le comunicazioni di tutti i servizi nazionali e locali?
+    message: Tutti i nuovi servizi non potranno più inviarti messaggi. Dovrai configurare manualmente i servizi che ti interessano.
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
