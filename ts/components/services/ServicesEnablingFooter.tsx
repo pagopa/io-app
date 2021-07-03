@@ -57,8 +57,7 @@ const mapStateToProps = (state: GlobalState) => {
   const profile = profileSelector(state);
   return {
     profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
-    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    potProfile: profile
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
   };
 };
 

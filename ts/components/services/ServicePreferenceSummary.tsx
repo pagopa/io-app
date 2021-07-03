@@ -16,20 +16,20 @@ import { profileServicePreferencesModeSelector } from "../../store/reducers/prof
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-export const mapServicesPreferenceModeLabel: Record<
-  ServicesPreferencesModeEnum,
-  string
-> = {
-  [ServicesPreferencesModeEnum.AUTO]: I18n.t(
-    "services.optIn.preferences.quickConfig.value"
-  ),
-  [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
-    "services.optIn.preferences.manualConfig.value"
-  ),
-  [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
-    "services.optIn.preferences.unavailable"
-  )
-};
+export const getServicesPreferenceModeLabel = (
+  mode: ServicesPreferencesModeEnum
+): string =>
+  ({
+    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+      "services.optIn.preferences.quickConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+      "services.optIn.preferences.manualConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
+      "services.optIn.preferences.unavailable"
+    )
+  }[mode]);
 
 /**
  * Display the current services preference mode set in the profile
@@ -43,12 +43,9 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
     <InfoBox iconName={"io-info"} iconColor={IOColors.bluegrey} iconSize={24}>
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
-      )} ${
-        mapServicesPreferenceModeLabel[
-          props.profileServicePreferenceMode ??
-            ServicesPreferencesModeEnum.LEGACY
-        ]
-      }`}</H5>
+      )} ${getServicesPreferenceModeLabel(
+        props.profileServicePreferenceMode ?? ServicesPreferencesModeEnum.LEGACY
+      )}`}</H5>
       <Link
         onPress={props.navigateToServicePreference}
         accessibilityRole={"button"}

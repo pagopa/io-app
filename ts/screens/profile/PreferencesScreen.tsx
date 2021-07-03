@@ -58,7 +58,7 @@ import {
 } from "../../utils/locale";
 import { servicesRedesignEnabled } from "../../config";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { mapServicesPreferenceModeLabel } from "../../components/services/ServicePreferenceSummary";
+import { getServicesPreferenceModeLabel } from "../../components/services/ServicePreferenceSummary";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -256,12 +256,10 @@ class PreferencesScreen extends React.Component<Props, State> {
               // TODO subtitle should show the selected option on profile
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.service_contact")}
-                subTitle={
-                  mapServicesPreferenceModeLabel[
-                    this.props.profileServicePreferenceMode ??
-                      ServicesPreferencesModeEnum.LEGACY
-                  ]
-                }
+                subTitle={getServicesPreferenceModeLabel(
+                  this.props.profileServicePreferenceMode ??
+                    ServicesPreferencesModeEnum.LEGACY
+                )}
                 onPress={this.props.navigateToServiceContactPreferenceScreen}
               />
             )}
