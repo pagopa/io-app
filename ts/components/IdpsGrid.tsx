@@ -6,19 +6,22 @@ import * as React from "react";
 import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { Button } from "native-base";
+import { connect } from "react-redux";
 import variables from "../theme/variables";
-import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { GlobalState } from "../store/reducers/types";
+import { idpsStateSelector } from "../store/reducers/content";
+import { LocalIdpsFallback } from "../utils/idps";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
-  idps: ReadonlyArray<SpidIdp>;
+  idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
-  onIdpSelected: (_: SpidIdp) => void;
+  onIdpSelected: (_: LocalIdpsFallback) => void;
   testID?: string;
 };
 
-type Props = OwnProps;
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 const GRID_GUTTER = variables.gridGutter;
 
@@ -39,13 +42,14 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (idp: SpidIdp): string => idp.id;
+const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
 const renderItem = (props: Props) => (
-  info: ListRenderItemInfo<SpidIdp>
+  info: ListRenderItemInfo<LocalIdpsFallback>
 ): React.ReactElement => {
   const { onIdpSelected } = props;
   const { item } = info;
+
   const onPress = () => onIdpSelected(item);
   if (item.isTestIdp === true) {
     return (
@@ -70,7 +74,10 @@ const renderItem = (props: Props) => (
       onPress={onPress}
       testID={`idp-${item.id}-button`}
     >
-      <Image source={{ uri: item.logo }} style={styles.idpLogo} />
+      <Image
+        source={item.localLogo ? item.localLogo : { uri: item.logo }}
+        style={styles.idpLogo}
+      />
     </ButtonDefaultOpacity>
   );
 };
@@ -85,4 +92,8 @@ const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   />
 );
 
-export default IdpsGrid;
+const mapStateToProps = (state: GlobalState) => ({
+  idpsState: idpsStateSelector(state)
+});
+
+export default connect(mapStateToProps)(IdpsGrid);

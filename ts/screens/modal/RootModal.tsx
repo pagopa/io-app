@@ -1,6 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
+import { mixpanelTrack } from "../../mixpanel";
 import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
 import { isBackendServicesStatusOffSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
@@ -27,6 +28,10 @@ export const RootModal: React.FunctionComponent<Props> = (props: Props) => {
     .getOrElse(false);
   // if the app is out of date, force a screen to update it
   if (isAppOutOfDate) {
+    void mixpanelTrack("UPDATE_APP_MODAL", {
+      minVersioniOS: props.backendInfo?.min_app_version.ios,
+      minVersionAndroid: props.backendInfo?.min_app_version.android
+    });
     return <UpdateAppModal />;
   }
   return <IdentificationModal />;

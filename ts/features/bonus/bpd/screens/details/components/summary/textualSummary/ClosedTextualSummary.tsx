@@ -1,3 +1,4 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { InfoBox } from "../../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../../components/core/typography/Body";
@@ -70,6 +71,38 @@ const endGracePeriod = (period: BpdPeriod) => {
 };
 
 /**
+ * Enriches the text in case of Super Cashback or max amount
+ * @param props
+ */
+const enhanceOkText = (props: Props): Option<string> => {
+  // the user earned the super cashback
+  if (
+    props.period.superCashbackAmount > 0 &&
+    props.period.amount.totalCashback >= props.period.superCashbackAmount
+  ) {
+    return some(
+      I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.closedPeriodSuperCashback",
+        {
+          amount: formatNumberAmount(props.period.superCashbackAmount)
+        }
+      )
+    );
+  }
+  // the user earned the max amount
+  else if (
+    props.period.amount.totalCashback >= props.period.maxPeriodCashback
+  ) {
+    return some(
+      I18n.t(
+        "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
+      )
+    );
+  }
+  return none;
+};
+
+/**
  * The user will receive the refund!
  * @param props
  * @constructor
@@ -84,14 +117,7 @@ const OK = (props: Props) => (
           amount: formatNumberAmount(props.period.amount.totalCashback)
         }
       )}
-      {/* If the max amount is reached, inform the user */}
-      {props.period.amount.totalCashback >= props.period.maxPeriodCashback
-        ? ": " +
-          I18n.t(
-            "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
-          )
-        : "!"}
-      {"\n"}
+      {enhanceOkText(props).getOrElse("") + "!\n"}
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.moneyTransfer",
         {

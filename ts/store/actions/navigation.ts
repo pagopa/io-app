@@ -97,6 +97,11 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToOnboardingServicePreferenceCompleteAction = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
+
 /**
  * Email
  */
@@ -135,6 +140,11 @@ export const navigateToMessageRouterScreen = (
  * Service
  */
 
+export const navigateToServiceHomeScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.SERVICES_HOME
+  });
+
 export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
@@ -155,6 +165,11 @@ export const navigateToFingerprintPreferenceScreen = () =>
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+  });
+
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
@@ -409,4 +424,17 @@ export const navigateToCieCardReaderScreen = (
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+  });
+
+/**
+ * SPID
+ */
+export const navigateToSPIDTestIDP = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_TEST
+  });
+
+export const navigateToSPIDLogin = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
   });

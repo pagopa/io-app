@@ -310,6 +310,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             }}
             outcomeQueryparamName={webViewOutcomeParamName}
             onGoBack={handlePayWebviewGoBack}
+            modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
           />
         )}
       </>
