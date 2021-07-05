@@ -64,7 +64,10 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { profileSelector } from "../store/reducers/profile";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
@@ -298,7 +301,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     if (servicesRedesignEnabled) {
       // TODO the saga should be called even for already loggedIn users without the preference set
-      yield call(askServicesPreferencesModeOptin, true);
+      yield call(
+        askServicesPreferencesModeOptin,
+        isProfileFirstOnBoarding(userProfile)
+      );
     }
 
     // Stop the watchAbortOnboardingSaga
@@ -326,7 +332,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
       if (servicesRedesignEnabled) {
         // TODO the saga should be called even for already loggedIn users without the preference set
-        yield call(askServicesPreferencesModeOptin);
+        yield call(askServicesPreferencesModeOptin, false);
       }
 
       // Stop the watchAbortOnboardingSaga

@@ -2,25 +2,29 @@ import { put, select, take } from "redux-saga/effects";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
-import { profileServicePreferencesModeSelector } from "../../store/reducers/profile";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import {
+  isServicesPreferenceModeSet,
+  profileServicePreferencesModeSelector
+} from "../../store/reducers/profile";
 
-export function* askServicesPreferencesModeOptin(isOnboarding?: true) {
+/**
+ * if the current profile has not services preference mode set
+ * navigate to a screen where he/she can make a choice
+ * @param isFirstOnboarding
+ */
+export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {
   const profileServicePreferenceMode: ReturnType<typeof profileServicePreferencesModeSelector> = yield select(
     profileServicePreferencesModeSelector
   );
-  // if the user is already logged-in and the preference is set, do nothing
-  if (
-    !isOnboarding &&
-    [ServicesPreferencesModeEnum.AUTO, ServicesPreferencesModeEnum.MANUAL].some(
-      sp => sp === profileServicePreferenceMode
-    )
-  ) {
+  // if the user's preference is set, do nothing
+  if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
     return;
   }
-  yield put(navigateToServicesPreferenceModeSelectionScreen({ isOnboarding }));
-  if (isOnboarding) {
-    // while on-boarding the selection ends with a thank you screen, remove it from the stack
+  yield put(
+    navigateToServicesPreferenceModeSelectionScreen({ isFirstOnboarding })
+  );
+  if (!isFirstOnboarding) {
+    // for existing users the selection ends with a thank you screen, remove it from the stack
     yield put(navigationHistoryPop(1));
   }
   // wait until a choice is done by the user

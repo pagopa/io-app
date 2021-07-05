@@ -134,6 +134,14 @@ export const profileServicePreferencesModeSelector = createSelector(
     )
 );
 
+// return the profile services preference mode
+export const isServicesPreferenceModeSet = (
+  mode: ServicesPreferencesModeEnum | undefined
+): boolean =>
+  [ServicesPreferencesModeEnum.AUTO, ServicesPreferencesModeEnum.MANUAL].some(
+    sp => sp === mode
+  );
+
 // return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
