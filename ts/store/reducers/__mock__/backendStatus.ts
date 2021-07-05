@@ -175,6 +175,9 @@ export const withBpdRankingConfig = (
   status: baseState.status.map(s => ({
     ...s,
     config: {
+      bpd: {
+        enroll_bpd_after_add_payment_method: false
+      },
       bpd_ranking: newConfig,
       bpd_ranking_v2: newConfig,
       cgn_merchants_v2: newConfig

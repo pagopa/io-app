@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, ScrollView } from "react-native";
+import { cgnMerchantVersionSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -41,7 +42,6 @@ import GenericErrorComponent from "../../../../components/screens/GenericErrorCo
 import { navigateBack } from "../../../../store/actions/navigation";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { configSelector } from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -154,7 +154,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
-  isMerchantV2Enabled: configSelector("cgn_merchants_v2")(state),
+  isMerchantV2Enabled: cgnMerchantVersionSelector(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
   eycaDetails: eycaDetailSelector(state)
 });
