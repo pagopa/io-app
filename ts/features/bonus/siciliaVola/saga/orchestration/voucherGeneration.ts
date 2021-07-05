@@ -2,6 +2,7 @@ import { call } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import {
   executeWorkUnit,
+  withFailureHandling,
   withResetNavigationStack
 } from "../../../../../sagas/workUnit";
 import {
@@ -35,5 +36,9 @@ function* svVoucherGenerationWorkUnit() {
  * This saga handles the SV activation workflow
  */
 export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
-  yield call(withResetNavigationStack, svVoucherGenerationWorkUnit);
+  const sagaExecution = () =>
+    withFailureHandling(() =>
+      withResetNavigationStack(svVoucherGenerationWorkUnit)
+    );
+  yield call(sagaExecution);
 }

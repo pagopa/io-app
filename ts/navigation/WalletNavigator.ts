@@ -1,10 +1,5 @@
 import { createStackNavigator } from "react-navigation";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  cgnEnabled,
-  svEnabled
-} from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
@@ -48,8 +43,6 @@ import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen
 import PaymentMethodDetailScreen from "../screens/wallet/PaymentMethodDetailScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
-import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
-import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
@@ -175,20 +168,11 @@ const cgnConfigMap = cgnEnabled
     }
   : {};
 
-const svConfigMap = svEnabled
-  ? {
-      [SV_ROUTES.MAIN]: {
-        screen: SvNavigator
-      }
-    }
-  : {};
-
 const routeConfig = {
   ...baseRouteConfigMap,
   ...bonusVacanzeConfigMap,
   ...bpdConfigMap,
-  ...cgnConfigMap,
-  ...svConfigMap
+  ...cgnConfigMap
 };
 
 /**
