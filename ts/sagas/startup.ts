@@ -31,6 +31,7 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
+  svEnabled,
   servicesRedesignEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
@@ -67,6 +68,7 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -352,6 +354,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (cgnEnabled) {
     // Start watching for cgn actions
     yield fork(watchBonusCgnSaga, sessionToken);
+  }
+
+  if (svEnabled) {
+    // Start watching for sv actions
+    yield fork(watchBonusSvSaga);
   }
 
   if (euCovidCertificateEnabled) {
