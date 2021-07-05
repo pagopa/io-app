@@ -27,6 +27,7 @@ import {
 import { profileUpsert } from "../../store/actions/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { showToast } from "../../utils/showToast";
+import { servicesOptinCompleted } from "../../store/actions/onboarding";
 
 type NavigationProps = {
   isFirstOnboarding: boolean;
@@ -54,7 +55,7 @@ const OnboardingServicesPreferenceScreen = (
   React.useEffect(() => {
     // when the user made a choice (the profile is right updated), navigate to thank-you page
     if (isServicesPreferenceModeSet(props.profileServicePreferenceMode)) {
-      props.onContinue();
+      props.onContinue(isFirstOnboarding);
       return;
     }
     // show error toast only when the profile updating fails
@@ -122,8 +123,13 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onContinue: () =>
-    dispatch(navigateToOnboardingServicePreferenceCompleteAction()),
+  onContinue: (isFirstOnboarding: boolean) =>
+    // if the user is not new, navigate to the thank-you screen
+    dispatch(
+      !isFirstOnboarding
+        ? navigateToOnboardingServicePreferenceCompleteAction()
+        : servicesOptinCompleted()
+    ),
   onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
     dispatch(profileUpsert.request({ service_preferences_settings: { mode } }))
 });
