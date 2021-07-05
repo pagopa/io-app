@@ -2,9 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Badge, View } from "native-base";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { useEffect, useState } from "react";
-import { View } from "native-base";
-import { FlatList, ListRenderItemInfo } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -59,71 +56,67 @@ const options: ReadonlyArray<ContactOption> = [
 ];
 
 const ServicesContactComponent = (props: Props): React.ReactElement => {
-  const [selected, setSelected] = useState<string | undefined>();
-
-  useEffect(() => {
-    setSelected(props.hasAlreadyOnboarded ? "quick" : undefined);
-  }, [props.hasAlreadyOnboarded]);
-
   const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => {
-const isSelected = pot.getOrElse(
+    const isSelected = pot.getOrElse(
       pot.map(
         props.profile,
-        p => p.service_preferences_settings.mode === item.mode
+        p =>
+          p.service_preferences_settings.mode === item.mode ||
+          (p.service_preferences_settings.mode ===
+            ServicesPreferencesModeEnum.LEGACY &&
+            item.mode === ServicesPreferencesModeEnum.AUTO)
       ),
       false
     );
-  return (
-    <>
-      <TouchableDefaultOpacity
-        style={[
-          IOStyles.row,
-          {
-            justifyContent: "space-between"
+    return (
+      <>
+        <TouchableDefaultOpacity
+          style={[
+            IOStyles.row,
+            {
+              justifyContent: "space-between"
+            }
+          ]}
+          accessibilityRole={"radio"}
+          accessibilityState={{ checked: isSelected }}
+          onPress={
+            // do nothing if it is the current mode set
+            isSelected ? constNull : () => props.onSelectMode(item.mode)
           }
-        ]}
-        accessibilityRole={"radio"}
-        accessibilityState={{ checked: isSelected }}
-        onPress={() => {
-        // do nothing if it is the current mode set
-        if(isSelected){
-			return;
-        }
-          setSelected(item.key);
-          props.onSelectOption(item.key);
-        }}
-      >
-        <View style={IOStyles.flex}>
-          {props.hasAlreadyOnboarded && item.key === "quick" && (
-            <Badge style={[styles.badge]}>
-              <BaseTypography
-                weight={"SemiBold"}
-                color={"white"}
-                style={{ fontSize: 12 }}
-              >
-                {I18n.t("services.optIn.preferences.oldUsersBadge")}
-              </BaseTypography>
-            </Badge>
-          )}
-          <H4>{item.title}</H4>
-          <H5 weight={"Regular"}>
-            {item.description1}
-            {item.description2 && <H5>{` ${item.description2}`}</H5>}
-          </H5>
-        </View>
-        <View hspacer large />
-        <IconFont
-          name={isSelected ? "io-radio-on" : "io-radio-off"}
-          color={IOColors.blue}
-          size={28}
-          style={{ alignSelf: "flex-start" }}
-        />
-      </TouchableDefaultOpacity>
-      <View spacer />
-      <ItemSeparatorComponent noPadded />
-      <View spacer />
-    </>
-  )};
+        >
+          <View style={IOStyles.flex}>
+            {props.hasAlreadyOnboarded &&
+              item.mode === ServicesPreferencesModeEnum.AUTO && (
+                <Badge style={[styles.badge]}>
+                  <BaseTypography
+                    weight={"SemiBold"}
+                    color={"white"}
+                    style={{ fontSize: 12 }}
+                  >
+                    {I18n.t("services.optIn.preferences.oldUsersBadge")}
+                  </BaseTypography>
+                </Badge>
+              )}
+            <H4>{item.title}</H4>
+            <H5 weight={"Regular"}>
+              {item.description1}
+              {item.description2 && <H5>{` ${item.description2}`}</H5>}
+            </H5>
+          </View>
+          <View hspacer large />
+          <IconFont
+            name={isSelected ? "io-radio-on" : "io-radio-off"}
+            color={IOColors.blue}
+            size={28}
+            style={{ alignSelf: "flex-start" }}
+          />
+        </TouchableDefaultOpacity>
+        <View spacer />
+        <ItemSeparatorComponent noPadded />
+        <View spacer />
+      </>
+    );
+  };
 
   return (
     <>
