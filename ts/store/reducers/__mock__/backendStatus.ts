@@ -1,5 +1,5 @@
 import { some } from "fp-ts/lib/Option";
-import { BackendStatus } from "../../../types/backendStatus";
+import { BackendStatus, Config } from "../../../types/backendStatus";
 import { BackendStatusState } from "../backendStatus";
 
 export const baseRawBackendStatus: BackendStatus = {
@@ -167,20 +167,22 @@ export const baseBackendState: BackendStatusState = {
   deadsCounter: 0
 };
 
+export const baseBackendConfig: Config = {
+  bpd: {
+    enroll_bpd_after_add_payment_method: false
+  },
+  bpd_ranking: true,
+  bpd_ranking_v2: true,
+  cgn_merchants_v2: true
+};
+
 export const withBpdRankingConfig = (
   baseState: BackendStatusState,
-  newConfig: boolean
+  newConfig: Config
 ): BackendStatusState => ({
   ...baseState,
   status: baseState.status.map(s => ({
     ...s,
-    config: {
-      bpd: {
-        enroll_bpd_after_add_payment_method: false
-      },
-      bpd_ranking: newConfig,
-      bpd_ranking_v2: newConfig,
-      cgn_merchants_v2: newConfig
-    }
+    config: { ...newConfig }
   }))
 });
