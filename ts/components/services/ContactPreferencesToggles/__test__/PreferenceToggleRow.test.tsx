@@ -40,8 +40,7 @@ describe("PreferenceToggleRow component", () => {
     it("should display activity indicator", () => {
       const component = renderComponent({
         ...options,
-        isError: false,
-        isLoading: true
+        graphicalState: "loading"
       });
 
       expect(
@@ -53,8 +52,7 @@ describe("PreferenceToggleRow component", () => {
       const spy = jest.fn();
       const component = renderComponent({
         ...options,
-        isError: true,
-        isLoading: false,
+        graphicalState: "error",
         onReload: spy
       });
       const reloadComponent = component.getByTestId(
@@ -68,8 +66,7 @@ describe("PreferenceToggleRow component", () => {
     it("should display switch disabled", () => {
       const component = renderComponent({
         ...options,
-        isError: false,
-        isLoading: false,
+        graphicalState: "ready",
         disabled: true
       });
       expect(component.getByTestId("preference-toggle-row")).toBeDefined();
@@ -89,8 +86,7 @@ function renderComponent(
     <PreferenceToggleRow
       label="default label"
       value={true}
-      isLoading={false}
-      isError={false}
+      graphicalState={"ready"}
       onPress={onPress}
       onReload={onReload}
       {...options}

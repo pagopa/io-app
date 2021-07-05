@@ -7,17 +7,16 @@ import IconFont from "../../ui/IconFont";
 import { IOColors } from "../../core/variables/IOColors";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import I18n from "../../../i18n";
+import { WithTestID } from "../../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   label: string;
   onPress: (value: boolean) => void;
   value: boolean;
-  isLoading: boolean;
-  isError: boolean;
+  graphicalState: "loading" | "error" | "ready";
   onReload: () => void;
   disabled?: boolean;
-  testID?: string;
-};
+}>;
 
 const styles = StyleSheet.create({
   row: {
@@ -32,50 +31,59 @@ const PreferenceToggleRow = ({
   label,
   onPress,
   value,
-  isLoading,
-  isError,
+  graphicalState,
   onReload,
   disabled,
   testID = "preference-toggle-row"
-}: Props): React.ReactElement => (
-  <View style={[styles.row]}>
-    <View style={IOStyles.flex}>
-      <H4
-        weight={"Regular"}
-        color={"bluegreyDark"}
-        testID={`${testID}-label`}
-        accessibilityRole={"text"}
-      >
-        {label}
-      </H4>
+}: Props): React.ReactElement => {
+  const getComponentByGraphicalState = () => {
+    switch (graphicalState) {
+      case "loading":
+        return (
+          <ActivityIndicator
+            testID={`${testID}-loading`}
+            accessibilityLabel={I18n.t("global.remoteStates.loading")}
+          />
+        );
+      case "error":
+        return (
+          <TouchableDefaultOpacity
+            onPress={onReload}
+            testID={`${testID}-reload`}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.accessibility.reload")}
+          >
+            <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
+          </TouchableDefaultOpacity>
+        );
+      case "ready":
+        return (
+          <Switch
+            value={value}
+            onValueChange={onPress}
+            testID={testID}
+            disabled={disabled}
+            accessibilityRole={"switch"}
+            accessibilityState={{ checked: value, disabled }}
+          />
+        );
+    }
+  };
+  return (
+    <View style={[styles.row]}>
+      <View style={IOStyles.flex}>
+        <H4
+          weight={"Regular"}
+          color={"bluegreyDark"}
+          testID={`${testID}-label`}
+          accessibilityRole={"text"}
+        >
+          {label}
+        </H4>
+      </View>
+      {getComponentByGraphicalState()}
     </View>
-    {!isLoading && !isError && (
-      <Switch
-        value={value}
-        onValueChange={onPress}
-        testID={testID}
-        disabled={disabled}
-        accessibilityRole={"switch"}
-        accessibilityState={{ checked: value, disabled }}
-      />
-    )}
-    {isLoading && !isError && (
-      <ActivityIndicator
-        testID={`${testID}-loading`}
-        accessibilityLabel={I18n.t("global.remoteStates.loading")}
-      />
-    )}
-    {!isLoading && isError && (
-      <TouchableDefaultOpacity
-        onPress={onReload}
-        testID={`${testID}-reload`}
-        accessibilityRole={"button"}
-        accessibilityLabel={I18n.t("global.accessibility.reload")}
-      >
-        <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
-      </TouchableDefaultOpacity>
-    )}
-  </View>
-);
+  );
+};
 
 export default PreferenceToggleRow;

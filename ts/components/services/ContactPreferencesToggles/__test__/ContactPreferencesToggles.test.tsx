@@ -61,7 +61,7 @@ describe("ContactPreferencesToggles component", () => {
       expect(
         component.getByTestId("contact-preferences-webhook-switch")
       ).toBeDefined();
-      // TODO this option should be reintegrated once option will supported back from backend
+      // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
       // expect(
       //   component.getByTestId("contact-preferences-email-switch")
       // ).toBeDefined();

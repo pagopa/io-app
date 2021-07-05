@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
@@ -88,13 +88,17 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     }
   };
 
+  const graphicalState = useMemo(
+    () => (isLoading ? "loading" : isError ? "error" : "ready"),
+    [isLoading, isError]
+  );
+
   return (
     <>
       <PreferenceToggleRow
         label={I18n.t("services.serviceIsEnabled")}
         onPress={(value: boolean) => onValueChange(value, "inbox")}
-        isLoading={isLoading}
-        isError={isError}
+        graphicalState={graphicalState}
         onReload={loadPreferences}
         value={getValueOrFalse(props.servicePreferenceStatus, "inbox")}
         testID={"contact-preferences-inbox-switch"}
@@ -108,8 +112,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
               label={I18n.t("services.pushNotifications")}
               onPress={(value: boolean) => onValueChange(value, "push")}
               value={getValueOrFalse(props.servicePreferenceStatus, "push")}
-              isLoading={isLoading}
-              isError={isError}
+              graphicalState={graphicalState}
               onReload={loadPreferences}
               testID={"contact-preferences-webhook-switch"}
             />
@@ -118,15 +121,14 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         )}
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
-      {/* TODO this option should be reintegrated once option will supported back from backend */}
+      {/* TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17 */}
       {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && getValueOrFalse(props.servicePreferenceStatus, "inbox") && ( */}
       {/*  <> */}
       {/*    <PreferenceToggleRow */}
       {/*      label={I18n.t("services.emailForwarding")} */}
       {/*      onPress={(value: boolean) => onValueChange(value, "email")} */}
       {/*      value={getValueOrFalse(props.servicePreferenceStatus, "email")} */}
-      {/*      onReload={loadPreferences} */}
-      {/*      isLoading={isLoading} */}
+      {/*      graphicalState={graphicalState} */}
       {/*      isError={isError} */}
       {/*      testID={"contact-preferences-email-switch"} */}
       {/*    /> */}
