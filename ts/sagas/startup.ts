@@ -111,10 +111,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import {
-  askOldUsersServicesOptin,
-  askServicesOptin
-} from "./services/servicesOptinSaga";
+import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -301,7 +298,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     if (servicesRedesignEnabled) {
       // TODO the saga should be called even for already loggedIn users without the preference set
-      yield call(askServicesOptin);
+      yield call(askServicesPreferencesModeOptin, true);
     }
 
     // Stop the watchAbortOnboardingSaga
@@ -329,7 +326,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
       if (servicesRedesignEnabled) {
         // TODO the saga should be called even for already loggedIn users without the preference set
-        yield call(askOldUsersServicesOptin);
+        yield call(askServicesPreferencesModeOptin);
       }
 
       // Stop the watchAbortOnboardingSaga

@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Badge, View } from "native-base";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -17,7 +16,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
-import { profileSelector } from "../../../../store/reducers/profile";
+import { profileServicePreferencesModeSelector } from "../../../../store/reducers/profile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 
 type Props = {
@@ -57,17 +56,11 @@ const options: ReadonlyArray<ContactOption> = [
 
 const ServicesContactComponent = (props: Props): React.ReactElement => {
   const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => {
-    const isSelected = pot.getOrElse(
-      pot.map(
-        props.profile,
-        p =>
-          p.service_preferences_settings.mode === item.mode ||
-          (p.service_preferences_settings.mode ===
-            ServicesPreferencesModeEnum.LEGACY &&
-            item.mode === ServicesPreferencesModeEnum.AUTO)
-      ),
-      false
-    );
+    const isSelected =
+      props.profileServicePreferenceMode === item.mode ||
+      (props.profileServicePreferenceMode ===
+        ServicesPreferencesModeEnum.LEGACY &&
+        item.mode === ServicesPreferencesModeEnum.AUTO);
     return (
       <>
         <TouchableDefaultOpacity
@@ -136,7 +129,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state)
+  profileServicePreferenceMode: profileServicePreferencesModeSelector(state)
 });
 
 const mapDispatchToProps = (_: Dispatch) => ({});

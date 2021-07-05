@@ -20,10 +20,9 @@ import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
-
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<{ isOldUser?: true }>;
+  NavigationInjectedProps<{ isOnboarding?: true }>;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props
