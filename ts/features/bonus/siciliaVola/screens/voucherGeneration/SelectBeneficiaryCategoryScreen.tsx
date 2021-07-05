@@ -4,22 +4,22 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
 import { NavigationEvents } from "react-navigation";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { GlobalState } from "../../../../store/reducers/types";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel
-} from "../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+} from "../../store/actions/voucherGeneration";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const AcceptTosComponent = (props: Props): React.ReactElement => {
+const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -38,10 +38,10 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"AcceptTosComponent"}
+        testID={"SelectBeneficiaryCategory"}
         ref={elementRef}
       >
-        <H1>AcceptTosComponent</H1>
+        <H1>SelectBeneficiaryCategoryScreen</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
@@ -57,4 +57,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AcceptTosComponent);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectBeneficiaryCategoryScreen);

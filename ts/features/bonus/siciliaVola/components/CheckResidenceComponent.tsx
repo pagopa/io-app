@@ -10,11 +10,9 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  svGenerateVoucherBack,
-  svGenerateVoucherCancel
-} from "../store/actions/voucherGeneration";
+import { svGenerateVoucherBack } from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { navigateToSvSelectbBeneficiaryCategoryScreen } from "../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -31,7 +29,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     primary: false,
     bordered: true,
     onPress: props.cancel,
-    title: "Cancel"
+    title: "Continue"
   };
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
@@ -53,7 +51,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
-  cancel: () => dispatch(svGenerateVoucherCancel())
+  cancel: () => dispatch(navigateToSvSelectbBeneficiaryCategoryScreen())
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
