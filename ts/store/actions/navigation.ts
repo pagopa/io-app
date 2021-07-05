@@ -97,6 +97,11 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToOnboardingServicePreferenceCompleteAction = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
+
 /**
  * Email
  */
@@ -134,6 +139,11 @@ export const navigateToMessageRouterScreen = (
 /**
  * Service
  */
+
+export const navigateToServiceHomeScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.SERVICES_HOME
+  });
 
 export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
