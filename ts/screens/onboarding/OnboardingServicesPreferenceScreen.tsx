@@ -18,6 +18,7 @@ import { Dispatch } from "../../store/actions/types";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -29,8 +30,8 @@ const OnboardingServicesPreferenceScreen = (
 ): React.ReactElement => {
   const { present: confirmManualConfig } = useManualConfigBottomSheet();
 
-  const onConfirmAction = (keyOption: string) => {
-    if (keyOption === "manual") {
+  const onConfirmAction = (mode: ServicesPreferencesModeEnum) => {
+    if (mode === ServicesPreferencesModeEnum.MANUAL) {
       return confirmManualConfig(props.onContinue);
     }
     return constNull();
@@ -40,10 +41,7 @@ const OnboardingServicesPreferenceScreen = (
     <BaseScreenComponent contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <ServicesContactComponent 
-            onSelectOption={onConfirmAction} 
-            hasAlreadyOnboarded={props.navigation.getParam("isOldUser")}
-          />
+          <ServicesContactComponent onSelectMode={onConfirmAction} />
           <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
             <H5 color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}

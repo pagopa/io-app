@@ -19,6 +19,7 @@ import {
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -123,6 +124,16 @@ export const hasProfileEmailSelector = createSelector(
     )
 );
 
+// return the profile services preference mode
+export const profileServicePreferencesModeSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): ServicesPreferencesModeEnum | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.service_preferences_settings.mode),
+      undefined
+    )
+);
+
 // return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
@@ -190,6 +201,8 @@ const reducer = (
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
             accepted_tos_version: newProfile.accepted_tos_version,
+            service_preferences_settings:
+              newProfile.service_preferences_settings,
             version: 0
           });
         }
@@ -210,6 +223,8 @@ const reducer = (
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
             accepted_tos_version: newProfile.accepted_tos_version,
+            service_preferences_settings:
+              newProfile.service_preferences_settings,
             version: newProfile.version
           });
         }
