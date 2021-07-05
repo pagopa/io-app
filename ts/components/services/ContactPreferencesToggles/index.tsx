@@ -43,7 +43,7 @@ const hasChannel = (
 /**
  * Utility function to get the user preference value for a specific channel
  * return false if preference state is pot.none or if an error occurred on API Response
-**/
+ * */
 const getChannelPreference = (
   potServicePreference: ServicePreferenceState,
   key: Item
@@ -104,18 +104,21 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
         onPress={(value: boolean) => onValueChange(value, "inbox")}
         graphicalState={graphicalState}
         onReload={loadPreferences}
-        value={getValueOrFalse(props.servicePreferenceStatus, "inbox")}
+        value={getChannelPreference(props.servicePreferenceStatus, "inbox")}
         testID={"contact-preferences-inbox-switch"}
       />
       <ItemSeparatorComponent noPadded />
       {hasChannel(NotificationChannelEnum.WEBHOOK, props.channels) &&
-        getValueOrFalse(props.servicePreferenceStatus, "inbox") && (
+        getChannelPreference(props.servicePreferenceStatus, "inbox") && (
           // toggle is disabled if the inbox value is false to prevent inconsistent data
           <>
             <PreferenceToggleRow
               label={I18n.t("services.pushNotifications")}
               onPress={(value: boolean) => onValueChange(value, "push")}
-              value={getValueOrFalse(props.servicePreferenceStatus, "push")}
+              value={getChannelPreference(
+                props.servicePreferenceStatus,
+                "push"
+              )}
               graphicalState={graphicalState}
               onReload={loadPreferences}
               testID={"contact-preferences-webhook-switch"}
@@ -126,12 +129,12 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
 
       {/* Email toggle is temporary removed until the feature will be enabled back from the backend */}
       {/* TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17 */}
-      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && getValueOrFalse(props.servicePreferenceStatus, "inbox") && ( */}
+      {/* {hasChannel(NotificationChannelEnum.EMAIL, props.channels) && getChannelPreference(props.servicePreferenceStatus, "inbox") && ( */}
       {/*  <> */}
       {/*    <PreferenceToggleRow */}
       {/*      label={I18n.t("services.emailForwarding")} */}
       {/*      onPress={(value: boolean) => onValueChange(value, "email")} */}
-      {/*      value={getValueOrFalse(props.servicePreferenceStatus, "email")} */}
+      {/*      value={getChannelPreference(props.servicePreferenceStatus, "email")} */}
       {/*      graphicalState={graphicalState} */}
       {/*      isError={isError} */}
       {/*      testID={"contact-preferences-email-switch"} */}
