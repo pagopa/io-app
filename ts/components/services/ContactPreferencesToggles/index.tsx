@@ -40,7 +40,11 @@ const hasChannel = (
     .map(anc => anc.indexOf(channel) !== -1)
     .getOrElse(true);
 
-const getValueOrFalse = (
+/**
+ * Utility function to get the user preference value for a specific channel
+ * return false if preference state is pot.none or if an error occurred on API Response
+**/
+const getChannelPreference = (
   potServicePreference: ServicePreferenceState,
   key: Item
 ): boolean => {
