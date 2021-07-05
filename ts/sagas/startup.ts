@@ -31,6 +31,7 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
+  svEnabled,
   servicesRedesignEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
@@ -67,6 +68,7 @@ import { profileSelector } from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -109,7 +111,10 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { askServicesOptin } from "./services/servicesOptinSaga";
+import {
+  askOldUsersServicesOptin,
+  askServicesOptin
+} from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -322,6 +327,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // check if the user expressed preference about mixpanel, if not ask for it
       yield call(askMixpanelOptIn);
 
+      if (servicesRedesignEnabled) {
+        // TODO the saga should be called even for already loggedIn users without the preference set
+        yield call(askOldUsersServicesOptin);
+      }
+
       // Stop the watchAbortOnboardingSaga
       yield cancel(watchAbortOnboardingSagaTask);
     }
@@ -344,6 +354,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (cgnEnabled) {
     // Start watching for cgn actions
     yield fork(watchBonusCgnSaga, sessionToken);
+  }
+
+  if (svEnabled) {
+    // Start watching for sv actions
+    yield fork(watchBonusSvSaga);
   }
 
   if (euCovidCertificateEnabled) {
@@ -479,7 +494,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     // Remove the pending message from the notification state
     yield put(clearNotificationPendingMessage());
-
     // Navigate to message router screen
     yield put(navigateToMessageRouterScreen({ messageId }));
     // Push the MAIN navigator in the history to handle the back button

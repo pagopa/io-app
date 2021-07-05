@@ -1623,6 +1623,11 @@ send_email_messages:
 services:
   optIn:
     preferences:
+      completed:
+        title: "Preferenze salvate!"
+        body: "Potrai sempre vedere la lista dei servizi disponibili visitando la sezione Servizi."
+        cta: "Vedi i servizi disponibili"
+      oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
       title: "Come vuoi utilizzare i servizi su IO?"

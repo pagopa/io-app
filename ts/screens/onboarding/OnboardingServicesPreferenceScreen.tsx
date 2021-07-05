@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { SafeAreaView, ScrollView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { View } from "native-base";
+import { NavigationInjectedProps } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
@@ -14,13 +15,15 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
+
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationInjectedProps<{ isOldUser?: true }>;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props
@@ -59,7 +62,8 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO add the function to confirm and start the profile update
-  onContinue: () => dispatch(servicesOptinCompleted())
+  onContinue: () =>
+    dispatch(navigateToOnboardingServicePreferenceCompleteAction())
 });
 
 export default connect(
