@@ -300,7 +300,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield call(checkAcknowledgedEmailSaga, userProfile);
 
     if (servicesRedesignEnabled) {
-      // TODO the saga should be called even for already loggedIn users without the preference set
       yield call(
         askServicesPreferencesModeOptin,
         isProfileFirstOnBoarding(userProfile)

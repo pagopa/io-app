@@ -134,7 +134,7 @@ export const profileServicePreferencesModeSelector = createSelector(
     )
 );
 
-// return the profile services preference mode
+// return true if the profile services preference mode is set (mode is set only when AUTO or MANUAL is the current mode)
 export const isServicesPreferenceModeSet = (
   mode: ServicesPreferencesModeEnum | undefined
 ): boolean =>
