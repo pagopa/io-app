@@ -76,7 +76,7 @@ const OnboardingServicesPreferenceScreen = (
     // if user's choice is 'manual', open bottom sheet to ask confirmation
     if (mode === ServicesPreferencesModeEnum.MANUAL) {
       void confirmManualConfig(() =>
-        setModeSelected(ServicesPreferencesModeEnum.MANUAL)
+        props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
       );
       return;
     }
