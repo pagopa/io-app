@@ -34,6 +34,7 @@ export const trackServiceAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServicePreference.failure):
     case getType(upsertServicePreference.failure):
       return mp.track(action.type, {
+        service_id: action.payload.id,
         reason: getNetworkErrorMessage(action.payload)
       });
     case getType(loadVisibleServices.request):
