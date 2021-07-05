@@ -16,7 +16,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
- * Screen which is displayed when a user requested a CGN activation
+ * Screen which is displayed when a user requested a service preference change
  * and it has been correctly activated
  */
 const ServicePreferenceCompleteScreen = (props: Props): React.ReactElement => (
