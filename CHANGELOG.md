@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0-rc.0](https://github.com/pagopa/io-app/compare/1.28.0-rc.4...1.29.0-rc.0) (2021-06-30)
+
+
+### Bug Fixes
+
+* [[IA-11](https://pagopa.atlassian.net/browse/IA-11),[IA-22](https://pagopa.atlassian.net/browse/IA-22)] IDPS list is requested only when trying to login with SPID ([#3136](https://github.com/pagopa/io-app/issues/3136)) ([22b8452](https://github.com/pagopa/io-app/commit/22b8452c643a9649ea8619234a55cafb0b72768d))
+* [[IA-73](https://pagopa.atlassian.net/browse/IA-73)] Can't login with SPID due to wrong navigation route ([#3175](https://github.com/pagopa/io-app/issues/3175)) ([529380d](https://github.com/pagopa/io-app/commit/529380d1b9ecee35ec917acc87874faa59ea9db6))
+
 ## [1.28.0-rc.4](https://github.com/pagopa/io-app/compare/1.28.0-rc.3...1.28.0-rc.4) (2021-06-25)
 
 

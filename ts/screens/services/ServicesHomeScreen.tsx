@@ -38,6 +38,7 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -56,6 +57,7 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
+  currentSelectedService,
   loadVisibleServices,
   showServiceDetails
 } from "../../store/actions/services";
@@ -99,6 +101,9 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
+import { servicesRedesignEnabled } from "../../config";
+import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -380,6 +385,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   private onServiceSelect = (service: ServicePublic) => {
+    if (servicesRedesignEnabled) {
+      this.props.setSelectedService(service.service_id);
+    }
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
@@ -552,8 +560,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {this.state.isLongPressEnabled &&
-                  this.renderLongPressFooterButtons()}
+                {servicesRedesignEnabled ? (
+                  <ServicesEnablingFooter />
+                ) : (
+                  this.state.isLongPressEnabled &&
+                  this.renderLongPressFooterButtons()
+                )}
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -653,7 +665,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={this.handleOnLongPressItem}
+              handleOnLongPressItem={
+                servicesRedesignEnabled ? constNull : this.handleOnLongPressItem
+              }
               isLongPressEnabled={this.state.isLongPressEnabled}
               onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
@@ -751,6 +765,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setSelectedService: (id: ServiceId) => dispatch(currentSelectedService(id)),
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
