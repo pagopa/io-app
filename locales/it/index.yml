@@ -1655,6 +1655,7 @@ services:
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Inviarti notifiche push
   emailForwarding: Inviarti e-mail
+  tosAndPrivacy: Termini e Privacy
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
