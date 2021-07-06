@@ -44,13 +44,13 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
 
     // when the user changes his/her preference, track the new preference
     if (
-      isStrictSome(prevPotProfile) &&
+      pot.isSome(prevPotProfile) &&
       isStrictSome(props.potProfile) &&
-      prevPotProfile.value.service_preferences_settings !==
-        props.potProfile.value.service_preferences_settings
+      prevPotProfile.value.service_preferences_settings.mode !==
+        props.potProfile.value.service_preferences_settings.mode
     ) {
       void mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
-        mode: props.potProfile.value.service_preferences_settings
+        mode: props.potProfile.value.service_preferences_settings.mode
       });
     }
     setPrevPotProfile(props.potProfile);
