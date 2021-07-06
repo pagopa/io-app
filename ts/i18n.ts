@@ -9,7 +9,7 @@ import { LocalizedMessageKeys } from "./types/backendStatus";
 
 type FallBackLocale = {
   localizedMessage: LocalizedMessageKeys;
-  locale: Locales;
+  locale: "it";
   localeEnum: PreferredLanguageEnum;
 };
 

@@ -24,9 +24,10 @@ import {
   handleInternalLink
 } from "../components/ui/Markdown/handlers/internalLink";
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
-import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
+import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import ROUTES from "../navigation/routes";
+import { localeFallback } from "../i18n";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -226,6 +227,11 @@ const internalRoutePredicates: Map<
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
+export const getCTALocale = (): MessageCTALocales =>
+  MessageCTALocales.decode(getLocalePrimaryWithFallback()).getOrElse(
+    localeFallback.locale
+  );
+
 const extractCTA = (
   text: string,
   serviceMetadata: MaybePotMetadata
@@ -233,7 +239,7 @@ const extractCTA = (
   fromPredicate((t: string) => FM.test(t))(text)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+      CTAS.decode(attrs[getCTALocale()]).fold(
         _ => none,
         // check if the decoded actions are valid
         cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)

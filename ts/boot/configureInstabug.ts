@@ -28,7 +28,8 @@ type InstabugUserAttributeKeys =
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
-  it: Instabug.locale.italian
+  it: Instabug.locale.italian,
+  de: Instabug.locale.dutch
 };
 
 export enum TypeLogs {

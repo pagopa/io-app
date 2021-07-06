@@ -1,6 +1,6 @@
 import { some } from "fp-ts/lib/Option";
 import { Locales } from "../../../locales/locales";
-import I18n, { setLocale } from "../../i18n";
+import I18n, { localeFallback, setLocale } from "../../i18n";
 import {
   getLocalePrimary,
   getLocalePrimaryWithFallback,
@@ -23,18 +23,16 @@ describe("getLocalePrimary", () => {
 
 describe("getLocalePrimaryWithFallback", () => {
   [
-    ["it", "it", "en"],
-    ["en", "en", "en"],
-    ["fr", "en", "en"],
-    ["fr", "it", "it"],
+    ["it", "it"],
+    ["en", "en"],
+    ["fr", localeFallback.locale],
+    ["fr", "it"],
     ["somethingstrange", "en"]
   ].forEach(t => {
-    const [locale, expected, fallback] = t;
+    const [locale, expected] = t;
     it("getLocalePrimaryWithFallback should return it", () => {
       setLocale(locale as Locales);
-      expect(getLocalePrimaryWithFallback(fallback as Locales)).toStrictEqual(
-        expected
-      );
+      expect(getLocalePrimaryWithFallback()).toStrictEqual(expected);
     });
   });
 });

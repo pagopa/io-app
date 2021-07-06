@@ -36,6 +36,7 @@ import {
 import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
+import { getCTALocale } from "../../utils/messages";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -116,7 +117,7 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
-          const locale = getLocalePrimaryWithFallback();
+          const locale = getCTALocale();
 
           return fromNullable(data[locale]).chain(l =>
             fromNullable(l.idps[id as IdentityProviderId])
@@ -141,7 +142,7 @@ export const screenContextualHelpDataSelector = createSelector<
     if (currentRouteName === undefined) {
       return none;
     }
-    const locale = getLocalePrimaryWithFallback();
+    const locale = getCTALocale();
     const screenData =
       data[locale] !== undefined
         ? data[locale].screens.find(
