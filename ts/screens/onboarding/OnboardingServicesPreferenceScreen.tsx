@@ -28,6 +28,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { showToast } from "../../utils/showToast";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
+import { mixpanelTrack } from "../../mixpanel";
 
 type NavigationProps = {
   isFirstOnboarding: boolean;
@@ -53,8 +54,11 @@ const OnboardingServicesPreferenceScreen = (
     typeof props.potProfile
   >(props.potProfile);
   React.useEffect(() => {
-    // when the user made a choice (the profile is right updated), navigate to thank-you page
+    // when the user made a choice (the profile is right updated), continue to the next step
     if (isServicesPreferenceModeSet(props.profileServicePreferenceMode)) {
+      void mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
+        mode: props.profileServicePreferenceMode
+      });
       props.onContinue(isFirstOnboarding);
       return;
     }
