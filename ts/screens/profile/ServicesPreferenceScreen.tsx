@@ -42,6 +42,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       showToast(I18n.t("global.genericError"));
     }
 
+    // when the user changes his/her preference, track the new preference
     if (
       isStrictSome(prevPotProfile) &&
       isStrictSome(props.potProfile) &&
