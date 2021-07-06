@@ -64,7 +64,10 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { profileSelector } from "../store/reducers/profile";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
@@ -111,10 +114,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import {
-  askOldUsersServicesOptin,
-  askServicesOptin
-} from "./services/servicesOptinSaga";
+import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -300,8 +300,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield call(checkAcknowledgedEmailSaga, userProfile);
 
     if (servicesRedesignEnabled) {
-      // TODO the saga should be called even for already loggedIn users without the preference set
-      yield call(askServicesOptin);
+      yield call(
+        askServicesPreferencesModeOptin,
+        isProfileFirstOnBoarding(userProfile)
+      );
     }
 
     // Stop the watchAbortOnboardingSaga
@@ -328,8 +330,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       yield call(askMixpanelOptIn);
 
       if (servicesRedesignEnabled) {
-        // TODO the saga should be called even for already loggedIn users without the preference set
-        yield call(askOldUsersServicesOptin);
+        yield call(askServicesPreferencesModeOptin, false);
       }
 
       // Stop the watchAbortOnboardingSaga

@@ -35,6 +35,7 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -100,6 +101,14 @@ export const navigateToTosScreen = NavigationActions.navigate({
 export const navigateToOnboardingServicePreferenceCompleteAction = () =>
   NavigationActions.navigate({
     routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
+
+export const navigateToServicesPreferenceModeSelectionScreen = (
+  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+    params
   });
 
 /**

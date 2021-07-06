@@ -5,14 +5,14 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { backendStatusLoadSuccess } from "../actions/backendStatus";
-import { Action } from "../actions/types";
 import {
   BackendStatus,
-  ConfigStatusKey,
+  BpdConfig,
   SectionStatus,
   SectionStatusKey
 } from "../../types/backendStatus";
+import { backendStatusLoadSuccess } from "../actions/backendStatus";
+import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted
@@ -48,13 +48,32 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
       .fold(undefined, s => s[sectionStatusKey])
   );
 
-// return the config status for the given key. if it is not present, returns undefined
-export const configSelector = (configStatusKey: ConfigStatusKey) =>
-  createSelector(backendStatusSelector, (backendStatus): boolean | undefined =>
+export const bpdRankingEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean | undefined =>
     backendStatus
       .mapNullable(bs => bs.config)
-      .fold(undefined, c => c[configStatusKey])
-  );
+      .mapNullable(config => config.bpd_ranking_v2)
+      .toUndefined()
+);
+
+export const bpdRemoteConfigSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): BpdConfig | undefined =>
+    backendStatus
+      .mapNullable(bs => bs.config)
+      .mapNullable(config => config.bpd)
+      .toUndefined()
+);
+
+export const cgnMerchantVersionSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean | undefined =>
+    backendStatus
+      .mapNullable(bs => bs.config)
+      .mapNullable(config => config.cgn_merchants_v2)
+      .toUndefined()
+);
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
