@@ -2,6 +2,7 @@
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
 import {
   EnableableFunctionsTypeEnum,
+  PrivativePaymentMethod,
   RawBPayPaymentMethod
 } from "../../../../types/pagopa";
 
@@ -245,3 +246,31 @@ export const rawBPay: RawBPayPaymentMethod = {
   updateDate: "2020-11-20",
   kind: "BPay"
 };
+
+export const mockPrivativeCard: PrivativePaymentMethod = {
+  walletType: "Card",
+  createDate: "2021-07-08",
+  enableableFunctions: ["FA", "pagoPA", "BPD"],
+  favourite: false,
+  idWallet: 25572,
+  info: {
+    blurredNumber: "0001",
+    brand: "Maestro",
+    brandLogo:
+      "https://wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_maestro.png",
+    expireMonth: "11",
+    expireYear: "2021",
+    hashPan:
+      "d48a59cdfbe3da7e4fe25e28cbb47d5747720ecc6fc392c87f1636fe95db22f90004",
+    holder: "Maria Rossi",
+    htokenList: ["token1", "token2"],
+    issuerAbiCode: "CONAD",
+    type: "PRV"
+  },
+  onboardingChannel: "IO",
+  pagoPA: false,
+  updateDate: "2020-11-20",
+  kind: "Privative",
+  caption: "●●●●0001",
+  icon: 37
+} as PrivativePaymentMethod;
