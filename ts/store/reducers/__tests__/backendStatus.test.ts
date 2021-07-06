@@ -2,7 +2,7 @@ import { none, some } from "fp-ts/lib/Option";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
-  configSelector,
+  bpdRankingEnabledSelector,
   sectionStatusSelector
 } from "../backendStatus";
 import { BackendStatus } from "../../../types/backendStatus";
@@ -234,7 +234,7 @@ describe("test selectors", () => {
   });
 
   it("should return undefined - configSelector", () => {
-    const config = configSelector("bpd_ranking_v2")(noneStore);
+    const config = bpdRankingEnabledSelector(noneStore);
     expect(config).toBeUndefined();
   });
 
@@ -244,7 +244,7 @@ describe("test selectors", () => {
         status: some({ ...status, config: { bpd_ranking_v2: true } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
+    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeTruthy();
   });
 
@@ -254,7 +254,7 @@ describe("test selectors", () => {
         status: some({ ...status, config: { bpd_ranking_v2: false } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
+    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
   });
 });
