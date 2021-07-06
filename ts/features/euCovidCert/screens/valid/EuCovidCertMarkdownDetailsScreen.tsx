@@ -18,7 +18,7 @@ import {
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
-import { captureScreenShoot, screenShotOption } from "../../utils/screenshoot";
+import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;

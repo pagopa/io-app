@@ -38,7 +38,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { showToast } from "../../../../utils/showToast";
-import { captureScreenShoot, screenShotOption } from "../../utils/screenshoot";
+import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
