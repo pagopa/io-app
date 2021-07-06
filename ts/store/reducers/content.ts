@@ -14,7 +14,6 @@ import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
