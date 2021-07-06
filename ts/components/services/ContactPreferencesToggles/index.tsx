@@ -49,7 +49,7 @@ const getChannelPreference = (
   key: Item
 ): boolean => {
   if (
-    isStrictSome(potServicePreference) &&
+    pot.isSome(potServicePreference) &&
     isServicePreferenceResponseSuccess(potServicePreference.value)
   ) {
     return potServicePreference.value.value[key];
