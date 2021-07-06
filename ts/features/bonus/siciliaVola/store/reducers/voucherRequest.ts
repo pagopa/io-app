@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import {
   Company,
   Hospital,
+  SvBeneficiaryCategory,
   University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
@@ -17,6 +18,8 @@ import {
   svGenerateVoucherUnderThresholdIncome
 } from "../actions/voucherGeneration";
 import { Action } from "../../../../../store/actions/types";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export type VoucherRequestState = Option<VoucherRequest>;
 const INITIAL_STATE: VoucherRequestState = none;
@@ -140,3 +143,9 @@ const reducer = (
 };
 
 export default reducer;
+
+export const selectedBeneficiaryCategorySelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherGeneration.voucherRequest],
+  (voucherRequest: VoucherRequestState): Option<SvBeneficiaryCategory> =>
+    voucherRequest.fold(none, vR => some(vR.category))
+);
