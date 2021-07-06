@@ -79,7 +79,7 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has not accepted ToS", () => {
-    it("should navigate to to ToS screen", () =>
+    it("should navigate to ToS screen", () =>
       expectSaga(checkAcceptedTosSaga, {
         ...oldOnboardedProfile,
         accepted_tos_version: undefined
