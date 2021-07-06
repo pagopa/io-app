@@ -1,12 +1,14 @@
 import { EnabledChannels } from "../../utils/profile";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 
+export type ServicePreference = { settings_version: number } & EnabledChannels;
+
 /**
  * Type representing service preference successfully loaded
  */
 type ServicePreferenceResponseSuccess = {
   kind: "success";
-  value: EnabledChannels;
+  value: ServicePreference;
 };
 
 /**
@@ -33,7 +35,7 @@ type ServicePreferenceTooManyRequests = {
 /**
  * Type representing all failures provided by API responses
  */
-type ServicePreferenceResponseFailure =
+export type ServicePreferenceResponseFailure =
   | ServicePreferenceNotFound
   | ServicePreferenceConflict
   | ServicePreferenceTooManyRequests;
