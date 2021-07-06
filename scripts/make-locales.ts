@@ -191,7 +191,7 @@ async function run(rootPath: string): Promise<void> {
   try {
     console.log(chalk.whiteBright("Translations builder"));
 
-    const masterLocale = process.env.I18N_MASTER_LOCALE || "en";
+    const masterLocale = "it";
 
     const locales = fs
       .readdirSync(root)
@@ -286,7 +286,7 @@ async function run(rootPath: string): Promise<void> {
           100 - (currentLocale.missing.length / masterKeys.keys.length) * 100;
         if (coveragePerc !== 0) {
           console.log(
-            chalk.yellowBright(`"${currentLocale.locale} - "`),
+            chalk.yellowBright(`"${currentLocale.locale}" locale`),
             `has a coverage of ${coveragePerc.toFixed(2)}% (${
               masterKeys.keys.length - currentLocale.missing.length
             }/${masterKeys.keys.length} keys)`
