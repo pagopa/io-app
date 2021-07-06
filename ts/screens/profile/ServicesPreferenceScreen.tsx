@@ -50,7 +50,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
         props.potProfile.value.service_preferences_settings.mode
     ) {
       void mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
-        mode: props.potProfile.value.service_preferences_settings
+        mode: props.potProfile.value.service_preferences_settings.mode
       });
     }
     setPrevPotProfile(props.potProfile);
