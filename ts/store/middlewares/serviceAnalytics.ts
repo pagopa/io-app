@@ -44,12 +44,16 @@ export const trackServiceAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
     case getType(loadServicePreference.request):
-    case getType(loadServicePreference.success):
       return mp.track(action.type);
     case getType(upsertServicePreference.request):
-    case getType(upsertServicePreference.success):
       return mp.track(action.type, {
         service_id: action.payload.id
+      });
+    case getType(loadServicePreference.success):
+    case getType(upsertServicePreference.success):
+      return mp.track(action.type, {
+        service_id: action.payload.id,
+        responseStatus: action.payload.kind
       });
   }
   return Promise.resolve();
