@@ -19,7 +19,7 @@ import {
   AVOID_ZOOM_JS,
   APP_EVENT_HANDLER
 } from "../utils/webview";
-import { getCTALocale } from "../utils/messages";
+import { getRemoteLocale } from "../utils/messages";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 import { Body as BodyText } from "./core/typography/Body";
@@ -195,7 +195,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       return;
     }
 
-    const locale = getCTALocale();
+    const locale = getRemoteLocale();
     const message = maybeData.value;
     switch (message.type) {
       case "CLOSE_MODAL":

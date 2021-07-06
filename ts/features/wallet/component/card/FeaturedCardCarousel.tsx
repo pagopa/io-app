@@ -20,7 +20,7 @@ import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding"
 import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
-import { getCTALocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../../utils/messages";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -75,7 +75,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
             undefined,
             bu => bu.logo
           );
-          const currentLocale = getCTALocale();
+          const currentLocale = getRemoteLocale();
 
           switch (b.id_type) {
             case ID_CGN_TYPE:

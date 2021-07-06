@@ -63,7 +63,7 @@ import {
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { getCTALocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../../utils/messages";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -524,7 +524,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const maybeBonusInfo = fromNullable(props.bonusInfo);
   const bonusInfoFromLocale = maybeBonusInfo
-    .map(b => b[getCTALocale()])
+    .map(b => b[getRemoteLocale()])
     .toUndefined();
   const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
     maybeNotNullyString(b.tos_url)

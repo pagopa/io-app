@@ -23,7 +23,7 @@ import { maybeNotNullyString } from "../../../../utils/strings";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { getCTALocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../../utils/messages";
 
 type OwnProps = {
   onBack?: () => void;
@@ -153,7 +153,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
 
   const bonusType = props.bonus;
   const bonusTypeLocalizedContent: BonusAvailableContent =
-    bonusType[getCTALocale()];
+    bonusType[getRemoteLocale()];
 
   const cancelButtonProps = {
     block: true,

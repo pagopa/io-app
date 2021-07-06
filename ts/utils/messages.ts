@@ -28,6 +28,7 @@ import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import ROUTES from "../navigation/routes";
 import { localeFallback } from "../i18n";
+import { Locales } from "../../locales/locales";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
@@ -227,7 +228,12 @@ const internalRoutePredicates: Map<
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
-export const getCTALocale = (): MessageCTALocales =>
+/**
+ * since remote payload can have a subset of supported locales, this function
+ * return the locale supported by the app. If the remote locale is not supported
+ * a fallback will be returned
+ */
+export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
   MessageCTALocales.decode(getLocalePrimaryWithFallback()).getOrElse(
     localeFallback.locale
   );
@@ -239,7 +245,7 @@ const extractCTA = (
   fromPredicate((t: string) => FM.test(t))(text)
     .map(m => FM<MessageCTA>(m).attributes)
     .chain(attrs =>
-      CTAS.decode(attrs[getCTALocale()]).fold(
+      CTAS.decode(attrs[getRemoteLocale()]).fold(
         _ => none,
         // check if the decoded actions are valid
         cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
