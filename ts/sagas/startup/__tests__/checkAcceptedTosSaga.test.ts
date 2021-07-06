@@ -78,10 +78,13 @@ describe("checkAcceptedTosSaga", () => {
         .run());
   });
 
-  describe("when user has accepted ToS before its version was persisted", () => {
-    it("should do nothing", () =>
-      expectSaga(checkAcceptedTosSaga, oldOnboardedProfile)
-        .not.put(navigateToTosScreen)
+  describe("when user has not accepted ToS", () => {
+    it("should navigate to ToS screen", () =>
+      expectSaga(checkAcceptedTosSaga, {
+        ...oldOnboardedProfile,
+        accepted_tos_version: undefined
+      })
+        .put(navigateToTosScreen)
         .run());
   });
 
