@@ -175,14 +175,14 @@ describe("getCTA", () => {
     );
   });
 
-  it("should return the english CTA when the language is not supported", () => {
+  it("should return the italian CTA when the language is not supported", () => {
     setLocale("fr" as Locales);
     const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
-      "go1",
+      "premi",
       "ioit://PROFILE_MAIN",
-      "go2",
+      "premi2",
       "ioit://PROFILE_MAIN2"
     );
     setLocale("it" as Locales); // restore default
