@@ -13,6 +13,7 @@ import {
   cleanMarkdownFromCTAs,
   getCTA,
   getMessagePaymentExpirationInfo,
+  getRemoteLocale,
   getServiceCTA,
   isCtaActionValid,
   MaybePotMetadata,
@@ -130,6 +131,28 @@ const serviceMetadataBase = {
 
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
+
+describe("getRemoteLocale", () => {
+  it("should return it", () => {
+    setLocale("it" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+
+  it("should return en", () => {
+    setLocale("en" as Locales);
+    expect(getRemoteLocale()).toEqual("en");
+  });
+
+  it("should return en", () => {
+    setLocale("de" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+
+  it("should return en", () => {
+    setLocale("xyz" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+});
 
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
