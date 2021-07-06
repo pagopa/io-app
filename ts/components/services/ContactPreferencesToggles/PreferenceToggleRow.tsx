@@ -1,15 +1,22 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import Switch from "../../ui/Switch";
 import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
+import IconFont from "../../ui/IconFont";
+import { IOColors } from "../../core/variables/IOColors";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import I18n from "../../../i18n";
+import { WithTestID } from "../../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   label: string;
   onPress: (value: boolean) => void;
   value: boolean;
-  testID?: string;
-};
+  graphicalState: "loading" | "error" | "ready";
+  onReload: () => void;
+  disabled?: boolean;
+}>;
 
 const styles = StyleSheet.create({
   row: {
@@ -24,16 +31,59 @@ const PreferenceToggleRow = ({
   label,
   onPress,
   value,
+  graphicalState,
+  onReload,
+  disabled,
   testID = "preference-toggle-row"
-}: Props): React.ReactElement => (
-  <View style={[styles.row]}>
-    <View style={IOStyles.flex}>
-      <H4 weight={"Regular"} color={"bluegreyDark"}>
-        {label}
-      </H4>
+}: Props): React.ReactElement => {
+  const getComponentByGraphicalState = () => {
+    switch (graphicalState) {
+      case "loading":
+        return (
+          <ActivityIndicator
+            testID={`${testID}-loading`}
+            accessibilityLabel={I18n.t("global.remoteStates.loading")}
+          />
+        );
+      case "error":
+        return (
+          <TouchableDefaultOpacity
+            onPress={onReload}
+            testID={`${testID}-reload`}
+            accessibilityRole={"button"}
+            accessibilityLabel={I18n.t("global.accessibility.reload")}
+          >
+            <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
+          </TouchableDefaultOpacity>
+        );
+      case "ready":
+        return (
+          <Switch
+            value={value}
+            onValueChange={onPress}
+            testID={testID}
+            disabled={disabled}
+            accessibilityRole={"switch"}
+            accessibilityState={{ checked: value, disabled }}
+          />
+        );
+    }
+  };
+  return (
+    <View style={[styles.row]}>
+      <View style={IOStyles.flex}>
+        <H4
+          weight={"Regular"}
+          color={"bluegreyDark"}
+          testID={`${testID}-label`}
+          accessibilityRole={"text"}
+        >
+          {label}
+        </H4>
+      </View>
+      {getComponentByGraphicalState()}
     </View>
-    <Switch value={value} onValueChange={onPress} testID={testID} />
-  </View>
-);
+  );
+};
 
 export default PreferenceToggleRow;

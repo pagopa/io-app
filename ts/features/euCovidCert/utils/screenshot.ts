@@ -1,13 +1,20 @@
 import { CaptureOptions, captureRef } from "react-native-view-shot";
 import { ReactInstance, RefObject } from "react";
+import { Dimensions } from "react-native";
 import { saveImageToGallery } from "../../../utils/share";
 
 type CaptureScreenShotEvents = {
   onSuccess?: () => void; // invoked on success
-  onError?: () => void; // invoken on error
+  onError?: () => void; // invoked on error
   onEnd?: () => void; // always invoked onSuccess/onError
   onNoPermissions?: () => void; // invoked in no given required permission
 };
+
+export const screenShotOption: CaptureOptions = {
+  width: Dimensions.get("window").width,
+  format: "png"
+};
+
 /**
  * utility to save a screenshot as image in the device camera roll
  * @param viewRef the view you want to export as image

@@ -1,39 +1,69 @@
 import * as React from "react";
-import { constNull } from "fp-ts/lib/function";
 import { connect } from "react-redux";
+import * as pot from "italia-ts-commons/lib/pot";
 import FooterWithButtons from "../ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
+import {
+  profileSelector,
+  profileServicePreferencesModeSelector
+} from "../../store/reducers/profile";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { profileUpsert } from "../../store/actions/profile";
+import { useManualConfigBottomSheet } from "../../screens/profile/components/services/ManualConfigBottomSheet";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-// this component shows two CTA to enable or disable services
-const ServicesEnablingFooter = (props: Props): React.ReactElement => (
-  <FooterWithButtons
-    type={"TwoButtonsInlineHalf"}
-    leftButton={{
-      title: I18n.t("services.disableAll"),
-      onPress: props.enableAll,
-      bordered: true,
-      light: true
-    }}
-    rightButton={{
-      title: I18n.t("services.enableAll"),
-      onPress: props.disableAll,
-      bordered: true,
-      light: true
-    }}
-  />
-);
+// this component shows a CTA to set services preference mode to MANUAL or AUTO
+const ServicesEnablingFooter = (props: Props): React.ReactElement => {
+  const { present: confirmManualConfig } = useManualConfigBottomSheet();
+  const modeManual = {
+    title: I18n.t("services.disableAll"),
+    action: () => {
+      void confirmManualConfig(() =>
+        props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+      );
+    }
+  };
+  const modeAuto = {
+    action: () =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.AUTO),
+    title: I18n.t("services.enableAll")
+  };
+  const buttonConfig =
+    props.profileServicePreferenceMode === ServicesPreferencesModeEnum.AUTO
+      ? modeManual
+      : modeAuto;
 
-const mapStateToProps = (_: GlobalState) => ({});
+  return (
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={{
+        title: props.isLoading
+          ? I18n.t("services.updatingServiceMode")
+          : buttonConfig.title,
+        onPress: buttonConfig.action,
+        disabled: props.isLoading,
+        bordered: true,
+        light: true
+      }}
+    />
+  );
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  // TODO Add the handlers when available
-  enableAll: constNull,
-  disableAll: constNull
+const mapStateToProps = (state: GlobalState) => {
+  const profile = profileSelector(state);
+  return {
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
+    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }))
 });
 
 export default connect(

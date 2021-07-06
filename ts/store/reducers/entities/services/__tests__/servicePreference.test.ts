@@ -7,6 +7,7 @@ import {
   upsertServicePreference
 } from "../../../../actions/services/servicePreference";
 import {
+  ServicePreference,
   ServicePreferenceResponse,
   WithServiceID
 } from "../../../../../types/services/ServicePreferenceResponse";
@@ -16,7 +17,6 @@ import {
   NetworkError
 } from "../../../../../utils/errors";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { EnabledChannels } from "../../../../../utils/profile";
 
 const initialState: ServicePreferenceState = pot.none;
 
@@ -36,7 +36,8 @@ describe("servicePreferenceReducer", () => {
       value: {
         inbox: true,
         push: true,
-        email: false
+        email: false,
+        settings_version: 0
       }
     };
 
@@ -54,15 +55,17 @@ describe("servicePreferenceReducer", () => {
       value: {
         inbox: true,
         push: true,
-        email: false
+        email: false,
+        settings_version: 0
       }
     });
 
-    const updatingResponse: WithServiceID<EnabledChannels> = {
+    const updatingResponse: WithServiceID<ServicePreference> = {
       id: "s1" as ServiceId,
       inbox: true,
       push: true,
-      email: true
+      email: true,
+      settings_version: 0
     };
 
     const requestUpsert = upsertServicePreference.request(updatingResponse);
@@ -76,7 +79,8 @@ describe("servicePreferenceReducer", () => {
         value: {
           inbox: true,
           push: true,
-          email: true
+          email: true,
+          settings_version: 0
         }
       })
     );
@@ -87,7 +91,8 @@ describe("servicePreferenceReducer", () => {
       value: {
         inbox: true,
         push: true,
-        email: true
+        email: true,
+        settings_version: 0
       }
     });
 
@@ -100,7 +105,8 @@ describe("servicePreferenceReducer", () => {
         value: {
           inbox: true,
           push: true,
-          email: true
+          email: true,
+          settings_version: 0
         }
       })
     );

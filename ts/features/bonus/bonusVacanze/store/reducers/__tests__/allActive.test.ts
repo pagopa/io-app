@@ -10,9 +10,13 @@ import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonu
 import { BonusCode } from "../../../../../../../definitions/bonus_vacanze/BonusCode";
 import { mockedBonus } from "../../../__mock__/mockData";
 import { ownedActiveOrRedeemedBonus } from "../allActive";
+import { ServicesPreferencesModeEnum } from "../../../../../../../definitions/backend/ServicesPreferencesMode";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
 const profile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,

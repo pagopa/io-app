@@ -1,11 +1,11 @@
 import { createAsyncAction } from "typesafe-actions";
 import {
+  ServicePreference,
   ServicePreferenceResponse,
   WithServiceID
 } from "../../../types/services/ServicePreferenceResponse";
 import { NetworkError } from "../../../utils/errors";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { EnabledChannels } from "../../../utils/profile";
 
 /**
  * Actions to load the specified preferences for a given ServiceID
@@ -24,7 +24,7 @@ export const upsertServicePreference = createAsyncAction(
   "SERVICE_PREFERENCE_UPSERT_SUCCESS",
   "SERVICE_PREFERENCE_UPSERT_FAILURE"
 )<
-  WithServiceID<EnabledChannels>,
+  WithServiceID<ServicePreference>,
   ServicePreferenceResponse,
   WithServiceID<NetworkError>
 >();

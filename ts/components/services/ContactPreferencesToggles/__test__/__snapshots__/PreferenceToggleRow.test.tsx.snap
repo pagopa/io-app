@@ -21,6 +21,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
     }
   >
     <Text
+      accessibilityRole="text"
       color="bluegreyDark"
       font="TitilliumWeb"
       fontStyle={
@@ -41,6 +42,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
           },
         ]
       }
+      testID="preference-toggle-row-label"
       weight="Regular"
       weightColorFactory={[Function]}
     >
@@ -49,6 +51,12 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
   </View>
   <RCTSwitch
     accessibilityRole="switch"
+    accessibilityState={
+      Object {
+        "checked": true,
+        "disabled": undefined,
+      }
+    }
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
