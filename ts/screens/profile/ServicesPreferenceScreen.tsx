@@ -10,7 +10,10 @@ import { Dispatch } from "../../store/actions/types";
 import I18n from "../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { profileUpsert } from "../../store/actions/profile";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  profileSelector,
+  profileServicePreferencesModeSelector
+} from "../../store/reducers/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { showToast } from "../../utils/showToast";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
@@ -57,7 +60,10 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("profile.preferences.list.service_contact")}
     >
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-        <ServicesContactComponent onSelectMode={handleOnSelectMode} />
+        <ServicesContactComponent
+          onSelectMode={handleOnSelectMode}
+          mode={props.profileServicePreferenceMode}
+        />
       </ScrollView>
     </BaseScreenComponent>
   );
@@ -67,7 +73,8 @@ const mapStateToProps = (state: GlobalState) => {
   const profile = profileSelector(state);
   return {
     isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    potProfile: profile
+    potProfile: profile,
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state)
   };
 };
 

@@ -2,7 +2,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Badge, View } from "native-base";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -17,12 +16,12 @@ import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
-import { profileSelector } from "../../../../store/reducers/profile";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 
 type Props = {
   onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
-  hasAlreadyOnboarded?: true;
+  mode?: ServicesPreferencesModeEnum;
+  showBadge?: boolean;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -57,17 +56,7 @@ const options: ReadonlyArray<ContactOption> = [
 
 const ServicesContactComponent = (props: Props): React.ReactElement => {
   const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => {
-    const isSelected = pot.getOrElse(
-      pot.map(
-        props.profile,
-        p =>
-          p.service_preferences_settings.mode === item.mode ||
-          (p.service_preferences_settings.mode ===
-            ServicesPreferencesModeEnum.LEGACY &&
-            item.mode === ServicesPreferencesModeEnum.AUTO)
-      ),
-      false
-    );
+    const isSelected = item.mode === props.mode;
     return (
       <>
         <TouchableDefaultOpacity
@@ -85,18 +74,17 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
           }
         >
           <View style={IOStyles.flex}>
-            {props.hasAlreadyOnboarded &&
-              item.mode === ServicesPreferencesModeEnum.AUTO && (
-                <Badge style={[styles.badge]}>
-                  <BaseTypography
-                    weight={"SemiBold"}
-                    color={"white"}
-                    style={{ fontSize: 12 }}
-                  >
-                    {I18n.t("services.optIn.preferences.oldUsersBadge")}
-                  </BaseTypography>
-                </Badge>
-              )}
+            {props.showBadge && item.mode === ServicesPreferencesModeEnum.AUTO && (
+              <Badge style={[styles.badge]}>
+                <BaseTypography
+                  weight={"SemiBold"}
+                  color={"white"}
+                  style={{ fontSize: 12 }}
+                >
+                  {I18n.t("services.optIn.preferences.oldUsersBadge")}
+                </BaseTypography>
+              </Badge>
+            )}
             <H4>{item.title}</H4>
             <H5 weight={"Regular"}>
               {item.description1}
@@ -135,9 +123,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
