@@ -4,7 +4,8 @@ const LocalizedMessage = t.interface({
   "en-EN": t.string,
   "it-IT": t.string
 });
-
+export type LocalizedMessage = t.TypeOf<typeof LocalizedMessage>;
+export type LocalizedMessageKeys = keyof LocalizedMessage;
 const BackendStatusR = t.interface({
   is_alive: t.boolean,
   message: LocalizedMessage

@@ -1,0 +1,9 @@
+---
+global:
+  navigator:
+    messages: mitteilungen
+    documents: unterlagen
+    wallet: brieftasche
+    profile: profil
+    services: dienstleistungen
+
