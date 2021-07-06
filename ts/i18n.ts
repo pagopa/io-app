@@ -37,16 +37,16 @@ I18n.defaultLocale = localeFallback.locale;
 // Define the supported translations
 // eslint-disable-next-line
 I18n.translations = {
-  en: locales.localeEN,
   it: locales.localeIT,
+  en: locales.localeEN,
   de: locales.localeDE
 };
 
 export const translations = Object.keys(I18n.translations);
 
-export const availableTranslations: ReadonlyArray<locales.Locales> = translations
-  .map(k => k as locales.Locales)
-  .sort();
+export const availableTranslations: ReadonlyArray<locales.Locales> = translations.map(
+  k => k as locales.Locales
+);
 
 export function setLocale(lang: locales.Locales) {
   // eslint-disable-next-line
