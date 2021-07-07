@@ -74,6 +74,7 @@ const ProfileDataScreen: React.FC<Props> = ({
                 : undefined
             }
             onPress={onPressEmail}
+            testID="insert-or-edit-email"
           />
         </List>
       </Content>

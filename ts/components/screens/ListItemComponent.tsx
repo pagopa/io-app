@@ -42,6 +42,7 @@ type Props = Readonly<{
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
   accessibilityState?: AccessibilityState;
+  testID?: string;
 }>;
 const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
@@ -117,6 +118,7 @@ export default class ListItemComponent extends React.Component<Props> {
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityState={this.props.accessibilityState}
         accessibilityRole={this.props.accessibilityRole}
+        testID={this.props.testID}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>

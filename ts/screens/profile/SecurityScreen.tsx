@@ -108,8 +108,9 @@ const SecurityScreen: FC<Props> = ({
             title={I18n.t("identification.unlockCode.reset.button_short")}
             subTitle={I18n.t("identification.unlockCode.reset.subtitle")}
             onPress={requestIdentificationAndResetPin}
+            testID="reset-unlock-code"
           />
-          {/* Enable/disable biometric authentication */}
+          {/* Enable/disable biometric recognition */}
           {isFingerprintAvailable && (
             <ListItemComponent
               title={I18n.t(
@@ -124,6 +125,7 @@ const SecurityScreen: FC<Props> = ({
               accessibilityState={{ checked: isFingerprintEnabled }}
               accessibilityRole="switch"
               onPress={onPressBiometricRecognitionItem}
+              testID="biometric-recognition"
             />
           )}
         </List>
