@@ -33,50 +33,85 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
   isContentLoaded,
   onLinkClicked,
   onRequestAssistance
-}) => (
-  <>
-    <BaseHeader
-      accessibilityEvents={{
-        avoidNavigationEventsUsage: true
-      }}
-      headerTitle={I18n.t("contextualHelp.title")}
-      customRightIcon={{
-        iconName: "io-close",
-        onPress: onClose,
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-    />
+}) => {
+  // Being content a ReactNode we can rely on `null` to represent no-content
+  const showLoader = contextualHelpData.content === undefined;
 
-    {!contextualHelpData.content && (
-      <View centerJustified={true}>
-        <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-      </View>
-    )}
-    {contextualHelpData.content && (
-      <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
-        <H3 accessible={true}>{contextualHelpData.title}</H3>
-        <View spacer={true} />
-        {contextualHelpData.content}
-        <View spacer={true} />
-        {contextualHelpData.faqs && isContentLoaded && (
-          <FAQComponent
-            onLinkClicked={onLinkClicked}
-            faqs={contextualHelpData.faqs}
-          />
-        )}
-        {isContentLoaded && (
-          <>
-            <View spacer={true} extralarge={true} />
-            <InstabugAssistanceComponent
-              requestAssistance={onRequestAssistance}
+  return (
+    <>
+      <BaseHeader
+        accessibilityEvents={{
+          avoidNavigationEventsUsage: true
+        }}
+        headerTitle={I18n.t("contextualHelp.title")}
+        customRightIcon={{
+          iconName: "io-close",
+          onPress: onClose,
+          accessibilityLabel: I18n.t(
+            "global.accessibility.contextualHelp.close"
+          )
+        }}
+      />
+      {showLoader && (
+        <View centerJustified={true}>
+          <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+        </View>
+      )}
+      {!showLoader && (
+        <Content
+          contentContainerStyle={styles.contentContainer}
+          noPadded={true}
+        >
+          {renderTitleIfPresent(contextualHelpData.title)}
+          {renderContentIfPresent(contextualHelpData.content)}
+
+          {contextualHelpData.faqs && isContentLoaded && (
+            <FAQComponent
+              onLinkClicked={onLinkClicked}
+              faqs={contextualHelpData.faqs}
             />
-          </>
-        )}
-        {isContentLoaded && <EdgeBorderComponent />}
-      </Content>
-    )}
-    <BetaBannerComponent />
-  </>
-);
+          )}
+          {isContentLoaded && (
+            <>
+              {contextualHelpData.content !== null && (
+                <View spacer={true} extralarge={true} />
+              )}
+              <InstabugAssistanceComponent
+                requestAssistance={onRequestAssistance}
+              />
+            </>
+          )}
+          {isContentLoaded && <EdgeBorderComponent />}
+        </Content>
+      )}
+      <BetaBannerComponent />
+    </>
+  );
+};
+
+function renderTitleIfPresent(title: string) {
+  if (title) {
+    return (
+      <>
+        <H3 accessible={true}>{title}</H3>
+        <View spacer={true} />
+      </>
+    );
+  }
+  return null;
+}
+
+function renderContentIfPresent(content: React.ReactNode) {
+  if (content === null) {
+    return null;
+  }
+
+  return (
+    <>
+      {content}
+      <View spacer={true} />
+    </>
+  );
+}
 
 export default ContextualHelpComponent;
