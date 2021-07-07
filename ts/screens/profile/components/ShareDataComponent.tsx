@@ -25,7 +25,6 @@ const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
 );
 
 export const ShareDataComponent = (): React.ReactElement => {
-  const isScreenReaderEnabled = useScreenReaderEnabled();
   const whyBottomSheet = useIOBottomSheet(
     <MarkdownBody
       body={I18n.t("profile.main.privacy.shareData.whyBottomSheet.body")}
@@ -59,7 +58,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             "profile.main.privacy.shareData.screen.why.description.three"
           )}
         </Body>
-        <Link onPress={whyBottomSheet.present} accessibilityRole="link">
+        <Link onPress={whyBottomSheet.present}>
           {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
         </Link>
       </InfoBox>
@@ -75,7 +74,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link onPress={securityBottomSheet.present} accessibilityRole="link">
+        <Link onPress={securityBottomSheet.present}>
           {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
         </Link>
       </InfoBox>
@@ -89,32 +88,16 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link
-          onPress={() => openWebUrl(ioSuppliersUrl)}
-          accessibilityRole="link"
-        >
+        <Link onPress={() => openWebUrl(ioSuppliersUrl)}>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
         </Link>
       </InfoBox>
       <View spacer={true} />
-      <Body
-        accessibilityRole="link"
-        onPress={() => {
-          if (isScreenReaderEnabled) {
-            openWebUrl(privacyUrl);
-          }
-        }}
-      >
+      <Body accessibilityRole="link" onPress={() => openWebUrl(privacyUrl)}>
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
-        <Link
-          onPress={() => {
-            if (!isScreenReaderEnabled) {
-              openWebUrl(privacyUrl);
-            }
-          }}
-        >
+        <Link>
           {I18n.t(
             "profile.main.privacy.shareData.screen.additionalInformation.cta"
           )}
