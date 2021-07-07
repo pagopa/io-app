@@ -262,7 +262,7 @@ async function run(rootPath: string): Promise<void> {
 
     // look for locales (partial) that have extra keys
     const badLocalesPartial = checkedLocaleKeys
-      // remove locales for which is allowed to omit translation keys
+      // include only locales for which is allowed to omit translation keys
       .filter(l => partialLocales.has(l.locale))
       .filter(l => l.extra.length > 0 || l.missing.length > 0);
 
@@ -272,7 +272,7 @@ async function run(rootPath: string): Promise<void> {
     // report if partial locales have extra keys
     if (badLocalesPartialExtra.length > 0) {
       badLocalesPartialExtra.forEach(reportBadLocale);
-      throw Error("bad locales detected");
+      throw Error("bad locales detected in partial language");
     }
 
     // print the partial locale coverage relative to master
@@ -280,7 +280,6 @@ async function run(rootPath: string): Promise<void> {
       const currentLocale = checkedLocaleKeys.find(
         cl => cl.locale === l.locale
       );
-
       if (currentLocale) {
         const coveragePerc =
           100 - (currentLocale.missing.length / masterKeys.keys.length) * 100;

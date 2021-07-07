@@ -1,9 +1,10 @@
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { Locales } from "../../locales/locales";
 import I18n, {
+  availableTranslations,
   localeFallback,
-  localeToPreferredLanguageMapping,
-  translations
+  localeToLocalizedMessageKey,
+  localeToPreferredLanguageMapping
 } from "../i18n";
 import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
 import { LocalizedMessageKeys } from "../types/backendStatus";
@@ -12,14 +13,12 @@ import { LocalizedMessageKeys } from "../types/backendStatus";
  */
 
 /**
- * Return a full string locale.
+ * Return a full string locale. (it -> it-IT)
  * If not italian, for all other languages english is the default.
  */
 export const getFullLocale = (): LocalizedMessageKeys =>
-  getLocalePrimary(I18n.currentLocale()).fold(
-    localeFallback.localizedMessage,
-    (l: string) => (l === "it" ? "it-IT" : "en-EN")
-  );
+  localeToLocalizedMessageKey.get(I18n.currentLocale()) ??
+  localeFallback.localizedMessageKey;
 /**
  * Returns the primary component of a locale
  *
@@ -44,7 +43,9 @@ export const getCurrentLocale = (): Locales => I18n.currentLocale();
  */
 export const getLocalePrimaryWithFallback = (): Locales =>
   getLocalePrimary(getCurrentLocale())
-    .filter(l => translations.some(t => t.toLowerCase() === l.toLowerCase()))
+    .filter(l =>
+      availableTranslations.some(t => t.toLowerCase() === l.toLowerCase())
+    )
     .map(s => s as Locales)
     .getOrElse(localeFallback.locale);
 

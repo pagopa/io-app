@@ -63,7 +63,7 @@ export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
 // CGN Feature Flag
-export const cgnEnabled: boolean = true;
+export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
 export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // EU Covid Certificate feature flag

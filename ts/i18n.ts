@@ -8,10 +8,18 @@ import { PreferredLanguageEnum } from "../definitions/backend/PreferredLanguage"
 import { LocalizedMessageKeys } from "./types/backendStatus";
 
 type FallBackLocale = {
-  localizedMessage: LocalizedMessageKeys;
+  localizedMessageKey: LocalizedMessageKeys;
   locale: "it";
   localeEnum: PreferredLanguageEnum;
 };
+
+export const localeToLocalizedMessageKey = new Map<
+  Locales,
+  LocalizedMessageKeys
+>([
+  ["it", "it-IT"],
+  ["en", "en-EN"]
+]);
 
 export const localeToPreferredLanguageMapping = new Map<
   Locales,
@@ -22,8 +30,9 @@ export const localeToPreferredLanguageMapping = new Map<
   ["de", PreferredLanguageEnum.de_DE]
 ]);
 
+// define the locale fallback used in the whole app code
 export const localeFallback: FallBackLocale = {
-  localizedMessage: "it-IT",
+  localizedMessageKey: "it-IT",
   locale: "it",
   localeEnum: PreferredLanguageEnum.it_IT
 };
@@ -42,11 +51,9 @@ I18n.translations = {
   de: locales.localeDE
 };
 
-export const translations = Object.keys(I18n.translations);
-
-export const availableTranslations: ReadonlyArray<locales.Locales> = translations.map(
-  k => k as locales.Locales
-);
+export const availableTranslations: ReadonlyArray<locales.Locales> = Object.keys(
+  I18n.translations
+).map(k => k as locales.Locales);
 
 export function setLocale(lang: locales.Locales) {
   // eslint-disable-next-line
