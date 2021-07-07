@@ -13,15 +13,20 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
+  svGenerateVoucherFailure,
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import { isSome } from "fp-ts/lib/Option";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const SickSelectDestinationScreen = (props: Props): React.ReactElement => {
+const SickSelectDestinationScreen = (
+  props: Props
+): React.ReactElement | null => {
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -29,18 +34,27 @@ const SickSelectDestinationScreen = (props: Props): React.ReactElement => {
     onPress: props.back,
     title: "Back"
   };
-  const cancelButtonProps = {
+  const continueButtonProps = {
     primary: false,
     bordered: true,
     onPress: props.cancel,
-    title: "Cancel"
+    title: "Continue"
   };
+
+  if (
+    isSome(props.selectedBeneficiaryCategory) &&
+    props.selectedBeneficiaryCategory.value !== "sick"
+  ) {
+    props.failure("The selected category is not Sick");
+    return null;
+  }
+
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"SelectBeneficiaryCategory"}
+        testID={"SickSelectDestinationScreen"}
         ref={elementRef}
       >
         <H1>SickSelectDestinationScreen</H1>
@@ -48,7 +62,7 @@ const SickSelectDestinationScreen = (props: Props): React.ReactElement => {
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={backButtonProps}
-        rightButton={cancelButtonProps}
+        rightButton={continueButtonProps}
       />
     </BaseScreenComponent>
   );
@@ -56,10 +70,13 @@ const SickSelectDestinationScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
+  failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectCategory: (category: SvBeneficiaryCategory) =>
     dispatch(svGenerateVoucherSelectCategory(category))
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
+});
 
 export default connect(
   mapStateToProps,
