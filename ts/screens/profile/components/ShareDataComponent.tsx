@@ -9,7 +9,6 @@ import Markdown from "../../../components/ui/Markdown";
 import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
-import { useScreenReaderEnabled } from "../../../utils/accessibility";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
