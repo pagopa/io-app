@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const options: ReadonlyArray<ContactOption> = [
+const options = (): ReadonlyArray<ContactOption> => [
   {
     title: I18n.t("services.optIn.preferences.quickConfig.title"),
     mode: ServicesPreferencesModeEnum.AUTO,
@@ -115,7 +115,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
       <FlatList
         style={{ flexGrow: 0 }}
         scrollEnabled={false}
-        data={options}
+        data={options()}
         renderItem={renderListItem}
         keyExtractor={o => o.mode}
       />
