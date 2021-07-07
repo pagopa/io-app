@@ -4,10 +4,24 @@ import { render, fireEvent } from "@testing-library/react-native";
 import I18n from "../../../i18n";
 import TosAndPrivacyBox from "../TosAndPrivacyBox";
 
-const mockOnPress = jest.fn();
+// eslint-disable-next-line functional/no-let
+let MOCK_URL_WILL_FAIL = false;
+
+const mockOpenWebUrl = jest.fn();
+const mockShowToast = jest.fn();
 
 jest.mock("../../../utils/url", () => ({
-  handleItemOnPress: jest.fn(_ => mockOnPress)
+  openWebUrl: (_: string, onError: () => void) => {
+    mockOpenWebUrl();
+    // we rely on an internal of `openWebUrl`, this might be improved?
+    if (MOCK_URL_WILL_FAIL) {
+      onError();
+    }
+  }
+}));
+
+jest.mock("../../../utils/showToast", () => ({
+  showToast: () => mockShowToast()
 }));
 
 const options = {
@@ -16,31 +30,46 @@ const options = {
 };
 
 describe("TosAndPrivacyBox component", () => {
-  beforeEach(() => mockOnPress.mockReset());
+  beforeEach(() => {
+    mockOpenWebUrl.mockReset();
+    mockShowToast.mockReset();
+    MOCK_URL_WILL_FAIL = false;
+  });
 
   describe("when both URLs are defined", () => {
     it("should match the snapshot", () => {
       const component = renderComponent(options);
       expect(component.toJSON()).toMatchSnapshot();
     });
-    it("should call `handleItemOnPress` for TOS link", () => {
+    it("should call `openWebUrl` for TOS link", () => {
       const component = renderComponent(options);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.tosLink"))!;
       fireEvent(link, "onPress");
-      expect(mockOnPress).toHaveBeenCalledTimes(1);
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
     });
 
-    it("should call `handleItemOnPress` for Privacy link", () => {
+    it("should call `openWebUrl` for Privacy link", () => {
       const component = renderComponent(options);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.privacyLink"))!;
       fireEvent(link, "onPress");
-      expect(mockOnPress).toHaveBeenCalledTimes(1);
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+    });
+
+    it("should call `showToast` when then link fails", () => {
+      MOCK_URL_WILL_FAIL = true;
+      const component = renderComponent(options);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const link = component
+        .getAllByRole("link")
+        .find(item => item.children[0] === I18n.t("services.privacyLink"))!;
+      fireEvent(link, "onPress");
+      expect(mockShowToast).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -59,6 +88,12 @@ describe("TosAndPrivacyBox component", () => {
           .getAllByRole("link")
           .find(item => item.children[0] === I18n.t("services.privacyLink"))
       ).toBeUndefined();
+    });
+  });
+
+  describe("when neither URL is defined", () => {
+    it("should not render anything", () => {
+      expect(renderComponent({}).toJSON()).toEqual(null);
     });
   });
 });

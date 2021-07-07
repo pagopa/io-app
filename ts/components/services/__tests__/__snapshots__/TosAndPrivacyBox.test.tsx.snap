@@ -72,48 +72,42 @@ exports[`TosAndPrivacyBox component when both URLs are defined should match the 
       Terms of use and Privacy
     </Text>
   </View>
-  <View
-    style={
+  <Text
+    accessibilityRole="link"
+    color="blue"
+    defaultColor="blue"
+    defaultWeight="SemiBold"
+    ellipsizeMode="tail"
+    font="TitilliumWeb"
+    fontStyle={
       Object {
-        "flex": 1,
-        "paddingVertical": 16,
+        "fontSize": 16,
+        "textDecorationLine": "underline",
       }
     }
-  >
-    <Text
-      accessibilityRole="link"
-      color="blue"
-      defaultColor="blue"
-      defaultWeight="SemiBold"
-      ellipsizeMode="tail"
-      font="TitilliumWeb"
-      fontStyle={
+    numberOfLines={1}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "paddingVertical": 16,
+        },
         Object {
           "fontSize": 16,
           "textDecorationLine": "underline",
-        }
-      }
-      numberOfLines={1}
-      onPress={[MockFunction]}
-      style={
-        Array [
-          Object {
-            "fontSize": 16,
-            "textDecorationLine": "underline",
-          },
-          Object {
-            "color": "#0073E6",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Terms and conditions
-    </Text>
-  </View>
+        },
+        Object {
+          "color": "#0073E6",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    weight="SemiBold"
+  >
+    Terms and conditions
+  </Text>
   <View
     style={
       Array [
@@ -128,62 +122,42 @@ exports[`TosAndPrivacyBox component when both URLs are defined should match the 
       ]
     }
   />
-  <View
-    style={
+  <Text
+    accessibilityRole="link"
+    color="blue"
+    defaultColor="blue"
+    defaultWeight="SemiBold"
+    ellipsizeMode="tail"
+    font="TitilliumWeb"
+    fontStyle={
       Object {
-        "flex": 1,
-        "paddingVertical": 16,
+        "fontSize": 16,
+        "textDecorationLine": "underline",
       }
     }
-  >
-    <Text
-      accessibilityRole="link"
-      color="blue"
-      defaultColor="blue"
-      defaultWeight="SemiBold"
-      ellipsizeMode="tail"
-      font="TitilliumWeb"
-      fontStyle={
+    numberOfLines={1}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "paddingVertical": 16,
+        },
         Object {
           "fontSize": 16,
           "textDecorationLine": "underline",
-        }
-      }
-      numberOfLines={1}
-      onPress={[MockFunction]}
-      style={
-        Array [
-          Object {
-            "fontSize": 16,
-            "textDecorationLine": "underline",
-          },
-          Object {
-            "color": "#0073E6",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "600",
-          },
-        ]
-      }
-      weight="SemiBold"
-    >
-      Privacy information
-    </Text>
-  </View>
-  <View
-    style={
-      Array [
-        Object {},
-        Object {
-          "backgroundColor": "#C9C9C9",
         },
-        false,
         Object {
-          "height": 0.5,
+          "color": "#0073E6",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
         },
       ]
     }
-  />
+    weight="SemiBold"
+  >
+    Privacy information
+  </Text>
   <View
     style={
       Array [
