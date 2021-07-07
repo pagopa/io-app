@@ -35,3 +35,15 @@ export const navigateToSvSickSelectDestinationScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
   });
+export const navigateToSvSelectFlightsDateScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
+  });
+export const navigateToSvSummaryScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.SUMMARY
+  });
+export const navigateToSvVoucherGeneratedScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
+  });
