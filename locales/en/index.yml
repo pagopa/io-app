@@ -1602,16 +1602,16 @@ services:
       oldUsersBadge: "Current setup"
       choiceLabel: "You chose the"
       unavailable: "Not defined"
-      title: "How do you want to use services on IO?"
+      title: "How do you want to configure services on IO?"
       body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
       quickConfig:
-        value: "quick setup"
+        value: "Quick setup"
         title: "Use quick setup"
         body:
           text1: "Only the services which have something important to tell you will contact you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
-        value: "manual setup"
+        value: "Manual setup"
         title: "Configure manually"
         body:
           text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
@@ -1648,10 +1648,10 @@ services:
     all: All
   loading:
     title: Loading the services list
-    subtitle: wait few seconds..
+    subtitle: Please wait...
   enableAll: Use quick setup
   disableAll: Use manual setup
-  updatingServiceMode: updating
+  updatingServiceMode: Please wait...
   disableAllTitle: "Do you really want to disable all the services?"
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
