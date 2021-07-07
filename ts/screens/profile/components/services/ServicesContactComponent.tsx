@@ -40,21 +40,21 @@ const styles = StyleSheet.create({
   }
 });
 
-const options: ReadonlyArray<ContactOption> = [
-  {
-    title: I18n.t("services.optIn.preferences.quickConfig.title"),
-    mode: ServicesPreferencesModeEnum.AUTO,
-    description1: I18n.t("services.optIn.preferences.quickConfig.body.text1"),
-    description2: I18n.t("services.optIn.preferences.quickConfig.body.text2")
-  },
-  {
-    title: I18n.t("services.optIn.preferences.manualConfig.title"),
-    mode: ServicesPreferencesModeEnum.MANUAL,
-    description1: I18n.t("services.optIn.preferences.manualConfig.body.text1")
-  }
-];
-
 const ServicesContactComponent = (props: Props): React.ReactElement => {
+  const options: ReadonlyArray<ContactOption> = [
+    {
+      title: I18n.t("services.optIn.preferences.quickConfig.title"),
+      mode: ServicesPreferencesModeEnum.AUTO,
+      description1: I18n.t("services.optIn.preferences.quickConfig.body.text1"),
+      description2: I18n.t("services.optIn.preferences.quickConfig.body.text2")
+    },
+    {
+      title: I18n.t("services.optIn.preferences.manualConfig.title"),
+      mode: ServicesPreferencesModeEnum.MANUAL,
+      description1: I18n.t("services.optIn.preferences.manualConfig.body.text1")
+    }
+  ];
+
   const renderListItem = ({ item }: ListRenderItemInfo<ContactOption>) => {
     const isSelected = item.mode === props.mode;
     return (
