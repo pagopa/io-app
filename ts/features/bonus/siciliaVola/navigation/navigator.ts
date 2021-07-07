@@ -6,6 +6,8 @@ import StudentSelectDestinationScreen from "../screens/voucherGeneration/Student
 import DisableAdditionalInfoScreen from "../screens/voucherGeneration/DisableAdditionalInfoScreen";
 import WorkerCheckIncomeScreen from "../screens/voucherGeneration/WorkerCheckIncomeScreen";
 import SickCheckIncomeScreen from "../screens/voucherGeneration/SickCheckIncomeScreen";
+import WorkerSelectDestinationScreen from "../screens/voucherGeneration/WorkerSelectDestinationScreen";
+import SickSelectDestinationScreen from "../screens/voucherGeneration/SickSelectDestinationScreen";
 
 const SvNavigator = createStackNavigator(
   {
@@ -24,8 +26,14 @@ const SvNavigator = createStackNavigator(
     [SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD]: {
       screen: WorkerCheckIncomeScreen
     },
+    [SV_ROUTES.VOUCHER_GENERATION.WORKER_SELECT_DESTINATION]: {
+      screen: WorkerSelectDestinationScreen
+    },
     [SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD]: {
       screen: SickCheckIncomeScreen
+    },
+    [SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION]: {
+      screen: SickSelectDestinationScreen
     }
   },
   {

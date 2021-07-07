@@ -23,7 +23,15 @@ export const navigateToSvWorkerCheckIncomeThresholdScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
   });
+export const navigateToSvWorkerSelectDestinationScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.WORKER_SELECT_DESTINATION
+  });
 export const navigateToSvSickCheckIncomeThresholdScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
+  });
+export const navigateToSvSickSelectDestinationScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
   });

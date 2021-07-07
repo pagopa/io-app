@@ -14,18 +14,18 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherUnderThresholdIncome
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { isSome } from "fp-ts/lib/Option";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
+const WorkerSelectDestinationScreen = (
+  props: Props
+): React.ReactElement | null => {
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -36,7 +36,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.navigateToSvWorkerSelectDestination,
+    onPress: props.cancel,
     title: "Continue"
   };
 
@@ -53,10 +53,10 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"WorkerCheckIncomeScreen"}
+        testID={"WorkerSelectDestinationScreen"}
         ref={elementRef}
       >
-        <H1>WorkerCheckIncomeScreen</H1>
+        <H1>WorkerSelectDestinationScreen</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
@@ -70,10 +70,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
-  selectDestination: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category)),
-  navigateToSvWorkerSelectDestination: () =>
-    dispatch(navigateToSvWorkerSelectDestinationScreen())
+  underThresholdIncome: () =>
+    dispatch(svGenerateVoucherUnderThresholdIncome(true))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
@@ -82,4 +80,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WorkerCheckIncomeScreen);
+)(WorkerSelectDestinationScreen);
