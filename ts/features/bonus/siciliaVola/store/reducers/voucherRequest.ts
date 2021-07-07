@@ -1,5 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import {
   Company,
   Hospital,
@@ -18,7 +19,6 @@ import {
   svGenerateVoucherUnderThresholdIncome
 } from "../actions/voucherGeneration";
 import { Action } from "../../../../../store/actions/types";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 export type VoucherRequestState = Option<VoucherRequest>;

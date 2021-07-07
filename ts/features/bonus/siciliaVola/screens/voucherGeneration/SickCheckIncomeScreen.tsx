@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
@@ -21,7 +22,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
-import { isSome } from "fp-ts/lib/Option";
 import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

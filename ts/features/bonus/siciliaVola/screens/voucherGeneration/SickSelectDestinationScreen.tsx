@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
@@ -18,7 +19,6 @@ import {
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { Hospital } from "../../types/SvVoucherRequest";
-import { isSome } from "fp-ts/lib/Option";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";

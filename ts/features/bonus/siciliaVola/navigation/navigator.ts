@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation";
 import CheckStatusRouterScreen from "../screens/voucherGeneration/CheckStatusRouterScreen";
-import SV_ROUTES from "./routes";
 import SelectBeneficiaryCategoryScreen from "../screens/voucherGeneration/SelectBeneficiaryCategoryScreen";
 import StudentSelectDestinationScreen from "../screens/voucherGeneration/StudentSelectDestinationScreen";
 import DisableAdditionalInfoScreen from "../screens/voucherGeneration/DisableAdditionalInfoScreen";
@@ -11,6 +10,7 @@ import SickSelectDestinationScreen from "../screens/voucherGeneration/SickSelect
 import SelectFlightsDateScreen from "../screens/voucherGeneration/SelectFlightsDateScreen";
 import SummaryScreen from "../screens/voucherGeneration/SummaryScreen";
 import VoucherGeneratedScreen from "../screens/voucherGeneration/VoucherGeneratedScreen";
+import SV_ROUTES from "./routes";
 
 const SvNavigator = createStackNavigator(
   {

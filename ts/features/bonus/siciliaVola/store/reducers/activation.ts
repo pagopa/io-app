@@ -1,8 +1,8 @@
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { getType } from "typesafe-actions";
 import { svServiceAlive, svTosAccepted } from "../actions/activation";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   remoteError,
