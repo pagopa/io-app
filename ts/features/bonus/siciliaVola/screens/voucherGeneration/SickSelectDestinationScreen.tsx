@@ -20,6 +20,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { Hospital } from "../../types/SvVoucherRequest";
 import { isSome } from "fp-ts/lib/Option";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -37,7 +38,7 @@ const SickSelectDestinationScreen = (
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.cancel,
+    onPress: props.navigateToSelectFlightsDateScreen,
     title: "Continue"
   };
 
@@ -72,7 +73,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectHospital: (hospital: Hospital) =>
-    dispatch(svGenerateVoucherSelectHospital(hospital))
+    dispatch(svGenerateVoucherSelectHospital(hospital)),
+  navigateToSelectFlightsDateScreen: () =>
+    dispatch(navigateToSvSelectFlightsDateScreen())
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

@@ -12,11 +12,10 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
-  svGenerateVoucherCancel,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherCancel
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -29,18 +28,18 @@ const DisableAdditionalInfoScreen = (props: Props): React.ReactElement => {
     onPress: props.back,
     title: "Back"
   };
-  const cancelButtonProps = {
+  const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.cancel,
-    title: "Cancel"
+    onPress: props.navigateToSelectFlightsDateScreen,
+    title: "Continue"
   };
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"SelectBeneficiaryCategory"}
+        testID={"DisableAdditionalInfoScreen"}
         ref={elementRef}
       >
         <H1>DisableAdditionalInfoScreen</H1>
@@ -48,7 +47,7 @@ const DisableAdditionalInfoScreen = (props: Props): React.ReactElement => {
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={backButtonProps}
-        rightButton={cancelButtonProps}
+        rightButton={continueButtonProps}
       />
     </BaseScreenComponent>
   );
@@ -56,8 +55,8 @@ const DisableAdditionalInfoScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  selectCategory: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category))
+  navigateToSelectFlightsDateScreen: () =>
+    dispatch(navigateToSvSelectFlightsDateScreen())
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

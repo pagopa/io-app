@@ -20,6 +20,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { University } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { isSome } from "fp-ts/lib/Option";
+import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -37,7 +38,7 @@ const StudentSelectDestinationScreen = (
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.cancel,
+    onPress: props.navigateToSelectFlightsDateScreen,
     title: "Continue"
   };
 
@@ -72,7 +73,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectUniversity: (university: University) =>
-    dispatch(svGenerateVoucherSelectUniversity(university))
+    dispatch(svGenerateVoucherSelectUniversity(university)),
+  navigateToSelectFlightsDateScreen: () =>
+    dispatch(navigateToSvSelectFlightsDateScreen())
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
