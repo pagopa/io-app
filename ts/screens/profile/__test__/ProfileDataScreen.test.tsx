@@ -47,7 +47,7 @@ describe("Test ProfileDataScreen", () => {
   });
   it("should render ListItemComponent insert or edit email with titleBadge if email is not validated", () => {
     const isProfileEmailValidated = false;
-    const { component, store } = renderComponent();
+    const { component } = renderComponent();
 
     expect(component).not.toBeNull();
     expect(component.queryByTestId("insert-or-edit-email")).not.toBeNull();
