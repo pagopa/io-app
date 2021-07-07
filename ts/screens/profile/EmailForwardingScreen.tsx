@@ -35,6 +35,7 @@ import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { servicesRedesignEnabled } from "../../config";
+import { mixpanelTrack } from "../../mixpanel";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -98,14 +99,16 @@ class EmailForwardingScreen extends React.Component<Props, State> {
       }
       // TODO move this login into a dedicated saga https://www.pivotaltracker.com/story/show/171600688
       // if the profile updating is successfully then apply isCustomChannelEnabledChoice
-      if (
-        pot.isSome(this.props.potProfile) &&
-        this.state.isCustomChannelEnabledChoice !== undefined
-      ) {
-        this.props.setCustomEmailChannelEnabled(
-          this.state.isCustomChannelEnabledChoice
-        );
-        this.setState({ isLoading: false });
+      if (pot.isSome(this.props.potProfile)) {
+        void mixpanelTrack("EMAIL_FORWARDING_MODE_SET", {
+          mode: this.props.potProfile.value.is_email_enabled ? "ALL" : "NONE"
+        });
+        if (this.state.isCustomChannelEnabledChoice !== undefined) {
+          this.props.setCustomEmailChannelEnabled(
+            this.state.isCustomChannelEnabledChoice
+          );
+          this.setState({ isLoading: false });
+        }
       }
     }
   }
