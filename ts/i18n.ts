@@ -37,9 +37,9 @@ export const localeFallback: FallBackLocale = {
   localeEnum: PreferredLanguageEnum.it_IT
 };
 
-// Should the app fallback to Italian if user locale doesn't exists
 // eslint-disable-next-line
 I18n.fallbacks = true;
+// Should the app fallback to Italian if user locale (o the current translation key) doesn't exists
 // eslint-disable-next-line
 I18n.defaultLocale = localeFallback.locale;
 
