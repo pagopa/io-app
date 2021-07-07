@@ -13,15 +13,20 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherFailure,
+  svGenerateVoucherSelectUniversity
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import { University } from "../../types/SvVoucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { isSome } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const StudentSelectDestinationScreen = (props: Props): React.ReactElement => {
+const StudentSelectDestinationScreen = (
+  props: Props
+): React.ReactElement | null => {
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -29,18 +34,27 @@ const StudentSelectDestinationScreen = (props: Props): React.ReactElement => {
     onPress: props.back,
     title: "Back"
   };
-  const cancelButtonProps = {
+  const continueButtonProps = {
     primary: false,
     bordered: true,
     onPress: props.cancel,
-    title: "Cancel"
+    title: "Continue"
   };
+
+  if (
+    isSome(props.selectedBeneficiaryCategory) &&
+    props.selectedBeneficiaryCategory.value !== "student"
+  ) {
+    props.failure("The selected category is not Student");
+    return null;
+  }
+
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"SelectBeneficiaryCategory"}
+        testID={"StudentSelectDestinationScreen"}
         ref={elementRef}
       >
         <H1>StudentSelectDestinationScreen</H1>
@@ -48,7 +62,7 @@ const StudentSelectDestinationScreen = (props: Props): React.ReactElement => {
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={backButtonProps}
-        rightButton={cancelButtonProps}
+        rightButton={continueButtonProps}
       />
     </BaseScreenComponent>
   );
@@ -56,10 +70,13 @@ const StudentSelectDestinationScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  selectCategory: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category))
+  failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
+  selectUniversity: (university: University) =>
+    dispatch(svGenerateVoucherSelectUniversity(university))
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
+});
 
 export default connect(
   mapStateToProps,

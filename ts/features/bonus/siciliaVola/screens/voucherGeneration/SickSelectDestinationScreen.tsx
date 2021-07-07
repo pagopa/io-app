@@ -14,10 +14,10 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherSelectHospital
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import { Hospital } from "../../types/SvVoucherRequest";
 import { isSome } from "fp-ts/lib/Option";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 
@@ -71,8 +71,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
-  selectCategory: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category))
+  selectHospital: (hospital: Hospital) =>
+    dispatch(svGenerateVoucherSelectHospital(hospital))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

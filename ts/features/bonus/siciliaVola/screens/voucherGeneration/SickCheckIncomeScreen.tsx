@@ -14,7 +14,8 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherSelectCategory,
+  svGenerateVoucherUnderThresholdIncome
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
@@ -73,7 +74,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectCategory: (category: SvBeneficiaryCategory) =>
     dispatch(svGenerateVoucherSelectCategory(category)),
   navigateToSvSickSelectDestination: () =>
-    dispatch(navigateToSvSickSelectDestinationScreen())
+    dispatch(navigateToSvSickSelectDestinationScreen()),
+  underThresholdIncome: () =>
+    dispatch(svGenerateVoucherUnderThresholdIncome(true))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

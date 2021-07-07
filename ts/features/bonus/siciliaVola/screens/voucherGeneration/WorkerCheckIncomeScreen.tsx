@@ -14,10 +14,9 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherFailure,
-  svGenerateVoucherSelectCategory
+  svGenerateVoucherUnderThresholdIncome
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { isSome } from "fp-ts/lib/Option";
@@ -70,8 +69,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
-  selectDestination: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category)),
+  underThresholdIncome: () =>
+    dispatch(svGenerateVoucherUnderThresholdIncome(true)),
   navigateToSvWorkerSelectDestination: () =>
     dispatch(navigateToSvWorkerSelectDestinationScreen())
 });
