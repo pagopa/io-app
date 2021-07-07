@@ -2539,6 +2539,36 @@ bonus:
         seconds:
           one: 1 secondo
           other: "{{seconds}} secondi"
+  sv:
+    voucherGeneration:
+      acceptTos:
+        title: "AcceptTosComponent"
+      checkResidence:
+        title: "CheckResidenceComponent"
+      selectBeneficiaryCategory:
+        title: "SelectBeneficiaryCategory"
+      student:
+        selectDestination:
+          title: "StudentSelectDestinationScreen"
+      disable:
+        additionalInfo:
+          title: "DisableAdditionalInfoScreen"
+      worker:
+        checkIncome:
+          title: "WorkerCheckIncomeScreen"
+        selectDestination:
+          title: "WorkerSelectDestinationScreen"
+      sick:
+        checkIncome:
+          title: "SickCheckIncomeScreen"
+        selectDestination:
+          title: "SickSelectDestinationScreen"
+      selectFlightsDate:
+        title: "SelectFlightsDateScreen"
+      summary:
+        title: "SummaryScreen"
+      voucherGenerated:
+        title: "VoucherGeneratedScreen"
 features:
   euCovidCertificate:
     save:

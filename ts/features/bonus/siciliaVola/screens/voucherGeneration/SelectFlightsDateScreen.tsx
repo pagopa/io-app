@@ -18,6 +18,7 @@ import {
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { navigateToSvSummaryScreen } from "../../navigation/actions";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -45,7 +46,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
         testID={"SelectFlightsDateScreen"}
         ref={elementRef}
       >
-        <H1>SelectFlightsDateScreen</H1>
+        <H1>{I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.title")}</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}

@@ -13,6 +13,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { svGenerateVoucherBack } from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { navigateToSvSelectBeneficiaryCategoryScreen } from "../navigation/actions";
+import I18n from "../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -39,7 +40,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
         testID={"BaseEuCovidCertificateLayout"}
         ref={elementRef}
       >
-        <H1>CheckResidenceComponent</H1>
+        <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}

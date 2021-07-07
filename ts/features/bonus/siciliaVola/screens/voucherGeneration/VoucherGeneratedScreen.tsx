@@ -18,6 +18,7 @@ import {
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -45,7 +46,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement => {
         testID={"VoucherGeneratedScreen"}
         ref={elementRef}
       >
-        <H1>VoucherGeneratedScreen</H1>
+        <H1>{I18n.t("bonus.sv.voucherGeneration.voucherGenerated.title")}</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}

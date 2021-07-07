@@ -21,6 +21,7 @@ import { Hospital } from "../../types/SvVoucherRequest";
 import { isSome } from "fp-ts/lib/Option";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -58,7 +59,9 @@ const SickSelectDestinationScreen = (
         testID={"SickSelectDestinationScreen"}
         ref={elementRef}
       >
-        <H1>SickSelectDestinationScreen</H1>
+        <H1>
+          {I18n.t("bonus.sv.voucherGeneration.sick.selectDestination.title")}
+        </H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}

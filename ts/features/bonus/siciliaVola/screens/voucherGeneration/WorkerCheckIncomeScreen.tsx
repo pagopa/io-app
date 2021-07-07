@@ -20,6 +20,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { isSome } from "fp-ts/lib/Option";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -55,7 +56,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
         testID={"WorkerCheckIncomeScreen"}
         ref={elementRef}
       >
-        <H1>WorkerCheckIncomeScreen</H1>
+        <H1>{I18n.t("bonus.sv.voucherGeneration.worker.checkIncome.title")}</H1>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}

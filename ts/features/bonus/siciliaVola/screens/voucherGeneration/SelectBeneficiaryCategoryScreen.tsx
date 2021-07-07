@@ -25,6 +25,7 @@ import {
   navigateToSvStudentSelectDestinationScreen,
   navigateToSvWorkerCheckIncomeThresholdScreen
 } from "../../navigation/actions";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -82,7 +83,9 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         testID={"SelectBeneficiaryCategory"}
         ref={elementRef}
       >
-        <H1>SelectBeneficiaryCategoryScreen</H1>
+        <H1>
+          {I18n.t("bonus.sv.voucherGeneration.selectBeneficiaryCategory.title")}
+        </H1>
 
         <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("student")}>
           <Text>Student</Text>
