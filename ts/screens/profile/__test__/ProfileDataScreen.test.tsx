@@ -91,7 +91,7 @@ const renderComponent = () => {
   return {
     component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
       () => <ProfileDataScreen />,
-      ROUTES.PROFILE_SECURITY,
+      ROUTES.PROFILE_DATA,
       {},
       store
     ),
