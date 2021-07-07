@@ -24,9 +24,10 @@ import customVariables, {
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
+import { servicesRedesignEnabled } from "../../config";
 import NewServiceListItem from "./NewServiceListItem";
+import ServicePreferenceSummary from "./ServicePreferenceSummary";
 
 type AnimatedProps = {
   animated?: {
@@ -162,7 +163,9 @@ class ServiceList extends React.Component<Props> {
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+        ListFooterComponent={
+          servicesRedesignEnabled && <ServicePreferenceSummary />
+        }
       />
     );
   }

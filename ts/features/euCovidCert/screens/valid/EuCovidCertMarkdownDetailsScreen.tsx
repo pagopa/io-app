@@ -1,8 +1,7 @@
 import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { Dimensions, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { CaptureOptions } from "react-native-view-shot";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
@@ -19,7 +18,7 @@ import {
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { MarkdownHandleCustomLink } from "../../components/MarkdownHandleCustomLink";
-import { captureScreenShoot } from "../../utils/screenshoot";
+import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 
 type NavigationParams = Readonly<{
   markdownDetails: string;
@@ -37,11 +36,6 @@ const styles = StyleSheet.create({
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
   showToast(error);
-const screenShotOption: CaptureOptions = {
-  width: Dimensions.get("window").width,
-  format: "jpg",
-  quality: 1.0
-};
 
 export const EuCovidCertMarkdownDetailsScreen = (
   props: NavigationInjectedProps<NavigationParams>
