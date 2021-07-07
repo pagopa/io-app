@@ -62,6 +62,9 @@ import { capitalize, maybeNotNullyString } from "../../utils/strings";
 import { handleItemOnPress, ItemAction } from "../../utils/url";
 import { servicesRedesignEnabled } from "../../config";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import { H3 } from "../../components/core/typography/H3";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -667,6 +670,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <OrganizationHeader service={service} />
           </Grid>
           <View spacer={true} large={true} />
+          <View style={[IOStyles.row, { alignItems: "center" }]}>
+            <IconFont
+              name={"io-envelope"}
+              color={IOColors.bluegrey}
+              size={18}
+            />
+            <View hspacer small />
+            <H3 weight={"SemiBold"} color={"bluegrey"}>
+              {I18n.t("serviceDetail.contacts.title")}
+            </H3>
+          </View>
+          <View spacer={true} small />
           {servicesRedesignEnabled ? (
             <ContactPreferencesToggles
               channels={this.service.available_notification_channels}
