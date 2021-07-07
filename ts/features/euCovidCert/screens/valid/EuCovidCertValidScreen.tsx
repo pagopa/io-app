@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   ViewStyle
 } from "react-native";
-import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -39,7 +38,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { showToast } from "../../../../utils/showToast";
-import { captureScreenShoot } from "../../utils/screenshoot";
+import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -215,11 +214,6 @@ const Footer = (props: FooterProps): React.ReactElement => {
   );
 };
 
-const screenShotOption: CaptureOptions = {
-  width: Dimensions.get("window").width,
-  format: "jpg",
-  quality: 1.0
-};
 const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const screenShotViewContainer = React.createRef<View>();
   const [flashAnimationState, setFlashAnimationState] = useState<
