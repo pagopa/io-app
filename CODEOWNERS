@@ -1,7 +1,7 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @undermaken @fabriziofff @CrisTofani @debiff
+* @pagopa/io-app
 
-/locales/ @undermaken @fabriziofff @CrisTofani @debiff @thisisjp
-/ios/ItaliaApp/it.lproj/ @undermaken @fabriziofff @CrisTofani @debiff @thisisjp
-/ios/ItaliaApp/en.lproj/ @undermaken @fabriziofff @CrisTofani @debiff @thisisjp
+/locales/ @pagopa/io-app @thisisjp
+/ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp
+/ios/ItaliaApp/en.lproj/ @pagopa/io-app @thisisjp

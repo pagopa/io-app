@@ -14,9 +14,13 @@ import { startApplicationInitialization } from "../../../store/actions/applicati
 import { profileUpsert } from "../../../store/actions/profile";
 
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkProfileEnabledSaga", () => {
   const profile: InitializedProfile = {
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.AUTO
+    },
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,

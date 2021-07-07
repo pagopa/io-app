@@ -28,6 +28,7 @@ import {
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -42,6 +43,9 @@ jest.mock("react-native-share", () => ({
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,

@@ -22,6 +22,7 @@ import {
 import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSessions";
 import { GlobalState } from "../../store/reducers/types";
 import { appReducer } from "../../store/reducers";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
@@ -35,6 +36,9 @@ jest.mock("react-native-share", () => ({
 }));
 
 const mockedProfile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
