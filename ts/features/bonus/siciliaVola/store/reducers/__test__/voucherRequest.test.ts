@@ -23,7 +23,7 @@ import { VoucherRequestState } from "../voucherRequest";
 const mockCategoryStudent: SvBeneficiaryCategory = "student";
 const mockCategoryWorker: SvBeneficiaryCategory = "worker";
 const mockCategorySick: SvBeneficiaryCategory = "sick";
-const mockCategoryDisable: SvBeneficiaryCategory = "disable";
+const mockCategoryDisabled: SvBeneficiaryCategory = "disabled";
 const mockCompany: Company = {
   businessName: "myCompany",
   vat: "1234abcd",
@@ -241,11 +241,11 @@ describe("Test availableRegion reducer", () => {
       store.getState().bonus.sv.voucherGeneration.voucherRequest
     ).toStrictEqual(none);
 
-    store.dispatch(svGenerateVoucherSelectCategory(mockCategoryDisable));
+    store.dispatch(svGenerateVoucherSelectCategory(mockCategoryDisabled));
     store.dispatch(svGenerateVoucherSelectFlightsDate(mockFlightsDate));
 
     const mockState: VoucherRequestState = some({
-      category: mockCategoryDisable
+      category: mockCategoryDisabled
     });
 
     expect(
