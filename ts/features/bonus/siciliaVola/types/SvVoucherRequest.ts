@@ -41,7 +41,7 @@ export type Hospital = {
 };
 
 export type DisabledVoucherRequest = {
-  category: "disable";
+  category: "disabled";
   departureDate?: Date;
   returnDate?: Date;
 };
