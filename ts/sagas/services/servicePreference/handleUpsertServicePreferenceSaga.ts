@@ -21,7 +21,7 @@ import { mapKinds } from "./handleGetServicePreferenceSaga";
  * @param currentServicePreferenceState
  * @param action
  */
-const calulateUpdatingPreference = (
+const calculateUpdatingPreference = (
   currentServicePreferenceState: ServicePreferenceState,
   action: ActionType<typeof upsertServicePreference.request>
 ): ServicePreference => {
