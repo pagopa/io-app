@@ -14,7 +14,7 @@ import { LocalizedMessageKeys } from "../types/backendStatus";
 
 /**
  * Return a full string locale. (it -> it-IT)
- * If not italian, for all other languages english is the default.
+ * If not italian, for all other languages italian is the default.
  */
 export const getFullLocale = (): LocalizedMessageKeys =>
   localeToLocalizedMessageKey.get(I18n.currentLocale()) ??
