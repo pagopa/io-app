@@ -94,7 +94,7 @@ const updateFlightsDate = (
   state: VoucherRequestState,
   flightsDate: FlightsDate
 ): VoucherRequestState =>
-  state.fold(state, vR =>
+  state.chain(vR =>
     some({
       ...vR,
       departureDate: flightsDate.departureDate,
