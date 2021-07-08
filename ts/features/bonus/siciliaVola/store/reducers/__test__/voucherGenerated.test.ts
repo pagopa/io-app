@@ -7,13 +7,15 @@ import {
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
-import { VoucherRequest } from "../../../types/SvVoucherRequest";
+import { University, VoucherRequest } from "../../../types/SvVoucherRequest";
 import { SvVoucherGeneratedResponse } from "../../../types/svVoucherResponse";
 import { SvVoucher, SvVoucherId } from "../../../types/svVoucher";
 
 const genericError = getTimeoutError();
 const mockVoucherRequest: VoucherRequest = {
-  category: "student"
+  category: "student",
+  university: {} as University,
+  departureDate: new Date()
 };
 const mockResponse: SvVoucherGeneratedResponse = {
   kind: "success",
