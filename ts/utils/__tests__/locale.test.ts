@@ -30,7 +30,7 @@ describe("getLocalePrimaryWithFallback", () => {
     ["somethingstrange", "it"]
   ].forEach(t => {
     const [locale, expected] = t;
-    it("getLocalePrimaryWithFallback should return it", () => {
+    it(`getLocalePrimaryWithFallback should return ${expected} if locale is ${locale}`, () => {
       setLocale(locale as Locales);
       expect(getLocalePrimaryWithFallback()).toStrictEqual(expected);
     });
