@@ -186,6 +186,11 @@ function* createOrUpdateProfileSaga(
   }
 }
 
+/**
+ * collection of predicates to forward chosen information:
+ * - first element contains the handler to check if the event should be dispatched
+ * - second element contains the callback to execute if the first element condition is verified
+ */
 const profileChangePredicates: ReadonlyArray<[
   (value: InitializedProfile, newValue: InitializedProfile) => boolean,
   (value: InitializedProfile) => Promise<void> | undefined
