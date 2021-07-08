@@ -3,6 +3,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
+import { isStringNullyOrEmpty } from "../utils/strings";
 import themeVariables from "../theme/variables";
 import { ContextualHelpData } from "./ContextualHelpModal";
 import { H3 } from "./core/typography/H3";
@@ -35,7 +36,7 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
   onRequestAssistance
 }) => {
   // Being content a ReactNode we can rely on `null` to represent no-content
-  const showLoader = contextualHelpData.content === undefined;
+  const isContentReady = contextualHelpData.content === undefined;
 
   return (
     <>
@@ -52,18 +53,29 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
           )
         }}
       />
-      {showLoader && (
+      {isContentReady && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
         </View>
       )}
-      {!showLoader && (
+      {!isContentReady && (
         <Content
           contentContainerStyle={styles.contentContainer}
           noPadded={true}
         >
-          {renderTitleIfPresent(contextualHelpData.title)}
-          {renderContentIfPresent(contextualHelpData.content)}
+          {!isStringNullyOrEmpty(contextualHelpData.title) && (
+            <>
+              <H3 accessible={true}>{contextualHelpData.title}</H3>
+              <View spacer={true} />
+            </>
+          )}
+
+          {contextualHelpData.content && (
+            <>
+              {contextualHelpData.content}
+              <View spacer={true} />
+            </>
+          )}
 
           {contextualHelpData.faqs && isContentLoaded && (
             <FAQComponent
@@ -88,30 +100,5 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
     </>
   );
 };
-
-function renderTitleIfPresent(title: string) {
-  if (title) {
-    return (
-      <>
-        <H3 accessible={true}>{title}</H3>
-        <View spacer={true} />
-      </>
-    );
-  }
-  return null;
-}
-
-function renderContentIfPresent(content: React.ReactNode) {
-  if (content === null) {
-    return null;
-  }
-
-  return (
-    <>
-      {content}
-      <View spacer={true} />
-    </>
-  );
-}
 
 export default ContextualHelpComponent;
