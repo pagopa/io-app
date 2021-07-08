@@ -68,7 +68,7 @@ export const svGenerateVoucherUnderThresholdIncome = createStandardAction(
 )<boolean>();
 
 /**
- * Step for worker, to indicate his company data
+ * Step for worker, to indicate the company data
  */
 export const svGenerateVoucherSelectCompany = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_COMPANY"
@@ -82,7 +82,7 @@ export const svGenerateVoucherSelectHospital = createStandardAction(
 )<Hospital>();
 
 /**
- * Step for student, to indicate his university data
+ * Step for student, to indicate the university data
  */
 export const svGenerateVoucherSelectUniversity = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_UNIVERSITY"
