@@ -3,8 +3,8 @@ import { getType } from "typesafe-actions";
 import {
   Company,
   Hospital,
-  University,
-  VoucherRequest
+  PartialVoucherRequest,
+  University
 } from "../../types/SvVoucherRequest";
 import {
   FlightsDate,
@@ -18,7 +18,7 @@ import {
 } from "../actions/voucherGeneration";
 import { Action } from "../../../../../store/actions/types";
 
-export type VoucherRequestState = Option<VoucherRequest>;
+export type VoucherRequestState = Option<PartialVoucherRequest>;
 const INITIAL_STATE: VoucherRequestState = none;
 
 /**
