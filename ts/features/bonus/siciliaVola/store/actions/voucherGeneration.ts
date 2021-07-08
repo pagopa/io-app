@@ -103,6 +103,7 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
 /**
  * get and handle available destination for a voucher request
  */
+// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
@@ -112,6 +113,7 @@ export const svGenerateVoucherAvailableDestination = createAsyncAction(
 /**
  * get and handle the generated voucher
  */
+// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
   "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_REQUEST",
   "SV_GENERATE_VOUCHER_GENERATED_VOUCHER_SUCCESS",
@@ -121,6 +123,7 @@ export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
 /**
  * get and handle the available state
  */
+// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableState = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_SUCCESS",
@@ -130,6 +133,7 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 /**
  * get and handle the available region
  */
+// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableRegion = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
@@ -139,6 +143,7 @@ export const svGenerateVoucherAvailableRegion = createAsyncAction(
 /**
  * get and handle the available province
  */
+// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableProvince = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
@@ -148,6 +153,7 @@ export const svGenerateVoucherAvailableProvince = createAsyncAction(
 /**
  * get and handle the available municipality
  */
+// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_SUCCESS",
