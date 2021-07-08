@@ -20,12 +20,12 @@ export const getServicesPreferenceModeLabel = (
   mode: ServicesPreferencesModeEnum
 ): string =>
   ({
-    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+    [ServicesPreferencesModeEnum.AUTO]: `${I18n.t(
       "services.optIn.preferences.quickConfig.value"
-    ),
-    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+    )}: ${I18n.t("services.optIn.preferences.quickConfig.label")}`,
+    [ServicesPreferencesModeEnum.MANUAL]: `${I18n.t(
       "services.optIn.preferences.manualConfig.value"
-    ),
+    )}: ${I18n.t("services.optIn.preferences.manualConfig.label")}`,
     [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
       "services.optIn.preferences.unavailable"
     )
