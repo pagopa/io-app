@@ -17,7 +17,7 @@ import { mapKinds } from "./handleGetServicePreferenceSaga";
 /**
  * Generates the payload for the updating preferences request, if a users disables the inbox flag than the other flags
  * are disabled.
- * If a user activate a disabled inbox flag than webhook is enabled too.
+ * If a user activates a disabled inbox flag than webhook is enabled too.
  * @param currentServicePreferenceState
  * @param action
  */
