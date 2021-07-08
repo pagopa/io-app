@@ -63,7 +63,7 @@ export function* handleUpsertServicePreference(
     servicePreferenceSelector
   );
 
-  const updatingPreference = calulateUpdatingPreference(
+  const updatingPreference = calculateUpdatingPreference(
     currentPreferences,
     action
   );
