@@ -38,8 +38,7 @@ export const getServicesPreferenceModeLabel = (
  * @constructor
  */
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
-  <View style={IOStyles.horizontalContentPadding}>
-    <View spacer />
+  <View footer style={IOStyles.horizontalContentPadding}>
     <InfoBox iconName={"io-info"} iconColor={IOColors.bluegrey} iconSize={24}>
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
@@ -53,7 +52,6 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
         {I18n.t("serviceDetail.updatePreferences")}
       </Link>
     </InfoBox>
-    <View spacer />
   </View>
 );
 
