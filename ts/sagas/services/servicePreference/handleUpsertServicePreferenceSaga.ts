@@ -1,4 +1,5 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
 import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
 import { BackendClient } from "../../../api/backend";
@@ -6,7 +7,46 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
 import { readablePrivacyReport } from "../../../utils/reporters";
+import {
+  servicePreferenceSelector,
+  ServicePreferenceState
+} from "../../../store/reducers/entities/services/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
 import { mapKinds } from "./handleGetServicePreferenceSaga";
+
+/**
+ * Generates the payload for the updating preferences request, if a users disables the inbox flag than the other flags
+ * are disabled.
+ * If a user activate a disabled inbox flag than webhook is enabled too.
+ * @param currentServicePreferenceState
+ * @param action
+ */
+const calulateUpdatingPreference = (
+  currentServicePreferenceState: ServicePreferenceState,
+  action: ActionType<typeof upsertServicePreference.request>
+): ServicePreference => {
+  if (
+    pot.isSome(currentServicePreferenceState) &&
+    isServicePreferenceResponseSuccess(currentServicePreferenceState.value) &&
+    !currentServicePreferenceState.value.value.inbox &&
+    action.payload.inbox
+  ) {
+    return {
+      is_inbox_enabled: action.payload.inbox,
+      is_webhook_enabled: true,
+      is_email_enabled: currentServicePreferenceState.value.value.email,
+      settings_version: action.payload
+        .settings_version as ServicePreference["settings_version"]
+    };
+  }
+  return {
+    is_inbox_enabled: action.payload.inbox,
+    is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
+    is_email_enabled: action.payload.inbox ? action.payload.email : false,
+    settings_version: action.payload
+      .settings_version as ServicePreference["settings_version"]
+  };
+};
 
 /**
  * saga to handle the update of service preferences after a user specific action
@@ -19,18 +59,16 @@ export function* handleUpsertServicePreference(
   >["upsertServicePreference"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
-  try {
-    // payload of the updating service preference
-    // if the inbox is set to false automatically we set to false all the other channels
-    // to prevent inconsistent statuses
-    const updatingPreference: ServicePreference = {
-      is_inbox_enabled: action.payload.inbox,
-      is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
-      is_email_enabled: action.payload.inbox ? action.payload.email : false,
-      settings_version: action.payload
-        .settings_version as ServicePreference["settings_version"]
-    };
+  const currentPreferences: ReturnType<typeof servicePreferenceSelector> = yield select(
+    servicePreferenceSelector
+  );
 
+  const updatingPreference = calulateUpdatingPreference(
+    currentPreferences,
+    action
+  );
+
+  try {
     const response: SagaCallReturnType<typeof upsertServicePreferences> = yield call(
       upsertServicePreferences,
       {
