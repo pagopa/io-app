@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.30.0-rc.0](https://github.com/pagopa/io-app/compare/1.29.0-rc.1...1.30.0-rc.0) (2021-07-08)
+
+
+### Bug Fixes
+
+* [[IA-120](https://pagopa.atlassian.net/browse/IA-120)] Info message is not right localized ([#3210](https://github.com/pagopa/io-app/issues/3210)) ([317af84](https://github.com/pagopa/io-app/commit/317af84d2a618af36c22a3d7eb7f3e8bb55f10ad))
+* [[IA-71](https://pagopa.atlassian.net/browse/IA-71)] Wrong secondary button in choose payment method screen ([#3176](https://github.com/pagopa/io-app/issues/3176)) ([0dd543d](https://github.com/pagopa/io-app/commit/0dd543d4d1e8fb0e2994603051a9da571e5a85bd))
+* **Redesign Servizi:** [[IARS-31](https://pagopa.atlassian.net/browse/IARS-31)] Items on service contact preference screen uses the device locale and not the app selected ([#3207](https://github.com/pagopa/io-app/issues/3207)) ([d45cd20](https://github.com/pagopa/io-app/commit/d45cd206fcb1630a20183692bb5dd454220233f3))
+
+
+### Chores
+
+* **Redesign Servizi:** [[IARS-34](https://pagopa.atlassian.net/browse/IARS-34)] Implements saga to handle profile preference upsert success action ([#3211](https://github.com/pagopa/io-app/issues/3211)) ([0b8c34d](https://github.com/pagopa/io-app/commit/0b8c34dbe1db5fb5e211c5bb6f6075591aaf2572))
+* [[IRS-66](https://pagopa.atlassian.net/browse/IRS-66)] Locales update [#3204](https://github.com/pagopa/io-app/issues/3204) ([04927c4](https://github.com/pagopa/io-app/commit/04927c43930c97513a83ad9c2edd3779526c2a8a))
+
 ## [1.29.0-rc.1](https://github.com/pagopa/io-app/compare/1.29.0-rc.0...1.29.0-rc.1) (2021-07-06)
 
 

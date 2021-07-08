@@ -16,8 +16,6 @@ import {
 } from "../../store/reducers/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { showToast } from "../../utils/showToast";
-import { isStrictSome } from "../../utils/pot";
-import { mixpanelTrack } from "../../mixpanel";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
 
@@ -42,17 +40,6 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       showToast(I18n.t("global.genericError"));
     }
 
-    // when the user changes his/her preference, track the new preference
-    if (
-      pot.isSome(prevPotProfile) &&
-      isStrictSome(props.potProfile) &&
-      prevPotProfile.value.service_preferences_settings.mode !==
-        props.potProfile.value.service_preferences_settings.mode
-    ) {
-      void mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
-        mode: props.potProfile.value.service_preferences_settings.mode
-      });
-    }
     setPrevPotProfile(props.potProfile);
   }, [props.potProfile]);
 
