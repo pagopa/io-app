@@ -128,7 +128,7 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 )<void, ReadonlyArray<State>, NetworkError>();
 
 /**
- * get and handle the available state
+ * get and handle the available region
  */
 export const svGenerateVoucherAvailableRegion = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
