@@ -133,7 +133,7 @@ const serviceMetadataBase = {
 beforeAll(() => setLocale("it" as Locales));
 
 describe("getRemoteLocale", () => {
-  it("should return it", () => {
+  it("should return it if locale is it", () => {
     setLocale("it" as Locales);
     expect(getRemoteLocale()).toEqual("it");
   });
