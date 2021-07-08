@@ -217,7 +217,7 @@ describe("Test availableRegion reducer", () => {
       store.getState().bonus.sv.voucherGeneration.voucherRequest
     ).toStrictEqual(mockState);
   });
-  it("Should be some and update the departureDate and the returnDate fields if the category is student, worker or sick after the select flights date action dispatched", () => {
+  it("Should be some and update the departureDate and the returnDate fields after the select flights date action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
@@ -227,25 +227,6 @@ describe("Test availableRegion reducer", () => {
       category: mockCategoryStudent,
       departureDate: mockFlightsDate.departureDate,
       returnDate: mockFlightsDate.returnDate
-    });
-
-    expect(
-      store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(mockState);
-  });
-  it("Should return the same state if the category is not student, worker or sick after the select flights date action dispatched", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherSelectFlightsDate(mockFlightsDate));
-    expect(
-      store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(none);
-
-    store.dispatch(svGenerateVoucherSelectCategory(mockCategoryDisabled));
-    store.dispatch(svGenerateVoucherSelectFlightsDate(mockFlightsDate));
-
-    const mockState: VoucherRequestState = some({
-      category: mockCategoryDisabled
     });
 
     expect(
