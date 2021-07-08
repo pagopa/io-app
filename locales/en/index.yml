@@ -1627,6 +1627,7 @@ services:
   serviceNotEnabled: The service is not enabled
   pushNotifications: Send you push notifications
   emailForwarding: Send you e-mail
+  tosAndPrivacy: Terms of use and Privacy
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also
