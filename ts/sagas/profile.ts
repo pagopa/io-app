@@ -213,6 +213,7 @@ const profileChangePredicates: ReadonlyArray<[
   ]
 ];
 
+// execute a list of predicates to detect interesting scenario and execute action when profile changes
 function* handleProfileChangesSaga(
   action: ActionType<typeof profileUpsert["success"]>
 ) {
