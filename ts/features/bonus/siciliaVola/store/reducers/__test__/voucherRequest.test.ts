@@ -23,7 +23,6 @@ import { VoucherRequestState } from "../voucherRequest";
 const mockCategoryStudent: SvBeneficiaryCategory = "student";
 const mockCategoryWorker: SvBeneficiaryCategory = "worker";
 const mockCategorySick: SvBeneficiaryCategory = "sick";
-const mockCategoryDisabled: SvBeneficiaryCategory = "disabled";
 const mockCompany: Company = {
   businessName: "myCompany",
   vat: "1234abcd",
