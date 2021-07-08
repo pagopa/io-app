@@ -148,7 +148,7 @@ describe("getRemoteLocale", () => {
     expect(getRemoteLocale()).toEqual("it");
   });
 
-  it("should return en", () => {
+  it("should return it if locale is not a supported language and is not in MessageCTALocales", () => {
     setLocale("xyz" as Locales);
     expect(getRemoteLocale()).toEqual("it");
   });
