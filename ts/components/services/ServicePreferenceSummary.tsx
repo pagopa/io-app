@@ -16,7 +16,7 @@ import { profileServicePreferencesModeSelector } from "../../store/reducers/prof
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-export const getServicesPreferenceModeLabel = (
+const getServicesPreferenceModeLabel = (
   mode: ServicesPreferencesModeEnum
 ): string =>
   ({
