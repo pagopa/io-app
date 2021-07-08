@@ -40,7 +40,7 @@ export type Hospital = {
   municipality: Municipality;
 };
 
-export type DisableVoucherRequest = {
+export type DisabledVoucherRequest = {
   category: "disable";
   departureDate?: Date;
   returnDate?: Date;
@@ -70,7 +70,7 @@ export type SickVoucherRequest = {
 };
 
 export type VoucherRequest =
-  | DisableVoucherRequest
+  | DisabledVoucherRequest
   | StudentVoucherRequest
   | WorkerVoucherRequest
   | SickVoucherRequest;
