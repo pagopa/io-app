@@ -138,7 +138,7 @@ describe("getRemoteLocale", () => {
     expect(getRemoteLocale()).toEqual("it");
   });
 
-  it("should return en", () => {
+  it("should return en if locale is en", () => {
     setLocale("en" as Locales);
     expect(getRemoteLocale()).toEqual("en");
   });
