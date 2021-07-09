@@ -260,13 +260,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       });
     }
   }
-
-  public componentDidMount() {
-    if (servicesRedesignEnabled) {
-      this.props.setCurrentSelectedService(this.serviceId);
-    }
-  }
-
   // collect the service
   private service = this.props.navigation.getParam("service");
 
@@ -671,6 +664,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <View spacer={true} small />
           {servicesRedesignEnabled ? (
             <ContactPreferencesToggles
+              serviceId={this.serviceId}
               channels={this.service.available_notification_channels}
             />
           ) : (
