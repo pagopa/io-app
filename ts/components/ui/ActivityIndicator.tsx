@@ -8,7 +8,11 @@ interface Props {
 }
 
 const ActivityIndicator: React.SFC<Props> = ({ color }) => (
-  <RNActivityIndicator size="large" color={color || variables.brandPrimary} />
+  <RNActivityIndicator
+    size="large"
+    color={color || variables.brandPrimary}
+    testID="rn-activity-indicator"
+  />
 );
 
 export default ActivityIndicator;
