@@ -31,7 +31,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   contentSelector,
   ServiceMetadataState
@@ -65,12 +65,15 @@ import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IOColors } from "../../components/core/variables/IOColors";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { currentSelectedService } from "../../store/actions/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
@@ -255,6 +258,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       this.setState({
         uiEnabledChannels
       });
+    }
+  }
+
+  public componentDidMount() {
+    if (servicesRedesignEnabled) {
+      this.props.setCurrentSelectedService(this.serviceId);
     }
   }
 
@@ -739,4 +748,12 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setCurrentSelectedService: (id: ServiceId) =>
+    dispatch(currentSelectedService(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServiceDetailsScreen);

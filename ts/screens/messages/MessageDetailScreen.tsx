@@ -21,10 +21,7 @@ import {
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import {
-  currentSelectedService,
-  loadServiceDetail
-} from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -39,7 +36,6 @@ import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
-import { servicesRedesignEnabled } from "../../config";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -135,9 +131,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     this.props.navigateToServiceDetailsScreen({
       service
     });
-    if (servicesRedesignEnabled) {
-      this.props.setCurrentSelectedService(service.service_id);
-    }
   };
 
   /**
@@ -376,9 +369,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(setMessageReadState(messageId, isRead)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params)),
-  setCurrentSelectedService: (id: ServiceId) =>
-    dispatch(currentSelectedService(id))
+  ) => dispatch(navigateToServiceDetailsScreen(params))
 });
 
 export default connect(
