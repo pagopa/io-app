@@ -110,6 +110,9 @@ const renderComponent = (
 ) =>
   render(
     <Provider store={store}>
-      <ContactPreferencesToggles {...options} />
+      <ContactPreferencesToggles
+        {...options}
+        serviceId={"aServiceID" as ServiceId}
+      />
     </Provider>
   );
