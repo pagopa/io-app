@@ -1606,12 +1606,14 @@ services:
       body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
       quickConfig:
         value: "Quick setup"
+        label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
         body:
           text1: "Only the services which have something important to tell you will contact you."
           text2: "You can always deactivate communications by services that do not interest you."
       manualConfig:
         value: "Manual setup"
+        label: "only the services you enabled can contact you."
         title: "Configure manually"
         body:
           text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
