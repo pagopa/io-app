@@ -8,6 +8,7 @@ import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { getEnabledChannelsForService } from "../../utils/profile";
 import ListItemComponent from "../screens/ListItemComponent";
+import { servicesRedesignEnabled } from "../../config";
 
 interface State {
   switchValue: boolean;
@@ -136,7 +137,7 @@ export default class NewServiceListItem extends React.PureComponent<
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
-        isItemDisabled={!switchValue}
+        isItemDisabled={servicesRedesignEnabled ? false : !switchValue}
         onSwitchValueChanged={this.onItemSwitchValueChanged}
         switchValue={switchValue}
         switchDisabled={pot.isUpdating(this.props.profile)}
