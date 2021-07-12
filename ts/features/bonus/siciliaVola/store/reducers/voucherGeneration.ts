@@ -5,7 +5,7 @@ import voucherGeneratedReducer, {
 } from "./voucherGenerated";
 import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
 import availableDestinationReducer, {
-  AvailableDestinationState
+  AvailableDestinationsState
 } from "./availableDestination";
 import availableStatesReducer, { AvailableStatesState } from "./availableState";
 import availableRegionsReducer, {
@@ -21,7 +21,7 @@ import availableMunicipalitiesReducer, {
 export type VoucherGenerationState = {
   voucherRequest: VoucherRequestState;
   voucherGenerated: VoucherGeneratedState;
-  availableDestination: AvailableDestinationState;
+  availableDestinations: AvailableDestinationsState;
   availableStates: AvailableStatesState;
   availableRegions: AvailableRegionsState;
   availableProvinces: AvailableProvincesState;
@@ -33,7 +33,7 @@ const svVoucherGenerationReducer = combineReducers<
   Action
 >({
   voucherRequest: voucherRequestReducer,
-  availableDestination: availableDestinationReducer,
+  availableDestinations: availableDestinationReducer,
   voucherGenerated: voucherGeneratedReducer,
   availableStates: availableStatesReducer,
   availableRegions: availableRegionsReducer,
