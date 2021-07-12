@@ -23,7 +23,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
@@ -32,7 +31,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   contentSelector,
   ServiceMetadataState
@@ -65,12 +64,16 @@ import ContactPreferencesToggles from "../../components/services/ContactPreferen
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IOColors } from "../../components/core/variables/IOColors";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { currentSelectedService } from "../../store/actions/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
@@ -162,23 +165,6 @@ const renderRowWithDefinedValue = (
       valueType
     )
   );
-
-// Renders a row in the service information panel as a link
-function renderInformationLinkRow(
-  info: string,
-  value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
-) {
-  return (
-    <View style={styles.infoItem}>
-      <TouchableDefaultOpacity onPress={handleItemOnPress(value, valueType)}>
-        <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-          {info}
-        </Text>
-      </TouchableDefaultOpacity>
-    </View>
-  );
-}
 
 // Renders a row in the service information panel as labelled image
 function renderInformationImageRow(
@@ -274,7 +260,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       });
     }
   }
-
   // collect the service
   private service = this.props.navigation.getParam("service");
 
@@ -341,16 +326,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           {metadata.description && <View spacer={true} large={true} />}
           {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
             <View>
-              {metadata.tos_url &&
-                renderInformationLinkRow(
-                  I18n.t("services.tosLink"),
-                  metadata.tos_url
-                )}
-              {metadata.privacy_url &&
-                renderInformationLinkRow(
-                  I18n.t("services.privacyLink"),
-                  metadata.privacy_url
-                )}
+              <TosAndPrivacyBox
+                tosUrl={metadata.tos_url}
+                privacyUrl={metadata.privacy_url}
+              />
+
               {(metadata.app_android ||
                 metadata.app_ios ||
                 metadata.web_url) && (
@@ -684,6 +664,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <View spacer={true} small />
           {servicesRedesignEnabled ? (
             <ContactPreferencesToggles
+              serviceId={this.serviceId}
               channels={this.service.available_notification_channels}
             />
           ) : (
@@ -761,4 +742,12 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setCurrentSelectedService: (id: ServiceId) =>
+    dispatch(currentSelectedService(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServiceDetailsScreen);
