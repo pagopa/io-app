@@ -42,27 +42,19 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
   createSelector(backendStatusSelector, (backendStatus):
     | SectionStatus
     | undefined =>
-    backendStatus
-      .mapNullable(bs => bs.sections)
-      .fold(undefined, s => s[sectionStatusKey])
+    backendStatus.map(bs => bs.sections[sectionStatusKey]).toUndefined()
   );
 
 export const bpdRankingEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
-    backendStatus
-      .mapNullable(bs => bs.config)
-      .mapNullable(config => config.bpd_ranking_v2)
-      .toUndefined()
+    backendStatus.map(bs => bs.config.bpd_ranking_v2).toUndefined()
 );
 
 export const bpdRemoteConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): BpdConfig | undefined =>
-    backendStatus
-      .mapNullable(bs => bs.config)
-      .mapNullable(config => config.bpd)
-      .toUndefined()
+    backendStatus.map(bs => bs.config.bpd).toUndefined()
 );
 
 export const cgnMerchantVersionSelector = createSelector(
