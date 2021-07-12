@@ -43,6 +43,7 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
+  profileServicePreferencesModeSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -56,6 +57,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
 import { servicesRedesignEnabled } from "../../config";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -92,6 +94,21 @@ function translateLocale(locale: string): string {
     .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
     .getOrElse(locale);
 }
+
+const getServicesPreferenceModeLabel = (
+  mode: ServicesPreferencesModeEnum
+): string =>
+  ({
+    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+      "services.optIn.preferences.quickConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+      "services.optIn.preferences.manualConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
+      "services.optIn.preferences.unavailable"
+    )
+  }[mode]);
 
 class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -253,7 +270,10 @@ class PreferencesScreen extends React.Component<Props, State> {
               // TODO subtitle should show the selected option on profile
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.service_contact")}
-                subTitle={I18n.t("services.optIn.preferences.unavailable")}
+                subTitle={getServicesPreferenceModeLabel(
+                  this.props.profileServicePreferenceMode ??
+                    ServicesPreferencesModeEnum.LEGACY
+                )}
                 onPress={this.props.navigateToServiceContactPreferenceScreen}
               />
             )}
@@ -306,6 +326,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isInboxEnabled: isInboxEnabledSelector(state),

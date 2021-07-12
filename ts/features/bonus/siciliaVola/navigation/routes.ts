@@ -1,0 +1,8 @@
+const SV_ROUTES = {
+  MAIN: "SV_ROUTES_MAIN",
+  VOUCHER_GENERATION: {
+    CHECK_STATUS: "SV_CHECK_STATUS"
+  }
+};
+
+export default SV_ROUTES;
