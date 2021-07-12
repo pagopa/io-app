@@ -5,16 +5,15 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import {
-  BackendStatus,
-  BpdConfig,
-  SectionStatus,
-  SectionStatusKey
-} from "../../types/backendStatus";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { Sections } from "../../../definitions/content/Sections";
+import { SectionStatus } from "../../../definitions/content/SectionStatus";
+import { BpdConfig } from "../../../definitions/content/BpdConfig";
 import { GlobalState } from "./types";
 
+export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
  * if you want to persist an option take care of persinsting/rehydrating
  * see https://www.pivotaltracker.com/story/show/170998374

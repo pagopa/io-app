@@ -5,8 +5,8 @@ import {
   bpdRankingEnabledSelector,
   sectionStatusSelector
 } from "../backendStatus";
-import { BackendStatus } from "../../../types/backendStatus";
 import { GlobalState } from "../types";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid

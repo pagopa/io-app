@@ -4,7 +4,7 @@ import * as matchers from "redux-saga-test-plan/matchers";
 
 import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
-import { BackendStatus } from "../../types/backendStatus";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
 
 jest.mock("react-native-background-timer", () => ({
   BackgroundTimer: { setTimeout: jest.fn }

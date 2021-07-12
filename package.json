@@ -3,7 +3,7 @@
   "version": "1.30.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.18.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.15.6/api_public.yaml",
-  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/950134b8a050d5defdabab8d1ad90ed04e14cde2/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_bonus.yaml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_cgn.yaml",
   "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/citizen.json",
