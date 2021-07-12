@@ -7,10 +7,12 @@ import {
 } from "../backendStatus";
 import { GlobalState } from "../types";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../__mock__/backendStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
   const responseON: BackendStatus = {
+    ...baseRawBackendStatus,
     is_alive: true,
     message: {
       "it-IT": "messaggio in italiano",
@@ -19,6 +21,7 @@ describe("backend service status reducer", () => {
   };
 
   const responseOff: BackendStatus = {
+    ...baseRawBackendStatus,
     is_alive: false,
     message: {
       "it-IT": "messaggio in italiano",

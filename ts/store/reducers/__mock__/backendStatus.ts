@@ -160,6 +160,14 @@ export const baseRawBackendStatus: BackendStatus = {
         "en-EN": "euCovidCert banner test"
       }
     }
+  },
+  config: {
+    bpd: {
+      enroll_bpd_after_add_payment_method: false
+    },
+    bpd_ranking: true,
+    bpd_ranking_v2: true,
+    cgn_merchants_v2: false
   }
 };
 
