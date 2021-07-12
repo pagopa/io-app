@@ -31,7 +31,7 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   contentSelector,
   ServiceMetadataState
@@ -65,12 +65,15 @@ import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IOColors } from "../../components/core/variables/IOColors";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { currentSelectedService } from "../../store/actions/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
@@ -257,7 +260,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       });
     }
   }
-
   // collect the service
   private service = this.props.navigation.getParam("service");
 
@@ -662,6 +664,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <View spacer={true} small />
           {servicesRedesignEnabled ? (
             <ContactPreferencesToggles
+              serviceId={this.serviceId}
               channels={this.service.available_notification_channels}
             />
           ) : (
@@ -739,4 +742,12 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setCurrentSelectedService: (id: ServiceId) =>
+    dispatch(currentSelectedService(id))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServiceDetailsScreen);
