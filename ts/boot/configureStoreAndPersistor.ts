@@ -242,6 +242,25 @@ const migrations: MigrationManifest = {
       ...state,
       content: { ...content, idps: remoteUndefined }
     };
+  },
+  // Version 17
+  // we removed currentSelectedServices from entities.services
+  "17": (state: PersistedState) => {
+    const entities = (state as PersistedGlobalState).entities;
+    return {
+      ...state,
+      content: {
+        ...entities,
+        services: {
+          servicePreference: entities.services.servicePreference,
+          byId: entities.services.byId,
+          byOrgFiscalCode: entities.services.byOrgFiscalCode,
+          visible: entities.services.visible,
+          readState: entities.services.readState,
+          firstLoading: entities.services.firstLoading
+        }
+      }
+    };
   }
 };
 
