@@ -1,5 +1,5 @@
 import { IUnitTag } from "italia-ts-commons/lib/units";
-import { AvailableDestination, VoucherRequest } from "./SvVoucherRequest";
+import { AvailableDestinations, VoucherRequest } from "./SvVoucherRequest";
 
 /**
  * The unique ID of a SiciliaVola Voucher
@@ -28,5 +28,5 @@ export type SvVoucher = WithSvVoucherId &
     beneficiary: string;
     qrCode: ReadonlyArray<QRCode>;
     barCode: ReadonlyArray<BarCode>;
-    availableDestination: AvailableDestination;
+    availableDestination: AvailableDestinations;
   };
