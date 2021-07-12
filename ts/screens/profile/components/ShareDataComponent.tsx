@@ -57,7 +57,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             "profile.main.privacy.shareData.screen.why.description.three"
           )}
         </Body>
-        <Link onPress={whyBottomSheet.present}>
+        <Link onPress={whyBottomSheet.present} testID="why">
           {I18n.t("profile.main.privacy.shareData.screen.why.cta")}
         </Link>
       </InfoBox>
@@ -73,7 +73,7 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link onPress={securityBottomSheet.present}>
+        <Link onPress={securityBottomSheet.present} testID="security">
           {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
         </Link>
       </InfoBox>
@@ -87,12 +87,16 @@ export const ShareDataComponent = (): React.ReactElement => {
             )}
           </Label>
         </Body>
-        <Link onPress={() => openWebUrl(ioSuppliersUrl)}>
+        <Link onPress={() => openWebUrl(ioSuppliersUrl)} testID="gdpr">
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.cta")}
         </Link>
       </InfoBox>
       <View spacer={true} />
-      <Body accessibilityRole="link" onPress={() => openWebUrl(privacyUrl)}>
+      <Body
+        accessibilityRole="link"
+        onPress={() => openWebUrl(privacyUrl)}
+        testID="additionalInformation"
+      >
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}
