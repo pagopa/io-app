@@ -2,7 +2,6 @@
  * Implements the preferences screen where the user can see and update his
  * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
-import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List, Content, View } from "native-base";
 import * as React from "react";
@@ -30,11 +29,8 @@ import {
 } from "../../store/reducers/persistedPreferences";
 import {
   isEmailEnabledSelector,
-  isProfileEmailValidatedSelector,
-  profileEmailSelector,
-  profileServicePreferencesModeSelector,
-  profileSpidEmailSelector,
-  isInboxEnabledSelector
+  isInboxEnabledSelector,
+  profileServicePreferencesModeSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
