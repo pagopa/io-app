@@ -12,16 +12,16 @@ import {
   svGenerateVoucherStart
 } from "../actions/voucherGeneration";
 
-export type AvailableMunicipalityState = pot.Pot<
+export type AvailableMunicipalitiesState = pot.Pot<
   IndexedById<Municipality>,
   NetworkError
 >;
-const INITIAL_STATE: AvailableMunicipalityState = pot.none;
+const INITIAL_STATE: AvailableMunicipalitiesState = pot.none;
 
 const reducer = (
-  state: AvailableMunicipalityState = INITIAL_STATE,
+  state: AvailableMunicipalitiesState = INITIAL_STATE,
   action: Action
-): AvailableMunicipalityState => {
+): AvailableMunicipalitiesState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;

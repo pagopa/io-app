@@ -7,25 +7,25 @@ import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
 import availableDestinationReducer, {
   AvailableDestinationState
 } from "./availableDestination";
-import availableStateReducer, { AvailableStateState } from "./availableState";
-import availableRegionReducer, {
-  AvailableRegionState
+import availableStatesReducer, { AvailableStatesState } from "./availableState";
+import availableRegionsReducer, {
+  AvailableRegionsState
 } from "./availableRegion";
-import availableProvinceReducer, {
-  AvailableProvinceState
+import availableProvincesReducer, {
+  AvailableProvincesState
 } from "./availableProvince";
-import availableMunicipalityReducer, {
-  AvailableMunicipalityState
+import availableMunicipalitiesReducer, {
+  AvailableMunicipalitiesState
 } from "./availableMunicipality";
 
 export type VoucherGenerationState = {
   voucherRequest: VoucherRequestState;
   voucherGenerated: VoucherGeneratedState;
   availableDestination: AvailableDestinationState;
-  availableState: AvailableStateState;
-  availableRegion: AvailableRegionState;
-  availableProvince: AvailableProvinceState;
-  availableMunicipality: AvailableMunicipalityState;
+  availableStates: AvailableStatesState;
+  availableRegions: AvailableRegionsState;
+  availableProvinces: AvailableProvincesState;
+  availableMunicipalities: AvailableMunicipalitiesState;
 };
 
 const svVoucherGenerationReducer = combineReducers<
@@ -35,10 +35,10 @@ const svVoucherGenerationReducer = combineReducers<
   voucherRequest: voucherRequestReducer,
   availableDestination: availableDestinationReducer,
   voucherGenerated: voucherGeneratedReducer,
-  availableState: availableStateReducer,
-  availableRegion: availableRegionReducer,
-  availableProvince: availableProvinceReducer,
-  availableMunicipality: availableMunicipalityReducer
+  availableStates: availableStatesReducer,
+  availableRegions: availableRegionsReducer,
+  availableProvinces: availableProvincesReducer,
+  availableMunicipalities: availableMunicipalitiesReducer
 });
 
 export default svVoucherGenerationReducer;

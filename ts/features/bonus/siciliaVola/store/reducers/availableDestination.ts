@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { AvailableDestination } from "../../types/SvVoucherRequest";
+import { AvailableDestinations } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import {
@@ -9,7 +9,7 @@ import {
 } from "../actions/voucherGeneration";
 
 export type AvailableDestinationState = pot.Pot<
-  AvailableDestination,
+  AvailableDestinations,
   NetworkError
 >;
 const INITIAL_STATE: AvailableDestinationState = pot.none;
