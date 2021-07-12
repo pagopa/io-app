@@ -28,8 +28,16 @@ export const svGenerateVoucherBack = createStandardAction(
   "SV_GENERATE_VOUCHER_BACK"
 )<void>();
 
+/**
+ * The workflow fails
+ */
+export const svGenerateVoucherFailure = createStandardAction(
+  "SV_GENERATE_VOUCHER_FAILURE"
+)<string>();
+
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
   | ActionType<typeof svGenerateVoucherCompleted>
   | ActionType<typeof svGenerateVoucherBack>
-  | ActionType<typeof svGenerateVoucherCancel>;
+  | ActionType<typeof svGenerateVoucherCancel>
+  | ActionType<typeof svGenerateVoucherFailure>;

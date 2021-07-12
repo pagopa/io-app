@@ -28,7 +28,8 @@ import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen,
-  navigateToLanguagePreferenceScreen
+  navigateToLanguagePreferenceScreen,
+  navigateToServicePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
@@ -42,6 +43,7 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
+  profileServicePreferencesModeSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -54,6 +56,10 @@ import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
+import { servicesRedesignEnabled } from "../../config";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { getServicesPreferenceModeLabel } from "../../components/services/ServicePreferenceSummary";
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -246,6 +252,18 @@ class PreferencesScreen extends React.Component<Props, State> {
               onPress={this.handleEmailOnPress}
             />
 
+            {servicesRedesignEnabled && (
+              // TODO subtitle should show the selected option on profile
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.service_contact")}
+                subTitle={getServicesPreferenceModeLabel(
+                  this.props.profileServicePreferenceMode ??
+                    ServicesPreferencesModeEnum.LEGACY
+                )}
+                onPress={this.props.navigateToServiceContactPreferenceScreen}
+              />
+            )}
+
             <ListItemComponent
               title={I18n.t("send_email_messages.title")}
               subTitle={this.getEmailForwardPreferencesSubtitle()}
@@ -294,6 +312,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isInboxEnabled: isInboxEnabledSelector(state),
@@ -308,6 +327,8 @@ function mapStateToProps(state: GlobalState) {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
+  navigateToServiceContactPreferenceScreen: () =>
+    dispatch(navigateToServicePreferenceScreen()),
   navigateToEmailForwardingPreferenceScreen: () =>
     dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>

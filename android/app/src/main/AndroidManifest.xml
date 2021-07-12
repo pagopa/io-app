@@ -77,6 +77,9 @@
 
     <meta-data android:name="com.mixpanel.android.MPConfig.UseIpAddressForGeolocation"
                android:value="false" />
+    <!-- disable A/B testing see https://pagopa.atlassian.net/browse/IA-42 -->
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableGestureBindingUI" android:value="true" />
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableEmulatorBindingUI" android:value="true" />
 
     <!-- START Required by mixpanel push notification -->
     <service
