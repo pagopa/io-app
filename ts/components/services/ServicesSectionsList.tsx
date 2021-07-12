@@ -29,12 +29,6 @@ type OwnProps = {
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
   isAll: boolean;
-  onLongPressItem?: () => void;
-  isLongPressEnabled: boolean;
-  onItemSwitchValueChanged?: (
-    service: ReadonlyArray<ServicePublic>,
-    value: boolean
-  ) => void;
   renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;
@@ -131,15 +125,10 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       <View style={styles.headerContentWrapper}>
         <ButtonDefaultOpacity
           small={true}
-          primary={!this.props.isLongPressEnabled}
           style={styles.button}
           block={true}
           onPress={this.props.onChooserAreasOfInterestPress}
-          disabled={
-            this.props.isRefreshing ||
-            this.props.isLongPressEnabled ||
-            this.props.isSelectableOrgsEmpty
-          }
+          disabled={this.props.isRefreshing || this.props.isSelectableOrgsEmpty}
         >
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.editButton")}
@@ -164,9 +153,6 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onSelect={this.props.onSelect}
         readServices={this.props.readServices}
         ListEmptyComponent={emptyComponent}
-        onLongPressItem={this.props.onLongPressItem}
-        isLongPressEnabled={this.props.isLongPressEnabled}
-        onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
         renderRightIcon={this.props.renderRightIcon}
       />
     );

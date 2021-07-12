@@ -56,7 +56,6 @@ import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { servicesRedesignEnabled } from "../../config";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 type OwnProps = Readonly<{
@@ -266,17 +265,14 @@ class PreferencesScreen extends React.Component<Props, State> {
               onPress={this.handleEmailOnPress}
             />
 
-            {servicesRedesignEnabled && (
-              // TODO subtitle should show the selected option on profile
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.service_contact")}
-                subTitle={getServicesPreferenceModeLabel(
-                  this.props.profileServicePreferenceMode ??
-                    ServicesPreferencesModeEnum.LEGACY
-                )}
-                onPress={this.props.navigateToServiceContactPreferenceScreen}
-              />
-            )}
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.service_contact")}
+              subTitle={getServicesPreferenceModeLabel(
+                this.props.profileServicePreferenceMode ??
+                  ServicesPreferencesModeEnum.LEGACY
+              )}
+              onPress={this.props.navigateToServiceContactPreferenceScreen}
+            />
 
             <ListItemComponent
               title={I18n.t("send_email_messages.title")}

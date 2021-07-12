@@ -11,16 +11,13 @@ import {
   RefreshControl,
   SectionList,
   SectionListData,
-  StyleSheet,
-  Vibration
+  StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
-import customVariables, {
-  VIBRATION_LONG_PRESS_DURATION
-} from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -45,12 +42,6 @@ type OwnProps = {
   ListEmptyComponent?: React.ComponentProps<
     typeof SectionList
   >["ListEmptyComponent"];
-  onLongPressItem?: () => void;
-  isLongPressEnabled: boolean;
-  onItemSwitchValueChanged?: (
-    services: ReadonlyArray<ServicePublic>,
-    value: boolean
-  ) => void;
   renderRightIcon?: (selectedOrgId: ServicesSectionState) => React.ReactNode;
 };
 
@@ -71,13 +62,6 @@ const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 class ServiceList extends React.Component<Props> {
   private sectionListRef = React.createRef<SectionList>();
 
-  private handleLongPressItem = () => {
-    if (this.props.onLongPressItem) {
-      this.props.onLongPressItem();
-      Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
-    }
-  };
-
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
@@ -90,9 +74,6 @@ class ServiceList extends React.Component<Props> {
         this.isRead(itemInfo.item, this.props.readServices)
       }
       hideSeparator={true}
-      onLongPress={this.handleLongPressItem}
-      onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
-      isLongPressEnabled={this.props.isLongPressEnabled}
     />
   );
 
