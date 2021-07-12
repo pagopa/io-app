@@ -24,21 +24,6 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 
 describe("Ranking ready vs not ready", () => {
   const mockStore = configureMockStore();
-  it("with ranking: ready, remote ranking: undefined should display SuperCashbackRankingNotReady", () => {
-    const period: BpdPeriodWithInfo = {
-      ...activePeriod,
-      amount: notEligibleAmount,
-      ranking: readyRanking
-    };
-    const store = mockStore(mockBpdState(period));
-    const component = render(
-      <Provider store={store}>
-        <BpdSummaryComponent />
-      </Provider>
-    );
-
-    expectSuperCashbackNotReady(component);
-  });
 
   it("with ranking: ready, remote ranking: false should display SuperCashbackRankingNotReady", () => {
     const period: BpdPeriodWithInfo = {
