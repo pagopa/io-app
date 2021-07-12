@@ -6,17 +6,19 @@ import voucherGeneratedReducer, {
 import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
 import availableDestinationReducer, {
   AvailableDestinationsState
-} from "./availableDestination";
-import availableStatesReducer, { AvailableStatesState } from "./availableState";
+} from "./availableDestinations";
+import availableStatesReducer, {
+  AvailableStatesState
+} from "./availableStates";
 import availableRegionsReducer, {
   AvailableRegionsState
-} from "./availableRegion";
+} from "./availableRegions";
 import availableProvincesReducer, {
   AvailableProvincesState
-} from "./availableProvince";
+} from "./availableProvinces";
 import availableMunicipalitiesReducer, {
   AvailableMunicipalitiesState
-} from "./availableMunicipality";
+} from "./availableMunicipalities";
 
 export type VoucherGenerationState = {
   voucherRequest: VoucherRequestState;

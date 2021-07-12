@@ -4,7 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import {
-  AvailableDestination,
+  AvailableDestinations,
   Company,
   Hospital,
   Municipality,
@@ -108,7 +108,7 @@ export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<void, AvailableDestination, NetworkError>();
+)<void, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
