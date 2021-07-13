@@ -20,13 +20,16 @@ import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
 const mockState: State = {
-  id: 1
+  id: 1,
+  name: "state1"
 };
 const mockRegion: Region = {
-  id: 1
+  id: 1,
+  name: "reg1"
 };
 const mockProvince: Province = {
-  id: 1
+  id: 1,
+  name: "prov1"
 };
 const mockResponse: ReadonlyArray<Municipality> = [
   { id: 1, name: "mun1" },

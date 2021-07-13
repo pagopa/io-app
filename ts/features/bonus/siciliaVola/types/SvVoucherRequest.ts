@@ -1,19 +1,19 @@
 export type State = {
   id: number;
-  name?: string;
+  name: string;
 };
 export type Region = {
   id: number;
-  name?: string;
+  name: string;
 };
 export type Province = {
   id: number;
-  name?: string;
+  name: string;
 };
 
 export type Municipality = {
   id: number;
-  name?: string;
+  name: string;
 };
 export type University = {
   universityName: string;

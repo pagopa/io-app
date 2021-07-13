@@ -13,7 +13,8 @@ import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
 const mockState: State = {
-  id: 1
+  id: 1,
+  name: "state1"
 };
 
 const mockResponse: ReadonlyArray<Region> = [
