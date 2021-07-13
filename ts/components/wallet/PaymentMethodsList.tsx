@@ -28,6 +28,7 @@ import {
 import { statusColorMap } from "../SectionStatusComponent";
 import { getFullLocale } from "../../utils/locale";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -124,7 +125,7 @@ const getBadgeStatus = (
           </Badge>
         ),
         alert:
-          section.level === "critical"
+          section.level === LevelEnum.critical
             ? () => Alert.alert(badgeLabel, section.message[locale])
             : undefined
       };
