@@ -422,7 +422,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(storeEligibilityRequestId):
       return mp.track(action.type);
 
-    // eslint-disable-next-line
     case getType(loadAllBonusActivations.success):
       return mp.track(action.type, {
         count: action.payload.length
