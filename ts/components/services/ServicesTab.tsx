@@ -6,11 +6,10 @@ import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createFactory } from "react";
 import * as React from "react";
-import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
@@ -26,7 +25,6 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
-import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ChooserListContainer from "../ChooserListContainer";
@@ -123,33 +121,6 @@ class ServicesTab extends React.PureComponent<Props> {
     this.props.hideModal();
   };
 
-  private onPressItem = (section: ServicesSectionState) => {
-    if (this.props.userMetadata && this.props.selectedOrganizations) {
-      if (this.props.updateToast) {
-        this.props.updateToast();
-      }
-      const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
-        item => item !== section.organizationFiscalCode
-      );
-      this.props.saveSelectedOrganizationItems(
-        this.props.userMetadata,
-        updatedAreasOfInterest
-      );
-    }
-  };
-
-  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => (
-    <TouchableOpacity onPress={() => this.onPressItem(section)}>
-      <View style={styles.iconContainer}>
-        <IconFont
-          name={"io-trash"}
-          color={customVariables.brandMildGray}
-          size={ICON_SIZE}
-        />
-      </View>
-    </TouchableOpacity>
-  );
-
   private onTabScroll = () => ({
     onScroll: Animated.event([
       {
@@ -162,13 +133,6 @@ class ServicesTab extends React.PureComponent<Props> {
   });
 
   public render() {
-    // the right icon in the organization section could be
-    // - if long press is enabled: a switch to enable/disable all related services
-    // - if the organization is local a button to remove it
-    // - none
-    const renderRightIcon = this.props.isLocal
-      ? this.renderLocalQuickSectionDeletion
-      : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
@@ -189,7 +153,6 @@ class ServicesTab extends React.PureComponent<Props> {
             : undefined
         }
         animated={this.onTabScroll()}
-        renderRightIcon={renderRightIcon}
       />
     );
   }

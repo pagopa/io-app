@@ -67,12 +67,7 @@ class ServiceList extends React.Component<Props> {
   ) => (
     <NewServiceListItem
       item={itemInfo.item}
-      profile={this.props.profile}
       onSelect={this.props.onSelect}
-      isRead={
-        !this.props.renderUnreadState ||
-        this.isRead(itemInfo.item, this.props.readServices)
-      }
       hideSeparator={true}
     />
   );
@@ -99,15 +94,6 @@ class ServiceList extends React.Component<Props> {
       rightItem={this.props.renderRightIcon?.(info.section)}
     />
   );
-
-  private isRead = (
-    potService: pot.Pot<ServicePublic, Error>,
-    readServices: ReadStateByServicesId
-  ): boolean =>
-    pot.getOrElse(
-      pot.map(potService, s => s && readServices[s.service_id] !== undefined),
-      false
-    );
 
   public render() {
     const {

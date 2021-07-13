@@ -3,23 +3,14 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-
-import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { getEnabledChannelsForService } from "../../utils/profile";
 import ListItemComponent from "../screens/ListItemComponent";
 
-interface State {
-  switchValue: boolean;
-}
-
-type Props = Readonly<{
+type Props = {
   item: pot.Pot<ServicePublic, Error>;
-  profile: ProfileState;
   onSelect: (service: ServicePublic) => void;
-  isRead: boolean;
   hideSeparator: boolean;
-}>;
+};
 
 const styles = StyleSheet.create({
   listItem: {
@@ -44,31 +35,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class NewServiceListItem extends React.PureComponent<
-  Props,
-  State
-> {
-  constructor(props: Props) {
-    super(props);
-    const switchValue = this.isInboxChannelEnabled();
-    this.state = {
-      switchValue
-    };
-  }
-
-  public componentDidUpdate() {
-    const switchValue = this.isInboxChannelEnabled();
-    if (
-      switchValue !== this.state.switchValue &&
-      !pot.isUpdating(this.props.profile)
-    ) {
-      this.setState({
-        switchValue
-      });
-    }
-  }
-
-  private getServiceKey = (potService: pot.Pot<ServicePublic, Error>): string =>
+const NewServiceListItem = (props: Props): React.ReactElement => {
+  const getServiceKey = (potService: pot.Pot<ServicePublic, Error>): string =>
     pot.getOrElse(
       pot.map(
         potService,
@@ -77,39 +45,28 @@ export default class NewServiceListItem extends React.PureComponent<
       `service-switch`
     );
 
-  private isInboxChannelEnabled() {
-    const potService = this.props.item;
-    const uiEnabledChannels = pot.map(potService, service =>
-      getEnabledChannelsForService(this.props.profile, service.service_id)
-    );
-    return pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
-  }
+  const potService = props.item;
 
-  public render() {
-    const { switchValue } = this.state;
-    const potService = this.props.item;
+  const onPress = pot.toUndefined(
+    pot.map(potService, service => () => props.onSelect(service))
+  );
 
-    const onPress = pot.toUndefined(
-      pot.map(potService, service => () => this.props.onSelect(service))
-    );
+  const serviceName = pot.isLoading(potService)
+    ? I18n.t("global.remoteStates.loading")
+    : pot.isError(potService) || pot.isNone(potService)
+    ? I18n.t("global.remoteStates.notAvailable")
+    : potService.value.service_name;
 
-    const serviceName = pot.isLoading(potService)
-      ? I18n.t("global.remoteStates.loading")
-      : pot.isError(potService) || pot.isNone(potService)
-      ? I18n.t("global.remoteStates.notAvailable")
-      : potService.value.service_name;
+  return (
+    <ListItemComponent
+      title={serviceName}
+      hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
+      onPress={onPress}
+      hideSeparator={props.hideSeparator}
+      style={styles.listItem}
+      keySwitch={getServiceKey(potService)}
+    />
+  );
+};
 
-    return (
-      <ListItemComponent
-        title={serviceName}
-        hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
-        onPress={onPress}
-        hideSeparator={this.props.hideSeparator}
-        style={styles.listItem}
-        switchValue={switchValue}
-        switchDisabled={pot.isUpdating(this.props.profile)}
-        keySwitch={this.getServiceKey(potService)}
-      />
-    );
-  }
-}
+export default NewServiceListItem;
