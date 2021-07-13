@@ -61,7 +61,9 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
   const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
   const label = getLabel(routeName, locale);
   const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
-  const isSelected = options.focused ? I18n.t("navigation.selected") : "";
+  const isSelected = options.focused
+    ? `${I18n.t("navigation.selected")}, `
+    : "";
 
   return (
     <Text
@@ -71,7 +73,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
           color: options.tintColor === null ? undefined : options.tintColor
         }
       ]}
-      accessibilityLabel={`${isSelected}, ${I18n.t("navigation.accessibility", {
+      accessibilityLabel={`${isSelected} ${I18n.t("navigation.accessibility", {
         section: label,
         order: maybeOrder.getOrElse(0)
       })}`}
