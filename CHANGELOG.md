@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0-rc.0](https://github.com/pagopa/io-app/compare/1.30.0-rc.2...1.31.0-rc.0) (2021-07-13)
+
+
+### Bug Fixes
+
+* [[IA-89](https://pagopa.atlassian.net/browse/IA-89)] Missing accessibility role on share data links ([#3185](https://github.com/pagopa/io-app/issues/3185)) ([d0e7be9](https://github.com/pagopa/io-app/commit/d0e7be9918deebb80af17d7a52311dfe62fe6a79)), closes [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89)
+
+
+### Chores
+
+* **deps:** bump addressable from 2.7.0 to 2.8.0 ([#3223](https://github.com/pagopa/io-app/issues/3223)) ([9df6068](https://github.com/pagopa/io-app/commit/9df6068985b3a34ad81456dbc3d5c07ca43ba2fb))
+* [[IA-126](https://pagopa.atlassian.net/browse/IA-126)] Persisted store snapshot test ([#3218](https://github.com/pagopa/io-app/issues/3218)) ([73622e2](https://github.com/pagopa/io-app/commit/73622e261626bad743a8a8ace3e0cdacda720567))
+
 ## [1.30.0-rc.2](https://github.com/pagopa/io-app/compare/1.30.0-rc.1...1.30.0-rc.2) (2021-07-09)
 
 
