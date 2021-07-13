@@ -10,7 +10,6 @@ import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import {
-  localServicesSectionsSelector,
   organizationsOfInterestSelector,
   ServicesSectionState
 } from "../../store/reducers/entities/services";
@@ -57,7 +56,6 @@ class ServicesTab extends React.PureComponent<Props> {
   public render() {
     return (
       <ServicesSectionsList
-        isSelectableOrgsEmpty={this.props.selectableOrganizations.length === 0}
         sections={this.props.sections}
         profile={this.props.profile}
         isRefreshing={this.props.isRefreshing}
@@ -70,20 +68,12 @@ class ServicesTab extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const localServicesSections = localServicesSectionsSelector(state);
-  const selectableOrganizations = localServicesSections.map(
-    (section: ServicesSectionState) => ({
-      name: section.organizationName,
-      fiscalCode: section.organizationFiscalCode
-    })
-  );
   const potUserMetadata = userMetadataSelector(state);
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);
   return {
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
     selectedOrganizations: organizationsOfInterestSelector(state),
-    selectableOrganizations,
     userMetadata,
     potUserMetadata
   };
