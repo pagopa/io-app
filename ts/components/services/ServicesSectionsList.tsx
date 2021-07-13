@@ -8,7 +8,6 @@ import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
-import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import ServiceList from "./ServiceList";
 
@@ -21,12 +20,10 @@ type AnimatedProps = {
 
 type OwnProps = {
   sections: ReadonlyArray<ServicesSectionState>;
-  profile: ProfileState;
   renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
-  isSelectableOrgsEmpty?: boolean;
 };
 
 type Props = AnimatedProps & OwnProps;
@@ -79,23 +76,20 @@ const emptyListComponent = () => (
   </View>
 );
 
-class ServicesSectionsList extends React.PureComponent<Props> {
-  private renderList = () => (
+const ServicesSectionsList = (props: Props): React.ReactElement => {
+  const renderList = () => (
     <ServiceList
-      animated={this.props.animated}
-      sections={this.props.sections}
-      profile={this.props.profile}
-      isRefreshing={this.props.isRefreshing}
-      onRefresh={this.props.onRefresh}
-      onSelect={this.props.onSelect}
+      animated={props.animated}
+      sections={props.sections}
+      isRefreshing={props.isRefreshing}
+      onRefresh={props.onRefresh}
+      onSelect={props.onSelect}
       ListEmptyComponent={emptyListComponent()}
-      renderRightIcon={this.props.renderRightIcon}
+      renderRightIcon={props.renderRightIcon}
     />
   );
 
-  public render() {
-    return <View style={styles.contentWrapper}>{this.renderList()}</View>;
-  }
-}
+  return <View style={styles.contentWrapper}>{renderList()}</View>;
+};
 
 export default ServicesSectionsList;
