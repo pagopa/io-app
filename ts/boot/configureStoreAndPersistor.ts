@@ -37,7 +37,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 17;
+const CURRENT_REDUX_STORE_VERSION = 16;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -241,25 +241,6 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       content: { ...content, idps: remoteUndefined }
-    };
-  },
-  // Version 17
-  // we removed currentSelectedServices from entities.services
-  "17": (state: PersistedState) => {
-    const entities = (state as PersistedGlobalState).entities;
-    return {
-      ...state,
-      entities: {
-        ...entities,
-        services: {
-          servicePreference: entities.services.servicePreference,
-          byId: entities.services.byId,
-          byOrgFiscalCode: entities.services.byOrgFiscalCode,
-          visible: entities.services.visible,
-          readState: entities.services.readState,
-          firstLoading: entities.services.firstLoading
-        }
-      }
     };
   }
 };
