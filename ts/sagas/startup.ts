@@ -31,8 +31,7 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  svEnabled,
-  servicesRedesignEnabled
+  svEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -299,12 +298,10 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     yield call(checkAcknowledgedEmailSaga, userProfile);
 
-    if (servicesRedesignEnabled) {
-      yield call(
-        askServicesPreferencesModeOptin,
-        isProfileFirstOnBoarding(userProfile)
-      );
-    }
+    yield call(
+      askServicesPreferencesModeOptin,
+      isProfileFirstOnBoarding(userProfile)
+    );
 
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
@@ -329,9 +326,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // check if the user expressed preference about mixpanel, if not ask for it
       yield call(askMixpanelOptIn);
 
-      if (servicesRedesignEnabled) {
-        yield call(askServicesPreferencesModeOptin, false);
-      }
+      yield call(askServicesPreferencesModeOptin, false);
 
       // Stop the watchAbortOnboardingSaga
       yield cancel(watchAbortOnboardingSagaTask);
