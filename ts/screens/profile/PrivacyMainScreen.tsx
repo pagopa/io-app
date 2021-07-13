@@ -6,7 +6,7 @@
  * - send a request to export all his data (receiving them by email)
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { List, Content, View } from "native-base";
+import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -17,8 +17,6 @@ import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner"
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
@@ -33,12 +31,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
+import ScreenContent from "../../components/screens/ScreenContent";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -192,14 +185,11 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
       >
-        <Content noPadded>
-          <View style={styles.container}>
-            <H1>{I18n.t("profile.main.privacy.title")}</H1>
-            <H4 color="bluegrey" weight="Regular">
-              {I18n.t("profile.main.privacy.subtitle")}
-            </H4>
-          </View>
-          <View spacer />
+        <ScreenContent
+          title={I18n.t("profile.main.privacy.title")}
+          subtitle={I18n.t("profile.main.privacy.subtitle")}
+          bounces={false}
+        >
           <List withContentLateralPadding={true}>
             {/* Privacy Policy */}
             <ListItemComponent
@@ -273,7 +263,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               }
             />
           </List>
-        </Content>
+        </ScreenContent>
       </TopScreenComponent>
     ));
     return (
