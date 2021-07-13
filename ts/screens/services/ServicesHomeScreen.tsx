@@ -450,7 +450,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         ) : (
           <ServicesSearch
             sectionsState={this.props.allSections}
-            profile={this.props.profile}
             onRefresh={this.refreshServices}
             navigateToServiceDetail={this.onServiceSelect}
             searchText={_}

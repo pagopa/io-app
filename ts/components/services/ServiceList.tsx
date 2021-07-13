@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
-import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -32,7 +31,6 @@ type AnimatedProps = {
 
 type OwnProps = {
   sections: ReadonlyArray<SectionListData<pot.Pot<ServicePublic, Error>>>;
-  profile: ProfileState;
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
