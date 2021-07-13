@@ -41,11 +41,17 @@ const NewServiceListItem = (props: Props): React.ReactElement => {
     pot.map(potService, service => () => props.onSelect(service))
   );
 
-  const serviceName = pot.isLoading(potService)
-    ? I18n.t("global.remoteStates.loading")
-    : pot.isError(potService) || pot.isNone(potService)
-    ? I18n.t("global.remoteStates.notAvailable")
-    : potService.value.service_name;
+  const serviceName = pot.fold(
+    potService,
+    () => I18n.t("global.remoteStates.loading"),
+    () => I18n.t("global.remoteStates.loading"),
+    () => I18n.t("global.remoteStates.notAvailable"),
+    () => I18n.t("global.remoteStates.notAvailable"),
+    service => service.service_name,
+    () => I18n.t("global.remoteStates.loading"),
+    service => service.service_name,
+    () => I18n.t("global.remoteStates.notAvailable")
+  );
 
   return (
     <ListItemComponent
