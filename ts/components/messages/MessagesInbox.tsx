@@ -73,7 +73,7 @@ const generateMessagesStateNotArchivedArray = (
     []
   );
 
-const ListEmptyComponent = (
+const ListEmptyComponent = () => (
   <EmptyListComponent
     image={require("../../../img/messages/empty-message-list-icon.png")}
     title={I18n.t("messages.inbox.emptyMessage.title")}
@@ -140,7 +140,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              isErrorLoading ? <ErrorLoadingComponent /> : ListEmptyComponent
+              isErrorLoading ? <ErrorLoadingComponent /> : ListEmptyComponent()
             }
             animated={animated}
           />

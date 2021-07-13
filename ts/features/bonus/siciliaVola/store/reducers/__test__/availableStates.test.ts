@@ -3,32 +3,25 @@ import { createStore } from "redux";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
-  svGenerateVoucherGeneratedVoucher,
+  svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
-import { University, VoucherRequest } from "../../../types/SvVoucherRequest";
-import { SvVoucherGeneratedResponse } from "../../../types/svVoucherResponse";
-import { SvVoucher, SvVoucherId } from "../../../types/svVoucher";
+import { State } from "../../../types/SvVoucherRequest";
+import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
-const mockVoucherRequest: VoucherRequest = {
-  category: "student",
-  university: {} as University,
-  departureDate: new Date()
-};
-const mockResponse: SvVoucherGeneratedResponse = {
-  kind: "success",
-  value: {
-    id: "abc123" as SvVoucherId
-  } as SvVoucher
-};
 
-describe("Test voucherGenerated reducer", () => {
+const mockResponse: ReadonlyArray<State> = [
+  { id: 1, name: "stat1" },
+  { id: 2, name: "stat2" }
+];
+
+describe("Test availableRegion reducer", () => {
   it("Initial state should be pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(
-      globalState.bonus.sv.voucherGeneration.voucherGenerated
+      globalState.bonus.sv.voucherGeneration.availableStates
     ).toStrictEqual(pot.none);
   });
   it("Should be pot.none after if the voucher generation workunit starts", () => {
@@ -37,39 +30,35 @@ describe("Test voucherGenerated reducer", () => {
     store.dispatch(svGenerateVoucherStart());
 
     expect(
-      store.getState().bonus.sv.voucherGeneration.voucherGenerated
+      store.getState().bonus.sv.voucherGeneration.availableStates
     ).toStrictEqual(pot.none);
   });
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(
-      svGenerateVoucherGeneratedVoucher.request(mockVoucherRequest)
-    );
+    store.dispatch(svGenerateVoucherAvailableState.request());
 
     expect(
-      store.getState().bonus.sv.voucherGeneration.voucherGenerated
+      store.getState().bonus.sv.voucherGeneration.availableStates
     ).toStrictEqual(pot.noneLoading);
   });
   it("Should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherGeneratedVoucher.success(mockResponse));
+    store.dispatch(svGenerateVoucherAvailableState.success(mockResponse));
 
     expect(
-      store.getState().bonus.sv.voucherGeneration.voucherGenerated
-    ).toStrictEqual(pot.some(mockResponse));
+      store.getState().bonus.sv.voucherGeneration.availableStates
+    ).toStrictEqual(pot.some(toIndexed(mockResponse, mR => mR.id)));
   });
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(
-      svGenerateVoucherGeneratedVoucher.request(mockVoucherRequest)
-    );
-    store.dispatch(svGenerateVoucherGeneratedVoucher.failure(genericError));
+    store.dispatch(svGenerateVoucherAvailableState.request());
+    store.dispatch(svGenerateVoucherAvailableState.failure(genericError));
 
     expect(
-      store.getState().bonus.sv.voucherGeneration.voucherGenerated
+      store.getState().bonus.sv.voucherGeneration.availableStates
     ).toStrictEqual(pot.toError(pot.none, genericError));
   });
 });

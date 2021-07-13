@@ -1,38 +1,29 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
-import { Province } from "../../types/SvVoucherRequest";
+import { State } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import {
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../actions/voucherGeneration";
 
-export type AvailableProvinceState = pot.Pot<
-  IndexedById<Province>,
-  NetworkError
->;
-const INITIAL_STATE: AvailableProvinceState = pot.none;
+export type AvailableStatesState = pot.Pot<IndexedById<State>, NetworkError>;
+const INITIAL_STATE: AvailableStatesState = pot.none;
 
 const reducer = (
-  state: AvailableProvinceState = INITIAL_STATE,
+  state: AvailableStatesState = INITIAL_STATE,
   action: Action
-): AvailableProvinceState => {
+): AvailableStatesState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableState.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableRegion.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableProvince.request):
       return pot.toLoading(state);
-    case getType(svGenerateVoucherAvailableProvince.success):
-      return pot.some(toIndexed(action.payload, p => p.id));
-    case getType(svGenerateVoucherAvailableProvince.failure):
+    case getType(svGenerateVoucherAvailableState.success):
+      return pot.some(toIndexed(action.payload, s => s.id));
+    case getType(svGenerateVoucherAvailableState.failure):
       return pot.toError(state, action.payload);
   }
   return state;

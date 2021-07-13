@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { AvailableDestination } from "../../types/SvVoucherRequest";
+import { AvailableDestinations } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import {
@@ -8,16 +8,16 @@ import {
   svGenerateVoucherStart
 } from "../actions/voucherGeneration";
 
-export type AvailableDestinationState = pot.Pot<
-  AvailableDestination,
+export type AvailableDestinationsState = pot.Pot<
+  AvailableDestinations,
   NetworkError
 >;
-const INITIAL_STATE: AvailableDestinationState = pot.none;
+const INITIAL_STATE: AvailableDestinationsState = pot.none;
 
 const reducer = (
-  state: AvailableDestinationState = INITIAL_STATE,
+  state: AvailableDestinationsState = INITIAL_STATE,
   action: Action
-): AvailableDestinationState => {
+): AvailableDestinationsState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;

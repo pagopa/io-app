@@ -58,7 +58,6 @@ import {
 } from "../../utils/locale";
 import { servicesRedesignEnabled } from "../../config";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { getServicesPreferenceModeLabel } from "../../components/services/ServicePreferenceSummary";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -95,6 +94,21 @@ function translateLocale(locale: string): string {
     .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
     .getOrElse(locale);
 }
+
+const getServicesPreferenceModeLabel = (
+  mode: ServicesPreferencesModeEnum
+): string =>
+  ({
+    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+      "services.optIn.preferences.quickConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+      "services.optIn.preferences.manualConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
+      "services.optIn.preferences.unavailable"
+    )
+  }[mode]);
 
 class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {

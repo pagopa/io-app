@@ -5,27 +5,29 @@ import voucherGeneratedReducer, {
 } from "./voucherGenerated";
 import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
 import availableDestinationReducer, {
-  AvailableDestinationState
-} from "./availableDestination";
-import availableStateReducer, { AvailableStateState } from "./availableState";
-import availableRegionReducer, {
-  AvailableRegionState
-} from "./availableRegion";
-import availableProvinceReducer, {
-  AvailableProvinceState
-} from "./availableProvince";
-import availableMunicipalityReducer, {
-  AvailableMunicipalityState
-} from "./availableMunicipality";
+  AvailableDestinationsState
+} from "./availableDestinations";
+import availableStatesReducer, {
+  AvailableStatesState
+} from "./availableStates";
+import availableRegionsReducer, {
+  AvailableRegionsState
+} from "./availableRegions";
+import availableProvincesReducer, {
+  AvailableProvincesState
+} from "./availableProvinces";
+import availableMunicipalitiesReducer, {
+  AvailableMunicipalitiesState
+} from "./availableMunicipalities";
 
 export type VoucherGenerationState = {
   voucherRequest: VoucherRequestState;
   voucherGenerated: VoucherGeneratedState;
-  availableDestination: AvailableDestinationState;
-  availableState: AvailableStateState;
-  availableRegion: AvailableRegionState;
-  availableProvince: AvailableProvinceState;
-  availableMunicipality: AvailableMunicipalityState;
+  availableDestinations: AvailableDestinationsState;
+  availableStates: AvailableStatesState;
+  availableRegions: AvailableRegionsState;
+  availableProvinces: AvailableProvincesState;
+  availableMunicipalities: AvailableMunicipalitiesState;
 };
 
 const svVoucherGenerationReducer = combineReducers<
@@ -33,12 +35,12 @@ const svVoucherGenerationReducer = combineReducers<
   Action
 >({
   voucherRequest: voucherRequestReducer,
-  availableDestination: availableDestinationReducer,
+  availableDestinations: availableDestinationReducer,
   voucherGenerated: voucherGeneratedReducer,
-  availableState: availableStateReducer,
-  availableRegion: availableRegionReducer,
-  availableProvince: availableProvinceReducer,
-  availableMunicipality: availableMunicipalityReducer
+  availableStates: availableStatesReducer,
+  availableRegions: availableRegionsReducer,
+  availableProvinces: availableProvincesReducer,
+  availableMunicipalities: availableMunicipalitiesReducer
 });
 
 export default svVoucherGenerationReducer;

@@ -4,9 +4,9 @@ import { createSelector } from "reselect";
 import {
   Company,
   Hospital,
+  PartialVoucherRequest,
+  University
   SvBeneficiaryCategory,
-  University,
-  VoucherRequest
 } from "../../types/SvVoucherRequest";
 import {
   FlightsDate,
@@ -21,7 +21,7 @@ import {
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export type VoucherRequestState = Option<VoucherRequest>;
+export type VoucherRequestState = Option<PartialVoucherRequest>;
 const INITIAL_STATE: VoucherRequestState = none;
 
 /**
@@ -33,7 +33,7 @@ const updateUnderThresholdIncome = (
   state: VoucherRequestState,
   underThresholdIncome: boolean
 ): VoucherRequestState =>
-  state.fold(state, vR => {
+  state.chain(vR => {
     if (vR.category === "worker" || vR.category === "sick") {
       return some({ ...vR, underThresholdIncome });
     }
@@ -49,7 +49,7 @@ const updateUniversity = (
   state: VoucherRequestState,
   university: University
 ): VoucherRequestState =>
-  state.fold(state, vR => {
+  state.chain(vR => {
     if (vR.category === "student") {
       return some({ ...vR, university });
     }
@@ -65,7 +65,7 @@ const updateCompany = (
   state: VoucherRequestState,
   company: Company
 ): VoucherRequestState =>
-  state.fold(state, vR => {
+  state.chain(vR => {
     if (vR.category === "worker") {
       return some({ ...vR, company });
     }
@@ -81,7 +81,7 @@ const updateHospital = (
   state: VoucherRequestState,
   hospital: Hospital
 ): VoucherRequestState =>
-  state.fold(state, vR => {
+  state.chain(vR => {
     if (vR.category === "sick") {
       return some({ ...vR, hospital });
     }
@@ -97,20 +97,13 @@ const updateFlightsDate = (
   state: VoucherRequestState,
   flightsDate: FlightsDate
 ): VoucherRequestState =>
-  state.fold(state, vR => {
-    if (
-      vR.category === "student" ||
-      vR.category === "worker" ||
-      vR.category === "sick"
-    ) {
-      return some({
-        ...vR,
-        departureDate: flightsDate.departureDate,
-        returnDate: flightsDate.returnDate
-      });
-    }
-    return state;
-  });
+  state.chain(vR =>
+    some({
+      ...vR,
+      departureDate: flightsDate.departureDate,
+      returnDate: flightsDate.returnDate
+    })
+  );
 
 const reducer = (
   state: VoucherRequestState = INITIAL_STATE,
