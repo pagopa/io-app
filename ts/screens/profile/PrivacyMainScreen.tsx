@@ -8,7 +8,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert, AlertButton, StyleSheet } from "react-native";
+import { Alert, AlertButton } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
@@ -29,7 +29,6 @@ import {
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
-import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 import ScreenContent from "../../components/screens/ScreenContent";
 
