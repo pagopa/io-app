@@ -1,5 +1,4 @@
 import * as React from "react";
-import { View } from "react-native";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { IOColorType } from "../core/variables/IOColors";
@@ -17,7 +16,6 @@ interface OwnProps {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   accessibilityEvents?: AccessibilityEvents;
   titleColor?: IOColorType;
-  statusAppRef?: React.RefObject<View>;
 }
 
 type BaseScreenComponentProps =
@@ -55,8 +53,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
       accessibilityEvents,
-      titleColor,
-      statusAppRef
+      titleColor
     } = this.props;
 
     return (
@@ -78,7 +75,6 @@ class TopScreenComponent extends React.PureComponent<Props> {
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}
         titleColor={titleColor}
-        statusAppRef={statusAppRef}
       >
         {this.props.children}
       </BaseScreenComponent>

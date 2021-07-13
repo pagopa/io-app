@@ -85,7 +85,6 @@ interface OwnProps {
   };
   customGoBack?: React.ReactNode;
   titleColor?: IOColorType;
-  statusAppRef?: React.RefObject<View>;
 }
 
 type Props = OwnProps &
@@ -153,9 +152,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.props.statusAppRef && this.props.statusAppRef?.current !== null
-          ? this.props.statusAppRef
-          : this.firstElementRef,
+        this.firstElementRef,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );

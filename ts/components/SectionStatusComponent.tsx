@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import {
+  NavigationScreenProp,
+  NavigationRoute,
+  NavigationParams
+} from "react-navigation";
 import { GlobalState } from "../store/reducers/types";
 import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
@@ -11,14 +15,17 @@ import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
 import { SectionStatus, SectionStatusKey } from "../types/backendStatus";
-import { setAccessibilityFocus } from "../utils/accessibility";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
-  statusAppRef?: React.RefObject<View>;
+  onSectionRef?: (ref: React.RefObject<View>) => void;
+  navigationProps?: NavigationScreenProp<
+    NavigationRoute<NavigationParams>,
+    NavigationParams
+  >;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -60,8 +67,6 @@ const color = IOColors.white;
  * @constructor
  */
 const SectionStatusComponent: React.FC<Props> = (props: Props) => {
-  const setAccessibilityTimeout = 0 as Millisecond;
-
   if (props.sectionStatus === undefined) {
     return null;
   }
@@ -69,6 +74,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     return null;
   }
 
+  const viewRef = React.createRef<View>();
   const sectionStatus = props.sectionStatus;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
@@ -77,25 +83,26 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
 
-  useEffect(() => {
-    setAccessibilityFocus(
-      props.statusAppRef as React.RefObject<View>,
-      setAccessibilityTimeout
-    );
-  }, [sectionStatus]);
+  React.useEffect(() => {
+    if (viewRef.current) {
+      props.onSectionRef?.(viewRef);
+    }
+
+    const unsubscribe = props.navigationProps?.addListener("didFocus", () => {
+      if (viewRef.current) {
+        props.onSectionRef?.(viewRef);
+      }
+    });
+
+    return () => unsubscribe?.remove();
+  }, [viewRef]);
 
   return (
     <TouchableWithoutFeedback
       onPress={() => maybeWebUrl.map(openWebUrl)}
       testID={"SectionStatusComponentTouchable"}
     >
-      <View
-        style={[styles.container, { backgroundColor }]}
-        accessible={true}
-        ref={props.statusAppRef}
-        accessibilityLabel={sectionStatus.message[locale]}
-        accessibilityRole="text"
-      >
+      <View style={[styles.container, { backgroundColor }]} ref={viewRef}>
         <IconFont
           testID={"SectionStatusComponentIcon"}
           name={iconName}
