@@ -43,7 +43,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         props.selectCategory(categoryBeneficiary);
         props.navigateToSvStudentSelectDestination();
         return;
-      case "disable":
+      case "disabled":
         props.selectCategory(categoryBeneficiary);
         props.navigateToSvDisableAdditionalInfo();
         return;
@@ -91,7 +91,9 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
           <Text>Student</Text>
         </ButtonDefaultOpacity>
 
-        <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("disable")}>
+        <ButtonDefaultOpacity
+          onPress={() => setCategoryBeneficiary("disabled")}
+        >
           <Text>Disable</Text>
         </ButtonDefaultOpacity>
 
