@@ -199,12 +199,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     // messages
     case getType(loadMessages.success):
-    //
-    // wallets success / services load requests
-    case getType(loadServicesDetail):
-      return mp.track(action.type, {
-        count: action.payload.length
-      });
     // end pay webview Payment (payment + onboarding credit card) actions (with properties)
     case getType(addCreditCardWebViewEnd):
     case getType(paymentWebViewEnd):
@@ -423,6 +417,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type);
 
     case getType(loadAllBonusActivations.success):
+    case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
       });
