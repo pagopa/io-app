@@ -12,12 +12,7 @@ import {
 } from "../../store/reducers/activation";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { svServiceAlive, svTosAccepted } from "../../store/actions/activation";
-import {
-  fold,
-  isError,
-  isLoading,
-  isReady
-} from "../../../bpd/model/RemoteValue";
+import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
@@ -29,21 +24,24 @@ const manageTosResponse = (tosAccepted: boolean): React.ReactElement =>
   tosAccepted ? <CheckResidenceComponent /> : <AcceptTosComponent />;
 
 const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
+  React.useEffect(() => {
+    props.checkServiceAvailable();
+    props.checkTosAccepted();
+  }, []);
+
   if (
-    isError(props.isServiceAlive) ||
+    !isReady(props.isServiceAlive) ||
     (isReady(props.isServiceAlive) && !props.isServiceAlive.value)
   ) {
-    return <GenericErrorComponent onRetry={props.checkServiceAvailable} />;
-  }
-  if (isLoading(props.isServiceAlive)) {
     return (
       <LoadingErrorComponent
-        isLoading={true}
-        loadingCaption={""}
+        isLoading={isLoading(props.isServiceAlive)}
+        loadingCaption={"loading"}
         onRetry={props.checkServiceAvailable}
       />
     );
   }
+
   return fold(
     props.tosAccepted,
     () => <GenericErrorComponent onRetry={props.checkTosAccepted} />,
