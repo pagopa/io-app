@@ -20,7 +20,6 @@ type AnimatedProps = {
 
 type OwnProps = {
   sections: ReadonlyArray<ServicesSectionState>;
-  renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
@@ -38,24 +37,6 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.contentPadding / 2,
     paddingBottom: customVariables.contentPadding / 2,
     alignItems: "center"
-  },
-  message: {
-    fontSize: customVariables.fontSizeBase,
-    textAlign: "left"
-  },
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0
-  },
-  textButton: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  icon: {
-    color: customVariables.brandPrimaryInverted,
-    lineHeight: 24
   },
   emptyListContentTitle: {
     paddingTop: customVariables.contentPadding,
@@ -76,8 +57,8 @@ const emptyListComponent = () => (
   </View>
 );
 
-const ServicesSectionsList = (props: Props): React.ReactElement => {
-  const renderList = () => (
+const ServicesSectionsList = (props: Props) => (
+  <View style={styles.contentWrapper}>
     <ServiceList
       animated={props.animated}
       sections={props.sections}
@@ -85,11 +66,8 @@ const ServicesSectionsList = (props: Props): React.ReactElement => {
       onRefresh={props.onRefresh}
       onSelect={props.onSelect}
       ListEmptyComponent={emptyListComponent()}
-      renderRightIcon={props.renderRightIcon}
     />
-  );
-
-  return <View style={styles.contentWrapper}>{renderList()}</View>;
-};
+  </View>
+);
 
 export default ServicesSectionsList;
