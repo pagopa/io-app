@@ -3,9 +3,9 @@
  * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { List, Content, View } from "native-base";
+import { List } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -13,8 +13,6 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
 import I18n from "../../i18n";
 import {
   navigateToCalendarPreferenceScreen,
@@ -33,7 +31,6 @@ import {
   profileServicePreferencesModeSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
 import {
   checkAndRequestPermission,
@@ -44,12 +41,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
+import ScreenContent from "../../components/screens/ScreenContent";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -158,14 +150,10 @@ class PreferencesScreen extends React.Component<Props> {
         faqCategories={["profile", "privacy", "authentication_SPID"]}
         goBack={true}
       >
-        <Content noPadded>
-          <View style={styles.container}>
-            <H1>{I18n.t("profile.preferences.title")}</H1>
-            <H4 color="bluegrey" weight="Regular">
-              {I18n.t("profile.preferences.subtitle")}
-            </H4>
-          </View>
-          <View spacer />
+        <ScreenContent
+          title={I18n.t("profile.preferences.title")}
+          subtitle={I18n.t("profile.preferences.subtitle")}
+        >
           <List withContentLateralPadding={true}>
             <ListItemComponent
               onPress={this.checkPermissionThenGoCalendar}
@@ -201,7 +189,7 @@ class PreferencesScreen extends React.Component<Props> {
               onPress={this.props.navigateToLanguagePreferenceScreen}
             />
           </List>
-        </Content>
+        </ScreenContent>
       </TopScreenComponent>
     );
   }

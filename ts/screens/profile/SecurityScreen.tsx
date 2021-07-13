@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { List, Content, View } from "native-base";
+import { List } from "native-base";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
@@ -10,22 +9,14 @@ import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFin
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
 import { updatePin } from "../../store/actions/pinset";
 import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
 import { authenticateConfig } from "../../utils/biometric";
 import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
-import customVariables from "../../theme/variables";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
-
-const styles = StyleSheet.create({
-  containerScreenTitle: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
+import ScreenContent from "../../components/screens/ScreenContent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -94,14 +85,10 @@ const SecurityScreen: FC<Props> = ({
       faqCategories={["profile", "privacy", "authentication_SPID"]}
       goBack
     >
-      <Content noPadded>
-        <View style={styles.containerScreenTitle}>
-          <H1>{I18n.t("profile.security.title")}</H1>
-          <H4 color="bluegrey" weight="Regular">
-            {I18n.t("profile.security.subtitle")}
-          </H4>
-        </View>
-        <View spacer />
+      <ScreenContent
+        title={I18n.t("profile.security.title")}
+        subtitle={I18n.t("profile.security.subtitle")}
+      >
         <List withContentLateralPadding>
           {/* Ask for verification and reset unlock code */}
           <ListItemComponent
@@ -129,7 +116,7 @@ const SecurityScreen: FC<Props> = ({
             />
           )}
         </List>
-      </Content>
+      </ScreenContent>
     </TopScreenComponent>
   );
 };

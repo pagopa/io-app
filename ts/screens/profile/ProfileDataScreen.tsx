@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { List, View, Content } from "native-base";
+import { List } from "native-base";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../i18n";
@@ -13,19 +12,11 @@ import {
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../store/actions/navigation";
-import customVariables from "../../theme/variables";
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
+import ScreenContent from "../../components/screens/ScreenContent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -53,14 +44,10 @@ const ProfileDataScreen: React.FC<Props> = ({
       faqCategories={["profile", "privacy", "authentication_SPID"]}
       goBack
     >
-      <Content noPadded>
-        <View style={styles.container}>
-          <H1>{I18n.t("profile.data.title")}</H1>
-          <H4 color="bluegrey" weight="Regular">
-            {I18n.t("profile.data.subtitle")}
-          </H4>
-        </View>
-        <View spacer />
+      <ScreenContent
+        title={I18n.t("profile.data.title")}
+        subtitle={I18n.t("profile.data.subtitle")}
+      >
         <List withContentLateralPadding>
           {/* Insert or edit email */}
           <ListItemComponent
@@ -77,7 +64,7 @@ const ProfileDataScreen: React.FC<Props> = ({
             testID="insert-or-edit-email"
           />
         </List>
-      </Content>
+      </ScreenContent>
     </TopScreenComponent>
   );
 };
