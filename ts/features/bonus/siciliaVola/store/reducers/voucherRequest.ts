@@ -5,8 +5,8 @@ import {
   Company,
   Hospital,
   PartialVoucherRequest,
-  University
-  SvBeneficiaryCategory,
+  University,
+  SvBeneficiaryCategory
 } from "../../types/SvVoucherRequest";
 import {
   FlightsDate,
