@@ -22,11 +22,9 @@ type AnimatedProps = {
 type OwnProps = {
   sections: ReadonlyArray<ServicesSectionState>;
   profile: ProfileState;
-  renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
-  isSelectableOrgsEmpty?: boolean;
 };
 
 type Props = AnimatedProps & OwnProps;
@@ -41,24 +39,6 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.contentPadding / 2,
     paddingBottom: customVariables.contentPadding / 2,
     alignItems: "center"
-  },
-  message: {
-    fontSize: customVariables.fontSizeBase,
-    textAlign: "left"
-  },
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0
-  },
-  textButton: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  icon: {
-    color: customVariables.brandPrimaryInverted,
-    lineHeight: 24
   },
   emptyListContentTitle: {
     paddingTop: customVariables.contentPadding,
@@ -79,23 +59,18 @@ const emptyListComponent = () => (
   </View>
 );
 
-class ServicesSectionsList extends React.PureComponent<Props> {
-  private renderList = () => (
+const ServicesSectionsList = (props: Props) => (
+  <View style={styles.contentWrapper}>
     <ServiceList
-      animated={this.props.animated}
-      sections={this.props.sections}
-      profile={this.props.profile}
-      isRefreshing={this.props.isRefreshing}
-      onRefresh={this.props.onRefresh}
-      onSelect={this.props.onSelect}
+      animated={props.animated}
+      sections={props.sections}
+      profile={props.profile}
+      isRefreshing={props.isRefreshing}
+      onRefresh={props.onRefresh}
+      onSelect={props.onSelect}
       ListEmptyComponent={emptyListComponent()}
-      renderRightIcon={this.props.renderRightIcon}
     />
-  );
-
-  public render() {
-    return <View style={styles.contentWrapper}>{this.renderList()}</View>;
-  }
-}
+  </View>
+);
 
 export default ServicesSectionsList;
