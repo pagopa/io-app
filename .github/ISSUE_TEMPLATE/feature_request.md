@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: 'About: Invia un suggerimento per migliorare l’app'
+about: Invia un suggerimento per migliorare l’app
 title: ''
 labels: "Suggerimento \U0001F4AA"
 assignees: ''
