@@ -36,17 +36,7 @@ const styles = StyleSheet.create({
 });
 
 const NewServiceListItem = (props: Props): React.ReactElement => {
-  const getServiceKey = (potService: pot.Pot<ServicePublic, Error>): string =>
-    pot.getOrElse(
-      pot.map(
-        potService,
-        service => `${service.service_id}-${service.version || 0}`
-      ),
-      `service-switch`
-    );
-
   const potService = props.item;
-
   const onPress = pot.toUndefined(
     pot.map(potService, service => () => props.onSelect(service))
   );
@@ -64,7 +54,6 @@ const NewServiceListItem = (props: Props): React.ReactElement => {
       onPress={onPress}
       hideSeparator={props.hideSeparator}
       style={styles.listItem}
-      keySwitch={getServiceKey(potService)}
     />
   );
 };

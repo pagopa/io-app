@@ -1,18 +1,14 @@
 /**
  * A component to render a tab containing a list of services organized in sections
  */
-import { left } from "fp-ts/lib/Either";
-import { Option, some } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { createFactory } from "react";
 import * as React from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import I18n from "../../i18n";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
-import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
   localServicesSectionsSelector,
   organizationsOfInterestSelector,
@@ -25,17 +21,11 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
-import { getLogoForOrganization } from "../../utils/organizations";
-import { isTextIncludedCaseInsensitive } from "../../utils/strings";
-import ChooserListContainer from "../ChooserListContainer";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { LightModalContextInterface } from "../ui/LightModal";
-import OrganizationLogo from "./OrganizationLogo";
 import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = Readonly<{
-  isLocal?: boolean;
-  isAll: boolean;
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
@@ -52,75 +42,7 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 
-const ICON_SIZE = 17;
-
-const styles = StyleSheet.create({
-  organizationLogo: {
-    marginBottom: 0
-  },
-  iconContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width),
-  }
-});
-
-const OrganizationsList = createFactory(ChooserListContainer<Organization>());
-
-function renderOrganizationLogo(organizationFiscalCode: string) {
-  return (
-    <OrganizationLogo
-      logoUri={getLogoForOrganization(organizationFiscalCode)}
-      imageStyle={styles.organizationLogo}
-    />
-  );
-}
-
-function organizationContainsText(item: Organization, searchText: string) {
-  return isTextIncludedCaseInsensitive(item.name, searchText);
-}
-
 class ServicesTab extends React.PureComponent<Props> {
-  /**
-   * For tab Locals
-   */
-  private showChooserAreasOfInterestModal = () => {
-    const {
-      selectableOrganizations,
-      hideModal,
-      selectedOrganizations
-    } = this.props;
-
-    this.props.showModal(
-      <OrganizationsList
-        items={selectableOrganizations}
-        initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
-        keyExtractor={(item: Organization) => item.fiscalCode}
-        itemTitleExtractor={(item: Organization) => item.name}
-        itemIconComponent={left(renderOrganizationLogo)}
-        onCancel={hideModal}
-        onSave={this.onSaveAreasOfInterest}
-        isRefreshEnabled={false}
-        matchingTextPredicate={organizationContainsText}
-        noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
-        noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
-      />
-    );
-  };
-
-  private onSaveAreasOfInterest = (
-    selectedFiscalCodes: Option<Set<string>>
-  ) => {
-    if (this.props.updateOrganizationsOfInterestMetadata) {
-      if (this.props.updateToast) {
-        this.props.updateToast();
-      }
-      this.props.updateOrganizationsOfInterestMetadata(selectedFiscalCodes);
-    }
-    this.props.hideModal();
-  };
-
   private onTabScroll = () => ({
     onScroll: Animated.event([
       {
@@ -135,23 +57,12 @@ class ServicesTab extends React.PureComponent<Props> {
   public render() {
     return (
       <ServicesSectionsList
-        isLocal={this.props.isLocal}
         isSelectableOrgsEmpty={this.props.selectableOrganizations.length === 0}
-        isAll={this.props.isAll}
         sections={this.props.sections}
         profile={this.props.profile}
         isRefreshing={this.props.isRefreshing}
         onRefresh={this.props.onRefresh}
         onSelect={this.props.onServiceSelect}
-        readServices={this.props.readServices}
-        onChooserAreasOfInterestPress={
-          this.props.isLocal ? this.showChooserAreasOfInterestModal : undefined
-        }
-        selectedOrganizationsFiscalCodes={
-          this.props.isLocal
-            ? new Set(this.props.selectedOrganizations || [])
-            : undefined
-        }
         animated={this.onTabScroll()}
       />
     );

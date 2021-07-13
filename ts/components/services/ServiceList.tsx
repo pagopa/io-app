@@ -15,7 +15,6 @@ import {
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
-import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
@@ -35,10 +34,8 @@ type OwnProps = {
   sections: ReadonlyArray<SectionListData<pot.Pot<ServicePublic, Error>>>;
   profile: ProfileState;
   isRefreshing: boolean;
-  renderUnreadState: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
-  readServices: ReadStateByServicesId;
   ListEmptyComponent?: React.ComponentProps<
     typeof SectionList
   >["ListEmptyComponent"];

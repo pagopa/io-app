@@ -8,11 +8,8 @@ import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
-import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
 
 type AnimatedProps = {
@@ -25,15 +22,10 @@ type AnimatedProps = {
 type OwnProps = {
   sections: ReadonlyArray<ServicesSectionState>;
   profile: ProfileState;
-  onChooserAreasOfInterestPress?: () => void;
-  selectedOrganizationsFiscalCodes?: Set<string>;
-  isLocal?: boolean;
-  isAll: boolean;
   renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
-  readServices: ReadStateByServicesId;
   isSelectableOrgsEmpty?: boolean;
 };
 
@@ -88,83 +80,21 @@ const emptyListComponent = () => (
 );
 
 class ServicesSectionsList extends React.PureComponent<Props> {
-  private localListEmptyComponent() {
-    return (
-      this.props.isLocal && (
-        <View style={styles.headerContentWrapper}>
-          <Text style={styles.message}>
-            {this.props.isSelectableOrgsEmpty
-              ? I18n.t("services.areasOfInterest.selectMessageEmptyOrgs")
-              : I18n.t("services.areasOfInterest.selectMessage")}
-          </Text>
-          <View spacer={true} large={true} />
-          <ButtonDefaultOpacity
-            small={true}
-            primary={true}
-            style={styles.button}
-            block={true}
-            onPress={this.props.onChooserAreasOfInterestPress}
-            disabled={this.props.isSelectableOrgsEmpty}
-          >
-            <IconFont name="io-plus" style={styles.icon} />
-            <Text style={styles.textButton}>
-              {I18n.t("services.areasOfInterest.addButton")}
-            </Text>
-          </ButtonDefaultOpacity>
-          <View spacer={true} extralarge={true} />
-          <Image source={require("../../../img/services/icon-places.png")} />
-        </View>
-      )
-    );
-  }
-
-  private renderEditButton = () =>
-    this.props.isLocal &&
-    this.props.selectedOrganizationsFiscalCodes &&
-    this.props.selectedOrganizationsFiscalCodes.size > 0 && (
-      <View style={styles.headerContentWrapper}>
-        <ButtonDefaultOpacity
-          small={true}
-          style={styles.button}
-          block={true}
-          onPress={this.props.onChooserAreasOfInterestPress}
-          disabled={this.props.isRefreshing || this.props.isSelectableOrgsEmpty}
-        >
-          <Text style={styles.textButton}>
-            {I18n.t("services.areasOfInterest.editButton")}
-          </Text>
-        </ButtonDefaultOpacity>
-      </View>
-    );
-
-  private renderList = () => {
-    // empty component is different from local and others (national and all)
-    const emptyComponent = this.props.isLocal
-      ? this.localListEmptyComponent()
-      : emptyListComponent();
-    return (
-      <ServiceList
-        renderUnreadState={!this.props.isAll}
-        animated={this.props.animated}
-        sections={this.props.sections}
-        profile={this.props.profile}
-        isRefreshing={this.props.isRefreshing}
-        onRefresh={this.props.onRefresh}
-        onSelect={this.props.onSelect}
-        readServices={this.props.readServices}
-        ListEmptyComponent={emptyComponent}
-        renderRightIcon={this.props.renderRightIcon}
-      />
-    );
-  };
+  private renderList = () => (
+    <ServiceList
+      animated={this.props.animated}
+      sections={this.props.sections}
+      profile={this.props.profile}
+      isRefreshing={this.props.isRefreshing}
+      onRefresh={this.props.onRefresh}
+      onSelect={this.props.onSelect}
+      ListEmptyComponent={emptyListComponent()}
+      renderRightIcon={this.props.renderRightIcon}
+    />
+  );
 
   public render() {
-    return (
-      <View style={styles.contentWrapper}>
-        {this.renderEditButton()}
-        {this.renderList()}
-      </View>
-    );
+    return <View style={styles.contentWrapper}>{this.renderList()}</View>;
   }
 }
 
