@@ -176,8 +176,8 @@ global:
     noResultsTitle: No results.
   localNotifications:
     spidLogin:
-      title: Remember to login to IO!
-      message: Login with your digital identity on IO, the public services app
+      title: Sign in to start using the app
+      message: IO can only work if you have signed in at least once
 tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
