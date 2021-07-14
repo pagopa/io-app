@@ -12,7 +12,6 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
-  svGenerateVoucherCancel,
   svGenerateVoucherCompleted,
   svGenerateVoucherGeneratedVoucher
 } from "../../store/actions/voucherGeneration";
@@ -38,6 +37,9 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement => {
     title: "Esci"
   };
 
+  // TODO: dispatch props.generateVoucherRequest when the component is mounted
+
+  // TODO: manage loading/error/timeout(SvGeneratedVoucherTimeoutScreen) state on generateVoucherRequest selector
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
@@ -58,7 +60,6 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
-  cancel: () => dispatch(svGenerateVoucherCancel()),
   completed: () => dispatch(svGenerateVoucherCompleted()),
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
     dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest))
