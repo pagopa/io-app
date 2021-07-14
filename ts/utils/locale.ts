@@ -4,10 +4,10 @@ import I18n, {
   availableTranslations,
   localeFallback,
   localeToLocalizedMessageKey,
-  localeToPreferredLanguageMapping
+  localeToPreferredLanguageMapping,
+  LocalizedMessageKeys
 } from "../i18n";
 import { PreferredLanguageEnum } from "../../definitions/backend/PreferredLanguage";
-import { LocalizedMessageKeys } from "../types/backendStatus";
 /**
  * Helpers for handling locales
  */
@@ -59,7 +59,7 @@ export const localeDateFormat = (date: Date, format: string): string =>
     ? I18n.t("global.date.invalid")
     : I18n.strftime(date, format);
 
-// from a given Locales return the relative PreferredLanguageEnum (fallback is en_GB)
+// from a given Locales return the relative PreferredLanguageEnum
 export const fromLocaleToPreferredLanguage = (
   locale: Locales
 ): PreferredLanguageEnum =>
@@ -67,7 +67,7 @@ export const fromLocaleToPreferredLanguage = (
     localeFallback.localeEnum
   );
 
-// from a given preferredLanguage return the relative Locales (fallback is en)
+// from a given preferredLanguage return the relative Locales
 export const fromPreferredLanguageToLocale = (
   preferredLanguage: PreferredLanguageEnum
 ): Locales =>
