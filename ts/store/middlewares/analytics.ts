@@ -118,7 +118,6 @@ import {
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
-import { loadServicesDetail } from "../actions/services";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -371,7 +370,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type);
 
     case getType(loadAllBonusActivations.success):
-    case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
       });
