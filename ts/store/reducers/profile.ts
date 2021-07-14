@@ -191,7 +191,7 @@ const reducer = (
     case getType(profileUpsert.success):
       if (pot.isSome(state)) {
         const currentProfile = state.value;
-        const newProfile = action.payload;
+        const newProfile = action.payload.newValue;
         // The API profile is still absent
         if (
           !currentProfile.has_profile &&

@@ -78,7 +78,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the inbox is not enabled", () =>
@@ -88,7 +90,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the webhook is not enabled", () =>
@@ -98,7 +102,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the email is not set", () =>
@@ -108,7 +114,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should restart the app if the profile update fails", () =>

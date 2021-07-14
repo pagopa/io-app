@@ -16,16 +16,16 @@ import { profileServicePreferencesModeSelector } from "../../store/reducers/prof
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-export const getServicesPreferenceModeLabel = (
+const getServicesPreferenceModeLabel = (
   mode: ServicesPreferencesModeEnum
 ): string =>
   ({
-    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+    [ServicesPreferencesModeEnum.AUTO]: `${I18n.t(
       "services.optIn.preferences.quickConfig.value"
-    ),
-    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+    )}: ${I18n.t("services.optIn.preferences.quickConfig.label")}`,
+    [ServicesPreferencesModeEnum.MANUAL]: `${I18n.t(
       "services.optIn.preferences.manualConfig.value"
-    ),
+    )}: ${I18n.t("services.optIn.preferences.manualConfig.label")}`,
     [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
       "services.optIn.preferences.unavailable"
     )
@@ -38,8 +38,7 @@ export const getServicesPreferenceModeLabel = (
  * @constructor
  */
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
-  <View style={IOStyles.horizontalContentPadding}>
-    <View spacer />
+  <View footer style={IOStyles.horizontalContentPadding}>
     <InfoBox iconName={"io-info"} iconColor={IOColors.bluegrey} iconSize={24}>
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
@@ -53,7 +52,6 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
         {I18n.t("serviceDetail.updatePreferences")}
       </Link>
     </InfoBox>
-    <View spacer />
   </View>
 );
 
