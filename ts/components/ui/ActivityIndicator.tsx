@@ -1,17 +1,24 @@
 import * as React from "react";
-import { ActivityIndicator as RNActivityIndicator } from "react-native";
+import {
+  ActivityIndicator as RNActivityIndicator,
+  ActivityIndicatorProps
+} from "react-native";
 
 import variables from "../../theme/variables";
+import { WithTestID } from "../../types/WithTestID";
 
-interface Props {
+type Props = WithTestID<{
   color?: string;
-}
+  accessibilityLabel?: string;
+  size?: ActivityIndicatorProps["size"];
+}>;
 
-const ActivityIndicator: React.SFC<Props> = ({ color }) => (
+const ActivityIndicator = (props: Props) => (
   <RNActivityIndicator
-    size="large"
-    color={color || variables.brandPrimary}
-    testID="rn-activity-indicator"
+    size={props.size ?? "large"}
+    accessibilityLabel={props.accessibilityLabel}
+    color={props.color || variables.brandPrimary}
+    testID={props.testID ?? "rn-activity-indicator"}
   />
 );
 
