@@ -11,7 +11,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import AddCardScreen from "../AddCardScreen";
 import { isValidCardHolder } from "../../../utils/input";
 import { InferNavigationParams } from "../../../types/react";
-import { luhnValidateCCN, validateCVV } from "../../../utils/card";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -139,75 +138,6 @@ describe("AddCardScreen", () => {
     expect(errorMessage).not.toBeNull();
     expect(continueButton).toBeDisabled();
   });
-
-  it("should show not validated with real non-amex card and if cvv is by 4 digits", () => {
-    const component = getComponent();
-    const cardPan = component.queryByTestId("panInputMask");
-    const cardCvv = component.queryByTestId("securityCode");
-
-    if (cardPan && cardCvv) {
-      fireEvent.changeText(cardPan, aValidPan);
-      fireEvent.changeText(cardCvv, aValidSecurityCode);
-    }
-
-    const isCardNumberValid = luhnValidateCCN(aValidPan);
-    const isCvvValidation = validateCVV(aValidPan, aValidAmexSecurityCode);
-
-    expect(isCardNumberValid).toBe(true);
-    expect(isCvvValidation).toBe(false);
-  });
-
-  it("should show not validated with real amex card and if cvv is by 3 digits", () => {
-    const component = getComponent();
-    const cardPan = component.queryByTestId("panInputMask");
-    const cardCvv = component.queryByTestId("securityCode");
-
-    if (cardPan && cardCvv) {
-      fireEvent.changeText(cardPan, aValidPan);
-      fireEvent.changeText(cardCvv, aValidSecurityCode);
-    }
-
-    const isCardNumberValid = luhnValidateCCN(aValidAmexPan);
-    const isCvvValidation = validateCVV(aValidAmexPan, aValidSecurityCode);
-
-    expect(isCardNumberValid).toBe(true);
-    expect(isCvvValidation).toBe(false);
-  });
-
-  it("should show validated with real amex card and if cvv is by 4 digits", () => {
-    const component = getComponent();
-    const cardPan = component.queryByTestId("panInputMask");
-    const cardCvv = component.queryByTestId("securityCode");
-
-    if (cardPan && cardCvv) {
-      fireEvent.changeText(cardPan, aValidPan);
-      fireEvent.changeText(cardCvv, aValidSecurityCode);
-    }
-
-    const isCardNumberValid = luhnValidateCCN(aValidAmexPan);
-    const isCvvValidation = validateCVV(aValidAmexPan, aValidAmexSecurityCode);
-
-    expect(isCardNumberValid).toBe(true);
-    expect(isCvvValidation).toBe(true);
-  });
-
-  it("should show validated with real non-amex card and if cvv is by 3 digits", () => {
-    const component = getComponent();
-    const cardPan = component.queryByTestId("panInputMask");
-    const cardCvv = component.queryByTestId("securityCode");
-
-    if (cardPan && cardCvv) {
-      fireEvent.changeText(cardPan, aValidPan);
-      fireEvent.changeText(cardCvv, aValidSecurityCode);
-    }
-
-    const isCardNumberValid = luhnValidateCCN(aValidPan);
-    const isCvvValidation = validateCVV(aValidPan, aValidSecurityCode);
-
-    expect(isCardNumberValid).toBe(true);
-    expect(isCvvValidation).toBe(true);
-  });
-});
 
 const getComponent = () => {
   type NavigationParams = InferNavigationParams<typeof AddCardScreen>;
