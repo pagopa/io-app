@@ -10,11 +10,11 @@ import SickSelectDestinationScreen from "../screens/voucherGeneration/SickSelect
 import SelectFlightsDateScreen from "../screens/voucherGeneration/SelectFlightsDateScreen";
 import SummaryScreen from "../screens/voucherGeneration/SummaryScreen";
 import VoucherGeneratedScreen from "../screens/voucherGeneration/VoucherGeneratedScreen";
-import SV_ROUTES from "./routes";
 import SvCheckIncomeKoScreen from "../screens/voucherGeneration/ko/SvCheckIncomeKoScreen";
 import SvCheckResidenceKoScreen from "../screens/voucherGeneration/ko/SvCheckResidenceKoScreen";
 import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko/SvSelectBeneficiaryCategoryKoScreen";
 import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
+import SV_ROUTES from "./routes";
 
 const SvNavigator = createStackNavigator(
   {

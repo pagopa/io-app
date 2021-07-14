@@ -1,13 +1,13 @@
+import * as React from "react";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
 import { View } from "native-base";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
 import I18n from "../../../../../../i18n";
 import { Body } from "../../../../../../components/core/typography/Body";
-import * as React from "react";
-import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { connect } from "react-redux";
 
 const SvCheckIncomeKoScreen = () => (
   <>
