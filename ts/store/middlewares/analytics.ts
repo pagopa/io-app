@@ -1,23 +1,12 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
-import { constNull } from "fp-ts/lib/function";
-import DeviceInfo from "react-native-device-info";
-import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import {
-  activateBonusVacanze,
-  cancelBonusVacanzeRequest,
-  checkBonusVacanzeEligibility,
   loadAllBonusActivations,
-  loadAvailableBonuses,
-  storeEligibilityRequestId
+  loadAvailableBonuses
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import {
-  isActivationResponseTrackable,
-  isEligibilityResponseTrackable
-} from "../../features/bonus/bonusVacanze/utils/bonus";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
@@ -42,10 +31,7 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
-import {
-  contentMunicipalityLoad,
-  loadServiceMetadata
-} from "../actions/content";
+import { contentMunicipalityLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -63,6 +49,7 @@ import {
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
@@ -77,11 +64,6 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import {
-  loadServiceDetail,
-  loadServicesDetail,
-  loadVisibleServices
-} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
@@ -135,7 +117,9 @@ import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
+import { noAnalyticsRoutes } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
+import { trackServiceAction } from "./serviceAnalytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -165,23 +149,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_IDP_ID: action.payload.id,
         SPID_IDP_NAME: action.payload.name
       });
-    case getType(profileLoadSuccess):
-      // as soon as we have the user fiscal code, attach the mixpanel
-      // session to the hashed fiscal code of the user
-      const fiscalnumber = action.payload.fiscal_code;
-
-      // Re-identify the user using the hashed fiscal code.
-      // It's important the flow order and the order in which the arguments are passed to the
-      // mp.alias function because the second argument is the 'Main ID' for mixpanel so the events
-      // will be showned in the Main ID page.
-      const identifyAndAlias = sha256(fiscalnumber).then(hash =>
-        mp.identify(hash).then(() => mp.alias(DeviceInfo.getUniqueId(), hash))
-      );
-
-      return Promise.all([
-        mp.track(action.type).then(constNull, constNull),
-        identifyAndAlias.then(constNull, constNull)
-      ]);
 
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
@@ -289,8 +256,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadServiceDetail.failure):
-    case getType(loadServiceMetadata.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -305,7 +270,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
-    case getType(loadVisibleServices.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -318,8 +282,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //  Bonus vacanze
     case getType(loadAllBonusActivations.failure):
     case getType(loadAvailableBonuses.failure):
-    case getType(checkBonusVacanzeEligibility.failure):
-    case getType(activateBonusVacanze.failure):
       return mp.track(action.type, {
         reason: action.payload.message
       });
@@ -358,6 +320,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadSuccess):
     // userMetadata
     case getType(userMetadataUpsert.request):
     case getType(userMetadataUpsert.success):
@@ -366,13 +329,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.request):
     case getType(loadMessagesCancel):
-    // services
-    case getType(loadVisibleServices.request):
-    case getType(loadVisibleServices.success):
-    case getType(loadServiceDetail.request):
-    case getType(loadServiceDetail.success):
-    case getType(loadServiceMetadata.request):
-    case getType(loadServiceMetadata.success):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
@@ -406,6 +362,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
+    case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
     // bonus vacanze
     case getType(loadAllBonusActivations.request):
@@ -442,6 +399,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         });
       }
       break;
+    case getType(loadAllBonusActivations.success):
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
+      return mp.track(action.type);
+
     case getType(deleteUserDataProcessing.request):
       return mp.track(action.type, { choice: action.payload });
     case getType(removeAccountMotivation):
@@ -451,6 +413,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         choice: action.payload.choice,
         reason: action.payload.error.message
+      });
+    case getType(setMixpanelEnabled):
+      return mp.track(action.type, {
+        value: action.payload
       });
   }
   return Promise.resolve();
@@ -474,6 +440,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackServiceAction(mixpanel)(action);
     void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
@@ -502,14 +469,16 @@ export function screenTracking(
       if (nextScreen) {
         setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      mixpanel
-        .track("SCREEN_CHANGE", {
+      // track only those events that are not included in the blacklist
+      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+        void mixpanel.track("SCREEN_CHANGE_V2", {
           SCREEN_NAME: nextScreen
-        })
-        .then(
-          () => 0,
-          () => 0
-        );
+        });
+      }
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
     }
     return result;
   };

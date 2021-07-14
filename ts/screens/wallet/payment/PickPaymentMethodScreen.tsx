@@ -19,7 +19,7 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
-  navigateToPaymentTransactionSummaryScreen,
+  navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -67,7 +67,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
   <FooterWithButtons
     type={"TwoButtonsInlineThird"}
-    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.cancel"))}
+    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.back"))}
     rightButton={confirmButtonProps(
       onContinue,
       I18n.t("wallet.newPaymentMethod.addButton")
@@ -156,10 +156,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
             )}
           </Content>
         </ScrollView>
-        {renderFooterButtons(
-          props.navigateToTransactionSummary,
-          props.navigateToAddPaymentMethod
-        )}
+        {renderFooterButtons(props.goBack, props.navigateToAddPaymentMethod)}
       </SafeAreaView>
     </BaseScreenComponent>
   );
@@ -207,13 +204,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateToTransactionSummary: () =>
-    dispatch(
-      navigateToPaymentTransactionSummaryScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount")
-      })
-    ),
+  goBack: () => dispatch(navigateBack()),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
       props.navigation.getParam("rptId"),

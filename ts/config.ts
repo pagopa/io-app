@@ -53,7 +53,6 @@ export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
-export const bpdTechnicalIban: boolean = Config.BPD_TECHNICAL_IBAN === "YES";
 
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
@@ -75,7 +74,7 @@ export const euCovidCertificateEnabled: boolean =
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(
   parseInt(Config.FETCH_TIMEOUT_MS, 10)
