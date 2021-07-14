@@ -1,7 +1,6 @@
 import { compareDesc, format as dateFnsFormat } from "date-fns";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
-import dfns_de from "date-fns/locale/de";
 import * as t from "io-ts";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Either, left, right } from "fp-ts/lib/Either";
@@ -16,7 +15,7 @@ type DateFnsLocale = typeof import("date-fns/locale/it");
 
 type DFNSLocales = Record<Locales, DateFnsLocale>;
 
-const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
+const locales: DFNSLocales = { it: dfns_it, en: dfns_en };
 
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>

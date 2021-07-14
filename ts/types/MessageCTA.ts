@@ -19,13 +19,10 @@ const CTASO = t.partial({
 
 export const CTAS = t.intersection([CTASR, CTASO], "CTAS");
 
-const props = {
+const MessageCTA = t.partial({
   it: CTAS,
   en: CTAS
-};
-const MessageCTA = t.partial(props);
-export const MessageCTALocales = t.keyof(props);
-export type MessageCTALocales = t.TypeOf<typeof MessageCTALocales>;
+});
 export type CTAS = t.TypeOf<typeof CTAS>;
 
 export type MessageCTA = t.TypeOf<typeof MessageCTA>;
