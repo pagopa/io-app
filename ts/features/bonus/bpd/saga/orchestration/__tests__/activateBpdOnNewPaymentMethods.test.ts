@@ -7,12 +7,12 @@ import { navigateToWalletHome } from "../../../../../../store/actions/navigation
 import { appReducer } from "../../../../../../store/reducers";
 import { bpdRemoteConfigSelector } from "../../../../../../store/reducers/backendStatus";
 import { mockPrivativeCard } from "../../../../../../store/reducers/wallet/__mocks__/wallets";
-import { BpdConfig } from "../../../../../../types/backendStatus";
 import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import { navigateToSuggestBpdActivation } from "../../../../../wallet/onboarding/bancomat/navigation/action";
 import { navigateToActivateBpdOnNewPrivative } from "../../../../../wallet/onboarding/privative/navigation/action";
 import { activateBpdOnNewPaymentMethods } from "../activateBpdOnNewAddedPaymentMethods";
 import { isBpdEnabled } from "../onboarding/startOnboarding";
+import { BpdConfig } from "../../../../../../../definitions/content/BpdConfig";
 
 const enrollAfterAddTrue: BpdConfig = {
   enroll_bpd_after_add_payment_method: true
