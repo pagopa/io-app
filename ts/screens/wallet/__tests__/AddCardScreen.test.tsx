@@ -138,6 +138,7 @@ describe("AddCardScreen", () => {
     expect(errorMessage).not.toBeNull();
     expect(continueButton).toBeDisabled();
   });
+});
 
 const getComponent = () => {
   type NavigationParams = InferNavigationParams<typeof AddCardScreen>;
