@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -21,13 +21,21 @@ import {
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
-import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
+import {
+  navigateToSvKoCheckIncomeThresholdScreen,
+  navigateToSvSickSelectDestinationScreen
+} from "../../navigation/actions";
 import I18n from "../../../../../i18n";
+import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
+  const [isIncomeUnderThreshold, setIsIncomeUnderThreshold] = React.useState<
+    boolean | undefined
+  >();
+
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -38,8 +46,12 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.navigateToSvSickSelectDestination,
-    title: "Continue"
+    onPress:
+      isIncomeUnderThreshold === true
+        ? props.navigateToSvSickSelectDestination
+        : props.navigateToSvKoCheckIncomeThreshold,
+    title: "Continue",
+    disabled: isIncomeUnderThreshold === undefined
   };
 
   if (
@@ -59,6 +71,13 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
         ref={elementRef}
       >
         <H1>{I18n.t("bonus.sv.voucherGeneration.sick.checkIncome.title")}</H1>
+
+        <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(true)}>
+          <Text> {"< 25000€"} </Text>
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(false)}>
+          <Text> {"> 25000€"} </Text>
+        </ButtonDefaultOpacity>
       </SafeAreaView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
@@ -77,7 +96,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToSvSickSelectDestination: () =>
     dispatch(navigateToSvSickSelectDestinationScreen()),
   underThresholdIncome: () =>
-    dispatch(svGenerateVoucherUnderThresholdIncome(true))
+    dispatch(svGenerateVoucherUnderThresholdIncome(true)),
+  navigateToSvKoCheckIncomeThreshold: () =>
+    dispatch(navigateToSvKoCheckIncomeThresholdScreen())
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
