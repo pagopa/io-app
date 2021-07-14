@@ -30,6 +30,7 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
+import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import {
   isShareEnabled,
   saveImageToGallery,
@@ -63,7 +64,6 @@ import {
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { getRemoteLocale } from "../../../../utils/messages";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -524,7 +524,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const maybeBonusInfo = fromNullable(props.bonusInfo);
   const bonusInfoFromLocale = maybeBonusInfo
-    .map(b => b[getRemoteLocale()])
+    .map(b => b[getLocalePrimaryWithFallback()])
     .toUndefined();
   const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
     maybeNotNullyString(b.tos_url)

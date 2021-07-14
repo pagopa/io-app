@@ -196,7 +196,6 @@ rooted:
 locales:
   it: Italian
   en: English
-  de: German
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy

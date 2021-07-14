@@ -131,6 +131,15 @@ describe("idpContextualHelpDataFromIdSelector", () => {
     expect(idpData.isNone()).toBeTruthy();
   });
 
+  it("should return data event it's not available for the current language (using fallback)", async () => {
+    setLocale("fr" as Locales);
+    const idpData = idpContextualHelpDataFromIdSelector("timid").resultFunc(
+      pot.some(chData)
+    );
+    setLocale("it" as Locales); // restore default
+    expect(idpData.isSome()).toBeTruthy();
+  });
+
   it("should return data for the set language (it)", async () => {
     assertIdpValues("DESCRIPTION IT", "PHONE IT");
   });
@@ -142,7 +151,7 @@ describe("idpContextualHelpDataFromIdSelector", () => {
 
   it("should return fallback data if the set language is not rupported", async () => {
     setLocale("de" as Locales);
-    assertIdpValues("DESCRIPTION IT", "PHONE IT");
+    assertIdpValues("DESCRIPTION EN", "PHONE EN");
   });
 
   const assertIdpValues = (description: string, phone: string) => {
@@ -212,7 +221,7 @@ describe("screenContextualHelpDataSelector", () => {
 
   it("should return data (english) if the current screen is present as key and the set language is not supported", async () => {
     setLocale("br" as Locales);
-    assertScreenValues("title IT", "**content IT**");
+    assertScreenValues("title EN", "**content EN**");
   });
 
   const assertScreenValues = (title: string, content: string) => {

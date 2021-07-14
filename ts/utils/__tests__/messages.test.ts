@@ -13,7 +13,6 @@ import {
   cleanMarkdownFromCTAs,
   getCTA,
   getMessagePaymentExpirationInfo,
-  getRemoteLocale,
   getServiceCTA,
   isCtaActionValid,
   MaybePotMetadata,
@@ -132,28 +131,6 @@ const serviceMetadataBase = {
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
 
-describe("getRemoteLocale", () => {
-  it("should return it if locale is it", () => {
-    setLocale("it" as Locales);
-    expect(getRemoteLocale()).toEqual("it");
-  });
-
-  it("should return en if locale is en", () => {
-    setLocale("en" as Locales);
-    expect(getRemoteLocale()).toEqual("en");
-  });
-
-  it("should return it if locale is a supported language but is not in MessageCTALocales", () => {
-    setLocale("de" as Locales);
-    expect(getRemoteLocale()).toEqual("it");
-  });
-
-  it("should return it if locale is not a supported language and is not in MessageCTALocales", () => {
-    setLocale("xyz" as Locales);
-    expect(getRemoteLocale()).toEqual("it");
-  });
-});
-
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
     const maybeCTAs = getCTA(messageWithContent);
@@ -175,14 +152,14 @@ describe("getCTA", () => {
     );
   });
 
-  it("should return the italian CTA when the language is not supported", () => {
+  it("should return the english CTA when the language is not supported", () => {
     setLocale("fr" as Locales);
     const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
-      "premi",
+      "go1",
       "ioit://PROFILE_MAIN",
-      "premi2",
+      "go2",
       "ioit://PROFILE_MAIN2"
     );
     setLocale("it" as Locales); // restore default

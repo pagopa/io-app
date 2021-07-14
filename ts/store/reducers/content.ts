@@ -14,6 +14,7 @@ import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
@@ -35,7 +36,6 @@ import {
 import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
-import { getRemoteLocale } from "../../utils/messages";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -116,7 +116,7 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
-          const locale = getRemoteLocale();
+          const locale = getLocalePrimaryWithFallback();
 
           return fromNullable(data[locale]).chain(l =>
             fromNullable(l.idps[id as IdentityProviderId])
@@ -141,7 +141,7 @@ export const screenContextualHelpDataSelector = createSelector<
     if (currentRouteName === undefined) {
       return none;
     }
-    const locale = getRemoteLocale();
+    const locale = getLocalePrimaryWithFallback();
     const screenData =
       data[locale] !== undefined
         ? data[locale].screens.find(
