@@ -3,58 +3,23 @@ import I18n from "react-native-i18n";
 // If the following import is missing, generate it by running:
 // npm run generate:locales
 import * as locales from "../locales/locales";
-import { Locales } from "../locales/locales";
-import { PreferredLanguageEnum } from "../definitions/backend/PreferredLanguage";
-import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
 
-export type LocalizedMessageKeys = keyof BackendStatusMessage;
-type FallBackLocale = {
-  localizedMessageKey: LocalizedMessageKeys;
-  locale: "it";
-  localeEnum: PreferredLanguageEnum;
-};
-
-export const localeToLocalizedMessageKey = new Map<
-  Locales,
-  LocalizedMessageKeys
->([
-  ["it", "it-IT"],
-  ["en", "en-EN"]
-]);
-
-export const localeToPreferredLanguageMapping = new Map<
-  Locales,
-  PreferredLanguageEnum
->([
-  ["it", PreferredLanguageEnum.it_IT],
-  ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE]
-]);
-
-// define the locale fallback used in the whole app code
-export const localeFallback: FallBackLocale = {
-  localizedMessageKey: "it-IT",
-  locale: "it",
-  localeEnum: PreferredLanguageEnum.it_IT
-};
-
+// Should the app fallback to English if user locale doesn't exists
 // eslint-disable-next-line
 I18n.fallbacks = true;
-// Should the app fallback to Italian if user locale (o the current translation key) doesn't exists
-// eslint-disable-next-line
-I18n.defaultLocale = localeFallback.locale;
 
 // Define the supported translations
 // eslint-disable-next-line
 I18n.translations = {
-  it: locales.localeIT,
   en: locales.localeEN,
-  de: locales.localeDE
+  it: locales.localeIT
 };
 
-export const availableTranslations: ReadonlyArray<locales.Locales> = Object.keys(
-  I18n.translations
-).map(k => k as locales.Locales);
+export const translations = Object.keys(I18n.translations);
+
+export const availableTranslations: ReadonlyArray<locales.Locales> = translations
+  .map(k => k as locales.Locales)
+  .sort();
 
 export function setLocale(lang: locales.Locales) {
   // eslint-disable-next-line
