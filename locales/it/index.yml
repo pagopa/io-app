@@ -2577,6 +2577,19 @@ bonus:
         title: "SummaryScreen"
       voucherGenerated:
         title: "VoucherGeneratedScreen"
+      ko:
+        checkIncome:
+          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
+          body: "Gli sconti Sicilia Vola sono dedicati solo a chi ha un reddito personale lordo inferiore a 25.000€."
+        selectBeneficiaryCategory:
+          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
+          body: "Gli sconti Sicilia Vola sono dedicati solo alle categorie presentate nella schermata precedente."
+        checkResidence:
+          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
+          body: "Gli sconti Sicilia Vola sono dedicati solo ai residenti in Sicilia."
+        timeout:
+          title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
+          body: "Riceverai un messaggio in app IO quando sarà pronto."
 features:
   euCovidCertificate:
     save:

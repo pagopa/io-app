@@ -11,6 +11,10 @@ import SelectFlightsDateScreen from "../screens/voucherGeneration/SelectFlightsD
 import SummaryScreen from "../screens/voucherGeneration/SummaryScreen";
 import VoucherGeneratedScreen from "../screens/voucherGeneration/VoucherGeneratedScreen";
 import SV_ROUTES from "./routes";
+import SvCheckIncomeKoScreen from "../screens/voucherGeneration/ko/SvCheckIncomeKoScreen";
+import SvCheckResidenceKoScreen from "../screens/voucherGeneration/ko/SvCheckResidenceKoScreen";
+import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko/SvSelectBeneficiaryCategoryKoScreen";
+import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
 
 const SvNavigator = createStackNavigator(
   {
@@ -46,6 +50,18 @@ const SvNavigator = createStackNavigator(
     },
     [SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED]: {
       screen: VoucherGeneratedScreen
+    },
+    [SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE]: {
+      screen: SvCheckResidenceKoScreen
+    },
+    [SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY]: {
+      screen: SvSelectBeneficiaryCategoryKoScreen
+    },
+    [SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD]: {
+      screen: SvCheckIncomeKoScreen
+    },
+    [SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER]: {
+      screen: SvGeneratedVoucherTimeoutScreen
     }
   },
   {

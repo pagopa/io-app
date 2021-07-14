@@ -47,3 +47,19 @@ export const navigateToSvVoucherGeneratedScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
   });
+export const navigateToSvKoCheckResidenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
+  });
+export const navigateToSvKoSelectBeneficiaryCategoryScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
+  });
+export const navigateToSvKoCheckIncomeThresholdScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD
+  });
+export const navigateToSvTimeoutGeneratedVoucherScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER
+  });

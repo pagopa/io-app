@@ -2548,6 +2548,19 @@ bonus:
         title: "SummaryScreen"
       voucherGenerated:
         title: "VoucherGeneratedScreen"
+      ko:
+        checkIncome:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to those with a gross personal income of less than € 25,000."
+        selectBeneficiaryCategory:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to the categories presented in the previous screen."
+        checkResidence:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to residents of Sicily."
+        timeout:
+          title: "Your Sicilia Vola discount code is being generated."
+          body: "You will receive a message in the IO app when it is ready."
 features:
   euCovidCertificate:
     save:
