@@ -118,6 +118,7 @@ import {
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
+import { loadServicesDetail } from "../actions/services";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -362,15 +363,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
-    case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
-    // bonus vacanze
-    case getType(loadAllBonusActivations.request):
-    case getType(loadAvailableBonuses.request):
     case getType(loadAvailableBonuses.success):
-    case getType(checkBonusVacanzeEligibility.request):
-    case getType(cancelBonusVacanzeRequest):
-    case getType(storeEligibilityRequestId):
+    case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
 
     case getType(loadAllBonusActivations.success):
@@ -383,26 +378,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         ecc: action.payload.content.eu_covid_cert !== undefined
       });
-
-    // bonus vacanze
-    case getType(checkBonusVacanzeEligibility.success):
-      if (isEligibilityResponseTrackable(action.payload)) {
-        return mp.track(action.type, {
-          status: action.payload.status
-        });
-      }
-      break;
-    case getType(activateBonusVacanze.success):
-      if (isActivationResponseTrackable(action.payload)) {
-        return mp.track(action.type, {
-          status: action.payload.status
-        });
-      }
-      break;
-    case getType(loadAllBonusActivations.success):
-    case getType(loadAvailableBonuses.success):
-    case getType(loadAvailableBonuses.request):
-      return mp.track(action.type);
 
     case getType(deleteUserDataProcessing.request):
       return mp.track(action.type, { choice: action.payload });
