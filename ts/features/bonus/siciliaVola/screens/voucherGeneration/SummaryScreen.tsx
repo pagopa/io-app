@@ -23,6 +23,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SummaryScreen = (props: Props): React.ReactElement => {
+  // TODO: dispatch availableDestination when the component is mounted
+
+  // TODO: manage loading/error state on availableDestination
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
