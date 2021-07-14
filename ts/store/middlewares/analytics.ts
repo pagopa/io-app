@@ -363,7 +363,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //  profile First time Login
     case getType(profileFirstLogin):
     // other
+    case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
+    case getType(loadAllBonusActivations.request):
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
@@ -372,11 +374,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServicesDetail):
       return mp.track(action.type, {
         count: action.payload.length
-      });
-
-    case getType(loadMessage.success):
-      return mp.track(action.type, {
-        ecc: action.payload.content.eu_covid_cert !== undefined
       });
 
     case getType(deleteUserDataProcessing.request):
