@@ -122,9 +122,7 @@ describe("ContactPreferencesToggles component", () => {
         component.getByTestId("contact-preferences-webhook-switch-loading")
       ).toBeDefined();
     });
-  });
 
-  describe("when channels are loading", () => {
     it("should render activity indicator on inbox and webhook", () => {
       const initialState = appReducer(
         undefined,
