@@ -17,7 +17,7 @@ export const navigateToSvStudentSelectDestinationScreen = () =>
   });
 export const navigateToSvDisabledAdditionalInfoScreen = () =>
   NavigationActions.navigate({
-    routeName: SV_ROUTES.VOUCHER_GENERATION.DISABLE_ADDITIONAL_INFO
+    routeName: SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
   });
 export const navigateToSvWorkerCheckIncomeThresholdScreen = () =>
   NavigationActions.navigate({

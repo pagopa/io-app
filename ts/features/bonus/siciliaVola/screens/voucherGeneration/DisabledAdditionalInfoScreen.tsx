@@ -21,7 +21,7 @@ import I18n from "../../../../../i18n";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const DisableAdditionalInfoScreen = (props: Props): React.ReactElement => {
+const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
@@ -40,11 +40,11 @@ const DisableAdditionalInfoScreen = (props: Props): React.ReactElement => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"DisableAdditionalInfoScreen"}
+        testID={"DisabledAdditionalInfoScreen"}
         ref={elementRef}
       >
         <H1>
-          {I18n.t("bonus.sv.voucherGeneration.disable.additionalInfo.title")}
+          {I18n.t("bonus.sv.voucherGeneration.disabled.additionalInfo.title")}
         </H1>
       </SafeAreaView>
       <FooterWithButtons
@@ -66,4 +66,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DisableAdditionalInfoScreen);
+)(DisabledAdditionalInfoScreen);

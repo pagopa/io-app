@@ -45,7 +45,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         return;
       case "disabled":
         props.selectCategory(categoryBeneficiary);
-        props.navigateToSvDisableAdditionalInfo();
+        props.navigateToSvDisabledAdditionalInfo();
         return;
       case "worker":
         props.selectCategory(categoryBeneficiary);
@@ -94,7 +94,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         <ButtonDefaultOpacity
           onPress={() => setCategoryBeneficiary("disabled")}
         >
-          <Text>Disable</Text>
+          <Text>Disabled</Text>
         </ButtonDefaultOpacity>
 
         <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("worker")}>
@@ -120,7 +120,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(svGenerateVoucherSelectCategory(category)),
   navigateToSvStudentSelectDestination: () =>
     dispatch(navigateToSvStudentSelectDestinationScreen()),
-  navigateToSvDisableAdditionalInfo: () =>
+  navigateToSvDisabledAdditionalInfo: () =>
     dispatch(navigateToSvDisabledAdditionalInfoScreen()),
   navigateToSvWorkerCheckIncomeThreshold: () =>
     dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
