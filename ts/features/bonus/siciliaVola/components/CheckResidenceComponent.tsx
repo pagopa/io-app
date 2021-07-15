@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -50,23 +50,25 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
       <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"BaseEuCovidCertificateLayout"}
+        testID={"CheckResidenceComponent"}
         ref={elementRef}
       >
-        <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
 
-        <ButtonDefaultOpacity onPress={() => setisResidentInSicily(true)}>
-          <Text> {"Resident In Sicily"} </Text>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity onPress={() => setisResidentInSicily(false)}>
-          <Text> {"Not ResidentInSicily"} </Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity onPress={() => setisResidentInSicily(true)}>
+            <Text> {"Resident In Sicily"} </Text>
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity onPress={() => setisResidentInSicily(false)}>
+            <Text> {"Not ResidentInSicily"} </Text>
+          </ButtonDefaultOpacity>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={backButtonProps}
+          rightButton={cancelButtonProps}
+        />
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={backButtonProps}
-        rightButton={cancelButtonProps}
-      />
     </BaseScreenComponent>
   );
 };

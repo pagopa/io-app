@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -83,33 +83,41 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         testID={"SelectBeneficiaryCategory"}
         ref={elementRef}
       >
-        <H1>
-          {I18n.t("bonus.sv.voucherGeneration.selectBeneficiaryCategory.title")}
-        </H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>
+            {I18n.t(
+              "bonus.sv.voucherGeneration.selectBeneficiaryCategory.title"
+            )}
+          </H1>
 
-        <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("student")}>
-          <Text>Student</Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
+            onPress={() => setCategoryBeneficiary("student")}
+          >
+            <Text>Student</Text>
+          </ButtonDefaultOpacity>
 
-        <ButtonDefaultOpacity
-          onPress={() => setCategoryBeneficiary("disabled")}
-        >
-          <Text>Disabled</Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
+            onPress={() => setCategoryBeneficiary("disabled")}
+          >
+            <Text>Disabled</Text>
+          </ButtonDefaultOpacity>
 
-        <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("worker")}>
-          <Text>Worker</Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
+            onPress={() => setCategoryBeneficiary("worker")}
+          >
+            <Text>Worker</Text>
+          </ButtonDefaultOpacity>
 
-        <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("sick")}>
-          <Text>Sick</Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("sick")}>
+            <Text>Sick</Text>
+          </ButtonDefaultOpacity>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={backButtonProps}
+          rightButton={continueButtonProps}
+        />
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={backButtonProps}
-        rightButton={continueButtonProps}
-      />
     </BaseScreenComponent>
   );
 };

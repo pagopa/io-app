@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -70,20 +70,24 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
         testID={"SickCheckIncomeScreen"}
         ref={elementRef}
       >
-        <H1>{I18n.t("bonus.sv.voucherGeneration.sick.checkIncome.title")}</H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>{I18n.t("bonus.sv.voucherGeneration.sick.checkIncome.title")}</H1>
 
-        <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(true)}>
-          <Text> {"< 25000€"} </Text>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(false)}>
-          <Text> {"> 25000€"} </Text>
-        </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(true)}>
+            <Text> {"< 25000€"} </Text>
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
+            onPress={() => setIsIncomeUnderThreshold(false)}
+          >
+            <Text> {"> 25000€"} </Text>
+          </ButtonDefaultOpacity>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={backButtonProps}
+          rightButton={continueButtonProps}
+        />
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={backButtonProps}
-        rightButton={continueButtonProps}
-      />
     </BaseScreenComponent>
   );
 };

@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -59,15 +59,19 @@ const StudentSelectDestinationScreen = (
         testID={"StudentSelectDestinationScreen"}
         ref={elementRef}
       >
-        <H1>
-          {I18n.t("bonus.sv.voucherGeneration.student.selectDestination.title")}
-        </H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>
+            {I18n.t(
+              "bonus.sv.voucherGeneration.student.selectDestination.title"
+            )}
+          </H1>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={backButtonProps}
+          rightButton={continueButtonProps}
+        />
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={backButtonProps}
-        rightButton={continueButtonProps}
-      />
     </BaseScreenComponent>
   );
 };

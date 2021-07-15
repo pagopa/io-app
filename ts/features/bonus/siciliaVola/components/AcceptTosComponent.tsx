@@ -2,7 +2,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -42,13 +42,15 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
         testID={"AcceptTosComponent"}
         ref={elementRef}
       >
-        <H1>{I18n.t("bonus.sv.voucherGeneration.acceptTos.title")}</H1>
+        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+          <H1>{I18n.t("bonus.sv.voucherGeneration.acceptTos.title")}</H1>
+        </ScrollView>
+        <FooterWithButtons
+          type={"TwoButtonsInlineHalf"}
+          leftButton={backButtonProps}
+          rightButton={cancelButtonProps}
+        />
       </SafeAreaView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={backButtonProps}
-        rightButton={cancelButtonProps}
-      />
     </BaseScreenComponent>
   );
 };
