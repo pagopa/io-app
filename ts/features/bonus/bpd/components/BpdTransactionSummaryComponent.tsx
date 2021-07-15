@@ -11,7 +11,6 @@ import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
@@ -106,7 +105,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      <TouchableDefaultOpacity style={styles.row} onPress={present}>
+      <View style={styles.row}>
         <IconFont name={"io-notice"} size={24} color={IOColors.blue} />
         <View hspacer={true} small={true} />
         <View>
@@ -116,12 +115,14 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
               {props.lastUpdateDate}
             </H5>
           </H5>
-          <H5 color={"blue"} weight={"SemiBold"}>
+          <Link onPress={present} weight={"SemiBold"}>
             {I18n.t("bonus.bpd.details.transaction.detail.summary.link")}
-          </H5>
+          </Link>
         </View>
-      </TouchableDefaultOpacity>
+      </View>
+
       <View spacer={true} />
+
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
         <H4 weight={"Bold"}>{`${localeDateFormat(
