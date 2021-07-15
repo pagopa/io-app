@@ -21,7 +21,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const CheckResidenceComponent = (props: Props): React.ReactElement => {
-  const [isResidentInSicily, setisResidentInSicily] = React.useState<
+  const [isResidentInSicily, setIsResidentInSicily] = React.useState<
     boolean | undefined
   >();
 
@@ -57,10 +57,10 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
 
-          <ButtonDefaultOpacity onPress={() => setisResidentInSicily(true)}>
+          <ButtonDefaultOpacity onPress={() => setIsResidentInSicily(true)}>
             <Text> {"Resident In Sicily"} </Text>
           </ButtonDefaultOpacity>
-          <ButtonDefaultOpacity onPress={() => setisResidentInSicily(false)}>
+          <ButtonDefaultOpacity onPress={() => setIsResidentInSicily(false)}>
             <Text> {"Not ResidentInSicily"} </Text>
           </ButtonDefaultOpacity>
         </ScrollView>
