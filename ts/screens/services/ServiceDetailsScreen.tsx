@@ -55,8 +55,6 @@ import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IOColors } from "../../components/core/variables/IOColors";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { currentSelectedService } from "../../store/actions/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -446,10 +444,7 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setCurrentSelectedService: (id: ServiceId) =>
-    dispatch(currentSelectedService(id))
-});
+const mapDispatchToProps = (_: Dispatch) => ({});
 
 export default connect(
   mapStateToProps,
