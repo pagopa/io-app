@@ -159,6 +159,14 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "euCovidCert banner test",
         "en-EN": "euCovidCert banner test"
       }
+    },
+    favourite_language: {
+      is_visible: false,
+      level: LevelEnum.warning,
+      message: {
+        "it-IT": "favourite_language banner test",
+        "en-EN": "favourite_language banner test"
+      }
     }
   },
   config: {
