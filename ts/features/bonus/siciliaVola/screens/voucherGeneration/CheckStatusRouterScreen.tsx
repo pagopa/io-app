@@ -49,7 +49,7 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
       <LoadingErrorComponent
         isLoading={true}
         loadingCaption={""}
-        onRetry={props.checkServiceAvailable}
+        onRetry={props.checkTosAccepted}
       />
     ),
     v => manageTosResponse(v),
