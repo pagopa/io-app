@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Switch from "../../ui/Switch";
 import { H4 } from "../../core/typography/H4";
 import { IOStyles } from "../../core/variables/IOStyles";
@@ -8,6 +8,7 @@ import { IOColors } from "../../core/variables/IOColors";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
+import ActivityIndicator from "../../ui/ActivityIndicator";
 
 type Props = WithTestID<{
   label: string;
@@ -41,6 +42,7 @@ const PreferenceToggleRow = ({
       case "loading":
         return (
           <ActivityIndicator
+            size={"small"}
             testID={`${testID}-loading`}
             accessibilityLabel={I18n.t("global.remoteStates.loading")}
           />
