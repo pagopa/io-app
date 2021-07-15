@@ -5,15 +5,8 @@ import {
 } from "react-native";
 
 import variables from "../../theme/variables";
-import { WithTestID } from "../../types/WithTestID";
 
-type Props = WithTestID<{
-  color?: string;
-  accessibilityLabel?: string;
-  size?: ActivityIndicatorProps["size"];
-}>;
-
-const ActivityIndicator = (props: Props) => (
+const ActivityIndicator = (props: ActivityIndicatorProps) => (
   <RNActivityIndicator
     size={props.size ?? "large"}
     accessibilityLabel={props.accessibilityLabel}
