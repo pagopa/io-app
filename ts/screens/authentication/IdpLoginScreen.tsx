@@ -258,7 +258,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
     const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
-
     return (
       <BaseScreenComponent
         goBack={true}
