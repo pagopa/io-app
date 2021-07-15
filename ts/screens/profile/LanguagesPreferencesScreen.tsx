@@ -155,7 +155,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
               })}
             </List>
           </ScreenContent>
-          <SectionStatusComponent sectionKey={"email_validation"} />
+          <SectionStatusComponent sectionKey={"favourite_language"} />
         </SafeAreaView>
       </TopScreenComponent>
     ));
