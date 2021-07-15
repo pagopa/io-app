@@ -3,7 +3,7 @@ import React from "react";
 import ActivityIndicator from "../ActivityIndicator";
 
 describe("ActivityIndicator", () => {
-  it("Freeze 'ActivityIndicator' state", () => {
+  it("should match the snapshot with default props", () => {
     expect(TestRenderer.create(<ActivityIndicator />)).toMatchSnapshot();
   });
 });
