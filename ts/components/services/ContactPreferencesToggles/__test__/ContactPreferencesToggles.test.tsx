@@ -2,6 +2,7 @@ import React from "react";
 import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
+import { Store } from "redux";
 import { NotificationChannelEnum } from "../../../../../definitions/backend/NotificationChannel";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -88,6 +89,64 @@ describe("ContactPreferencesToggles component", () => {
       // ).toBeDefined();
     });
   });
+
+  describe("when channels are loading", () => {
+    it("should render activity indicator on inbox", () => {
+      const initialState = appReducer(
+        undefined,
+        loadServicePreference.success({
+          id: "some_id" as ServiceId,
+          kind: "success",
+          value: { inbox: true, email: true, push: true, settings_version: 0 }
+        })
+      );
+      // the store will be in someLoading
+      const state = appReducer(
+        initialState,
+        loadServicePreference.request("aServiceID" as ServiceId)
+      );
+      const mockStore = configureMockStore<GlobalState>();
+      const store = mockStore({
+        ...state
+      } as GlobalState);
+      const component = renderComponent(store, {
+        channels: [
+          NotificationChannelEnum.EMAIL,
+          NotificationChannelEnum.WEBHOOK
+        ]
+      });
+      expect(
+        component.getByTestId("contact-preferences-inbox-switch-loading")
+      ).toBeDefined();
+      expect(
+        component.getByTestId("contact-preferences-webhook-switch-loading")
+      ).toBeDefined();
+    });
+
+    it("should render activity indicator on inbox and webhook", () => {
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const state = appReducer(
+        initialState,
+        loadServicePreference.request("aServiceID" as ServiceId)
+      );
+      const mockStore = configureMockStore<GlobalState>();
+      const store = mockStore({
+        ...state
+      } as GlobalState);
+      const component = renderComponent(store, {
+        channels: [
+          NotificationChannelEnum.EMAIL,
+          NotificationChannelEnum.WEBHOOK
+        ]
+      });
+      expect(
+        component.getByTestId("contact-preferences-inbox-switch-loading")
+      ).toBeDefined();
+    });
+  });
 });
 
 const mockState = (servicePreference: ServicePreferenceResponse) => {
@@ -103,7 +162,7 @@ const mockState = (servicePreference: ServicePreferenceResponse) => {
 };
 
 const renderComponent = (
-  store: any,
+  store: Store<unknown>,
   options: {
     channels?: ReadonlyArray<NotificationChannelEnum>;
   }
