@@ -159,11 +159,20 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "euCovidCert banner test",
         "en-EN": "euCovidCert banner test"
       }
+    },
+    favourite_language: {
+      is_visible: false,
+      level: LevelEnum.warning,
+      message: {
+        "it-IT": "favourite_language banner test",
+        "en-EN": "favourite_language banner test"
+      }
     }
   },
   config: {
     bpd: {
-      enroll_bpd_after_add_payment_method: false
+      enroll_bpd_after_add_payment_method: false,
+      program_active: true
     },
     bpd_ranking: true,
     bpd_ranking_v2: true,
@@ -179,7 +188,8 @@ export const baseBackendState: BackendStatusState = {
 
 export const baseBackendConfig: Config = {
   bpd: {
-    enroll_bpd_after_add_payment_method: false
+    enroll_bpd_after_add_payment_method: false,
+    program_active: true
   },
   bpd_ranking: true,
   bpd_ranking_v2: true,
