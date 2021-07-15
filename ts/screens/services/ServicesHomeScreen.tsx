@@ -309,7 +309,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
     return (
-      <View style={[styles.center, styles.padded, IOStyles.flex]}>
+      <View style={[styles.center, styles.padded]}>
         {Platform.OS === "ios" && <View style={styles.customSpacer} />}
         <View spacer={true} extralarge={true} />
         <View spacer={true} extralarge={true} />
