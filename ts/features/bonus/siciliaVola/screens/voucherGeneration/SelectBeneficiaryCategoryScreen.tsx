@@ -20,7 +20,7 @@ import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import {
-  navigateToSvDisableAdditionalInfoScreen,
+  navigateToSvDisabledAdditionalInfoScreen,
   navigateToSvSickCheckIncomeThresholdScreen,
   navigateToSvStudentSelectDestinationScreen,
   navigateToSvWorkerCheckIncomeThresholdScreen
@@ -121,7 +121,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToSvStudentSelectDestination: () =>
     dispatch(navigateToSvStudentSelectDestinationScreen()),
   navigateToSvDisableAdditionalInfo: () =>
-    dispatch(navigateToSvDisableAdditionalInfoScreen()),
+    dispatch(navigateToSvDisabledAdditionalInfoScreen()),
   navigateToSvWorkerCheckIncomeThreshold: () =>
     dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
   navigateToSvSickCheckIncomeThreshold: () =>

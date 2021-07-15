@@ -15,7 +15,7 @@ export const navigateToSvStudentSelectDestinationScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
   });
-export const navigateToSvDisableAdditionalInfoScreen = () =>
+export const navigateToSvDisabledAdditionalInfoScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.DISABLE_ADDITIONAL_INFO
   });
