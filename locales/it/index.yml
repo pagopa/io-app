@@ -63,6 +63,7 @@ global:
   sectionStatus:
     moreInfo: più info
   accessibility:
+    reload: "Ricarica"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
@@ -175,8 +176,8 @@ global:
     noResultsTitle: Nessun risultato.
   localNotifications:
     spidLogin:
-      title: Ricordati di accedere ad IO!
-      message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
+      title: Accedi per iniziare a usare l'app
+      message: IO funziona solo se hai effettuato l'accesso almeno una volta
 tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
@@ -464,6 +465,7 @@ navigation:
   messages: Messaggi
   profile: Profilo
   accessibility: "Sezione {{section}}, pannello, {{order}} di 4"
+  selected: È selezionato
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
@@ -1630,16 +1632,18 @@ services:
       oldUsersBadge: "Impostazione attuale"
       choiceLabel: "Hai scelto la"
       unavailable: "Non selezionato"
-      title: "Come vuoi utilizzare i servizi su IO?"
+      title: "Come vuoi configurare i servizi su IO?"
       body: "IO è semplice perché non devi fare nulla: se un servizio ha qualcosa di importante da dirti, può mandarti un messaggio."
       quickConfig:
-        value: "configurazione rapida"
+        value: "Configurazione rapida"
+        label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
         body:
           text1: "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
       manualConfig:
-        value: "configurazione manuale"
+        value: "Configurazione manuale"
+        label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
         body:
           text1: "Nessun servizio potrà contattarti. Per ricevere messaggi dovrai configurarli uno a uno."
@@ -1650,10 +1654,11 @@ services:
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: Il servizio è attivo
+  serviceIsEnabled: Contattarti in app
   serviceNotEnabled: Il servizio non è attivo
-  pushNotifications: Notifiche push
-  emailForwarding: Inoltro via email
+  pushNotifications: Inviarti notifiche push
+  emailForwarding: Inviarti e-mail
+  tosAndPrivacy: Termini e Privacy
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
@@ -1677,13 +1682,16 @@ services:
   loading:
     title: Sto caricando l'elenco dei servizi
     subtitle: attendi qualche secondo...
-  enableAll: Attiva tutti
-  disableAll: Disattiva tutti
+  enableAll: Usa configurazione rapida
+  disableAll: Usa configurazione manuale
+  updatingServiceMode: Attendi...
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
+  contacts:
+    title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
   contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."

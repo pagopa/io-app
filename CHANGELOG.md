@@ -2,6 +2,95 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0-rc.0](https://github.com/pagopa/io-app/compare/1.30.0-rc.2...1.31.0-rc.0) (2021-07-13)
+
+
+### Bug Fixes
+
+* [[IA-89](https://pagopa.atlassian.net/browse/IA-89)] Missing accessibility role on share data links ([#3185](https://github.com/pagopa/io-app/issues/3185)) ([d0e7be9](https://github.com/pagopa/io-app/commit/d0e7be9918deebb80af17d7a52311dfe62fe6a79)), closes [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89) [#IA-89](https://github.com/pagopa/io-app/issues/IA-89)
+
+
+### Chores
+
+* **deps:** bump addressable from 2.7.0 to 2.8.0 ([#3223](https://github.com/pagopa/io-app/issues/3223)) ([9df6068](https://github.com/pagopa/io-app/commit/9df6068985b3a34ad81456dbc3d5c07ca43ba2fb))
+* [[IA-126](https://pagopa.atlassian.net/browse/IA-126)] Persisted store snapshot test ([#3218](https://github.com/pagopa/io-app/issues/3218)) ([73622e2](https://github.com/pagopa/io-app/commit/73622e261626bad743a8a8ace3e0cdacda720567))
+
+## [1.30.0-rc.2](https://github.com/pagopa/io-app/compare/1.30.0-rc.1...1.30.0-rc.2) (2021-07-09)
+
+
+### Bug Fixes
+
+* [[IA-125](https://pagopa.atlassian.net/browse/IA-125)] Persisted store doesn't migrate ([#3217](https://github.com/pagopa/io-app/issues/3217)) ([2576148](https://github.com/pagopa/io-app/commit/2576148f2d8cc6de19a361f9319ddcb8fe8066d5))
+
+## [1.30.0-rc.1](https://github.com/pagopa/io-app/compare/1.30.0-rc.0...1.30.0-rc.1) (2021-07-09)
+
+
+### Features
+
+* **Redesign Servizi:** [[IARS-14](https://pagopa.atlassian.net/browse/IARS-14)]  TOS and info new section ([#3200](https://github.com/pagopa/io-app/issues/3200)) ([a506ace](https://github.com/pagopa/io-app/commit/a506ace418eed22e2f01afc962008667397b4292))
+
+
+### Bug Fixes
+
+* **Redesign Servizi:** [[IARS-39](https://pagopa.atlassian.net/browse/IARS-39)] Fix services not selected from message detail screen ([#3216](https://github.com/pagopa/io-app/issues/3216)) ([52cd82a](https://github.com/pagopa/io-app/commit/52cd82af24efc6102973caf94f93af1fa9f8245d))
+* [[IA-9](https://pagopa.atlassian.net/browse/IA-9)] Remove extra space context help ([#3213](https://github.com/pagopa/io-app/issues/3213)) ([fb2622c](https://github.com/pagopa/io-app/commit/fb2622c08111efed634947f177e0e1bfcad4ffab))
+* **Redesign Servizi:** [[IARS-37](https://pagopa.atlassian.net/browse/IARS-37)] Fix disabled webhook flag when reactivating service communication ([#3214](https://github.com/pagopa/io-app/issues/3214)) ([7a5e229](https://github.com/pagopa/io-app/commit/7a5e2298fda0a4ca79e12bca2a96b9d27d7f49eb))
+
+
+### Chores
+
+* **Redesign Servizi:** [[IARS-38](https://pagopa.atlassian.net/browse/IARS-38)] Removes the Enabling footer button from ServicesHomeScreen ([#3215](https://github.com/pagopa/io-app/issues/3215)) ([2f0d795](https://github.com/pagopa/io-app/commit/2f0d7952a38802f7cb8e1959a0ccf4603d657c1f))
+
+## [1.30.0-rc.0](https://github.com/pagopa/io-app/compare/1.29.0-rc.1...1.30.0-rc.0) (2021-07-08)
+
+
+### Bug Fixes
+
+* [[IA-120](https://pagopa.atlassian.net/browse/IA-120)] Info message is not right localized ([#3210](https://github.com/pagopa/io-app/issues/3210)) ([317af84](https://github.com/pagopa/io-app/commit/317af84d2a618af36c22a3d7eb7f3e8bb55f10ad))
+* [[IA-71](https://pagopa.atlassian.net/browse/IA-71)] Wrong secondary button in choose payment method screen ([#3176](https://github.com/pagopa/io-app/issues/3176)) ([0dd543d](https://github.com/pagopa/io-app/commit/0dd543d4d1e8fb0e2994603051a9da571e5a85bd))
+* **Redesign Servizi:** [[IARS-31](https://pagopa.atlassian.net/browse/IARS-31)] Items on service contact preference screen uses the device locale and not the app selected ([#3207](https://github.com/pagopa/io-app/issues/3207)) ([d45cd20](https://github.com/pagopa/io-app/commit/d45cd206fcb1630a20183692bb5dd454220233f3))
+
+
+### Chores
+
+* **Redesign Servizi:** [[IARS-34](https://pagopa.atlassian.net/browse/IARS-34)] Implements saga to handle profile preference upsert success action ([#3211](https://github.com/pagopa/io-app/issues/3211)) ([0b8c34d](https://github.com/pagopa/io-app/commit/0b8c34dbe1db5fb5e211c5bb6f6075591aaf2572))
+* [[IRS-66](https://pagopa.atlassian.net/browse/IRS-66)] Locales update [#3204](https://github.com/pagopa/io-app/issues/3204) ([04927c4](https://github.com/pagopa/io-app/commit/04927c43930c97513a83ad9c2edd3779526c2a8a))
+
+## [1.29.0-rc.1](https://github.com/pagopa/io-app/compare/1.29.0-rc.0...1.29.0-rc.1) (2021-07-06)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[IAC-96](https://pagopa.atlassian.net/browse/IAC-96)] Remove cashback item from FeaturedCardCarousel in wallet ([#3194](https://github.com/pagopa/io-app/issues/3194)) ([9d62e1f](https://github.com/pagopa/io-app/commit/9d62e1f2a74f9083e813dac2b66c5bcf172a3de3))
+* **Bonus Pagamenti Digitali:** [[IAC-97](https://pagopa.atlassian.net/browse/IAC-97)] Remote configuration for cashback enroll after add payment method ([#3197](https://github.com/pagopa/io-app/issues/3197)) ([527c6ee](https://github.com/pagopa/io-app/commit/527c6eebafb00806852974264010220854037330))
+* **EU Covid Certificate:** [[IAGP-66](https://pagopa.atlassian.net/browse/IAGP-66)] Export screenshot in PNG format ([#3199](https://github.com/pagopa/io-app/issues/3199)) ([ded0cf3](https://github.com/pagopa/io-app/commit/ded0cf391f5f2bb2a0f0ed2cc6cffbabc7316739))
+* **Redesign Servizi:** [[IARS-13](https://pagopa.atlassian.net/browse/IARS-13)] Isolate toggle components for service contact preference handling ([#3178](https://github.com/pagopa/io-app/issues/3178)) ([00ae7b4](https://github.com/pagopa/io-app/commit/00ae7b40350db1050bc4fa53ec5a564459a37a15))
+* **Redesign Servizi:** [[IARS-24](https://pagopa.atlassian.net/browse/IARS-24)] Update profile services preference mode ([#3191](https://github.com/pagopa/io-app/issues/3191)) ([121dd48](https://github.com/pagopa/io-app/commit/121dd48e520c77f5bc257cb3ae79e305b59d3036))
+* [[IA-72](https://pagopa.atlassian.net/browse/IA-72)] Add contextual help and tracking to UpdateAppModal ([#3179](https://github.com/pagopa/io-app/issues/3179)) ([f4f517c](https://github.com/pagopa/io-app/commit/f4f517cfa7b8c25953ec91509a9c93c6dabee82b))
+* **Redesign Servizi:** [[IARS-4](https://pagopa.atlassian.net/browse/IARS-4),[IARS-6](https://pagopa.atlassian.net/browse/IARS-6)] Implements footer component for ServicesHome screen to enable, disable all services ([#3180](https://github.com/pagopa/io-app/issues/3180)) ([851f28f](https://github.com/pagopa/io-app/commit/851f28f73921375160eb3b1bab37f5e2326bfbb0))
+
+
+### Bug Fixes
+
+* **Redesign Servizi:** [[IARS-30](https://pagopa.atlassian.net/browse/IARS-30)] Conditions to send event is never raised ([#3202](https://github.com/pagopa/io-app/issues/3202)) ([8ed2ef8](https://github.com/pagopa/io-app/commit/8ed2ef889ace5b8f5688a57c5522d14287a80dd6))
+* [[IA-106](https://pagopa.atlassian.net/browse/IA-106)] Profile is not updated ([#3201](https://github.com/pagopa/io-app/issues/3201)) ([4965c52](https://github.com/pagopa/io-app/commit/4965c52857c1729a56cd5c7c9da410c3d79ace50))
+* **Redesign Servizi:** [[IARS-22](https://pagopa.atlassian.net/browse/IARS-22)] Implements accessibility on ServiceContactComponent ([#3189](https://github.com/pagopa/io-app/issues/3189)) ([f3e1b8e](https://github.com/pagopa/io-app/commit/f3e1b8e6aec191e9c1cf44184645f13daea1f27d))
+
+
+### Chores
+
+* **Redesign Servizi:** [[IARS-20](https://pagopa.atlassian.net/browse/IARS-20),[IARS-21](https://pagopa.atlassian.net/browse/IARS-21)] Introduces networking types and store definition for services preference ([#3177](https://github.com/pagopa/io-app/issues/3177)) ([c9a3f93](https://github.com/pagopa/io-app/commit/c9a3f938dd451ee5db47ae61469ac3045c3408a6))
+* **Redesign Servizi:** [[IARS-23](https://pagopa.atlassian.net/browse/IARS-23)] Introduces Service Preference API Saga and toggle component store linking ([#3186](https://github.com/pagopa/io-app/issues/3186)) ([ef00c43](https://github.com/pagopa/io-app/commit/ef00c4312ba89a12ec51b28b39a616459f7429e0))
+* **Redesign Servizi:** [[IARS-25](https://pagopa.atlassian.net/browse/IARS-25)] Add services preference mode opt-in on startup ([#3196](https://github.com/pagopa/io-app/issues/3196)) ([a145fcb](https://github.com/pagopa/io-app/commit/a145fcb0628b0bce513d030ae98d5a2355737eea))
+* **Redesign Servizi:** [[IARS-26](https://pagopa.atlassian.net/browse/IARS-26)] Preference summary is displayed only on national list as footer ([#3182](https://github.com/pagopa/io-app/issues/3182)) ([19249ee](https://github.com/pagopa/io-app/commit/19249ee5e34469f9200981ef1b14e26f617e9d72))
+* **Redesign Servizi:** [[IARS-27](https://pagopa.atlassian.net/browse/IARS-27)] Removes the option to set Email forwarding preference by service [#3187](https://github.com/pagopa/io-app/issues/3187) ([04d6004](https://github.com/pagopa/io-app/commit/04d60046e708a0cab749ff8aa931b7375728d6f9))
+* **Redesign Servizi:** [[IARS-29](https://pagopa.atlassian.net/browse/IARS-29)] Add mixpanel track for newly integrated service preference API ([#3195](https://github.com/pagopa/io-app/issues/3195)) ([bef9853](https://github.com/pagopa/io-app/commit/bef98538530fd66bfb49def4131df7eafb794a03))
+* **Redesign Servizi:** [[IARS-7](https://pagopa.atlassian.net/browse/IARS-7)] Introduces thank you page for service preference save ([#3184](https://github.com/pagopa/io-app/issues/3184)) ([23134d5](https://github.com/pagopa/io-app/commit/23134d5e912755a0e22060d205efccf82e5f4474))
+* **Sicilia Vola:** [[IASV-7](https://pagopa.atlassian.net/browse/IASV-7)] Create SiciliaVola voucher generation workunit ([#3128](https://github.com/pagopa/io-app/issues/3128)) ([928b4bf](https://github.com/pagopa/io-app/commit/928b4bf1e89fd2b6d9ad20ca5d702267d8df0a00))
+* [[IA-21](https://pagopa.atlassian.net/browse/IA-21)] added permissions mapping in README ([#3132](https://github.com/pagopa/io-app/issues/3132)) ([09c713f](https://github.com/pagopa/io-app/commit/09c713f6ebe3e4a1408a61258ceabeded8d571fc)), closes [#IA-21](https://github.com/pagopa/io-app/issues/IA-21)
+* [[IA-45](https://pagopa.atlassian.net/browse/IA-45)] In wallet home header when VO is active, the title and the add card method is not clear ([#3164](https://github.com/pagopa/io-app/issues/3164)) ([b397c99](https://github.com/pagopa/io-app/commit/b397c99b5d819121e1eed09fd56e7387cb2a8a4e))
+* **Redesign Servizi:** [[IARS-8](https://pagopa.atlassian.net/browse/IARS-8)] Adds the bottom sheet to confirm the manual option ([#3165](https://github.com/pagopa/io-app/issues/3165)) ([f6491f4](https://github.com/pagopa/io-app/commit/f6491f4839d7f9a2baf494b9cc419824c92d8c0d))
+
 ## [1.29.0-rc.0](https://github.com/pagopa/io-app/compare/1.28.0-rc.4...1.29.0-rc.0) (2021-06-30)
 
 

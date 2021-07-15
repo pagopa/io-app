@@ -15,7 +15,6 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../../store/actions/services/servicePreference";
-import { servicesRedesignEnabled } from "../../config";
 import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLoadSaga";
 import { handleGetServicePreference } from "./servicePreference/handleGetServicePreferenceSaga";
 import { handleUpsertServicePreference } from "./servicePreference/handleUpsertServicePreferenceSaga";
@@ -40,21 +39,19 @@ export function* watchLoadServicesSaga(
     backendClient.getService
   );
 
-  if (servicesRedesignEnabled) {
-    // handle the load of service preference request
-    // TODO Add backend client when defined
-    yield takeLatest(
-      getType(loadServicePreference.request),
-      handleGetServicePreference
-    );
+  // handle the load of service preference request
+  yield takeLatest(
+    getType(loadServicePreference.request),
+    handleGetServicePreference,
+    backendClient.getServicePreference
+  );
 
-    // handle the upsert request for the current service
-    // TODO Add backend client when defined
-    yield takeLatest(
-      getType(upsertServicePreference.request),
-      handleUpsertServicePreference
-    );
-  }
+  // handle the upsert request for the current service
+  yield takeLatest(
+    getType(upsertServicePreference.request),
+    handleUpsertServicePreference,
+    backendClient.upsertServicePreference
+  );
 
   // start a watcher to handle the load of services details in a bunch (i.e when visible services are loaded)
   yield fork(watchServicesDetailLoadSaga, backendClient.getService);

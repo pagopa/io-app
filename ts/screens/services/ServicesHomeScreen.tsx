@@ -26,7 +26,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {
-  Alert,
   Animated,
   Image,
   KeyboardAvoidingView,
@@ -38,9 +37,7 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
@@ -54,10 +51,8 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { loadServiceMetadata } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
-  currentSelectedService,
   loadVisibleServices,
   showServiceDetails
 } from "../../store/actions/services";
@@ -101,9 +96,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../components/SectionStatusComponent";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
-import { servicesRedesignEnabled } from "../../config";
-import ServicesEnablingFooter from "../../components/services/ServicesEnablingFooter";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
+import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -265,22 +258,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
-  private handleOnLongPressItem = () => {
-    if (!this.props.isSearchEnabled) {
-      const enableServices = this.areAllServicesInboxChannelDisabled();
-
-      const isLongPressEnabled = !this.state.isLongPressEnabled;
-      const currentTabServicesId = this.props.tabsServicesId[
-        this.state.currentTab
-      ];
-      this.setState({
-        isLongPressEnabled,
-        currentTabServicesId,
-        enableServices
-      });
-    }
-  };
-
   /**
    * if we are displaying the loading screen and we got no errors on loading
    * data, then we can show the content
@@ -385,9 +362,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   private onServiceSelect = (service: ServicePublic) => {
-    if (servicesRedesignEnabled) {
-      this.props.setSelectedService(service.service_id);
-    }
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
@@ -395,116 +369,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
-  private showAlertOnDisableServices = (
-    title: string,
-    msg: string,
-    onConfirmPress: () => void
-  ) => {
-    Alert.alert(
-      title,
-      msg,
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.ok"),
-          style: "destructive",
-          onPress: () => {
-            onConfirmPress();
-            // update the persisted preferences to remember the user read the alert
-            this.props.updatePersistedPreference(true);
-          }
-        }
-      ],
-      { cancelable: false }
-    );
-  };
-
-  private onItemSwitchValueChanged = (
-    services: ReadonlyArray<ServicePublic>,
-    value: boolean
-  ) => {
-    // check if the alert of disable service has not been shown already and if the service is active
-    if (!this.props.wasServiceAlertDisplayedOnce && !value) {
-      this.showAlertOnDisableServices(
-        I18n.t("serviceDetail.disableTitle"),
-        I18n.t("serviceDetail.disableMsg"),
-        () => {
-          this.props.disableOrEnableServices(
-            services.map(s => s.service_id),
-            this.props.profile,
-            false
-          );
-        }
-      );
-    } else {
-      this.props.disableOrEnableServices(
-        services.map(s => s.service_id),
-        this.props.profile,
-        value
-      );
-    }
-    const enableServices = this.areAllServicesInboxChannelDisabled();
-    this.setState({ enableServices });
-  };
-
   public componentWillUnmount() {
     if (this.navListener) {
       this.navListener.remove();
     }
   }
-
-  // This method enable or disable services and update the enableServices props
-  private disableOrEnableTabServices = () => {
-    const { profile } = this.props;
-    if (pot.isUpdating(profile)) {
-      return;
-    }
-    const { currentTabServicesId, enableServices } = this.state;
-    this.props.disableOrEnableServices(
-      currentTabServicesId,
-      profile,
-      enableServices
-    );
-    this.setState({ enableServices: !enableServices });
-  };
-
-  private renderLongPressFooterButtons = () => (
-    <View style={styles.varBar}>
-      <ButtonDefaultOpacity
-        block={true}
-        bordered={true}
-        onPress={this.handleOnLongPressItem}
-        style={styles.buttonBar}
-      >
-        <Text>{I18n.t("global.buttons.cancel")}</Text>
-      </ButtonDefaultOpacity>
-      <ButtonDefaultOpacity
-        block={true}
-        primary={true}
-        style={styles.buttonBar}
-        onPress={() => {
-          if (!this.props.wasServiceAlertDisplayedOnce) {
-            this.showAlertOnDisableServices(
-              I18n.t("services.disableAllTitle"),
-              I18n.t("services.disableAllMsg"),
-              this.disableOrEnableTabServices
-            );
-          } else {
-            this.disableOrEnableTabServices();
-          }
-        }}
-      >
-        <Text>
-          {this.state.enableServices
-            ? I18n.t("services.enableAll")
-            : I18n.t("services.disableAll")}
-        </Text>
-      </ButtonDefaultOpacity>
-    </View>
-  );
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -560,12 +429,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                {servicesRedesignEnabled ? (
-                  <ServicesEnablingFooter />
-                ) : (
-                  this.state.isLongPressEnabled &&
-                  this.renderLongPressFooterButtons()
-                )}
+                <ServicePreferenceSummary />
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -586,11 +450,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         ) : (
           <ServicesSearch
             sectionsState={this.props.allSections}
-            profile={this.props.profile}
             onRefresh={this.refreshServices}
             navigateToServiceDetail={this.onServiceSelect}
             searchText={_}
-            readServices={this.props.readServices}
           />
         )
       )
@@ -660,16 +522,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             heading={I18n.t("services.tab.national")}
           >
             <ServicesTab
-              isAll={false}
               sections={nationalTabSections}
               isRefreshing={isRefreshing}
               onRefresh={this.refreshScreenContent}
               onServiceSelect={this.onServiceSelect}
-              handleOnLongPressItem={
-                servicesRedesignEnabled ? constNull : this.handleOnLongPressItem
-              }
-              isLongPressEnabled={this.state.isLongPressEnabled}
-              onItemSwitchValueChanged={this.onItemSwitchValueChanged}
               tabScrollOffset={this.animatedTabScrollPositions[1]}
             />
           </Tab>
@@ -765,7 +621,6 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedService: (id: ServiceId) => dispatch(currentSelectedService(id)),
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
@@ -802,13 +657,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           ...metadata,
           organizationsOfInterest: selectedItemIds
         }
-      })
-    );
-  },
-  updatePersistedPreference: (value: boolean) => {
-    dispatch(
-      serviceAlertDisplayedOnceSuccess({
-        wasServiceAlertDisplayedOnce: value
       })
     );
   },

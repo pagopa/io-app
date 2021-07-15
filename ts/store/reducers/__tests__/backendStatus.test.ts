@@ -2,15 +2,18 @@ import { none, some } from "fp-ts/lib/Option";
 import {
   areSystemsDeadReducer,
   BackendStatusState,
-  configSelector,
+  bpdRankingEnabledSelector,
   sectionStatusSelector
 } from "../backendStatus";
-import { BackendStatus } from "../../../types/backendStatus";
 import { GlobalState } from "../types";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../__mock__/backendStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
   const responseON: BackendStatus = {
+    ...baseRawBackendStatus,
     is_alive: true,
     message: {
       "it-IT": "messaggio in italiano",
@@ -19,6 +22,7 @@ describe("backend service status reducer", () => {
   };
 
   const responseOff: BackendStatus = {
+    ...baseRawBackendStatus,
     is_alive: false,
     message: {
       "it-IT": "messaggio in italiano",
@@ -67,16 +71,18 @@ describe("backend service status reducer", () => {
 // TODO: refactor using  baseBackendState
 describe("test selectors", () => {
   // smoke tests: valid / invalid
-  const status = {
+  const status: BackendStatus = {
+    ...baseRawBackendStatus,
     is_alive: true,
     message: {
       "it-IT": "messaggio in italiano",
       "en-EN": "english message"
     },
     sections: {
+      ...baseRawBackendStatus.sections,
       cashback: {
         is_visible: false,
-        level: "warning",
+        level: LevelEnum.warning,
         message: {
           "it-IT": "Il cashback è in manutenzione, tornerà operativo a breve",
           "en-EN":
@@ -85,7 +91,7 @@ describe("test selectors", () => {
       },
       email_validation: {
         is_visible: true,
-        level: "warning",
+        level: LevelEnum.warning,
         message: {
           "it-IT":
             "la sezione messaggi è in manutenzione, tornerà operativa a breve",
@@ -95,7 +101,7 @@ describe("test selectors", () => {
       },
       messages: {
         is_visible: false,
-        level: "warning",
+        level: LevelEnum.warning,
         message: {
           "it-IT":
             "la sezione messaggi è in manutenzione, tornerà operativa a breve",
@@ -105,7 +111,7 @@ describe("test selectors", () => {
       },
       services: {
         is_visible: false,
-        level: "critical",
+        level: LevelEnum.critical,
         web_url: {
           "it-IT": "https://io.italia.it/",
           "en-EN": "https://io.italia.it/"
@@ -119,7 +125,7 @@ describe("test selectors", () => {
       },
       login: {
         is_visible: false,
-        level: "normal",
+        level: LevelEnum.normal,
         web_url: {
           "it-IT": "https://io.italia.it/",
           "en-EN": "https://io.italia.it/"
@@ -133,7 +139,7 @@ describe("test selectors", () => {
       },
       wallets: {
         is_visible: false,
-        level: "critical",
+        level: LevelEnum.critical,
         web_url: {
           "it-IT": "https://io.italia.it/",
           "en-EN": "https://io.italia.it/"
@@ -147,7 +153,7 @@ describe("test selectors", () => {
       },
       ingress: {
         is_visible: false,
-        level: "critical",
+        level: LevelEnum.critical,
         web_url: {
           "it-IT": "https://io.italia.it/",
           "en-EN": "https://io.italia.it/"
@@ -161,7 +167,7 @@ describe("test selectors", () => {
       },
       credit_card: {
         is_visible: true,
-        level: "warning",
+        level: LevelEnum.warning,
         badge: {
           "it-IT": "warning message",
           "en-EN": "possible slowness"
@@ -173,7 +179,7 @@ describe("test selectors", () => {
       },
       satispay: {
         is_visible: false,
-        level: "critical",
+        level: LevelEnum.critical,
         message: {
           "it-IT": "satispay",
           "en-EN": "satispay"
@@ -181,7 +187,7 @@ describe("test selectors", () => {
       },
       bancomat: {
         is_visible: false,
-        level: "normal",
+        level: LevelEnum.normal,
         message: {
           "it-IT": "bancomat",
           "en-EN": "bancomat"
@@ -193,7 +199,7 @@ describe("test selectors", () => {
       },
       bancomatpay: {
         is_visible: false,
-        level: "warning",
+        level: LevelEnum.warning,
         message: {
           "it-IT": "bancomatpay",
           "en-EN": "bancomatpay"
@@ -201,7 +207,7 @@ describe("test selectors", () => {
       },
       digital_payments: {
         is_visible: false,
-        level: "warning",
+        level: LevelEnum.warning,
         message: {
           "it-IT": "digital_payments",
           "en-EN": "digital_payments"
@@ -234,7 +240,7 @@ describe("test selectors", () => {
   });
 
   it("should return undefined - configSelector", () => {
-    const config = configSelector("bpd_ranking_v2")(noneStore);
+    const config = bpdRankingEnabledSelector(noneStore);
     expect(config).toBeUndefined();
   });
 
@@ -244,7 +250,7 @@ describe("test selectors", () => {
         status: some({ ...status, config: { bpd_ranking_v2: true } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
+    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeTruthy();
   });
 
@@ -254,7 +260,7 @@ describe("test selectors", () => {
         status: some({ ...status, config: { bpd_ranking_v2: false } })
       }
     } as any) as GlobalState;
-    const bpd_ranking = configSelector("bpd_ranking_v2")(someStoreConfig);
+    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
     expect(bpd_ranking).toBeFalsy();
   });
 });

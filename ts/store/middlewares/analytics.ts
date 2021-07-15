@@ -31,10 +31,7 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
-import {
-  contentMunicipalityLoad,
-  loadServiceMetadata
-} from "../actions/content";
+import { contentMunicipalityLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -67,11 +64,6 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import {
-  loadServiceDetail,
-  loadServicesDetail,
-  loadVisibleServices
-} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
@@ -127,6 +119,7 @@ import {
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
+import { trackServiceAction } from "./serviceAnalytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -173,12 +166,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     // messages
     case getType(loadMessages.success):
-    //
-    // wallets success / services load requests
-    case getType(loadServicesDetail):
-      return mp.track(action.type, {
-        count: action.payload.length
-      });
     // end pay webview Payment (payment + onboarding credit card) actions (with properties)
     case getType(addCreditCardWebViewEnd):
     case getType(paymentWebViewEnd):
@@ -269,8 +256,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadServiceDetail.failure):
-    case getType(loadServiceMetadata.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -285,7 +270,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
-    case getType(loadVisibleServices.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -345,13 +329,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.request):
     case getType(loadMessagesCancel):
-    // services
-    case getType(loadVisibleServices.request):
-    case getType(loadVisibleServices.success):
-    case getType(loadServiceDetail.request):
-    case getType(loadServiceDetail.success):
-    case getType(loadServiceMetadata.request):
-    case getType(loadServiceMetadata.success):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
@@ -430,6 +407,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackServiceAction(mixpanel)(action);
     void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
