@@ -2548,6 +2548,7 @@ bonus:
           one: 1 secondo
           other: "{{seconds}} secondi"
   sv:
+    headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
         title: "AcceptTosComponent"

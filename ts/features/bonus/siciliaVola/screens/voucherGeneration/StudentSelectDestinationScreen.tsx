@@ -3,11 +3,9 @@ import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { isSome } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -52,8 +50,11 @@ const StudentSelectDestinationScreen = (
   }
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <NavigationEvents onDidFocus={() => setAccessibilityFocus(elementRef)} />
+    <BaseScreenComponent
+      goBack={true}
+      contextualHelp={emptyContextualHelp}
+      headerTitle={I18n.t("bonus.sv.headerTitle")}
+    >
       <SafeAreaView
         style={IOStyles.flex}
         testID={"StudentSelectDestinationScreen"}
