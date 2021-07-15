@@ -15,11 +15,13 @@ import { isBpdEnabled } from "../onboarding/startOnboarding";
 import { BpdConfig } from "../../../../../../../definitions/content/BpdConfig";
 
 const enrollAfterAddTrue: BpdConfig = {
-  enroll_bpd_after_add_payment_method: true
+  enroll_bpd_after_add_payment_method: true,
+  program_active: true
 };
 
 const enrollAfterAddFalse: BpdConfig = {
-  enroll_bpd_after_add_payment_method: false
+  enroll_bpd_after_add_payment_method: false,
+  program_active: true
 };
 
 describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
