@@ -16,7 +16,6 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../../../store/actions/services/servicePreference";
-import { serviceIDCurrentSelector } from "../../../store/reducers/entities/services/currentService";
 import {
   isServicePreferenceResponseSuccess,
   ServicePreference
@@ -29,6 +28,7 @@ type Item = "email" | "push" | "inbox";
 
 type Props = {
   channels?: ReadonlyArray<NotificationChannelEnum>;
+  serviceId: ServiceId;
 } & ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -61,13 +61,11 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const { isLoading, isError } = props;
   const [isFirstRender, setIsFirstRender] = useState(true);
 
-  const loadPreferences = () => {
-    if (props.currentService !== null) {
-      props.loadServicePreference(props.currentService.serviceID);
-    }
-  };
+  const loadPreferences = () => props.loadServicePreference(props.serviceId);
 
-  useEffect(loadPreferences, []);
+  useEffect(() => {
+    loadPreferences();
+  }, [props.serviceId]);
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -82,10 +80,9 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const onValueChange = (value: boolean, type: Item) => {
     if (
       isStrictSome(props.servicePreferenceStatus) &&
-      isServicePreferenceResponseSuccess(props.servicePreferenceStatus.value) &&
-      props.currentService !== null
+      isServicePreferenceResponseSuccess(props.servicePreferenceStatus.value)
     ) {
-      props.upsertServicePreference(props.currentService.serviceID, {
+      props.upsertServicePreference(props.serviceId, {
         ...props.servicePreferenceStatus.value.value,
         [type]: value
       });
@@ -160,8 +157,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     isLoading,
     isError,
-    servicePreferenceStatus,
-    currentService: serviceIDCurrentSelector(state)
+    servicePreferenceStatus
   };
 };
 

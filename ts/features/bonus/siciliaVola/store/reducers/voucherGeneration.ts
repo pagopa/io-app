@@ -1,28 +1,46 @@
-import { getType } from "typesafe-actions";
-import { none, Option } from "fp-ts/lib/Option";
+import { combineReducers } from "redux";
 import { Action } from "../../../../../store/actions/types";
-import { svGenerateVoucherStart } from "../actions/voucherGeneration";
+import voucherGeneratedReducer, {
+  VoucherGeneratedState
+} from "./voucherGenerated";
+import voucherRequestReducer, { VoucherRequestState } from "./voucherRequest";
+import availableDestinationReducer, {
+  AvailableDestinationsState
+} from "./availableDestinations";
+import availableStatesReducer, {
+  AvailableStatesState
+} from "./availableStates";
+import availableRegionsReducer, {
+  AvailableRegionsState
+} from "./availableRegions";
+import availableProvincesReducer, {
+  AvailableProvincesState
+} from "./availableProvinces";
+import availableMunicipalitiesReducer, {
+  AvailableMunicipalitiesState
+} from "./availableMunicipalities";
 
 export type VoucherGenerationState = {
-  residenceInSicily: Option<boolean>;
-  category: Option<number>;
+  voucherRequest: VoucherRequestState;
+  voucherGenerated: VoucherGeneratedState;
+  availableDestinations: AvailableDestinationsState;
+  availableStates: AvailableStatesState;
+  availableRegions: AvailableRegionsState;
+  availableProvinces: AvailableProvincesState;
+  availableMunicipalities: AvailableMunicipalitiesState;
 };
 
-export const INITIAL_STATE: VoucherGenerationState = {
-  residenceInSicily: none,
-  category: none
-};
+const svVoucherGenerationReducer = combineReducers<
+  VoucherGenerationState,
+  Action
+>({
+  voucherRequest: voucherRequestReducer,
+  availableDestinations: availableDestinationReducer,
+  voucherGenerated: voucherGeneratedReducer,
+  availableStates: availableStatesReducer,
+  availableRegions: availableRegionsReducer,
+  availableProvinces: availableProvincesReducer,
+  availableMunicipalities: availableMunicipalitiesReducer
+});
 
-const reducer = (
-  state: VoucherGenerationState = INITIAL_STATE,
-  action: Action
-): VoucherGenerationState => {
-  switch (action.type) {
-    case getType(svGenerateVoucherStart):
-      return INITIAL_STATE;
-  }
-
-  return state;
-};
-
-export default reducer;
+export default svVoucherGenerationReducer;
