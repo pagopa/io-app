@@ -42,10 +42,13 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled && bpdRemoteConfig?.program_active ? (
-        <BpdPaymentMethodCapability
-          paymentMethod={paymentMethod}
-          key={`capability_item_${index}`}
-        />
+        <>
+          <BpdPaymentMethodCapability
+            paymentMethod={paymentMethod}
+            key={`capability_item_${index}`}
+          />
+          <ItemSeparatorComponent noPadded={true} />
+        </>
       ) : null;
   }
 };
@@ -58,7 +61,7 @@ const capabilityFactory = (
 const generateCapabilityItems = (
   paymentMethod: PaymentMethod,
   bpdRemoteConfig?: BpdConfig
-) =>
+): ReadonlyArray<React.ReactNode> =>
   paymentMethod.enableableFunctions.reduce((acc, val, i): ReadonlyArray<
     React.ReactNode
   > => {
@@ -95,7 +98,6 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       {capabilityItems}
-      {capabilityItems.length > 0 && <ItemSeparatorComponent noPadded={true} />}
       <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
   );
