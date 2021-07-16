@@ -88,29 +88,27 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
   }).present;
 
   return (
-    <>
-      <View style={styles.row} testID={"BpdPaymentMethodCapability"}>
-        <View style={styles.left}>
-          <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-            {I18n.t("bonus.bpd.title")}
-          </H4>
-          <H5 weight={"Regular"} color={"bluegrey"}>
-            {I18n.t("bonus.bpd.description")}
-          </H5>
-        </View>
-        <BpdToggle
-          graphicalValue={graphicalState}
-          onPress={() => showExplanation("NotActivable")}
-          onValueChanged={newVal =>
-            handleValueChanged(props, () =>
-              askConfirmation(newVal, () =>
-                props.updateValue(hash as HPan, newVal)
-              )
-            )
-          }
-        />
+    <View style={styles.row} testID={"BpdPaymentMethodCapability"}>
+      <View style={styles.left}>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+          {I18n.t("bonus.bpd.title")}
+        </H4>
+        <H5 weight={"Regular"} color={"bluegrey"}>
+          {I18n.t("bonus.bpd.description")}
+        </H5>
       </View>
-    </>
+      <BpdToggle
+        graphicalValue={graphicalState}
+        onPress={() => showExplanation("NotActivable")}
+        onValueChanged={newVal =>
+          handleValueChanged(props, () =>
+            askConfirmation(newVal, () =>
+              props.updateValue(hash as HPan, newVal)
+            )
+          )
+        }
+      />
+    </View>
   );
 };
 
