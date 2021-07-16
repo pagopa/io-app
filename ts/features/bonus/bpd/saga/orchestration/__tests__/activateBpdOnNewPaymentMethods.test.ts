@@ -2,6 +2,7 @@ import { left, right } from "fp-ts/lib/Either";
 import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { BpdConfig } from "../../../../../../../definitions/content/BpdConfig";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { appReducer } from "../../../../../../store/reducers";
@@ -12,7 +13,6 @@ import { navigateToSuggestBpdActivation } from "../../../../../wallet/onboarding
 import { navigateToActivateBpdOnNewPrivative } from "../../../../../wallet/onboarding/privative/navigation/action";
 import { activateBpdOnNewPaymentMethods } from "../activateBpdOnNewAddedPaymentMethods";
 import { isBpdEnabled } from "../onboarding/startOnboarding";
-import { BpdConfig } from "../../../../../../../definitions/content/BpdConfig";
 
 const enrollAfterAddTrue: BpdConfig = {
   enroll_bpd_after_add_payment_method: true,
@@ -88,7 +88,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .run();
   });
 
-  it("With at least one payment method with bpd capability and bpd enrolled, should navigate to navigateToActivateBpdOnNewPrivative", async () => {
+  it("With at least one payment method with bpd capability, bpd enrolled and program_active === true, should navigate to navigateToActivateBpdOnNewPrivative", async () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
@@ -102,6 +102,27 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
       .put(navigateToActivateBpdOnNewPrivative())
+      .not.put(navigateToSuggestBpdActivation())
+      .run();
+  });
+
+  it("With at least one payment method with bpd capability, bpd enrolled and program_active === false, should navigate to navigateToActivateBpdOnNewPrivative", async () => {
+    await expectSaga(
+      activateBpdOnNewPaymentMethods,
+      [mockPrivativeCard],
+      navigateToActivateBpdOnNewPrivative()
+    )
+      .provide([
+        [matchers.call(isBpdEnabled), right(true)],
+        [
+          matchers.select(bpdRemoteConfigSelector),
+          { ...enrollAfterAddFalse, program_active: false }
+        ]
+      ])
+      .not.put(navigateToWalletHome())
+      .call(isBpdEnabled)
+      .select(bpdRemoteConfigSelector)
+      .not.put(navigateToActivateBpdOnNewPrivative())
       .not.put(navigateToSuggestBpdActivation())
       .run();
   });
