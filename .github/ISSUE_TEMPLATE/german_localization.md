@@ -2,13 +2,13 @@
 name: IO übersetzen
 about: Aiutaci a tradurre l'app in tedesco
 title: ''
-labels: "German :de:"
+labels: "German 🇩🇪 "
 assignees: 'thisisjp'
 
 ---
 
 - *Sai usare bene GitHub?* [Leggi le istruzioni](https://github.com/pagopa/io-app#internationalization) e contribuisci direttamente con una PR
-- *Vuoi fornire un suggerimento* su una traduzione esistente o mancante? Rispondi alle domande seguenti \U0001F447
+- *Vuoi fornire un suggerimento* su una traduzione esistente o mancante? Rispondi alle domande seguenti 👇🏻 
 
 **Qual è il testo che desideri tradurre?**
 Inserisci esattamente come riportato in app
