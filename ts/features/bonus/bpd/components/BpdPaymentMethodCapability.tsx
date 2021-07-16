@@ -89,7 +89,7 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
 
   return (
     <>
-      <View style={styles.row}>
+      <View style={styles.row} testID={"BpdPaymentMethodCapability"}>
         <View style={styles.left}>
           <H4 weight={"SemiBold"} color={"bluegreyDark"}>
             {I18n.t("bonus.bpd.title")}

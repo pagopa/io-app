@@ -95,11 +95,7 @@ const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       {capabilityItems}
-      {capabilityItems.length > 0 && (
-        <>
-          <ItemSeparatorComponent noPadded={true} />
-        </>
-      )}
+      {capabilityItems.length > 0 && <ItemSeparatorComponent noPadded={true} />}
       <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     </>
   );
