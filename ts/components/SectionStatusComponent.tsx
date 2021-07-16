@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
-import {
-  NavigationScreenProp,
-  NavigationRoute,
-  NavigationParams
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { GlobalState } from "../store/reducers/types";
 import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
@@ -22,10 +18,7 @@ import { Label } from "./core/typography/Label";
 type OwnProps = {
   sectionKey: SectionStatusKey;
   onSectionRef?: (ref: React.RefObject<View>) => void;
-  navigationProps?: NavigationScreenProp<
-    NavigationRoute<NavigationParams>,
-    NavigationParams
-  >;
+  navigationProps?: NavigationScreenProp<NavigationState>;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -83,16 +76,19 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
 
-  React.useEffect(() => {
+  const handleOnSectionRef = () => {
     if (viewRef.current) {
       props.onSectionRef?.(viewRef);
     }
+  };
 
-    const unsubscribe = props.navigationProps?.addListener("didFocus", () => {
-      if (viewRef.current) {
-        props.onSectionRef?.(viewRef);
-      }
-    });
+  React.useEffect(() => {
+    handleOnSectionRef();
+
+    const unsubscribe = props.navigationProps?.addListener(
+      "didFocus",
+      handleOnSectionRef
+    );
 
     return () => unsubscribe?.remove();
   }, [viewRef]);
