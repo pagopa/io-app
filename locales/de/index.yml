@@ -1,0 +1,8 @@
+---
+global:
+  navigator:
+    messages: meldungen
+    documents: dokumente
+    wallet: zahlung
+    profile: profil
+    services: dienste
