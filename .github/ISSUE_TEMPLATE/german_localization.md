@@ -2,7 +2,7 @@
 name: IO übersetzen
 about: Aiutaci a tradurre l'app in tedesco
 title: ''
-labels: "internationalization", "German :de:"
+labels: "German :de:"
 assignees: 'thisisjp'
 
 ---
