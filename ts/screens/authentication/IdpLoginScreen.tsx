@@ -3,7 +3,7 @@ import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -39,6 +39,7 @@ import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
 import { mixpanelTrack } from "../../mixpanel";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -173,6 +174,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
+    if (event.url.includes("appregistry-posteid.mobile.poste.it")) {
+      void Linking.openURL(event.url);
+    }
+
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess
@@ -281,7 +286,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             textZoom={100}
-            source={{ uri: loginUri }}
+            source={{ uri: "http://192.168.1.77:3000/login" }}
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
