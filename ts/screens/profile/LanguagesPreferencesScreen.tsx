@@ -1,7 +1,7 @@
 import { List } from "native-base";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Locales, TranslationKeys } from "../../../locales/locales";
@@ -25,6 +25,8 @@ import { profileUpsert } from "../../store/actions/profile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { profileSelector } from "../../store/reducers/profile";
 import { showToast } from "../../utils/showToast";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import SectionStatusComponent from "../../components/SectionStatusComponent";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
@@ -120,38 +122,41 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
         headerTitle={I18n.t("profile.preferences.title")}
         goBack={true}
       >
-        <ScreenContent
-          title={I18n.t("profile.preferences.list.preferred_language.title")}
-          subtitle={I18n.t(
-            "profile.preferences.list.preferred_language.subtitle"
-          )}
-        >
-          <List withContentLateralPadding={true}>
-            {availableTranslations.map((lang, index) => {
-              const isSelectedLanguage = this.isAlreadyPreferred(lang);
-              const languageTitle = I18n.t(`locales.${lang}`, {
-                defaultValue: lang
-              });
-              return (
-                <ListItemComponent
-                  key={index}
-                  title={languageTitle}
-                  hideIcon={!isSelectedLanguage}
-                  iconSize={iconSize}
-                  iconName={isSelectedLanguage ? "io-tick-big" : undefined}
-                  onPress={() => this.onLanguageSelected(lang)}
-                  accessible={true}
-                  accessibilityRole={"radio"}
-                  accessibilityLabel={`${languageTitle}, ${
-                    isSelectedLanguage
-                      ? I18n.t("global.accessibility.active")
-                      : I18n.t("global.accessibility.inactive")
-                  }`}
-                />
-              );
-            })}
-          </List>
-        </ScreenContent>
+        <SafeAreaView style={IOStyles.flex}>
+          <ScreenContent
+            title={I18n.t("profile.preferences.list.preferred_language.title")}
+            subtitle={I18n.t(
+              "profile.preferences.list.preferred_language.subtitle"
+            )}
+          >
+            <List withContentLateralPadding={true}>
+              {availableTranslations.map((lang, index) => {
+                const isSelectedLanguage = this.isAlreadyPreferred(lang);
+                const languageTitle = I18n.t(`locales.${lang}`, {
+                  defaultValue: lang
+                });
+                return (
+                  <ListItemComponent
+                    key={index}
+                    title={languageTitle}
+                    hideIcon={!isSelectedLanguage}
+                    iconSize={iconSize}
+                    iconName={isSelectedLanguage ? "io-tick-big" : undefined}
+                    onPress={() => this.onLanguageSelected(lang)}
+                    accessible={true}
+                    accessibilityRole={"radio"}
+                    accessibilityLabel={`${languageTitle}, ${
+                      isSelectedLanguage
+                        ? I18n.t("global.accessibility.active")
+                        : I18n.t("global.accessibility.inactive")
+                    }`}
+                  />
+                );
+              })}
+            </List>
+          </ScreenContent>
+          <SectionStatusComponent sectionKey={"favourite_language"} />
+        </SafeAreaView>
       </TopScreenComponent>
     ));
     return <ContainerComponent isLoading={this.state.isLoading} />;

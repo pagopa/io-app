@@ -7,7 +7,6 @@ import { Content } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { SectionStatusKey } from "../../../../../types/backendStatus";
 import {
   isError,
   isLoading,
@@ -21,6 +20,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type MethodType = "bancomatPay" | "bancomat";
