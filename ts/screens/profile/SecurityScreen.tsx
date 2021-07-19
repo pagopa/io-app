@@ -73,12 +73,6 @@ const SecurityScreen: FC<Props> = ({
       );
   };
 
-  const onPressBiometricRecognitionItem = () => {
-    if (isScreenReaderEnabled) {
-      setBiometricPreference(!isFingerprintEnabled);
-    }
-  };
-
   return (
     <TopScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -98,23 +92,27 @@ const SecurityScreen: FC<Props> = ({
             testID="reset-unlock-code"
           />
           {/* Enable/disable biometric recognition */}
-          {isFingerprintAvailable && (
-            <ListItemComponent
-              title={I18n.t(
-                "profile.security.list.biometric_recognition.title"
-              )}
-              subTitle={I18n.t(
-                "profile.security.list.biometric_recognition.subtitle"
-              )}
-              onSwitchValueChanged={setBiometricPreference}
-              switchValue={isFingerprintEnabled}
-              isLongPressEnabled
-              accessibilityState={{ checked: isFingerprintEnabled }}
-              accessibilityRole="switch"
-              onPress={onPressBiometricRecognitionItem}
-              testID="biometric-recognition"
-            />
-          )}
+          <ListItemComponent
+            title={I18n.t("profile.security.list.biometric_recognition.title")}
+            subTitle={I18n.t(
+              "profile.security.list.biometric_recognition.subtitle"
+            )}
+            onSwitchValueChanged={
+              !isScreenReaderEnabled
+                ? () => setBiometricPreference(!isFingerprintEnabled)
+                : undefined
+            }
+            switchValue={isFingerprintEnabled}
+            isLongPressEnabled
+            accessibilityState={{ checked: isFingerprintEnabled }}
+            accessibilityRole="switch"
+            onPress={
+              isScreenReaderEnabled
+                ? () => setBiometricPreference(!isFingerprintEnabled)
+                : undefined
+            }
+            testID="biometric-recognition"
+          />
         </List>
       </ScreenContent>
     </TopScreenComponent>

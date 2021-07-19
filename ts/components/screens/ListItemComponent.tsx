@@ -114,7 +114,6 @@ export default class ListItemComponent extends React.Component<Props> {
         onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
-        accessible={this.props.accessible}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityState={this.props.accessibilityState}
         accessibilityRole={this.props.accessibilityRole}
@@ -150,6 +149,8 @@ export default class ListItemComponent extends React.Component<Props> {
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
                   disabled={this.props.switchDisabled}
+                  accessibilityElementsHidden
+                  importantForAccessibility="no-hide-descendants"
                 />
               ) : (
                 <IconFont
