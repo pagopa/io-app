@@ -189,7 +189,7 @@ export function* watchMessagesLoadOrCancelSaga(
   let lastTask: Option<Task> = none;
   while (true) {
     // FIXME: why not takeLatest?
-    // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
+    // Wait for MESSAGES_LOAD_REQUEST
     const action: ActionType<typeof loadMessagesAction["request"]> = yield take(
       getType(loadMessagesAction.request)
     );
