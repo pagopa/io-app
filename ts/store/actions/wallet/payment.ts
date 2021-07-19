@@ -221,10 +221,6 @@ export const paymentCompletedSuccess = createStandardAction(
   "PAYMENT_COMPLETED_SUCCESS"
 )<PaymentCompletedSuccessPayload>();
 
-export const paymentCompletedFailure = createStandardAction(
-  "PAYMENT_COMPLETED_FAILURE"
-)<OutcomeCodesKey | undefined>();
-
 //
 // delete an ongoing payment
 //
@@ -278,7 +274,6 @@ export type PaymentActions =
   | ActionType<typeof paymentFetchPspsForPaymentId>
   | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
-  | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof abortRunningPayment>

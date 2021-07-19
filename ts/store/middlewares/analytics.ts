@@ -72,7 +72,6 @@ import {
   abortRunningPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
@@ -95,8 +94,6 @@ import {
   addWalletCreditCardRequest,
   addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
@@ -328,8 +325,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(creditCardCheckout3dsRequest):
-    case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
     case getType(setFavouriteWalletRequest):
@@ -351,7 +346,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
     //  profile First time Login
