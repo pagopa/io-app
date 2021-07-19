@@ -3,7 +3,6 @@
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
-import { cgnEnabled } from "../../config";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
