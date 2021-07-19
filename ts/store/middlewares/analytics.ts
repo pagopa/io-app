@@ -14,8 +14,7 @@ import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted,
-  analyticsOnboardingStarted
+  analyticsAuthenticationStarted
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -111,7 +110,6 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
@@ -314,7 +312,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     case getType(identificationForceLogout):
     // onboarding
-    case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
     case getType(updatePin):
     // profile
