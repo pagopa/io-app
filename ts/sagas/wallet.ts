@@ -349,7 +349,8 @@ function* startOrResumeAddCreditCardSaga(
                     // otherwise navigate to a screen where is asked to join bpd
                     if (
                       bpdEnroll.value &&
-                      isRawCreditCard(maybeAddedWallet.paymentMethod)
+                      isRawCreditCard(maybeAddedWallet.paymentMethod) &&
+                      bpdRemoteConfig?.program_active
                     ) {
                       yield put(
                         navigateToActivateBpdOnNewCreditCard({
@@ -937,7 +938,10 @@ function* checkProfile(
     | ActionType<typeof profileUpsert.success>
     | ActionType<typeof profileLoadSuccess>
 ) {
-  const enabled = action.payload.is_email_validated === true;
+  const enabled =
+    action.type === getType(profileUpsert.success)
+      ? action.payload.newValue.is_email_validated === true
+      : action.payload.is_email_validated === true;
   yield put(setWalletSessionEnabled(enabled));
 }
 

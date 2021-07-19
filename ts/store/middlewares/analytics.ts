@@ -364,12 +364,15 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // other
     case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
-    // bonus vacanze
     case getType(loadAllBonusActivations.request):
-    case getType(loadAllBonusActivations.success):
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
+
+    case getType(loadAllBonusActivations.success):
+      return mp.track(action.type, {
+        count: action.payload.length
+      });
 
     case getType(deleteUserDataProcessing.request):
       return mp.track(action.type, { choice: action.payload });
