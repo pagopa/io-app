@@ -23,7 +23,6 @@ import {
   EntrypointRoute,
   PaymentStartPayload
 } from "../../reducers/wallet/payment";
-import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
