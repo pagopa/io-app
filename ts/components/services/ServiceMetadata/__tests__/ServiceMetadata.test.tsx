@@ -2,15 +2,15 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
-import { TranslationKeys } from "../../../../locales/locales";
-import { Service, ScopeEnum } from "../../../../definitions/content/Service";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { capitalize } from "../../../utils/strings";
-import * as utilsUrl from "../../../utils/url";
-import I18n from "../../../i18n";
-import ServiceMetadata from "../ServiceMetadata";
+import { TranslationKeys } from "../../../../../locales/locales";
+import { Service, ScopeEnum } from "../../../../../definitions/content/Service";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { capitalize } from "../../../../utils/strings";
+import * as utilsUrl from "../../../../utils/url";
+import I18n from "../../../../i18n";
+import ServiceMetadata from "../../ServiceMetadata";
 
-jest.mock("../../../utils/platform");
+jest.mock("../../../../utils/platform");
 
 const spyOpenWebUrl = jest.spyOn(utilsUrl, "openWebUrl");
 
@@ -32,7 +32,7 @@ describe("ServiceMetadata component", () => {
     spyOpenWebUrl.mockReset();
   });
   afterEach(() => {
-    jest.dontMock("../../../utils/url");
+    jest.dontMock("../../../../utils/url");
   });
 
   it("should render the section header", () => {
@@ -197,7 +197,7 @@ describe("ServiceMetadata component", () => {
   describe("when the platform is Android", () => {
     beforeAll(() => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      require("../../../utils/platform").test_setPlatform("android");
+      require("../../../../utils/platform").test_setPlatform("android");
     });
 
     describe(`and servicesMetadata.app_android is defined`, () => {
@@ -244,7 +244,7 @@ describe("ServiceMetadata component", () => {
   describe("when the platform is iOS", () => {
     beforeAll(() => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      require("../../../utils/platform").test_setPlatform("ios");
+      require("../../../../utils/platform").test_setPlatform("ios");
     });
 
     describe(`and servicesMetadata.app_ios is defined`, () => {
