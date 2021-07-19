@@ -24,7 +24,6 @@ import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
-  loadMessagesCancel,
   loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
@@ -191,12 +190,9 @@ export function* watchMessagesLoadOrCancelSaga(
   while (true) {
     // FIXME: why not takeLatest?
     // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
-    const action:
-      | ActionType<typeof loadMessagesAction["request"]>
-      | ActionType<typeof loadMessagesCancel> = yield take([
-      getType(loadMessagesAction.request),
-      getType(loadMessagesCancel)
-    ]);
+    const action: ActionType<typeof loadMessagesAction["request"]> = yield take(
+      getType(loadMessagesAction.request)
+    );
     if (lastTask.isSome()) {
       // If there is an already running task cancel it
       yield cancel(lastTask.value);

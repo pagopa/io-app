@@ -45,7 +45,6 @@ import {
 import {
   loadMessage,
   loadMessages,
-  loadMessagesCancel,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
@@ -328,7 +327,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessagesCancel):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
