@@ -72,6 +72,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * - if the bonus handler is set, the relative item performs the handler
  * - if the bonus handler is not set and the bonus is 'visible':
  *    - it displays the 'incoming label' within the bonus
+ *    TODO: with the current implementation this functionality doesn't work:
  *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
  *    - if the bonus is not active at the on press it does nothing
  */
@@ -107,6 +108,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (item.visibility === "experimental" && !handled) {
       return null;
     }
+    // TODO: this behavior with the current implementation never occurs!
     // when the bonus is visible but this app version cant handle it
     const isComingSoon = item.visibility === "visible" && !handled;
     /**
