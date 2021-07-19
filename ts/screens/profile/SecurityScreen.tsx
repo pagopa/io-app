@@ -92,27 +92,35 @@ const SecurityScreen: FC<Props> = ({
             testID="reset-unlock-code"
           />
           {/* Enable/disable biometric recognition */}
-          <ListItemComponent
-            title={I18n.t("profile.security.list.biometric_recognition.title")}
-            subTitle={I18n.t(
-              "profile.security.list.biometric_recognition.subtitle"
-            )}
-            onSwitchValueChanged={
-              !isScreenReaderEnabled
-                ? () => setBiometricPreference(!isFingerprintEnabled)
-                : undefined
-            }
-            switchValue={isFingerprintEnabled}
-            isLongPressEnabled
-            accessibilityState={{ checked: isFingerprintEnabled }}
-            accessibilityRole="switch"
-            onPress={
-              isScreenReaderEnabled
-                ? () => setBiometricPreference(!isFingerprintEnabled)
-                : undefined
-            }
-            testID="biometric-recognition"
-          />
+          {isFingerprintAvailable && (
+            <ListItemComponent
+              title={I18n.t(
+                "profile.security.list.biometric_recognition.title"
+              )}
+              subTitle={I18n.t(
+                "profile.security.list.biometric_recognition.subtitle"
+              )}
+              // if the screen reader is disabled, the user can enable/disable
+              // the biometric recognition only by pressing the switch
+              onSwitchValueChanged={
+                !isScreenReaderEnabled
+                  ? () => setBiometricPreference(!isFingerprintEnabled)
+                  : undefined
+              }
+              switchValue={isFingerprintEnabled}
+              isLongPressEnabled
+              accessibilityState={{ checked: isFingerprintEnabled }}
+              accessibilityRole="switch"
+              // if the screen reader is enabled, the user can enable/disable
+              // the biometric recognition only by pressing the whole ListItemComponent
+              onPress={
+                isScreenReaderEnabled
+                  ? () => setBiometricPreference(!isFingerprintEnabled)
+                  : undefined
+              }
+              testID="biometric-recognition"
+            />
+          )}
         </List>
       </ScreenContent>
     </TopScreenComponent>
