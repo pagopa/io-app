@@ -399,10 +399,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);
-
-    if (cgnEnabled) {
-      void trackCgnAction(mixpanel)(action);
-    }
+    void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
     void trackServiceAction(mixpanel)(action);
     void trackEuCovidCertificateActions(mixpanel)(action);
