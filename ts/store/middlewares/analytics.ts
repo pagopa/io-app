@@ -3,6 +3,7 @@
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import { cgnEnabled } from "../../config";
 import {
   loadAllBonusActivations,
   loadAvailableBonuses
@@ -404,7 +405,10 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);
-    void trackCgnAction(mixpanel)(action);
+
+    if (cgnEnabled) {
+      void trackCgnAction(mixpanel)(action);
+    }
     void trackContentAction(mixpanel)(action);
     void trackServiceAction(mixpanel)(action);
     void trackEuCovidCertificateActions(mixpanel)(action);
