@@ -278,6 +278,7 @@ export type PaymentActions =
   | ActionType<typeof paymentFetchPspsForPaymentId>
   | ActionType<typeof paymentExecuteStart>
   | ActionType<typeof paymentCompletedSuccess>
+  | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof abortRunningPayment>
