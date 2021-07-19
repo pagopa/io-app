@@ -14,8 +14,7 @@ import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted,
-  analyticsOnboardingStarted
+  analyticsAuthenticationStarted
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -45,7 +44,6 @@ import {
 import {
   loadMessage,
   loadMessages,
-  loadMessagesCancel,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
@@ -74,7 +72,6 @@ import {
   abortRunningPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
@@ -97,8 +94,6 @@ import {
   addWalletCreditCardRequest,
   addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
@@ -112,7 +107,6 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
@@ -315,7 +309,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     case getType(identificationForceLogout):
     // onboarding
-    case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
     case getType(updatePin):
     // profile
@@ -328,13 +321,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessagesCancel):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(creditCardCheckout3dsRequest):
-    case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
     case getType(setFavouriteWalletRequest):
@@ -356,7 +346,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
     //  profile First time Login
@@ -404,7 +393,8 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackAction(mixpanel)(action);
     void trackBpdAction(mixpanel)(action);
     void trackBancomatAction(mixpanel)(action);
-    void trackSatispayAction(mixpanel)(action);
+    // TODO: activate simultaneously with the activation of satispay
+    // void trackSatispayAction(mixpanel)(action);
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);

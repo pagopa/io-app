@@ -36,7 +36,6 @@ import {
   navigateToWalletConfirmCardDetails
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import {
@@ -458,7 +457,6 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
-  addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateBack: () => dispatch(navigateBack()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(
