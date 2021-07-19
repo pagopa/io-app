@@ -74,19 +74,6 @@ export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
 )<CreditCardFailure>();
 
-type CreditCardCheckout3dsRequestPayload = Readonly<{
-  urlCheckout3ds: string;
-  paymentManagerToken: PaymentManagerToken;
-}>;
-
-export const creditCardCheckout3dsRequest = createStandardAction(
-  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_REQUEST"
-)<CreditCardCheckout3dsRequestPayload>();
-
-export const creditCardCheckout3dsSuccess = createStandardAction(
-  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
-)<string>();
-
 // used to accumulate all the urls browsed into the pay webview
 export const creditCardPaymentNavigationUrls = createStandardAction(
   "CREDITCARD_PAYMENT_NAVIGATION_URLS"
@@ -184,8 +171,6 @@ export type WalletsActions =
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
   | ActionType<typeof addWalletNewCreditCardFailure>
-  | ActionType<typeof creditCardCheckout3dsRequest>
-  | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
   | ActionType<typeof creditCardPaymentNavigationUrls>
   | ActionType<typeof fetchWalletsRequestWithExpBackoff>
