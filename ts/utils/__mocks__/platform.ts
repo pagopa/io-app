@@ -1,5 +1,3 @@
-// const platform = jest.createMockFromModule("./platform");
-
 // eslint-disable-next-line functional/no-let
 let isIos = true;
 // eslint-disable-next-line functional/no-let
