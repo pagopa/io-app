@@ -354,7 +354,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   if (svEnabled) {
     // Start watching for sv actions
-    yield fork(watchBonusSvSaga);
+    yield fork(watchBonusSvSaga, sessionToken);
   }
 
   if (euCovidCertificateEnabled) {
