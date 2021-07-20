@@ -90,8 +90,15 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
   const disabledStyle = state !== "active" ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getRemoteLocale()];
+
+  // eslint-disable-next-line no-console
+  console.log(bonusTypeLocalizedContent);
   return (
-    <ListItem style={styles.listItem} onPress={props.onPress}>
+    <ListItem
+      style={styles.listItem}
+      onPress={props.onPress}
+      testID={`AvailableBonusItem-${bonusItem.id_type}`}
+    >
       <View style={styles.columnLeft}>
         <Grid>
           <Row>
