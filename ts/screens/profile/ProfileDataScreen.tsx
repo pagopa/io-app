@@ -15,7 +15,6 @@ import {
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
@@ -46,7 +45,7 @@ const ProfileDataScreen: React.FC<Props> = ({
   navigateToEmailReadScreen,
   navigateToEmailInsertScreen,
   hasProfileEmail,
-  optionSpidEmail,
+  spidEmail,
   nameSurname
 }): React.ReactElement => {
   const onPressEmail = () =>
@@ -76,12 +75,13 @@ const ProfileDataScreen: React.FC<Props> = ({
         subtitle={I18n.t("profile.data.subtitle")}
       >
         <List withContentLateralPadding>
-          {/* Name and surname */}
+          {/* Show name and surname */}
           {nameSurname && (
             <ListItemComponent
               title={I18n.t("profile.data.list.nameSurname")}
               subTitle={nameSurname}
               hideIcon
+              testID="name-surname"
             />
           )}
           {/* Insert or edit email */}
@@ -99,24 +99,25 @@ const ProfileDataScreen: React.FC<Props> = ({
             testID="insert-or-edit-email"
           />
           {/* Check if spid email exists */}
-          {optionSpidEmail.isSome() && (
-            <>
+          {spidEmail.isSome() && (
+            <View testID="spid-data">
               <View style={styles.headerSPID}>
                 <H3 color="bluegrey">
                   {I18n.t("profile.data.list.spid.headerTitle")}
                 </H3>
               </View>
+              {/* Show spid email info */}
               <ListItemComponent
                 title={I18n.t("profile.data.list.spid.email")}
-                subTitle={optionSpidEmail.value}
+                subTitle={spidEmail.value}
                 onPress={present}
                 iconName="io-info"
                 smallIconSize
                 iconOnTop
+                testID="spid-email"
               />
-            </>
+            </View>
           )}
-          <EdgeBorderComponent />
         </List>
       </ScreenContent>
     </TopScreenComponent>
@@ -132,7 +133,7 @@ const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
   hasProfileEmail: hasProfileEmailSelector(state),
-  optionSpidEmail: profileSpidEmailSelector(state),
+  spidEmail: profileSpidEmailSelector(state),
   nameSurname: profileNameSurnameSelector(state)
 });
 
