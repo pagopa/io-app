@@ -28,7 +28,6 @@ const options = {
   tosUrl: "https://www.fsf.org/",
   privacyUrl: "https://gnupg.org/"
 };
-// header.children.find(node => node
 
 describe("TosAndPrivacyBox component", () => {
   beforeEach(() => {
