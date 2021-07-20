@@ -2039,6 +2039,10 @@ faq:
     title: "La mia carta non ha alcun codice di sicurezza."
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
+  state:
+    finished:
+      caption: "concluso"
+      description: "Questo bonus è terminato e non è più possibile richiederlo"
   bonusVacanze:
     accessibility:
       card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}

@@ -1,6 +1,7 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
+  Alert,
   FlatList,
   Linking,
   ListRenderItemInfo,
@@ -11,6 +12,7 @@ import {
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
+import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
@@ -23,8 +25,10 @@ import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../../store/actions/types";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
+import { getRemoteLocale } from "../../../../utils/messages";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { AvailableBonusItem } from "../components/AvailableBonusItem";
@@ -84,7 +88,14 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     });
   };
 
-  private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
+  private completedAlert = (title: string) => {
+    Alert.alert(title, I18n.t("bonus.state.finished.description"));
+  };
+
+  private renderListItem = (
+    info: ListRenderItemInfo<BonusAvailable>,
+    bpdConfig: BpdConfig | undefined
+  ) => {
     const item = info.item;
 
     // only bonus vacanze tap is handled
@@ -96,7 +107,11 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+      const bpdHandler = bpdConfig?.program_active
+        ? this.props.startBpdOnboarding
+        : () => this.completedAlert(info.item[getRemoteLocale()].name);
+
+      handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }
 
     if (cgnEnabled) {
@@ -110,7 +125,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     }
     // TODO: this behavior with the current implementation never occurs!
     // when the bonus is visible but this app version cant handle it
-    const isComingSoon = item.visibility === "visible" && !handled;
+    const incoming = item.visibility === "visible" && !handled;
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
@@ -144,7 +159,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       <AvailableBonusItem
         bonusItem={item}
         onPress={onItemPress}
-        isComingSoon={isComingSoon}
+        state={incoming ? "incoming" : "active"}
       />
     );
   };
@@ -187,7 +202,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
               <FlatList
                 scrollEnabled={false}
                 data={availableBonusesList.filter(experimentalAndVisibleBonus)}
-                renderItem={this.renderListItem}
+                renderItem={b => this.renderListItem(b, this.props.bpdConfig)}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
                   <ItemSeparatorComponent noPadded={true} />
@@ -209,7 +224,8 @@ const mapStateToProps = (state: GlobalState) => ({
   availableBonusesList: supportedAvailableBonusSelector(state),
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
-  isError: isAvailableBonusNoneErrorSelector(state)
+  isError: isAvailableBonusNoneErrorSelector(state),
+  bpdConfig: bpdRemoteConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
