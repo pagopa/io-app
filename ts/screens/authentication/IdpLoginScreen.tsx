@@ -11,6 +11,7 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import URLParse from "url-parse";
 import brokenLinkImage from "../../../img/broken-link.png";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -174,8 +175,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    if (event.url.includes("appregistry-posteid.mobile.poste.it")) {
-      void Linking.openURL(event.url);
+    const url = event.url;
+    if (
+      this.props.loggedOutWithIdpAuth?.idp.id === "posteid" &&
+      url.startsWith("intent://")
+    ) {
+      const hook = "S.browser_fallback_url=";
+      const fallbackUrl = url.substring(
+        url.indexOf(hook) + hook.length,
+        url.lastIndexOf(";end")
+      );
+      void Linking.openURL(fallbackUrl);
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(
@@ -286,7 +296,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             textZoom={100}
-            source={{ uri: "http://192.168.1.77:3000/login" }}
+            originWhitelist={["http://*", "https://*", "intent://*"]}
+            source={{ uri: loginUri }}
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
