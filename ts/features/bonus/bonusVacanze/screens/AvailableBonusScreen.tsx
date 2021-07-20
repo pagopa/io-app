@@ -10,7 +10,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -31,7 +31,10 @@ import variables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
-import { AvailableBonusItem } from "../components/AvailableBonusItem";
+import {
+  AvailableBonusItem,
+  AvailableBonusItemState
+} from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
@@ -89,7 +92,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   };
 
   private completedAlert = (title: string) => {
-    Alert.alert(title, I18n.t("bonus.state.finished.description"));
+    Alert.alert(title, I18n.t("bonus.state.completed.description"));
   };
 
   private renderListItem = (
@@ -123,9 +126,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (item.visibility === "experimental" && !handled) {
       return null;
     }
-    // TODO: this behavior with the current implementation never occurs!
-    // when the bonus is visible but this app version cant handle it
-    const incoming = item.visibility === "visible" && !handled;
+
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
@@ -155,11 +156,27 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       );
     };
 
+    // TODO: this behavior with the current implementation never occurs!
+    // when the bonus is visible but this app version cant handle it
+    const maybeIncoming: Option<AvailableBonusItemState> =
+      item.visibility === "visible" && !handled ? some("incoming") : none;
+
+    // TODO: Atm only a custom case for the cashback, using the remote bpdConfiguration to choose if is finished
+    // see https://pagopa.atlassian.net/browse/IAI-22 for the complete bonus refactoring
+    const maybeFinished: Option<AvailableBonusItemState> =
+      info.item.id_type === ID_BPD_TYPE && !bpdConfig?.program_active
+        ? some("completed")
+        : none;
+
+    const state: AvailableBonusItemState = maybeIncoming
+      .alt(maybeFinished)
+      .getOrElse("active");
+
     return (
       <AvailableBonusItem
         bonusItem={item}
         onPress={onItemPress}
-        state={incoming ? "incoming" : "active"}
+        state={state}
       />
     );
   };
@@ -231,7 +248,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  // TODO Add the param to navigate to proper bonus by name (?)
+  // TODO: Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));

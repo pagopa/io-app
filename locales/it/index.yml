@@ -2040,7 +2040,7 @@ faq:
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   state:
-    finished:
+    completed:
       caption: "concluso"
       description: "Questo bonus è terminato e non è più possibile richiederlo"
   bonusVacanze:

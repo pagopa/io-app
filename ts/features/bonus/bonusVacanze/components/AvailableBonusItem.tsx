@@ -7,7 +7,7 @@ import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../../utils/messages";
 
-type AvailableBonusItemState = "incoming" | "finished" | "active";
+export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
 type Props = {
   bonusItem: BonusAvailable;
@@ -71,8 +71,8 @@ const renderBadge = (state: AvailableBonusItemState) => {
   switch (state) {
     case "incoming":
       return <BonusBadge caption={I18n.t("wallet.methods.comingSoon")} />;
-    case "finished":
-      return <BonusBadge caption={I18n.t("bonus.state.finished.caption")} />;
+    case "completed":
+      return <BonusBadge caption={I18n.t("bonus.state.completed.caption")} />;
     case "active":
       return null;
   }
