@@ -36,11 +36,14 @@ import {
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
+import {
+  getIdpLoginUri,
+  getPosteIntent,
+  onLoginUriChanged
+} from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
 import { mixpanelTrack } from "../../mixpanel";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -176,16 +179,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const url = event.url;
-    if (
-      this.props.loggedOutWithIdpAuth?.idp.id === "posteid" &&
-      url.startsWith("intent://")
-    ) {
-      const hook = "S.browser_fallback_url=";
-      const fallbackUrl = url.substring(
-        url.indexOf(hook) + hook.length,
-        url.lastIndexOf(";end")
-      );
-      void Linking.openURL(fallbackUrl);
+    const posteIntent = getPosteIntent(
+      this.props.loggedOutWithIdpAuth?.idp.id ?? "",
+      url
+    );
+    if (posteIntent.isSome()) {
+      void Linking.openURL(posteIntent.value);
+      return false;
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(
