@@ -91,8 +91,6 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getRemoteLocale()];
 
-  // eslint-disable-next-line no-console
-  console.log(bonusTypeLocalizedContent);
   return (
     <ListItem
       style={styles.listItem}
