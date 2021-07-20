@@ -84,6 +84,14 @@ module.exports = {
     "sonarjs/no-small-switch": "off",
     "sonarjs/no-duplicate-string": "off"
   },
+  overrides: [
+    {
+      files: ["**/*.test.*"],
+      rules: {
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    }
+  ],
   settings: {
     react: {
       version: "detect"
