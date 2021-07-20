@@ -39,3 +39,7 @@ export const BackendSiciliaVolaClient = (
     )
   };
 };
+
+export type BackendSiciliaVolaClient = ReturnType<
+  typeof BackendSiciliaVolaClient
+>;
