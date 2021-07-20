@@ -445,12 +445,6 @@ profile:
         title: Riconoscimento biometrico
         subtitle: Usa la tua impronta o il tuo volto
         needed_to_disable: Riconoscimento richiesto per disabilitare
-        popup:
-          title: Consenti l’accesso al sensore biometrico
-          description: Tocca ‘Impostazioni’ e consenti ad IO di utilizzare il sensore biometrico del tuo dispositivo.
-      forward:
-        contextualHelpTitle: Come gestire l'inoltro dei messaggi
-        contextualHelpContent: !include profile/profile_data_email_forward.md
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO. 
@@ -478,25 +472,10 @@ profile:
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
-<<<<<<< HEAD
-    spid_email:
-      contextualHelpTitle: Questa preferenza è impostata nel tuo profilo SPID
-      contextualHelpContent: !include profile/profile_preferences_spid_email.md
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> [#178212350] Added security screen
-=======
->>>>>>> [#178212417] Added profile data on one screen
     email:
       forward:
         contextualHelpTitle: Come gestire l'inoltro dei messaggi
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
-<<<<<<< HEAD
-=======
->>>>>>> [#178212350] Added profile data screen
-=======
->>>>>>> [#178212350] Added security screen
     calendar:
       contextualHelpTitle: Cos'è il tuo calendario preferito
       contextualHelpContent: !include profile/profile_preferences_calendar.md
@@ -1648,16 +1627,10 @@ notifications:
 biometric_recognition:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
->>>>>>> [#178212350] Added security screen
-=======
->>>>>>> [#178212350] Moved biometric recognition inside security screen
 send_email_messages:
   title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a

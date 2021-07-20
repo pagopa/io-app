@@ -445,12 +445,6 @@ profile:
         title: Biometric recognition
         subtitle: Use your fingerprint or your face
         needed_to_disable: Recognition required to disable
-        popup:
-          title: Allow access to the biometric sensor
-          description: Tap 'Settings' and allow IO to use the biometric sensor of your device.
-      forward:
-        contextualHelpTitle: How to handle message forwarding
-        contextualHelpContent: !include profile/profile_data_email_forward.md
   preferences:
     title: Preferences
     subtitle: These settings allow you to customize the IO app experience.
@@ -458,7 +452,6 @@ profile:
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       service_contact: Use of services
-      spid_email: SPID email
       wip: In progress
       language: Language
       digitalDomicile: Digital domicile
@@ -479,25 +472,10 @@ profile:
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
-<<<<<<< HEAD
-    spid_email:
-      contextualHelpTitle: This setting is set up on your SPID profile
-      contextualHelpContent: !include profile/profile_preferences_spid_email.md
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> [#178212350] Added security screen
-=======
->>>>>>> [#178212417] Added profile data on one screen
     email:
       forward:
         contextualHelpTitle: How to handle message forwarding
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
-<<<<<<< HEAD
-=======
->>>>>>> [#178212350] Added profile data screen
-=======
->>>>>>> [#178212350] Added security screen
     calendar:
       contextualHelpTitle: What is your favorite calendar
       contextualHelpContent: !include profile/profile_preferences_calendar.md
@@ -1621,16 +1599,10 @@ notifications:
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
->>>>>>> [#178212350] Added security screen
-=======
->>>>>>> [#178212350] Moved biometric recognition inside security screen
 send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to
