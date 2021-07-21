@@ -223,9 +223,7 @@ profile:
     title: Präferenzen
     contextualHelpTitle: Ihre Vorlieben
     list:
-      spid_email: SPID E-Mail
       wip: In Bearbeitung
-      mobile_phone: Handynummer
       language: Sprache
       digitalDomicile: Digitales Domizil
       preferred_calendar:
@@ -244,8 +242,6 @@ profile:
       title: Diese Einstellung wird in Ihrem SPID-Profil eingerichtet
     language:
       contextualHelpTitle: Wie Sie Ihre Spracheinstellung verwalten
-    spid_email:
-      contextualHelpTitle: Diese Einstellung wird in Ihrem SPID-Profil eingerichtet
     email:
       forward:
         contextualHelpTitle: Wie Sie die Nachrichtenweiterleitung handhaben
