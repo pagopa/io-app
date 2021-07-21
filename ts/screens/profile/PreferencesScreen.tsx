@@ -8,9 +8,11 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
   navigateToCalendarPreferenceScreen,
@@ -48,7 +50,8 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReduxProps &
+  LightModalContextInterface;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -214,4 +217,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToLanguagePreferenceScreen())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreferencesScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(PreferencesScreen));

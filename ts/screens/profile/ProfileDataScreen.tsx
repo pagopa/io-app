@@ -48,11 +48,6 @@ const ProfileDataScreen: React.FC<Props> = ({
   spidEmail,
   nameSurname
 }): React.ReactElement => {
-  const onPressEmail = () =>
-    hasProfileEmail
-      ? navigateToEmailReadScreen()
-      : navigateToEmailInsertScreen();
-
   const { present } = useIOBottomSheet(
     <>
       <View spacer />
@@ -63,6 +58,11 @@ const ProfileDataScreen: React.FC<Props> = ({
     I18n.t("profile.data.spid_email.contextualHelpTitle"),
     300
   );
+
+  const onPressEmail = () =>
+    hasProfileEmail
+      ? navigateToEmailReadScreen()
+      : navigateToEmailInsertScreen();
 
   return (
     <TopScreenComponent
