@@ -2,10 +2,11 @@ import color from "color";
 import * as React from "react";
 import { Input as InputNativeBase } from "native-base";
 import { StyleSheet, TextInputProps } from "react-native";
-import { TextInputMask, TextInputMaskProps } from "react-native-masked-text";
+import { TextInputMaskProps } from "react-native-masked-text";
 import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 import { makeFontStyleObject } from "../core/fonts";
+import TextInputMask from "../ui/MaskedInput";
 
 const styles = StyleSheet.create({
   textInputMask: {
