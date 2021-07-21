@@ -2064,7 +2064,7 @@ bonus:
   state:
     completed:
       caption: "concluso"
-      description: "Questo bonus è terminato e non è più possibile richiederlo"
+      description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
     accessibility:
       card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
