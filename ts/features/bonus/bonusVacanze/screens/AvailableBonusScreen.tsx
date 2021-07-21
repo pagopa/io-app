@@ -1,6 +1,7 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
+  Alert,
   FlatList,
   Linking,
   ListRenderItemInfo,
@@ -9,8 +10,9 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
+import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
@@ -23,11 +25,16 @@ import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../../store/actions/types";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
+import { getRemoteLocale } from "../../../../utils/messages";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
-import { AvailableBonusItem } from "../components/AvailableBonusItem";
+import {
+  AvailableBonusItem,
+  AvailableBonusItemState
+} from "../components/AvailableBonusItem";
 import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
@@ -72,6 +79,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * - if the bonus handler is set, the relative item performs the handler
  * - if the bonus handler is not set and the bonus is 'visible':
  *    - it displays the 'incoming label' within the bonus
+ *    TODO: with the current implementation this functionality doesn't work:
  *    - if the bonus is active (is_active = true) at on press it shows an alert that invites the user to update
  *    - if the bonus is not active at the on press it does nothing
  */
@@ -83,7 +91,14 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     });
   };
 
-  private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
+  private completedAlert = (title: string) => {
+    Alert.alert(title, I18n.t("bonus.state.completed.description"));
+  };
+
+  private renderListItem = (
+    info: ListRenderItemInfo<BonusAvailable>,
+    bpdConfig: BpdConfig | undefined
+  ) => {
     const item = info.item;
 
     // only bonus vacanze tap is handled
@@ -95,7 +110,11 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     ]);
 
     if (bpdEnabled) {
-      handlersMap.set(ID_BPD_TYPE, _ => this.props.startBpdOnboarding());
+      const bpdHandler = bpdConfig?.program_active
+        ? this.props.startBpdOnboarding
+        : () => this.completedAlert(info.item[getRemoteLocale()].name);
+
+      handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
     }
 
     if (cgnEnabled) {
@@ -107,8 +126,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     if (item.visibility === "experimental" && !handled) {
       return null;
     }
-    // when the bonus is visible but this app version cant handle it
-    const isComingSoon = item.visibility === "visible" && !handled;
+
     /**
      * The available bonuses metadata are stored on the github repository and handled by the flag hidden to show up through this list,
      * if a new bonus is visible (hidden=false) and active from the github repository means that there's a new official version of the app which handles the newly added bonus.
@@ -138,11 +156,27 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
       );
     };
 
+    // TODO: this behavior with the current implementation never occurs!
+    // when the bonus is visible but this app version cant handle it
+    const maybeIncoming: Option<AvailableBonusItemState> =
+      item.visibility === "visible" && !handled ? some("incoming") : none;
+
+    // TODO: Atm only a custom case for the cashback, using the remote bpdConfiguration to choose if is finished
+    // see https://pagopa.atlassian.net/browse/IAI-22 for the complete bonus refactoring
+    const maybeFinished: Option<AvailableBonusItemState> =
+      info.item.id_type === ID_BPD_TYPE && !bpdConfig?.program_active
+        ? some("completed")
+        : none;
+
+    const state: AvailableBonusItemState = maybeIncoming
+      .alt(maybeFinished)
+      .getOrElse("active");
+
     return (
       <AvailableBonusItem
         bonusItem={item}
         onPress={onItemPress}
-        isComingSoon={isComingSoon}
+        state={state}
       />
     );
   };
@@ -185,7 +219,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
               <FlatList
                 scrollEnabled={false}
                 data={availableBonusesList.filter(experimentalAndVisibleBonus)}
-                renderItem={this.renderListItem}
+                renderItem={b => this.renderListItem(b, this.props.bpdConfig)}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
                   <ItemSeparatorComponent noPadded={true} />
@@ -207,13 +241,14 @@ const mapStateToProps = (state: GlobalState) => ({
   availableBonusesList: supportedAvailableBonusSelector(state),
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
-  isError: isAvailableBonusNoneErrorSelector(state)
+  isError: isAvailableBonusNoneErrorSelector(state),
+  bpdConfig: bpdRemoteConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  // TODO Add the param to navigate to proper bonus by name (?)
+  // TODO: Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     dispatch(navigateToBonusRequestInformation({ bonusItem }));
     dispatch(navigationHistoryPop(1));

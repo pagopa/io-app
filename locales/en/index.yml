@@ -2033,6 +2033,10 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  state:
+    completed:
+      caption: "concluded"
+      description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
       card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
