@@ -423,13 +423,20 @@ profile:
     showroom: UI Showroom
   data:
     title: I tuoi dati
-    subtitle: Rivedi le tue informazioni.
+    subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
     list:
       email: Indirizzo email
       need_validate: Da validare
+      nameSurname: Nome e cognome
+      spid:
+        headerTitle: Dati SPID
+        email: Email SPID
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_data_email_address.md
+    spid_email:
+      contextualHelpTitle: Questo dato è impostato nel tuo profilo SPID
+      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
@@ -438,17 +445,12 @@ profile:
         title: Riconoscimento biometrico
         subtitle: Usa la tua impronta o il tuo volto
         needed_to_disable: Riconoscimento richiesto per disabilitare
-        popup:
-          title: Consenti l’accesso al sensore biometrico
-          description: Tocca ‘Impostazioni’ e consenti ad IO di utilizzare il sensore biometrico del tuo dispositivo.
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO. 
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
-      spid_email: Email SPID
-      mobile_phone: Numero di telefono SPID
       wip: In elaborazione
       language: Lingua
       digitalDomicile: Domicilio digitale
@@ -470,9 +472,6 @@ profile:
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
-    spid_email:
-      contextualHelpTitle: Questa preferenza è impostata nel tuo profilo SPID
-      contextualHelpContent: !include profile/profile_preferences_spid_email.md
     email:
       forward:
         contextualHelpTitle: Come gestire l'inoltro dei messaggi
@@ -568,6 +567,7 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      apduNotSupported: "Il sistema operativo non supporta la lettura della tua carta di identità elettronica. Per maggiori informazioni, contatta il produttore del tuo dispositivo."
       retry: Riprova
       noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -1628,6 +1628,10 @@ notifications:
 biometric_recognition:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
+  switchLabel: Attiva il riconoscimento biometrico
+  enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+  enroll_btnLabel: Vai alle impostazioni
+  needed_to_disable: Riconoscimento richiesto per disabilitare
 send_email_messages:
   title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
@@ -2061,6 +2065,10 @@ faq:
     title: "La mia carta non ha alcun codice di sicurezza."
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
+  state:
+    completed:
+      caption: "concluso"
+      description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
     accessibility:
       card: Il tuo Bonus Vacanze con codice {{code}}, del valore di {{value}} euro è {{status}}
