@@ -1937,10 +1937,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/react-native-cie@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.0.5.tgz#bf9eb9c502849f8227616b20cda109ef15d0688e"
-  integrity sha512-49xRqeiRQk4Us3idKOiAS3GVrK+hD4E3Kqsskg4YZEPBMThkiaulOTneIYVECBzxFrwIVoaxQ/nwYF83n0cJ5A==
+"@pagopa/react-native-cie@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.0.7.tgz#ee2a3f28e56238d02767116920feede4cd9a3014"
+  integrity sha512-ysrIyDe0rxcRiQg0sdvHEVz+IYfZKeLfq94u7v/ecZsFFS2CQOIfveSrPLH0Sc0islEUKXrnt0BtJ6VxWq8bvQ==
 
 "@pagopa/ts-commons@^9.4.0":
   version "9.4.0"
