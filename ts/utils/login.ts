@@ -1,6 +1,6 @@
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { fromPredicate, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
 /**
@@ -20,30 +20,24 @@ type LoginFailure = {
 type LoginResult = LoginSuccess | LoginFailure;
 
 export const isPosteIDP = (idp: string): boolean => idp === "posteid";
-export const isIntentScheme = (url: string): boolean =>
-  new URLParse(url, true).protocol === "intent:";
-export const extractFallback = (intent: string): Option<string> => {
-  const hook = "S.browser_fallback_url=";
-  const hookIndex = intent.indexOf(hook);
-  if (hookIndex !== -1) {
-    const endIndex = intent.lastIndexOf(";end");
-    if (endIndex !== -1) {
-      return some(intent.substring(hookIndex + hook.length, endIndex));
-    }
-  }
-  return none;
-};
 
-export const getPosteIntent = (idp: string, url: string): Option<string> => {
-  console.log(url);
-  console.log("isPosteIDP", isPosteIDP(idp));
-  console.log("isIntentScheme", new URLParse(url, true).protocol);
-  if (!isPosteIDP(idp)) {
+/**
+ * return some(intentFallbackUrl) if the given {@param intentUrl} is a valid intent and it has the fallback url
+ * https://developer.chrome.com/docs/multidevice/android/intents/
+ * @param intentUrl
+ */
+export const getIntentFallbackUrl = (intentUrl: string): Option<string> => {
+  const intentParse = new URLParse(intentUrl, true).protocol;
+  if (intentParse !== "intent:") {
     return none;
   }
-  return fromPredicate<string>(value => isIntentScheme(value))(url).chain(
-    extractFallback
-  );
+  const hook = "S.browser_fallback_url=";
+  const hookIndex = intentUrl.indexOf(hook);
+  const endIndex = intentUrl.indexOf(";end", hookIndex + hook.length);
+  if (hookIndex !== -1 && endIndex !== -1) {
+    return some(intentUrl.substring(hookIndex + hook.length, endIndex));
+  }
+  return none;
 };
 
 // Prefixes for LOGIN SUCCESS/ERROR

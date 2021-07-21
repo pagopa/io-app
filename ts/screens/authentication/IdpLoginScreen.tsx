@@ -11,7 +11,6 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import URLParse from "url-parse";
 import brokenLinkImage from "../../../img/broken-link.png";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -38,7 +37,8 @@ import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import {
   getIdpLoginUri,
-  getPosteIntent,
+  getIntentFallbackUrl,
+  isPosteIDP,
   onLoginUriChanged
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
@@ -179,13 +179,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const url = event.url;
-    const posteIntent = getPosteIntent(
-      this.props.loggedOutWithIdpAuth?.idp.id ?? "",
-      url
-    );
-    if (posteIntent.isSome()) {
-      void Linking.openURL(posteIntent.value);
-      return false;
+    // if an intent is coming from Post SPID login form, extract the fallbackUrl and use it in Linking.openURL
+    if (isPosteIDP(this.props.loggedOutWithIdpAuth?.idp.id ?? "")) {
+      const posteIntent = getIntentFallbackUrl(url);
+      if (posteIntent.isSome()) {
+        void Linking.openURL(posteIntent.value);
+        return false;
+      }
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(
@@ -296,7 +296,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             textZoom={100}
-            originWhitelist={["http://*", "https://*", "intent://*"]}
+            originWhitelist={["https://*", "intent://*"]}
             source={{ uri: loginUri }}
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
