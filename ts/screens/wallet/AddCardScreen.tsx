@@ -149,7 +149,7 @@ const primaryButtonPropsFromState = (
   return card.fold<BlockButtonProps>(
     (e: string | undefined) => ({
       ...baseButtonProps,
-      disabled: true,
+      disabled: !isCardNumberValid || !isCvvValid,
       accessibilityRole: "button",
       accessibilityLabel: e
     }),
