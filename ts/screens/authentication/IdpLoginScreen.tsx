@@ -179,7 +179,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const url = event.url;
-    // if an intent is coming from Post SPID login form, extract the fallbackUrl and use it in Linking.openURL
+    // if an intent is coming from Poste SPID login form, extract the fallbackUrl and use it in Linking.openURL
     if (isPosteIDP(this.props.loggedOutWithIdpAuth?.idp.id ?? "")) {
       const posteIntent = getIntentFallbackUrl(url);
       if (posteIntent.isSome()) {
