@@ -2036,7 +2036,7 @@ bonus:
   state:
     completed:
       caption: "concluded"
-      description: "This bonus has expired and can no longer be claimed"
+      description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
       card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
