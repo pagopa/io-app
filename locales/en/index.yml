@@ -559,6 +559,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
