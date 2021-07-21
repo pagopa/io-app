@@ -423,13 +423,20 @@ profile:
     showroom: UI Showroom
   data:
     title: Your data
-    subtitle: Review your information.
+    subtitle: Here you will find your personal and contact data used by the IO app.
     list:
       email: Email address
       need_validate: To be validated
+      nameSurname: Name and surname
+      spid:
+        headerTitle: SPID data
+        email: SPID email
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_data_email_address.md
+    spid_email:
+      contextualHelpTitle: This data is set in your SPID profile
+      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
@@ -438,9 +445,6 @@ profile:
         title: Biometric recognition
         subtitle: Use your fingerprint or your face
         needed_to_disable: Recognition required to disable
-        popup:
-          title: Allow access to the biometric sensor
-          description: Tap 'Settings' and allow IO to use the biometric sensor of your device.
   preferences:
     title: Preferences
     subtitle: These settings allow you to customize the IO app experience.
@@ -448,9 +452,7 @@ profile:
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       service_contact: Use of services
-      spid_email: SPID email
       wip: In progress
-      mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
       preferred_calendar:
@@ -470,9 +472,6 @@ profile:
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
-    spid_email:
-      contextualHelpTitle: This setting is set up on your SPID profile
-      contextualHelpContent: !include profile/profile_preferences_spid_email.md
     email:
       forward:
         contextualHelpTitle: How to handle message forwarding
@@ -560,6 +559,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -1600,6 +1600,10 @@ notifications:
 biometric_recognition:
   contextualHelpTitle: How works biometric recognition
   contextualHelpContent: !include profile/profile_security_biometric_recognition.md
+  switchLabel: Enable biometric recognition
+  enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+  enroll_btnLabel: Go to settings
+  needed_to_disable: Recognition required to disable
 send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to
@@ -2033,6 +2037,10 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  state:
+    completed:
+      caption: "concluded"
+      description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
       card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
