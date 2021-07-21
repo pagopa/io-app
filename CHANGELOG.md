@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0-rc.2](https://github.com/pagopa/io-app/compare/1.31.0-rc.1...1.31.0-rc.2) (2021-07-21)
+
+
+### Features
+
+* [[#178212417](https://www.pivotaltracker.com/story/show/178212417)] Feature profile data on one screen ([#3090](https://github.com/pagopa/io-app/issues/3090)) ([f408db7](https://github.com/pagopa/io-app/commit/f408db774d3447393bbd027cdbeeb1c84e119551))
+* **Bonus Pagamenti Digitali:** [[IAC-102](https://pagopa.atlassian.net/browse/IAC-102)] Add support for expired cashback as listitem in available bonuses list ([#3241](https://github.com/pagopa/io-app/issues/3241)) ([3353280](https://github.com/pagopa/io-app/commit/335328047a36f3feff561369983cb75518704935))
+* **Redesign Servizi:** [[IARS-12](https://pagopa.atlassian.net/browse/IARS-12),[IARS-15](https://pagopa.atlassian.net/browse/IARS-15)] Metadata section in profile ([#3225](https://github.com/pagopa/io-app/issues/3225)) ([5822c4d](https://github.com/pagopa/io-app/commit/5822c4d6548ea701afc6b1e495f73bdd72bf5e8d))
+* [[#178212350](https://www.pivotaltracker.com/story/show/178212350)] New profile structure ([#3082](https://github.com/pagopa/io-app/issues/3082)) ([f8da207](https://github.com/pagopa/io-app/commit/f8da2071c7288610d41d53269156899b837580ab))
+* **Bonus Pagamenti Digitali:** [[IAC-101](https://pagopa.atlassian.net/browse/IAC-101)] Display cashback capability for a payment method only if the cashback program is active ([#3238](https://github.com/pagopa/io-app/issues/3238)) ([c570826](https://github.com/pagopa/io-app/commit/c570826a1cef2b7ba0cef6a4ae9ed25865befbfc))
+* [[IA-152](https://pagopa.atlassian.net/browse/IA-152)] Create german_localization ([#3235](https://github.com/pagopa/io-app/issues/3235)) ([755a730](https://github.com/pagopa/io-app/commit/755a730e87bf33b576097a2394e810f7b9d000fb))
+
+
+### Chores
+
+* [[IA-153](https://pagopa.atlassian.net/browse/IA-153)] Events cleanup ([#3239](https://github.com/pagopa/io-app/issues/3239)) ([00ae28f](https://github.com/pagopa/io-app/commit/00ae28feef3ceef1e8273fee451440f2414c5bff))
+* [[IA-155](https://pagopa.atlassian.net/browse/IA-155)] Update index.yml [#3243](https://github.com/pagopa/io-app/issues/3243) ([9787439](https://github.com/pagopa/io-app/commit/9787439551bdc2bb7ba8252d5f35a6ceada35aa3))
+* [[IA-56](https://pagopa.atlassian.net/browse/IA-56)] Upgrade react-native-cie ([#3245](https://github.com/pagopa/io-app/issues/3245)) ([9e39ed6](https://github.com/pagopa/io-app/commit/9e39ed6338fba82212067f35613d98e038eb8189))
+
 ## [1.31.0-rc.1](https://github.com/pagopa/io-app/compare/1.31.0-rc.0...1.31.0-rc.1) (2021-07-16)
 
 
