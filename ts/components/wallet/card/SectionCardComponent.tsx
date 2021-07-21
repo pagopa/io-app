@@ -211,9 +211,9 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View
               style={[styles.cardInner]}
               accessibilityLabel={I18n.t(
-                "wallet.accessibility.sectionCardLabel",
-                { label }
+                "wallet.accessibility.sectionCardLabel"
               )}
+              accessibilityHint={I18n.t("wallet.accessibility.sectionCardHint")}
               accessibilityRole="button"
             >
               <View style={[styles.flexRow, styles.topSpacing]}>
