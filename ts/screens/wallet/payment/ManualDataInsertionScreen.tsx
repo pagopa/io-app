@@ -41,7 +41,6 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import image from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import { validateOptionalEither } from "../../../utils/validateOptionalEither";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
