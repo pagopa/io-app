@@ -8,7 +8,7 @@
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  */
 
-import { Content, Form, H1, Text } from "native-base";
+import { Content, Form, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
@@ -144,7 +144,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <TouchableDefaultOpacity onPress={this.showModal}>
               <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
             </TouchableDefaultOpacity>
-
+            <View spacer />
             <Form>
               <LabelledItem
                 type="text"
@@ -163,6 +163,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   }
                 }}
               />
+              <View spacer />
               <LabelledItem
                 type="text"
                 isValid={validateOptionalEither(

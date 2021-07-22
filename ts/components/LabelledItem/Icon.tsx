@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     alignSelf: "auto",
     height: "auto"
+  },
+  iconFont: {
+    paddingRight: 0
   }
 });
 
@@ -51,7 +54,7 @@ export const Icon: React.FC<Props> = ({
         size={variables.iconSize3}
         color={iconColor ?? variables.brandDarkGray}
         name={icon}
-        style={iconStyle}
+        style={[iconStyle, styles.iconFont]}
         accessibilityLabel={accessibilityLabelIcon}
         testID="IconFont"
       />
