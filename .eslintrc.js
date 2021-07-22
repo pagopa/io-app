@@ -82,7 +82,8 @@ module.exports = {
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
-    "sonarjs/no-duplicate-string": "off"
+    "sonarjs/no-duplicate-string": "off",
+    "sonarjs/no-nested-template-literals": "warn"
   },
   overrides: [
     {
