@@ -52,7 +52,7 @@ describe("Test LabelledItem", () => {
     expect(component).not.toBeNull();
     expect(component.queryByTestId("NavigationEvents")).not.toBeNull();
   });
-  it("should render Icon if iconPosition is left and icon is defined", () => {
+  it("should render ButtonDefaultOpacity if iconPosition is left and icon is defined", () => {
     const component = renderComponent({
       ...textInputProps,
       iconPosition,
@@ -60,9 +60,9 @@ describe("Test LabelledItem", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("Icon")).not.toBeNull();
+    expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
   });
-  it("should render Icon if iconPosition is right and icon is defined", () => {
+  it("should render ButtonDefaultOpacity if iconPosition is right and icon is defined", () => {
     const component = renderComponent({
       ...textInputProps,
       iconPosition: "right",
@@ -70,7 +70,7 @@ describe("Test LabelledItem", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("Icon")).not.toBeNull();
+    expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
   });
   it("should render description if is defined", () => {
     const component = renderComponent({
@@ -108,7 +108,7 @@ describe("Test LabelledItem", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("Icon")).not.toBeNull();
+    expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
     expect(isString(icon)).toBeTruthy();
     expect(component.queryByTestId("IconFont")).not.toBeNull();
   });
@@ -121,11 +121,11 @@ describe("Test LabelledItem", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("Icon")).not.toBeNull();
+    expect(component.queryByTestId("ButtonDefaultOpacity")).not.toBeNull();
     expect(isString(iconImage)).toBeFalsy();
     expect(component.queryByTestId("Image")).not.toBeNull();
   });
-  it("should call onPress if is defined and icon is pressed", () => {
+  it("should call onPress if is defined and ButtonDefaultOpacity is pressed", () => {
     const component = renderComponent({
       ...textInputProps,
       iconPosition,
@@ -134,11 +134,9 @@ describe("Test LabelledItem", () => {
     });
 
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("Icon")).not.toBeNull();
-    expect(isString(icon)).toBeTruthy();
-    const iconFontComponent = component.getByTestId("IconFont");
-    expect(iconFontComponent).not.toBeNull();
-    fireEvent.press(iconFontComponent);
+    const buttonDefaultOpacity = component.getByTestId("ButtonDefaultOpacity");
+    expect(buttonDefaultOpacity).not.toBeNull();
+    fireEvent.press(buttonDefaultOpacity);
     expect(onPress).toHaveBeenCalled();
   });
   it("should have red description color if isValid is false", () => {

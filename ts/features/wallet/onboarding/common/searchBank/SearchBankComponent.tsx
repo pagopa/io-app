@@ -82,6 +82,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
             : undefined
         }}
         icon={isLoading ? undefined : "io-search"}
+        iconPosition="right"
       />
       <View spacer={true} />
       {isLoading ? (

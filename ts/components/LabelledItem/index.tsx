@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -65,7 +68,7 @@ export const LabelledItem: React.FC<Props> = ({
   const isNotValid = props.isValid === undefined ? false : !props.isValid;
 
   return (
-    <View>
+    <View style={styles.flex}>
       {props.label && (
         <View
           testID="label"
