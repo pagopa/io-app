@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   }
 });
 
-// if is dev env add "http" to allow the dev-server usage
+// if the app is running in dev env, add "http" to allow the dev-server usage
 const originSchemasWhiteList = [
   "https://*",
   "intent://*",
