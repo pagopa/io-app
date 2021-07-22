@@ -26,12 +26,12 @@ const loadingCaption = () => I18n.t("global.remoteStates.loading");
  * this is a dummy screen reachable only from a message CTA
  */
 const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
+  const navigation = useNavigationContext();
   if (!props.bpdRemoteConfig?.program_active) {
     Alert.alert(
       I18n.t("bonus.bpd.title"),
       I18n.t("bonus.state.completed.description")
     );
-    const navigation = useNavigationContext();
     navigation.goBack();
     return null;
   }

@@ -42,12 +42,12 @@ const loadLocales = () => ({
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
 const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
+  const navigation = useNavigationContext();
   if (!props.bpdRemoteConfig?.program_active) {
     Alert.alert(
       I18n.t("bonus.bpd.title"),
       I18n.t("bonus.bpd.iban.bpdCompletedMessage")
     );
-    const navigation = useNavigationContext();
     navigation.goBack();
     return null;
   }
