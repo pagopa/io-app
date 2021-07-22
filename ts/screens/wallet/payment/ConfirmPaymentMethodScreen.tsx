@@ -14,7 +14,6 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
