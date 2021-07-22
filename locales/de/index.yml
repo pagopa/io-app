@@ -65,6 +65,7 @@ global:
     search: Suche
     skip: "Überspringen"
     add: Hinzufügen
+    details: Details
   navigator:
     messages: Mitteilungen
     wallet: Konto
