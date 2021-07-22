@@ -131,7 +131,9 @@ const openSupportedCardsPage = (): void => {
 
 const primaryButtonPropsFromState = (
   state: CreditCardState,
-  onNavigate: (card: CreditCard) => NavigationNavigateAction
+  onNavigate: (card: CreditCard) => NavigationNavigateAction,
+  isHolderValid: boolean,
+  isExpirationDateValid?: boolean
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
   const baseButtonProps = {
     block: true,
@@ -149,13 +151,17 @@ const primaryButtonPropsFromState = (
   return card.fold<BlockButtonProps>(
     (e: string | undefined) => ({
       ...baseButtonProps,
-      disabled: !isCardNumberValid || !isCvvValid,
+      disabled: true,
       accessibilityRole: "button",
       accessibilityLabel: e
     }),
     c => ({
       ...baseButtonProps,
-      disabled: !isCardNumberValid || !isCvvValid,
+      disabled:
+        !isCardNumberValid ||
+        !isCvvValid ||
+        !isHolderValid ||
+        !isExpirationDateValid,
       onPress: () => {
         Keyboard.dismiss();
         onNavigate(c);
@@ -446,7 +452,9 @@ const AddCardScreen: React.FC<Props> = props => {
         leftButton={secondaryButtonProps}
         rightButton={primaryButtonPropsFromState(
           creditCard,
-          props.navigateToConfirmCardDetailsScreen
+          props.navigateToConfirmCardDetailsScreen,
+          isValidCardHolder(creditCard.holder),
+          maybeCreditcardValidOrExpired(creditCard).toUndefined()
         )}
       />
     </BaseScreenComponent>
