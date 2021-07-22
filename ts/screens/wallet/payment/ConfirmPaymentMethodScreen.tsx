@@ -252,17 +252,13 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H4>{` ${maybePsp.value.businessName}`}</H4>
             </H4>
           )}
-          <TouchableDefaultOpacity accessible>
-            <Link onPress={props.pickPsp} weight={"Bold"}>
-              {I18n.t("payment.changePsp")}
-            </Link>
-          </TouchableDefaultOpacity>
+          <Link onPress={props.pickPsp} weight={"Bold"}>
+            {I18n.t("payment.changePsp")}
+          </Link>
           <View spacer={true} large={true} />
-          <TouchableDefaultOpacity>
-            <Link onPress={showHelp} testID="why-a-fee">
-              {I18n.t("wallet.whyAFee.title")}
-            </Link>
-          </TouchableDefaultOpacity>
+          <Link onPress={showHelp} testID="why-a-fee">
+            {I18n.t("wallet.whyAFee.title")}
+          </Link>
         </View>
       </Content>
 
