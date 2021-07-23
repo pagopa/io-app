@@ -71,7 +71,7 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
 
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.onCancel}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
