@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0-rc.3](https://github.com/pagopa/io-app/compare/1.31.0-rc.2...1.31.0-rc.3) (2021-07-23)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[IAC-109](https://pagopa.atlassian.net/browse/IAC-109)] Disable cashback onboarding and edit IBAN from message CTA if the initiative is completed ([#3251](https://github.com/pagopa/io-app/issues/3251)) ([c8ca5b0](https://github.com/pagopa/io-app/commit/c8ca5b0d7d95eabd13c1972425738e8dce927d09))
+
+
+### Bug Fixes
+
+* [[IA-156](https://pagopa.atlassian.net/browse/IA-156)] Missing luhn check on continue button ([#3253](https://github.com/pagopa/io-app/issues/3253)) ([2240b3a](https://github.com/pagopa/io-app/commit/2240b3a58de1689e54675851fa859551be4f255f))
+* [[IA-164](https://pagopa.atlassian.net/browse/IA-164)] Unable to navigate to an internal route using a CTA in service details [#3255](https://github.com/pagopa/io-app/issues/3255) ([8b47071](https://github.com/pagopa/io-app/commit/8b47071d81380356a9e57e2a7abf23779f381991))
+
+
+### Chores
+
+* [[IA-154](https://pagopa.atlassian.net/browse/IA-154)] Upgrade eslint and introduce test-only rules ([#3240](https://github.com/pagopa/io-app/issues/3240)) ([a3f3518](https://github.com/pagopa/io-app/commit/a3f35182902f7c5908cbce4d9d51b5224262aa08))
+
 ## [1.31.0-rc.2](https://github.com/pagopa/io-app/compare/1.31.0-rc.1...1.31.0-rc.2) (2021-07-21)
 
 
