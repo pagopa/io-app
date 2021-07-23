@@ -12,7 +12,6 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { format, formatDateAsLocal } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
-import { H4 } from "../core/typography/H4";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 
@@ -108,15 +107,12 @@ class MessageDetailData extends React.PureComponent<Props> {
         )}
 
         {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
-          <H4
-            color="bluegrey"
-            weight="Regular"
-            accessibilityRole="link"
-            onPress={this.props.goToServiceDetail}
-          >
+          <Text accessibilityRole="link">
             {`${I18n.t("messageDetails.service")} `}
-            <Link>{this.data.service_detail.value.service_name}</Link>
-          </H4>
+            <Link onPress={this.props.goToServiceDetail}>
+              {this.data.service_detail.value.service_name}
+            </Link>
+          </Text>
         )}
         {this.hasEmailOrPhone && (
           <React.Fragment>
