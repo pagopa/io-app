@@ -44,12 +44,6 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { RTron } from "../../boot/configureStoreAndPersistor";
-import {
-  svServiceAlive,
-  svTosAccepted
-} from "../../features/bonus/siciliaVola/store/actions/activation";
-import { svGenerateVoucherStart } from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -133,22 +127,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    RTron?.onCustomCommand({
-      title: "start Sicilia Vola",
-      description: "start sicilia vola flow",
-      command: "start Sicilia Vola",
-      handler: () => {
-        this.props.startSiciliaVola();
-      }
-    });
-    RTron?.onCustomCommand({
-      title: "Alive + Tos Not Accepted",
-      description: "Alive + Tos Not Accepted",
-      command: "Alive + Tos Not Accepted",
-      handler: () => {
-        this.props.aliveAndTosNotAccepted();
-      }
-    });
     this.onRefreshMessages();
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -342,13 +320,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startSiciliaVola: () => {
-    dispatch(svGenerateVoucherStart());
-  },
-  aliveAndTosNotAccepted: () => {
-    dispatch(svServiceAlive.success(true));
-    dispatch(svTosAccepted.success(false));
-  },
   refreshMessages: (
     lexicallyOrderedMessagesState: ReturnType<
       typeof lexicallyOrderedMessagesStateSelector
