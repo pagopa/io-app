@@ -85,16 +85,17 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
       </Body>
 
       <View spacer={true} large={true} />
-      <Body
-        accessibilityRole="link"
-        onPress={
-          props.methodType === "cobadge" ? props.openTosModal : props.onSearch
-        }
-      >
+      <Body accessibilityRole="link">
         <H4 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text3}
         </H4>
-        <Link>{locales.text4}</Link>
+        <Link
+          onPress={
+            props.methodType === "cobadge" ? props.openTosModal : props.onSearch
+          }
+        >
+          {locales.text4}
+        </Link>
       </Body>
     </>
   );
