@@ -15,6 +15,7 @@ import SvCheckResidenceKoScreen from "../screens/voucherGeneration/ko/SvCheckRes
 import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko/SvSelectBeneficiaryCategoryKoScreen";
 import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
 import SV_ROUTES from "./routes";
+import VoucherListScreen from "../screens/VoucherListScreen";
 
 const SvNavigator = createStackNavigator(
   {
@@ -62,6 +63,9 @@ const SvNavigator = createStackNavigator(
     },
     [SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER]: {
       screen: SvGeneratedVoucherTimeoutScreen
+    },
+    [SV_ROUTES.VOUCHER_LIST]: {
+      screen: VoucherListScreen
     }
   },
   {
