@@ -19,9 +19,9 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Helper function that requests a new session token from the SiciliaVola.
   // When calling the Sv APIs, we must use separate session, generated from the
   // sessionToken.
-  const getSiciliaVolaSession = async () => {
+  const getSiciliaVolaSessionToken = async () => {
     try {
-      const response = await siciliaVolaClient.GetMitVoucherToken(sessionToken);
+      const response = await siciliaVolaClient.getMitVoucherToken(sessionToken);
       if (response.isRight() && response.value.status === 200) {
         return some(response.value.value.token);
       }
@@ -33,8 +33,9 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // The session manager for SiciliaVola (Sv) will manage the
   // refreshing of the Sv session when calling its APIs, keeping a shared token
   // and serializing the refresh requests.
-  const svSessionManager = new SessionManager(getSiciliaVolaSession);
+  const svSessionManager = new SessionManager(getSiciliaVolaSessionToken);
 
+  svSessionManager.withRefresh(siciliaVolaClient.getAeroportiBeneficiario)();
   // SV Activation workflow
   yield takeLatest(
     getType(svGenerateVoucherStart),

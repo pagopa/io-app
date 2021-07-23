@@ -43,8 +43,7 @@ export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
 
-export const bonusVacanzeEnabled: boolean =
-  Config.BONUS_VACANZE_ENABLED === "YES";
+export const bonusVacanzeEnabled: boolean = true;
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
@@ -63,7 +62,7 @@ export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
 // CGN Feature Flag
-export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
+export const cgnEnabled: boolean = false;
 export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
 // EU Covid Certificate feature flag
@@ -71,7 +70,7 @@ export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
 // SiciliaVola Feature Flag
-export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
+export const svEnabled: boolean = true;
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -108,8 +107,7 @@ export const totServiceFetchWorkers = t.Integer.decode(
   parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_SERVICE_FETCH_WORKERS);
 
-export const shouldDisplayVersionInfoOverlay =
-  Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
+export const shouldDisplayVersionInfoOverlay = true;
 
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
