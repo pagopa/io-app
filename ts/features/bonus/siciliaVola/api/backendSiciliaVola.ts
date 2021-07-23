@@ -3,7 +3,6 @@ import {
   composeHeaderProducers,
   createFetchRequestForApi
 } from "italia-ts-commons/lib/requests";
-import { flip } from "fp-ts/lib/function";
 import {
   getMitVoucherTokenDefaultDecoder,
   GetMitVoucherTokenT
@@ -127,10 +126,10 @@ export const BackendSiciliaVolaClient = (
       GetListaComuniBySiglaProvincia,
       options
     ),
-    getAeroportiBeneficiario: (idRegione: number) =>
-      withBearerToken(
+    getAeroportiBeneficiario: (svBearerToken: SessionToken) =>
+      withToken(svBearerToken)(
         createFetchRequestForApi(GetAeroportiBeneficiario, options)
-      )({ idRegione })
+      )
   };
 };
 

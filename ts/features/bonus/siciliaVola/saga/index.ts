@@ -35,8 +35,11 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // and serializing the refresh requests.
   const svSessionManager = new SessionManager(getSiciliaVolaSessionToken);
 
-  const getAeroportiBeneficiario = svSessionManager.withRefresh(() =>
-    siciliaVolaClient.getAeroportiBeneficiario(5)
+  const getAeroportiBeneficiario = siciliaVolaClient.getAeroportiBeneficiario(
+    "abc" as SessionToken
+  );
+  svSessionManager.withRefresh(() =>
+    getAeroportiBeneficiario({ idRegione: 1 })
   );
   // SV Activation workflow
   yield takeLatest(
