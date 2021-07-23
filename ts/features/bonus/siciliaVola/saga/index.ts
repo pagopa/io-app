@@ -1,13 +1,13 @@
 import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
-import { svGenerateVoucherStart } from "../store/actions/voucherGeneration";
-import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
+import { none, some } from "fp-ts/lib/Option";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
-import { none, some } from "fp-ts/lib/Option";
+import { svGenerateVoucherStart } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
+import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -35,7 +35,9 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // and serializing the refresh requests.
   const svSessionManager = new SessionManager(getSiciliaVolaSessionToken);
 
-  svSessionManager.withRefresh(siciliaVolaClient.getAeroportiBeneficiario)();
+  const getAeroportiBeneficiario = svSessionManager.withRefresh(() =>
+    siciliaVolaClient.getAeroportiBeneficiario(5)
+  );
   // SV Activation workflow
   yield takeLatest(
     getType(svGenerateVoucherStart),

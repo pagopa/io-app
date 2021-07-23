@@ -1,12 +1,13 @@
 import {
-  getMitVoucherTokenDefaultDecoder,
-  GetMitVoucherTokenT
-} from "../../../../../definitions/io_sicilia_vola_token/requestTypes";
-import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi
 } from "italia-ts-commons/lib/requests";
+import { flip } from "fp-ts/lib/function";
+import {
+  getMitVoucherTokenDefaultDecoder,
+  GetMitVoucherTokenT
+} from "../../../../../definitions/io_sicilia_vola_token/requestTypes";
 import {
   tokenHeaderProducer,
   withBearerToken as withToken
@@ -126,10 +127,10 @@ export const BackendSiciliaVolaClient = (
       GetListaComuniBySiglaProvincia,
       options
     ),
-    getAeroportiBeneficiario: (svBarearToken: SessionToken) =>
-      withToken(svBarearToken)(
+    getAeroportiBeneficiario: (idRegione: number) =>
+      withBearerToken(
         createFetchRequestForApi(GetAeroportiBeneficiario, options)
-      )
+      )({ idRegione })
   };
 };
 
