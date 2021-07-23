@@ -16,6 +16,7 @@ import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -36,7 +37,7 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
     return (
       <LoadingErrorComponent
         isLoading={isLoading(props.isServiceAlive)}
-        loadingCaption={"loading"}
+        loadingCaption={I18n.t("global.genericWaiting")}
         onRetry={props.checkServiceAvailable}
       />
     );

@@ -2555,7 +2555,8 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        buttons:
+          requestBonus: "Request a discount code"
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:

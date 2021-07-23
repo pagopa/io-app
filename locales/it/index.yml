@@ -2583,7 +2583,8 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        buttons:
+          requestBonus: "Richiedi un codice sconto"
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
