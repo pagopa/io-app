@@ -1,6 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/lib/function";
+import { Alert } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
@@ -21,9 +23,6 @@ import I18n from "../../../../../i18n";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const manageTosResponse = (tosAccepted: boolean): React.ReactElement =>
-  tosAccepted ? <CheckResidenceComponent /> : <AcceptTosComponent />;
-
 const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
   React.useEffect(() => {
     props.checkServiceAvailable();
@@ -42,6 +41,40 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
       />
     );
   }
+
+  const handleTosCancel = () => {
+    props.cancel();
+    props.back();
+  };
+
+  const handleTosAccepted = () => {
+    Alert.alert(
+      I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.title"),
+      I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.message"),
+      [
+        {
+          text: I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.buttons.ok"),
+          style: "default",
+          // TODO replace with the effective implementation
+          onPress: constNull
+        },
+        {
+          text: I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.buttons.ko"),
+          style: "default",
+          onPress: handleTosCancel
+        }
+      ]
+    );
+  };
+  const manageTosResponse = (tosAccepted: boolean): React.ReactElement =>
+    tosAccepted ? (
+      <CheckResidenceComponent />
+    ) : (
+      <AcceptTosComponent
+        onAccept={handleTosAccepted}
+        onCancel={handleTosCancel}
+      />
+    );
 
   return fold(
     props.tosAccepted,
