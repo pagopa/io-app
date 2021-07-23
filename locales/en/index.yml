@@ -2556,11 +2556,11 @@ bonus:
     voucherGeneration:
       acceptTos:
         alert:
-          title: "Attenzione"
-          message: "Ti informiamo che le informazioni che inserirai costituiscono a tutti gli effetti una autocertificazione. Eventuali dichiarazioni mendaci saranno perseguibili ai sensi del d.P.R. n.445/2000"
+          title: "Attention"
+          message: "We inform you that the information you enter constitutes in effect a self-certification. Any false declarations will be punishable under the d.P.R. 445/2000"
           buttons:
-            ok: "continua"
-            ko: "Annulla richiesta"
+            ok: "Continue"
+            ko: "Abort"
         buttons:
           requestBonus: "Request a discount code"
       checkResidence:
