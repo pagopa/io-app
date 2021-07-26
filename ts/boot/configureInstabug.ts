@@ -19,7 +19,6 @@ type InstabugLocales = { [k in Locales]: Instabug.locale };
 type InstabugUserAttributeKeys =
   | "backendVersion"
   | "activeScreen"
-  | "fiscalcode"
   | "identityProvider"
   | "lastSeenMessageID"
   | "appVersion"
