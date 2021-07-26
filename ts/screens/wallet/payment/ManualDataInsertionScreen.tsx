@@ -30,7 +30,6 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
@@ -145,11 +144,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <TouchableDefaultOpacity>
-              <Link onPress={this.showModal}>
-                {I18n.t("wallet.insertManually.link")}
-              </Link>
-            </TouchableDefaultOpacity>
+            <Link onPress={this.showModal}>
+              {I18n.t("wallet.insertManually.link")}
+            </Link>
 
             <Form>
               <Item

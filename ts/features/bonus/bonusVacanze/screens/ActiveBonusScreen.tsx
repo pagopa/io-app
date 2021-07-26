@@ -649,14 +649,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     <View spacer={true} />
                     <ItemSeparatorComponent noPadded={true} />
                     <View spacer={true} large={true} />
-                    <TouchableDefaultOpacity>
-                      <Link
-                        onPress={() => handleModalPress(maybeBonusTos.value)}
-                        numberOfLines={1}
-                      >
-                        {I18n.t("bonus.tos.title")}
-                      </Link>
-                    </TouchableDefaultOpacity>
+                    <Link
+                      onPress={() => handleModalPress(maybeBonusTos.value)}
+                      numberOfLines={1}
+                    >
+                      {I18n.t("bonus.tos.title")}
+                    </Link>
                   </>
                 )}
                 {/* add extra bottom space when capturing screenshot */}

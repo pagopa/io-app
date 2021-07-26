@@ -121,6 +121,12 @@ const styles = StyleSheet.create({
   },
   fullOpacity: {
     backgroundColor: variables.brandPrimary
+  },
+  link: {
+    textAlign: "center",
+    paddingBottom: 5,
+    paddingTop: 4.5,
+    lineHeight: 30
   }
 });
 
@@ -293,17 +299,14 @@ class LandingScreen extends React.PureComponent<Props, State> {
             </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
-
-          <ButtonDefaultOpacity block={true} small={true} transparent={true}>
-            <Link
-              style={styles.noPadded}
-              onPress={this.navigateToSpidCieInformationRequest}
-            >
-              {this.isCieSupported()
-                ? I18n.t("authentication.landing.nospid-nocie")
-                : I18n.t("authentication.landing.nospid")}
-            </Link>
-          </ButtonDefaultOpacity>
+          <Link
+            style={styles.link}
+            onPress={this.navigateToSpidCieInformationRequest}
+          >
+            {this.isCieSupported()
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Link>
         </View>
       </BaseScreenComponent>
     );
