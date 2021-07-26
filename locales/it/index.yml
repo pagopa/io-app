@@ -2269,6 +2269,7 @@ bonus:
       body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
       skip: "Non ora"
     iban:
+      bpdCompletedMessage: "Questa iniziativa è terminata e non è più possibile modificare l'IBAN"
       cta:
         bpdNotActiveTitle: "attenzione"
         bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
