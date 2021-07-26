@@ -36,3 +36,6 @@ export const isTimeoutError = (error: NetworkError): error is TimeoutError =>
 
 export const getNetworkErrorMessage = (error: NetworkError): string =>
   isTimeoutError(error) ? error.kind : error.value.message;
+
+export const getErrorFromNetworkError = (networkError: NetworkError): Error =>
+  new Error(getNetworkErrorMessage(networkError));

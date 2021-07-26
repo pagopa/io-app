@@ -157,9 +157,9 @@ type updatePaymentStatusPayload = { idWallet: number; paymentEnabled: boolean };
  * change the payment status (enable or disable a payment method to pay with pagoPa)
  */
 export const updatePaymentStatus = createAsyncAction(
-  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_REQUEST",
-  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_SUCCESS",
-  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_FAILURE"
+  "UPDATE_WALLET_PAYMENT_STATUS_REQUEST",
+  "UPDATE_WALLET_PAYMENT_STATUS_SUCCESS",
+  "UPDATE_WALLET_PAYMENT_STATUS_FAILURE"
 )<updatePaymentStatusPayload, updatePaymentStatusPayload, NetworkError>();
 
 export type WalletsActions =
