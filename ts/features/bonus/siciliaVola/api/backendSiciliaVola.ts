@@ -83,9 +83,7 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
   url: params =>
     `/api/v1/mitvoucher/data/rest/unsecured/comuni/${params.siglaProvincia}`,
   query: _ => ({}),
-  headers: _ => ({
-    "Ocp-Apim-Subscription-Key": "fe43f9a67c474aa294a1af798c760639"
-  }),
+  headers: _ => ({}),
   response_decoder: getListaProvinceByIdRegioneDefaultDecoder()
 };
 
@@ -98,7 +96,6 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
     `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idRegione}`,
   query: _ => ({}),
   headers: h => ({
-    "Ocp-Apim-Subscription-Key": "fe43f9a67c474aa294a1af798c760639",
     Authorization: h.Bearer
   }),
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
@@ -139,10 +136,7 @@ export const BackendSiciliaVolaClient = (
     getAeroportiBeneficiario: (idRegione: number) =>
       flip(
         withSiciliaVolaToken(
-          createFetchRequestForApi(GetAeroportiBeneficiario, {
-            ...options,
-            baseUrl: "https://api.io.italia.it"
-          })
+          createFetchRequestForApi(GetAeroportiBeneficiario, options)
         )
       )({ idRegione })
   };

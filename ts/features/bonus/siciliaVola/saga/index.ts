@@ -39,10 +39,6 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getSiciliaVolaSessionToken
   );
 
-  const request = svSessionManager.withRefresh(
-    siciliaVolaClient.getAeroportiBeneficiario(1)
-  );
-  const response: SagaCallReturnType<typeof request> = yield call(request);
   // SV Activation workflow
   yield takeLatest(
     getType(svGenerateVoucherStart),
