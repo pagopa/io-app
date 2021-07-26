@@ -8,11 +8,6 @@ export const analyticsAuthenticationCompleted = createAction(
   "ANALYTICS_AUTHENTICATION_COMPLETED"
 );
 
-export const analyticsOnboardingStarted = createAction(
-  "ANALYTICS_ONBOARDING_STARTED"
-);
-
 export type AnalyticsActions =
-  | ActionType<typeof analyticsOnboardingStarted>
   | ActionType<typeof analyticsAuthenticationStarted>
   | ActionType<typeof analyticsAuthenticationCompleted>;
