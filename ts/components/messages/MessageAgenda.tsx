@@ -256,7 +256,7 @@ const generateItemLayouts = (sections: Sections) => {
   return itemLayouts;
 };
 
-const getFakeItemComponent = (
+const getFakeItemComponent = () => (
   <View style={styles.itemEmptyWrapper}>
     <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
