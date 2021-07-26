@@ -64,6 +64,7 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { getRemoteLocale } from "../../../../utils/messages";
+import { Link } from "../../../../components/core/typography/Link";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -648,17 +649,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     <View spacer={true} />
                     <ItemSeparatorComponent noPadded={true} />
                     <View spacer={true} large={true} />
-                    <TouchableDefaultOpacity
+                    <Link
                       onPress={() => handleModalPress(maybeBonusTos.value)}
+                      numberOfLines={1}
                     >
-                      <Text
-                        link={true}
-                        ellipsizeMode={"tail"}
-                        numberOfLines={1}
-                      >
-                        {I18n.t("bonus.tos.title")}
-                      </Text>
-                    </TouchableDefaultOpacity>
+                      {I18n.t("bonus.tos.title")}
+                    </Link>
                   </>
                 )}
                 {/* add extra bottom space when capturing screenshot */}
