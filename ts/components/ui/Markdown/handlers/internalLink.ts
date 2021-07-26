@@ -116,7 +116,7 @@ export function handleInternalLink(
     dispatch(
       addInternalRouteNavigation({
         ...internalNavigation,
-        params: { serviceId }
+        params: { ...internalNavigation.params, serviceId }
       })
     );
     dispatch(
