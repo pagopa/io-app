@@ -64,7 +64,8 @@ import {
 } from "../../store/actions/wallet/transactions";
 import {
   fetchWalletsRequestWithExpBackoff,
-  runSendAddCobadgeTrackSaga
+  runSendAddCobadgeTrackSaga,
+  updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { navSelector } from "../../store/reducers/navigationHistory";
@@ -660,7 +661,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletPaymentMethodDetailScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletPaymentMethodDetailScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+  navigateToPaymentScanQrCode: () =>
+    dispatch(
+      updatePaymentStatus.request({ idWallet: 123, paymentEnabled: true })
+    ),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

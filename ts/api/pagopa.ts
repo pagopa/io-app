@@ -46,6 +46,8 @@ import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
   addWalletSatispayUsingPOSTDecoder,
+  changePayOptionDefaultDecoder,
+  ChangePayOptionT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -63,8 +65,6 @@ import {
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
   GetWalletsUsingGETT,
-  payCreditCardVerificationUsingPOSTDecoder,
-  PayCreditCardVerificationUsingPOSTT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
@@ -399,23 +399,6 @@ const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
-type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
-  PayCreditCardVerificationUsingPOSTT,
-  200,
-  TransactionResponse
->;
-
-const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
-  method: "post",
-  url: () => "/v1/payments/cc/actions/pay",
-  query: () => ({}),
-  body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: payCreditCardVerificationUsingPOSTDecoder(
-    TransactionResponse
-  )
-};
-
 const deleteWallet: DeleteWalletUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
@@ -583,6 +566,15 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
 
+const updatePaymentStatus: ChangePayOptionT = {
+  method: "post",
+  url: ({ idWallet }) => `/v1/wallet/${idWallet}/payment-status`,
+  query: () => ({}),
+  body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: changePayOptionDefaultDecoder()
+};
+
 const withPaymentManagerToken = <
   P extends { Bearer: string; LookUpId?: string },
   R
@@ -725,20 +717,6 @@ export function PaymentManagerClient(
       )({
         walletRequest: { data: wallet }
       }),
-    payCreditCardVerification: (
-      payRequest: TypeofApiParams<
-        PayCreditCardVerificationUsingPOSTT
-      >["payRequest"],
-      language?: TypeofApiParams<
-        PayCreditCardVerificationUsingPOSTT
-      >["language"]
-    ) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(boardPay, altOptions))
-      )({
-        payRequest,
-        language
-      }),
     deleteWallet: (id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
@@ -798,7 +776,19 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(addCobadgeToWallet, altOptions)
         )
-      )({ cobadegPaymentInstrumentsRequest })
+      )({ cobadegPaymentInstrumentsRequest }),
+    updatePaymentStatus: (payload: {
+      idWallet: number;
+      paymentEnabled: boolean;
+    }) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(updatePaymentStatus, altOptions)
+        )
+      )({
+        idWallet: payload.idWallet,
+        walletPaymentstatus: { pagoPA: payload.paymentEnabled }
+      })
   };
 }
 

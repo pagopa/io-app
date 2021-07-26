@@ -37,7 +37,8 @@ import {
   fetchWalletsSuccess,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
@@ -206,6 +207,38 @@ export function* fetchPspRequestHandler(
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
     }
+  }
+}
+
+/**
+ * Handles update payment status request
+ * (enable or disable a payment method to pay with pagoPa)
+ */
+export function* updatePaymentStatusSaga(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof updatePaymentStatus.request>
+): Generator<Effect, void, any> {
+  const updatePayment = pagoPaClient.updatePaymentStatus(action.payload);
+  const request = pmSessionManager.withRefresh(updatePayment);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(
+          updatePaymentStatus.success({
+            idWallet: action.payload.idWallet,
+            paymentEnabled: response.value.value.pagoPA
+          })
+        );
+      } else {
+        throw Error(`response status ${response.value.status}`);
+      }
+    } else {
+      throw Error(readablePrivacyReport(response.value));
+    }
+  } catch (error) {
+    yield put(updatePaymentStatus.failure(getNetworkError(error)));
   }
 }
 

@@ -12,6 +12,7 @@ import {
   WalletResponse
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
+import { NetworkError } from "../../../utils/errors";
 
 // this action load wallets following a backoff retry strategy
 export const fetchWalletsRequestWithExpBackoff = createStandardAction(
@@ -151,6 +152,16 @@ export const sendAddCobadgeMessage = createStandardAction(
   "SEND_ADD_COBADGE_MESSAGE"
 )<boolean>();
 
+type updatePaymentStatusPayload = { idWallet: number; paymentEnabled: boolean };
+/**
+ * change the payment status (enable or disable a payment method to pay with pagoPa)
+ */
+export const updatePaymentStatus = createAsyncAction(
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_REQUEST",
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_SUCCESS",
+  "REFRESH_PM_TOKEN_WHILE_ADD_CREDIT_CARD_FAILURE"
+)<updatePaymentStatusPayload, updatePaymentStatusPayload, NetworkError>();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -175,4 +186,5 @@ export type WalletsActions =
   | ActionType<typeof creditCardPaymentNavigationUrls>
   | ActionType<typeof fetchWalletsRequestWithExpBackoff>
   | ActionType<typeof runSendAddCobadgeTrackSaga>
-  | ActionType<typeof sendAddCobadgeMessage>;
+  | ActionType<typeof sendAddCobadgeMessage>
+  | ActionType<typeof updatePaymentStatus>;
