@@ -17,6 +17,7 @@ export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
   if (isCreditCard(paymentMethod)) {
     return CreditCardType.decode(paymentMethod.info.brand).fold(
       () => true,
+      // eslint-disable-next-line sonarjs/no-empty-collection
       pm => !brandsBlackList.has(pm)
     );
   }

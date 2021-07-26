@@ -35,6 +35,7 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -97,6 +98,19 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToOnboardingServicePreferenceCompleteAction = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
+
+export const navigateToServicesPreferenceModeSelectionScreen = (
+  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+    params
+  });
+
 /**
  * Email
  */
@@ -135,6 +149,11 @@ export const navigateToMessageRouterScreen = (
  * Service
  */
 
+export const navigateToServiceHomeScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.SERVICES_HOME
+  });
+
 export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
@@ -146,11 +165,6 @@ export const navigateToServiceDetailsScreen = (
 /**
  * Profile
  */
-
-export const navigateToFingerprintPreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
-  });
 
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationActions.navigate({

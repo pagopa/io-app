@@ -5,7 +5,8 @@ import {
   Platform,
   StyleProp,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  AccessibilityState
 } from "react-native";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
@@ -40,6 +41,8 @@ type Props = Readonly<{
   accessible?: boolean;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
+  accessibilityState?: AccessibilityState;
+  testID?: string;
 }>;
 const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
@@ -111,9 +114,10 @@ export default class ListItemComponent extends React.Component<Props> {
         onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
-        accessible={this.props.accessible}
         accessibilityLabel={this.props.accessibilityLabel}
+        accessibilityState={this.props.accessibilityState}
         accessibilityRole={this.props.accessibilityRole}
+        testID={this.props.testID}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
@@ -145,6 +149,8 @@ export default class ListItemComponent extends React.Component<Props> {
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
                   disabled={this.props.switchDisabled}
+                  accessibilityElementsHidden
+                  importantForAccessibility="no-hide-descendants"
                 />
               ) : (
                 <IconFont

@@ -14,8 +14,7 @@ import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted,
-  analyticsOnboardingStarted
+  analyticsAuthenticationStarted
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -31,10 +30,7 @@ import {
   sessionInvalid
 } from "../actions/authentication";
 import { cieAuthenticationError } from "../actions/cie";
-import {
-  contentMunicipalityLoad,
-  loadServiceMetadata
-} from "../actions/content";
+import { contentMunicipalityLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -48,7 +44,6 @@ import {
 import {
   loadMessage,
   loadMessages,
-  loadMessagesCancel,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
@@ -67,11 +62,6 @@ import {
   removeAccountMotivation
 } from "../actions/profile";
 import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
-import {
-  loadServiceDetail,
-  loadServicesDetail,
-  loadVisibleServices
-} from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
@@ -82,7 +72,6 @@ import {
   abortRunningPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
@@ -105,8 +94,6 @@ import {
   addWalletCreditCardRequest,
   addWalletNewCreditCardFailure,
   addWalletNewCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
@@ -120,13 +107,13 @@ import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import trackSatispayAction from "../../features/wallet/satispay/analytics/index";
 import {
   addCreditCardOutcomeCode,
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
+import { trackServiceAction } from "./serviceAnalytics";
 
 // eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -173,12 +160,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
     // messages
     case getType(loadMessages.success):
-    //
-    // wallets success / services load requests
-    case getType(loadServicesDetail):
-      return mp.track(action.type, {
-        count: action.payload.length
-      });
     // end pay webview Payment (payment + onboarding credit card) actions (with properties)
     case getType(addCreditCardWebViewEnd):
     case getType(paymentWebViewEnd):
@@ -269,8 +250,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadServiceDetail.failure):
-    case getType(loadServiceMetadata.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -285,7 +264,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
-    case getType(loadVisibleServices.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
@@ -331,7 +309,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     case getType(identificationForceLogout):
     // onboarding
-    case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
     case getType(updatePin):
     // profile
@@ -344,20 +321,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessagesCancel):
-    // services
-    case getType(loadVisibleServices.request):
-    case getType(loadVisibleServices.success):
-    case getType(loadServiceDetail.request):
-    case getType(loadServiceDetail.success):
-    case getType(loadServiceMetadata.request):
-    case getType(loadServiceMetadata.success):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
-    case getType(creditCardCheckout3dsRequest):
-    case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
     case getType(setFavouriteWalletRequest):
@@ -379,7 +346,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
     //  profile First time Login
@@ -387,12 +353,15 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // other
     case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
-    // bonus vacanze
     case getType(loadAllBonusActivations.request):
-    case getType(loadAllBonusActivations.success):
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
+
+    case getType(loadAllBonusActivations.success):
+      return mp.track(action.type, {
+        count: action.payload.length
+      });
 
     case getType(deleteUserDataProcessing.request):
       return mp.track(action.type, { choice: action.payload });
@@ -424,12 +393,14 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
     void trackAction(mixpanel)(action);
     void trackBpdAction(mixpanel)(action);
     void trackBancomatAction(mixpanel)(action);
-    void trackSatispayAction(mixpanel)(action);
+    // TODO: activate simultaneously with the activation of satispay
+    // void trackSatispayAction(mixpanel)(action);
     void trackBPayAction(mixpanel)(action);
     void trackCoBadgeAction(mixpanel)(action);
     void trackPrivativeAction(mixpanel)(action);
     void trackCgnAction(mixpanel)(action);
     void trackContentAction(mixpanel)(action);
+    void trackServiceAction(mixpanel)(action);
     void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);

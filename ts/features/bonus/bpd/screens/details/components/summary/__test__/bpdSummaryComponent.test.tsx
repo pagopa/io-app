@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
 import {
+  baseBackendConfig,
   baseBackendState,
   withBpdRankingConfig
 } from "../../../../../../../../store/reducers/__mock__/backendStatus";
@@ -447,7 +448,10 @@ export const mockBpdState = (
   backendStatus:
     bpdRankingRemoteConfig === undefined
       ? baseBackendState
-      : withBpdRankingConfig(baseBackendState, bpdRankingRemoteConfig),
+      : withBpdRankingConfig(baseBackendState, {
+          ...baseBackendConfig,
+          bpd_ranking_v2: bpdRankingRemoteConfig
+        }),
   profile: pot.none
 });
 

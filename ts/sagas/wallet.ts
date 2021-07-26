@@ -145,6 +145,7 @@ import {
   setFavouriteWalletRequest,
   setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
+import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -341,11 +342,15 @@ function* startOrResumeAddCreditCardSaga(
                   );
                   // if the method is bpd compliant check if we have info about bpd activation
                   if (hasBpdFeature && pot.isSome(bpdEnroll)) {
+                    const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> = yield select(
+                      bpdRemoteConfigSelector
+                    );
                     // if bdp is active navigate to a screen where it asked to enroll that method in bpd
                     // otherwise navigate to a screen where is asked to join bpd
                     if (
                       bpdEnroll.value &&
-                      isRawCreditCard(maybeAddedWallet.paymentMethod)
+                      isRawCreditCard(maybeAddedWallet.paymentMethod) &&
+                      bpdRemoteConfig?.program_active
                     ) {
                       yield put(
                         navigateToActivateBpdOnNewCreditCard({
@@ -362,8 +367,12 @@ function* startOrResumeAddCreditCardSaga(
                           ]
                         })
                       );
-                    } else {
+                    } else if (
+                      bpdRemoteConfig?.enroll_bpd_after_add_payment_method
+                    ) {
                       yield put(navigateToSuggestBpdActivation());
+                    } else {
+                      yield call(waitAndNavigateToWalletHome);
                     }
                     // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
                     // this pop could be easily break when this flow is entered by other points
@@ -929,7 +938,10 @@ function* checkProfile(
     | ActionType<typeof profileUpsert.success>
     | ActionType<typeof profileLoadSuccess>
 ) {
-  const enabled = action.payload.is_email_validated === true;
+  const enabled =
+    action.type === getType(profileUpsert.success)
+      ? action.payload.newValue.is_email_validated === true
+      : action.payload.is_email_validated === true;
   yield put(setWalletSessionEnabled(enabled));
 }
 

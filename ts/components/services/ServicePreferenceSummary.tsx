@@ -10,27 +10,41 @@ import { Link } from "../core/typography/Link";
 import { GlobalState } from "../../store/reducers/types";
 import { Dispatch } from "../../store/actions/types";
 import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { profileServicePreferencesModeSelector } from "../../store/reducers/profile";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const mapChoiceLabel = new Map<string, string>([
-  ["AUTO", I18n.t("services.optIn.preferences.quickConfig.value")],
-  ["MANUAL", I18n.t("services.optIn.preferences.manualConfig.value")]
-]);
+const getServicesPreferenceModeLabel = (
+  mode: ServicesPreferencesModeEnum
+): string =>
+  ({
+    [ServicesPreferencesModeEnum.AUTO]: `${I18n.t(
+      "services.optIn.preferences.quickConfig.value"
+    )}: ${I18n.t("services.optIn.preferences.quickConfig.label")}`,
+    [ServicesPreferencesModeEnum.MANUAL]: `${I18n.t(
+      "services.optIn.preferences.manualConfig.value"
+    )}: ${I18n.t("services.optIn.preferences.manualConfig.label")}`,
+    [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
+      "services.optIn.preferences.unavailable"
+    )
+  }[mode]);
 
-const getChoiceLabel = (status: string) =>
-  mapChoiceLabel.get(status) ??
-  I18n.t("services.optIn.preferences.unavailable");
-
+/**
+ * Display the current services preference mode set in the profile
+ * Display a link to navigate to a screen to update the service preference mode
+ * @param props
+ * @constructor
+ */
 const ServicePreferenceSummary = (props: Props): React.ReactElement => (
-  // FIXME Replace the string with the current preference option saved on profile
-  <View style={IOStyles.horizontalContentPadding}>
-    <View spacer />
+  <View footer style={IOStyles.horizontalContentPadding}>
     <InfoBox iconName={"io-info"} iconColor={IOColors.bluegrey} iconSize={24}>
       <H5 weight={"Regular"} color={"bluegrey"}>{`${I18n.t(
         "services.optIn.preferences.choiceLabel"
-      )} ${getChoiceLabel(props.serviceOption)}`}</H5>
+      )} ${getServicesPreferenceModeLabel(
+        props.profileServicePreferenceMode ?? ServicesPreferencesModeEnum.LEGACY
+      )}`}</H5>
       <Link
         onPress={props.navigateToServicePreference}
         accessibilityRole={"button"}
@@ -38,13 +52,11 @@ const ServicePreferenceSummary = (props: Props): React.ReactElement => (
         {I18n.t("serviceDetail.updatePreferences")}
       </Link>
     </InfoBox>
-    <View spacer />
   </View>
 );
 
-const mapStateToProps = (_: GlobalState) => ({
-  // FIXME Service option should be taken from profile
-  serviceOption: "MANUAL"
+const mapStateToProps = (state: GlobalState) => ({
+  profileServicePreferenceMode: profileServicePreferencesModeSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

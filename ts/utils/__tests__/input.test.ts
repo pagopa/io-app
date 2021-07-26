@@ -36,7 +36,7 @@ describe("CreditCardPan", () => {
   const invalidPANs: ReadonlyArray<string> = [
     "1234 1234 1234 1234",
     "123412341234123_123",
-    "1234123412341",
+    "1234123412",
     "12341234123412341234"
   ];
 
@@ -206,7 +206,7 @@ describe("isValidCardHolder", () => {
     "ú",
     "ù",
     "û"
-  ].map(accentedCardHolder =>
+  ].forEach(accentedCardHolder =>
     it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
       expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();
     })
@@ -220,7 +220,7 @@ describe("isValidCardHolder", () => {
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "0123456789",
     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-  ].map(notAccentedCardHolder =>
+  ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
     })

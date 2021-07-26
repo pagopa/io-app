@@ -1,6 +1,7 @@
 import { NavigationNavigateAction } from "react-navigation";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
+import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
 import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
@@ -17,27 +18,31 @@ export function* activateBpdOnNewPaymentMethods(
   paymentMethods: ReadonlyArray<PaymentMethod>,
   navigateToActivateNewMethods: NavigationNavigateAction
 ) {
-  const atLeastOneBancomatWithBpdCapability = paymentMethods.some(b =>
+  const atLeastOnePaymentMethodWithBpdCapability = paymentMethods.some(b =>
     hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
   );
 
   // No payment method with bpd capability added in the current workflow, return to wallet home
-  if (!atLeastOneBancomatWithBpdCapability) {
+  if (!atLeastOnePaymentMethodWithBpdCapability) {
     return yield put(navigateToWalletHome());
   }
   const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
     isBpdEnabled
   );
 
+  const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> = yield select(
+    bpdRemoteConfigSelector
+  );
+
   // Error while reading the bpdEnabled, return to wallet
   if (isBpdEnabledResponse.isLeft()) {
     yield put(navigateToWalletHome());
   } else {
-    if (isBpdEnabledResponse.value) {
-      // navigate to onboarding new bancomat
+    if (isBpdEnabledResponse.value && bpdRemoteConfig?.program_active) {
+      // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
       yield put(navigateToActivateNewMethods);
-    } else {
-      // navigate to "ask if u want to start bpd onboarding"
+    } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {
+      // navigate to "ask if you want to start bpd onboarding"
       yield put(navigateToSuggestBpdActivation());
     }
   }
