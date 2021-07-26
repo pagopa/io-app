@@ -24,6 +24,9 @@ import {
   getStatiUEDefaultDecoder,
   GetStatiUET
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
+import { flip } from "fp-ts/lib/function";
+import { Omit } from "italia-ts-commons/lib/types";
+import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 
 /**
  * Get the Sicilia Vola session token
@@ -101,6 +104,13 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
 };
 
+const withSiciliaVolaToken = <P extends { Bearer: string }, R>(
+  f: (p: P) => Promise<R>
+) => (token: MitVoucherToken) => async (po: Omit<P, "Bearer">): Promise<R> => {
+  const params = Object.assign({ Bearer: String(token.token) }, po) as P;
+  return f(params);
+};
+
 // client for SiciliaVola to handle API communications
 export const BackendSiciliaVolaClient = (
   baseUrl: string,
@@ -126,10 +136,15 @@ export const BackendSiciliaVolaClient = (
       GetListaComuniBySiglaProvincia,
       options
     ),
-    getAeroportiBeneficiario: (svBearerToken: SessionToken) =>
-      withToken(svBearerToken)(
-        createFetchRequestForApi(GetAeroportiBeneficiario, options)
-      )
+    getAeroportiBeneficiario: (idRegione: number) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(GetAeroportiBeneficiario, {
+            ...options,
+            baseUrl: "https://api.io.italia.it"
+          })
+        )
+      )({ idRegione })
   };
 };
 

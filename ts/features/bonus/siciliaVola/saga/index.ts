@@ -1,4 +1,4 @@
-import { takeLatest } from "redux-saga/effects";
+import { call, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
 import { none, some } from "fp-ts/lib/Option";
@@ -8,6 +8,8 @@ import { svGenerateVoucherStart } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
 import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
+import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -23,7 +25,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     try {
       const response = await siciliaVolaClient.getMitVoucherToken(sessionToken);
       if (response.isRight() && response.value.status === 200) {
-        return some(response.value.value.token);
+        return some(response.value.value);
       }
       return none;
     } catch {
@@ -33,14 +35,14 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // The session manager for SiciliaVola (Sv) will manage the
   // refreshing of the Sv session when calling its APIs, keeping a shared token
   // and serializing the refresh requests.
-  const svSessionManager = new SessionManager(getSiciliaVolaSessionToken);
+  const svSessionManager: SessionManager<MitVoucherToken> = new SessionManager(
+    getSiciliaVolaSessionToken
+  );
 
-  const getAeroportiBeneficiario = siciliaVolaClient.getAeroportiBeneficiario(
-    "abc" as SessionToken
+  const request = svSessionManager.withRefresh(
+    siciliaVolaClient.getAeroportiBeneficiario(1)
   );
-  svSessionManager.withRefresh(() =>
-    getAeroportiBeneficiario({ idRegione: 1 })
-  );
+  const response: SagaCallReturnType<typeof request> = yield call(request);
   // SV Activation workflow
   yield takeLatest(
     getType(svGenerateVoucherStart),
