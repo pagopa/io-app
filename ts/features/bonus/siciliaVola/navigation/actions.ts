@@ -63,8 +63,3 @@ export const navigateToSvTimeoutGeneratedVoucherScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER
   });
-
-export const navigateToSvVoucherListScreen = () =>
-  NavigationActions.navigate({
-    routeName: SV_ROUTES.VOUCHER_LIST
-  });

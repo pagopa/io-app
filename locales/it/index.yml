@@ -440,14 +440,14 @@ profile:
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
-    list:
+    list:       
       biometric_recognition:
         title: Riconoscimento biometrico
         subtitle: Usa la tua impronta o il tuo volto
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
-    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO.
+    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO. 
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
@@ -2625,8 +2625,6 @@ bonus:
         timeout:
           title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
           body: "Riceverai un messaggio in app IO quando sarà pronto."
-    voucherList:
-      title: "VoucherListScreen"
 features:
   euCovidCertificate:
     save:
