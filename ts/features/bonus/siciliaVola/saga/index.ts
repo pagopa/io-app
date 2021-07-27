@@ -4,13 +4,17 @@ import { SagaIterator } from "redux-saga";
 import { none, some } from "fp-ts/lib/Option";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
-import { svGenerateVoucherStart } from "../store/actions/voucherGeneration";
+import {
+  svGenerateVoucherAvailableState,
+  svGenerateVoucherStart
+} from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
 import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svServiceAlive } from "../store/actions/activation";
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
+import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -48,4 +52,11 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV check if the service is alive
   yield takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
+
+  // SV get the list of UE state
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableState.request),
+    handleGetStatiUE,
+    siciliaVolaClient.getStatiUE
+  );
 }
