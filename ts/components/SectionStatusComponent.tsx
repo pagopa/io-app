@@ -11,10 +11,10 @@ import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/SectionStatus";
+import { SectionStatusKey } from "../types/backendStatus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
-import { SectionStatusKey } from "../types/backendStatus";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
