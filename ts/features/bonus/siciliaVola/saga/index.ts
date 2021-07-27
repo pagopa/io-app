@@ -1,4 +1,4 @@
-import { call, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
 import { none, some } from "fp-ts/lib/Option";
@@ -9,7 +9,8 @@ import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
 import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
-import { SagaCallReturnType } from "../../../../types/utils";
+import { svServiceAlive } from "../store/actions/activation";
+import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -44,4 +45,7 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getType(svGenerateVoucherStart),
     handleSvVoucherGenerationStartActivationSaga
   );
+
+  // SV check if the service is alive
+  yield takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
 }
