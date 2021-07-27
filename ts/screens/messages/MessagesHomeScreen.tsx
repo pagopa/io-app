@@ -149,7 +149,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { isSearchEnabled } = this.props;
+    const { isSearchEnabled, navigation } = this.props;
 
     return (
       <TopScreenComponent
@@ -164,6 +164,13 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         isSearchAvailable={{ enabled: true, searchType: "Messages" }}
         appLogo={true}
       >
+        <SectionStatusComponent
+          sectionKey={"messages"}
+          navigationProps={navigation as NavigationScreenProp<NavigationState>}
+          onSectionRef={v => {
+            setAccessibilityFocus(v, 100 as Millisecond);
+          }}
+        />
         {!isSearchEnabled && (
           <React.Fragment>
             <AnimatedScreenContentHeader
@@ -208,8 +215,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       navigateToMessageDetail,
-      updateMessagesArchivedState,
-      navigation
+      updateMessagesArchivedState
     } = this.props;
     return (
       <View style={IOStyles.flex}>
@@ -286,13 +292,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             />
           </Tab>
         </AnimatedTabs>
-        <SectionStatusComponent
-          sectionKey={"messages"}
-          navigationProps={navigation as NavigationScreenProp<NavigationState>}
-          onSectionRef={v => {
-            setAccessibilityFocus(v, 100 as Millisecond);
-          }}
-        />
       </View>
     );
   };
