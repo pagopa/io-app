@@ -440,7 +440,7 @@ profile:
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
-    list:       
+    list:
       biometric_recognition:
         title: Biometric recognition
         subtitle: Use your fingerprint or your face
@@ -2597,6 +2597,8 @@ bonus:
         timeout:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
+    voucherList:
+      title: "VoucherListScreen"
 features:
   euCovidCertificate:
     save:
