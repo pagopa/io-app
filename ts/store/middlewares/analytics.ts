@@ -100,7 +100,8 @@ import {
   refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
@@ -112,6 +113,7 @@ import {
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
+import { getNetworkErrorMessage } from "../../utils/errors";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -227,6 +229,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+    case getType(updatePaymentStatus.failure):
+      return mp.track(action.type, {
+        reason: getNetworkErrorMessage(action.payload)
+      });
 
     // Messages actions with properties
     case getType(removeMessages): {
@@ -332,6 +338,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(fetchTransactionsRequest):
     case getType(refreshPMTokenWhileAddCreditCard.request):
     case getType(refreshPMTokenWhileAddCreditCard.success):
+    case getType(updatePaymentStatus.request):
+    case getType(updatePaymentStatus.success):
     // payment
     case getType(abortRunningPayment):
     case getType(paymentInitializeState):

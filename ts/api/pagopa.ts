@@ -567,7 +567,7 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
 };
 
 const updatePaymentStatus: ChangePayOptionT = {
-  method: "post",
+  method: "put",
   url: ({ idWallet }) => `/v1/wallet/${idWallet}/payment-status`,
   query: () => ({}),
   body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
