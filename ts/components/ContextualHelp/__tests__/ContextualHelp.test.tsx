@@ -9,7 +9,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
 import ROUTES from "../../navigation/routes";
 import { appReducer } from "../../store/reducers";
-import { ContextualHelp } from "../ContextualHelp";
+import { ContextualHelp } from "../index";
 
 jest.useFakeTimers();
 

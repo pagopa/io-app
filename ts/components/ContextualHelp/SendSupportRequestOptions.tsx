@@ -2,19 +2,21 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import I18n from "../i18n";
-import themeVariables from "../theme/variables";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { H1 } from "./core/typography/H1";
-import { BaseHeader } from "./screens/BaseHeader";
-import Markdown from "./ui/Markdown";
-import IconFont from "./ui/IconFont";
-import FooterWithButtons from "./ui/FooterWithButtons";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import { IOStyles } from "./core/variables/IOStyles";
-import { RawCheckBox } from "./core/selection/RawCheckBox";
-import { Label } from "./core/typography/Label";
-import Accordion from "./ui/Accordion";
+
+import I18n from "../../i18n";
+import themeVariables from "../../theme/variables";
+
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { H1 } from "../core/typography/H1";
+import { BaseHeader } from "../screens/BaseHeader";
+import Markdown from "../ui/Markdown";
+import IconFont from "../ui/IconFont";
+import FooterWithButtons from "../ui/FooterWithButtons";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import { IOStyles } from "../core/variables/IOStyles";
+import { RawCheckBox } from "../core/selection/RawCheckBox";
+import { Label } from "../core/typography/Label";
+import Accordion from "../ui/Accordion";
 
 const checkboxStyle = StyleSheet.create({
   container: {

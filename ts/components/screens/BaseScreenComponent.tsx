@@ -27,7 +27,9 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
-import ContextualHelpModal from "../ContextualHelpModal";
+import ContextualHelpModal, {
+  RequestAssistancePayload
+} from "../ContextualHelp/ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
@@ -101,16 +103,19 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     };
   }
 
-  private handleOnRequestAssistance = (
-    type: BugReporting.reportType,
-    supportToken: SupportTokenState,
-    shouldAttachScreenshotToIBRequest?: boolean
-  ) => {
+  private handleOnRequestAssistance = ({
+    supportToken,
+    supportType,
+    shouldSendScreenshot
+  }: RequestAssistancePayload) => {
+    // TODO:
+    // 1. receive config
+    // 2. use support token and device id from here
+
     // don't close modal if the report isn't a bug (bug brings a screenshot)
-    if (type !== BugReporting.reportType.bug) {
-      this.setState(
-        { requestReport: some(type), supportToken },
-        this.handleOnContextualHelpDismissed
+    if (supportType !== BugReporting.reportType.bug) {
+      this.setState({ requestReport: some(supportType), supportToken }, () =>
+        this.handleOnContextualHelpDismissed(supportToken)
       );
       return;
     }
@@ -124,9 +129,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       this.setState({ isHelpVisible: false }, () => {
         this.setState(
           {
-            requestReport: some(type),
+            requestReport: some(supportType),
             supportToken,
-            shouldAttachScreenshotToIBRequest
+            shouldAttachScreenshotToIBRequest: shouldSendScreenshot
           },
           () => {
             // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
@@ -134,7 +139,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
             // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
             setTimeout(
-              this.handleOnContextualHelpDismissed,
+              () => this.handleOnContextualHelpDismissed(supportToken),
               ANDROID_OPEN_REPORT_DELAY
             );
             this.setState({ contextualHelpModalAnimation: "slide" });
@@ -144,16 +149,17 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleOnContextualHelpDismissed = () => {
+  private handleOnContextualHelpDismissed = (
+    supportTokenState?: SupportTokenState
+  ) => {
+    const supportToken = fromNullable(supportTokenState)
+      .mapNullable<SupportToken | undefined>(rsp =>
+        getValueOrElse(rsp, undefined)
+      )
+      .getOrElse(undefined);
     const maybeReport = this.state.requestReport;
     this.setState({ requestReport: none }, () => {
       maybeReport.map(type => {
-        const supportToken = fromNullable(this.state.supportToken)
-          .mapNullable<SupportToken | undefined>(rsp =>
-            getValueOrElse(rsp, undefined)
-          )
-          .getOrElse(undefined);
-
         // Store/remove and log the support token only if is a new assistance request.
         if (type === BugReporting.reportType.bug) {
           // log on instabug the support token
@@ -202,21 +208,25 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
   };
 
-  private hideHelp = () => {
+  private hideHelp = (supportToken?: SupportTokenState) => {
     maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground(
         "light-content",
         customVariables.brandDarkGray
       )
     );
-    this.handleOnContextualHelpDismissed();
+    this.handleOnContextualHelpDismissed(supportToken);
     this.setState({ isHelpVisible: false });
   };
 
-  private handleOnLinkClicked = (url: string) => {
+  private handleOnLinkClicked = (
+    url: string,
+    supportToken?: SupportTokenState
+  ) => {
     // manage links with IO_INTERNAL_LINK_PREFIX as prefix
     if (isIoInternalLink(url)) {
-      this.hideHelp();
+      // TODO: ensure supportToken is not an issue here
+      this.hideHelp(supportToken);
       return;
     }
 
@@ -255,7 +265,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       markdownContentLoaded
     } = this.state;
 
-    const ch = contextualHelp
+    const contextualHelpConfig = contextualHelp
       ? { body: contextualHelp.body, title: contextualHelp.title }
       : contextualHelpMarkdown
       ? {
@@ -298,14 +308,14 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           titleColor={titleColor}
         />
         {children}
-        {ch && (
+        {contextualHelpConfig && (
           <ContextualHelpModal
             shouldAskForScreenshotWithInitialValue={
               shouldAskForScreenshotWithInitialValue
             }
-            title={ch.title}
+            title={contextualHelpConfig.title}
             onLinkClicked={this.handleOnLinkClicked}
-            body={ch.body}
+            body={contextualHelpConfig.body}
             isVisible={isHelpVisible}
             modalAnimation={contextualHelpModalAnimation}
             onRequestAssistance={this.handleOnRequestAssistance}

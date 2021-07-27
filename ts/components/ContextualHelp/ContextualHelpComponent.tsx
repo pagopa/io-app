@@ -1,24 +1,31 @@
 import { BugReporting } from "instabug-reactnative";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import I18n from "../i18n";
-import { isStringNullyOrEmpty } from "../utils/strings";
-import themeVariables from "../theme/variables";
-import { ContextualHelpData } from "./ContextualHelpModal";
-import { H3 } from "./core/typography/H3";
-import FAQComponent from "./FAQComponent";
-import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
-import { BaseHeader } from "./screens/BaseHeader";
-import BetaBannerComponent from "./screens/BetaBannerComponent";
-import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
-import ActivityIndicator from "./ui/ActivityIndicator";
+import { StyleSheet, Text } from "react-native";
+import { SupportTokenState } from "../../../store/reducers/authentication";
+import I18n from "../../i18n";
+import { isStringNullyOrEmpty } from "../../utils/strings";
+import themeVariables from "../../theme/variables";
+import { H3 } from "../core/typography/H3";
+import FAQComponent from "../FAQComponent";
+import InstabugAssistanceComponent from "../InstabugAssistanceComponent";
+import { BaseHeader } from "../screens/BaseHeader";
+import BetaBannerComponent from "../screens/BetaBannerComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import ActivityIndicator from "../ui/ActivityIndicator";
+import { FAQType } from "../../utils/faq";
 
 const styles = StyleSheet.create({
   contentContainer: {
     padding: themeVariables.contentPadding
   }
 });
+
+export type ContextualHelpData = {
+  title: string;
+  content: React.ReactNode;
+  faqs?: ReadonlyArray<FAQType>;
+};
 
 type Props = {
   onClose: () => void;
@@ -53,6 +60,7 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
           )
         }}
       />
+      <Text>{"ora son qui"}</Text>
       {isContentReady && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
