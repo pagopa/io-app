@@ -5,10 +5,7 @@ import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { GlobalState } from "../store/reducers/types";
-import {
-  SectionStatusKey,
-  sectionStatusSelector
-} from "../store/reducers/backendStatus";
+import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
@@ -17,6 +14,7 @@ import { LevelEnum } from "../../definitions/content/SectionStatus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
+import { SectionStatusKey } from "../types/backendStatus";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
