@@ -816,12 +816,25 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  yield takeLatest(
-    getType(updatePaymentStatus.request),
-    updatePaymentStatusSaga,
-    paymentManagerClient,
-    pmSessionManager
-  );
+  yield takeLatest(getType(updatePaymentStatus.request), function* (
+    action: ActionType<typeof updatePaymentStatus.request>
+  ) {
+    yield call(
+      updatePaymentStatusSaga,
+      paymentManagerClient,
+      pmSessionManager,
+      action
+    );
+    const updatePaymentOutcome: ActionType<
+      typeof updatePaymentStatus.success | typeof updatePaymentStatus.failure
+    > = yield take([
+      getType(updatePaymentStatus.success),
+      getType(updatePaymentStatus.failure)
+    ]);
+    if (updatePaymentOutcome.type === getType(updatePaymentStatus.success)) {
+      yield put(fetchWalletsRequestWithExpBackoff());
+    }
+  });
 
   if (bpdEnabled) {
     const contentClient = ContentClient();
