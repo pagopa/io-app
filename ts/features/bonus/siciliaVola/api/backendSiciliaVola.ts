@@ -16,6 +16,7 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   getAeroportiBeneficiarioDefaultDecoder,
   GetAeroportiBeneficiarioT,
+  getListaComuniBySiglaProvinciaDefaultDecoder,
   GetListaComuniBySiglaProvinciaT,
   getListaProvinceByIdRegioneDefaultDecoder,
   GetListaProvinceByIdRegioneT,
@@ -46,9 +47,7 @@ const GetStatiUE: GetStatiUET = {
   method: "get",
   url: () => "/api/v1/mitvoucher/data/rest/unsecured/statiUE",
   query: _ => ({}),
-  headers: _ => ({
-    "Ocp-Apim-Subscription-Key": "fe43f9a67c474aa294a1af798c760639"
-  }),
+  headers: _ => ({}),
   response_decoder: getStatiUEDefaultDecoder()
 };
 
@@ -84,7 +83,7 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
     `/api/v1/mitvoucher/data/rest/unsecured/comuni/${params.siglaProvincia}`,
   query: _ => ({}),
   headers: _ => ({}),
-  response_decoder: getListaProvinceByIdRegioneDefaultDecoder()
+  response_decoder: getListaComuniBySiglaProvinciaDefaultDecoder()
 };
 
 /**
