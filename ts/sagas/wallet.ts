@@ -184,13 +184,13 @@ import {
   paymentStartRequest,
   paymentVerificaRequestHandler,
   setFavouriteWalletRequestHandler,
-  updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
+import { handleUpdatePaymentStatus } from "./wallet/updatePaymentStatus";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -816,25 +816,12 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  yield takeLatest(getType(updatePaymentStatus.request), function* (
-    action: ActionType<typeof updatePaymentStatus.request>
-  ) {
-    yield call(
-      updatePaymentStatusSaga,
-      paymentManagerClient,
-      pmSessionManager,
-      action
-    );
-    const updatePaymentOutcome: ActionType<
-      typeof updatePaymentStatus.success | typeof updatePaymentStatus.failure
-    > = yield take([
-      getType(updatePaymentStatus.success),
-      getType(updatePaymentStatus.failure)
-    ]);
-    if (updatePaymentOutcome.type === getType(updatePaymentStatus.success)) {
-      yield put(fetchWalletsRequestWithExpBackoff());
-    }
-  });
+  yield takeLatest(
+    getType(updatePaymentStatus.request),
+    handleUpdatePaymentStatus,
+    paymentManagerClient,
+    pmSessionManager
+  );
 
   if (bpdEnabled) {
     const contentClient = ContentClient();

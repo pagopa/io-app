@@ -11,7 +11,6 @@ export const brandsBlackList = new Set<CreditCardType>();
  * @param paymentMethod
  */
 export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
-  paymentMethod.enableableFunctions;
   if (paymentMethod.pagoPA === false) {
     return false;
   }
