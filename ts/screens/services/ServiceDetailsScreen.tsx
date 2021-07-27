@@ -13,7 +13,7 @@ import BaseScreenComponent, {
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import {
   contentSelector,
   ServiceMetadataState
@@ -49,7 +49,6 @@ type NavigationParams = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
 type State = {
@@ -307,7 +306,9 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatch
+});
 
 export default connect(
   mapStateToProps,
