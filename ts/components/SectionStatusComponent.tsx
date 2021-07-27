@@ -5,12 +5,15 @@ import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { GlobalState } from "../store/reducers/types";
-import { sectionStatusSelector } from "../store/reducers/backendStatus";
+import {
+  SectionStatusKey,
+  sectionStatusSelector
+} from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
-import { SectionStatus, SectionStatusKey } from "../types/backendStatus";
+import { LevelEnum } from "../../definitions/content/SectionStatus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
@@ -38,16 +41,16 @@ const styles = StyleSheet.create({
   text: { marginLeft: 16, flex: 1 }
 });
 
-export const statusColorMap: Record<SectionStatus["level"], string> = {
-  normal: IOColors.aqua,
-  critical: IOColors.red,
-  warning: IOColors.orange
+export const statusColorMap: Record<LevelEnum, string> = {
+  [LevelEnum.normal]: IOColors.aqua,
+  [LevelEnum.critical]: IOColors.red,
+  [LevelEnum.warning]: IOColors.orange
 };
 
-const statusIconMap: Record<SectionStatus["level"], string> = {
-  normal: "io-complete",
-  critical: "io-warning",
-  warning: "io-info"
+const statusIconMap: Record<LevelEnum, string> = {
+  [LevelEnum.normal]: "io-complete",
+  [LevelEnum.critical]: "io-warning",
+  [LevelEnum.warning]: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
@@ -67,7 +70,8 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     return null;
   }
 
-  const viewRef = React.createRef<View>();
+  const viewRefLink = React.createRef<View>();
+  const viewRefNoLink = React.createRef<View>();
   const sectionStatus = props.sectionStatus;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
@@ -78,8 +82,10 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   const noticeHasLink = maybeWebUrl.isSome();
 
   const handleOnSectionRef = () => {
-    if (viewRef.current) {
-      props.onSectionRef?.(viewRef);
+    if (viewRefLink.current) {
+      props.onSectionRef?.(viewRefLink);
+    } else if (viewRefNoLink.current) {
+      props.onSectionRef?.(viewRefNoLink);
     }
   };
 
@@ -92,7 +98,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     );
 
     return () => unsubscribe?.remove();
-  }, [viewRef]);
+  }, [viewRefLink, viewRefNoLink]);
 
   return (
     <>
@@ -111,7 +117,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
               _ => `, ${I18n.t("global.sectionStatus.moreInfo")}`
             )}`}
             accessibilityRole="link"
-            ref={viewRef}
+            ref={viewRefLink}
           >
             <IconFont
               testID={"SectionStatusComponentIcon"}
@@ -148,7 +154,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
         <View
           style={[styles.container, { backgroundColor }]}
           accessible={true}
-          ref={viewRef}
+          ref={viewRefNoLink}
           accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
             "global.accessibility.alert"
           )}`}
