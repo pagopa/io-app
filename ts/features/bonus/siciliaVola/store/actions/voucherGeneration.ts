@@ -16,7 +16,7 @@ import {
   VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
-import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
+import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher

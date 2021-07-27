@@ -8,8 +8,8 @@ import {
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
 import { University, VoucherRequest } from "../../../types/SvVoucherRequest";
-import { SvVoucherGeneratedResponse } from "../../../types/svVoucherResponse";
-import { SvVoucher, SvVoucherId } from "../../../types/svVoucher";
+import { SvVoucherGeneratedResponse } from "../../../types/SvVoucherResponse";
+import { SvVoucher, SvVoucherId } from "../../../types/SvVoucher";
 
 const genericError = getTimeoutError();
 const mockVoucherRequest: VoucherRequest = {

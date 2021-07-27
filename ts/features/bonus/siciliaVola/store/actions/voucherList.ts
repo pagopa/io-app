@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
-import { SvVoucher } from "../../types/svVoucher";
+import { SvVoucher } from "../../types/SvVoucher";
 
 /**
  * get and handle the available state

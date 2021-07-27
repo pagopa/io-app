@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { getTimeoutError } from "../../../../../../utils/errors";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 import { svVoucherListGet } from "../../actions/voucherList";
-import { SvVoucher, SvVoucherId } from "../../../types/svVoucher";
+import { SvVoucher, SvVoucherId } from "../../../types/SvVoucher";
 
 const genericError = getTimeoutError();
 

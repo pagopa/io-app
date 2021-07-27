@@ -1,4 +1,4 @@
-import { SvVoucher } from "./svVoucher";
+import { SvVoucher } from "./SvVoucher";
 
 export type SvVoucherGeneratedResponseSuccess = {
   kind: "success";
@@ -12,9 +12,11 @@ export type SvVoucherGeneratedResponseTimeout = {
   kind: "timeout";
 };
 
+export type SvVoucherGeneratedResponseFailure = SvVoucherGeneratedResponseTimeout;
+
 /**
  * This type represents all the possible remote responses
  */
 export type SvVoucherGeneratedResponse =
   | SvVoucherGeneratedResponseSuccess
-  | SvVoucherGeneratedResponseTimeout;
+  | SvVoucherGeneratedResponseFailure;

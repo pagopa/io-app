@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
-import { SvVoucher } from "../../types/svVoucher";
+import { SvVoucher } from "../../types/SvVoucher";
 import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
 import { svVoucherListGet } from "../actions/voucherList";
 import { NetworkError } from "../../../../../utils/errors";
