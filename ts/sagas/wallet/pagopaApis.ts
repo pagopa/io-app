@@ -232,10 +232,12 @@ export function* updatePaymentStatusSaga(
           })
         );
       } else {
-        throw Error(`response status ${response.value.status}`);
+        const errorStatus = Error(`response status ${response.value.status}`);
+        yield put(updatePaymentStatus.failure(getNetworkError(errorStatus)));
       }
     } else {
-      throw Error(readablePrivacyReport(response.value));
+      const errorDescription = Error(readablePrivacyReport(response.value));
+      yield put(updatePaymentStatus.failure(getNetworkError(errorDescription)));
     }
   } catch (error) {
     yield put(updatePaymentStatus.failure(getNetworkError(error)));

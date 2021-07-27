@@ -1,5 +1,5 @@
-import { ActionType, getType } from "typesafe-actions";
-import { call, put, take } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { call, put } from "redux-saga/effects";
 import {
   fetchWalletsRequestWithExpBackoff,
   updatePaymentStatus
@@ -11,7 +11,7 @@ import { updatePaymentStatusSaga } from "./pagopaApis";
 
 /**
  * handle the request of update a payment method to enable/disable it to pay with pagoPA
- * it uses a dedicated API to update the payment method and waits for a result action (success/failure)
+ * it uses a dedicated API to update the payment method and waits until the request has been completed
  * then it reloads the wallet list to spread the refreshed payment methods
  * @param paymentManagerClient
  * @param pmSessionManager
@@ -28,13 +28,5 @@ export function* handleUpdatePaymentStatus(
     pmSessionManager,
     action
   );
-  const updatePaymentOutcome: ActionType<
-    typeof updatePaymentStatus.success | typeof updatePaymentStatus.failure
-  > = yield take([
-    getType(updatePaymentStatus.success),
-    getType(updatePaymentStatus.failure)
-  ]);
-  if (updatePaymentOutcome.type === getType(updatePaymentStatus.success)) {
-    yield put(fetchWalletsRequestWithExpBackoff());
-  }
+  yield put(fetchWalletsRequestWithExpBackoff());
 }

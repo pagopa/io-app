@@ -663,7 +663,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () =>
     dispatch(
-      updatePaymentStatus.request({ idWallet: 123, paymentEnabled: true })
+      updatePaymentStatus.request({ idWallet: 28945, paymentEnabled: false })
     ),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));

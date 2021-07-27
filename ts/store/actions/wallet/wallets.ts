@@ -152,7 +152,7 @@ export const sendAddCobadgeMessage = createStandardAction(
   "SEND_ADD_COBADGE_MESSAGE"
 )<boolean>();
 
-type updatePaymentStatusPayload = { idWallet: number; paymentEnabled: boolean };
+type UpdatePaymentStatusPayload = { idWallet: number; paymentEnabled: boolean };
 /**
  * change the payment status (enable or disable a payment method to pay with pagoPa)
  */
@@ -160,7 +160,7 @@ export const updatePaymentStatus = createAsyncAction(
   "UPDATE_WALLET_PAYMENT_STATUS_REQUEST",
   "UPDATE_WALLET_PAYMENT_STATUS_SUCCESS",
   "UPDATE_WALLET_PAYMENT_STATUS_FAILURE"
-)<updatePaymentStatusPayload, updatePaymentStatusPayload, NetworkError>();
+)<UpdatePaymentStatusPayload, UpdatePaymentStatusPayload, NetworkError>();
 
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
