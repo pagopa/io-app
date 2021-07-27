@@ -8,6 +8,7 @@ import { State } from "../../types/SvVoucherRequest";
 import { isDefined } from "../../../../../utils/guards";
 import { ActionType } from "typesafe-actions";
 
+// TODO: add the mapping when the swagger will be fixed
 const mapKinds: Record<number, string> = {};
 
 // convert a success response to the logical app representation of it

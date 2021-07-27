@@ -123,7 +123,6 @@ export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
 /**
  * get and handle the available state
  */
-// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableState = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_SUCCESS",
@@ -133,12 +132,11 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 /**
  * get and handle the available region
  */
-// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableRegion = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_REGION_FAILURE"
-)<State, ReadonlyArray<Region>, NetworkError>();
+)<void, ReadonlyArray<Region>, NetworkError>();
 
 /**
  * get and handle the available province
