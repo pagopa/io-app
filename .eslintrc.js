@@ -6,8 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:sonarjs/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -83,8 +82,17 @@ module.exports = {
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
-    "sonarjs/no-duplicate-string": "off"
+    "sonarjs/no-duplicate-string": "off",
+    "sonarjs/no-nested-template-literals": "warn"
   },
+  overrides: [
+    {
+      files: ["**/*.test.*"],
+      rules: {
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    }
+  ],
   settings: {
     react: {
       version: "detect"
