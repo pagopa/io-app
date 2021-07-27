@@ -11,10 +11,12 @@ import {
   addWalletNewCreditCardSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
   refreshPMTokenWhileAddCreditCard,
   runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest
+  setFavouriteWalletRequest,
+  updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import {
   lastPaymentOutcomeCodeSelector,
@@ -31,6 +33,9 @@ import {
 } from "../../utils/input";
 import { SessionManager } from "../../utils/SessionManager";
 import { testableWalletsSaga } from "../wallet";
+import { handleUpdatePaymentStatus } from "../wallet/updatePaymentStatus";
+import { updatePaymentStatusSaga } from "../wallet/pagopaApis";
+import { PaymentManagerClient } from "../../api/pagopa";
 
 jest.mock("react-native-background-timer", () => ({
   startTimer: jest.fn()
@@ -137,6 +142,38 @@ describe("startOrResumeAddCreditCardSaga", () => {
       .delay(testableWalletsSaga!.successScreenDelay)
       .next()
       .put(setFavouriteWalletRequest(anIdWallet))
+      .next();
+  });
+});
+
+describe("handleUpdatePaymentStatus", () => {
+  it("should execute the update request and dispatch the action to reload the wallets list", () => {
+    const aPMToken = "1234" as PaymentManagerToken;
+    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
+      jest.fn(() => Promise.resolve(some(aPMToken)))
+    );
+    const paymentManagerClient = ({
+      updatePaymentStatus: jest.fn()
+    } as unknown) as ReturnType<typeof PaymentManagerClient>;
+    const requestAction = updatePaymentStatus.request({
+      idWallet: 123,
+      paymentEnabled: true
+    });
+    testSaga(
+      handleUpdatePaymentStatus,
+      paymentManagerClient,
+      aPmSessionManager,
+      requestAction
+    )
+      .next()
+      .call(
+        updatePaymentStatusSaga,
+        paymentManagerClient,
+        aPmSessionManager,
+        requestAction
+      )
+      .next()
+      .put(fetchWalletsRequestWithExpBackoff())
       .next();
   });
 });
