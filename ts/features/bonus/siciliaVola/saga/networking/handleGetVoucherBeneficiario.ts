@@ -43,6 +43,7 @@ export function* handleGetVoucherBeneficiario(
   action: ActionType<typeof svVoucherListGet.request>
 ) {
   try {
+    // TODO: add MitVoucherToken
     const getVoucherBeneficiarioResult: SagaCallReturnType<typeof getVoucherBeneficiario> = yield call(
       getVoucherBeneficiario,
       action.payload
