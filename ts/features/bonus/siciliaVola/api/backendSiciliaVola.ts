@@ -87,7 +87,7 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
 };
 
 /**
- * Get the list of municipalities selectable by the user given a province abbreviation
+ * Get the list of the airports available for the voucher given a regionId
  */
 const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   method: "get",
