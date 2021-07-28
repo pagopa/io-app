@@ -294,7 +294,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // download / delete profile
     case getType(upsertUserDataProcessing.success):
       return mp.track(action.type, action.payload);
-
+    // wallet
+    case getType(updatePaymentStatus.success):
+      return mp.track(action.type, {
+        pagoPA: action.payload.paymentMethod?.pagoPA
+      });
     //
     // Actions (without properties)
     //
