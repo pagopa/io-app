@@ -343,7 +343,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(refreshPMTokenWhileAddCreditCard.request):
     case getType(refreshPMTokenWhileAddCreditCard.success):
     case getType(updatePaymentStatus.request):
-    case getType(updatePaymentStatus.success):
     // payment
     case getType(abortRunningPayment):
     case getType(paymentInitializeState):
