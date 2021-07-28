@@ -4,20 +4,14 @@ import { BackHandler, Text } from "react-native";
 import { createStore } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 
-import { applicationChangeState } from "../../store/actions/application";
-import { GlobalState } from "../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
-import ROUTES from "../../navigation/routes";
-import { appReducer } from "../../store/reducers";
+import { applicationChangeState } from "../../../store/actions/application";
+import { GlobalState } from "../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import ROUTES from "../../../navigation/routes";
+import { appReducer } from "../../../store/reducers";
 import { ContextualHelp } from "../index";
 
 jest.useFakeTimers();
-
-const options = {
-  title: "a title",
-  body: jest.fn(),
-  onClose: jest.fn()
-};
 
 /**
  * Finds the first button with iconName as a child.
@@ -26,7 +20,7 @@ const options = {
  * TODO: this helper is a stub for further development around an a11y-oriented
  * library that can be shared across projects.
  */
-function buttonByIconName(iconName: string, renderAPI: RenderAPI) {
+export function buttonByIconName(iconName: string, renderAPI: RenderAPI) {
   return renderAPI.getAllByRole("button").find(
     button =>
       !!button.children.find(child => {
@@ -37,6 +31,12 @@ function buttonByIconName(iconName: string, renderAPI: RenderAPI) {
       })
   );
 }
+
+const options = {
+  title: "a title",
+  body: jest.fn(),
+  onClose: jest.fn()
+};
 
 describe("ContextualHelp component", () => {
   it("should render a button with the 'io-close' icon", () => {

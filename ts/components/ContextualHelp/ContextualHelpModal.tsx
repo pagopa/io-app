@@ -1,13 +1,13 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
+import React, { useEffect, useState } from "react";
+import { InteractionManager, Modal, ModalBaseProps } from "react-native";
+import DeviceInfo from "react-native-device-info";
+import { connect } from "react-redux";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container } from "native-base";
-import React, { useEffect, useState } from "react";
-import { InteractionManager, Modal, ModalBaseProps, Text } from "react-native";
-import DeviceInfo from "react-native-device-info";
-import { connect } from "react-redux";
-import { Option } from "fp-ts/lib/Option";
 
+import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { loadContextualHelpData } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
 import { screenContextualHelpDataSelector } from "../../store/reducers/content";
@@ -19,11 +19,7 @@ import {
 } from "../../store/reducers/authentication";
 import { loadSupportToken } from "../../store/actions/authentication";
 import { remoteUndefined } from "../../features/bonus/bpd/model/RemoteValue";
-import {
-  FAQsCategoriesType,
-  FAQType,
-  getFAQsFromCategories
-} from "../../utils/faq";
+import { FAQsCategoriesType, getFAQsFromCategories } from "../../utils/faq";
 import { instabugReportOpened } from "../../store/actions/debug";
 import Markdown from "../ui/Markdown";
 import SendSupportRequestOptions, {
@@ -32,7 +28,6 @@ import SendSupportRequestOptions, {
 import ContextualHelpComponent, {
   ContextualHelpData
 } from "./ContextualHelpComponent";
-import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 
 export type RequestAssistancePayload = {
   supportType: BugReporting.reportType;
@@ -48,6 +43,7 @@ type OwnProps = Readonly<{
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   isVisible: boolean;
   modalAnimation?: ModalBaseProps["animationType"];
+  onLinkClicked?: (url: string) => void;
   onRequestAssistance: (payload: RequestAssistancePayload) => void;
   shouldAskForScreenshotWithInitialValue?: boolean;
   title: string;
@@ -57,7 +53,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-type ContextualHelpData = any;
 /**
  If contextualData (loaded from the content server) contains the route of the current screen,
  title, content, faqs are read from it, otherwise they came from the locales stored in app
@@ -91,19 +86,13 @@ const getContextualHelpData = (
  */
 const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const [content, setContent] = useState<React.ReactNode>(null);
-  const [contentLoaded, setContentLoaded] = useState<boolean | undefined>(
+  const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
-
-  type AssistanceRequestStep =
-    | { _tag: "idle" } // show ContextualHelpComponent
-    | { _tag: "begin"; readonly supportType: BugReporting.reportType } // show Send..
-    | { _tag: "end" };
-  const [assistanceRequestStep, setAssistanceRequestStep] = useState<
-    AssistanceRequestStep
-  >({ _tag: "idle" });
-
-  // const [supportType, setSupportType] = useState< BugReporting.reportType | undefined >(undefined);
+  const [
+    authenticatedSupportType,
+    setAuthenticatedSupportType
+  ] = useState<BugReporting.reportType | null>(null);
 
   useEffect(() => {
     // if the contextual data is empty or is in error -> try to reload
@@ -128,7 +117,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
   const onClose = () => {
     void InteractionManager.runAfterInteractions(() => setContent(null));
     props.close();
-    setAssistanceRequestStep({ _tag: "end" });
+    setAuthenticatedSupportType(null);
   };
 
   const contextualHelpData: ContextualHelpData = getContextualHelpData(
@@ -138,7 +127,7 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       faqs: getFAQsFromCategories(props.faqCategories ?? []),
       content
     },
-    () => setContentLoaded(true)
+    () => setContentHasLoaded(true)
   );
 
   /**
@@ -148,54 +137,44 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
    */
   const isContentLoaded = props.maybeContextualData.fold(
     props.contentLoaded,
-    _ => contentLoaded
+    _ => contentHasLoaded
   );
 
-  /**
-   * If the user is authenticated and is a new request we show the screen that allows to choose or not to send the personal token
-   * to the assistance.
-   * Otherwise we allow the user to open directly a the assistance request (new or not) without sending the personal token.
-   */
-  const startRequestAssistance = (supportType: BugReporting.reportType) => {
+  const initRequestAssistance = (supportType: BugReporting.reportType) => {
     // ask to send the personal information to the assistance only for a new bug.
     if (props.isAuthenticated && supportType === BugReporting.reportType.bug) {
       // refresh / load support token
       props.loadSupportToken();
-      setAssistanceRequestStep({ _tag: "begin", supportType });
+      setAuthenticatedSupportType(supportType);
     } else {
-      endRequestAssistance({
+      finalizeRequestAssistance({
         supportType,
         supportToken: props.supportToken
       });
     }
   };
 
-  const endRequestAssistance = (payload: RequestAssistancePayload) => {
+  const finalizeRequestAssistance = (payload: RequestAssistancePayload) => {
     props.dispatchOpenReportType(payload.supportType);
     props.onRequestAssistance(payload);
-    setAssistanceRequestStep({ _tag: "end" });
   };
 
   /**
-   * If an authenticated user chooses to send the personal data we send it to the assistance.
-   * Otherwise we allow the user to open a new assistance request without sending the personal data.
-   *
-   * @param options Contains the checkboxes' values, @todo handle screenshot attachment request.
+   * Authenticated request is a two-steps procedure: first, we ask the permission to use
+   * personal data. Second, we actually submit the request.
    */
-  const handleContinue = (options: SupportRequestOptions) => {
-    if (assistanceRequestStep._tag === "begin") {
-      const { supportType } = assistanceRequestStep;
-      endRequestAssistance({
-        supportType,
-        supportToken: options.sendPersonalInfo
-          ? props.supportToken
-          : remoteUndefined,
-        deviceUniqueId: options.sendPersonalInfo
-          ? DeviceInfo.getUniqueId()
-          : undefined,
-        shouldSendScreenshot: options.sendScreenshot
-      });
-    }
+  const handleContinueWithOptions = (options: SupportRequestOptions) => {
+    finalizeRequestAssistance({
+      supportType: options.supportType,
+      supportToken: options.sendPersonalInfo
+        ? props.supportToken
+        : remoteUndefined,
+      deviceUniqueId: options.sendPersonalInfo
+        ? DeviceInfo.getUniqueId()
+        : undefined,
+      shouldSendScreenshot: options.sendScreenshot
+    });
+    setAuthenticatedSupportType(null);
   };
 
   return (
@@ -208,24 +187,27 @@ const ContextualHelpModal: React.FunctionComponent<Props> = (props: Props) => {
       onRequestClose={onClose}
     >
       <Container>
-        {(assistanceRequestStep._tag === "idle" ||
-          assistanceRequestStep._tag === "end") && (
+        {authenticatedSupportType ? (
+          <SendSupportRequestOptions
+            onClose={onClose}
+            onGoBack={() => {
+              if (authenticatedSupportType) {
+                setAuthenticatedSupportType(null);
+              }
+            }}
+            onContinue={handleContinueWithOptions}
+            shouldAskForScreenshotWithInitialValue={
+              props.shouldAskForScreenshotWithInitialValue
+            }
+            supportType={authenticatedSupportType}
+          />
+        ) : (
           <ContextualHelpComponent
             onClose={onClose}
             onLinkClicked={onClose}
             contextualHelpData={contextualHelpData}
             isContentLoaded={isContentLoaded}
-            onRequestAssistance={startRequestAssistance}
-          />
-        )}
-        {assistanceRequestStep._tag === "begin" && (
-          <SendSupportRequestOptions
-            onClose={onClose}
-            onGoBack={() => setAssistanceRequestStep({ _tag: "idle" })}
-            onContinue={handleContinue}
-            shouldAskForScreenshotWithInitialValue={
-              props.shouldAskForScreenshotWithInitialValue
-            }
+            onRequestAssistance={initRequestAssistance}
           />
         )}
       </Container>

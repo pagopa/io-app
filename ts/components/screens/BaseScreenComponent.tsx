@@ -108,14 +108,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     supportType,
     shouldSendScreenshot
   }: RequestAssistancePayload) => {
-    // TODO:
-    // 1. receive config
-    // 2. use support token and device id from here
-
     // don't close modal if the report isn't a bug (bug brings a screenshot)
     if (supportType !== BugReporting.reportType.bug) {
-      this.setState({ requestReport: some(supportType), supportToken }, () =>
-        this.handleOnContextualHelpDismissed(supportToken)
+      this.setState(
+        { requestReport: some(supportType), supportToken },
+        this.handleOnContextualHelpDismissed
       );
       return;
     }
@@ -139,7 +136,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
             // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
             setTimeout(
-              () => this.handleOnContextualHelpDismissed(supportToken),
+              this.handleOnContextualHelpDismissed,
               ANDROID_OPEN_REPORT_DELAY
             );
             this.setState({ contextualHelpModalAnimation: "slide" });
@@ -149,10 +146,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleOnContextualHelpDismissed = (
-    supportTokenState?: SupportTokenState
-  ) => {
-    const supportToken = fromNullable(supportTokenState)
+  private handleOnContextualHelpDismissed = () => {
+    const supportToken = fromNullable(this.state.supportToken)
       .mapNullable<SupportToken | undefined>(rsp =>
         getValueOrElse(rsp, undefined)
       )
@@ -208,25 +203,21 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     });
   };
 
-  private hideHelp = (supportToken?: SupportTokenState) => {
+  private hideHelp = () => {
     maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground(
         "light-content",
         customVariables.brandDarkGray
       )
     );
-    this.handleOnContextualHelpDismissed(supportToken);
+    this.handleOnContextualHelpDismissed();
     this.setState({ isHelpVisible: false });
   };
 
-  private handleOnLinkClicked = (
-    url: string,
-    supportToken?: SupportTokenState
-  ) => {
+  private handleOnLinkClicked = (url: string) => {
     // manage links with IO_INTERNAL_LINK_PREFIX as prefix
     if (isIoInternalLink(url)) {
-      // TODO: ensure supportToken is not an issue here
-      this.hideHelp(supportToken);
+      this.hideHelp();
       return;
     }
 

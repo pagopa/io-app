@@ -1,8 +1,8 @@
 import { BugReporting } from "instabug-reactnative";
 import { Content, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, Text } from "react-native";
-import { SupportTokenState } from "../../../store/reducers/authentication";
+import { StyleSheet } from "react-native";
+
 import I18n from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import themeVariables from "../../theme/variables";
@@ -60,7 +60,6 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
           )
         }}
       />
-      <Text>{"ora son qui"}</Text>
       {isContentReady && (
         <View centerJustified={true}>
           <ActivityIndicator color={themeVariables.brandPrimaryLight} />
