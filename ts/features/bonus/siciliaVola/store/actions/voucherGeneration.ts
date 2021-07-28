@@ -141,22 +141,20 @@ export const svGenerateVoucherAvailableRegion = createAsyncAction(
 /**
  * get and handle the available province
  */
-// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableProvince = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_FAILURE"
-)<Region, ReadonlyArray<Province>, NetworkError>();
+)<number, ReadonlyArray<Province>, NetworkError>();
 
 /**
  * get and handle the available municipality
  */
-// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_FAILURE"
-)<Province, ReadonlyArray<Municipality>, NetworkError>();
+)<string, ReadonlyArray<Municipality>, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
