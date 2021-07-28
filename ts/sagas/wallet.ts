@@ -184,13 +184,13 @@ import {
   paymentStartRequest,
   paymentVerificaRequestHandler,
   setFavouriteWalletRequestHandler,
+  updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
-import { handleUpdatePaymentStatus } from "./wallet/updatePaymentStatus";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -818,7 +818,7 @@ export function* watchWalletSaga(
 
   yield takeLatest(
     getType(updatePaymentStatus.request),
-    handleUpdatePaymentStatus,
+    updatePaymentStatusSaga,
     paymentManagerClient,
     pmSessionManager
   );

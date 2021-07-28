@@ -225,12 +225,16 @@ export function* updatePaymentStatusSaga(
     const response: SagaCallReturnType<typeof request> = yield call(request);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(
-          updatePaymentStatus.success({
-            idWallet: action.payload.idWallet,
-            paymentEnabled: response.value.value.pagoPA
-          })
-        );
+        if (response.value.value.data) {
+          yield put(updatePaymentStatus.success(response.value.value.data));
+        } else {
+          // this should not never happen (payload weak typed)
+          yield put(
+            updatePaymentStatus.failure(
+              getNetworkError(Error("payload is empty"))
+            )
+          );
+        }
       } else {
         const errorStatus = Error(`response status ${response.value.status}`);
         yield put(updatePaymentStatus.failure(getNetworkError(errorStatus)));
