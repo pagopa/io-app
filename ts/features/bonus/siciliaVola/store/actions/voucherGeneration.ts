@@ -103,12 +103,11 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
 /**
  * get and handle available destination for a voucher request
  */
-// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<void, AvailableDestinations, NetworkError>();
+)<number, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
