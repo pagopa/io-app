@@ -226,7 +226,11 @@ export function* updatePaymentStatusSaga(
     if (response.isRight()) {
       if (response.value.status === 200) {
         if (response.value.value.data) {
-          yield put(updatePaymentStatus.success(response.value.value.data));
+          yield put(
+            updatePaymentStatus.success(
+              convertWalletV2toWalletV1(response.value.value.data)
+            )
+          );
         } else {
           // this should not never happen (payload weak typed)
           yield put(

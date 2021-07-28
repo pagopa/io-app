@@ -350,6 +350,19 @@ const reducer = (
         walletById: pot.toLoading(state.walletById)
       };
 
+    case getType(updatePaymentStatus.success):
+      const currentWallets = Object.values(pot.getOrElse(state.walletById, {}));
+      // remove and updated the updated wallet
+      const updateWallets = [
+        ...currentWallets
+          .filter(isDefined)
+          .filter(w => w.idWallet !== action.payload.idWallet),
+        action.payload
+      ];
+      return {
+        ...state,
+        walletById: pot.some(toIndexed(updateWallets, _ => _.idWallet))
+      };
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPsp.success):
     case getType(deleteWalletSuccess):

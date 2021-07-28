@@ -7,7 +7,6 @@ import {
 import {
   CreditCard,
   NullableWallet,
-  PatchedWalletV2,
   PaymentManagerToken,
   Wallet,
   WalletResponse
@@ -161,7 +160,7 @@ export const updatePaymentStatus = createAsyncAction(
   "UPDATE_WALLET_PAYMENT_STATUS_REQUEST",
   "UPDATE_WALLET_PAYMENT_STATUS_SUCCESS",
   "UPDATE_WALLET_PAYMENT_STATUS_FAILURE"
-)<UpdatePaymentStatusPayload, PatchedWalletV2, NetworkError>();
+)<UpdatePaymentStatusPayload, Wallet, NetworkError>();
 
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
