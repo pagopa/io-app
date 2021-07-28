@@ -352,7 +352,7 @@ const reducer = (
 
     case getType(updatePaymentStatus.success):
       const currentWallets = Object.values(pot.getOrElse(state.walletById, {}));
-      // remove and updated the updated wallet
+      // remove and append the updated wallet
       const updateWallets = [
         ...currentWallets
           .filter(isDefined)

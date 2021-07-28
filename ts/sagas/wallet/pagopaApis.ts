@@ -211,7 +211,7 @@ export function* fetchPspRequestHandler(
 }
 
 /**
- * Handles update payment status request
+ * Handles the update of payment method status
  * (enable or disable a payment method to pay with pagoPa)
  */
 export function* updatePaymentStatusSaga(
