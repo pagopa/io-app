@@ -1,4 +1,4 @@
-import { SvVoucher } from "./SvVoucher";
+import { SvVoucher, SvVoucherId } from "./SvVoucher";
 
 export type SvVoucherGeneratedResponseSuccess = {
   kind: "success";
@@ -20,3 +20,11 @@ export type SvVoucherGeneratedResponseFailure = SvVoucherGeneratedResponseTimeou
 export type SvVoucherGeneratedResponse =
   | SvVoucherGeneratedResponseSuccess
   | SvVoucherGeneratedResponseFailure;
+
+export type VoucherPreview = {
+  idVoucher: SvVoucherId;
+  departureDate: Date;
+  returnDate?: Date;
+  destination: string;
+};
+export type SvVoucherListResponse = ReadonlyArray<VoucherPreview>;

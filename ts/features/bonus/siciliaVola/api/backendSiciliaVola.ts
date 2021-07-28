@@ -23,11 +23,14 @@ import {
   getListaRegioniDefaultDecoder,
   GetListaRegioniT,
   getStatiUEDefaultDecoder,
-  GetStatiUET
+  GetStatiUET,
+  getVoucherBeneficiarioDefaultDecoder,
+  GetVoucherBeneficiarioT
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
 import { flip } from "fp-ts/lib/function";
 import { Omit } from "italia-ts-commons/lib/types";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
 
 /**
  * Get the Sicilia Vola session token
@@ -100,6 +103,20 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
 };
 
+/**
+ * Get the list of user's vouchers
+ *
+ * TODO: modify post in get and add auth header when the swagger will be fixed
+ */
+const GetVoucherBeneficiario: GetVoucherBeneficiarioT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/ricercaVoucher`,
+  query: _ => ({}),
+  body: voucherListRequest => JSON.stringify(voucherListRequest),
+  headers: ApiHeaderJson,
+  response_decoder: getVoucherBeneficiarioDefaultDecoder()
+};
+
 const withSiciliaVolaToken = <P extends { Bearer: string }, R>(
   f: (p: P) => Promise<R>
 ) => (token: MitVoucherToken) => async (po: Omit<P, "Bearer">): Promise<R> => {
@@ -137,7 +154,15 @@ export const BackendSiciliaVolaClient = (
         withSiciliaVolaToken(
           createFetchRequestForApi(GetAeroportiBeneficiario, options)
         )
-      )({ idRegione })
+      )({ idRegione }),
+    getVoucherBeneficiario: (
+      voucherListRequest: VoucherBeneficiarioInputBean
+    ) =>
+      // TODO: add auth header
+      createFetchRequestForApi(
+        GetVoucherBeneficiario,
+        options
+      )({ voucherBeneficiarioInputBean: voucherListRequest })
   };
 };
 
