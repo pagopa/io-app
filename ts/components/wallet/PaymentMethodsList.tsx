@@ -21,10 +21,14 @@ import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import I18n from "../../i18n";
 import { GlobalState } from "../../store/reducers/types";
-import { backendStatusSelector } from "../../store/reducers/backendStatus";
+import {
+  backendStatusSelector,
+  SectionStatusKey
+} from "../../store/reducers/backendStatus";
 import { statusColorMap } from "../SectionStatusComponent";
-import { BackendStatus, SectionStatusKey } from "../../types/backendStatus";
 import { getFullLocale } from "../../utils/locale";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -121,7 +125,7 @@ const getBadgeStatus = (
           </Badge>
         ),
         alert:
-          section.level === "critical"
+          section.level === LevelEnum.critical
             ? () => Alert.alert(badgeLabel, section.message[locale])
             : undefined
       };

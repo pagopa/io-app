@@ -38,11 +38,11 @@ export function* activateBpdOnNewPaymentMethods(
   if (isBpdEnabledResponse.isLeft()) {
     yield put(navigateToWalletHome());
   } else {
-    if (isBpdEnabledResponse.value) {
-      // navigate to onboarding new bancomat
+    if (isBpdEnabledResponse.value && bpdRemoteConfig?.program_active) {
+      // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
       yield put(navigateToActivateNewMethods);
     } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {
-      // navigate to "ask if u want to start bpd onboarding"
+      // navigate to "ask if you want to start bpd onboarding"
       yield put(navigateToSuggestBpdActivation());
     }
   }

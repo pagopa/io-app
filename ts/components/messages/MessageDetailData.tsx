@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
     alignSelf: "center"
+  },
+  service: {
+    display: "flex",
+    flexDirection: "row"
   }
 });
 
@@ -107,12 +111,12 @@ class MessageDetailData extends React.PureComponent<Props> {
         )}
 
         {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
-          <Text accessibilityRole="link">
-            {`${I18n.t("messageDetails.service")} `}
-            <Link onPress={this.props.goToServiceDetail}>
+          <View style={styles.service}>
+            <Text>{`${I18n.t("messageDetails.service")} `}</Text>
+            <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
               {this.data.service_detail.value.service_name}
             </Link>
-          </Text>
+          </View>
         )}
         {this.hasEmailOrPhone && (
           <React.Fragment>

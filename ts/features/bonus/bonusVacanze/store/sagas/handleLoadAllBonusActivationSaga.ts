@@ -25,6 +25,7 @@ export function* handleLoadAllBonusActivations(
         const items = allBonusActivationsResponse.value.value.items;
         const ids = items.map(i => i.id);
         yield all(ids.map(id => put(loadBonusVacanzeFromId.request(id))));
+        yield put(loadAllBonusActivations.success(items));
         return;
       }
       throw Error(

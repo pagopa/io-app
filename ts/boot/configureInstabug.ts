@@ -19,7 +19,6 @@ type InstabugLocales = { [k in Locales]: Instabug.locale };
 type InstabugUserAttributeKeys =
   | "backendVersion"
   | "activeScreen"
-  | "fiscalcode"
   | "identityProvider"
   | "lastSeenMessageID"
   | "appVersion"
@@ -28,7 +27,8 @@ type InstabugUserAttributeKeys =
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
-  it: Instabug.locale.italian
+  it: Instabug.locale.italian,
+  de: Instabug.locale.german
 };
 
 export enum TypeLogs {
