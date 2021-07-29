@@ -351,17 +351,14 @@ const reducer = (
       };
 
     case getType(updatePaymentStatus.success):
-      const currentWallets = Object.values(pot.getOrElse(state.walletById, {}));
-      // remove and append the updated wallet
-      const updateWallets = [
-        ...currentWallets
-          .filter(isDefined)
-          .filter(w => w.idWallet !== action.payload.idWallet),
-        action.payload
-      ];
+      const currentWallets = pot.getOrElse(state.walletById, {});
+      // update the received wallet
       return {
         ...state,
-        walletById: pot.some(toIndexed(updateWallets, _ => _.idWallet))
+        walletById: pot.some({
+          ...currentWallets,
+          [action.payload.idWallet]: action.payload
+        })
       };
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPsp.success):
