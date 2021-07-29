@@ -88,9 +88,9 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     handleOnSectionRef();
 
-    const unsubscribe = navigation.addListener("didFocus", handleOnSectionRef);
+    const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
 
-    return () => unsubscribe.remove();
+    return () => unsubscribe?.remove();
   }, [viewRef]);
 
   return (
