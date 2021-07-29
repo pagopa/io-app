@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { BonusActivationCollection } from "../../../../../../definitions/bonus_vacanze/BonusActivationCollection";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../../definitions/bonus_vacanze/InstanceId";
@@ -17,7 +18,7 @@ export const loadAllBonusActivations = createAsyncAction(
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_REQUEST",
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
-)<void, void, Error>();
+)<void, BonusActivationCollection["items"], Error>();
 
 /**
  * Request the list of all the types of bonus

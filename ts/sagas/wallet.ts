@@ -349,7 +349,8 @@ function* startOrResumeAddCreditCardSaga(
                     // otherwise navigate to a screen where is asked to join bpd
                     if (
                       bpdEnroll.value &&
-                      isRawCreditCard(maybeAddedWallet.paymentMethod)
+                      isRawCreditCard(maybeAddedWallet.paymentMethod) &&
+                      bpdRemoteConfig?.program_active
                     ) {
                       yield put(
                         navigateToActivateBpdOnNewCreditCard({
