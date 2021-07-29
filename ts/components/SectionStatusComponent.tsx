@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { GlobalState } from "../store/reducers/types";
 import { sectionStatusSelector } from "../store/reducers/backendStatus";
 import I18n from "../i18n";
@@ -12,6 +11,7 @@ import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/SectionStatus";
 import { SectionStatusKey } from "../types/backendStatus";
+import { useNavigationContext } from "../utils/hooks/useOnFocus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
@@ -19,7 +19,6 @@ import { Label } from "./core/typography/Label";
 type OwnProps = {
   sectionKey: SectionStatusKey;
   onSectionRef?: (ref: React.RefObject<View>) => void;
-  navigationProps?: NavigationScreenProp<NavigationState>;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -78,6 +77,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   const noticeHasLink = maybeWebUrl.isSome();
+  const navigation = useNavigationContext();
 
   const handleOnSectionRef = () => {
     if (viewRefLink.current) {
@@ -90,10 +90,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     handleOnSectionRef();
 
-    const unsubscribe = props.navigationProps?.addListener(
-      "didFocus",
-      handleOnSectionRef
-    );
+    const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
 
     return () => unsubscribe?.remove();
   }, [viewRefLink, viewRefNoLink]);

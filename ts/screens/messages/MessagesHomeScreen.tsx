@@ -7,9 +7,7 @@ import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import {
   NavigationEventSubscription,
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
+  NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -149,7 +147,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { isSearchEnabled, navigation } = this.props;
+    const { isSearchEnabled } = this.props;
 
     return (
       <TopScreenComponent
@@ -166,7 +164,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       >
         <SectionStatusComponent
           sectionKey={"messages"}
-          navigationProps={navigation as NavigationScreenProp<NavigationState>}
           onSectionRef={v => {
             setAccessibilityFocus(v, 100 as Millisecond);
           }}
