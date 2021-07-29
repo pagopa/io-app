@@ -13,10 +13,10 @@ import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
 import { LevelEnum } from "../../definitions/content/SectionStatus";
+import { useNavigationContext } from "../utils/hooks/useOnFocus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
-import { useNavigationContext } from "../utils/hooks/useOnFocus";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
