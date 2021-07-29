@@ -13,7 +13,7 @@
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions.json",
   "io_bpd_winning_transactions_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/winning_transactions_v2.json",
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.16.0/api_eucovidcert.yaml",
-  "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/IA-166-update-pagopa-spec/pagopa/pm/spec.json",
+  "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/privative/definitions.yml",

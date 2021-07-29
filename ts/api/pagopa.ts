@@ -583,7 +583,7 @@ export type ChangePayOptionT = r.IPutApiRequestType<
 
 const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
-  url: ({ idWallet }) => `/v1/wallet/${idWallet}/payment-status`,
+  url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
   query: () => ({}),
   body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
