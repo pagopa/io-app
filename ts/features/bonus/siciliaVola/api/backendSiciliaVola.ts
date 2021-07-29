@@ -16,6 +16,8 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   getAeroportiBeneficiarioDefaultDecoder,
   GetAeroportiBeneficiarioT,
+  getAeroportiStatoDefaultDecoder,
+  GetAeroportiStatoT,
   getListaComuniBySiglaProvinciaDefaultDecoder,
   GetListaComuniBySiglaProvinciaT,
   getListaProvinceByIdRegioneDefaultDecoder,
@@ -90,7 +92,7 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
 };
 
 /**
- * Get the list of the airports available for the voucher given a regionId
+ * Get the list of the airports available for the voucher given a regionId when the selected state is Italy
  */
 const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   method: "get",
@@ -101,6 +103,20 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
     Authorization: h.Bearer
   }),
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
+};
+
+/**
+ * Get the list of the airports available for the voucher given a stateId when the selected state is an abroad state
+ */
+const GetAeroportiStato: GetAeroportiStatoT = {
+  method: "get",
+  url: params =>
+    `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idStato}`,
+  query: _ => ({}),
+  headers: h => ({
+    Authorization: h.Bearer
+  }),
+  response_decoder: getAeroportiStatoDefaultDecoder()
 };
 
 /**
@@ -155,6 +171,12 @@ export const BackendSiciliaVolaClient = (
           createFetchRequestForApi(GetAeroportiBeneficiario, options)
         )
       )({ idRegione }),
+    getAeroportiStato: (idStato: number) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(GetAeroportiStato, options)
+        )
+      )({ idStato }),
     getVoucherBeneficiario: (
       voucherListRequest: VoucherBeneficiarioInputBean
     ) =>

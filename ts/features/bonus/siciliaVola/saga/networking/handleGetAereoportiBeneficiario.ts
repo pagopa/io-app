@@ -25,9 +25,9 @@ const convertSuccess = (
 };
 
 export function* handleGetAereoportiBeneficiario(
-  getAeroportiBeneficiario: ReturnType<
-    typeof BackendSiciliaVolaClient
-  >["getAeroportiBeneficiario"],
+  getAeroportiBeneficiario:
+    | ReturnType<typeof BackendSiciliaVolaClient>["getAeroportiBeneficiario"]
+    | ReturnType<typeof BackendSiciliaVolaClient>["getAeroportiStato"],
   svSessionManager: SessionManager<MitVoucherToken>,
   action: ActionType<typeof svGenerateVoucherAvailableDestination.request>
 ) {
