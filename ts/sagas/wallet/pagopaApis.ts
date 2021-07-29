@@ -37,7 +37,8 @@ import {
   fetchWalletsSuccess,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
@@ -206,6 +207,48 @@ export function* fetchPspRequestHandler(
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
     }
+  }
+}
+
+/**
+ * Handles the update of payment method status
+ * (enable or disable a payment method to pay with pagoPa)
+ */
+export function* updatePaymentStatusSaga(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof updatePaymentStatus.request>
+): Generator<Effect, void, any> {
+  const updatePayment = pagoPaClient.updatePaymentStatus(action.payload);
+  const request = pmSessionManager.withRefresh(updatePayment);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        if (response.value.value.data) {
+          yield put(
+            updatePaymentStatus.success(
+              convertWalletV2toWalletV1(response.value.value.data)
+            )
+          );
+        } else {
+          // this should not never happen (payload weak typed)
+          yield put(
+            updatePaymentStatus.failure(
+              getNetworkError(Error("payload is empty"))
+            )
+          );
+        }
+      } else {
+        const errorStatus = Error(`response status ${response.value.status}`);
+        yield put(updatePaymentStatus.failure(getNetworkError(errorStatus)));
+      }
+    } else {
+      const errorDescription = Error(readablePrivacyReport(response.value));
+      yield put(updatePaymentStatus.failure(getNetworkError(errorDescription)));
+    }
+  } catch (error) {
+    yield put(updatePaymentStatus.failure(getNetworkError(error)));
   }
 }
 
