@@ -45,6 +45,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       const nav: ReturnType<typeof navSelector> = yield select(navSelector);
       const currentRoute = getCurrentRouteName(nav);
       const isSecuredRoute =
+        // eslint-disable-next-line sonarjs/no-empty-collection
         currentRoute && whiteList.indexOf(currentRoute) !== -1;
       if (isSecuredRoute) {
         /**

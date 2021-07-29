@@ -6,7 +6,6 @@ import { Content } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { SectionStatusKey } from "../../../../../types/backendStatus";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { isError, isLoading } from "../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../store/abi";
@@ -19,6 +18,7 @@ import {
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { SearchStartComponent } from "./SearchStartComponent";
 
 type MethodType = "bancomatPay" | "bancomat" | "cobadge";

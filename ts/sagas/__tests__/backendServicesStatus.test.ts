@@ -4,13 +4,15 @@ import * as matchers from "redux-saga-test-plan/matchers";
 
 import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
-import { BackendStatus } from "../../types/backendStatus";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../../store/reducers/__mock__/backendStatus";
 
 jest.mock("react-native-background-timer", () => ({
   BackgroundTimer: { setTimeout: jest.fn }
 }));
 
 const responseOn: BackendStatus = {
+  ...baseRawBackendStatus,
   is_alive: true,
   message: {
     "it-IT": "messaggio in italiano",
