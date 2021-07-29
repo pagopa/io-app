@@ -1,3 +1,5 @@
+import { flip } from "fp-ts/lib/function";
+import { Omit } from "italia-ts-commons/lib/types";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -29,8 +31,6 @@ import {
   getVoucherBeneficiarioDefaultDecoder,
   GetVoucherBeneficiarioT
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
-import { flip } from "fp-ts/lib/function";
-import { Omit } from "italia-ts-commons/lib/types";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
 

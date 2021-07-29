@@ -1,19 +1,19 @@
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svGenerateVoucherAvailableState } from "../../store/actions/voucherGeneration";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { StatoUEBeanList } from "../../../../../../definitions/api_sicilia_vola/StatoUEBeanList";
 import { State } from "../../types/SvVoucherRequest";
 import { isDefined } from "../../../../../utils/guards";
-import { ActionType } from "typesafe-actions";
 
 // TODO: add the mapping when the swagger will be fixed
 const mapKinds: Record<number, string> = {};
 
 // convert a success response to the logical app representation of it
-const convertSuccess = (statiUE: StatoUEBeanList): ReadonlyArray<State> => {
-  return statiUE
+const convertSuccess = (statiUE: StatoUEBeanList): ReadonlyArray<State> =>
+  statiUE
     .map(s =>
       s.id && s.descrizione
         ? {
@@ -23,7 +23,6 @@ const convertSuccess = (statiUE: StatoUEBeanList): ReadonlyArray<State> => {
         : undefined
     )
     .filter(isDefined);
-};
 
 export function* handleGetStatiUE(
   getStatiUE: ReturnType<typeof BackendSiciliaVolaClient>["getStatiUE"],

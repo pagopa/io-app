@@ -1,9 +1,9 @@
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { isDefined } from "../../../../../utils/guards";
-import { ActionType } from "typesafe-actions";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svGenerateVoucherAvailableDestination } from "../../store/actions/voucherGeneration";
@@ -16,13 +16,12 @@ const mapKinds: Record<number, string> = {};
 // convert a success response to the logical app representation of it
 const convertSuccess = (
   availableDestinations: AeroportoSedeBeanList
-): AvailableDestinations => {
-  return availableDestinations
+): AvailableDestinations =>
+  availableDestinations
     .map(d => {
       return d.denominazione ? d.denominazione : undefined;
     })
     .filter(isDefined);
-};
 
 export function* handleGetAereoportiBeneficiario(
   getAeroportiBeneficiario:

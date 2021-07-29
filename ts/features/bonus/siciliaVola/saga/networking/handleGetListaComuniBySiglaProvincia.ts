@@ -1,11 +1,11 @@
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svGenerateVoucherAvailableMunicipality } from "../../store/actions/voucherGeneration";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Municipality } from "../../types/SvVoucherRequest";
 import { isDefined } from "../../../../../utils/guards";
-import { ActionType } from "typesafe-actions";
 import { ComuneBeanList } from "../../../../../../definitions/api_sicilia_vola/ComuneBeanList";
 
 // TODO: add the mapping when the swagger will be fixed
@@ -14,8 +14,8 @@ const mapKinds: Record<number, string> = {};
 // convert a success response to the logical app representation of it
 const convertSuccess = (
   listaComuni: ComuneBeanList
-): ReadonlyArray<Municipality> => {
-  return listaComuni
+): ReadonlyArray<Municipality> =>
+  listaComuni
     .map(r =>
       r.codiceCatastale && r.descrizioneComune
         ? {
@@ -25,7 +25,6 @@ const convertSuccess = (
         : undefined
     )
     .filter(isDefined);
-};
 
 export function* handleGetListaComuniBySiglaProvincia(
   getListaComuni: ReturnType<

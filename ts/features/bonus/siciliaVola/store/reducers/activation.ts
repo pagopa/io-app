@@ -46,32 +46,20 @@ const reducer = (
         ...state,
         isAlive: remoteError(action.payload)
       };
+    case getType(svAcceptTos.request):
     case getType(svTosAccepted.request):
       return {
         ...state,
         tosAccepted: remoteLoading
       };
+    case getType(svAcceptTos.success):
     case getType(svTosAccepted.success):
       return {
         ...state,
         tosAccepted: remoteReady(action.payload)
       };
-    case getType(svTosAccepted.failure):
-      return {
-        ...state,
-        tosAccepted: remoteError(action.payload)
-      };
-    case getType(svAcceptTos.request):
-      return {
-        ...state,
-        tosAccepted: remoteLoading
-      };
-    case getType(svAcceptTos.success):
-      return {
-        ...state,
-        tosAccepted: remoteReady(action.payload)
-      };
     case getType(svAcceptTos.failure):
+    case getType(svTosAccepted.failure):
       return {
         ...state,
         tosAccepted: remoteError(action.payload)

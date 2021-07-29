@@ -1,9 +1,9 @@
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { isDefined } from "../../../../../utils/guards";
-import { ActionType } from "typesafe-actions";
 import { svVoucherListGet } from "../../store/actions/voucherList";
 import { ListaVoucherBeneficiarioOutputBean } from "../../../../../../definitions/api_sicilia_vola/ListaVoucherBeneficiarioOutputBean";
 import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
@@ -20,15 +20,15 @@ const convertSuccess = (
 ): SvVoucherListResponse => {
   if (voucherBeneficiario.listaRisultati) {
     return voucherBeneficiario.listaRisultati
-      .map(v => {
-        return v.idVoucher && v.aeroportoDest && v.dataVolo
+      .map(v =>
+        v.idVoucher && v.aeroportoDest && v.dataVolo
           ? {
               idVoucher: v.idVoucher as SvVoucherId,
               departureDate: v.dataVolo,
               destination: v.aeroportoDest
             }
-          : undefined;
-      })
+          : undefined
+      )
       .filter(isDefined);
   } else {
     return [];
