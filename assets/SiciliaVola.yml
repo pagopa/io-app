@@ -315,6 +315,22 @@ definitions:
       idRegione:
         type: "integer"
         format: "int64"
+  StatoUEBeanList:
+    type: "array"
+    items:
+      $ref: "#/definitions/StatoUEBean"
+  ProvinciaBeanList:
+    type: "array"
+    items:
+      $ref: "#/definitions/ProvinciaBean"
+  ComuneBeanList:
+    type: "array"
+    items:
+      $ref: "#/definitions/ComuneBean"
+  AeroportoSedeBeanList:
+    type: "array"
+    items:
+      $ref: "#/definitions/AeroportoSedeBean"
   StatoUEBean:
     type: "object"
     properties:
@@ -497,9 +513,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/AeroportoSedeBean"
+            $ref: "#/definitions/AeroportoSedeBeanList"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/aeroportiStato/{idStato}:
@@ -507,6 +521,9 @@ paths:
       tags:
       - "securedBeneficiario"
       operationId: "getAeroportiStato"
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
       produces:
       - "application/json"
       parameters:
@@ -520,9 +537,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/AeroportoSedeBean"
+            $ref: "#/definitions/AeroportoSedeBeanList"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/annullaVoucher:
@@ -826,9 +841,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ComuneBean"
+            $ref: "#/definitions/ComuneBeanList"
         500:
           description: "Errore interno."
   /rest/unsecured/comuniConsentiti:
@@ -896,9 +909,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ProvinciaBean"
+            $ref: "#/definitions/ProvinciaBeanList"
         500:
           description: "Errore interno."
   /rest/unsecured/puntiVendita:
@@ -936,9 +947,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ProvinciaBean"
+            $ref: "#/definitions/ProvinciaBeanList"
         500:
           description: "Errore interno."
   /rest/unsecured/statiUE:
@@ -953,9 +962,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/StatoUEBean"
+            $ref: "#/definitions/StatoUEBeanList"
         500:
           description: "Errore interno."
   /rest/unsecured/tratte:
@@ -995,6 +1002,4 @@ securityDefinitions:
     name: Authorization
     in: header
   OcpApimSubscriptionKey:
-    type:
-    name: Ocp-Apim-Subscription-Key
-    in: header
+    type: basic
