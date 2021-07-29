@@ -5,16 +5,41 @@ import { none, some } from "fp-ts/lib/Option";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
 import {
+  svGenerateVoucherAvailableDestination,
+  svGenerateVoucherAvailableDestinationAbroad,
+  svGenerateVoucherAvailableMunicipality,
+  svGenerateVoucherAvailableProvince,
+  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
+  svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherStart
 } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
 import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
-import { svServiceAlive } from "../store/actions/activation";
+import {
+  svAcceptTos,
+  svServiceAlive,
+  svTosAccepted
+} from "../store/actions/activation";
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
+import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
+import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
+import { handleGetListaProvinceByIdRegione } from "./networking/handleGetListaProvinceByIdRegione";
+import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
+import {
+  svVoucherDetailGet,
+  svVoucherListGet,
+  svVoucherRevocation
+} from "../store/actions/voucherList";
+import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
+import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
+import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBeneficiario";
+import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
+import { handleGetAereoportiBeneficiario } from "./networking/handleGetAereoportiBeneficiario";
+import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -50,13 +75,88 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     handleSvVoucherGenerationStartActivationSaga
   );
 
-  // SV check if the service is alive
+  // SV get check if the service is alive
   yield takeLatest(getType(svServiceAlive.request), handleSvServiceAlive);
+
+  // SV get check if the user already accepted the ToS
+  // TODO: pass svSessionManager in order to send the MitVoucherToken
+  yield takeLatest(getType(svTosAccepted.request), handleSvTosAccepted);
+
+  // SV post the user tos acceptance
+  // TODO: pass svSessionManager in order to send the MitVoucherToken
+  yield takeLatest(getType(svAcceptTos.request), handleSvAccepTos);
 
   // SV get the list of UE state
   yield takeLatest(
     getType(svGenerateVoucherAvailableState.request),
     handleGetStatiUE,
     siciliaVolaClient.getStatiUE
+  );
+
+  // SV get the list of the Italian regions
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableRegion.request),
+    handleGetListaRegioni,
+    siciliaVolaClient.getListaRegioni
+  );
+
+  // SV get the list of province given a region id
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableProvince.request),
+    handleGetListaProvinceByIdRegione,
+    siciliaVolaClient.getListaProvinceByIdRegione
+  );
+
+  // SV get the list municipalities given a province
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableMunicipality.request),
+    handleGetListaComuniBySiglaProvincia,
+    siciliaVolaClient.getListaComuniBySiglaProvincia
+  );
+
+  // SV get the list of available destination given a region when the selected state is Italy
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableDestination.request),
+    handleGetAereoportiBeneficiario,
+    siciliaVolaClient.getAeroportiBeneficiario,
+    svSessionManager
+  );
+  // SV get the list of available destination given a state when the selected state is an abroad state
+  yield takeLatest(
+    getType(svGenerateVoucherAvailableDestinationAbroad.request),
+    handleGetAereoportiBeneficiario,
+    siciliaVolaClient.getAeroportiStato,
+    svSessionManager
+  );
+
+  // SV post the voucher request
+  yield takeLatest(
+    getType(svGenerateVoucherGeneratedVoucher.request),
+    handlePostAggiungiVoucher,
+    svSessionManager
+  );
+
+  // SV get the vouchers list already generated
+  yield takeLatest(
+    getType(svVoucherListGet.request),
+    handleGetVoucherBeneficiario,
+    siciliaVolaClient.getVoucherBeneficiario,
+    svSessionManager
+  );
+
+  // SV get the voucher details
+  // TODO: pass the client when it will be created
+  yield takeLatest(
+    getType(svVoucherDetailGet.request),
+    handleGetDettaglioVoucher,
+    svSessionManager
+  );
+
+  // SV post the voucher revocation
+  // TODO: pass the client when it will be created
+  yield takeLatest(
+    getType(svVoucherRevocation.request),
+    handleVoucherRevocation,
+    svSessionManager
   );
 }
