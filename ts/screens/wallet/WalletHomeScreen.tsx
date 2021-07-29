@@ -95,6 +95,16 @@ import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import {
+  svGenerateVoucherAvailableDestination,
+  svGenerateVoucherAvailableMunicipality,
+  svGenerateVoucherAvailableProvince,
+  svGenerateVoucherAvailableRegion,
+  svGenerateVoucherAvailableState,
+  svGenerateVoucherStart
+} from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
+import { RTron } from "../../boot/configureStoreAndPersistor";
+import { svVoucherListGet } from "../../features/bonus/siciliaVola/store/actions/voucherList";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -551,6 +561,37 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       anyCreditCardAttempts
     } = this.props;
 
+    RTron?.onCustomCommand({
+      command: "request state",
+      handler: () => this.props.requestState(),
+      title: "request state"
+    });
+    RTron?.onCustomCommand({
+      command: "request region",
+      handler: () => this.props.requestRegion(),
+      title: "request region"
+    });
+    RTron?.onCustomCommand({
+      command: "request province",
+      handler: () => this.props.requestProvince(),
+      title: "request province"
+    });
+    RTron?.onCustomCommand({
+      command: "request comuni",
+      handler: () => this.props.requestComuni(),
+      title: "request comuni"
+    });
+    RTron?.onCustomCommand({
+      command: "request lista voucher",
+      handler: () => this.props.listaVoucher(),
+      title: "request lista voucher"
+    });
+    RTron?.onCustomCommand({
+      command: "request lista destinazioni",
+      handler: () => this.props.listaDestinazioni(),
+      title: "request lista destinazioni"
+    });
+
     const headerContent = (
       <>
         <WalletHomeHeader />
@@ -654,13 +695,22 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
+  requestState: () => dispatch(svGenerateVoucherAvailableState.request()),
+  requestRegion: () => dispatch(svGenerateVoucherAvailableRegion.request()),
+  requestProvince: () =>
+    dispatch(svGenerateVoucherAvailableProvince.request(1)),
+  requestComuni: () =>
+    dispatch(svGenerateVoucherAvailableMunicipality.request("MI")),
+  listaVoucher: () => dispatch(svVoucherListGet.request({})),
+  listaDestinazioni: () =>
+    dispatch(svGenerateVoucherAvailableDestination.request(1)),
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
   navigateToWalletPaymentMethodDetailScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletPaymentMethodDetailScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+  navigateToPaymentScanQrCode: () => dispatch(svGenerateVoucherStart()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

@@ -20,7 +20,7 @@ const mockVoucherRequest: VoucherRequest = {
 const mockResponse: SvVoucherGeneratedResponse = {
   kind: "success",
   value: {
-    id: "abc123" as SvVoucherId
+    id: 12345 as SvVoucherId
   } as SvVoucher
 };
 
