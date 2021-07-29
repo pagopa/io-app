@@ -22,8 +22,8 @@ import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { getRemoteLocale } from "../../../../utils/messages";
+import { Link } from "../../../../components/core/typography/Link";
 
 type OwnProps = {
   onBack?: () => void;
@@ -108,19 +108,13 @@ const getTosFooter = (
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} extralarge={true} />
         <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
-        <TouchableDefaultOpacity
+        <Link
+          weight={"SemiBold"}
+          numberOfLines={1}
           onPress={() => handleModalPress(bT)}
-          accessibilityRole={"link"}
         >
-          <Text
-            link={true}
-            semibold={true}
-            ellipsizeMode={"tail"}
-            numberOfLines={1}
-          >
-            {I18n.t("bonus.tos.title")}
-          </Text>
-        </TouchableDefaultOpacity>
+          {I18n.t("bonus.tos.title")}
+        </Link>
       </>,
       // if tos and regulation url is defined
       // return a markdown footer including both links reference (BPD)

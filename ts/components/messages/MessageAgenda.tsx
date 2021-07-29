@@ -256,7 +256,7 @@ const generateItemLayouts = (sections: Sections) => {
   return itemLayouts;
 };
 
-const FakeItemComponent = (
+const getFakeItemComponent = () => (
   <View style={styles.itemEmptyWrapper}>
     <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
@@ -399,7 +399,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     MessageAgendaItem | FakeItem
   > = info => {
     if (isFakeItem(info.item)) {
-      return FakeItemComponent;
+      return getFakeItemComponent();
     }
 
     const message = info.item.e1;
