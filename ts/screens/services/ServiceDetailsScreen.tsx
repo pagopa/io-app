@@ -197,7 +197,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
           {canRenderItems && (
             <>
-              {canRenderItems && metadata && (
+              {metadata && (
                 <>
                   <TosAndPrivacyBox
                     tosUrl={metadata.tos_url}
@@ -221,7 +221,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 isDebugModeEnabled={this.props.isDebugModeEnabled}
               />
 
-              {canRenderItems && <EdgeBorderComponent />}
+              {<EdgeBorderComponent />}
 
               <View spacer={true} extralarge={true} />
             </>
