@@ -4,10 +4,10 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BpdConfig } from "../../../../definitions/content/BpdConfig";
+import Initiative from "../../../../img/wallet/initiatives.svg";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import IconFont from "../../../components/ui/IconFont";
 import { bpdEnabled } from "../../../config";
 import I18n from "../../../i18n";
 import { bpdRemoteConfigSelector } from "../../../store/reducers/backendStatus";
@@ -17,9 +17,10 @@ import {
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
-import Initiative from "../../../../img/wallet/initiatives.svg";
 
-type OwnProps = { paymentMethod: PaymentMethod };
+type OwnProps = {
+  paymentMethod: PaymentMethod;
+} & Pick<React.ComponentProps<typeof View>, "style">;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -81,7 +82,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement => {
   );
 
   return (
-    <>
+    <View style={props.style}>
       <View style={styles.row}>
         <Initiative
           width={20}
@@ -93,7 +94,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement => {
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       {capabilityItems}
-    </>
+    </View>
   );
 };
 
