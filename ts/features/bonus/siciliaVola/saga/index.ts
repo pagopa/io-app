@@ -16,24 +16,24 @@ import {
 } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
-import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import {
   svAcceptTos,
   svServiceAlive,
   svTosAccepted
 } from "../store/actions/activation";
+import {
+  svVoucherDetailGet,
+  svVoucherListGet,
+  svVoucherRevocation
+} from "../store/actions/voucherList";
+import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
 import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
 import { handleGetListaProvinceByIdRegione } from "./networking/handleGetListaProvinceByIdRegione";
 import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
-import {
-  svVoucherDetailGet,
-  svVoucherListGet,
-  svVoucherRevocation
-} from "../store/actions/voucherList";
 import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
 import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBeneficiario";

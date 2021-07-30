@@ -18,9 +18,7 @@ const convertSuccess = (
   availableDestinations: AeroportoSedeBeanList
 ): AvailableDestinations =>
   availableDestinations
-    .map(d => {
-      return d.denominazione ? d.denominazione : undefined;
-    })
+    .map(d => (d.denominazione ? d.denominazione : undefined))
     .filter(isDefined);
 
 export function* handleGetAereoportiBeneficiario(
