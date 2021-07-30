@@ -19,7 +19,7 @@ import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
@@ -120,7 +120,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
+        <PaymentMethodFeatures paymentMethod={bancomat} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <UnsubscribeButton

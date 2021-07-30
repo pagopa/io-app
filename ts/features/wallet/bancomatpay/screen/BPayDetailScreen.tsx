@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -100,7 +100,7 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bPay} />
+        <PaymentMethodFeatures paymentMethod={bPay} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() =>

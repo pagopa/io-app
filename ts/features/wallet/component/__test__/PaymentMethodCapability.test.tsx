@@ -11,7 +11,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { mockPrivativeCard } from "../../../../store/reducers/wallet/__mocks__/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import PaymentMethodCapabilities from "../PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../PaymentMethodFeatures";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
   useBottomSheetModal: () => ({
@@ -75,7 +75,7 @@ const renderComponent = (state: GlobalState, paymentMethod: PaymentMethod) => {
   const store = createStore(appReducer, state as any);
 
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => <PaymentMethodCapabilities paymentMethod={paymentMethod} />,
+    () => <PaymentMethodFeatures paymentMethod={paymentMethod} />,
     ROUTES.WALLET_BANCOMAT_DETAIL,
     {},
     store

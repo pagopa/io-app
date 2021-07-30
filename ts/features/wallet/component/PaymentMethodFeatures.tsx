@@ -79,7 +79,7 @@ const generateCapabilityItems = (
  * @param props
  * @constructor
  */
-const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
+const PaymentMethodFeatures: React.FunctionComponent<Props> = props => {
   const capabilityItems = generateCapabilityItems(
     props.paymentMethod,
     props.bpdRemoteConfig
@@ -112,4 +112,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaymentMethodCapabilities);
+)(PaymentMethodFeatures);

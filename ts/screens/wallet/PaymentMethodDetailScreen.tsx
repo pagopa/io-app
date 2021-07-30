@@ -12,7 +12,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import PaymentMethodCapabilities from "../../features/wallet/component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../features/wallet/component/PaymentMethodFeatures";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -192,7 +192,7 @@ const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
         <>
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer={true} extralarge={true} />
-            <PaymentMethodCapabilities paymentMethod={pm} />
+            <PaymentMethodFeatures paymentMethod={pm} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
             <FavoritePaymentMethodSwitch

@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
@@ -97,7 +97,7 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={satispay} />
+        <PaymentMethodFeatures paymentMethod={satispay} />
         <SatispayInformation />
         <View spacer={true} large={true} />
         <UnsubscribeButton

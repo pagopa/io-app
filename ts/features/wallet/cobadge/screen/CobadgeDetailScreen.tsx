@@ -12,9 +12,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { Label } from "../../../../components/core/typography/Label";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
@@ -97,7 +97,7 @@ const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={cobadge} />
+        <PaymentMethodFeatures paymentMethod={cobadge} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() =>
