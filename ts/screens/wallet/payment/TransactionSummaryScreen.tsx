@@ -7,9 +7,10 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -22,7 +23,8 @@ import I18n from "../../../i18n";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen
+  navigateToPaymentTransactionErrorScreen,
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -39,6 +41,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
+  getPayablePaymentMethodsSelector,
   pagoPaCreditCardWalletV1Selector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
@@ -176,6 +179,22 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
+  private alertNoPayablePaymentMethods = () => {
+    Alert.alert("test", "message", [
+      {
+        text: I18n.t("global.buttons.cancel"),
+        style: "default",
+        onPress: constNull
+      },
+      {
+        text: "Continua",
+        style: "default",
+        // TODO replace with the effective implementation
+        onPress: this.props.navigateToWalletAddPaymentMethod
+      }
+    ]);
+  };
+
   private renderFooterButtons() {
     const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
     const basePrimaryButtonProps = {
@@ -190,11 +209,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
             ...basePrimaryButtonProps,
             disabled: false,
             onPress: () =>
-              this.props.startOrResumePayment(
-                potVerifica.value,
-                maybeFavoriteWallet,
-                hasWallets
-              )
+              false
+                ? this.props.startOrResumePayment(
+                    potVerifica.value,
+                    maybeFavoriteWallet,
+                    false
+                  )
+                : this.alertNoPayablePaymentMethods()
           }
         : {
             ...basePrimaryButtonProps,
@@ -373,8 +394,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasWallets =
-    pot.getOrElse(pagoPaCreditCardWalletV1Selector(state), []).length !== 0;
+  const hasWallets = getPayablePaymentMethodsSelector(state).length > 0;
 
   return {
     error,
@@ -474,6 +494,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 
   return {
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
+    navigateToWalletAddPaymentMethod: () =>
+      dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,
