@@ -21,7 +21,6 @@ import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import SatispayInformation from "./SatispayInformation";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -98,7 +97,6 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
         <PaymentMethodFeatures paymentMethod={satispay} />
-        <SatispayInformation />
         <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() =>

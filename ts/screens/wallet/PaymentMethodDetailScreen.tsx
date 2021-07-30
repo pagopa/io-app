@@ -17,7 +17,6 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
-import FavoritePaymentMethodSwitch from "../../components/wallet/FavoriteMethodSwitch";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodFeatures from "../../features/wallet/component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
@@ -193,9 +192,6 @@ const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer={true} extralarge={true} />
             <PaymentMethodFeatures paymentMethod={pm} />
-            <ItemSeparatorComponent noPadded={true} />
-            <FavoritePaymentMethodSwitch paymentMethod={pm} />
-            <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
             <DeletePaymentMethodButton
               onPress={() =>

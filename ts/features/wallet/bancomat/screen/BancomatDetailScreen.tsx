@@ -121,7 +121,6 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <PaymentMethodFeatures paymentMethod={bancomat} />
-        <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() =>

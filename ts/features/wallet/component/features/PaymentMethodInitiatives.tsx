@@ -75,6 +75,11 @@ const generateCapabilityItems = (
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
+/**
+ * This component enlists the different initiatives active on the payment methods
+ * @param props
+ * @constructor
+ */
 const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const capabilityItems = generateCapabilityItems(
     props.paymentMethod,
