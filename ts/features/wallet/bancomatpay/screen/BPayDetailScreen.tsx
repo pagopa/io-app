@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodFeatures from "../../component/feature/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

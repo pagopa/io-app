@@ -194,7 +194,6 @@ const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} extralarge={true} />
             <PaymentMethodFeatures paymentMethod={pm} />
             <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} large={true} />
             <FavoritePaymentMethodSwitch
               isLoading={
                 pot.isLoading(props.favoriteWalletId) ||
@@ -207,7 +206,6 @@ const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
                 )
               }
             />
-            <View spacer={true} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
             <DeletePaymentMethodButton

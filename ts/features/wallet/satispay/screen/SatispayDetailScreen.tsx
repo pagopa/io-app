@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodFeatures from "../../component/feature/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";

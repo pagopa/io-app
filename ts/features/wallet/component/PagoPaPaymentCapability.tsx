@@ -2,11 +2,9 @@ import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { Link } from "../../../components/core/typography/Link";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../components/ui/Markdown";
 import Switch from "../../../components/ui/Switch";
@@ -16,17 +14,9 @@ import { PaymentSupportStatus } from "../../../types/paymentMethodCapabilities";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../utils/url";
+import { BasePaymentFeatureListItem } from "./features/BasePaymentFeatureListItem";
 
 const styles = StyleSheet.create({
-  row: {
-    paddingVertical: 16,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  left: {
-    ...IOStyles.flex,
-    paddingRight: 8
-  },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -97,8 +87,8 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
  *
  * We have 4 possible different cases:
  *   - The card can pay on IO -> pagoPa === true
- *   - The card in the future can pay on IO -> Satispay, BPay
- *   - The card is not abilitated to pay on IO, pagoPa === false and type === PRV or Bancomat
+ *   - The card will be able to pay in the future on IO -> Satispay, BPay
+ *   - The card is not able to pay on IO, pagoPa === false and type === PRV or Bancomat
  *   - The card can onboard another card that can pay on IO -> co-badge credit card pagoPa === false and type !== PRV
  * @param props
  */
@@ -127,25 +117,13 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
 
   return (
     <TouchableDefaultOpacity onPress={present}>
-      <View style={styles.row}>
-        <View style={styles.left}>
-          <H4
-            weight={"SemiBold"}
-            color={"bluegreyDark"}
-            testID={"PagoPaPaymentCapabilityTitle"}
-          >
-            {I18n.t("wallet.methods.card.pagoPaCapability.title")}
-          </H4>
-          <H5
-            weight={"Regular"}
-            color={"bluegrey"}
-            testID={"PagoPaPaymentCapabilityDescription"}
-          >
-            {I18n.t("wallet.methods.card.pagoPaCapability.description")}
-          </H5>
-        </View>
-        {availabilityBadge(isPaymentMethodSupported(props.paymentMethod))}
-      </View>
+      <BasePaymentFeatureListItem
+        title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
+        description={I18n.t("wallet.methods.card.pagoPaCapability.description")}
+        rightElement={availabilityBadge(
+          isPaymentMethodSupported(props.paymentMethod)
+        )}
+      />
     </TouchableDefaultOpacity>
   );
 };
