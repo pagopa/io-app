@@ -75,13 +75,13 @@ const generateCapabilityItems = (
     return handlerForCapability === null ? acc : [...acc, handlerForCapability];
   }, [] as ReadonlyArray<React.ReactNode>);
 
-const PaymentMethodInitiatives = (props: Props): React.ReactElement => {
+const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const capabilityItems = generateCapabilityItems(
     props.paymentMethod,
     props.bpdRemoteConfig
   );
 
-  return (
+  return capabilityItems.length > 0 ? (
     <View style={props.style}>
       <View style={styles.row}>
         <Initiative
@@ -95,7 +95,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement => {
       </View>
       {capabilityItems}
     </View>
-  );
+  ) : null;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
