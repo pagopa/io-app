@@ -150,7 +150,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
-    const metadata =
+    const metadata = pot.toOption(potServiceMetadata).toUndefined();
       pot.isSome(potServiceMetadata) && potServiceMetadata.value
         ? potServiceMetadata.value
         : undefined;
@@ -158,7 +158,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // if markdown content is not available, render immediately what is possible
     // but we must wait for metadata load to be completed to avoid flashes
     const isMarkdownAvailable =
-      pot.isLoading(potServiceMetadata) || (metadata && metadata.description);
+      pot.isLoading(potServiceMetadata) || metadata?.description;
     const canRenderItems = pot.isError(potServiceMetadata)
       ? // if there is an error, render immediately
         true
@@ -182,7 +182,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           </Grid>
           <View spacer={true} small={true} />
 
-          {metadata && metadata.description && (
+          {metadata?.description && (
             <>
               <Markdown
                 animated={true}
@@ -214,7 +214,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <View spacer={true} large={true} />
 
               <ServiceMetadata
-                servicesMetadata={metadata || undefined}
+                servicesMetadata={metadata}
                 organizationFiscalCode={service.organization_fiscal_code}
                 getItemOnPress={handleItemOnPress}
                 serviceId={service.service_id}
