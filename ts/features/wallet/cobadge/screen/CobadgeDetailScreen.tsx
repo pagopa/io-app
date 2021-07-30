@@ -12,7 +12,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../component/feature/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../components/core/typography/Label";

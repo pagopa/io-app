@@ -5,14 +5,22 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import defaultCardIcon from "../../../img/wallet/cards-icons/unknown.png";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
+import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
+import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import PaymentMethodFeatures from "../../features/wallet/component/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../features/wallet/component/features/PaymentMethodFeatures";
+import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -27,17 +35,9 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { isRawCreditCard, Wallet } from "../../types/pagopa";
+import { getTitleFromCard } from "../../utils/paymentMethod";
 import { showToast } from "../../utils/showToast";
 import { FOUR_UNICODE_CIRCLES, handleSetFavourite } from "../../utils/wallet";
-import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
-import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
-import defaultCardIcon from "../../../img/wallet/cards-icons/unknown.png";
-import { getTitleFromCard } from "../../utils/paymentMethod";
-import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;

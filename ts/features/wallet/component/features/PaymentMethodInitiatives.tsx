@@ -3,20 +3,20 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { BpdConfig } from "../../../../definitions/content/BpdConfig";
-import Initiative from "../../../../img/wallet/initiatives.svg";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import { bpdEnabled } from "../../../config";
-import I18n from "../../../i18n";
-import { bpdRemoteConfigSelector } from "../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../store/reducers/types";
+import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
+import Initiative from "../../../../../img/wallet/initiatives.svg";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { bpdEnabled } from "../../../../config";
+import I18n from "../../../../i18n";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
-} from "../../../types/pagopa";
-import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
+} from "../../../../types/pagopa";
+import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;

@@ -16,7 +16,7 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../component/feature/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BasePrivativeCard from "../component/card/BasePrivativeCard";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";

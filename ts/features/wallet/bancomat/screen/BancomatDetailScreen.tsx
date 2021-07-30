@@ -19,7 +19,7 @@ import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodFeatures from "../../component/PaymentMethodFeatures";
+import PaymentMethodFeatures from "../../component/feature/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";

@@ -2,9 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StyleSheet } from "react-native";
-import { bpdRemoteConfigSelector } from "../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../store/reducers/types";
-import { PaymentMethod } from "../../../types/pagopa";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
+import { PaymentMethod } from "../../../../types/pagopa";
 import PaymentMethodInitiatives from "./PaymentMethodInitiatives";
 import PaymentMethodSettings from "./PaymentMethodSettings";
 
