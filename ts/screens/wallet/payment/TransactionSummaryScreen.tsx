@@ -209,7 +209,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
             ...basePrimaryButtonProps,
             disabled: false,
             onPress: () =>
-              false
+              hasWallets
                 ? this.props.startOrResumePayment(
                     potVerifica.value,
                     maybeFavoriteWallet,
@@ -495,7 +495,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   return {
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
-      dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+      dispatch(
+        navigateToWalletAddPaymentMethod({
+          inPayment: none,
+          canAddOnlyPayablePaymentMethod: true
+        })
+      ),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,
