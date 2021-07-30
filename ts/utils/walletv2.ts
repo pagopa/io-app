@@ -23,8 +23,8 @@ import {
 } from "./input";
 
 /**
- * true if the given wallet support the given walletFunction
- * @param wallet
+ * true if the given paymentMethod supports the given walletFunction
+ * @param paymentMethod
  * @param walletFunction
  */
 export const hasFunctionEnabled = (

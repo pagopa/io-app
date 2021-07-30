@@ -143,7 +143,8 @@ import {
   runSendAddCobadgeTrackSaga,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  updatePaymentStatus
 } from "../store/actions/wallet/wallets";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
@@ -183,6 +184,7 @@ import {
   paymentStartRequest,
   paymentVerificaRequestHandler,
   setFavouriteWalletRequestHandler,
+  updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
@@ -811,6 +813,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(setWalletSessionEnabled),
     setWalletSessionEnabledSaga,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(updatePaymentStatus.request),
+    updatePaymentStatusSaga,
+    paymentManagerClient,
     pmSessionManager
   );
 
