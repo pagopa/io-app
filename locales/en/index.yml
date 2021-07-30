@@ -1403,7 +1403,7 @@ wallet:
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
-    title: "Available Functions"
+    title: "Available initiatives"
   outcomeMessage:
     cta:
       close: Close

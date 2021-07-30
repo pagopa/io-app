@@ -17,6 +17,7 @@ import {
   PaymentMethod
 } from "../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
+import Initiative from "../../../../img/wallet/initiatives.svg";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 
@@ -82,10 +83,10 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement => {
   return (
     <>
       <View style={styles.row}>
-        <IconFont
-          name={"io-preferenze"}
-          size={20}
-          color={IOColors.bluegreyDark}
+        <Initiative
+          width={20}
+          height={20}
+          stroke={IOColors.bluegreyDark}
           style={styles.icon}
         />
         <View hspacer={true} />
