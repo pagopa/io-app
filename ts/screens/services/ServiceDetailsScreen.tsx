@@ -151,21 +151,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
     const metadata = pot.toOption(potServiceMetadata).toUndefined();
-      pot.isSome(potServiceMetadata) && potServiceMetadata.value
-        ? potServiceMetadata.value
-        : undefined;
 
     // if markdown content is not available, render immediately what is possible
     // but we must wait for metadata load to be completed to avoid flashes
     const isMarkdownAvailable =
       pot.isLoading(potServiceMetadata) || metadata?.description;
-    const canRenderItems = pot.isError(potServiceMetadata)
-      ? // if there is an error, render immediately
-        true
-      : isMarkdownAvailable
-      ? // if markdown data is available, wait for it to be rendered
-        this.state.isMarkdownLoaded
+    const isMarkdownLoaded = isMarkdownAvailable
+      ? this.state.isMarkdownLoaded
       : true;
+    // if markdown data is available, wait for it to be rendered
+    const canRenderItems = pot.isError(potServiceMetadata) || isMarkdownLoaded;
 
     const maybeCTA = getServiceCTA(potServiceMetadata);
 
@@ -221,7 +216,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 isDebugModeEnabled={this.props.isDebugModeEnabled}
               />
 
-              {<EdgeBorderComponent />}
+              <EdgeBorderComponent />
 
               <View spacer={true} extralarge={true} />
             </>
