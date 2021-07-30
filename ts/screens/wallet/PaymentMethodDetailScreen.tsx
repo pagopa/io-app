@@ -10,7 +10,6 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
