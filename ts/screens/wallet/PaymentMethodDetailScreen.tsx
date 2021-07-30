@@ -17,7 +17,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { getCardIconFromBrandLogo } from "../../components/wallet/card/Logo";
-import { FavoritePaymentMethodSwitch } from "../../components/wallet/FavoriteMethodSwitch";
+import FavoritePaymentMethodSwitch from "../../components/wallet/FavoriteMethodSwitch";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import PaymentMethodFeatures from "../../features/wallet/component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../features/wallet/component/RemovePaymentMethod";
@@ -194,18 +194,7 @@ const PaymentMethodDetailScreen: React.FC<Props> = (props: Props) => {
             <View spacer={true} extralarge={true} />
             <PaymentMethodFeatures paymentMethod={pm} />
             <ItemSeparatorComponent noPadded={true} />
-            <FavoritePaymentMethodSwitch
-              isLoading={
-                pot.isLoading(props.favoriteWalletId) ||
-                pot.isUpdating(props.favoriteWalletId)
-              }
-              switchValue={pot.getOrElse(isFavorite, false)}
-              onValueChange={v =>
-                handleSetFavourite(v, () =>
-                  props.setFavoriteWallet(pm.idWallet)
-                )
-              }
-            />
+            <FavoritePaymentMethodSwitch paymentMethod={pm} />
             <ItemSeparatorComponent noPadded={true} />
             <View spacer={true} large={true} />
             <DeletePaymentMethodButton

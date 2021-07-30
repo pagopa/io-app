@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The base layout for the Payment feature list items
+ * The base layout for the Payment feature list items, used to compose the different functionalities
  * @param props
  * @constructor
  */

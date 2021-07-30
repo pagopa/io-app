@@ -1,18 +1,41 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { BasePaymentFeatureListItem } from "../../features/wallet/component/features/BasePaymentFeatureListItem";
 import I18n from "../../i18n";
+import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
+import { GlobalState } from "../../store/reducers/types";
+import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../types/pagopa";
+import { handleSetFavourite } from "../../utils/wallet";
 import Switch from "../ui/Switch";
 
-type Props = {
-  isLoading?: boolean;
+type OwnProps = {
   onValueChange?: (value: boolean) => void;
-  switchValue: boolean;
+  paymentMethod: PaymentMethod;
 };
 
-// this component represents the payment status as favorite and handle the user request to change it
-export const FavoritePaymentMethodSwitch = (props: Props) => {
-  const rightElement = props.isLoading ? (
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
+  OwnProps;
+
+/**
+ * This component represents the payment "favorite" status and allows the user to change it with a switch
+ * @param props
+ * @constructor
+ */
+const FavoritePaymentMethodSwitch = (props: Props) => {
+  const isLoading =
+    pot.isLoading(props.favoriteWalletId) ||
+    pot.isUpdating(props.favoriteWalletId);
+  const isFavorite = pot.map(
+    props.favoriteWalletId,
+    _ => _ === props.paymentMethod.idWallet
+  );
+
+  const rightElement = isLoading ? (
     <ActivityIndicator
       color={"black"}
       accessible={false}
@@ -21,8 +44,12 @@ export const FavoritePaymentMethodSwitch = (props: Props) => {
     />
   ) : (
     <Switch
-      onValueChange={v => props.onValueChange?.(v)}
-      value={props.switchValue}
+      onValueChange={v =>
+        handleSetFavourite(v, () =>
+          props.setFavoriteWallet(props.paymentMethod.idWallet)
+        )
+      }
+      value={pot.getOrElse(isFavorite, false)}
     />
   );
   return (
@@ -33,3 +60,17 @@ export const FavoritePaymentMethodSwitch = (props: Props) => {
     />
   );
 };
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setFavoriteWallet: (walletId?: number) =>
+    dispatch(setFavouriteWalletRequest(walletId))
+});
+
+const mapStateToProps = (state: GlobalState) => ({
+  favoriteWalletId: getFavoriteWalletId(state)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FavoritePaymentMethodSwitch);
