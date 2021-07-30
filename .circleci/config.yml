@@ -526,13 +526,13 @@ workflows:
   build:
     jobs:
       - compile-typescript
-      - run-tests
-      - eslint
+        # - run-tests
+        # - eslint
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
+        #      - run-danger:
+        filters:
+          branches:
+            ignore: master
 
 
 
