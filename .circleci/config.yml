@@ -530,9 +530,9 @@ workflows:
         # - eslint
 
         #      - run-danger:
-        filters:
-          branches:
-            ignore: master
+        # filters:
+        #  branches:
+        #    ignore: master
 
 
 
