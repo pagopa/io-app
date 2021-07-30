@@ -15,7 +15,7 @@ import {
   PaymentMethod
 } from "../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../utils/walletv2";
-import PagoPaPaymentCapability from "../PagoPaPaymentCapability";
+import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
 

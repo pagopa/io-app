@@ -1,20 +1,20 @@
 import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { H5 } from "../../../components/core/typography/H5";
-import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import Markdown from "../../../components/ui/Markdown";
-import Switch from "../../../components/ui/Switch";
-import I18n from "../../../i18n";
-import { PaymentMethod } from "../../../types/pagopa";
-import { PaymentSupportStatus } from "../../../types/paymentMethodCapabilities";
-import { useIOBottomSheet } from "../../../utils/bottomSheet";
-import { isPaymentMethodSupported } from "../../../utils/paymentMethodCapabilities";
-import { openWebUrl } from "../../../utils/url";
-import { BasePaymentFeatureListItem } from "./features/BasePaymentFeatureListItem";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { H5 } from "../../../../components/core/typography/H5";
+import { Link } from "../../../../components/core/typography/Link";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import Markdown from "../../../../components/ui/Markdown";
+import Switch from "../../../../components/ui/Switch";
+import I18n from "../../../../i18n";
+import { PaymentMethod } from "../../../../types/pagopa";
+import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { isPaymentMethodSupported } from "../../../../utils/paymentMethodCapabilities";
+import { openWebUrl } from "../../../../utils/url";
+import { BasePaymentFeatureListItem } from "./BasePaymentFeatureListItem";
 
 const styles = StyleSheet.create({
   badgeInfo: {

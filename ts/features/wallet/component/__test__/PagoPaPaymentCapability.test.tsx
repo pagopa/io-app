@@ -8,7 +8,7 @@ import {
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../../../types/pagopa";
-import PagoPaPaymentCapability from "../PagoPaPaymentCapability";
+import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
 import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 
 const renderTestTarget = (paymentMethod: PaymentMethod) =>
