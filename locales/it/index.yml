@@ -192,7 +192,7 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Continua
-    body: Sei sicuro di aver compreso i rischi e voler continuare?
+    body: Hai compreso i rischi e vuoi continuare?
     confirmText: Si
     cancelText: Annulla
   cancelAlert:
@@ -2291,7 +2291,7 @@ bonus:
         text2: "non risulta corretto: controllalo per piacere!"
       koCannotVerify:
         title: "Non è stato possibile verificare il tuo IBAN"
-        text1: "Se sei sicuro che l’IBAN"
+        text1: "Se hai la certezza che l’IBAN"
         text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
       koNotOwned:
         title: "Controlla l'IBAN inserito"
