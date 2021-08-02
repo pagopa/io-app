@@ -3,7 +3,7 @@ import * as React from "react";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { RawCheckBox } from "../../../../../../components/core/selection/RawCheckBox";
+import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 
 type Props = {
   text: string;

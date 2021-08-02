@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
 
 /**
  * This component allows the user to choose and change the common settings for a payment methods
+ * The {@link FavoritePaymentMethodSwitch} should be rendered only if the payment method has the capability pagoPA and
+ * the payment are active (paymentMethod.pagoPA === true)
  * @param props
  * @constructor
  */
@@ -50,12 +52,13 @@ const PaymentMethodSettings = (props: Props): React.ReactElement => (
     {hasFunctionEnabled(
       props.paymentMethod,
       EnableableFunctionsTypeEnum.pagoPA
-    ) && (
-      <>
-        <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />
-        <ItemSeparatorComponent noPadded={true} />
-      </>
-    )}
+    ) &&
+      props.paymentMethod.pagoPA && (
+        <>
+          <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />
+          <ItemSeparatorComponent noPadded={true} />
+        </>
+      )}
   </>
 );
 

@@ -12,7 +12,7 @@ import IconFont from "./ui/IconFont";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import { IOStyles } from "./core/variables/IOStyles";
-import { RawCheckBox } from "./core/selection/RawCheckBox";
+import { RawCheckBox } from "./core/selection/checkbox/RawCheckBox";
 import { Label } from "./core/typography/Label";
 import Accordion from "./ui/Accordion";
 
