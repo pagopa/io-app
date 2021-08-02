@@ -51,6 +51,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
+import { mixpanelTrack } from "../../../mixpanel";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -179,6 +180,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   // inform the user he/she has no payment methods to pay
   private alertNoPayablePaymentMethods = () => {
+    void mixpanelTrack("NO_PAYABLE_METHODS");
     Alert.alert(
       I18n.t("payment.alertNoPaymentMethods.title"),
       I18n.t("payment.alertNoPaymentMethods.message"),
