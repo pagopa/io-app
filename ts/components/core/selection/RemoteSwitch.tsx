@@ -75,6 +75,13 @@ const NoneErrorVersion = <E, _>(props: NoneErrorProps<E>) => (
  */
 export const RemoteSwitch = <E, _>(props: Props<E>): React.ReactElement => {
   const loadingComponent = <LoadingVersion testID={props.testID} />;
+  const switchComponent = (value: boolean) => (
+    <SwitchVersion
+      testID={props.testID}
+      value={value}
+      onValueChange={props.onValueChange}
+    />
+  );
 
   return pot.fold(
     props.value,
@@ -82,23 +89,11 @@ export const RemoteSwitch = <E, _>(props: Props<E>): React.ReactElement => {
     () => loadingComponent,
     _ => loadingComponent,
     _ => <NoneErrorVersion testID={props.testID} onRetry={props.onRetry} />,
-    value => (
-      <SwitchVersion
-        testID={props.testID}
-        value={value}
-        onValueChange={props.onValueChange}
-      />
-    ),
+    value => switchComponent(value),
     _ => loadingComponent,
     (_, newValue) => (
       <SwitchVersion testID={props.testID} value={newValue} disabled={true} />
     ),
-    value => (
-      <SwitchVersion
-        testID={props.testID}
-        value={value}
-        onValueChange={props.onValueChange}
-      />
-    )
+    value => switchComponent(value)
   );
 };
