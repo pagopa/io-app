@@ -4,13 +4,13 @@ import { StyleSheet } from "react-native";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { WithTestID } from "../../../../types/WithTestID";
+import { TestID } from "../../../../types/WithTestID";
 
-type Props = WithTestID<{
+type Props = {
   title: string;
   description: string;
   rightElement: React.ReactNode;
-}>;
+} & TestID;
 
 const styles = StyleSheet.create({
   row: {
