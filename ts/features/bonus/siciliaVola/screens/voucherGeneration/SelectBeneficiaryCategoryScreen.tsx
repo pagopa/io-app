@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -25,7 +26,6 @@ import {
 } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
 import { RadioButtonList } from "../../../../../components/core/selection/RadioButtonList";
-import { View } from "native-base";
 
 type BeneficiaryCategory = SvBeneficiaryCategory | "other";
 
