@@ -102,6 +102,10 @@ const analyticActions = new Map<CieAuthenticationErrorReason, string>([
   ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
   ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
   [
+    "EXTENDED_APDU_NOT_SUPPORTED",
+    I18n.t("authentication.cie.nfc.apduNotSupported")
+  ],
+  [
     "ON_NO_INTERNET_CONNECTION",
     I18n.t("authentication.cie.card.error.tryAgain")
   ],
@@ -194,13 +198,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           });
         }
         break;
-
       case "Transmission Error":
       case "ON_TAG_LOST":
       case "TAG_ERROR_NFC_NOT_SUPPORTED":
       case "ON_TAG_DISCOVERED_NOT_CIE":
       case "AUTHENTICATION_ERROR":
       case "ON_NO_INTERNET_CONNECTION":
+      case "EXTENDED_APDU_NOT_SUPPORTED":
         this.setError({ eventReason: event.event });
         break;
 

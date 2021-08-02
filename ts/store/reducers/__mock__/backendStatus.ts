@@ -1,6 +1,8 @@
 import { some } from "fp-ts/lib/Option";
-import { BackendStatus } from "../../../types/backendStatus";
 import { BackendStatusState } from "../backendStatus";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { Config } from "../../../../definitions/content/Config";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -11,7 +13,7 @@ export const baseRawBackendStatus: BackendStatus = {
   sections: {
     cashback: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT": "Il cashback è in manutenzione, tornerà operativo a breve",
         "en-EN":
@@ -20,7 +22,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     email_validation: {
       is_visible: true,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT":
           "la sezione messaggi è in manutenzione, tornerà operativa a breve",
@@ -30,7 +32,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     messages: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT":
           "la sezione messaggi è in manutenzione, tornerà operativa a breve",
@@ -40,7 +42,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     services: {
       is_visible: false,
-      level: "critical",
+      level: LevelEnum.critical,
       web_url: {
         "it-IT": "https://io.italia.it/",
         "en-EN": "https://io.italia.it/"
@@ -54,7 +56,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     login: {
       is_visible: false,
-      level: "normal",
+      level: LevelEnum.normal,
       web_url: {
         "it-IT": "https://io.italia.it/",
         "en-EN": "https://io.italia.it/"
@@ -68,7 +70,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     wallets: {
       is_visible: false,
-      level: "critical",
+      level: LevelEnum.critical,
       web_url: {
         "it-IT": "https://io.italia.it/",
         "en-EN": "https://io.italia.it/"
@@ -82,7 +84,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     ingress: {
       is_visible: false,
-      level: "critical",
+      level: LevelEnum.critical,
       web_url: {
         "it-IT": "https://io.italia.it/",
         "en-EN": "https://io.italia.it/"
@@ -96,7 +98,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     credit_card: {
       is_visible: true,
-      level: "warning",
+      level: LevelEnum.warning,
       badge: {
         "it-IT": "warning message",
         "en-EN": "possible slowness"
@@ -108,7 +110,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     satispay: {
       is_visible: false,
-      level: "critical",
+      level: LevelEnum.critical,
       message: {
         "it-IT": "satispay",
         "en-EN": "satispay"
@@ -116,7 +118,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     bancomat: {
       is_visible: false,
-      level: "normal",
+      level: LevelEnum.normal,
       message: {
         "it-IT": "bancomat",
         "en-EN": "bancomat"
@@ -128,7 +130,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     bancomatpay: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT": "bancomatpay",
         "en-EN": "bancomatpay"
@@ -136,7 +138,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     digital_payments: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT": "digital_payments",
         "en-EN": "digital_payments"
@@ -144,7 +146,7 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     cobadge: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT": "cobadge",
         "en-EN": "cobadge"
@@ -152,12 +154,29 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     euCovidCert: {
       is_visible: false,
-      level: "warning",
+      level: LevelEnum.warning,
       message: {
         "it-IT": "euCovidCert banner test",
         "en-EN": "euCovidCert banner test"
       }
+    },
+    favourite_language: {
+      is_visible: false,
+      level: LevelEnum.warning,
+      message: {
+        "it-IT": "favourite_language banner test",
+        "en-EN": "favourite_language banner test"
+      }
     }
+  },
+  config: {
+    bpd: {
+      enroll_bpd_after_add_payment_method: false,
+      program_active: true
+    },
+    bpd_ranking: true,
+    bpd_ranking_v2: true,
+    cgn_merchants_v2: false
   }
 };
 
@@ -167,17 +186,23 @@ export const baseBackendState: BackendStatusState = {
   deadsCounter: 0
 };
 
+export const baseBackendConfig: Config = {
+  bpd: {
+    enroll_bpd_after_add_payment_method: false,
+    program_active: true
+  },
+  bpd_ranking: true,
+  bpd_ranking_v2: true,
+  cgn_merchants_v2: true
+};
+
 export const withBpdRankingConfig = (
   baseState: BackendStatusState,
-  newConfig: boolean
+  newConfig: Config
 ): BackendStatusState => ({
   ...baseState,
   status: baseState.status.map(s => ({
     ...s,
-    config: {
-      bpd_ranking: newConfig,
-      bpd_ranking_v2: newConfig,
-      cgn_merchants_v2: newConfig
-    }
+    config: { ...newConfig }
   }))
 });

@@ -92,6 +92,7 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 type State = {
   isScreenReaderActive: boolean;
+  isMounted: boolean;
 };
 const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
@@ -102,15 +103,19 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   public constructor(props: Props) {
     super(props);
     this.handleFocus = this.handleFocus.bind(this);
-    this.state = { isScreenReaderActive: false };
+    this.state = { isScreenReaderActive: false, isMounted: false };
   }
 
   // set accessibility focus when component is mounted
   // it should be used paired with avoidNavigationEvents === true (navigation context not available)
   public componentDidMount() {
+    this.setState({ isMounted: true });
     void AccessibilityInfo.isScreenReaderEnabled()
       .then(isScreenReaderActive => {
-        this.setState({ isScreenReaderActive });
+        if (this.state.isMounted) {
+          this.setState({ isScreenReaderActive });
+        }
+
         if (
           isScreenReaderActive &&
           fromNullable(this.props.accessibilityEvents).fold(
@@ -122,6 +127,10 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         }
       })
       .catch(); // do nothing
+  }
+
+  public componentWillUnmount() {
+    this.setState({ isMounted: false });
   }
 
   get canHandleFocus() {

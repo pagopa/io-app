@@ -4,18 +4,23 @@ import _ from "lodash";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
 import { GlobalState } from "../store/reducers/types";
-import { sectionStatusSelector } from "../store/reducers/backendStatus";
+import {
+  SectionStatusKey,
+  sectionStatusSelector
+} from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
 import { getFullLocale } from "../utils/locale";
-import { SectionStatus, SectionStatusKey } from "../types/backendStatus";
+import { LevelEnum } from "../../definitions/content/SectionStatus";
+import { useNavigationContext } from "../utils/hooks/useOnFocus";
 import { IOColors } from "./core/variables/IOColors";
 import IconFont from "./ui/IconFont";
 import { Label } from "./core/typography/Label";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
+  onSectionRef?: (ref: React.RefObject<View>) => void;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -35,16 +40,16 @@ const styles = StyleSheet.create({
   text: { marginLeft: 16, flex: 1 }
 });
 
-export const statusColorMap: Record<SectionStatus["level"], string> = {
-  normal: IOColors.aqua,
-  critical: IOColors.red,
-  warning: IOColors.orange
+export const statusColorMap: Record<LevelEnum, string> = {
+  [LevelEnum.normal]: IOColors.aqua,
+  [LevelEnum.critical]: IOColors.red,
+  [LevelEnum.warning]: IOColors.orange
 };
 
-const statusIconMap: Record<SectionStatus["level"], string> = {
-  normal: "io-complete",
-  critical: "io-warning",
-  warning: "io-info"
+const statusIconMap: Record<LevelEnum, string> = {
+  [LevelEnum.normal]: "io-complete",
+  [LevelEnum.critical]: "io-warning",
+  [LevelEnum.warning]: "io-info"
 };
 const iconSize = 24;
 const color = IOColors.white;
@@ -64,6 +69,7 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
     return null;
   }
 
+  const viewRef = React.createRef<View>();
   const sectionStatus = props.sectionStatus;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
@@ -71,12 +77,28 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   const maybeWebUrl = maybeNotNullyString(
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
+  const navigation = useNavigationContext();
+
+  const handleOnSectionRef = () => {
+    if (viewRef.current) {
+      props.onSectionRef?.(viewRef);
+    }
+  };
+
+  React.useEffect(() => {
+    handleOnSectionRef();
+
+    const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
+
+    return () => unsubscribe?.remove();
+  }, [viewRef]);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => maybeWebUrl.map(openWebUrl)}
       testID={"SectionStatusComponentTouchable"}
     >
-      <View style={[styles.container, { backgroundColor }]}>
+      <View style={[styles.container, { backgroundColor }]} ref={viewRef}>
         <IconFont
           testID={"SectionStatusComponentIcon"}
           name={iconName}

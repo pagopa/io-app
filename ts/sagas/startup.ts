@@ -30,7 +30,8 @@ import {
   cgnEnabled,
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest
+  pagoPaApiUrlPrefixTest,
+  svEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -42,6 +43,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
+import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
   navigateToMessageRouterScreen,
@@ -61,15 +63,24 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
-import { profileSelector } from "../store/reducers/profile";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../store/reducers/profile";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
+import {
+  askMixpanelOptIn,
+  handleSetMixpanelEnabled,
+  initMixpanel
+} from "./mixpanel";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
@@ -102,6 +113,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -120,6 +132,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
+
+  // check if mixpanel could be initialized
+  yield call(initMixpanel);
+  // listen for mixpanel enabling events
+  yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> = yield select(
@@ -272,11 +289,19 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
+    // check if the user expressed preference about mixpanel, if not ask for it
+    yield call(askMixpanelOptIn);
+
     storedPin = yield call(checkConfiguredPinSaga);
 
     yield call(checkAcknowledgedFingerprintSaga);
 
     yield call(checkAcknowledgedEmailSaga, userProfile);
+
+    yield call(
+      askServicesPreferencesModeOptin,
+      isProfileFirstOnBoarding(userProfile)
+    );
 
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
@@ -297,6 +322,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       }
       // Ask to accept ToS if there is a new available version
       yield call(checkAcceptedTosSaga, userProfile);
+
+      // check if the user expressed preference about mixpanel, if not ask for it
+      yield call(askMixpanelOptIn);
+
+      yield call(askServicesPreferencesModeOptin, false);
 
       // Stop the watchAbortOnboardingSaga
       yield cancel(watchAbortOnboardingSagaTask);
@@ -320,6 +350,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   if (cgnEnabled) {
     // Start watching for cgn actions
     yield fork(watchBonusCgnSaga, sessionToken);
+  }
+
+  if (svEnabled) {
+    // Start watching for sv actions
+    yield fork(watchBonusSvSaga);
   }
 
   if (euCovidCertificateEnabled) {
@@ -455,7 +490,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
     // Remove the pending message from the notification state
     yield put(clearNotificationPendingMessage());
-
     // Navigate to message router screen
     yield put(navigateToMessageRouterScreen({ messageId }));
     // Push the MAIN navigator in the history to handle the back button

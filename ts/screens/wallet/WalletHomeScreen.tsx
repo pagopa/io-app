@@ -54,7 +54,7 @@ import {
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
   navigateToWalletList,
-  navigateToWalletTransactionsScreen
+  navigateToWalletPaymentMethodDetailScreen
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
@@ -391,7 +391,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         {validWallets.length > 0 ? (
           <RotatedCards
             wallets={validWallets}
-            onClick={this.props.navigateToWalletTransactionsScreen}
+            onClick={this.props.navigateToWalletPaymentMethodDetailScreen}
           />
         ) : null}
         {/* new payment method rendering (bancomat, bancomatPay, satispay) */}
@@ -657,8 +657,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
-  navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
-    dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
+  navigateToWalletPaymentMethodDetailScreen: (selectedWallet: Wallet) =>
+    dispatch(navigateToWalletPaymentMethodDetailScreen({ selectedWallet })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {

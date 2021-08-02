@@ -7,6 +7,7 @@ import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { Locales } from "../../../locales/locales";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   continueWithRootOrJailbreak,
   customEmailChannelSetEnabled,
@@ -19,6 +20,7 @@ import {
   serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
+import { differentProfileLoggedIn } from "../actions/crossSessions";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -32,9 +34,10 @@ export type PersistedPreferencesState = Readonly<{
   //       https://www.pivotaltracker.com/story/show/170998374
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
   continueWithRootOrJailbreak?: boolean;
+  isMixpanelEnabled: boolean | null;
 }>;
 
-const initialPreferencesState: PersistedPreferencesState = {
+export const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
   preferredCalendar: undefined,
   preferredLanguage: undefined,
@@ -42,7 +45,8 @@ const initialPreferencesState: PersistedPreferencesState = {
   isPagoPATestEnabled: false,
   isExperimentalFeaturesEnabled: false,
   isCustomEmailChannelEnabled: pot.none,
-  continueWithRootOrJailbreak: false
+  continueWithRootOrJailbreak: false,
+  isMixpanelEnabled: null
 };
 
 export default function preferencesReducer(
@@ -107,6 +111,22 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(setMixpanelEnabled, action)) {
+    return {
+      ...state,
+      isMixpanelEnabled: action.payload
+    };
+  }
+
+  // when the current user is different from the previous logged one
+  // reset the mixpanel opt-in preference
+  if (isActionOf(differentProfileLoggedIn, action)) {
+    return {
+      ...state,
+      isMixpanelEnabled: null
+    };
+  }
+
   return state;
 }
 
@@ -131,6 +151,9 @@ export const persistedPreferencesSelector = (state: GlobalState) =>
 
 export const continueWithRootOrJailbreakSelector = (state: GlobalState) =>
   state.persistedPreferences.continueWithRootOrJailbreak;
+
+export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
+  state.persistedPreferences.isMixpanelEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

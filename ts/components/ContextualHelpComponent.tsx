@@ -3,6 +3,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
+import { isStringNullyOrEmpty } from "../utils/strings";
 import themeVariables from "../theme/variables";
 import { ContextualHelpData } from "./ContextualHelpModal";
 import { H3 } from "./core/typography/H3";
@@ -33,50 +34,71 @@ const ContextualHelpComponent: React.FunctionComponent<Props> = ({
   isContentLoaded,
   onLinkClicked,
   onRequestAssistance
-}) => (
-  <>
-    <BaseHeader
-      accessibilityEvents={{
-        avoidNavigationEventsUsage: true
-      }}
-      headerTitle={I18n.t("contextualHelp.title")}
-      customRightIcon={{
-        iconName: "io-close",
-        onPress: onClose,
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-    />
+}) => {
+  // Being content a ReactNode we can rely on `null` to represent no-content
+  const isContentReady = contextualHelpData.content === undefined;
 
-    {!contextualHelpData.content && (
-      <View centerJustified={true}>
-        <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-      </View>
-    )}
-    {contextualHelpData.content && (
-      <Content contentContainerStyle={styles.contentContainer} noPadded={true}>
-        <H3 accessible={true}>{contextualHelpData.title}</H3>
-        <View spacer={true} />
-        {contextualHelpData.content}
-        <View spacer={true} />
-        {contextualHelpData.faqs && isContentLoaded && (
-          <FAQComponent
-            onLinkClicked={onLinkClicked}
-            faqs={contextualHelpData.faqs}
-          />
-        )}
-        {isContentLoaded && (
-          <>
-            <View spacer={true} extralarge={true} />
-            <InstabugAssistanceComponent
-              requestAssistance={onRequestAssistance}
+  return (
+    <>
+      <BaseHeader
+        accessibilityEvents={{
+          avoidNavigationEventsUsage: true
+        }}
+        headerTitle={I18n.t("contextualHelp.title")}
+        customRightIcon={{
+          iconName: "io-close",
+          onPress: onClose,
+          accessibilityLabel: I18n.t(
+            "global.accessibility.contextualHelp.close"
+          )
+        }}
+      />
+      {isContentReady && (
+        <View centerJustified={true}>
+          <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+        </View>
+      )}
+      {!isContentReady && (
+        <Content
+          contentContainerStyle={styles.contentContainer}
+          noPadded={true}
+        >
+          {!isStringNullyOrEmpty(contextualHelpData.title) && (
+            <>
+              <H3 accessible={true}>{contextualHelpData.title}</H3>
+              <View spacer={true} />
+            </>
+          )}
+
+          {contextualHelpData.content && (
+            <>
+              {contextualHelpData.content}
+              <View spacer={true} />
+            </>
+          )}
+
+          {contextualHelpData.faqs && isContentLoaded && (
+            <FAQComponent
+              onLinkClicked={onLinkClicked}
+              faqs={contextualHelpData.faqs}
             />
-          </>
-        )}
-        {isContentLoaded && <EdgeBorderComponent />}
-      </Content>
-    )}
-    <BetaBannerComponent />
-  </>
-);
+          )}
+          {isContentLoaded && (
+            <>
+              {contextualHelpData.content !== null && (
+                <View spacer={true} extralarge={true} />
+              )}
+              <InstabugAssistanceComponent
+                requestAssistance={onRequestAssistance}
+              />
+            </>
+          )}
+          {isContentLoaded && <EdgeBorderComponent />}
+        </Content>
+      )}
+      <BetaBannerComponent />
+    </>
+  );
+};
 
 export default ContextualHelpComponent;
