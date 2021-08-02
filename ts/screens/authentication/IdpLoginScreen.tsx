@@ -38,7 +38,6 @@ import { SessionToken } from "../../types/SessionToken";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
-  isPosteIDP,
   onLoginUriChanged
 } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
@@ -186,13 +185,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
     const url = event.url;
-    // if an intent is coming from Poste SPID login form, extract the fallbackUrl and use it in Linking.openURL
-    if (isPosteIDP(this.props.loggedOutWithIdpAuth?.idp.id ?? "")) {
-      const posteIntent = getIntentFallbackUrl(url);
-      if (posteIntent.isSome()) {
-        void Linking.openURL(posteIntent.value);
-        return false;
-      }
+    // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
+    const idpIntent = getIntentFallbackUrl(url);
+    if (idpIntent.isSome()) {
+      void Linking.openURL(idpIntent.value);
+      return false;
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(

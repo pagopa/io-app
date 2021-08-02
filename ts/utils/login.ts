@@ -19,8 +19,6 @@ type LoginFailure = {
 
 type LoginResult = LoginSuccess | LoginFailure;
 
-export const isPosteIDP = (idp: string): boolean => idp === "posteid";
-
 /**
  * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
  * more info https://developer.chrome.com/docs/multidevice/android/intents/
