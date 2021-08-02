@@ -44,7 +44,6 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
 
   const handleTosCancel = () => {
     props.cancel();
-    props.back();
   };
 
   const handleTosAccepted = () => {
