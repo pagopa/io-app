@@ -107,6 +107,19 @@ export const getFavoriteWallet = createSelector(
 );
 
 /**
+ * Select a payment method using the id (walletId) and extracts the payment status (is the payment enabled on this payment method?)
+ * Return pot.some(undefined) if no payment methods with the id are found
+ */
+export const getPaymentStatusById = createSelector(
+  [getWalletsById, (_: GlobalState, id: number) => id],
+  (potWalletsById, id): pot.Pot<boolean | undefined, Error> =>
+    pot.map(
+      potWalletsById,
+      walletsById => walletsById[id]?.paymentMethod?.pagoPA
+    )
+);
+
+/**
  * @deprecated Using API v2 this selector is deprecated
  * If you are searching for credit card or bancomat use {@link creditCardWalletV1Selector}
  * - {@link pagoPaCreditCardWalletV1Selector} {@link bancomatListSelector} instead

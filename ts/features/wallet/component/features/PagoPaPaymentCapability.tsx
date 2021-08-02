@@ -8,6 +8,7 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
+import { pmActivatePaymentEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
@@ -15,6 +16,7 @@ import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
 import { BasePaymentFeatureListItem } from "./BasePaymentFeatureListItem";
+import PaymentStatusSwitch from "./PaymentStatusSwitch";
 
 const styles = StyleSheet.create({
   badgeInfo: {
@@ -56,11 +58,16 @@ const getLocales = () => ({
   incompatible: I18n.t("wallet.methods.card.pagoPaCapability.incompatible")
 });
 
-const availabilityBadge = (badgeType: PaymentSupportStatus) => {
+const availabilityBadge = (
+  badgeType: PaymentSupportStatus,
+  paymentMethod: PaymentMethod
+) => {
   const { available, arriving, incompatible } = getLocales();
   switch (badgeType) {
     case "available":
-      return (
+      return pmActivatePaymentEnabled ? (
+        <PaymentStatusSwitch paymentMethod={paymentMethod} />
+      ) : (
         <Badge style={[styles.badgeInfo, styles.badgeAvailable]}>
           <H5 color="white">{available}</H5>
         </Badge>
@@ -95,6 +102,7 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
 const PagoPaPaymentCapability: React.FC<Props> = props => {
   const onOpenLearnMoreAboutInAppPayments = () =>
     openWebUrl(IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL);
+  const paymentSupported = isPaymentSupported(props.paymentMethod);
 
   const { present } = useIOBottomSheet(
     <View>
@@ -116,13 +124,13 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
   );
 
   return (
-    <TouchableDefaultOpacity onPress={present}>
+    <TouchableDefaultOpacity
+      onPress={paymentSupported === "available" ? undefined : present}
+    >
       <BasePaymentFeatureListItem
         title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
         description={I18n.t("wallet.methods.card.pagoPaCapability.description")}
-        rightElement={availabilityBadge(
-          isPaymentSupported(props.paymentMethod)
-        )}
+        rightElement={availabilityBadge(paymentSupported, props.paymentMethod)}
       />
     </TouchableDefaultOpacity>
   );
