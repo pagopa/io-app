@@ -1,4 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
@@ -10,6 +11,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
 import { handleSetFavourite } from "../../utils/wallet";
+import { IOStyleVariables } from "../core/variables/IOStyleVariables";
 import Switch from "../ui/Switch";
 
 type OwnProps = {
@@ -36,12 +38,14 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
   );
 
   const rightElement = isLoading ? (
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-    />
+    <View style={{ width: IOStyleVariables.switchWidth }}>
+      <ActivityIndicator
+        color={"black"}
+        accessible={false}
+        importantForAccessibility={"no-hide-descendants"}
+        accessibilityElementsHidden={true}
+      />
+    </View>
   ) : (
     <Switch
       onValueChange={v =>

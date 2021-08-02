@@ -82,11 +82,23 @@ export const RemoteSwitch = <E, _>(props: Props<E>): React.ReactElement => {
     () => loadingComponent,
     _ => loadingComponent,
     _ => <NoneErrorVersion testID={props.testID} onRetry={props.onRetry} />,
-    value => <SwitchVersion testID={props.testID} value={value} />,
+    value => (
+      <SwitchVersion
+        testID={props.testID}
+        value={value}
+        onValueChange={props.onValueChange}
+      />
+    ),
     _ => loadingComponent,
     (_, newValue) => (
       <SwitchVersion testID={props.testID} value={newValue} disabled={true} />
     ),
-    value => <SwitchVersion testID={props.testID} value={value} />
+    value => (
+      <SwitchVersion
+        testID={props.testID}
+        value={value}
+        onValueChange={props.onValueChange}
+      />
+    )
   );
 };

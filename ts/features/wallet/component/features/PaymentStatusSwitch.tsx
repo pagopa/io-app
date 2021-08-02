@@ -10,6 +10,7 @@ import { IOStyleVariables } from "../../../../components/core/variables/IOStyleV
 import IconFont from "../../../../components/ui/IconFont";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
+  fetchWalletsRequestWithExpBackoff,
   updatePaymentStatus,
   UpdatePaymentStatusPayload
 } from "../../../../store/actions/wallet/wallets";
@@ -73,11 +74,21 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   );
 
   return paymentMethodExists.fold(<Fallback />, val => (
-    <RemoteSwitch value={val} />
+    <RemoteSwitch
+      value={val}
+      onRetry={props.loadWallets}
+      onValueChange={newVal =>
+        props.updatePaymentStatus({
+          paymentEnabled: newVal,
+          idWallet: props.paymentMethod.idWallet
+        })
+      }
+    />
   ));
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
   updatePaymentStatus: (payload: UpdatePaymentStatusPayload) =>
     dispatch(updatePaymentStatus.request(payload))
 });
