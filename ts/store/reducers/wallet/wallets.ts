@@ -156,7 +156,7 @@ export const paymentMethodsSelector = createSelector(
     )
 );
 
-// return the payment methods can pay in IO
+// return those payment methods that can pay within pagoPA
 export const getPayablePaymentMethodsSelector = createSelector(
   paymentMethodsSelector,
   (
