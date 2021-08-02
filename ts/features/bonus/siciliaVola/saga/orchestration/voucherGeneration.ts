@@ -1,4 +1,4 @@
-import { call } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import {
   executeWorkUnit,
@@ -13,6 +13,10 @@ import {
 } from "../../store/actions/voucherGeneration";
 import SV_ROUTES from "../../navigation/routes";
 import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
+import CGN_ROUTES from "../../../cgn/navigation/routes";
+import BONUSVACANZE_ROUTES from "../../../bonusVacanze/navigation/routes";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.
@@ -41,4 +45,15 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
       withResetNavigationStack(svVoucherGenerationWorkUnit)
     );
   yield call(sagaExecution);
+
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+    navigationCurrentRouteSelector
+  );
+  const route = currentRoute.toUndefined();
+  if (
+    // if the activation started from the CTA -> go back
+    route === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+  ) {
+    yield put(navigateBack());
+  }
 }
