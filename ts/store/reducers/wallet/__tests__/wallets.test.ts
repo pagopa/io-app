@@ -18,6 +18,7 @@ import {
   creditCardWalletV1Selector,
   getFavoriteWallet,
   getFavoriteWalletId,
+  getPayablePaymentMethodsSelector,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector
 } from "../wallets";
@@ -247,6 +248,43 @@ describe("updatePaymentStatus state changes", () => {
       expect(updatedFirstWallet!.paymentMethod!.pagoPA).toBeTruthy();
     }
   }
+});
+
+describe("getPayablePaymentMethodsSelector", () => {
+  it("should return false - no payable methods", () => {
+    const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+  });
+
+  it("should return false - empty wallet", () => {
+    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
+      .value as PatchedWalletV2ListResponse;
+    const updatedMethods = paymentMethods.data!.map(w =>
+      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+    );
+    const withWallets = appReducer(
+      undefined,
+      fetchWalletsSuccess(updatedMethods)
+    );
+    expect(updatedMethods.length).toBeGreaterThan(0);
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+  });
+
+  it("should return true - one payable method", () => {
+    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
+      .value as PatchedWalletV2ListResponse;
+    const updatedMethods = [...paymentMethods.data!];
+    // eslint-disable-next-line functional/immutable-data
+    updatedMethods[0] = { ...updatedMethods[0], pagoPA: true };
+    const withWallets = appReducer(
+      undefined,
+      fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
+    );
+    expect(updatedMethods.length).toBeGreaterThan(0);
+    expect(
+      getPayablePaymentMethodsSelector(withWallets).length
+    ).toBeGreaterThan(0);
+  });
 });
 
 const mockWalletState = (
