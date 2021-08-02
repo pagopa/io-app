@@ -2589,7 +2589,13 @@ bonus:
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "Dichiaro di essere"
+        categories:
+          student: "Studente fuori sede"
+          disabled: "Disabile grave"
+          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+          sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
+          other: "Nessuno dei precedenti"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
