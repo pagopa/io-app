@@ -791,7 +791,7 @@ datetimes:
   notValid: Invalid date.
 payment:
   alertNoPaymentMethods:
-    title: Add a method to make payments in the app
+    title: Add a method to make in-app payments
     message: The method will be saved in the Wallet, so you can pay faster next time.
     buttons:
       ok: Continue
