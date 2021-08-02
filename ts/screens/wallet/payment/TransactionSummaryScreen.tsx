@@ -497,7 +497,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(
         navigateToWalletAddPaymentMethod({
           inPayment: none,
-          canAddOnlyPayablePaymentMethod: true
+          showOnlyPayablePaymentMethods: true
         })
       ),
     dispatchPaymentVerificaRequest,
