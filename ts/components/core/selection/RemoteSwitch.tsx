@@ -1,4 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
 import I18n from "../../../i18n";
@@ -8,6 +9,7 @@ import IconFont from "../../ui/IconFont";
 import Switch from "../../ui/Switch";
 import { calculateSlop } from "../accessibility";
 import { IOColors } from "../variables/IOColors";
+import { IOStyleVariables } from "../variables/IOStyleVariables";
 
 type Props<E> = {
   value: pot.Pot<boolean, E>;
@@ -19,11 +21,13 @@ const iconSize = 24;
 const slop = calculateSlop(iconSize);
 
 const LoadingVersion = (props: TestID) => (
-  <ActivityIndicator
-    testID={props.testID}
-    color={"black"}
-    accessibilityLabel={I18n.t("global.remoteStates.loading")}
-  />
+  <View style={{ width: IOStyleVariables.switchWidth }}>
+    <ActivityIndicator
+      testID={props.testID}
+      color={"black"}
+      accessibilityLabel={I18n.t("global.remoteStates.loading")}
+    />
+  </View>
 );
 
 type SwitchProps = Pick<
@@ -48,12 +52,14 @@ const NoneErrorVersion = <E, _>(props: NoneErrorProps<E>) => (
     accessibilityLabel={I18n.t("global.genericRetry")}
     hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
     onPress={props.onRetry}
+    style={{ width: IOStyleVariables.switchWidth }}
   >
     <IconFont
       testID={props.testID}
       name={"io-reload"}
       size={iconSize}
       color={IOColors.blue}
+      style={{ textAlign: "center" }}
     />
   </TouchableDefaultOpacity>
 );

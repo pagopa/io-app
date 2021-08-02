@@ -1,13 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RemoteSwitch tests Snapshot for pot.none 1`] = `
-<ActivityIndicator
-  accessibilityLabel="Loading..."
-  animating={true}
-  color="black"
-  hidesWhenStopped={true}
-  size="small"
-/>
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "width": 51,
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    accessibilityLabel="Loading..."
+    animating={true}
+    color="black"
+    hidesWhenStopped={true}
+    size="small"
+  />
+</View>
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
@@ -34,6 +45,7 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
   style={
     Object {
       "opacity": 1,
+      "width": 51,
     }
   }
 >
@@ -50,7 +62,12 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
           "fontSize": 24,
         },
         Array [
-          Object {},
+          Array [
+            Object {},
+            Object {
+              "textAlign": "center",
+            },
+          ],
           Object {
             "color": "#0073E6",
           },
@@ -73,23 +90,45 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.noneLoading 1`] = `
-<ActivityIndicator
-  accessibilityLabel="Loading..."
-  animating={true}
-  color="black"
-  hidesWhenStopped={true}
-  size="small"
-/>
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "width": 51,
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    accessibilityLabel="Loading..."
+    animating={true}
+    color="black"
+    hidesWhenStopped={true}
+    size="small"
+  />
+</View>
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
-<ActivityIndicator
-  accessibilityLabel="Loading..."
-  animating={true}
-  color="black"
-  hidesWhenStopped={true}
-  size="small"
-/>
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "width": 51,
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    accessibilityLabel="Loading..."
+    animating={true}
+    color="black"
+    hidesWhenStopped={true}
+    size="small"
+  />
+</View>
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
@@ -193,23 +232,45 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.someLoading 1`] = `
-<ActivityIndicator
-  accessibilityLabel="Loading..."
-  animating={true}
-  color="black"
-  hidesWhenStopped={true}
-  size="small"
-/>
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "width": 51,
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    accessibilityLabel="Loading..."
+    animating={true}
+    color="black"
+    hidesWhenStopped={true}
+    size="small"
+  />
+</View>
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
-<ActivityIndicator
-  accessibilityLabel="Loading..."
-  animating={true}
-  color="black"
-  hidesWhenStopped={true}
-  size="small"
-/>
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "width": 51,
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    accessibilityLabel="Loading..."
+    animating={true}
+    color="black"
+    hidesWhenStopped={true}
+    size="small"
+  />
+</View>
 `;
 
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `

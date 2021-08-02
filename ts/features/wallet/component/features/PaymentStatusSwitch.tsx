@@ -1,9 +1,14 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
+import IconFont from "../../../../components/ui/IconFont";
+import { mixpanelTrack } from "../../../../mixpanel";
 import {
   updatePaymentStatus,
   UpdatePaymentStatusPayload
@@ -44,17 +49,32 @@ const toOptionPot = (
   );
 
 /**
+ * This should never happens, track the error and display a close icon
+ * @constructor
+ */
+const Fallback = () => {
+  void mixpanelTrack("PAYMENT_STATUS_SWITCH_ID_NOT_IN_WALLET_LIST");
+  return (
+    <View style={{ paddingLeft: IOStyleVariables.switchWidth - 24 }}>
+      <IconFont name={"io-close"} size={24} color={IOColors.blue} />
+    </View>
+  );
+};
+/**
  * A switch that represent the current Payment status (enabled to payments) for a payment method.
  * The user can change the setting using this Switch.
  * @param props
  * @constructor
  */
 const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
+  // Should never be none, this will happens only if the idWallet is not in the walletList
   const paymentMethodExists = toOptionPot(
     props.paymentStatus(props.paymentMethod.idWallet)
   );
 
-  return paymentMethodExists.fold(null, val => <RemoteSwitch value={val} />);
+  return paymentMethodExists.fold(<Fallback />, val => (
+    <RemoteSwitch value={val} />
+  ));
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
