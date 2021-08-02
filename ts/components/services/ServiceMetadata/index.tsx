@@ -15,7 +15,7 @@ type Props = {
   isDebugModeEnabled: boolean;
   organizationFiscalCode: OrganizationFiscalCode;
   serviceId: ServiceId;
-  servicesMetadata: Service;
+  servicesMetadata?: Service;
 };
 
 /**
@@ -37,7 +37,7 @@ const ServiceMetadata: React.FC<Props> = ({
     phone,
     support_url,
     web_url
-  } = servicesMetadata;
+  } = servicesMetadata || {};
   return (
     <>
       <SectionHeader iconName="io-phone" title={"services.contactsAndInfo"} />

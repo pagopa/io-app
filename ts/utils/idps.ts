@@ -21,7 +21,7 @@ export const idps: ReadonlyArray<LocalIdpsFallback> = [
     name: "Aruba",
     localLogo: require("../../img/spid-idp-arubaid.png"),
     logo: "",
-    profileUrl: "http://selfcarespid.aruba.it"
+    profileUrl: "https://selfcarespid.aruba.it"
   },
   {
     id: "infocertid",
