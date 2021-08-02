@@ -34,7 +34,8 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
-  canAddOnlyPayablePaymentMethod?: true;
+  // if set it will shown only those method can pay with pagoPA
+  showOnlyPayablePaymentMethods?: true;
   keyFrom?: string;
 }>;
 
@@ -112,7 +113,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 ) => {
   const inPayment = props.navigation.getParam("inPayment");
   const canAddOnlyPayablePaymentMethod = props.navigation.getParam(
-    "canAddOnlyPayablePaymentMethod"
+    "showOnlyPayablePaymentMethods"
   );
 
   const cancelButtonProps = {
