@@ -148,6 +148,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <View spacer={true} large={true} />
               <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
+              {/* since we're paying show only those method can pay with pagoPA */}
               <PaymentMethodsList
                 paymentMethods={getpaymentMethods(props, true)}
                 navigateToAddCreditCard={props.navigateToAddCreditCard}
