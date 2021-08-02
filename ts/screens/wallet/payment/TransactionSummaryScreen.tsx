@@ -7,7 +7,7 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -51,7 +51,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { mixpanelTrack } from "../../../mixpanel";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -178,24 +178,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  // inform the user he/she has no payment methods to pay
-  private alertNoPayablePaymentMethods = () => {
-    void mixpanelTrack("NO_PAYABLE_METHODS");
-    Alert.alert(
-      I18n.t("payment.alertNoPaymentMethods.title"),
-      I18n.t("payment.alertNoPaymentMethods.message"),
-      [
-        {
-          text: I18n.t("payment.alertNoPaymentMethods.buttons.ko")
-        },
-        {
-          text: I18n.t("payment.alertNoPaymentMethods.buttons.ok"),
-          onPress: this.props.navigateToWalletAddPaymentMethod
-        }
-      ]
-    );
-  };
-
   private renderFooterButtons() {
     const { potVerifica, maybeFavoriteWallet, hasPayableMethods } = this.props;
     const basePrimaryButtonProps = {
@@ -216,7 +198,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
                     maybeFavoriteWallet,
                     false
                   )
-                : this.alertNoPayablePaymentMethods()
+                : alertNoPayablePaymentMethods(
+                    this.props.navigateToWalletAddPaymentMethod
+                  )
           }
         : {
             ...basePrimaryButtonProps,
