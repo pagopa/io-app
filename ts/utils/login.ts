@@ -25,8 +25,8 @@ type LoginResult = LoginSuccess | LoginFailure;
  * @param intentUrl
  */
 export const getIntentFallbackUrl = (intentUrl: string): Option<string> => {
-  const intentParse = new URLParse(intentUrl, true).protocol;
-  if (intentParse !== "intent:") {
+  const intentProtocol = URLParse.extractProtocol(intentUrl);
+  if (intentProtocol.protocol !== "intent:" || !intentProtocol.slashes) {
     return none;
   }
   const hook = "S.browser_fallback_url=";

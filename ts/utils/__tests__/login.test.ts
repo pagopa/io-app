@@ -92,6 +92,10 @@ describe("getIntentFallbackUrl", () => {
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;fallback_url=https://domain.it/?tranId=acb;end",
       none
+    ],
+    [
+      "intent:/domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb;end",
+      none
     ]
   ];
   test.each(isIntentSchemeCases)(
