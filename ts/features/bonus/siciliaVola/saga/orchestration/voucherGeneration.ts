@@ -15,8 +15,6 @@ import SV_ROUTES from "../../navigation/routes";
 import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
-import CGN_ROUTES from "../../../cgn/navigation/routes";
-import BONUSVACANZE_ROUTES from "../../../bonusVacanze/navigation/routes";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.
