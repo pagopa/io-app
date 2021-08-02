@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0-rc.1](https://github.com/pagopa/io-app/compare/1.32.0-rc.0...1.32.0-rc.1) (2021-07-30)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[IAC-108](https://pagopa.atlassian.net/browse/IAC-108)] Remove Add payment method CTA from cashback details screen [#3247](https://github.com/pagopa/io-app/issues/3247) ([df17044](https://github.com/pagopa/io-app/commit/df170444b4e9675a427005a3055ea4f79af56a95))
+* [[IA-170](https://pagopa.atlassian.net/browse/IA-170)] Add action/saga/network to change payment method status ([#3262](https://github.com/pagopa/io-app/issues/3262)) ([44ff992](https://github.com/pagopa/io-app/commit/44ff9921f5a3ad2387043b0009b24fb91a1a7c76))
+
+
+### Bug Fixes
+
+* [[IA-107](https://pagopa.atlassian.net/browse/IA-107)] Missing accessibility role link on search bank privacy policy ([#3248](https://github.com/pagopa/io-app/issues/3248)) ([1a7a041](https://github.com/pagopa/io-app/commit/1a7a04118aafe5a8b0e3e250d64c56d3cc64a710)), closes [#IA-107](https://github.com/pagopa/io-app/issues/IA-107) [#IA-107](https://github.com/pagopa/io-app/issues/IA-107)
+* [[IABT-1214](https://pagopa.atlassian.net/browse/IABT-1214)] Italian label is shown even when the language is set to different locale ([#3260](https://github.com/pagopa/io-app/issues/3260)) ([0dc08ad](https://github.com/pagopa/io-app/commit/0dc08ad73196ccab548907eaf28bcce3cc67073f))
+
+
+### Chores
+
+* [[IA-52](https://pagopa.atlassian.net/browse/IA-52)] When VO/Talkback is On, the advice banner doesn't focus ([#3188](https://github.com/pagopa/io-app/issues/3188)) ([ba8713b](https://github.com/pagopa/io-app/commit/ba8713b9a34261be4ddef32b6fd0143f8a1b4aaf))
+
+## [1.32.0-rc.0](https://github.com/pagopa/io-app/compare/1.31.0-rc.3...1.32.0-rc.0) (2021-07-26)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-13](https://pagopa.atlassian.net/browse/IASV-13)] Add SiciliaVola entry point ([#3257](https://github.com/pagopa/io-app/issues/3257)) ([059ce43](https://github.com/pagopa/io-app/commit/059ce43b14cb83c45a4e1672966b146e0bd4f397))
+
+
+### Bug Fixes
+
+* [[IA-90](https://pagopa.atlassian.net/browse/IA-90)] The traits of some links are not read correctly ([#3244](https://github.com/pagopa/io-app/issues/3244)) ([82cb73f](https://github.com/pagopa/io-app/commit/82cb73f92db0feffb6f6e82b380cb01e924ed8ef))
+
+
+### Chores
+
+* [[IA-169](https://pagopa.atlassian.net/browse/IA-169)] Copy update [#3261](https://github.com/pagopa/io-app/issues/3261) ([e678d60](https://github.com/pagopa/io-app/commit/e678d6076c5f23e37ee47c2278af7c3703ddae4c))
+* [[IA-47](https://pagopa.atlassian.net/browse/IA-47)] In wallet home, when click on refresh label the accessibility label is wrong ([#3167](https://github.com/pagopa/io-app/issues/3167)) ([59d2ca7](https://github.com/pagopa/io-app/commit/59d2ca736b3686ff7b5a44b305fceef6027c4bba))
+
 ## [1.31.0-rc.3](https://github.com/pagopa/io-app/compare/1.31.0-rc.2...1.31.0-rc.3) (2021-07-23)
 
 

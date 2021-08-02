@@ -48,11 +48,13 @@ import {
   fetchWalletsRequest,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
+import { getErrorFromNetworkError } from "../../../utils/errors";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -341,12 +343,23 @@ const reducer = (
     case getType(fetchWalletsRequestWithExpBackoff):
     case getType(fetchWalletsRequest):
     case getType(paymentUpdateWalletPsp.request):
+    case getType(updatePaymentStatus.request):
     case getType(deleteWalletRequest):
       return {
         ...state,
         walletById: pot.toLoading(state.walletById)
       };
 
+    case getType(updatePaymentStatus.success):
+      const currentWallets = pot.getOrElse(state.walletById, {});
+      // update the received wallet
+      return {
+        ...state,
+        walletById: pot.some({
+          ...currentWallets,
+          [action.payload.idWallet]: action.payload
+        })
+      };
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPsp.success):
     case getType(deleteWalletSuccess):
@@ -364,6 +377,14 @@ const reducer = (
       return {
         ...state,
         walletById: pot.toError(state.walletById, action.payload)
+      };
+    case getType(updatePaymentStatus.failure):
+      return {
+        ...state,
+        walletById: pot.toError(
+          state.walletById,
+          getErrorFromNetworkError(action.payload)
+        )
       };
 
     //
