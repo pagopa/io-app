@@ -18,6 +18,7 @@ import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import {
   navigateToSvDisabledAdditionalInfoScreen,
+  navigateToSvKoSelectBeneficiaryCategoryScreen,
   navigateToSvSickCheckIncomeThresholdScreen,
   navigateToSvStudentSelectDestinationScreen,
   navigateToSvWorkerCheckIncomeThresholdScreen
@@ -93,7 +94,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         props.navigateToSvSickCheckIncomeThreshold();
         return;
       case "other":
-        // TODO: go to ko screen
+        props.navigateToSvKoSelectBeneficiaryCategory();
         return;
     }
   };
@@ -159,7 +160,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToSvWorkerCheckIncomeThreshold: () =>
     dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
   navigateToSvSickCheckIncomeThreshold: () =>
-    dispatch(navigateToSvSickCheckIncomeThresholdScreen())
+    dispatch(navigateToSvSickCheckIncomeThresholdScreen()),
+  navigateToSvKoSelectBeneficiaryCategory: () =>
+    dispatch(navigateToSvKoSelectBeneficiaryCategoryScreen())
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
