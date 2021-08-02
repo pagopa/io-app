@@ -790,6 +790,12 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  alertNoPaymentMethods:
+    title: Add a method to make payments in the app
+    message: The method will be saved in the Wallet, so you can pay faster next time.
+    buttons:
+      ok: Continue
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment

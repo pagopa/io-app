@@ -10,7 +10,6 @@ import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -41,8 +40,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
-  getPayablePaymentMethodsSelector,
-  pagoPaCreditCardWalletV1Selector
+  getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
@@ -179,24 +177,25 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
+  // inform the user he/she has no payment methods to pay
   private alertNoPayablePaymentMethods = () => {
-    Alert.alert("test", "message", [
-      {
-        text: I18n.t("global.buttons.cancel"),
-        style: "default",
-        onPress: constNull
-      },
-      {
-        text: "Continua",
-        style: "default",
-        // TODO replace with the effective implementation
-        onPress: this.props.navigateToWalletAddPaymentMethod
-      }
-    ]);
+    Alert.alert(
+      I18n.t("payment.alertNoPaymentMethods.title"),
+      I18n.t("payment.alertNoPaymentMethods.message"),
+      [
+        {
+          text: I18n.t("payment.alertNoPaymentMethods.buttons.ko")
+        },
+        {
+          text: I18n.t("payment.alertNoPaymentMethods.buttons.ok"),
+          onPress: this.props.navigateToWalletAddPaymentMethod
+        }
+      ]
+    );
   };
 
   private renderFooterButtons() {
-    const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
+    const { potVerifica, maybeFavoriteWallet, hasPayableMethods } = this.props;
     const basePrimaryButtonProps = {
       primary: true,
       title: I18n.t("wallet.continue")
@@ -209,7 +208,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
             ...basePrimaryButtonProps,
             disabled: false,
             onPress: () =>
-              hasWallets
+              hasPayableMethods
                 ? this.props.startOrResumePayment(
                     potVerifica.value,
                     maybeFavoriteWallet,
@@ -394,7 +393,7 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
-  const hasWallets = getPayablePaymentMethodsSelector(state).length > 0;
+  const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
 
   return {
     error,
@@ -404,7 +403,7 @@ const mapStateToProps = (state: GlobalState) => {
     potVerifica: verifica,
     paymentId,
     maybeFavoriteWallet,
-    hasWallets
+    hasPayableMethods
   };
 };
 
@@ -435,7 +434,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     maybeFavoriteWallet: ReturnType<
       typeof mapStateToProps
     >["maybeFavoriteWallet"],
-    hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
+    hasPayableMethods: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
   ) =>
     dispatch(
       runStartOrResumePaymentActivationSaga({
@@ -461,7 +460,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
                 })
               );
             },
-            hasWallets
+            hasPayableMethods
           )
       })
     );
@@ -518,7 +517,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       maybeFavoriteWallet: ReturnType<
         typeof mapStateToProps
       >["maybeFavoriteWallet"],
-      hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
+      hasWallets: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
     ) => {
       if (pot.isSome(potVerifica)) {
         startOrResumePayment(
@@ -557,7 +556,7 @@ const mergeProps = (
       dispatchProps.onRetryWithPotVerifica(
         stateProps.potVerifica,
         stateProps.maybeFavoriteWallet,
-        stateProps.hasWallets
+        stateProps.hasPayableMethods
       );
     }
   };
