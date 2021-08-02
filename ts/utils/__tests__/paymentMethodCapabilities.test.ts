@@ -5,10 +5,7 @@ import {
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
-import {
-  isPaymentMethodSupported,
-  canMethodPay
-} from "../paymentMethodCapabilities";
+import { isPaymentSupported, canMethodPay } from "../paymentMethodCapabilities";
 
 describe("canMethodPay", () => {
   it("should return true if the Credit card is of type CrediCardType", () => {
@@ -68,7 +65,7 @@ describe("isPaymentMethodSupported", () => {
       pagoPA: true
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("available");
   });
   it("should return not_available if is a credit card and pagoPa is false", () => {
     const aMaestroCreditCard = {
@@ -83,7 +80,7 @@ describe("isPaymentMethodSupported", () => {
       pagoPA: false
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
   });
   it("should return onboardableNotImplemented if is a cobadge card", () => {
     const aCreditCard = {
@@ -99,7 +96,7 @@ describe("isPaymentMethodSupported", () => {
       pagoPA: false
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual(
+    expect(isPaymentSupported(aPaymentMethod)).toEqual(
       "onboardableNotImplemented"
     );
   });
@@ -111,7 +108,7 @@ describe("isPaymentMethodSupported", () => {
       kind: "Satispay"
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
   });
   it("should return arriving if the payment method is of kind BPay", () => {
     const aBPay = {} as SatispayPaymentMethod;
@@ -120,7 +117,7 @@ describe("isPaymentMethodSupported", () => {
       kind: "BPay"
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("arriving");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
   });
 
   it("should return not_available if the payment method is of kind Bancomat", () => {
@@ -130,7 +127,7 @@ describe("isPaymentMethodSupported", () => {
       kind: "Bancomat"
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
   });
 
   it("should return not_available if is a privative card", () => {
@@ -148,6 +145,6 @@ describe("isPaymentMethodSupported", () => {
       pagoPA: false
     } as PaymentMethod;
 
-    expect(isPaymentMethodSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
   });
 });

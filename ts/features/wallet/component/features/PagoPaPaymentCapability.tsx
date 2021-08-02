@@ -12,7 +12,7 @@ import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
-import { isPaymentMethodSupported } from "../../../../utils/paymentMethodCapabilities";
+import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
 import { BasePaymentFeatureListItem } from "./BasePaymentFeatureListItem";
 
@@ -71,7 +71,7 @@ const availabilityBadge = (badgeType: PaymentSupportStatus) => {
           <H5 color="blue">{arriving}</H5>
         </Badge>
       );
-    case "not_available":
+    case "notAvailable":
       return (
         <Badge style={[styles.badgeNotAvailable, styles.badgeInfo]}>
           <H5 color="blue">{incompatible}</H5>
@@ -121,7 +121,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
         title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
         description={I18n.t("wallet.methods.card.pagoPaCapability.description")}
         rightElement={availabilityBadge(
-          isPaymentMethodSupported(props.paymentMethod)
+          isPaymentSupported(props.paymentMethod)
         )}
       />
     </TouchableDefaultOpacity>
