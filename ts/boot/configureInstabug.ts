@@ -23,7 +23,8 @@ type InstabugUserAttributeKeys =
   | "lastSeenMessageID"
   | "appVersion"
   | "blockedPaymentRptId"
-  | "supportToken";
+  | "supportToken"
+  | "deviceUniqueID";
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,

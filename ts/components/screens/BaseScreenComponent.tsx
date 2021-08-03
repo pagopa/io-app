@@ -21,6 +21,7 @@ import {
   openInstabugQuestionReport,
   openInstabugReplies,
   setInstabugSupportTokenAttribute,
+  setInstabugUserAttribute,
   TypeLogs
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
@@ -36,10 +37,50 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
-import { SupportTokenState } from "../../store/reducers/authentication";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
-import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
+
+/**
+ * Run side-effects from the Instabug library based on the type of support.
+ */
+function handleOnContextualHelpDismissed(
+  payload: RequestAssistancePayload,
+  attachmentConfig: DefaultReportAttachmentTypeConfiguration
+): void {
+  const maybeSupportToken = getValueOrElse(payload.supportToken, undefined);
+  const { supportType } = payload;
+
+  switch (supportType) {
+    case BugReporting.reportType.bug: {
+      // Store/remove and log the support token only if is a new assistance request.
+      // log on instabug the support token
+      if (maybeSupportToken) {
+        instabugLog(
+          JSON.stringify(maybeSupportToken),
+          TypeLogs.INFO,
+          "support-token"
+        );
+      }
+      // set or remove the support token as instabug user attribute
+      setInstabugSupportTokenAttribute(maybeSupportToken);
+
+      if (payload.deviceUniqueId) {
+        setInstabugUserAttribute("deviceUniqueID", payload.deviceUniqueId);
+      }
+
+      openInstabugQuestionReport(attachmentConfig);
+      return;
+    }
+
+    case BugReporting.reportType.question: {
+      openInstabugReplies();
+      return;
+    }
+
+    default:
+      return;
+  }
+}
 
 export interface ContextualHelpProps {
   title: string;
@@ -73,10 +114,7 @@ type Props = OwnProps &
   Pick<ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
 
 interface State {
-  shouldAttachScreenshotToIBRequest: boolean | undefined;
   isHelpVisible: boolean;
-  requestReport: Option<BugReporting.reportType>;
-  supportToken?: SupportTokenState;
   markdownContentLoaded: Option<boolean>;
   contextualHelpModalAnimation: ModalBaseProps["animationType"];
 }
@@ -91,10 +129,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      shouldAttachScreenshotToIBRequest: undefined,
       contextualHelpModalAnimation: "slide",
       isHelpVisible: false,
-      requestReport: none,
       // if the content is markdown we listen for load end event, otherwise the content is
       // assumed always loaded
       markdownContentLoaded: fromNullable(
@@ -103,92 +139,38 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     };
   }
 
-  private handleOnRequestAssistance = ({
-    supportToken,
-    supportType,
-    shouldSendScreenshot
-  }: RequestAssistancePayload) => {
-    // don't close modal if the report isn't a bug (bug brings a screenshot)
-    if (supportType !== BugReporting.reportType.bug) {
-      this.setState(
-        { requestReport: some(supportType), supportToken },
-        this.handleOnContextualHelpDismissed
-      );
-      return;
+  private handleOnRequestAssistance = (payload: RequestAssistancePayload) => {
+    // if reportAttachmentTypes is undefined use the default attachment config
+    const attachmentConfig: DefaultReportAttachmentTypeConfiguration = {
+      ...(this.props.reportAttachmentTypes ??
+        defaultAttachmentTypeConfiguration),
+      screenshot: payload.shouldSendScreenshot ?? true
+    };
+
+    if (payload.supportType === BugReporting.reportType.bug) {
+      const contextualHelpModalAnimation = Platform.select<
+        ModalBaseProps["animationType"]
+      >({
+        ios: "slide",
+        default: "none"
+      });
+      this.setState({ contextualHelpModalAnimation }, () => {
+        this.setState({ isHelpVisible: false }, () => {
+          // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
+          // we force handling here. The timeout is due to wait until the modal is completely hidden
+          // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
+          // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
+          setTimeout(
+            () => handleOnContextualHelpDismissed(payload, attachmentConfig),
+            ANDROID_OPEN_REPORT_DELAY
+          );
+          this.setState({ contextualHelpModalAnimation: "slide" });
+        });
+      });
+    } else {
+      // don't close modal if the report isn't a bug (bug brings a screenshot)
+      handleOnContextualHelpDismissed(payload, attachmentConfig);
     }
-    const contextualHelpModalAnimation = Platform.select<
-      ModalBaseProps["animationType"]
-    >({
-      ios: "slide",
-      default: "none"
-    });
-    this.setState({ contextualHelpModalAnimation }, () => {
-      this.setState({ isHelpVisible: false }, () => {
-        this.setState(
-          {
-            requestReport: some(supportType),
-            supportToken,
-            shouldAttachScreenshotToIBRequest: shouldSendScreenshot
-          },
-          () => {
-            // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
-            // we force handling here. The timeout is due to wait until the modal is completely hidden
-            // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
-            // TODO: To complete the porting to 0.63.x, both iOS and Android will use the timeout. https://www.pivotaltracker.com/story/show/174195300
-            setTimeout(
-              this.handleOnContextualHelpDismissed,
-              ANDROID_OPEN_REPORT_DELAY
-            );
-            this.setState({ contextualHelpModalAnimation: "slide" });
-          }
-        );
-      });
-    });
-  };
-
-  private handleOnContextualHelpDismissed = () => {
-    const supportToken = fromNullable(this.state.supportToken)
-      .mapNullable<SupportToken | undefined>(rsp =>
-        getValueOrElse(rsp, undefined)
-      )
-      .getOrElse(undefined);
-    const maybeReport = this.state.requestReport;
-    this.setState({ requestReport: none }, () => {
-      maybeReport.map(type => {
-        // Store/remove and log the support token only if is a new assistance request.
-        if (type === BugReporting.reportType.bug) {
-          // log on instabug the support token
-          if (supportToken) {
-            instabugLog(
-              JSON.stringify(supportToken),
-              TypeLogs.INFO,
-              "support-token"
-            );
-          }
-          // set or remove the support token as instabug user attribute
-          setInstabugSupportTokenAttribute(supportToken);
-        }
-
-        const { reportAttachmentTypes } = this.props;
-        const { shouldAttachScreenshotToIBRequest } = this.state;
-
-        // if reportAttachmentTypes is undefined use the default attachment config
-        const attachmentConfig: DefaultReportAttachmentTypeConfiguration = {
-          ...(reportAttachmentTypes ?? defaultAttachmentTypeConfiguration),
-          screenshot: shouldAttachScreenshotToIBRequest ?? true
-        };
-
-        switch (type) {
-          case BugReporting.reportType.bug:
-            openInstabugQuestionReport(attachmentConfig);
-            break;
-          case BugReporting.reportType.question:
-            openInstabugReplies();
-
-            break;
-        }
-      });
-    });
   };
 
   private showHelp = () => {
@@ -210,7 +192,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         customVariables.brandDarkGray
       )
     );
-    this.handleOnContextualHelpDismissed();
     this.setState({ isHelpVisible: false });
   };
 
@@ -325,3 +306,5 @@ export default connectStyle(
   {},
   mapPropsToStyleNames
 )(BaseScreenComponent);
+
+export { handleOnContextualHelpDismissed as test_handleOnContextualHelpDismissed };
