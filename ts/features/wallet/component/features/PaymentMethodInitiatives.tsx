@@ -43,13 +43,10 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled && bpdRemoteConfig?.program_active ? (
-        <>
-          <BpdPaymentMethodCapability
-            paymentMethod={paymentMethod}
-            key={`capability_item_${index}`}
-          />
+        <View key={`capability_item_${index}`}>
+          <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
           <ItemSeparatorComponent noPadded={true} />
-        </>
+        </View>
       ) : null;
   }
 };
