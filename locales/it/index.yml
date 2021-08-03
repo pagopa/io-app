@@ -2608,7 +2608,8 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Informazioni aggiuntive"
+          body: "Dichiaro di possedere i requisiti di cui all’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
       worker:
         checkIncome:
           title: "WorkerCheckIncomeScreen"

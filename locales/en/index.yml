@@ -2580,7 +2580,8 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Additional informations"
+            body: "I declare that I meet the requirements referred to in Article 3, paragraph 3, of the law of February 5, 1992, no. 104"
       worker:
         checkIncome:
           title: "WorkerCheckIncomeScreen"
