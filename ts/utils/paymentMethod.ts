@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { ImageSourcePropType, ImageURISource } from "react-native";
+import { Alert, ImageSourcePropType, ImageURISource } from "react-native";
 import { Either, right } from "fp-ts/lib/Either";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
@@ -39,6 +39,7 @@ import {
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
+import { mixpanelTrack } from "../mixpanel";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
 import { isExpired } from "./dates";
 
@@ -252,4 +253,26 @@ export const isPaymentMethodExpired = (
         paymentMethod.info.expireYear
       );
   }
+};
+
+// inform the user he/she has no payment methods to pay
+export const alertNoPayablePaymentMethods = (
+  onContinue: () => void,
+  onCancel?: () => void
+) => {
+  void mixpanelTrack("NO_PAYABLE_METHODS");
+  Alert.alert(
+    I18n.t("payment.alertNoPaymentMethods.title"),
+    I18n.t("payment.alertNoPaymentMethods.message"),
+    [
+      {
+        text: I18n.t("payment.alertNoPaymentMethods.buttons.ko"),
+        onPress: onCancel
+      },
+      {
+        text: I18n.t("payment.alertNoPaymentMethods.buttons.ok"),
+        onPress: onContinue
+      }
+    ]
+  );
 };
