@@ -2,6 +2,7 @@ import { TypeEnum } from "../../../definitions/pagopa/walletv2/CardInfo";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
+  EnableableFunctionsTypeEnum,
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
@@ -51,8 +52,8 @@ describe("canMethodPay", () => {
 });
 
 describe("isPaymentMethodSupported", () => {
-  it("should return available if the payment method is of kind CreditCard, pagoPa is true", () => {
-    const aNonMaestroCreditCard = {
+  it("should return available if the payment method is of kind CreditCard, has capability pagoPa", () => {
+    const aNoMaestroCreditCard = {
       kind: "CreditCard",
       info: {
         brand: "VISA"
@@ -60,14 +61,15 @@ describe("isPaymentMethodSupported", () => {
       pagoPA: true
     } as CreditCardPaymentMethod;
     const aPaymentMethod = {
-      ...aNonMaestroCreditCard,
+      ...aNoMaestroCreditCard,
       kind: "CreditCard",
-      pagoPA: true
+      pagoPA: true,
+      enableableFunctions: [EnableableFunctionsTypeEnum.pagoPA]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("available");
   });
-  it("should return not_available if is a credit card and pagoPa is false", () => {
+  it("should return notAvailable if is a credit card and pagoPa is false", () => {
     const aMaestroCreditCard = {
       kind: "CreditCard",
       info: {
@@ -77,10 +79,11 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aMaestroCreditCard,
       kind: "CreditCard",
-      pagoPA: false
+      pagoPA: false,
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
   });
   it("should return onboardableNotImplemented if is a cobadge card", () => {
     const aCreditCard = {
@@ -93,7 +96,8 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aCreditCard,
       kind: "CreditCard",
-      pagoPA: false
+      pagoPA: false,
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual(
@@ -105,7 +109,8 @@ describe("isPaymentMethodSupported", () => {
     const aSatispay = {} as SatispayPaymentMethod;
     const aPaymentMethod = {
       ...aSatispay,
-      kind: "Satispay"
+      kind: "Satispay",
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
@@ -114,23 +119,25 @@ describe("isPaymentMethodSupported", () => {
     const aBPay = {} as SatispayPaymentMethod;
     const aPaymentMethod = {
       ...aBPay,
-      kind: "BPay"
+      kind: "BPay",
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
   });
 
-  it("should return not_available if the payment method is of kind Bancomat", () => {
+  it("should return notAvailable if the payment method is of kind Bancomat", () => {
     const aBancomat = {} as BancomatPaymentMethod;
     const aPaymentMethod = {
       ...aBancomat,
-      kind: "Bancomat"
+      kind: "Bancomat",
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
   });
 
-  it("should return not_available if is a privative card", () => {
+  it("should return notAvailable if is a privative card", () => {
     const aCreditCard = {
       kind: "CreditCard",
       info: {
@@ -142,9 +149,10 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aCreditCard,
       kind: "CreditCard",
-      pagoPA: false
+      pagoPA: false,
+      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
     } as PaymentMethod;
 
-    expect(isPaymentSupported(aPaymentMethod)).toEqual("not_available");
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
   });
 });
