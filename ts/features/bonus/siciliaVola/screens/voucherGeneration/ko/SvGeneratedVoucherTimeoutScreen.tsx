@@ -9,7 +9,7 @@ import I18n from "../../../../../../i18n";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
-const SvCheckIncomeKoScreen = () => (
+const SvGeneratedVoucherTimeoutScreen = () => (
   <>
     <View spacer={true} extralarge={true} />
     <View spacer={true} extralarge={true} />
@@ -31,4 +31,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SvCheckIncomeKoScreen);
+)(SvGeneratedVoucherTimeoutScreen);

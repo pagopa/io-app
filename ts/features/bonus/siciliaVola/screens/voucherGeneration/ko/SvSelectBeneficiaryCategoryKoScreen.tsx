@@ -15,7 +15,7 @@ import { svGenerateVoucherCancel } from "../../../store/actions/voucherGeneratio
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const SvCheckIncomeKoScreen: React.FC<Props> = (props: Props) => (
+const SvSelectBeneficiaryCategoryKoScreen: React.FC<Props> = (props: Props) => (
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
       image={renderInfoRasterImage(image)}
@@ -44,4 +44,4 @@ const mapStateToProps = (_: GlobalState) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SvCheckIncomeKoScreen);
+)(SvSelectBeneficiaryCategoryKoScreen);
