@@ -14,6 +14,7 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
+  EnableableFunctionsTypeEnum,
   isBancomat,
   isBPay,
   isCreditCard,
@@ -31,6 +32,7 @@ import {
 import { PotFromActions } from "../../../types/utils";
 import { isDefined } from "../../../utils/guards";
 import { enhancePaymentMethod } from "../../../utils/paymentMethod";
+import { hasFunctionEnabled } from "../../../utils/walletv2";
 import { sessionExpired, sessionInvalid } from "../../actions/authentication";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
@@ -258,13 +260,18 @@ export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
   );
 
 /**
- * Return all the payment methods visible in wallet screen
+ * Return all the payment methods visible in wallet screen.
+ * First return the payment method that have pagoPA capability
  */
 export const paymentMethodListVisibleInWalletSelector = createSelector(
   [paymentMethodsSelector],
   (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(paymentMethodsPot, paymentMethodList =>
-      paymentMethodList.filter(isVisibleInWallet)
+      _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
+        hasFunctionEnabled(pm, EnableableFunctionsTypeEnum.pagoPA)
+          ? -1
+          : pm.idWallet
+      )
     )
 );
 

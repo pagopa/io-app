@@ -8,6 +8,7 @@ import { PaymentMethod } from "../../../../types/pagopa";
 import BancomatWalletPreview from "../../bancomat/component/BancomatWalletPreview";
 import BPayWalletPreview from "../../bancomatpay/component/BPayWalletPreview";
 import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
+import CreditCardWalletPreview from "../../creditCard/component/CreditCardWalletPreview";
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
 
@@ -25,7 +26,9 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
       // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that have an issuerAbiCode
       return pm.info.issuerAbiCode !== undefined ? (
         <CobadgeWalletPreview key={pm.idWallet} cobadge={pm} />
-      ) : null;
+      ) : (
+        <CreditCardWalletPreview key={pm.idWallet} creditCard={pm} />
+      );
     case "BPay":
       return <BPayWalletPreview key={pm.idWallet} bPay={pm} />;
     case "Privative":
