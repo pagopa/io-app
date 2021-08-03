@@ -122,7 +122,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       </ButtonDefaultOpacity>
     </View>,
     I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle"),
-    300
+    200
   );
 
   return (
