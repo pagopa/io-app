@@ -2588,15 +2588,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "I also declare"
+        threshold:
+          under: "to have a gross annual income of less than or equal to € 25,000"
+          over: "to have a gross annual income exceeding € 25,000"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:
