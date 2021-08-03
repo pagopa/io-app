@@ -1,64 +1,93 @@
 import * as React from "react";
-import { useRef } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  svGenerateVoucherBack,
-  svGenerateVoucherCancel
-} from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import TosWebviewComponent from "../../../../components/TosWebviewComponent";
+import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = {
+  onCancel: () => void;
+  onAccept: () => void;
+};
 
+// TODO change with the ufficial TOS page see https://pagopa.atlassian.net/browse/IASV-10
+const tosUrl = "https://io.italia.it/app-content/tos_privacy.html";
+
+/**
+ * This component loads and shows the tos url
+ * The user can accept or cancel (if the content is successfully loaded)
+ * If the tos content can't be load, an error will be shown and the user can retry to reload
+ * @param props
+ * @constructor
+ */
 const AcceptTosComponent = (props: Props): React.ReactElement => {
-  const elementRef = useRef(null);
-  const backButtonProps = {
+  const [tosLoadingState, setTosLoadingState] = React.useState<
+    "loading" | "error" | "loaded"
+  >("loading");
+  const [url, setUrl] = React.useState(tosUrl);
+  const undoButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.back,
-    title: "Back"
+    onPress: props.onCancel,
+    title: I18n.t("global.buttons.cancel")
   };
-  const cancelButtonProps = {
-    primary: false,
-    bordered: true,
-    onPress: props.cancel,
-    title: "Cancel"
+  const requestBonusButtonProps = {
+    primary: true,
+    bordered: false,
+    onPress: props.onAccept,
+    title: I18n.t("bonus.sv.voucherGeneration.acceptTos.buttons.requestBonus")
   };
-  return (
+
+  const renderContent = () => {
+    switch (tosLoadingState) {
+      case "loaded":
+      case "loading":
+        return (
+          <TosWebviewComponent
+            handleError={() => setTosLoadingState("error")}
+            handleLoadEnd={() => setTosLoadingState("loaded")}
+            url={url}
+            shouldFooterRender={false}
+          />
+        );
+      case "error":
+        return (
+          <LoadingErrorComponent
+            isLoading={false}
+            loadingCaption={I18n.t("global.genericWaiting")}
+            onRetry={() => {
+              setTosLoadingState("loading");
+              // force url reloading
+              setUrl(`${tosUrl}?time=${new Date().getTime()}`);
+            }}
+          />
+        );
+    }
+  };
+
+  const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
-      goBack={true}
+      goBack={props.onCancel}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"AcceptTosComponent"}
-        ref={elementRef}
-      >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("bonus.sv.voucherGeneration.acceptTos.title")}</H1>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
-          rightButton={cancelButtonProps}
-        />
+      <SafeAreaView style={IOStyles.flex} testID={"AcceptTosComponent"}>
+        {renderContent()}
+        {tosLoadingState === "loaded" && (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={undoButtonProps}
+            rightButton={requestBonusButtonProps}
+          />
+        )}
       </SafeAreaView>
     </BaseScreenComponent>
-  );
+  ));
+  return <ContainerComponent isLoading={tosLoadingState === "loading"} />;
 };
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(svGenerateVoucherBack()),
-  cancel: () => dispatch(svGenerateVoucherCancel())
-});
-const mapStateToProps = (_: GlobalState) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AcceptTosComponent);
+export default AcceptTosComponent;
