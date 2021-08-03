@@ -24,7 +24,7 @@ import { Body } from "../../../../../components/core/typography/Body";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-// TODO: update with the correct disclaimer
+// TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
 const disclaimerLink =
   "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
