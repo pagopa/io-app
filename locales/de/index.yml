@@ -556,6 +556,12 @@ datetimes:
   yesterday: gestern
   todayAt: heute, bei
 payment:
+  alertNoPaymentMethods:
+    title: Bitte hinzufügen Sie einen Zahlungsdienstleister, um aus der IO-App zu bezahlen
+    message: Die Zahlungsmethode wird in Ihrem Konto gespeichert, damit Sie nächster Mal schneller bezahlen können.
+    buttons:
+      ok: Weiter
+      ko: Abbrechen
   errorDetails: Details
   noPsp: Sie müssen noch einen Zahlungsdienstleister auswählen
   IUV: IUV

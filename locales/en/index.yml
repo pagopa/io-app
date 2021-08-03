@@ -790,6 +790,12 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  alertNoPaymentMethods:
+    title: Add a method to make in-app payments
+    message: The method will be saved in your Wallet, so you can pay easier next time.
+    buttons:
+      ok: Continue
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment
@@ -2557,7 +2563,14 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        alert:
+          title: "Attention"
+          message: "We inform you that the information you enter constitutes in effect a self-certification. Any false declarations will be punishable under the d.P.R. 445/2000"
+          buttons:
+            ok: "Continue"
+            ko: "Abort"
+        buttons:
+          requestBonus: "Request a discount code"
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
