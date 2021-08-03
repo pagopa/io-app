@@ -3,13 +3,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  bancomatListVisibleInWalletSelector,
-  bPayListVisibleInWalletSelector,
-  cobadgeListVisibleInWalletSelector,
-  privativeListVisibleInWalletSelector,
-  satispayListVisibleInWalletSelector
-} from "../../../../store/reducers/wallet/wallets";
+import { paymentMethodListVisibleInWalletSelector } from "../../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../../types/pagopa";
 import BancomatWalletPreview from "../../bancomat/component/BancomatWalletPreview";
 import BPayWalletPreview from "../../bancomatpay/component/BPayWalletPreview";
 import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
@@ -19,70 +14,34 @@ import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
+  switch (pm.kind) {
+    case "Satispay":
+      return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
+    case "Bancomat":
+      return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
+    case "CreditCard":
+      // We should distinguish between a plain credit card and a cobadge credit card.
+      // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that have an issuerAbiCode
+      return pm.info.issuerAbiCode !== undefined ? (
+        <CobadgeWalletPreview key={pm.idWallet} cobadge={pm} />
+      ) : null;
+    case "BPay":
+      return <BPayWalletPreview key={pm.idWallet} bPay={pm} />;
+    case "Privative":
+      return <PrivativeWalletPreview key={pm.idWallet} privative={pm} />;
+  }
+};
+
 /**
- * The new wallet preview that renders all the new v2 methods.
- * Atm the legacy types (credit card) are rendered with the old method.
- * TODO: will render also satispay, bancomat pay
+ * The new wallet preview that renders all the new v2 methods as folded card preview
  * @constructor
  */
 const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
   <>
-    {pot.getOrElse(
-      pot.map(props.bancomatList, b => (
-        <>
-          {b.map(enhancedBancomat => (
-            <BancomatWalletPreview
-              key={enhancedBancomat.idWallet}
-              bancomat={enhancedBancomat}
-            />
-          ))}
-        </>
-      )),
-      null
-    )}
     {pot.toUndefined(
-      pot.mapNullable(props.bPayList, bP => (
-        <>
-          {bP.map(bPayMethod => (
-            <BPayWalletPreview key={bPayMethod.idWallet} bPay={bPayMethod} />
-          ))}
-        </>
-      ))
-    )}
-    {pot.toUndefined(
-      pot.mapNullable(props.satispayList, s => (
-        <>
-          {s.map(satispayMethod => (
-            <SatispayWalletPreview
-              key={satispayMethod.idWallet}
-              satispay={satispayMethod}
-            />
-          ))}
-        </>
-      ))
-    )}
-    {pot.toUndefined(
-      pot.mapNullable(props.cobadgeList, c => (
-        <>
-          {c.map(cobadgeMethod => (
-            <CobadgeWalletPreview
-              key={cobadgeMethod.idWallet}
-              cobadge={cobadgeMethod}
-            />
-          ))}
-        </>
-      ))
-    )}
-    {pot.toUndefined(
-      pot.mapNullable(props.privativeList, c => (
-        <>
-          {c.map(privativeMethod => (
-            <PrivativeWalletPreview
-              key={privativeMethod.idWallet}
-              privative={privativeMethod}
-            />
-          ))}
-        </>
+      pot.mapNullable(props.paymentMethods, pm => (
+        <>{pm.map(paymentMethodPreview)}</>
       ))
     )}
   </>
@@ -91,11 +50,7 @@ const WalletV2PreviewCards: React.FunctionComponent<Props> = props => (
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  bancomatList: bancomatListVisibleInWalletSelector(state),
-  bPayList: bPayListVisibleInWalletSelector(state),
-  satispayList: satispayListVisibleInWalletSelector(state),
-  cobadgeList: cobadgeListVisibleInWalletSelector(state),
-  privativeList: privativeListVisibleInWalletSelector(state)
+  paymentMethods: paymentMethodListVisibleInWalletSelector(state)
 });
 
 export default connect(

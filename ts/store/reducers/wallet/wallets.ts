@@ -258,6 +258,17 @@ export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
   );
 
 /**
+ * Return all the payment methods visible in wallet screen
+ */
+export const paymentMethodListVisibleInWalletSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+    pot.map(paymentMethodsPot, paymentMethodList =>
+      paymentMethodList.filter(isVisibleInWallet)
+    )
+);
+
+/**
  * Return a credit card list visible in the wallet
  */
 export const creditCardListVisibleInWalletSelector = createSelector(
