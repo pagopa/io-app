@@ -55,6 +55,7 @@ import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
+import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -78,11 +79,10 @@ export const getAllWallets = (state: GlobalState): WalletsState =>
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
-const getWallets = createSelector(getWalletsById, potWx =>
-  pot.map(
-    potWx,
-    wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
-  )
+const getWallets = createSelector(
+  getWalletsById,
+  (potWx): pot.Pot<ReadonlyArray<Wallet>, Error> =>
+    pot.map(potWx, wx => values(wx).filter(isDefined))
 );
 
 // return a pot with the id of the favorite wallet. none otherwise
@@ -168,6 +168,19 @@ export const paymentMethodsSelector = createSelector(
         .filter(isDefined)
     )
 );
+
+// return those payment methods that can pay within pagoPA
+export const getPayablePaymentMethodsSelector = createSelector(
+  paymentMethodsSelector,
+  (
+    potPm: ReturnType<typeof paymentMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> =>
+    pot.getOrElse(
+      pot.map(potPm, pms => pms.filter(canMethodPay)),
+      []
+    )
+);
+
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (
