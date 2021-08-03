@@ -30,13 +30,13 @@ const CreditCardWalletPreview = (props: Props): React.ReactElement => (
       </BlurredPan>
     }
     image={getCardIconFromBrandLogo(props.creditCard.info)}
-    onPress={() => console.log("tap")}
+    onPress={() => props.navigateToCreditCardDetail(props.creditCard)}
   />
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToCreditCardDetails: (creditCard: CreditCardPaymentMethod) =>
-    dispatch(navigateToWalletPaymentMethodDetailScreen(creditCard))
+  navigateToCreditCardDetail: (creditCard: CreditCardPaymentMethod) =>
+    dispatch(navigateToWalletPaymentMethodDetailScreen({ creditCard }))
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

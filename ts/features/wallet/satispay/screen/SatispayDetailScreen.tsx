@@ -84,7 +84,7 @@ const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
     <DarkLayout
       bounces={false}
       contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.card.shortName")}
+      title={I18n.t("wallet.creditCard.details.header")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}

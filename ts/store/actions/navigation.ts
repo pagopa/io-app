@@ -6,6 +6,7 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { CreditCardDetailScreen } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
@@ -25,7 +26,6 @@ import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import PaymentMethodDetailScreen from "../../screens/wallet/PaymentMethodDetailScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
@@ -255,10 +255,10 @@ export const navigateToTransactionDetailsScreen = (
   });
 
 export const navigateToWalletPaymentMethodDetailScreen = (
-  params: InferNavigationParams<typeof PaymentMethodDetailScreen>
+  params: InferNavigationParams<typeof CreditCardDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_PAYMENT_METHOD_DETAIL,
+    routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
     params
   });
 
