@@ -5,7 +5,7 @@ import { IOStyles } from "../variables/IOStyles";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
-type RadioItem<T> = {
+export type RadioItem<T> = {
   label: string;
   id: T;
 };

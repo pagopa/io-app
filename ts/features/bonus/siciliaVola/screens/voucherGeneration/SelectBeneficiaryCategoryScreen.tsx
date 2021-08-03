@@ -2,7 +2,8 @@ import * as React from "react";
 import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -14,25 +15,66 @@ import {
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import {
   navigateToSvDisabledAdditionalInfoScreen,
+  navigateToSvKoSelectBeneficiaryCategoryScreen,
   navigateToSvSickCheckIncomeThresholdScreen,
   navigateToSvStudentSelectDestinationScreen,
   navigateToSvWorkerCheckIncomeThresholdScreen
 } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
+
+type BeneficiaryCategory = SvBeneficiaryCategory | "other";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const getCategoryBeneficiaryItems = (): ReadonlyArray<
+  RadioItem<BeneficiaryCategory>
+> => [
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.student"
+    ),
+    id: "student"
+  },
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.disabled"
+    ),
+    id: "disabled"
+  },
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.worker"
+    ),
+    id: "worker"
+  },
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.sick"
+    ),
+    id: "sick"
+  },
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.other"
+    ),
+    id: "other"
+  }
+];
 
 const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
   const elementRef = useRef(null);
 
   const [categoryBeneficiary, setCategoryBeneficiary] = useState<
-    SvBeneficiaryCategory | "other" | undefined
+    BeneficiaryCategory | undefined
   >(undefined);
 
   const routeNextScreen = () => {
@@ -54,7 +96,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         props.navigateToSvSickCheckIncomeThreshold();
         return;
       case "other":
-        // TODO: go to ko screen
+        props.navigateToSvKoSelectBeneficiaryCategory();
         return;
     }
   };
@@ -63,13 +105,13 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
     primary: false,
     bordered: true,
     onPress: props.back,
-    title: "Back"
+    title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
     primary: false,
-    bordered: true,
+    bordered: false,
     onPress: routeNextScreen,
-    title: "Continue",
+    title: I18n.t("global.buttons.continue"),
     disabled: categoryBeneficiary === undefined
   };
 
@@ -91,27 +133,13 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
             )}
           </H1>
 
-          <ButtonDefaultOpacity
-            onPress={() => setCategoryBeneficiary("student")}
-          >
-            <Text>Student</Text>
-          </ButtonDefaultOpacity>
-
-          <ButtonDefaultOpacity
-            onPress={() => setCategoryBeneficiary("disabled")}
-          >
-            <Text>Disabled</Text>
-          </ButtonDefaultOpacity>
-
-          <ButtonDefaultOpacity
-            onPress={() => setCategoryBeneficiary("worker")}
-          >
-            <Text>Worker</Text>
-          </ButtonDefaultOpacity>
-
-          <ButtonDefaultOpacity onPress={() => setCategoryBeneficiary("sick")}>
-            <Text>Sick</Text>
-          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <RadioButtonList<BeneficiaryCategory>
+            key="delete_reason"
+            items={getCategoryBeneficiaryItems()}
+            selectedItem={categoryBeneficiary}
+            onPress={setCategoryBeneficiary}
+          />
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
@@ -134,7 +162,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToSvWorkerCheckIncomeThreshold: () =>
     dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
   navigateToSvSickCheckIncomeThreshold: () =>
-    dispatch(navigateToSvSickCheckIncomeThresholdScreen())
+    dispatch(navigateToSvSickCheckIncomeThresholdScreen()),
+  navigateToSvKoSelectBeneficiaryCategory: () =>
+    dispatch(navigateToSvKoSelectBeneficiaryCategoryScreen())
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)
