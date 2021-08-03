@@ -34,6 +34,8 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
+  // if set it will shown only those method can pay with pagoPA
+  showOnlyPayablePaymentMethods?: true;
   keyFrom?: string;
 }>;
 
@@ -46,7 +48,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
-const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
+const getpaymentMethods = (
+  props: Props,
+  onlyPaymentMethodCanPay: boolean
+): ReadonlyArray<IPaymentMethod> => [
   {
     name: I18n.t("wallet.methods.card.name"),
     description: I18n.t("wallet.methods.card.description"),
@@ -66,27 +71,21 @@ const getpaymentMethods = (props: Props): ReadonlyArray<IPaymentMethod> => [
     description: I18n.t("wallet.methods.pagobancomat.description"),
     onPress: props.startAddBancomat,
     status:
-      bpdEnabled && props.navigation.getParam("inPayment").isNone()
-        ? "implemented"
-        : "notImplemented",
+      bpdEnabled && !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
     section: "bancomat"
   },
   {
     name: I18n.t("wallet.methods.digital.name"),
     description: I18n.t("wallet.methods.digital.description"),
     onPress: props.navigateToWalletAddDigitalPaymentMethod,
-    status: props.navigation.getParam("inPayment").isNone()
-      ? "implemented"
-      : "notImplemented",
+    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
     section: "digital_payments"
   },
   {
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
     onPress: props.startAddPrivative,
-    status: props.navigation.getParam("inPayment").isNone()
-      ? "implemented"
-      : "notImplemented"
+    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
@@ -113,6 +112,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const inPayment = props.navigation.getParam("inPayment");
+  const canAddOnlyPayablePaymentMethod = props.navigation.getParam(
+    "showOnlyPayablePaymentMethods"
+  );
 
   const cancelButtonProps = {
     block: true,
@@ -146,8 +148,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <View spacer={true} large={true} />
               <H1>{I18n.t("wallet.payWith.title")}</H1>
               <View spacer={true} />
+              {/* since we're paying show only those method can pay with pagoPA */}
               <PaymentMethodsList
-                paymentMethods={getpaymentMethods(props)}
+                paymentMethods={getpaymentMethods(props, true)}
                 navigateToAddCreditCard={props.navigateToAddCreditCard}
               />
             </View>
@@ -156,7 +159,10 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
           <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
             <PaymentMethodsList
               navigateToAddCreditCard={props.navigateToAddCreditCard}
-              paymentMethods={getpaymentMethods(props)}
+              paymentMethods={getpaymentMethods(
+                props,
+                canAddOnlyPayablePaymentMethod === true
+              )}
             />
           </Content>
         )}
