@@ -35,12 +35,16 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
   navigateBack,
-  navigateToPaymentTransactionSummaryScreen
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Link } from "../../../components/core/typography/Link";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -51,6 +55,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 type State = Readonly<{
@@ -83,6 +88,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       paymentNoticeNumber: none,
       organizationFiscalCode: none
     };
+  }
+
+  public componentDidMount() {
+    if (!this.props.hasPayableMethods) {
+      alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
+    }
   }
 
   private isFormValid = () =>
@@ -220,6 +231,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => {
     dispatch(navigateBack());
   },
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      })
+    ),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
@@ -236,7 +254,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(withLightModalContext(ManualDataInsertionScreen));
