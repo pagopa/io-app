@@ -25,17 +25,19 @@ import {
   navigateToSvWorkerCheckIncomeThresholdScreen
 } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
-import { RadioButtonList } from "../../../../../components/core/selection/RadioButtonList";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
 
 type BeneficiaryCategory = SvBeneficiaryCategory | "other";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const getCategoryBeneficiaryItems = (): ReadonlyArray<{
-  label: string;
-  id: BeneficiaryCategory;
-}> => [
+const getCategoryBeneficiaryItems = (): ReadonlyArray<
+  RadioItem<BeneficiaryCategory>
+> => [
   {
     label: I18n.t(
       "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.student"
