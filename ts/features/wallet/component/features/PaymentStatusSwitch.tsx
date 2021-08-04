@@ -75,6 +75,7 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
 
   return paymentMethodExists.fold(<Fallback />, val => (
     <RemoteSwitch
+      testID={"PaymentStatusSwitch"}
       value={val}
       onRetry={props.loadWallets}
       onValueChange={newVal =>
