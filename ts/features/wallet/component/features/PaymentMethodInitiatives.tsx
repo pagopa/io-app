@@ -82,7 +82,6 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     props.paymentMethod,
     props.bpdRemoteConfig
   );
-
   return capabilityItems.length > 0 ? (
     <View style={props.style}>
       <View style={styles.row}>

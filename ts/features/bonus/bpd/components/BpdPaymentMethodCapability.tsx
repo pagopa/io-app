@@ -85,6 +85,7 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
 
   return (
     <BasePaymentFeatureListItem
+      testID={"BpdPaymentMethodCapability"}
       title={I18n.t("bonus.bpd.title")}
       description={I18n.t("bonus.bpd.description")}
       rightElement={bpdToggle}

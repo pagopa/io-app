@@ -2,12 +2,14 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
 import IconFont from "../../../../components/ui/IconFont";
+import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
   fetchWalletsRequestWithExpBackoff,
@@ -17,6 +19,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
+import { showToast } from "../../../../utils/showToast";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -69,9 +72,16 @@ const Fallback = () => {
  */
 const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   // Should never be none, this will happens only if the idWallet is not in the walletList
-  const paymentMethodExists = toOptionPot(
-    props.paymentStatus(props.paymentMethod.idWallet)
-  );
+  const maybePaymentMethod = props.paymentStatus(props.paymentMethod.idWallet);
+  const paymentMethodExists = toOptionPot(maybePaymentMethod);
+
+  const isError = pot.isError(maybePaymentMethod);
+
+  useEffect(() => {
+    if (isError) {
+      showToast(I18n.t("global.actions.retry"));
+    }
+  }, [isError]);
 
   return paymentMethodExists.fold(<Fallback />, val => (
     <RemoteSwitch
