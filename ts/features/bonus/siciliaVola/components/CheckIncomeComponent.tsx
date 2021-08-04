@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -75,7 +76,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
-
+          <View spacer={true} />
           <RadioButtonList<boolean>
             key="check_income"
             items={getCheckIncomeUnderThresholItems()}
