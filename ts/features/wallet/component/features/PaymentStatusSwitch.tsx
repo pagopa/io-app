@@ -2,7 +2,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
@@ -76,10 +76,15 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
   const paymentMethodExists = toOptionPot(maybePaymentMethod);
 
   const isError = pot.isError(maybePaymentMethod);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
-    if (isError) {
-      showToast(I18n.t("global.actions.retry"));
+    if (!isFirstRender) {
+      if (isError) {
+        showToast(I18n.t("global.actions.retry"), "danger");
+      }
+    } else {
+      setIsFirstRender(false);
     }
   }, [isError]);
 
