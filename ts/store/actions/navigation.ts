@@ -254,7 +254,7 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletPaymentMethodDetailScreen = (
+export const navigateToCreditCardDetailScreen = (
   params: InferNavigationParams<typeof CreditCardDetailScreen>
 ) =>
   NavigationActions.navigate({

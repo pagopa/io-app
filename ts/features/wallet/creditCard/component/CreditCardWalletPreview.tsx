@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
-import { navigateToWalletPaymentMethodDetailScreen } from "../../../../store/actions/navigation";
+import { navigateToCreditCardDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { BlurredPan } from "../../component/card/BlurredPan";
@@ -36,7 +36,7 @@ const CreditCardWalletPreview = (props: Props): React.ReactElement => (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToCreditCardDetail: (creditCard: CreditCardPaymentMethod) =>
-    dispatch(navigateToWalletPaymentMethodDetailScreen({ creditCard }))
+    dispatch(navigateToCreditCardDetailScreen({ creditCard }))
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
