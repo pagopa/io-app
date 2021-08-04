@@ -11,7 +11,8 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
-  svGenerateVoucherCancel
+  svGenerateVoucherCancel,
+  svGenerateVoucherUnderThresholdIncome
 } from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { navigateToSvKoCheckIncomeThresholdScreen } from "../navigation/actions";
@@ -47,6 +48,18 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   >();
 
   const elementRef = useRef(null);
+
+  const handleContinue = () => {
+    if (incomeUnderThreshold !== undefined) {
+      props.underThresholdIncome(incomeUnderThreshold);
+    }
+    if (incomeUnderThreshold === true) {
+      props.onContinuePress();
+    } else {
+      props.navigateToSvKoCheckIncomeThreshold();
+    }
+  };
+
   const cancelButtonProps = {
     primary: false,
     bordered: true,
@@ -55,10 +68,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress:
-      incomeUnderThreshold === true
-        ? props.onContinuePress
-        : props.navigateToSvKoCheckIncomeThreshold,
+    onPress: handleContinue,
     title: I18n.t("global.buttons.continue"),
     disabled: incomeUnderThreshold === undefined
   };
@@ -97,7 +107,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   back: () => dispatch(svGenerateVoucherBack()),
   navigateToSvKoCheckIncomeThreshold: () =>
-    dispatch(navigateToSvKoCheckIncomeThresholdScreen())
+    dispatch(navigateToSvKoCheckIncomeThresholdScreen()),
+  underThresholdIncome: (isUnderThresholdIncome: boolean) =>
+    dispatch(svGenerateVoucherUnderThresholdIncome(isUnderThresholdIncome))
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
