@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0-rc.2](https://github.com/pagopa/io-app/compare/1.32.0-rc.1...1.32.0-rc.2) (2021-08-03)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-23](https://pagopa.atlassian.net/browse/IASV-23)] Select beneficiary category screen ([#3273](https://github.com/pagopa/io-app/issues/3273)) ([239cf59](https://github.com/pagopa/io-app/commit/239cf59beb65adce6697fddc286e1ed3feb2d170))
+* **Sicilia Vola:** [[IASV-35](https://pagopa.atlassian.net/browse/IASV-35)] Add ToS component ([#3256](https://github.com/pagopa/io-app/issues/3256)) ([0150ad3](https://github.com/pagopa/io-app/commit/0150ad3c78a7b842f02d929ab88ca5b43ce0bf23))
+
+
+### Bug Fixes
+
+* **Redesign Servizi:** [[IARS-43](https://pagopa.atlassian.net/browse/IARS-43)] Render maximum amount of information available ([#3268](https://github.com/pagopa/io-app/issues/3268)) ([e380844](https://github.com/pagopa/io-app/commit/e38084483b513fb17144d1b88a8a1e579e0f88c4))
+
+
+### Chores
+
+* [[IA-162](https://pagopa.atlassian.net/browse/IA-162)] Handle Poste/SPID intent ([#3250](https://github.com/pagopa/io-app/issues/3250)) ([3617cf0](https://github.com/pagopa/io-app/commit/3617cf0d3238058d8ac4f8a48384e8604eb47bdd))
+* [[IA-177](https://pagopa.atlassian.net/browse/IA-177)] Alert user when is paying and there are no payable methods ([#3272](https://github.com/pagopa/io-app/issues/3272)) ([7672d43](https://github.com/pagopa/io-app/commit/7672d434238df52381cef33a66ffabe73a9984c3))
+* gender neutral questions in Italian locale ([#3270](https://github.com/pagopa/io-app/issues/3270)) ([1d8d115](https://github.com/pagopa/io-app/commit/1d8d115d672689d5ac0c7e769ddbed8ec6f92321))
+
 ## [1.32.0-rc.1](https://github.com/pagopa/io-app/compare/1.32.0-rc.0...1.32.0-rc.1) (2021-07-30)
 
 
