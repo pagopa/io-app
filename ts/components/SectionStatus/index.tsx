@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { TouchableWithoutFeedback, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { Text } from "native-base";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -42,7 +42,6 @@ const color = IOColors.white;
  * it could be tappable if the web url is defined
  * it renders nothing if for the given props.sectionKey there is no data or it is not visible
  * @param props
- * @constructor
  */
 const SectionStatus: React.FC<Props> = (props: Props) => {
   if (props.sectionStatus === undefined) {
@@ -107,14 +106,15 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
       backgroundColor={backgroundColor}
       iconColor={color}
       iconName={iconName}
+      testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
     >
       {innerSectionChildren}
     </StatusContent>,
     webUrl => (
-      <TouchableWithoutFeedback
+      <Pressable
+        testID={"SectionStatusComponentPressable"}
         onPress={() => openWebUrl(webUrl)}
-        testID={"SectionStatusComponentTouchable"}
       >
         <StatusContent
           accessibilityLabel={accessibilityLabel}
@@ -126,7 +126,7 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
         >
           {innerSectionChildren}
         </StatusContent>
-      </TouchableWithoutFeedback>
+      </Pressable>
     )
   );
 };

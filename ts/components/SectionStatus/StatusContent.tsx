@@ -1,5 +1,6 @@
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import React from "react";
+import { WithTestID } from "../../types/WithTestID";
 import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
 
@@ -20,14 +21,15 @@ const styles = StyleSheet.create({
   text: { marginLeft: 16, flex: 1 }
 });
 
-type Props = {
+type Props = WithTestID<{
   accessibilityLabel: string;
   accessibilityRole?: AccessibilityRole;
   backgroundColor: string;
   iconColor: string;
   iconName: string;
   viewRef: React.RefObject<View>;
-};
+}>;
+
 const StatusContent: React.FC<Props> = ({
   accessibilityLabel,
   accessibilityRole,
@@ -43,20 +45,15 @@ const StatusContent: React.FC<Props> = ({
     accessibilityLabel={accessibilityLabel}
     accessibilityRole={accessibilityRole}
     ref={viewRef}
+    testID={"SectionStatusContent"}
   >
     <IconFont
-      testID={"SectionStatusComponentIcon"}
       name={iconName}
       size={iconSize}
       color={iconColor}
       style={styles.alignCenter}
     />
-    <Label
-      color={"white"}
-      style={styles.text}
-      weight={"Regular"}
-      testID={"SectionStatusComponentLabel"}
-    >
+    <Label color={"white"} style={styles.text} weight={"Regular"}>
       {children}
     </Label>
   </View>
