@@ -114,7 +114,7 @@ import {
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getNetworkErrorMessage } from "../../utils/errors";
-import { searchServicesEnabled } from "../actions/search";
+import { searchMessagesEnabled } from "../actions/search";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -332,7 +332,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-    case getType(searchServicesEnabled):
+    case getType(searchMessagesEnabled):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
