@@ -1,27 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-  AccessibilityRole
-} from "react-native";
+import { TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
-import { GlobalState } from "../store/reducers/types";
+import { GlobalState } from "../../store/reducers/types";
 import {
   SectionStatusKey,
   sectionStatusSelector
-} from "../store/reducers/backendStatus";
-import I18n from "../i18n";
-import { maybeNotNullyString } from "../utils/strings";
-import { openWebUrl } from "../utils/url";
-import { getFullLocale } from "../utils/locale";
-import { LevelEnum } from "../../definitions/content/SectionStatus";
-import { useNavigationContext } from "../utils/hooks/useOnFocus";
-import { IOColors } from "./core/variables/IOColors";
-import IconFont from "./ui/IconFont";
-import { Label } from "./core/typography/Label";
+} from "../../store/reducers/backendStatus";
+import I18n from "../../i18n";
+import { maybeNotNullyString } from "../../utils/strings";
+import { openWebUrl } from "../../utils/url";
+import { getFullLocale } from "../../utils/locale";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
+import { useNavigationContext } from "../../utils/hooks/useOnFocus";
+import { IOColors } from "../core/variables/IOColors";
+import StatusContent from "./StatusContent";
 
 type OwnProps = {
   sectionKey: SectionStatusKey;
@@ -29,21 +23,6 @@ type OwnProps = {
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    width: "100%",
-    paddingLeft: 24,
-    paddingRight: 24,
-    paddingBottom: 8,
-    paddingTop: 8,
-    alignItems: "flex-start",
-    alignContent: "center"
-  },
-  alignCenter: { alignSelf: "center" },
-  text: { marginLeft: 16, flex: 1 }
-});
 
 export const statusColorMap: Record<LevelEnum, string> = {
   [LevelEnum.normal]: IOColors.aqua,
@@ -56,48 +35,7 @@ const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.critical]: "io-warning",
   [LevelEnum.warning]: "io-info"
 };
-const iconSize = 24;
 const color = IOColors.white;
-
-type InnerSectionProps = {
-  iconName: string;
-  backgroundColor: string;
-  accessibilityLabel: string;
-  accessibilityRole?: AccessibilityRole;
-  viewRef: React.RefObject<View>;
-};
-const InnerSection: React.FC<InnerSectionProps> = ({
-  iconName,
-  children,
-  backgroundColor,
-  accessibilityLabel,
-  accessibilityRole,
-  viewRef
-}) => (
-  <View
-    style={[styles.container, { backgroundColor }]}
-    accessible={true}
-    accessibilityLabel={accessibilityLabel}
-    accessibilityRole={accessibilityRole}
-    ref={viewRef}
-  >
-    <IconFont
-      testID={"SectionStatusComponentIcon"}
-      name={iconName}
-      size={iconSize}
-      color={color}
-      style={styles.alignCenter}
-    />
-    <Label
-      color={"white"}
-      style={styles.text}
-      weight={"Regular"}
-      testID={"SectionStatusComponentLabel"}
-    >
-      {children}
-    </Label>
-  </View>
-);
 
 /**
  * this component shows a full width banner with an icon and text
@@ -106,7 +44,7 @@ const InnerSection: React.FC<InnerSectionProps> = ({
  * @param props
  * @constructor
  */
-const SectionStatusComponent: React.FC<Props> = (props: Props) => {
+const SectionStatus: React.FC<Props> = (props: Props) => {
   if (props.sectionStatus === undefined) {
     return null;
   }
@@ -164,28 +102,30 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
   }, [viewRef]);
 
   return maybeWebUrl.fold(
-    <InnerSection
+    <StatusContent
       accessibilityLabel={accessibilityLabel}
       backgroundColor={backgroundColor}
+      iconColor={color}
       iconName={iconName}
       viewRef={viewRef}
     >
       {innerSectionChildren}
-    </InnerSection>,
+    </StatusContent>,
     webUrl => (
       <TouchableWithoutFeedback
         onPress={() => openWebUrl(webUrl)}
         testID={"SectionStatusComponentTouchable"}
       >
-        <InnerSection
+        <StatusContent
           accessibilityLabel={accessibilityLabel}
           accessibilityRole={"link"}
           backgroundColor={backgroundColor}
+          iconColor={color}
           iconName={iconName}
           viewRef={viewRef}
         >
           {innerSectionChildren}
-        </InnerSection>
+        </StatusContent>
       </TouchableWithoutFeedback>
     )
   );
@@ -200,9 +140,7 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
  * this is not ensured by the selector because the backend status (update each 60sec)
  * is overwritten on each request
  */
-const component = React.memo(
-  SectionStatusComponent,
-  (prev: Props, curr: Props) =>
-    _.isEqual(prev.sectionStatus, curr.sectionStatus)
+const component = React.memo(SectionStatus, (prev: Props, curr: Props) =>
+  _.isEqual(prev.sectionStatus, curr.sectionStatus)
 );
 export default connect(mapStateToProps)(component);

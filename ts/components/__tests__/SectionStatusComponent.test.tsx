@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import * as React from "react";
 import { some } from "fp-ts/lib/Option";
-import SectionStatusComponent from "../SectionStatusComponent";
+import SectionStatusComponent from "../SectionStatus";
 import I18n, { setLocale } from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { IOColors } from "../core/variables/IOColors";
