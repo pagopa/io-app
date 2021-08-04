@@ -6,7 +6,6 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { CreditCardDetailScreen } from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
@@ -36,6 +35,7 @@ import {
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -338,14 +338,6 @@ export const navigateToWalletHome = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_HOME,
     params
-  });
-
-/**
- * @deprecated
- */
-export const navigateToWalletList = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_LIST
   });
 
 export const navigateToWalletAddPaymentMethod = (

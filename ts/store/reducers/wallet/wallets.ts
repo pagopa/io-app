@@ -215,6 +215,21 @@ export const creditCardListSelector = createSelector(
 );
 
 /**
+ * Return a {@link CreditCardPaymentMethod} by walletId
+ * Return undefined if not in list
+ */
+export const creditCardByIdSelector = createSelector(
+  [creditCardListSelector, (_: GlobalState, id: number) => id],
+  (potCreditCardList, id): CreditCardPaymentMethod | undefined =>
+    pot.getOrElse(
+      pot.map(potCreditCardList, creditCardList =>
+        creditCardList.find(cc => cc.idWallet === id)
+      ),
+      undefined
+    )
+);
+
+/**
  * Return a privative card list in the wallet
  */
 export const privativeListSelector = createSelector(

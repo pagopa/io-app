@@ -9,7 +9,7 @@ import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
-import { CreditCardDetailScreen } from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
+import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
@@ -42,15 +42,11 @@ import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetails
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
-import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
 
 const baseRouteConfigMap = {
   [ROUTES.WALLET_HOME]: {
     screen: WalletHomeScreen
-  },
-  [ROUTES.WALLET_LIST]: {
-    screen: WalletsScreen
   },
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: {
     screen: AddPaymentMethodScreen
