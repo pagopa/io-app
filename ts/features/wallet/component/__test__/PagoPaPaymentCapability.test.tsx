@@ -1,8 +1,9 @@
-import * as React from "react";
-import { render } from "@testing-library/react-native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { render } from "@testing-library/react-native";
+import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
+import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../store/actions/wallet/wallets";
@@ -21,7 +22,6 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
-import { TypeEnum } from "../../../../../definitions/pagopa/walletv2/CardInfo";
 
 const renderTestTarget = (paymentMethod: PaymentMethod) =>
   render(
@@ -29,6 +29,8 @@ const renderTestTarget = (paymentMethod: PaymentMethod) =>
       <PagoPaPaymentCapability paymentMethod={paymentMethod} />
     </BottomSheetModalProvider>
   );
+
+jest.mock("../../../../config", () => ({ pmActivatePaymentEnabled: true }));
 
 describe("PagoPaPaymentCapability", () => {
   jest.useFakeTimers();
