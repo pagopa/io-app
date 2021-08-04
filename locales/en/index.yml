@@ -2574,7 +2574,13 @@ bonus:
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "I declare to be"
+        categories:
+          student: "Off-site student"
+          disabled: "Severely disabled"
+          worker: "Employee with a workplace outside Sicily"
+          sick: "Patient in need of treatment outside the Sicily region"
+          other: "None of the above"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
