@@ -6,7 +6,8 @@ import { Alert } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
-  svGenerateVoucherCancel
+  svGenerateVoucherCancel,
+  svGenerateVoucherStart
 } from "../../store/actions/voucherGeneration";
 import {
   isAliveSelector,
@@ -25,6 +26,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
   React.useEffect(() => {
+    props.start();
     props.checkServiceAvailable();
     props.checkTosAccepted();
   }, []);
@@ -90,6 +92,7 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  start: () => dispatch(svGenerateVoucherStart()),
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   checkServiceAvailable: () => dispatch(svServiceAlive.request()),
