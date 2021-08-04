@@ -5,22 +5,22 @@ import { StyleSheet } from "react-native";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import I18n from "../../../../i18n";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
-import satispayImage from "../../../../../img/wallet/cards-icons/satispay.png";
 import SatispayCard from "../SatispayCard";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   satispay: SatispayPaymentMethod;
@@ -57,6 +57,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 
 /**
  * Detail screen for a satispay
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const SatispayDetailScreen: React.FunctionComponent<Props> = props => {

@@ -55,6 +55,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 );
 /**
  * Detail screen for a privative card
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {

@@ -76,6 +76,7 @@ const startCoBadge = (props: Props) => {
 
 /**
  * Detail screen for a bancomat
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {

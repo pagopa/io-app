@@ -57,6 +57,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 
 /**
  * Detail screen for a Bancomat Pay
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {

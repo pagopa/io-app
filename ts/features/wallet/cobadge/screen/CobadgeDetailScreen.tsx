@@ -58,6 +58,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 
 /**
  * Detail screen for a cobadge card
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
