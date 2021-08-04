@@ -7,13 +7,17 @@ import SectionStatusComponent from "../SectionStatusComponent";
 import I18n, { setLocale } from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 import { IOColors } from "../core/variables/IOColors";
-import { SectionStatus, SectionStatusKey } from "../../types/backendStatus";
+import {
+  LevelEnum,
+  SectionStatus
+} from "../../../definitions/content/SectionStatus";
+import { SectionStatusKey } from "../../store/reducers/backendStatus";
 
 jest.mock("../../utils/url");
 
 const sectionStatus: SectionStatus = {
   is_visible: true,
-  level: "normal",
+  level: LevelEnum.normal,
   web_url: {
     "it-IT": "https://io.italia.it/cashback/faq/#n44",
     "en-EN": "https://io.italia.it/cashback/faq/#n44"
@@ -99,7 +103,10 @@ describe("Section Status Component test different rendering states", () => {
 
   it("should render the right color (warning)", () => {
     const warningStore = mockStore(
-      mockSectionStatusState("messages", { ...sectionStatus, level: "warning" })
+      mockSectionStatusState("messages", {
+        ...sectionStatus,
+        level: LevelEnum.warning
+      })
     );
     const component = getComponent("messages", warningStore);
     const view = component.queryByTestId("SectionStatusComponentTouchable");
@@ -111,7 +118,7 @@ describe("Section Status Component test different rendering states", () => {
     const criticalStore = mockStore(
       mockSectionStatusState("messages", {
         ...sectionStatus,
-        level: "critical"
+        level: LevelEnum.critical
       })
     );
     const component = getComponent("messages", criticalStore);

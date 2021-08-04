@@ -114,7 +114,7 @@ describe("Test BpdTransactionsV2State store", () => {
 
       expect(Object.keys(entities.byId).length).toBe(expectedTrxId.length);
 
-      expectedTrxId.map(x => {
+      expectedTrxId.forEach(x => {
         expect(entities.byId[x]).toBeDefined();
         expect(entities.byId[x]?.idTrx.toString()).toBe(x);
       });
@@ -190,7 +190,7 @@ describe("Test BpdTransactionsV2State store", () => {
 
       expect(Object.keys(entities.byId).length).toBe(expectedEntitiesId.length);
 
-      expectedEntitiesId.map(x => {
+      expectedEntitiesId.forEach(x => {
         expect(entities.byId[x]).toBeDefined();
         expect(entities.byId[x]?.idTrx.toString()).toBe(x);
       });

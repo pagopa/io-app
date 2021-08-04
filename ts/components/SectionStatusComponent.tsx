@@ -4,7 +4,10 @@ import _ from "lodash";
 import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { Text } from "native-base";
 import { GlobalState } from "../store/reducers/types";
-import { sectionStatusSelector } from "../store/reducers/backendStatus";
+import {
+  SectionStatusKey,
+  sectionStatusSelector
+} from "../store/reducers/backendStatus";
 import I18n from "../i18n";
 import { maybeNotNullyString } from "../utils/strings";
 import { openWebUrl } from "../utils/url";
@@ -101,6 +104,20 @@ const SectionStatusComponent: React.FC<Props> = (props: Props) => {
         <TouchableWithoutFeedback
           onPress={() => maybeWebUrl.map(openWebUrl)}
           testID={"SectionStatusComponentTouchable"}
+    >
+      <View style={[styles.container, { backgroundColor }]}>
+        <IconFont
+          testID={"SectionStatusComponentIcon"}
+          name={iconName}
+          size={iconSize}
+          color={color}
+          style={styles.alignCenter}
+        />
+        <Label
+          color={"white"}
+          style={styles.text}
+          weight={"Regular"}
+          testID={"SectionStatusComponentLabel"}
         >
           <View
             style={[styles.container, { backgroundColor }]}

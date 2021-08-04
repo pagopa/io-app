@@ -30,17 +30,21 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
   navigateBack,
-  navigateToPaymentTransactionSummaryScreen
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { Link } from "../../../components/core/typography/Link";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -51,6 +55,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 type State = Readonly<{
@@ -83,6 +88,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       paymentNoticeNumber: none,
       organizationFiscalCode: none
     };
+  }
+
+  public componentDidMount() {
+    if (!this.props.hasPayableMethods) {
+      alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
+    }
   }
 
   private isFormValid = () =>
@@ -144,9 +155,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <TouchableDefaultOpacity onPress={this.showModal}>
-              <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
-            </TouchableDefaultOpacity>
+            <Link onPress={this.showModal}>
+              {I18n.t("wallet.insertManually.link")}
+            </Link>
 
             <Form>
               <Item
@@ -220,6 +231,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => {
     dispatch(navigateBack());
   },
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      })
+    ),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
@@ -236,7 +254,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(withLightModalContext(ManualDataInsertionScreen));

@@ -11,7 +11,10 @@ import {
   euCovidCertificateFromAuthCodeSelector,
   euCovidCertificateShouldBeLoadedSelector
 } from "../store/reducers/byAuthCode";
-import { EUCovidCertificateAuthCode } from "../types/EUCovidCertificate";
+import {
+  EUCovidCertificateAuthCode,
+  EUCovidCertificate
+} from "../types/EUCovidCertificate";
 import { EUCovidCertificateResponse } from "../types/EUCovidCertificateResponse";
 import EuCovidCertExpiredScreen from "./EuCovidCertExpiredScreen";
 import EuCovidCertLoadingScreen from "./EuCovidCertLoadingScreen";
@@ -49,22 +52,22 @@ const routeEuCovidResponse = (
     case "wrongFormat":
       return <EuCovidCertWrongFormatKoScreen />;
     case "success":
-      switch (response.value.kind) {
-        case "valid":
-          return <EuCovidCertValidScreen validCertificate={response.value} />;
-        case "revoked":
-          return (
-            <EuCovidCertRevokedScreen
-              revokeInfo={response.value.markdownInfo}
-            />
-          );
-        case "expired":
-          return (
-            <EuCovidCertExpiredScreen
-              expiredInfo={response.value.markdownInfo}
-            />
-          );
-      }
+      return routeSuccessEuCovidResponse(response.value);
+  }
+};
+
+const routeSuccessEuCovidResponse = (
+  certificate: EUCovidCertificate
+): React.ReactElement => {
+  switch (certificate.kind) {
+    case "valid":
+      return <EuCovidCertValidScreen validCertificate={certificate} />;
+    case "revoked":
+      return <EuCovidCertRevokedScreen revokeInfo={certificate.markdownInfo} />;
+    case "expired":
+      return (
+        <EuCovidCertExpiredScreen expiredInfo={certificate.markdownInfo} />
+      );
   }
 };
 
