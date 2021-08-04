@@ -822,8 +822,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: Der vorherige Versuch, diese Zahlugsmitteilung zu bezahlen, wurde abgebrochen. Sie können sie nach {{verbleibendeMinuten}} Minuten erneut versuchen zu bezahlen.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: Der Abbruch dieses Zahlungsversuchs wurde vor mehr als 15 Minuten gemacht, aber sie ist immer noch blockiert. Verwenden Sie die Schaltfläche unten, um uns eine Nachricht zu senden.
     sendReport: Schreiben Sie uns
-  walletList:
-    contextualHelpTitle: Ihre Zahlungsmethoden
   walletCardTransaction:
     contextualHelpTitle: Alle Transaktionen für diese Zahlungsmethode
 saveCard:
