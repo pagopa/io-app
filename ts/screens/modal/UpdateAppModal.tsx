@@ -24,7 +24,7 @@ import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../utils/url";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 
 const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
