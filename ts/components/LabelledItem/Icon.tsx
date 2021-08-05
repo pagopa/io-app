@@ -30,7 +30,7 @@ export type StyleType = IconProps["style"] & ImageStyle;
 
 type Props = {
   icon: string | ImageSourcePropType;
-  iconColor?: string;
+  iconColor: string;
   iconStyle?: StyleType;
   accessibilityLabelIcon?: string;
   onPress?: () => void;
@@ -52,7 +52,7 @@ export const Icon: React.FC<Props> = ({
     {isString(icon) ? (
       <IconFont
         size={variables.iconSize3}
-        color={iconColor ?? variables.brandDarkGray}
+        color={iconColor}
         name={icon}
         style={[iconStyle, styles.iconFont]}
         accessibilityLabel={accessibilityLabelIcon}

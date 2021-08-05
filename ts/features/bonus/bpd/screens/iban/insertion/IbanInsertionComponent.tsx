@@ -75,7 +75,6 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <View spacer={true} large={true} />
             <H5>{ibanDescription}</H5>
             <LabelledItem
-              type="text"
               isValid={fromNullable(iban).fold(undefined, _ =>
                 Iban.decode(iban).isRight()
               )}

@@ -12,14 +12,20 @@
 import { Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { ImageSourcePropType, StyleSheet } from "react-native";
+import { ImageSourcePropType, StyleSheet, TextInputProps } from "react-native";
 import { NavigationEvents } from "react-navigation";
+import color from "color";
+import { Input as InputNativeBase } from "native-base";
+import { TextInputMaskProps } from "react-native-masked-text";
+
+import { makeFontStyleObject } from "../core/fonts";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 import { H5 } from "../core/typography/H5";
+import { IOColors } from "../core/variables/IOColors";
+import TextInputMask from "../ui/MaskedInput";
 import { Icon, StyleType } from "./Icon";
-import { Input, InputProps } from "./Input";
 
 const styles = StyleSheet.create({
   noBottomLine: {
@@ -30,27 +36,83 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1
+  },
+  textInputMask: {
+    ...makeFontStyleObject("Regular")
   }
 });
 
+interface TextInputAdditionalProps extends TextInputProps {
+  disabled?: boolean;
+}
+
 type CommonProp = Readonly<{
-  label?: string;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  accessibilityLabelIcon?: string;
+  description?: string;
+  focusBorderColor?: string;
+  hasNavigationEvents?: boolean;
   icon?: string | ImageSourcePropType;
+  iconColor?: string;
   iconPosition?: "left" | "right";
   iconStyle?: StyleType;
-  iconColor?: string;
+  inputMaskProps?: TextInputMaskProps &
+    React.ComponentPropsWithRef<typeof TextInputMask>;
+  inputProps?: TextInputAdditionalProps;
   isValid?: boolean;
-  focusBorderColor?: string;
-  description?: string;
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-  accessibilityLabelIcon?: string;
+  label?: string;
   onPress?: () => void;
-  hasNavigationEvents?: boolean;
 }>;
 
-export type Props = WithTestID<CommonProp> & InputProps;
+export type Props = WithTestID<CommonProp>;
 
+function getColorsByProps({
+  isDisabledTextInput,
+  hasFocus,
+  isEmpty,
+  isValid
+}: {
+  isDisabledTextInput: boolean;
+  hasFocus: boolean;
+  isEmpty: boolean;
+  isValid?: boolean;
+}) {
+  const borderColor = isDisabledTextInput
+    ? IOColors.greyLight
+    : hasFocus && isEmpty
+    ? variables.itemBorderDefaultColor
+    : undefined;
+
+  // weird type needed to be accepted as H5 prop
+  const descriptionColor:
+    | "bluegreyLight"
+    | "red"
+    | "bluegreyDark" = isDisabledTextInput
+    ? "bluegreyLight"
+    : isValid === false
+    ? "red"
+    : "bluegreyDark";
+  const iconColor = isDisabledTextInput
+    ? IOColors.bluegreyLight
+    : variables.brandDarkGray;
+  // weird type needed to be accepted as H5 prop
+  const labelColor: "bluegreyLight" | "bluegreyDark" = isDisabledTextInput
+    ? "bluegreyLight"
+    : "bluegreyDark";
+
+  const placeholderTextColor = isDisabledTextInput
+    ? color(IOColors.bluegreyLight).string()
+    : color(variables.brandGray).darken(0.2).string();
+
+  return {
+    borderColor,
+    descriptionColor,
+    iconColor,
+    placeholderTextColor,
+    labelColor
+  };
+}
 export const LabelledItem: React.FC<Props> = ({
   iconPosition = "left",
   ...props
@@ -58,14 +120,38 @@ export const LabelledItem: React.FC<Props> = ({
   const [isEmpty, setIsEmpty] = useState(true);
   const [hasFocus, setHasFocus] = useState(false);
 
-  const descriptionColor = props.isValid === false ? "red" : "bluegreyDark";
   const accessibilityLabel = props.accessibilityLabel ?? "";
-  const inputBorderColor =
-    hasFocus && isEmpty
-      ? variables.itemBorderDefaultColor
-      : props.focusBorderColor;
   const isValid = props.isValid === undefined ? false : props.isValid;
   const isNotValid = props.isValid === undefined ? false : !props.isValid;
+
+  const {
+    borderColor,
+    descriptionColor,
+    iconColor,
+    placeholderTextColor,
+    labelColor
+  } = getColorsByProps({
+    isDisabledTextInput: Boolean(props.inputProps && props.inputProps.disabled),
+    hasFocus,
+    isEmpty,
+    isValid: props.isValid
+  });
+
+  const handleOnFocus = () => {
+    setHasFocus(true);
+  };
+
+  const handleOnBlur = () => {
+    setHasFocus(false);
+  };
+
+  /**
+   * check if the input is empty and set the value in the state
+   */
+  const checkInputIsEmpty = (text?: string) => {
+    const isInputEmpty = text === undefined || text.length === 0;
+    setIsEmpty(isInputEmpty);
+  };
 
   return (
     <View style={styles.flex}>
@@ -76,7 +162,7 @@ export const LabelledItem: React.FC<Props> = ({
           accessibilityElementsHidden={true}
         >
           <Item style={styles.noBottomLine}>
-            <H5>{props.label}</H5>
+            <H5 color={labelColor}>{props.label}</H5>
           </Item>
         </View>
       )}
@@ -91,7 +177,7 @@ export const LabelledItem: React.FC<Props> = ({
         <Item
           style={{
             ...styles.bottomLine,
-            borderColor: inputBorderColor
+            borderColor: borderColor || props.focusBorderColor
           }}
           error={isNotValid}
           success={isValid}
@@ -107,19 +193,48 @@ export const LabelledItem: React.FC<Props> = ({
           {iconPosition === "left" && props.icon && (
             <Icon
               icon={props.icon}
-              iconColor={props.iconColor}
+              iconColor={iconColor}
               iconStyle={props.iconStyle}
               accessibilityLabelIcon={props.accessibilityLabelIcon}
               onPress={props.onPress}
             />
           )}
 
-          <Input setHasFocus={setHasFocus} setIsEmpty={setIsEmpty} {...props} />
+          {props.inputMaskProps && (
+            <TextInputMask
+              underlineColorAndroid="transparent"
+              style={styles.textInputMask}
+              {...props.inputMaskProps}
+              onChangeText={(formatted: string, text?: string) => {
+                props.inputMaskProps?.onChangeText?.(formatted, text);
+                checkInputIsEmpty(text);
+              }}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}InputMask`}
+            />
+          )}
+
+          {props.inputProps && (
+            <InputNativeBase
+              underlineColorAndroid="transparent"
+              {...props.inputProps}
+              onChangeText={(text: string) => {
+                props.inputProps?.onChangeText?.(text);
+                checkInputIsEmpty(text);
+              }}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+              testID={`${props.testID}Input`}
+              disabled={props.inputProps?.disabled}
+              placeholderTextColor={placeholderTextColor}
+            />
+          )}
 
           {iconPosition === "right" && props.icon && (
             <Icon
               icon={props.icon}
-              iconColor={props.iconColor}
+              iconColor={iconColor}
               iconStyle={props.iconStyle}
               accessibilityLabelIcon={props.accessibilityLabelIcon}
               onPress={props.onPress}
