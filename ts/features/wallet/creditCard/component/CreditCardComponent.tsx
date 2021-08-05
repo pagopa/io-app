@@ -57,7 +57,7 @@ const topLeft = (
           {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
         </H5>
       </View>
-      {pot.getOrElseWithUpdating(favorite, false) && (
+      {pot.getOrElse(favorite, false) && (
         <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
       )}
     </View>
