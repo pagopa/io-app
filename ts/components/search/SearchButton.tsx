@@ -58,7 +58,7 @@ class SearchButton extends React.Component<Props, State> {
             }}
             icon="io-close"
             iconPosition="right"
-            onPressIcon={this.onSearchDisable}
+            onPress={this.onSearchDisable}
             accessibilityLabelIcon={I18n.t("global.buttons.close")}
             iconColor={this.props.color}
           />

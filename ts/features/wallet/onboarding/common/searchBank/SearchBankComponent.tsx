@@ -26,6 +26,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   const [filteredList, setFilteredList] = React.useState<ReadonlyArray<Abi>>(
     []
   );
+  const { isLoading } = props;
 
   const performSearch = (text: string, bankList: ReadonlyArray<Abi>) => {
     if (text.length === 0) {
@@ -70,22 +71,20 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
     <>
       <LabelledItem
         type="text"
-        label={
-          !props.isLoading ? I18n.t("wallet.searchAbi.bankName") : undefined
-        }
+        label={isLoading ? undefined : I18n.t("wallet.searchAbi.bankName")}
         inputProps={{
           value: searchText,
           autoFocus: true,
           onChangeText: handleFilter,
-          disabled: props.isLoading,
-          placeholder: props.isLoading
+          disabled: isLoading,
+          placeholder: isLoading
             ? I18n.t("wallet.searchAbi.loading")
             : undefined
         }}
-        icon={!props.isLoading ? "io-search" : undefined}
+        icon={isLoading ? undefined : "io-search"}
       />
       <View spacer={true} />
-      {props.isLoading ? (
+      {isLoading ? (
         <>
           <View spacer={true} large={true} />
           <ActivityIndicator

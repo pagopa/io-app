@@ -137,7 +137,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
               }}
               icon="io-close"
               iconPosition="right"
-              onPressIcon={this.onPressCancel}
+              onPress={this.onPressCancel}
               accessibilityLabelIcon={I18n.t("global.buttons.close")}
             />
           ) : (

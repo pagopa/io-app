@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, SafeAreaView, ScrollView } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { makeFontStyleObject } from "../../../../../../components/core/fonts";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -44,9 +45,8 @@ const upperCaseAndNoBlanks = (text: string) =>
   text.replace(/\s/g, "").toUpperCase();
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
-  const [iban, setIban] = useState(props.startIban ?? "");
-  const isValidIban = iban.length > 0 && Iban.decode(iban).isRight();
-  const userCanContinue = isValidIban && iban.length > 0;
+  const [iban, setIban] = useState<string | undefined>(props.startIban);
+  const isValidIban = iban && Iban.decode(iban).isRight();
   const {
     headerTitle,
     title,
@@ -76,7 +76,9 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <H5>{ibanDescription}</H5>
             <LabelledItem
               type="text"
-              isValid={!iban ? undefined : isValidIban}
+              isValid={fromNullable(iban).fold(undefined, _ =>
+                Iban.decode(iban).isRight()
+              )}
               inputProps={{
                 value: iban,
                 autoCapitalize: "characters",
@@ -84,10 +86,12 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
                 onChangeText: text => {
                   // On Android we cannot modify the input text, or the text is duplicated
                   setIban(
-                    Platform.select({
-                      android: text,
-                      default: upperCaseAndNoBlanks(text)
-                    })
+                    text
+                      ? Platform.select({
+                          android: text,
+                          default: upperCaseAndNoBlanks(text)
+                        })
+                      : undefined
                   );
                 },
                 style: IBANInputStyle
@@ -99,9 +103,11 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
           </View>
         </ScrollView>
         <FooterTwoButtons
-          rightDisabled={!userCanContinue}
+          rightDisabled={!isValidIban}
           onRight={() =>
-            Iban.decode(upperCaseAndNoBlanks(iban)).map(props.onIbanConfirm)
+            Iban.decode(upperCaseAndNoBlanks(iban as string)).map(
+              props.onIbanConfirm
+            )
           }
           onCancel={props.onContinue}
           rightText={I18n.t("global.buttons.continue")}

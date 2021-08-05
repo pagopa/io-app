@@ -8,15 +8,14 @@
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  */
 
-import { Content, Form, H1, Text } from "native-base";
+import { Content, Form, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { isRight } from "fp-ts/lib/Either";
-import { isNone } from "fp-ts/lib/Option";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
+import { Either } from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -74,6 +73,12 @@ const styles = StyleSheet.create({
     backgroundColor: variables.colorWhite
   }
 });
+
+// helper to translate Option<Either> to true|false|void semantics
+const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
+  o
+    .map<boolean | undefined>(e => e.isRight())
+    .getOrElse(undefined);
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
@@ -141,6 +146,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       onPress: this.props.goBack,
       title: I18n.t("global.buttons.cancel")
     };
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -156,17 +162,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Link onPress={this.showModal}>
               {I18n.t("wallet.insertManually.link")}
             </Link>
-
+            <View spacer />
             <Form>
               <LabelledItem
                 type="text"
-                isValid={
-                  isNone(this.state.paymentNoticeNumber)
-                    ? undefined
-                    : this.state.paymentNoticeNumber
-                        .map(isRight)
-                        .getOrElse(false)
-                }
+                isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
                   keyboardType: "numeric",
@@ -181,15 +181,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   }
                 }}
               />
+              <View spacer />
               <LabelledItem
                 type="text"
-                isValid={
-                  isNone(this.state.organizationFiscalCode)
-                    ? undefined
-                    : this.state.organizationFiscalCode
-                        .map(isRight)
-                        .getOrElse(false)
-                }
+                isValid={unwrapOptionalEither(
+                  this.state.organizationFiscalCode
+                )}
                 label={I18n.t("wallet.insertManually.entityCode")}
                 inputProps={{
                   keyboardType: "numeric",
