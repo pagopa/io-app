@@ -120,6 +120,7 @@ global:
     dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: There is a temporary problem, please try again.
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
@@ -2598,7 +2599,7 @@ bonus:
         selectDestination:
           title: "SickSelectDestinationScreen"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Flight date"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
