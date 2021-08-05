@@ -17,14 +17,14 @@ while IFS= read -r line; do
 done < "$input"
 
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
-printf "%14s $PAGOPA_API_URL_PREFIX$PAGOPA_API_URL_SUFFIX\n" "production:" 
-printf "%14s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX\n" "test:" 
+printf "%14s $PAGOPA_API_URL_PREFIX$PAGOPA_API_URL_SUFFIX\n" "production:"
+printf "%14s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX\n" "test:"
 
 
 SEND_MSG="✅ pagopa production and test specifications have no differences"
 SEND_EXIT=0
-# mention matteo boschi slack account
-MB_SLACK="<@UQXC9SNVD>" 
+# mention here on channel
+MENTION_SLACK="<!here>"
 
 # json formatting (python pipe) is needed because diff command works by comparing line by line
 PAGO_PA_PROD_CONTENT=$(curl -s $PAGOPA_API_URL_PREFIX$PAGOPA_API_URL_SUFFIX | python -m json.tool)
@@ -44,12 +44,12 @@ printf "\n"
 if [ $VAR_LENGTH -eq "0" ]; then
     echo $SEND_MSG
 else
-    KO_MSG="⚠️ $MB_SLACK It seems *PROD* and *DEV* pagoPa specifications are different"
+    KO_MSG="[PagoPa API check] ⚠️ $MENTION_SLACK It seems *PROD* and *DEV* pagoPa specifications are different"
     echo "⚠️  It seems PROD and DEV pagoPa specifications are different"
     SEND_MSG=$KO_MSG
     SEND_EXIT=1
     #send slack notification
-    channel="#io_status"
+    channel="#io_dev_app_status"
     res=$(curl -s -X POST -H 'Content-type: application/json' -H 'Authorization: Bearer '${IO_APP_SLACK_HELPER_BOT_TOKEN:-}'' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://slack.com/api/chat.postMessage)
 fi
 
