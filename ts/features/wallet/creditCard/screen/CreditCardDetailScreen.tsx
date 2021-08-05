@@ -34,7 +34,12 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   return storeCreditCard ? (
     <BasePaymentMethodScreen
       paymentMethod={storeCreditCard}
-      card={<CreditCardComponent creditCard={storeCreditCard} />}
+      card={
+        <CreditCardComponent
+          testID={"CreditCardComponent"}
+          creditCard={storeCreditCard}
+        />
+      }
       content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
     />
   ) : (

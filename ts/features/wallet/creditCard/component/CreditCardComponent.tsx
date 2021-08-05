@@ -15,6 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../../store/reducers/wallet/wallets";
 import variables from "../../../../theme/variables";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { TestID } from "../../../../types/WithTestID";
 import { isPaymentMethodExpired } from "../../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../../utils/stringBuilder";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
@@ -23,7 +24,7 @@ import { BrandImage } from "../../component/card/BrandImage";
 
 type OwnProps = {
   creditCard: CreditCardPaymentMethod;
-};
+} & TestID;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -76,6 +77,7 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
   );
   return (
     <BaseCardComponent
+      testID={props.testID}
       topLeftCorner={topLeft(props.creditCard, favorite)}
       bottomLeftCorner={<Body>{props.nameSurname?.toLocaleUpperCase()}</Body>}
       bottomRightCorner={

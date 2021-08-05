@@ -128,6 +128,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       onPress={paymentSupported === "available" ? undefined : present}
     >
       <BasePaymentFeatureListItem
+        testID={"PagoPaPaymentCapability"}
         title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
         description={I18n.t("wallet.methods.card.pagoPaCapability.description")}
         rightElement={availabilityBadge(paymentSupported, props.paymentMethod)}

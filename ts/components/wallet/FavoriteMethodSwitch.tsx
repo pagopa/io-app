@@ -58,6 +58,7 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
   );
   return (
     <BasePaymentFeatureListItem
+      testID={"FavoritePaymentMethodSwitch"}
       title={I18n.t("wallet.favourite.setFavoriteTitle")}
       description={I18n.t("wallet.favourite.setFavoriteSubtitle")}
       rightElement={rightElement}
