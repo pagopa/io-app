@@ -59,6 +59,16 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
     return departureDate === undefined;
   };
 
+  const handleOnPressContinue = () => {
+    if (departureDate) {
+      props.selectFlightsDate({
+        departureDate,
+        returnDate
+      });
+    }
+    props.navigateToSummaryScreen();
+  };
+
   const cancelButtonProps = {
     bordered: true,
     onPress: props.back,
@@ -66,7 +76,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress: props.navigateToSummaryScreen,
+    onPress: handleOnPressContinue,
     title: I18n.t("global.buttons.continue"),
     disabled: handleDisableContinue()
   };
@@ -131,7 +141,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  selectFlightsDateScreen: (flightsDate: FlightsDate) =>
+  selectFlightsDate: (flightsDate: FlightsDate) =>
     dispatch(svGenerateVoucherSelectFlightsDate(flightsDate)),
   navigateToSummaryScreen: () => dispatch(navigateToSvSummaryScreen())
 });
