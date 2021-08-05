@@ -1,19 +1,12 @@
-/**
- * This component shows a contextual help
- * that provides additional information when
- * needed (e.g. ToS, explaining why fees are
- * needed)
- */
-
 import { Body, Container, Content, H1, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, StyleSheet } from "react-native";
 
-import IconFont from "../components/ui/IconFont";
+import IconFont from "../../components/ui/IconFont";
 
-import themeVariables from "../theme/variables";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import AppHeader from "./ui/AppHeader";
+import themeVariables from "../../theme/variables";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import AppHeader from "../ui/AppHeader";
 
 type Props = Readonly<{
   title: string;
@@ -27,6 +20,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * This component shows a contextual help
+ * that provides additional information when
+ * needed (e.g. ToS, explaining why fees are
+ * needed)
+ */
 export class ContextualHelp extends React.Component<Props> {
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPressed);
