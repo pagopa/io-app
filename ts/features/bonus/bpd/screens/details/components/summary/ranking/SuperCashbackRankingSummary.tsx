@@ -9,7 +9,7 @@ import { IOColors } from "../../../../../../../../components/core/variables/IOCo
 import { IOStyles } from "../../../../../../../../components/core/variables/IOStyles";
 import IconFont from "../../../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../../../i18n";
-import { configSelector } from "../../../../../../../../store/reducers/backendStatus";
+import { bpdRankingEnabledSelector } from "../../../../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
 import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
 import { useSuperCashbackRankingBottomSheet } from "../../../../../components/superCashbackRanking/SuperCashbackRanking";
@@ -151,7 +151,7 @@ const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
 const mapDispatchToProps = (_: Dispatch) => ({});
 
 const mapStateToProps = (state: GlobalState) => ({
-  rankingRemoteEnabled: configSelector("bpd_ranking_v2")(state)
+  rankingRemoteEnabled: bpdRankingEnabledSelector(state)
 });
 
 export default connect(

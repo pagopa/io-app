@@ -37,7 +37,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 14;
+const CURRENT_REDUX_STORE_VERSION = 16;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -222,6 +222,25 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       content: newContent
+    };
+  },
+  // Version 15
+  // added isMixpanelEnabled
+  "15": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
+    };
+  },
+  // Version 16
+  // default value for content.idps
+  "16": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    return {
+      ...state,
+      content: { ...content, idps: remoteUndefined }
     };
   }
 };

@@ -66,7 +66,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 22
   },
-  padded: { paddingHorizontal: customVariables.contentPadding }
+  padded: { paddingHorizontal: customVariables.contentPadding },
+  button: {
+    marginBottom: 15
+  }
 });
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
@@ -214,6 +217,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         onPress={this.instabugLogAndOpenReport}
         bordered={true}
         block={true}
+        style={styles.button}
       >
         <IconFont name={"io-messaggi"} />
         <Text>{I18n.t("payment.details.info.buttons.help")}</Text>

@@ -6,6 +6,7 @@ import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValu
 import {
   isRawCreditCard,
   PatchedWalletV2ListResponse,
+  RawPaymentMethod,
   Wallet
 } from "../../../../types/pagopa";
 import { walletsV2_2, walletsV2_1, walletsV2_3 } from "../__mocks__/wallets";
@@ -17,12 +18,19 @@ import {
   creditCardWalletV1Selector,
   getFavoriteWallet,
   getFavoriteWalletId,
+  getPayablePaymentMethodsSelector,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector
 } from "../wallets";
 import { GlobalState } from "../../types";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
+import { appReducer } from "../../index";
+import { applicationChangeState } from "../../../actions/application";
+import {
+  fetchWalletsSuccess,
+  updatePaymentStatus
+} from "../../../actions/wallet/wallets";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -198,6 +206,84 @@ describe("walletV2 favoriteId Selector", () => {
     expect(getFavoriteWallet(aFavoriteState)).toEqual(
       pot.some(favouriteWallet)
     );
+  });
+});
+
+describe("updatePaymentStatus state changes", () => {
+  const walletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1)
+    .value as PatchedWalletV2ListResponse;
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const withWallets = appReducer(
+    globalState,
+    fetchWalletsSuccess(walletsV2.data!.map(convertWalletV2toWalletV1))
+  );
+  expect(pot.isSome(withWallets.wallet.wallets.walletById)).toBeTruthy();
+  if (pot.isSome(withWallets.wallet.wallets.walletById)) {
+    const currentIndexedWallets = withWallets.wallet.wallets.walletById.value;
+    expect(Object.keys(currentIndexedWallets).length).toEqual(
+      walletsV2.data!.length
+    );
+    // try to invert payment status on first wallet
+    const temp = Object.values(currentIndexedWallets)[0];
+    const firstWallet = {
+      ...temp,
+      paymentMethod: {
+        ...temp!.paymentMethod,
+        pagoPA: true
+      } as RawPaymentMethod
+    } as Wallet;
+    const updatePaymentStatusState = appReducer(
+      globalState,
+      updatePaymentStatus.success({
+        ...firstWallet,
+        pagoPA: false
+      } as any)
+    );
+    const updatedState = updatePaymentStatusState.wallet.wallets.walletById;
+    expect(pot.isSome(updatedState)).toBeTruthy();
+    if (pot.isSome(updatedState)) {
+      const updatedFirstWallet = Object.values(updatedState.value).find(
+        w => w!.idWallet === firstWallet.idWallet
+      );
+      expect(updatedFirstWallet!.paymentMethod!.pagoPA).toBeTruthy();
+    }
+  }
+});
+
+describe("getPayablePaymentMethodsSelector", () => {
+  it("should return false - no payable methods", () => {
+    const withWallets = appReducer(undefined, fetchWalletsSuccess([]));
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+  });
+
+  it("should return false - empty wallet", () => {
+    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
+      .value as PatchedWalletV2ListResponse;
+    const updatedMethods = paymentMethods.data!.map(w =>
+      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+    );
+    const withWallets = appReducer(
+      undefined,
+      fetchWalletsSuccess(updatedMethods)
+    );
+    expect(updatedMethods.length).toBeGreaterThan(0);
+    expect(getPayablePaymentMethodsSelector(withWallets).length).toEqual(0);
+  });
+
+  it("should return true - one payable method", () => {
+    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
+      .value as PatchedWalletV2ListResponse;
+    const updatedMethods = [...paymentMethods.data!];
+    // eslint-disable-next-line functional/immutable-data
+    updatedMethods[0] = { ...updatedMethods[0], pagoPA: true };
+    const withWallets = appReducer(
+      undefined,
+      fetchWalletsSuccess(updatedMethods.map(convertWalletV2toWalletV1))
+    );
+    expect(updatedMethods.length).toBeGreaterThan(0);
+    expect(
+      getPayablePaymentMethodsSelector(withWallets).length
+    ).toBeGreaterThan(0);
   });
 });
 

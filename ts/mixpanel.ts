@@ -1,6 +1,6 @@
+import { Appearance } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
-import { Appearance } from "react-native";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
@@ -12,19 +12,19 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-const initializeMixPanel = async () => {
+export const initializeMixPanel = async () => {
+  if (mixpanel !== undefined) {
+    return;
+  }
   const privateInstance = new MixpanelInstance(mixpanelToken);
   await privateInstance.initialize();
   mixpanel = privateInstance;
   await setupMixpanel(mixpanel);
 };
 
-initializeMixPanel()
-  .then()
-  .catch(() => 0);
-
 const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
+  await mp.optInTracking();
   // on iOS it can be deactivate by invoking a SDK method
   // on Android it can be done adding an extra config in AndroidManifest
   // see https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection
@@ -37,9 +37,17 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     appReadableVersion: getAppVersion(),
     colorScheme: Appearance.getColorScheme()
   });
-
   // Identify the user using the device uniqueId
   await mp.identify(DeviceInfo.getUniqueId());
+};
+
+export const terminateMixpanel = async () => {
+  if (mixpanel) {
+    await mixpanel.flush();
+    await mixpanel.optOutTracking();
+    mixpanel = undefined;
+  }
+  return Promise.resolve();
 };
 
 export const setMixpanelPushNotificationToken = (token: string) => {

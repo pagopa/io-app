@@ -7,7 +7,7 @@ import { CreditCard } from "../types/pagopa";
 import I18n from "../i18n";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 
-export const MIN_PAN_DIGITS = 14;
+export const MIN_PAN_DIGITS = 12;
 const MAX_PAN_DIGITS = 19;
 
 /**

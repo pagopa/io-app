@@ -53,6 +53,8 @@ import {
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { mixpanelTrack } from "../mixpanel";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -115,6 +117,8 @@ function* createOrUpdateProfileSaga(
   // FIXME: perhaps this is responsibility of the caller?
   const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
+        service_preferences_settings:
+          currentProfile.service_preferences_settings,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         is_email_validated: currentProfile.is_email_validated || false,
@@ -127,6 +131,9 @@ function* createOrUpdateProfileSaga(
         ...action.payload
       }
     : {
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.LEGACY
+        },
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
@@ -166,11 +173,56 @@ function* createOrUpdateProfileSaga(
       throw new Error(response.value.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-      yield put(profileUpsert.success(response.value.value));
+      yield put(
+        profileUpsert.success({
+          value: currentProfile,
+          newValue: response.value.value
+        })
+      );
     }
   } catch (e) {
     const error: Error = e || Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
+  }
+}
+
+/**
+ * collection of predicates to forward chosen information:
+ * - first element contains the handler to check if the event should be dispatched
+ * - second element contains the callback to execute if the first element condition is verified
+ */
+const profileChangePredicates: ReadonlyArray<[
+  (value: InitializedProfile, newValue: InitializedProfile) => boolean,
+  (value: InitializedProfile) => Promise<void> | undefined
+]> = [
+  [
+    (value, newValue) => value.is_email_enabled !== newValue.is_email_enabled,
+    value =>
+      mixpanelTrack("EMAIL_FORWARDING_MODE_SET", {
+        mode: value.is_email_enabled ? "ALL" : "NONE"
+      })
+  ],
+  [
+    (value, newValue) =>
+      value.service_preferences_settings.mode !==
+      newValue.service_preferences_settings.mode,
+    value =>
+      mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
+        mode: value.service_preferences_settings.mode
+      })
+  ]
+];
+
+// execute a list of predicates to detect interesting scenario and execute action when profile changes
+function* handleProfileChangesSaga(
+  action: ActionType<typeof profileUpsert["success"]>
+) {
+  const { value, newValue } = action.payload;
+
+  for (const item of profileChangePredicates) {
+    if (item[0](value, newValue)) {
+      yield call(item[1], newValue);
+    }
   }
 }
 
@@ -185,6 +237,8 @@ export function* watchProfileUpsertRequestsSaga(
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );
+
+  yield takeLatest(getType(profileUpsert.success), handleProfileChangesSaga);
 }
 
 // This function listens for Profile refresh requests and calls the needed saga.

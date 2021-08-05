@@ -1,3 +1,4 @@
+import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
 import {
   ID_BONUS_VACANZE_TYPE,
@@ -71,6 +72,40 @@ This is the process in app:
 - if you confirm the request, IO generates your Bonus Vacanze;
 - once activated, your bonus will be visible in the Payments section of the app.
 `;
+export const bpdBonus: BonusAvailable = {
+  id_type: ID_BPD_TYPE,
+  it: {
+    name: "Cashback",
+    description:
+      "Fino a 500€ a nucleo familiare per andare in vacanza in Italia",
+    subtitle:
+      "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
+    title: "Richiesta Bonus Vacanze",
+    content: contentBonusVacanzeIT,
+    tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
+  },
+  en: {
+    name: "Cashback",
+    description: "Up to € 500 per family to go on holiday in Italy",
+    subtitle:
+      "The incentive established to support tourism after the lockdown due to the Coronavirus emergency.",
+    title: "Bonus Vacanze Request",
+    content: contentBonusVacanzeEN,
+    tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
+  },
+  service_id: "01EB8AXKNV6NMSP2R25KSGF743",
+  is_active: false,
+  hidden: true,
+  visibility: BonusVisibilityEnum.visible,
+  valid_from: new Date("2020-07-01T00:00:00.000Z"),
+  valid_to: new Date("2020-12-31T00:00:00.000Z"),
+  cover:
+    "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_BonusVacanze.png",
+  sponsorship_description: "Agenzia delle Entrate",
+  sponsorship_cover:
+    "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_AgenziaEntrate.png"
+};
+
 export const availableBonuses: BonusesAvailable = [
   {
     id_type: ID_BONUS_VACANZE_TYPE,
@@ -105,39 +140,7 @@ export const availableBonuses: BonusesAvailable = [
     sponsorship_cover:
       "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_AgenziaEntrate.png"
   },
-  {
-    id_type: ID_BPD_TYPE,
-    it: {
-      name: "Cashback",
-      description:
-        "Fino a 500€ a nucleo familiare per andare in vacanza in Italia",
-      subtitle:
-        "L'incentivo per supportare il settore del turismo dopo il lockdown richiesto dal COVID-19",
-      title: "Richiesta Bonus Vacanze",
-      content: contentBonusVacanzeIT,
-      tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
-    },
-    en: {
-      name: "Cashback",
-      description: "Up to € 500 per family to go on holiday in Italy",
-      subtitle:
-        "The incentive established to support tourism after the lockdown due to the Coronavirus emergency.",
-      title: "Bonus Vacanze Request",
-      content: contentBonusVacanzeEN,
-      tos_url: "https://io.italia.it/app-content/bonus_vacanze_tos.html"
-    },
-    service_id: "01EB8AXKNV6NMSP2R25KSGF743",
-    is_active: false,
-    hidden: true,
-    visibility: BonusVisibilityEnum.visible,
-    valid_from: new Date("2020-07-01T00:00:00.000Z"),
-    valid_to: new Date("2020-12-31T00:00:00.000Z"),
-    cover:
-      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_BonusVacanze.png",
-    sponsorship_description: "Agenzia delle Entrate",
-    sponsorship_cover:
-      "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/vacanze/logo/logo_AgenziaEntrate.png"
-  },
+  bpdBonus,
   {
     id_type: ID_CGN_TYPE,
     it: {

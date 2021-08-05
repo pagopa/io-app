@@ -1,24 +1,28 @@
 /**
  * Implements the reducers for static content.
  */
-import {fromNullable, none, Option} from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {ITuple2} from "italia-ts-commons/lib/tuples";
-import {NavigationState} from "react-navigation";
-import {createSelector} from "reselect";
-import {getType} from "typesafe-actions";
-import {ContextualHelp} from "../../../definitions/content/ContextualHelp";
-import {Idp} from "../../../definitions/content/Idp";
-import {Municipality as MunicipalityMetadata} from "../../../definitions/content/Municipality";
-import {ScreenCHData} from "../../../definitions/content/ScreenCHData";
-import {Service as ServiceMetadata} from "../../../definitions/content/Service";
-import {IdentityProviderId} from "../../models/IdentityProvider";
-import {CodiceCatastale} from "../../types/MunicipalityCodiceCatastale";
-import {getLocalePrimaryWithFallback} from "../../utils/locale";
-import {getCurrentRouteName} from "../../utils/navigation";
-import {contentMunicipalityLoad, loadContextualHelpData, loadIdps, loadServiceMetadata} from "../actions/content";
-import {clearCache} from "../actions/profile";
-import {removeServiceTuples} from "../actions/services";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { NavigationState } from "react-navigation";
+import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
+import { Idp } from "../../../definitions/content/Idp";
+import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
+import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
+import { IdentityProviderId } from "../../models/IdentityProvider";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { getCurrentRouteName } from "../../utils/navigation";
+import {
+  contentMunicipalityLoad,
+  loadContextualHelpData,
+  loadIdps,
+  loadServiceMetadata
+} from "../actions/content";
+import { clearCache } from "../actions/profile";
+import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import {
   isReady,
@@ -30,7 +34,8 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { idps } from "../../utils/idps";
+import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
+import { getRemoteLocale } from "../../utils/messages";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -90,10 +95,15 @@ export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
 
-export const idpsSelector = createSelector(
+export const idpsStateSelector = createSelector(
   contentSelector,
-  (content: ContentState): ReadonlyArray<SpidIdp> =>
-    isReady(content.idps) ? content.idps.value.items : idps
+  (content: ContentState): ContentState["idps"] => content.idps
+);
+
+export const idpsSelector = createSelector(
+  idpsStateSelector,
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | LocalIdpsFallback> =>
+    isReady(idps) ? idps.value.items : idpsFallback
 );
 
 /**
@@ -106,7 +116,7 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
-          const locale = getLocalePrimaryWithFallback();
+          const locale = getRemoteLocale();
 
           return fromNullable(data[locale]).chain(l =>
             fromNullable(l.idps[id as IdentityProviderId])
@@ -131,7 +141,7 @@ export const screenContextualHelpDataSelector = createSelector<
     if (currentRouteName === undefined) {
       return none;
     }
-    const locale = getLocalePrimaryWithFallback();
+    const locale = getRemoteLocale();
     const screenData =
       data[locale] !== undefined
         ? data[locale].screens.find(

@@ -53,6 +53,7 @@ date:
     - "pm"
 global:
   you: "YOU"
+  id: "ID"
   badges:
     blocked: "Blocked"
     onGoing: "Ongoing"
@@ -63,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
     description: Description
@@ -118,7 +120,7 @@ global:
     dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericError: Ooops, something did not work as expected, please try again!
+  genericError: There is a temporary problem, please try again.
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
@@ -135,6 +137,7 @@ global:
     share: Share
     delete: Delete
     cancel: Cancel
+    settings: Settings
     ok: OK
     ok2: Ok
     continue: Continue
@@ -175,8 +178,12 @@ global:
     noResultsTitle: No results.
   localNotifications:
     spidLogin:
-      title: Remember to login to IO!
-      message: Login with your digital identity on IO, the public services app
+      title: Sign in to start using the app
+      message: IO can only work if you have signed in at least once
+  media:
+    email: "Email"
+    pec: "Certified email"
+    phone: "Phone"
 tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
@@ -195,6 +202,7 @@ rooted:
 locales:
   it: Italian
   en: English
+  de: German
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy
@@ -255,7 +263,8 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Do you want to logout?
+    menulabel: Logout from IO
+    alertTitle: Do you want to logout?
     alertMessage: If you want to login again, you'll need to authenticate using CIE or SPID.
     loading: Logout in progress...
     exit: Exit
@@ -285,13 +294,19 @@ profile:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
+    data:
+      title: Your data
+      description: Review your information
     preferences:
       title: Preferences
       description: Customize your app experience
+    security:
+      title: Security
+      description: Manage biometric access and unlock code
     privacy:
-      title: Information and conditions of use
+      title: Privacy Policy and Terms of Service
       description: Your rights and obligations when using IO
-      subtitle: Here you find information on the legal conditions and on the processing of your personal data.
+      subtitle: In this section you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
@@ -336,8 +351,8 @@ profile:
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
-        title: Privacy policy
-        description: See the Privacy policy and the conditions of use of IO
+        title: Privacy & Terms
+        description: Read the Privacy Policy and the Terms of Service
         header: Information note on the processing of the IO app users's personal data
         updated: We updated our Terms and conditions
         infobox: It is necessary to read and accept the Terms and Conditions
@@ -345,6 +360,48 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Privacy"
+        listItem:
+          title: "Share usage data"
+          description: "Help the IO team to monitor the functioning of the app"
+        screen:
+          title: "Your usage data"
+          description: "Help the IO team monitor how the app is performing and provide you adequate support in case of issues."
+          why:
+            description:
+              one: "IO collects only the information "
+              two: "necessary "
+              three: "to monitor the performance of the services provided to you"
+            cta: "Why?"
+          security:
+            description:
+              one: "We take security measures to protect your data and "
+              two: "pseudonymise it where possible"
+            cta: "Learn more"
+          gdpr:
+            description:
+              one: "The IO team works with other providers in accordance with "
+              two: "GDPR regulations"
+            cta: "See our providers"
+          additionalInformation:
+            description: "For more information, please read"
+            cta: "the Privacy Policy and Terms and Conditions"
+          profileSettings: "You can change this choice anytime in Profile > Preferences"
+          cta:
+            shareData: "Share data"
+            dontShareData: "Don’t share data"
+            dontShare: "Don’t share"
+          confirmToast: "Preferences updated!"
+        alert:
+          title: "You are not giving IO consent to collect your usage data"
+          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+        whyBottomSheet:
+          title: "For what purposes do we collect information?"
+          body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
+        securityBottomSheet:
+          title: "What does pseudonymisation mean?"
+          body: "It’s the processing of personal data in such a manner that the personal data can no longer be attributed to a specific data subject without the use of additional information, provided that such additional information is kept separately and is subject to technical and organisational measures to ensure that the personal data are not attributed to an identified or identifiable natural person."
     appInfo:
       title: About IO
       description: Learn more about the IO app
@@ -360,26 +417,42 @@ profile:
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
-    accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
     showroom: UI Showroom
+  data:
+    title: Your data
+    subtitle: Here you will find your personal and contact data used by the IO app.
+    list:
+      email: Email address
+      need_validate: To be validated
+      nameSurname: Name and surname
+      spid:
+        headerTitle: SPID data
+        email: SPID email
+    email:
+      contextualHelpTitle: How to manage your email
+      contextualHelpContent: !include profile/profile_data_email_address.md
+    spid_email:
+      contextualHelpTitle: This data is set in your SPID profile
+      contextualHelpContent: !include profile/profile_data_spid_email.md
+  security:
+    title: Security
+    subtitle: Manage in-app authentication methods.
+    list:
+      biometric_recognition:
+        title: Biometric recognition
+        subtitle: Use your fingerprint or your face
+        needed_to_disable: Recognition required to disable
   preferences:
     title: Preferences
-    subtitle: This settings will be used by all services of the Public Amministration.
+    subtitle: These settings allow you to customize the IO app experience.
     contextualHelpTitle: Your preferences
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
-      biometric_recognition: Biometric recognition
-      biometric_recognition_status:
-        enabled: Enabled
-        disabled: Disabled
-      email: Email address
-      spid_email: SPID email
-      need_validate: To be validated
+      service_contact: Use of services
       wip: In progress
-      mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
       preferred_calendar:
@@ -399,12 +472,7 @@ profile:
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
-    spid_email:
-      contextualHelpTitle: This setting is set up on your SPID profile
-      contextualHelpContent: !include profile/profile_preferences_spid_email.md
     email:
-      contextualHelpTitle: How to manage your email
-      contextualHelpContent: !include profile/profile_preferences_email_address.md
       forward:
         contextualHelpTitle: How to handle message forwarding
         contextualHelpContent: !include profile/profile_preferences_email_forward.md
@@ -420,6 +488,7 @@ navigation:
   messages: Messages
   profile: Profile
   accessibility: "Section {{section}}, panel, {{order}} of 4"
+  selected: Is selected
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
@@ -490,6 +559,7 @@ authentication:
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      apduNotSupported: "The operating system doesn't support the reading of your CIE. For further details, please contact your device manufacturer."
       retry: Retry
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -720,6 +790,12 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  alertNoPaymentMethods:
+    title: Add a method to make in-app payments
+    message: The method will be saved in your Wallet, so you can pay easier next time.
+    buttons:
+      ok: Continue
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment
@@ -810,6 +886,9 @@ wallet:
     noName: Name unavailable
     loading: Loading bank list...
   accessibility:
+    sectionCardLabel: "Update payment methods"
+    sectionCardHint: "Update the list of payment methods"
+    addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
       payment:
@@ -1032,6 +1111,9 @@ wallet:
     loadWalletsErrorTitle: Systems are taking longer than expected
     loadWalletsErrorBody: We have not received a response from the security systems, but your card may have been added. Update your wallet before trying again.
     loadingAlert: I am checking your card data..
+  challenge3ds:
+    header: Authorize Payment
+    description: The card issuer needs your confirmation. Should you have any issues, please contact your bank.
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -1269,7 +1351,7 @@ wallet:
       message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
-      message: IO needs access to the Photos to scan QR codes
+      message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
       buttonText:
         settings: Enable permissions
         cancel: Cancel
@@ -1516,6 +1598,7 @@ messageDetails:
   question: "Is something unclear?"
   answer: If something is unclear about the content of the message, you want to report an error, or you want to know more about it, you can contact the service directly by indicating the following message ID.
   call: Call
+  sendEmail: Send email
   write: Write
   id: "ID:"
 notifications:
@@ -1523,10 +1606,8 @@ notifications:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
 biometric_recognition:
-  title: Biometric recognition
-  subTitle: Enable or disable biometric recognition
   contextualHelpTitle: How works biometric recognition
-  contextualHelpContent: !include profile/profile_preferences_biometric_recognition.md
+  contextualHelpContent: !include profile/profile_security_biometric_recognition.md
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
@@ -1545,21 +1626,51 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  optIn:
+    preferences:
+      completed:
+        title: "Preferences saved!"
+        body: "You can always see the list of available services by visiting the Services section."
+        cta: "Check available services"
+      oldUsersBadge: "Current setup"
+      choiceLabel: "You chose the"
+      unavailable: "Not defined"
+      title: "How do you want to configure services on IO?"
+      body: "IO is simple because there's nothing to set up: if a service has something important to tell you, it can send you a message."
+      quickConfig:
+        value: "Quick setup"
+        label: "all the services you didn't disable can contact you."
+        title: "Use quick setup"
+        body:
+          text1: "Only the services which have something important to tell you will contact you."
+          text2: "You can always deactivate communications by services that do not interest you."
+      manualConfig:
+        value: "Manual setup"
+        label: "only the services you enabled can contact you."
+        title: "Configure manually"
+        body:
+          text1: "No service will be able to contact you. You will have to enable them one by one to receive messages."
+        bottomSheet:
+          title: "Do you really want to setup services one by one?"
+          body: "**On IO you will only be contacted by the services that have something important to tell you.** If you choose this option, you will need to setup the services you are interest in manually. All the services that will come in future will not be able to contact you."
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   contextualHelpTitle: About this section
   contextualHelpContent: !include services/services_home.md
-  serviceIsEnabled: The service is enabled
+  serviceIsEnabled: Contact you in app
   serviceNotEnabled: The service is not enabled
-  pushNotifications: Push Notifications
-  emailForwarding: Email forwarding
+  pushNotifications: Send you push notifications
+  emailForwarding: Send you e-mail
+  tosAndPrivacy: Terms of use and Privacy
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also
   otherAppWeb: Online on
-  otherAppIos: With the iOS app
-  otherAppAndroid: With the Android app
+  otherAppIos: iOS App
+  otherAppAndroid: Android App
   contactsAndInfo: Contacts and info
+  visitWebsite: Browse Website
+  askForAssistance: Get support
   contactAddress: Address
   contactPhone: Phone
   contactSupport: Support
@@ -1575,14 +1686,18 @@ services:
     all: All
   loading:
     title: Loading the services list
-    subtitle: wait few seconds..
-  enableAll: Enable all
-  disableAll: Disable all
+    subtitle: Please wait...
+  enableAll: Use quick setup
+  disableAll: Use manual setup
+  updatingServiceMode: Please wait...
   disableAllTitle: "Do you really want to disable all the services?"
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
+  fiscalCode: "Organization's fiscal code"
+  contacts:
+    title: "This service can:"
   headerTitle: "Service details"
   contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
@@ -1651,6 +1766,7 @@ reminders:
   noOtherDeadlines: There are no more deadline
 openMaps:
   genericError: An error occurred while opening the map
+  openAddressOnMap: Open the address on the map
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1670,7 +1786,7 @@ contextualHelp:
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code, in order to make it easier to solve the problem.
+    cta: Share your fiscal code and your device's unique identifier, in order to make it easier to solve the problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
@@ -1929,6 +2045,10 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  state:
+    completed:
+      caption: "concluded"
+      description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
       card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
@@ -2129,6 +2249,7 @@ bonus:
       body2: "If you prefer, you can activate cashback on these methods later as well."
       skip: "Maybe later"
     iban:
+      bpdCompletedMessage: "This initiative has ended and it is no longer possible to change the IBAN"
       cta:
         bpdNotActiveTitle: "attention"
         bpdNotActiveMessage: "you are not registered for cashback, sign up and try again."
@@ -2181,10 +2302,11 @@ bonus:
           currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
           currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
           currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
-          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. By {{endGracePeriodDate}} you will be able to see the final calculation."
-          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to € {{amount}} of Cashback"
-          closedPeriodMaxAmount: "it's the highest refund possible!"
-          moneyTransfer: "By {{date}} you will receive the transfer on the IBAN you entered."
+          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. You will receive a message when the operation is completed."
+          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to a refund of € {{amount}}"
+          closedPeriodMaxAmount: ", the highest refund possible"
+          closedPeriodSuperCashback: ", including € {{amount}} of Super Cashback"
+          moneyTransfer: "You will receive a message when the transfer will be performed on the IBAN you entered."
           inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
           label:
             one: "1 valid transaction"
@@ -2233,7 +2355,7 @@ bonus:
                 one: "1 valid transaction "
                 other: "{{transactions}} valid transactions "
               text4: "and collected "
-              text5: "a cashback of "
+              text5: "a refund of "
             milestone:
               title: "Congratulation, you reached {{cashbackValue}}"
               body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
@@ -2292,7 +2414,7 @@ bonus:
           title: "How does it work?"
           body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
           status:
-            active: "**The ranking changes every day.** The final one will be displayed on {{endDate}}."
+            active: "**The ranking changes every day.** You will receive a message when it will be published."
             closed: "Ranking for this period is closed."
       lastUpdate: Updated at {{hour}} on {{date}}
   cgn:
@@ -2437,6 +2559,65 @@ bonus:
         seconds:
           one: 1 second
           other: "{{seconds}} seconds"
+  sv:
+    headerTitle: "Sicilia Vola"
+    voucherGeneration:
+      acceptTos:
+        alert:
+          title: "Attention"
+          message: "We inform you that the information you enter constitutes in effect a self-certification. Any false declarations will be punishable under the d.P.R. 445/2000"
+          buttons:
+            ok: "Continue"
+            ko: "Abort"
+        buttons:
+          requestBonus: "Request a discount code"
+      checkResidence:
+        title: "CheckResidenceComponent"
+      selectBeneficiaryCategory:
+        title: "I declare to be"
+        categories:
+          student: "Off-site student"
+          disabled: "Severely disabled"
+          worker: "Employee with a workplace outside Sicily"
+          sick: "Patient in need of treatment outside the Sicily region"
+          other: "None of the above"
+      student:
+        selectDestination:
+          title: "StudentSelectDestinationScreen"
+      disabled:
+        additionalInfo:
+          title: "DisabledAdditionalInfoScreen"
+      worker:
+        checkIncome:
+          title: "WorkerCheckIncomeScreen"
+        selectDestination:
+          title: "WorkerSelectDestinationScreen"
+      sick:
+        checkIncome:
+          title: "SickCheckIncomeScreen"
+        selectDestination:
+          title: "SickSelectDestinationScreen"
+      selectFlightsDate:
+        title: "SelectFlightsDateScreen"
+      summary:
+        title: "SummaryScreen"
+      voucherGenerated:
+        title: "VoucherGeneratedScreen"
+      ko:
+        checkIncome:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to those with a gross personal income of less than € 25,000."
+        selectBeneficiaryCategory:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to the categories presented in the previous screen."
+        checkResidence:
+          title: "Sorry, you do not have the features to access the discounts."
+          body: "Sicilia Vola discounts are dedicated only to residents of Sicily."
+        timeout:
+          title: "Your Sicilia Vola discount code is being generated."
+          body: "You will receive a message in the IO app when it is ready."
+    voucherList:
+      title: "VoucherListScreen"
 features:
   euCovidCertificate:
     save:
