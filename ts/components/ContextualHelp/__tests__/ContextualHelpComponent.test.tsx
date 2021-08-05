@@ -2,15 +2,17 @@ import React from "react";
 import { NavigationParams } from "react-navigation";
 import { Text } from "react-native";
 import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 
-import { applicationChangeState } from "../../store/actions/application";
-// import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
-import ROUTES from "../../navigation/routes";
-import { appReducer } from "../../store/reducers";
-import ContextualHelpComponent from "../ContextualHelpComponent";
-import { ContextualHelpData } from "../ContextualHelpModal";
+import { applicationChangeState } from "../../../store/actions/application";
+import { GlobalState } from "../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import ROUTES from "../../../navigation/routes";
+import { appReducer } from "../../../store/reducers";
+import I18n from "../../../i18n";
+import ContextualHelpComponent, {
+  ContextualHelpData
+} from "../ContextualHelpComponent";
 
 jest.useFakeTimers();
 
@@ -99,6 +101,16 @@ describe("ContextualHelpComponent", () => {
         }).getByText(contextualHelpData.faqs![0].title)
       ).toBeDefined();
     });
+  });
+
+  it("should call `onRequestAssistance` when the Instabug button is pressed", () => {
+    const component = renderComponent(options);
+    const ibButton = component.getByText(
+      I18n.t("instabug.contextualHelp.buttonBug")
+    );
+    expect(ibButton).toBeDefined();
+    fireEvent(ibButton, "onPress");
+    expect(options.onRequestAssistance).toHaveBeenCalledTimes(1);
   });
 });
 
