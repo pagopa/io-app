@@ -100,7 +100,8 @@ import {
   refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../actions/wallet/wallets";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
@@ -112,6 +113,8 @@ import {
   paymentOutcomeCode
 } from "../actions/wallet/outcomeCode";
 import { noAnalyticsRoutes } from "../../utils/analytics";
+import { getNetworkErrorMessage } from "../../utils/errors";
+import { searchMessagesEnabled } from "../actions/search";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -227,6 +230,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+    case getType(updatePaymentStatus.failure):
+      return mp.track(action.type, {
+        reason: getNetworkErrorMessage(action.payload)
+      });
 
     // Messages actions with properties
     case getType(removeMessages): {
@@ -288,7 +295,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // download / delete profile
     case getType(upsertUserDataProcessing.success):
       return mp.track(action.type, action.payload);
-
+    // wallet
+    case getType(updatePaymentStatus.success):
+      return mp.track(action.type, {
+        pagoPA: action.payload.paymentMethod?.pagoPA
+      });
     //
     // Actions (without properties)
     //
@@ -321,6 +332,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
+    case getType(searchMessagesEnabled):
     // wallet
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
@@ -332,6 +344,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(fetchTransactionsRequest):
     case getType(refreshPMTokenWhileAddCreditCard.request):
     case getType(refreshPMTokenWhileAddCreditCard.success):
+    case getType(updatePaymentStatus.request):
     // payment
     case getType(abortRunningPayment):
     case getType(paymentInitializeState):

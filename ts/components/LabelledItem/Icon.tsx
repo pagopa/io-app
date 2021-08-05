@@ -56,10 +56,10 @@ export const Icon: React.FC<Props> = ({
         name={icon}
         style={[iconStyle, styles.iconFont]}
         accessibilityLabel={accessibilityLabelIcon}
-        testID="IconFont"
+        testID="LabelledItem_IconFont"
       />
     ) : (
-      <Image source={icon} style={iconStyle} testID="Image" />
+      <Image source={icon} style={iconStyle} testID="LabelledItem_Image" />
     )}
   </ButtonDefaultOpacity>
 );

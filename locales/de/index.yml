@@ -84,8 +84,12 @@ global:
     invalidSearchBarText: Mindestens {{minCharacter}} Zeichen eingeben
     noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuchen Sie etwas anderes."
     noResultsTitle: Keine Ergebnisse.
+  media:
+    email: "E-Mail"
+    pec: PEC
+    phone: Telefon
 tablet:
-  message: Die Oberfläche der App-IO ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
+  message: Die Oberfläche der IO-App ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
 rooted:
   title: Es sieht so aus, als ob die Sicherheit Ihres Geräts kompromittiert worden ist!
   continueAlert:
@@ -106,7 +110,7 @@ clipboard:
   copyText: kopieren
   copyFeedbackButton: kopiert
 betaBanner:
-  title: 'App-IO'
+  title: 'IO-App'
   description: Ihre Berichte helfen uns, Tag für Tag besser zu werden.
 connection:
   status:
@@ -135,32 +139,34 @@ profile:
     accessibility:
       unavailable: Nicht verfügbar
       preview:
-        label: Vorschau auf Ihr Steuernummer-Dokument
-        hint: Aktivieren Sie diese Option, um ein Faksimile Ihres Steuernummer-Dokuments anzuzeigen
+        label: Vorschau auf Ihre Steuernummerkarte
+        hint: Aktivieren Sie diese Option, um ein Faksimile Ihre Steuernummerkarte anzuzeigen
       front:
-        label: Vorderseite des Dokuments Code {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}},{{Provinz}} am {{Geburtsdatum}}
+        label: Vorderseite der Steuernummerkarte mit dem Code {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}}, {{Provinz}} am {{Geburtsdatum}}
         hint: Aktivieren, um die Querformatansicht anzuzeigen
       rear:
-        label: Barcode Ihres Dokuments
+        label: Barcode Ihrer Steuernummerkarte
         hint: Aktivieren, um die Querformatansicht anzuzeigen
     title: Ihre persönlichen Dokumente
     fiscalCode: Steuernummer
-    content: Das Faksimile des Steuerkodex ersetzt nicht das physische Dokument, aber es ermöglicht das Lesen von Daten und Barcodes
+    content: Das Faksimile der Steuernummerkarte ersetzt nicht das physische Dokument, aber es ermöglicht das Lesen von Daten und Barcodes
     facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFIL
   unknown: Unbekannt
   logout:
+    menulabel: IO beenden
+    alertTitle: "Möchten Sie wirklich beenden?"
     alertMessage: "Sind Sie sicher, dass Sie sich abmelden wollen? Wenn Sie sich das nächste Mal anmelden, benötigen Sie eine neue Anmeldung mit CIE oder SPID."
     exit: Beenden
     cta:
       header: Wie wollen Sie die App verlassen?
       keepData:
-        title: Quit keeping all data
-        description: Um di App-IO zu nutzen, müssen Sie sich erneut mit Ihrer digitalen Identität anmelden, alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun.
+        title: Beenden und alle Daten behalten
+        description: Um die IO-App zu nutzen, müssen Sie sich erneut mit Ihrer digitalen Identität anmelden. Alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun.
       resetData:
         title: Beenden und Zurücksetzen dieser App
-        description: "APP-IO wird in den Ausgangszustand zurückversetzt, als ob sie gerade installiert worden wäre. Diese Option hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun."
+        description: "IO-App wird in den Ausgangszustand zurückversetzt, so als ob sie gerade installiert worden wäre. Diese Option hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun."
   errors:
     load: Fehler beim Laden des Profils
     upsert: Fehler beim Erstellen oder Aktualisieren des Profils
@@ -178,11 +184,18 @@ profile:
       alert: Sind Sie sicher, dass Sie den Cache löschen wollen?
       clear: Cache löschen
       cleared: Der Cache wurde geleert.
+    data:
+      title: Ihre Daten
+      description: Ihre Informationen aktualisieren
     preferences:
       title: Voreinstellungen
       description: App-interne Einstellungen verwalten
+    security:
+      title: Sicherheit
+      description: "Biometrischen Zugang und PIN ändern"
     privacy:
-      description: Ihre Rechte und Pflichten bei der Nutzung der App-IO
+      title: Privacy und Nutzungsbestimmungen
+      description: Ihre Rechte und Pflichten bei der Nutzung der IO-App
       loading: Warten Sie ein paar Sekunden, wir überprüfen Ihr Profil.
       exportData:
           cta: Kopie Ihrer Daten anfordern
@@ -196,15 +209,15 @@ profile:
             confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Ihren Daten.
           error: Beim Absenden Ihrer Exportanfrage ist ein Fehler aufgetreten, bitte versuchen Sie es erneut!
       privacyPolicy:
-        title: Privacy Policy
-        header: Siehe die Datenschutzrichtlinie und die Nutzungsbedingungen von IO
+        title: Datenschutzbestimmungen
+        header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
         updated: Wir haben unsere Allgemeinen Geschäftsbedingungen aktualisiert
         infobox: Es ist notwendig, die Allgemeinen Geschäftsbedingungen zu lesen und zu akzeptieren
         contextualHelpTitlePolicy: Was sind die Informationen über die Verarbeitung von personenbezogenen Daten
         contextualHelpTitle: Ihre Datenschutzeinstellungen
     appInfo:
       title: Über IO
-      description: Erfahren Sie mehr über die App-IO
+      description: Erfahren Sie mehr über die IO-App
     developersSectionHeader: Entwickler
     experimentalFeatures:
       confirmTitle: Experimentelle Merkmale
@@ -217,24 +230,42 @@ profile:
       alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
       alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
     appVersion: App-Version
-    backendVersion: Backend Version
-    debugMode: Debug mode
+    backendVersion: Backend-Version
+    debugMode: Debug-Modus
     showroom: UI Showroom
+  data:
+    title: Ihre Daten
+    subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"
+    list:
+      email: "E-Mail-Adresse"
+      nameSurname: Name und Nachname
+      spid:
+        headerTitle: SPID Daten
+        email: "SPID – E-Mail"
+  security:
+    title: Sicherheit
+    subtitle: Authentifizierungsmethode der App einstellen.
+    list:
+      biometric_recognition:
+        title: Biometrische Erkennung
+        subtitle: Fingerabdruck- oder Gesichts-erkennung benutzen
   preferences:
-    title: Präferenzen
+    title: Einstellungen
+    subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
     contextualHelpTitle: Ihre Vorlieben
     list:
       wip: In Bearbeitung
       language: Sprache
       digitalDomicile: Digitales Domizil
+      service_contact: Dienst-management
       preferred_calendar:
         title: Standard-Kalender
         not_selected: Nicht ausgewählt
       preferred_language:
         title: Bevorzugte Sprache
-        subtitle: In welcher Sprache möchten Sie die Applikation nutzen?
+        subtitle: In welcher Sprache möchten Sie die Anwendung nutzen?
         alert:
-          title: Möchten Sie die Sprache ändern in
+          title: Möchten Sie die Sprache ändern zu
           subtitle: Sie müssen die Anwendung neu starten, damit dies geschieht
         not_selected: Nicht ausgewählt
     empty:
@@ -247,7 +278,7 @@ profile:
       forward:
         contextualHelpTitle: Wie Sie die Nachrichtenweiterleitung handhaben
     calendar:
-      contextualHelpTitle: Was ist Ihr Lieblingskalender
+      contextualHelpTitle: Was ist Ihr bevorzugter Kalender
       local_calendar: Lokaler Kalender
       birthday_calendar: Geburtstage
 userMetadata:
@@ -265,11 +296,11 @@ cie:
 spid:
   login: LOGIN
   loginButton: LOGIN MIT
-  selectIdp: Um mit der Anmeldung fortzufahren, wählen Sie Ihren SPID-Identitätsanbieter.
+  selectIdp: Um mit der Anmeldung fortzufahren, wählen Sie Ihren SPID-Anbieter.
   selectDemoIdp: Wenn Sie noch keine eigene SPID-Identität haben, durchsuchen Sie die App in demo mode
   loginErrorAlert:
-    title: Fehler beim einloggen
-    message: Entschuldigung, es gab einen Fehler beim Einloggen, versuchen Sie es noch einmal?
+    title: Fehler bei der Anmeldung
+    message: Entschuldigung, es gab einen Fehler bei der Anmeldung. Bitte versuchen Sie es noch einmal.
   subscription:
     line1: SPID ist die digitale Identität für den Zugriff auf Online-Dienste der öffentlichen Verwaltung.
     line2: Geben Sie Ihre E-Mail-Adresse ein, um sie zu aktivieren.
@@ -286,21 +317,21 @@ authentication:
       os_version_unsupported: eine mit der CIE-Authentifizierung kompatible Betriebssystemversion (Android 6.0 oder höher)
       nfc_incompatible: eine NFC-Antenne, die mit der Authentifizierung über CIE kompatibel ist
     contentTitleCie: Sie haben keinen SPID oder CIE?
-    spid_or_cie: Um die App-IO nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
+    spid_or_cie: Um die IO-App nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
     request_cie: CIE anfordern
     request_spid: SPID anfordern
-    contextualHelpTitle: So registrieren Sie sich in der App-IO
+    contextualHelpTitle: So registrieren Sie sich in der IO-App
     loginSpid: Anmeldung mit SPID
     loginCie: Anmeldung mit CIE
     loginSpidCie: Anmeldung mittels SPID oder CIE
     infoSpidCie: Einführung in SPID und CIE
-    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrem elektronischen Personalausweis (CIE) anmelden
+    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrer elektronischen Identitätskarte (CIE) anmelden
     nospid: Sie haben keinen SPID? Finden Sie mehr heraus
     nospid-nocie: Sie haben keinen SPID oder CIE?  Finden Sie mehr heraus
     card1-title: Alle Mitteilungen an einem Ort
     card1-content: Anzeige aller eingehenden Mitteilungen von öffentlichen Körperschaften
     card2-title: Verwenden Sie Ihre bevorzugte Zahlungsmethode
-    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkontokorrent oder mit Ihrer Zahlkarte bezahlen
+    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkonto oder mit Ihrer Bankkarte bezahlen
     card3-title: Schnelles Bezahlen einer physischen Mitteilung
     card3-content: Sie können eine Zahlungsmitteilung auch durch Scannen des QR-Codes bezahlen
     card4-title: Sie können die App nur mittels SPID verwenden
@@ -308,22 +339,22 @@ authentication:
       um Ihre Online-Sicherheit zu gewährleisten
     card5-title: Willkommen bei der öffentlichen Version von IO!
     expiredCardHeaderTitle: Anmeldung mit CIE
-    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die App-IO zugreifen möchten, müssen Sie SPID verwenden."
-    expiredCardHelp: Wie erneuert man seinen elektronischen Personalausweis?
+    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die IO-App zugreifen möchten, müssen Sie SPID verwenden."
+    expiredCardHelp: Wie erneuert man seine elektronische Identitätskarte?
   cie:
     genericTitle: Anmeldung mit CIE
     cie: CIE
-    noDataTitle: Um die App-IO zu verwenden, müssen Sie das Senden von Daten zulassen
+    noDataTitle: Um die IO-App zu verwenden, müssen Sie das Senden von Daten zulassen
     nfc:
       retry: Wiederholen
       noNfcConnectionTitle: Sind Sie sicher, dass Sie die Karte abgelegt haben?
       enableNfcTitle: NFC einschalten
       enableNfcHeader: NFC prüfen
-      enableNfcContent: Damit die App Ihren elektronischen Personalausweis verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
+      enableNfcContent: Damit die App Ihre elektronische Identitätskarte verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
     pin:
       accessibility:
-        placeholderLabel: PIN des elektronischen Personalausweises
-        label: Einschubfeld für elektronische Ausweisstifte
+        placeholderLabel: PIN der elektronischen Identitätskarte
+        label: Eingabefeld für die PIN der elektronischen Identitätskarte
         hint: Geben Sie in diesem Feld den 8-stelligen Pin Ihrer elektronischen Identitätskarte ein.
       pinCardTitle: Geben Sie die PIN Ihrer ID-Karte ein
       pinCardHeader: Anmeldung mit CIE
@@ -343,7 +374,7 @@ authentication:
       titleiOS: Bitte versuchen Sie es erneut
       title: Halten Sie die Karte erneut
       layCardMessageHeader: Halten Sie Ihre elektronische ID-Karte für einige Sekunden an die Rückseite Ihres Telefons.
-      layCardMessageHeaderiOS: Halten Sie Ihren elektronischen Personalausweis auf die obere Rückseite Ihres iPhones.
+      layCardMessageHeaderiOS: Halten Sie Ihre elektronische Identitätskarte auf die obere Rückseite Ihres iPhones.
       layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie die Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie eine Vibration spüren.
       cieCardValid: Ok, Ihre Karte ist gültig! Sie können sie nun entfernen.
       readerCardTitle: Halten Sie die Karte für ein paar Sekunden
@@ -358,7 +389,7 @@ authentication:
         tryAgain: Etwas hat nicht wie erwartet funktioniert, während wir Ihre CIE gelesen haben. Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es erneut!
         unknownCardTitle: Unbekannte Karte
         unknownCardContent: Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein.
-        unknownCardHelpLink: Was ist ein elektronischer Personalausweis?
+        unknownCardHelpLink: Was ist eine elektronische Identitätskarte?
   spid: SPID
   spid_information_request:
     headerTitle: E-Mail Adresse einfügen
@@ -417,7 +448,7 @@ authentication:
     spid:
       unknown: Unbekannter Fehler
       error_19: "Sie haben zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuchen Sie es in ein paar Minuten erneut oder wenden Sie sich an Ihren SPID-Identitätsanbieter, um Ihre Anmeldedaten zu ändern."
-      error_20: "Aus Sicherheitsgründen erfordert die App-IO eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wenden Sie sich an Ihren SPID-Identitätsanbieter, um zu erfahren, wie Sie diesen verwenden können."
+      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wenden Sie sich an Ihren SPID-Identitätsanbieter, um zu erfahren, wie Sie diesen verwenden können."
       error_21: "Es ist zu viel Zeit vergangen, seit Sie mit dem Einloggen begonnen haben: Bitte beginnen Sie noch einmal von vorne."
       error_22: "Um IO benutzen zu können, müssen Sie den Zugriff auf einige Ihrer Daten erlauben: Melden Sie sich erneut an und geben Sie Ihr Einverständnis zur Datenübermittlung."
       error_23: "Ihre SPID-Identität ist gesperrt oder widerrufen. Um Ihr Konto zu reaktivieren, wenden Sie sich an Ihren SPID-Identitätsanbieter."
@@ -429,7 +460,7 @@ email:
   read:
     title: Ihre E-Mail-Adresse
     info: Dies ist die E-Mail-Adresse, die mit Ihrem SPID-Konto verknüpft ist. Sie können
-      Sie können in der App-IO eine andere E-Mail-Adresse verwenden, wenn Sie dies wünschen. Um die neue E-Mail-Adresse in Betrieb zu nehmen,
+      Sie können in der IO-App eine andere E-Mail-Adresse verwenden, wenn Sie dies wünschen. Um die neue E-Mail-Adresse in Betrieb zu nehmen,
       müssen Sie sie validieren, indem Sie auf den Link klicken,
       den Sie per E-Mail erhalten.
     details: Sie können diese Adresse ändern, dann sollten Sie sie validieren, indem Sie auf den Link klicken,
@@ -439,13 +470,13 @@ email:
     alert: "Achtung: Ihr pagoPA Konto ist mit Ihrer E-Mail-Adresse verknüpft.
       Wenn Sie diese ändern, wird IO Ihre registrierten Zahlungsmethoden und Transaktionen nicht
       mehr auflisten."
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die App-IO. Wenn Sie feststellen,
+    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
       dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie direkt in Ihrem
       SPID-Dienstanbieterkonto bearbeiten.
   insert:
     header: Aktivierung
     title: E-Mail eingeben
-    subtitle: Einige Funktionen der App-IO benötigen Ihre E-Mail-Adresse.
+    subtitle: Einige Funktionen der IO-App benötigen Ihre E-Mail-Adresse.
     label: Persönliche E-Mail-Adresse
     alert: Sie verwenden bereits diese E-Mail
     help:
@@ -470,10 +501,10 @@ email:
     sent: E-Mail gesendet
     send_validation_ok: E-Mail-Validierung gesendet
     send_validation_ko: Beim Senden der E-Mail-Validierung ist ein Fehler aufgetreten. Versuchen Sie es erneut.
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die App-IO. Wenn Sie feststellen,
+    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
       dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie
       direkt in Ihrem SPID-Dienstanbieterkonto bearbeiten.
-    validation_ok: Ihre E-Mail-Adresse wurde validiert. Sie können nun alle Funktionalitäten der App-IO nutzen.
+    validation_ok: Ihre E-Mail-Adresse wurde validiert. Sie können nun alle Funktionalitäten der IO-App nutzen.
     validated: E-Mail validiert!
     validated_ok: Danke, jetzt können Sie alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen.
 onboarding:
@@ -491,9 +522,9 @@ onboarding:
     contentSubtitle: Geben Sie einen 6-stelligen Code ein
     contentTitleConfirm: Fügen Sie Ihren Code erneut ein
     contentTitleConfirmSubtitle: Geben Sie erneut den 6-stelligen Code ein
-    pinInfo: Dieser Code wird jedes Mal abgefragt, wenn Sie die App-IO öffnen und wenn Sie sensible Daten anzeigen oder dispositive Transaktionen durchführen müssen. Sie können ihn jederzeit ändern, indem Sie sich authentifizieren.
+    pinInfo: Dieser Code wird jedes Mal abgefragt, wenn Sie die IO-App öffnen und wenn Sie sensible Daten anzeigen oder dispositive Transaktionen durchführen müssen. Sie können ihn jederzeit ändern, indem Sie sich authentifizieren.
     reset: Ändern Sie den Code
-    confirmInvalid: Die beiden Pins stimmen nicht überein
+    confirmInvalid: Die beiden PINs stimmen nicht überein
     contextualHelpTitle: Wie lautet Ihr Freischaltcode?
   alert:
     title: Wollen Sie sich wirklich abmelden?
@@ -525,13 +556,19 @@ datetimes:
   yesterday: gestern
   todayAt: heute, bei
 payment:
+  alertNoPaymentMethods:
+    title: Bitte hinzufügen Sie einen Zahlungsdienstleister, um aus der IO-App zu bezahlen
+    message: Die Zahlungsmethode wird in Ihrem Konto gespeichert, damit Sie nächster Mal schneller bezahlen können.
+    buttons:
+      ok: Weiter
+      ko: Abbrechen
   errorDetails: Details
   noPsp: Sie müssen noch einen Zahlungsdienstleister auswählen
   IUV: IUV
   IUV_extended: Einheitlicher Zahlungscode (IUV)
   notice: Hinweis
   noticeCode: Hinweis-Code
-  recipientFiscalCode: Empfänger-Steuernummer
+  recipientFiscalCode: Steuernummer des Empfängers
   details:
     state:
       successful: Erfolgreich
@@ -539,7 +576,7 @@ payment:
       failed: Gescheitert
     info:
       buttons:
-        copy: kopieren
+        copy: Kopieren
         help: Support kontaktieren
       title: Zahlungsdetail
       enteCreditore: Gläubiger
@@ -552,7 +589,7 @@ payment:
     list:
       empty:
           title: Keine Zahlungsversuche
-          description: App-IO hat keine Zahlungsversuche gespeichert. Hier finden Sie Ihre letzten Zahlungsversuche
+          description: IO-App hat keine Zahlungsversuche gespeichert. Hier finden Sie Ihre letzten Zahlungsversuche
       title: Zahlungsversuche
       iuv: IUV Zahlungen {{iuv}}
 wallet:
@@ -567,8 +604,8 @@ wallet:
         title: "Tut uns leid, wir konnten keine Karten finden"
       add:
         screenTitle: "Möchten Sie diese Karte hinzufügen?"
-        bodySingular: "Wir haben 1 Karte gefunden, welche auf Ihnen geschrieben ist. Fahren Sie mit dem Hinzufügen dieser Karte fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
-        bodyPlural: "Wir haben {{number}} Karten gefunden, welche auf Ihnen geschrieben sind. Fahren Sie mit dem Hinzufügen dieser Karte/en fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
+        bodySingular: "Wir haben eine Karte gefunden, welche auf Ihren Namen ausgestellt ist. Fahren Sie mit dem Hinzufügen dieser Karte fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
+        bodyPlural: "Wir haben {{number}} Karten gefunden, welche auf Ihren Namen ausgestellt sind. Fahren Sie mit dem Hinzufügen dieser Karte/en fort, indem Sie auf Hinzufügen klicken, oder klicken Sie auf Überspringen, um den Vorgang abzubrechen."
   alert:
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
     titlePagoPaUpdateApp: Update erforderlich
@@ -584,6 +621,7 @@ wallet:
   transactionsLoadFailure: Das Laden Ihrer Transaktionen ist fehlgeschlagen, bitte versuchen Sie es erneut.
   transactionsLoadMore: Vorherige laden
   transacionsLoadingMore: Vorheriges Laden...
+  transactionsShow: Zeige Transaktionen
   pickPaymentMethod:
     unavailable:
       title: Diese Zahlungsmethode ist zur Zeit nicht verfügbar
@@ -595,9 +633,10 @@ wallet:
     alert: 'Die für die Zahlung der Transaktion verwendete Zahlungsmethode wurde aus den Zahlungsmethoden entfernt'
   newPaymentMethod:
     add: hinzufügen
+    refresh: Aktualisieren
     addButton: Eine neue Zahlungsmethode hinzufügen
-    addDescription: Fügen Sie eine Zahlungsmethode hinzu, um in Sekundenschnelle aus der App-IO zu bezahlen, oder fordern Sie die Aktivierung einer Bonus- oder Rabattkarte an.
-    walletAlert: "Sie verfügen über verschiedene Zahlungsmethoden, aber es wird noch keine von der App-IO unterstützt"
+    addDescription: Fügen Sie eine Zahlungsmethode hinzu, um in Sekundenschnelle aus der IO-App zu bezahlen, oder fordern Sie die Aktivierung einer Bonus- oder Rabattkarte an.
+    walletAlert: "Sie verfügen über verschiedene Zahlungsmethoden, aber es wird noch keine von der IO-App unterstützt"
     successful: Die Karte wurde erfolgreich hinzugefügt!
     failed: Die Karte konnte nicht hinzugefügt werden
     failedCardAlreadyExists: Die Karte, die Sie hinzufügen haben, existiert bereits
@@ -619,7 +658,7 @@ wallet:
     infoTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
     info: Diese Zahlungsmethode wird automatisch für die nächste Zahlung vorgeschlagen
     save: Speichern
-    notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte verbucht.
+    notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte abgebucht.
     loadingAlert: Ihre Kartendaten werden überprüft...
   saveCardInPayment:
     header: Mit dieser Karte bezahlen
@@ -680,14 +719,14 @@ wallet:
     updatedAmount: Aktualisierter Betrag
     updateInfo: 'pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden '
     loadingMessage:
-      activation: Ich benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
-      verification: Ich prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...
-      generic: Ich schließe die Verifizierungsvorgang Ihrer Zahlungsmitteilung ab, warten Sie ein paar Sekunden...
-      wallet: Ich prüfe die Zahlungsmethode...
+      activation: Benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
+      verification: Prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...
+      generic: Schließe die Verifizierungsvorgang Ihrer Zahlungsmitteilung ab, warten Sie ein paar Sekunden...
+      wallet: Prüfe die Zahlungsmethode...
     contextualHelpTitle: Zusammenfassung der Transaktion
   insertManually:
     header: Zahlungsmitteilungsdaten einfügen
-    title: Geben Sie Ihre Zahlungsmitteilungsdaten ein
+    title: Geben Sie Ihre Zahlungsmitteilungsdaten ein,
     info: welche es uns ermöglichen, die Transaktion zu erkennen
     link: Wo befinden sich diese?
     noticeCode: Zahlungsmitteilungscode
@@ -696,7 +735,7 @@ wallet:
     proceed: Mit der Transaktion fortfahren
     contextualHelpTitle: Mitteilungsdaten manuell einfügen
   errorTransaction:
-    submitBugText: Wenn Sie das Problem nicht lösen können, informieren Sie uns bitte über das Marienkäfer-Symbol oben rechts. Danke!
+    submitBugText: Wenn Sie das Problem nicht lösen können, informieren Sie uns bitte über das Käfer-Symbol oben rechts. Danke!
   transactionDetails: Transaktionsdetails
   transactionFullReason: Vollständiger Grund
   total: Gesamtbetrag
@@ -716,7 +755,7 @@ wallet:
   noNewTransactions: Es gibt keine neuen Transaktionen.
   noneTransactions: Es gibt keine Transaktionen
   noTransactionsInWalletHome: Sie haben noch keine Operation durchgeführt.
-  noTransactionsInTransactionsScreen: Mit dieser Zahlungsmethode haben Sie nie über der App IO oder pagoPA bezahlt. In dieser Liste sehen Sie nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden.
+  noTransactionsInTransactionsScreen: Mit dieser Zahlungsmethode haben Sie nie über der IO-App oder pagoPA bezahlt. In dieser Liste sehen Sie nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden.
   payNotice: Zahlungsmitteilung bezahlen
   latestTransactions: Ihre letzten Transaktionen
   creditDebitCards: Kredit-/Debitkarten
@@ -739,6 +778,12 @@ wallet:
   addCardTitle: Kartendetails
   dummyCard:
     labels:
+      holder:
+        label: Besitzer der Karte
+        description:
+          base: "Bitte den Besitzer der Karte eingeben"
+          error: "Bitte den Besitzer der Karte richtig eingeben"
+      pan: Kartenummer
       expirationDate: Fälligkeitsdatum
       securityCode: Karten-Sicherheitscode
     values:
@@ -746,6 +791,8 @@ wallet:
       pan: 0000 0000 0000 0000
       expirationDate: mm/yy
       securityCode: "•••"
+  acceptedCards: Akzeptierte Karten
+  missingDataCTA: Fehlen einige Daten?
   chooseMethod: Wählen Sie die gewünschte Zahlungsmethode
   QRtoPay:
     chooser: Bild aus der Galerie wählen
@@ -753,10 +800,10 @@ wallet:
     byCameraTitle: Hinweis QR-Code
     setManually: Geben Sie die Daten ein
     cameraUsagePermissionInfobox:
-      title: "App IO Kamera-Nutzungserlaubnis"
-      message: "Die App IO benötigt eine Kameranutzungserlaubnis, um den QR-Code zu fotografieren"
+      title: "IO-App Kamera-Nutzungserlaubnis"
+      message: "Die IO-App muss auf die Kamera zugreifen, um den QR-Code zu fotografieren"
     settingsAlert:
-      title: Es scheint, dass der Zugriff auf die Galerie verweigert wurde
+      title: Es scheint, dass der Zugriff auf die Fotogalerie verweigert wurde
       buttonText:
           settings: Berechtigungen aktivieren
           cancel: Abbrechen
@@ -801,14 +848,14 @@ messages:
     message:
       read: "Mitteilung"
       unread: "Ungelesene Mitteilung"
-      description: "{{newMessage}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
+      description: "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}"
       received_on: "erhalten am"
       received_at: "erhalten um"
   contextualHelpTitle: Über diesen Abschnitt
   counting:
     zero: Keine Mitteilung
-    one: Sie haben 1 Mitteilung
-    other: Sie haben  {{count}} Mitteilung
+    one: Sie haben eine Mitteilung
+    other: Sie haben {{count}} Mitteilungen
   tab:
     inbox: Posteingang
     deadlines: Fällig
@@ -818,7 +865,7 @@ messages:
   loading: Mitteilungen laden...
   yesterday: gestern
   errorLoading:
-    details: Fehler beim Laden von Mitteilungsdetails
+    details: Fehler beim Laden der Mitteilungsdetails
     senderInfo:  Absenderdienst unbekannt
     serviceInfo: Service-Info unbekannt
     departmentInfo: Abteilungsinfo unbekannt
@@ -865,7 +912,7 @@ messages:
       cancel: "Abbrechen"
     errors:
       fetchCalendars: Fehler beim Einsehen des Kalenders
-    helper: "Die App-IO merkt sich diese Auswahl, Sie können sie über das Einstellungsfenster ändern."
+    helper: "Die IO-App merkt sich diese Auswahl, Sie können sie über das Einstellungsfenster ändern."
   unknownSender: Unbekannter Absender
   noContent: Inhalt nicht verfügbar
   archive:
@@ -879,7 +926,7 @@ messages:
   deadlines:
     emptyMessage:
       title: Sie haben keine Fälligkeiten.
-      subtitle:  Verwenden Sie die Schaltfläche oben, um frühere Fälligkeiten einzusehen.
+      subtitle:  Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen. 
   medical:
     not_available: "n/v"
     prescription: Elektronische Verschreibung
@@ -921,7 +968,7 @@ notifications:
     errorMessage: Bei der Registrierung mit dem Push-Benachrichtigungsdienst wurde ein Fehler festgestellt
 send_email_messages:
   title: Mitteilungen per E-Mail weiterleiten
-  subtitle: Möchten Sie, dass die App-IO den Inhalt von Mitteilungen per E-Mail weiterleitet an
+  subtitle: Möchten Sie, dass die IO-App den Inhalt von Mitteilungen per E-Mail weiterleitet an
   options:
     disable_all:
       label: Für alle Dienste deaktivieren
@@ -940,13 +987,16 @@ services:
   serviceNotEnabled: Der Dienst ist nicht aktiv
   pushNotifications: Push-Mitteilungen schicken
   emailForwarding: E-Mail zuschicken
+  tosAndPrivacy: Nutzungsbedingungen und Datenschutzbestimmungen
   tosLink: Bedingungen und Konditionen
   privacyLink: Informationen zum Datenschutz
   otherAppsInfo: Sie finden diesen Dienst auch
   otherAppWeb: Online auf
-  otherAppIos: Mit der App-IO
+  otherAppIos: Mit der IO-App
   otherAppAndroid: Mit der Android-App
   contactsAndInfo: Kontakte und Informationen
+  visitWebsite: Website
+  askForAssistance: Hilfe anfragen
   contactAddress: Adresse
   contactPhone: Telefon
   contactSupport: Support
@@ -955,7 +1005,7 @@ services:
     selectMessageEmptyOrgs: Im Moment ist es nicht möglich, einen Standort zu hinterlegen. Bitte ziehen Sie den Bildschirm nach unten, um die Daten zu aktualisieren und versuchen Sie es erneut.
     addButton: Fügen Sie Ihre gewünschten Themenbereiche hinzu
     editButton: Ändern Sie Ihre Themenbereiche.
-    searchEmpty: Wenn Sie Ihr Themenfeld nicht finden, bedeutet dies, dass die Körperschaft dieses Gebiets noch keine Dienste auf der App-IO anzeigen.
+    searchEmpty: Wenn Sie Ihr Themenfeld nicht finden, bedeutet dies, dass die Körperschaft dieses Gebiets noch keine Dienste über die IO-App bereitstellen.
   tab:
     locals: Lokal
     national: National
@@ -967,34 +1017,35 @@ services:
   disableAll: Manuelle Konfiguration verwenden
   updatingServiceMode: Bitte warten...
   disableAllTitle: "Wollen Sie wirklich alle Dienste deaktivieren?"
-  disableAllMsg: "Beachten Sie, dass Sie auf der App-IO nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
+  disableAllMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
   close: Schließen
-  emptyListMessage: Zurzeit sind keine Dienste verfügbar, zum aktualisieren ziehen Sie den Bildschirm nach unten
+  emptyListMessage: Zurzeit sind keine Dienste verfügbar, zum Aktualisieren wischen Sie auf dem Bildschirm nach unten
 serviceDetail:
+  fiscalCode: "Steuernr. Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
   headerTitle: "Service Details"
   onUpdateEnabledChannelsFailure: "Es gab ein kurzzeitiges Problem beim Speichern der Einstellungen, bitte versuchen Sie es erneut."
   disableTitle: "Wollen Sie den Dienst wirklich deaktivieren?"
-  disableMsg: "Beachten Sie, dass Sie auf der App-IO nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
+  disableMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
   lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist allgemein {{enabled}}:"
   updatePreferences: Aktualisieren Sie Ihre Einstellungen
   goTo: Gehen Sie zu den Einstellungen
   enabled: aktiviert
   disabled: deaktiviert
-  notValidated: Um die E-Mail Weiterleitung zu aktivieren, müssen Sie Ihre E-Mail Adresse validieren.
+  notValidated: Um die E-Mail-Weiterleitung zu aktivieren, müssen Sie Ihre E-Mail-Adresse validieren.
 identification:
   title: Hallo!
   titleProfileName: Hallo {{profileName}}!
   titleValidation: Bestätigen Sie den Vorgang
   subtitleCode: Geben Sie den Freischaltcode ein
   subtitleCodeFingerprint: den Fingerabdruck oder den Entsperrcode verwenden
-  subtitleCodeFaceId: Verwenden Sie die Face ID oder geben Sie den Entsperrcode ein
+  subtitleCodeFaceId: Verwenden Sie die FaceID oder geben Sie den Entsperrcode ein
   biometric:
     fingerprintType: Fingerabdruck
     title: Biometrische Identifikation
     popup:
-      reason: Identifikation durch Touch ID fehlgeschlagen
+      reason: Identifikation durch TouchID fehlgeschlagen
       title: Identifikation erforderlich
       sensorDescription: Berührungssensor
       fallbackLabel: Verwenden Sie den Freischaltcode
@@ -1007,7 +1058,7 @@ identification:
     accessibility:
       unlockHint: Sie haben {{number}} Zeichen von {{length}} eingegeben
       fingerprint: Anmeldung mit Ihrem Fingerabdruck
-      faceId: Anmeldung mit Face ID
+      faceId: Anmeldung mit FaceID
       delete: Letzte eingefügte Ziffer entfernen
     reset:
       button: Haben Sie vergessen, den
@@ -1029,33 +1080,33 @@ calendarEvents:
     ok: Termin entfernen
     cancel: Vorgang abbrechen
 reminders:
-  emptyMonth: Keine Erinnerungen für diesen Monat
-  loadMoreData: bisherige Termine
+  emptyMonth: Keine Fälligkeiten für diesen Monat
+  loadMoreData: Bisherige Termine
   noOtherDeadlines: Es gibt keine weiteren Fristen
 openMaps:
   genericError: Beim Öffnen der Karte ist ein Fehler aufgetreten
 genericError: Ein Fehler ist aufgetreten
-titleUpdateApp: Aktualisieren Sie die App-IO!
+titleUpdateApp: Aktualisieren Sie die IO-App!
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-messageUpdateApp: "Die App-IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können,
+messageUpdateApp: "Die IO-App führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können,
   müssen Sie sie auf die neueste Version aktualisieren."
-btnUpdateApp: Aktualisieren Sie die App-IO
+btnUpdateApp: Aktualisieren Sie die IO-App
 systemsOff:
-  title: App-IO kann nicht gestartet werden
+  title: IO-App kann nicht gestartet werden
   closeApp: Schließen Sie die Anwendung und versuchen Sie es erneut
 contextualHelp:
-  title: Die App-IO hilft Ihnen
+  title: Die IO-App hilft Ihnen
 instabug:
   contextualHelp:
     title1: Benötigen Sie Hilfe?
 features:
   euCovidCertificate:
     save:
-      noPermission: "Die App-IO hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
+      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
       ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
       bottomSheet:
         title: "Speichern Sie das Zertifikat"
-        subTitle: "Sie können auch ohne Internetverbindung den QR-Code des Zertifikats anzeigen, ohne die App-IO zu öffnen."
+        subTitle: "Auch ohne der IO-App und Internetverbindung kann das Zertifikat angezeigt werden."
         saveAsImage:
           title: "Bild in Galerie speichern"
           subTitle: "Sie finden den QR-Code auch als Bild auf Ihrem Smartphone."
@@ -1068,7 +1119,7 @@ features:
       authorizationCode: "Autorisierungscode"
       messageIdentifier: "Identifizierung der Nachricht"
     loading:
-      title: "Downloaden der Zertifikatsdaten aus der nationalen Plattform des Gesundheitsministeriums"
+      title: "Herunterladen der Zertifikatsdaten von der nationalen Plattform des Gesundheitsministeriums"
       subtitle: "Bitte warten"
     valid:
       accessibility:
@@ -1090,7 +1141,7 @@ features:
         subtitle: "Nützliche Informationen für den Support:"
         cta: "Support kontaktieren"
       notOperational:
-        title: "Die grüne COVID-19-Zertifizierung funktioniert derzeit nicht"
+        title: "Das Grüne COVID-19-Zertifikat funktioniert derzeit nicht"
       temporarilyNotAvailable:
         title: "Der Dienst ist vorübergehend nicht verfügbar"
         subtitle: "Bitte versuchen Sie es später erneut"

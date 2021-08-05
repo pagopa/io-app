@@ -192,7 +192,7 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Continua
-    body: Sei sicuro di aver compreso i rischi e voler continuare?
+    body: Hai compreso i rischi e vuoi continuare?
     confirmText: Si
     cancelText: Annulla
   cancelAlert:
@@ -440,14 +440,14 @@ profile:
   security:
     title: Sicurezza
     subtitle: Gestisci le modalità di autenticazione in app.
-    list:       
+    list:
       biometric_recognition:
         title: Riconoscimento biometrico
         subtitle: Usa la tua impronta o il tuo volto
         needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Preferenze
-    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO. 
+    subtitle: Queste impostazioni ti permettono di personalizzare l’esperienza di app IO.
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
@@ -808,6 +808,12 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  alertNoPaymentMethods:
+    title: Aggiungi un metodo per effettuare pagamenti in app
+    message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+    buttons:
+      ok: Continua
+      ko: Annulla
   abortWebView:
     title: Vuoi interrompere il pagamento in corso?
     confirm: Annulla il pagamento
@@ -898,6 +904,8 @@ wallet:
     noName: Nome non disponibile
     loading: Carico la lista delle banche...
   accessibility:
+    sectionCardLabel: "Aggiorna metodi di pagamento"
+    sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -1407,7 +1415,7 @@ wallet:
         title: "La tua carta ha più di un logo?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
-      removeCta: "Elimina questo metodo di pagamento"
+      removeCta: "Elimina questo metodo"
       deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
@@ -2289,7 +2297,7 @@ bonus:
         text2: "non risulta corretto: controllalo per piacere!"
       koCannotVerify:
         title: "Non è stato possibile verificare il tuo IBAN"
-        text1: "Se sei sicuro che l’IBAN"
+        text1: "Se hai la certezza che l’IBAN"
         text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
       koNotOwned:
         title: "Controlla l'IBAN inserito"
@@ -2583,11 +2591,24 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        alert:
+          title: "Attenzione"
+          message: "Ti informiamo che le informazioni che inserirai costituiscono a tutti gli effetti una autocertificazione. Eventuali dichiarazioni mendaci saranno perseguibili ai sensi del d.P.R. n.445/2000"
+          buttons:
+            ok: "Continua"
+            ko: "Annulla richiesta"
+        buttons:
+          requestBonus: "Richiedi un codice sconto"
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "Dichiaro di essere"
+        categories:
+          student: "Studente fuori sede"
+          disabled: "Disabile grave"
+          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+          sick: "Paziente con necessità di cure al di fuori della Sicilia"
+          other: "Nessuno dei precedenti"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
@@ -2623,6 +2644,8 @@ bonus:
         timeout:
           title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
           body: "Riceverai un messaggio in app IO quando sarà pronto."
+    voucherList:
+      title: "VoucherListScreen"
 features:
   euCovidCertificate:
     save:

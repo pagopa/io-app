@@ -15,6 +15,7 @@ import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
+import { Either } from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -29,19 +30,22 @@ import { withLightModalContext } from "../../../components/helpers/withLightModa
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { LabelledItem } from "../../../components/LabelledItem";
 import I18n from "../../../i18n";
 import {
   navigateBack,
-  navigateToPaymentTransactionSummaryScreen
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { validateOptionalEither } from "../../../utils/validateOptionalEither";
+import { Link } from "../../../components/core/typography/Link";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -52,6 +56,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 type State = Readonly<{
@@ -69,6 +74,12 @@ const styles = StyleSheet.create({
   }
 });
 
+// helper to translate Option<Either> to true|false|void semantics
+const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
+  o
+    .map<boolean | undefined>(e => e.isRight())
+    .getOrElse(undefined);
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
   body: "wallet.insertManually.contextualHelpContent"
@@ -80,6 +91,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       paymentNoticeNumber: none,
       organizationFiscalCode: none
     };
+  }
+
+  public componentDidMount() {
+    if (!this.props.hasPayableMethods) {
+      alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
+    }
   }
 
   private isFormValid = () =>
@@ -129,6 +146,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       onPress: this.props.goBack,
       title: I18n.t("global.buttons.cancel")
     };
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -141,14 +159,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <TouchableDefaultOpacity onPress={this.showModal}>
-              <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
-            </TouchableDefaultOpacity>
+            <Link onPress={this.showModal}>
+              {I18n.t("wallet.insertManually.link")}
+            </Link>
             <View spacer />
             <Form>
               <LabelledItem
                 type="text"
-                isValid={validateOptionalEither(this.state.paymentNoticeNumber)}
+                isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
                   keyboardType: "numeric",
@@ -166,7 +184,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <View spacer />
               <LabelledItem
                 type="text"
-                isValid={validateOptionalEither(
+                isValid={unwrapOptionalEither(
                   this.state.organizationFiscalCode
                 )}
                 label={I18n.t("wallet.insertManually.entityCode")}
@@ -206,6 +224,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => {
     dispatch(navigateBack());
   },
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      })
+    ),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
@@ -222,7 +247,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(withLightModalContext(ManualDataInsertionScreen));
