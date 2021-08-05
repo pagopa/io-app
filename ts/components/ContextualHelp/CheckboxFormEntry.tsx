@@ -63,6 +63,7 @@ const CheckboxFormEntry: React.FC<Props> = ({
   onToggle
 }) => {
   const checkboxLabelKeys = checkboxLabelMapFactory();
+  const accordion = checkboxLabelKeys[target].accordion;
 
   return (
     <View style={checkboxStyle.container}>
@@ -77,11 +78,8 @@ const CheckboxFormEntry: React.FC<Props> = ({
         >
           {checkboxLabelKeys[target].cta}
         </Label>
-        {"accordion" in checkboxLabelKeys[target] && (
-          <Accordion
-            title={checkboxLabelKeys[target].accordion?.title || ""}
-            content={checkboxLabelKeys[target].accordion?.content || ""}
-          />
+        {accordion && (
+          <Accordion title={accordion.title} content={accordion.content} />
         )}
       </View>
     </View>

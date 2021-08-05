@@ -13,16 +13,17 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
+import { isTestEnv } from "../../utils/environment";
 import { TranslationKeys } from "../../../locales/locales";
 import {
-  defaultAttachmentTypeConfiguration,
   DefaultReportAttachmentTypeConfiguration,
+  TypeLogs,
+  defaultAttachmentTypeConfiguration,
   instabugLog,
   openInstabugQuestionReport,
   openInstabugReplies,
-  setInstabugSupportTokenAttribute,
-  setInstabugUserAttribute,
-  TypeLogs
+  setInstabugDeviceIdAttribute,
+  setInstabugSupportTokenAttribute
 } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -61,12 +62,9 @@ function handleOnContextualHelpDismissed(
           "support-token"
         );
       }
-      // set or remove the support token as instabug user attribute
+      // set or remove the properties
       setInstabugSupportTokenAttribute(maybeSupportToken);
-
-      if (payload.deviceUniqueId) {
-        setInstabugUserAttribute("deviceUniqueID", payload.deviceUniqueId);
-      }
+      setInstabugDeviceIdAttribute(payload.deviceUniqueId);
 
       openInstabugQuestionReport(attachmentConfig);
       return;
@@ -307,4 +305,6 @@ export default connectStyle(
   mapPropsToStyleNames
 )(BaseScreenComponent);
 
-export { handleOnContextualHelpDismissed as test_handleOnContextualHelpDismissed };
+export const testableHandleOnContextualHelpDismissed = isTestEnv
+  ? handleOnContextualHelpDismissed
+  : undefined;

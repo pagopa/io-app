@@ -7,7 +7,10 @@ import {
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import * as configureInstabugModule from "../../../boot/configureInstabug";
 import { TypeLogs } from "../../../boot/configureInstabug";
-import { test_handleOnContextualHelpDismissed as handleOnContextualHelpDismissed } from "../BaseScreenComponent";
+import { testableHandleOnContextualHelpDismissed } from "../BaseScreenComponent";
+
+// we know it's defined in test env
+const handleOnContextualHelpDismissed = testableHandleOnContextualHelpDismissed!;
 
 const defaultAttachmentTypeConfiguration = {
   screenshot: true,
@@ -81,17 +84,31 @@ describe("handleOnContextualHelpDismissed", () => {
     });
 
     describe("and the device UUID is present", () => {
-      it("should call `setInstabugUserAttribute` with the UUID", () => {
+      it("should call `setInstabugDeviceIdAttribute` with the UUID", () => {
         const spy = jest.spyOn(
           configureInstabugModule,
-          "setInstabugUserAttribute"
+          "setInstabugDeviceIdAttribute"
         );
         handleOnContextualHelpDismissed(
           { ...basePayload, deviceUniqueId: "aaa-bbb-ccc" },
           defaultAttachmentTypeConfiguration
         );
-        expect(spy).toHaveBeenLastCalledWith("deviceUniqueID", "aaa-bbb-ccc");
+        expect(spy).toHaveBeenLastCalledWith("aaa-bbb-ccc");
       });
+    });
+  });
+
+  describe("and the device UUID is not defined", () => {
+    it("should call `setInstabugDeviceIdAttribute` without the UUID", () => {
+      const spy = jest.spyOn(
+        configureInstabugModule,
+        "setInstabugDeviceIdAttribute"
+      );
+      handleOnContextualHelpDismissed(
+        basePayload,
+        defaultAttachmentTypeConfiguration
+      );
+      expect(spy).toHaveBeenLastCalledWith(undefined);
     });
   });
 
