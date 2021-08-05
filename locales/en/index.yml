@@ -2600,6 +2600,13 @@ bonus:
           title: "SickSelectDestinationScreen"
       selectFlightsDate:
         title: "Flight date"
+        subtitle: "Please indicate the type of flight and the date (s) you will travel on"
+        flights_choice:
+          departure: "One way flight"
+          return: "Round trip"
+        labels:
+          departure: "Departure date"
+          return: "Return date"
       summary:
         title: "SummaryScreen"
       voucherGenerated:

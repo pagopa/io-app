@@ -2628,6 +2628,13 @@ bonus:
           title: "SickSelectDestinationScreen"
       selectFlightsDate:
         title: "Data del volo"
+        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
+        flights_choice:
+          departure: "Volo di sola andata"
+          return: "Andata e ritorno"
+        labels:
+          departure: "Data di partenza"
+          return: "Data di ritorno"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
