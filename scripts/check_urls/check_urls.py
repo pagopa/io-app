@@ -22,8 +22,8 @@ HEADERS = {
 MAX_TIMEOUT = 20
 global_uris = set()
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
-tagged_people = ["<@UTVS9R0SF>"]
-SLACK_CHANNEL = "#io_dev_app_feed"
+tagged_people = ["<!here>"]
+SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
