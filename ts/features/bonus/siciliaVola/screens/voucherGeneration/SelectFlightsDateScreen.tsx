@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -17,23 +17,58 @@ import {
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { navigateToSvSummaryScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
+import DateTimePicker from "../../../../../components/ui/DateTimePicker";
+import { View } from "native-base";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
+import { H5 } from "../../../../../components/core/typography/H5";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const getShowReturnDateItems = (): ReadonlyArray<RadioItem<boolean>> => [
+  {
+    id: false,
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.departure"
+    )
+  },
+  {
+    id: true,
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.return"
+    )
+  }
+];
+
 const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
   const elementRef = useRef(null);
-  const backButtonProps = {
-    primary: false,
+  const [departureDate, setDepartureDate] = useState<Date | undefined>(
+    undefined
+  );
+  const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
+
+  const [showReturn, setShowReturn] = useState<boolean | undefined>(false);
+
+  const handleDisableContinue = (): boolean => {
+    if (showReturn === true) {
+      return departureDate === undefined || returnDate === undefined;
+    }
+    return departureDate === undefined;
+  };
+
+  const cancelButtonProps = {
     bordered: true,
     onPress: props.back,
-    title: "Back"
+    title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
-    primary: false,
-    bordered: true,
+    bordered: false,
     onPress: props.navigateToSummaryScreen,
-    title: "Continue"
+    title: I18n.t("global.buttons.continue"),
+    disabled: handleDisableContinue()
   };
 
   return (
@@ -51,10 +86,42 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
           <H1>
             {I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.title")}
           </H1>
+          <View spacer={true} />
+          <H5 color={"bluegrey"} weight={"Regular"}>
+            {I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.subtitle")}
+          </H5>
+          <View spacer={true} />
+          <RadioButtonList<boolean>
+            key="flights"
+            items={getShowReturnDateItems()}
+            selectedItem={showReturn}
+            onPress={setShowReturn}
+          />
+
+          <DateTimePicker
+            label={I18n.t(
+              "bonus.sv.voucherGeneration.selectFlightsDate.labels.departure"
+            )}
+            date={departureDate}
+            onConfirm={setDepartureDate}
+          />
+          <View spacer={true} />
+
+          {showReturn && (
+            <DateTimePicker
+              label={I18n.t(
+                "bonus.sv.voucherGeneration.selectFlightsDate.labels.return"
+              )}
+              date={returnDate}
+              onConfirm={setReturnDate}
+              minimumDate={departureDate}
+              blocked={departureDate === undefined}
+            />
+          )}
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
+          leftButton={cancelButtonProps}
           rightButton={continueButtonProps}
         />
       </SafeAreaView>
