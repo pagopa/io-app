@@ -1,6 +1,5 @@
 import * as React from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import IconFont from "./IconFont";
 import { View } from "native-base";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -11,6 +10,7 @@ import variables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import I18n from "../../i18n";
+import IconFont from "./IconFont";
 
 type Props = {
   date: Date | undefined;

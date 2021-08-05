@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -18,7 +19,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { navigateToSvSummaryScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
 import DateTimePicker from "../../../../../components/ui/DateTimePicker";
-import { View } from "native-base";
 import {
   RadioButtonList,
   RadioItem
