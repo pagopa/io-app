@@ -1252,7 +1252,7 @@ wallet:
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
         title: In app payments
-        description: Make payments to the public administration through pagoPA
+        description: Pay your notices with pagoPA logo
         active: Active
         arriving: Arriving
         incompatible: Incompatible

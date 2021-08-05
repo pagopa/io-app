@@ -1274,7 +1274,7 @@ wallet:
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
       pagoPaCapability:
         title: Pagamenti in app
-        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        description: Paga gli avvisi che hanno il logo pagoPA
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
