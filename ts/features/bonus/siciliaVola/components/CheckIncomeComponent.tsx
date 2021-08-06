@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -54,14 +53,13 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   >();
 
   const handleContinue = () => {
-    if (incomeUnderThreshold !== undefined) {
-      props.underThresholdIncome(incomeUnderThreshold);
+    if (incomeUnderThreshold === undefined) {
+      return;
     }
-    if (incomeUnderThreshold === true) {
-      props.onContinuePress();
-    } else {
-      props.navigateToSvKoCheckIncomeThreshold();
-    }
+    props.underThresholdIncome(incomeUnderThreshold);
+    (incomeUnderThreshold
+      ? props.onContinuePress
+      : props.navigateToSvKoCheckIncomeThreshold)();
   };
 
   const cancelButtonProps = {
