@@ -23,7 +23,7 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":
       // We should distinguish between a plain credit card and a cobadge credit card.
-      // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that have an issuerAbiCode
+      // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that has an issuerAbiCode
       return pm.info.issuerAbiCode !== undefined ? (
         <CobadgeWalletPreview key={pm.idWallet} cobadge={pm} />
       ) : (
