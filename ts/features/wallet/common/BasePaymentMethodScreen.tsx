@@ -74,7 +74,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
 
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={isLoadingDelete}
+      isLoading={true}
       loadingCaption={I18n.t("cardComponent.deleteLoading")}
     />
   ) : (
