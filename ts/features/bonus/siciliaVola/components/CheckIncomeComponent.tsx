@@ -47,8 +47,6 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const elementRef = useRef(null);
-
   const handleContinue = () => {
     if (incomeUnderThreshold !== undefined) {
       props.underThresholdIncome(incomeUnderThreshold);
@@ -79,11 +77,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"CheckIncomeComponent"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"CheckIncomeComponent"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
           <View spacer={true} />
