@@ -29,7 +29,7 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const getCheckIncomeUnderThresholItems = (): ReadonlyArray<
+const getCheckIncomeUnderThresholdItems = (): ReadonlyArray<
   RadioItem<boolean>
 > => [
   {
@@ -89,7 +89,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
           <View spacer={true} />
           <RadioButtonList<boolean>
             key="check_income"
-            items={getCheckIncomeUnderThresholItems()}
+            items={getCheckIncomeUnderThresholdItems()}
             selectedItem={incomeUnderThreshold}
             onPress={setIncomeUnderThreshold}
           />
