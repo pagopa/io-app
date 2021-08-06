@@ -167,6 +167,18 @@ export const baseRawBackendStatus: BackendStatus = {
         "it-IT": "favourite_language banner test",
         "en-EN": "favourite_language banner test"
       }
+    },
+    app_update_required: {
+      is_visible: true,
+      level: LevelEnum.normal,
+      web_url: {
+        "it-IT": "",
+        "en-EN": ""
+      },
+      message: {
+        "it-IT": "aggiornamento richiesto",
+        "en-EN": "update required"
+      }
     }
   },
   config: {

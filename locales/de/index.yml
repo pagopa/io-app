@@ -621,6 +621,7 @@ wallet:
   transactionsLoadFailure: Das Laden Ihrer Transaktionen ist fehlgeschlagen, bitte versuchen Sie es erneut.
   transactionsLoadMore: Vorherige laden
   transacionsLoadingMore: Vorheriges Laden...
+  transactionsShow: Zeige Transaktionen
   pickPaymentMethod:
     unavailable:
       title: Diese Zahlungsmethode ist zur Zeit nicht verfügbar
