@@ -84,17 +84,20 @@ describe("SectionStatusComponent", () => {
       ).not.toBeNull();
     });
 
-    it("should set the correct a11y properties to the status content", () => {
+    it("should set the correct a11y properties on the touchable wrapper", () => {
       setLocale("it");
       const component = getComponent("messages");
-      const view = component.getByTestId("SectionStatusContent");
+      const view = component.getByTestId("SectionStatusComponentPressable");
       expect(view.props.accessible).toBe(true);
-      expect(view.props.accessibilityRole).toBe("link");
       expect(view.props.accessibilityLabel).toMatch(
         `${sectionStatus.message["it-IT"]}, ${I18n.t(
           "global.sectionStatus.moreInfo"
         )}`
       );
+      expect(view.props.accessibilityHint).toMatch(
+        I18n.t("global.accessibility.linkHint")
+      );
+      expect(view.props.accessibilityRole).toBe("link");
     });
 
     it("should render the touchable wrapper which opens the correct url", () => {

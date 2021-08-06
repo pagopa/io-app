@@ -41,7 +41,6 @@ const color = IOColors.white;
  * this component shows a full width banner with an icon and text
  * it could be tappable if the web url is defined
  * it renders nothing if for the given props.sectionKey there is no data or it is not visible
- * @param props
  */
 const SectionStatus: React.FC<Props> = (props: Props) => {
   if (props.sectionStatus === undefined) {
@@ -67,33 +66,6 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
     }
   };
 
-  const accessibilityLabel = maybeWebUrl.fold(
-    `${sectionStatus.message[locale]}, ${I18n.t("global.accessibility.alert")}`,
-    _ =>
-      `${sectionStatus.message[locale]}, ${I18n.t(
-        "global.sectionStatus.moreInfo"
-      )}`
-  );
-
-  const innerSectionChildren = maybeWebUrl.fold(
-    <>{sectionStatus.message[locale]}</>,
-    _ => (
-      <>
-        {`${sectionStatus.message[locale]} `}
-        <Text
-          testID={"SectionStatusComponentMoreInfo"}
-          style={{
-            color,
-            textDecorationLine: "underline",
-            fontWeight: "bold"
-          }}
-        >
-          {I18n.t("global.sectionStatus.moreInfo")}
-        </Text>
-      </>
-    )
-  );
-
   React.useEffect(() => {
     handleOnSectionRef();
     const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
@@ -101,30 +73,48 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
   }, [viewRef]);
 
   return maybeWebUrl.fold(
+    // render text only
     <StatusContent
-      accessibilityLabel={accessibilityLabel}
+      accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
+        "global.accessibility.alert"
+      )}`}
       backgroundColor={backgroundColor}
       iconColor={color}
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
     >
-      {innerSectionChildren}
+      {`${sectionStatus.message[locale]} `}
     </StatusContent>,
+
+    // render a pressable element with the link
     webUrl => (
       <Pressable
-        testID={"SectionStatusComponentPressable"}
+        accessibilityHint={I18n.t("global.accessibility.linkHint")}
+        accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
+          "global.sectionStatus.moreInfo"
+        )}`}
+        accessibilityRole={"link"}
         onPress={() => openWebUrl(webUrl)}
+        testID={"SectionStatusComponentPressable"}
       >
         <StatusContent
-          accessibilityLabel={accessibilityLabel}
-          accessibilityRole={"link"}
           backgroundColor={backgroundColor}
           iconColor={color}
           iconName={iconName}
           viewRef={viewRef}
         >
-          {innerSectionChildren}
+          {`${sectionStatus.message[locale]} `}
+          <Text
+            testID={"SectionStatusComponentMoreInfo"}
+            style={{
+              color,
+              textDecorationLine: "underline",
+              fontWeight: "bold"
+            }}
+          >
+            {I18n.t("global.sectionStatus.moreInfo")}
+          </Text>
         </StatusContent>
       </Pressable>
     )

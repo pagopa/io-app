@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 });
 
 type Props = WithTestID<{
-  accessibilityLabel: string;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
   backgroundColor: string;
   iconColor: string;
@@ -31,6 +32,7 @@ type Props = WithTestID<{
 }>;
 
 const StatusContent: React.FC<Props> = ({
+  accessibilityHint,
   accessibilityLabel,
   accessibilityRole,
   backgroundColor,
@@ -40,17 +42,18 @@ const StatusContent: React.FC<Props> = ({
   viewRef
 }) => (
   <View
-    style={[styles.container, { backgroundColor }]}
-    accessible={true}
+    accessibilityHint={accessibilityHint}
     accessibilityLabel={accessibilityLabel}
     accessibilityRole={accessibilityRole}
+    accessible={true}
     ref={viewRef}
+    style={[styles.container, { backgroundColor }]}
     testID={"SectionStatusContent"}
   >
     <IconFont
+      color={iconColor}
       name={iconName}
       size={iconSize}
-      color={iconColor}
       style={styles.alignCenter}
     />
     <Label color={"white"} style={styles.text} weight={"Regular"}>
