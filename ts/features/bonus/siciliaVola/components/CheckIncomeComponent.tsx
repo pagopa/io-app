@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -10,7 +9,6 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherUnderThresholdIncome
 } from "../store/actions/voucherGeneration";
@@ -21,6 +19,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 
 type OwnProps = {
   onContinuePress: () => void;
@@ -29,15 +28,20 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const getCheckIncomeUnderThresholItems = (): ReadonlyArray<
+const threshold = 25000;
+const getCheckIncomeUnderThresholdItems = (): ReadonlyArray<
   RadioItem<boolean>
 > => [
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under"),
+    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
+      amount: formatNumberAmount(threshold, true)
+    }),
     id: true
   },
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over"),
+    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
+      amount: formatNumberAmount(threshold, true)
+    }),
     id: false
   }
 ];
@@ -47,17 +51,14 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const elementRef = useRef(null);
-
   const handleContinue = () => {
-    if (incomeUnderThreshold !== undefined) {
-      props.underThresholdIncome(incomeUnderThreshold);
+    if (incomeUnderThreshold === undefined) {
+      return;
     }
-    if (incomeUnderThreshold === true) {
-      props.onContinuePress();
-    } else {
-      props.navigateToSvKoCheckIncomeThreshold();
-    }
+    props.underThresholdIncome(incomeUnderThreshold);
+    (incomeUnderThreshold
+      ? props.onContinuePress
+      : props.navigateToSvKoCheckIncomeThreshold)();
   };
 
   const cancelButtonProps = {
@@ -79,17 +80,13 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"CheckIncomeComponent"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"CheckIncomeComponent"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
           <View spacer={true} />
           <RadioButtonList<boolean>
             key="check_income"
-            items={getCheckIncomeUnderThresholItems()}
+            items={getCheckIncomeUnderThresholdItems()}
             selectedItem={incomeUnderThreshold}
             onPress={setIncomeUnderThreshold}
           />
@@ -105,7 +102,6 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  back: () => dispatch(svGenerateVoucherBack()),
   navigateToSvKoCheckIncomeThreshold: () =>
     dispatch(navigateToSvKoCheckIncomeThresholdScreen()),
   underThresholdIncome: (isUnderThresholdIncome: boolean) =>
