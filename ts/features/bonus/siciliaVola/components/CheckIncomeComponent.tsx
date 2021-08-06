@@ -21,6 +21,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 
 type OwnProps = {
   onContinuePress: () => void;
@@ -29,15 +30,20 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const threshold = 25000;
 const getCheckIncomeUnderThresholdItems = (): ReadonlyArray<
   RadioItem<boolean>
 > => [
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under"),
+    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
+      amount: formatNumberAmount(threshold, true)
+    }),
     id: true
   },
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over"),
+    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
+      amount: formatNumberAmount(threshold, true)
+    }),
     id: false
   }
 ];

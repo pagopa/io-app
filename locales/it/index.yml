@@ -2624,8 +2624,8 @@ bonus:
       checkIncome:
         title: "Dichiaro inoltre"
         threshold:
-          under: "di avere un reddito lordo annuo inferiore o uguale a 25.000€"
-          over: "di avere un reddito lordo annuo superiore a 25.000€"
+          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
+          over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:
