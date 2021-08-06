@@ -9,7 +9,6 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherUnderThresholdIncome
 } from "../store/actions/voucherGeneration";
@@ -103,7 +102,6 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  back: () => dispatch(svGenerateVoucherBack()),
   navigateToSvKoCheckIncomeThreshold: () =>
     dispatch(navigateToSvKoCheckIncomeThresholdScreen()),
   underThresholdIncome: (isUnderThresholdIncome: boolean) =>
