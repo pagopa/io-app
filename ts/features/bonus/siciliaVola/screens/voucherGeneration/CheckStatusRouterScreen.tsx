@@ -15,12 +15,7 @@ import {
 } from "../../store/reducers/activation";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { svServiceAlive, svTosAccepted } from "../../store/actions/activation";
-import {
-  fold,
-  isLoading,
-  isReady,
-  remoteReady
-} from "../../../bpd/model/RemoteValue";
+import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
@@ -104,8 +99,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   checkTosAccepted: () => dispatch(svTosAccepted.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
-  isServiceAlive: remoteReady(true),
-  tosAccepted: remoteReady(true)
+  isServiceAlive: isAliveSelector(state),
+  tosAccepted: tosAcceptedSelector(state)
 });
 
 export default connect(
