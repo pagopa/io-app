@@ -888,6 +888,12 @@ wallet:
   accessibility:
     sectionCardLabel: "Update payment methods"
     sectionCardHint: "Update the list of payment methods"
+    folded:
+      creditCard: "{{brand}} card, the number ends with {{blurredNumber}}"
+      bancomat: "{{bankName}} BANCOMAT"
+      coBadge: "{{brand}} Card, {{bankName}}"
+      bancomatPay: "{{bankName}} BANCOMATPay"
+      cta: "View instrument details"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:

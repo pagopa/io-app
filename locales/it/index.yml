@@ -906,6 +906,12 @@ wallet:
   accessibility:
     sectionCardLabel: "Aggiorna metodi di pagamento"
     sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
+    folded:
+      creditCard: "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}"
+      bancomat: "BANCOMAT {{bankName}}"
+      coBadge: "Carta {{brand}} {{bankName}}"
+      bancomatPay: "BANCOMATPay {{bankName}}"
+      cta: "Visualizza i dettagli dello strumento"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
