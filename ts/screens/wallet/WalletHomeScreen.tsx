@@ -1,4 +1,4 @@
-import { fromNullable, fromPredicate, none } from "fp-ts/lib/Option";
+import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -196,21 +196,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
 
   private handleBackPress = () => {
-    fromPredicate((cond: boolean) => cond)(this.newMethodAdded).foldL(
-      () => {
-        this.props.navigateBack();
-      },
-      _ => {
-        fromNullable(this.navigationKeyFrom).foldL(
-          () => {
-            this.props.navigateBack();
-          },
-          k => {
-            this.props.navigateBack(k);
-          }
-        );
-      }
-    );
+    const shouldPop =
+      this.newMethodAdded && this.navigationKeyFrom !== undefined;
+
+    this.props.navigateBack(shouldPop ? this.navigationKeyFrom : undefined);
     return true;
   };
 
