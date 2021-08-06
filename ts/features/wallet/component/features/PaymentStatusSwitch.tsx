@@ -44,9 +44,9 @@ const toOptionPot = (
     error => some(pot.noneError(error)),
     value => (value !== undefined ? some(pot.some(value)) : none),
     value => (value !== undefined ? some(pot.someLoading(value)) : none),
-    (olddValue, newValue) =>
-      olddValue !== undefined && newValue !== undefined
-        ? some(pot.someUpdating(olddValue, newValue))
+    (oldValue, newValue) =>
+      oldValue !== undefined && newValue !== undefined
+        ? some(pot.someUpdating(oldValue, newValue))
         : none,
     (value, error) =>
       value !== undefined ? some(pot.someError(value, error)) : none
