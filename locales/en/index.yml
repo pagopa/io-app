@@ -893,7 +893,8 @@ wallet:
       bancomat: "{{bankName}} BANCOMAT"
       coBadge: "{{brand}} Card, {{bankName}}"
       bancomatPay: "{{bankName}} BANCOMATPay"
-      cta: "View instrument details"
+      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
+      cta: "View method details"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -943,6 +944,7 @@ wallet:
         title: "Sorry, we haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Add Satispay"
       start:
         title: "Do you want to add your Satispay account to IO?"
