@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0-rc.3](https://github.com/pagopa/io-app/compare/1.32.0-rc.2...1.32.0-rc.3) (2021-08-06)
+
+
+### Features
+
+* [[IA-171](https://pagopa.atlassian.net/browse/IA-171)] Add app_update_required ServiceSection ([#3265](https://github.com/pagopa/io-app/issues/3265)) ([a475bb1](https://github.com/pagopa/io-app/commit/a475bb1d31da353a2c1cdff034948c8eee230e0a))
+
+
+### Bug Fixes
+
+* [[IA-185](https://pagopa.atlassian.net/browse/IA-185)] Fixes broken URIs from the daily check and manages some improvements to Slack scripts ([#3283](https://github.com/pagopa/io-app/issues/3283)) ([50d5f09](https://github.com/pagopa/io-app/commit/50d5f090f3af6f3b05a633aa4cba8aaa7e49cc74))
+
+
+### Chores
+
+* [[IA-13](https://pagopa.atlassian.net/browse/IA-13)] Changed all native base Input with LabelledItem generic component ([#3143](https://github.com/pagopa/io-app/issues/3143)) ([6b246e0](https://github.com/pagopa/io-app/commit/6b246e04c30296872f51bc7fc6d32a43d2c6f041)), closes [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13)
+* [[IA-157](https://pagopa.atlassian.net/browse/IA-157)] Share unique ID with assistance ([#3266](https://github.com/pagopa/io-app/issues/3266)) ([5715b16](https://github.com/pagopa/io-app/commit/5715b16d3d55c22b46df082abda8322f5729c3b7))
+* [[IA-179](https://pagopa.atlassian.net/browse/IA-179)] Track message search enabling ([#3271](https://github.com/pagopa/io-app/issues/3271)) ([828d55c](https://github.com/pagopa/io-app/commit/828d55c04f6fcacb77e93995b357b4245cd0d79d))
+* [[IA-184](https://pagopa.atlassian.net/browse/IA-184)] New German string [#3281](https://github.com/pagopa/io-app/issues/3281) ([0f0c106](https://github.com/pagopa/io-app/commit/0f0c106e5a0152020751d20b9447b4ff82f46fd0))
+
+## [1.32.0-rc.2](https://github.com/pagopa/io-app/compare/1.32.0-rc.1...1.32.0-rc.2) (2021-08-03)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-23](https://pagopa.atlassian.net/browse/IASV-23)] Select beneficiary category screen ([#3273](https://github.com/pagopa/io-app/issues/3273)) ([239cf59](https://github.com/pagopa/io-app/commit/239cf59beb65adce6697fddc286e1ed3feb2d170))
+* **Sicilia Vola:** [[IASV-35](https://pagopa.atlassian.net/browse/IASV-35)] Add ToS component ([#3256](https://github.com/pagopa/io-app/issues/3256)) ([0150ad3](https://github.com/pagopa/io-app/commit/0150ad3c78a7b842f02d929ab88ca5b43ce0bf23))
+
+
+### Bug Fixes
+
+* **Redesign Servizi:** [[IARS-43](https://pagopa.atlassian.net/browse/IARS-43)] Render maximum amount of information available ([#3268](https://github.com/pagopa/io-app/issues/3268)) ([e380844](https://github.com/pagopa/io-app/commit/e38084483b513fb17144d1b88a8a1e579e0f88c4))
+
+
+### Chores
+
+* [[IA-162](https://pagopa.atlassian.net/browse/IA-162)] Handle Poste/SPID intent ([#3250](https://github.com/pagopa/io-app/issues/3250)) ([3617cf0](https://github.com/pagopa/io-app/commit/3617cf0d3238058d8ac4f8a48384e8604eb47bdd))
+* [[IA-177](https://pagopa.atlassian.net/browse/IA-177)] Alert user when is paying and there are no payable methods ([#3272](https://github.com/pagopa/io-app/issues/3272)) ([7672d43](https://github.com/pagopa/io-app/commit/7672d434238df52381cef33a66ffabe73a9984c3))
+* gender neutral questions in Italian locale ([#3270](https://github.com/pagopa/io-app/issues/3270)) ([1d8d115](https://github.com/pagopa/io-app/commit/1d8d115d672689d5ac0c7e769ddbed8ec6f92321))
+
 ## [1.32.0-rc.1](https://github.com/pagopa/io-app/compare/1.32.0-rc.0...1.32.0-rc.1) (2021-07-30)
 
 

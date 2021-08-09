@@ -12,11 +12,11 @@ import { PrivativePaymentMethod } from "../../../../types/pagopa";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
 import { showToast } from "../../../../utils/showToast";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import BasePrivativeCard from "../component/card/BasePrivativeCard";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -55,6 +55,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 );
 /**
  * Detail screen for a privative card
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
@@ -99,7 +100,7 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={privative} />
+        <PaymentMethodFeatures paymentMethod={privative} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() =>

@@ -2,10 +2,10 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
-} from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
-import { calculateSlop } from "../accessibility";
-import { IOColors } from "../variables/IOColors";
+} from "../../../TouchableDefaultOpacity";
+import IconFont from "../../../ui/IconFont";
+import { calculateSlop } from "../../accessibility";
+import { IOColors } from "../../variables/IOColors";
 
 type Props = {
   // the value of the checkbox

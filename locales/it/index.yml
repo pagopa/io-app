@@ -1274,7 +1274,7 @@ wallet:
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
       pagoPaCapability:
         title: Pagamenti in app
-        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        description: Paga gli avvisi che hanno il logo pagoPA
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
@@ -1399,9 +1399,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
-  walletList:
-    contextualHelpTitle: I tuoi metodi di pagamento
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1432,7 +1429,7 @@ wallet:
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
-    title: "Funzioni Disponibili"
+    title: "Iniziative disponibili"
   outcomeMessage:
     cta:
       close: Chiudi
@@ -1813,7 +1810,7 @@ contextualHelp:
   sendPersonalInfo:
     title: Nuova segnalazione
     description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
-    cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
+    cta: Condividi il tuo codice fiscale e l'identificativo unico del dispositivo, in modo da rendere più semplice la risoluzione del problema.
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
@@ -2602,7 +2599,13 @@ bonus:
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "Dichiaro di essere"
+        categories:
+          student: "Studente fuori sede"
+          disabled: "Disabile grave"
+          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+          sick: "Paziente con necessità di cure al di fuori della Sicilia"
+          other: "Nessuno dei precedenti"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
