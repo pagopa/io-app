@@ -1278,9 +1278,9 @@ wallet:
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
-        bottomSheetTitle: Cosa sono i pagamenti in app?
-        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
-        bottomSheetCTA: Scopri di più
+        bottomSheetTitle: Perché non posso pagare in app?
+        bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
+        bottomSheetCTA: Scopri i metodi supportati
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -2613,15 +2613,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "Dichiaro inoltre"
+        threshold:
+          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
+          over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:
