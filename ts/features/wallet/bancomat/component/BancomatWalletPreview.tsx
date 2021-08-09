@@ -46,6 +46,14 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     }
   );
 
+const getAccessibilityRepresentation = (bancomat: BancomatPaymentMethod) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomat", {
+    bankName: bancomat.caption
+  });
+  const cta = I18n.t("wallet.accessibility.folded.cta");
+  return `${cardRepresentation}, ${cta}`;
+};
+
 /**
  * A card preview for a bancomat card
  * @param props
@@ -60,6 +68,7 @@ const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
 
   return (
     <CardLogoPreview
+      accessibilityLabel={getAccessibilityRepresentation(props.bancomat)}
       left={renderLeft(props, imgDimensions)}
       image={pagoBancomatImage}
       onPress={() => props.navigateToBancomatDetails(props.bancomat)}

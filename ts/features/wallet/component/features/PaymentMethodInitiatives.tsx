@@ -3,23 +3,24 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { BpdConfig } from "../../../../definitions/content/BpdConfig";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import IconFont from "../../../components/ui/IconFont";
-import { bpdEnabled } from "../../../config";
-import I18n from "../../../i18n";
-import { bpdRemoteConfigSelector } from "../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../store/reducers/types";
+import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
+import Initiative from "../../../../../img/wallet/initiatives.svg";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { bpdEnabled } from "../../../../config";
+import I18n from "../../../../i18n";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   EnableableFunctionsTypeEnum,
   PaymentMethod
-} from "../../../types/pagopa";
-import BpdPaymentMethodCapability from "../../bonus/bpd/components/BpdPaymentMethodCapability";
-import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
+} from "../../../../types/pagopa";
+import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 
-type OwnProps = { paymentMethod: PaymentMethod };
+type OwnProps = {
+  paymentMethod: PaymentMethod;
+} & Pick<React.ComponentProps<typeof View>, "style">;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -42,13 +43,10 @@ const capabilityFactory = (
       return null;
     case EnableableFunctionsTypeEnum.BPD:
       return bpdEnabled && bpdRemoteConfig?.program_active ? (
-        <>
-          <BpdPaymentMethodCapability
-            paymentMethod={paymentMethod}
-            key={`capability_item_${index}`}
-          />
+        <View key={`capability_item_${index}`}>
+          <BpdPaymentMethodCapability paymentMethod={paymentMethod} />
           <ItemSeparatorComponent noPadded={true} />
-        </>
+        </View>
       ) : null;
   }
 };
@@ -75,36 +73,33 @@ const generateCapabilityItems = (
   }, [] as ReadonlyArray<React.ReactNode>);
 
 /**
- * Display the capabilities available for a payment method
+ * This component enlists the different initiatives active on the payment methods
  * @param props
  * @constructor
  */
-const PaymentMethodCapabilities: React.FunctionComponent<Props> = props => {
+const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const capabilityItems = generateCapabilityItems(
     props.paymentMethod,
     props.bpdRemoteConfig
   );
-
-  return (
-    <>
+  return capabilityItems.length > 0 ? (
+    <View style={props.style}>
       <View style={styles.row}>
-        <IconFont
-          name={"io-preferenze"}
-          size={20}
-          color={IOColors.bluegreyDark}
+        <Initiative
+          width={20}
+          height={20}
+          stroke={IOColors.bluegreyDark}
           style={styles.icon}
         />
         <View hspacer={true} />
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       {capabilityItems}
-      <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
-    </>
-  );
+    </View>
+  ) : null;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
-
 const mapStateToProps = (state: GlobalState) => ({
   bpdRemoteConfig: bpdRemoteConfigSelector(state)
 });
@@ -112,4 +107,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaymentMethodCapabilities);
+)(PaymentMethodInitiatives);
