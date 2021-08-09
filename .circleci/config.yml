@@ -93,7 +93,9 @@ jobs:
       - run: yarn generate:all
       # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
-      - run: yarn tsc:noemit
+      #TODO remove after test start
+#      - run: yarn tsc:noemit
+      #TODO remove after test end
 
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
@@ -429,7 +431,7 @@ jobs:
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            gem install bundler
+            gem install bundler:$BUNDLER_VERSION
 
       # Remove watchman from node global packages
       - run:
@@ -437,11 +439,11 @@ jobs:
           command: npm r -g watchman
 
       # Install watchman with brew
-      - run:
-          name: Install watchman
-          command: |
-            brew update
-            brew install watchman || exit 0
+#      - run:
+#          name: Install watchman
+#          command: |
+#            brew update
+#            brew install watchman || exit 0
 
       # Install bundle dependencies
       - run:
