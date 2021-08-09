@@ -18,6 +18,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
@@ -118,7 +119,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     if (
       whereAmIFrom(this.props.nav).fold(
         false,
-        r => r === "WALLET_HOME" || r === "WALLET_PAYMENT_METHOD_DETAIL"
+        r => r === ROUTES.WALLET_HOME || r === ROUTES.WALLET_CREDIT_CARD_DETAIL
       )
     ) {
       return this.props.navigation.goBack();

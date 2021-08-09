@@ -19,7 +19,7 @@ import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import { navigateToOnboardingCoBadgeChooseTypeStartScreen } from "../../onboarding/cobadge/navigation/action";
 import BancomatCard from "../component/bancomatCard/BancomatCard";
@@ -76,6 +76,7 @@ const startCoBadge = (props: Props) => {
 
 /**
  * Detail screen for a bancomat
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
@@ -101,7 +102,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
   ) : (
     <DarkLayout
       bounces={false}
-      title={I18n.t("wallet.methods.card.shortName")}
+      title={I18n.t("wallet.creditCard.details.header")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
@@ -120,8 +121,7 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
         <View spacer={true} />
         <ItemSeparatorComponent noPadded={true} />
         <View spacer={true} />
-        <PaymentMethodCapabilities paymentMethod={bancomat} />
-        <ItemSeparatorComponent noPadded={true} />
+        <PaymentMethodFeatures paymentMethod={bancomat} />
         <View spacer={true} />
         <UnsubscribeButton
           onPress={() =>

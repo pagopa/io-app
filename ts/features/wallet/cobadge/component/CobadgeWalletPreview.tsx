@@ -6,6 +6,7 @@ import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
+import I18n from "../../../../i18n";
 import { navigateToCobadgeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -51,6 +52,17 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     }
   );
 
+const getAccessibilityRepresentation = (cobadge: CreditCardPaymentMethod) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.coBadge", {
+    brand: cobadge.info.brand,
+    bankName:
+      cobadge.abiInfo?.name ??
+      I18n.t("wallet.accessibility.folded.bankNotAvailable")
+  });
+  const cta = I18n.t("wallet.accessibility.folded.cta");
+  return `${cardRepresentation}, ${cta}`;
+};
+
 /**
  * A card preview for a cobadge card
  * @param props
@@ -66,6 +78,7 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
   const brandLogo = getCardIconFromBrandLogo(props.cobadge.info);
   return (
     <CardLogoPreview
+      accessibilityLabel={getAccessibilityRepresentation(props.cobadge)}
       left={renderLeft(props, imgDimensions)}
       image={brandLogo}
       onPress={() => props.navigateToCobadgeDetails(props.cobadge)}
