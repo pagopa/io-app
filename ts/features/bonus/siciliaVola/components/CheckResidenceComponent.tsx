@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { View } from "native-base";
 import {
   RadioButtonList,
@@ -23,7 +23,6 @@ import I18n from "../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
 const getCheckResidencyRegionItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
     label: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily"),
@@ -47,16 +46,16 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     primary: false,
     bordered: true,
     onPress: props.back,
-    title: "Back"
+    title: I18n.t("global.buttons.back")
   };
-  const cancelButtonProps = {
+  const continueButtonProps = {
     primary: false,
     bordered: true,
     onPress:
       isResidentInSicily === true
         ? props.navigateToSvSelectBeneficiaryCategory
         : props.navigateToSvKoCheckResidence,
-    title: "Continue",
+    title: I18n.t("global.buttons.continue"),
     disabled: isResidentInSicily === undefined
   };
 
@@ -89,12 +88,13 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
           leftButton={backButtonProps}
-          rightButton={cancelButtonProps}
+          rightButton={continueButtonProps}
         />
       </SafeAreaView>
     </BaseScreenComponent>
   );
 };
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   navigateToSvSelectBeneficiaryCategory: () =>
