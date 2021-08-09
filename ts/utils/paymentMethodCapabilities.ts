@@ -31,7 +31,7 @@ export const canMethodPay = (paymentMethod: PaymentMethod): boolean => {
   return paymentMethod.pagoPA;
 };
 
-const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
+export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
   paymentMethod.info?.issuerAbiCode && paymentMethod.info.type !== TypeEnum.PRV;
 
 /**
