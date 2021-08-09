@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
+const DeleteButton = (props: { onPress?: () => void }) => (
   <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
     <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
   </Button>
@@ -74,7 +74,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
 
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={isLoadingDelete}
+      isLoading={true}
       loadingCaption={I18n.t("cardComponent.deleteLoading")}
     />
   ) : (
@@ -93,7 +93,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
       <View style={IOStyles.horizontalContentPadding}>
         {content}
         <View spacer={true} large={true} />
-        <UnsubscribeButton
+        <DeleteButton
           onPress={() =>
             present(() => {
               props.deleteWallet(paymentMethod.idWallet);
