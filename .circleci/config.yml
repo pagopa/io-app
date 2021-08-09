@@ -414,7 +414,7 @@ jobs:
     steps:
       # Restore workflow workspace
       - attach_workspace:
-          at: /home/circleci
+          at: /Users/distiller
 
       # Restore bundle cache
       - restore_cache:
