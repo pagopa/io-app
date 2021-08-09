@@ -62,6 +62,7 @@ type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
 
 /**
  * Credit card component
+ * @deprecated Use {@link BaseCardComponent} and related custom implementation (eg: {@link CreditCardComponent})
  */
 export default class CardComponent extends React.Component<Props> {
   private handleDeleteSelect = () =>
