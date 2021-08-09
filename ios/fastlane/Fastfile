@@ -198,6 +198,50 @@ platform :ios do
     )
   end
 
+  desc "Submit a new Beta Build to TestFlight, using CircleCI"
+  lane :beta_circleci_testflight do |options|
+
+    # Increment the build number
+    build_number = get_build_number
+
+    # Get the current version from the project
+    version_number = get_version_number
+
+    api_key = app_store_connect_api_key(
+      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
+      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
+      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
+      duration: 1200,
+    )
+
+    sync_code_signing(type: "appstore", api_key: api_key)
+
+    # Install pods
+    cocoapods
+
+    # build the app
+    gym(
+      scheme: "ItaliaApp",
+      clean: true,
+      export_method: "app-store",
+      workspace: "ItaliaApp.xcworkspace",
+      include_symbols: false,
+      # sdk: "iphoneos8.4"
+    )
+
+    # generate the changelog based on last commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "ios/testflight/*"
+    )
+
+    # upload to itunes store
+    pilot(
+      api_key: api_key,
+      changelog: changelog,
+      skip_waiting_for_build_processing: true
+    )
+  end
+
   desc "Deploy a new version to the App Store"
   lane :release do
     match(type: "appstore")
