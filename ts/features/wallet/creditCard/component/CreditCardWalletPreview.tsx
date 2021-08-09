@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import { BlurredPan } from "../../component/card/BlurredPan";
 import { CardLogoPreview } from "../../component/card/CardLogoPreview";
+import I18n from "../../../../i18n";
 
 type OwnProps = {
   creditCard: CreditCardPaymentMethod;
@@ -17,6 +18,17 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
+const getAccessibilityRepresentation = (
+  creditCard: CreditCardPaymentMethod
+) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.creditCard", {
+    brand: creditCard.info.brand,
+    blurredNumber: creditCard.info.blurredNumber
+  });
+  const cta = I18n.t("wallet.accessibility.folded.cta");
+  return `${cardRepresentation}, ${cta}`;
+};
+
 /**
  * Folded preview representation for the Credit Card payment method.
  * @param props
@@ -24,6 +36,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CreditCardWalletPreview = (props: Props): React.ReactElement => (
   <CardLogoPreview
+    accessibilityLabel={getAccessibilityRepresentation(props.creditCard)}
     left={
       <BlurredPan style={IOStyles.flex} numberOfLines={1} testID={"caption"}>
         {props.creditCard.caption}
