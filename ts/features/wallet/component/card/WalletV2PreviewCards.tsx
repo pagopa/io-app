@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
 import { paymentMethodListVisibleInWalletSelector } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
+import { isCobadge } from "../../../../utils/paymentMethodCapabilities";
 import BancomatWalletPreview from "../../bancomat/component/BancomatWalletPreview";
 import BPayWalletPreview from "../../bancomatpay/component/BPayWalletPreview";
 import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
@@ -23,8 +24,8 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":
       // We should distinguish between a plain credit card and a cobadge credit card.
-      // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that have an issuerAbiCode
-      return pm.info.issuerAbiCode !== undefined ? (
+      // Unfortunately, the cobadge card doesn't have a own type but is a CreditCard that has an issuerAbiCode
+      return isCobadge(pm) ? (
         <CobadgeWalletPreview key={pm.idWallet} cobadge={pm} />
       ) : (
         <CreditCardWalletPreview key={pm.idWallet} creditCard={pm} />

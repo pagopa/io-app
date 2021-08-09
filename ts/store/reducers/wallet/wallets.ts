@@ -221,11 +221,10 @@ export const creditCardListSelector = createSelector(
 export const creditCardByIdSelector = createSelector(
   [creditCardListSelector, (_: GlobalState, id: number) => id],
   (potCreditCardList, id): CreditCardPaymentMethod | undefined =>
-    pot.getOrElse(
+    pot.toUndefined(
       pot.map(potCreditCardList, creditCardList =>
         creditCardList.find(cc => cc.idWallet === id)
-      ),
-      undefined
+      )
     )
 );
 
