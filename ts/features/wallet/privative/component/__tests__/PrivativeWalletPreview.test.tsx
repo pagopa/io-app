@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { none, some } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
+import I18n from "../../../../../i18n";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import { PrivativePaymentMethod } from "../../../../../types/pagopa";
 import PrivativeWalletPreview from "../PrivativeWalletPreview";
@@ -15,9 +16,22 @@ describe("PrivativeWalletPreview", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
     const { component } = getComponent(mockPrivativeCard);
     const caption = component.queryByTestId("caption");
-
     expect(caption).not.toBeNull();
     expect(caption).toHaveTextContent(mockPrivativeCard.caption);
+  });
+  it("should have the accessibility settings", () => {
+    const { component } = getComponent(mockPrivativeCard);
+    const buttonRole = component.queryByA11yRole("button");
+    expect(buttonRole).not.toBeNull();
+
+    const cardRepresentation = I18n.t("wallet.accessibility.folded.privative", {
+      blurredNumber: mockPrivativeCard.info.blurredNumber
+    });
+    const cta = I18n.t("wallet.accessibility.folded.cta");
+    const expectedLabel = `${cardRepresentation}, ${cta}`;
+
+    const a11yLabel = component.queryByA11yLabel(expectedLabel);
+    expect(a11yLabel).not.toBeNull();
   });
   it("should show the fallback gdo logo if useImageResize returns a size but there isn't the cardLogo", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
