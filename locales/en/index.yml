@@ -1264,9 +1264,9 @@ wallet:
         active: Active
         arriving: Arriving
         incompatible: Incompatible
-        bottomSheetTitle: What does in-app payment mean?
-        bottomSheetBody: With IO you can pay all pagoPA notices, even those on paper. When you perform in-app payments, you'll need to authorize the transaction using your biometrics or the unlock code.
-        bottomSheetCTA: Learn more.
+        bottomSheetTitle: Why can’t I make in-app payments?
+        bottomSheetBody: This method doesn’t support online payments. 
+        bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
@@ -2593,15 +2593,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "I also declare"
+        threshold:
+          under: "to have a gross annual income of less than or equal to {{amount}}"
+          over: "to have a gross annual income exceeding {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:

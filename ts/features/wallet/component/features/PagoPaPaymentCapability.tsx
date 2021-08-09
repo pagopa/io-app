@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 type Props = { paymentMethod: PaymentMethod };
 
 const IN_APP_PAYMENTS_LEARN_MORE_VIDEO_URL =
-  "https://www.youtube.com/watch?v=2URN1LNLpbU";
+  "https://io.italia.it/metodi-pagamento";
 
 const getLocales = () => ({
   available: I18n.t("wallet.methods.card.pagoPaCapability.active"),
@@ -120,7 +120,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       </ButtonDefaultOpacity>
     </View>,
     I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetTitle"),
-    300
+    200
   );
 
   return (
