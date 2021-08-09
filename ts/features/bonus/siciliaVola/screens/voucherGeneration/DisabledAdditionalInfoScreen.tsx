@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -42,7 +42,6 @@ const loadLocales = () => ({
 });
 
 const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
-  const elementRef = useRef(null);
   const [acceptedDisclaimer, setAcceptedDisclaimer] = useState<boolean>(false);
 
   const cancelButtonProps = {
@@ -68,7 +67,6 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
       <SafeAreaView
         style={IOStyles.flex}
         testID={"DisabledAdditionalInfoScreen"}
-        ref={elementRef}
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{title}</H1>
