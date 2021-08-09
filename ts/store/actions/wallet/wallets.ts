@@ -152,7 +152,10 @@ export const sendAddCobadgeMessage = createStandardAction(
   "SEND_ADD_COBADGE_MESSAGE"
 )<boolean>();
 
-type UpdatePaymentStatusPayload = { idWallet: number; paymentEnabled: boolean };
+export type UpdatePaymentStatusPayload = {
+  idWallet: number;
+  paymentEnabled: boolean;
+};
 /**
  * change the payment status (enable or disable a payment method to pay with pagoPa)
  */
