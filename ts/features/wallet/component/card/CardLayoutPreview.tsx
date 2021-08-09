@@ -1,15 +1,14 @@
 import { View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { AccessibilityProps, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 
 type Props = {
   left: React.ReactNode;
   right: React.ReactNode;
   onPress?: () => void;
-};
+} & AccessibilityProps;
 
 const styles = StyleSheet.create({
   card: {
@@ -67,9 +66,8 @@ export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
     {/* In order to render the shadow on android */}
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
     <TouchableDefaultOpacity
-      onPress={props.onPress}
+      {...props}
       accessible={true}
-      accessibilityLabel={I18n.t("wallet.accessibility.cardsPreview")}
       accessibilityRole={"button"}
       style={styles.rotatedCard}
       testID={"cardPreview"}

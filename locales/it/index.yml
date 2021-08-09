@@ -906,6 +906,14 @@ wallet:
   accessibility:
     sectionCardLabel: "Aggiorna metodi di pagamento"
     sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
+    folded:
+      creditCard: "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}"
+      bancomat: "BANCOMAT {{bankName}}"
+      coBadge: "Carta {{brand}}, {{bankName}}"
+      bancomatPay: "BANCOMATPay {{bankName}}"
+      privative: "Carta fedeltà, il numero della carta finisce con {{blurredNumber}}"
+      cta: "Visualizza i dettagli del metodo"
+      bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -955,6 +963,7 @@ wallet:
         title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
         body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Aggiungi Satispay"
       start:
         title: "Vuoi aggiungere su IO il tuo account Satispay?"
