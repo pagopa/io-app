@@ -1,5 +1,5 @@
+import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
 import I18n from "../i18n";
-import { CreditCard } from "../types/pagopa";
 
 const DISPLAYED_DIGITS = 2;
 
@@ -45,7 +45,7 @@ export const formatNumberCentsToAmount = (
   displayCurrency: boolean = false
 ): string => formatNumberAmount(centsToAmount(cents), displayCurrency);
 
-export const buildExpirationDate = (creditCard: CreditCard): string =>
+export const buildExpirationDate = (creditCard: CardInfo): string =>
   `${creditCard.expireMonth}/${creditCard.expireYear}`;
 
 /**

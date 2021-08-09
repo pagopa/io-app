@@ -3,9 +3,9 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
+import { RawCheckBox } from "../core/selection/checkbox/RawCheckBox";
 
 import { IOStyles } from "../core/variables/IOStyles";
-import { RawCheckBox } from "../core/selection/RawCheckBox";
 import { Label } from "../core/typography/Label";
 import Accordion from "../ui/Accordion";
 

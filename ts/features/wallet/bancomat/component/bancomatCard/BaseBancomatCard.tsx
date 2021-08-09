@@ -17,6 +17,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { BrandImage } from "../../../component/card/BrandImage";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
@@ -62,11 +63,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline"
-  },
-  bancomatLogo: {
-    width: 60,
-    height: 36,
-    resizeMode: "contain"
   },
   badgeInfo: {
     borderWidth: 1,
@@ -151,7 +147,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
         </View>
         <View style={styles.bottomRow}>
           <Body>{props.user.toLocaleUpperCase()}</Body>
-          <Image style={styles.bancomatLogo} source={pagoBancomatLogo} />
+          <BrandImage image={pagoBancomatLogo} />
         </View>
       </View>
     </>

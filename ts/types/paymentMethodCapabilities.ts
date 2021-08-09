@@ -4,5 +4,5 @@
 export type PaymentSupportStatus =
   | "available"
   | "arriving"
-  | "not_available"
+  | "notAvailable"
   | "onboardableNotImplemented";
