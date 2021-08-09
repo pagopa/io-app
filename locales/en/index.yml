@@ -2569,7 +2569,12 @@ bonus:
         buttons:
           requestBonus: "Request a discount code"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Residency's region"
+        items:
+          inSicily: "I reside in Sicily"
+          notInSicily: "I reside in a different region"
+        info:
+          "Please remember that the discount is available only to residents of Sicily"
       selectBeneficiaryCategory:
         title: "I declare to be"
         categories:
