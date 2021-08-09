@@ -548,6 +548,9 @@ workflows:
     jobs:
       - compile-typescript
 
+      - ios-beta-release:
+          requires:
+            - compile-typescript
 
         #start test
 #      - run-tests
