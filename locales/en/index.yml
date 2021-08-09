@@ -895,6 +895,7 @@ wallet:
       bancomatPay: "{{bankName}} BANCOMATPay"
       privative: "Loyalty card, the card number ends with {{blurredNumber}}"
       cta: "View method details"
+      bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:

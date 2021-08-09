@@ -55,7 +55,9 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
 const getAccessibilityRepresentation = (cobadge: CreditCardPaymentMethod) => {
   const cardRepresentation = I18n.t("wallet.accessibility.folded.coBadge", {
     brand: cobadge.info.brand,
-    bankName: cobadge.abiInfo?.name
+    bankName:
+      cobadge.abiInfo?.name ??
+      I18n.t("wallet.accessibility.folded.bankNotAvailable")
   });
   const cta = I18n.t("wallet.accessibility.folded.cta");
   return `${cardRepresentation}, ${cta}`;
