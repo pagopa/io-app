@@ -1252,13 +1252,13 @@ wallet:
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
         title: In app payments
-        description: Make payments to the public administration through pagoPA
+        description: Pay your notices with pagoPA logo
         active: Active
         arriving: Arriving
         incompatible: Incompatible
-        bottomSheetTitle: What does in-app payment mean?
-        bottomSheetBody: With IO you can pay all pagoPA notices, even those on paper. When you perform in-app payments, you'll need to authorize the transaction using your biometrics or the unlock code.
-        bottomSheetCTA: Learn more.
+        bottomSheetTitle: Why can’t I make in-app payments?
+        bottomSheetBody: This method doesn’t support online payments. 
+        bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
@@ -1376,9 +1376,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     sendReport: Send report
     loadingData: loading failure, try again.
-  walletList:
-    contextualHelpTitle: Your payment methods
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1409,7 +1406,7 @@ wallet:
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
-    title: "Available Functions"
+    title: "Available initiatives"
   outcomeMessage:
     cta:
       close: Close
@@ -2588,15 +2585,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "I also declare"
+        threshold:
+          under: "to have a gross annual income of less than or equal to {{amount}}"
+          over: "to have a gross annual income exceeding {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:

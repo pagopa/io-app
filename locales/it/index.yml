@@ -1274,13 +1274,13 @@ wallet:
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
       pagoPaCapability:
         title: Pagamenti in app
-        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        description: Paga gli avvisi che hanno il logo pagoPA
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
-        bottomSheetTitle: Cosa sono i pagamenti in app?
-        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
-        bottomSheetCTA: Scopri di più
+        bottomSheetTitle: Perché non posso pagare in app?
+        bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
+        bottomSheetCTA: Scopri i metodi supportati
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1399,9 +1399,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
-  walletList:
-    contextualHelpTitle: I tuoi metodi di pagamento
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1432,7 +1429,7 @@ wallet:
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
-    title: "Funzioni Disponibili"
+    title: "Iniziative disponibili"
   outcomeMessage:
     cta:
       close: Chiudi
@@ -2616,15 +2613,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "Dichiaro inoltre"
+        threshold:
+          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
+          over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:

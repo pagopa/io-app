@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A preview card layout that generalizes {@link CardPreview}.
+ * A preview card layout that generalizes a card preview for a payment method layout.
  * Can be used to render a generic wallet preview card.
  * @param props
  * @constructor
