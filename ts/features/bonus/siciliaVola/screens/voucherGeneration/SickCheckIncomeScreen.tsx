@@ -72,7 +72,7 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
         ref={elementRef}
       >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("bonus.sv.voucherGeneration.sick.checkIncome.title")}</H1>
+          <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
 
           <ButtonDefaultOpacity onPress={() => setIsIncomeUnderThreshold(true)}>
             <Text> {"< 25000€"} </Text>
