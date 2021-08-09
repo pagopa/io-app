@@ -1274,7 +1274,7 @@ wallet:
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
       pagoPaCapability:
         title: Pagamenti in app
-        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        description: Paga gli avvisi che hanno il logo pagoPA
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
@@ -1399,9 +1399,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
-  walletList:
-    contextualHelpTitle: I tuoi metodi di pagamento
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1432,7 +1429,7 @@ wallet:
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
-    title: "Funzioni Disponibili"
+    title: "Iniziative disponibili"
   outcomeMessage:
     cta:
       close: Chiudi

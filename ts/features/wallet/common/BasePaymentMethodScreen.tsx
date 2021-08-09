@@ -1,33 +1,33 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import * as React from "react";
 import { Button, View } from "native-base";
-import { NavigationActions, NavigationInjectedProps } from "react-navigation";
+import * as React from "react";
 import { StyleSheet } from "react-native";
+import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../../../i18n";
-import { GlobalState } from "../../../../store/reducers/types";
-import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
-import { PrivativePaymentMethod } from "../../../../types/pagopa";
-import DarkLayout from "../../../../components/screens/DarkLayout";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { deleteWalletRequest } from "../../../../store/actions/wallet/wallets";
-import { showToast } from "../../../../utils/showToast";
-import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
-import BasePrivativeCard from "../component/card/BasePrivativeCard";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { Label } from "../../../components/core/typography/Label";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import DarkLayout from "../../../components/screens/DarkLayout";
+import I18n from "../../../i18n";
+import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
+import { GlobalState } from "../../../store/reducers/types";
+import { getWalletsById } from "../../../store/reducers/wallet/wallets";
+import { PaymentMethod } from "../../../types/pagopa";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { showToast } from "../../../utils/showToast";
+import { useRemovePaymentMethodBottomSheet } from "../component/RemovePaymentMethod";
 
-type NavigationParams = Readonly<{
-  privative: PrivativePaymentMethod;
-}>;
+type OwnProps = {
+  paymentMethod: PaymentMethod;
+  card: React.ReactNode;
+  content: React.ReactNode;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+  OwnProps;
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -48,25 +48,22 @@ const styles = StyleSheet.create({
   }
 });
 
-const UnsubscribeButton = (props: { onPress?: () => void }) => (
+const DeleteButton = (props: { onPress?: () => void }) => (
   <Button bordered={true} style={styles.cancelButton} onPress={props.onPress}>
-    <Label color={"red"}>{I18n.t("wallet.bancomat.details.removeCta")}</Label>
+    <Label color={"red"}>{I18n.t("cardComponent.removeCta")}</Label>
   </Button>
 );
 /**
- * Detail screen for a privative card
- * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
+ * Base layout for payment methods screen & legacy delete handling
  * @constructor
  */
-const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
+const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
 
-  const privative: PrivativePaymentMethod = props.navigation.getParam(
-    "privative"
-  );
+  const { card, content, paymentMethod } = props;
   const { present } = useRemovePaymentMethodBottomSheet({
-    icon: privative.icon,
-    caption: privative.caption
+    icon: paymentMethod.icon,
+    caption: paymentMethod.caption
   });
 
   React.useEffect(() => {
@@ -77,8 +74,8 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
 
   return isLoadingDelete ? (
     <LoadingSpinnerOverlay
-      isLoading={isLoadingDelete}
-      loadingCaption={I18n.t("wallet.bancomat.details.deleteLoading")}
+      isLoading={true}
+      loadingCaption={I18n.t("cardComponent.deleteLoading")}
     />
   ) : (
     <DarkLayout
@@ -91,21 +88,15 @@ const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
       gradientHeader={true}
       hideHeader={true}
     >
-      <View style={styles.cardContainer}>
-        <BasePrivativeCard
-          loyaltyLogo={privative.icon}
-          caption={privative.caption}
-          gdoLogo={privative.gdoLogo}
-        />
-      </View>
+      <View style={styles.cardContainer}>{card}</View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodFeatures paymentMethod={privative} />
+        {content}
         <View spacer={true} large={true} />
-        <UnsubscribeButton
+        <DeleteButton
           onPress={() =>
             present(() => {
-              props.deleteWallet(privative.idWallet);
+              props.deleteWallet(paymentMethod.idWallet);
               setIsLoadingDelete(true);
             })
           }
@@ -139,4 +130,4 @@ const mapStateToProps = (state: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PrivativeDetailScreen);
+)(BasePaymentMethodScreen);

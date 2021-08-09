@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getWalletsById } from "../../../../store/reducers/wallet/wallets";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { showToast } from "../../../../utils/showToast";
-import PaymentMethodCapabilities from "../../component/PaymentMethodCapabilities";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { useRemovePaymentMethodBottomSheet } from "../../component/RemovePaymentMethod";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -57,6 +57,7 @@ const UnsubscribeButton = (props: { onPress?: () => void }) => (
 
 /**
  * Detail screen for a Bancomat Pay
+ * TODO: refactoring using {@link BasePaymentMethodScreen} https://pagopa.atlassian.net/browse/IA-183
  * @constructor
  */
 const BPayDetailScreen: React.FunctionComponent<Props> = props => {
@@ -84,7 +85,7 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
     <DarkLayout
       bounces={false}
       contextualHelp={emptyContextualHelp}
-      title={I18n.t("wallet.methods.bancomatPay.name")}
+      title={I18n.t("wallet.creditCard.details.header")}
       faqCategories={["wallet_methods"]}
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
@@ -100,7 +101,7 @@ const BPayDetailScreen: React.FunctionComponent<Props> = props => {
       </View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
-        <PaymentMethodCapabilities paymentMethod={bPay} />
+        <PaymentMethodFeatures paymentMethod={bPay} />
         <View spacer={true} large={true} />
         <UnsubscribeButton
           onPress={() =>
