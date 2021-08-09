@@ -2613,15 +2613,16 @@ bonus:
         additionalInfo:
           title: "DisabledAdditionalInfoScreen"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "Dichiaro inoltre"
+        threshold:
+          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
+          over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
         title: "SelectFlightsDateScreen"
       summary:
