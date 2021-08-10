@@ -235,7 +235,8 @@ platform :ios do
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
-      tag_match_pattern: "ios/testflight/*"
+      tag_match_pattern: "*-rc.*",
+      merge_commit_filtering: "exclude_merges"
     )
 
     # upload to itunes store
