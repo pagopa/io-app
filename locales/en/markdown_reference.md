@@ -50,7 +50,6 @@ Esempio link interni
 [servizi](ioit://SERVICES_HOME),
 [profilo](ioit://PROFILE_MAIN),
 [portafoglio](ioit://WALLET_HOME),
-[elenco metodi di pagamento](ioit://WALLET_LIST),
 [privacy](ioit://PROFILE_PRIVACY_MAIN),
 [Termini e condizioni d'uso](ioit://PROFILE_TOS),
 [privacy policy](ioit://PROFILE_PRIVACY)

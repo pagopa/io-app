@@ -25,7 +25,6 @@ import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import PaymentMethodDetailScreen from "../../screens/wallet/PaymentMethodDetailScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
@@ -36,6 +35,7 @@ import {
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
 import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -254,11 +254,11 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletPaymentMethodDetailScreen = (
-  params: InferNavigationParams<typeof PaymentMethodDetailScreen>
+export const navigateToCreditCardDetailScreen = (
+  params: InferNavigationParams<typeof CreditCardDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_PAYMENT_METHOD_DETAIL,
+    routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
     params
   });
 
@@ -338,14 +338,6 @@ export const navigateToWalletHome = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_HOME,
     params
-  });
-
-/**
- * @deprecated
- */
-export const navigateToWalletList = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_LIST
   });
 
 export const navigateToWalletAddPaymentMethod = (
