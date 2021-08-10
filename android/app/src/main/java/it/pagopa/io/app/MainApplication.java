@@ -41,6 +41,7 @@ import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 import com.facebook.react.PackageList;
 import android.content.Context;
@@ -82,7 +83,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
-          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),
+          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),new RNDateTimePickerPackage(),
           new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
               .setInvocationEvent("none").setPrimaryColor("#0073E6").build());
     }
