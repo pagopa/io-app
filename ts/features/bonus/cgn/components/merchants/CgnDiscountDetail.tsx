@@ -3,6 +3,7 @@ import { View } from "native-base";
 import { StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import { index } from "fp-ts/lib/Array";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -75,18 +76,20 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-        <IconFont
-          name={"io-theater"}
-          size={CATEGORY_ICON_SIZE}
-          color={IOColors.bluegrey}
-        />
-        <View hspacer small />
-        <H5 weight={"SemiBold"} color={"bluegrey"}>
-          {discount.productCategories[0].toLocaleUpperCase()}
-        </H5>
-      </View>
+      {index(0, [...discount.productCategories]).fold(undefined, cat => (
+        <View style={styles.row}>
+          <IconFont
+            name={"io-theater"}
+            size={CATEGORY_ICON_SIZE}
+            color={IOColors.bluegrey}
+          />
+          <View hspacer small />
+          {/* FIXME properly handle multiple categories on discount */}
+          <H5 weight={"SemiBold"} color={"bluegrey"}>
+            {cat.toLocaleUpperCase()}
+          </H5>
+        </View>
+      ))}
       <View spacer />
       <H3 accessible={true} accessibilityRole={"header"}>
         {I18n.t("bonus.cgn.merchantDetail.title.description")}

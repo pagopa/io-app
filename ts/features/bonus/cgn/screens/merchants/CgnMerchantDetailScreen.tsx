@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { fromNullable } from "fp-ts/lib/Option";
+import { index } from "fp-ts/lib/Array";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -77,12 +78,13 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer large />
             <H1>{merchantDetail.value.name}</H1>
-            <H4 weight={"Regular"}>
-              {fromNullable(merchantDetail.value.addresses).fold(
-                merchantDetail.value.websiteUrl,
-                addresses => addresses[0].full_address
-              )}
-            </H4>
+            {fromNullable(merchantDetail.value.addresses).fold(
+              <H4 weight={"Regular"}>{merchantDetail.value.websiteUrl}</H4>,
+              addresses =>
+                index(0, [...addresses]).fold(undefined, add => (
+                  <H4 weight={"Regular"}>{add.full_address}</H4>
+                ))
+            )}
             <View spacer />
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
             <View spacer small />

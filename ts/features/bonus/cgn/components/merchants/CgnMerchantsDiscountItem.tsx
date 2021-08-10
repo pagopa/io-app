@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
+import { index } from "fp-ts/lib/Array";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -44,12 +45,20 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
                 color={IOColors.bluegrey}
               />
               <View hspacer small />
-              <View style={IOStyles.flex}>
-                {/* FIXME properly handle multiple categories on discount */}
-                <H5 weight={"SemiBold"} color={"bluegrey"}>
-                  {discount.productCategories[0].toLocaleUpperCase()}
-                </H5>
-              </View>
+              {index(0, [...discount.productCategories]).fold(
+                undefined,
+                cat => (
+                  <View
+                    style={IOStyles.flex}
+                    key={`merchant_category_${discount.discount}`}
+                  >
+                    {/* FIXME properly handle multiple categories on discount */}
+                    <H5 weight={"SemiBold"} color={"bluegrey"}>
+                      {cat.toLocaleUpperCase()}
+                    </H5>
+                  </View>
+                )
+              )}
             </View>
             <View spacer xsmall />
             <View style={IOStyles.flex}>

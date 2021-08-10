@@ -26,7 +26,11 @@ import {
   cgnOfflineMerchants,
   cgnOnlineMerchants
 } from "../../store/actions/merchants";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import {
+  getValueOrElse,
+  isLoading,
+  isReady
+} from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -66,18 +70,14 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
   const merchantsAll = useMemo(() => {
-    const onlineMerchants = isReady(props.onlineMerchants)
-      ? props.onlineMerchants.value
-      : [];
-    const offlineMerchants = isReady(props.offlineMerchants)
-      ? props.offlineMerchants.value
-      : [];
+    const onlineMerchants = getValueOrElse(props.onlineMerchants, []);
+    const offlineMerchants = getValueOrElse(props.offlineMerchants, []);
 
     return [
       ...offlineMerchants,
       ...onlineMerchants
     ].sort((m1: MerchantsAll, m2: MerchantsAll) =>
-      m1.name > m2.name ? 1 : -1
+      m1.name.localeCompare(m2.name)
     );
   }, [props.onlineMerchants, props.offlineMerchants]);
 

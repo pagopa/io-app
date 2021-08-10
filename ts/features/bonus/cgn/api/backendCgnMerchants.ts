@@ -1,11 +1,8 @@
 import {
   ApiHeaderJson,
   composeHeaderProducers,
-  createFetchRequestForApi,
-  RequestHeaderProducer,
-  RequestHeaders
+  createFetchRequestForApi
 } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   getMerchantDefaultDecoder,
@@ -15,8 +12,7 @@ import {
   getOnlineMerchantsDefaultDecoder,
   GetOnlineMerchantsT
 } from "../../../../../definitions/cgn/merchants/requestTypes";
-
-const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
+import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 
 const BASE_URL = "/api/v1/cgn-operator-search";
 
@@ -48,14 +44,6 @@ const getMerchant: GetMerchantT = {
   response_decoder: getMerchantDefaultDecoder()
 };
 
-function ParamAuthorizationBearerHeaderProducer<
-  P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
-}
-
 //
 // A specific backend client to handle cgn requests
 //
@@ -69,22 +57,15 @@ export function BackendCgnMerchants(
     fetchApi
   };
 
-  // withBearerToken injects the field 'Bearer' with value token into the parameter P
-  // of the f function
-  const withBearerToken = <P extends { Bearer: string }, R>(
-    f: (p: P) => Promise<R>
-  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
-    const params = Object.assign({ Bearer: String(token) }, po) as P;
-    return f(params);
-  };
+  const withToken = withBearerToken(token);
 
   return {
-    getOnlineMerchants: withBearerToken(
+    getOnlineMerchants: withToken(
       createFetchRequestForApi(getOnlineMerchants, options)
     ),
-    getOfflineMerchants: withBearerToken(
+    getOfflineMerchants: withToken(
       createFetchRequestForApi(getOfflineMerchants, options)
     ),
-    getMerchant: withBearerToken(createFetchRequestForApi(getMerchant, options))
+    getMerchant: withToken(createFetchRequestForApi(getMerchant, options))
   };
 }

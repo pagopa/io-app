@@ -10,7 +10,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 
 type Props = {
   // FIXME change the props when merchant definition is available
-  category: string;
+  category: string | undefined;
   name: string;
   location: string;
   onPress: () => void;
@@ -35,14 +35,16 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
     style={styles.verticalPadding}
     onPress={props.onPress}
   >
-    <View style={styles.row}>
-      {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-      <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
-      <View hspacer small />
-      <H5 weight={"SemiBold"} color={"bluegrey"}>
-        {props.category.toLocaleUpperCase()}
-      </H5>
-    </View>
+    {props.category && (
+      <View style={styles.row}>
+        {/* TODO when available and defined the icon name should be defined through a map of category codes */}
+        <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
+        <View hspacer small />
+        <H5 weight={"SemiBold"} color={"bluegrey"}>
+          {props.category.toLocaleUpperCase()}
+        </H5>
+      </View>
+    )}
     <View spacer small />
     <H2>{props.name}</H2>
     <Label weight={"Regular"} color={"bluegrey"}>

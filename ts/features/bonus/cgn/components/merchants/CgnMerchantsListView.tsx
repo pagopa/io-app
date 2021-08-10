@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View } from "native-base";
 import { FlatList, ListRenderItemInfo } from "react-native";
+import { index } from "fp-ts/lib/Array";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
@@ -19,21 +20,14 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
   const renderListItem = (
     listItem: ListRenderItemInfo<OfflineMerchant | OnlineMerchant>
   ) => {
-    if (OfflineMerchant.is(listItem.item)) {
-      return (
-        <CgnMerchantListItem
-          category={listItem.item.productCategories[0]}
-          name={listItem.item.name}
-          location={listItem.item.address.full_address}
-          onPress={() => props.onItemPress(listItem.item.id)}
-        />
-      );
-    }
+    const location = OfflineMerchant.is(listItem.item)
+      ? listItem.item.address.full_address
+      : listItem.item.websiteUrl;
     return (
       <CgnMerchantListItem
-        category={listItem.item.productCategories[0]}
+        category={index(0, [...listItem.item.productCategories]).toUndefined()}
         name={listItem.item.name}
-        location={listItem.item.websiteUrl}
+        location={location}
         onPress={() => props.onItemPress(listItem.item.id)}
       />
     );
