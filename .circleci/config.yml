@@ -407,7 +407,7 @@ jobs:
             - italia-app
 
 
-  # Prepare build for end-to-end iOS tests
+  # Create release build and submit to the store
   ios-beta-release:
     <<: *defaults_macos
 
@@ -434,9 +434,9 @@ jobs:
             gem install bundler:$BUNDLER_VERSION
 
       # Remove watchman from node global packages
-      - run:
-          name: Remove watchman from node global packages
-          command: npm r -g watchman
+#      - run:
+#          name: Remove watchman from node global packages
+#          command: npm r -g watchman
 
       # Install watchman with brew
 #      - run:
@@ -456,11 +456,13 @@ jobs:
           paths:
             - vendor/bundle
 
+      - run: ./scripts/ios-release-build.sh
+
       # Fetch CocoaPods specs
       - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
       # Re-run postinstall scripts (setup of react-native libs)
-      - run: npm run postinstall
+#      - run: npm run postinstall
 
       # Install pods
       - run: cd ios && bundle exec pod install --verbose
@@ -468,10 +470,10 @@ jobs:
       # new build!
 
       # Save workspace for next jobs in the workflow
-      - persist_to_workspace:
-          root: /Users/distiller
-          paths:
-            - italia-app
+#      - persist_to_workspace:
+#          root: /Users/distiller
+#          paths:
+#            - italia-app
 
 
   # Run end-to-end iOS tests
