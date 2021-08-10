@@ -2,7 +2,7 @@ import * as React from "react";
 import { useMemo } from "react";
 import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
-import { View } from "native-base";
+import { Item, View } from "native-base";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -123,15 +123,19 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-          <LabelledItem
-            type="text"
-            inputProps={{
-              value: searchValue,
-              autoFocus: true,
-              onChangeText: setSearchValue,
-              placeholder: I18n.t("global.buttons.search")
-            }}
-          />
+          <Item>
+            <LabelledItem
+              type="text"
+              icon={"io-search"}
+              iconPosition={"right"}
+              inputProps={{
+                value: searchValue,
+                autoFocus: true,
+                onChangeText: setSearchValue,
+                placeholder: I18n.t("global.buttons.search")
+              }}
+            />
+          </Item>
         </View>
         <CgnMerchantsListView
           merchantList={merchantList}
