@@ -2621,7 +2621,10 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Informazioni aggiuntive"
+          disclaimer:
+            normal: "Dichiaro di possedere i requisiti di cui all’"
+            link: "articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
       worker:
         selectDestination:
           title: "WorkerSelectDestinationScreen"
