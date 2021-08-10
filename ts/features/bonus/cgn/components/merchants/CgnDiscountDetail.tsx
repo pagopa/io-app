@@ -16,6 +16,7 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { BaseTypography } from "../../../../../components/core/typography/BaseTypography";
 import { addEvery } from "../../../../../utils/strings";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { getCategorySpecs } from "../../utils/filters";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
@@ -76,20 +77,21 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
 
   return (
     <View style={styles.container}>
-      {index(0, [...discount.productCategories]).fold(undefined, cat => (
-        <View style={styles.row}>
-          <IconFont
-            name={"io-theater"}
-            size={CATEGORY_ICON_SIZE}
-            color={IOColors.bluegrey}
-          />
-          <View hspacer small />
-          {/* FIXME properly handle multiple categories on discount */}
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {cat.toLocaleUpperCase()}
-          </H5>
-        </View>
-      ))}
+      {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
+        getCategorySpecs(categoryKey).fold(undefined, c => (
+          <View style={styles.row}>
+            <IconFont
+              name={c.icon}
+              size={CATEGORY_ICON_SIZE}
+              color={IOColors.bluegrey}
+            />
+            <View hspacer small />
+            <H5 weight={"SemiBold"} color={"bluegrey"}>
+              {I18n.t(c.nameKey).toLocaleUpperCase()}
+            </H5>
+          </View>
+        ))
+      )}
       <View spacer />
       <H3 accessible={true} accessibilityRole={"header"}>
         {I18n.t("bonus.cgn.merchantDetail.title.description")}

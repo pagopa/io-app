@@ -10,6 +10,8 @@ import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { getCategorySpecs } from "../../utils/filters";
+import I18n from "../../../../../i18n";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
@@ -37,29 +39,23 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
       <ShadowBox>
         <View style={[styles.row, styles.container]}>
           <View style={IOStyles.flex}>
-            <View style={[styles.row, styles.container]}>
-              {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-              <IconFont
-                name={"io-theater"}
-                size={22}
-                color={IOColors.bluegrey}
-              />
-              <View hspacer small />
-              {index(0, [...discount.productCategories]).fold(
-                undefined,
-                cat => (
-                  <View
-                    style={IOStyles.flex}
-                    key={`merchant_category_${discount.discount}`}
-                  >
-                    {/* FIXME properly handle multiple categories on discount */}
+            {index(0, [...discount.productCategories]).fold(
+              undefined,
+              categoryKey =>
+                getCategorySpecs(categoryKey).fold(undefined, c => (
+                  <View style={styles.row}>
+                    <IconFont
+                      name={c.icon}
+                      size={22}
+                      color={IOColors.bluegrey}
+                    />
+                    <View hspacer small />
                     <H5 weight={"SemiBold"} color={"bluegrey"}>
-                      {cat.toLocaleUpperCase()}
+                      {I18n.t(c.nameKey).toLocaleUpperCase()}
                     </H5>
                   </View>
-                )
-              )}
-            </View>
+                ))
+            )}
             <View spacer xsmall />
             <View style={IOStyles.flex}>
               <H4 weight={"SemiBold"} color={"bluegreyDark"}>

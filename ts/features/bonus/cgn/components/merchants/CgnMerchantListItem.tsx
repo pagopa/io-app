@@ -7,10 +7,12 @@ import { Label } from "../../../../../components/core/typography/Label";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { getCategorySpecs } from "../../utils/filters";
+import I18n from "../../../../../i18n";
+import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 
 type Props = {
-  // FIXME change the props when merchant definition is available
-  category: string | undefined;
+  category: ProductCategory | undefined;
   name: string;
   location: string;
   onPress: () => void;
@@ -35,16 +37,16 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
     style={styles.verticalPadding}
     onPress={props.onPress}
   >
-    {props.category && (
-      <View style={styles.row}>
-        {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-        <IconFont name={"io-theater"} size={22} color={IOColors.bluegrey} />
-        <View hspacer small />
-        <H5 weight={"SemiBold"} color={"bluegrey"}>
-          {props.category.toLocaleUpperCase()}
-        </H5>
-      </View>
-    )}
+    {props.category &&
+      getCategorySpecs(props.category).fold(undefined, c => (
+        <View style={styles.row}>
+          <IconFont name={c.icon} size={22} color={IOColors.bluegrey} />
+          <View hspacer small />
+          <H5 weight={"SemiBold"} color={"bluegrey"}>
+            {I18n.t(c.nameKey).toLocaleUpperCase()}
+          </H5>
+        </View>
+      ))}
     <View spacer small />
     <H2>{props.name}</H2>
     <Label weight={"Regular"} color={"bluegrey"}>

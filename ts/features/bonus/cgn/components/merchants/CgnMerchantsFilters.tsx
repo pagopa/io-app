@@ -150,7 +150,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H2>
             <View spacer small />
             <FlatList
-              data={categories}
+              data={_.values(categories)}
               keyExtractor={cat => cat.type}
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent noPadded={true} />
