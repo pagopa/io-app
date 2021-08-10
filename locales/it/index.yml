@@ -120,6 +120,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: C'è un problema temporaneo, riprova.
   genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
@@ -808,6 +809,12 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  alertNoPaymentMethods:
+    title: Aggiungi un metodo per effettuare pagamenti in app
+    message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+    buttons:
+      ok: Continua
+      ko: Annulla
   abortWebView:
     title: Vuoi interrompere il pagamento in corso?
     confirm: Annulla il pagamento
@@ -900,6 +907,14 @@ wallet:
   accessibility:
     sectionCardLabel: "Aggiorna metodi di pagamento"
     sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
+    folded:
+      creditCard: "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}"
+      bancomat: "BANCOMAT {{bankName}}"
+      coBadge: "Carta {{brand}}, {{bankName}}"
+      bancomatPay: "BANCOMATPay {{bankName}}"
+      privative: "Carta fedeltà, il numero della carta finisce con {{blurredNumber}}"
+      cta: "Visualizza i dettagli del metodo"
+      bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -949,6 +964,7 @@ wallet:
         title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
         body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Aggiungi Satispay"
       start:
         title: "Vuoi aggiungere su IO il tuo account Satispay?"
@@ -1268,13 +1284,13 @@ wallet:
       description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
       pagoPaCapability:
         title: Pagamenti in app
-        description: Effettua pagamenti verso la Pubblica Amministrazione tramite pagoPA
+        description: Paga gli avvisi che hanno il logo pagoPA
         active: Attivo
         arriving: In arrivo
         incompatible: Non compatibile
-        bottomSheetTitle: Cosa sono i pagamenti in app?
-        bottomSheetBody: IO ti permette di pagare tutti gli avvisi pagoPA, anche quelli cartacei. Quando effettui un pagamento in app, ti verrà chiesto di autorizzarlo tramite riconoscimento biometrico o codice di sblocco.
-        bottomSheetCTA: Scopri di più
+        bottomSheetTitle: Perché non posso pagare in app?
+        bottomSheetBody: Questo metodo non è abilitato a effettuare pagamenti online.
+        bottomSheetCTA: Scopri i metodi supportati
     bonus:
       name: Sconto, bonus e altri servizi
       description: Iniziative degli enti pubblici a supporto della spesa, o servizi relativi ai pagamenti
@@ -1393,9 +1409,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
-  walletList:
-    contextualHelpTitle: I tuoi metodi di pagamento
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1426,7 +1439,7 @@ wallet:
     body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
-    title: "Funzioni Disponibili"
+    title: "Iniziative disponibili"
   outcomeMessage:
     cta:
       close: Chiudi
@@ -1807,7 +1820,7 @@ contextualHelp:
   sendPersonalInfo:
     title: Nuova segnalazione
     description: "Il Team di IO è a disposizione per risolvere eventuali **problemi** dell’app o per ascoltare i **suggerimenti** dei nostri utenti relativi a **migliorie o nuove funzionalità.**\n\nSe hai dubbi sul **contenuto di un messaggio** o su un servizio, ti consigliamo di **contattare l'ente relativo**: troverai i contatti in fondo al messaggio o nella scheda del servizio in questione."
-    cta: Condividi il tuo codice fiscale, in modo da rendere più semplice la risoluzione del problema.
+    cta: Condividi il tuo codice fiscale e l'identificativo unico del dispositivo, in modo da rendere più semplice la risoluzione del problema.
     informativeTitle: Come sapete il mio codice fiscale?
     informativeDescription: Il codice fiscale fa parte di quel set di dati che l’app IO riceve dall’identità SPID o dalla Carta d’identità elettronica con cui hai effettuato l’accesso. Non è obbligatorio inviare il codice fiscale insieme alla segnalazione, ma permette all’assistenza di IO di fare analisi più mirate sui nostri sistemi e quindi di ridurre i tempi di risoluzione del problema. Per maggiori informazioni sul trattamento dei dati, consulta la nostra Informativa Privacy.
 instabug:
@@ -2585,29 +2598,53 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        alert:
+          title: "Attenzione"
+          message: "Ti informiamo che le informazioni che inserirai costituiscono a tutti gli effetti una autocertificazione. Eventuali dichiarazioni mendaci saranno perseguibili ai sensi del d.P.R. n.445/2000"
+          buttons:
+            ok: "Continua"
+            ko: "Annulla richiesta"
+        buttons:
+          requestBonus: "Richiedi un codice sconto"
       checkResidence:
         title: "CheckResidenceComponent"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "Dichiaro di essere"
+        categories:
+          student: "Studente fuori sede"
+          disabled: "Disabile grave"
+          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+          sick: "Paziente con necessità di cure al di fuori della Sicilia"
+          other: "Nessuno dei precedenti"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Informazioni aggiuntive"
+          disclaimer:
+            normal: "Dichiaro di possedere i requisiti di cui all’"
+            link: "articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "Dichiaro inoltre"
+        threshold:
+          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
+          over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Data del volo"
+        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
+        flights_choice:
+          departure: "Volo di sola andata"
+          return: "Andata e ritorno"
+        labels:
+          departure: "Data di partenza"
+          return: "Data di ritorno"
       summary:
         title: "SummaryScreen"
       voucherGenerated:

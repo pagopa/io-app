@@ -2,7 +2,7 @@ import * as React from "react";
 import { useMemo } from "react";
 import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
-import { Input, Item, View } from "native-base";
+import { View } from "native-base";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -14,7 +14,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { LabelledItem } from "../../../../../components/LabelledItem";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import {
   cgnOfflineMerchantsSelector,
@@ -52,7 +52,6 @@ const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
- * This is the v1 of the merchants visualization for CGN discount, offline and online merchants are mixed together
  * @param props
  * @constructor
  */
@@ -124,15 +123,15 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-          <Item>
-            <Input
-              value={searchValue}
-              autoFocus={true}
-              onChangeText={setSearchValue}
-              placeholderTextColor={IOColors.bluegreyLight}
-              placeholder={I18n.t("global.buttons.search")}
-            />
-          </Item>
+          <LabelledItem
+            type="text"
+            inputProps={{
+              value: searchValue,
+              autoFocus: true,
+              onChangeText: setSearchValue,
+              placeholder: I18n.t("global.buttons.search")
+            }}
+          />
         </View>
         <CgnMerchantsListView
           merchantList={merchantList}

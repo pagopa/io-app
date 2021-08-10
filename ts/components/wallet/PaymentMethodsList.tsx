@@ -197,10 +197,8 @@ const renderListItem = (
           </View>
         </ListItem>
       );
-      break;
     case "notImplemented":
       return null;
-      break;
   }
 };
 

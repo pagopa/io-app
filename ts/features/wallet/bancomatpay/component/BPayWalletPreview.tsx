@@ -1,15 +1,16 @@
+import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
-import { Option } from "fp-ts/lib/Option";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { GlobalState } from "../../../../store/reducers/types";
-import { CardLogoPreview } from "../../component/card/CardLogoPreview";
+import I18n from "../../../../i18n";
 import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation";
+import { GlobalState } from "../../../../store/reducers/types";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
+import { CardLogoPreview } from "../../component/card/CardLogoPreview";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
@@ -50,6 +51,14 @@ const renderLeft = (props: Props, size: Option<[number, number]>) =>
     }
   );
 
+const getAccessibilityRepresentation = (bancomatPay: BPayPaymentMethod) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay", {
+    bankName: bancomatPay.caption
+  });
+  const cta = I18n.t("wallet.accessibility.folded.cta");
+  return `${cardRepresentation}, ${cta}`;
+};
+
 /**
  * A card preview for a bancomat card
  * @param props
@@ -63,6 +72,7 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => {
   );
   return (
     <CardLogoPreview
+      accessibilityLabel={getAccessibilityRepresentation(props.bPay)}
       left={renderLeft(props, imgDimensions)}
       image={bPayImage}
       onPress={() => props.navigateToBPayDetails(props.bPay)}

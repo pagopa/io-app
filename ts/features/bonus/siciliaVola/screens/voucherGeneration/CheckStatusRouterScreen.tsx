@@ -1,10 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/lib/function";
+import { Alert } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   svGenerateVoucherBack,
-  svGenerateVoucherCancel
+  svGenerateVoucherCancel,
+  svGenerateVoucherStart
 } from "../../store/actions/voucherGeneration";
 import {
   isAliveSelector,
@@ -16,15 +19,14 @@ import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
+import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const manageTosResponse = (tosAccepted: boolean): React.ReactElement =>
-  tosAccepted ? <CheckResidenceComponent /> : <AcceptTosComponent />;
-
 const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
   React.useEffect(() => {
+    props.start();
     props.checkServiceAvailable();
     props.checkTosAccepted();
   }, []);
@@ -36,11 +38,44 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
     return (
       <LoadingErrorComponent
         isLoading={isLoading(props.isServiceAlive)}
-        loadingCaption={"loading"}
+        loadingCaption={I18n.t("global.genericWaiting")}
         onRetry={props.checkServiceAvailable}
       />
     );
   }
+
+  const handleTosCancel = () => {
+    props.cancel();
+  };
+
+  const handleTosAccepted = () => {
+    Alert.alert(
+      I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.title"),
+      I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.message"),
+      [
+        {
+          text: I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.buttons.ok"),
+          style: "default",
+          // TODO replace with the effective implementation
+          onPress: constNull
+        },
+        {
+          text: I18n.t("bonus.sv.voucherGeneration.acceptTos.alert.buttons.ko"),
+          style: "default",
+          onPress: handleTosCancel
+        }
+      ]
+    );
+  };
+  const manageTosResponse = (tosAccepted: boolean): React.ReactElement =>
+    tosAccepted ? (
+      <CheckResidenceComponent />
+    ) : (
+      <AcceptTosComponent
+        onAccept={handleTosAccepted}
+        onCancel={handleTosCancel}
+      />
+    );
 
   return fold(
     props.tosAccepted,
@@ -57,6 +92,7 @@ const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  start: () => dispatch(svGenerateVoucherStart()),
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   checkServiceAvailable: () => dispatch(svServiceAlive.request()),
