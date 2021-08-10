@@ -2597,7 +2597,10 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Additional informations"
+          disclaimer:
+            normal: "I declare that I meet the requirements referred to in "
+            link: "Article 3, paragraph 3, of the law of February 5, 1992, no. 104"
       worker:
         selectDestination:
           title: "WorkerSelectDestinationScreen"
