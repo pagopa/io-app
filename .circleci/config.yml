@@ -459,7 +459,7 @@ jobs:
       - run: ./scripts/ios-release-build.sh
 
       # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+#      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
       # Re-run postinstall scripts (setup of react-native libs)
 #      - run: npm run postinstall
