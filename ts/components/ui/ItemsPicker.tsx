@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { Picker } from "native-base";
 import { StyleSheet } from "react-native";
 import ArrowDown from "../../../img/features/siciliaVola/arrowDown.svg";
@@ -10,14 +9,16 @@ import { fromNullable } from "fp-ts/lib/Option";
 
 type PickerItem = {
   label: string;
-  value?: string;
+  value?: string | number;
 };
+
+export type PickerItems = ReadonlyArray<PickerItem>;
 
 type Props = {
   items: ReadonlyArray<PickerItem>;
-  onValueChange: (value: string) => void;
+  onValueChange: (value: string | number) => void;
   placeholder?: string;
-  selectedValue?: string;
+  selectedValue?: string | number;
 };
 
 const styles = StyleSheet.create({
@@ -39,7 +40,9 @@ const styles = StyleSheet.create({
   picker: {
     flex: 1,
     justifyContent: "space-between",
-    alignSelf: "auto"
+    alignSelf: "auto",
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors.bluegreyLight
   }
 });
 
@@ -47,7 +50,9 @@ const addAndroidPlaceholder = (
   placeholder: string,
   items: ReadonlyArray<PickerItem>
 ): ReadonlyArray<PickerItem & { disabled?: boolean }> => {
-  const placeholderItem: PickerItem & { disabled?: boolean } = {
+  const placeholderItem: PickerItem & {
+    disabled?: boolean;
+  } = {
     label: placeholder,
     value: undefined,
     disabled: true
@@ -68,6 +73,7 @@ const generateItems = (
         label={i.label}
         value={undefined}
         color={i.disabled ? IOColors.bluegreyLight : IOColors.bluegreyDark}
+        key={i.value}
       />
     ));
   }
@@ -81,17 +87,15 @@ const generateItems = (
  * @param props
  * @constructor
  */
-const ItemsPicker: React.FunctionComponent<Props> = (props: Props) => {
-  const [selectedValue, setSelectedValue] = useState();
-
-  const handleValueChange = (value: string, _: number) =>
+const ItemsPicker = (props: Props) => {
+  const handleValueChange = (value: string | number, _: number) =>
     fromNullable(value).map(v => props.onValueChange(v));
 
   return (
     <Picker
       enabled={true}
       collapsable={true}
-      selectedValue={selectedValue}
+      selectedValue={props.selectedValue}
       onValueChange={handleValueChange}
       headerTitleStyle={styles.headerTitle}
       headerBackButtonTextStyle={styles.headerBackButton}
@@ -101,13 +105,7 @@ const ItemsPicker: React.FunctionComponent<Props> = (props: Props) => {
       }
       style={styles.picker}
     >
-      {generateItems(
-        [
-          { value: "pippo", label: "pippo" },
-          { value: "pluto", label: "pluto" }
-        ],
-        props.placeholder
-      )}
+      {generateItems(props.items, props.placeholder)}
     </Picker>
   );
 };
