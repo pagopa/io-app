@@ -201,6 +201,10 @@ platform :ios do
   desc "Submit a new Beta Build to TestFlight, using CircleCI"
   lane :beta_circleci_testflight do |options|
 
+    setup_ci(
+      provider: "circleci"
+    )
+
     # Increment the build number
     build_number = get_build_number
 
