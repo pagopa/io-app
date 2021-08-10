@@ -467,6 +467,10 @@ jobs:
       # Install pods
 #      - run: cd ios && bundle exec pod install --verbose
 
+      - add_ssh_keys:
+          fingerprints:
+            - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
+
       # new build!
       # Run alpha lane
       - run:
