@@ -465,9 +465,12 @@ jobs:
 #      - run: npm run postinstall
 
       # Install pods
-      - run: cd ios && bundle exec pod install --verbose
+#      - run: cd ios && bundle exec pod install --verbose
 
       # new build!
+      # Run alpha lane
+      - run:
+          command: cd ios && bundle exec fastlane beta_circleci_testflight
 
       # Save workspace for next jobs in the workflow
 #      - persist_to_workspace:
