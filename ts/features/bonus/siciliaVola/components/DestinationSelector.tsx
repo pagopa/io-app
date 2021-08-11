@@ -14,9 +14,30 @@ import {
 } from "../store/reducers/availableStates";
 import { View } from "native-base";
 import { H5 } from "../../../../components/core/typography/H5";
+import { ActivityIndicator } from "react-native";
+import { isError, isLoading } from "../../bpd/model/RemoteValue";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const LoadingComponent = () => (
+  <ActivityIndicator
+    color={"black"}
+    accessible={false}
+    importantForAccessibility={"no-hide-descendants"}
+    accessibilityElementsHidden={true}
+  />
+);
+
+const ErrorComponent = (onPress: () => void) => (
+  <H5
+    color={"red"}
+    style={{ textDecorationLine: "underline" }}
+    onPress={onPress}
+  >
+    {"Riprova"}
+  </H5>
+);
 
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   // When the component is mounted load the available states
@@ -40,7 +61,13 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       <View>
-        <H5 color={"bluegreyDark"}>{"Stato"}</H5>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>{"Stato"}</H5>
+          <View hspacer={true} />
+          {isLoading(props.availableStates) && <LoadingComponent />}
+          {isError(props.availableStates) &&
+            ErrorComponent(props.requestAvailableState)}
+        </View>
         <ItemsPicker
           placeholder={"Seleziona uno stato"}
           items={props.availableStateItems}
@@ -54,7 +81,13 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View spacer={true} />
       <View>
-        <H5 color={"bluegreyDark"}>{"Regione"}</H5>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>{"Regione"}</H5>
+          <View hspacer={true} />
+          {isLoading(props.availableStates) && <LoadingComponent />}
+          {isError(props.availableStates) &&
+            ErrorComponent(props.requestAvailableState)}
+        </View>
         <ItemsPicker
           placeholder={"Seleziona una regione"}
           items={props.availableStateItems}
