@@ -2636,6 +2636,19 @@ bonus:
         threshold:
           under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
           over: "di avere un reddito lordo annuo superiore a {{amount}}"
+      selectDestinationCommon:
+        state:
+          label: "Stato"
+          placeholder: "Seleziona uno stato"
+        region:
+          label: "Regione"
+          placeholder: "Seleziona una regione"
+        province:
+          label: "Provincia"
+          placeholder: "Seleziona una provincia"
+        municipality:
+          label: "Comune"
+          placeholder: "Seleziona un comune"
       selectFlightsDate:
         title: "Data del volo"
         subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"

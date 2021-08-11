@@ -1267,7 +1267,7 @@ wallet:
         arriving: Arriving
         incompatible: Incompatible
         bottomSheetTitle: Why can’t I make in-app payments?
-        bottomSheetBody: This method doesn’t support online payments. 
+        bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
@@ -2608,6 +2608,19 @@ bonus:
         threshold:
           under: "to have a gross annual income of less than or equal to {{amount}}"
           over: "to have a gross annual income exceeding {{amount}}"
+      selectDestinationCommon:
+        state:
+          label: "State"
+          placeholder: "Select a state"
+        region:
+          label: "Region"
+          placeholder: "Select a region"
+        province:
+          label: "Province"
+          placeholder: "Select a province"
+        municipality:
+          label: "Municipality"
+          placeholder: "Select a municipality"
       selectFlightsDate:
         title: "Flight date"
         subtitle: "Please indicate the type of flight and the date (s) you will travel on"
