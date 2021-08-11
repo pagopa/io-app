@@ -54,7 +54,7 @@ import {
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
 import { Link } from "../../components/core/typography/Link";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
@@ -309,7 +309,6 @@ const AddCardScreen: React.FC<Props> = props => {
       >
         <Content scrollEnabled={false}>
           <LabelledItem
-            type={"text"}
             label={I18n.t("wallet.dummyCard.labels.holder.label")}
             description={
               isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
@@ -337,7 +336,6 @@ const AddCardScreen: React.FC<Props> = props => {
           <View spacer={true} />
 
           <LabelledItem
-            type={"masked"}
             label={I18n.t("wallet.dummyCard.labels.pan")}
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
@@ -368,7 +366,6 @@ const AddCardScreen: React.FC<Props> = props => {
           <Grid>
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
                 accessibilityLabel={accessiblityLabels.expirationDate}
@@ -391,7 +388,6 @@ const AddCardScreen: React.FC<Props> = props => {
             <Col style={styles.verticalSpacing} />
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t(
                   detectedBrand.cvvLength === 4
                     ? "wallet.dummyCard.labels.securityCode4D"

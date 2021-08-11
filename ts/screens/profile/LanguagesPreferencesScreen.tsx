@@ -26,7 +26,7 @@ import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner"
 import { profileSelector } from "../../store/reducers/profile";
 import { showToast } from "../../utils/showToast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 
 type Props = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &

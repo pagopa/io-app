@@ -91,6 +91,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
       <View style={styles.cardContainer}>{card}</View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>
+        <View spacer={true} />
         {content}
         <View spacer={true} large={true} />
         <DeleteButton

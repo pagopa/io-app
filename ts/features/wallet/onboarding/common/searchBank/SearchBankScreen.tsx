@@ -18,7 +18,7 @@ import { fetchPagoPaTimeout } from "../../../../../config";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { SearchBankComponent } from "./SearchBankComponent";
