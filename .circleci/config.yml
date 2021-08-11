@@ -271,7 +271,8 @@ jobs:
   test-ios:
     <<: *defaults_macos
 
-    resource_class: large
+    # Not supported atm
+    # resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -329,7 +330,8 @@ jobs:
   test-ios-e2e-build:
     <<: *defaults_macos
 
-    resource_class: large
+    # Not supported atm
+    # resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -410,7 +412,8 @@ jobs:
   ios-beta-release:
     <<: *defaults_macos
 
-    resource_class: large
+    # Not supported atm
+    # resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -464,7 +467,8 @@ jobs:
   test-ios-e2e-run:
     <<: *defaults_macos
 
-    resource_class: large
+    # Not supported atm
+    # resource_class: large
 
     steps:
       # Restore workflow workspace
