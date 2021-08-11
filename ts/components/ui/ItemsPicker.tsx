@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Picker } from "native-base";
 import { StyleSheet } from "react-native";
+import { fromNullable } from "fp-ts/lib/Option";
 import ArrowDown from "../../../img/features/siciliaVola/arrowDown.svg";
 import variables from "../../theme/variables";
 import { isAndroid } from "../../utils/platform";
 import { IOColors } from "../core/variables/IOColors";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type PickerItem = {
   label: string;
@@ -17,6 +17,7 @@ export type PickerItems = ReadonlyArray<PickerItem>;
 type Props = {
   items: ReadonlyArray<PickerItem>;
   onValueChange: (value: string | number) => void;
+  disabled?: boolean;
   placeholder?: string;
   selectedValue?: string | number;
 };
@@ -93,7 +94,7 @@ const ItemsPicker = (props: Props) => {
 
   return (
     <Picker
-      enabled={true}
+      enabled={!props.disabled}
       collapsable={true}
       selectedValue={props.selectedValue}
       onValueChange={handleValueChange}
