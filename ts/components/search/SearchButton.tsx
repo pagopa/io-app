@@ -48,7 +48,6 @@ class SearchButton extends React.Component<Props, State> {
       <React.Fragment>
         {searchText.isSome() ? (
           <LabelledItem
-            type="text"
             hasNavigationEvents
             inputProps={{
               placeholder: I18n.t("global.actions.search"),
