@@ -471,16 +471,18 @@ jobs:
           fingerprints:
             - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
 
-      - run:
-          name: Set previous tag
-          command: |
-            export PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
-            echo $PREVIOUS_TAG
+#      - run:
+#          name: Set previous tag
+#          command: |
+#            export PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
+#            echo $PREVIOUS_TAG
 
       # Run alpha lane
       - run:
           name: Build & submit to App store
           command: |
+            export PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
+            echo $PREVIOUS_TAG
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
