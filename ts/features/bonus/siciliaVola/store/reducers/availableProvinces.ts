@@ -1,6 +1,9 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
+import {
+  IndexedById,
+  toArray,
+  toIndexed
+} from "../../../../../store/helpers/indexer";
 import { Province } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
@@ -10,12 +13,22 @@ import {
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../actions/voucherGeneration";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../bpd/model/RemoteValue";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { PickerItems } from "../../../../../components/ui/ItemsPicker";
 
-export type AvailableProvincesState = pot.Pot<
+export type AvailableProvincesState = RemoteValue<
   IndexedById<Province>,
   NetworkError
 >;
-const INITIAL_STATE: AvailableProvincesState = pot.none;
+const INITIAL_STATE: AvailableProvincesState = remoteUndefined;
 
 const reducer = (
   state: AvailableProvincesState = INITIAL_STATE,
@@ -23,19 +36,40 @@ const reducer = (
 ): AvailableProvincesState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
-      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableState.request):
-      return pot.none;
     case getType(svGenerateVoucherAvailableRegion.request):
-      return pot.none;
+      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableProvince.request):
-      return pot.toLoading(state);
+      return remoteLoading;
     case getType(svGenerateVoucherAvailableProvince.success):
-      return pot.some(toIndexed(action.payload, p => p.id));
+      return remoteReady(toIndexed(action.payload, p => p.id));
     case getType(svGenerateVoucherAvailableProvince.failure):
-      return pot.toError(state, action.payload);
+      return remoteError(action.payload);
   }
   return state;
 };
 
 export default reducer;
+
+export const availableProvincesSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherGeneration.availableProvinces],
+  (availableProvinces: AvailableProvincesState): AvailableProvincesState =>
+    availableProvinces
+);
+
+export const availableProvincesItemsSelector = createSelector(
+  [availableProvincesSelector],
+  (availableProvinces: AvailableProvincesState): PickerItems => {
+    switch (availableProvinces.kind) {
+      case "ready":
+        return toArray(availableProvinces.value).map(p => ({
+          value: p.id,
+          label: p.name
+        }));
+      case "error":
+      case "loading":
+      case "undefined":
+        return [];
+    }
+  }
+);
