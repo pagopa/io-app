@@ -43,6 +43,7 @@ export function* handleGetAereoportiBeneficiario(
             convertSuccess(getAeroportiBeneficiarioResult.value.value)
           )
         );
+        return;
       }
       if (mapKinds[getAeroportiBeneficiarioResult.value.status] !== undefined) {
         yield put(
@@ -52,15 +53,14 @@ export function* handleGetAereoportiBeneficiario(
             )
           })
         );
+        return;
       }
-    } else {
-      // cannot decode response
-      yield put(
-        svGenerateVoucherAvailableDestination.failure({
-          ...getGenericError(new Error("Generic Error"))
-        })
-      );
     }
+    yield put(
+      svGenerateVoucherAvailableDestination.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
   } catch (e) {
     yield put(
       svGenerateVoucherAvailableDestination.failure({ ...getNetworkError(e) })

@@ -56,6 +56,7 @@ export function* handleGetVoucherBeneficiario(
             convertSuccess(getVoucherBeneficiarioResult.value.value)
           )
         );
+        return;
       }
       if (mapKinds[getVoucherBeneficiarioResult.value.status] !== undefined) {
         yield put(
@@ -65,15 +66,14 @@ export function* handleGetVoucherBeneficiario(
             )
           })
         );
+        return;
       }
-    } else {
-      // cannot decode response
-      yield put(
-        svVoucherListGet.failure({
-          ...getGenericError(new Error("Generic Error"))
-        })
-      );
     }
+    yield put(
+      svVoucherListGet.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
   } catch (e) {
     yield put(svVoucherListGet.failure({ ...getNetworkError(e) }));
   }
