@@ -217,6 +217,18 @@ jobs:
       - attach_workspace:
           at: /home/circleci
 
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
       # Restore sdk cache
       - restore_cache:
           keys:
@@ -230,17 +242,7 @@ jobs:
       - restore_cache:
           key: *android_jars_cache_key
 
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
 
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
 
       # Recreate google-services.json from ENV variable
       - run:
@@ -282,9 +284,6 @@ jobs:
       - restore_cache:
           keys:
             - *ios_gems_cache_key
-
-      # Set Ruby Version for chruby
-      - run: echo "ruby-2.7" > .ruby-version
 
       - run:
           name: Configure Bundler
@@ -341,9 +340,6 @@ jobs:
       - restore_cache:
           keys:
             - *ios_gems_cache_key
-
-      # Set Ruby Version for chruby
-      - run: echo "ruby-2.7" > .ruby-version
 
       - run:
           name: Configure Bundler
@@ -423,9 +419,6 @@ jobs:
       - restore_cache:
           keys:
             - *ios_gems_cache_key
-
-      # Set Ruby Version for chruby
-#      - run: echo "ruby-2.7" > .ruby-version
 
       - run:
           name: Configure Bundler
@@ -545,7 +538,7 @@ workflows:
 #          filters:
 #            branches:
 #              ignore: master
-      - ios-beta-release:
+      - alpha-release-android:
           requires:
             - compile-typescript
 
