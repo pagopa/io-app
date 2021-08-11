@@ -54,7 +54,7 @@ import {
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
 import { Link } from "../../components/core/typography/Link";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
