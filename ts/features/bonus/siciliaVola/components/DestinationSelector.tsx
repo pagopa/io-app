@@ -70,6 +70,18 @@ const ErrorComponent = (onPress: () => void) => (
 );
 
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
+  const requestMunicipalitiesWithSelectedProvince = () => {
+    if (props.selectedProvince) {
+      props.requestAvailableMunicipalities(props.selectedProvince);
+    }
+  };
+
+  const requestProvinceWithSelectedRegion = () => {
+    if (props.selectedRegion) {
+      props.requestAvailableProvinces(props.selectedRegion);
+    }
+  };
+
   // When the component is mounted load the available states
   useEffect(() => {
     props.requestAvailableState();
@@ -82,15 +94,11 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   }, [props.selectedState]);
 
   useEffect(() => {
-    if (props.selectedRegion) {
-      props.requestAvailableProvinces(props.selectedRegion);
-    }
+    requestProvinceWithSelectedRegion();
   }, [props.selectedRegion]);
 
   useEffect(() => {
-    if (props.selectedProvince) {
-      props.requestAvailableMunicipalities(props.selectedProvince);
-    }
+    requestMunicipalitiesWithSelectedProvince();
   }, [props.selectedProvince]);
 
   return (
@@ -162,11 +170,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           <View hspacer={true} />
           {isLoading(props.availableProvinces) && <LoadingComponent />}
           {isError(props.availableProvinces) &&
-            ErrorComponent(() => {
-              if (props.selectedRegion) {
-                props.requestAvailableProvinces(props.selectedRegion);
-              }
-            })}
+            ErrorComponent(requestProvinceWithSelectedRegion)}
         </View>
         <ItemsPicker
           key={"province"}
@@ -194,11 +198,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           <View hspacer={true} />
           {isLoading(props.availableMunicipalities) && <LoadingComponent />}
           {isError(props.availableMunicipalities) &&
-            ErrorComponent(() => {
-              if (props.selectedProvince) {
-                props.requestAvailableMunicipalities(props.selectedProvince);
-              }
-            })}
+            ErrorComponent(requestMunicipalitiesWithSelectedProvince)}
         </View>
         <ItemsPicker
           key={"municipality"}
