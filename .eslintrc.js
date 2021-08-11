@@ -13,7 +13,14 @@ module.exports = {
     project: "tsconfig.json",
     sourceType: "module"
   },
-  plugins: ["@typescript-eslint", "react", "import", "functional", "sonarjs"],
+  plugins: [
+    "@typescript-eslint",
+    "react",
+    "react-hooks",
+    "import",
+    "functional",
+    "sonarjs"
+  ],
   rules: {
     "no-case-declarations": "off",
     "no-inner-declarations": "off",
@@ -79,6 +86,7 @@ module.exports = {
     "react/display-name": "off",
     "react/jsx-key": "error",
     "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
+    "react-hooks/rules-of-hooks": "warn",
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
