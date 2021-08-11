@@ -19,7 +19,6 @@ import { University } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
 import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
-import ItemsPicker from "../../../../../components/ui/ItemsPicker";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -63,11 +62,6 @@ const StudentSelectDestinationScreen = (
               "bonus.sv.voucherGeneration.student.selectDestination.title"
             )}
           </H1>
-          <ItemsPicker
-            placeholder={"Seleziona un comune"}
-            items={[]}
-            // onValueChange={(a, b) => true}
-          />
         </ScrollView>
 
         <FooterWithButtons
