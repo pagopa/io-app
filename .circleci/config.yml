@@ -536,7 +536,7 @@ jobs:
 
 workflows:
   version: 2
-  merge-pull-request-checks:
+  build:
     jobs:
       - compile-typescript
       - run-tests
