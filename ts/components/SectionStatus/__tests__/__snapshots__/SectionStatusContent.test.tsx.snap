@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusContent should match the snapshot 1`] = `
+<View
+  accessibilityLabel="a label"
+  accessibilityRole="link"
+  accessible={true}
+  style={
+    Array [
+      Object {
+        "alignContent": "center",
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "paddingBottom": 8,
+        "paddingLeft": 24,
+        "paddingRight": 24,
+        "paddingTop": 8,
+        "width": "100%",
+      },
+      Object {
+        "backgroundColor": "#00C5CA",
+      },
+    ]
+  }
+  testID="SectionStatusContent"
+>
+  <Text
+    accessibilityElementsHidden={true}
+    accessibilityLabel=""
+    accessible={false}
+    allowFontScaling={false}
+    importantForAccessibility="no-hide-descendants"
+    style={
+      Array [
+        Object {
+          "color": "#00C5CA",
+          "fontSize": 24,
+        },
+        Array [
+          Array [
+            Object {},
+            Object {
+              "alignSelf": "center",
+            },
+          ],
+          Object {
+            "color": "#00C5CA",
+          },
+          Object {
+            "fontSize": 24,
+          },
+        ],
+        Object {
+          "fontFamily": "io-icon-font",
+          "fontStyle": "normal",
+          "fontWeight": "normal",
+        },
+        Object {},
+      ]
+    }
+  >
+    
+  </Text>
+  <Text
+    color="white"
+    defaultColor="blue"
+    defaultWeight="Bold"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "marginLeft": 16,
+        },
+        Object {
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#FFFFFF",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  />
+</View>
+`;
