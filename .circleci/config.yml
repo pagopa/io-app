@@ -528,20 +528,13 @@ workflows:
   build:
     jobs:
       - compile-typescript
-#      - run-tests
-#      - eslint
+      - run-tests
+      - eslint
 
-#      - run-danger:
-#          filters:
-#            branches:
-#              ignore: master
-      - alpha-release-android:
-          requires:
-            - compile-typescript
-      - ios-beta-release:
-          requires:
-            - compile-typescript
-
+      - run-danger:
+          filters:
+            branches:
+              ignore: master
 
       # To avoid running too many (long) native builds and tests, this step
       # waits the approval for the Android native tests.
