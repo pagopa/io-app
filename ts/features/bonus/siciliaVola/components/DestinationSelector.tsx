@@ -1,5 +1,9 @@
 import * as React from "react";
+import { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { View } from "native-base";
 import {
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableProvince,
@@ -8,16 +12,12 @@ import {
   svGenerateVoucherFailure
 } from "../store/actions/voucherGeneration";
 import { GlobalState } from "../../../../store/reducers/types";
-import { connect } from "react-redux";
 import ItemsPicker from "../../../../components/ui/ItemsPicker";
-import { useEffect } from "react";
 import {
   availableStateItemsSelector,
   availableStatesSelector
 } from "../store/reducers/availableStates";
-import { View } from "native-base";
 import { H5 } from "../../../../components/core/typography/H5";
-import { ActivityIndicator } from "react-native";
 import { isError, isLoading } from "../../bpd/model/RemoteValue";
 import {
   availableRegionsItemsSelector,
@@ -76,18 +76,21 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    if (props.selectedState && props.selectedState === italyId)
+    if (props.selectedState && props.selectedState === italyId) {
       props.requestAvailableRegions();
+    }
   }, [props.selectedState]);
 
   useEffect(() => {
-    if (props.selectedRegion)
+    if (props.selectedRegion) {
       props.requestAvailableProvinces(props.selectedRegion);
+    }
   }, [props.selectedRegion]);
 
   useEffect(() => {
-    if (props.selectedProvince)
+    if (props.selectedProvince) {
       props.requestAvailableMunicipalities(props.selectedProvince);
+    }
   }, [props.selectedProvince]);
 
   return (
@@ -160,8 +163,9 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           {isLoading(props.availableProvinces) && <LoadingComponent />}
           {isError(props.availableProvinces) &&
             ErrorComponent(() => {
-              if (props.selectedRegion)
+              if (props.selectedRegion) {
                 props.requestAvailableProvinces(props.selectedRegion);
+              }
             })}
         </View>
         <ItemsPicker
@@ -191,8 +195,9 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           {isLoading(props.availableMunicipalities) && <LoadingComponent />}
           {isError(props.availableMunicipalities) &&
             ErrorComponent(() => {
-              if (props.selectedProvince)
+              if (props.selectedProvince) {
                 props.requestAvailableMunicipalities(props.selectedProvince);
+              }
             })}
         </View>
         <ItemsPicker

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import {
   IndexedById,
   toArray,
@@ -21,7 +22,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { PickerItems } from "../../../../../components/ui/ItemsPicker";
 
