@@ -93,7 +93,7 @@ jobs:
       - run: yarn generate:all
       # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
-      - run: yarn tsc:noemit
+#      - run: yarn tsc:noemit
 
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
@@ -425,7 +425,7 @@ jobs:
             - *ios_gems_cache_key
 
       # Set Ruby Version for chruby
-      - run: echo "ruby-2.7" > .ruby-version
+#      - run: echo "ruby-2.7" > .ruby-version
 
       - run:
           name: Configure Bundler
@@ -538,13 +538,16 @@ workflows:
   build:
     jobs:
       - compile-typescript
-      - run-tests
-      - eslint
+#      - run-tests
+#      - eslint
 
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
+#      - run-danger:
+#          filters:
+#            branches:
+#              ignore: master
+      - ios-beta-release:
+          requires:
+            - compile-typescript
 
 
       # To avoid running too many (long) native builds and tests, this step
