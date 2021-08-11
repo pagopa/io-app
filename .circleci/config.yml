@@ -477,17 +477,14 @@ jobs:
             PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
             echo $PREVIOUS_TAG
 
-      # new build!
       # Run alpha lane
       - run:
           name: Build & submit to App store
-          command: cd ios && bundle exec fastlane beta_circleci_testflight
-
-      # Save workspace for next jobs in the workflow
-#      - persist_to_workspace:
-#          root: /Users/distiller
-#          paths:
-#            - italia-app
+          command: |
+            PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
+            echo $PREVIOUS_TAG
+            cd ios
+            bundle exec fastlane beta_circleci_testflight
 
 
   # Run end-to-end iOS tests

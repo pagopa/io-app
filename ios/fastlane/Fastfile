@@ -219,6 +219,7 @@ platform :ios do
     previous_tag = "#{ENV['PREVIOUS_TAG']}"
 
     echo(message: previous_tag)
+    echo(message: ENV["PREVIOUS_TAG"])
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
