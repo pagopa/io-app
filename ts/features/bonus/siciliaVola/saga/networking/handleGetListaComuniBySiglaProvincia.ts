@@ -45,6 +45,7 @@ export function* handleGetListaComuniBySiglaProvincia(
             convertSuccess(getListaComuniResult.value.value)
           )
         );
+        return;
       }
       if (mapKinds[getListaComuniResult.value.status] !== undefined) {
         yield put(
@@ -54,15 +55,14 @@ export function* handleGetListaComuniBySiglaProvincia(
             )
           })
         );
+        return;
       }
-    } else {
-      // cannot decode response
-      yield put(
-        svGenerateVoucherAvailableMunicipality.failure({
-          ...getGenericError(new Error("Generic Error"))
-        })
-      );
     }
+    yield put(
+      svGenerateVoucherAvailableMunicipality.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
   } catch (e) {
     yield put(
       svGenerateVoucherAvailableMunicipality.failure({ ...getNetworkError(e) })

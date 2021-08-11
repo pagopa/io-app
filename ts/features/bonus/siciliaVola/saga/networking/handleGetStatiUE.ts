@@ -40,6 +40,7 @@ export function* handleGetStatiUE(
             convertSuccess(getStatiUEResult.value.value)
           )
         );
+        return;
       }
       if (mapKinds[getStatiUEResult.value.status] !== undefined) {
         yield put(
@@ -49,15 +50,14 @@ export function* handleGetStatiUE(
             )
           })
         );
+        return;
       }
-    } else {
-      // cannot decode response
-      yield put(
-        svGenerateVoucherAvailableState.failure({
-          ...getGenericError(new Error("Generic Error"))
-        })
-      );
     }
+    yield put(
+      svGenerateVoucherAvailableState.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
   } catch (e) {
     yield put(
       svGenerateVoucherAvailableState.failure({ ...getNetworkError(e) })

@@ -45,6 +45,7 @@ export function* handleGetListaProvinceByIdRegione(
             convertSuccess(getListaProvinceResult.value.value)
           )
         );
+        return;
       }
       if (mapKinds[getListaProvinceResult.value.status] !== undefined) {
         yield put(
@@ -54,15 +55,14 @@ export function* handleGetListaProvinceByIdRegione(
             )
           })
         );
+        return;
       }
-    } else {
-      // cannot decode response
-      yield put(
-        svGenerateVoucherAvailableProvince.failure({
-          ...getGenericError(new Error("Generic Error"))
-        })
-      );
     }
+    yield put(
+      svGenerateVoucherAvailableProvince.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
   } catch (e) {
     yield put(
       svGenerateVoucherAvailableProvince.failure({ ...getNetworkError(e) })
