@@ -78,7 +78,9 @@ const generateItems = (
       />
     ));
   }
-  return items.map(i => <Picker.Item label={i.label} value={i.value} />);
+  return items.map(i => (
+    <Picker.Item label={i.label} value={i.value} key={i.value} />
+  ));
 };
 /**
  * Wrapper around the native-base Picker component.
