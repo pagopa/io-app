@@ -218,7 +218,7 @@ platform :ios do
 
     previous_tag = "#{ENV['PREVIOUS_TAG']}"
 
-#     echo(previous_tag)
+    echo(message: previous_tag)
 
     # generate the changelog based on last commits
     changelog = changelog_from_git_commits(
@@ -226,7 +226,7 @@ platform :ios do
       pretty:"- %s"
     )
 
-    echo changelog
+    echo(message: changelog)
 
     # Install pods
     cocoapods
