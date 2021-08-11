@@ -18,6 +18,7 @@ import color from "color";
 import { Input as InputNativeBase } from "native-base";
 import { TextInputMaskProps } from "react-native-masked-text";
 
+import { isStringNullyOrEmpty } from "../../utils/strings";
 import { makeFontStyleObject } from "../core/fonts";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -67,6 +68,17 @@ type CommonProp = Readonly<{
 
 export type Props = WithTestID<CommonProp>;
 
+const brandGrayDarken = color(variables.brandGray).darken(0.2).string();
+
+type DescriptionColor = "bluegreyLight" | "bluegreyDark" | "red";
+type LabelColor = Exclude<DescriptionColor, "red">;
+type ColorByProps = {
+  borderColor: string | undefined;
+  descriptionColor: DescriptionColor;
+  iconColor: string;
+  labelColor: LabelColor;
+  placeholderTextColor: string;
+};
 function getColorsByProps({
   isDisabledTextInput,
   hasFocus,
@@ -77,40 +89,23 @@ function getColorsByProps({
   hasFocus: boolean;
   isEmpty: boolean;
   isValid?: boolean;
-}) {
-  const borderColor = isDisabledTextInput
-    ? IOColors.greyLight
-    : hasFocus && isEmpty
-    ? variables.itemBorderDefaultColor
-    : undefined;
-
-  // weird type needed to be accepted as H5 prop
-  const descriptionColor:
-    | "bluegreyLight"
-    | "red"
-    | "bluegreyDark" = isDisabledTextInput
-    ? "bluegreyLight"
-    : isValid === false
-    ? "red"
-    : "bluegreyDark";
-  const iconColor = isDisabledTextInput
-    ? IOColors.bluegreyLight
-    : variables.brandDarkGray;
-  // weird type needed to be accepted as H5 prop
-  const labelColor: "bluegreyLight" | "bluegreyDark" = isDisabledTextInput
-    ? "bluegreyLight"
-    : "bluegreyDark";
-
-  const placeholderTextColor = isDisabledTextInput
-    ? color(IOColors.bluegreyLight).string()
-    : color(variables.brandGray).darken(0.2).string();
-
+}): ColorByProps {
+  if (isDisabledTextInput) {
+    return {
+      borderColor: IOColors.greyLight,
+      descriptionColor: "bluegreyLight",
+      iconColor: IOColors.bluegreyLight,
+      labelColor: "bluegreyLight",
+      placeholderTextColor: IOColors.bluegreyLight
+    };
+  }
   return {
-    borderColor,
-    descriptionColor,
-    iconColor,
-    placeholderTextColor,
-    labelColor
+    borderColor:
+      hasFocus && isEmpty ? variables.itemBorderDefaultColor : undefined,
+    descriptionColor: isValid === false ? "red" : "bluegreyDark",
+    iconColor: variables.brandDarkGray,
+    placeholderTextColor: brandGrayDarken,
+    labelColor: "bluegreyDark"
   };
 }
 export const LabelledItem: React.FC<Props> = ({
@@ -148,10 +143,8 @@ export const LabelledItem: React.FC<Props> = ({
   /**
    * check if the input is empty and set the value in the state
    */
-  const checkInputIsEmpty = (text?: string) => {
-    const isInputEmpty = text === undefined || text.length === 0;
-    setIsEmpty(isInputEmpty);
-  };
+  const checkInputIsEmpty = (text?: string) =>
+    setIsEmpty(isStringNullyOrEmpty(text));
 
   return (
     <View style={styles.flex}>
