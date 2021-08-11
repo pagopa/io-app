@@ -7,7 +7,7 @@ import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { appReducer } from "../../../../../store/reducers";
 import ROUTES from "../../../../../navigation/routes";
 import I18n from "../../../../../i18n";
-import { svGenerateVoucherBack } from "../../store/actions/voucherGeneration";
+import { svGenerateVoucherCancel } from "../../store/actions/voucherGeneration";
 import {
   navigateToSvKoCheckResidenceScreen,
   navigateToSvSelectBeneficiaryCategoryScreen
@@ -78,12 +78,12 @@ describe("the CheckResidenceComponent", () => {
     expect(store.getActions()).toEqual([navigateToSvKoCheckResidenceScreen()]);
   });
 
-  describe("when the back button is pressed", () => {
-    it("should go back", () => {
+  describe("when the cancel button is pressed", () => {
+    it("should dispatch a `svGenerateVoucherCancel` action", () => {
       const { component, store } = renderComponent();
-      const backButton = component.getByText(I18n.t("global.buttons.back"));
-      fireEvent(backButton, "onPress");
-      expect(store.getActions()).toEqual([svGenerateVoucherBack()]);
+      const cancelButton = component.getByText(I18n.t("global.buttons.cancel"));
+      fireEvent(cancelButton, "onPress");
+      expect(store.getActions()).toEqual([svGenerateVoucherCancel()]);
     });
   });
 });

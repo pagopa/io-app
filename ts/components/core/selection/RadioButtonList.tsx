@@ -52,13 +52,7 @@ export const RadioButtonList = <T extends any>(props: Props<T>) => (
     )}
     <View style={styles.itemsContainer}>
       {props.items.map((item, key) => (
-        <View
-          key={`radio_item_${key}`}
-          style={styles.item}
-          accessible={true}
-          accessibilityLabel={item.label}
-          accessibilityRole="radio"
-        >
+        <View key={`radio_item_${key}`} style={styles.item}>
           <IconFont
             name={
               props.selectedItem === item.id ? "io-radio-on" : "io-radio-off"

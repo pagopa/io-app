@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -13,7 +13,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../store/reducers/types";
-import { svGenerateVoucherBack } from "../store/actions/voucherGeneration";
+import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   navigateToSvKoCheckResidenceScreen,
@@ -41,12 +41,11 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.back,
-    title: I18n.t("global.buttons.back")
+    onPress: props.cancel,
+    title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
     primary: false,
@@ -65,11 +64,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"CheckResidenceComponent"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"CheckResidenceComponent"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
           <View spacer={true} />
@@ -96,7 +91,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(svGenerateVoucherBack()),
+  cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvSelectBeneficiaryCategory: () =>
     dispatch(navigateToSvSelectBeneficiaryCategoryScreen()),
   navigateToSvKoCheckResidence: () =>
