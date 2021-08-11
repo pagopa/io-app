@@ -35,7 +35,6 @@ defaults_android: &defaults_android
     ANDROID_GOOGLE_API_LEVEL: "23"
     # - REACT_NATIVE_MAX_WORKERS: 1
     GRADLE_OPTS: '-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx8g -XX:MaxPermSize=4096m -XX:+HeapDumpOnOutOfMemoryError"'
-    RUBY_VERSION: ruby-2.7
 
 # macos builds
 defaults_macos: &defaults_macos
