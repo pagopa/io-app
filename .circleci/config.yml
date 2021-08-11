@@ -93,9 +93,8 @@ jobs:
       - run: yarn generate:all
       # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
-      #TODO remove after test start
-#      - run: yarn tsc:noemit
-      #TODO remove after test end
+      - run: yarn tsc:noemit
+
 
       # Save workspace for next jobs in the workflow
       - persist_to_workspace:
@@ -407,7 +406,7 @@ jobs:
             - italia-app
 
 
-  # Create release build and submit to the store
+  # Create a release build, submit to the store and distributes to the beta testers
   ios-beta-release:
     <<: *defaults_macos
 
@@ -433,18 +432,6 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      # Remove watchman from node global packages
-#      - run:
-#          name: Remove watchman from node global packages
-#          command: npm r -g watchman
-
-      # Install watchman with brew
-#      - run:
-#          name: Install watchman
-#          command: |
-#            brew update
-#            brew install watchman || exit 0
-
       # Install bundle dependencies
       - run:
           name: Bundle Install
@@ -461,17 +448,11 @@ jobs:
       # Fetch CocoaPods specs
 #      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
-      # Re-run postinstall scripts (setup of react-native libs)
-#      - run: npm run postinstall
-
-      # Install pods
-#      - run: cd ios && bundle exec pod install --verbose
-
       - add_ssh_keys:
           fingerprints:
             - "f6:10:4f:48:64:51:83:2c:e4:3c:80:36:42:f2:4c:0b"
 
-      # Run alpha lane
+      # Run beta_circleci_testflight lane
       - run:
           name: Build & submit to App store
           command: |
@@ -551,24 +532,17 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  merge-pull-request-checks:
     jobs:
       - compile-typescript
+      - run-tests
+      - eslint
 
-      - ios-beta-release:
-          requires:
-            - compile-typescript
+      - run-danger:
+          filters:
+            branches:
+              ignore: master
 
-        #start test
-#      - run-tests
-
-#      - eslint
-
-#      - run-danger:
-#          filters:
-#            branches:
-#              ignore: master
-        #end test
 
       # To avoid running too many (long) native builds and tests, this step
       # waits the approval for the Android native tests.
@@ -625,6 +599,18 @@ workflows:
 
       # Build Android alpha release & submit to play store
       - alpha-release-android:
+          requires:
+            - compile-typescript
+            - run-tests
+            - eslint
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      # Create a release build, submit to the store and distributes to the beta testers
+      - ios-beta-release:
           requires:
             - compile-typescript
             - run-tests
