@@ -188,6 +188,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
     // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
     const idpIntent = getIntentFallbackUrl(url);
     if (idpIntent.isSome()) {
+      void mixpanelTrack("SPID_LOGIN_INTENT", {
+        idp: this.props.loggedOutWithIdpAuth?.idp
+      });
       void Linking.openURL(idpIntent.value);
       return false;
     }
