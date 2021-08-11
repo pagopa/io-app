@@ -1,45 +1,59 @@
-import * as React from "react";
-import { useRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../components/core/selection/RadioButtonList";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
+import { Body } from "../../../../components/core/typography/Body";
 import { GlobalState } from "../../../../store/reducers/types";
-import { svGenerateVoucherBack } from "../store/actions/voucherGeneration";
+import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   navigateToSvKoCheckResidenceScreen,
   navigateToSvSelectBeneficiaryCategoryScreen
 } from "../navigation/actions";
 import I18n from "../../../../i18n";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+const getCheckResidencyRegionItems = (): ReadonlyArray<RadioItem<boolean>> => [
+  {
+    label: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily"),
+    id: true
+  },
+  {
+    label: I18n.t(
+      "bonus.sv.voucherGeneration.checkResidence.items.notInSicily"
+    ),
+    id: false
+  }
+];
 
 const CheckResidenceComponent = (props: Props): React.ReactElement => {
   const [isResidentInSicily, setIsResidentInSicily] = React.useState<
     boolean | undefined
   >();
 
-  const elementRef = useRef(null);
-  const backButtonProps = {
-    primary: false,
-    bordered: true,
-    onPress: props.back,
-    title: "Back"
-  };
   const cancelButtonProps = {
     primary: false,
     bordered: true,
+    onPress: props.cancel,
+    title: I18n.t("global.buttons.cancel")
+  };
+  const continueButtonProps = {
+    bordered: false,
     onPress:
       isResidentInSicily === true
         ? props.navigateToSvSelectBeneficiaryCategory
         : props.navigateToSvKoCheckResidence,
-    title: "Continue",
+    title: I18n.t("global.buttons.continue"),
     disabled: isResidentInSicily === undefined
   };
 
@@ -49,32 +63,34 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"CheckResidenceComponent"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"CheckResidenceComponent"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
+          <View spacer={true} />
 
-          <ButtonDefaultOpacity onPress={() => setIsResidentInSicily(true)}>
-            <Text> {"Resident In Sicily"} </Text>
-          </ButtonDefaultOpacity>
-          <ButtonDefaultOpacity onPress={() => setIsResidentInSicily(false)}>
-            <Text> {"Not ResidentInSicily"} </Text>
-          </ButtonDefaultOpacity>
+          <RadioButtonList<boolean>
+            key="check_income"
+            items={getCheckResidencyRegionItems()}
+            selectedItem={isResidentInSicily}
+            onPress={setIsResidentInSicily}
+          />
+          <View spacer={true} />
+          <Body>
+            {I18n.t("bonus.sv.voucherGeneration.checkResidence.info")}
+          </Body>
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
-          rightButton={cancelButtonProps}
+          leftButton={cancelButtonProps}
+          rightButton={continueButtonProps}
         />
       </SafeAreaView>
     </BaseScreenComponent>
   );
 };
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(svGenerateVoucherBack()),
+  cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvSelectBeneficiaryCategory: () =>
     dispatch(navigateToSvSelectBeneficiaryCategoryScreen()),
   navigateToSvKoCheckResidence: () =>
