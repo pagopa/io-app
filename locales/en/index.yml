@@ -120,6 +120,7 @@ global:
     dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: There is a temporary problem, please try again.
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
@@ -2613,7 +2614,14 @@ bonus:
           under: "to have a gross annual income of less than or equal to {{amount}}"
           over: "to have a gross annual income exceeding {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Flight date"
+        subtitle: "Please indicate the type of flight and the date (s) you will travel on"
+        flights_choice:
+          departure: "One way flight"
+          return: "Round trip"
+        labels:
+          departure: "Departure date"
+          return: "Return date"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
