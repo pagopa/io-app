@@ -120,6 +120,7 @@ global:
     dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: There is a temporary problem, please try again.
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
@@ -888,6 +889,14 @@ wallet:
   accessibility:
     sectionCardLabel: "Update payment methods"
     sectionCardHint: "Update the list of payment methods"
+    folded:
+      creditCard: "{{brand}} card, the number ends with {{blurredNumber}}"
+      bancomat: "{{bankName}} BANCOMAT"
+      coBadge: "{{brand}} Card, {{bankName}}"
+      bancomatPay: "{{bankName}} BANCOMATPay"
+      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
+      cta: "View method details"
+      bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -937,6 +946,7 @@ wallet:
         title: "Sorry, we haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Add Satispay"
       start:
         title: "Do you want to add your Satispay account to IO?"
@@ -2583,7 +2593,10 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Additional informations"
+          disclaimer:
+            normal: "I declare that I meet the requirements referred to in "
+            link: "Article 3, paragraph 3, of the law of February 5, 1992, no. 104"
       worker:
         selectDestination:
           title: "WorkerSelectDestinationScreen"
@@ -2596,7 +2609,14 @@ bonus:
           under: "to have a gross annual income of less than or equal to {{amount}}"
           over: "to have a gross annual income exceeding {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Flight date"
+        subtitle: "Please indicate the type of flight and the date (s) you will travel on"
+        flights_choice:
+          departure: "One way flight"
+          return: "Round trip"
+        labels:
+          departure: "Departure date"
+          return: "Return date"
       summary:
         title: "SummaryScreen"
       voucherGenerated:

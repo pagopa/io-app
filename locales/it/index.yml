@@ -120,6 +120,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: C'è un problema temporaneo, riprova.
   genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
@@ -906,6 +907,14 @@ wallet:
   accessibility:
     sectionCardLabel: "Aggiorna metodi di pagamento"
     sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
+    folded:
+      creditCard: "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}"
+      bancomat: "BANCOMAT {{bankName}}"
+      coBadge: "Carta {{brand}}, {{bankName}}"
+      bancomatPay: "BANCOMATPay {{bankName}}"
+      privative: "Carta fedeltà, il numero della carta finisce con {{blurredNumber}}"
+      cta: "Visualizza i dettagli del metodo"
+      bankNotAvailable: "nome banca non disponibile"
     addElement: Aggiungi elemento al portafoglio
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     transactionListItem:
@@ -955,6 +964,7 @@ wallet:
         title: "Spiacenti, non abbiamo trovato nessuna servizio BANCOMAT Pay attivo"
         body: "Contatta la tua Banca per attivare BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Aggiungi Satispay"
       start:
         title: "Vuoi aggiungere su IO il tuo account Satispay?"
@@ -2611,7 +2621,10 @@ bonus:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Informazioni aggiuntive"
+          disclaimer:
+            normal: "Dichiaro di possedere i requisiti di cui all’"
+            link: "articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
       worker:
         selectDestination:
           title: "WorkerSelectDestinationScreen"
@@ -2624,7 +2637,14 @@ bonus:
           under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
           over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Data del volo"
+        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
+        flights_choice:
+          departure: "Volo di sola andata"
+          return: "Andata e ritorno"
+        labels:
+          departure: "Data di partenza"
+          return: "Data di ritorno"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
