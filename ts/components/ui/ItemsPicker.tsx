@@ -72,7 +72,7 @@ const generateItems = (
     return addAndroidPlaceholder(placeholder, items).map(i => (
       <Picker.Item
         label={i.label}
-        value={undefined}
+        value={i.value}
         color={i.disabled ? IOColors.bluegreyLight : IOColors.bluegreyDark}
         key={i.value}
       />
