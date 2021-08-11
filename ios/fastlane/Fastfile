@@ -86,8 +86,7 @@ platform :ios do
       clean: true,
       export_method: "ad-hoc",
       workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false,
-      # sdk: "iphoneos8.4"
+      include_symbols: false
     )
   end
 
@@ -104,8 +103,7 @@ platform :ios do
       clean: true,
       export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false,
-      # sdk: "iphoneos8.4"
+      include_symbols: false
     )
   end
 
@@ -225,8 +223,7 @@ platform :ios do
       clean: true,
       export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false,
-      # sdk: "iphoneos8.4"
+      include_symbols: false
     )
 
     previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
