@@ -199,17 +199,6 @@ platform :ios do
   end
 
   desc "Submit a new Beta Build to TestFlight, using CircleCI"
-  lane :testsh do |options|
-
-  previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
-  changelog = changelog_from_git_commits(
-    tag_match_pattern: "*" +previous_tag + "*" ,
-    pretty:"- %s"
-  )
-
-  end
-
-  desc "Submit a new Beta Build to TestFlight, using CircleCI"
   lane :beta_circleci_testflight do |options|
 
     # Setup the circleci environment
@@ -227,19 +216,6 @@ platform :ios do
 
     sync_code_signing(type: "appstore", api_key: api_key)
 
-    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
-
-    echo(message: previous_tag)
-
-    # generate the changelog based on last commits
-    changelog = changelog_from_git_commits(
-      tag_match_pattern: "*" +previous_tag + "*" ,
-      pretty:"- %s",
-      merge_commit_filtering: "exclude_merges"
-    )
-
-    echo(message: changelog)
-
     # Install pods
     cocoapods
 
@@ -253,7 +229,14 @@ platform :ios do
       # sdk: "iphoneos8.4"
     )
 
+    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
 
+    # generate the changelog based on last commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "*" +previous_tag + "*" ,
+      pretty:"- %s",
+      merge_commit_filtering: "exclude_merges"
+    )
 
     # upload to itunes store
     pilot(
