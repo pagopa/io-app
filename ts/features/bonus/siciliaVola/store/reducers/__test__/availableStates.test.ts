@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { createStore } from "redux";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -9,6 +8,12 @@ import {
 import { getTimeoutError } from "../../../../../../utils/errors";
 import { State } from "../../../types/SvVoucherRequest";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined
+} from "../../../../bpd/model/RemoteValue";
 
 const genericError = getTimeoutError();
 
@@ -22,7 +27,7 @@ describe("Test availableRegion reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(
       globalState.bonus.sv.voucherGeneration.availableStates
-    ).toStrictEqual(pot.none);
+    ).toStrictEqual(remoteUndefined);
   });
   it("Should be pot.none after if the voucher generation workunit starts", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -31,7 +36,7 @@ describe("Test availableRegion reducer", () => {
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableStates
-    ).toStrictEqual(pot.none);
+    ).toStrictEqual(remoteUndefined);
   });
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -40,7 +45,7 @@ describe("Test availableRegion reducer", () => {
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableStates
-    ).toStrictEqual(pot.noneLoading);
+    ).toStrictEqual(remoteLoading);
   });
   it("Should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -49,7 +54,7 @@ describe("Test availableRegion reducer", () => {
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableStates
-    ).toStrictEqual(pot.some(toIndexed(mockResponse, mR => mR.id)));
+    ).toStrictEqual(remoteReady(toIndexed(mockResponse, mR => mR.id)));
   });
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -59,6 +64,6 @@ describe("Test availableRegion reducer", () => {
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableStates
-    ).toStrictEqual(pot.toError(pot.none, genericError));
+    ).toStrictEqual(remoteError(genericError));
   });
 });
