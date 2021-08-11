@@ -238,10 +238,13 @@ platform :ios do
       merge_commit_filtering: "exclude_merges"
     )
 
-    # upload to itunes store
+    # upload to App store
     pilot(
       api_key: api_key,
-      changelog: changelog
+      changelog: changelog,
+      distribute_external: true,
+      notify_external_testers: true,
+      groups: ["Amici&Familiari", "PagoPa"],
     )
   end
 
