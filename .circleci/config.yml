@@ -270,7 +270,7 @@ jobs:
   test-ios:
     <<: *defaults_macos
 
-    # Not supported atm
+    # Not supported with the current plan
     # resource_class: large
 
     steps:
@@ -329,7 +329,7 @@ jobs:
   test-ios-e2e-build:
     <<: *defaults_macos
 
-    # Not supported atm
+    # Not supported with the current plan
     # resource_class: large
 
     steps:
@@ -411,7 +411,7 @@ jobs:
   ios-beta-release:
     <<: *defaults_macos
 
-    # Not supported atm
+    # Not supported with the current plan
     # resource_class: large
 
     steps:
@@ -466,7 +466,7 @@ jobs:
   test-ios-e2e-run:
     <<: *defaults_macos
 
-    # Not supported atm
+    # Not supported with the current plan
     # resource_class: large
 
     steps:
