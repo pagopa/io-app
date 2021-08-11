@@ -12,7 +12,7 @@ import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import SectionStatusComponent from "../../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../../components/SectionStatus";
 
 type Props = WithTestID<{
   content: React.ReactElement;

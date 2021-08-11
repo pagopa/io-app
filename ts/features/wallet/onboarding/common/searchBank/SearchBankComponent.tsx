@@ -70,7 +70,6 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   return (
     <>
       <LabelledItem
-        type="text"
         label={isLoading ? undefined : I18n.t("wallet.searchAbi.bankName")}
         inputProps={{
           value: searchText,

@@ -74,7 +74,6 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
         <View style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
           <LabelledItem
-            type="text"
             inputProps={{
               value: searchValue,
               autoFocus: true,
