@@ -77,6 +77,7 @@ global:
     active: State active
     inactive: State inactive
     linkHint: Activating this item you will be redirected to the web browser of your device
+    alert: Alert
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -1082,8 +1083,8 @@ wallet:
     bPay:
       successful: BancomatPay successfully removed
       failed: BancomatPay could not be removed
-    successful: Card successfully removed
-    failed: The card could not be removed
+    successful: Payment method successfully removed
+    failed: The payment method could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add

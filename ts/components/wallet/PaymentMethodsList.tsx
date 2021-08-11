@@ -25,7 +25,7 @@ import {
   backendStatusSelector,
   SectionStatusKey
 } from "../../store/reducers/backendStatus";
-import { statusColorMap } from "../SectionStatusComponent";
+import { statusColorMap } from "../SectionStatus";
 import { getFullLocale } from "../../utils/locale";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";

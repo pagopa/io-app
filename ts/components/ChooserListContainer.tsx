@@ -128,7 +128,6 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
         <Right>
           {searchText.isSome() ? (
             <LabelledItem
-              type="text"
               inputProps={{
                 placeholder: I18n.t("global.actions.search"),
                 value: searchText.value,

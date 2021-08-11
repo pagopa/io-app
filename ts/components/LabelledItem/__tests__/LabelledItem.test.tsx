@@ -1,19 +1,16 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { isString } from "lodash";
 import React from "react";
-import { LabelledItem, Props } from "../LabelledItem";
-import { InputProps } from "../LabelledItem/Input";
+import { LabelledItem, Props } from "../index";
 
 jest.mock("react-navigation", () => ({
   NavigationEvents: "mockNavigationEvents"
 }));
 
-const textInputProps: InputProps = {
-  type: "text",
+const textInputProps = {
   inputProps: { value: "value" }
-};
-const textInputMaskProps: InputProps = {
-  type: "masked",
+} as Props;
+const textInputMaskProps = {
   inputMaskProps: {
     value: "value",
     type: "custom",
@@ -21,7 +18,7 @@ const textInputMaskProps: InputProps = {
       mask: "9999 9999 9999 9999 999"
     }
   }
-};
+} as Props;
 const onPress = jest.fn();
 const icon = "io-place";
 const iconPosition = "left";
@@ -72,20 +69,38 @@ describe("Test LabelledItem", () => {
     expect(component.queryByText(description)).toBeTruthy();
   });
 
-  it("should render TextInputMask if type is equal to masked", () => {
-    const component = renderComponent({
-      ...textInputMaskProps,
-      testID
+  describe("when `inputMaskProps` is defined", () => {
+    it("should render TextInputMask", () => {
+      const component = renderComponent({
+        ...textInputMaskProps,
+        testID
+      });
+      expect(component.queryByTestId(`${testID}InputMask`)).not.toBeNull();
     });
-    expect(component.queryByTestId(`${testID}InputMask`)).not.toBeNull();
+    it("should not render the InputNativeBase", () => {
+      const component = renderComponent({
+        ...textInputMaskProps,
+        testID
+      });
+      expect(component.queryByTestId(`${testID}Input`)).toBeNull();
+    });
   });
 
-  it("should render InputNativeBase if type is equal to text", () => {
-    const component = renderComponent({
-      ...textInputProps,
-      testID
+  describe("when `inputProps` is defined", () => {
+    it("should render the InputNativeBase", () => {
+      const component = renderComponent({
+        ...textInputProps,
+        testID
+      });
+      expect(component.queryByTestId(`${testID}Input`)).not.toBeNull();
     });
-    expect(component.queryByTestId(`${testID}Input`)).not.toBeNull();
+    it("should not render TextInputMask", () => {
+      const component = renderComponent({
+        ...textInputProps,
+        testID
+      });
+      expect(component.queryByTestId(`${testID}InputMask`)).toBeNull();
+    });
   });
 
   it("should render IconFont if icon is a string", () => {

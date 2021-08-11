@@ -37,7 +37,6 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={{ flex: 1 }}>
         <Content>
           <LabelledItem
-            type={"text"}
             label={I18n.t("global.username")}
             icon="io-titolare"
             isValid={
@@ -54,7 +53,6 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
           <View spacer={true} />
 
           <LabelledItem
-            type={"text"}
             label={I18n.t("global.password")}
             icon="io-lucchetto"
             isValid={password.length > 0 ? true : undefined}
