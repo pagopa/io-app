@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import {
+  svGenerateVoucherAvailableMunicipality,
+  svGenerateVoucherAvailableProvince,
   svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherFailure
@@ -21,16 +23,25 @@ import {
   availableRegionsItemsSelector,
   availableRegionsSelector
 } from "../store/reducers/availableRegions";
+import {
+  availableProvincesItemsSelector,
+  availableProvincesSelector
+} from "../store/reducers/availableProvinces";
+import {
+  availableMunicipalitiesItemsSelector,
+  availableMunicipalitiesSelector
+} from "../store/reducers/availableMunicipalities";
+import i18n from "../../../../i18n";
 
 type OwnProps = {
   selectedState: number | undefined;
   setSelectedState: (stateId: number) => void;
   selectedRegion: number | undefined;
   setSelectedRegion: (regionId: number) => void;
-  selectedProvince: number | undefined;
-  setSelectedProvince: (provinceId: number) => void;
-  selectedMunicipality: number | undefined;
-  setSelectedMunicipality: (municipalityId: number) => void;
+  selectedProvince: string | undefined;
+  setSelectedProvince: (provinceId: string) => void;
+  selectedMunicipality: string | undefined;
+  setSelectedMunicipality: (municipalityId: string) => void;
 };
 
 const italyId = 14;
@@ -54,7 +65,7 @@ const ErrorComponent = (onPress: () => void) => (
     style={{ textDecorationLine: "underline" }}
     onPress={onPress}
   >
-    {"Riprova"}
+    {i18n.t("global.genericRetry")}
   </H5>
 );
 
@@ -69,18 +80,35 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       props.requestAvailableRegions();
   }, [props.selectedState]);
 
+  useEffect(() => {
+    if (props.selectedRegion)
+      props.requestAvailableProvinces(props.selectedRegion);
+  }, [props.selectedRegion]);
+
+  useEffect(() => {
+    if (props.selectedProvince)
+      props.requestAvailableMunicipalities(props.selectedProvince);
+  }, [props.selectedProvince]);
+
   return (
     <>
       <View>
         <View style={{ flex: 1, flexDirection: "row" }}>
-          <H5 color={"bluegreyDark"}>{"Stato"}</H5>
+          <H5 color={"bluegreyDark"}>
+            {i18n.t(
+              "bonus.sv.voucherGeneration.selectDestinationCommon.state.label"
+            )}
+          </H5>
           <View hspacer={true} />
           {isLoading(props.availableStates) && <LoadingComponent />}
           {isError(props.availableStates) &&
             ErrorComponent(props.requestAvailableState)}
         </View>
         <ItemsPicker
-          placeholder={"Seleziona uno stato"}
+          key={"state"}
+          placeholder={i18n.t(
+            "bonus.sv.voucherGeneration.selectDestinationCommon.state.placeholder"
+          )}
           items={props.availableStatesItems}
           onValueChange={v => {
             if (typeof v === "number") {
@@ -93,14 +121,21 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       <View spacer={true} />
       <View>
         <View style={{ flex: 1, flexDirection: "row" }}>
-          <H5 color={"bluegreyDark"}>{"Regione"}</H5>
+          <H5 color={"bluegreyDark"}>
+            {i18n.t(
+              "bonus.sv.voucherGeneration.selectDestinationCommon.region.label"
+            )}
+          </H5>
           <View hspacer={true} />
           {isLoading(props.availableRegions) && <LoadingComponent />}
           {isError(props.availableRegions) &&
-            ErrorComponent(props.requestAvailableState)}
+            ErrorComponent(props.requestAvailableRegions)}
         </View>
         <ItemsPicker
-          placeholder={"Seleziona una regione"}
+          key={"region"}
+          placeholder={i18n.t(
+            "bonus.sv.voucherGeneration.selectDestinationCommon.region.placeholder"
+          )}
           items={props.availableRegionsItems}
           onValueChange={v => {
             if (typeof v === "number") {
@@ -115,12 +150,28 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View spacer={true} />
       <View>
-        <H5 color={"bluegreyDark"}>{"Provincia"}</H5>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>
+            {i18n.t(
+              "bonus.sv.voucherGeneration.selectDestinationCommon.province.label"
+            )}
+          </H5>
+          <View hspacer={true} />
+          {isLoading(props.availableProvinces) && <LoadingComponent />}
+          {isError(props.availableProvinces) &&
+            ErrorComponent(() => {
+              if (props.selectedRegion)
+                props.requestAvailableProvinces(props.selectedRegion);
+            })}
+        </View>
         <ItemsPicker
-          placeholder={"Seleziona una provincia"}
-          items={props.availableStatesItems}
+          key={"province"}
+          placeholder={i18n.t(
+            "bonus.sv.voucherGeneration.selectDestinationCommon.province.placeholder"
+          )}
+          items={props.availableProvincesItems}
           onValueChange={v => {
-            if (typeof v === "number") {
+            if (typeof v === "string") {
               props.setSelectedProvince(v);
             }
           }}
@@ -130,12 +181,28 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <View spacer={true} />
       <View>
-        <H5 color={"bluegreyDark"}>{"Comune"}</H5>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>
+            {i18n.t(
+              "bonus.sv.voucherGeneration.selectDestinationCommon.municipality.label"
+            )}
+          </H5>
+          <View hspacer={true} />
+          {isLoading(props.availableMunicipalities) && <LoadingComponent />}
+          {isError(props.availableMunicipalities) &&
+            ErrorComponent(() => {
+              if (props.selectedProvince)
+                props.requestAvailableMunicipalities(props.selectedProvince);
+            })}
+        </View>
         <ItemsPicker
-          placeholder={"Seleziona un comune"}
-          items={props.availableStatesItems}
+          key={"municipality"}
+          placeholder={i18n.t(
+            "bonus.sv.voucherGeneration.selectDestinationCommon.municipality.placeholder"
+          )}
+          items={props.availableMunicipalitiesItems}
           onValueChange={v => {
-            if (typeof v === "number") {
+            if (typeof v === "string") {
               props.setSelectedMunicipality(v);
             }
           }}
@@ -152,13 +219,21 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(svGenerateVoucherAvailableState.request()),
   requestAvailableRegions: () =>
     dispatch(svGenerateVoucherAvailableRegion.request()),
+  requestAvailableProvinces: (regionId: number) =>
+    dispatch(svGenerateVoucherAvailableProvince.request(regionId)),
+  requestAvailableMunicipalities: (provinceId: string) =>
+    dispatch(svGenerateVoucherAvailableMunicipality.request(provinceId)),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason))
 });
 const mapStateToProps = (state: GlobalState) => ({
   availableStates: availableStatesSelector(state),
   availableStatesItems: availableStateItemsSelector(state),
   availableRegions: availableRegionsSelector(state),
-  availableRegionsItems: availableRegionsItemsSelector(state)
+  availableRegionsItems: availableRegionsItemsSelector(state),
+  availableProvinces: availableProvincesSelector(state),
+  availableProvincesItems: availableProvincesItemsSelector(state),
+  availableMunicipalities: availableMunicipalitiesSelector(state),
+  availableMunicipalitiesItems: availableMunicipalitiesItemsSelector(state)
 });
 
 export default connect(
