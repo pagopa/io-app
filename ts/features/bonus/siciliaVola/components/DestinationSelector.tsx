@@ -1,13 +1,14 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import {
+  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherFailure
 } from "../store/actions/voucherGeneration";
 import { GlobalState } from "../../../../store/reducers/types";
 import { connect } from "react-redux";
 import ItemsPicker from "../../../../components/ui/ItemsPicker";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   availableStateItemsSelector,
   availableStatesSelector
@@ -16,8 +17,26 @@ import { View } from "native-base";
 import { H5 } from "../../../../components/core/typography/H5";
 import { ActivityIndicator } from "react-native";
 import { isError, isLoading } from "../../bpd/model/RemoteValue";
+import {
+  availableRegionsItemsSelector,
+  availableRegionsSelector
+} from "../store/reducers/availableRegions";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
+type OwnProps = {
+  selectedState: number | undefined;
+  setSelectedState: (stateId: number) => void;
+  selectedRegion: number | undefined;
+  setSelectedRegion: (regionId: number) => void;
+  selectedProvince: number | undefined;
+  setSelectedProvince: (provinceId: number) => void;
+  selectedMunicipality: number | undefined;
+  setSelectedMunicipality: (municipalityId: number) => void;
+};
+
+const italyId = 14;
+
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const LoadingComponent = () => (
@@ -45,18 +64,10 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
     props.requestAvailableState();
   }, []);
 
-  const [selectedState, setSelectedState] = useState<number | undefined>(
-    undefined
-  );
-  const [selectedProvince, setSelectedProvince] = useState<number | undefined>(
-    undefined
-  );
-  const [selectedRegion, setSelectedRegion] = useState<number | undefined>(
-    undefined
-  );
-  const [selectedMunicipality, setSelectedMunicipality] = useState<
-    number | undefined
-  >(undefined);
+  useEffect(() => {
+    if (props.selectedState && props.selectedState === italyId)
+      props.requestAvailableRegions();
+  }, [props.selectedState]);
 
   return (
     <>
@@ -70,13 +81,13 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         </View>
         <ItemsPicker
           placeholder={"Seleziona uno stato"}
-          items={props.availableStateItems}
+          items={props.availableStatesItems}
           onValueChange={v => {
             if (typeof v === "number") {
-              setSelectedState(v);
+              props.setSelectedState(v);
             }
           }}
-          selectedValue={selectedState}
+          selectedValue={props.selectedState}
         />
       </View>
       <View spacer={true} />
@@ -84,19 +95,22 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row" }}>
           <H5 color={"bluegreyDark"}>{"Regione"}</H5>
           <View hspacer={true} />
-          {isLoading(props.availableStates) && <LoadingComponent />}
-          {isError(props.availableStates) &&
+          {isLoading(props.availableRegions) && <LoadingComponent />}
+          {isError(props.availableRegions) &&
             ErrorComponent(props.requestAvailableState)}
         </View>
         <ItemsPicker
           placeholder={"Seleziona una regione"}
-          items={props.availableStateItems}
+          items={props.availableRegionsItems}
           onValueChange={v => {
             if (typeof v === "number") {
-              setSelectedRegion(v);
+              props.setSelectedRegion(v);
             }
           }}
-          selectedValue={selectedRegion}
+          selectedValue={props.selectedRegion}
+          disabled={
+            props.selectedState === undefined || props.selectedState !== italyId
+          }
         />
       </View>
       <View spacer={true} />
@@ -104,13 +118,14 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         <H5 color={"bluegreyDark"}>{"Provincia"}</H5>
         <ItemsPicker
           placeholder={"Seleziona una provincia"}
-          items={props.availableStateItems}
+          items={props.availableStatesItems}
           onValueChange={v => {
             if (typeof v === "number") {
-              setSelectedProvince(v);
+              props.setSelectedProvince(v);
             }
           }}
-          selectedValue={selectedProvince}
+          selectedValue={props.selectedProvince}
+          disabled={props.selectedRegion === undefined}
         />
       </View>
       <View spacer={true} />
@@ -118,13 +133,14 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         <H5 color={"bluegreyDark"}>{"Comune"}</H5>
         <ItemsPicker
           placeholder={"Seleziona un comune"}
-          items={props.availableStateItems}
+          items={props.availableStatesItems}
           onValueChange={v => {
             if (typeof v === "number") {
-              setSelectedMunicipality(v);
+              props.setSelectedMunicipality(v);
             }
           }}
-          selectedValue={selectedMunicipality}
+          selectedValue={props.selectedMunicipality}
+          disabled={props.selectedProvince === undefined}
         />
       </View>
     </>
@@ -134,11 +150,15 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestAvailableState: () =>
     dispatch(svGenerateVoucherAvailableState.request()),
+  requestAvailableRegions: () =>
+    dispatch(svGenerateVoucherAvailableRegion.request()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason))
 });
 const mapStateToProps = (state: GlobalState) => ({
   availableStates: availableStatesSelector(state),
-  availableStateItems: availableStateItemsSelector(state)
+  availableStatesItems: availableStateItemsSelector(state),
+  availableRegions: availableRegionsSelector(state),
+  availableRegionsItems: availableRegionsItemsSelector(state)
 });
 
 export default connect(
