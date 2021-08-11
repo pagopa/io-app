@@ -41,7 +41,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const backButtonProps = {
+  const cancelButtonProps = {
     primary: false,
     bordered: true,
     onPress: props.cancel,
@@ -82,7 +82,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
+          leftButton={cancelButtonProps}
           rightButton={continueButtonProps}
         />
       </SafeAreaView>
