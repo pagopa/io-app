@@ -48,7 +48,7 @@ import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { Link } from "../../components/core/typography/Link";
 
 type Props = NavigationInjectedProps &

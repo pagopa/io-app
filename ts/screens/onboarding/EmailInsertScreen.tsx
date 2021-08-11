@@ -276,7 +276,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem
-                  type={"text"}
                   label={
                     isFromProfileSection
                       ? I18n.t("email.edit.label")
