@@ -216,7 +216,7 @@ platform :ios do
 
     sync_code_signing(type: "appstore", api_key: api_key)
 
-    previous_tag = File.read("./ios/fastlane/previous_tag")
+    previous_tag = "#{ENV['PREVIOUS_TAG']}"
 
     echo previous_tag
 
