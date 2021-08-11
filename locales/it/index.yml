@@ -121,6 +121,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: C'è un problema temporaneo, riprova.
   genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
@@ -2637,7 +2638,14 @@ bonus:
           under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
           over: "di avere un reddito lordo annuo superiore a {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Data del volo"
+        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
+        flights_choice:
+          departure: "Volo di sola andata"
+          return: "Andata e ritorno"
+        labels:
+          departure: "Data di partenza"
+          return: "Data di ritorno"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
