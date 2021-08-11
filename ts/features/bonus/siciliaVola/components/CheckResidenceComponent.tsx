@@ -48,8 +48,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
-    primary: false,
-    bordered: true,
+    bordered: false,
     onPress:
       isResidentInSicily === true
         ? props.navigateToSvSelectBeneficiaryCategory
