@@ -43,6 +43,7 @@ const bancomatScreenContent = (
   bancomat: BancomatPaymentMethod
 ) => (
   <>
+    <View spacer={true} small={true} />
     <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
     <View spacer={true} />
     <ItemSeparatorComponent noPadded={true} />
