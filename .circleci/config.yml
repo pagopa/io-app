@@ -481,8 +481,6 @@ jobs:
       - run:
           name: Build & submit to App store
           command: |
-            export PREVIOUS_TAG=$(git tag --sort=-taggerdate | grep \\-rc\\. | sed -n '2 p')
-            echo $PREVIOUS_TAG
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
