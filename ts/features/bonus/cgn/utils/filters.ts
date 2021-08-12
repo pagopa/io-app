@@ -1,63 +1,61 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { TranslationKeys } from "../../../../../locales/locales";
-
-export type CategoryType =
-  | "theater"
-  | "travel"
-  | "books"
-  | "health"
-  | "telco"
-  | "sport"
-  | "museum"
-  | "mobility";
+import {
+  ProductCategory,
+  ProductCategoryEnum
+} from "../../../../../definitions/cgn/merchants/ProductCategory";
 
 export type Category = {
-  type: CategoryType;
+  type: ProductCategory;
   icon: string;
   nameKey: TranslationKeys;
 };
 
-export const categories: ReadonlyArray<Category> = [
-  {
-    type: "theater",
+export const categories: Record<ProductCategory, Category> = {
+  [ProductCategoryEnum.arts]: {
+    type: ProductCategoryEnum.arts,
     icon: "io-theater",
     nameKey: "bonus.cgn.merchantDetail.categories.theater"
   },
-  {
-    type: "travel",
+  [ProductCategoryEnum.travels]: {
+    type: ProductCategoryEnum.travels,
     icon: "io-travel",
     nameKey: "bonus.cgn.merchantDetail.categories.travel"
   },
-  {
-    type: "mobility",
+  [ProductCategoryEnum.transportation]: {
+    type: ProductCategoryEnum.transportation,
     icon: "io-car",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility"
   },
-  {
-    type: "telco",
+  [ProductCategoryEnum.connectivity]: {
+    type: ProductCategoryEnum.connectivity,
     icon: "io-phone-vibration",
     nameKey: "bonus.cgn.merchantDetail.categories.telco"
   },
-  {
-    type: "books",
+  [ProductCategoryEnum.books]: {
+    type: ProductCategoryEnum.books,
     icon: "io-books",
     nameKey: "bonus.cgn.merchantDetail.categories.book"
   },
-  {
-    type: "museum",
+  [ProductCategoryEnum.entertainments]: {
+    type: ProductCategoryEnum.entertainments,
     icon: "io-museums",
     nameKey: "bonus.cgn.merchantDetail.categories.museum"
   },
-  {
-    type: "sport",
+  [ProductCategoryEnum.sports]: {
+    type: ProductCategoryEnum.sports,
     icon: "io-sports",
     nameKey: "bonus.cgn.merchantDetail.categories.sport"
   },
-  {
-    type: "health",
+  [ProductCategoryEnum.health]: {
+    type: ProductCategoryEnum.health,
     icon: "io-wellness",
     nameKey: "bonus.cgn.merchantDetail.categories.health"
   }
-];
+};
+
+export const getCategorySpecs = (category: ProductCategory): Option<Category> =>
+  fromNullable(categories[category]);
 
 export type OrderType = {
   label: TranslationKeys;
