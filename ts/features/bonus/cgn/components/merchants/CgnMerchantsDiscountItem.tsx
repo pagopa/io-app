@@ -1,19 +1,22 @@
 import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
+import { index } from "fp-ts/lib/Array";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { ShadowBox } from "../../../bpd/screens/details/components/summary/base/ShadowBox";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { TmpDiscountType } from "../../__mock__/availableMerchantDetail";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { getCategorySpecs } from "../../utils/filters";
+import I18n from "../../../../../i18n";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
-  discount: TmpDiscountType;
+  discount: Discount;
 };
 
 const styles = StyleSheet.create({
@@ -36,28 +39,31 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
       <ShadowBox>
         <View style={[styles.row, styles.container]}>
           <View style={IOStyles.flex}>
-            <View style={[styles.row, styles.container]}>
-              {/* TODO when available and defined the icon name should be defined through a map of category codes */}
-              <IconFont
-                name={"io-theater"}
-                size={22}
-                color={IOColors.bluegrey}
-              />
-              <View hspacer small />
-              <View style={IOStyles.flex}>
-                <H5 weight={"SemiBold"} color={"bluegrey"}>
-                  {discount.category.toLocaleUpperCase()}
-                </H5>
-              </View>
-            </View>
+            {index(0, [...discount.productCategories]).fold(
+              undefined,
+              categoryKey =>
+                getCategorySpecs(categoryKey).fold(undefined, c => (
+                  <View style={styles.row}>
+                    <IconFont
+                      name={c.icon}
+                      size={22}
+                      color={IOColors.bluegrey}
+                    />
+                    <View hspacer small />
+                    <H5 weight={"SemiBold"} color={"bluegrey"}>
+                      {I18n.t(c.nameKey).toLocaleUpperCase()}
+                    </H5>
+                  </View>
+                ))
+            )}
             <View spacer xsmall />
             <View style={IOStyles.flex}>
               <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-                {discount.title}
+                {discount.name}
               </H4>
             </View>
           </View>
-          <CgnDiscountValueBox value={discount.value} small={true} />
+          <CgnDiscountValueBox value={discount.discount} small={true} />
         </View>
       </ShadowBox>
     </TouchableDefaultOpacity>
