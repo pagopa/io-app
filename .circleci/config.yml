@@ -449,7 +449,7 @@ jobs:
           name: Build & submit to App store
           command: |
             cd ios
-            bundle exec fastlane beta_circleci_testflight & sleep 5; kill $!
+            timeout 5 bundle exec fastlane beta_circleci_testflight
 
 
   # Run end-to-end iOS tests
