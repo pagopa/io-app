@@ -799,7 +799,7 @@ payment:
       ok: Continue
       ko: Cancel
   alertNoActivePaymentMethods:
-    title: To use this feature, enable in-app payments
+    title: To use this feature, turn on in-app payments
     message: Enable at least one method in your Wallet, or add a new one.
     buttons:
       ok: Go to the wallet
