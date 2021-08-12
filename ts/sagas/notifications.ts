@@ -2,11 +2,10 @@
  * A saga to manage notifications
  */
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
 import { Platform } from "react-native";
-import { call, Effect, put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
 import { PlatformEnum } from "../../definitions/backend/Platform";
-import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
 import { BackendClient } from "../api/backend";
 import {
   notificationsInstallationTokenRegistered,
@@ -28,11 +27,7 @@ export function* updateInstallationSaga(
   createOrUpdateInstallation: ReturnType<
     typeof BackendClient
   >["createOrUpdateInstallation"]
-): Generator<
-  Effect,
-  TypeOfApiResponseStatus<CreateOrUpdateInstallationT> | undefined,
-  any
-> {
+): SagaIterator {
   // Get the notifications installation data from the store
   const notificationsInstallation: ReturnType<typeof notificationsInstallationSelector> = yield select(
     notificationsInstallationSelector
@@ -74,9 +69,7 @@ export function* updateInstallationSaga(
         )
       );
     }
-    return response.value.status;
   } catch (error) {
     yield put(updateNotificationInstallationFailure(error));
-    return undefined;
   }
 }
