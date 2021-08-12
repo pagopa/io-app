@@ -13,8 +13,6 @@ import {
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
-import { RTron } from "../boot/configureStoreAndPersistor";
-import { getNetworkErrorMessage } from "../utils/errors";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
