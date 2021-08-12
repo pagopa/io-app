@@ -125,7 +125,6 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
           <Item>
             <LabelledItem
-              type="text"
               icon={"io-search"}
               iconPosition={"right"}
               inputProps={{
