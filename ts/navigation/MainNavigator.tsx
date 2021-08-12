@@ -9,12 +9,12 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import deviceInfoModule from "react-native-device-info";
 import {
-  createBottomTabNavigator,
   NavigationRoute,
   NavigationScreenProp,
   NavigationState,
   StackActions
 } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import NavBarLabel from "../components/NavBarLabel";
 import ProfileTabIcon from "../components/ProfileTabIcon";
@@ -201,8 +201,6 @@ const navigation = createBottomTabNavigator(
       inactiveTintColor: variables.brandDarkGray,
       style: [styles.tabBarStyle, styles.upsideShadow]
     },
-    animationEnabled: true,
-    swipeEnabled: false,
     initialRouteName: ROUTES.MESSAGES_NAVIGATOR
   }
 );
