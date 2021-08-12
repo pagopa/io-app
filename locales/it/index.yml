@@ -2608,7 +2608,12 @@ bonus:
         buttons:
           requestBonus: "Richiedi un codice sconto"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Regione di residenza"
+        items:
+          inSicily: "Risiedo in Sicilia"
+          notInSicily: "Risiedo in un'altra regione"
+        info:
+          "Ricorda che gli sconti sono diponibili solo per i cittadini residenti in Sicilia."
       selectBeneficiaryCategory:
         title: "Dichiaro di essere"
         categories:
