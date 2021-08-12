@@ -13,6 +13,8 @@ import {
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
+import { RTron } from "../boot/configureStoreAndPersistor";
+import { getNetworkErrorMessage } from "../utils/errors";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
@@ -32,7 +34,6 @@ export function* updateInstallationSaga(
   const notificationsInstallation: ReturnType<typeof notificationsInstallationSelector> = yield select(
     notificationsInstallationSelector
   );
-
   // Check if the notification server token is available (non available on iOS simulator)
   if (notificationsInstallation.token === undefined) {
     return undefined;
