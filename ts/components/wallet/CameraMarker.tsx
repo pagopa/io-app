@@ -23,8 +23,8 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
     state === "INVALID"
       ? "io-close"
       : state === "VALID"
-        ? "io-tick-big"
-        : undefined;
+      ? "io-tick-big"
+      : undefined;
 
   const sideLength = screenWidth / 2;
 

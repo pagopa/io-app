@@ -5,31 +5,46 @@
  * directory).
  */
 
-// tslint:disable:no-invalid-this
+/* eslint-disable no-invalid-this */
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
 
-// tslint:disable-next-line:no-object-mutation
+export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
+
+// eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
+  minTouchableAreaSize: 48,
+
   // Android
-  btnUppercaseAndroidText: false,
+  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
-  btnHeight: 48,
+  textLightButtonWeight: "600" as FontWeight,
+
+  btnHeight: 40,
   btnWidgetHeight: 24,
   btnFontSize: 16,
+  btnIconSize: 24,
+
   btnXSmallHeight: 32,
-  btnXSmallLineHeight: 20,
+  btnXSmallLineHeight: 18,
+  btnXSmallFontSize: 14,
+  btnXSmallIconSize: 18,
+
   btnSmallHeight: 39,
-  btnSmallFontSize: 16,
+  btnSmallLineHeight: 20,
+  btnSmallFontSize: 14,
+  btnSmallIconSize: 20,
+
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#E6E9F2",
+  btnLightBorderColor: "#AEB5BF",
 
   // Color
   brandPrimary: "#0066CC",
@@ -39,22 +54,45 @@ const customVariables = Object.assign(materialVariables, {
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
-  brandDarkGray: "#5C6F82",
+  brandMildGray: "#C7D1D9",
+  brandDarkGray: "#475A6D",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
   brandHighlight: "#00C5CA",
+  brandHighLighter: "#00CDD2",
+
+  milderGray: "#5F6F80",
+  darkerGray: "#4B5C6F",
+
+  lightGray: "#909DA8",
+  lighterGray: "#C1C9D2",
+  lightestGray: "#E0E3E6",
 
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
-  colorWhite: "white",
+  colorWhite: "#FFFFFF",
+  colorBlack: "#000000",
+  disabledService: "#909DA8",
+  itemBorderDefaultColor: "#5F6F82",
+
+  calendarExpirableColor: "#D0021B",
 
   itemSeparator: "#C9C9C9",
+
+  toastColor: "#C1f4f2",
+  badgeYellow: "#ffc824",
+
+  headerIconDark: "#798593",
+  headerIconLight: "#E4E7EA",
 
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   get fontSizeSmaller(): number {
     return this.fontSizeBase * 0.75;
+  },
+  get fontSizeXSmall(): number {
+    return this.fontSizeBase * 0.8125;
   },
   get fontSizeSmall(): number {
     return this.fontSizeBase * 0.875;
@@ -78,6 +116,8 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 2.5;
   },
   lineHeightBase: 24,
+  lineHeightSmall: 18,
+  lineHeightXSmall: 17,
   get lineHeightFontSizeRatio(): number {
     return this.lineHeightBase / this.fontSizeBase;
   },
@@ -127,7 +167,6 @@ const customVariables = Object.assign(materialVariables, {
   contentPadding: 24,
   contentPaddingLarge: 48,
   contentBackground: "#FFFFFF",
-  contentAlternativeBackground: "#F5F6F7",
   contentPrimaryBackground: "#0073E6",
 
   // Footer
@@ -231,8 +270,8 @@ const customVariables = Object.assign(materialVariables, {
   modalHeaderHeight: 75,
 
   // Text
-  textColor: "#5C6F82",
-  textLinkColor: "#0063CF",
+  textColor: "#475A6D",
+  textLinkColor: "#0073E6",
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
@@ -245,6 +284,8 @@ const customVariables = Object.assign(materialVariables, {
   inputNormalWeight: "400" as FontWeight,
 
   // Spacer
+  spacerExtrasmallHeight: 4,
+  spacerSmallHeight: 8,
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
@@ -260,7 +301,7 @@ const customVariables = Object.assign(materialVariables, {
   tabDefaultBg: "#FFFFFF",
   tabUnderlineColor: "#F6F6F6",
   tabUnderlineHeight: 2,
-  topTabBarTextColor: "#5C6F82",
+  topTabBarTextColor: "#475A6D",
   topTabBarActiveTextColor: "#0066CC",
 
   // Animations
@@ -272,7 +313,10 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82"
+  unselectedColor: "#475A6D",
+
+  // Checkbox
+  checkboxDefaultColor: "transparent"
 });
 
 export default customVariables;

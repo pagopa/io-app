@@ -8,7 +8,8 @@ import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { GlobalState } from "./types";
 
 export const UserMetadataMetadata = t.partial({
-  experimentalFeatures: t.boolean
+  experimentalFeatures: t.boolean,
+  organizationsOfInterest: t.readonlyArray(t.string)
 });
 
 export type UserMetadataMetadata = t.TypeOf<typeof UserMetadataMetadata>;
@@ -16,6 +17,11 @@ export type UserMetadataMetadata = t.TypeOf<typeof UserMetadataMetadata>;
 export type UserMetadata = {
   version: BackendUserMetadata["version"];
   metadata: UserMetadataMetadata;
+};
+
+export const emptyUserMetadata: BackendUserMetadata = {
+  version: 0,
+  metadata: ""
 };
 
 export type UserMetadataState = pot.Pot<UserMetadata, Error>;
@@ -40,7 +46,7 @@ export function backendUserMetadataToUserMetadata(
     );
 
     if (metadataOrError.isLeft()) {
-      // TODO: Add proper error
+      // TODO: Add proper error (https://www.pivotaltracker.com/story/show/170819415)
       return left(new Error());
     }
 
@@ -65,7 +71,8 @@ export function userMetadataToBackendUserMetadata(
 export const INITIAL_STATE: UserMetadataState = pot.none;
 
 // Selectors
-export const userMetadataSelector = (state: GlobalState) => state.userMetadata;
+export const userMetadataSelector = (state: GlobalState): UserMetadataState =>
+  state.userMetadata;
 
 const userMetadataReducer = (
   state: UserMetadataState = INITIAL_STATE,

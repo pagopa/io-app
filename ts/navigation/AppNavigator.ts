@@ -1,13 +1,13 @@
+import { Animated, Easing } from "react-native";
 import { createStackNavigator, TransitionConfig } from "react-navigation";
+import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
-import IngressScreen from "../screens/IngressScreen";
+import IngressScreen from "../screens/ingress/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-
-import { Animated, Easing } from "react-native";
 
 function transitionConfig(): TransitionConfig {
   // FIXME: we should be able to skip the blue background
@@ -55,21 +55,28 @@ const navigator = createStackNavigator(
       screen: BackgroundScreen
     },
     [ROUTES.AUTHENTICATION]: {
-      // The navigator used for unauthenticated users
+      // The navigator used during authentication
       screen: AuthenticationNavigator
     },
     [ROUTES.ONBOARDING]: {
+      // The navigator user during onboarding for authenticated users
       screen: OnboardingNavigator
     },
     [ROUTES.MAIN]: {
-      // The navigator used for authenticated users
+      // The navigator used for authenticated users on onboarding completed
       screen: MainNavigator
+    },
+    [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
+      screen: WorkunitGenericFailure
     }
   },
   {
     // Let each screen handle the header and navigation
     headerMode: "none",
-    transitionConfig
+    transitionConfig,
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

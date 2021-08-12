@@ -36,7 +36,7 @@ const reducer = (
       const messageId = action.payload.messageId;
 
       const stateCopy = { ...state };
-      // tslint:disable-next-line:no-object-mutation
+      // eslint-disable-next-line
       delete stateCopy[messageId];
       return stateCopy;
     }

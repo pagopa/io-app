@@ -5,7 +5,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { clearDeepLink, navigateToDeepLink } from "../store/actions/deepLink";
 
 export function* watchNavigateToDeepLinkSaga(): IterableIterator<Effect> {
-  yield takeLatest(getType(navigateToDeepLink), function*(
+  yield takeLatest(getType(navigateToDeepLink), function* (
     action: ActionType<typeof navigateToDeepLink>,
     replace: boolean = false
   ) {

@@ -1,19 +1,20 @@
-import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Body, Button, Content, Input, Item, Right, View } from "native-base";
+import { Body, Content, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
+  BackHandler,
   ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
 } from "react-native";
-import variables from "../theme/variables";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { areSetEqual } from "../utils/options";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -21,6 +22,7 @@ import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "./helpers/withItemsSelection";
+import { LabelledItem } from "./LabelledItem";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
@@ -87,10 +89,21 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     ) {
       this.props.setSelectedItemIds(initialSelectedItemIds);
     }
+
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private onPressCancel = () => {
     this.props.onCancel();
+  };
+
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
   };
 
   private onPressSave = () => {
@@ -114,32 +127,29 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
         <Body />
         <Right>
           {searchText.isSome() ? (
-            <Item>
-              <Input
-                placeholder={I18n.t("global.actions.search")}
-                value={searchText.value}
-                onChangeText={this.onSearchTextChange}
-                autoFocus={true}
-                placeholderTextColor={color(variables.brandGray)
-                  .darken(0.2)
-                  .string()}
-              />
-              <Button onPress={this.onSearchDisable} transparent={true}>
-                <IconFont
-                  name="io-close"
-                  accessible={true}
-                  accessibilityLabel={I18n.t("global.buttons.close")}
-                />
-              </Button>
-            </Item>
+            <LabelledItem
+              inputProps={{
+                placeholder: I18n.t("global.actions.search"),
+                value: searchText.value,
+                onChangeText: this.onSearchTextChange,
+                autoFocus: true
+              }}
+              icon="io-close"
+              iconPosition="right"
+              onPress={this.onPressCancel}
+              accessibilityLabelIcon={I18n.t("global.buttons.close")}
+            />
           ) : (
-            <Button onPress={this.handleSearchPress} transparent={true}>
+            <ButtonDefaultOpacity
+              onPress={this.handleSearchPress}
+              transparent={true}
+            >
               <IconFont
                 name="io-search"
                 accessible={true}
                 accessibilityLabel={I18n.t("global.actions.search")}
               />
-            </Button>
+            </ButtonDefaultOpacity>
           )}
         </Right>
       </React.Fragment>
@@ -170,17 +180,10 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     searchDelay
   );
 
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
-  };
-
   /**
    * Footer
    */
-  private renderFooterButtons() {
+  private renderFooterButtons(hasNoNewSelection: boolean) {
     const cancelButtonProps = {
       block: true,
       light: true,
@@ -191,13 +194,14 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     const saveButtonProps = {
       block: true,
       primary: true,
+      disabled: hasNoNewSelection,
       onPress: this.onPressSave,
       title: I18n.t("global.buttons.saveSelection")
     };
 
     return (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={saveButtonProps}
       />
@@ -280,24 +284,39 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           </View>
         </Content>
         <KeyboardAvoidingView
-          behavior="padding"
+          behavior={Platform.OS === "android" ? "height" : "padding"}
           keyboardVerticalOffset={Platform.select({
             ios: 0,
             android: customVariables.contentPadding
           })}
         >
-          {this.renderFooterButtons()}
+          {this.renderFooterButtons(
+            areSetEqual(this.props.initialSelectedItemIds, selectedItemIds)
+          )}
         </KeyboardAvoidingView>
       </View>
     );
   }
 }
 
-type Without<T, K> = Pick<T, Exclude<keyof T, K>>;
-type ExternalProps<T> = Without<OtherProps<T>, "classes">;
-
-type ChooserListContainerType = <T>(props: ExternalProps<T>) => any;
-
-export default (withItemsSelection(
-  ChooserListContainer
-) as unknown) as ChooserListContainerType;
+export default <T extends Record<string, unknown>>() => {
+  const hocComponent = (props: Props<T>) => {
+    const {
+      selectedItemIds,
+      toggleItemSelection,
+      resetSelection,
+      setSelectedItemIds,
+      ...otherProps
+    } = props;
+    return (
+      <ChooserListContainer<T>
+        selectedItemIds={selectedItemIds}
+        toggleItemSelection={toggleItemSelection}
+        resetSelection={resetSelection}
+        setSelectedItemIds={setSelectedItemIds}
+        {...otherProps}
+      />
+    );
+  };
+  return withItemsSelection(hocComponent);
+};

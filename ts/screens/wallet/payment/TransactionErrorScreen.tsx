@@ -6,18 +6,20 @@ import { differenceInMinutes } from "date-fns";
 import { Option, some } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentIdPolling,
   paymentVerifica
@@ -58,8 +60,12 @@ const styles = StyleSheet.create({
   },
 
   errorMessageSubtitle: {
-    textAlign: "center",
-    fontSize: customVariables.fontSizeSmall
+    textAlign: "center"
+  },
+
+  paddedLR: {
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   }
 });
 
@@ -125,6 +131,19 @@ export const renderErrorTransactionMessage = (
 };
 
 class TransactionErrorScreen extends React.Component<Props> {
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    this.props.backToEntrypointPayment();
+    return true;
+  };
+
   // Save the rptId as attribute and open the Instabug chat.
   private sendPaymentBlockedBug = () => {
     const rptId = this.props.navigation.getParam("rptId");
@@ -169,9 +188,12 @@ class TransactionErrorScreen extends React.Component<Props> {
           {!deleteInProgress && (
             <React.Fragment>
               <View spacer={true} extralarge={true} />
-              <Button block={true} onPress={this.sendPaymentBlockedBug}>
+              <ButtonDefaultOpacity
+                block={true}
+                onPress={this.sendPaymentBlockedBug}
+              >
                 <Text>Invia segnalazione</Text>
-              </Button>
+              </ButtonDefaultOpacity>
             </React.Fragment>
           )}
         </React.Fragment>
@@ -190,9 +212,9 @@ class TransactionErrorScreen extends React.Component<Props> {
           {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL_TIMEOUT")}
         </Text>
         <View spacer={true} extralarge={true} />
-        <Button block={true} onPress={this.sendPaymentBlockedBug}>
+        <ButtonDefaultOpacity block={true} onPress={this.sendPaymentBlockedBug}>
           <Text>{I18n.t("wallet.errors.sendReport")}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   };
@@ -214,7 +236,7 @@ class TransactionErrorScreen extends React.Component<Props> {
         goBack={this.onPressCancel}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
-        <Content>
+        <Content noPadded={true} style={styles.paddedLR}>
           <View style={styles.contentWrapper}>
             <View spacer={true} extralarge={true} />
 
@@ -251,14 +273,11 @@ class TransactionErrorScreen extends React.Component<Props> {
    */
   private renderButtons = (canRetry: boolean) => {
     const cancelButtonProps = {
-      block: true,
-      light: true,
       cancel: true,
       onPress: this.onPressCancel,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
-      block: true,
       primary: true,
       onPress: this.onPressRetry,
       title: I18n.t("global.buttons.retry")
@@ -272,7 +291,7 @@ class TransactionErrorScreen extends React.Component<Props> {
     };
     return canRetry ? (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={retryButtonProps}
       />
@@ -304,7 +323,8 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
-    dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount }))
+    dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount })),
+  backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 
 export default connect(

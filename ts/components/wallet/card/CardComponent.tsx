@@ -4,7 +4,7 @@
  * the props passed
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import {
@@ -13,22 +13,19 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-
+import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
-
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
-import { isExpiredCard } from "../../../utils/wallet";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
+import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
+import { H5 } from "../../core/typography/H5";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-
-// TODO: the "*" character renders differently (i.e. a larger circle) on
-// some devices @https://www.pivotaltracker.com/story/show/159231780
-const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
-const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(3);
 
 interface BaseProps {
   wallet: Wallet;
@@ -38,6 +35,7 @@ interface FullCommonProps extends BaseProps {
   isFavorite?: pot.Pot<boolean, Error>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
+  extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
 }
@@ -64,6 +62,7 @@ type Props = FullProps | HeaderProps | PreviewProps | PickingProps;
 
 /**
  * Credit card component
+ * @deprecated Use {@link BaseCardComponent} and related custom implementation (eg: {@link CreditCardComponent})
  */
 export default class CardComponent extends React.Component<Props> {
   private handleDeleteSelect = () =>
@@ -109,9 +108,20 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private renderTopRightCorner() {
-    const { wallet } = this.props;
+    if (
+      this.props.type === "Preview" ||
+      this.props.type === "Picking" ||
+      this.props.type === "Full"
+    ) {
+      const { wallet } = this.props;
+      return (
+        <View style={styles.cardLogo}>
+          <Logo item={wallet.creditCard} />
+        </View>
+      );
+    }
 
-    if (this.props.type === "Full" || this.props.type === "Header") {
+    if (this.props.type === "Header") {
       const {
         hideFavoriteIcon,
         isFavorite,
@@ -121,47 +131,45 @@ export default class CardComponent extends React.Component<Props> {
       } = this.props;
 
       return (
-        <React.Fragment>
-          {!hideFavoriteIcon &&
-            isFavorite !== undefined && (
-              <IconFont
-                name={
-                  pot.getOrElseWithUpdating(isFavorite, false) === true
-                    ? "io-filled-star"
-                    : "io-empty-star"
-                }
-                color={
-                  pot.isUpdating(isFavorite)
-                    ? variables.brandDarkGray
-                    : variables.brandPrimary
-                }
-                onPress={this.handleFavoritePress}
-              />
-            )}
+        <View style={styles.row}>
+          {!hideFavoriteIcon && isFavorite !== undefined && (
+            <IconFont
+              name={
+                pot.getOrElseWithUpdating(isFavorite, false)
+                  ? "io-filled-star"
+                  : "io-empty-star"
+              }
+              color={
+                pot.isUpdating(isFavorite)
+                  ? variables.brandDarkGray
+                  : variables.brandPrimary
+              }
+              onPress={this.handleFavoritePress}
+            />
+          )}
 
           {!hideMenu && (
             <Menu>
               <MenuTrigger>
                 <IconFont
-                  name="io-more"
+                  name={"io-more"}
                   color={variables.brandPrimary}
                   style={styles.paddedIcon}
                 />
               </MenuTrigger>
 
               <MenuOptions>
-                {onSetFavorite &&
-                  isFavorite !== undefined && (
-                    <MenuOption onSelect={this.handleFavoritePress}>
-                      <Text bold={true} style={styles.blueText}>
-                        {I18n.t(
-                          pot.getOrElseWithUpdating(isFavorite, false) === true
-                            ? "cardComponent.unsetFavourite"
-                            : "cardComponent.setFavourite"
-                        )}
-                      </Text>
-                    </MenuOption>
-                  )}
+                {onSetFavorite && isFavorite !== undefined && (
+                  <MenuOption onSelect={this.handleFavoritePress}>
+                    <Text bold={true} style={styles.blueText}>
+                      {I18n.t(
+                        pot.getOrElseWithUpdating(isFavorite, false)
+                          ? "cardComponent.unsetFavorite"
+                          : "cardComponent.setFavorite"
+                      )}
+                    </Text>
+                  </MenuOption>
+                )}
 
                 {onDelete && (
                   <MenuOption onSelect={this.handleDeleteSelect}>
@@ -173,14 +181,6 @@ export default class CardComponent extends React.Component<Props> {
               </MenuOptions>
             </Menu>
           )}
-        </React.Fragment>
-      );
-    }
-
-    if (this.props.type === "Preview") {
-      return (
-        <View style={styles.cardLogo}>
-          <Logo item={wallet.creditCard} />
         </View>
       );
     }
@@ -194,37 +194,39 @@ export default class CardComponent extends React.Component<Props> {
     if (type === "Preview") {
       return null;
     }
+    // Right icon, basically needed for the sole "Header" variant
+    const getBodyIcon = () => {
+      switch (type) {
+        case "Picking":
+        case "Full":
+          return null;
+        case "Header":
+          return (
+            <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
+              <Logo item={creditCard} />
+            </View>
+          );
+      }
+    };
 
     const expirationDate = buildExpirationDate(creditCard);
-    const isExpired = isExpiredCard(creditCard);
-
+    const isCardExpired = this.props.wallet.paymentMethod
+      ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
+      : false;
     return (
-      <View
-        style={[styles.columns, styles.paddedTop, styles.body]}
-        onTouchEnd={this.handleOnCardPress}
-      >
+      <View style={[styles.columns, styles.paddedTop]}>
         <View>
-          <Text
-            style={[
-              CreditCardStyles.textStyle,
-              !isExpired
-                ? CreditCardStyles.smallTextStyle
-                : CreditCardStyles.expiredTextStyle
-            ]}
+          <H5
+            color={isCardExpired ? "red" : "bluegreyDark"}
+            weight={"SemiBold"}
           >
-            {!isExpired
-              ? `${I18n.t("cardComponent.validUntil")}  ${expirationDate}`
-              : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
-          </Text>
-
+            {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
+          </H5>
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
             {creditCard.holder.toUpperCase()}
           </Text>
         </View>
-
-        <View style={styles.cardLogo}>
-          <Logo item={creditCard} />
-        </View>
+        {getBodyIcon()}
       </View>
     );
   }
@@ -249,7 +251,7 @@ export default class CardComponent extends React.Component<Props> {
     );
 
     return (
-      <Button
+      <ButtonDefaultOpacity
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
@@ -257,11 +259,11 @@ export default class CardComponent extends React.Component<Props> {
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
-          name="io-right"
+          name={"io-right"}
           size={variables.iconSize2}
           style={footerTextStyle}
         />
-      </Button>
+      </ButtonDefaultOpacity>
     );
   }
 
@@ -271,33 +273,30 @@ export default class CardComponent extends React.Component<Props> {
     const hasFlatBottom =
       this.props.type === "Preview" || this.props.type === "Header";
 
+    const isHeader = this.props.type === "Header";
+
     return wallet.creditCard === undefined ? null : (
       <View
-        style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
+        style={[
+          styles.card,
+          styles.cardShadow,
+          hasFlatBottom ? styles.flatBottom : undefined,
+          isHeader && styles.cardHeader
+        ]}
       >
         <View style={[styles.cardInner]}>
-          <View style={[styles.row]}>
-            <View
-              style={[styles.row, styles.numberArea]}
-              onTouchEnd={this.handleOnCardPress}
-            >
-              <Text style={[CreditCardStyles.smallTextStyle]}>
-                {`${HIDDEN_CREDITCARD_NUMBERS}`}
-              </Text>
-
-              <Text style={[CreditCardStyles.largeTextStyle]}>
-                {`${wallet.creditCard.pan.slice(-4)}`}
-              </Text>
+          <View style={[styles.row, styles.spaced]}>
+            <View style={styles.row}>
+              <BlurredPan>
+                {`${FOUR_UNICODE_CIRCLES} ${wallet.creditCard.pan.slice(-4)}`}
+              </BlurredPan>
             </View>
-
-            <View style={styles.topRightCornerContainer}>
-              {this.renderTopRightCorner()}
-            </View>
+            <View>{this.renderTopRightCorner()}</View>
           </View>
-
+          {hasFlatBottom && <View spacer={true} />}
+          {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>
-
         {this.renderFooterRow()}
       </View>
     );

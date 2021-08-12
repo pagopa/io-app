@@ -11,6 +11,7 @@ import {
   ApplicationState
 } from "../actions/application";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type AppState = Readonly<{
   appState: ApplicationState;
@@ -19,6 +20,12 @@ export type AppState = Readonly<{
 export const initialAppState: AppState = {
   appState: "background"
 };
+
+export const appStateSelector = (state: GlobalState): AppState =>
+  state.appState;
+
+export const appCurrentStateSelector = (state: GlobalState) =>
+  state.appState.appState;
 
 export default function appState(
   state: AppState = initialAppState,

@@ -1,11 +1,12 @@
-import { Button, Text, View } from "native-base";
+import { Content, Text } from "native-base";
 import * as React from "react";
-import { NavigationScreenProps } from "react-navigation";
+import { Alert } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import AbortOnboardingModal from "../../components/AbortOnboardingModal";
-import ScreenContent from "../../components/screens/ScreenContent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -14,34 +15,28 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch } from "../../store/actions/types";
 
-type NavigationParams = {
+type NavigationParams = Readonly<{
   biometryType: BiometrySimpleType;
-};
+}>;
 
 export type BiometryPrintableSimpleType =
   | "FINGERPRINT"
   | "TOUCH_ID"
   | "FACE_ID";
 
-type OwnProps = NavigationScreenProps<NavigationParams>;
+type Props = NavigationInjectedProps<NavigationParams> &
+  ReturnType<typeof mapDispatchToProps>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
-
-type State = {
-  isAbortOnboardingModalVisible: boolean;
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.contextualHelpTitle",
+  body: "onboarding.contextualHelpContent"
 };
 
 /**
- * A screen to show if the fingerprint is supported to the user.
+ * A screen to show, if the fingerprint is supported by the device,
+ * the instruction to enable the fingerprint/faceID usage
  */
-export class FingerprintScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isAbortOnboardingModalVisible: false
-    };
-  }
-
+class FingerprintScreen extends React.PureComponent<Props> {
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
    * @param biometrySimplePrintableType
@@ -63,74 +58,71 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
    * Print the icon according to current biometry status
    * @param biometrySimplePrintableType
    */
-  private renderIcon(biometryType: BiometrySimpleType) {
+  private getBiometryIconName(biometryType: BiometrySimpleType) {
     switch (biometryType) {
       case "FACE_ID":
-        return require("../../../img/icons/faceid-onboarding-icon.png");
+        return "io-face-id";
       case "FINGERPRINT":
       case "TOUCH_ID":
       case "NOT_ENROLLED":
       case "UNAVAILABLE":
-        return require("../../../img/icons/fingerprint-onboarding-icon.png");
+        return "io-fingerprint";
     }
   }
 
+  private handleGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: this.props.abortOnboarding
+        }
+      ]
+    );
+
   public render() {
-    const { isAbortOnboardingModalVisible } = this.state;
     const biometryType = this.props.navigation.getParam("biometryType");
 
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
-        title={I18n.t("onboarding.fingerprint.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_fingerprint"]}
       >
-        <ScreenContent
+        <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
-          icon={this.renderIcon(biometryType)}
-        >
-          <View content={true}>
-            <Text>
-              {biometryType !== "NOT_ENROLLED"
-                ? I18n.t("onboarding.fingerprint.body.enrolledText", {
-                    biometryType: this.renderBiometryType(
-                      biometryType as BiometryPrintableSimpleType
-                    )
-                  })
-                : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
-            </Text>
-          </View>
-        </ScreenContent>
-        <View footer={true}>
-          <Button
-            block={true}
-            primary={true}
-            onPress={this.props.fingerprintAcknowledgeRequest}
-          >
-            <Text>{I18n.t("global.buttons.continue")}</Text>
-          </Button>
-        </View>
-
-        {isAbortOnboardingModalVisible && (
-          <AbortOnboardingModal
-            onClose={this.handleModalClose}
-            onConfirm={this.handleModalConfirm}
-          />
-        )}
+          iconFont={{ name: this.getBiometryIconName(biometryType) }}
+        />
+        <Content>
+          <Text>
+            {biometryType !== "NOT_ENROLLED"
+              ? I18n.t("onboarding.fingerprint.body.enrolledText", {
+                  biometryType: this.renderBiometryType(
+                    biometryType as BiometryPrintableSimpleType
+                  )
+                })
+              : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
+          </Text>
+        </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            title: I18n.t("global.buttons.continue"),
+            primary: true,
+            onPress: this.props.fingerprintAcknowledgeRequest
+          }}
+        />
       </TopScreenComponent>
     );
   }
-
-  private handleGoBack = () =>
-    this.setState({ isAbortOnboardingModalVisible: true });
-
-  private handleModalClose = () =>
-    this.setState({ isAbortOnboardingModalVisible: false });
-
-  private handleModalConfirm = () => {
-    this.handleModalClose();
-    this.props.abortOnboarding();
-  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -139,7 +131,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(FingerprintScreen);
+export default connect(undefined, mapDispatchToProps)(FingerprintScreen);

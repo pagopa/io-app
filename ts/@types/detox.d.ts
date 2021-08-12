@@ -1,4 +1,4 @@
-// tslint:disable:no-namespace no-method-signature
+/* eslint-disable @typescript-eslint/no-namespace */
 
 declare namespace Detox {
   interface Detox {

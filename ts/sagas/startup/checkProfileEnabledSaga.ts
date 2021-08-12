@@ -1,37 +1,50 @@
-import { Effect } from "redux-saga";
-import { put, take } from "redux-saga/effects";
+import { Effect } from "redux-saga/effects";
+import { call, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserProfileUnion } from "../../api/backend";
+import { fromNullable } from "fp-ts/lib/Option";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
+import {
+  hasProfileEmail,
+  isProfileFirstOnBoarding
+} from "../../store/reducers/profile";
+
+function* enableProfileInboxWebhook() {
+  yield put(
+    profileUpsert.request({
+      is_inbox_enabled: true,
+      is_webhook_enabled: true
+    })
+  );
+}
 
 export function* checkProfileEnabledSaga(
-  profile: UserProfileUnion
-): IterableIterator<Effect> {
+  profile: InitializedProfile
+): Generator<
+  Effect,
+  void,
+  | ActionType<typeof profileUpsert["success"]>
+  | ActionType<typeof profileUpsert["failure"]>
+> {
+  const atv = fromNullable(profile.accepted_tos_version).getOrElse(0);
+  const shouldEnableInbox = !profile.is_inbox_enabled && atv > 0;
+  const tosNotAccepted = atv === 0;
+  // auto-update for those profiles that have been fallen in a buggy scenario
+  // see https://www.pivotaltracker.com/story/show/174845929
+  if (shouldEnableInbox) {
+    yield call(enableProfileInboxWebhook);
+  }
   if (
-    !profile.has_profile ||
-    !profile.email ||
-    !profile.is_inbox_enabled ||
-    !profile.is_webhook_enabled
+    tosNotAccepted &&
+    (!hasProfileEmail(profile) ||
+      !profile.is_inbox_enabled ||
+      !profile.is_webhook_enabled)
   ) {
-    // NOTE: `has_profile` is a boolean that is true if the profile is
-    // active in the API.
-    // FIXME: the `version` field has the same meaning at the `has_profile`
-    //        field, we should get rid of `has_profile`.
-    //        see https://github.com/teamdigitale/italia-backend/blob/v0.0.48/src/types/profile.ts#L33
-
     // Upsert the user profile to enable inbox and webhook
-    yield put(
-      profileUpsert.request({
-        is_inbox_enabled: true,
-        is_webhook_enabled: true,
-        email: profile.spid_email
-      })
-    );
-    const action:
-      | ActionType<typeof profileUpsert["success"]>
-      | ActionType<typeof profileUpsert["failure"]> = yield take([
+    yield call(enableProfileInboxWebhook);
+    const action = yield take([
       getType(profileUpsert.success),
       getType(profileUpsert.failure)
     ]);
@@ -42,13 +55,8 @@ export function* checkProfileEnabledSaga(
       yield put(startApplicationInitialization());
     } else {
       // First time login
-      if (!profile.has_profile) {
-        yield put(
-          profileFirstLogin({
-            fiscal_code: profile.fiscal_code,
-            spid_email: profile.spid_email
-          })
-        );
+      if (isProfileFirstOnBoarding(profile)) {
+        yield put(profileFirstLogin());
       }
     }
   }

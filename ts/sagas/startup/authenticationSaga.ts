@@ -1,51 +1,42 @@
-import { Effect } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, cancel, Effect, fork, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
+import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
-
-import { NavigationActions } from "react-navigation";
-import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
-import ROUTES from "../../navigation/routes";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
+import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
+import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
 /**
  * A saga that makes the user go through the authentication process until
  * a SessionToken gets produced.
  */
-export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
+export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   yield put(analyticsAuthenticationStarted());
 
-  const isSessionExpired: boolean = yield select<GlobalState>(
-    isSessionExpiredSelector
-  );
+  // Watch for the test login
+  const watchTestLogin = yield fork(watchTestLoginRequestSaga);
+  // Watch for login by CIE
+  const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
-  if (isSessionExpired) {
-    // If the user is unauthenticated because of the expired session,
-    // navigate directly to the IDP selection screen.
-    yield put(
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-      })
-    );
-  } else {
-    // Otherwise, navigate to the landing screen.
-    yield put(resetToAuthenticationRoute);
-  }
+  yield put(resetToAuthenticationRoute);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
   const action: ActionType<typeof loginSuccess> = yield take(
     getType(loginSuccess)
   );
+
+  yield cancel(watchCieAuthentication);
+  yield cancel(watchTestLogin);
+
+  // stop cie manager from listening nfc
+  yield call(stopCieManager);
 
   // User logged in successfully, remove all the scheduled local notifications
   // to remind the user to authenticate with spid

@@ -32,7 +32,5 @@ export const PotTransform = createTransform(
   // We only care about rehydrated so we do not apply any transformation
   // for inboundState.
   _ => _,
-  (outboundState, _) => {
-    return JSON.parse(JSON.stringify(outboundState), potReviver);
-  }
+  (outboundState, _) => JSON.parse(JSON.stringify(outboundState), potReviver)
 );

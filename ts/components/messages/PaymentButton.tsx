@@ -1,251 +1,192 @@
-/**
- * A component to render the button related to a payment
- * pired with a message.
- *
- */
-import { Button, Text } from "native-base";
-import React, { ComponentProps } from "react";
+import { fromNullable } from "fp-ts/lib/Option";
+import { Text } from "native-base";
+import React from "react";
 import { StyleSheet } from "react-native";
-
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
-import { MessagePaymentExpirationInfo } from "../../utils/messages";
-import { formatPaymentAmount } from "../../utils/payment";
-import IconFont from "../ui/IconFont";
+import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
+import {
+  navigateToMessageRouterScreen,
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
+} from "../../store/actions/navigation";
+import { loadServiceDetail } from "../../store/actions/services";
+import { paymentInitializeState } from "../../store/actions/wallet/payment";
+import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
+import { InferNavigationParams } from "../../types/react";
+import { isUpdateNeeded } from "../../utils/appVersion";
+import {
+  isExpirable,
+  isExpired,
+  isExpiring,
+  MessagePaymentExpirationInfo,
+  paymentExpirationInfo
+} from "../../utils/messages";
+import {
+  formatPaymentAmount,
+  getAmountFromPaymentAmount,
+  getRptIdFromNoticeNumber
+} from "../../utils/payment";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
-type Props = {
+type OwnProps = {
   paid: boolean;
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo;
   small?: boolean;
   disabled?: boolean;
-  onPress: ComponentProps<typeof Button>["onPress"];
+  message: CreatedMessageWithContent;
+  service?: ServicePublic;
+  enableAlertStyle?: boolean;
 };
 
-const baseStyles = StyleSheet.create({
-  button: {
-    flex: 7,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: 40
-  },
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
-  icon: {
-    marginRight: 4,
-    lineHeight: 32
+const styles = StyleSheet.create({
+  half: {
+    flex: 1
   },
-
-  text: {
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingLeft: 0,
-    fontSize: 14,
-    lineHeight: 20
-  }
+  twoThird: {
+    flex: 7
+  },
+  marginTop1: { marginTop: 1 }
 });
 
-const unexpirableStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.brandPrimary
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
-const validStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.brandPrimary
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
-const expiringStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#D0021B"
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
-const expiredStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.brandDarkGray
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
-const smallStyles = StyleSheet.create({
-  button: {
-    height: 32
-  },
-
-  icon: {},
-
-  text: {}
-});
-
-const disabledStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#b5b5b5",
-    borderWidth: 0
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
-const paidStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.colorWhite,
-    borderColor: customVariables.brandHighlight,
-    borderWidth: 1
-  },
-
-  text: {
-    color: customVariables.brandHighlight
-  }
-});
-
-const getExpirationStyles = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
-  small: boolean = false
-) => {
-  if (messagePaymentExpirationInfo.kind === "UNEXPIRABLE") {
-    return unexpirableStyles;
-  }
-
-  switch (messagePaymentExpirationInfo.expireStatus) {
-    case "VALID":
-      return validStyles;
-    case "EXPIRING":
-      return small ? expiringStyles : validStyles;
-
-    default:
-      return expiredStyles;
-  }
-};
-
-const getButtonText = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
-  paid: boolean
-): string => {
-  const { amount } = messagePaymentExpirationInfo;
-
-  if (paid) {
-    return I18n.t("messages.cta.paid", {
-      amount: formatPaymentAmount(amount)
-    });
-  }
-
-  if (
-    messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
-    messagePaymentExpirationInfo.expireStatus === "EXPIRED"
-  ) {
-    return I18n.t("messages.cta.payment.expired");
-  }
-
-  return I18n.t("messages.cta.pay", {
-    amount: formatPaymentAmount(amount)
-  });
-};
-
+/**
+ * A component to render the button related to the payment
+ * paired with a message.
+ */
 class PaymentButton extends React.PureComponent<Props> {
-  // tslint:disable-next-line: cognitive-complexity
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get isPaymentInvalidAfterDueDate() {
+    return this.paymentExpirationInfo.fold(false, isExpirable);
+  }
+
+  get isPaymentExpiredAndInvalid() {
+    return this.isPaymentExpired && this.isPaymentInvalidAfterDueDate;
+  }
+
+  private getButtonText = (): string => {
+    const { messagePaymentExpirationInfo } = this.props;
+    const { amount } = messagePaymentExpirationInfo;
+
+    if (this.props.paid) {
+      return I18n.t("messages.cta.paid", {
+        amount: formatPaymentAmount(amount)
+      });
+    }
+
+    return I18n.t("messages.cta.seeNotice");
+  };
+
+  get isPaymentExpired() {
+    return (
+      !this.props.paid && isExpired(this.props.messagePaymentExpirationInfo)
+    );
+  }
+
+  private handleOnPress = () => {
+    const {
+      messagePaymentExpirationInfo,
+      service,
+      paid,
+      disabled,
+      message
+    } = this.props;
+
+    const amount = getAmountFromPaymentAmount(
+      messagePaymentExpirationInfo.amount
+    );
+
+    const rptId = fromNullable(service).chain(_ =>
+      getRptIdFromNoticeNumber(
+        _.organization_fiscal_code,
+        messagePaymentExpirationInfo.noticeNumber
+      )
+    );
+
+    // (small means in list -.-')
+    // if it is rendered in list and the payment is expired and it is not still valid to pay (invalid after due date)
+    // navigate to message detail screen
+    if ((this.props.small && this.isPaymentExpiredAndInvalid) || paid) {
+      this.props.navigateToMessageDetail();
+      return;
+    }
+
+    if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
+      this.props.refreshService(message.sender_service_id);
+      // TODO: optimize the managment of the payment initialization
+      if (this.props.isEmailValidated && !this.props.isUpdatedNeededPagoPa) {
+        this.props.paymentInitializeState();
+        this.props.navigateToPaymentTransactionSummaryScreen({
+          rptId: rptId.value,
+          initialAmount: amount.value
+        });
+      } else {
+        // Navigating to Wallet home, having the email address is not validated,
+        // it will be displayed RemindEmailValidationOverlay
+        this.props.navigateToWalletHomeScreen();
+      }
+    }
+  };
+
   public render() {
     const {
-      paid,
       messagePaymentExpirationInfo,
       small,
       disabled,
-      onPress
+      paid,
+      enableAlertStyle
     } = this.props;
-
-    const appliedStyles = getExpirationStyles(
-      messagePaymentExpirationInfo,
-      small
-    );
-
-    const isUnexpirable = messagePaymentExpirationInfo.kind === "UNEXPIRABLE";
-    const isExpired =
-      messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
-      messagePaymentExpirationInfo.expireStatus === "EXPIRED";
-    const hideIcon = isUnexpirable || isExpired || !small;
-
     return (
-      <Button
-        disabled={disabled || paid}
-        light={true}
-        onPress={paid ? undefined : onPress}
-        style={[
-          baseStyles.button,
-          appliedStyles.button,
-          small && smallStyles.button,
-          paid && paidStyles.button,
-          disabled && disabledStyles.button
-        ]}
+      <ButtonDefaultOpacity
+        primary={!this.isPaymentExpired && !disabled}
+        disabled={disabled}
+        onPress={this.handleOnPress}
+        gray={paid}
+        darkGray={
+          !paid &&
+          this.isPaymentExpired &&
+          messagePaymentExpirationInfo.kind === "EXPIRABLE"
+        }
+        xsmall={small}
+        alert={
+          enableAlertStyle && !paid && isExpiring(messagePaymentExpirationInfo)
+        }
+        style={this.props.small ? styles.twoThird : styles.half}
       >
-        {!hideIcon ||
-          (paid && (
-            <IconFont
-              name={paid ? "io-tick-big" : "io-timer"}
-              style={[
-                baseStyles.icon,
-                appliedStyles.icon,
-                small && smallStyles.icon,
-                disabled && disabledStyles.icon
-              ]}
-              color={
-                paid && !disabled ? customVariables.brandHighlight : undefined
-              }
-            />
-          ))}
-        <Text
-          bold={true}
-          style={[
-            baseStyles.text,
-            appliedStyles.text,
-            small && smallStyles.text,
-            paid && paidStyles.text,
-            disabled && disabledStyles.text
-          ]}
-        >
-          {getButtonText(messagePaymentExpirationInfo, paid)}
-        </Text>
-      </Button>
+        <Text style={styles.marginTop1}>{this.getButtonText()}</Text>
+      </ButtonDefaultOpacity>
     );
   }
 }
 
-export default PaymentButton;
+const mapStateToProps = (state: GlobalState) => ({
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  isUpdatedNeededPagoPa: isUpdateNeeded(
+    serverInfoDataSelector(state),
+    "min_app_version_pagopa"
+  )
+});
+
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
+  navigateToMessageDetail: () =>
+    dispatch(navigateToMessageRouterScreen({ messageId: ownProps.message.id })),
+  refreshService: (serviceId: string) =>
+    dispatch(loadServiceDetail.request(serviceId)),
+  paymentInitializeState: () => dispatch(paymentInitializeState()),
+  navigateToPaymentTransactionSummaryScreen: (
+    params: InferNavigationParams<typeof TransactionSummaryScreen>
+  ) => dispatch(navigateToPaymentTransactionSummaryScreen(params)),
+  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentButton);

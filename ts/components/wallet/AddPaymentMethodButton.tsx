@@ -1,8 +1,9 @@
 import { Text } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 const styles = StyleSheet.create({
@@ -19,13 +20,23 @@ const styles = StyleSheet.create({
 
 interface Props {
   onPress: () => void;
+  iconSize?: number;
+  labelSize?: number;
 }
 
-export const AddPaymentMethodButton: React.SFC<Props> = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={styles.button}>
-    <IconFont name="io-plus" color={customVariables.colorWhite} />
-    <Text style={styles.label}>
+export const AddPaymentMethodButton: React.SFC<Props> = ({
+  onPress,
+  iconSize,
+  labelSize
+}) => (
+  <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
+    <IconFont
+      name="io-plus"
+      color={customVariables.colorWhite}
+      size={iconSize}
+    />
+    <Text bold={true} style={[styles.label, { fontSize: labelSize }]}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </Text>
-  </TouchableOpacity>
+  </TouchableDefaultOpacity>
 );

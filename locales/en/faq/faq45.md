@@ -1,0 +1,1 @@
+Each institution that manages payments within pagoPA (Paying Service Provider) may independently apply different transaction fees, depending on its own commercial policies and the contractual terms they set with the user.

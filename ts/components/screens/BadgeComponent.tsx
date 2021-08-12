@@ -6,15 +6,25 @@ import * as React from "react";
 import { Circle, Svg } from "react-native-svg";
 import customVariables from "../../theme/variables";
 
-export class BadgeComponent extends React.PureComponent<{}> {
+const badgeWidth = 10;
+
+type Props = {
+  color?: string;
+};
+
+export class BadgeComponent extends React.PureComponent<Props> {
   public render() {
     return (
-      <Svg width={14} height={18}>
+      <Svg width={badgeWidth} height={badgeWidth}>
         <Circle
-          cx="50%"
-          cy="50%"
-          r={14 / 2}
-          fill={customVariables.contentPrimaryBackground}
+          cx={"50%"}
+          cy={"50%"}
+          r={badgeWidth / 2}
+          fill={
+            this.props.color
+              ? this.props.color
+              : customVariables.contentPrimaryBackground
+          }
         />
       </Svg>
     );

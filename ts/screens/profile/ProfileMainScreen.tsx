@@ -1,69 +1,52 @@
-/**
- * A component to show the main screen of the Profile section
- */
-import {
-  Button,
-  H3,
-  List,
-  ListItem,
-  Switch,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
+  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-
-import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
+import { TranslationKeys } from "../../../locales/locales";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import SelectLogoutOption from "../../components/SelectLogoutOption";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
+import { isPlaygroundsEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  LogoutOption,
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import {
-  preferencesExperimentalFeaturesSetEnabled,
-  preferencesPagoPaTestEnvironmentSetEnabled
-} from "../../store/actions/persistedPreferences";
-import { startPinReset } from "../../store/actions/pinset";
+import { preferencesPagoPaTestEnvironmentSetEnabled } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
+import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { isDevEnv } from "../../utils/environment";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { navigateToLogout } from "../../store/actions/navigation";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -73,6 +56,11 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+type State = {
+  tapsOnAppVersion: number;
+  deviceUniqueId: string;
+};
 
 const styles = StyleSheet.create({
   itemLeft: {
@@ -106,23 +94,71 @@ const styles = StyleSheet.create({
   }
 });
 
-const getAppLongVersion = () => {
-  const buildNumber =
-    Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
-  return `${DeviceInfo.getVersion()}${buildNumber}`;
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.main.contextualHelpTitle",
+  body: "profile.main.contextualHelpContent"
 };
 
-class ProfileMainScreen extends React.PureComponent<Props> {
-  private handleClearCachePress = () => {
-    this.props.clearCache();
-    Toast.show({ text: "The cache has been cleared." });
-  };
+const consecutiveTapRequired = 4;
+const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
-  private logout = (logoutOption: LogoutOption) => {
-    this.props.logout(logoutOption);
+/**
+ * A screen to show all the options related to the user profile
+ */
+class ProfileMainScreen extends React.PureComponent<Props, State> {
+  private navListener?: NavigationEventSubscription;
 
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      tapsOnAppVersion: 0,
+      deviceUniqueId: DeviceInfo.getUniqueId()
+    };
+    this.handleClearCachePress = this.handleClearCachePress.bind(this);
+  }
+
+  public componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    });
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+    // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
-  };
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
+  }
+
+  private handleClearCachePress() {
+    Alert.alert(
+      I18n.t("profile.main.cache.alert"),
+      undefined,
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            this.props.clearCache();
+            Toast.show({ text: I18n.t("profile.main.cache.cleared") });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   private developerListItem(
     title: string,
@@ -149,89 +185,113 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <Button
-          info={!isDanger}
+        <ButtonDefaultOpacity
+          primary={true}
           danger={isDanger}
           small={true}
           onPress={onPress}
         >
           <Text numberOfLines={1}>{title}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
+      </ListItem>
+    );
+  }
+
+  private versionListItem(title: string, onPress: () => void) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <Text numberOfLines={1} semibold={true} onPress={onPress}>
+          {title}
+        </Text>
       </ListItem>
     );
   }
 
   private onLogoutPress = () => {
-    // Show a modal to let the user select a calendar
-    this.props.showModal(
-      <SelectLogoutOption
-        onCancel={this.props.hideModal}
-        onOptionSelected={this.logout}
-        header={
-          <View>
-            <H3 style={styles.modalHeader}>
-              {I18n.t("profile.logout.cta.header")}
-            </H3>
-            <View spacer={true} large={true} />
-          </View>
+    Alert.alert(
+      I18n.t("profile.logout.alertTitle"),
+      I18n.t("profile.logout.alertMessage"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel")
+        },
+        {
+          text: I18n.t("profile.logout.exit"),
+          onPress: this.props.logout
         }
-      />
+      ],
+      { cancelable: true }
     );
   };
 
-  private onExperimentalFeaturesToggle = (enabled: boolean) => {
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
-        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
         [
           {
             text: I18n.t("global.buttons.cancel"),
             style: "cancel"
           },
           {
-            text: I18n.t("global.buttons.ok"),
+            text: I18n.t("global.buttons.confirm"),
             style: "destructive",
             onPress: () => {
-              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
-                enabled
-              );
+              this.props.setPagoPATestEnabled(enabled);
+              this.showModal();
             }
           }
         ],
         { cancelable: false }
       );
     } else {
-      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
+      this.props.setPagoPATestEnabled(enabled);
+      this.showModal();
     }
   };
 
-  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
+  private idResetTap?: number;
+
+  // When tapped 5 times activate the debug mode of the application.
+  // If more than two seconds pass between taps, the counter is reset
+  private onTapAppVersion = () => {
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
+    // do nothing
+    if (this.props.isDebugModeEnabled || isDevEnv) {
+      return;
+    }
+    if (this.state.tapsOnAppVersion === consecutiveTapRequired) {
+      this.props.setDebugModeEnabled(true);
+      this.setState({ tapsOnAppVersion: 0 });
+      Toast.show({ text: I18n.t("profile.main.developerModeOn") });
+    } else {
+      // eslint-disable-next-line functional/immutable-data
+      this.idResetTap = setInterval(
+        this.resetAppTapCounter,
+        RESET_COUNTER_TIMEOUT
+      );
+      const tapsOnAppVersion = this.state.tapsOnAppVersion + 1;
+      this.setState({
+        tapsOnAppVersion
+      });
+    }
   };
 
-  private confirmResetAlert = () =>
-    Alert.alert(
-      I18n.t("profile.main.resetPin.confirmTitle"),
-      I18n.t("profile.main.resetPin.confirmMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: this.props.resetPin
-        }
-      ],
-      { cancelable: false }
-    );
+  private resetAppTapCounter = () => {
+    this.setState({ tapsOnAppVersion: 0 });
+    clearInterval(this.idResetTap);
+  };
 
   private ServiceListRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
@@ -240,183 +300,231 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     }
   };
 
-  // tslint:disable-next-line: no-big-function
-  public render() {
+  private renderDeveloperSection() {
     const {
-      navigation,
       backendInfo,
+      dispatchSessionExpired,
+      isDebugModeEnabled,
+      isPagoPATestEnabled,
+      navigation,
+      notificationId,
+      notificationToken,
       sessionToken,
       walletToken,
-      notificationToken,
-      notificationId
+      setDebugModeEnabled
     } = this.props;
+    const { deviceUniqueId } = this.state;
 
-    // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
-    // tslint:disable no-big-function
-    const screenContent = () => {
-      return (
-        <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
-          <NavigationEvents onWillFocus={this.scrollToTop} />
-          <List withContentLateralPadding={true}>
-            {/* Preferences */}
+    return (
+      <React.Fragment>
+        <SectionHeaderComponent
+          sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+        />
+        {isPlaygroundsEnabled && (
+          <>
             <ListItemComponent
-              title={I18n.t("profile.main.preferences.title")}
-              subTitle={I18n.t("profile.main.preferences.description")}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
-              }
-              isFirstItem={true}
+              title={"MyPortal Web Playground"}
+              onPress={() => navigation.navigate(ROUTES.WEB_PLAYGROUND)}
             />
-
-            {/* Privacy */}
             <ListItemComponent
-              title={I18n.t("profile.main.privacy.title")}
-              subTitle={I18n.t("profile.main.privacy.description")}
-              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-              isLastItem={true}
+              title={"Markdown Playground"}
+              onPress={() => navigation.navigate(ROUTES.MARKDOWN_PLAYGROUND)}
             />
+          </>
+        )}
 
-            <SectionHeaderComponent
-              sectionHeader={I18n.t("profile.main.accountSectionHeader")}
-            />
+        {/* Showroom */}
+        <ListItemComponent
+          title={I18n.t("profile.main.showroom")}
+          onPress={() => navigation.navigate(ROUTES.SHOWROOM)}
+          isFirstItem={true}
+        />
 
-            {/* Reset PIN */}
-            <ListItemComponent
-              title={I18n.t("pin_login.pin.reset.button_short")}
-              subTitle={I18n.t("pin_login.pin.reset.tip_short")}
-              onPress={this.confirmResetAlert}
-            />
+        {this.developerListItem(
+          I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+          isPagoPATestEnabled,
+          this.onPagoPAEnvironmentToggle,
+          I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.debugMode"),
+          isDebugModeEnabled,
+          setDebugModeEnabled
+        )}
+        {isDebugModeEnabled && (
+          <React.Fragment>
+            {backendInfo &&
+              this.debugListItem(
+                `${I18n.t("profile.main.backendVersion")} ${
+                  backendInfo.version
+                }`,
+                () => clipboardSetStringWithFeedback(backendInfo.version),
+                false
+              )}
 
-            {/* Logout/Exit */}
-            <ListItemComponent
-              title={I18n.t("profile.main.logout")}
-              subTitle={I18n.t("profile.logout.menulabel")}
-              onPress={this.onLogoutPress}
-              isLastItem={true}
-            />
+            {isDevEnv &&
+              sessionToken &&
+              this.debugListItem(
+                `Session Token ${sessionToken}`,
+                () => clipboardSetStringWithFeedback(sessionToken),
+                false
+              )}
 
-            <SectionHeaderComponent
-              sectionHeader={I18n.t("profile.main.developersSectionHeader")}
-            />
+            {isDevEnv &&
+              walletToken &&
+              this.debugListItem(
+                `Wallet token ${walletToken}`,
+                () => clipboardSetStringWithFeedback(walletToken),
+                false
+              )}
 
-            {this.developerListItem(
-              I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-              this.props.isExperimentalFeaturesEnabled,
-              this.onExperimentalFeaturesToggle
+            {isDevEnv &&
+              this.debugListItem(
+                `Notification ID ${notificationId}`,
+                () => clipboardSetStringWithFeedback(notificationId),
+                false
+              )}
+
+            {isDevEnv &&
+              notificationToken &&
+              this.debugListItem(
+                `Notification token ${notificationToken}`,
+                () => clipboardSetStringWithFeedback(notificationToken),
+                false
+              )}
+
+            {isDevEnv &&
+              this.debugListItem(
+                `Device unique ID ${deviceUniqueId}`,
+                () => clipboardSetStringWithFeedback(deviceUniqueId),
+                false
+              )}
+
+            {this.debugListItem(
+              I18n.t("profile.main.cache.clear"),
+              this.handleClearCachePress,
+              true
             )}
 
-            {this.developerListItem(
-              I18n.t("profile.main.pagoPaEnv"),
-              this.props.isPagoPATestEnabled,
-              this.onPagoPAEnvironmentToggle,
-              I18n.t("profile.main.pagoPAEnvAlert")
-            )}
+            {isDevEnv &&
+              this.debugListItem(
+                I18n.t("profile.main.forgetCurrentSession"),
+                dispatchSessionExpired,
+                true
+              )}
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    );
+  }
+  public render() {
+    const { navigation } = this.props;
 
-            {this.developerListItem(
-              I18n.t("profile.main.debugMode"),
-              this.props.isDebugModeEnabled,
-              this.props.setDebugModeEnabled
-            )}
-
-            {this.props.isDebugModeEnabled && (
-              <React.Fragment>
-                {this.debugListItem(
-                  `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
-                  () => clipboardSetStringWithFeedback(getAppLongVersion()),
-                  false
-                )}
-
-                {backendInfo &&
-                  this.debugListItem(
-                    `${I18n.t("profile.main.backendVersion")} ${
-                      backendInfo.version
-                    }`,
-                    () => clipboardSetStringWithFeedback(backendInfo.version),
-                    false
-                  )}
-                {sessionToken &&
-                  this.debugListItem(
-                    `Session Token ${sessionToken}`,
-                    () => clipboardSetStringWithFeedback(sessionToken),
-                    false
-                  )}
-
-                {walletToken &&
-                  this.debugListItem(
-                    `Wallet token ${walletToken}`,
-                    () => clipboardSetStringWithFeedback(walletToken),
-                    false
-                  )}
-
-                {this.debugListItem(
-                  `Notification ID ${notificationId.slice(0, 6)}`,
-                  () => clipboardSetStringWithFeedback(notificationId),
-                  false
-                )}
-
-                {notificationToken &&
-                  this.debugListItem(
-                    `Notification token ${notificationToken.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationToken),
-                    false
-                  )}
-
-                {this.debugListItem(
-                  I18n.t("profile.main.clearCache"),
-                  this.handleClearCachePress,
-                  true
-                )}
-
-                {this.debugListItem(
-                  I18n.t("profile.main.forgetCurrentSession"),
-                  this.props.dispatchSessionExpired,
-                  true
-                )}
-              </React.Fragment>
-            )}
-          </List>
-        </ScrollView>
+    const showInformationModal = (
+      title: TranslationKeys,
+      body: TranslationKeys
+    ) => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
+        />
       );
     };
 
-    return this.props.isExperimentalFeaturesEnabled ? (
+    const screenContent = () => (
+      <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
+        <NavigationEvents onWillFocus={this.scrollToTop} />
+        <View spacer={true} />
+        <List withContentLateralPadding={true}>
+          {/* Data */}
+          <ListItemComponent
+            title={I18n.t("profile.main.data.title")}
+            subTitle={I18n.t("profile.main.data.description")}
+            onPress={() => navigation.navigate(ROUTES.PROFILE_DATA)}
+            isFirstItem
+          />
+
+          {/* Preferences */}
+          <ListItemComponent
+            title={I18n.t("profile.main.preferences.title")}
+            subTitle={I18n.t("profile.main.preferences.description")}
+            onPress={() => navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)}
+          />
+
+          {/* Security */}
+          <ListItemComponent
+            title={I18n.t("profile.main.security.title")}
+            subTitle={I18n.t("profile.main.security.description")}
+            onPress={() => navigation.navigate(ROUTES.PROFILE_SECURITY)}
+          />
+
+          {/* Privacy */}
+          <ListItemComponent
+            title={I18n.t("profile.main.privacy.title")}
+            subTitle={I18n.t("profile.main.privacy.description")}
+            onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
+          />
+
+          {/* APP IO */}
+          <ListItemComponent
+            title={I18n.t("profile.main.appInfo.title")}
+            subTitle={I18n.t("profile.main.appInfo.description")}
+            onPress={() =>
+              showInformationModal(
+                "profile.main.appInfo.title",
+                "profile.main.appInfo.contextualHelpContent"
+              )
+            }
+          />
+
+          {/* Logout/Exit */}
+          <ListItemComponent
+            title={I18n.t("profile.main.logout")}
+            subTitle={I18n.t("profile.logout.menulabel")}
+            onPress={this.onLogoutPress}
+            hideIcon={true}
+            isLastItem={true}
+          />
+
+          {this.versionListItem(
+            `${I18n.t("profile.main.appVersion")} ${getAppVersion()}`,
+            this.onTapAppVersion
+          )}
+
+          {/* Developers Section */}
+          {(this.props.isDebugModeEnabled || isDevEnv) &&
+            this.renderDeveloperSection()}
+
+          {/* end list */}
+          <EdgeBorderComponent />
+        </List>
+      </ScrollView>
+    );
+
+    return (
       <DarkLayout
-        allowGoBack={false}
+        accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
-        headerBody={<IconFont name="io-logo" color={"white"} />}
-        title={I18n.t("profile.main.screenTitle")}
+        appLogo={true}
+        title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
-          <TouchableOpacity
+          <TouchableDefaultOpacity
+            accessibilityRole={"button"}
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }
           >
             <FiscalCodeComponent type={"Preview"} />
-          </TouchableOpacity>
+          </TouchableDefaultOpacity>
         }
-        contextualHelp={{
-          title: I18n.t("profile.main.screenTitle"),
-          body: () => (
-            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
-          )
-        }}
-        banner={ExperimentalFeaturesBanner}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile"]}
       >
         {screenContent()}
       </DarkLayout>
-    ) : (
-      <TopScreenComponent
-        title={I18n.t("profile.main.screenTitle")}
-        appLogo={true}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.main.screenTitle")}
-          icon={require("../../../img/icons/gears.png")}
-          subtitle={I18n.t("profile.main.screenSubtitle")}
-        />
-        {screenContent()}
-      </TopScreenComponent>
     );
   }
 }
@@ -431,25 +539,20 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
+  isDebugModeEnabled: isDebugModeEnabledSelector(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetPin: () => dispatch(startPinReset()),
-  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
+  logout: () => dispatch(navigateToLogout()),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
-  dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
-    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
+  dispatchSessionExpired: () => dispatch(sessionExpired())
 });
 
 export default connect(

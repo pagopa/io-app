@@ -1,23 +1,16 @@
-import { Effect } from "redux-saga";
-import { call, put, takeLatest } from "redux-saga/effects";
+import { Effect, put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";
-
-import { saveNavigationStateSaga } from "./saveNavigationStateSaga";
+import { clearCache } from "../../store/actions/profile";
 
 /**
- * Handles the expiration of session while the user is using the app.
+ * Handles the expiration of the session while the user is using the app.
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
-  yield takeLatest(getType(sessionExpired), function*() {
-    // Save the navigation state
-    yield call(saveNavigationStateSaga);
-
-    // Re-initialize the app
-    // Since there was a SESSION_EXPIRED action, the user will be asked to
-    // authenticate again.
+  yield takeLatest(getType(sessionExpired), function* () {
+    yield put(clearCache());
+    // start again the application
     yield put(startApplicationInitialization());
   });
 }

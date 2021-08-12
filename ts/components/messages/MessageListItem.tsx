@@ -1,24 +1,27 @@
+/**
+ * A component to display the list item in the MessagesHomeScreen
+ */
 import { fromNullable } from "fp-ts/lib/Option";
-import { Button, Text, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity } from "react-native";
-
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { makeFontStyleObject } from "../../theme/fonts";
-import variables from "../../theme/variables";
-import customVariables from "../../theme/variables";
-import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { messageNeedsCTABar } from "../../utils/messages";
-import { BadgeComponent } from "../screens/BadgeComponent";
-import IconFont from "../ui/IconFont";
-import MessageCTABar from "./MessageCTABar";
+import {
+  convertDateToWordDistance,
+  convertReceivedDateToAccessible
+} from "../../utils/convertDateToWordDistance";
+import {
+  hasPrescriptionData,
+  messageNeedsCTABar,
+  paymentExpirationInfo
+} from "../../utils/messages";
+import DetailedlistItemComponent from "../DetailedlistItemComponent";
+import MessageListCTABar from "./MessageListCTABar";
 
 type Props = {
   isRead: boolean;
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
@@ -27,102 +30,45 @@ type Props = {
   isSelected: boolean;
 };
 
-const styles = StyleSheet.create({
-  highlight: {
-    flex: 1
-  },
-
-  mainWrapper: {
-    flex: 1,
-    paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding
-  },
-
-  mainWrapperSelected: {
-    backgroundColor: "#E7F3FF"
-  },
-
-  headerWrapper: {
-    flexDirection: "row",
-    marginBottom: 4
-  },
-
-  headerLeft: {
-    flex: 0,
-    paddingRight: 4
-  },
-
-  headerCenter: {
-    flex: 1,
-    paddingRight: 32
-  },
-  serviceOrganizationName: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: customVariables.brandDarkestGray
-  },
-
-  serviceDepartmentName: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: customVariables.brandDarkGray
-  },
-
-  headerRight: {
-    flex: 0
-  },
-
-  messageDate: {
-    ...makeFontStyleObject(Platform.select, "700", false),
-    fontSize: 14,
-    lineHeight: 18,
-    color: customVariables.brandDarkGray
-  },
-  contentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 42
-  },
-
-  contentCenter: {
-    flex: 1,
-    paddingRight: 32
-  },
-
-  messageTitle: {
-    ...makeFontStyleObject(Platform.select, "700", false),
-    fontSize: 16,
-    lineHeight: 21,
-    color: customVariables.brandDarkestGray
-  },
-
-  contentRight: {
-    flex: 0
-  },
-
-  selectionCheckbox: {
-    left: 0,
-    paddingBottom: 1
-  },
-
-  footerWrapper: {
-    height: 32,
-    marginTop: 12
-  }
-});
+type Message = {
+  isRead: boolean;
+  organizationName: string;
+  serviceName: string;
+} & CreatedMessageWithContentAndAttachments;
 
 const UNKNOWN_SERVICE_DATA = {
-  organizationName: "Mittente sconosciuto",
-  departmentName: "Info sul servizio mancanti"
+  organizationName: I18n.t("messages.errorLoading.senderInfo"),
+  serviceName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
 class MessageListItem extends React.PureComponent<Props> {
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+  get paid(): boolean {
+    return this.props.payment !== undefined;
+  }
+
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
   };
 
   private handleLongPress = () => {
     this.props.onLongPress(this.props.message.id);
+  };
+
+  private announceMessage = (message: Message) => {
+    const newMessage = message.isRead
+      ? I18n.t("messages.accessibility.message.read")
+      : I18n.t("messages.accessibility.message.unread");
+
+    return I18n.t("messages.accessibility.message.description", {
+      newMessage,
+      organizationName: message.organizationName,
+      serviceName: message.serviceName,
+      subject: message.content.subject,
+      receivedAt: convertReceivedDateToAccessible(message.created_at)
+    });
   };
 
   public render() {
@@ -137,7 +83,7 @@ class MessageListItem extends React.PureComponent<Props> {
 
     const uiService = fromNullable(service).fold(UNKNOWN_SERVICE_DATA, _ => ({
       organizationName: _.organization_name,
-      departmentName: _.department_name
+      serviceName: _.service_name
     }));
 
     const uiDate = convertDateToWordDistance(
@@ -145,77 +91,37 @@ class MessageListItem extends React.PureComponent<Props> {
       I18n.t("messages.yesterday")
     );
 
-    const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
-
-    const iconColor = isSelected
-      ? variables.selectedColor
-      : variables.unselectedColor;
-
     return (
-      <TouchableOpacity
-        style={styles.highlight}
-        onPress={this.handlePress}
-        onLongPress={this.handleLongPress}
+      <DetailedlistItemComponent
+        isNew={!isRead}
+        onPressItem={this.handlePress}
+        text11={uiService.organizationName}
+        text12={uiDate}
+        text2={uiService.serviceName}
+        text3={message.content.subject}
+        onLongPressItem={this.handleLongPress}
+        isSelectionModeEnabled={isSelectionModeEnabled}
+        isItemSelected={isSelected}
+        isPaid={this.paid}
+        accessible={true}
+        accessibilityLabel={this.announceMessage({
+          isRead,
+          ...message,
+          ...uiService
+        })}
       >
-        <View
-          style={[
-            styles.mainWrapper,
-            isSelected ? styles.mainWrapperSelected : undefined
-          ]}
-        >
-          <View style={styles.headerWrapper}>
-            {!isRead && (
-              <View style={styles.headerLeft}>
-                <BadgeComponent />
-              </View>
-            )}
-            <View style={styles.headerCenter}>
-              <Text numberOfLines={1} style={styles.serviceOrganizationName}>
-                {uiService.organizationName}
-              </Text>
-              <Text numberOfLines={1} style={styles.serviceDepartmentName}>
-                {uiService.departmentName}
-              </Text>
-            </View>
-            <View style={styles.headerRight}>
-              <Text style={styles.messageDate}>{uiDate}</Text>
-            </View>
-          </View>
-
-          <View style={styles.contentWrapper}>
-            <View style={styles.contentCenter}>
-              <Text numberOfLines={2} style={styles.messageTitle}>
-                {message.content.subject}
-              </Text>
-            </View>
-            <View style={styles.contentRight}>
-              {isSelectionModeEnabled ? (
-                <Button onPress={this.handleLongPress} transparent={true}>
-                  <IconFont name={iconName} color={iconColor} />
-                </Button>
-              ) : (
-                <IconFont
-                  name="io-right"
-                  size={24}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              )}
-            </View>
-          </View>
-
-          {messageNeedsCTABar(message) && (
-            <View style={styles.footerWrapper}>
-              <MessageCTABar
-                message={message}
-                service={service}
-                payment={payment}
-                small={true}
-                disabled={isSelectionModeEnabled}
-              />
-            </View>
-          )}
-        </View>
-      </TouchableOpacity>
+        {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
+          <React.Fragment>
+            <MessageListCTABar
+              onEUCovidCTAPress={this.handlePress}
+              message={message}
+              service={service}
+              payment={payment}
+              disabled={isSelectionModeEnabled}
+            />
+          </React.Fragment>
+        )}
+      </DetailedlistItemComponent>
     );
   }
 }

@@ -1,58 +1,48 @@
+import { createMockTask } from "@redux-saga/testing-utils";
+import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-
 import { getType } from "typesafe-actions";
-
+import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
-import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
-
 import { SessionToken } from "../../../types/SessionToken";
-
-import { NavigationActions } from "react-navigation";
-import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
-import ROUTES from "../../../navigation/routes";
+import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
+import { watchTestLoginRequestSaga } from "../../testLoginSaga";
 import { authenticationSaga } from "../authenticationSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
+jest.mock("react-native-background-timer", () => ({
+  startTimer: jest.fn()
+}));
+
 describe("authenticationSaga", () => {
-  it("should navigate to authentication screen and return the session token on login success", () => {
+  it("should always navigate to authentication screen and return the session token on login success", () => {
+    const watchCieAuthentication: Task = createMockTask();
+    const watchTestLoginRequest: Task = createMockTask();
+
     testSaga(authenticationSaga)
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
+      .fork(watchTestLoginRequestSaga)
+      .next(watchTestLoginRequest)
+      .fork(watchCieAuthenticationSaga)
+      .next(watchCieAuthentication)
       .put(resetToAuthenticationRoute)
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
-      .call(removeScheduledNotificationAccessSpid)
+      .cancel(watchCieAuthentication)
       .next()
-      .put(analyticsAuthenticationCompleted())
+      .cancel(watchTestLoginRequest)
       .next()
-      .returns(aSessionToken);
-  });
-
-  it("should navigate to IDP selection screen on session expired and return the session token on login success", () => {
-    testSaga(authenticationSaga)
+      .call(stopCieManager)
       .next()
-      .put(analyticsAuthenticationStarted())
-      .next()
-      .select(isSessionExpiredSelector)
-      .next(true)
-      .put(
-        NavigationActions.navigate({
-          routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-        })
-      )
-      .next()
-      .take(getType(loginSuccess))
-      .next(loginSuccess(aSessionToken))
       .call(removeScheduledNotificationAccessSpid)
       .next()
       .put(analyticsAuthenticationCompleted())

@@ -1,5 +1,7 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @cloudify @francescopersico @undermaken
+* @pagopa/io-app
 
-/locales/ @cloudify @matteodesanti @francescopersico @undermaken
+/locales/ @pagopa/io-app @thisisjp
+/ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp
+/ios/ItaliaApp/en.lproj/ @pagopa/io-app @thisisjp

@@ -8,24 +8,37 @@
  * footer with a button for starting a new payment
  */
 
-import I18n from "i18n-js";
-import { Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import Markdown from "../ui/Markdown";
-import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   title: string;
   allowGoBack: boolean;
+  topContentHeight?: number;
   hasDynamicSubHeader: boolean;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
+  refreshControl?: Animated.ComponentProps<Content>["refreshControl"];
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  appLogo?: boolean;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
+  footerFullWidth?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -86,30 +99,37 @@ export default class WalletLayout extends React.Component<Props> {
   public render(): React.ReactNode {
     const {
       title,
+      accessibilityLabel,
       allowGoBack,
       hideHeader,
       footerContent,
-      contentStyle
+      contentStyle,
+      appLogo,
+      footerFullWidth
     } = this.props;
 
     return (
       <DarkLayout
+        accessibilityLabel={accessibilityLabel}
         bounces={false}
         allowGoBack={allowGoBack}
-        headerBody={<PagoPALogo />}
         title={title ? title : I18n.t("wallet.wallet")}
-        icon={require("../../../img/wallet/bank.png")}
+        iconFont={{ name: "io-pagopa" }}
+        appLogo={appLogo}
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}
         dynamicSubHeader={this.dynamicSubHeader()}
-        topContentHeight={250}
+        topContentHeight={this.props.topContentHeight}
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
-        contextualHelp={{
-          title: I18n.t("wallet.wallet"),
-          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
-        }}
+        footerFullWidth={footerFullWidth}
+        contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
+        contentRefreshControl={this.props.refreshControl}
+        faqCategories={this.props.faqCategories}
+        gradientHeader={this.props.gradientHeader}
+        headerPaddingMin={this.props.headerPaddingMin}
       >
         {this.props.children}
       </DarkLayout>

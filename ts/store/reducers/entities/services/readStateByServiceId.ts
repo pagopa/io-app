@@ -1,8 +1,13 @@
 import { getType } from "typesafe-actions";
-import { clearCache } from "../../../actions/profile";
-import { showServiceDetails } from "../../../actions/services";
+import _ from "lodash";
+import {
+  loadServiceDetailNotFound,
+  markServiceAsRead,
+  showServiceDetails
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import { differentProfileLoggedIn } from "../../../actions/crossSessions";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -10,15 +15,13 @@ export type ReadStateByServicesId = Readonly<{
 
 const INITIAL_STATE: ReadStateByServicesId = {};
 
-export const readStateByServiceIdSelector = (id: string) => (
-  state: GlobalState
-): boolean | undefined => state.entities.services.readState[id] !== undefined;
-
-export const readServicesSelector = (
+// Selectors
+export const readServicesByIdSelector = (
   state: GlobalState
 ): ReadStateByServicesId => state.entities.services.readState;
 
-export function readStateByServiceIdReducer(
+// Reducer
+export function readServicesByIdReducer(
   state = INITIAL_STATE,
   action: Action
 ): ReadStateByServicesId {
@@ -29,7 +32,16 @@ export function readStateByServiceIdReducer(
         ...state,
         [action.payload.service_id]: true
       };
-    case getType(clearCache):
+
+    case getType(markServiceAsRead):
+      return {
+        ...state,
+        [action.payload]: true
+      };
+    case getType(loadServiceDetailNotFound):
+      return _.omit(state, [action.payload]);
+    // reset reading state if current profile is different from the previous one
+    case getType(differentProfileLoggedIn):
       return INITIAL_STATE;
 
     default:
@@ -37,4 +49,4 @@ export function readStateByServiceIdReducer(
   }
 }
 
-export default readStateByServiceIdReducer;
+export default readServicesByIdReducer;

@@ -1,9 +1,11 @@
 import { Either } from "fp-ts/lib/Either";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
 type Props = Readonly<{
@@ -59,7 +61,7 @@ export default class ChooserListItem extends React.Component<Props> {
       : itemIconComponent;
 
     return (
-      <TouchableOpacity onPress={this.handleOnPress}>
+      <TouchableDefaultOpacity onPress={this.handleOnPress}>
         <View style={styles.container}>
           {icon && <View>{icon}</View>}
           <View style={styles.content}>
@@ -67,11 +69,11 @@ export default class ChooserListItem extends React.Component<Props> {
               {itemTitle}
             </Text>
           </View>
-          <Button onPress={this.handleOnPress} transparent={true}>
+          <ButtonDefaultOpacity onPress={this.handleOnPress} transparent={true}>
             <IconFont name={iconName} color={iconColor} />
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
-      </TouchableOpacity>
+      </TouchableDefaultOpacity>
     );
   }
 

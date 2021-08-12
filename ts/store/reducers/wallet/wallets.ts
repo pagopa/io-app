@@ -3,11 +3,38 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { values } from "lodash";
+import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
+import _ from "lodash";
+import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
+import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
+import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  CreditCardPaymentMethod,
+  EnableableFunctionsTypeEnum,
+  isBancomat,
+  isBPay,
+  isCreditCard,
+  isPrivativeCard,
+  isRawCreditCard,
+  isSatispay,
+  PaymentMethod,
+  PrivativePaymentMethod,
+  RawCreditCardPaymentMethod,
+  RawPaymentMethod,
+  SatispayPaymentMethod,
+  Wallet
+} from "../../../types/pagopa";
 
-import { Wallet } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
+import { isDefined } from "../../../utils/guards";
+import { enhancePaymentMethod } from "../../../utils/paymentMethod";
+import { hasFunctionEnabled } from "../../../utils/walletv2";
+import { sessionExpired, sessionInvalid } from "../../actions/authentication";
+import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
@@ -15,70 +42,90 @@ import {
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
   addWalletCreditCardSuccess,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
+  addWalletCreditCardWithBackoffRetryRequest,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsRequest,
+  fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
-  setFavouriteWalletFailure,
-  setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
+import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
+import { getErrorFromNetworkError } from "../../../utils/errors";
+import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
-  favoriteWalletId: pot.Pot<Wallet["idWallet"], Error>;
   creditCardAddWallet: PotFromActions<
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
   >;
-  creditCardVerification: PotFromActions<
-    typeof payCreditCardVerificationSuccess,
-    typeof payCreditCardVerificationFailure
-  >;
-  creditCardCheckout3ds: PotFromActions<
-    typeof creditCardCheckout3dsSuccess,
-    never
-  >;
 }>;
+
+export type PersistedWalletsState = WalletsState & PersistPartial;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
-  favoriteWalletId: pot.none,
-  creditCardAddWallet: pot.none,
-  creditCardVerification: pot.none,
-  creditCardCheckout3ds: pot.none
+  creditCardAddWallet: pot.none
 };
 
-// selectors
+// Selectors
+export const getAllWallets = (state: GlobalState): WalletsState =>
+  state.wallet.wallets;
+
 export const getWalletsById = (state: GlobalState) =>
   state.wallet.wallets.walletById;
 
-const getWallets = createSelector(getWalletsById, potWx =>
-  pot.map(
-    potWx,
-    wx => values(wx).filter(_ => _ !== undefined) as ReadonlyArray<Wallet>
-  )
+const getWallets = createSelector(
+  getWalletsById,
+  (potWx): pot.Pot<ReadonlyArray<Wallet>, Error> =>
+    pot.map(potWx, wx => values(wx).filter(isDefined))
 );
 
-export const getFavoriteWalletId = (state: GlobalState) =>
-  state.wallet.wallets.favoriteWalletId;
-
-export const getFavoriteWallet = (state: GlobalState) =>
-  pot.mapNullable(state.wallet.wallets.favoriteWalletId, walletId =>
-    pot.toUndefined(
-      pot.map(state.wallet.wallets.walletById, wx => wx[walletId])
+// return a pot with the id of the favorite wallet. none otherwise
+export const getFavoriteWalletId = createSelector(
+  getWallets,
+  (potWx: ReturnType<typeof getWallets>): pot.Pot<number, Error> =>
+    pot.mapNullable(
+      potWx,
+      wx => values(wx).find(w => w.favourite === true)?.idWallet
     )
-  );
+);
 
+export const getFavoriteWallet = createSelector(
+  [getFavoriteWalletId, getWalletsById],
+  (
+    favoriteWalletID: pot.Pot<number, Error>,
+    walletsById: WalletsState["walletById"]
+  ): pot.Pot<Wallet, Error> =>
+    pot.mapNullable(favoriteWalletID, walletId =>
+      pot.toUndefined(pot.map(walletsById, wx => wx[walletId]))
+    )
+);
+
+/**
+ * Select a payment method using the id (walletId) and extracts the payment status (is the payment enabled on this payment method?)
+ * Return pot.some(undefined) if no payment methods with the id are found
+ */
+export const getPaymentStatusById = createSelector(
+  [getWalletsById, (_: GlobalState, id: number) => id],
+  (potWalletsById, id): pot.Pot<boolean | undefined, Error> =>
+    pot.map(
+      potWalletsById,
+      walletsById => walletsById[id]?.paymentMethod?.pagoPA
+    )
+);
+
+/**
+ * @deprecated Using API v2 this selector is deprecated
+ * If you are searching for credit card or bancomat use {@link creditCardWalletV1Selector}
+ * - {@link pagoPaCreditCardWalletV1Selector} {@link bancomatListSelector} instead
+ */
 export const walletsSelector = createSelector(
   getWallets,
   // define whether an order among cards needs to be established
@@ -98,13 +145,251 @@ export const walletsSelector = createSelector(
               ? 0
               : -1
             : b.lastUsage === undefined
-              ? 1
-              : a.lastUsage.getTime() - b.lastUsage.getTime())
+            ? 1
+            : a.lastUsage.getTime() - b.lastUsage.getTime())
       )
     )
 );
 
+/**
+ * Get a list of the payment methods in the wallet
+ */
+export const paymentMethodsSelector = createSelector(
+  [walletsSelector, abiSelector],
+  (potWallet, remoteAbi): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+    pot.map(potWallet, wallets =>
+      wallets
+        .map(w =>
+          w.paymentMethod
+            ? enhancePaymentMethod(
+                w.paymentMethod,
+                getValueOrElse(remoteAbi, {})
+              )
+            : undefined
+        )
+        .filter(isDefined)
+    )
+);
+
+// return those payment methods that can pay within pagoPA
+export const getPayablePaymentMethodsSelector = createSelector(
+  paymentMethodsSelector,
+  (
+    potPm: ReturnType<typeof paymentMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> =>
+    pot.getOrElse(
+      pot.map(potPm, pms => pms.filter(canMethodPay)),
+      []
+    )
+);
+
+export const rawCreditCardListSelector = createSelector(
+  [paymentMethodsSelector],
+  (
+    paymentMethods: pot.Pot<ReadonlyArray<RawPaymentMethod>, Error>
+  ): ReadonlyArray<RawCreditCardPaymentMethod> =>
+    pot.getOrElse(
+      pot.map(paymentMethods, w => w.filter(isRawCreditCard)),
+      []
+    )
+);
+
+/**
+ * Return a bancomat list enhanced with the additional abi information in the wallet
+ */
+export const bancomatListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<BancomatPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isBancomat))
+);
+
+/**
+ * Return a credit card list in the wallet
+ */
+export const creditCardListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod =>
+      paymentMethod.filter(isCreditCard)
+    )
+);
+
+/**
+ * Return a {@link CreditCardPaymentMethod} by walletId
+ * Return undefined if not in list
+ */
+export const creditCardByIdSelector = createSelector(
+  [creditCardListSelector, (_: GlobalState, id: number) => id],
+  (potCreditCardList, id): CreditCardPaymentMethod | undefined =>
+    pot.toUndefined(
+      pot.map(potCreditCardList, creditCardList =>
+        creditCardList.find(cc => cc.idWallet === id)
+      )
+    )
+);
+
+/**
+ * Return a privative card list in the wallet
+ */
+export const privativeListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod =>
+      paymentMethod.filter(isPrivativeCard)
+    )
+);
+
+/**
+ * Return a satispay list in the wallet
+ */
+export const satispayListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isSatispay))
+);
+
+/**
+ * Return a BPay list in the wallet
+ */
+export const bPayListSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodPot): pot.Pot<ReadonlyArray<BPayPaymentMethod>, Error> =>
+    pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isBPay))
+);
+
+/**
+ * return true if the payment method is visible in the wallet (the onboardingChannel
+ * is IO or WISP) or if the onboardingChannel is undefined.
+ * We choose to show cards with onboardingChannel undefined to ensure backward compatibility
+ * with cards inserted before the field was added.
+ * Explicitly handling the undefined is a conservative choice, as the field should be an enum (IO, WISP, EXT)
+ * but it is a string and therefore we cannot be sure that incorrect data will not arrive.
+ *
+ * @param pm
+ */
+const visibleOnboardingChannels = ["IO", "WISP", undefined];
+export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
+  visibleOnboardingChannels.some(
+    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
+  );
+
+/**
+ * Return all the payment methods visible in wallet screen.
+ * First return the payment method that have pagoPA capability
+ */
+export const paymentMethodListVisibleInWalletSelector = createSelector(
+  [paymentMethodsSelector],
+  (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
+    pot.map(paymentMethodsPot, paymentMethodList =>
+      _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
+        hasFunctionEnabled(pm, EnableableFunctionsTypeEnum.pagoPA)
+          ? -1
+          : pm.idWallet
+      )
+    )
+);
+
+/**
+ * Return a credit card list visible in the wallet
+ */
+export const creditCardListVisibleInWalletSelector = createSelector(
+  [creditCardListSelector],
+  (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
+    pot.map(creditCardListPot, creditCardList =>
+      creditCardList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a bancomat list visible in the wallet
+ */
+export const bancomatListVisibleInWalletSelector = createSelector(
+  [bancomatListSelector],
+  (bancomatListPot): pot.Pot<ReadonlyArray<BancomatPaymentMethod>, Error> =>
+    pot.map(bancomatListPot, bancomatList =>
+      bancomatList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a satispay list visible in the wallet
+ */
+export const satispayListVisibleInWalletSelector = createSelector(
+  [satispayListSelector],
+  (satispayListPot): pot.Pot<ReadonlyArray<SatispayPaymentMethod>, Error> =>
+    pot.map(satispayListPot, satispayList =>
+      satispayList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Return a BPay list visible in the wallet
+ */
+export const bPayListVisibleInWalletSelector = createSelector(
+  [bPayListSelector],
+  (bPayListPot): pot.Pot<ReadonlyArray<BPayPaymentMethod>, Error> =>
+    pot.map(bPayListPot, bPayList => bPayList.filter(isVisibleInWallet))
+);
+
+/**
+ * Return a CoBadge list visible in the wallet
+ */
+export const cobadgeListVisibleInWalletSelector = createSelector(
+  [creditCardListVisibleInWalletSelector],
+  (creditCardListPot): pot.Pot<ReadonlyArray<CreditCardPaymentMethod>, Error> =>
+    pot.map(creditCardListPot, creditCardList =>
+      creditCardList.filter(
+        cc =>
+          cc.pagoPA === false &&
+          cc.info.issuerAbiCode !== undefined &&
+          cc.info.type !== TypeEnum.PRV
+      )
+    )
+);
+
+/**
+ * Return a Privative card list visible in the wallet
+ */
+export const privativeListVisibleInWalletSelector = createSelector(
+  [privativeListSelector],
+  (privativeListPot): pot.Pot<ReadonlyArray<PrivativePaymentMethod>, Error> =>
+    pot.map(privativeListPot, privativeList =>
+      privativeList.filter(isVisibleInWallet)
+    )
+);
+
+/**
+ * Get the list of credit cards using the info contained in v2 (Walletv2) to distinguish
+ */
+export const creditCardWalletV1Selector = createSelector(
+  [walletsSelector],
+  (
+    potWallet: pot.Pot<ReadonlyArray<Wallet>, Error>
+  ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
+    pot.map(potWallet, wallets =>
+      wallets.filter(
+        w =>
+          w.paymentMethod && w.paymentMethod.walletType === WalletTypeEnum.Card
+      )
+    )
+);
+
+/**
+ * Get the list of credit cards usable as payment instrument in pagoPA
+ * using the info contained in v2 (Walletv2) to distinguish
+ */
+export const pagoPaCreditCardWalletV1Selector = createSelector(
+  [creditCardWalletV1Selector],
+  (
+    potCreditCards: pot.Pot<ReadonlyArray<Wallet>, Error>
+  ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
+    pot.map(potCreditCards, wallets =>
+      wallets.filter(w => w.paymentMethod?.pagoPA === true)
+    )
+);
+
 // reducer
+// eslint-disable-next-line complexity
 const reducer = (
   state: WalletsState = WALLETS_INITIAL_STATE,
   action: Action
@@ -113,74 +398,76 @@ const reducer = (
     //
     // fetch wallets
     //
-
+    case getType(fetchWalletsRequestWithExpBackoff):
     case getType(fetchWalletsRequest):
     case getType(paymentUpdateWalletPsp.request):
+    case getType(updatePaymentStatus.request):
     case getType(deleteWalletRequest):
       return {
         ...state,
-        favoriteWalletId: pot.toLoading(state.favoriteWalletId),
         walletById: pot.toLoading(state.walletById)
       };
 
+    case getType(updatePaymentStatus.success):
+      const currentWallets = pot.getOrElse(state.walletById, {});
+      // update the received wallet
+      return {
+        ...state,
+        walletById: pot.some({
+          ...currentWallets,
+          [action.payload.idWallet]: action.payload
+        })
+      };
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPsp.success):
     case getType(deleteWalletSuccess):
       const wallets = isOfType(getType(paymentUpdateWalletPsp.success), action)
         ? action.payload.wallets
         : action.payload;
-      const favouriteWallet = wallets.find(_ => _.favourite === true);
-      const newState = {
+      return {
         ...state,
         walletById: pot.some(toIndexed(wallets, _ => _.idWallet))
       };
-      return favouriteWallet !== undefined
-        ? {
-            ...newState,
-            favoriteWalletId: pot.some(favouriteWallet.idWallet)
-          }
-        : newState;
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
     case getType(paymentUpdateWalletPsp.failure):
       return {
         ...state,
-        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload),
         walletById: pot.toError(state.walletById, action.payload)
+      };
+    case getType(updatePaymentStatus.failure):
+      return {
+        ...state,
+        walletById: pot.toError(
+          state.walletById,
+          getErrorFromNetworkError(action.payload)
+        )
       };
 
     //
     // set favourite wallet
     //
 
-    case getType(setFavouriteWalletRequest):
-      return {
-        ...state,
-        favoriteWalletId:
-          action.payload === undefined
-            ? pot.none
-            : pot.toUpdating(state.favoriteWalletId, action.payload)
-      };
-
     case getType(setFavouriteWalletSuccess):
       // On success, we update both the favourite wallet ID and the
       // corresponding Wallet in walletById.
-      // Note that we don't update the Wallet that was previously the
-      // favourite one.
       return {
         ...state,
-        favoriteWalletId: pot.some(action.payload.idWallet),
-        walletById: {
-          ...state.walletById,
-          [action.payload.idWallet]: action.payload
-        }
-      };
-
-    case getType(setFavouriteWalletFailure):
-      return {
-        ...state,
-        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload)
+        walletById: pot.map(state.walletById, walletsById =>
+          _.keys(walletsById).reduce<IndexedById<Wallet>>(
+            (acc, val) =>
+              ({
+                ...acc,
+                [val]: {
+                  ...walletsById[val],
+                  favourite:
+                    action.payload.idWallet === walletsById[val]?.idWallet
+                }
+              } as IndexedById<Wallet>),
+            {}
+          )
+        )
       };
 
     //
@@ -190,11 +477,10 @@ const reducer = (
     case getType(addWalletCreditCardInit):
       return {
         ...state,
-        creditCardAddWallet: pot.none,
-        creditCardVerification: pot.none,
-        creditCardCheckout3ds: pot.none
+        creditCardAddWallet: pot.none
       };
 
+    case getType(addWalletCreditCardWithBackoffRetryRequest):
     case getType(addWalletCreditCardRequest):
       return {
         ...state,
@@ -212,49 +498,12 @@ const reducer = (
         ...state,
         creditCardAddWallet: pot.noneError(action.payload)
       };
-
-    //
-    // pay credit card verification
-    //
-
-    case getType(payCreditCardVerificationRequest):
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
+    case getType(clearCache):
       return {
         ...state,
-        creditCardVerification: pot.noneLoading
-      };
-
-    case getType(payCreditCardVerificationSuccess):
-      return {
-        ...state,
-        creditCardVerification: pot.some(action.payload)
-      };
-
-    case getType(payCreditCardVerificationFailure):
-      return {
-        ...state,
-        creditCardVerification: pot.noneError(action.payload)
-      };
-
-    //
-    // credit card 3ds checkout
-    //
-
-    case getType(creditCardCheckout3dsRequest):
-      // a valid URL has been made available
-      // from pagoPA and needs to be opened in a webview
-      const urlWithToken = `${action.payload.urlCheckout3ds}&sessionToken=${
-        action.payload.paymentManagerToken
-      }`;
-
-      return {
-        ...state,
-        creditCardCheckout3ds: pot.someLoading(urlWithToken)
-      };
-
-    case getType(creditCardCheckout3dsSuccess):
-      return {
-        ...state,
-        creditCardCheckout3ds: pot.some("done")
+        walletById: WALLETS_INITIAL_STATE.walletById
       };
 
     default:

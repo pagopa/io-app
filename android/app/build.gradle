@@ -21,7 +21,9 @@ import com.android.build.OutputFile
  *   // the name of the generated asset file containing your JS bundle
  *   bundleAssetName: "index.android.bundle",
  *
- *   // the entry file for bundle generation
+ *   // the entry file for bundle generation. If none specified and
+ *   // "index.android.js" exists, it will be used. Otherwise "index.js" is
+ *   // default. Can be overridden with ENTRY_FILE environment variable.
  *   entryFile: "index.android.js",
  *
  *   // whether to bundle JS and assets in debug mode
@@ -79,10 +81,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-  entryFile: "index.js",
-  // TODO: Check if we still need this
-  extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")],
-  inputExcludes: ["ios/**", "__tests__/**", "bundle_out/**"]
+  enableHermes: true
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -100,7 +99,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -115,11 +114,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "it.teamdigitale.app.italiaapp"
+        applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
-        versionName "1.1." + (System.getenv('CIRCLE_BUILD_NUM') ? System.getenv('CIRCLE_BUILD_NUM') : "1")
+        versionName "1.33.0.4"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -131,11 +130,11 @@ android {
     }
     signingConfigs {
         release {
-            if (System.getenv('ITALIAAPP_RELEASE_STORE_FILE')) {
-                storeFile file(System.getenv('ITALIAAPP_RELEASE_STORE_FILE'))
-                storePassword System.getenv('ITALIAAPP_RELEASE_STORE_PASSWORD')
-                keyAlias System.getenv('ITALIAAPP_RELEASE_KEY_ALIAS')
-                keyPassword System.getenv('ITALIAAPP_RELEASE_KEY_PASSWORD')
+            if (System.getenv('IO_APP_RELEASE_STORE_FILE')) {
+                storeFile file(System.getenv('IO_APP_RELEASE_STORE_FILE'))
+                storePassword System.getenv('IO_APP_RELEASE_STORE_PASSWORD')
+                keyAlias System.getenv('IO_APP_RELEASE_KEY_ALIAS')
+                keyPassword System.getenv('IO_APP_RELEASE_KEY_PASSWORD')
             }
         }
     }
@@ -192,36 +191,47 @@ android {
     }
 }
 
+def jscFlavor = 'org.webkit:android-jsc:+'
+def enableHermes = project.ext.react.get("enableHermes", false)
+
 dependencies {
-    implementation project(':@react-native-community_async-storage')
-    implementation project(':react-native-lewin-qrcode')
-    implementation project(':react-native-image-picker')
-    compile project(':react-native-flag-secure-android')
-    compile project(':react-native-fs')
-    compile project(':react-native-android-open-settings')
-    compile project(':react-native-gesture-handler')
-    compile project(':react-native-calendar-events')
-    compile project(':react-native-webview')
-    compile project(':react-native-touch-id')
-    compile project(':react-native-background-timer')
-    compile project(':instabug-reactnative')
-    compile project(':react-native-svg')
-    compile project(':react-native-text-input-mask')
-    compile project(':react-native-splash-screen')
-    compile project(':react-native-exception-handler')
-    compile project(':react-native-camera')
-    compile project(':react-native-push-notification')
-    compile project(':react-native-keychain')
-    compile project(':react-native-i18n')
-    compile project(':react-native-sha256')
-    compile project(':react-native-mixpanel')
-    compile project(':react-native-device-info')
-    compile project(':react-native-config')
-    compile "com.google.android.gms:play-services-gcm:8.1.0"
-    compile "com.android.support:multidex:1.0.3"
+    implementation project(':jail-monkey')
+    implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-share')
+    implementation project(':react-native-permissions')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation ("com.facebook.react:react-native:0.59.9") { force = true } // From node_modules
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+      exclude group:'com.facebook.fbjni'
+    }
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+        exclude group:'com.squareup.okhttp3', module:'okhttp'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
+
+    implementation project(':react-native-cie')
+    // compile "com.squareup.okhttp3:okhttp:4.2.1"
+    // compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    // compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+        force = true //API 19 support
+    }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermes-engine/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
+    implementation project(':@react-native-community_datetimepicker')
+
 }
 
 // Run this once to be able to run the application with BUCK
@@ -233,3 +243,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 
 // Add the following line to the bottom of the file:
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

@@ -1,12 +1,13 @@
 /**
  * Main navigator, handling the navigation within
- * the app *after* the login has occurred. This takes
- * care of displaying a tab navigator with the
- * appropriate icons
+ * the app *after* the login and onboarding have
+ * occurred. This takes care of displaying a tab
+ * navigator with the appropriate icons
  */
 
 import * as React from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
+import deviceInfoModule from "react-native-device-info";
 import {
   createBottomTabNavigator,
   NavigationRoute,
@@ -15,28 +16,19 @@ import {
   StackActions
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
+import NavBarLabel from "../components/NavBarLabel";
 import ProfileTabIcon from "../components/ProfileTabIcon";
+import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
-import { newHomeServicesEnabled } from "../config";
-import I18n from "../i18n";
-import { makeFontStyleObject } from "../theme/fonts";
+import WalletTabIcon from "../components/WalletTabIcon";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
-import OldServicesNavigator from "./OldServicesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
-type Routes = keyof typeof ROUTES;
 
-type RouteLabelMap = { [key in Routes]?: string };
-const ROUTE_LABEL: RouteLabelMap = {
-  MESSAGES_NAVIGATOR: I18n.t("global.navigator.messages"),
-  WALLET_HOME: I18n.t("global.navigator.wallet"),
-  DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
-  SERVICES_NAVIGATOR: I18n.t("global.navigator.services"),
-  PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
-};
+type Routes = keyof typeof ROUTES;
 
 type RouteIconMap = { [key in Routes]?: string };
 const ROUTE_ICON: RouteIconMap = {
@@ -47,35 +39,43 @@ const ROUTE_ICON: RouteIconMap = {
   PROFILE_NAVIGATOR: "io-profilo"
 };
 
-const getLabel = (routeName: string): string => {
-  const fallbackLabel = "unknown"; // fallback label
-  // "routeName as Routes" is assumed to be safe as explained @https://github.com/teamdigitale/italia-app/pull/193#discussion_r192347234
-  // adding fallback anyway -- better safe than sorry
-  const label = ROUTE_LABEL[routeName as Routes];
-  return label === undefined ? fallbackLabel : label;
-};
-
 const getIcon = (routeName: string): string => {
   const fallbackIcon = "io-question"; // fallback icon: question mark
   const route = ROUTE_ICON[routeName as Routes]; // same as for getLabel
   return route === undefined ? fallbackIcon : route;
 };
 
-const styles = StyleSheet.create({
-  labelStyle: {
-    ...makeFontStyleObject(Platform.select),
-    textAlign: "center",
-    fontSize: variables.fontSizeSmaller
-  },
-  tabBarStyle: {
-    height: 64,
+const tabBarStyleFactory = () => {
+  const defaultStyle = {
     backgroundColor: variables.colorWhite,
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
-    paddingTop: 8,
-    paddingBottom: 10
-  },
+    paddingTop: 8
+  };
+
+  // Add space to the bottom bar for iPhone 12, which has
+  // deviceId "iPhone 13" counterintuitevely
+  // See https://gist.github.com/adamawolf/3048717 for device IDs
+
+  const isIPhone12 = deviceInfoModule.getDeviceId().indexOf("iPhone13") !== -1;
+
+  return {
+    ...defaultStyle,
+    ...(isIPhone12
+      ? {
+          paddingBottom: 30,
+          height: 84
+        }
+      : {
+          paddingBottom: 10,
+          height: 64
+        })
+  };
+};
+
+const styles = StyleSheet.create({
+  tabBarStyle: tabBarStyleFactory(),
   upsideShadow: {
     // iOS shadow
     shadowColor: variables.footerShadowColor,
@@ -91,17 +91,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const NoTabBarRoutes: ReadonlyArray<string> = [
-  ROUTES.WALLET_ADD_PAYMENT_METHOD,
-  ROUTES.PAYMENT_SCAN_QR_CODE,
-  ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-  ROUTES.WALLET_ADD_CARD,
-  ROUTES.WALLET_CONFIRM_CARD_DETAILS,
-  ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-  ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
-  ROUTES.PAYMENT_PICK_PSP,
-  ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
-  ROUTES.PAYMENT_TRANSACTION_ERROR
+const TabFirstLevelRoutes: Array<string> = [
+  ROUTES.WALLET_HOME,
+  ROUTES.MESSAGES_HOME,
+  ROUTES.SERVICES_HOME,
+  ROUTES.PROFILE_MAIN
 ];
 
 const getTabBarVisibility = (
@@ -111,10 +105,7 @@ const getTabBarVisibility = (
 
   const { routeName } = state.routes[state.index];
 
-  if (NoTabBarRoutes.indexOf(routeName) !== -1) {
-    return false;
-  }
-  return true;
+  return TabFirstLevelRoutes.indexOf(routeName) !== -1;
 };
 
 /**
@@ -128,13 +119,8 @@ const navigation = createBottomTabNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
     },
-    // FIXME: Documents are temporarily disabled during the experimental phase
-    // see https://www.pivotaltracker.com/story/show/159490857
-    // [ROUTES.DOCUMENTS_HOME]: {
-    //   screen: PlaceholderScreen
-    // },
     [ROUTES.SERVICES_NAVIGATOR]: {
-      screen: newHomeServicesEnabled ? ServicesNavigator : OldServicesNavigator
+      screen: ServicesNavigator
     },
     [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator
@@ -149,19 +135,7 @@ const navigation = createBottomTabNavigator(
       }) => {
         const { routeName } = nav.state;
         // adding `color` as a separate style property since it depends on tintColor
-        return (
-          <Text
-            style={[
-              styles.labelStyle,
-              {
-                color:
-                  options.tintColor === null ? undefined : options.tintColor
-              }
-            ]}
-          >
-            {getLabel(routeName)}
-          </Text>
-        );
+        return <NavBarLabel options={options} routeName={routeName} />;
       },
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
@@ -173,10 +147,24 @@ const navigation = createBottomTabNavigator(
             />
           );
         }
+        if (iconName === ROUTE_ICON.WALLET_HOME) {
+          return (
+            <WalletTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
         if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
           return (
             <ProfileTabIcon
               size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
+          return (
+            <ServiceTabIcon
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
@@ -205,6 +193,10 @@ const navigation = createBottomTabNavigator(
       }
     }),
     tabBarOptions: {
+      /**
+       * Add the hidden on keyboard show option when https://www.pivotaltracker.com/story/show/172715822
+       * see https://github.com/react-navigation/react-navigation/issues/7415#issuecomment-485027123
+       */
       activeTintColor: variables.brandPrimary,
       inactiveTintColor: variables.brandDarkGray,
       style: [styles.tabBarStyle, styles.upsideShadow]

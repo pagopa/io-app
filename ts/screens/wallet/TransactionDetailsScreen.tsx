@@ -1,47 +1,42 @@
-/**
- * Transaction details screen, displaying
- * a list of information available about a
- * specific transaction.
- * TODO: check what controls implemented into this screen will be included into API
- *      - number deimals fixed to 2
- *      - get total amount from fee + amount
- *      - currency symbol
- *      - sum of amounts
- *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
- * TODO: insert contextual help to the Text link related to the fee
- *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../components/helpers/withContextualHelp";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import CopyButtonComponent from "../../components/CopyButtonComponent";
+import { Link } from "../../components/core/typography/Link";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import H5 from "../../components/ui/H5";
-import IconFont from "../../components/ui/IconFont";
-import Markdown from "../../components/ui/Markdown";
-import Logo from "../../components/wallet/card/Logo";
-import { RotatedCards } from "../../components/wallet/card/RotatedCards";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
+import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { navigateToWalletHome } from "../../store/actions/navigation";
+import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
+import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
+import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
-import variables from "../../theme/variables";
-import { Transaction, Wallet } from "../../types/pagopa";
-import { cleanTransactionDescription } from "../../utils/payment";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { formatDateAsLocal } from "./../../utils/dates";
+import customVariables from "../../theme/variables";
+import { Transaction } from "../../types/pagopa";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { formatDateAsLocal } from "../../utils/dates";
+import { whereAmIFrom } from "../../utils/navigation";
+import {
+  cleanTransactionDescription,
+  getTransactionFee,
+  getTransactionIUV
+} from "../../utils/payment";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -52,8 +47,8 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps &
-  ContextualHelpInjectedProps;
+  LightModalContextInterface &
+  OwnProps;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -61,147 +56,78 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 
 const styles = StyleSheet.create({
-  value: {
-    flex: 1,
-    flexDirection: "row"
-  },
-
-  valueImage: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-  },
-
-  align: {
-    textAlign: "right"
-  },
-
-  titleRow: {
-    justifyContent: "space-between"
-  },
-
-  whyLink: {
-    color: variables.textLinkColor
-  },
-
-  alignCenter: {
-    alignItems: "center"
-  },
-
-  white: {
-    color: variables.colorWhite
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
-
-  whiteContent: {
-    backgroundColor: variables.colorWhite,
-    flex: 1
-  },
-
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-
   pspLogo: {
-    width: 100,
-    height: 30,
+    maxWidth: 80,
+    maxHeight: 32,
+    width: "100%",
+    height: "100%",
     resizeMode: "contain"
   },
-
-  creditCardLogo: {
-    width: 48,
+  cardLogo: {
+    alignSelf: "flex-end",
     height: 30,
-    resizeMode: "contain"
+    width: 48
+  },
+  darkText: {
+    color: customVariables.brandDarkestGray
+  },
+  bigText: {
+    fontSize: 20
+  },
+  row: { flexDirection: "row", justifyContent: "space-between" },
+  cardIcon: {
+    alignSelf: "flex-end",
+    height: 30,
+    width: 48
+  },
+  centered: { alignItems: "center" },
+  flex: {
+    flex: 1,
+    alignSelf: "center"
   }
 });
 
-class TransactionDetailsScreen extends React.Component<Props> {
-  private displayedWallet(transactionWallet: Wallet | undefined) {
-    return transactionWallet ? (
-      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-    ) : (
-      <RotatedCards cardType="Preview" />
-    );
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.transactionDetails",
+  body: "wallet.detailsTransaction.contextualHelpContent"
+};
+
+type State = {
+  showFullReason: boolean;
+};
+
+/**
+ * Transaction details screen, displaying
+ * a list of information available about a
+ * specific transaction.
+ */
+class TransactionDetailsScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { showFullReason: false };
   }
 
-  /**
-   * It provides the proper header to the screen. If isTransactionStarted
-   * (the user displays the screen during the process of identify and accept a transaction)
-   * then the "Thank you message" is displayed
-   */
-  private topContent(
-    paymentCompleted: boolean,
-    transactionWallet: Wallet | undefined
-  ) {
-    return (
-      <React.Fragment>
-        {paymentCompleted ? (
-          <View>
-            <Grid>
-              <Col size={1} />
-              <Col size={5} style={styles.alignCenter}>
-                <View spacer={true} />
-                <Row>
-                  <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
-                </Row>
-                <Row>
-                  <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
-                </Row>
-                <View spacer={true} />
-              </Col>
-              <Col size={1} />
-            </Grid>
-          </View>
-        ) : (
-          <View spacer={true} />
-        )}
-        {this.displayedWallet(transactionWallet)}
-      </React.Fragment>
-    );
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  /**
-   * It provides the proper format to the listed content by using flex layout
-   */
-  private labelValueRow(
-    label: string | React.ReactElement<any>,
-    value: string | React.ReactElement<any>,
-    labelIsNote: boolean = true
-  ): React.ReactNode {
-    return (
-      <Col>
-        <View spacer={true} />
-        <Row style={{ alignItems: "center" }}>
-          <Text note={labelIsNote}>{label}</Text>
-          <Text style={[styles.value, styles.align]} bold={true}>
-            {value}
-          </Text>
-        </Row>
-      </Col>
-    );
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  /**
-   * It provides the proper format to the listed content by using flex layout
-   */
-  private labelImageRow(
-    label: string | React.ReactElement<any>,
-    value: string | React.ReactElement<any>,
-    labelIsNote: boolean = true
-  ): React.ReactNode {
-    return (
-      <Col>
-        <View spacer={true} />
-        <Row style={{ alignItems: "center" }}>
-          <Text note={labelIsNote}>{label}</Text>
-          <View style={[styles.value, styles.valueImage]}>{value}</View>
-        </Row>
-      </Col>
-    );
-  }
+  private handleBackPress = () => {
+    if (
+      whereAmIFrom(this.props.nav).fold(
+        false,
+        r => r === ROUTES.WALLET_HOME || r === ROUTES.WALLET_CREDIT_CARD_DETAIL
+      )
+    ) {
+      return this.props.navigation.goBack();
+    } else {
+      this.props.navigateBackToEntrypointPayment();
+      return true;
+    }
+  };
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
@@ -211,128 +137,200 @@ class TransactionDetailsScreen extends React.Component<Props> {
     }
   };
 
-  public render(): React.ReactNode {
-    const { psp } = this.props;
+  private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
+    const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
-    // whether this transaction is the result of a just completed payment
-    const isPaymentCompletedTransaction = this.props.navigation.getParam(
-      "isPaymentCompletedTransaction",
-      false
-    );
-    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
-    const fee = formatNumberAmount(
-      centsToAmount(
-        transaction.fee === undefined
-          ? transaction.grandTotal.amount - transaction.amount.amount
-          : transaction.fee.amount
-      )
-    );
-    const totalAmount = formatNumberAmount(
-      centsToAmount(transaction.grandTotal.amount)
+    // fee
+    const fee = getTransactionFee(transaction);
+
+    const totalAmount = formatNumberCentsToAmount(
+      transaction.grandTotal.amount,
+      true
     );
 
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
 
-    const creditCard =
-      transactionWallet !== undefined
-        ? transactionWallet.creditCard
-        : undefined;
+    const transactionDateTime = formatDateAsLocal(transaction.created, true)
+      .concat(" - ")
+      .concat(transaction.created.toLocaleTimeString());
+
+    const paymentMethodIcon = fromNullable(
+      transactionWallet &&
+        transactionWallet.creditCard &&
+        transactionWallet.creditCard.brandLogo
+    )
+      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
+      .getOrElse(undefined);
+
+    const paymentMethodBrand =
+      transactionWallet &&
+      transactionWallet.creditCard &&
+      transactionWallet.creditCard.brand;
+
+    const iuv = getTransactionIUV(transaction.description).toUndefined();
+
+    const idTransaction = transaction.id;
+    return {
+      fullReason: transaction.description,
+      iuv,
+      idTransaction,
+      paymentMethodBrand,
+      paymentMethodIcon,
+      transactionDateTime,
+      amount,
+      totalAmount,
+      fee
+    };
+  };
+
+  private handleOnFullReasonPress = () =>
+    this.setState(ps => ({ showFullReason: !ps.showFullReason }));
+
+  public render(): React.ReactNode {
+    const { psp } = this.props;
+    const transaction = this.props.navigation.getParam("transaction");
+    const data = this.getData();
+
+    const standardRow = (label: string, value: string) => (
+      <View style={styles.row}>
+        <Text style={styles.flex}>{label}</Text>
+        <Text bold={true} dark={true} selectable={true}>
+          {value}
+        </Text>
+      </View>
+    );
 
     return (
-      <WalletLayout
-        title={I18n.t("wallet.transaction")}
-        allowGoBack={!isPaymentCompletedTransaction}
-        topContent={this.topContent(
-          isPaymentCompletedTransaction,
-          transactionWallet
-        )}
-        hideHeader={true}
-        hasDynamicSubHeader={false}
+      <BaseScreenComponent
+        dark={true}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        goBack={this.handleBackPress}
+        headerTitle={I18n.t("wallet.transactionDetails")}
+        faqCategories={["wallet_transaction"]}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
-        <Content
-          scrollEnabled={false}
-          style={[styles.noBottomPadding, styles.whiteContent]}
-        >
-          <Grid>
-            <Row style={styles.titleRow}>
-              <H5 style={styles.brandDarkGray}>
-                {I18n.t("wallet.transactionDetails")}
-              </H5>
-              <IconFont
-                name="io-close"
-                size={variables.iconSizeBase}
-                onPress={this.props.navigateToWalletHome}
-                style={styles.brandDarkGray}
+        <SlidedContentComponent hasFlatBottom={true}>
+          <PaymentSummaryComponent
+            title={I18n.t("wallet.receipt")}
+            recipient={transaction.merchant}
+            description={cleanTransactionDescription(transaction.description)}
+          />
+          <Link onPress={this.handleOnFullReasonPress}>
+            {I18n.t("wallet.transactionFullReason")}
+          </Link>
+          {this.state.showFullReason && (
+            <Text
+              selectable={true}
+              onLongPress={() =>
+                clipboardSetStringWithFeedback(data.fullReason)
+              }
+            >
+              {data.fullReason}
+            </Text>
+          )}
+          <View spacer={true} large={true} />
+          {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
+          {/** transaction date */}
+          <View spacer={true} xsmall={true} />
+          <View spacer={true} large={true} />
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.date"),
+            data.transactionDateTime
+          )}
+
+          <View spacer={true} large={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} large={true} />
+
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.amount"),
+            data.amount
+          )}
+
+          {data.fee && (
+            <>
+              <View spacer={true} small={true} />
+              {standardRow(
+                I18n.t("wallet.firstTransactionSummary.fee"),
+                data.fee
+              )}
+            </>
+          )}
+
+          <View spacer={true} />
+
+          {/** Total amount (amount + fee) */}
+          <View style={styles.row}>
+            <Text style={[styles.bigText, styles.flex]} bold={true} dark={true}>
+              {I18n.t("wallet.firstTransactionSummary.total")}
+            </Text>
+            <Text style={styles.bigText} bold={true} dark={true}>
+              {data.totalAmount}
+            </Text>
+          </View>
+
+          {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} large={true} />
+            </React.Fragment>
+          )}
+
+          {/** paymnet method icon */}
+          {/** to be implemented with the card logo when https://github.com/pagopa/io-app/pull/1622/ is merged */}
+
+          {data.paymentMethodIcon ? (
+            <View style={[styles.row, styles.centered]}>
+              <Text>{I18n.t("wallet.paymentMethod")}</Text>
+              <Image
+                style={styles.cardLogo}
+                source={{ uri: data.paymentMethodIcon }}
               />
-            </Row>
-            <View spacer={true} large={true} />
-            {this.labelValueRow(
-              I18n.t("wallet.total"),
-              <H5 style={styles.value}>{totalAmount}</H5>
-            )}
-            {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
-            {this.labelValueRow(
-              <Text>
-                <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
-                <Text
-                  note={true}
-                  bold={true}
-                  style={styles.whyLink}
-                  onPress={this.props.showHelp}
-                >
-                  {I18n.t("wallet.why")}
-                </Text>
-              </Text>,
-              fee
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.paymentReason"),
-              cleanTransactionDescription(transaction.description)
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.recipient"),
-              transaction.merchant
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.date"),
-              formatDateAsLocal(transaction.created, true)
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.time"),
-              transaction.created.toLocaleTimeString()
-            )}
-            {creditCard && creditCard.brandLogo
-              ? this.labelImageRow(
-                  I18n.t("wallet.paymentMethod"),
-                  <Logo imageStyle={styles.creditCardLogo} item={creditCard} />
-                )
-              : creditCard && creditCard.brand
-                ? this.labelValueRow(
-                    I18n.t("wallet.paymentMethod"),
-                    creditCard.brand
-                  )
-                : undefined}
-            {psp && psp.logoPSP
-              ? this.labelImageRow(
-                  I18n.t("wallet.psp"),
-                  <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
-                )
-              : psp && psp.businessName
-                ? this.labelValueRow(I18n.t("wallet.psp"), psp.businessName)
-                : undefined}
-          </Grid>
-        </Content>
-      </WalletLayout>
+            </View>
+          ) : (
+            data.paymentMethodBrand && (
+              <Text bold={true}>{data.paymentMethodBrand}</Text>
+            )
+          )}
+
+          {(data.paymentMethodIcon || data.paymentMethodBrand) && (
+            <View spacer={true} />
+          )}
+
+          {/** Transaction id */}
+          <View>
+            <Text>
+              {I18n.t("wallet.firstTransactionSummary.idTransaction")}
+            </Text>
+            <View style={styles.row}>
+              <Text bold={true}>{data.idTransaction}</Text>
+              <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
+            </View>
+          </View>
+
+          <View spacer={true} large={true} />
+          <View spacer={true} large={true} />
+          <ButtonDefaultOpacity
+            light={true}
+            bordered={true}
+            block={true}
+            onPress={this.handleBackPress}
+          >
+            <Text>{I18n.t("global.buttons.close")}</Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+        </SlidedContentComponent>
+      </BaseScreenComponent>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateBackToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
@@ -347,17 +345,12 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
     isLoading,
-    psp: pot.toUndefined(potPsp)
+    psp: pot.toUndefined(potPsp),
+    nav: navHistorySelector(state)
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withContextualHelp(
-    withLoadingSpinner(TransactionDetailsScreen),
-    I18n.t("wallet.whyAFee.title"),
-    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
-  )
-);
+)(withLightModalContext(withLoadingSpinner(TransactionDetailsScreen)));

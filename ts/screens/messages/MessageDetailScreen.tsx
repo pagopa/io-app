@@ -1,32 +1,41 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H3, Text, View } from "native-base";
+import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { contentServiceLoad } from "../../store/actions/content";
+import { loadServiceMetadata } from "../../store/actions/content";
 import {
   loadMessageWithRelations,
   setMessageReadState
 } from "../../store/actions/messages";
-import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import {
+  isMessageRead,
+  messagesStatusSelector
+} from "../../store/reducers/entities/messages/messagesStatus";
+import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
+import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -88,8 +97,7 @@ const styles = StyleSheet.create({
   },
 
   errorStateMessageSubmitBug: {
-    marginTop: 16,
-    fontSize: customVariables.fontSizeSmall
+    marginTop: 16
   },
 
   errorStateFooterWrapper: {
@@ -108,14 +116,19 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "messageDetails.contextualHelpTitle",
+  body: "messageDetails.contextualHelpContent"
+};
+
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
-    // screen, we issue a contentServiceLoad to refresh the service metadata
-    this.props.contentServiceLoad(service.service_id);
-    this.props.navigateToOldServiceDetailsScreen({
+    // screen, we issue a loadServiceMetadata request to refresh the service metadata
+    this.props.loadServiceMetadata(service.service_id);
+    this.props.navigateToServiceDetailsScreen({
       service
     });
   };
@@ -123,29 +136,25 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   /**
    * Renders the empty message state, when no message content is avaialable
    */
-  private renderEmptyState = () => {
-    return (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.emptyMessage")}
-        </Text>
-      </View>
-    );
-  };
+  private renderEmptyState = () => (
+    <View style={styles.notFullStateContainer}>
+      <Text style={styles.notFullStateMessageText}>
+        {I18n.t("messageDetails.emptyMessage")}
+      </Text>
+    </View>
+  );
 
   /**
    * Used when the App is trying to load the message/service.
    */
-  private renderLoadingState = () => {
-    return (
-      <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
-          {I18n.t("messageDetails.loadingText")}
-        </Text>
-        <ActivityIndicator />
-      </View>
-    );
-  };
+  private renderLoadingState = () => (
+    <View style={styles.notFullStateContainer}>
+      <Text style={styles.notFullStateMessageText}>
+        {I18n.t("messageDetails.loadingText")}
+      </Text>
+      <ActivityIndicator />
+    </View>
+  );
 
   /**
    * Used when something went wrong but there is a way to recover.
@@ -170,13 +179,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>
             </View>
             <View style={styles.erroStateMessageDataRight}>
-              <Button
+              <ButtonDefaultOpacity
                 xsmall={true}
                 bordered={true}
                 onPress={() => clipboardSetStringWithFeedback(messageId)}
               >
                 <Text>{I18n.t("clipboard.copyText")}</Text>
-              </Button>
+              </ButtonDefaultOpacity>
             </View>
           </View>
           <Text alignCenter={true} style={styles.errorStateMessageRetry}>
@@ -187,22 +196,22 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           </Text>
         </View>
         <View style={styles.errorStateFooterWrapper}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             cancel={true}
             onPress={this.goBack}
             style={styles.errorStateCancelButton}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={onRetry}
             style={styles.errorStateRetryButton}
           >
             <Text>{I18n.t("global.buttons.retry")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </View>
     );
@@ -211,39 +220,35 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   /**
    * Used when we have all data to properly render the content of the screen.
    */
-  private renderFullState = (
-    message: CreatedMessageWithContent,
-    service: pot.Pot<ServicePublic, Error>,
-    paymentsByRptId: Props["paymentsByRptId"]
-  ) => {
-    const { isDebugModeEnabled } = this.props;
+  private renderFullState = (message: CreatedMessageWithContent) => {
+    const {
+      potServiceDetail,
+      potServiceMetadata,
+      paymentsByRptId
+    } = this.props;
+
     return (
-      <Content noPadded={true}>
-        <MessageDetailComponent
-          message={message}
-          paymentsByRptId={paymentsByRptId}
-          potService={service}
-          onServiceLinkPress={
-            pot.isSome(service)
-              ? () => this.onServiceLinkPressHandler(service.value)
-              : undefined
-          }
-          isDebugModeEnabled={isDebugModeEnabled}
-        />
-      </Content>
+      <MessageDetailComponent
+        message={message}
+        paymentsByRptId={paymentsByRptId}
+        potServiceDetail={potServiceDetail}
+        potServiceMetadata={potServiceMetadata}
+        onServiceLinkPress={
+          pot.isSome(potServiceDetail)
+            ? () => this.onServiceLinkPressHandler(potServiceDetail.value)
+            : undefined
+        }
+      />
     );
   };
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
+  // https://www.pivotaltracker.com/story/show/170819221
   private renderCurrentState = () => {
-    const { potMessage, potService, paymentsByRptId } = this.props;
+    const { potMessage } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(
-        potMessage.value,
-        potService,
-        paymentsByRptId
-      );
+      return this.renderFullState(potMessage.value);
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -257,20 +262,45 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   private setMessageReadState = () => {
-    const { potMessage, maybeRead } = this.props;
-
-    if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
+    const { potMessage, isRead } = this.props;
+    if (pot.isSome(potMessage) && !isRead) {
       // Set the message read state to TRUE
-      this.props.setMessageReadState(true);
+      this.props.setMessageReadState(potMessage.value.id, true);
     }
   };
 
   public componentDidMount() {
+    const { potMessage, potServiceDetail, refreshService } = this.props;
+    // if the message is loaded then refresh sender service data
+    if (pot.isSome(potMessage) && !pot.isLoading(potServiceDetail)) {
+      refreshService(potMessage.value.sender_service_id);
+    }
+    this.loadServicesMetadata();
     this.setMessageReadState();
   }
 
-  public componentDidUpdate() {
-    this.setMessageReadState();
+  public componentDidUpdate(prevProps: Props) {
+    const { potMessage, potServiceDetail, refreshService } = this.props;
+    const { potMessage: prevPotMessage } = prevProps;
+
+    // if the message was not yet loaded in the component's mount, the service is refreshed here once the message is loaded
+    if (!pot.isSome(prevPotMessage) && pot.isSome(potMessage)) {
+      this.setMessageReadState();
+      if (!pot.isLoading(potServiceDetail)) {
+        refreshService(potMessage.value.sender_service_id);
+      }
+      this.loadServicesMetadata();
+    }
+  }
+
+  // force load service metadata to get information about email & phone (needed in MessageDetailData)
+  // the last version is preferred (fresh updates)
+  private loadServicesMetadata() {
+    if (!pot.isLoading(this.props.potServiceMetadata)) {
+      pot.map(this.props.potMessage, m => {
+        this.props.loadServiceMetadata(m.sender_service_id);
+      });
+    }
   }
 
   public render() {
@@ -278,6 +308,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       <BaseScreenComponent
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["messages_detail"]}
       >
         {this.renderCurrentState()}
       </BaseScreenComponent>
@@ -293,7 +325,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const maybeRead = maybeMessageState.map(_ => _.isRead);
+  const messagesStatus = messagesStatusSelector(state);
+  const isRead = maybeMessageState
+    .map(_ => isMessageRead(messagesStatus, _.meta.id))
+    .getOrElse(true);
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
@@ -301,34 +336,41 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const potMessage = maybeMessageState.map(_ => _.message).getOrElse(pot.none);
 
   // Map the potential message to the potential service
-  const potService = maybeMessageState
+  const potServiceDetail = maybeMessageState
     .mapNullable(_ => serviceByIdSelector(_.meta.sender_service_id)(state))
     .getOrElse(pot.none);
 
+  // Map the potential message to the potential service
+  const potServiceMetadata = pot.getOrElse(
+    pot.mapNullable(potMessage, m =>
+      serviceMetadataByIdSelector(m.sender_service_id)(state)
+    ),
+    pot.none
+  );
+
   return {
     maybeMeta,
-    maybeRead,
+    isRead,
     potMessage,
-    potService,
-    paymentsByRptId: state.entities.paymentByRptId,
-    isDebugModeEnabled: state.debug.isDebugModeEnabled
+    potServiceDetail,
+    potServiceMetadata,
+    paymentsByRptId: paymentsByRptIdSelector(state)
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
-  const messageId = ownProps.navigation.getParam("messageId");
-  return {
-    contentServiceLoad: (serviceId: ServiceId) =>
-      dispatch(contentServiceLoad.request(serviceId)),
-    loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
-      dispatch(loadMessageWithRelations.request(meta)),
-    setMessageReadState: (isRead: boolean) =>
-      dispatch(setMessageReadState(messageId, isRead)),
-    navigateToOldServiceDetailsScreen: (
-      params: InferNavigationParams<typeof OldServiceDetailsScreen>
-    ) => dispatch(navigateToOldServiceDetailsScreen(params))
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  refreshService: (serviceId: string) =>
+    dispatch(loadServiceDetail.request(serviceId)),
+  loadServiceMetadata: (serviceId: string) =>
+    dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
+  loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
+    dispatch(loadMessageWithRelations.request(meta)),
+  setMessageReadState: (messageId: string, isRead: boolean) =>
+    dispatch(setMessageReadState(messageId, isRead)),
+  navigateToServiceDetailsScreen: (
+    params: InferNavigationParams<typeof ServiceDetailsScreen>
+  ) => dispatch(navigateToServiceDetailsScreen(params))
+});
 
 export default connect(
   mapStateToProps,

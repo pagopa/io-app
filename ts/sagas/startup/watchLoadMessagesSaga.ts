@@ -4,6 +4,8 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Task } from "redux-saga";
 import {
   all,
@@ -18,21 +20,18 @@ import {
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
-  loadMessagesCancel,
   loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 
@@ -41,29 +40,13 @@ import { uniqueItem } from "../../utils/enumerables";
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): IterableIterator<Effect> {
+): Generator<Effect, void, any> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
-    // Load already cached messages ids from the store
-    const potCachedMessagesAllIds: ReturnType<
-      typeof messagesAllIdsSelector
-    > = yield select<GlobalState>(messagesAllIdsSelector);
-    const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
-
-    // Load already cached messages from the store
-    const cachedMessagesById: ReturnType<
-      typeof messagesStateByIdSelector
-    > = yield select<GlobalState>(messagesStateByIdSelector);
-
-    // Load already cached services from the store
-    const cachedServicesById: ReturnType<
-      typeof servicesByIdSelector
-    > = yield select<GlobalState>(servicesByIdSelector);
-
     // Request the list of messages from the Backend
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
@@ -80,23 +63,44 @@ export function* loadMessages(
         yield put(sessionExpired());
         return;
       } else if (response.value.status !== 200) {
-        // TODO: provide status code along with message in error
+        // TODO: provide status code along with message in error https://www.pivotaltracker.com/story/show/170819193
         const error =
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(loadMessagesAction.failure(error));
+        yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
-        yield put(
-          loadMessagesAction.success(response.value.value.items.map(_ => _.id))
+        const responseItemsIds = response.value.value.items.map(_ => _.id);
+
+        yield put(loadMessagesAction.success(responseItemsIds));
+
+        // Load already cached messages ids from the store
+        const potCachedMessagesAllIds: ReturnType<typeof messagesAllIdsSelector> = yield select(
+          messagesAllIdsSelector
         );
+        const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
+
         // Calculate the ids of the message no more visible that we need
         // to remove from the cache.
-        const responseItemsIds = response.value.value.items.map(_ => _.id);
-        const messagesIdsToRemoveFromCache = cachedMessagesAllIds.filter(
+        const messageIds = cachedMessagesAllIds.filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
+
+        // Load already cached messages status ids from the store
+        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> = yield select(
+          messagesStatusSelector
+        );
+        const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
+          _ => responseItemsIds.indexOf(_) < 0
+        );
+
+        // Calculate the ids of the message no more visible that we need
+        // to remove from the messagesStatus cache.
+        const messagesIdsToRemoveFromCache = Array.from(
+          new Set([...messageIds, ...messagesStatusIds])
+        );
+
         // Remove the details of the no more visible messages from the
         // redux store.
         if (messagesIdsToRemoveFromCache.length > 0) {
@@ -107,6 +111,11 @@ export function* loadMessages(
         // but we want to process them from latest to oldest so we
         // reverse the order.
         const reversedItems = [...response.value.value.items].reverse();
+
+        // Load already cached messages from the store
+        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> = yield select(
+          messagesStateByIdSelector
+        );
 
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
@@ -120,19 +129,34 @@ export function* loadMessages(
         // Filter messages already in the store
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
-        const shouldLoadService = (id: string) =>
-          cachedServicesById[id] === undefined;
+        // Load already cached services from the store
+        const cachedServicesById: ReturnType<typeof servicesByIdSelector> = yield select(
+          servicesByIdSelector
+        );
+
+        const shouldLoadService = (id: string) => {
+          const cached = cachedServicesById[id];
+          // we need to load a service if (one of these is true)
+          // - service is not cached
+          // - service is not loading AND (service is none OR service is error)
+          return (
+            cached === undefined ||
+            (!pot.isLoading(cached) &&
+              (pot.isNone(cached) || pot.isError(cached)))
+          );
+        };
 
         // Filter services already in the store
         const pendingServicesIds = pendingMessages
           .map(_ => _.sender_service_id)
           .filter(shouldLoadService)
           .filter(uniqueItem); // Get unique ids
-
         // Fetch the services detail in parallel
-        // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
+        // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
-        yield all(pendingServicesIds.map(id => put(loadService.request(id))));
+        yield all(
+          pendingServicesIds.map(id => put(loadServiceDetail.request(id)))
+        );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
@@ -142,7 +166,7 @@ export function* loadMessages(
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesAction.failure(error.message));
+    yield put(loadMessagesAction.failure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a loadMessagesCancelled action.
@@ -159,19 +183,16 @@ export function* loadMessages(
  */
 export function* watchMessagesLoadOrCancelSaga(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
-): IterableIterator<Effect> {
+): Generator<Effect, void, any> {
   // We store the latest task so we can also cancel it
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   let lastTask: Option<Task> = none;
   while (true) {
     // FIXME: why not takeLatest?
-    // Wait for MESSAGES_LOAD_REQUEST or MESSAGES_LOAD_CANCEL action
-    const action:
-      | ActionType<typeof loadMessagesAction["request"]>
-      | ActionType<typeof loadMessagesCancel> = yield take([
-      getType(loadMessagesAction.request),
-      getType(loadMessagesCancel)
-    ]);
+    // Wait for MESSAGES_LOAD_REQUEST
+    const action: ActionType<typeof loadMessagesAction["request"]> = yield take(
+      getType(loadMessagesAction.request)
+    );
     if (lastTask.isSome()) {
       // If there is an already running task cancel it
       yield cancel(lastTask.value);

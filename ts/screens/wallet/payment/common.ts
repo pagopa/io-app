@@ -1,4 +1,4 @@
-// tslint:disable:parameters-max-number
+/* eslint-disable */
 
 import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
@@ -85,13 +85,11 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
     dispatch(
       paymentFetchPspsForPaymentId.request({
         idPayment,
-        // provide the idWallet to the getPsps request only if the wallet has
-        // a preferred PSP
-        idWallet: selectedWallet.psp ? selectedWallet.idWallet : undefined,
+        idWallet: selectedWallet.idWallet,
         onFailure: () => onFailure("FETCH_PSPS_FAILURE"),
         onSuccess: successAction => {
           // filter PSPs for the current locale only (the list will contain
-          // duspliacates for all the supported languages)
+          // duplicates for all the supported languages)
           const psps = pspsForLocale(successAction.payload);
           if (psps.length === 0) {
             // this payment method cannot be used!

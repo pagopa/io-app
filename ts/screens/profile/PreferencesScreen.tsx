@@ -1,38 +1,47 @@
+/**
+ * Implements the preferences screen where the user can see and update his
+ * email, mobile number, preferred language, biometric recognition usage and digital address.
+ */
+import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
-
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
-  navigateToFingerprintPreferenceScreen
+  navigateToEmailForwardingPreferenceScreen,
+  navigateToLanguagePreferenceScreen,
+  navigateToServicePreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import {
+  isCustomEmailChannelEnabledSelector,
+  preferredLanguageSelector
+} from "../../store/reducers/persistedPreferences";
+import {
+  isEmailEnabledSelector,
+  isInboxEnabledSelector,
+  profileServicePreferencesModeSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { checkCalendarPermission } from "../../utils/calendar";
-import { getLocalePrimary } from "../../utils/locale";
-
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.unavailable.title"),
-    I18n.t("profile.preferences.unavailable.message")
-  );
-
-const languageAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.language.title"),
-    I18n.t("profile.preferences.language.message")
-  );
+import { openAppSettings } from "../../utils/appSettings";
+import {
+  checkAndRequestPermission,
+  convertLocalCalendarName
+} from "../../utils/calendar";
+import {
+  getLocalePrimary,
+  getLocalePrimaryWithFallback
+} from "../../utils/locale";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import ScreenContent from "../../components/screens/ScreenContent";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -41,19 +50,12 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReduxProps &
+  LightModalContextInterface;
 
-type State = {
-  isFingerprintAvailable: boolean;
-  hasCalendarPermission: boolean;
-  checkCalendarPermissionAndUpdateStateSubscription?: ReturnType<
-    NavigationScreenProp<NavigationState>["addListener"]
-  >;
-};
-
-const INITIAL_STATE: State = {
-  isFingerprintAvailable: false,
-  hasCalendarPermission: false
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
 };
 
 /**
@@ -69,134 +71,122 @@ function translateLocale(locale: string): string {
     .getOrElse(locale);
 }
 
-/**
- * Implements the preferences screen where the user can see and update his
- * email, mobile number, preferred language, biometric recognition usage and digital address.
- */
-class PreferencesScreen extends React.Component<Props, State> {
+const getServicesPreferenceModeLabel = (
+  mode: ServicesPreferencesModeEnum
+): string =>
+  ({
+    [ServicesPreferencesModeEnum.AUTO]: I18n.t(
+      "services.optIn.preferences.quickConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.MANUAL]: I18n.t(
+      "services.optIn.preferences.manualConfig.value"
+    ),
+    [ServicesPreferencesModeEnum.LEGACY]: I18n.t(
+      "services.optIn.preferences.unavailable"
+    )
+  }[mode]);
+
+class PreferencesScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
   }
 
-  public componentWillMount() {
-    getFingerprintSettings().then(
-      biometryTypeOrUnsupportedReason => {
-        this.setState({
-          isFingerprintAvailable:
-            biometryTypeOrUnsupportedReason !== "UNAVAILABLE" &&
-            biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
-        });
-      },
-      _ => undefined
-    );
+  private checkPermissionThenGoCalendar = () => {
+    void checkAndRequestPermission()
+      .then(calendarPermission => {
+        if (calendarPermission.authorized) {
+          this.props.navigateToCalendarPreferenceScreen();
+        } else if (!calendarPermission.asked) {
+          // Authorized is false (denied, restricted or undetermined)
+          // If the user denied permission previously (not in this session)
+          // prompt an alert to inform that his calendar permissions could have been turned off
+          Alert.alert(
+            I18n.t("global.genericAlert"),
+            I18n.t("messages.cta.calendarPermDenied.title"),
+            [
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+                style: "cancel"
+              },
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.ok"),
+                style: "default",
+                onPress: () => {
+                  // open app settings to turn on the calendar permissions
+                  openAppSettings();
+                }
+              }
+            ],
+            { cancelable: true }
+          );
+        }
+      })
+      .catch();
+  };
 
-    this.setState({
-      checkCalendarPermissionAndUpdateStateSubscription: this.props.navigation.addListener(
-        "willFocus",
-        this.checkCalendarPermissionAndUpdateState
-      )
-    });
-  }
-
-  public componentWillUnmount() {
-    if (
-      this.state.checkCalendarPermissionAndUpdateStateSubscription !== undefined
-    ) {
-      this.state.checkCalendarPermissionAndUpdateStateSubscription.remove();
+  private getEmailForwardPreferencesSubtitle = (): string => {
+    if (!this.props.isInboxEnabled || !this.props.isEmailEnabled) {
+      return I18n.t("send_email_messages.options.disable_all.label");
     }
-  }
-
-  private checkCalendarPermissionAndUpdateState = () => {
-    checkCalendarPermission().then(
-      hasPermission =>
-        this.setState({
-          hasCalendarPermission: hasPermission
-        }),
-      _ => undefined
+    return pot.getOrElse(
+      pot.map(this.props.isCustomEmailChannelEnabled, enabled =>
+        enabled
+          ? I18n.t("send_email_messages.options.by_service.label")
+          : I18n.t("send_email_messages.options.enable_all.label")
+      ),
+      I18n.t("send_email_messages.options.enable_all.label")
     );
   };
 
   public render() {
-    const { potProfile } = this.props;
-    const { hasCalendarPermission, isFingerprintAvailable } = this.state;
-
-    const profileData = potProfile
-      .map(_ => ({
-        spid_email: untag(_.spid_email),
-        spid_mobile_phone: untag(_.spid_mobile_phone)
-      }))
-      .getOrElse({
-        spid_email: I18n.t("global.remoteStates.notAvailable"),
-        spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
-      });
-
-    const languages = this.props.languages
-      .filter(_ => _.length > 0)
-      .map(_ => translateLocale(_[0]))
-      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+    const language = this.props.preferredLanguage.fold(
+      translateLocale(getLocalePrimaryWithFallback()),
+      l => translateLocale(l)
+    );
 
     return (
       <TopScreenComponent
-        title={I18n.t("profile.preferences.title")}
-        goBack={() => this.props.navigation.goBack()}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile", "privacy", "authentication_SPID"]}
+        goBack={true}
       >
         <ScreenContent
           title={I18n.t("profile.preferences.title")}
           subtitle={I18n.t("profile.preferences.subtitle")}
-          icon={require("../../../img/icons/gears.png")}
         >
           <List withContentLateralPadding={true}>
-            {isFingerprintAvailable && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.biometric_recognition")}
-                onPress={this.props.navigateToFingerprintPreferenceScreen}
-                subTitle={
-                  this.props.isFingerprintEnabled
-                    ? I18n.t(
-                        "profile.preferences.list.biometric_recognition_status.enabled"
-                      )
-                    : I18n.t(
-                        "profile.preferences.list.biometric_recognition_status.disabled"
-                      )
-                }
-              />
-            )}
-            {hasCalendarPermission && (
-              <ListItemComponent
-                onPress={this.props.navigateToCalendarPreferenceScreen}
-                title={I18n.t(
-                  "profile.preferences.list.preferred_calendar.title"
-                )}
-                subTitle={
-                  this.props.preferredCalendar
-                    ? this.props.preferredCalendar.title
-                    : I18n.t(
-                        "profile.preferences.list.preferred_calendar.not_selected"
-                      )
-                }
-              />
-            )}
-
             <ListItemComponent
-              title={I18n.t("profile.preferences.list.email")}
-              subTitle={profileData.spid_email}
-              iconName={"io-email"}
-              onPress={unavailableAlert}
+              onPress={this.checkPermissionThenGoCalendar}
+              title={I18n.t(
+                "profile.preferences.list.preferred_calendar.title"
+              )}
+              subTitle={
+                this.props.preferredCalendar
+                  ? convertLocalCalendarName(this.props.preferredCalendar.title)
+                  : I18n.t(
+                      "profile.preferences.list.preferred_calendar.not_selected"
+                    )
+              }
             />
 
             <ListItemComponent
-              title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={profileData.spid_mobile_phone}
-              iconName={"io-phone-number"}
-              onPress={unavailableAlert}
+              title={I18n.t("profile.preferences.list.service_contact")}
+              subTitle={getServicesPreferenceModeLabel(
+                this.props.profileServicePreferenceMode ??
+                  ServicesPreferencesModeEnum.LEGACY
+              )}
+              onPress={this.props.navigateToServiceContactPreferenceScreen}
             />
 
+            <ListItemComponent
+              title={I18n.t("send_email_messages.title")}
+              subTitle={this.getEmailForwardPreferencesSubtitle()}
+              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
+            />
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
-              subTitle={languages}
-              iconName={"io-languages"}
-              onPress={languageAlert}
+              subTitle={language}
+              onPress={this.props.navigateToLanguagePreferenceScreen}
             />
           </List>
         </ScreenContent>
@@ -205,21 +195,29 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar
-});
+function mapStateToProps(state: GlobalState) {
+  return {
+    preferredLanguage: preferredLanguageSelector(state),
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isInboxEnabled: isInboxEnabledSelector(state),
+    isCustomEmailChannelEnabled: isCustomEmailChannelEnabledSelector(state),
+    preferredCalendar: state.persistedPreferences.preferredCalendar
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToFingerprintPreferenceScreen: () =>
-    dispatch(navigateToFingerprintPreferenceScreen()),
+  navigateToServiceContactPreferenceScreen: () =>
+    dispatch(navigateToServicePreferenceScreen()),
+  navigateToEmailForwardingPreferenceScreen: () =>
+    dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen())
+    dispatch(navigateToCalendarPreferenceScreen()),
+  navigateToLanguagePreferenceScreen: () =>
+    dispatch(navigateToLanguagePreferenceScreen())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PreferencesScreen);
+)(withLightModalContext(PreferencesScreen));

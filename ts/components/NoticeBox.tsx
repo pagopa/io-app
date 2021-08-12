@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
+import { StyleSheet, View } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 
 import IconFont from "./ui/IconFont";
@@ -12,18 +11,22 @@ type Props = {
 
 const styles = StyleSheet.create({
   mainWrapper: {
+    flex: 1,
+    flexDirection: "row",
     borderRadius: 8,
     padding: 20
   },
 
   messageWrapper: {
-    alignItems: "flex-start",
+    paddingRight: 20,
+    alignItems: "flex-end",
     justifyContent: "center"
   },
 
   iconWrapper: {
-    alignItems: "flex-end",
-    justifyContent: "center"
+    marginRight: 12,
+    alignItems: "flex-start",
+    justifyContent: "flex-start"
   }
 });
 
@@ -31,14 +34,12 @@ class NoticeBox extends React.PureComponent<Props> {
   public render() {
     const { backgroundColor, iconProps } = this.props;
     return (
-      <Grid style={[styles.mainWrapper, { backgroundColor }]}>
-        <Col size={10} style={styles.messageWrapper}>
-          {this.props.children}
-        </Col>
-        <Col size={2} style={styles.iconWrapper}>
+      <View style={[styles.mainWrapper, { backgroundColor }]}>
+        <View style={styles.iconWrapper}>
           <IconFont {...iconProps} />
-        </Col>
-      </Grid>
+        </View>
+        <View style={styles.messageWrapper}>{this.props.children}</View>
+      </View>
     );
   }
 }

@@ -1,14 +1,9 @@
 import TouchID, { IsSupportedConfig } from "react-native-touch-id";
-import { Effect } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
-
+import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
-
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
-import { GlobalState } from "../../store/reducers/types";
 export type BiometrySimpleType =
   | "FINGERPRINT"
   | "FACE_ID"
@@ -25,12 +20,14 @@ export type BiometrySimpleType =
  * All other cases are treated as a single umbrella case "Unavailable: Not
  * supported/Others".
  */
-function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
+function* onboardFingerprintIfAvailableSaga(): Generator<
+  Effect,
+  void,
+  BiometrySimpleType
+> {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometryTypeOrUnsupportedReason: BiometrySimpleType = yield call(
-    getFingerprintSettings
-  );
+  const biometryTypeOrUnsupportedReason = yield call(getFingerprintSettings);
 
   if (biometryTypeOrUnsupportedReason !== "UNAVAILABLE") {
     // If biometric recognition is available, navigate to the Fingerprint
@@ -44,7 +41,7 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
-    yield take(getType(fingerprintAcknowledge.request));
+    yield take(fingerprintAcknowledge.request);
 
     // Receive the acknowledgement, then update system state that flags this
     // screen as "Read"
@@ -72,15 +69,19 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
  * saga that prompts it, otherwise. Consider that, like ToS, this should happen
  * at first launch of the app ONLY.
  */
-export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
+export function* checkAcknowledgedFingerprintSaga(): Generator<
+  Effect,
+  void,
+  ReturnType<typeof isFingerprintAcknowledgedSelector>
+> {
   // Query system state and check whether the user has already acknowledged biometric
   // recognition Screen. Consider that, like ToS, this should be displayed once.
-  const isFingerprintAcknowledged: ReturnType<
-    typeof isFingerprintAcknowledgedSelector
-  > = yield select<GlobalState>(isFingerprintAcknowledgedSelector);
+  const isFingerprintAcknowledged = yield select(
+    isFingerprintAcknowledgedSelector
+  );
 
   if (!isFingerprintAcknowledged) {
-    // Navigate to the FingerprintScreen
+    // Navigate to the FingerprintScreen and wait for acknowledgment
     yield call(onboardFingerprintIfAvailableSaga);
   }
 }
@@ -107,8 +108,8 @@ export function getFingerprintSettings(): Promise<BiometrySimpleType> {
           biometryType === true
             ? "FINGERPRINT"
             : biometryType === "FaceID"
-              ? "FACE_ID"
-              : "TOUCH_ID"
+            ? "FACE_ID"
+            : "TOUCH_ID"
         );
       })
       .catch(reason => {

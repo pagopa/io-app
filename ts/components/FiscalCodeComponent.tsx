@@ -2,12 +2,11 @@
  * A component to show the profile fiscal code fac-simile.
  * It can be displayed as:
  * - Preview: it renders only the header of the fac-simile, rotated on the perspective direction
- * - Full: it renders the fac-simile in the horiontal position
+ * - Full: it renders the fac-simile in the horizontal position
  * - Landscape: it renders the fac-simile in the vertical position (rotated of 90 degrees)
- * The fac-simile back side can be rendered for both full and lansdscape modes,
+ * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -20,31 +19,27 @@ import {
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { UserProfile } from "../../definitions/backend/UserProfile";
-import { MunicipalityState } from "../store/reducers/content";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { Municipality } from "../../definitions/content/Municipality";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
 import { extractFiscalCodeData } from "../utils/profile";
+import { maybeNotNullyString } from "../utils/strings";
+import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
-  profile: UserProfile;
-  municipality: MunicipalityState;
+  profile: InitializedProfile;
+  municipality: pot.Pot<Municipality, Error>;
+  getBackSide: boolean;
+  type: "Full" | "Landscape";
 }
 
 interface PreviewProps {
   type: "Preview";
 }
 
-interface FullProps extends BaseProps {
-  type: "Full";
-  getBackSide: boolean;
-}
-
-interface LandscapeProps extends BaseProps {
-  type: "Landscape";
-  getBackSide: boolean;
-}
-
-type Props = PreviewProps | FullProps | LandscapeProps;
+type Props = PreviewProps | BaseProps;
 
 // fiscal card fac-simile dimensions: 546 x 870
 const contentWidth =
@@ -93,10 +88,10 @@ const cardSpacerL = 16 * landscapeScaleFactor;
 const cardLargeSpacerL = 24 * landscapeScaleFactor;
 const cardLineHeightL = 26 * landscapeScaleFactor;
 
-const barCodeHeightL = 107 * landscapeScaleFactor;
-const barCodeWidthL = 512 * landscapeScaleFactor;
-const barCodeMarginLeftL = 170 * landscapeScaleFactor;
-const barCodeMarginTopL = 164 * landscapeScaleFactor;
+const barCodeHeightL = 110 * landscapeScaleFactor;
+const barCodeWidthL = 520 * landscapeScaleFactor;
+const barCodeMarginLeftL = 168 * landscapeScaleFactor;
+const barCodeMarginTopL = 181 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
   -94 * landscapeScaleFactor + // rotation correction factor
@@ -161,7 +156,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: textFontSizeF,
     marginLeft: textLeftMarginF,
-    color: customVariables.brandDarkestGray
+    color: IOColors.black
   },
 
   landscapeText: {
@@ -175,7 +170,8 @@ const styles = StyleSheet.create({
 
   fullFiscalCodeText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: fiscalCodeHeightF
+    marginTop: fiscalCodeHeightF,
+    color: IOColors.black
   },
 
   landscapeFiscalCodeText: {
@@ -192,7 +188,8 @@ const styles = StyleSheet.create({
 
   fullLastNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: lastNameHeightF
+    marginTop: lastNameHeightF,
+    color: IOColors.black
   },
 
   landscapeLastNameText: {
@@ -207,7 +204,8 @@ const styles = StyleSheet.create({
 
   fullNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: nameHeightF
+    marginTop: nameHeightF,
+    color: IOColors.black
   },
 
   landscapeNameText: {
@@ -223,7 +221,8 @@ const styles = StyleSheet.create({
   fullGenderText: {
     lineHeight: textdLineHeightF,
     marginTop: nameHeightF,
-    marginLeft: textGenderLeftMarginF
+    marginLeft: textGenderLeftMarginF,
+    color: IOColors.black
   },
 
   landscapeGender: {
@@ -244,7 +243,8 @@ const styles = StyleSheet.create({
 
   fullBirthPlaceText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: birdPlaceHeightF
+    marginTop: birdPlaceHeightF,
+    color: IOColors.black
   },
 
   landscapeBirthPlaceText: {
@@ -269,12 +269,14 @@ const styles = StyleSheet.create({
 
   fullBirthCityText: {
     lineHeight: textdLineHeightF,
-    marginTop: birthCityHeightF
+    marginTop: birthCityHeightF,
+    color: IOColors.black
   },
 
   fullDateText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: dateHeightF
+    marginTop: dateHeightF,
+    color: IOColors.black
   },
 
   landscapeDateText: {
@@ -297,7 +299,7 @@ const styles = StyleSheet.create({
   },
 
   landscapeFacSimile: {
-    marginTop: 295 * landscapeScaleFactor,
+    marginTop: 290 * landscapeScaleFactor,
     position: "absolute",
     color: customVariables.brandDarkestGray,
     fontSize: textFontSizeL,
@@ -329,7 +331,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     content: string,
     fullStyle: StyleProp<ViewStyle>,
     landscapeStyle: StyleProp<ViewStyle>,
-    isLandscape: boolean
+    isLandscape: boolean,
+    selectable: boolean = false
   ) {
     return (
       <Text
@@ -340,29 +343,89 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
         ]}
+        selectable={selectable}
+        accessible={true}
+        accessibilityElementsHidden={true}
+        importantForAccessibility={"no-hide-descendants"}
       >
         {content.toUpperCase()}
       </Text>
     );
   }
 
+  get accessibilityText(): Record<
+    "accessibilityLabel" | "accessibilityHint",
+    string
+  > {
+    if (this.props.type === "Preview") {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.preview.label"
+        ),
+        accessibilityHint: I18n.t(
+          "profile.fiscalCode.accessibility.preview.hint"
+        )
+      };
+    }
+    const isLandScape = this.props.type === "Landscape";
+    if (this.props.getBackSide) {
+      return {
+        accessibilityLabel: I18n.t(
+          "profile.fiscalCode.accessibility.rear.label"
+        ),
+        accessibilityHint: isLandScape
+          ? ""
+          : I18n.t("profile.fiscalCode.accessibility.rear.hint")
+      };
+    }
+
+    const fiscalCodeData = extractFiscalCodeData(
+      this.props.profile.fiscal_code,
+      this.props.municipality
+    );
+    const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
+    // goBackSide === false
+    return {
+      accessibilityLabel: I18n.t(
+        "profile.fiscalCode.accessibility.front.label",
+        {
+          code: this.props.profile.fiscal_code,
+          name: this.props.profile.name,
+          family_name: this.props.profile.family_name,
+          gender: fiscalCodeData.gender || na,
+          birthDate: fiscalCodeData.birthday
+            ? dateToAccessibilityReadableFormat(fiscalCodeData.birthday)
+            : na,
+          province: maybeNotNullyString(
+            fiscalCodeData.siglaProvincia
+          ).getOrElse(na),
+          placeOfBirth: maybeNotNullyString(
+            fiscalCodeData.denominazione
+          ).getOrElse(na)
+        }
+      ),
+      accessibilityHint: isLandScape
+        ? ""
+        : I18n.t("profile.fiscalCode.accessibility.front.hint")
+    };
+  }
+
   private renderFrontContent(
-    profile: UserProfile,
-    municipality: MunicipalityState,
+    profile: InitializedProfile,
+    municipality: pot.Pot<Municipality, Error>,
     isLandscape: boolean
   ) {
-    const fiscalCodeData = extractFiscalCodeData(
-      profile.fiscal_code,
-      municipality
-    );
+    const fiscalCode = profile.fiscal_code;
+    const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
 
     return (
       <React.Fragment>
         {this.renderItem(
-          profile.fiscal_code,
+          fiscalCode,
           styles.fullFiscalCodeText,
           styles.landscapeFiscalCodeText,
-          isLandscape
+          isLandscape,
+          true
         )}
 
         {this.renderItem(
@@ -379,7 +442,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           isLandscape
         )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.denominazione,
             styles.fullBirthPlaceText,
@@ -395,7 +458,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             isLandscape
           )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.siglaProvincia,
             styles.fullBirthCityText,
@@ -420,7 +483,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
-          background={"transparent"}
+          background={"white"}
           height={barCodeHeightL - 5}
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
@@ -456,7 +519,11 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   public render(): React.ReactNode {
     return (
-      <View>
+      <View
+        accessible={true}
+        accessibilityLabel={this.accessibilityText.accessibilityLabel}
+        accessibilityHint={this.accessibilityText.accessibilityHint}
+      >
         <Image
           source={
             this.props.type !== "Preview" && this.props.getBackSide

@@ -1,91 +1,55 @@
-import { Button, Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
+
 import { StyleSheet } from "react-native";
+import variables from "../../theme/variables";
+import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 
-import { ComponentProps } from "../../types/react";
-
+// TODO: Refactor with an unique component like `FooterTopShadow` after bonus vacanze
 const styles = StyleSheet.create({
+  footerVariant: {
+    backgroundColor: variables.footerBackground,
+    paddingBottom: variables.footerPaddingBottom,
+    paddingLeft: variables.footerPaddingLeft,
+    paddingRight: variables.footerPaddingRight,
+    paddingTop: variables.footerPaddingTop,
+    // iOS shadow
+    shadowColor: variables.footerShadowColor,
+    shadowOffset: {
+      width: variables.footerShadowOffsetWidth,
+      height: variables.footerShadowOffsetHeight
+    },
+    shadowOpacity: variables.footerShadowOpacity,
+    shadowRadius: variables.footerShadowRadius,
+    // Android shadow
+    elevation: variables.footerElevation
+  },
   container: {
-    flexDirection: "row"
-  },
-  button: {
-    alignContent: "center",
-    flex: 1
-  },
-  buttonTwoThirds: {
-    alignContent: "center",
-    flex: 2
+    overflow: "hidden",
+    marginTop: -variables.footerShadowOffsetHeight,
+    paddingTop: variables.footerShadowOffsetHeight
   }
 });
 
-type OwnButtonProps = {
-  title: string;
-};
-
-type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
-
-interface SingleButton {
-  type: "SingleButton";
-  leftButton: FooterButtonProps;
-}
-
-interface TwoButtonsInlineHalf {
-  type: "TwoButtonsInlineHalf";
-  leftButton: FooterButtonProps;
-  rightButton: FooterButtonProps;
-}
-
-interface TwoButtonsInlineThird {
-  type: "TwoButtonsInlineThird";
-  leftButton: FooterButtonProps;
-  rightButton: FooterButtonProps;
-}
-
-type Props = SingleButton | TwoButtonsInlineHalf | TwoButtonsInlineThird;
-
 /**
- * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
+ * Implements a component that show buttons as sticky footer
+ * It can include 1, 2 or 3 buttons. If they are 2, they can have the inlineHalf  or the inlineOneThird style
  */
-export default class FooterWithButtons extends React.Component<Props, never> {
-  private renderRightButton() {
-    if (this.props.type === "SingleButton") {
-      return null;
-    }
-
-    const {
-      type,
-      rightButton: { title: rightButtonTitle, ...otherPropsRightButton }
-    } = this.props;
-
-    return (
-      <React.Fragment>
-        <View hspacer={true} />
-        <Button
-          {...otherPropsRightButton}
-          style={
-            type === "TwoButtonsInlineThird"
-              ? styles.buttonTwoThirds
-              : styles.button
-          }
-        >
-          <Text numberOfLines={1}>{rightButtonTitle}</Text>
-        </Button>
-      </React.Fragment>
-    );
-  }
-
+export default class FooterWithButtons extends React.Component<
+  BlockButtonsProps,
+  never
+> {
   public render() {
-    const {
-      title: leftButtonTitle,
-      ...otherPropsLeftButton
-    } = this.props.leftButton;
-
     return (
-      <View footer={true} style={styles.container}>
-        <Button style={styles.button} {...otherPropsLeftButton}>
-          <Text>{leftButtonTitle}</Text>
-        </Button>
-        {this.renderRightButton()}
+      <View
+        style={styles.container}
+        accessible={this.props.accessible}
+        pointerEvents={"box-none"}
+        testID="FooterWithButtons"
+      >
+        <View style={styles.footerVariant}>
+          <BlockButtons {...this.props} />
+        </View>
       </View>
     );
   }

@@ -1,22 +1,29 @@
+/**
+ * This module implements the sagas to retrive data from the content client:
+ */
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import * as pot from "italia-ts-commons/lib/pot";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, put, takeEvery } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ContentClient } from "../api/content";
-
+import { ServiceId } from "../../definitions/backend/ServiceId";
+import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-
+import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad
+  loadContextualHelpData,
+  loadIdps,
+  loadServiceMetadata
 } from "../store/actions/content";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
+import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
 
@@ -29,35 +36,68 @@ function getServiceMetadata(
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
-      .then(resolve, () => resolve(undefined))
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
+  );
+}
+
+/**
+ * Retrieves idps text data from the static content repository
+ */
+function getContextualHelpData(): Promise<
+  t.Validation<BasicResponseType<ContextualHelp>>
+> {
+  return new Promise((resolve, _) =>
+    contentClient
+      .getContextualHelp()
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
 }
 
 /**
  * A saga that watches for and executes requests to load service metadata.
  *
- * TODO: do not retrieve the content on each request, rely on cache headers
+ * TODO: do not retrieve the metadata on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-export function* watchContentServiceLoadSaga(): Iterator<Effect> {
-  yield takeEvery(getType(contentServiceLoad.request), function*(
-    action: ActionType<typeof contentServiceLoad["request"]>
-  ) {
-    const serviceId = action.payload;
-
+function* watchServiceMetadataLoadSaga(
+  action: ActionType<typeof loadServiceMetadata["request"]>
+): SagaIterator {
+  const serviceId = action.payload;
+  try {
     const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
       getServiceMetadata,
       serviceId
     );
 
-    if (response.isRight() && response.value.status === 200) {
-      yield put(
-        contentServiceLoad.success({ serviceId, data: response.value.value })
+    if (response.isLeft()) {
+      const error = response.fold(
+        readableReport,
+        ({ status }) => `response status ${status}`
       );
-    } else {
-      yield put(contentServiceLoad.failure(serviceId));
+      throw Error(error);
     }
-  });
+    if (response.isRight()) {
+      if (response.value.status === 200 || response.value.status === 404) {
+        // If 404, the service has no saved metadata
+        const data =
+          response.value.status === 200
+            ? pot.some(response.value.value)
+            : pot.some(undefined);
+        yield put(loadServiceMetadata.success({ serviceId, data }));
+      } else {
+        throw Error(`[${serviceId}] response status ${response.value.status}`);
+      }
+    }
+  } catch (e) {
+    yield put(
+      loadServiceMetadata.failure({
+        serviceId,
+        error: e
+          ? new Error(`[${serviceId}] ${typeof e === "string" ? e : e.message}`)
+          : Error(`[${serviceId}] Unable to load metadata for service`)
+      })
+    );
+  }
 }
 
 /**
@@ -66,7 +106,11 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
 function* fetchMunicipalityMetadata(
   getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
-): IterableIterator<Effect | Either<Error, MunicipalityMedadata>> {
+): Generator<
+  Effect,
+  Either<Error, MunicipalityMedadata>,
+  SagaCallReturnType<typeof getMunicipality>
+> {
   try {
     const response: SagaCallReturnType<typeof getMunicipality> = yield call(
       getMunicipality,
@@ -79,24 +123,21 @@ function* fetchMunicipalityMetadata(
     if (response.value.status !== 200) {
       throw Error(`response status ${response.value.status}`);
     }
-    return right(response.value.value);
+    return right<Error, MunicipalityMedadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, MunicipalityMedadata>(error);
   }
 }
 
 /**
  * A saga that watches for and executes requests to load municipality metadata.
  */
-export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
-  yield takeEvery(getType(contentMunicipalityLoad.request), function*(
-    action: ActionType<typeof contentMunicipalityLoad["request"]>
-  ) {
-    const codiceCatastale = action.payload;
-
-    const response: SagaCallReturnType<
-      typeof fetchMunicipalityMetadata
-    > = yield call(
+function* watchContentMunicipalityLoadSaga(
+  action: ActionType<typeof contentMunicipalityLoad["request"]>
+): SagaIterator {
+  const codiceCatastale = action.payload;
+  try {
+    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> = yield call(
       fetchMunicipalityMetadata,
       contentClient.getMunicipality,
       codiceCatastale
@@ -110,7 +151,121 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
         })
       );
     } else {
-      yield put(contentMunicipalityLoad.failure(codiceCatastale));
+      throw response.value;
     }
-  });
+  } catch (e) {
+    yield put(
+      contentMunicipalityLoad.failure({
+        error: e,
+        codiceCatastale
+      })
+    );
+  }
+}
+
+/**
+ * A saga that watches for and executes requests to load contextual help text data
+ */
+function* watchLoadContextualHelp(): SagaIterator {
+  try {
+    const response: SagaCallReturnType<typeof getContextualHelpData> = yield call(
+      getContextualHelpData
+    );
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(loadContextualHelpData.success(response.value.value));
+        return;
+      }
+      throw Error(`response status ${response.value.status}`);
+    }
+    throw Error(readableReport(response.value));
+  } catch (e) {
+    yield put(loadContextualHelpData.failure(e));
+  }
+}
+
+/**
+ * A saga that watches for and executes requests to load idps data
+ */
+function* watchLoadIdps(
+  getIdps: ReturnType<typeof ContentClient>["getIdps"]
+): SagaIterator {
+  try {
+    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield call(
+      getIdps
+    );
+    if (idpsListResponse.isRight()) {
+      if (idpsListResponse.value.status === 200) {
+        yield put(loadIdps.success(idpsListResponse.value.value));
+        return;
+      }
+      throw Error(`response status ${idpsListResponse.value.status}`);
+    } else {
+      throw Error(readableReport(idpsListResponse.value));
+    }
+  } catch (e) {
+    yield put(loadIdps.failure(e));
+  }
+}
+
+// handle available list loading
+function* handleLoadAvailableBonus(
+  getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
+): SagaIterator {
+  try {
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> = yield call(
+      getBonusAvailable,
+      {}
+    );
+    if (bonusListReponse.isRight()) {
+      if (bonusListReponse.value.status === 200) {
+        yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
+        return;
+      }
+      throw Error(`response status ${bonusListReponse.value.status}`);
+    } else {
+      throw Error(readableReport(bonusListReponse.value));
+    }
+  } catch (e) {
+    yield put(loadAvailableBonuses.failure(e));
+  }
+}
+
+export function* watchContentSaga() {
+  // watch municipality loading request
+  yield takeEvery(
+    getType(contentMunicipalityLoad.request),
+    watchContentMunicipalityLoadSaga
+  );
+
+  // watch service metadata loading request
+  yield takeEvery(
+    getType(loadServiceMetadata.request),
+    watchServiceMetadataLoadSaga
+  );
+
+  // Watch contextual help text data loading request
+  yield takeLatest(
+    getType(loadContextualHelpData.request),
+    watchLoadContextualHelp
+  );
+
+  // Watch idps data loading request
+  yield takeLatest(
+    getType(loadIdps.request),
+    watchLoadIdps,
+    contentClient.getIdps
+  );
+
+  // Load content related to the contextual help body
+  yield put(loadContextualHelpData.request());
+
+  if (bonusVacanzeEnabled || bpdEnabled || cgnEnabled) {
+    // available bonus list request
+    yield takeLatest(
+      getType(loadAvailableBonuses.request),
+      handleLoadAvailableBonus,
+      contentClient.getBonusAvailable
+    );
+  }
 }

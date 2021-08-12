@@ -1,171 +1,132 @@
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
+import { Dispatch } from "redux";
+import { useEffect, useState } from "react";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import AdviceComponent from "../../components/AdviceComponent";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
-import { InfoBanner } from "../../components/InfoBanner";
-import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
-import * as config from "../../config";
-
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import I18n from "../../i18n";
-
-import { IdentityProvider } from "../../models/IdentityProvider";
-
-import ROUTES from "../../navigation/routes";
-
-import {
-  forgetCurrentSession,
-  idpSelected
-} from "../../store/actions/authentication";
-import { ReduxProps } from "../../store/actions/types";
-
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
-
+import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
+import { GlobalState } from "../../store/reducers/types";
+import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { LocalIdpsFallback, testIdp } from "../../utils/idps";
+import { loadIdps } from "../../store/actions/content";
+import {
+  navigateBack,
+  navigateToSPIDLogin,
+  navigateToSPIDTestIDP
+} from "../../store/actions/navigation";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
 
-interface OwnProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
-
-const idps: ReadonlyArray<IdentityProvider> = [
-  {
-    id: "arubaid",
-    name: "Aruba ID",
-    logo: require("../../../img/spid-idp-arubaid.png"),
-    entityID: "arubaid",
-    profileUrl: "http://selfcarespid.aruba.it"
-  },
-  {
-    id: "infocertid",
-    name: "Infocert ID",
-    logo: require("../../../img/spid-idp-infocertid.png"),
-    entityID: "infocertid",
-    profileUrl: "https://my.infocert.it/selfcare"
-  },
-  {
-    id: "intesaid",
-    name: "Intesa ID",
-    logo: require("../../../img/spid-idp-intesaid.png"),
-    entityID: "intesaid",
-    profileUrl: "https://spid.intesa.it"
-  },
-  {
-    id: "lepidaid",
-    name: "Lepida ID",
-    logo: require("../../../img/spid-idp-lepidaid.png"),
-    entityID: "lepidaid",
-    profileUrl: "https://id.lepida.it/"
-  },
-  {
-    id: "namirialid",
-    name: "Namirial ID",
-    logo: require("../../../img/spid-idp-namirialid.png"),
-    entityID: "namirialid",
-    profileUrl: "https://idp.namirialtsp.com/idp"
-  },
-  {
-    id: "posteid",
-    name: "Poste ID",
-    logo: require("../../../img/spid-idp-posteid.png"),
-    entityID: "posteid",
-    profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  },
-  {
-    id: "sielteid",
-    name: "Sielte ID",
-    logo: require("../../../img/spid-idp-sielteid.png"),
-    entityID: "sielteid",
-    profileUrl: "https://myid.sieltecloud.it/profile/"
-  },
-  {
-    id: "spiditalia",
-    name: "SPIDItalia Register.it",
-    logo: require("../../../img/spid-idp-spiditalia.png"),
-    entityID: "spiditalia",
-    profileUrl: "https://spid.register.it"
-  },
-  {
-    id: "timid",
-    name: "Telecom Italia",
-    logo: require("../../../img/spid-idp-timid.png"),
-    entityID: "timid",
-    profileUrl: "https://id.tim.it/identity/private/"
-  }
-];
-
-const testIdp = {
-  id: "test",
-  name: "Test",
-  logo: require("../../../img/spid.png"),
-  entityID: "xx_testenv2",
-  profileUrl: "https://italia-backend/profile.html"
-};
-
-const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
+const TAPS_TO_OPEN_TESTIDP = 5;
 
 const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    backgroundColor: variables.contentAlternativeBackground
+    backgroundColor: variables.brandGray
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.idp_selection.contextualHelpTitle",
+  body: "authentication.idp_selection.contextualHelpContent"
+};
+
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-const IdpSelectionScreen: React.SFC<Props> = props => {
-  const goBack = props.isSessionExpired
-    ? // If the session is expired, on back we need to reset the authentication state in the store
-      () => {
-        props.dispatch(forgetCurrentSession());
-      }
-    : () => props.navigation.goBack();
+const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  const [counter, setCounter] = useState(0);
 
-  const onIdpSelected = (idp: IdentityProvider) => {
-    props.dispatch(idpSelected(idp));
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+  const onIdpSelected = (idp: LocalIdpsFallback) => {
+    if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
+      const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
+      setCounter(newValue);
+    } else {
+      props.setSelectedIdp(idp);
+      instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
+      props.navigateToIdpSelection();
+    }
   };
+
+  useEffect(() => {
+    props.requestIdps();
+  }, []);
+
+  useEffect(() => {
+    if (counter === TAPS_TO_OPEN_TESTIDP) {
+      setCounter(0);
+      props.setSelectedIdp(testIdp);
+      props.navigateToIdpTest();
+    }
+  }, [counter]);
 
   return (
     <BaseScreenComponent
-      goBack={goBack}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["authentication_IPD_selection"]}
+      goBack={true}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <Content noPadded={true} overScrollMode="never" bounces={false}>
-        {props.isSessionExpired && (
-          <React.Fragment>
-            <InfoBanner
-              message={I18n.t("authentication.expiredSessionBanner.message")}
+      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
+        <Content noPadded={true} overScrollMode={"never"} bounces={false}>
+          <ScreenContentHeader
+            title={I18n.t("authentication.idp_selection.contentTitle")}
+          />
+          <View style={styles.gridContainer} testID={"idps-view"}>
+            <IdpsGrid
+              idps={[...props.idps, testIdp]}
+              onIdpSelected={onIdpSelected}
             />
+
             <View spacer={true} />
-          </React.Fragment>
-        )}
-        <ScreenHeader
-          heading={
-            <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-          }
-        />
-        <View style={styles.gridContainer} testID="idps-view">
-          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
-          <View spacer={true} />
-          <Button block={true} light={true} bordered={true} onPress={goBack}>
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
-      </Content>
+            <ButtonDefaultOpacity
+              block={true}
+              light={true}
+              bordered={true}
+              onPress={props.goBack}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </ButtonDefaultOpacity>
+          </View>
+          <View style={{ padding: variables.contentPadding }}>
+            <View spacer={true} />
+            <AdviceComponent
+              text={I18n.t("login.expiration_info")}
+              iconColor={"black"}
+            />
+          </View>
+        </Content>
+      </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  isSessionExpired: isSessionExpiredSelector(state)
+  idps: idpsSelector(state),
+  isIdpsLoading: isLoading(idpsStateSelector(state))
 });
 
-export default connect(mapStateToProps)(IdpSelectionScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToIdpSelection: () => dispatch(navigateToSPIDLogin()),
+  navigateToIdpTest: () => dispatch(navigateToSPIDTestIDP()),
+  goBack: () => dispatch(navigateBack()),
+  requestIdps: () => dispatch(loadIdps.request()),
+  setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IdpSelectionScreen);

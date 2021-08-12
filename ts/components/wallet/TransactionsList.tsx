@@ -2,48 +2,49 @@
  * This component displays a list of transactions
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Content,
-  Grid,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-
+import {
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet
+} from "react-native";
 import I18n from "../../i18n";
+import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import {
+  dateToAccessibilityReadableFormat,
+  hoursAndMinutesToAccessibilityReadableFormat
+} from "../../utils/accessibility";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { BadgeComponent } from "../screens/BadgeComponent";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { H3 } from "../core/typography/H3";
+import DetailedlistItemComponent from "../DetailedlistItemComponent";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import H5 from "../ui/H5";
+
+type State = {
+  loadingMore: boolean;
+};
 
 type Props = Readonly<{
   title: string;
   amount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
+  areMoreTransactionsAvailable: boolean;
+  onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
+  helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
+  readTransactions: ReadTransactionsState;
 }>;
-
+const screenWidth = Dimensions.get("screen").width;
 const styles = StyleSheet.create({
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-  listItem: {
-    marginLeft: 0,
-    paddingRight: 0
-  },
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
@@ -56,16 +57,13 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-  dateStyle: {
-    lineHeight: 18,
-    fontSize: 13
-  },
-  badgeStyle: {
-    flex: 0,
-    paddingRight: 4
-  },
-  viewStyle: {
-    flexDirection: "row"
+  moreButton: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    width: screenWidth - variables.contentPadding * 2,
+    backgroundColor: variables.colorWhite
   }
 });
 
@@ -73,69 +71,105 @@ const styles = StyleSheet.create({
  * Transactions List component
  */
 
-export default class TransactionsList extends React.Component<Props> {
-  private renderDate(item: Transaction) {
-    const isNew = true; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+export default class TransactionsList extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { loadingMore: false };
+  }
+
+  public componentDidUpdate(prevProps: Props, prevState: State) {
+    // loading more transaction is complete (or we got an error), revert the state
+    if (
+      prevState.loadingMore &&
+      pot.isLoading(prevProps.transactions) &&
+      (pot.isSome(this.props.transactions) ||
+        pot.isError(this.props.transactions))
+    ) {
+      this.setState({ loadingMore: false });
+    }
+  }
+
+  private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
+    const item = info.item;
+    const paymentReason = cleanTransactionDescription(item.description);
+    const recipient = item.merchant;
+    // Check if the current transaction is stored among the read transactions.
+    const isNew = this.props.readTransactions[item.id.toString()] === undefined;
+
+    const amount = formatNumberCentsToAmount(item.amount.amount);
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
       true
     )} - ${item.created.toLocaleTimeString()}`;
     return (
-      <Row>
-        <Left>
-          <View style={styles.viewStyle}>
-            {isNew && (
-              <View style={styles.badgeStyle}>
-                <BadgeComponent />
-              </View>
-            )}
-            <View>
-              <Text note={true} style={styles.dateStyle}>
-                {datetime}
-              </Text>
-            </View>
-          </View>
-        </Left>
-      </Row>
+      <DetailedlistItemComponent
+        isNew={isNew}
+        text11={recipient}
+        text12={amount}
+        text2={datetime}
+        text3={paymentReason}
+        onPressItem={() => this.props.navigateToTransactionDetails(item)}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityLabel={I18n.t(
+          "wallet.accessibility.transactionListItem.label",
+          {
+            payment: isNew
+              ? I18n.t(
+                  "wallet.accessibility.transactionListItem.payment.unread"
+                )
+              : I18n.t("wallet.accessibility.transactionListItem.payment.read"),
+            merchant: recipient,
+            amount,
+            datetime: dateToAccessibilityReadableFormat(item.created),
+            hours: hoursAndMinutesToAccessibilityReadableFormat(item.created),
+            reason: paymentReason
+          }
+        )}
+      />
     );
-  }
+  };
 
-  private renderRow = (item: Transaction): React.ReactElement<any> => {
-    const paymentReason = cleanTransactionDescription(item.description);
-    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
-    const recipient = item.merchant;
+  /**
+   * 1 - if more transaction are available to load, show the load more button
+   * 2 - if all transactions are loaded, show end list component
+   */
+  private footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
+    if (!this.props.areMoreTransactionsAvailable) {
+      return transactions.length > 0 && <EdgeBorderComponent />;
+    }
+
     return (
-      <ListItem
-        style={styles.listItem}
-        onPress={() => this.props.navigateToTransactionDetails(item)}
-      >
-        <Body>
-          <Grid>
-            {this.renderDate(item)}
-            <Row>
-              <Left>
-                <Text>{paymentReason}</Text>
-              </Left>
-              <Right>
-                <Text>{amount}</Text>
-              </Right>
-            </Row>
-            <Row>
-              <Left>
-                <Text note={true}>{recipient}</Text>
-              </Left>
-            </Row>
-          </Grid>
-        </Body>
-      </ListItem>
+      <View>
+        <ButtonDefaultOpacity
+          style={styles.moreButton}
+          bordered={true}
+          disabled={this.state.loadingMore}
+          onPress={() => {
+            this.setState({ loadingMore: true }, () =>
+              this.props.onLoadMoreTransactions()
+            );
+          }}
+        >
+          <Text>
+            {I18n.t(
+              // change the button text if we are loading another slice of transactions
+              this.state.loadingMore
+                ? "wallet.transacionsLoadingMore"
+                : "wallet.transactionsLoadMore"
+            )}
+          </Text>
+        </ButtonDefaultOpacity>
+        <EdgeBorderComponent />
+      </View>
     );
   };
 
   public render(): React.ReactNode {
     const { ListEmptyComponent } = this.props;
-
-    if (pot.isLoading(this.props.transactions)) {
+    // first loading
+    if (!this.state.loadingMore && pot.isLoading(this.props.transactions)) {
       return (
         <BoxedRefreshIndicator
           white={true}
@@ -143,36 +177,35 @@ export default class TransactionsList extends React.Component<Props> {
         />
       );
     }
-
-    const transactions = pot.getOrElse(this.props.transactions, []);
-
-    return transactions.length === 0 && ListEmptyComponent ? (
+    const transactions: ReadonlyArray<Transaction> = pot.getOrElse(
+      this.props.transactions,
+      []
+    );
+    return transactions.length === 0 &&
+      !this.props.areMoreTransactionsAvailable &&
+      ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
-      // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
-      <Content
-        scrollEnabled={false}
-        style={[styles.noBottomPadding, styles.whiteContent]}
-      >
+      <Content scrollEnabled={false} style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
-            <H5 style={styles.brandDarkGray}>
+            <H3 weight={"SemiBold"} color={"bluegreyDark"}>
               {I18n.t("wallet.latestTransactions")}
-            </H5>
+            </H3>
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
-
-        <Grid>
-          <Row>
-            <List
-              scrollEnabled={false}
-              removeClippedSubviews={false}
-              dataArray={transactions as Transaction[]} // tslint:disable-line: readonly-array
-              renderRow={this.renderRow}
-            />
-          </Row>
-        </Grid>
+        {this.props.helpMessage}
+        <FlatList
+          scrollEnabled={false}
+          data={transactions}
+          renderItem={this.renderTransaction}
+          ItemSeparatorComponent={() => (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
+          keyExtractor={item => item.id.toString()}
+          ListFooterComponent={this.footerListComponent(transactions)}
+        />
       </Content>
     );
   }

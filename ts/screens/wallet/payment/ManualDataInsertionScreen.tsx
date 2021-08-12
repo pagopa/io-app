@@ -6,24 +6,18 @@
  *  TODO:
  *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
-import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
+import { Content, Form, H1, Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEventPayload,
-  NavigationEvents,
-  NavigationInjectedProps
-} from "react-navigation";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import { isLeft, isRight } from "fp-ts/lib/Either";
+import { isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
+import { Either } from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
@@ -33,18 +27,25 @@ import {
 } from "italia-ts-commons/lib/strings";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
+import { LabelledItem } from "../../../components/LabelledItem";
 import I18n from "../../../i18n";
 import {
+  navigateBack,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletHome
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
-import { NumberFromString } from "../../../utils/number";
+import { Link } from "../../../components/core/typography/Link";
+import { GlobalState } from "../../../store/reducers/types";
+import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -55,6 +56,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 type State = Readonly<{
@@ -64,54 +66,40 @@ type State = Readonly<{
   organizationFiscalCode: Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  delocalizedAmount: Option<
-    ReturnType<typeof AmountInEuroCentsFromString.decode>
-  >;
-  inputAmountValue: string;
 }>;
 
 const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
-  },
-
-  noLeftMargin: {
-    marginLeft: 0
   }
 });
 
-const AmountInEuroCentsFromString = NumberFromString.pipe(
-  AmountInEuroCentsFromNumber
-);
+// helper to translate Option<Either> to true|false|void semantics
+const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
+  o
+    .map<boolean | undefined>(e => e.isRight())
+    .getOrElse(undefined);
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.insertManually.contextualHelpTitle",
+  body: "wallet.insertManually.contextualHelpContent"
+};
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       paymentNoticeNumber: none,
-      organizationFiscalCode: none,
-      delocalizedAmount: none,
-      inputAmountValue: ""
+      organizationFiscalCode: none
     };
   }
 
-  private handleWillFocus = (payload: NavigationEventPayload) => {
-    const isInvalidAmount =
-      payload.state.params !== undefined
-        ? payload.state.params.isInvalidAmount
-        : false;
-    if (isInvalidAmount) {
-      this.setState({ inputAmountValue: "", delocalizedAmount: none });
+  public componentDidMount() {
+    if (!this.props.hasPayableMethods) {
+      alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
     }
-  };
-
-  private decimalSeparatorRe = RegExp(
-    `\\${I18n.t("global.localization.decimalSeparator")}`,
-    "g"
-  );
+  }
 
   private isFormValid = () =>
-    this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
     this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
@@ -134,17 +122,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 paymentNoticeNumber,
                 organizationFiscalCode
               })
-            )
-          )
-          .chain(rptId =>
-            this.state.delocalizedAmount
-              .chain(fromEither)
-              .map(delocalizedAmount =>
-                this.props.navigateToTransactionSummary(
-                  rptId,
-                  delocalizedAmount
-                )
-              )
+            ).map(rptId => {
+              // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+              const initialAmount = "1" as AmountInEuroCents;
+              this.props.navigateToTransactionSummary(rptId, initialAmount);
+            })
           )
       );
   };
@@ -161,96 +143,62 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     const secondaryButtonProps = {
       block: true,
       cancel: true,
-      onPress: this.props.navigateToWalletHome,
+      onPress: this.props.goBack,
       title: I18n.t("global.buttons.cancel")
     };
+
     return (
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_insert_notice_data"]}
       >
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
+        <NavigationEvents />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <Text link={true} onPress={this.showModal}>
+            <Link onPress={this.showModal}>
               {I18n.t("wallet.insertManually.link")}
-            </Text>
+            </Link>
+            <View spacer />
             <Form>
-              <Item
-                style={styles.noLeftMargin}
-                floatingLabel={true}
-                error={this.state.paymentNoticeNumber
-                  .map(isLeft)
-                  .getOrElse(false)}
-                success={this.state.paymentNoticeNumber
-                  .map(isRight)
-                  .getOrElse(false)}
-              >
-                <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
-                <Input
-                  keyboardType={"numeric"}
-                  maxLength={18}
-                  onChangeText={value => {
+              <LabelledItem
+                isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
+                label={I18n.t("wallet.insertManually.noticeCode")}
+                inputProps={{
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  maxLength: 18,
+                  onChangeText: value => {
                     this.setState({
                       paymentNoticeNumber: some(value)
                         .filter(NonEmptyString.is)
                         .map(_ => PaymentNoticeNumberFromString.decode(_))
                     });
-                  }}
-                />
-              </Item>
-              <Item
-                style={styles.noLeftMargin}
-                floatingLabel={true}
-                error={this.state.organizationFiscalCode
-                  .map(isLeft)
-                  .getOrElse(false)}
-                success={this.state.organizationFiscalCode
-                  .map(isRight)
-                  .getOrElse(false)}
-              >
-                <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
-                <Input
-                  keyboardType={"numeric"}
-                  maxLength={11}
-                  onChangeText={value => {
+                  }
+                }}
+              />
+              <View spacer />
+              <LabelledItem
+                isValid={unwrapOptionalEither(
+                  this.state.organizationFiscalCode
+                )}
+                label={I18n.t("wallet.insertManually.entityCode")}
+                inputProps={{
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  maxLength: 11,
+                  onChangeText: value => {
                     this.setState({
                       organizationFiscalCode: some(value)
                         .filter(NonEmptyString.is)
                         .map(_ => OrganizationFiscalCode.decode(_))
                     });
-                  }}
-                />
-              </Item>
-              <Item
-                style={styles.noLeftMargin}
-                floatingLabel={true}
-                error={this.state.delocalizedAmount
-                  .map(isLeft)
-                  .getOrElse(false)}
-                success={this.state.delocalizedAmount
-                  .map(isRight)
-                  .getOrElse(false)}
-              >
-                <Label>{I18n.t("wallet.insertManually.amount")}</Label>
-                <Input
-                  keyboardType={"numeric"}
-                  maxLength={10}
-                  value={this.state.inputAmountValue}
-                  onChangeText={value =>
-                    this.setState({
-                      inputAmountValue: value,
-                      delocalizedAmount: some(
-                        value.replace(this.decimalSeparatorRe, ".")
-                      )
-                        .filter(NonEmptyString.is)
-                        .map(_ => AmountInEuroCentsFromString.decode(_))
-                    })
                   }
-                />
-              </Item>
+                }}
+              />
             </Form>
           </Content>
         </ScrollView>
@@ -263,6 +211,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   }
   private showModal = () => {
+    Keyboard.dismiss();
     this.props.showModal(
       <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
     );
@@ -270,11 +219,21 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  goBack: () => {
+    dispatch(navigateBack());
+  },
+  navigateToWalletAddPaymentMethod: () =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      })
+    ),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
+    Keyboard.dismiss();
     dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
@@ -286,7 +245,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
+const mapStateToProps = (state: GlobalState) => ({
+  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(withLightModalContext(ManualDataInsertionScreen));

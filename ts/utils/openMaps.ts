@@ -1,6 +1,6 @@
-import { Toast } from "native-base";
 import { Linking, Platform } from "react-native";
 import I18n from "../i18n";
+import { showToast } from "./showToast";
 
 export function openMaps(
   streetName: string,
@@ -23,7 +23,9 @@ export function openMaps(
           android: `${intentScheme}${label}`
         });
 
-  Linking.openURL(url).catch(() =>
-    Toast.show({ text: I18n.t("openMaps.genericError") })
-  );
+  if (url !== undefined) {
+    Linking.openURL(url).catch(() =>
+      showToast(I18n.t("openMaps.genericError"))
+    );
+  }
 }

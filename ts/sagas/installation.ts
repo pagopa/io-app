@@ -3,29 +3,31 @@
  */
 import { call, Effect, put, select } from "redux-saga/effects";
 
-import { scheduleLocalNotificationsAccessSpid } from "../boot/scheduleLocalNotifications";
+import {
+  removeScheduledNotificationAccessSpid,
+  scheduleLocalNotificationsAccessSpid
+} from "../boot/scheduleLocalNotifications";
 import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
-import { GlobalState } from "../store/reducers/types";
-import { deletePin } from "../utils/keychain";
 
 /**
  * This generator function removes user data from previous application
  * installation
  */
-export function* previousInstallationDataDeleteSaga(): IterableIterator<
-  Effect
+export function* previousInstallationDataDeleteSaga(): Generator<
+  Effect,
+  void,
+  boolean
 > {
-  const isFirstRunAfterInstall: ReturnType<
-    typeof isFirstRunAfterInstallSelector
-  > = yield select<GlobalState>(isFirstRunAfterInstallSelector);
+  const isFirstRunAfterInstall: ReturnType<typeof isFirstRunAfterInstallSelector> = yield select(
+    isFirstRunAfterInstallSelector
+  );
 
   if (isFirstRunAfterInstall) {
-    // Delete the current PIN from the Keychain
-    // tslint:disable-next-line:saga-yield-return-type
-    yield call(deletePin);
     // invalidate the session
     yield put(sessionInvalid());
+    // Remove all the notification already set
+    yield call(removeScheduledNotificationAccessSpid);
     // Schedule a set of local notifications
     yield call(scheduleLocalNotificationsAccessSpid);
   }

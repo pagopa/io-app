@@ -1,3 +1,3 @@
 declare module "remark" {
-  export default function(): any;
+  export default function (): any;
 }

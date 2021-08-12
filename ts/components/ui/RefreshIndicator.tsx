@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 
 const isAndroid = Platform.OS === "android";
 
-export const RefreshIndicator: React.SFC<{}> = () => {
+export const RefreshIndicator: React.FunctionComponent = () => {
   const activityIndicator = (
     <ActivityIndicator
       size={isAndroid ? 24 : "large"}

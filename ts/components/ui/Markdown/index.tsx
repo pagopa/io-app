@@ -1,11 +1,9 @@
-/**
- * A component to render the message markdown as HTML inside a WebView
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
-import { AppState, AppStateStatus } from "react-native";
 import {
   ActivityIndicator,
+  AppState,
+  AppStateStatus,
   InteractionManager,
   LayoutAnimation,
   Platform,
@@ -19,10 +17,13 @@ import * as RNFS from "react-native-fs";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-
+import { filterXSS } from "xss";
+import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
+import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
+import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
 import { handleLinkMessage } from "./handlers/link";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { WebViewMessage } from "./types";
@@ -72,8 +73,10 @@ body {
   margin: 0;
   padding: 0;
   color: ${customVariables.textColor};
-  font-size: 16px;
+  font-size: ${customVariables.fontSize1}px;
   font-family: 'Titillium Web';
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -82,6 +85,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-block-start: 0;
+  font-size: ${customVariables.fontSize1}px;
 }
 
 ul, ol {
@@ -120,27 +124,62 @@ div.custom-block.io-demo-block .custom-block-body::after {
 </style>
 `;
 
-const generateInlineCss = (cssStyle: string) => {
-  return `<style>
+const generateInlineCss = (cssStyle: string) => `<style>
   ${cssStyle}
   </style>`;
-};
 
-const generateHtml = (content: string, cssStyle?: string) => {
-  return `
+const generateCustomFontList = `<style>
+    ol {
+      list-style: none;
+      counter-reset: li;
+    }
+    ol li::before {
+      content: counter(li);
+      counter-increment: li;
+      color: ${customVariables.brandPrimary};
+      display: inline-block;
+      width: 1em;
+      margin-left: -1.5em;
+      margin-right: 0.5em;
+      text-align: right;
+      direction: rtl;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 18px;
+    }
+  </style>`;
+
+const avoidTextSelectionCSS = `<style>
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>`;
+
+const generateHtml = (
+  content: string,
+  cssStyle?: string,
+  useCustomSortedList: boolean = false,
+  avoidTextSelection: boolean = false
+) => `
   <!DOCTYPE html>
   <html>
-  <head>
-  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  <head>
-  <body>
-  ${GLOBAL_CSS}
-  ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${content}
-  </body>
+    <head>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </head>
+    <body>
+    ${GLOBAL_CSS}
+    ${cssStyle ? generateInlineCss(cssStyle) : ""}
+    ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+    ${useCustomSortedList ? generateCustomFontList : ""}
+    ${content}
+    </body>
   </html>
   `;
-};
 
 /**
  * Covert the old demo markdown tag with the new one.
@@ -155,17 +194,22 @@ const convertOldDemoMarkdownTag = (markdown: string) =>
 type OwnProps = {
   children: string;
   animated?: boolean;
+  extraBodyHeight?: number;
+  useCustomSortedList?: boolean;
+  onLoadEnd?: () => void;
+  onLinkClicked?: (url: string) => void;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
    * <script> and </script> tags.
    */
-
+  avoidTextSelection?: true;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
+  letUserZoom?: boolean;
 };
 
-type Props = OwnProps & ReduxProps;
+type Props = WithTestID<OwnProps> & ReduxProps;
 
 type State = {
   html?: string;
@@ -174,6 +218,9 @@ type State = {
   appState: string;
 };
 
+/**
+ * A component to render the message markdown as HTML inside a WebView
+ */
 class Markdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
 
@@ -188,20 +235,46 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { children, animated, onError, cssStyle } = this.props;
+    const {
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList,
+      avoidTextSelection
+    } = this.props;
 
-    this.compileMarkdownAsync(children, animated, onError, cssStyle);
+    this.compileMarkdownAsync(
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList,
+      avoidTextSelection
+    );
 
     AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevChildren } = prevProps;
-    const { children, animated, onError, cssStyle } = this.props;
+    const {
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList
+    } = this.props;
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
-      this.compileMarkdownAsync(children, animated, onError, cssStyle);
+      this.compileMarkdownAsync(
+        children,
+        animated,
+        onError,
+        cssStyle,
+        useCustomSortedList
+      );
     }
   }
 
@@ -225,26 +298,39 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { webViewStyle } = this.props;
+    const { extraBodyHeight, webViewStyle } = this.props;
     const { html, htmlBodyHeight } = this.state;
     const containerStyle: ViewStyle = {
-      height: htmlBodyHeight
+      height: htmlBodyHeight + (extraBodyHeight || 0)
     };
+
+    const isLoading =
+      html === undefined || (html !== "" && htmlBodyHeight === 0);
 
     return (
       <React.Fragment>
-        <ActivityIndicator
-          size="large"
-          color={customVariables.brandPrimary}
-          animating={
-            html === undefined || (html !== "" && htmlBodyHeight === 0)
-          }
-        />
+        {isLoading && (
+          <ActivityIndicator
+            testID={this.props.testID}
+            size={"large"}
+            color={customVariables.brandPrimary}
+            animating={true}
+            accessible={true}
+            accessibilityHint={I18n.t(
+              "global.accessibility.activityIndicator.hint"
+            )}
+            accessibilityLabel={I18n.t(
+              "global.accessibility.activityIndicator.label"
+            )}
+          />
+        )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                testID={this.props.testID}
+                accessible={false}
                 key={this.state.webviewKey}
                 textZoom={100}
                 ref={this.webViewRef}
@@ -254,7 +340,10 @@ class Markdown extends React.PureComponent<Props, State> {
                 originWhitelist={["*"]}
                 source={{ html, baseUrl: "" }}
                 javaScriptEnabled={true}
-                injectedJavaScript={INJECTED_JAVASCRIPT}
+                injectedJavaScript={closeInjectedScript(
+                  INJECTED_JAVASCRIPT +
+                    (this.props.letUserZoom ? "" : AVOID_ZOOM_JS)
+                )}
                 onLoadEnd={this.handleLoadEnd}
                 onMessage={this.handleWebViewMessage}
                 showsVerticalScrollIndicator={false}
@@ -268,9 +357,19 @@ class Markdown extends React.PureComponent<Props, State> {
 
   // When the injected html is loaded inject the script to notify the height
   private handleLoadEnd = () => {
-    if (this.webViewRef.current) {
-      this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
+    if (this.props.onLoadEnd) {
+      this.props.onLoadEnd();
     }
+
+    setTimeout(() => {
+      // to avoid yellow box warning
+      // it's ugly but it works https://github.com/react-native-community/react-native-webview/issues/341#issuecomment-466639820
+      if (this.webViewRef.current) {
+        this.webViewRef.current.injectJavaScript(
+          closeInjectedScript(NOTIFY_BODY_HEIGHT_SCRIPT)
+        );
+      }
+    }, 100);
   };
 
   // A function that handles message sent by the WebView component
@@ -286,6 +385,9 @@ class Markdown extends React.PureComponent<Props, State> {
       switch (message.type) {
         case "LINK_MESSAGE":
           handleLinkMessage(dispatch, message.payload.href);
+          fromNullable(this.props.onLinkClicked).map(s =>
+            s(message.payload.href)
+          );
           break;
 
         case "RESIZE_MESSAGE":
@@ -302,9 +404,11 @@ class Markdown extends React.PureComponent<Props, State> {
     markdown: string,
     animated: boolean = false,
     onError?: (error: any) => void,
-    cssStyle?: string
+    cssStyle?: string,
+    useCustomSortedList: boolean = false,
+    avoidTextSelection: boolean = false
   ) => {
-    InteractionManager.runAfterInteractions(() => {
+    void InteractionManager.runAfterInteractions(() => {
       if (animated) {
         // Animate the layout change
         // See https://facebook.github.io/react-native/docs/layoutanimation.html
@@ -314,12 +418,22 @@ class Markdown extends React.PureComponent<Props, State> {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       }
       remarkProcessor.process(
-        convertOldDemoMarkdownTag(markdown),
+        convertOldDemoMarkdownTag(
+          // sanitize html to prevent xss attacks
+          filterXSS(markdown, { stripIgnoreTagBody: ["script"] })
+        ),
         (error: any, file: any) => {
+          // for retro compatibility
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({
-                html: generateHtml(String(file), cssStyle)
+                html: generateHtml(
+                  String(file),
+                  cssStyle,
+                  useCustomSortedList,
+                  avoidTextSelection
+                )
               });
         }
       );

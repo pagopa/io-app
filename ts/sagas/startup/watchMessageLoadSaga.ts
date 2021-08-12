@@ -17,12 +17,12 @@ export function* watchMessageLoadSaga(
 ) {
   // Create the channel used for the communication with the handlers.
   // The channel has a buffer with initial size of 10 requests.
-  const requestsChannel: Channel<
-    ActionType<typeof loadMessageAction.request>
-  > = yield call(channel, buffers.expanding());
+  const requestsChannel: Channel<ActionType<
+    typeof loadMessageAction.request
+  >> = yield call(channel, buffers.expanding());
 
   // Start the handlers
-  // tslint:disable-next-line:no-let
+  // eslint-disable-next-line
   for (let i = 0; i < totMessageFetchWorkers; i++) {
     yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
   }
