@@ -23,7 +23,8 @@ export type InstallationState = Readonly<{
 export function getInitialState(): InstallationState {
   return {
     id: generateInstallationId(),
-    token: undefined
+    token: undefined,
+    registeredToken: undefined
   };
 }
 
