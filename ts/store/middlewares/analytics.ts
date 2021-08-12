@@ -57,6 +57,7 @@ import { createPinSuccess, updatePin } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
+  profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
   removeAccountMotivation
@@ -324,6 +325,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadRequest):
     case getType(profileLoadSuccess):
     // userMetadata
     case getType(userMetadataUpsert.request):
