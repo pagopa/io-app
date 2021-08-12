@@ -14,6 +14,8 @@ type Props = {
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
   dark?: boolean;
+  // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
+  // will be rendered in place of icon
   rightComponent?: React.ReactElement;
 };
 

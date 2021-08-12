@@ -22,6 +22,8 @@ type Props = Readonly<{
   subtitleLink?: JSX.Element;
   dark?: boolean;
   dynamicHeight?: Animated.AnimatedInterpolation;
+  // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
+  // will be rendered in place of icon
   rightComponent?: React.ReactElement;
 }>;
 
