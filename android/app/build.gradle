@@ -102,6 +102,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 def enableProguardInReleaseBuilds = false
 
 android {
+    ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -167,7 +168,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        defaultConfig.versionCode * 10 + versionCodes.get(abi)
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
         }
     }
