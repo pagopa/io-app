@@ -8,7 +8,10 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
 import { BackendClient } from "../api/backend";
-import { updateNotificationInstallationFailure } from "../store/actions/notifications";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationInstallationFailure
+} from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
 
@@ -39,6 +42,13 @@ export function* updateInstallationSaga(
   if (notificationsInstallation.token === undefined) {
     return undefined;
   }
+  // Check if the notification server token is changed from the registered one
+  if (
+    notificationsInstallation.token ===
+    notificationsInstallation.registeredToken
+  ) {
+    return undefined;
+  }
   try {
     // Send the request to the backend
     const response: SagaCallReturnType<typeof createOrUpdateInstallation> = yield call(
@@ -51,12 +61,18 @@ export function* updateInstallationSaga(
         }
       }
     );
-
     /**
      * If the response isLeft (got an error) dispatch a failure action
      */
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
+    }
+    if (response.value.status === 200) {
+      yield put(
+        notificationsInstallationTokenRegistered(
+          notificationsInstallation.token
+        )
+      );
     }
     return response.value.status;
   } catch (error) {
