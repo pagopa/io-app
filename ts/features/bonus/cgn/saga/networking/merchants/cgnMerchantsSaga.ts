@@ -7,7 +7,10 @@ import {
   cgnOnlineMerchants,
   cgnSelectedMerchant
 } from "../../../store/actions/merchants";
-import { getNetworkError } from "../../../../../../utils/errors";
+import {
+  getGenericError,
+  getNetworkError
+} from "../../../../../../utils/errors";
 
 export function* cgnOnlineMerchantsSaga(
   getOnlineMerchants: ReturnType<
@@ -25,10 +28,11 @@ export function* cgnOnlineMerchantsSaga(
 
     if (onlineMerchantsResult.isLeft()) {
       yield put(
-        cgnOnlineMerchants.failure({
-          kind: "generic",
-          value: new Error(readableReport(onlineMerchantsResult.value))
-        })
+        cgnOnlineMerchants.failure(
+          getGenericError(
+            new Error(readableReport(onlineMerchantsResult.value))
+          )
+        )
       );
       return;
     }
@@ -62,10 +66,11 @@ export function* cgnOfflineMerchantsSaga(
 
     if (offlineMerchantsResult.isLeft()) {
       yield put(
-        cgnOfflineMerchants.failure({
-          kind: "generic",
-          value: new Error(readableReport(offlineMerchantsResult.value))
-        })
+        cgnOfflineMerchants.failure(
+          getGenericError(
+            new Error(readableReport(offlineMerchantsResult.value))
+          )
+        )
       );
       return;
     }
@@ -96,10 +101,9 @@ export function* cgnMerchantDetail(
     );
     if (merchantDetailResult.isLeft()) {
       yield put(
-        cgnSelectedMerchant.failure({
-          kind: "generic",
-          value: new Error(readableReport(merchantDetailResult.value))
-        })
+        cgnSelectedMerchant.failure(
+          getGenericError(new Error(readableReport(merchantDetailResult.value)))
+        )
       );
       return;
     }

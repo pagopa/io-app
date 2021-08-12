@@ -7,7 +7,8 @@ import {
   Image,
   ListRenderItemInfo,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { fromNullable } from "fp-ts/lib/Option";
@@ -40,6 +41,15 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationParams>;
 
+const styles = StyleSheet.create({
+  merchantImage: {
+    width: "100%",
+    height: 230,
+    resizeMode: "cover",
+    borderRadius: 12
+  }
+});
+
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
@@ -66,12 +76,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
             <View style={{ paddingHorizontal: 16 }}>
               <Image
                 source={{ uri: merchantDetail.value.imageUrl }}
-                style={{
-                  width: "100%",
-                  height: 230,
-                  resizeMode: "cover",
-                  borderRadius: 12
-                }}
+                style={styles.merchantImage}
               />
             </View>
           )}
@@ -97,8 +102,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
             <View spacer large />
           </View>
         </ScrollView>
-        {fromNullable(merchantDetail.value.websiteUrl).fold(<></>, url => (
-          // eslint-disable-next-line react/jsx-key
+        {fromNullable(merchantDetail.value.websiteUrl).fold(undefined, url => (
           <FooterWithButtons
             type={"SingleButton"}
             leftButton={confirmButtonProps(
