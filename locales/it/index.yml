@@ -1101,8 +1101,8 @@ wallet:
     bPay:
       successful: BancomatPay rimosso correttamente
       failed: Impossibile rimuovere BancomatPay
-    successful: Carta rimossa correttamente
-    failed: Impossibile rimuovere la carta
+    successful: Metodo di pagamento rimosso correttamente
+    failed: Impossibile rimuovere il metodo di pagamento
     alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
@@ -2608,7 +2608,12 @@ bonus:
         buttons:
           requestBonus: "Richiedi un codice sconto"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Regione di residenza"
+        items:
+          inSicily: "Risiedo in Sicilia"
+          notInSicily: "Risiedo in un'altra regione"
+        info:
+          "Ricorda che gli sconti sono diponibili solo per i cittadini residenti in Sicilia."
       selectBeneficiaryCategory:
         title: "Dichiaro di essere"
         categories:

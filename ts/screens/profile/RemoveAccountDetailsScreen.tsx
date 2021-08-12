@@ -159,7 +159,6 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
               />
               {selectedMotivation === RemoveAccountMotivationEnum.OTHERS && (
                 <LabelledItem
-                  type="text"
                   label={I18n.t(
                     "profile.main.privacy.removeAccount.details.labelOpenAnswer"
                   )}
