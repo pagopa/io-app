@@ -17,7 +17,7 @@ import {
   confirmButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { SearchStartComponent } from "./SearchStartComponent";
 

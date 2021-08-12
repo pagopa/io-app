@@ -113,7 +113,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
           <View style={IOStyles.horizontalContentPadding}>
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H2>
             <LabelledItem
-              type="text"
               inputProps={{
                 value: searchValue,
                 onChangeText: setSearchValue,
@@ -128,7 +127,6 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
               <>
                 <H2>{I18n.t("bonus.cgn.merchantsList.filter.addressTitle")}</H2>
                 <LabelledItem
-                  type="text"
                   inputProps={{
                     value: address,
                     onChangeText: setAddress,

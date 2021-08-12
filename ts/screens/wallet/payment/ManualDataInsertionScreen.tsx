@@ -165,7 +165,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <View spacer />
             <Form>
               <LabelledItem
-                type="text"
                 isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
@@ -183,7 +182,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               />
               <View spacer />
               <LabelledItem
-                type="text"
                 isValid={unwrapOptionalEither(
                   this.state.organizationFiscalCode
                 )}

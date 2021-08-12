@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.3](https://github.com/pagopa/io-app/compare/1.33.0-rc.2...1.33.0-rc.3) (2021-08-11)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-34](https://pagopa.atlassian.net/browse/IASV-34)] Select region screen ([#3288](https://github.com/pagopa/io-app/issues/3288)) ([32c2157](https://github.com/pagopa/io-app/commit/32c21570054adb5c13be5b837089bdd000683fbc))
+
+
+### Bug Fixes
+
+* [[IA-53](https://pagopa.atlassian.net/browse/IA-53)] VO doesn't read correctly the banner trait ([#3208](https://github.com/pagopa/io-app/issues/3208)) ([8567d9e](https://github.com/pagopa/io-app/commit/8567d9e96ab22f94223549b3ccaf123e39e38a61))
+
+
+### Chores
+
+* [[#178393697](https://www.pivotaltracker.com/story/show/178393697)][[#178393686](https://www.pivotaltracker.com/story/show/178393686)] Chore added disabled state to LabelledItem and changed colours ([#3155](https://github.com/pagopa/io-app/issues/3155)) ([b2c3748](https://github.com/pagopa/io-app/commit/b2c3748fa75a9ac8e4b8d3a4a28ade5c12403c48)), closes [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13)
+* [[IA-183](https://pagopa.atlassian.net/browse/IA-183)] Code refactoring for all payment method detail screens ([#3286](https://github.com/pagopa/io-app/issues/3286)) ([79caf6a](https://github.com/pagopa/io-app/commit/79caf6a5bb3307cb002052ffaae241d79807e3ed))
+
+## [1.33.0-rc.2](https://github.com/pagopa/io-app/compare/1.33.0-rc.1...1.33.0-rc.2) (2021-08-11)
+
+## [1.33.0-rc.1](https://github.com/pagopa/io-app/compare/1.33.0-rc.0...1.33.0-rc.1) (2021-08-11)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-31](https://pagopa.atlassian.net/browse/IASV-31)] Select flights date screen ([#3284](https://github.com/pagopa/io-app/issues/3284)) ([7cdb2bc](https://github.com/pagopa/io-app/commit/7cdb2bc54002f1fa8593cab4f82e1b5ae0866d70))
+
+
+### Chores
+
+* **deps:** bump path-parse from 1.0.6 to 1.0.7 ([#3291](https://github.com/pagopa/io-app/issues/3291)) ([36d74ee](https://github.com/pagopa/io-app/commit/36d74ee82cb4cf2b13843a164c1398e1facb855c))
+
 ## [1.33.0-rc.0](https://github.com/pagopa/io-app/compare/1.32.0-rc.3...1.33.0-rc.0) (2021-08-10)
 
 
