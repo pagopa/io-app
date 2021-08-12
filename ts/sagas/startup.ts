@@ -175,6 +175,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     apiUrlPrefix,
     sessionToken
   );
+  // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> = yield call(
     checkSession,
     backendClient.getSession

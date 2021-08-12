@@ -12,7 +12,7 @@ export const updateNotificationsInstallationToken = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
 )<string>();
 
-// the notification token is save in IO backend
+// the notification token is registered in the backend
 export const notificationsInstallationTokenRegistered = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_TOKEN_REGISTERED"
 )<string>();

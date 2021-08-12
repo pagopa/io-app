@@ -37,7 +37,7 @@ export function* updateInstallationSaga(
   if (notificationsInstallation.token === undefined) {
     return undefined;
   }
-  // Check if the notification server token is changed from the registered one
+  // Check if the notification token is changed from the one registered in the backend
   if (
     notificationsInstallation.token ===
     notificationsInstallation.registeredToken

@@ -30,7 +30,6 @@ const NotificationPayload = t.partial({
 });
 
 function configurePushNotifications() {
-  store.dispatch(updateNotificationsInstallationToken("mynotificationToken"));
   // if isDevEnv, disable push notification to avoid crash for missing firebase settings
   if (isDevEnv) {
     return;

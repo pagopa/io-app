@@ -14,8 +14,9 @@ import { GlobalState } from "../types";
 
 export type InstallationState = Readonly<{
   id: string;
+  // the current push notification token release from push notification service (APNS, Firebase)
   token?: string;
-  // the token register in IO backend used within push notification
+  // the token registered in the backend
   registeredToken?: string;
 }>;
 
