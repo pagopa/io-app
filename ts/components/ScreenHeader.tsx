@@ -14,6 +14,9 @@ type Props = {
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
   dark?: boolean;
+  // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
+  // will be rendered in place of icon
+  rightComponent?: React.ReactElement;
 };
 
 const styles = StyleSheet.create({
@@ -69,7 +72,7 @@ class ScreenHeader extends React.Component<Props> {
   };
 
   public render() {
-    const { heading, dark } = this.props;
+    const { heading, dark, rightComponent } = this.props;
     return (
       <View
         accessible={true}
@@ -78,7 +81,7 @@ class ScreenHeader extends React.Component<Props> {
         <View accessible={true} style={styles.text}>
           {heading}
         </View>
-        {this.getIcon()}
+        {fromNullable(rightComponent).fold(this.getIcon(), c => c)}
       </View>
     );
   }
