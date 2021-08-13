@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.5](https://github.com/pagopa/io-app/compare/1.33.0-rc.4...1.33.0-rc.5) (2021-08-13)
+
+
+### Features
+
+* [[IA-1](https://pagopa.atlassian.net/browse/IA-1)] Update notification token when it changes ([#3295](https://github.com/pagopa/io-app/issues/3295)) ([679d6b7](https://github.com/pagopa/io-app/commit/679d6b75d6065e0458de7c7b0348cc984581acea))
+* **Carta Giovani Nazionale:** [[#178358407](https://www.pivotaltracker.com/story/show/178358407),[#178358013](https://www.pivotaltracker.com/story/show/178358013)] Integrates merchants search API for CGN ([#3123](https://github.com/pagopa/io-app/issues/3123)) ([8ad7f2b](https://github.com/pagopa/io-app/commit/8ad7f2ba164e0aa7a99bcea47457b1346df0c1d7))
+
+
+### Chores
+
+* [[IA-187](https://pagopa.atlassian.net/browse/IA-187)] Edit Service Preferences moved on Service Home header ([#3292](https://github.com/pagopa/io-app/issues/3292)) ([0088746](https://github.com/pagopa/io-app/commit/008874676e26655efbab4d7c8eae167008048df6))
+
 ## [1.33.0-rc.4](https://github.com/pagopa/io-app/compare/1.33.0-rc.3...1.33.0-rc.4) (2021-08-12)
 
 
