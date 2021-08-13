@@ -1,4 +1,5 @@
 import TouchID from "react-native-touch-id";
+import { IsSupportedConfig } from "react-native-touch-id";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
@@ -86,7 +87,7 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
   }
 }
 
-const isTouchIdSupportedConfig = {
+const isTouchIdSupportedConfig: IsSupportedConfig = {
   unifiedErrors: true
 };
 
