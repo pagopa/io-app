@@ -11,8 +11,7 @@ import deviceInfoModule from "react-native-device-info";
 import {
   NavigationRoute,
   NavigationScreenProp,
-  NavigationState,
-  StackActions
+  NavigationState
 } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import MessagesTabIcon from "../components/MessagesTabIcon";
@@ -176,19 +175,6 @@ const navigation = createBottomTabNavigator(
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
-        }
-      },
-      tabBarOnPress: options => {
-        if (options.navigation.state.index > 0) {
-          // Always show the first screen on tab press
-          options.navigation.dispatch(
-            StackActions.popToTop({
-              immediate: true,
-              key: options.navigation.state.key
-            })
-          );
-        } else {
-          options.defaultHandler();
         }
       }
     }),
