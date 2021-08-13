@@ -99,7 +99,10 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
-import { watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
+import {
+  checkSession,
+  watchCheckSessionSaga
+} from "./startup/watchCheckSessionSaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -172,20 +175,22 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     apiUrlPrefix,
     sessionToken
   );
-
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  const installationResponseStatus: SagaCallReturnType<typeof updateInstallationSaga> = yield call(
-    updateInstallationSaga,
-    backendClient.createOrUpdateInstallation
+  // check if the current session is still valid
+  const checkSessionResponse: SagaCallReturnType<typeof checkSession> = yield call(
+    checkSession,
+    backendClient.getSession
   );
-  if (installationResponseStatus === 401) {
+  if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
     yield put(sessionExpired());
     return;
   }
+
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;

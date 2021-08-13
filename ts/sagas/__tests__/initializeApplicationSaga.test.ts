@@ -60,7 +60,7 @@ const profile: InitializedProfile = {
 };
 
 describe("initializeApplicationSaga", () => {
-  it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
+  it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(previousInstallationDataDeleteSaga)
@@ -80,14 +80,15 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(200) // updateInstallationSaga
+      .next(200) // checkSession
+      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(none)
       .next(none) // loadSessionInformationSaga
       .put(startApplicationInitialization());
   });
 
-  it("should dispatch sessionExpired if installation id response is 401", () => {
+  it("should dispatch sessionExpired if check session response is 401", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(previousInstallationDataDeleteSaga)
@@ -107,7 +108,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(401) // updateInstallationSaga
+      .next(401) // checksession
       .put(sessionExpired());
   });
 
@@ -131,7 +132,8 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(200) // updateInstallationSaga
+      .next(200) // check session
+      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(
         some({
