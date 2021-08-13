@@ -32,12 +32,13 @@ import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { isDevEnv } from "../utils/environment";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { NotificationsState } from "../store/reducers/notifications";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 16;
+const CURRENT_REDUX_STORE_VERSION = 17;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -241,6 +242,22 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       content: { ...content, idps: remoteUndefined }
+    };
+  },
+  // Version 17
+  // default value for new field 'registeredToken' in notifications.installation
+  "17": (state: PersistedState) => {
+    const notifications: NotificationsState = (state as PersistedGlobalState)
+      .notifications;
+    return {
+      ...state,
+      notifications: {
+        ...notifications,
+        installation: {
+          ...notifications.installation,
+          registeredToken: undefined
+        }
+      }
     };
   }
 };
