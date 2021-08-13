@@ -13,6 +13,7 @@ import {
 } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
+import { mixpanelTrack } from "../mixpanel";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
@@ -41,6 +42,7 @@ export function* updateInstallationSaga(
     notificationsInstallation.token ===
     notificationsInstallation.registeredToken
   ) {
+    void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
     return undefined;
   }
   try {
@@ -65,6 +67,12 @@ export function* updateInstallationSaga(
       yield put(
         notificationsInstallationTokenRegistered(
           notificationsInstallation.token
+        )
+      );
+    } else {
+      yield put(
+        updateNotificationInstallationFailure(
+          new Error(`response status code ${response.value.status}`)
         )
       );
     }
