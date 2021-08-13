@@ -343,24 +343,7 @@ jobs:
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            gem install bundler
-
-      # TODO: possibly remove this after the following issue has been fixed:
-      # https://github.com/GeekyAnts/NativeBase/issues/1957
-      - run: "[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils"
-      - run: "[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils"
-
-      # Remove watchman from node global packages
-      - run:
-          name: Remove watchman from node global packages
-          command: npm r -g watchman
-
-      # Install watchman with brew
-      - run:
-          name: Install watchman
-          command: |
-            brew update
-            brew install watchman || exit 0
+            gem install bundler:$BUNDLER_VERSION
 
       # Install bundle dependencies
       - run:
@@ -373,23 +356,19 @@ jobs:
           paths:
             - vendor/bundle
 
-      # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-
-      # Re-run postinstall scripts (setup of react-native libs)
-      - run: npm run postinstall
-
-      # Install pods
-      - run: cd ios && bundle exec pod install --verbose
+      - run:
+          name: Prepare build
+          command: |
+            cp .env.local .env
+            npm run postinstall
+            yarn cie-ios:ci
+            rm -rf /tmp/metro-bundler-cache-*
+            rm -rf /tmp/haste-map-react-native-packager-*
 
       # Install Detox and ios-sim utils
       # see: https://github.com/wix/detox/
       - run: npm install -g detox
-
-      # cleanup metro and haste cache
-      - run: rm -rf /tmp/metro-bundler-cache-*
-      - run: rm -rf /tmp/haste-map-react-native-packager-*
-
+      
       # Run detox e2e tests
       - run: detox build -c ios.sim.release
 
@@ -436,9 +415,6 @@ jobs:
             - vendor/bundle
 
       - run: ./scripts/ios-release-build.sh
-
-      # Fetch CocoaPods specs
-#      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
 
       - add_ssh_keys:
           fingerprints:
