@@ -232,7 +232,7 @@ dependencies {
         implementation jscFlavor
     }
     implementation project(':@react-native-community_datetimepicker')
-
+    implementation project(':@react-native-clipboard_clipboard')
 }
 
 // Run this once to be able to run the application with BUCK
