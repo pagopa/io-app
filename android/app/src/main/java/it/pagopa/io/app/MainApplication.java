@@ -40,6 +40,7 @@ import com.reactnativecommunity.webview.RNCWebViewPackage;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+import com.reactnativecommunity.art.ARTPackage;
 
 import com.facebook.react.PackageList;
 
@@ -71,6 +72,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
             new ReanimatedPackage(),
+            new ARTPackage(),
             new CookieManagerPackage(),
             new ClipboardPackage(),
             new CameraRollPackage(),
