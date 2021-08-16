@@ -220,7 +220,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     }
   }
 
-  private handleDidFocus = () => this.setState({ isFocused: true });
+  private handleWillFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
@@ -244,7 +244,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     return (
       <Container style={styles.white}>
         <NavigationEvents
-          onDidFocus={this.handleDidFocus}
+          onWillFocus={this.handleWillFocus}
           onWillBlur={this.handleWillBlur}
         />
         <BaseScreenComponent
