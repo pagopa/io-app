@@ -1,7 +1,5 @@
 package it.pagopa.io.app;
 
-import androidx.multidex.MultiDexApplication;
-
 import com.robinpowered.react.ScreenBrightness.ScreenBrightnessPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
@@ -10,7 +8,6 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
 import com.swmansion.reanimated.ReanimatedPackage;
-import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactnativecommunity.cookies.CookieManagerPackage;
 import com.reactnativecommunity.cameraroll.CameraRollPackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -24,7 +21,7 @@ import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.calendarevents.CalendarEventsPackage;
+import com.calendarevents.RNCalendarEventsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
@@ -44,6 +41,8 @@ import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 import com.facebook.react.PackageList;
+
+import android.app.Application;
 import android.content.Context;
 import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
@@ -52,7 +51,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends MultiDexApplication implements ReactApplication {
+public class MainApplication extends Application implements ReactApplication {
 
 
   private final ReactNativeHost mReactNativeHost =
@@ -70,7 +69,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new ClipboardPackage(),
             new ReanimatedPackage(),
             new CookieManagerPackage(),
             new CameraRollPackage(),
@@ -79,7 +77,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
             new LinearGradientPackage(),
             new RNSharePackage(), new ScreenBrightnessPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
-          new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
+          new RNGestureHandlerPackage(), new RNCalendarEventsPackage(), new RNCWebViewPackage(),
           new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
