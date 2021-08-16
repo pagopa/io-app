@@ -233,6 +233,7 @@ dependencies {
     }
     implementation project(':@react-native-community_datetimepicker')
     implementation project(':@react-native-clipboard_clipboard')
+    implementation project(':react-native-art')
 }
 
 // Run this once to be able to run the application with BUCK
