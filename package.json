@@ -25,7 +25,7 @@
     "run-android": "react-native run-android",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
     "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc",
-    "start-fix-cycle": "yarn pre-remarkcycle && standard-version -t \"\" --prerelease rc --release-as patch",
+    "start-fix-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as patch",
     "start-release-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as minor",
     "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major",
     "attach": "react-native attach",
