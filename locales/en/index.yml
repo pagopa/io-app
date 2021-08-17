@@ -1274,7 +1274,7 @@ wallet:
         arriving: Arriving
         incompatible: Incompatible
         bottomSheetTitle: Why can’t I make in-app payments?
-        bottomSheetBody: This method doesn’t support online payments. 
+        bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
@@ -1640,6 +1640,8 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  accessibility:
+    edit: Edit services setup
   optIn:
     preferences:
       completed:

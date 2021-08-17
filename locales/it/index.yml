@@ -1668,6 +1668,8 @@ send_email_messages:
       label: Scegli servizio per servizio
       info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
+  accessibility:
+    edit: Modifica l'impostazione dei servizi
   optIn:
     preferences:
       completed:
