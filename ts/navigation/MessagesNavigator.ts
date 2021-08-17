@@ -1,7 +1,9 @@
+import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import {
-  createStackNavigator,
-  NavigationRouteConfigMap
-} from "react-navigation";
+  NavigationStackOptions,
+  NavigationStackProp
+} from "react-navigation-stack/src/types";
 import { euCovidCertificateEnabled } from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
@@ -10,7 +12,10 @@ import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ROUTES from "./routes";
 
-const baseMessageRouteConfig: NavigationRouteConfigMap = {
+const baseMessageRouteConfig: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   [ROUTES.MESSAGES_HOME]: {
     screen: MessagesHomeScreen
   },
@@ -22,7 +27,10 @@ const baseMessageRouteConfig: NavigationRouteConfigMap = {
   }
 };
 
-const euCovidCertificateRouteConfig: NavigationRouteConfigMap = euCovidCertificateEnabled
+const euCovidCertificateRouteConfig: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = euCovidCertificateEnabled
   ? {
       [EUCOVIDCERT_ROUTES.MAIN]: {
         screen: EuCovidCertNavigator
@@ -30,7 +38,10 @@ const euCovidCertificateRouteConfig: NavigationRouteConfigMap = euCovidCertifica
     }
   : {};
 
-const messageRouteConfig: NavigationRouteConfigMap = {
+const messageRouteConfig: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   ...baseMessageRouteConfig,
   ...euCovidCertificateRouteConfig
 };

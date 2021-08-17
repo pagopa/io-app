@@ -6,11 +6,8 @@ import * as React from "react";
 import { Alert, BackHandler } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
-import {
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
@@ -41,7 +38,7 @@ type State = {
 
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
-  NavigationScreenProps<NavigationParams> &
+  NavigationStackScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (

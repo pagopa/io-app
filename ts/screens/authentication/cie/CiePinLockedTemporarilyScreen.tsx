@@ -4,7 +4,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { Linking, Platform } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -16,7 +16,7 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
-type Props = NavigationScreenProps & ReduxProps;
+type Props = NavigationStackScreenProps & ReduxProps;
 
 type State = Readonly<{
   isLoadingCompleted: boolean;

@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { myPortalEnabled, svEnabled } from "../config";
 
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";

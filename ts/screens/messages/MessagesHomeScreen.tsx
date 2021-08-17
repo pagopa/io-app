@@ -5,10 +5,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
-import {
-  NavigationEventSubscription,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationEventSubscription } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -48,7 +46,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
