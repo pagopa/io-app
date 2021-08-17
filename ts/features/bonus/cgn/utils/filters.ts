@@ -12,33 +12,33 @@ export type Category = {
 };
 
 export const categories: Record<ProductCategory, Category> = {
-  [ProductCategoryEnum.arts]: {
-    type: ProductCategoryEnum.arts,
+  [ProductCategoryEnum.foodDrink]: {
+    type: ProductCategoryEnum.foodDrink,
     icon: "io-theater",
     nameKey: "bonus.cgn.merchantDetail.categories.theater"
   },
-  [ProductCategoryEnum.travels]: {
-    type: ProductCategoryEnum.travels,
+  [ProductCategoryEnum.travelling]: {
+    type: ProductCategoryEnum.travelling,
     icon: "io-travel",
     nameKey: "bonus.cgn.merchantDetail.categories.travel"
   },
-  [ProductCategoryEnum.transportation]: {
-    type: ProductCategoryEnum.transportation,
+  [ProductCategoryEnum.shopping]: {
+    type: ProductCategoryEnum.shopping,
     icon: "io-car",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility"
   },
-  [ProductCategoryEnum.connectivity]: {
-    type: ProductCategoryEnum.connectivity,
+  [ProductCategoryEnum.services]: {
+    type: ProductCategoryEnum.services,
     icon: "io-phone-vibration",
     nameKey: "bonus.cgn.merchantDetail.categories.telco"
   },
-  [ProductCategoryEnum.books]: {
-    type: ProductCategoryEnum.books,
+  [ProductCategoryEnum.learning]: {
+    type: ProductCategoryEnum.learning,
     icon: "io-books",
     nameKey: "bonus.cgn.merchantDetail.categories.book"
   },
-  [ProductCategoryEnum.entertainments]: {
-    type: ProductCategoryEnum.entertainments,
+  [ProductCategoryEnum.entertainment]: {
+    type: ProductCategoryEnum.entertainment,
     icon: "io-museums",
     nameKey: "bonus.cgn.merchantDetail.categories.museum"
   },
@@ -49,6 +49,11 @@ export const categories: Record<ProductCategory, Category> = {
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
+    icon: "io-wellness",
+    nameKey: "bonus.cgn.merchantDetail.categories.health"
+  },
+  [ProductCategoryEnum.hotels]: {
+    type: ProductCategoryEnum.hotels,
     icon: "io-wellness",
     nameKey: "bonus.cgn.merchantDetail.categories.health"
   }
