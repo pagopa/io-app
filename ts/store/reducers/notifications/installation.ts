@@ -5,19 +5,26 @@
 import { getType } from "typesafe-actions";
 
 import { generateInstallationId } from "../../../utils/installation";
-import { updateNotificationsInstallationToken } from "../../actions/notifications";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationsInstallationToken
+} from "../../actions/notifications";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 
 export type InstallationState = Readonly<{
   id: string;
+  // the current push notification token release from push notification service (APNS, Firebase)
   token?: string;
+  // the token registered in the backend
+  registeredToken?: string;
 }>;
 
 export function getInitialState(): InstallationState {
   return {
     id: generateInstallationId(),
-    token: undefined
+    token: undefined,
+    registeredToken: undefined
   };
 }
 
@@ -28,7 +35,8 @@ const reducer = (
   switch (action.type) {
     case getType(updateNotificationsInstallationToken):
       return { ...state, token: action.payload };
-
+    case getType(notificationsInstallationTokenRegistered):
+      return { ...state, registeredToken: action.payload };
     default:
       return state;
   }
