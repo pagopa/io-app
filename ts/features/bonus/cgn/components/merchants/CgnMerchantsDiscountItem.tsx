@@ -12,6 +12,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
@@ -42,19 +43,22 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
             {index(0, [...discount.productCategories]).fold(
               undefined,
               categoryKey =>
-                getCategorySpecs(categoryKey).fold(undefined, c => (
-                  <View style={styles.row}>
-                    <IconFont
-                      name={c.icon}
-                      size={22}
-                      color={IOColors.bluegrey}
-                    />
-                    <View hspacer small />
-                    <H5 weight={"SemiBold"} color={"bluegrey"}>
-                      {I18n.t(c.nameKey).toLocaleUpperCase()}
-                    </H5>
-                  </View>
-                ))
+                getCategorySpecs(categoryKey as ProductCategoryEnum).fold(
+                  undefined,
+                  c => (
+                    <View style={styles.row}>
+                      <IconFont
+                        name={c.icon}
+                        size={22}
+                        color={IOColors.bluegrey}
+                      />
+                      <View hspacer small />
+                      <H5 weight={"SemiBold"} color={"bluegrey"}>
+                        {I18n.t(c.nameKey).toLocaleUpperCase()}
+                      </H5>
+                    </View>
+                  )
+                )
             )}
             <View spacer xsmall />
             <View style={IOStyles.flex}>
@@ -63,7 +67,9 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
           </View>
-          <CgnDiscountValueBox value={discount.discount} small={true} />
+          {discount.discount && (
+            <CgnDiscountValueBox value={discount.discount} small={true} />
+          )}
         </View>
       </ShadowBox>
     </TouchableDefaultOpacity>
