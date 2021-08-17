@@ -413,6 +413,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderHeaderLink = () => (
     <TouchableDefaultOpacity
       style={styles.headerLinkContainer}
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityLabel={I18n.t("services.accessibility.edit")}
       onPress={this.props.navigateToServicePreference}
     >
       <IconFont name={"io-coggle"} size={16} color={IOColors.blue} />
