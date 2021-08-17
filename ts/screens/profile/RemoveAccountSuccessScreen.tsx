@@ -2,7 +2,7 @@ import { Content, View } from "native-base";
 import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -14,7 +14,7 @@ import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 
-type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationStackScreenProps & ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
   content: {
     flex: 1,

@@ -9,7 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
@@ -32,7 +32,7 @@ import { userDataProcessingSelector } from "../../store/reducers/userDataProcess
 import { showToast } from "../../utils/showToast";
 import ScreenContent from "../../components/screens/ScreenContent";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 

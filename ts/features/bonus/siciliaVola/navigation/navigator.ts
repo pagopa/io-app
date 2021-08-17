@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import CheckStatusRouterScreen from "../screens/voucherGeneration/CheckStatusRouterScreen";
 import SelectBeneficiaryCategoryScreen from "../screens/voucherGeneration/SelectBeneficiaryCategoryScreen";
 import StudentSelectDestinationScreen from "../screens/voucherGeneration/StudentSelectDestinationScreen";

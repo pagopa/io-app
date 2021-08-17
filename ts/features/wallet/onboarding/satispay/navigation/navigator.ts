@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
 import ActivateBpdOnNewSatispayScreen from "../screens/ActivateBpdOnNewSatispayScreen";
 import SearchSatispayManagerScreen from "../screens/search/SearchSatispayManagerScreen";
