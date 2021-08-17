@@ -148,8 +148,12 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
 
 const CgnDiscountDetailHeader = ({ discount }: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
-    <CgnDiscountValueBox value={discount.discount} small />
-    <View hspacer />
+    {discount.discount && (
+      <>
+        <CgnDiscountValueBox value={discount.discount} small />
+        <View hspacer />
+      </>
+    )}
     <H3 style={IOStyles.flex}>{discount.name}</H3>
   </View>
 );
