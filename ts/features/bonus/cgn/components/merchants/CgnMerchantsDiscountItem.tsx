@@ -63,7 +63,9 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               </H4>
             </View>
           </View>
-          <CgnDiscountValueBox value={discount.discount} small={true} />
+          {discount.discount && (
+            <CgnDiscountValueBox value={discount.discount} small={true} />
+          )}
         </View>
       </ShadowBox>
     </TouchableDefaultOpacity>
