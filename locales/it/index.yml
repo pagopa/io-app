@@ -1663,7 +1663,7 @@ send_email_messages:
       info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
   accessibility:
-    edit: Modifica l'impostazinoe dei servizi
+    edit: Modifica l'impostazione dei servizi
   optIn:
     preferences:
       completed:
