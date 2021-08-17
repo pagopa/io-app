@@ -26,12 +26,12 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { H2 } from "../../../../../components/core/typography/H2";
 import I18n from "../../../../../i18n";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
