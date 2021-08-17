@@ -17,7 +17,6 @@ import { BaseTypography } from "../../../../../components/core/typography/BaseTy
 import { addEvery } from "../../../../../utils/strings";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
@@ -79,22 +78,19 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   return (
     <View style={styles.container}>
       {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
-        getCategorySpecs(categoryKey as ProductCategoryEnum).fold(
-          undefined,
-          c => (
-            <View style={styles.row}>
-              <IconFont
-                name={c.icon}
-                size={CATEGORY_ICON_SIZE}
-                color={IOColors.bluegrey}
-              />
-              <View hspacer small />
-              <H5 weight={"SemiBold"} color={"bluegrey"}>
-                {I18n.t(c.nameKey).toLocaleUpperCase()}
-              </H5>
-            </View>
-          )
-        )
+        getCategorySpecs(categoryKey).fold(undefined, c => (
+          <View style={styles.row}>
+            <IconFont
+              name={c.icon}
+              size={CATEGORY_ICON_SIZE}
+              color={IOColors.bluegrey}
+            />
+            <View hspacer small />
+            <H5 weight={"SemiBold"} color={"bluegrey"}>
+              {I18n.t(c.nameKey).toLocaleUpperCase()}
+            </H5>
+          </View>
+        ))
       )}
       <View spacer />
       <H3 accessible={true} accessibilityRole={"header"}>
