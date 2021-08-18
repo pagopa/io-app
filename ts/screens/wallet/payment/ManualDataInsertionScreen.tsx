@@ -37,15 +37,22 @@ import I18n from "../../../i18n";
 import {
   navigateBack,
   navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletAddPaymentMethod
+  navigateToWalletAddPaymentMethod,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { Link } from "../../../components/core/typography/Link";
 import { GlobalState } from "../../../store/reducers/types";
-import { getPayablePaymentMethodsSelector } from "../../../store/reducers/wallet/wallets";
-import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import {
+  getPagoPAMethodsSelector,
+  getPayablePaymentMethodsSelector
+} from "../../../store/reducers/wallet/wallets";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -95,6 +102,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     if (!this.props.hasPayableMethods) {
+      if (this.props.hasPagoPaMethods) {
+        alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
+        return;
+      }
       alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
     }
   }
@@ -222,6 +233,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => {
     dispatch(navigateBack());
   },
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToWalletAddPaymentMethod: () =>
     dispatch(
       navigateToWalletAddPaymentMethod({
@@ -246,7 +258,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0
+  hasPayableMethods: getPayablePaymentMethodsSelector(state).length > 0,
+  hasPagoPaMethods: getPagoPAMethodsSelector(state).length > 0
 });
 
 export default connect(

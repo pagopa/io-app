@@ -276,3 +276,25 @@ export const alertNoPayablePaymentMethods = (
     ]
   );
 };
+
+// inform the user he/she has some payable payment methods but not one of them is active
+export const alertNoActivePayablePaymentMethods = (
+  onContinue: () => void,
+  onCancel?: () => void
+) => {
+  void mixpanelTrack("NO_ACTIVE_PAYABLE_METHODS");
+  Alert.alert(
+    I18n.t("payment.alertNoActivePaymentMethods.title"),
+    I18n.t("payment.alertNoActivePaymentMethods.message"),
+    [
+      {
+        text: I18n.t("payment.alertNoActivePaymentMethods.buttons.ko"),
+        onPress: onCancel
+      },
+      {
+        text: I18n.t("payment.alertNoActivePaymentMethods.buttons.ok"),
+        onPress: onContinue
+      }
+    ]
+  );
+};
