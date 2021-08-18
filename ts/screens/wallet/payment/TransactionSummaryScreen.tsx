@@ -23,7 +23,8 @@ import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen,
-  navigateToWalletAddPaymentMethod
+  navigateToWalletAddPaymentMethod,
+  navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -40,6 +41,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import {
   getFavoriteWallet,
+  getPagoPAMethodsSelector,
   getPayablePaymentMethodsSelector
 } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
@@ -51,7 +53,10 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -178,8 +183,21 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
+  private handleContinueOnPress = (verifica: PaymentRequestsGetResponse) => {
+    const { maybeFavoriteWallet, hasPayableMethods } = this.props;
+    if (hasPayableMethods) {
+      this.props.startOrResumePayment(verifica, maybeFavoriteWallet, false);
+      return;
+    }
+    if (this.props.hasPagoPaMethods) {
+      alertNoActivePayablePaymentMethods(this.props.navigateToWalletHome);
+      return;
+    }
+    alertNoPayablePaymentMethods(this.props.navigateToWalletAddPaymentMethod);
+  };
+
   private renderFooterButtons() {
-    const { potVerifica, maybeFavoriteWallet, hasPayableMethods } = this.props;
+    const { potVerifica } = this.props;
     const basePrimaryButtonProps = {
       primary: true,
       title: I18n.t("wallet.continue")
@@ -191,16 +209,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         ? {
             ...basePrimaryButtonProps,
             disabled: false,
-            onPress: () =>
-              hasPayableMethods
-                ? this.props.startOrResumePayment(
-                    potVerifica.value,
-                    maybeFavoriteWallet,
-                    false
-                  )
-                : alertNoPayablePaymentMethods(
-                    this.props.navigateToWalletAddPaymentMethod
-                  )
+            onPress: () => this.handleContinueOnPress(potVerifica.value)
           }
         : {
             ...basePrimaryButtonProps,
@@ -380,6 +389,7 @@ const mapStateToProps = (state: GlobalState) => {
     : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
   const hasPayableMethods = getPayablePaymentMethodsSelector(state).length > 0;
+  const hasPagoPaMethods = getPagoPAMethodsSelector(state).length > 0;
 
   return {
     error,
@@ -389,7 +399,8 @@ const mapStateToProps = (state: GlobalState) => {
     potVerifica: verifica,
     paymentId,
     maybeFavoriteWallet,
-    hasPayableMethods
+    hasPayableMethods,
+    hasPagoPaMethods
   };
 };
 
@@ -478,6 +489,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
 
   return {
+    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
       dispatch(

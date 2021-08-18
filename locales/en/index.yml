@@ -798,6 +798,12 @@ payment:
     buttons:
       ok: Continue
       ko: Cancel
+  alertNoActivePaymentMethods:
+    title: To use this feature, turn on in-app payments
+    message: Please enable at least one method in your Wallet, or you can add a new one.
+    buttons:
+      ok: Open Wallet
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment
