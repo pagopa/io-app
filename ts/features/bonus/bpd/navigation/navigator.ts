@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";

@@ -32,10 +32,8 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import {
-  NavigationEventSubscription,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationEventSubscription } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -105,7 +103,7 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { Label } from "../../components/core/typography/Label";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
-type OwnProps = NavigationScreenProps;
+type OwnProps = NavigationStackScreenProps;
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (

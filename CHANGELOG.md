@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.7](https://github.com/pagopa/io-app/compare/1.33.0-rc.6...1.33.0-rc.7) (2021-08-18)
+
+
+### Chores
+
+* [[IAI-16](https://pagopa.atlassian.net/browse/IAI-16)] Upgrade react-native to 0.64.2 ([#3301](https://github.com/pagopa/io-app/issues/3301)) ([b0c1eaa](https://github.com/pagopa/io-app/commit/b0c1eaa99357c39d3dc9140a69f0175612bf3282))
+
+## [1.33.0-rc.6](https://github.com/pagopa/io-app/compare/1.33.0-rc.5...1.33.0-rc.6) (2021-08-17)
+
+
+### Bug Fixes
+
+* [[IABT-1233](https://pagopa.atlassian.net/browse/IABT-1233)] Wrong accessibility on services home screen ([#3303](https://github.com/pagopa/io-app/issues/3303)) ([172f599](https://github.com/pagopa/io-app/commit/172f59903c096f3b637a6b36076d81794ca0de1e))
+
+
+### Chores
+
+* [[IAI-32](https://pagopa.atlassian.net/browse/IAI-32)] Upgrade react-navigation to 4.4 ([#3300](https://github.com/pagopa/io-app/issues/3300)) ([d4ed5e1](https://github.com/pagopa/io-app/commit/d4ed5e1833bbdbc7cb6be12761af3ee178f4a9bd))
+* **Carta Giovani Nazionale:** [[#179247891](https://www.pivotaltracker.com/story/show/179247891)] Sync cgn updated specs ([#3305](https://github.com/pagopa/io-app/issues/3305)) ([4b2b9b8](https://github.com/pagopa/io-app/commit/4b2b9b80be1237990aa4a5e93b1fa7a7f8029c80))
+
 ## [1.33.0-rc.5](https://github.com/pagopa/io-app/compare/1.33.0-rc.4...1.33.0-rc.5) (2021-08-13)
 
 

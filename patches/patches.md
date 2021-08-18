@@ -15,12 +15,6 @@ Created on **29/07/2020**
 - **04/03/2021** Improve track function type definition.
 
 
-### react-native-safe-area-view+0.12.0
-Created on **27/07/2020**
-
-#### Reason:
-- Temporary fix, in order to execute the application after the porting to 0.63.x, waiting to replace react-navigation and remove this patch.
-
 
 ### react-native-touch-id+4.4.1
 Created on **09/05/2019** and **20/12/2019**
@@ -68,3 +62,9 @@ Created on **10/05/2021**
 
 #### Reason:
 - Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
+
+### react-native-screen-brightness+2.0.0-alpha
+Created on **16/08/2021**
+
+#### Reason:
+- implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2

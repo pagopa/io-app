@@ -43,6 +43,7 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 describe("Bpd Summary Component graphical test for different states", () => {
   const mockStore = configureMockStore();
   MockDate.set("2020-11-04");
+  jest.useFakeTimers();
 
   it("Render Inactive period", () => {
     const store = mockStore(

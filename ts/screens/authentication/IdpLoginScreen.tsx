@@ -9,7 +9,7 @@ import {
   WebViewErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
@@ -45,7 +45,7 @@ import { getUrlBasepath } from "../../utils/url";
 import { mixpanelTrack } from "../../mixpanel";
 import { isDevEnv } from "../../utils/environment";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 

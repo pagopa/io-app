@@ -1,8 +1,6 @@
 import { Component, ComponentType, StatelessComponent } from "react";
-import {
-  NavigationInjectedProps,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 
 /**
  * Evaluates to the Props type of a React component
@@ -23,6 +21,6 @@ export type InferNavigationParams<
   P = ComponentProps<C>
 > = P extends NavigationInjectedProps<infer N>
   ? N
-  : P extends NavigationScreenProps<infer N1>
+  : P extends NavigationStackScreenProps<infer N1>
   ? N1
   : never;

@@ -5,7 +5,8 @@ import { BackHandler } from "react-native";
 import {
   NavigationActions,
   NavigationRoute,
-  StackActions
+  StackActions,
+  SwitchActions
 } from "react-navigation";
 import { Middleware } from "redux";
 import I18n from "../../i18n";
@@ -49,6 +50,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
       case NavigationActions.NAVIGATE:
       case NavigationActions.SET_PARAMS:
       case StackActions.REPLACE:
+      case SwitchActions.JUMP_TO:
       case StackActions.POP_TO_TOP: {
         // We don't need to store the history on first navigation
         if (firstRun) {
