@@ -102,6 +102,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 def enableProguardInReleaseBuilds = false
 
 android {
+    ndkVersion rootProject.ext.ndkVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -167,7 +168,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        defaultConfig.versionCode * 10 + versionCodes.get(abi)
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
         }
     }
@@ -218,10 +219,6 @@ dependencies {
     // compile "com.squareup.okhttp3:okhttp:4.2.1"
     // compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
     // compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
-    //OkHttp
-    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
-        force = true //API 19 support
-    }
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
@@ -231,7 +228,8 @@ dependencies {
         implementation jscFlavor
     }
     implementation project(':@react-native-community_datetimepicker')
-
+    implementation project(':@react-native-clipboard_clipboard')
+    implementation project(':react-native-art')
 }
 
 // Run this once to be able to run the application with BUCK
