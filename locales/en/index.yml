@@ -888,8 +888,8 @@ wallet:
     noName: Name unavailable
     loading: Loading bank list...
   accessibility:
-    sectionCardLabel: "Update payment methods"
-    sectionCardHint: "Update the list of payment methods"
+    sectionCardLabel: "Payment methods"
+    sectionCardHint: "double tap to update the list"
     folded:
       creditCard: "{{brand}} card, the number ends with {{blurredNumber}}"
       bancomat: "{{bankName}} BANCOMAT"
@@ -2055,6 +2055,8 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  accessibility:
+    sectionCardLabel: "Bonus and discounts"
   state:
     completed:
       caption: "concluded"
