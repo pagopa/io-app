@@ -126,7 +126,7 @@
     "react-native-reanimated": "^1.13.1",
     "react-native-responsive-screen": "^1.4.1",
     "react-native-screen-brightness": "^2.0.0-alpha",
-    "react-native-screens": "^2.10.1",
+    "react-native-screens": "^2.18.1",
     "react-native-sha256": "1.2.3",
     "react-native-share": "^3.3.2",
     "react-native-splash-screen": "^3.2.0",
