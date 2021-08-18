@@ -816,6 +816,12 @@ payment:
     buttons:
       ok: Continua
       ko: Annulla
+  alertNoActivePaymentMethods:
+    title: Per usare questa funzionalità, abilita i pagamenti in app
+    message: Abilita almeno un metodo presente nel tuo Portafoglio, o aggiungine uno nuovo.
+    buttons:
+      ok: Vai al Portafoglio
+      ko: Annulla
   abortWebView:
     title: Vuoi interrompere il pagamento in corso?
     confirm: Annulla il pagamento
