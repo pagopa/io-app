@@ -125,11 +125,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
 
   return (
     <TouchableDefaultOpacity
-      onPress={
-        paymentSupported === "available" && pmActivatePaymentEnabled
-          ? undefined
-          : present
-      }
+      onPress={paymentSupported === "available" ? undefined : present}
     >
       <BasePaymentFeatureListItem
         testID={"PagoPaPaymentCapability"}
