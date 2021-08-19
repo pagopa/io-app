@@ -82,6 +82,7 @@ export const useMaxBrightness = () => {
     // eslint-disable-next-line functional/immutable-data
     currentTransition.current = setNewBrightness(newBrightness);
 
+    // unmount
     return () => {
       AppState.removeEventListener("change", setAppState);
       if (startBrightness) {
