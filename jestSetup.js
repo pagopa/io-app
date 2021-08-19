@@ -4,6 +4,7 @@
 
 import { NativeModules } from "react-native";
 import mockAsyncStorage from "@react-native-community/async-storage/jest/async-storage-mock";
+import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 
 NativeModules.RNGestureHandlerModule = {
   attachGestureHandler: jest.fn(),
@@ -20,6 +21,7 @@ jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("react-native-permissions", jest.fn());
 jest.mock("@react-native-community/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
+jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
 /**
  * adds as for documentation suggestion
