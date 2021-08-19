@@ -1,6 +1,7 @@
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
+import { useRef, useState } from "react";
 import * as React from "react";
-import { Platform } from "react-native";
+import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
 const getBrightnessPlatform: () => Promise<number> = () =>
@@ -26,48 +27,66 @@ export const setBrightness = (brightness: number): TaskEither<Error, number> =>
     reason => new Error(String(reason))
   );
 
-const HIGH_BRIGHTNESS = 1.0; // Target screen brightness for a very bright screen
+const HIGH_BRIGHTNESS = 1.0; // Max brightness value
 
 /**
- * Hook that sets the brightness to maximum, until the screen is unmounted
+ * Set the device brightness to the max value and restore the original brightness when
+ * the component is unmount or the app changes state (!== active)
  */
 export const useMaxBrightness = () => {
-  // Brightness effect manager
+  // The initial device brightness
+  const [startBrightness, setStartBrightness] = useState<number | undefined>(
+    undefined
+  );
+  // The current app state
+  const [appState, setAppState] = useState<AppStateStatus | undefined>(
+    undefined
+  );
+  // Track the current async transition, in order to wait before execute the next async transition
+  const currentTransition = useRef<Promise<void>>(Promise.resolve());
+
+  AppState.addEventListener("change", setAppState);
+
+  // Change the device brightness
+  const setNewBrightness = async (brightness: number) => {
+    await currentTransition.current;
+    await setBrightness(brightness).run();
+  };
+
+  // First mount, read and save the current device brightness
   React.useEffect(() => {
-    // eslint-disable-next-line functional/no-let
-    let myBrightness: number | undefined;
-
-    const myBrightF = async () => {
-      myBrightness = await getBrightness()
-        .fold(
-          () => undefined,
-          _ => _
-        )
-        .run();
+    const getCurrentBrightness = async () => {
+      setStartBrightness(
+        await getBrightness()
+          .fold(
+            () => undefined,
+            _ => _
+          )
+          .run()
+      );
     };
+    // eslint-disable-next-line functional/immutable-data
+    currentTransition.current = getCurrentBrightness();
+  }, []);
 
-    const mySetBrightF = async () => {
-      await myBrightF();
-      if (myBrightness) {
-        await setBrightness(HIGH_BRIGHTNESS).run();
-      }
-    };
+  // If app state changes of currentBrightness changes, update the brightness
+  React.useEffect(() => {
+    if (startBrightness === undefined) {
+      return;
+    }
+    const newBrightness =
+      appState === "active" || appState === undefined
+        ? HIGH_BRIGHTNESS
+        : startBrightness;
 
-    const finishedSet = mySetBrightF();
+    // eslint-disable-next-line functional/immutable-data
+    currentTransition.current = setNewBrightness(newBrightness);
 
     return () => {
-      const restoreDeviceBrightnessF = async () => {
-        await finishedSet;
-        if (myBrightness) {
-          await setBrightness(myBrightness)
-            .fold(
-              () => undefined,
-              _ => _
-            )
-            .run();
-        }
-      };
-      void restoreDeviceBrightnessF();
+      AppState.removeEventListener("change", setAppState);
+      if (startBrightness) {
+        void setNewBrightness(startBrightness);
+      }
     };
-  }, []);
+  }, [startBrightness, appState]);
 };
