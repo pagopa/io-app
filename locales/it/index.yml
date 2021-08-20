@@ -913,7 +913,7 @@ wallet:
     loading: Carico la lista delle banche...
   accessibility:
     sectionCardLabel: "Aggiorna metodi di pagamento"
-    sectionCardHint: "tocca due volte per aggiornare la lista"
+    sectionCardHint: "Aggiorna la lista dei metodi di pagamento"
     folded:
       creditCard: "Carta {{brand}}, il numero della carta finisce con {{blurredNumber}}"
       bancomat: "BANCOMAT {{bankName}}"
@@ -2090,7 +2090,7 @@ faq:
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
   accessibility:
-    sectionCardLabel: "Bonus e sconti"
+    sectionCardLabel: "Aggiorna bonus e sconti"
   state:
     completed:
       caption: "concluso"
