@@ -1,0 +1,442 @@
+diff --git a/node_modules/react-native/scripts/generate-specs.sh b/node_modules/react-native/scripts/generate-specs.sh
+index aed955e..fca2822 100755
+--- a/node_modules/react-native/scripts/generate-specs.sh
++++ b/node_modules/react-native/scripts/generate-specs.sh
+@@ -10,14 +10,14 @@
+ #
+ # Optionally, set these envvars to override defaults:
+ # - SRCS_DIR: Path to JavaScript sources
+-# - CODEGEN_MODULES_LIBRARY_NAME: Defaults to FBReactNativeSpec
+-# - CODEGEN_MODULES_OUTPUT_DIR: Defaults to React/$CODEGEN_MODULES_LIBRARY_NAME/$CODEGEN_MODULES_LIBRARY_NAME
+-# - CODEGEN_COMPONENTS_LIBRARY_NAME: Defaults to rncore
+-# - CODEGEN_COMPONENTS_OUTPUT_DIR: Defaults to ReactCommon/react/renderer/components/$CODEGEN_COMPONENTS_LIBRARY_NAME
++# - MODULES_LIBRARY_NAME: Defaults to FBReactNativeSpec
++# - MODULES_OUTPUT_DIR: Defaults to React/$MODULES_LIBRARY_NAME/$MODULES_LIBRARY_NAME
++# - COMPONENTS_LIBRARY_NAME: Defaults to rncore
++# - COMPONENTS_OUTPUT_DIR: Defaults to ReactCommon/react/renderer/components/$COMPONENTS_LIBRARY_NAME
+ #
+ # Usage:
+ #   ./scripts/generate-specs.sh
+-#   SRCS_DIR=myapp/js CODEGEN_MODULES_LIBRARY_NAME=MySpecs CODEGEN_MODULES_OUTPUT_DIR=myapp/MySpecs ./scripts/generate-specs.sh
++#   SRCS_DIR=myapp/js MODULES_LIBRARY_NAME=MySpecs MODULES_OUTPUT_DIR=myapp/MySpecs ./scripts/generate-specs.sh
+ #
+ 
+ # shellcheck disable=SC2038
+@@ -27,13 +27,13 @@ set -e
+ THIS_DIR=$(cd -P "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo "${BASH_SOURCE[0]}")")" && pwd)
+ TEMP_DIR=$(mktemp -d /tmp/react-native-codegen-XXXXXXXX)
+ RN_DIR=$(cd "$THIS_DIR/.." && pwd)
+-
+-# find node path
+-source "$RN_DIR/scripts/find-node.sh"
+-
+ NODE_BINARY="${NODE_BINARY:-$(command -v node || true)}"
+ USE_FABRIC="${USE_FABRIC:-0}"
+ 
++# Find path to Node
++# shellcheck source=/dev/null
++source "$RN_DIR/scripts/find-node.sh"
++
+ cleanup () {
+   set +e
+   rm -rf "$TEMP_DIR"
+@@ -46,25 +46,34 @@ describe () {
+ 
+ main() {
+   SRCS_DIR=${SRCS_DIR:-$(cd "$RN_DIR/Libraries" && pwd)}
+-  CODEGEN_MODULES_LIBRARY_NAME=${CODEGEN_MODULES_LIBRARY_NAME:-FBReactNativeSpec}
++  MODULES_LIBRARY_NAME=${MODULES_LIBRARY_NAME:-FBReactNativeSpec}
+ 
+-  CODEGEN_COMPONENTS_LIBRARY_NAME=${CODEGEN_COMPONENTS_LIBRARY_NAME:-rncore}
+-  CODEGEN_MODULES_OUTPUT_DIR=${CODEGEN_MODULES_OUTPUT_DIR:-"$RN_DIR/React/$CODEGEN_MODULES_LIBRARY_NAME/$CODEGEN_MODULES_LIBRARY_NAME"}
+-  # TODO: $CODEGEN_COMPONENTS_PATH should be programmatically specified, and may change with use_frameworks! support.
+-  CODEGEN_COMPONENTS_PATH="ReactCommon/react/renderer/components"
+-  CODEGEN_COMPONENTS_OUTPUT_DIR=${CODEGEN_COMPONENTS_OUTPUT_DIR:-"$RN_DIR/$CODEGEN_COMPONENTS_PATH/$CODEGEN_COMPONENTS_LIBRARY_NAME"}
++  COMPONENTS_LIBRARY_NAME=${COMPONENTS_LIBRARY_NAME:-rncore}
++  MODULES_OUTPUT_DIR=${MODULES_OUTPUT_DIR:-"$RN_DIR/React/$MODULES_LIBRARY_NAME/$MODULES_LIBRARY_NAME"}
++  # TODO: $COMPONENTS_PATH should be programmatically specified, and may change with use_frameworks! support.
++  COMPONENTS_PATH="ReactCommon/react/renderer/components"
++  COMPONENTS_OUTPUT_DIR=${COMPONENTS_OUTPUT_DIR:-"$RN_DIR/$COMPONENTS_PATH/$COMPONENTS_LIBRARY_NAME"}
+ 
+   TEMP_OUTPUT_DIR="$TEMP_DIR/out"
+   SCHEMA_FILE="$TEMP_DIR/schema.json"
+ 
++  CODEGEN_REPO_PATH="$RN_DIR/packages/react-native-codegen"
++  CODEGEN_NPM_PATH="$RN_DIR/../react-native-codegen"
++
+   if [ -z "$NODE_BINARY" ]; then
+     echo "Error: Could not find node. Make sure it is in bash PATH or set the NODE_BINARY environment variable." 1>&2
+     exit 1
+   fi
+ 
+-  CODEGEN_PATH=$("$NODE_BINARY" -e "console.log(require('path').dirname(require.resolve('react-native-codegen/package.json')))")
++  if [ -d "$CODEGEN_REPO_PATH" ]; then
++    CODEGEN_PATH=$(cd "$CODEGEN_REPO_PATH" && pwd)
++  elif [ -d "$CODEGEN_NPM_PATH" ]; then
++    CODEGEN_PATH=$(cd "$CODEGEN_NPM_PATH" && pwd)
++  else
++    echo "Error: Could not determine react-native-codegen location. Try running 'yarn install' or 'npm install' in your project root." 1>&2
++    exit 1
++  fi
+ 
+-  # Special case for running CodeGen from source: build it
+   if [ ! -d "$CODEGEN_PATH/lib" ]; then
+     describe "Building react-native-codegen package"
+     bash "$CODEGEN_PATH/scripts/oss/build.sh"
+@@ -75,14 +84,14 @@ main() {
+ 
+   describe "Generating native code from schema (iOS)"
+   pushd "$RN_DIR" >/dev/null || exit 1
+-    "$NODE_BINARY" scripts/generate-specs-cli.js ios "$SCHEMA_FILE" "$TEMP_OUTPUT_DIR" "$CODEGEN_MODULES_LIBRARY_NAME"
++    "$NODE_BINARY" scripts/generate-specs-cli.js ios "$SCHEMA_FILE" "$TEMP_OUTPUT_DIR" "$MODULES_LIBRARY_NAME"
+   popd >/dev/null || exit 1
+ 
+   describe "Copying output to final directory"
+-  mkdir -p "$CODEGEN_COMPONENTS_OUTPUT_DIR" "$CODEGEN_MODULES_OUTPUT_DIR"
+-  cp -R "$TEMP_OUTPUT_DIR/$CODEGEN_MODULES_LIBRARY_NAME.h" "$TEMP_OUTPUT_DIR/$CODEGEN_MODULES_LIBRARY_NAME-generated.mm" "$CODEGEN_MODULES_OUTPUT_DIR" || exit 1
+-  find "$TEMP_OUTPUT_DIR" -type f | xargs sed -i.bak "s/$CODEGEN_MODULES_LIBRARY_NAME/$CODEGEN_COMPONENTS_LIBRARY_NAME/g" || exit 1
+-  find "$TEMP_OUTPUT_DIR" -type f -not -iname "$CODEGEN_MODULES_LIBRARY_NAME*" -exec cp '{}' "$CODEGEN_COMPONENTS_OUTPUT_DIR/" ';' || exit 1
++  mkdir -p "$COMPONENTS_OUTPUT_DIR" "$MODULES_OUTPUT_DIR"
++  cp -R "$TEMP_OUTPUT_DIR/$MODULES_LIBRARY_NAME.h" "$TEMP_OUTPUT_DIR/$MODULES_LIBRARY_NAME-generated.mm" "$MODULES_OUTPUT_DIR" || exit 1
++  find "$TEMP_OUTPUT_DIR" -type f | xargs sed -i.bak "s/$MODULES_LIBRARY_NAME/$COMPONENTS_LIBRARY_NAME/g" || exit 1
++  find "$TEMP_OUTPUT_DIR" -type f -not -iname "$MODULES_LIBRARY_NAME*" -exec cp '{}' "$COMPONENTS_OUTPUT_DIR/" ';' || exit 1
+ 
+   echo >&2 'Done.'
+ }
+diff --git a/node_modules/react-native/scripts/react-native-xcode.back.sh b/node_modules/react-native/scripts/react-native-xcode.back.sh
+new file mode 100755
+index 0000000..09b6c40
+--- /dev/null
++++ b/node_modules/react-native/scripts/react-native-xcode.back.sh
+@@ -0,0 +1,181 @@
++#!/bin/bash
++# Copyright (c) Facebook, Inc. and its affiliates.
++#
++# This source code is licensed under the MIT license found in the
++# LICENSE file in the root directory of this source tree.
++
++# Bundle React Native app's code and image assets.
++# This script is supposed to be invoked as part of Xcode build process
++# and relies on environment variables (including PWD) set by Xcode
++
++# Print commands before executing them (useful for troubleshooting)
++set -x
++DEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH
++
++# Enables iOS devices to get the IP address of the machine running Metro
++if [[ "$CONFIGURATION" = *Debug* && ! "$PLATFORM_NAME" == *simulator ]]; then
++  for num in 0 1 2 3 4 5 6 7 8; do
++    IP=$(ipconfig getifaddr en${num})
++    if [ ! -z "$IP" ]; then
++      break
++    fi
++  done
++  if [ -z "$IP" ]; then
++    IP=$(ifconfig | grep 'inet ' | grep -v ' 127.' | grep -v ' 169.254.' |cut -d\   -f2  | awk 'NR==1{print $1}')
++  fi
++
++  echo "$IP" > "$DEST/ip.txt"
++fi
++
++if [[ "$SKIP_BUNDLING" ]]; then
++  echo "SKIP_BUNDLING enabled; skipping."
++  exit 0;
++fi
++
++case "$CONFIGURATION" in
++  *Debug*)
++    if [[ "$PLATFORM_NAME" == *simulator ]]; then
++      if [[ "$FORCE_BUNDLING" ]]; then
++        echo "FORCE_BUNDLING enabled; continuing to bundle."
++      else
++        echo "Skipping bundling in Debug for the Simulator (since the packager bundles for you). Use the FORCE_BUNDLING flag to change this behavior."
++        exit 0;
++      fi
++    else
++      echo "Bundling for physical device. Use the SKIP_BUNDLING flag to change this behavior."
++    fi
++
++    DEV=true
++    ;;
++  "")
++    echo "$0 must be invoked by Xcode"
++    exit 1
++    ;;
++  *)
++    DEV=false
++    ;;
++esac
++
++# Path to react-native folder inside node_modules
++REACT_NATIVE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
++# The project should be located next to where react-native is installed
++# in node_modules.
++PROJECT_ROOT=${PROJECT_ROOT:-"$REACT_NATIVE_DIR/../.."}
++
++cd "$PROJECT_ROOT" || exit
++
++# Define entry file
++if [[ "$ENTRY_FILE" ]]; then
++  # Use ENTRY_FILE defined by user
++  :
++elif [[ -s "index.ios.js" ]]; then
++  ENTRY_FILE=${1:-index.ios.js}
++else
++  ENTRY_FILE=${1:-index.js}
++fi
++
++if [[ $DEV != true && ! -f "$ENTRY_FILE" ]]; then
++  echo "error: Entry file $ENTRY_FILE does not exist. If you use another file as your entry point, pass ENTRY_FILE=myindex.js" >&2
++  exit 2
++fi
++
++# find node path
++source "$REACT_NATIVE_DIR/scripts/find-node.sh"
++
++# check and assign NODE_BINARY env
++# shellcheck source=/dev/null
++source "$REACT_NATIVE_DIR/scripts/node-binary.sh"
++
++[ -z "$HERMES_CLI_PATH" ] && HERMES_CLI_PATH="$PODS_ROOT/hermes-engine/destroot/bin/hermesc"
++
++if [[ -z "$USE_HERMES" && -f "$HERMES_CLI_PATH" ]]; then
++  echo "Enabling Hermes byte-code compilation. Disable with USE_HERMES=false if needed."
++  USE_HERMES=true
++fi
++
++if [[ $USE_HERMES == true && ! -f "$HERMES_CLI_PATH" ]]; then
++  echo "error: USE_HERMES is set to true but the hermesc binary could not be " \
++       "found at ${HERMES_CLI_PATH}. Perhaps you need to run pod install or otherwise " \
++       "point the HERMES_CLI_PATH variable to your custom location." >&2
++  exit 2
++fi
++
++[ -z "$NODE_ARGS" ] && export NODE_ARGS=""
++
++[ -z "$CLI_PATH" ] && export CLI_PATH="$REACT_NATIVE_DIR/cli.js"
++
++[ -z "$BUNDLE_COMMAND" ] && BUNDLE_COMMAND="bundle"
++
++[ -z "$COMPOSE_SOURCEMAP_PATH" ] && COMPOSE_SOURCEMAP_PATH="$REACT_NATIVE_DIR/scripts/compose-source-maps.js"
++
++if [[ -z "$BUNDLE_CONFIG" ]]; then
++  CONFIG_ARG=""
++else
++  CONFIG_ARG="--config $BUNDLE_CONFIG"
++fi
++
++BUNDLE_FILE="$CONFIGURATION_BUILD_DIR/main.jsbundle"
++
++EXTRA_ARGS=
++
++case "$PLATFORM_NAME" in
++  "macosx")
++    BUNDLE_PLATFORM="macos"
++    ;;
++  *)
++    BUNDLE_PLATFORM="ios"
++    ;;
++esac
++
++EMIT_SOURCEMAP=
++if [[ ! -z "$SOURCEMAP_FILE" ]]; then
++  EMIT_SOURCEMAP=true
++fi
++
++PACKAGER_SOURCEMAP_FILE=
++if [[ $EMIT_SOURCEMAP == true ]]; then
++  if [[ $USE_HERMES == true ]]; then
++    PACKAGER_SOURCEMAP_FILE="$CONFIGURATION_BUILD_DIR/$(basename $SOURCEMAP_FILE)"
++  else
++    PACKAGER_SOURCEMAP_FILE="$SOURCEMAP_FILE"
++  fi
++  EXTRA_ARGS="$EXTRA_ARGS --sourcemap-output $PACKAGER_SOURCEMAP_FILE"
++fi
++
++"$NODE_BINARY" $NODE_ARGS "$CLI_PATH" $BUNDLE_COMMAND \
++  $CONFIG_ARG \
++  --entry-file "$ENTRY_FILE" \
++  --platform "$BUNDLE_PLATFORM" \
++  --dev $DEV \
++  --reset-cache \
++  --bundle-output "$BUNDLE_FILE" \
++  --assets-dest "$DEST" \
++  $EXTRA_ARGS \
++  $EXTRA_PACKAGER_ARGS
++
++if [[ $USE_HERMES != true ]]; then
++  cp "$BUNDLE_FILE" "$DEST/"
++  BUNDLE_FILE="$DEST/main.jsbundle"
++else
++  EXTRA_COMPILER_ARGS=
++  if [[ $DEV == true ]]; then
++    EXTRA_COMPILER_ARGS=-Og
++  else
++    EXTRA_COMPILER_ARGS=-O
++  fi
++  if [[ $EMIT_SOURCEMAP == true ]]; then
++    EXTRA_COMPILER_ARGS="$EXTRA_COMPILER_ARGS -output-source-map"
++  fi
++  "$HERMES_CLI_PATH" -emit-binary $EXTRA_COMPILER_ARGS -out "$DEST/main.jsbundle" "$BUNDLE_FILE" 
++  if [[ $EMIT_SOURCEMAP == true ]]; then
++    HBC_SOURCEMAP_FILE="$BUNDLE_FILE.map"
++    "$NODE_BINARY" "$COMPOSE_SOURCEMAP_PATH" "$PACKAGER_SOURCEMAP_FILE" "$HBC_SOURCEMAP_FILE" -o "$SOURCEMAP_FILE"
++  fi
++  BUNDLE_FILE="$DEST/main.jsbundle"
++fi
++
++if [[ $DEV != true && ! -f "$BUNDLE_FILE" ]]; then
++  echo "error: File $BUNDLE_FILE does not exist. This must be a bug with" >&2
++  echo "React Native, please report it here: https://github.com/facebook/react-native/issues"
++  exit 2
++fi
+diff --git a/node_modules/react-native/scripts/react-native-xcode.sh b/node_modules/react-native/scripts/react-native-xcode.sh
+index 09b6c40..bb68936 100755
+--- a/node_modules/react-native/scripts/react-native-xcode.sh
++++ b/node_modules/react-native/scripts/react-native-xcode.sh
+@@ -149,6 +149,7 @@ fi
+   --dev $DEV \
+   --reset-cache \
+   --bundle-output "$BUNDLE_FILE" \
++  --sourcemap-output "$BUNDLE_FILE.map" \
+   --assets-dest "$DEST" \
+   $EXTRA_ARGS \
+   $EXTRA_PACKAGER_ARGS
+diff --git a/node_modules/react-native/scripts/react_native_pods.rb b/node_modules/react-native/scripts/react_native_pods.rb
+index db9a34a..2e3535f 100644
+--- a/node_modules/react-native/scripts/react_native_pods.rb
++++ b/node_modules/react-native/scripts/react_native_pods.rb
+@@ -62,8 +62,8 @@ def use_react_native! (options={})
+   end
+ 
+   if hermes_enabled
+-    pod 'React-Core/Hermes', :path => "#{prefix}/"
+-    pod 'hermes-engine', '~> 0.7.2'
++    pod 'React-hermes', :path => "#{prefix}/ReactCommon/hermes"
++    pod 'hermes-engine'
+     pod 'libevent', '~> 2.1.12'
+   end
+ end
+@@ -71,7 +71,7 @@ end
+ def use_flipper!(versions = {}, configurations: ['Debug'])
+   versions['Flipper'] ||= '~> 0.75.1'
+   versions['Flipper-DoubleConversion'] ||= '1.1.7'
+-  versions['Flipper-Folly'] ||= '~> 2.5.3'
++  versions['Flipper-Folly'] ||= '~> 2.5'
+   versions['Flipper-Glog'] ||= '0.3.6'
+   versions['Flipper-PeerTalk'] ||= '~> 0.0.4'
+   versions['Flipper-RSocket'] ||= '~> 1.3'
+@@ -138,59 +138,41 @@ def exclude_architectures(installer)
+ end
+ 
+ def react_native_post_install(installer)
+-  pods_prefix = File.dirname(installer.pods_project.path)
+-
+   if has_pod(installer, 'Flipper')
+     flipper_post_install(installer)
+   end
+ 
+-  ## Fix for RTC-Folly on iOS 14.5 - makes Hermes work again
+-  find_and_replace(
+-    "#{pods_prefix}/RCT-Folly/folly/synchronization/DistributedMutex-inl.h",
+-    'atomic_notify_one(state)',
+-    'folly::atomic_notify_one(state)'
+-  )
+-
+-  find_and_replace(
+-    "#{pods_prefix}Pods/RCT-Folly/folly/synchronization/DistributedMutex-inl.h",
+-    'atomic_wait_until(&state, previous | data, deadline)',
+-    'folly::atomic_wait_until(&state, previous | data, deadline)'
+-  )
+-
+-  ## Exclude `i386` from valid architectures when building with Hermes on iOS
+   exclude_architectures(installer)
+ end
+ 
+ def use_react_native_codegen!(spec, options={})
+   return if ENV['DISABLE_CODEGEN'] == '1'
+ 
+-  # The path to react-native (e.g. react_native_path)
+-  prefix = options[:path] ||= File.join(__dir__, "..")
++  # The path to react-native
++  prefix = options[:path] ||= "${PODS_TARGET_SRCROOT}/../.."
+ 
+   # The path to JavaScript files
+-  srcs_dir = options[:srcs_dir] ||= File.join(prefix, "Libraries")
++  js_srcs = options[:js_srcs_dir] ||= "#{prefix}/Libraries"
+ 
+   # Library name (e.g. FBReactNativeSpec)
+-  codegen_modules_library_name = spec.name
+-  codegen_modules_output_dir = options[:codegen_modules_output_dir] ||= File.join(prefix, "React/#{codegen_modules_library_name}/#{codegen_modules_library_name}")
++  modules_library_name = spec.name
++  modules_output_dir = "React/#{modules_library_name}/#{modules_library_name}"
+ 
+   # Run the codegen as part of the Xcode build pipeline.
+-  env_vars = "SRCS_DIR=#{srcs_dir}"
+-  env_vars += " CODEGEN_MODULES_OUTPUT_DIR=#{codegen_modules_output_dir}"
++  env_vars = "SRCS_DIR=#{js_srcs}"
++  env_vars += " MODULES_OUTPUT_DIR=#{prefix}/#{modules_output_dir}"
++  env_vars += " MODULES_LIBRARY_NAME=#{modules_library_name}"
+ 
+-  # Since the generated files are not guaranteed to exist when CocoaPods is run, we need to create
+-  # empty files to ensure the references are included in the resulting Pods Xcode project.
+-  mkdir_command = "mkdir -p #{codegen_modules_output_dir}"
+-  generated_filenames = [ "#{codegen_modules_library_name}.h", "#{codegen_modules_library_name}-generated.mm" ]
+-  generated_files = generated_filenames.map { |filename| File.join(codegen_modules_output_dir, filename) }
++  generated_dirs = [ modules_output_dir ]
++  generated_filenames = [ "#{modules_library_name}.h", "#{modules_library_name}-generated.mm" ]
++  generated_files = generated_filenames.map { |filename| "#{modules_output_dir}/#{filename}" }
+ 
+   if ENV['USE_FABRIC'] == '1'
+     # We use a different library name for components, as well as an additional set of files.
+-    # Eventually, we want these to be part of the same library as #{codegen_modules_library_name} above.
+-    codegen_components_library_name = "rncore"
+-    codegen_components_output_dir = File.join(prefix, "ReactCommon/react/renderer/components/#{codegen_components_library_name}")
+-    env_vars += " CODEGEN_COMPONENTS_OUTPUT_DIR=#{codegen_components_output_dir}"
+-    mkdir_command += " #{codegen_components_output_dir}"
++    # Eventually, we want these to be part of the same library as #{modules_library_name} above.
++    components_output_dir = "ReactCommon/react/renderer/components/rncore/"
++    generated_dirs.push components_output_dir
++    env_vars += " COMPONENTS_OUTPUT_DIR=#{prefix}/#{components_output_dir}"
+     components_generated_filenames = [
+       "ComponentDescriptors.h",
+       "EventEmitters.cpp",
+@@ -201,32 +183,16 @@ def use_react_native_codegen!(spec, options={})
+       "ShadowNodes.cpp",
+       "ShadowNodes.h"
+     ]
+-    generated_files = generated_files.concat(components_generated_filenames.map { |filename| File.join(codegen_components_output_dir, filename) })
++    generated_files = generated_files.concat(components_generated_filenames.map { |filename| "#{components_output_dir}/#{filename}" })
+   end
+ 
+   spec.script_phase = {
+     :name => 'Generate Specs',
+-    :input_files => [srcs_dir],
+-    :output_files => ["$(DERIVED_FILE_DIR)/codegen-#{codegen_modules_library_name}.log"].concat(generated_files),
+-    :script => "set -o pipefail\n\nbash -l -c '#{env_vars} CODEGEN_MODULES_LIBRARY_NAME=#{codegen_modules_library_name} #{File.join(__dir__, "generate-specs.sh")}' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"",
++    :input_files => [js_srcs],
++    :output_files => ["${DERIVED_FILE_DIR}/codegen-#{modules_library_name}.log"].concat(generated_files.map { |filename| "#{prefix}/#{filename}"} ),
++    :script => "set -o pipefail\n\nbash -l -c '#{env_vars} ${PODS_TARGET_SRCROOT}/../../scripts/generate-specs.sh' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"",
+     :execution_position => :before_compile,
+     :show_env_vars_in_log => true
+   }
+-
+-  spec.prepare_command = "#{mkdir_command} && touch #{generated_files.reduce() { |str, file| str + " " + file }}"
+-end
+-
+-# Local method for the Xcode 12.5 fix
+-def find_and_replace(dir, findstr, replacestr)
+-  Dir[dir].each do |name|
+-    text = File.read(name)
+-    replace = text.gsub(findstr, replacestr)
+-    replaced = text.index(replacestr)
+-    next if !replaced.nil? || text == replace
+-
+-    puts "Patching #{name}"
+-    File.open(name, 'w') { |file| file.puts replace }
+-    $stdout.flush
+-  end
+-  Dir["#{dir}*/"].each(&method(:find_and_replace))
++  spec.prepare_command = "mkdir -p #{generated_dirs.reduce("") { |str, dir| "#{str} ../../#{dir}" }} && touch #{generated_files.reduce("") { |str, filename| "#{str} ../../#{filename}" }}"
+ end
+\ No newline at end of file
