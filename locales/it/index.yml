@@ -2089,6 +2089,9 @@ faq:
     title: "La mia carta non ha alcun codice di sicurezza."
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
+  accessibility:
+    sectionCardLabel: "Aggiorna bonus e sconti"
+    sectionCardHint: "Aggiorna la lista dei bonus attivi"
   state:
     completed:
       caption: "concluso"
