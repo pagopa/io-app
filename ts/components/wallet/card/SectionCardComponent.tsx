@@ -20,6 +20,7 @@ type Props = {
   isNew?: boolean;
   cardStyle?: ViewStyle;
   accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 const styles = StyleSheet.create({
@@ -215,7 +216,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <View
             style={[styles.cardInner]}
             accessibilityLabel={props.accessibilityLabel}
-            accessibilityHint={I18n.t("wallet.accessibility.sectionCardHint")}
+            accessibilityHint={props.accessibilityHint}
             accessibilityRole="button"
           >
             <View style={[styles.flexRow, styles.topSpacing]}>

@@ -65,6 +65,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
       <SectionCardComponent
         status={props.status}
         accessibilityLabel={I18n.t("bonus.accessibility.sectionCardLabel")}
+        accessibilityHint={I18n.t("bonus.accessibility.sectionCardHint")}
         label={I18n.t("bonus.requestLabel")}
         onPress={onButtonPress}
       />

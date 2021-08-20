@@ -2091,6 +2091,7 @@ faq:
 bonus:
   accessibility:
     sectionCardLabel: "Aggiorna bonus e sconti"
+    sectionCardHint: "Aggiorna la lista dei bonus attivi"
   state:
     completed:
       caption: "concluso"

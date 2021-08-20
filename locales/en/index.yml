@@ -2063,6 +2063,7 @@ faq:
 bonus:
   accessibility:
     sectionCardLabel: "Update bonus and discounts"
+    sectionCardHint: "Update the list of active bonuses"
   state:
     completed:
       caption: "concluded"
