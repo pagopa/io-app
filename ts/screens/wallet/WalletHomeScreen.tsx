@@ -323,6 +323,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return (
       <SectionCardComponent
         status={sectionCardStatus}
+        accessibilityLabel={I18n.t("wallet.accessibility.sectionCardLabel")}
+        accessibilityHint={I18n.t("wallet.accessibility.sectionCardHint")}
         label={I18n.t("wallet.paymentMethods")}
         onPress={() => {
           if (sectionCardStatus !== "loading") {
