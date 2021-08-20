@@ -68,3 +68,11 @@ Created on **16/08/2021**
 
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
+
+### react-native+0.64.2
+Created on **20/08/2021**
+
+#### Reason:
+- As for known issue anytime a developer launch a pod install on his own machine the podfile would be updated with 
+  different hashes: [here the issue](https://github.com/facebook/react-native/issues/31193)
+  To be removed when updating to `react-native` *0.65*
