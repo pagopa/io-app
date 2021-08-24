@@ -1212,14 +1212,14 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds..
-      verification: I am checking the status and the amount of your notice..
-      generic: I am finishing the verification operations of your notice, wait a few seconds..
-      wallet: I am checking for payment method..
+      activation: I'm alerting the entity, wait a few seconds...
+      verification: I am checking the status and the amount of your notice...
+      generic: I am finishing the verification operations of your notice, wait a few seconds...
+      wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
-    header: Insert notice data
+    header: Enter notice data
     title: Insert the notice data
     info: which allow us to identify the transaction
     link: Where are they?
@@ -1357,11 +1357,11 @@ wallet:
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
-    wrongQrCode: Not a pagoPA QR Code!
-    byCameraTitle: Notice QR Code
+    wrongQrCode: QR Code not valid. Enter data manually.
+    byCameraTitle: Scan the QR Code
     cameraUsageInfo: Scan the QR Code on the payment notice, or
       manually enter the data (Notice Code and Payee Fiscal Code).
-    setManually: Enter the data
+    setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
@@ -2061,6 +2061,9 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  accessibility:
+    sectionCardLabel: "Update bonus and discounts"
+    sectionCardHint: "Update the list of active bonuses"
   state:
     completed:
       caption: "concluded"
