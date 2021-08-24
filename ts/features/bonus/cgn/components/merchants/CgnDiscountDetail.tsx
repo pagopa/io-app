@@ -160,7 +160,9 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
           }}
           onPressWithGestureHandler={true}
         >
-          <Label color={"white"}>{"Accedi all’agevolazione"}</Label>
+          <Label color={"white"}>
+            {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+          </Label>
         </ButtonDefaultOpacity>
       )}
     </View>
