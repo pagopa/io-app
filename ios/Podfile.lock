@@ -311,13 +311,13 @@ PODS:
     - React-Core
   - react-native-cookies (4.0.1):
     - React
-  - react-native-location (2.5.0):
-    - React
-  - react-native-maps (0.28.0):
-    - React-Core
   - react-native-flipper (0.103.0):
     - React-Core
   - react-native-image-picker (4.0.6):
+    - React-Core
+  - react-native-location (2.5.0):
+    - React
+  - react-native-maps (0.28.0):
     - React-Core
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
