@@ -21,9 +21,13 @@ import { profileNameSurnameSelector } from "../../../../../../store/reducers/pro
 import { EmailAddress } from "../../../../../../../definitions/backend/EmailAddress";
 import { PreferredLanguages } from "../../../../../../../definitions/backend/PreferredLanguages";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { ServicesPreferencesModeEnum } from "../../../../../../../definitions/backend/ServicesPreferencesMode";
 
 const mockedProfile: InitializedProfile = {
   accepted_tos_version: 2.1,
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   email: "mario.rossi@email.it" as EmailAddress,
   family_name: "Rossi",
   has_profile: true,

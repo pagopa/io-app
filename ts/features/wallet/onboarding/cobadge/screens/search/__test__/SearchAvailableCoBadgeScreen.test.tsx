@@ -151,7 +151,7 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
     expect(isCoBadgeKoNotFoundScreen(testComponent)).toBe(true);
   });
   describe("Search request metadata pending behaviour", () => {
-    [undefined, abiTestId].map(abi =>
+    [undefined, abiTestId].forEach(abi =>
       it(`With at least one pending in search metadata request, abi=${abi}, should render CoBadgeKoServiceError`, () => {
         const { store, testComponent } = getSearchAvailableCoBadgeScreen();
         store.dispatch(searchUserCoBadge.request(undefined));
@@ -186,7 +186,7 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
   });
 
   describe("Search request metadata error behaviour", () => {
-    [undefined, abiTestId].map(abi =>
+    [undefined, abiTestId].forEach(abi =>
       it(`With at least one error in search metadata request, abi=${abi}, should render CoBadgeKoServiceError`, () => {
         const { store, testComponent } = getSearchAvailableCoBadgeScreen();
         store.dispatch(searchUserCoBadge.request(abi));
@@ -227,7 +227,7 @@ describe("Test behaviour of the SearchAvailableCoBadgeScreen", () => {
     );
   });
   describe("Payment methods found", () => {
-    [undefined, abiTestId].map(abi =>
+    [undefined, abiTestId].forEach(abi =>
       it(`With at least one payment method found and all search metadata request ok, abi=${abi}, should render AddCoBadgeScreen`, () => {
         const { store, testComponent } = getSearchAvailableCoBadgeScreen();
         store.dispatch(searchUserCoBadge.request(abi));

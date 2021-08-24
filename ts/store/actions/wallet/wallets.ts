@@ -12,6 +12,7 @@ import {
   WalletResponse
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
+import { NetworkError } from "../../../utils/errors";
 
 // this action load wallets following a backoff retry strategy
 export const fetchWalletsRequestWithExpBackoff = createStandardAction(
@@ -73,19 +74,6 @@ export type CreditCardFailure =
 export const addWalletCreditCardFailure = createStandardAction(
   "WALLET_ADD_CREDITCARD_FAILURE"
 )<CreditCardFailure>();
-
-type CreditCardCheckout3dsRequestPayload = Readonly<{
-  urlCheckout3ds: string;
-  paymentManagerToken: PaymentManagerToken;
-}>;
-
-export const creditCardCheckout3dsRequest = createStandardAction(
-  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_REQUEST"
-)<CreditCardCheckout3dsRequestPayload>();
-
-export const creditCardCheckout3dsSuccess = createStandardAction(
-  "WALLET_ADD_CREDITCARD_CHECKOUT_3DS_SUCCESS"
-)<string>();
 
 // used to accumulate all the urls browsed into the pay webview
 export const creditCardPaymentNavigationUrls = createStandardAction(
@@ -164,6 +152,19 @@ export const sendAddCobadgeMessage = createStandardAction(
   "SEND_ADD_COBADGE_MESSAGE"
 )<boolean>();
 
+export type UpdatePaymentStatusPayload = {
+  idWallet: number;
+  paymentEnabled: boolean;
+};
+/**
+ * change the payment status (enable or disable a payment method to pay with pagoPa)
+ */
+export const updatePaymentStatus = createAsyncAction(
+  "WALLET_UPDATE_PAYMENT_STATUS_REQUEST",
+  "WALLET_UPDATE_PAYMENT_STATUS_SUCCESS",
+  "WALLET_UPDATE_PAYMENT_STATUS_FAILURE"
+)<UpdatePaymentStatusPayload, Wallet, NetworkError>();
+
 export type WalletsActions =
   | ActionType<typeof fetchWalletsRequest>
   | ActionType<typeof fetchWalletsSuccess>
@@ -184,10 +185,9 @@ export type WalletsActions =
   | ActionType<typeof addWalletCreditCardFailure>
   | ActionType<typeof addWalletNewCreditCardSuccess>
   | ActionType<typeof addWalletNewCreditCardFailure>
-  | ActionType<typeof creditCardCheckout3dsRequest>
-  | ActionType<typeof creditCardCheckout3dsSuccess>
   | ActionType<typeof setWalletSessionEnabled>
   | ActionType<typeof creditCardPaymentNavigationUrls>
   | ActionType<typeof fetchWalletsRequestWithExpBackoff>
   | ActionType<typeof runSendAddCobadgeTrackSaga>
-  | ActionType<typeof sendAddCobadgeMessage>;
+  | ActionType<typeof sendAddCobadgeMessage>
+  | ActionType<typeof updatePaymentStatus>;

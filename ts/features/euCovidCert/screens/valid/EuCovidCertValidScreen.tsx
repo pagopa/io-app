@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   ViewStyle
 } from "react-native";
-import { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -39,7 +38,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { showToast } from "../../../../utils/showToast";
-import { captureScreenShoot } from "../../utils/screenshoot";
+import { captureScreenShoot, screenShotOption } from "../../utils/screenshot";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -88,34 +87,38 @@ const EuCovidCertValidComponent = (
 ): React.ReactElement => (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
-      <TouchableOpacity
-        testID={"QRCode"}
-        accessible={true}
-        accessibilityRole={"imagebutton"}
-        accessibilityLabel={I18n.t(
-          "features.euCovidCertificate.valid.accessibility.qrCode"
-        )}
-        accessibilityHint={I18n.t(
-          "features.euCovidCertificate.valid.accessibility.hint"
-        )}
-        onPress={() =>
-          props.navigateToQrCodeFullScreen(
-            props.validCertificate.qrCode.content
-          )
-        }
-      >
-        <Image
-          source={{
-            uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
-          }}
-          style={styles.qrCode}
-          onError={() => {
-            void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
-              messageId: props.messageId
-            });
-          }}
-        />
-      </TouchableOpacity>
+      <>
+        <View spacer={true} />
+        <TouchableOpacity
+          testID={"QRCode"}
+          accessible={true}
+          accessibilityRole={"imagebutton"}
+          accessibilityLabel={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.qrCode"
+          )}
+          accessibilityHint={I18n.t(
+            "features.euCovidCertificate.valid.accessibility.hint"
+          )}
+          onPress={() =>
+            props.navigateToQrCodeFullScreen(
+              props.validCertificate.qrCode.content
+            )
+          }
+        >
+          <Image
+            source={{
+              uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
+            }}
+            style={styles.qrCode}
+            onError={() => {
+              void mixpanelTrack("EUCOVIDCERT_QRCODE_IMAGE_NOT_VALID", {
+                messageId: props.messageId
+              });
+            }}
+          />
+        </TouchableOpacity>
+        <View spacer={true} />
+      </>
     )}
     {props.validCertificate.markdownInfo && (
       <View style={props.markdownWebViewStyle}>
@@ -211,11 +214,6 @@ const Footer = (props: FooterProps): React.ReactElement => {
   );
 };
 
-const screenShotOption: CaptureOptions = {
-  width: Dimensions.get("window").width,
-  format: "jpg",
-  quality: 1.0
-};
 const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const screenShotViewContainer = React.createRef<View>();
   const [flashAnimationState, setFlashAnimationState] = useState<

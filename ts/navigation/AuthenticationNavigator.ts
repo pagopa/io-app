@@ -1,7 +1,9 @@
+import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import {
-  createStackNavigator,
-  NavigationRouteConfigMap
-} from "react-navigation";
+  NavigationStackOptions,
+  NavigationStackProp
+} from "react-navigation-stack/src/types";
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
@@ -21,7 +23,10 @@ import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
 
 // Routes loaded in production mode
-const productionRouteConfigMap: NavigationRouteConfigMap = {
+const productionRouteConfigMap: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   [ROUTES.AUTHENTICATION_LANDING]: {
     screen: LandingScreen
   },
@@ -71,7 +76,10 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
 };
 
 // Routes loaded on development mode
-const developmentRouteConfigMap: NavigationRouteConfigMap = {
+const developmentRouteConfigMap: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   ...productionRouteConfigMap,
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen

@@ -36,7 +36,6 @@ import {
   navigateToWalletConfirmCardDetails
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import {
@@ -55,7 +54,7 @@ import {
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
 import { Link } from "../../components/core/typography/Link";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
@@ -69,6 +68,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { useLuhnValidation } from "../../utils/hooks/useLuhnValidation";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -131,13 +131,20 @@ const openSupportedCardsPage = (): void => {
 
 const primaryButtonPropsFromState = (
   state: CreditCardState,
-  onNavigate: (card: CreditCard) => NavigationNavigateAction
+  onNavigate: (card: CreditCard) => NavigationNavigateAction,
+  isHolderValid: boolean,
+  isExpirationDateValid?: boolean
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
   const baseButtonProps = {
     block: true,
     primary: true,
     title: I18n.t("global.buttons.continue")
   };
+
+  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
+    state.pan.getOrElse(""),
+    state.securityCode.getOrElse("")
+  );
 
   const card = getCreditCardFromState(state);
 
@@ -150,7 +157,11 @@ const primaryButtonPropsFromState = (
     }),
     c => ({
       ...baseButtonProps,
-      disabled: false,
+      disabled:
+        !isCardNumberValid ||
+        !isCvvValid ||
+        !isHolderValid ||
+        !isExpirationDateValid,
       onPress: () => {
         Keyboard.dismiss();
         onNavigate(c);
@@ -248,6 +259,11 @@ const AddCardScreen: React.FC<Props> = props => {
     creditCard.pan
   );
 
+  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
+    creditCard.pan.getOrElse(""),
+    creditCard.securityCode.getOrElse("")
+  );
+
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
@@ -293,7 +309,6 @@ const AddCardScreen: React.FC<Props> = props => {
       >
         <Content scrollEnabled={false}>
           <LabelledItem
-            type={"text"}
             label={I18n.t("wallet.dummyCard.labels.holder.label")}
             description={
               isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
@@ -321,11 +336,10 @@ const AddCardScreen: React.FC<Props> = props => {
           <View spacer={true} />
 
           <LabelledItem
-            type={"masked"}
             label={I18n.t("wallet.dummyCard.labels.pan")}
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
-            isValid={isValidPan(creditCard.pan)}
+            isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
               placeholder: placeholders.placeholderCard,
@@ -352,7 +366,6 @@ const AddCardScreen: React.FC<Props> = props => {
           <Grid>
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
                 accessibilityLabel={accessiblityLabels.expirationDate}
@@ -375,14 +388,15 @@ const AddCardScreen: React.FC<Props> = props => {
             <Col style={styles.verticalSpacing} />
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t(
                   detectedBrand.cvvLength === 4
                     ? "wallet.dummyCard.labels.securityCode4D"
                     : "wallet.dummyCard.labels.securityCode"
                 )}
                 icon="io-lucchetto"
-                isValid={isValidSecurityCode(creditCard.securityCode)}
+                isValid={
+                  creditCard.securityCode.getOrElse("") ? isCvvValid : undefined
+                }
                 accessibilityLabel={
                   detectedBrand.cvvLength === 4
                     ? accessiblityLabels.securityCode4D
@@ -434,7 +448,9 @@ const AddCardScreen: React.FC<Props> = props => {
         leftButton={secondaryButtonProps}
         rightButton={primaryButtonPropsFromState(
           creditCard,
-          props.navigateToConfirmCardDetailsScreen
+          props.navigateToConfirmCardDetailsScreen,
+          isValidCardHolder(creditCard.holder),
+          maybeCreditcardValidOrExpired(creditCard).toUndefined()
         )}
       />
     </BaseScreenComponent>
@@ -445,7 +461,6 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
-  addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateBack: () => dispatch(navigateBack()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(

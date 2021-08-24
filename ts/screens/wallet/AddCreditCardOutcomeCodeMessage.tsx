@@ -1,18 +1,15 @@
 import React from "react";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { NavigationInjectedProps } from "react-navigation";
+import paymentCompleted from "../../../img/pictograms/payment-completed.png";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMessageComponent";
 import I18n from "../../i18n";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import { GlobalState } from "../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../store/reducers/wallet/outcomeCode";
-import {
-  navigateToWalletHome,
-  navigateToWalletTransactionsScreen
-} from "../../store/actions/navigation";
-import OutcomeCodeMessageComponent from "../../components/wallet/OutcomeCodeMessageComponent";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import paymentCompleted from "../../../img/pictograms/payment-completed.png";
 import { Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -51,9 +48,7 @@ const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
-  navigateToCreditCardDetails: (selectedWallet: Wallet) =>
-    dispatch(navigateToWalletTransactionsScreen({ selectedWallet }))
+  navigateToWalletHome: () => dispatch(navigateToWalletHome())
 });
 
 const mapStateToProps = (state: GlobalState) => ({

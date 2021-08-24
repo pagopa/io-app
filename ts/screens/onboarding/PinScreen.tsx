@@ -3,7 +3,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -26,7 +26,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

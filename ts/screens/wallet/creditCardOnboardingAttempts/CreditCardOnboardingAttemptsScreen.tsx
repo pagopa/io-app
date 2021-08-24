@@ -1,7 +1,7 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
@@ -22,7 +22,7 @@ import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnb
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   noBottomPadding: {
