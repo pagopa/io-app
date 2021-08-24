@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import ActivateBpdOnNewCoBadgeScreen from "../screens/ActivateBpdOnNewCoBadgeScreen";
 import AddCoBadgeScreen from "../screens/add-account/AddCoBadgeScreen";
 import CoBadgeChooseType from "../screens/CoBadgeChooseType";

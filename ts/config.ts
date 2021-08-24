@@ -73,9 +73,9 @@ export const euCovidCertificateEnabled: boolean =
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
-// ServicesRedesign Feature Flag
-export const servicesRedesignEnabled: boolean =
-  Config.SERVICES_REDESIGN_ENABLED === "YES";
+// PM activate payment on payment method Feature Flag
+export const pmActivatePaymentEnabled: boolean =
+  Config.PM_ACTIVATE_PAYMENT_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;

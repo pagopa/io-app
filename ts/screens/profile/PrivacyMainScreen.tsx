@@ -9,15 +9,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -32,8 +30,9 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
+import ScreenContent from "../../components/screens/ScreenContent";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -184,7 +183,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
         goBack={this.props.navigation.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
-        headerTitle={I18n.t("profile.main.title")}
       >
         <ScreenContent
           title={I18n.t("profile.main.privacy.title")}
@@ -263,7 +261,6 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                   : undefined
               }
             />
-            <EdgeBorderComponent />
           </List>
         </ScreenContent>
       </TopScreenComponent>

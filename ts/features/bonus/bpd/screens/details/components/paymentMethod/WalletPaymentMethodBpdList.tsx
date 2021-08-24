@@ -1,6 +1,6 @@
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet } from "react-native";
@@ -9,7 +9,6 @@ import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
-import { Label } from "../../../../../../../components/core/typography/Label";
 import { Link } from "../../../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../../../i18n";
@@ -53,19 +52,6 @@ const UpdateLabel = (props: Props & { caption: string }) =>
   );
 
 /**
- * Start the onboarding of a new payment method
- * @param props
- * @constructor
- */
-const AddPaymentMethodButton = (props: { onPress: () => void }) => (
-  <Button style={styles.addButton} onPress={props.onPress} bordered={true}>
-    <Label color={"blue"}>
-      {I18n.t("bonus.bpd.details.paymentMethods.add.cta")}
-    </Label>
-  </Button>
-);
-
-/**
  * No payment methods are active
  * @constructor
  */
@@ -104,11 +90,6 @@ const PaymentMethodNone = (props: Props) => (
         caption={I18n.t("global.buttons.show").toLowerCase()}
       />
     </View>
-
-    <View spacer={true} large={true} />
-    <View spacer={true} small={true} />
-    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
-    <View spacer={true} small={true} />
   </>
 );
 
@@ -130,8 +111,6 @@ const PaymentMethodError = (props: Props) => (
     <InfoBox iconColor={IOColors.red}>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.error")}</Body>
     </InfoBox>
-    <View spacer={true} large={true} />
-    <AddPaymentMethodButton onPress={props.addPaymentMethod} />
   </>
 );
 
@@ -161,8 +140,6 @@ const PaymentMethodSome = (props: Props) =>
       ) : (
         <NoPaymentMethodFound />
       )}
-      <View spacer={true} />
-      <AddPaymentMethodButton onPress={props.addPaymentMethod} />
     </View>
   ) : null;
 

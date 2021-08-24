@@ -11,9 +11,9 @@ type Props = {
   url: string;
   handleLoadEnd: () => void;
   handleError: () => void;
-  handleWebViewMessage: (event: any) => void;
-  onAcceptTos: () => void;
-  onExit: () => void;
+  handleWebViewMessage?: (event: any) => void;
+  onAcceptTos?: () => void;
+  onExit?: () => void;
 };
 
 const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (

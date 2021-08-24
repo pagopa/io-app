@@ -10,9 +10,8 @@
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
     </a>
-    <a href="CODE-OF-CONDUCT.md">
-        <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" />
-    </a>
+  <img src="https://img.shields.io/github/contributors-anon/pagopa/io-app" />
+  <img src="https://img.shields.io/github/repo-size/pagopa/io-app" />
 </p>
 
 <p align="center">
@@ -33,6 +32,7 @@
   - [Who develops the app?](#who-develops-the-app)
   - [Can I use the app?](#can-i-use-the-app)
   - [How can I help you?](#how-can-i-help-you)
+  - [What permissions are used by the IO app?](#what-permissions-are-used-by-the-io-app)
 - [Main technologies used](#main-technologies-used)
 - [Architecture](#architecture)
   - [SPID Authentication](#spid-authentication)
@@ -89,6 +89,78 @@ Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platform
 [Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
 If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
+
+### What permissions are used by the IO app?
+
+Because different platforms have different types of Permissions below we have two sections about permissions requested by the IO app for both environments (iOS and Android). Some permissions may be defined but not used. Their presence is due to dependencies with third-party modules or because they are required by the target store.
+
+**android** 
+
+| Permission (android.permission.*)| Usage / Meaning                                                                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| INTERNET                         | Allows applications to open network sockets (e.g. simple internet connectivity)                                       |
+| ACCESS_NETWORK_STATE             | Allows applications to access information about networks (e.g. details about connection quality/state)                |
+| ACCESS_WIFI_STATE                | Allows applications to access information about WIFI state                                                            |
+| CAMERA                           | Allows applications to access device camera to scan QR codes                                                          |
+| FOREGROUND_SERVICE               | Allows applications to use foreground service                                                                         |
+| MODIFY_AUDIO_SETTINGS            | Allows an application to modify global audio settings. Related to camera usage.                                                                 |
+| NFC                              | Allows applications to perform I/O operations over NFC                                                                |
+| RECEIVE_BOOT_COMPLETED           | Allows an application to receive the Intent.ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting. Used for push notification. |
+| VIBRATE                          | Allows access to the vibrator. This allow the application to emit vibration                                           |
+| WAKE_LOCK                        | Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming. Used for push notification.                            |
+| READ_APP_BADGE                   | Notification Badges that show on app icons                                                                            |
+| READ_CALENDAR                    | Allows an application to read the user's calendar data                                                                |
+| WRITE_CALENDAR                   | Allows an application to write the user's calendar data. Used to automatically set reminders.                                                               |
+| READ_EXTERNAL_STORAGE            | Allows an application to read from external storage. Used to pick images from gallery with payment QRCode.                                                                   |
+| WRITE_EXTERNAL_STORAGE           | Allows an application to write to external storage. Used to store images, e.g.: save bonus information (QRCode for Bonus Vacanze or EuCovid Certificate, etc.)                                                                 |
+| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification                                                 |
+
+Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
+
+| Permission (manufacturer)                                               | Usage / Meaning                                                                              |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| com.anddoes.launcher.permission.UPDATE_COUNT                            | used for the notification badge                                                   |
+| com.google.android.c2dm.permission.RECEIVE                              | It is used when receiving a broadcast from GCM server that contains a GCM message. Used for push notification. |
+| com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE  | It is used by Firebase to recognize where the app was installed from              |
+| com.htc.launcher.permission.READ_SETTINGS                               | Used for the notification badge. Specific for HTC vendor.                                                  |
+| com.htc.launcher.permission.UPDATE_SHORTCUT                             | used for the notification badge                                                   |
+| com.huawei.android.launcher.permission.CHANGE_BADGE                     | Used for the notification badge. Specific for Huawei vendor.                                                   |
+| com.huawei.android.launcher.permission.READ_SETTINGS                    | used for the notification badge                                                   |
+| com.huawei.android.launcher.permission.WRITE_SETTINGS                   | used for the notification badge                                                   |
+| com.majeur.launcher.permission.UPDATE_BADGE                             | used for the notification badge                                                   |
+| com.oppo.launcher.permission.READ_SETTINGS                              | used for the notification badge                                                   |
+| com.oppo.launcher.permission.WRITE_SETTINGS                             | used for the notification badge                                                   |
+| com.sec.android.provider.badge.permission.READ                          | used for the notification badge                                                   |
+| com.sec.android.provider.badge.permission.WRITE                         | used for the notification badge                                                   |
+| com.sonyericsson.home.permission.BROADCAST_BADGE                        | used for the notification badge                                                   |
+| com.sonymobile.home.permission.PROVIDER_INSERT_BADGE                    | used for the notification badge                                                   |
+| me.everything.badger.permission.BADGE_COUNT_READ                        | used for the notification badge                                                   |
+| me.everything.badger.permission.BADGE_COUNT_WRITE                       | used for the notification badge                                                   |
+
+
+**ios**
+(more info about permissions requested by Apple [here](https://www.pivotaltracker.com/n/projects/2048617/stories/160232897))
+
+| Permission                                  | Usage / Meaning                                                                                                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| NSAppleMusicUsageDescription                | This key is required if your app uses APIs that access the user’s media library.                                                         |
+| NSBluetoothAlwaysUsageDescription           | This key is required if your app uses the device’s Bluetooth interface.                                                                  |
+| NSBluetoothPeripheralUsageDescription       | This key is required if your app uses APIs that access Bluetooth peripherals and has a deployment target earlier than iOS 13.            |
+| NSContactsUsageDescription                  | IO needs access to your contacts to let you add them in calendar events.                                                                 |
+| NSLocationAlwaysUsageDescription            | This key is required if your iOS app uses APIs that access the user’s location at all times and deploys to targets earlier than iOS 11.  |
+| NSLocationUsageDescription                  | This key is required if your app uses APIs that access the user’s location information.                                                  |
+| NSLocationWhenInUseUsageDescription         | This key is required if your iOS app uses APIs that access the user’s location information while the app is in use.                      |
+| NSMicrophoneUsageDescription                | IO needs access to the microphone in case you want to leave a voice note. Used in the assistance flow.                                                               |
+| NSMotionUsageDescription                    | This key is required if your app uses APIs that access the device’s motion data.                                                         |
+| NSCalendarsUsageDescription                 | IO needs access to the calendar to add event reminders.                                                                                  |
+| NSCameraUsageDescription                    | IO needs access to the camera to scan QR codes.                                                                                          |
+| NSFaceIDUsageDescription                    | Enable Face ID for biometric identification.                                                                                              |
+| NSPhotoLibraryAddUsageDescription           | This key is required if your app uses APIs that have write access to the user’s photo library.                                           |
+| NSPhotoLibraryUsageDescription              | IO needs access to the Photos to scan QR codes.                                                                                          |
+| NSSpeechRecognitionUsageDescription         | This key is required if your app uses APIs that send user data to Apple’s speech recognition servers. Used in the assistance flow.                                                                                        |
+| Remote  Notification                        | Request permission to receive remote push notification.                                                                                  |
+| NFC (Near Field Communication Tag Reading)  | Request NFC capability.                                                                                                                  |
+
 
 ## Main technologies used
 

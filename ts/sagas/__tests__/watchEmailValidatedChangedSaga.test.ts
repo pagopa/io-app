@@ -13,8 +13,12 @@ import {
   isProfileEmailValidatedChanged,
   testableCheckProfileEmailChanged as checkProfileEmailChanged
 } from "../watchProfileEmailValidationChangedSaga";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 const profile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,

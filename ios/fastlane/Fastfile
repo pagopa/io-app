@@ -86,8 +86,7 @@ platform :ios do
       clean: true,
       export_method: "ad-hoc",
       workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false,
-      # sdk: "iphoneos8.4"
+      include_symbols: false
     )
   end
 
@@ -104,8 +103,7 @@ platform :ios do
       clean: true,
       export_method: "app-store",
       workspace: "ItaliaApp.xcworkspace",
-      include_symbols: false,
-      # sdk: "iphoneos8.4"
+      include_symbols: false
     )
   end
 
@@ -195,6 +193,57 @@ platform :ios do
       username: ITUNES_USER,
       changelog: changelog,
       skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Submit a new Beta Build to TestFlight, using CircleCI"
+  lane :beta_circleci_testflight do |options|
+
+    # Setup the circleci environment
+    setup_ci(
+      provider: "circleci"
+    )
+
+    # use the App Store API Key to authenticate
+    api_key = app_store_connect_api_key(
+      key_id: "#{ENV['APP_STORE_API_KEY_ID']}",
+      issuer_id: "#{ENV['APP_STORE_API_KEY_ISSUER_ID']}",
+      key_filepath: "./fastlane/AuthKey_#{ENV['APP_STORE_API_KEY_ID']}.p8",
+      duration: 1200,
+    )
+
+    sync_code_signing(type: "appstore", api_key: api_key)
+
+    # Install pods
+    cocoapods
+
+    # build the app
+    gym(
+      scheme: "ItaliaApp",
+      clean: true,
+      export_method: "app-store",
+      workspace: "ItaliaApp.xcworkspace",
+      include_symbols: false
+    )
+
+    previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
+
+    # generate the changelog based on last commits
+    changelog = changelog_from_git_commits(
+      tag_match_pattern: "*" +previous_tag + "*" ,
+      pretty:"- %s",
+      merge_commit_filtering: "exclude_merges"
+    )
+
+    # upload to App store
+    pilot(
+      api_key: api_key,
+      changelog: changelog,
+      distribute_external: true,
+      notify_external_testers: true,
+      groups: ["Amici&Familiari", "PagoPa"],
+      # max wait for App Store Connect processing (30 min)
+      wait_processing_timeout_duration: 1800
     )
   end
 

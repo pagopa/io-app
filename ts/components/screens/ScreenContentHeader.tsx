@@ -22,6 +22,9 @@ type Props = Readonly<{
   subtitleLink?: JSX.Element;
   dark?: boolean;
   dynamicHeight?: Animated.AnimatedInterpolation;
+  // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
+  // will be rendered in place of icon
+  rightComponent?: React.ReactElement;
 }>;
 
 const styles = StyleSheet.create({
@@ -80,7 +83,15 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { subtitle, subtitleLink, dark, icon, iconFont, title } = this.props;
+    const {
+      subtitle,
+      subtitleLink,
+      dark,
+      icon,
+      iconFont,
+      title,
+      rightComponent
+    } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
@@ -104,6 +115,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             icon={icon}
             iconFont={iconFont}
             dark={dark}
+            rightComponent={rightComponent}
           />
           {subtitle && (
             <View style={styles.subheaderContainer}>

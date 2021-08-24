@@ -5,12 +5,14 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
-import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
+import { getRemoteLocale } from "../../../../utils/messages";
+
+export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
 type Props = {
   bonusItem: BonusAvailable;
   onPress: () => void;
-  isComingSoon: boolean;
+  state: AvailableBonusItemState;
 };
 
 const styles = StyleSheet.create({
@@ -43,12 +45,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     alignContent: "center"
   },
-  notImplementedBadge: {
+  badge: {
     height: 18,
     marginTop: 2,
     backgroundColor: variables.lightGray
   },
-  notImplementedText: {
+  badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21
   },
   centeredContents: {
@@ -59,6 +61,23 @@ const styles = StyleSheet.create({
   }
 });
 
+const BonusBadge = (props: { caption: string }) => (
+  <Badge style={styles.badge}>
+    <Text style={styles.badgeText}>{props.caption}</Text>
+  </Badge>
+);
+
+const renderBadge = (state: AvailableBonusItemState) => {
+  switch (state) {
+    case "incoming":
+      return <BonusBadge caption={I18n.t("wallet.methods.comingSoon")} />;
+    case "completed":
+      return <BonusBadge caption={I18n.t("bonus.state.completed.caption")} />;
+    case "active":
+      return null;
+  }
+};
+
 /**
  * Component to show the listItem for available bonuses list,
  * clicking the item user navigates to the request of the related bonus
@@ -67,12 +86,17 @@ const styles = StyleSheet.create({
 export const AvailableBonusItem: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { bonusItem, isComingSoon } = props;
-  const disabledStyle = isComingSoon ? styles.disabled : {};
+  const { bonusItem, state } = props;
+  const disabledStyle = state !== "active" ? styles.disabled : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
-    bonusItem[getLocalePrimaryWithFallback()];
+    bonusItem[getRemoteLocale()];
+
   return (
-    <ListItem style={styles.listItem} onPress={props.onPress}>
+    <ListItem
+      style={styles.listItem}
+      onPress={props.onPress}
+      testID={`AvailableBonusItem-${bonusItem.id_type}`}
+    >
       <View style={styles.columnLeft}>
         <Grid>
           <Row>
@@ -80,13 +104,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
               <Text bold={true} style={[disabledStyle, styles.methodTitle]}>
                 {bonusTypeLocalizedContent.name}
               </Text>
-              {isComingSoon && (
-                <Badge style={styles.notImplementedBadge}>
-                  <Text style={styles.notImplementedText}>
-                    {I18n.t("wallet.methods.comingSoon")}
-                  </Text>
-                </Badge>
-              )}
+              {renderBadge(state)}
             </View>
           </Row>
           <Row>

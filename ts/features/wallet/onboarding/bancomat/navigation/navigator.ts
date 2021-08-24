@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
 import BancomatSearchStartScreen from "../screens/search/BancomatSearchStartScreen";
 import SearchAvailableUserBancomatScreen from "../screens/searchBancomat/SearchAvailableUserBancomatScreen";

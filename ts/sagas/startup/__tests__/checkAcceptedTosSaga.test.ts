@@ -15,9 +15,13 @@ import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile: InitializedProfile = {
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.AUTO
+    },
     has_profile: false,
     is_email_enabled: true,
     is_inbox_enabled: true,
@@ -31,6 +35,9 @@ describe("checkAcceptedTosSaga", () => {
   };
 
   const oldOnboardedProfile: InitializedProfile = {
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.AUTO
+    },
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
@@ -71,10 +78,13 @@ describe("checkAcceptedTosSaga", () => {
         .run());
   });
 
-  describe("when user has accepted ToS before its version was persisted", () => {
-    it("should do nothing", () =>
-      expectSaga(checkAcceptedTosSaga, oldOnboardedProfile)
-        .not.put(navigateToTosScreen)
+  describe("when user has not accepted ToS", () => {
+    it("should navigate to ToS screen", () =>
+      expectSaga(checkAcceptedTosSaga, {
+        ...oldOnboardedProfile,
+        accepted_tos_version: undefined
+      })
+        .put(navigateToTosScreen)
         .run());
   });
 

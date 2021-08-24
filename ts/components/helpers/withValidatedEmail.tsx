@@ -1,11 +1,9 @@
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProps,
-  StackActions
-} from "react-navigation";
+import { NavigationEvents, StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+
 import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
@@ -20,7 +18,7 @@ import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
