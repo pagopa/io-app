@@ -2,7 +2,14 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore, Reducer, Store } from "redux";
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+  Middleware,
+  Reducer,
+  Store
+} from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -14,6 +21,7 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
+import createDebugger from "redux-flipper";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -340,13 +348,22 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const middlewares = applyMiddleware(
+
+  const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
     logger,
     navigationHistory,
     navigation,
     analytics.actionTracking, // generic tracker for selected redux actions
-    analytics.screenTracking // tracks screen navigation,
+    analytics.screenTracking // tracks screen navigation
+  ];
+
+  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
+    ? [createDebugger()]
+    : [];
+
+  const middlewares = applyMiddleware(
+    ...[...baseMiddlewares, ...devMiddleware]
   );
   // add Reactotron enhancer if the app is running in dev mode
 
