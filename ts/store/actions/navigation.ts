@@ -25,7 +25,6 @@ import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import {
   BancomatPaymentMethod,
@@ -35,6 +34,8 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -97,6 +98,19 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToOnboardingServicePreferenceCompleteAction = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
+
+export const navigateToServicesPreferenceModeSelectionScreen = (
+  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
+    params
+  });
+
 /**
  * Email
  */
@@ -123,9 +137,22 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
+export const navigateToMessageRouterScreen = (
+  params: InferNavigationParams<typeof MessageDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_ROUTER,
+    params
+  });
+
 /**
  * Service
  */
+
+export const navigateToServiceHomeScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.SERVICES_HOME
+  });
 
 export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
@@ -139,14 +166,14 @@ export const navigateToServiceDetailsScreen = (
  * Profile
  */
 
-export const navigateToFingerprintPreferenceScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
-  });
-
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+  });
+
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
@@ -178,6 +205,11 @@ export const navigateToPrivacyScreen = NavigationActions.navigate({
   routeName: ROUTES.PROFILE_PRIVACY_MAIN,
   action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
 });
+
+export const navigateToPrivacyShareData = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+  });
 /**
  * Wallet & Payments
  */
@@ -222,11 +254,11 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletTransactionsScreen = (
-  params: InferNavigationParams<typeof TransactionsScreen>
+export const navigateToCreditCardDetailScreen = (
+  params: InferNavigationParams<typeof CreditCardDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
+    routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
     params
   });
 
@@ -306,14 +338,6 @@ export const navigateToWalletHome = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_HOME,
     params
-  });
-
-/**
- * @deprecated
- */
-export const navigateToWalletList = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.WALLET_LIST
   });
 
 export const navigateToWalletAddPaymentMethod = (
@@ -396,4 +420,17 @@ export const navigateToCieCardReaderScreen = (
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+  });
+
+/**
+ * SPID
+ */
+export const navigateToSPIDTestIDP = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_TEST
+  });
+
+export const navigateToSPIDLogin = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
   });

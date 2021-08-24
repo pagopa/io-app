@@ -3,12 +3,13 @@ import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../theme/variables";
+import { TestID } from "../../../../types/WithTestID";
 
 type Props = {
   topLeftCorner: React.ReactNode;
   bottomLeftCorner: React.ReactNode;
   bottomRightCorner: React.ReactNode;
-};
+} & TestID;
 
 const styles = StyleSheet.create({
   cardBox: {
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
 const BaseCardComponent: React.FunctionComponent<Props> = (props: Props) => (
   <>
     {Platform.OS === "android" && <View style={styles.shadowBox} />}
-    <View style={styles.cardBox}>
+    <View style={styles.cardBox} testID={props.testID}>
       <View>{props.topLeftCorner}</View>
       <View style={styles.bottomRow}>
         {props.bottomLeftCorner}

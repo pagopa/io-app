@@ -13,6 +13,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import * as myBrightness from "../../utils/brightness";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { PreferredLanguageEnum } from ".../../../definitions/backend/PreferredLanguage";
 
 jest.mock("react-native-share", () => jest.fn());
@@ -23,6 +24,9 @@ describe("Test How Fiscal Code Overlay gets rendered on lifetime methods", () =>
   const myProps: FiscalCodeProps = {
     onCancel: jest.fn(),
     profile: {
+      service_preferences_settings: {
+        mode: ServicesPreferencesModeEnum.AUTO
+      },
       accepted_tos_version: 3,
       blocked_inbox_or_channels: {},
       email: "pippo@fake-email.it" as EmailAddress,

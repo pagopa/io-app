@@ -1,19 +1,13 @@
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { AccessibilityProps, ImageSourcePropType } from "react-native";
+import { BrandImage } from "./BrandImage";
 import { CardLayoutPreview } from "./CardLayoutPreview";
 
 type Props = {
   left: React.ReactNode;
   image: ImageSourcePropType;
   onPress?: () => void;
-};
-
-const styles = StyleSheet.create({
-  cardLogo: {
-    height: 30,
-    width: 48
-  }
-});
+} & AccessibilityProps;
 
 /**
  * A preview card that shows as right section an image of fixed dimensions.
@@ -21,16 +15,5 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const CardLogoPreview: React.FunctionComponent<Props> = props => (
-  <CardLayoutPreview
-    left={props.left}
-    onPress={props.onPress}
-    right={
-      <Image
-        source={props.image}
-        style={styles.cardLogo}
-        testID={"cardImage"}
-        resizeMode="contain"
-      />
-    }
-  />
+  <CardLayoutPreview {...props} right={<BrandImage image={props.image} />} />
 );

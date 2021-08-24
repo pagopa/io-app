@@ -1,9 +1,9 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { useEffect, useState } from "react";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -13,21 +13,23 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
 import { GlobalState } from "../../store/reducers/types";
-import { idpsSelector } from "../../store/reducers/content";
+import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { testIdp } from "../../utils/idps";
+import { LocalIdpsFallback, testIdp } from "../../utils/idps";
+import { loadIdps } from "../../store/actions/content";
+import {
+  navigateBack,
+  navigateToSPIDLogin,
+  navigateToSPIDTestIDP
+} from "../../store/actions/navigation";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
-
-type State = Readonly<{
-  counter: number;
-}>;
+  ReturnType<typeof mapDispatchToProps>;
 
 const TAPS_TO_OPEN_TESTIDP = 5;
 
@@ -47,48 +49,48 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-class IdpSelectionScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { counter: 0 };
-  }
+const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  const [counter, setCounter] = useState(0);
 
-  private onIdpSelected = (idp: SpidIdp) => {
-    const { counter } = this.state;
+  const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
-      this.setState({ counter: newValue });
-      return;
+      setCounter(newValue);
+    } else {
+      props.setSelectedIdp(idp);
+      instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
+      props.navigateToIdpSelection();
     }
-    this.props.setSelectedIdp(idp);
-    instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public componentDidUpdate() {
-    if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
-      this.setState({ counter: 0 });
-      this.props.setSelectedIdp(testIdp);
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_TEST);
-    }
-  }
+  useEffect(() => {
+    props.requestIdps();
+  }, []);
 
-  public render() {
-    return (
-      <BaseScreenComponent
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["authentication_IPD_selection"]}
-        goBack={this.props.navigation.goBack}
-        headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-      >
+  useEffect(() => {
+    if (counter === TAPS_TO_OPEN_TESTIDP) {
+      setCounter(0);
+      props.setSelectedIdp(testIdp);
+      props.navigateToIdpTest();
+    }
+  }, [counter]);
+
+  return (
+    <BaseScreenComponent
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["authentication_IPD_selection"]}
+      goBack={true}
+      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+    >
+      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
         <Content noPadded={true} overScrollMode={"never"} bounces={false}>
           <ScreenContentHeader
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
             <IdpsGrid
-              idps={[...this.props.idps, testIdp]}
-              onIdpSelected={this.onIdpSelected}
+              idps={[...props.idps, testIdp]}
+              onIdpSelected={onIdpSelected}
             />
 
             <View spacer={true} />
@@ -96,7 +98,7 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
               block={true}
               light={true}
               bordered={true}
-              onPress={this.props.navigation.goBack}
+              onPress={props.goBack}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
@@ -109,16 +111,21 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             />
           </View>
         </Content>
-      </BaseScreenComponent>
-    );
-  }
-}
+      </LoadingSpinnerOverlay>
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
-  idps: idpsSelector(state)
+  idps: idpsSelector(state),
+  isIdpsLoading: isLoading(idpsStateSelector(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToIdpSelection: () => dispatch(navigateToSPIDLogin()),
+  navigateToIdpTest: () => dispatch(navigateToSPIDTestIDP()),
+  goBack: () => dispatch(navigateBack()),
+  requestIdps: () => dispatch(loadIdps.request()),
   setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
 });
 

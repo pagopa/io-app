@@ -14,9 +14,13 @@ import { startApplicationInitialization } from "../../../store/actions/applicati
 import { profileUpsert } from "../../../store/actions/profile";
 
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 describe("checkProfileEnabledSaga", () => {
   const profile: InitializedProfile = {
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.AUTO
+    },
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
@@ -74,7 +78,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the inbox is not enabled", () =>
@@ -84,7 +90,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the webhook is not enabled", () =>
@@ -94,7 +102,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should update the profile when the email is not set", () =>
@@ -104,7 +114,9 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .not.put(startApplicationInitialization())
-      .dispatch(profileUpsert.success(updatedProfile))
+      .dispatch(
+        profileUpsert.success({ value: profile, newValue: updatedProfile })
+      )
       .run());
 
   it("should restart the app if the profile update fails", () =>

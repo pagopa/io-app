@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import I18n from "../../../../i18n";
 import { navigateToPrivativeDetailScreen } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isImageURISource } from "../../../../types/image";
@@ -59,6 +60,14 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
     );
   });
 
+const getAccessibilityRepresentation = (privative: PrivativePaymentMethod) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.privative", {
+    blurredNumber: privative.info.blurredNumber
+  });
+  const cta = I18n.t("wallet.accessibility.folded.cta");
+  return `${cardRepresentation}, ${cta}`;
+};
+
 /**
  * A card preview for a privative card
  * @param props
@@ -74,6 +83,7 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
 
   return (
     <CardLayoutPreview
+      accessibilityLabel={getAccessibilityRepresentation(props.privative)}
       left={
         <BlurredPan style={IOStyles.flex} numberOfLines={1} testID={"caption"}>
           {props.privative.caption}

@@ -3,7 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
@@ -41,7 +41,7 @@ type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
 
-type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
+type OwnProps = NavigationStackScreenProps<MessageDetailScreenNavigationParams>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &

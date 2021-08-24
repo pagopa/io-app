@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the InformationRow component should match the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    accessibilityHint="copy"
+    accessibilityRole="button"
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flexDirection": "row",
+        "marginVertical": 24,
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      color="bluegrey"
+      ellipsizeMode="tail"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+      weightColorFactory={[Function]}
+    >
+      Organization's Fiscal Code
+    </Text>
+    <View
+      hspacer={true}
+      style={Object {}}
+    />
+    <Text
+      color="blue"
+      ellipsizeMode="tail"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      numberOfLines={1}
+      style={
+        Array [
+          Array [
+            Object {
+              "flex": 1,
+            },
+            Object {
+              "textAlign": "right",
+            },
+          ],
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#0073E6",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+      weightColorFactory={[Function]}
+    >
+      via Roma
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {},
+        Object {
+          "backgroundColor": "#C9C9C9",
+        },
+        false,
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+</View>
+`;
