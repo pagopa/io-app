@@ -32,10 +32,8 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import {
-  NavigationEventSubscription,
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationEventSubscription } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -50,7 +48,10 @@ import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { loadServiceMetadata } from "../../store/actions/content";
-import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToServiceDetailsScreen,
+  navigateToServicePreferenceScreen
+} from "../../store/actions/navigation";
 import { profileUpsert } from "../../store/actions/profile";
 import {
   loadVisibleServices,
@@ -94,12 +95,15 @@ import {
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
-import ServicePreferenceSummary from "../../components/services/ServicePreferenceSummary";
+import IconFont from "../../components/ui/IconFont";
+import { IOColors } from "../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
+import { Label } from "../../components/core/typography/Label";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
-type OwnProps = NavigationScreenProps;
+type OwnProps = NavigationStackScreenProps;
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
@@ -211,6 +215,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     lineHeight: 20,
     color: customVariables.brandPrimary
+  },
+  headerLinkContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
@@ -402,6 +410,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
+  private renderHeaderLink = () => (
+    <TouchableDefaultOpacity
+      style={styles.headerLinkContainer}
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityLabel={I18n.t("services.accessibility.edit")}
+      onPress={this.props.navigateToServicePreference}
+    >
+      <IconFont name={"io-coggle"} size={16} color={IOColors.blue} />
+      <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
+        {I18n.t("global.buttons.edit").toLocaleUpperCase()}
+      </Label>
+    </TouchableDefaultOpacity>
+  );
+
   public render() {
     return (
       <KeyboardAvoidingView
@@ -425,11 +448,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               <React.Fragment>
                 <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
-                  iconFont={{ name: "io-home-servizi" }}
+                  rightComponent={this.renderHeaderLink()}
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
-                <ServicePreferenceSummary />
               </React.Fragment>
             )}
           </TopScreenComponent>
@@ -621,6 +643,8 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToServicePreference: () =>
+    dispatch(navigateToServicePreferenceScreen()),
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (

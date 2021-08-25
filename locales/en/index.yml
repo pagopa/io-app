@@ -77,6 +77,7 @@ global:
     active: State active
     inactive: State inactive
     linkHint: Activating this item you will be redirected to the web browser of your device
+    alert: Alert
     activityIndicator:
       label: Loading
       hint: Wait for the content load
@@ -120,6 +121,7 @@ global:
     dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+    dateTimePicker: "gg/mm/yyyy"
   genericError: There is a temporary problem, please try again.
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
@@ -440,7 +442,7 @@ profile:
   security:
     title: Security
     subtitle: Manage in-app authentication methods.
-    list:       
+    list:
       biometric_recognition:
         title: Biometric recognition
         subtitle: Use your fingerprint or your face
@@ -790,6 +792,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  alertNoPaymentMethods:
+    title: Add a method to make in-app payments
+    message: The method will be saved in your Wallet, so you can pay easier next time.
+    buttons:
+      ok: Continue
+      ko: Cancel
+  alertNoActivePaymentMethods:
+    title: To use this feature, turn on in-app payments
+    message: Please enable at least one method in your Wallet, or you can add a new one.
+    buttons:
+      ok: Open Wallet
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment
@@ -880,6 +894,16 @@ wallet:
     noName: Name unavailable
     loading: Loading bank list...
   accessibility:
+    sectionCardLabel: "Update payment methods"
+    sectionCardHint: "Update the list of payment methods"
+    folded:
+      creditCard: "{{brand}} card, the number ends with {{blurredNumber}}"
+      bancomat: "{{bankName}} BANCOMAT"
+      coBadge: "{{brand}} Card, {{bankName}}"
+      bancomatPay: "{{bankName}} BANCOMATPay"
+      privative: "Loyalty card, the card number ends with {{blurredNumber}}"
+      cta: "View method details"
+      bankNotAvailable: "bank name not available"
     addElement: Add element to wallet
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     transactionListItem:
@@ -929,6 +953,7 @@ wallet:
         title: "Sorry, we haven't found any active BANCOMAT Pay service"
         body: "Contact your bank to activate BANCOMAT Pay!"
     satispay:
+      name: "Satispay"
       headerTitle: "Add Satispay"
       start:
         title: "Do you want to add your Satispay account to IO?"
@@ -1064,8 +1089,8 @@ wallet:
     bPay:
       successful: BancomatPay successfully removed
       failed: BancomatPay could not be removed
-    successful: Card successfully removed
-    failed: The card could not be removed
+    successful: Payment method successfully removed
+    failed: The payment method could not be removed
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
@@ -1187,14 +1212,14 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds..
-      verification: I am checking the status and the amount of your notice..
-      generic: I am finishing the verification operations of your notice, wait a few seconds..
-      wallet: I am checking for payment method..
+      activation: I'm alerting the entity, wait a few seconds...
+      verification: I am checking the status and the amount of your notice...
+      generic: I am finishing the verification operations of your notice, wait a few seconds...
+      wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
-    header: Insert notice data
+    header: Enter notice data
     title: Insert the notice data
     info: which allow us to identify the transaction
     link: Where are they?
@@ -1244,13 +1269,13 @@ wallet:
       description: The card issued by your bank that you normally use to pay in stores and online
       pagoPaCapability:
         title: In app payments
-        description: Make payments to the public administration through pagoPA
+        description: Pay your notices with pagoPA logo
         active: Active
         arriving: Arriving
         incompatible: Incompatible
-        bottomSheetTitle: What does in-app payment mean?
-        bottomSheetBody: With IO you can pay all pagoPA notices, even those on paper. When you perform in-app payments, you'll need to authorize the transaction using your biometrics or the unlock code.
-        bottomSheetCTA: Learn more.
+        bottomSheetTitle: Why can’t I make in-app payments?
+        bottomSheetBody: This method doesn’t support online payments.
+        bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
       description: Public initiatives to support Economy, or services related to payments
@@ -1332,11 +1357,11 @@ wallet:
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
-    wrongQrCode: Not a pagoPA QR Code!
-    byCameraTitle: Notice QR Code
+    wrongQrCode: QR Code not valid. Enter data manually.
+    byCameraTitle: Scan the QR Code
     cameraUsageInfo: Scan the QR Code on the payment notice, or
       manually enter the data (Notice Code and Payee Fiscal Code).
-    setManually: Enter the data
+    setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
@@ -1368,9 +1393,6 @@ wallet:
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     sendReport: Send report
     loadingData: loading failure, try again.
-  walletList:
-    contextualHelpTitle: Your payment methods
-    contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1401,7 +1423,7 @@ wallet:
     body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
-    title: "Available Functions"
+    title: "Available initiatives"
   outcomeMessage:
     cta:
       close: Close
@@ -1618,6 +1640,8 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  accessibility:
+    edit: Edit services setup
   optIn:
     preferences:
       completed:
@@ -1778,7 +1802,7 @@ contextualHelp:
   sendPersonalInfo:
     title: New report
     description: "The IO Team is available to solve any **problems** with the app or to listen to **suggestions** from our users regarding **improvements or new features**. If you have doubts about the **content of a message** or about a service, we recommend that you **contact the relevant entity**: you will find the contacts at the bottom of the message or in the card of the service in question."
-    cta: Share your fiscal code, in order to make it easier to solve the problem.
+    cta: Share your fiscal code and your device's unique identifier, in order to make it easier to solve the problem.
     informativeTitle: How do you know my fiscal code?
     informativeDescription: The fiscal code is part of that set of data that the IO app receives from the SPID identity or the electronic identity card with which you logged in. It is not mandatory to send the fiscal code together with the report, but it allows IO's assistance to make more targeted analyzes on our systems and therefore to reduce the time to resolve the problem. For more information on data processing, see our Privacy Policy.
 instabug:
@@ -2037,6 +2061,9 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  accessibility:
+    sectionCardLabel: "Update bonus and discounts"
+    sectionCardHint: "Update the list of active bonuses"
   state:
     completed:
       caption: "concluded"
@@ -2555,29 +2582,58 @@ bonus:
     headerTitle: "Sicilia Vola"
     voucherGeneration:
       acceptTos:
-        title: "AcceptTosComponent"
+        alert:
+          title: "Attention"
+          message: "We inform you that the information you enter constitutes in effect a self-certification. Any false declarations will be punishable under the d.P.R. 445/2000"
+          buttons:
+            ok: "Continue"
+            ko: "Abort"
+        buttons:
+          requestBonus: "Request a discount code"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Residency's region"
+        items:
+          inSicily: "I reside in Sicily"
+          notInSicily: "I reside in a different region"
+        info:
+          "Please remember that the discount is available only to residents of Sicily"
       selectBeneficiaryCategory:
-        title: "SelectBeneficiaryCategory"
+        title: "I declare to be"
+        categories:
+          student: "Off-site student"
+          disabled: "Severely disabled"
+          worker: "Employee with a workplace outside Sicily"
+          sick: "Patient in need of treatment outside the Sicily region"
+          other: "None of the above"
       student:
         selectDestination:
           title: "StudentSelectDestinationScreen"
       disabled:
         additionalInfo:
-          title: "DisabledAdditionalInfoScreen"
+          title: "Additional informations"
+          disclaimer:
+            normal: "I declare that I meet the requirements referred to in "
+            link: "Article 3, paragraph 3, of the law of February 5, 1992, no. 104"
       worker:
-        checkIncome:
-          title: "WorkerCheckIncomeScreen"
         selectDestination:
           title: "WorkerSelectDestinationScreen"
       sick:
-        checkIncome:
-          title: "SickCheckIncomeScreen"
         selectDestination:
           title: "SickSelectDestinationScreen"
+      checkIncome:
+        title: "I also declare"
+        threshold:
+          under: "to have a gross annual income of less than or equal to {{amount}}"
+          over: "to have a gross annual income exceeding {{amount}}"
       selectFlightsDate:
-        title: "SelectFlightsDateScreen"
+        title: "Flight date"
+        subtitle: "Please indicate the type of flight and the date (s) you will travel on"
+        flights_choice:
+          departure: "One way flight"
+          return: "Round trip"
+        labels:
+          departure: "Departure date"
+          return: "Return date"
       summary:
         title: "SummaryScreen"
       voucherGenerated:
@@ -2595,6 +2651,8 @@ bonus:
         timeout:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
+    voucherList:
+      title: "VoucherListScreen"
 features:
   euCovidCertificate:
     save:

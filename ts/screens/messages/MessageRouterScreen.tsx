@@ -26,9 +26,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 /**
  * In order to have the final CreatedMessageWithContentAndAttachments, these conditions should be verified:
- * - props.allMessages should be pot.some
- * - messageId should be in props.allMessages
- * - props.messageState(messageId) should be defined and pot.some
+ * - props.allMessages should be pot.some (it means messages are refreshed: loadMessages triggers the loading of the single message in that list)
+ * - messageId should be in props.allMessages (the specific message should be loaded)
+ * - props.messageState(messageId) should be defined and pot.some (we have the details)
  * @param props
  */
 const getLoadingState = (

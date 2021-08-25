@@ -8,7 +8,8 @@ import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -41,7 +42,7 @@ import { withKeyboard } from "../../utils/keyboard";
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -56,11 +57,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
-  },
-  emailInput: {
-    fontWeight: customVariables.h1FontWeight,
-    color: customVariables.h1Color,
-    fontSize: 18
   },
   darkestGray: {
     color: customVariables.brandDarkestGray
@@ -281,7 +277,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem
-                  type={"text"}
                   label={
                     isFromProfileSection
                       ? I18n.t("email.edit.label")
@@ -295,8 +290,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     autoCapitalize: "none",
                     keyboardType: "email-address",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: this.handleOnChangeEmailText,
-                    style: styles.emailInput
+                    onChangeText: this.handleOnChangeEmailText
                   }}
                   iconStyle={styles.icon}
                 />

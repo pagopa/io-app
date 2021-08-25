@@ -9,14 +9,15 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import {
   SingleButton,
   TwoButtonsInlineHalf
@@ -45,7 +46,7 @@ import customVariables from "../../theme/variables";
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   emailWithIcon: {

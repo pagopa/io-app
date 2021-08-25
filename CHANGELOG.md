@@ -2,6 +2,202 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.8](https://github.com/pagopa/io-app/compare/1.33.0-rc.7...1.33.0-rc.8) (2021-08-20)
+
+
+### Chores
+
+* [[IA-182](https://pagopa.atlassian.net/browse/IA-182)] Display an alert when there are no payment methods enabled to pay ([#3297](https://github.com/pagopa/io-app/issues/3297)) ([5ddd5bd](https://github.com/pagopa/io-app/commit/5ddd5bd3d4245bcd093ca9a0b1ce4b3a03fa0a73))
+* [[IA-51](https://pagopa.atlassian.net/browse/IA-51)] Fixes accessibility for sectionCardComponent ([#3312](https://github.com/pagopa/io-app/issues/3312)) ([3a5e281](https://github.com/pagopa/io-app/commit/3a5e281cda00a5a3fb09e6d332aa6c60df121098))
+* [[IAI-28](https://pagopa.atlassian.net/browse/IAI-28)] Upgrade react-native-webview and urllib3 ([#3307](https://github.com/pagopa/io-app/issues/3307)) ([7c9db16](https://github.com/pagopa/io-app/commit/7c9db16336ddc9e6ce76eebd55485403e54e5f51))
+* [[IAI-39](https://pagopa.atlassian.net/browse/IAI-39)] Adds a patch to react-native package to solve conflicting pod specs ([#3317](https://github.com/pagopa/io-app/issues/3317)) ([d36f882](https://github.com/pagopa/io-app/commit/d36f882d1b687531306afe3479b46d5ee7aa45a7))
+* Enable Hermes on iOS ([#3318](https://github.com/pagopa/io-app/issues/3318)) ([afc66cb](https://github.com/pagopa/io-app/commit/afc66cbf8d78b91da9062696015ff823a7e26b3b))
+
+## [1.33.0-rc.7](https://github.com/pagopa/io-app/compare/1.33.0-rc.6...1.33.0-rc.7) (2021-08-18)
+
+
+### Chores
+
+* [[IAI-16](https://pagopa.atlassian.net/browse/IAI-16)] Upgrade react-native to 0.64.2 ([#3301](https://github.com/pagopa/io-app/issues/3301)) ([b0c1eaa](https://github.com/pagopa/io-app/commit/b0c1eaa99357c39d3dc9140a69f0175612bf3282))
+
+## [1.33.0-rc.6](https://github.com/pagopa/io-app/compare/1.33.0-rc.5...1.33.0-rc.6) (2021-08-17)
+
+
+### Bug Fixes
+
+* [[IABT-1233](https://pagopa.atlassian.net/browse/IABT-1233)] Wrong accessibility on services home screen ([#3303](https://github.com/pagopa/io-app/issues/3303)) ([172f599](https://github.com/pagopa/io-app/commit/172f59903c096f3b637a6b36076d81794ca0de1e))
+
+
+### Chores
+
+* [[IAI-32](https://pagopa.atlassian.net/browse/IAI-32)] Upgrade react-navigation to 4.4 ([#3300](https://github.com/pagopa/io-app/issues/3300)) ([d4ed5e1](https://github.com/pagopa/io-app/commit/d4ed5e1833bbdbc7cb6be12761af3ee178f4a9bd))
+* **Carta Giovani Nazionale:** [[#179247891](https://www.pivotaltracker.com/story/show/179247891)] Sync cgn updated specs ([#3305](https://github.com/pagopa/io-app/issues/3305)) ([4b2b9b8](https://github.com/pagopa/io-app/commit/4b2b9b80be1237990aa4a5e93b1fa7a7f8029c80))
+
+## [1.33.0-rc.5](https://github.com/pagopa/io-app/compare/1.33.0-rc.4...1.33.0-rc.5) (2021-08-13)
+
+
+### Features
+
+* [[IA-1](https://pagopa.atlassian.net/browse/IA-1)] Update notification token when it changes ([#3295](https://github.com/pagopa/io-app/issues/3295)) ([679d6b7](https://github.com/pagopa/io-app/commit/679d6b75d6065e0458de7c7b0348cc984581acea))
+* **Carta Giovani Nazionale:** [[#178358407](https://www.pivotaltracker.com/story/show/178358407),[#178358013](https://www.pivotaltracker.com/story/show/178358013)] Integrates merchants search API for CGN ([#3123](https://github.com/pagopa/io-app/issues/3123)) ([8ad7f2b](https://github.com/pagopa/io-app/commit/8ad7f2ba164e0aa7a99bcea47457b1346df0c1d7))
+
+
+### Chores
+
+* [[IA-187](https://pagopa.atlassian.net/browse/IA-187)] Edit Service Preferences moved on Service Home header ([#3292](https://github.com/pagopa/io-app/issues/3292)) ([0088746](https://github.com/pagopa/io-app/commit/008874676e26655efbab4d7c8eae167008048df6))
+
+## [1.33.0-rc.4](https://github.com/pagopa/io-app/compare/1.33.0-rc.3...1.33.0-rc.4) (2021-08-12)
+
+
+### Chores
+
+* [[IAI-4](https://pagopa.atlassian.net/browse/IAI-4)] Generate iOS build on circleCI ([#3289](https://github.com/pagopa/io-app/issues/3289)) ([7c742c7](https://github.com/pagopa/io-app/commit/7c742c7af78091fc1ff6cc4ace88532005e08c6d))
+* Add react-hooks rule as a warning ([#3293](https://github.com/pagopa/io-app/issues/3293)) ([51815fd](https://github.com/pagopa/io-app/commit/51815fd15a0c2e29e5d791c4a77d918e9df7a6cb))
+
+## [1.33.0-rc.3](https://github.com/pagopa/io-app/compare/1.33.0-rc.2...1.33.0-rc.3) (2021-08-11)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-34](https://pagopa.atlassian.net/browse/IASV-34)] Select region screen ([#3288](https://github.com/pagopa/io-app/issues/3288)) ([32c2157](https://github.com/pagopa/io-app/commit/32c21570054adb5c13be5b837089bdd000683fbc))
+
+
+### Bug Fixes
+
+* [[IA-53](https://pagopa.atlassian.net/browse/IA-53)] VO doesn't read correctly the banner trait ([#3208](https://github.com/pagopa/io-app/issues/3208)) ([8567d9e](https://github.com/pagopa/io-app/commit/8567d9e96ab22f94223549b3ccaf123e39e38a61))
+
+
+### Chores
+
+* [[#178393697](https://www.pivotaltracker.com/story/show/178393697)][[#178393686](https://www.pivotaltracker.com/story/show/178393686)] Chore added disabled state to LabelledItem and changed colours ([#3155](https://github.com/pagopa/io-app/issues/3155)) ([b2c3748](https://github.com/pagopa/io-app/commit/b2c3748fa75a9ac8e4b8d3a4a28ade5c12403c48)), closes [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13)
+* [[IA-183](https://pagopa.atlassian.net/browse/IA-183)] Code refactoring for all payment method detail screens ([#3286](https://github.com/pagopa/io-app/issues/3286)) ([79caf6a](https://github.com/pagopa/io-app/commit/79caf6a5bb3307cb002052ffaae241d79807e3ed))
+
+## [1.33.0-rc.2](https://github.com/pagopa/io-app/compare/1.33.0-rc.1...1.33.0-rc.2) (2021-08-11)
+
+## [1.33.0-rc.1](https://github.com/pagopa/io-app/compare/1.33.0-rc.0...1.33.0-rc.1) (2021-08-11)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-31](https://pagopa.atlassian.net/browse/IASV-31)] Select flights date screen ([#3284](https://github.com/pagopa/io-app/issues/3284)) ([7cdb2bc](https://github.com/pagopa/io-app/commit/7cdb2bc54002f1fa8593cab4f82e1b5ae0866d70))
+
+
+### Chores
+
+* **deps:** bump path-parse from 1.0.6 to 1.0.7 ([#3291](https://github.com/pagopa/io-app/issues/3291)) ([36d74ee](https://github.com/pagopa/io-app/commit/36d74ee82cb4cf2b13843a164c1398e1facb855c))
+
+## [1.33.0-rc.0](https://github.com/pagopa/io-app/compare/1.32.0-rc.3...1.33.0-rc.0) (2021-08-10)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-24](https://pagopa.atlassian.net/browse/IASV-24)] Check income worker screen ([#3279](https://github.com/pagopa/io-app/issues/3279)) ([586d1a6](https://github.com/pagopa/io-app/commit/586d1a6056714e6d56e34b202327b8f3facf9dc5))
+* **Sicilia Vola:** [[IASV-28](https://pagopa.atlassian.net/browse/IASV-28)] Add check income sick screen ([#3280](https://github.com/pagopa/io-app/issues/3280)) ([35888af](https://github.com/pagopa/io-app/commit/35888af44d87514a496221c14522ac4c5d9e26f4))
+* **Sicilia Vola:** [[IASV-30](https://pagopa.atlassian.net/browse/IASV-30)] Additional information screen for disabled ([#3276](https://github.com/pagopa/io-app/issues/3276)) ([661878a](https://github.com/pagopa/io-app/commit/661878ad0fc43cdd38a29979fdbc37f7eda21d25))
+* [[IA-165](https://pagopa.atlassian.net/browse/IA-165)] Rework payment method details screen & add functionality to change payment method status ([#3274](https://github.com/pagopa/io-app/issues/3274)) ([0317b1c](https://github.com/pagopa/io-app/commit/0317b1c4034b48678ae4d36f55bd43cd6eaa6319))
+
+
+### Chores
+
+* [[IA-181](https://pagopa.atlassian.net/browse/IA-181)] Update bottom sheet content shown when a payment method can't pay ([#3275](https://github.com/pagopa/io-app/issues/3275)) ([19bb33a](https://github.com/pagopa/io-app/commit/19bb33a1071457da82be9adccbd31470000a7d0e))
+* [[IA-48](https://pagopa.atlassian.net/browse/IA-48),[IA-49](https://pagopa.atlassian.net/browse/IA-49)] Update accessibility for wallet preview cards ([#3287](https://github.com/pagopa/io-app/issues/3287)) ([20e0c1e](https://github.com/pagopa/io-app/commit/20e0c1e5745f6d8b948bf3e37e133b091374e8cd))
+* **Sicilia Vola:** [[IASV-41](https://pagopa.atlassian.net/browse/IASV-41)] Add check income component ([#3278](https://github.com/pagopa/io-app/issues/3278)) ([8a33563](https://github.com/pagopa/io-app/commit/8a3356300a84471d8b3ae46e79305ab9d001c44c))
+
+## [1.32.0-rc.3](https://github.com/pagopa/io-app/compare/1.32.0-rc.2...1.32.0-rc.3) (2021-08-06)
+
+
+### Features
+
+* [[IA-171](https://pagopa.atlassian.net/browse/IA-171)] Add app_update_required ServiceSection ([#3265](https://github.com/pagopa/io-app/issues/3265)) ([a475bb1](https://github.com/pagopa/io-app/commit/a475bb1d31da353a2c1cdff034948c8eee230e0a))
+
+
+### Bug Fixes
+
+* [[IA-185](https://pagopa.atlassian.net/browse/IA-185)] Fixes broken URIs from the daily check and manages some improvements to Slack scripts ([#3283](https://github.com/pagopa/io-app/issues/3283)) ([50d5f09](https://github.com/pagopa/io-app/commit/50d5f090f3af6f3b05a633aa4cba8aaa7e49cc74))
+
+
+### Chores
+
+* [[IA-13](https://pagopa.atlassian.net/browse/IA-13)] Changed all native base Input with LabelledItem generic component ([#3143](https://github.com/pagopa/io-app/issues/3143)) ([6b246e0](https://github.com/pagopa/io-app/commit/6b246e04c30296872f51bc7fc6d32a43d2c6f041)), closes [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13) [#IA-13](https://github.com/pagopa/io-app/issues/IA-13)
+* [[IA-157](https://pagopa.atlassian.net/browse/IA-157)] Share unique ID with assistance ([#3266](https://github.com/pagopa/io-app/issues/3266)) ([5715b16](https://github.com/pagopa/io-app/commit/5715b16d3d55c22b46df082abda8322f5729c3b7))
+* [[IA-179](https://pagopa.atlassian.net/browse/IA-179)] Track message search enabling ([#3271](https://github.com/pagopa/io-app/issues/3271)) ([828d55c](https://github.com/pagopa/io-app/commit/828d55c04f6fcacb77e93995b357b4245cd0d79d))
+* [[IA-184](https://pagopa.atlassian.net/browse/IA-184)] New German string [#3281](https://github.com/pagopa/io-app/issues/3281) ([0f0c106](https://github.com/pagopa/io-app/commit/0f0c106e5a0152020751d20b9447b4ff82f46fd0))
+
+## [1.32.0-rc.2](https://github.com/pagopa/io-app/compare/1.32.0-rc.1...1.32.0-rc.2) (2021-08-03)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-23](https://pagopa.atlassian.net/browse/IASV-23)] Select beneficiary category screen ([#3273](https://github.com/pagopa/io-app/issues/3273)) ([239cf59](https://github.com/pagopa/io-app/commit/239cf59beb65adce6697fddc286e1ed3feb2d170))
+* **Sicilia Vola:** [[IASV-35](https://pagopa.atlassian.net/browse/IASV-35)] Add ToS component ([#3256](https://github.com/pagopa/io-app/issues/3256)) ([0150ad3](https://github.com/pagopa/io-app/commit/0150ad3c78a7b842f02d929ab88ca5b43ce0bf23))
+
+
+### Bug Fixes
+
+* **Redesign Servizi:** [[IARS-43](https://pagopa.atlassian.net/browse/IARS-43)] Render maximum amount of information available ([#3268](https://github.com/pagopa/io-app/issues/3268)) ([e380844](https://github.com/pagopa/io-app/commit/e38084483b513fb17144d1b88a8a1e579e0f88c4))
+
+
+### Chores
+
+* [[IA-162](https://pagopa.atlassian.net/browse/IA-162)] Handle Poste/SPID intent ([#3250](https://github.com/pagopa/io-app/issues/3250)) ([3617cf0](https://github.com/pagopa/io-app/commit/3617cf0d3238058d8ac4f8a48384e8604eb47bdd))
+* [[IA-177](https://pagopa.atlassian.net/browse/IA-177)] Alert user when is paying and there are no payable methods ([#3272](https://github.com/pagopa/io-app/issues/3272)) ([7672d43](https://github.com/pagopa/io-app/commit/7672d434238df52381cef33a66ffabe73a9984c3))
+* gender neutral questions in Italian locale ([#3270](https://github.com/pagopa/io-app/issues/3270)) ([1d8d115](https://github.com/pagopa/io-app/commit/1d8d115d672689d5ac0c7e769ddbed8ec6f92321))
+
+## [1.32.0-rc.1](https://github.com/pagopa/io-app/compare/1.32.0-rc.0...1.32.0-rc.1) (2021-07-30)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[IAC-108](https://pagopa.atlassian.net/browse/IAC-108)] Remove Add payment method CTA from cashback details screen [#3247](https://github.com/pagopa/io-app/issues/3247) ([df17044](https://github.com/pagopa/io-app/commit/df170444b4e9675a427005a3055ea4f79af56a95))
+* [[IA-170](https://pagopa.atlassian.net/browse/IA-170)] Add action/saga/network to change payment method status ([#3262](https://github.com/pagopa/io-app/issues/3262)) ([44ff992](https://github.com/pagopa/io-app/commit/44ff9921f5a3ad2387043b0009b24fb91a1a7c76))
+
+
+### Bug Fixes
+
+* [[IA-107](https://pagopa.atlassian.net/browse/IA-107)] Missing accessibility role link on search bank privacy policy ([#3248](https://github.com/pagopa/io-app/issues/3248)) ([1a7a041](https://github.com/pagopa/io-app/commit/1a7a04118aafe5a8b0e3e250d64c56d3cc64a710)), closes [#IA-107](https://github.com/pagopa/io-app/issues/IA-107) [#IA-107](https://github.com/pagopa/io-app/issues/IA-107)
+* [[IABT-1214](https://pagopa.atlassian.net/browse/IABT-1214)] Italian label is shown even when the language is set to different locale ([#3260](https://github.com/pagopa/io-app/issues/3260)) ([0dc08ad](https://github.com/pagopa/io-app/commit/0dc08ad73196ccab548907eaf28bcce3cc67073f))
+
+
+### Chores
+
+* [[IA-52](https://pagopa.atlassian.net/browse/IA-52)] When VO/Talkback is On, the advice banner doesn't focus ([#3188](https://github.com/pagopa/io-app/issues/3188)) ([ba8713b](https://github.com/pagopa/io-app/commit/ba8713b9a34261be4ddef32b6fd0143f8a1b4aaf))
+
+## [1.32.0-rc.0](https://github.com/pagopa/io-app/compare/1.31.0-rc.3...1.32.0-rc.0) (2021-07-26)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-13](https://pagopa.atlassian.net/browse/IASV-13)] Add SiciliaVola entry point ([#3257](https://github.com/pagopa/io-app/issues/3257)) ([059ce43](https://github.com/pagopa/io-app/commit/059ce43b14cb83c45a4e1672966b146e0bd4f397))
+
+
+### Bug Fixes
+
+* [[IA-90](https://pagopa.atlassian.net/browse/IA-90)] The traits of some links are not read correctly ([#3244](https://github.com/pagopa/io-app/issues/3244)) ([82cb73f](https://github.com/pagopa/io-app/commit/82cb73f92db0feffb6f6e82b380cb01e924ed8ef))
+
+
+### Chores
+
+* [[IA-169](https://pagopa.atlassian.net/browse/IA-169)] Copy update [#3261](https://github.com/pagopa/io-app/issues/3261) ([e678d60](https://github.com/pagopa/io-app/commit/e678d6076c5f23e37ee47c2278af7c3703ddae4c))
+* [[IA-47](https://pagopa.atlassian.net/browse/IA-47)] In wallet home, when click on refresh label the accessibility label is wrong ([#3167](https://github.com/pagopa/io-app/issues/3167)) ([59d2ca7](https://github.com/pagopa/io-app/commit/59d2ca736b3686ff7b5a44b305fceef6027c4bba))
+
+## [1.31.0-rc.3](https://github.com/pagopa/io-app/compare/1.31.0-rc.2...1.31.0-rc.3) (2021-07-23)
+
+
+### Features
+
+* **Bonus Pagamenti Digitali:** [[IAC-109](https://pagopa.atlassian.net/browse/IAC-109)] Disable cashback onboarding and edit IBAN from message CTA if the initiative is completed ([#3251](https://github.com/pagopa/io-app/issues/3251)) ([c8ca5b0](https://github.com/pagopa/io-app/commit/c8ca5b0d7d95eabd13c1972425738e8dce927d09))
+
+
+### Bug Fixes
+
+* [[IA-156](https://pagopa.atlassian.net/browse/IA-156)] Missing luhn check on continue button ([#3253](https://github.com/pagopa/io-app/issues/3253)) ([2240b3a](https://github.com/pagopa/io-app/commit/2240b3a58de1689e54675851fa859551be4f255f))
+* [[IA-164](https://pagopa.atlassian.net/browse/IA-164)] Unable to navigate to an internal route using a CTA in service details [#3255](https://github.com/pagopa/io-app/issues/3255) ([8b47071](https://github.com/pagopa/io-app/commit/8b47071d81380356a9e57e2a7abf23779f381991))
+
+
+### Chores
+
+* [[IA-154](https://pagopa.atlassian.net/browse/IA-154)] Upgrade eslint and introduce test-only rules ([#3240](https://github.com/pagopa/io-app/issues/3240)) ([a3f3518](https://github.com/pagopa/io-app/commit/a3f35182902f7c5908cbce4d9d51b5224262aa08))
+
 ## [1.31.0-rc.2](https://github.com/pagopa/io-app/compare/1.31.0-rc.1...1.31.0-rc.2) (2021-07-21)
 
 

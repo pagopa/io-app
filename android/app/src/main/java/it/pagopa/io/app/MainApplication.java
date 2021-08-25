@@ -1,7 +1,5 @@
 package it.pagopa.io.app;
 
-import androidx.multidex.MultiDexApplication;
-
 import com.robinpowered.react.ScreenBrightness.ScreenBrightnessPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
@@ -24,7 +22,7 @@ import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.calendarevents.CalendarEventsPackage;
+import com.calendarevents.RNCalendarEventsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
@@ -41,8 +39,12 @@ import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+import com.reactnativecommunity.art.ARTPackage;
 
 import com.facebook.react.PackageList;
+
+import android.app.Application;
 import android.content.Context;
 import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
@@ -51,7 +53,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends MultiDexApplication implements ReactApplication {
+public class MainApplication extends Application implements ReactApplication {
 
 
   private final ReactNativeHost mReactNativeHost =
@@ -69,20 +71,21 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new ClipboardPackage(),
             new ReanimatedPackage(),
+            new ARTPackage(),
             new CookieManagerPackage(),
+            new ClipboardPackage(),
             new CameraRollPackage(),
             new RNViewShotPackage(),
             new JailMonkeyPackage(),
             new LinearGradientPackage(),
             new RNSharePackage(), new ScreenBrightnessPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
-          new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
+          new RNGestureHandlerPackage(), new RNCalendarEventsPackage(), new RNCWebViewPackage(),
           new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
-          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),
+          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),new RNDateTimePickerPackage(),
           new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
               .setInvocationEvent("none").setPrimaryColor("#0073E6").build());
     }

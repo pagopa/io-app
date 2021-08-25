@@ -22,8 +22,8 @@ HEADERS = {
 MAX_TIMEOUT = 20
 global_uris = set()
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
-tagged_people = ["<@UTVS9R0SF>"]
-SLACK_CHANNEL = "#io_status"
+tagged_people = ["<!here>"]
+SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
@@ -165,7 +165,7 @@ def send_slack_message(invalid_uris: List[IOUrl]):
         )
         if len(invalid_uris) > 0:
             tags = " ".join(tagged_people)
-            message = ":warning: %s There are %d uris in *IO App* that are not working" % (tags,len(invalid_uris))
+            message = "[URLs Check] :warning: %s There are %d uris in *IO App* that are not working" % (tags,len(invalid_uris))
             message_blocks = []
             message_blocks.append({
                 "type": "section",

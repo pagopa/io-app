@@ -61,7 +61,6 @@ const PanInputField = (props: {
   onChangeText: (text: string) => void;
 }): React.ReactElement => (
   <LabelledItem
-    type={"masked"}
     label={I18n.t("wallet.dummyCard.labels.pan")}
     inputMaskProps={{
       value: props.value,

@@ -36,7 +36,7 @@ describe("CreditCardPan", () => {
   const invalidPANs: ReadonlyArray<string> = [
     "1234 1234 1234 1234",
     "123412341234123_123",
-    "1234123412341",
+    "1234123412",
     "12341234123412341234"
   ];
 

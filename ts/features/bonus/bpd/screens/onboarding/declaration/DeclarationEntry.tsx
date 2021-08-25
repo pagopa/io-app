@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
-import { RawCheckBox } from "../../../../../../components/core/selection/RawCheckBox";
+import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
 
 const styles = StyleSheet.create({
   main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" },

@@ -12,6 +12,11 @@ export const updateNotificationsInstallationToken = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_TOKEN_UPDATE"
 )<string>();
 
+// the notification token is registered in the backend
+export const notificationsInstallationTokenRegistered = createStandardAction(
+  "NOTIFICATIONS_INSTALLATION_TOKEN_REGISTERED"
+)<string>();
+
 export const updateNotificationInstallationFailure = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE"
 )<Error>();
@@ -30,4 +35,5 @@ export type NotificationsActions =
   | ActionType<typeof updateNotificationsInstallationToken>
   | ActionType<typeof updateNotificationInstallationFailure>
   | ActionType<typeof updateNotificationsPendingMessage>
-  | ActionType<typeof clearNotificationPendingMessage>;
+  | ActionType<typeof clearNotificationPendingMessage>
+  | ActionType<typeof notificationsInstallationTokenRegistered>;

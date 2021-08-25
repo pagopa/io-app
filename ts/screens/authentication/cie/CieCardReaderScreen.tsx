@@ -14,7 +14,7 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
@@ -47,7 +47,7 @@ type NavigationParams = {
   authorizationUri: string;
 };
 
-type Props = NavigationScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<NavigationParams> &
   ReduxProps &
   ReturnType<typeof mapStateToProps>;
 
