@@ -1,6 +1,6 @@
 import { BugReporting } from "instabug-reactnative";
 
-import { RequestAssistancePayload } from "../../ContextualHelp/ContextualHelpModal";
+import { RequestAssistancePayload } from "../../ContextualHelp";
 import {
   remoteReady,
   remoteUndefined

@@ -31,7 +31,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
 import ContextualHelpModal, {
   RequestAssistancePayload
-} from "../ContextualHelp/ContextualHelpModal";
+} from "../ContextualHelp";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
