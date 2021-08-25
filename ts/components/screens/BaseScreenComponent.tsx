@@ -13,6 +13,7 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
+
 import { isTestEnv } from "../../utils/environment";
 import { TranslationKeys } from "../../../locales/locales";
 import {
@@ -29,9 +30,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { handleItemOnPress } from "../../utils/url";
-import ContextualHelpModal, {
-  RequestAssistancePayload
-} from "../ContextualHelp";
+import ContextualHelp, { RequestAssistancePayload } from "../ContextualHelp";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import {
@@ -39,6 +38,9 @@ import {
   isIoInternalLink
 } from "../ui/Markdown/handlers/link";
 import { getValueOrElse } from "../../features/bonus/bpd/model/RemoteValue";
+import { noAnalyticsRoutes } from "../../utils/analytics";
+import { mixpanelTrack } from "../../mixpanel";
+
 import { AccessibilityEvents, BaseHeader } from "./BaseHeader";
 
 /**
@@ -105,11 +107,13 @@ interface OwnProps {
   // As of now, the following prop is propagated through 4 levels
   // to finally display a checkbox in SendSupportRequestOptions
   shouldAskForScreenshotWithInitialValue?: boolean;
+
+  screenName: string;
 }
 
 type Props = OwnProps &
   ComponentProps<typeof BaseHeader> &
-  Pick<ComponentProps<typeof ContextualHelpModal>, "faqCategories">;
+  Pick<ComponentProps<typeof ContextualHelp>, "faqCategories">;
 
 interface State {
   isHelpVisible: boolean;
@@ -172,6 +176,14 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private showHelp = () => {
+    // getCurrentRouteName(store.getState().nav);
+    const SCREEN_NAME = noAnalyticsRoutes.has(this.props.screenName)
+      ? "_"
+      : this.props.screenName;
+    void mixpanelTrack("OPEN_CONTEXTUAL_HELP", {
+      SCREEN_NAME
+    });
+
     maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
     );
@@ -279,7 +291,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         />
         {children}
         {contextualHelpConfig && (
-          <ContextualHelpModal
+          <ContextualHelp
             shouldAskForScreenshotWithInitialValue={
               shouldAskForScreenshotWithInitialValue
             }

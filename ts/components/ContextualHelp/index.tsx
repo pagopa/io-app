@@ -85,7 +85,7 @@ const getContextualHelpData = (
  *
  * Optionally, the title and the content are injected from the content presented in the related clinet response.
  */
-const Index: React.FunctionComponent<Props> = (props: Props) => {
+const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   const [content, setContent] = useState<React.ReactNode>(null);
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
@@ -237,4 +237,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(instabugReportOpened({ type }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, mapDispatchToProps)(ContextualHelp);
