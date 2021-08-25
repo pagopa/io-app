@@ -47,7 +47,6 @@ import {
   AddWalletCreditCardUsingPOSTT,
   addWalletSatispayUsingPOSTDecoder,
   changePayOptionDecoder,
-  ChangePayOptionT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -91,6 +90,7 @@ import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
+import { WalletPaymentstatus } from "../../definitions/pagopa/WalletPaymentstatus";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -566,12 +566,26 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
 
+// Request type definition
+export type ChangePayOptionT = r.IPutApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly idWallet: number;
+    readonly walletPaymentstatus: WalletPaymentstatus;
+  },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2Response>
+  | r.IResponseType<400, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
+>;
+
 const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
   url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
   query: () => ({}),
-  body: ({ walletPaymentStatusRequest }) =>
-    JSON.stringify(walletPaymentStatusRequest),
+  body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
 };
@@ -788,7 +802,7 @@ export function PaymentManagerClient(
         )
       )({
         idWallet: payload.idWallet,
-        walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
+        walletPaymentstatus: { pagoPA: payload.paymentEnabled }
       })
   };
 }
