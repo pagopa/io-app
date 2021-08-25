@@ -3,7 +3,7 @@ import * as React from "react";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { pot } from "italia-ts-commons";
+import * as pot from "italia-ts-commons/lib/pot";
 import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import BPayCard from "../BPayCard";

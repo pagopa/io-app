@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../../i18n";
 import {
+  baseBackendConfig,
   baseBackendState,
   withBpdRankingConfig
 } from "../../../../../../../../store/reducers/__mock__/backendStatus";
@@ -42,6 +43,7 @@ jest.mock("@gorhom/bottom-sheet", () => ({
 describe("Bpd Summary Component graphical test for different states", () => {
   const mockStore = configureMockStore();
   MockDate.set("2020-11-04");
+  jest.useFakeTimers();
 
   it("Render Inactive period", () => {
     const store = mockStore(
@@ -447,7 +449,10 @@ export const mockBpdState = (
   backendStatus:
     bpdRankingRemoteConfig === undefined
       ? baseBackendState
-      : withBpdRankingConfig(baseBackendState, bpdRankingRemoteConfig),
+      : withBpdRankingConfig(baseBackendState, {
+          ...baseBackendConfig,
+          bpd_ranking_v2: bpdRankingRemoteConfig
+        }),
   profile: pot.none
 });
 

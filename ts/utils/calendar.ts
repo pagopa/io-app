@@ -29,7 +29,7 @@ export async function checkAndRequestPermission(): Promise<
   CalendarAuthorization
 > {
   try {
-    const status = await RNCalendarEvents.authorizationStatus();
+    const status = await RNCalendarEvents.checkPermissions();
     // If the user already selected to deny permission just return false
     if (status === "denied") {
       return { authorized: false, asked: false };
@@ -41,7 +41,7 @@ export async function checkAndRequestPermission(): Promise<
     }
 
     // In other cases ask the authorization
-    const newStatus = await RNCalendarEvents.authorizeEventStore();
+    const newStatus = await RNCalendarEvents.requestPermissions();
     return { authorized: newStatus === "authorized", asked: true };
   } catch {
     return { authorized: false, asked: false };
@@ -53,7 +53,7 @@ export async function checkAndRequestPermission(): Promise<
  */
 export async function checkCalendarPermission() {
   try {
-    const status = await RNCalendarEvents.authorizationStatus();
+    const status = await RNCalendarEvents.checkPermissions();
     // If the permission is already granted return true
     return status === "authorized";
   } catch {
@@ -127,6 +127,7 @@ export const searchEventInCalendar = async (
             evs.find(
               e =>
                 e.title === title &&
+                e.endDate &&
                 new Date(e.endDate).getDay() === endDate.getDay()
             )
           )

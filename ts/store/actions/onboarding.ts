@@ -24,12 +24,17 @@ export const clearOnboarding = createStandardAction("CLEAR_ONBOARDING")();
 
 export const emailInsert = createStandardAction("EMAIL_INSERT")();
 
+export const servicesOptinCompleted = createStandardAction(
+  "SERVICES_OPTIN_COMPLETED"
+)();
+
 type OnboardingActionTypes =
   | typeof tosAccepted
   | typeof fingerprintAcknowledge
   | typeof emailInsert
   | typeof emailAcknowledged
   | typeof abortOnboarding
-  | typeof clearOnboarding;
+  | typeof clearOnboarding
+  | typeof servicesOptinCompleted;
 
 export type OnboardingActions = ActionType<OnboardingActionTypes>;

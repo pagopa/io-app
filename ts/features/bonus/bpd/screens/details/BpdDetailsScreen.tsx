@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import DarkLayout from "../../../../../components/screens/DarkLayout";
-import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";

@@ -1,11 +1,8 @@
 import React, { ReactElement, useEffect } from "react";
 import { Provider } from "react-redux";
 import { render, RenderOptions } from "@testing-library/react-native";
-import {
-  createAppContainer,
-  NavigationContainer,
-  createStackNavigator
-} from "react-navigation";
+import { createAppContainer, NavigationNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import { Store } from "redux";
 import { NavigationInjectedProps } from "react-navigation";
 
@@ -23,7 +20,7 @@ export function renderWithRedux<S>(
 
 export // If the screen to render and test is reachable via a navigator, create an app and render it
 function renderNavContainerRedux<S>(
-  navContainer: NavigationContainer,
+  navContainer: NavigationNavigator<any, any>,
   store: Store<S>,
   renderOptions: RenderOptions
 ) {

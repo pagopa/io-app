@@ -14,7 +14,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
 import {
-  navigateToPaymentTransactionSummaryScreen,
+  navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../../store/actions/navigation";
 import {
@@ -65,23 +65,18 @@ describe("PickPaymentMethodScreen", () => {
   let store: ReturnType<typeof mockStore>;
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
-  it("should dispatch the navigateToPaymentTransactionSummaryScreen action if the cancel button is pressed", () => {
+  it("should dispatch the navigateBack action if the back button is pressed", () => {
     store = mockStore(globalState);
 
     const component = renderPickPaymentMethodScreen(store);
 
     expect(component).not.toBeNull();
-    const cancelButton = component.getByText(I18n.t("global.buttons.cancel"));
+    const cancelButton = component.getByText(I18n.t("global.buttons.back"));
 
     expect(cancelButton).not.toBeNull();
     if (cancelButton !== null) {
       fireEvent.press(cancelButton);
-      expect(store.getActions()).toEqual([
-        navigateToPaymentTransactionSummaryScreen({
-          rptId,
-          initialAmount
-        })
-      ]);
+      expect(store.getActions()).toEqual([navigateBack()]);
     }
   });
   it("should dispatch the navigateToAddPaymentMethod action if the 'add payment method' button is pressed", () => {

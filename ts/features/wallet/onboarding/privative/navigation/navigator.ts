@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import ActivateBpdOnNewPrivativeScreen from "../screens/ActivateBpdOnNewPrivativeScreen";
 import AddPrivativeCardScreen from "../screens/add/AddPrivativeCardScreen";
 import AddPrivativeCardNumberScreen from "../screens/AddPrivativeCardNumberScreen";

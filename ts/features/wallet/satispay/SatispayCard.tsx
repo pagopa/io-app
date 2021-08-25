@@ -7,15 +7,11 @@ import satispayLogoMin from "../../../../img/wallet/cards-icons/satispay.png";
 import { Body } from "../../../components/core/typography/Body";
 import { GlobalState } from "../../../store/reducers/types";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import { BrandImage } from "../component/card/BrandImage";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
-  satispayLogoMin: {
-    width: 60,
-    height: 36,
-    resizeMode: "contain"
-  },
   satispayLogoExt: {
     width: 132,
     height: 33,
@@ -31,9 +27,7 @@ const SatispayCard: React.FunctionComponent<Props> = (props: Props) => (
     bottomLeftCorner={
       <Body>{(props.nameSurname ?? "").toLocaleUpperCase()}</Body>
     }
-    bottomRightCorner={
-      <Image style={styles.satispayLogoMin} source={satispayLogoMin} />
-    }
+    bottomRightCorner={<BrandImage image={satispayLogoMin} />}
   />
 );
 

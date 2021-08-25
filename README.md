@@ -10,9 +10,8 @@
     <a href="https://codecov.io/gh/pagopa/io-app">
         <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
     </a>
-    <a href="CODE-OF-CONDUCT.md">
-        <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" />
-    </a>
+  <img src="https://img.shields.io/github/contributors-anon/pagopa/io-app" />
+  <img src="https://img.shields.io/github/repo-size/pagopa/io-app" />
 </p>
 
 <p align="center">
@@ -33,6 +32,7 @@
   - [Who develops the app?](#who-develops-the-app)
   - [Can I use the app?](#can-i-use-the-app)
   - [How can I help you?](#how-can-i-help-you)
+  - [What permissions are used by the IO app?](#what-permissions-are-used-by-the-io-app)
 - [Main technologies used](#main-technologies-used)
 - [Architecture](#architecture)
   - [SPID Authentication](#spid-authentication)
@@ -82,13 +82,85 @@ The development of the app is carried out by several contributors:
 
 ### Can I use the app?
 
-Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) or have a [CIE](https://www.cartaidentita.interno.gov.it) (support ready for Android - soon for iOS) to login to the app.
+Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) or have a [CIE](https://www.cartaidentita.interno.gov.it) to login to the app.
 
 ### How can I help you?
 
 [Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
 If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
+
+### What permissions are used by the IO app?
+
+Because different platforms have different types of Permissions below we have two sections about permissions requested by the IO app for both environments (iOS and Android). Some permissions may be defined but not used. Their presence is due to dependencies with third-party modules or because they are required by the target store.
+
+**android** 
+
+| Permission (android.permission.*)| Usage / Meaning                                                                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| INTERNET                         | Allows applications to open network sockets (e.g. simple internet connectivity)                                       |
+| ACCESS_NETWORK_STATE             | Allows applications to access information about networks (e.g. details about connection quality/state)                |
+| ACCESS_WIFI_STATE                | Allows applications to access information about WIFI state                                                            |
+| CAMERA                           | Allows applications to access device camera to scan QR codes                                                          |
+| FOREGROUND_SERVICE               | Allows applications to use foreground service                                                                         |
+| MODIFY_AUDIO_SETTINGS            | Allows an application to modify global audio settings. Related to camera usage.                                                                 |
+| NFC                              | Allows applications to perform I/O operations over NFC                                                                |
+| RECEIVE_BOOT_COMPLETED           | Allows an application to receive the Intent.ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting. Used for push notification. |
+| VIBRATE                          | Allows access to the vibrator. This allow the application to emit vibration                                           |
+| WAKE_LOCK                        | Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming. Used for push notification.                            |
+| READ_APP_BADGE                   | Notification Badges that show on app icons                                                                            |
+| READ_CALENDAR                    | Allows an application to read the user's calendar data                                                                |
+| WRITE_CALENDAR                   | Allows an application to write the user's calendar data. Used to automatically set reminders.                                                               |
+| READ_EXTERNAL_STORAGE            | Allows an application to read from external storage. Used to pick images from gallery with payment QRCode.                                                                   |
+| WRITE_EXTERNAL_STORAGE           | Allows an application to write to external storage. Used to store images, e.g.: save bonus information (QRCode for Bonus Vacanze or EuCovid Certificate, etc.)                                                                 |
+| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification                                                 |
+
+Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
+
+| Permission (manufacturer)                                               | Usage / Meaning                                                                              |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| com.anddoes.launcher.permission.UPDATE_COUNT                            | used for the notification badge                                                   |
+| com.google.android.c2dm.permission.RECEIVE                              | It is used when receiving a broadcast from GCM server that contains a GCM message. Used for push notification. |
+| com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE  | It is used by Firebase to recognize where the app was installed from              |
+| com.htc.launcher.permission.READ_SETTINGS                               | Used for the notification badge. Specific for HTC vendor.                                                  |
+| com.htc.launcher.permission.UPDATE_SHORTCUT                             | used for the notification badge                                                   |
+| com.huawei.android.launcher.permission.CHANGE_BADGE                     | Used for the notification badge. Specific for Huawei vendor.                                                   |
+| com.huawei.android.launcher.permission.READ_SETTINGS                    | used for the notification badge                                                   |
+| com.huawei.android.launcher.permission.WRITE_SETTINGS                   | used for the notification badge                                                   |
+| com.majeur.launcher.permission.UPDATE_BADGE                             | used for the notification badge                                                   |
+| com.oppo.launcher.permission.READ_SETTINGS                              | used for the notification badge                                                   |
+| com.oppo.launcher.permission.WRITE_SETTINGS                             | used for the notification badge                                                   |
+| com.sec.android.provider.badge.permission.READ                          | used for the notification badge                                                   |
+| com.sec.android.provider.badge.permission.WRITE                         | used for the notification badge                                                   |
+| com.sonyericsson.home.permission.BROADCAST_BADGE                        | used for the notification badge                                                   |
+| com.sonymobile.home.permission.PROVIDER_INSERT_BADGE                    | used for the notification badge                                                   |
+| me.everything.badger.permission.BADGE_COUNT_READ                        | used for the notification badge                                                   |
+| me.everything.badger.permission.BADGE_COUNT_WRITE                       | used for the notification badge                                                   |
+
+
+**ios**
+(more info about permissions requested by Apple [here](https://www.pivotaltracker.com/n/projects/2048617/stories/160232897))
+
+| Permission                                  | Usage / Meaning                                                                                                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| NSAppleMusicUsageDescription                | This key is required if your app uses APIs that access the user’s media library.                                                         |
+| NSBluetoothAlwaysUsageDescription           | This key is required if your app uses the device’s Bluetooth interface.                                                                  |
+| NSBluetoothPeripheralUsageDescription       | This key is required if your app uses APIs that access Bluetooth peripherals and has a deployment target earlier than iOS 13.            |
+| NSContactsUsageDescription                  | IO needs access to your contacts to let you add them in calendar events.                                                                 |
+| NSLocationAlwaysUsageDescription            | This key is required if your iOS app uses APIs that access the user’s location at all times and deploys to targets earlier than iOS 11.  |
+| NSLocationUsageDescription                  | This key is required if your app uses APIs that access the user’s location information.                                                  |
+| NSLocationWhenInUseUsageDescription         | This key is required if your iOS app uses APIs that access the user’s location information while the app is in use.                      |
+| NSMicrophoneUsageDescription                | IO needs access to the microphone in case you want to leave a voice note. Used in the assistance flow.                                                               |
+| NSMotionUsageDescription                    | This key is required if your app uses APIs that access the device’s motion data.                                                         |
+| NSCalendarsUsageDescription                 | IO needs access to the calendar to add event reminders.                                                                                  |
+| NSCameraUsageDescription                    | IO needs access to the camera to scan QR codes.                                                                                          |
+| NSFaceIDUsageDescription                    | Enable Face ID for biometric identification.                                                                                              |
+| NSPhotoLibraryAddUsageDescription           | This key is required if your app uses APIs that have write access to the user’s photo library.                                           |
+| NSPhotoLibraryUsageDescription              | IO needs access to the Photos to scan QR codes.                                                                                          |
+| NSSpeechRecognitionUsageDescription         | This key is required if your app uses APIs that send user data to Apple’s speech recognition servers. Used in the assistance flow.                                                                                        |
+| Remote  Notification                        | Request permission to receive remote push notification.                                                                                  |
+| NFC (Near Field Communication Tag Reading)  | Request NFC capability.                                                                                                                  |
+
 
 ## Main technologies used
 
@@ -126,307 +198,37 @@ In the following there are instructions to build the app in your computer for de
 
 ### Pre-requisites
 
-You need a recent macOS , Linux or Windows 10 based computer, and an Unix based development environment. On macOS and Linux this environment is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
+You need a recent macOS, Linux or Windows 10 based computer, and a Unix based development environment. On macOS and Linux this environment is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
 
 The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
 
 #### Install NodeJS and Ruby
 
-To run the project you need to install a properly version of NodeJS and ruby.
+To run the project you need to install the correct version of NodeJS and Ruby.
 
-On macOS and Linux we recommend the use of a virtual environment, such as `nodenv` for managing multiple versions of NodeJS, `rbenv` for managing multiple versions of ruby or `asdf` which can manage both under his virtual environment.
+On macOS and Linux **we recommend the use of a virtual environment**, such as
+[nodenv](https://github.com/nodenv/nodenv) for NodeJS, [rbenv](https://github.com/rbenv/rbenv) for Ruby 
+or [asdf](https://github.com/asdf-vm/asdf) which can manage both of them under its virtual environment.
 
-The node version used in this project is stored in `.node-version`, meanwhile the version of ruby is stored in `.ruby-version`.
+The node version used in this project is stored in [.node-version](.node-version), 
+while the version of Ruby is stored in [.ruby-version](.ruby-version).
 
 If you already have nodenv or rbenv installed and configured on your system, the correct version node will be set when you access the app directory.
 
-To install, follow the steps described below.
+Please **ensure that you are running the correct versions** before working on the project.
 
-#### Install nodenv
-On macOS and Linux can be useful to install [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
-
-The node version used in this project is stored in [.node-version](.node-version).
-
-If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
-
-To install, follow the steps described below.
-
-##### Install nodenv on macOS
-
-First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
-
-Install `nodenv` with the command:
-
-```
-brew install nodenv
-```
-
-Brew installs `nodenv` in the path so no more steps are needed. Check you have it available with the command `which nodenv`.
-
-##### Install nodenv on Linux 
-
-This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
-
-```
-git clone https://github.com/nodenv/nodenv-installer
-./nodenv-installer/bin/nodenv-installer
-```
-
-Add `nodenv` to the PATH, then reload the configuation as follows:
-
-```
-echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>~/.bashrc
-source ~/.bashrc
-```
-
-Check you have it available with the command `which nodenv`.
-
-#### Completing and verifying configuration
-
-Either on Mac or Linux you need to add to your shell the initialization command and reload the configuration:
-
-```
-echo 'eval "$(nodenv init -)"' >>~/.bashrc
-source ~/.bashrc
-```
-
-(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
-
-Finally you can install your version of `node` using `nodenv` (replace `<work-dir>` with your actual work directory)
-
-```
-cd <work-dir>/io-app
-nodenv install
-```
-
-You should now verify that the output of the `nodenv version` command and the version of the node in the PATH are the same as the content of the `.node-version` file. For example:
-
-```
-$ nodenv version
-12.13.0 (set by <work-dir>/io-app/.node-version)
-$ node -v
-12.13.0
-$ cat .node-version
-12.13.0
-```
-
-#### Install rbenv
-
-On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), can be useful to install [rbenv](https://github.com/rbenv/rbenv).
-
-The Ruby version used in this project is stored in [.ruby-version](.ruby-version).
-
-If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
-
-To install, follow the steps described below.
-
-##### Installing `rbenv` on macOS
-
-You should already have installed `brew` so use:
-
-```
-brew install rbenv
-```
-
-Brew installs `rbenv` in the path so no more steps are needed.
-
-##### Installing `rbenv` on Linux 
-
-This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. 
-
-```
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-mkdir ~/.rbenv/plugins
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-```
-
-Add `rbenv` to the PATH as follows then reload the intialization file
-
-```
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>~/.bashrc
-source ~/.bashrc
-```
-
-Verify you have installed it correctly with the command `which rbenv`.
-
-#### Completing and verifying configuration
-
-Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
-
-```
-echo 'eval "$(rbenv init -)"' >>~/.bashrc
-source ~/.bashrc
-```
-
-(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
-
-
-Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
-
-```
-sudo apt-get update
-sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
- ```
-
-Now you can install your version of `ruby` using `rbenv` (replace `<work-dir>` with your actual work directory)
-
-```
-cd <work-dir>/io-app
-rbenv install
-```
-
-You should verify that the output of the `rbenv version` command and the content of the file `.ruby-version` are the same:
-
-For example (replace `<work-dir>` with your actual work directory):
-
-```
-$ cd <work-dir>/io-app
-$ rbenv version
-2.4.2 (set by <work-dir>/io-app/.ruby-version)
-$ ruby -v
-ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
-$ cat .ruby-version
-2.4.2
-```
-
-#### Install asdf
-
-On macOS and Linux we may recommend the use of [asdf](https://github.com/asdf-vm/asdf) for managing multiple versions of NodeJS and Ruby under the same virtual environment.
-
-If you already have asdf installed and configured on your system, the correct version node will be set when you access the app directory.
-
-To install, follow the steps described below.
-
-##### Install asdf on macOS
-
-First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
-
-Install `asdf` with the command:
-
-```
-brew install asdf
-```
-
-Add `asdf.sh` to your shell with:
-```
-# ZSH
-echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
-
-# BASH
-echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
-```
-
-Restart your shell and check you have it available with the command `which asdf`.
-##### Install asdf on Linux 
-
-This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
-
-```
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-cd ~/.asdf
-git checkout "$(git describe --abbrev=0 --tags)"
-```
-
-Add `asdf` to the PATH, then reload the configuation as follows:
-
-```
-echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
-echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Add a `.asdfrc` file to your home directory and asdf will use the settings specified in the file. The file should be formatted like this:
-```
-legacy_version_file = yes
-```
-
-Check you have it available with the command `which asdf`.
-
-#### Completing and verifying configuration
-
-Now you have to add the specific plugins for `node` and `ruby`.
-
-```
-asdf plugin add ruby
-asdf plugin add nodejs
-```
-
-Before you can install your version of Ruby, you need a C compiler and some libraries. 
-
-##### Ubuntu or Debian based systems:
-
-Run:
-
-```
-sudo apt-get update
-sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
-```
-
-##### MacOS:
-
-Run:
-
-```
-brew install build-essential libssl-dev libreadline-dev zlib1g-dev
-brew install gnupg
-```
-Install XCode from the App Store and then run:
-
-```
-sudo xcode-select --switch /Applications/Xcode.app
-```
-
-
-
-After the compiler installation import the Node.js release team's OpenPGP keys to main keyring:
-
-```
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-```
-
-Finally you can install your version of `node` and `ruby` using `asdf` (replace `<work-dir>` with your actual work directory)
-
-```
-cd <work-dir>/io-app
-asdf install
-```
-
-You should now verify that the output of the `asdf current` command and the version of the node in the PATH are the same as the content of the `.tool-versions` file. For example:
-
-```
-$ asdf current
-nodejs         12.13.0  (set by <work-dir>/io-app/.tool-versions)
-ruby           2.4.2    (set by <work-dir>/io-app/.tool-versions)
-
-$ node -v
-v10.13.0
-
-$ ruby -v
-ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
-```
 
 #### Install yarn
 
-For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
+For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/).
 
-
-Yarn is a node application. IF you have already installed in your system version of node compatible with yarn, you can install it as a global command with:
+You can install it as a global command with:
 
 ```
 npm install -g yarn
 ```
 
-If you do not have node already installed you can install  `yarn` using `asdf` with this procedure:
-
-```
-cd <work-dir>/io-app
-asdf global nodejs 12.13.0
-npm install -g yarn
-```
-
-Now you have to login and logout again from the terminal as yarn installs the configuration in different places on macOS or Linux.
-
-Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
+Remember to set the correct version of Node in advance as suggested above.
 
 #### Install bundler and cocoapods
 
@@ -487,23 +289,11 @@ _Note: The sample configuration sets the app to interface with our test environm
 
 #### Dependencies
 
-**module for CIE authentication**
-IO uses a [react native module](https://github.com/pagopa/io-cie-sdk) to allow authentication through CIE ([Carta di Identità Elettronica](https://www.cartaidentita.interno.gov.it/))
+Note that IO uses a [react native module](https://github.com/pagopa/io-cie-sdk) to allow authentication through 
+CIE ([Carta di Identità Elettronica](https://www.cartaidentita.interno.gov.it/)).
 
-#### Create Github token
-In order to access the Github registry a Github token is needed:
 
-- Go to [Github](https://github.com) and access to your account
-- In the upper-right hand corner click your profile photo then click Settings
-- On the left sidebar, click Developer settings.
-- On the left sidebar, click Personal access tokens.
-- Click the Generate new token button and create a new token with the following permissions:
-    - read:packages
-    - write:packages
-    - delete:packages
-- Click the green Generate token button.
-
-Now you can install the libraries used by the project:
+You can install the libraries used by the project:
 
 ```
 $ bundle install
@@ -514,7 +304,7 @@ $ pod install   # skip on linux
 
 #### Generating API definitions and translations
 
-Finally, generate the definitions from the openapi specs and from the YAML translations:
+Finally, generate the definitions from the OpenAPI specs and from the YAML translations:
 
 ```
 $ yarn generate:all
@@ -534,7 +324,7 @@ $ react-native run-android
 On iOS (the simulator will be launched automatically):
 
 ```
-$ react-native run-ios
+$ yarn run-ios
 ```
 
 _Note: the app uses CocoaPods, the project to run is therefore `ItaliaApp.xcworkspace` instead of `ItaliaApp.xcodeproj` (`run-ios` will automatically detect it)._
@@ -568,14 +358,17 @@ _Note: the alpha releases on Android are automatically carried by the `alpha-rel
 
 #### iOS
 
-For this step you’ll need to have a proper iOS development certificate on your dev machine that is also installed on your physical device.
+For this step you’ll need to have a proper iOS development certificate on your dev machine that is also 
+installed on your physical device.
 
 To test the io-app on a real iOS device you must:
 1. Open the project with Xcode and modify the bundle identifier (eg: add ‘.test’ to the existing one)  
-1. Go to the 'Build Settings' tab and in the PROVISIONING_PROFILE section delete the existing ID. Then select 'ios developer' in the debug field of the 'Code Signing Identity'  
+1. Go to the 'Build Settings' tab and in the PROVISIONING_PROFILE section delete the existing ID. 
+   Then select 'ios developer' in the debug field of the 'Code Signing Identity'  
 1. In General tab select the 'Automatically Menage Signing' checkbox  
 1. You must have an Apple id developer and select it from the 'Team' drop-down menu  
-1. (Without Xcode) navigate in the io-app project and open the package.json file, in the scripts section add: _"build: ios": "react-native bundle --entry-file = 'index.js' - bundle-output = '. / ios / main.jsbundle' --dev = false --platform = 'ios' "_ 
+1. (Without Xcode) navigate in the io-app project and open the package.json file, in the scripts section 
+   add: _"build: ios": "react-native bundle --entry-file = 'index.js' - bundle-output = '. / ios / main.jsbundle' --dev = false --platform = 'ios' "_ 
 1. Open the Terminal and from the root directory project run _npm run build: ios_  
 1. In Xcode navigate in the project, select _'main.jsbundle'_ and enable the checkbox on the right labeled 'ItaliaApp'
 1. Always in Xcode select 'Product' -> 'Clean Build Folder'
@@ -585,7 +378,8 @@ To test the io-app on a real iOS device you must:
 
 ### Development with Backend App and Local Test IDP
 
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.<br/>
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
+
 If you prefer a light way to run IO app backend, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
 
 #### App Backend and test IDP installation
@@ -594,13 +388,17 @@ Follow the documentation of the repository [italia-backend](https://github.com/p
 
 #### WebView, HTTPS and self-signed certificates
 
-At the moment, react-native does not allow to open WebView on HTTPS url with a self-signed certificate. However, the test IDP uses HTTPS and a self-signed certificate. To avoid this problem, it is possible to locally install a Proxy that acts as a proxy-pass to the Backend App and the IDP.
+At the moment, react-native does not allow to open WebView on HTTPS url with a self-signed certificate.
+However, the test IDP uses HTTPS and a self-signed certificate. 
+To avoid this problem, it is possible to locally install a Proxy that acts as a proxy-pass to the Backend App 
+and the IDP.
 
 ##### Installation of mitmproxy
 
 [Mitmproxy](https://mitmproxy.org/) is a simple proxy to use and is also suitable for our purpose. For installation, follow the documentation page on the [official website](https://docs.mitmproxy.org/stable/overview-installation/).
 
-The script `scripts/mitmproxy_metro_bundler.py` allows the proxy to intercept requests to the Simulator and, only in case of specific ports, to proxy the localhost. Start the proxy with the following command:
+The script `scripts/mitmproxy_metro_bundler.py` allows the proxy to intercept requests to the Simulator and, only in 
+case of specific ports, to proxy the localhost. Start the proxy with the following command:
 
 ```
 SIMULATOR_HOST_IP=XXXXX mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s scripts/mitmproxy_metro_bundler.py
@@ -613,7 +411,7 @@ Add in place of `XXXXX`:
 
 ##### Installing the mitmproxy certificate within the emulator Android
 
-Install certificate mitmproxy within the emulator following the official  [guide](https://docs.mitmproxy.org/stable/concepts-certificates/).
+Install certificate mitmproxy within the emulator following the official [guide](https://docs.mitmproxy.org/stable/concepts-certificates/).
 
 #### Set the proxy for the connection in the Android emulator
 
@@ -624,8 +422,10 @@ In the connection configuration enter:
 
 ### Development with IO dev local server
 It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
-It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
-`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. To use it, just run these commands:<br/>
+It can be used as it is, or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).
+`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. 
+To use it, just run these commands:
+
 `cp .env.local .env && yarn postinstall`
 
 ### Update the app icons

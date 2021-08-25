@@ -14,8 +14,12 @@ import {
   profileEmailSelector,
   ProfileState
 } from "../profile";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
 const userProfileWithEmailAndValidated: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
