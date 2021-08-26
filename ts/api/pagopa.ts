@@ -90,7 +90,7 @@ import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
-import { WalletPaymentstatus } from "../../definitions/pagopa/WalletPaymentstatus";
+import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -571,7 +571,7 @@ export type ChangePayOptionT = r.IPutApiRequestType<
   {
     readonly Bearer: string;
     readonly idWallet: number;
-    readonly walletPaymentstatus: WalletPaymentstatus;
+    readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
   },
   "Content-Type" | "Authorization",
   never,
@@ -585,7 +585,8 @@ const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
   url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
   query: () => ({}),
-  body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
+  body: ({ walletPaymentStatusRequest }) =>
+    JSON.stringify(walletPaymentStatusRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
 };
@@ -802,7 +803,7 @@ export function PaymentManagerClient(
         )
       )({
         idWallet: payload.idWallet,
-        walletPaymentstatus: { pagoPA: payload.paymentEnabled }
+        walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
       })
   };
 }
