@@ -4,7 +4,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
 import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
 import {
-  EnableableFunctionsTypeEnum,
   isRawCreditCard,
   PatchedWalletV2ListResponse,
   RawPaymentMethod,
@@ -33,6 +32,7 @@ import {
   fetchWalletsSuccess,
   updatePaymentStatus
 } from "../../../actions/wallet/wallets";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -316,7 +316,7 @@ describe("getPagoPAMethodsSelector", () => {
     // eslint-disable-next-line functional/immutable-data
     updatedMethods[0] = {
       ...updatedMethods[0],
-      enableableFunctions: [EnableableFunctionsTypeEnum.pagoPA]
+      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
     };
     const withWallets = appReducer(
       undefined,
