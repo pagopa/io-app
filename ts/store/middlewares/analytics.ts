@@ -1,13 +1,20 @@
-import { constNull } from "fp-ts/lib/function";
-import { sha256 } from "react-native-sha256";
+/* eslint-disable no-fallthrough */
+// disabled in order to allows comments between the switch
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import {
+  loadAllBonusActivations,
+  loadAvailableBonuses
+} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
+import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import { mixpanel } from "../../mixpanel";
+import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted,
-  analyticsOnboardingStarted
+  analyticsAuthenticationStarted
 } from "../actions/analytics";
 import { applicationChangeState } from "../actions/application";
 import {
@@ -22,11 +29,13 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { contentServiceLoad } from "../actions/content";
+import { cieAuthenticationError } from "../actions/cie";
+import { contentMunicipalityLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
+  identificationForceLogout,
   identificationPinReset,
   identificationRequest,
   identificationStart,
@@ -35,36 +44,45 @@ import {
 import {
   loadMessage,
   loadMessages,
-  loadMessagesCancel,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
+import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
+  updateNotificationsInstallationToken,
+  notificationsInstallationTokenRegistered
 } from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess } from "../actions/pinset";
+import { createPinSuccess, updatePin } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
+  profileLoadRequest,
   profileLoadSuccess,
-  profileUpsert
+  profileUpsert,
+  removeAccountMotivation
 } from "../actions/profile";
-import { loadService, loadVisibleServices } from "../actions/services";
+import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
+  deleteUserDataProcessing,
+  upsertUserDataProcessing
+} from "../actions/userDataProcessing";
+import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
+import {
+  abortRunningPayment,
   paymentAttiva,
   paymentCheck,
-  paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentDeletePayment,
-  paymentExecutePayment,
+  paymentExecuteStart,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentInitializeState,
   paymentUpdateWalletPsp,
-  paymentVerifica
+  paymentVerifica,
+  paymentWebViewEnd
 } from "../actions/wallet/payment";
 import {
   fetchTransactionsFailure,
@@ -72,28 +90,41 @@ import {
   fetchTransactionsSuccess
 } from "../actions/wallet/transactions";
 import {
+  addCreditCardWebViewEnd,
   addWalletCreditCardFailure,
   addWalletCreditCardInit,
   addWalletCreditCardRequest,
-  creditCardCheckout3dsRequest,
-  creditCardCheckout3dsSuccess,
+  addWalletNewCreditCardFailure,
+  addWalletNewCreditCardSuccess,
   deleteWalletFailure,
   deleteWalletRequest,
   deleteWalletSuccess,
-  fetchWalletsFailure,
-  fetchWalletsRequest,
-  fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
+  refreshPMTokenWhileAddCreditCard,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../actions/wallet/wallets";
-// tslint:disable cognitive-complexity no-big-function
+
+import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
+import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
+import {
+  addCreditCardOutcomeCode,
+  paymentOutcomeCode
+} from "../actions/wallet/outcomeCode";
+import { noAnalyticsRoutes } from "../../utils/analytics";
+import { getNetworkErrorMessage } from "../../utils/errors";
+import { searchMessagesEnabled } from "../actions/search";
+import { trackContentAction } from "./contentAnalytics";
+import { trackServiceAction } from "./serviceAnalytics";
+
+// eslint-disable-next-line complexity
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-): Promise<any> => {
+): Promise<void | ReadonlyArray<null>> => {
+  // eslint-disable-next-line sonarjs/max-switch-cases
   switch (action.type) {
     //
     // Application state actions
@@ -117,29 +148,33 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         SPID_IDP_ID: action.payload.id,
         SPID_IDP_NAME: action.payload.name
       });
-    case getType(profileLoadSuccess):
-      // as soon as we have the user fiscal code, attach the mixpanel
-      // session to the hashed fiscal code of the user
-      const fiscalnumber = action.payload.fiscal_code;
-      const identify = sha256(fiscalnumber).then(hash => mp.identify(hash));
-      return Promise.all([
-        mp.track(action.type).then(constNull, constNull),
-        identify.then(constNull, constNull)
-      ]);
+
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_URL: action.payload.url
       });
 
-    case getType(profileFirstLogin):
-      return mp.track(action.type, action.payload);
-    //
-    // Wallet actions (with properties)
-    //
-    case getType(fetchWalletsSuccess):
+    // dispatch to mixpanel when the email is validated
+    case getType(profileEmailValidationChanged):
+      return mp.track(action.type, { isEmailValidated: action.payload });
+
     case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
-        count: action.payload.length
+        count: action.payload.data.length,
+        total: action.payload.total.getOrElse(-1)
+      });
+    // messages
+    case getType(loadMessages.success):
+    // end pay webview Payment (payment + onboarding credit card) actions (with properties)
+    case getType(addCreditCardWebViewEnd):
+    case getType(paymentWebViewEnd):
+      return mp.track(action.type, {
+        exitType: action.payload
+      });
+    case getType(addCreditCardOutcomeCode):
+    case getType(paymentOutcomeCode):
+      return mp.track(action.type, {
+        outCome: action.payload.getOrElse("")
       });
     //
     // Payment actions (with properties)
@@ -163,13 +198,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       // by a verifica operation that return a duplicated payment error.
       // Only in the former case we have a transaction and an amount.
       if (action.payload.kind === "COMPLETED") {
-        const amount = action.payload.transaction.amount.amount;
+        const amount = action.payload.transaction?.amount.amount;
         return mp
           .track(action.type, {
             amount,
             kind: action.payload.kind
           })
-          .then(_ => mp.trackCharge(amount));
+          .then(_ => mp.trackCharge(amount ?? -1));
       } else {
         return mp.track(action.type, {
           kind: action.payload.kind
@@ -179,12 +214,27 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Wallet / payment failure actions (reason in the payload)
     //
     case getType(addWalletCreditCardFailure):
+      return mp.track(action.type, {
+        reason: action.payload.kind,
+        // only GENERIC_ERROR could have details of the error
+        error:
+          action.payload.kind === "GENERIC_ERROR"
+            ? action.payload.reason
+            : "n/a"
+      });
+    case getType(addWalletNewCreditCardFailure):
+      return mp.track(action.type);
+
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):
     case getType(paymentCheck.failure):
       return mp.track(action.type, {
         reason: action.payload
+      });
+    case getType(updatePaymentStatus.failure):
+      return mp.track(action.type, {
+        reason: getNetworkErrorMessage(action.payload)
       });
 
     // Messages actions with properties
@@ -206,34 +256,52 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, action.payload);
 
     // logout / load message / failure
+    case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadService.failure):
-    case getType(contentServiceLoad.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
+    // Failures with reason as Error and optional description
+    case getType(cieAuthenticationError):
+      return mp.track(action.type, action.payload);
     // Failures with reason as Error
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    case getType(userMetadataUpsert.failure):
+    case getType(userMetadataLoad.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
-    case getType(loadVisibleServices.failure):
-    case getType(fetchWalletsFailure):
-    case getType(payCreditCardVerificationFailure):
+    case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsFailure):
     case getType(paymentFetchPspsForPaymentId.failure):
-    case getType(paymentExecutePayment.failure):
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
+    case getType(paymentExecuteStart.failure):
     case getType(updateNotificationInstallationFailure):
+    //  Bonus vacanze
+    case getType(loadAllBonusActivations.failure):
+    case getType(loadAvailableBonuses.failure):
       return mp.track(action.type, {
         reason: action.payload.message
       });
-
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mp.track(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale
+      });
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mp.track(action.type, action.payload);
+    // wallet
+    case getType(updatePaymentStatus.success):
+      return mp.track(action.type, {
+        pagoPA: action.payload.paymentMethod?.pagoPA
+      });
     //
     // Actions (without properties)
     //
@@ -242,11 +310,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(analyticsAuthenticationCompleted):
     case getType(loginSuccess):
     case getType(sessionInformationLoadSuccess):
-
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutSuccess):
-
     // identification
     case getType(identificationRequest):
     case getType(identificationStart):
@@ -254,42 +320,36 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationSuccess):
     case getType(identificationFailure):
     case getType(identificationPinReset):
+    case getType(identificationForceLogout):
     // onboarding
-    case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
+    case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadRequest):
+    case getType(profileLoadSuccess):
+    // userMetadata
+    case getType(userMetadataUpsert.request):
+    case getType(userMetadataUpsert.success):
+    case getType(userMetadataLoad.request):
+    case getType(userMetadataLoad.success):
     // messages
     case getType(loadMessages.request):
-
-    case getType(loadMessages.success):
-    case getType(loadMessagesCancel):
-    case getType(loadMessage.success):
-
-    // services
-    case getType(loadVisibleServices.request):
-    case getType(loadVisibleServices.success):
-
-    case getType(loadService.request):
-    case getType(loadService.success):
-
-    // content
-    case getType(contentServiceLoad.success):
+    case getType(searchMessagesEnabled):
     // wallet
-    case getType(fetchWalletsRequest):
-
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
-    case getType(payCreditCardVerificationRequest):
-    case getType(payCreditCardVerificationSuccess):
-    case getType(creditCardCheckout3dsRequest):
-    case getType(creditCardCheckout3dsSuccess):
+    case getType(addWalletNewCreditCardSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
     case getType(fetchTransactionsRequest):
+    case getType(refreshPMTokenWhileAddCreditCard.request):
+    case getType(refreshPMTokenWhileAddCreditCard.success):
+    case getType(updatePaymentStatus.request):
     // payment
+    case getType(abortRunningPayment):
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
     case getType(paymentIdPolling.request):
@@ -298,21 +358,46 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
-
+    case getType(paymentExecuteStart.request):
+    case getType(paymentExecuteStart.success):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentExecutePayment.request):
-    case getType(paymentExecutePayment.success):
-    case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
-
+    //  profile First time Login
+    case getType(profileFirstLogin):
     // other
+    case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
+    case getType(notificationsInstallationTokenRegistered):
+    case getType(loadAllBonusActivations.request):
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
       return mp.track(action.type);
+
+    case getType(loadAllBonusActivations.success):
+      return mp.track(action.type, {
+        count: action.payload.length
+      });
+
+    case getType(deleteUserDataProcessing.request):
+      return mp.track(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.success):
+      return mp.track(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
+      return mp.track(action.type, {
+        choice: action.payload.choice,
+        reason: action.payload.error.message
+      });
+    case getType(setMixpanelEnabled):
+      return mp.track(action.type, {
+        value: action.payload
+      });
   }
   return Promise.resolve();
 };
+
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
@@ -322,86 +407,56 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   if (mixpanel !== undefined) {
     // call mixpanel tracking only after we have initialized mixpanel with the
     // API token
-    trackAction(mixpanel)(action).then(constNull, constNull);
+    void trackAction(mixpanel)(action);
+    void trackBpdAction(mixpanel)(action);
+    void trackBancomatAction(mixpanel)(action);
+    // TODO: activate simultaneously with the activation of satispay
+    // void trackSatispayAction(mixpanel)(action);
+    void trackBPayAction(mixpanel)(action);
+    void trackCoBadgeAction(mixpanel)(action);
+    void trackPrivativeAction(mixpanel)(action);
+    void trackCgnAction(mixpanel)(action);
+    void trackContentAction(mixpanel)(action);
+    void trackServiceAction(mixpanel)(action);
+    void trackEuCovidCertificateActions(mixpanel)(action);
   }
   return next(action);
 };
-// gets the current screen from navigation state
-// TODO: Need to be fixed
-export function getCurrentRouteName(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.routeName &&
-    typeof navNode.routeName === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.routeName;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteName(route);
-  }
-  return undefined;
-}
 
-export function getCurrentRouteKey(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.key &&
-    typeof navNode.key === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.key;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteKey(route);
-  }
-  return undefined;
-}
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
-  https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
+  https://reactnavigation.org/docs/1.x/screen-tracking/#screen-tracking-with-redux
 */
 export function screenTracking(
   store: MiddlewareAPI
 ): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) => {
-    return (action: Action): Action => {
-      if (
-        action.type !== NavigationActions.NAVIGATE &&
-        action.type !== NavigationActions.BACK
-      ) {
-        return next(action);
+  return (next: Dispatch): ((_: Action) => Action) => (
+    action: Action
+  ): Action => {
+    if (
+      action.type !== NavigationActions.NAVIGATE &&
+      action.type !== NavigationActions.BACK
+    ) {
+      return next(action);
+    }
+    const currentScreen = getCurrentRouteName(store.getState().nav);
+    const result = next(action);
+    const nextScreen = getCurrentRouteName(store.getState().nav);
+    if (nextScreen !== currentScreen && mixpanel) {
+      if (nextScreen) {
+        setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      const currentScreen = getCurrentRouteName(store.getState().nav);
-      const result = next(action);
-      const nextScreen = getCurrentRouteName(store.getState().nav);
-      if (nextScreen !== currentScreen && mixpanel) {
-        if (nextScreen) {
-          setInstabugUserAttribute("activeScreen", nextScreen);
-        }
-        mixpanel
-          .track("SCREEN_CHANGE", {
-            SCREEN_NAME: nextScreen
-          })
-          .then(() => 0, () => 0);
+      // track only those events that are not included in the blacklist
+      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+        void mixpanel.track("SCREEN_CHANGE_V2", {
+          SCREEN_NAME: nextScreen
+        });
       }
-      return result;
-    };
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
+    }
+    return result;
   };
 }

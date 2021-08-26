@@ -39,7 +39,7 @@ export function serviceContainsText(
   );
 }
 
-// Return true if the given service is available (visible)
+// Return true if the given service is available (visible)
 export const isVisibleService = (
   visibleServices: VisibleServicesState,
   potService: pot.Pot<ServicePublic, Error>

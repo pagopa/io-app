@@ -1,9 +1,11 @@
+/**
+ * A component to show a message when there is no network connection
+ */
 import color from "color";
 import { Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-
 import I18n from "../i18n";
 import { ReduxProps } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
@@ -17,15 +19,13 @@ const styles = StyleSheet.create({
     zIndex: Platform.OS === "ios" ? 1 : undefined
   },
   inner: {
-    backgroundColor: color(customVariables.brandDarkestGray)
-      .fade(0.5)
-      .string(),
+    backgroundColor: color(customVariables.brandDarkestGray).fade(0.5).string(),
     height: 30,
     position: "absolute",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    top: Platform.OS === "ios" ? 12 : 0,
+    top: -5, // negative index to avoid overlap with the ScreenContentHeader title
     width: "100%",
     zIndex: Platform.OS === "android" ? 1 : undefined
   },
@@ -40,18 +40,15 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Implements a component that show a message when there is no network connection
- */
 const ConnectionBar: React.SFC<Props> = props => {
   if (props.isConnected) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessible={true}>
       <View style={styles.inner}>
-        <IconFont name="io-offline" style={styles.icon} />
+        <IconFont name={"io-offline"} style={styles.icon} />
         <Text style={styles.text}>{I18n.t("connection.status.offline")}</Text>
       </View>
     </View>

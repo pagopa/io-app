@@ -15,17 +15,17 @@ declare module "native-base-shoutem-theme" {
   }
 
   export type MapPropsToStyleNames = <P>(
-    styleNames: string[],
+    styleNames: Array<string>,
     props: P
   ) => ReadonlyArray<string>;
 
   /**
    * The connectStyle function does not use forwardRef.
    * To get a ref to the wrapped component you have to use _root.
-   * 
+   *
    * RT = _root Type
    */
-  export function connectStyle<RT = {}>(
+  export function connectStyle<RT>(
     componentStyleName: string,
     componentStyle = {},
     mapPropsToStyleNames: MapPropsToStyleNames,
@@ -34,7 +34,7 @@ declare module "native-base-shoutem-theme" {
 }
 
 declare module "native-base/src/utils/mapPropsToStyleNames" {
-  export default function<P>(
+  export default function <P>(
     styleNames: ReadonlyArray<string>,
     props: P
   ): ReadonlyArray<string>;
@@ -43,7 +43,7 @@ declare module "native-base/src/utils/mapPropsToStyleNames" {
 declare module "native-base/src/theme/components" {
   type Variables = any;
   type Theme = any;
-  export default function(variables: Variables): Theme;
+  export default function (variables: Variables): Theme;
 }
 
 declare module "native-base/src/theme/variables/material" {

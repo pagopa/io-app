@@ -1,8 +1,14 @@
 import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  AccessibilityRole,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  ViewStyle,
+  AccessibilityState
+} from "react-native";
 import Switch from "../../components/ui/Switch";
-
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import IconFont from "./../ui/IconFont";
@@ -18,6 +24,8 @@ type Props = Readonly<{
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
+  smallIconSize?: boolean;
+  iconOnTop?: boolean;
   iconSize?: number;
   hideIcon?: boolean;
   paddingRightDescription?: number;
@@ -30,9 +38,13 @@ type Props = Readonly<{
   switchDisabled?: boolean;
   keySwitch?: string;
   isLongPressEnabled?: boolean;
+  accessible?: boolean;
+  accessibilityLabel?: string;
+  accessibilityRole?: AccessibilityRole;
+  accessibilityState?: AccessibilityState;
+  testID?: string;
 }>;
-
-const ICON_SIZE = 24;
+const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
 
 const styles = StyleSheet.create({
@@ -66,11 +78,16 @@ const styles = StyleSheet.create({
     paddingRight: 16
   },
   disabledItem: {
-    color: customVariables.disabledService
+    color: customVariables.lightGray
   },
   description: {
-    fontSize: 14,
     paddingRight: PADDING_R_DESCRIPTION,
+    alignSelf: "flex-start"
+  },
+  center: {
+    alignSelf: "center"
+  },
+  alignToStart: {
     alignSelf: "flex-start"
   },
   badgeStyle: {
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
-    const { iconSize = ICON_SIZE } = this.props;
+    const ICON_SIZE = this.props.iconSize || DEFAULT_ICON_SIZE;
     const showDefaultIcon =
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
@@ -97,6 +114,10 @@ export default class ListItemComponent extends React.Component<Props> {
         onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
+        accessibilityLabel={this.props.accessibilityLabel}
+        accessibilityState={this.props.accessibilityState}
+        accessibilityRole={this.props.accessibilityRole}
+        testID={this.props.testID}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
@@ -128,11 +149,13 @@ export default class ListItemComponent extends React.Component<Props> {
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
                   disabled={this.props.switchDisabled}
+                  accessibilityElementsHidden
+                  importantForAccessibility="no-hide-descendants"
                 />
               ) : (
                 <IconFont
-                  name="io-right"
-                  size={iconSize}
+                  name={"io-right"}
+                  size={ICON_SIZE}
                   color={customVariables.contentPrimaryBackground}
                 />
               ))}
@@ -152,15 +175,16 @@ export default class ListItemComponent extends React.Component<Props> {
             </Text>
           )}
         </View>
-        {this.props.iconName !== undefined &&
-          this.props.hideIcon !== true && (
+        {this.props.iconName !== undefined && this.props.hideIcon !== true && (
+          <View style={this.props.iconOnTop && styles.alignToStart}>
             <IconFont
               name={this.props.iconName}
-              size={iconSize * 2}
-              style={{ alignSelf: "center" }}
+              size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
+              style={styles.center}
               color={customVariables.contentPrimaryBackground}
             />
-          )}
+          </View>
+        )}
       </ListItem>
     );
   }

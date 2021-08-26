@@ -14,7 +14,6 @@ import {
 export function withLightModalContext<P>(
   WrappedComponent: React.ComponentType<P & LightModalContextInterface>
 ) {
-  // tslint:disable-next-line:max-classes-per-file
   class WithLightModalContext extends React.Component<P> {
     public render() {
       return (

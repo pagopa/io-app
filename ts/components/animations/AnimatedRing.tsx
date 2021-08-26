@@ -29,7 +29,7 @@ export default class AnimatedRing extends React.Component<Props> {
   public componentDidMount() {
     // Here an animation is created: a ring expands its area in a time interval and repeat it infinitely.
     // The animation starts with a delay passed in the props
-    // tslint:disable-next-line: no-object-mutation
+    // eslint-disable-next-line
     this.idTimeout = setTimeout(() => {
       Animated.loop(
         Animated.timing(this.animatedValue, {

@@ -9,9 +9,13 @@ import { navigationStateSelector } from "../../../store/reducers/navigation";
 
 import ROUTES from "../../../navigation/routes";
 
+jest.mock("react-native-share", () => ({
+  open: jest.fn()
+}));
+
 describe("saveNavigationStateSaga", () => {
-  it("should not set a deep link when not in main navigator", () => {
-    return expectSaga(saveNavigationStateSaga)
+  it("should not set a deep link when not in main navigator", () =>
+    expectSaga(saveNavigationStateSaga)
       .provide([
         [
           matchers.select(navigationStateSelector),
@@ -22,8 +26,7 @@ describe("saveNavigationStateSaga", () => {
         ]
       ])
       .not.put.like({ action: { type: getType(setDeepLink) } })
-      .run();
-  });
+      .run());
   it("should set a deep link when in main navigator", () => {
     const subRoute = {
       routeName: "Test",

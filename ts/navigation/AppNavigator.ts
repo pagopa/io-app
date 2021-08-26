@@ -1,44 +1,12 @@
-import { createStackNavigator, TransitionConfig } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 
 import BackgroundScreen from "../screens/BackgroundScreen";
-import IngressScreen from "../screens/IngressScreen";
+import IngressScreen from "../screens/ingress/IngressScreen";
 import AuthenticationNavigator from "./AuthenticationNavigator";
 import MainNavigator from "./MainNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
-
-import { Animated, Easing } from "react-native";
-
-function transitionConfig(): TransitionConfig {
-  // FIXME: we should be able to skip the blue background
-  //        fading in and out when restoring the app by looking
-  //        at the scene stack
-  // transitionProps: NavigationTransitionProps,
-  // prevTransitionProps: NavigationTransitionProps,
-  // isModal: boolean
-  return {
-    transitionSpec: {
-      duration: 0,
-      timing: Animated.timing,
-      easing: Easing.step0
-    }
-    // ---
-    // transitionSpec: {
-    //   duration: 0,
-    //   easing: Easing.out(Easing.poly(4)),
-    //   timing: Animated.timing
-    // },
-    // screenInterpolator: sceneProps => {
-    //   const { position, scene } = sceneProps;
-    //   const thisSceneIndex = scene.index;
-    //   const opacity = position.interpolate({
-    //     inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-    //     outputRange: [0, 1, 0]
-    //   });
-    //   return { opacity };
-    // }
-  };
-}
 
 /**
  * The main stack of screens of the Application.
@@ -65,12 +33,17 @@ const navigator = createStackNavigator(
     [ROUTES.MAIN]: {
       // The navigator used for authenticated users on onboarding completed
       screen: MainNavigator
+    },
+    [ROUTES.WORKUNIT_GENERIC_FAILURE]: {
+      screen: WorkunitGenericFailure
     }
   },
   {
     // Let each screen handle the header and navigation
     headerMode: "none",
-    transitionConfig
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

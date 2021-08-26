@@ -1,8 +1,15 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-
-import { applyMiddleware, compose, createStore, Reducer } from "redux";
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+  Middleware,
+  Reducer,
+  Store
+} from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -14,9 +21,9 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import { isDevEnvironment } from "../config";
+import createDebugger from "redux-flipper";
 import rootSaga from "../sagas";
-import { Action, Store, StoreEnhancer } from "../store/actions/types";
+import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
@@ -24,17 +31,22 @@ import {
   authenticationPersistConfig,
   createRootReducer
 } from "../store/reducers";
+import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
+import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import { isDevEnv } from "../utils/environment";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { NotificationsState } from "../store/reducers/notifications";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 7;
+const CURRENT_REDUX_STORE_VERSION = 17;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -61,21 +73,18 @@ const migrations: MigrationManifest = {
 
   // Version 2
   // Adds messagesIdsByServiceId
-  "2": (state: PersistedState) => {
-    return addMessagesIdsByServiceId(state as PersistedGlobalState);
-  },
+  "2": (state: PersistedState) =>
+    addMessagesIdsByServiceId(state as PersistedGlobalState),
 
   // Version 3
   // we changed the entities of organizations
   "3": (state: PersistedState) => {
     const entitiesState = (state as any).entities;
     const orgNameByFiscalCode = entitiesState.organizations;
-    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => {
-      return {
-        fiscalCode: key,
-        name: orgNameByFiscalCode[key]
-      };
-    });
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => ({
+      fiscalCode: key,
+      name: orgNameByFiscalCode[key]
+    }));
 
     return {
       ...state,
@@ -91,9 +100,9 @@ const migrations: MigrationManifest = {
 
   // Version 4
   // we added a state to monitor what pagoPA environment is selected
-  "4": (state: PersistedState) => {
-    return (state as PersistedGlobalState).persistedPreferences
-      .isPagoPATestEnabled === undefined
+  "4": (state: PersistedState) =>
+    (state as PersistedGlobalState).persistedPreferences.isPagoPATestEnabled ===
+    undefined
       ? {
           ...state,
           persistedPreferences: {
@@ -103,8 +112,7 @@ const migrations: MigrationManifest = {
         }
       : {
           ...state
-        };
-  },
+        },
 
   // Version 5
   // we changed the way ToS acceptance is managed
@@ -137,42 +145,155 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => {
+  "7": (state: PersistedState) => ({
+    ...state,
+    entities: {
+      ...(state as PersistedGlobalState).entities,
+      services: {
+        ...(state as PersistedGlobalState).entities.services,
+        byId: {}
+      }
+    }
+  }),
+
+  // Version 8
+  // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
+  // they will be stored only when a service details screen is displayed
+  "8": (state: PersistedState) => ({
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      servicesMetadata: {
+        ...(state as PersistedGlobalState).content.servicesMetadata,
+        byId: {}
+      }
+    }
+  }),
+
+  // Version 9
+  // we fix a bug on the version 8 of the migration implying a no proper creation of the content segment of store
+  // (the servicesByScope state was not properly initialized)
+  "9": (state: PersistedState) => ({
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      servicesByScope: pot.none
+    }
+  }),
+  // Version 10
+  // since entities.messages are not persisted anymore, empty the related store section
+  "10": (state: PersistedState) => ({
+    ...state,
+    entities: {
+      ...(state as PersistedGlobalState).entities,
+      messages: {}
+    }
+  }),
+
+  // Version 11
+  // add the default state for isCustomEmailChannelEnabled
+  "11": (state: PersistedState) => ({
+    ...state,
+    persistedPreferences: {
+      ...(state as PersistedGlobalState).persistedPreferences,
+      isCustomEmailChannelEnabled: pot.none
+    }
+  }),
+  // Version 12
+  // change default state of isDebugModeEnabled: false
+  "12": (state: PersistedState) => ({
+    ...state,
+    debug: {
+      isDebugModeEnabled: false
+    }
+  }),
+  // Version 13
+  // add content.idpTextData
+  // set default value
+  "13": (state: PersistedState) => ({
+    ...state,
+    content: {
+      ...(state as PersistedGlobalState).content,
+      idpTextData: pot.none
+    }
+  }),
+  // Version 14
+  // remove content.idpTextData
+  // add context.contextualHelp
+  "14": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    const newContent: ContentState = {
+      servicesMetadata: content.servicesMetadata,
+      municipality: content.municipality,
+      contextualHelp: pot.none,
+      idps: remoteUndefined
+    };
     return {
       ...state,
-      entities: {
-        ...(state as PersistedGlobalState).entities,
-        services: {
-          ...(state as PersistedGlobalState).entities.services,
-          byId: {}
+      content: newContent
+    };
+  },
+  // Version 15
+  // added isMixpanelEnabled
+  "15": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
+    };
+  },
+  // Version 16
+  // default value for content.idps
+  "16": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    return {
+      ...state,
+      content: { ...content, idps: remoteUndefined }
+    };
+  },
+  // Version 17
+  // default value for new field 'registeredToken' in notifications.installation
+  "17": (state: PersistedState) => {
+    const notifications: NotificationsState = (state as PersistedGlobalState)
+      .notifications;
+    return {
+      ...state,
+      notifications: {
+        ...notifications,
+        installation: {
+          ...notifications.installation,
+          registeredToken: undefined
         }
       }
     };
   }
 };
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
-
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
+  blacklist: ["entities"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "notifications",
     "profile",
-    "entities",
     "debug",
     "persistedPreferences",
     "installation",
     "payments",
     "content",
-    "userMetadata"
+    "userMetadata",
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
+  // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
   transforms: [DateISO8601Transform, PotTransform]
 };
 
@@ -181,7 +302,11 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   Action
 >(
   rootPersistConfig,
-  createRootReducer([rootPersistConfig, authenticationPersistConfig])
+  createRootReducer([
+    rootPersistConfig,
+    authenticationPersistConfig,
+    walletsPersistConfig
+  ])
 );
 
 const logger = createLogger({
@@ -191,9 +316,10 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-const RTron = __DEV__ ? configureReactotron() : {};
+export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware(
-  __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+  // cast to any due to a type lacking
+  RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
 );
 
 /**
@@ -220,28 +346,42 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
    */
 
   const composeEnhancers =
+    // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const middlewares = applyMiddleware(
+
+  const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
     logger,
     navigationHistory,
     navigation,
     analytics.actionTracking, // generic tracker for selected redux actions
-    analytics.screenTracking // tracks screen navigation,
+    analytics.screenTracking // tracks screen navigation
+  ];
+
+  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
+    ? [createDebugger()]
+    : [];
+
+  const middlewares = applyMiddleware(
+    ...[...baseMiddlewares, ...devMiddleware]
   );
   // add Reactotron enhancer if the app is running in dev mode
-  const enhancer: StoreEnhancer = __DEV__
-    ? composeEnhancers(middlewares, RTron.createEnhancer())
-    : composeEnhancers(middlewares);
 
-  const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
-    persistedReducer,
-    enhancer
-  );
+  const enhancer: StoreEnhancer =
+    RTron && RTron.createEnhancer
+      ? composeEnhancers(middlewares, RTron.createEnhancer())
+      : composeEnhancers(middlewares);
+
+  const store: Store = createStore<
+    PersistedGlobalState,
+    Action,
+    Record<string, unknown>,
+    Record<string, unknown>
+  >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
   if (isDebuggingInChrome) {
-    // tslint:disable-next-line:no-object-mutation
+    // eslint-disable-next-line
     (window as any).store = store;
   }
 

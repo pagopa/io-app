@@ -1,3 +1,3 @@
 declare module "remark-custom-blocks" {
-  export default function(): any;
+  export default function (): any;
 }

@@ -7,7 +7,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { PaginatedServiceTupleCollection } from "../../../../../definitions/backend/PaginatedServiceTupleCollection";
-import { clearCache } from "../../../actions/profile";
 import { loadVisibleServices } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -33,9 +32,6 @@ export const visibleServicesReducer = (
     case getType(loadVisibleServices.failure):
       return pot.toError(state, action.payload);
 
-    case getType(clearCache):
-      return INITIAL_STATE;
-
     default:
       return state;
   }
@@ -44,6 +40,4 @@ export const visibleServicesReducer = (
 // Selectors
 export const visibleServicesSelector = (
   state: GlobalState
-): VisibleServicesState => {
-  return state.entities.services.visible;
-};
+): VisibleServicesState => state.entities.services.visible;

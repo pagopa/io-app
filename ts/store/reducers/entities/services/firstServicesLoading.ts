@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { FirstServiceLoadSuccess } from "../../../actions/services";
+import { firstServiceLoadSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -17,7 +17,7 @@ export const firstLoadingReducer = (
   action: Action
 ): FirstLoadingState => {
   switch (action.type) {
-    case getType(FirstServiceLoadSuccess): {
+    case getType(firstServiceLoadSuccess): {
       return {
         isFirstServicesLoadingCompleted: true
       };

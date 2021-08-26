@@ -1,63 +1,70 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
-  RptId
-} from "italia-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Content, H1, Text, View } from "native-base";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../../components/ContextualHelp";
-import { withErrorModal } from "../../../components/helpers/withErrorModal";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
+import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
-import { identificationRequest } from "../../../store/actions/identification";
 import {
+  navigateToPaymentOutcomeCode,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen
+  navigateToPaymentPickPspScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  backToEntrypointPayment,
+  abortRunningPayment,
   paymentCompletedFailure,
   paymentCompletedSuccess,
-  paymentExecutePayment,
-  paymentInitializeState,
-  runDeleteActivePaymentSaga
+  paymentExecuteStart,
+  paymentWebViewEnd,
+  PaymentWebViewEndReason
 } from "../../../store/actions/wallet/payment";
-import {
-  fetchTransactionsRequest,
-  runPollTransactionSaga
-} from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
-import {
-  isCompletedTransaction,
-  isSuccessTransaction,
-  Psp,
-  Transaction,
-  Wallet
-} from "../../../types/pagopa";
-import { AmountToImporto } from "../../../utils/amounts";
+import customVariables from "../../../theme/variables";
+import { Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
-import { formatNumberAmount } from "../../../utils/stringBuilder";
+import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { PayloadForAction } from "../../../types/utils";
+import {
+  paymentStartPayloadSelector,
+  PaymentStartWebViewPayload,
+  pmSessionTokenSelector
+} from "../../../store/reducers/wallet/payment";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
+import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
+import { H4 } from "../../../components/core/typography/H4";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
+import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
+import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
+import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
+import { OutcomeCodesKey } from "../../../types/outcomeCode";
+import { getLookUpIdPO } from "../../../utils/pmLookUpId";
+import { Link } from "../../../components/core/typography/Link";
 
-type NavigationParams = Readonly<{
+export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   verifica: PaymentRequestsGetResponse;
@@ -78,308 +85,272 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center"
   },
-
   childTwice: {
-    flex: 2
+    flex: 2,
+    alignContent: "center"
   },
-
   parent: {
     flexDirection: "row"
   },
-
   paddedLR: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   },
-
   textRight: {
     textAlign: "right"
   },
-
   divider: {
     borderTopWidth: 1,
     borderTopColor: variables.brandGray
   },
-
   textCenter: {
     textAlign: "center"
-  }
+  },
+  padded: { paddingHorizontal: customVariables.contentPadding },
+  alert: {
+    backgroundColor: customVariables.brandHighLighter,
+    paddingHorizontal: customVariables.contentPadding,
+    paddingVertical: 11,
+    flexDirection: "row"
+  },
+  alertIcon: {
+    alignSelf: "center",
+    paddingRight: 18
+  },
+  flex: { flex: 1 },
+  textColor: { color: customVariables.brandDarkGray }
 });
 
-/**
- * Returns the fee for a wallet that has a preferred psp
- */
-const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
-  fromNullable(w.psp).map(
-    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
-  );
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.whyAFee.title",
+  body: "wallet.whyAFee.text"
+};
 
-class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
-  private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
-    this.props.showModal(
+const payUrlSuffix = "/v3/webview/transactions/pay";
+const webViewExitPathName = "/v3/webview/logout/bye";
+const webViewOutcomeParamName = "outcome";
+
+const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
+  React.useEffect(() => {
+    // show a toast if we got an error while retrieving pm session token
+    if (props.retrievingSessionTokenError.isSome()) {
+      showToast(I18n.t("global.actions.retry"));
+    }
+  }, [props.retrievingSessionTokenError]);
+
+  const showHelp = () => {
+    props.showModal(
       <ContextualHelp
-        onClose={this.props.hideModal}
+        onClose={props.hideModal}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
       />
     );
   };
+  const urlPrefix = props.isPagoPATestEnabled
+    ? pagoPaApiUrlPrefixTest
+    : pagoPaApiUrlPrefix;
 
-  public render(): React.ReactNode {
-    const verifica = this.props.navigation.getParam("verifica");
-    const wallet = this.props.navigation.getParam("wallet");
+  const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
+    "verifica"
+  );
+  const wallet: Wallet = props.navigation.getParam("wallet");
+  const idPayment: string = props.navigation.getParam("idPayment");
+  const paymentReason = verifica.causaleVersamento;
+  const maybePsp = fromNullable(wallet.psp);
+  const fee = maybePsp.fold(undefined, psp => psp.fixedCost.amount);
 
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
-    );
+  const totalAmount = maybePsp.fold(
+    verifica.importoSingoloVersamento,
+    fee =>
+      (verifica.importoSingoloVersamento as number) +
+      (fee.fixedCost.amount as number)
+  );
 
-    // FIXME: it seems like we're converting a number to a string and vice versa
-    const maybeWalletFee = feeForWallet(wallet).map(
-      AmountInEuroCentsFromNumber.encode
-    );
+  // emit an event to inform the pay web view finished
+  // dispatch the outcome code and navigate to payment outcome code screen
+  const handlePaymentOutcome = (maybeOutcomeCode: Option<string>) => {
+    // the outcome is a payment done successfully
+    if (
+      maybeOutcomeCode.isSome() &&
+      isPaymentOutcomeCodeSuccessfully(
+        maybeOutcomeCode.value,
+        props.outcomeCodes
+      )
+    ) {
+      // store the rptid of a payment done
+      props.dispatchPaymentCompleteSuccessfully(
+        props.navigation.getParam("rptId")
+      );
+      // refresh transactions list
+      props.loadTransactions();
+    } else {
+      props.dispatchPaymentFailure(
+        maybeOutcomeCode.fold(undefined, oc => {
+          const maybeCode = OutcomeCodesKey.decode(oc);
+          return maybeCode.isRight() ? maybeCode.value : undefined;
+        })
+      );
+    }
+    props.dispatchEndPaymentWebview("EXIT_PATH");
+    props.dispatchPaymentOutCome(maybeOutcomeCode);
+    props.navigateToOutComePaymentScreen();
+  };
 
-    const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
-      currentAmount
-    );
-    const totalAmount = maybeWalletFee
-      // tslint:disable-next-line:restrict-plus-operands
-      .map(walletFee => currentAmountDecoded + walletFee)
-      .getOrElse(currentAmountDecoded);
+  // the user press back during the pay web view challenge
+  const handlePayWebviewGoBack = () => {
+    Alert.alert(I18n.t("payment.abortWebView.title"), "", [
+      {
+        text: I18n.t("payment.abortWebView.confirm"),
+        onPress: () => {
+          props.dispatchCancelPayment();
+          props.dispatchEndPaymentWebview("USER_ABORT");
+        },
+        style: "cancel"
+      },
+      {
+        text: I18n.t("payment.abortWebView.cancel")
+      }
+    ]);
+  };
 
-    const paymentReason = verifica.causaleVersamento;
+  const formData = props.payStartWebviewPayload
+    .map<Record<string, string | number>>(payload => ({
+      ...payload,
+      ...getLookUpIdPO()
+    }))
+    .getOrElse({});
 
-    const recipient = verifica.enteBeneficiario;
-
-    return (
-      <BaseScreenComponent
-        goBack={this.props.onCancel}
-        headerTitle={I18n.t("wallet.ConfirmPayment.header")}
-      >
-        <Content noPadded={true}>
-          <PaymentBannerComponent
-            currentAmount={currentAmount}
-            paymentReason={paymentReason}
-            recipient={recipient}
-            onCancel={this.props.onCancel}
-          />
-          <View style={styles.paddedLR}>
-            <View spacer={true} extralarge={true} />
-            <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
-            <View spacer={true} />
-            <Grid>
-              <Row>
-                <Col>
-                  <Text>{I18n.t("wallet.ConfirmPayment.partialAmount")}</Text>
-                </Col>
-                <Col>
-                  <Text bold={true} style={styles.textRight}>
-                    {formatNumberAmount(
-                      AmountInEuroCentsFromNumber.encode(currentAmount)
-                    )}
-                  </Text>
-                </Col>
-              </Row>
-              {maybeWalletFee.isSome() && (
-                <Row>
-                  <Col size={4}>
-                    <Text>
-                      {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <TouchableDefaultOpacity onPress={this.showHelp}>
-                        <Text link={true}>
-                          {I18n.t("wallet.ConfirmPayment.why")}
-                        </Text>
-                      </TouchableDefaultOpacity>
-                    </Text>
-                  </Col>
-
-                  <Col size={1}>
-                    <Text bold={true} style={styles.textRight}>
-                      {formatNumberAmount(maybeWalletFee.value)}
-                    </Text>
-                  </Col>
-                </Row>
-              )}
-              <View spacer={true} large={true} />
-              <Row style={styles.divider}>
-                <Col>
-                  <View spacer={true} large={true} />
-                  <H1>{I18n.t("wallet.ConfirmPayment.totalAmount")}</H1>
-                </Col>
-                <Col>
-                  <View spacer={true} large={true} />
-                  <H1 style={styles.textRight}>
-                    {formatNumberAmount(totalAmount)}
-                  </H1>
-                </Col>
-              </Row>
-              <View spacer={true} />
-              <Row>
-                <Col>
-                  <CardComponent
-                    type="Full"
-                    wallet={wallet}
-                    hideMenu={true}
-                    hideFavoriteIcon={true}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col size={1} />
-                <Col size={9}>
-                  <View spacer={true} large={true} />
-                  <Text style={styles.textCenter}>
-                    {wallet.psp !== undefined
-                      ? `${I18n.t("payment.currentPsp")} ${
-                          wallet.psp.businessName
-                        } `
-                      : I18n.t("payment.noPsp")}
-                    <TouchableDefaultOpacity onPress={this.props.pickPsp}>
-                      <Text link={true}>{I18n.t("payment.changePsp")}</Text>
-                    </TouchableDefaultOpacity>
-                  </Text>
-                  <View spacer={true} />
-                </Col>
-                <Col size={1} />
-              </Row>
-              <Row style={styles.divider}>
-                <Col size={1} />
-                <Col size={9}>
-                  <View spacer={true} />
-
-                  <Text style={styles.textCenter}>
-                    {I18n.t("wallet.ConfirmPayment.info")}
-                  </Text>
-                  <View spacer={true} extralarge={true} />
-                </Col>
-                <Col size={1} />
-              </Row>
-            </Grid>
-          </View>
-        </Content>
-
-        <View footer={true}>
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            onPress={() => this.props.runAuthorizationAndPayment()}
-          >
-            <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
-          </ButtonDefaultOpacity>
+  return (
+    <BaseScreenComponent
+      goBack={props.onCancel}
+      headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["payment"]}
+    >
+      <Content noPadded={true} bounces={false}>
+        <PaymentBannerComponent
+          currentAmount={verifica.importoSingoloVersamento}
+          paymentReason={paymentReason}
+          fee={fee as ImportoEuroCents}
+        />
+        <View style={styles.padded}>
           <View spacer={true} />
-          <View style={styles.parent}>
-            <ButtonDefaultOpacity
-              style={styles.child}
-              block={true}
-              cancel={true}
-              onPress={this.props.onCancel}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </ButtonDefaultOpacity>
-            <View hspacer={true} />
-            <ButtonDefaultOpacity
-              style={[styles.child, styles.childTwice]}
-              block={true}
-              light={true}
-              bordered={true}
-              onPress={() => this.props.pickPaymentMethod()}
-            >
-              <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-            </ButtonDefaultOpacity>
-          </View>
+          <CardComponent
+            type={"Full"}
+            wallet={wallet}
+            hideMenu={true}
+            hideFavoriteIcon={true}
+          />
+          <View spacer={true} />
+          {maybePsp.isNone() ? (
+            <H4 weight={"Regular"}>{I18n.t("payment.noPsp")}</H4>
+          ) : (
+            <H4 weight={"Regular"}>
+              {I18n.t("payment.currentPsp")}
+              <H4>{` ${maybePsp.value.businessName}`}</H4>
+            </H4>
+          )}
+          <Link onPress={props.pickPsp} weight={"Bold"}>
+            {I18n.t("payment.changePsp")}
+          </Link>
+          <View spacer={true} large={true} />
+          <Link onPress={showHelp} testID="why-a-fee">
+            {I18n.t("wallet.whyAFee.title")}
+          </Link>
         </View>
-      </BaseScreenComponent>
-    );
-  }
-}
+      </Content>
 
-const mapStateToProps = ({ wallet }: GlobalState) => ({
-  isLoading:
-    pot.isLoading(wallet.payment.transaction) ||
-    pot.isLoading(wallet.payment.confirmedTransaction),
-  error: pot.isError(wallet.payment.transaction)
-    ? some(wallet.payment.transaction.error.message)
-    : none
-});
+      <View style={styles.alert}>
+        <IconFont
+          style={styles.alertIcon}
+          name={"io-notice"}
+          size={24}
+          color={customVariables.brandDarkGray}
+        />
+        <Text style={[styles.flex, styles.textColor]}>
+          <Text bold={true}>{I18n.t("global.genericAlert")}</Text>
+          {` ${I18n.t("wallet.ConfirmPayment.info")}`}
+        </Text>
+      </View>
+
+      <View footer={true}>
+        <ButtonDefaultOpacity
+          block={true}
+          primary={true}
+          // a payment is running
+          disabled={props.payStartWebviewPayload.isSome()}
+          onPress={() =>
+            props.dispatchPaymentStart({
+              idWallet: wallet.idWallet,
+              idPayment,
+              language: getLocalePrimaryWithFallback()
+            })
+          }
+        >
+          <Text>{`${I18n.t(
+            "wallet.ConfirmPayment.goToPay"
+          )} ${formatNumberCentsToAmount(totalAmount, true)}`}</Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} />
+        <View style={styles.parent}>
+          <ButtonDefaultOpacity
+            style={styles.child}
+            block={true}
+            cancel={true}
+            onPress={props.onCancel}
+          >
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
+          </ButtonDefaultOpacity>
+          <View hspacer={true} />
+          <ButtonDefaultOpacity
+            style={styles.childTwice}
+            block={true}
+            bordered={true}
+            onPress={props.pickPaymentMethod}
+          >
+            <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
+          </ButtonDefaultOpacity>
+        </View>
+      </View>
+      {props.payStartWebviewPayload.isSome() && (
+        <PayWebViewModal
+          postUri={urlPrefix + payUrlSuffix}
+          formData={formData}
+          finishPathName={webViewExitPathName}
+          onFinish={handlePaymentOutcome}
+          outcomeQueryparamName={webViewOutcomeParamName}
+          onGoBack={handlePayWebviewGoBack}
+          modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
+        />
+      )}
+    </BaseScreenComponent>
+  );
+};
+
+const mapStateToProps = (state: GlobalState) => {
+  const pmSessionToken = pmSessionTokenSelector(state);
+  const paymentStartPayload = paymentStartPayloadSelector(state);
+  const payStartWebviewPayload: Option<PaymentStartWebViewPayload> =
+    isReady(pmSessionToken) && paymentStartPayload
+      ? some({ ...paymentStartPayload, sessionToken: pmSessionToken.value })
+      : none;
+  return {
+    isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+    outcomeCodes: outcomeCodesSelector(state),
+    payStartWebviewPayload,
+    isLoading: isLoading(pmSessionToken),
+    retrievingSessionTokenError: isError(pmSessionToken)
+      ? some(pmSessionToken.error.message)
+      : none
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const onTransactionTimeout = () => {
-    dispatch(backToEntrypointPayment());
-    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+  const dispatchCancelPayment = () => {
+    dispatch(abortRunningPayment());
+    showToast(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"), "success");
   };
-
-  const onTransactionValid = (tx: Transaction) => {
-    if (isSuccessTransaction(tx)) {
-      // on success:
-      dispatch(
-        navigateToTransactionDetailsScreen({
-          isPaymentCompletedTransaction: true,
-          transaction: tx
-        })
-      );
-      // signal success
-      dispatch(
-        paymentCompletedSuccess({
-          transaction: tx,
-          rptId: props.navigation.getParam("rptId"),
-          kind: "COMPLETED"
-        })
-      );
-      // reset the payment state
-      dispatch(paymentInitializeState());
-      // update the transactions state
-      dispatch(fetchTransactionsRequest());
-      // navigate to the resulting transaction details
-      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
-    } else {
-      // on failure:
-      // navigate to entrypoint of payment or wallet home
-      dispatch(backToEntrypointPayment());
-      // signal faliure
-      dispatch(paymentCompletedFailure());
-      // delete the active payment from pagoPA
-      dispatch(runDeleteActivePaymentSaga());
-      // reset the payment state
-      dispatch(paymentInitializeState());
-      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
-    }
-  };
-
-  const onIdentificationSuccess = () => {
-    dispatch(
-      paymentExecutePayment.request({
-        wallet: props.navigation.getParam("wallet"),
-        idPayment: props.navigation.getParam("idPayment"),
-        onSuccess: action => {
-          dispatch(
-            runPollTransactionSaga({
-              id: action.payload.id,
-              isValid: isCompletedTransaction,
-              onTimeout: onTransactionTimeout,
-              onValid: onTransactionValid
-            })
-          );
-        }
-      })
-    );
-  };
-
-  const runAuthorizationAndPayment = () =>
-    dispatch(
-      identificationRequest(
-        false,
-        {
-          message: I18n.t("wallet.ConfirmPayment.identificationMessage")
-        },
-        {
-          label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
-          onCancel: () => undefined
-        },
-        {
-          onSuccess: onIdentificationSuccess
-        }
-      )
-    );
   return {
     pickPaymentMethod: () =>
       dispatch(
@@ -398,7 +369,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           verifica: props.navigation.getParam("verifica"),
           idPayment: props.navigation.getParam("idPayment"),
           psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet")
+          wallet: props.navigation.getParam("wallet"),
+          chooseToChange: true
         })
       ),
     onCancel: () => {
@@ -414,34 +386,39 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         },
         buttonIndex => {
           if (buttonIndex === 0) {
-            // on cancel:
-            // navigate to entrypoint of payment or wallet home
-            dispatch(backToEntrypointPayment());
-            // delete the active payment from pagoPA
-            dispatch(runDeleteActivePaymentSaga());
-            // reset the payment state
-            dispatch(paymentInitializeState());
-            showToast(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
-              "success"
-            );
+            dispatchCancelPayment();
           }
         }
       );
     },
-    runAuthorizationAndPayment,
-    onRetry: runAuthorizationAndPayment
+    dispatchPaymentStart: (
+      payload: PayloadForAction<typeof paymentExecuteStart["request"]>
+    ) => dispatch(paymentExecuteStart.request(payload)),
+    dispatchEndPaymentWebview: (reason: PaymentWebViewEndReason) => {
+      dispatch(paymentWebViewEnd(reason));
+    },
+    dispatchCancelPayment,
+    dispatchPaymentOutCome: (outComeCode: Option<string>) =>
+      dispatch(paymentOutcomeCode(outComeCode)),
+    navigateToOutComePaymentScreen: () =>
+      dispatch(navigateToPaymentOutcomeCode()),
+    loadTransactions: () =>
+      dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
+
+    dispatchPaymentCompleteSuccessfully: (rptId: RptId) =>
+      dispatch(
+        paymentCompletedSuccess({
+          kind: "COMPLETED",
+          rptId,
+          transaction: undefined
+        })
+      ),
+    dispatchPaymentFailure: (outcomeCode: OutcomeCodesKey | undefined) =>
+      dispatch(paymentCompletedFailure(outcomeCode))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withLightModalContext(
-    withErrorModal(
-      withLoadingSpinner(ConfirmPaymentMethodScreen),
-      (_: string) => _
-    )
-  )
-);
+)(withLightModalContext(withLoadingSpinner(ConfirmPaymentMethodScreen)));

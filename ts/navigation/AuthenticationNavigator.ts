@@ -1,28 +1,32 @@
+import { NavigationRoute, NavigationRouteConfigMap } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import {
-  createStackNavigator,
-  NavigationRouteConfigMap
-} from "react-navigation";
-
+  NavigationStackOptions,
+  NavigationStackProp
+} from "react-navigation-stack/src/types";
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
-import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
-import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
-import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
-import CiePinScreen from "../screens/authentication/CiePinScreen";
-import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
-import CieValidScreen from "../screens/authentication/CieValidScreen";
+import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
+import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
+import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
+import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
+import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
+import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
+import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
-import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
-import NfcEnabledScreen from "../screens/authentication/NfcEnabledScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
+import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
 
 // Routes loaded in production mode
-const productionRouteConfigMap: NavigationRouteConfigMap = {
+const productionRouteConfigMap: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   [ROUTES.AUTHENTICATION_LANDING]: {
     screen: LandingScreen
   },
@@ -34,6 +38,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
+  },
+  [ROUTES.AUTHENTICATION_IDP_TEST]: {
+    screen: TestAuthenticationScreen
   },
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
     screen: SpidInformationScreen
@@ -48,33 +55,31 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.CIE_EXPIRED_SCREEN]: {
     screen: CieExpiredOrInvalidScreen
   },
-  // For valid cie screen
-  [ROUTES.CIE_VALID_SCREEN]: {
-    screen: CieValidScreen
-  },
-  [ROUTES.CIE_READER_SCREEN]: {
-    screen: CieCardReaderScreen
-  },
-  // For CIE success screen
-  [ROUTES.CIE_SUCCESS_SCREEN]: {
-    screen: CieSuccessScreen
-  },
-  [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
-    screen: InterruptedReadingCardScreen
-  },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen
   },
   [ROUTES.CIE_AUTHORIZE_USAGE_SCREEN]: {
     screen: CieAuthorizeDataUsageScreen
   },
-  [ROUTES.CIE_NFC_ENABLED]: {
-    screen: NfcEnabledScreen
+  [ROUTES.CIE_CARD_READER_SCREEN]: {
+    screen: CieCardReaderScreen
+  },
+  [ROUTES.CIE_CONSENT_DATA_USAGE]: {
+    screen: CieConsentDataUsageScreen
+  },
+  [ROUTES.CIE_WRONG_PIN_SCREEN]: {
+    screen: CieWrongCiePinScreen
+  },
+  [ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN]: {
+    screen: CiePinLockedTemporarilyScreen
   }
 };
 
 // Routes loaded on development mode
-const developmentRouteConfigMap: NavigationRouteConfigMap = {
+const developmentRouteConfigMap: NavigationRouteConfigMap<
+  NavigationStackOptions,
+  NavigationStackProp<NavigationRoute, any>
+> = {
   ...productionRouteConfigMap,
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
@@ -88,7 +93,10 @@ const navigator = createStackNavigator(
   environment === "DEV" ? developmentRouteConfigMap : productionRouteConfigMap,
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

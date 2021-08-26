@@ -1,6 +1,5 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Effect } from "redux-saga";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, Effect, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
@@ -14,11 +13,11 @@ import { SagaCallReturnType } from "../../types/utils";
 /**
  * Handles the logout flow
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function* watchLogoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"]
 ): Iterator<Effect> {
-  yield takeEvery(getType(logoutRequest), function*(
+  yield takeEvery(getType(logoutRequest), function* (
     action: ActionType<typeof logoutRequest>
   ) {
     // Issue a logout request to the backend, asking to delete the session

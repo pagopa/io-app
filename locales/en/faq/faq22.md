@@ -1,0 +1,2 @@
+You can at any time disable biometric recognition in the 'Profile' section of the IO app.
+Biometric recognition is already disabled if it is not available on your device, or if it has been disabled by system preferences.

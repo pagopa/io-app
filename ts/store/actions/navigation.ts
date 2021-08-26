@@ -7,23 +7,35 @@ import {
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
+import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
-import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
-import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
+import FingerprintScreen from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
+import AddCreditCardOutcomeCodeMessage from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
+import CreditCardOnboardingAttemptDetailScreen from "../../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptDetailScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
+import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
+import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
-import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
+import {
+  BancomatPaymentMethod,
+  BPayPaymentMethod,
+  CreditCardPaymentMethod,
+  PrivativePaymentMethod,
+  SatispayPaymentMethod
+} from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
+import OnboardingServicesPreferenceScreen from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
+import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -55,6 +67,12 @@ export const navigateToMainNavigatorAction = StackActions.reset({
   ]
 });
 
+export const navigateBack = NavigationActions.back;
+
+/**
+ * Authentication
+ */
+
 export const navigateToIdpSelectionScreenAction = NavigationActions.navigate({
   routeName: ROUTES.AUTHENTICATION,
   action: NavigationActions.navigate({
@@ -80,30 +98,36 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToEmailValidateScreen = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING,
-  action: NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
-  })
-});
+export const navigateToOnboardingServicePreferenceCompleteAction = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+  });
 
-export const navigateToEmailReadScreen = (
-  params: InferNavigationParams<typeof EmailReadScreen>
+export const navigateToServicesPreferenceModeSelectionScreen = (
+  params: InferNavigationParams<typeof OnboardingServicesPreferenceScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.READ_EMAIL_SCREEN,
+    routeName: ROUTES.ONBOARDING_SERVICES_PREFERENCE,
     params
   });
 
-export const navigateBack = NavigationActions.back;
+/**
+ * Email
+ */
 
-export const navigateToEmailInsertScreen = (
-  params: InferNavigationParams<typeof EmailInsertScreen>
-) =>
+export const navigateToEmailReadScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.INSERT_EMAIL_SCREEN,
-    params
+    routeName: ROUTES.READ_EMAIL_SCREEN
   });
+
+export const navigateToEmailInsertScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.INSERT_EMAIL_SCREEN
+  });
+
+/**
+ * Message
+ */
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
@@ -111,6 +135,23 @@ export const navigateToMessageDetailScreenAction = (
   NavigationActions.navigate({
     routeName: ROUTES.MESSAGE_DETAIL,
     params
+  });
+
+export const navigateToMessageRouterScreen = (
+  params: InferNavigationParams<typeof MessageDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.MESSAGE_ROUTER,
+    params
+  });
+
+/**
+ * Service
+ */
+
+export const navigateToServiceHomeScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.SERVICES_HOME
   });
 
 export const navigateToServiceDetailsScreen = (
@@ -121,15 +162,57 @@ export const navigateToServiceDetailsScreen = (
     params
   });
 
-export const navigateToFingerprintPreferenceScreen = () =>
+/**
+ * Profile
+ */
+
+export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
+    routeName: ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING
+  });
+
+export const navigateToServicePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_SERVICES
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
+
+export const navigateToLanguagePreferenceScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PREFERENCES_LANGUAGE
+  });
+
+export const navigateToLogout = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_LOGOUT
+  });
+
+export const navigateToRemoveAccountSuccess = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS
+  });
+
+export const navigateToRemoveAccountDetailScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS
+  });
+
+export const navigateToPrivacyScreen = NavigationActions.navigate({
+  routeName: ROUTES.PROFILE_PRIVACY_MAIN,
+  action: NavigationActions.navigate({ routeName: ROUTES.PROFILE_PRIVACY_MAIN })
+});
+
+export const navigateToPrivacyShareData = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PROFILE_PRIVACY_SHARE_DATA
+  });
+/**
+ * Wallet & Payments
+ */
 
 export const navigateToPaymentTransactionSummaryScreen = (
   params: InferNavigationParams<typeof TransactionSummaryScreen>
@@ -155,12 +238,14 @@ export const navigateToPaymentPickPaymentMethodScreen = (
     params
   });
 
-// TODO: this should use StackActions.reset
-// to reset the navigation. Right now, the
-// "back" option is not allowed -- so the user cannot
-// get back to previous screens, but the navigation
-// stack should be cleaned right here
-// @https://www.pivotaltracker.com/story/show/159300579
+export const navigateToTransactionSuccessScreen = (
+  params: InferNavigationParams<typeof TransactionSuccessScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_SUCCESS,
+    params
+  });
+
 export const navigateToTransactionDetailsScreen = (
   params: InferNavigationParams<typeof TransactionDetailsScreen>
 ) =>
@@ -169,12 +254,50 @@ export const navigateToTransactionDetailsScreen = (
     params
   });
 
-export const navigateToWalletTransactionsScreen = (
-  params: InferNavigationParams<typeof TransactionsScreen>
+export const navigateToCreditCardDetailScreen = (
+  params: InferNavigationParams<typeof CreditCardDetailScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_CARD_TRANSACTIONS,
+    routeName: ROUTES.WALLET_CREDIT_CARD_DETAIL,
     params
+  });
+
+export const navigateToBancomatDetailScreen = (
+  bancomat: BancomatPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BANCOMAT_DETAIL,
+    params: { bancomat }
+  });
+
+export const navigateToSatispayDetailScreen = (
+  satispay: SatispayPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_SATISPAY_DETAIL,
+    params: { satispay }
+  });
+
+export const navigateToBPayDetailScreen = (bPay: BPayPaymentMethod) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_BPAY_DETAIL,
+    params: { bPay }
+  });
+
+export const navigateToCobadgeDetailScreen = (
+  cobadge: CreditCardPaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_COBADGE_DETAIL,
+    params: { cobadge }
+  });
+
+export const navigateToPrivativeDetailScreen = (
+  privative: PrivativePaymentMethod
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+    params: { privative }
   });
 
 export const navigateToPaymentPickPspScreen = (
@@ -193,14 +316,28 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     params
   });
 
-export const navigateToWalletHome = () =>
+export const navigateToPaymentHistoryDetail = (
+  params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_HOME
+    routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+    params
   });
 
-export const navigateToWalletList = () =>
+export const navigateToCreditCardOnboardingAttempt = (
+  params: InferNavigationParams<typeof CreditCardOnboardingAttemptDetailScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_LIST
+    routeName: ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL,
+    params
+  });
+
+export const navigateToWalletHome = (
+  params?: InferNavigationParams<typeof WalletHomeScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_HOME,
+    params
   });
 
 export const navigateToWalletAddPaymentMethod = (
@@ -209,6 +346,11 @@ export const navigateToWalletAddPaymentMethod = (
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_ADD_PAYMENT_METHOD,
     params
+  });
+
+export const navigateToWalletAddDigitalPaymentMethod = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
   });
 
 export const navigateToWalletAddCreditCard = (
@@ -240,27 +382,55 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
+export const navigateToAddCreditCardOutcomeCode = (
+  params: InferNavigationParams<typeof AddCreditCardOutcomeCodeMessage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE,
+    params
+  });
+
+export const navigateToPaymentOutcomeCode = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_OUTCOMECODE_MESSAGE
+  });
+
+/**
+ * CIE
+ */
+
 export const navigateToCieInvalidScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_EXPIRED_SCREEN
   });
 
-export const navigateToCieValid = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_VALID_SCREEN
-  });
-
-export const navigateToCieSuccessScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_SUCCESS_SCREEN
-  });
-
-export const navigateToInterruptedReadingCie = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
-  });
-
 export const navigateToCiePinScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_PIN_SCREEN
+  });
+
+export const navigateToCieCardReaderScreen = (
+  params?: InferNavigationParams<typeof CieCardReaderScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_CARD_READER_SCREEN,
+    params
+  });
+
+export const navigateToWorkunitGenericFailureScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.WORKUNIT_GENERIC_FAILURE
+  });
+
+/**
+ * SPID
+ */
+export const navigateToSPIDTestIDP = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_TEST
+  });
+
+export const navigateToSPIDLogin = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_LOGIN
   });

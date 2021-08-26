@@ -33,12 +33,13 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export function* fetchUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
-): IterableIterator<Effect | Either<Error, BackendUserMetadata>> {
+): Generator<
+  Effect,
+  Either<Error, BackendUserMetadata>,
+  SagaCallReturnType<typeof getUserMetadata>
+> {
   try {
-    const response: SagaCallReturnType<typeof getUserMetadata> = yield call(
-      getUserMetadata,
-      {}
-    );
+    const response = yield call(getUserMetadata, {});
 
     // Can't decode response
     if (response.isLeft()) {
@@ -48,18 +49,18 @@ export function* fetchUserMetadata(
     if (response.value.status !== 200) {
       if (response.value.status === 204) {
         // Return an empty object cause profile has no metadata yet (204 === No Content)
-        return right(emptyUserMetadata);
+        return right<Error, BackendUserMetadata>(emptyUserMetadata);
       }
 
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
-      return left(Error(error));
+      return left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right(response.value.value);
+    return right<Error, BackendUserMetadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, BackendUserMetadata>(error);
   }
 }
 
@@ -70,14 +71,19 @@ export function* fetchUserMetadata(
 export function* loadUserMetadata(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"],
   setLoading: boolean = false
-): IterableIterator<Effect | Option<UserMetadata>> {
+): Generator<
+  Effect,
+  Option<UserMetadata>,
+  SagaCallReturnType<typeof fetchUserMetadata>
+> {
   if (setLoading) {
     yield put(userMetadataLoad.request());
   }
 
-  const backendUserMetadataOrError: SagaCallReturnType<
-    typeof fetchUserMetadata
-  > = yield call(fetchUserMetadata, getUserMetadata);
+  const backendUserMetadataOrError = yield call(
+    fetchUserMetadata,
+    getUserMetadata
+  );
 
   if (backendUserMetadataOrError.isLeft()) {
     yield put(userMetadataLoad.failure(backendUserMetadataOrError.value));
@@ -116,7 +122,7 @@ export function* watchLoadUserMetadata(
 /**
  * Call loadUserMetadata saga.
  */
-export function* loadUserMetadataManager(
+function* loadUserMetadataManager(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ) {
   yield fork(loadUserMetadata, getUserMetadata);
@@ -130,11 +136,13 @@ export function* postUserMetadata(
     typeof BackendClient
   >["createOrUpdateUserMetadata"],
   backendUserMetadata: BackendUserMetadata
-): IterableIterator<Effect | Either<Error, BackendUserMetadata>> {
+): Generator<
+  Effect,
+  Either<Error, BackendUserMetadata>,
+  SagaCallReturnType<typeof createOrUpdateUserMetadata>
+> {
   try {
-    const response: SagaCallReturnType<
-      typeof createOrUpdateUserMetadata
-    > = yield call(createOrUpdateUserMetadata, {
+    const response = yield call(createOrUpdateUserMetadata, {
       userMetadata: backendUserMetadata
     });
 
@@ -147,12 +155,12 @@ export function* postUserMetadata(
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
-      return left(Error(error));
+      return left<Error, BackendUserMetadata>(Error(error));
     }
 
-    return right(response.value.value);
+    return right<Error, BackendUserMetadata>(response.value.value);
   } catch (error) {
-    return left(error);
+    return left<Error, BackendUserMetadata>(error);
   }
 }
 
@@ -166,14 +174,14 @@ export function* upsertUserMetadata(
   >["createOrUpdateUserMetadata"],
   userMetadata: UserMetadata,
   setLoading: boolean = false
-): IterableIterator<Effect | Option<UserMetadata>> {
+): Generator<Effect, Option<UserMetadata>, any> {
   if (setLoading) {
     yield put(userMetadataUpsert.request(userMetadata));
   }
 
-  const currentUserMetadata: ReturnType<
-    typeof userMetadataSelector
-  > = yield select(userMetadataSelector);
+  const currentUserMetadata: ReturnType<typeof userMetadataSelector> = yield select(
+    userMetadataSelector
+  );
 
   // The version of the new userMetadata must be one more
   // the old one.
@@ -192,9 +200,7 @@ export function* upsertUserMetadata(
   }
 
   // Call the saga that perform the API request.
-  const updatedBackendUserMetadataOrError: SagaCallReturnType<
-    typeof postUserMetadata
-  > = yield call(
+  const updatedBackendUserMetadataOrError: SagaCallReturnType<typeof postUserMetadata> = yield call(
     postUserMetadata,
     createOrUpdateUserMetadata,
     // Backend stores the metadata as a plain string

@@ -1,32 +1,35 @@
-/**
- * A screen that allow the user to set the PIN.
- */
-
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-
 import Pinpad from "../../components/Pinpad";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
-import TextWithIcon from "../../components/ui/TextWithIcon";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPinSuccess } from "../../store/actions/pinset";
-import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
+import { maybeNotNullyString } from "../../utils/strings";
+import { GlobalState } from "../../store/reducers/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { AlertModal } from "../../components/ui/AlertModal";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReduxProps & OwnProps;
+type Props = NavigationStackScreenProps &
+  LightModalContextInterface &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -34,13 +37,13 @@ type PinUnselected = {
 
 type PinSelected = {
   state: "PinSelected";
-  // User selected PIN
+  // User selected unlock code
   pin: PinString;
 };
 
 type PinConfirmError = {
   state: "PinConfirmError";
-  // User confirmed a wrong PIN
+  // User confirmed a wrong unlock code
   pin: PinString;
 };
 
@@ -64,15 +67,31 @@ type PinState =
 
 type State = {
   pinState: PinState;
+  errorDescription?: string;
 };
 
 const styles = StyleSheet.create({
-  header: { lineHeight: 40 }
+  header: {
+    fontSize: 20,
+    lineHeight: 22
+  },
+  description: { lineHeight: 22 }
 });
 
-class PinScreen extends React.Component<Props, State> {
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.unlockCode.contextualHelpTitle",
+  body: "onboarding.unlockCode.contextualHelpContent"
+};
+const accessibilityTimeout = 100 as Millisecond;
+const instabuglogTag = "pin-creation";
+/**
+ * A screen that allows the user to set the unlock code.
+ */
+class PinScreen extends React.PureComponent<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
-
+  private headerRef = React.createRef<Text>();
+  private confirmationStatusRef = React.createRef<Text>();
+  private continueButtonRef = React.createRef<View>();
   constructor(props: Props) {
     super(props);
 
@@ -85,17 +104,32 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Method called when the first CodeInput is filled
-  public onPinFulfill = (code: PinString) =>
-    this.setState({
-      pinState: {
-        state: "PinSelected",
-        pin: code
-      }
-    });
+  public onPinFulfill = (code: PinString) => {
+    instabugLog(
+      `onPinFulfill: len ${code.length} - state PinSelected`,
+      TypeLogs.DEBUG,
+      instabuglogTag
+    );
+    this.setState(
+      {
+        pinState: {
+          state: "PinSelected",
+          pin: code
+        }
+      },
+      // set focus on header to read "type inserted pin again..."
+      () => setAccessibilityFocus(this.headerRef, accessibilityTimeout)
+    );
+  };
 
   // Method called when the confirmation CodeInput is valid and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
     if (this.state.pinState.state === "PinConfirmed") {
+      instabugLog(
+        `onPinConfirmRemoveLastDigit - state PinSelected`,
+        TypeLogs.DEBUG,
+        instabuglogTag
+      );
       const pinState: PinSelected = {
         ...this.state.pinState,
         state: "PinSelected"
@@ -108,76 +142,119 @@ class PinScreen extends React.Component<Props, State> {
 
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
-    // If the inserted PIN do not match we clear the component to let the user retry
+    instabugLog(
+      `onPinConfirmFulfill len ${code.length} valid ${isValid}`,
+      TypeLogs.DEBUG,
+      instabuglogTag
+    );
+    // If the inserted unlock code do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
       this.pinConfirmComponent.debounceClear();
       if (
         this.state.pinState.state === "PinSelected" ||
         this.state.pinState.state === "PinConfirmed"
       ) {
+        instabugLog(
+          `onPinConfirmFulfill - state PinConfirmError`,
+          TypeLogs.DEBUG,
+          instabuglogTag
+        );
         const pinConfirmError: PinConfirmError = {
           ...this.state.pinState,
           state: "PinConfirmError"
         };
-        this.setState({
-          pinState: pinConfirmError
-        });
+        this.setState(
+          {
+            pinState: pinConfirmError,
+            errorDescription: I18n.t("onboarding.unlockCode.confirmInvalid")
+          },
+          () => {
+            // set focus on label to read about the error
+            setAccessibilityFocus(this.confirmationStatusRef);
+          }
+        );
+      } else if (this.state.pinState.state === "PinConfirmError") {
+        // another pin confirm error, set focus on label to read about the error
+        setAccessibilityFocus(this.confirmationStatusRef);
       }
       return;
     }
-    this.setState({
-      pinState: {
-        state: "PinConfirmed",
-        pin: code
+    instabugLog(
+      `onPinConfirmFulfill - state PinConfirmed`,
+      TypeLogs.DEBUG,
+      instabuglogTag
+    );
+    this.setState(
+      {
+        pinState: {
+          state: "PinConfirmed",
+          pin: code
+        },
+        errorDescription: undefined
+      },
+      () => {
+        // set focus on "continue" button
+        setAccessibilityFocus(this.continueButtonRef);
       }
-    });
+    );
   };
 
-  public onPinReset() {
-    this.setState({
-      pinState: {
-        state: "PinUnselected"
-      }
+  private renderErrorDescription = () =>
+    maybeNotNullyString(this.state.errorDescription).fold(undefined, des => {
+      // wait 100ms to set focus
+      setAccessibilityFocus(this.confirmationStatusRef, accessibilityTimeout);
+      return (
+        <Text
+          ref={this.confirmationStatusRef}
+          alignCenter={true}
+          bold={true}
+          white={false}
+          primary={true}
+          accessible={true}
+        >
+          {des}
+        </Text>
+      );
     });
+
+  public onPinReset() {
+    this.setState(
+      {
+        pinState: {
+          state: "PinUnselected"
+        },
+        errorDescription: undefined
+      },
+      () => {
+        setAccessibilityFocus(this.headerRef, accessibilityTimeout);
+      }
+    );
   }
 
-  // Render a different header when the user need to confirm the PIN
+  // Render a different header when the user need to confirm the unlock code
   public renderContentHeader(pinState: PinState) {
-    if (pinState.state === "PinUnselected") {
-      return (
-        <H3 style={styles.header}>{I18n.t("onboarding.pin.contentTitle")}</H3>
-      );
-    } else {
-      return (
-        <H3 style={styles.header}>
-          {I18n.t("onboarding.pin.contentTitleConfirm")}
-        </H3>
-      );
-    }
-  }
-
-  // Render the PIN match/doesn't match feedback message
-  public renderCodeInputConfirmValidation() {
-    const state = this.state.pinState.state;
-    if (state !== "PinConfirmed" && state !== "PinConfirmError") {
-      return undefined;
-    }
-    const validationMessage =
-      state === "PinConfirmed" ? (
-        <TextWithIcon success={true}>
-          <IconFont name="io-tick-big" />
-          <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
-        </TextWithIcon>
-      ) : (
-        <TextWithIcon danger={true}>
-          <IconFont name="io-close" />
-          <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
-        </TextWithIcon>
-      );
     return (
       <React.Fragment>
-        <View spacer={true} extralarge={true} />
-        {validationMessage}
+        <Text
+          style={styles.header}
+          alignCenter={true}
+          bold={true}
+          dark={true}
+          ref={this.headerRef}
+        >
+          {I18n.t(
+            pinState.state === "PinUnselected"
+              ? "onboarding.unlockCode.contentTitle"
+              : "onboarding.unlockCode.contentTitleConfirm"
+          )}
+        </Text>
+        <Text alignCenter={true} dark={true}>
+          {I18n.t(
+            pinState.state === "PinUnselected"
+              ? "onboarding.unlockCode.contentSubtitle"
+              : "onboarding.unlockCode.contentTitleConfirmSubtitle"
+          )}
+        </Text>
       </React.Fragment>
     );
   }
@@ -186,33 +263,31 @@ class PinScreen extends React.Component<Props, State> {
   public renderCodeInput(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
       /**
-       * The component that allows the user to SELECT the PIN.
+       * The component that allows the user to SELECT the unlock code.
        */
       return (
         <Pinpad
           inactiveColor={variables.brandLightGray}
-          activeColor={variables.brandDarkGray}
+          activeColor={variables.contentPrimaryBackground}
           onFulfill={this.onPinFulfill}
-          buttonType="light"
+          buttonType={"light"}
         />
       );
     } else {
       /**
-       * The component that allows the user to CONFIRM the PIN.
+       * The component that allows the user to CONFIRM the unlock code.
        */
       return (
         <React.Fragment>
           <Pinpad
             inactiveColor={variables.brandLightGray}
-            activeColor={variables.brandDarkGray}
+            activeColor={variables.contentPrimaryBackground}
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
-            ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
-            buttonType="light"
+            ref={pinpad => (this.pinConfirmComponent = pinpad)} // eslint-disable-line
+            buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
-
-          {this.renderCodeInputConfirmValidation()}
         </React.Fragment>
       );
     }
@@ -223,41 +298,39 @@ class PinScreen extends React.Component<Props, State> {
     return (
       <Content>
         {this.renderContentHeader(pinState)}
+        {this.renderErrorDescription()}
         {this.renderCodeInput(pinState)}
-        {this.renderDescription(pinState)}
+        {this.renderDescription()}
       </Content>
     );
   }
 
   // Render the description for the different states
-  public renderDescription(pinState: PinState) {
-    if (pinState.state === "PinUnselected") {
-      return <Text>{I18n.t("onboarding.pin.pinInfo")}</Text>;
-    } else {
-      return <Text>{I18n.t("onboarding.pin.pinInfoSelected")}</Text>;
-    }
+  public renderDescription() {
+    return (
+      <Text alignCenter={true} style={styles.description}>
+        {I18n.t("onboarding.unlockCode.pinInfo")}
+      </Text>
+    );
   }
 
   public renderContinueButton(pinState: PinState) {
     if (pinState.state !== "PinConfirmed") {
-      return;
+      return undefined;
     }
 
-    const { pin } = pinState;
-
-    const onPress = () => this.setPin(pin);
     return (
-      <React.Fragment>
+      <View accessible={true} ref={this.continueButtonRef}>
         <ButtonDefaultOpacity
           block={true}
           primary={true}
           disabled={false}
-          onPress={onPress}
+          onPress={() => this.setPin(pinState.pin)}
         >
-          <Text>{I18n.t("onboarding.pin.continue")}</Text>
+          <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
-      </React.Fragment>
+      </View>
     );
   }
 
@@ -273,8 +346,9 @@ class PinScreen extends React.Component<Props, State> {
               block={true}
               bordered={true}
               onPress={() => this.onPinReset()}
+              // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
             >
-              <Text>{I18n.t("onboarding.pin.reset")}</Text>
+              <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
             </ButtonDefaultOpacity>
           </React.Fragment>
         )}
@@ -282,7 +356,11 @@ class PinScreen extends React.Component<Props, State> {
     );
   }
 
-  private handleGoBack = () =>
+  private handleGoBack = () => {
+    if (this.props.isOnboardingCompleted) {
+      this.props.navigation.goBack();
+      return;
+    }
     Alert.alert(
       I18n.t("onboarding.alert.title"),
       I18n.t("onboarding.alert.description"),
@@ -294,10 +372,19 @@ class PinScreen extends React.Component<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding())
+          onPress: this.props.abortOnboarding
         }
       ]
     );
+  };
+
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
 
   public render() {
     const { pinState } = this.state;
@@ -305,6 +392,8 @@ class PinScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         {this.renderContent(pinState)}
@@ -314,6 +403,7 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   private setPin = (pin: PinString) => {
+    instabugLog(`setPin - state PinSaved`, TypeLogs.DEBUG, instabuglogTag);
     this.setState({
       pinState: {
         state: "PinSaved",
@@ -321,28 +411,57 @@ class PinScreen extends React.Component<Props, State> {
         savedPin: pot.noneLoading
       }
     });
-    setPin(pin).then(
-      _ => {
-        this.setState({
-          pinState: {
-            state: "PinSaved",
-            pin,
-            savedPin: pot.some(pin)
+    setPin(pin)
+      .then(
+        _ => {
+          this.setState({
+            pinState: {
+              state: "PinSaved",
+              pin,
+              savedPin: pot.some(pin)
+            }
+          });
+          instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
+          this.props.createPinSuccess(pin);
+          // user is updating his/her pin inside the app, go back
+          if (this.props.isOnboardingCompleted) {
+            // We need to ask the user to restart the app
+            this.showModal();
+            this.props.navigation.goBack();
           }
-        });
-        this.props.dispatch(createPinSuccess(pin));
-      },
-      _ =>
-        // TODO: show toast
-        this.setState({
-          pinState: {
-            state: "PinSaved",
-            pin,
-            savedPin: pot.noneError("error")
-          }
-        })
-    );
+        },
+        _ => {
+          instabugLog(`setPin error`, TypeLogs.DEBUG, instabuglogTag);
+          // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
+          this.setState({
+            pinState: {
+              state: "PinSaved",
+              pin,
+              savedPin: pot.noneError("error")
+            }
+          });
+        }
+      )
+      .catch(e => {
+        instabugLog(
+          `setPin error ${e ? e.toString() : ""}`,
+          TypeLogs.DEBUG,
+          instabuglogTag
+        );
+      });
   };
 }
 
-export default connect()(PinScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),
+  abortOnboarding: () => dispatch(abortOnboarding())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(PinScreen));

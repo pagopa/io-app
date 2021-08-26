@@ -1,27 +1,33 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
 import {
+  ActivityIndicator,
   Animated,
   FlatList,
   ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
-
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
+import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
-import customVariables from "../../theme/variables";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
@@ -58,6 +64,7 @@ type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
   longPressedItemIndex: Option<number>;
+  isFirstLoad: boolean;
 };
 
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
@@ -72,43 +79,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
   },
-
-  itemWithoutCTABarContainer: {
-    display: "flex",
-    flex: 1,
-    height: ITEM_WITHOUT_CTABAR_HEIGHT
-  },
-
-  itemWithCTABarContainer: {
-    display: "flex",
-    flex: 1,
-    height: ITEM_WITH_CTABAR_HEIGHT
-  },
-
-  itemSeparator: {
-    height: 1,
-    backgroundColor: customVariables.brandLightGray
-  },
-
   itemLoadingHeaderWrapper: {
     flexDirection: "row",
     marginBottom: 4
   },
-
   itemLoadingHeaderCenter: {
     flex: 1,
     paddingRight: 55 // Includes right header space
   },
-
   itemLoadingContentWrapper: {
     flexDirection: "row",
     alignItems: "center",
     height: 42
   },
-
   itemLoadingContentCenter: {
     flex: 1,
     paddingRight: 32
+  },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
+  },
+  activityIndicator: {
+    padding: 12
   }
 });
 
@@ -127,9 +119,9 @@ const getItemHeight = (messageState: MessageState): number => {
 };
 
 const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
-  // tslint:disable-next-line: no-let
+  // eslint-disable-next-line
   let offset = 0;
-  // tslint:disable-next-line: readonly-array
+  // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
 
   messageStates.forEach((messageState, index) => {
@@ -140,6 +132,7 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
         ? itemHeight
         : itemHeight + ITEM_SEPARATOR_HEIGHT;
 
+    // eslint-disable-next-line functional/immutable-data
     itemLayouts.push({
       length: itemHeightWithSeparator,
       offset,
@@ -183,15 +176,16 @@ const MessageListItemPlaceholder = (
   </View>
 );
 
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MessageList extends React.Component<Props, State> {
-  private flatListRef = React.createRef<typeof AnimatedFlatList>();
+  private flatListRef = React.createRef<FlatList>();
 
   private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current.getNode().scrollToIndex({ animated, index });
+      this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
 
@@ -199,7 +193,8 @@ class MessageList extends React.Component<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      longPressedItemIndex: none
+      longPressedItemIndex: none,
+      isFirstLoad: Platform.OS === "ios" // considering firstLoad only when running device is iOS
     };
   }
 
@@ -220,15 +215,14 @@ class MessageList extends React.Component<Props, State> {
     return null;
   }
 
-  private renderItem = (info: ListRenderItemInfo<MessageState>) => {
-    const { meta, isRead, message: potMessage } = info.item;
+  private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
+    const { meta, message: potMessage, isRead } = info.item;
     const { paymentsByRptId, onPressItem } = this.props;
-
     const potService = this.props.servicesById[meta.sender_service_id];
-    if (
-      potService &&
-      (pot.isLoading(potService) || pot.isLoading(potMessage))
-    ) {
+    const isServiceLoading = potService
+      ? pot.isNone(potService) && pot.isLoading(potService) // is none loading
+      : false;
+    if (isServiceLoading || pot.isLoading(potMessage)) {
       return MessageListItemPlaceholder;
     }
 
@@ -243,7 +237,7 @@ class MessageList extends React.Component<Props, State> {
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
           // needed for giving feedback in the messsage list
-        } as CreatedMessageWithContent)
+        } as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
     const service =
@@ -259,44 +253,33 @@ class MessageList extends React.Component<Props, State> {
     const payment =
       message.content.payment_data !== undefined && service !== undefined
         ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
+            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
           ]
         : undefined;
 
     return (
-      <View
-        style={
-          messageNeedsCTABar(message)
-            ? styles.itemWithCTABarContainer
-            : styles.itemWithoutCTABarContainer
-        }
-      >
-        <MessageListItem
-          isRead={isRead}
-          message={message}
-          service={service}
-          payment={payment}
-          onPress={onPressItem}
-          onLongPress={this.onLongPress}
-          isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
-          isSelected={this.props.selectedMessageIds
-            .map(_ => _.has(info.item.meta.id))
-            .getOrElse(false)}
-        />
-      </View>
+      <MessageListItem
+        isRead={isRead}
+        message={message}
+        service={service}
+        payment={payment}
+        onPress={onPressItem}
+        onLongPress={this.onLongPress}
+        isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
+        isSelected={this.props.selectedMessageIds
+          .map(_ => _.has(info.item.meta.id))
+          .getOrElse(false)}
+      />
     );
   };
 
   private getItemLayout = (
     _: ReadonlyArray<MessageState> | null,
     index: number
-  ) => {
-    return this.state.itemLayouts[index];
-  };
+  ) => this.state.itemLayouts[index];
 
   private onLongPress = (id: string) => {
+    Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;
@@ -329,24 +312,44 @@ class MessageList extends React.Component<Props, State> {
     } = this.props;
 
     const refreshControl = (
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={() => {
+          if (this.state.isFirstLoad) {
+            this.setState({ isFirstLoad: false });
+          }
+          onRefresh();
+        }}
+      />
     );
-
     return (
       <React.Fragment>
         <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
+        {/* in iOS refresh indicator is shown only when user does pull to refresh on list
+          so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
+          see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
+          see https://github.com/facebook/react-native/issues/15892
+        */}
+        {refreshing && this.state.isFirstLoad && (
+          <ActivityIndicator
+            animating={true}
+            style={styles.activityIndicator}
+          />
+        )}
         <AnimatedFlatList
           ref={this.flatListRef}
+          style={styles.padded}
           scrollEnabled={true}
           data={messageStates}
-          extraData={{ servicesById, paymentsByRptId }}
+          extraData={{ servicesById, paymentsByRptId, refreshing }}
+          refreshing={refreshing}
           keyExtractor={keyExtractor}
           refreshControl={refreshControl}
           initialNumToRender={10}
           scrollEventThrottle={
             animated ? animated.scrollEventThrottle : undefined
           }
-          ItemSeparatorComponent={ItemSeparatorComponent}
+          ItemSeparatorComponent={ItemSeparator}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={this.renderItem}
           getItemLayout={this.getItemLayout}

@@ -1,34 +1,49 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
- * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, List, Text, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
+import { ScrollView } from "react-native-gesture-handler";
+import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import CardComponent from "../../../components/wallet/card/CardComponent";
-import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
 import {
-  navigateToPaymentTransactionSummaryScreen,
+  navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { walletsSelector } from "../../../store/reducers/wallet/wallets";
-import variables from "../../../theme/variables";
-import { Wallet } from "../../../types/pagopa";
-import { AmountToImporto } from "../../../utils/amounts";
+import {
+  bancomatListVisibleInWalletSelector,
+  bPayListVisibleInWalletSelector,
+  creditCardListVisibleInWalletSelector,
+  privativeListVisibleInWalletSelector,
+  satispayListVisibleInWalletSelector
+} from "../../../store/reducers/wallet/wallets";
+import { PaymentMethod, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
+import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import { dispatchPickPspOrConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -44,113 +59,152 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({
-  paddedLR: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
-  }
-});
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.payWith.contextualHelpTitle",
+  body: "wallet.payWith.contextualHelpContent"
+};
 
-class PickPaymentMethodScreen extends React.Component<Props> {
-  public render(): React.ReactNode {
-    const verifica = this.props.navigation.getParam("verifica");
+const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
+  <FooterWithButtons
+    type={"TwoButtonsInlineThird"}
+    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.back"))}
+    rightButton={confirmButtonProps(
+      onContinue,
+      I18n.t("wallet.newPaymentMethod.addButton")
+    )}
+  />
+);
 
-    const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
-    );
-    const recipient = verifica.enteBeneficiario;
+const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
+  props: Props
+) => {
+  const payableWallets = props.payableWallets;
+  const notPayableWallets = props.notPayableWallets;
 
-    const { wallets } = this.props;
-
-    const primaryButtonProps = {
-      block: true,
-      onPress: this.props.navigateToAddPaymentMethod,
-      title: I18n.t("wallet.newPaymentMethod.addButton")
-    };
-
-    const secondaryButtonProps = {
-      block: true,
-      bordered: true,
-      onPress: this.props.navigateToTransactionSummary,
-      title: I18n.t("global.buttons.cancel")
-    };
-
-    return (
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("wallet.payWith.header")}
-      >
-        <Content noPadded={true}>
-          <PaymentBannerComponent
-            paymentReason={paymentReason}
-            currentAmount={currentAmount}
-            recipient={recipient}
-            onCancel={this.props.navigateToTransactionSummary}
-          />
-
-          <View style={styles.paddedLR}>
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("wallet.payWith.header")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["wallet_methods"]}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={IOStyles.flex}>
+          <Content>
+            <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <View spacer={true} />
-            <H1>
-              {I18n.t(
-                wallets.length > 0
-                  ? "wallet.payWith.title"
-                  : "wallet.payWith.noWallets.title"
-              )}
-            </H1>
-            <View spacer={true} />
-            <Text>
-              {I18n.t(
-                wallets.length > 0
-                  ? "wallet.payWith.text"
-                  : "wallet.payWith.noWallets.text"
-              )}
-            </Text>
-            <View spacer={true} />
-            <List
-              removeClippedSubviews={false}
-              dataArray={wallets as any[]} // tslint:disable-line: readonly-array
-              renderRow={(item): React.ReactElement<any> => (
-                <CardComponent
-                  type="Picking"
-                  wallet={item}
-                  mainAction={this.props.navigateToConfirmOrPickPsp}
+            {payableWallets.length > 0 ? (
+              <>
+                <H4 weight={"Regular"} color={"bluegreyDark"}>
+                  {I18n.t("wallet.payWith.text")}
+                </H4>
+                <FlatList
+                  testID={"availablePaymentMethodList"}
+                  removeClippedSubviews={false}
+                  data={payableWallets}
+                  keyExtractor={item => item.idWallet.toString()}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickAvailablePaymentMethodListItem
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                      onPress={() =>
+                        props.navigateToConfirmOrPickPsp(
+                          // Since only credit cards are now accepted method we manage only this case
+                          // TODO: if payment methods different from credit card should be accepted manage every case
+                          convertWalletV2toWalletV1(i.item)
+                        )
+                      }
+                    />
+                  )}
                 />
-              )}
-            />
-          </View>
-        </Content>
+                <View spacer={true} />
+              </>
+            ) : (
+              <H4
+                weight={"Regular"}
+                color={"bluegreyDark"}
+                testID={"noWallets"}
+              >
+                {I18n.t("wallet.payWith.noWallets.text")}
+              </H4>
+            )}
 
-        <View spacer={true} />
+            {notPayableWallets.length > 0 && (
+              <>
+                <View spacer={true} />
+                <H4 color={"bluegreyDark"}>
+                  {I18n.t(
+                    "wallet.payWith.pickPaymentMethod.notAvailable.title"
+                  )}
+                </H4>
+                <View spacer={true} />
+                <FlatList
+                  testID={"notPayablePaymentMethodList"}
+                  removeClippedSubviews={false}
+                  data={notPayableWallets}
+                  keyExtractor={item => item.idWallet.toString()}
+                  ListFooterComponent={<View spacer />}
+                  renderItem={i => (
+                    <PickNotAvailablePaymentMethodListItem
+                      isFirst={i.index === 0}
+                      paymentMethod={i.item}
+                    />
+                  )}
+                />
+              </>
+            )}
+          </Content>
+        </ScrollView>
+        {renderFooterButtons(props.goBack, props.navigateToAddPaymentMethod)}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
-      </BaseScreenComponent>
-    );
-  }
+function getValueOrEmptyArray(
+  value: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
+): ReadonlyArray<PaymentMethod> {
+  return pot.getOrElse(value, []);
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potWallets = walletsSelector(state);
+  const potVisibleCreditCard = creditCardListVisibleInWalletSelector(state);
+  const potVisibleBancomat = bancomatListVisibleInWalletSelector(state);
+  const potVisibleBPay = bPayListVisibleInWalletSelector(state);
+  const potVisibleSatispay = satispayListVisibleInWalletSelector(state);
+  const potVisiblePrivative = privativeListVisibleInWalletSelector(state);
   const potPsps = state.wallet.payment.psps;
-  const isLoading = pot.isLoading(potWallets) || pot.isLoading(potPsps);
+  const isLoading =
+    pot.isLoading(potVisibleCreditCard) || pot.isLoading(potPsps);
+
+  const visibleWallets = [
+    potVisibleCreditCard,
+    potVisibleBancomat,
+    potVisibleBPay,
+    potVisibleSatispay,
+    potVisiblePrivative
+  ].reduce(
+    (
+      acc: ReadonlyArray<PaymentMethod>,
+      curr: pot.Pot<ReadonlyArray<PaymentMethod>, unknown>
+    ) => [...acc, ...getValueOrEmptyArray(curr)],
+    [] as ReadonlyArray<PaymentMethod>
+  );
+
   return {
-    wallets: pot.getOrElse(potWallets, []),
-    isLoading
+    // Considering that the creditCardListVisibleInWalletSelector return
+    // all the visible credit card we need to filter them in order to extract
+    // only the cards that can pay on IO.
+    payableWallets: visibleWallets.filter(vPW => canMethodPay(vPW)),
+    notPayableWallets: visibleWallets.filter(vPW => !canMethodPay(vPW)),
+    isLoading,
+    nameSurname: profileNameSurnameSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateToTransactionSummary: () =>
-    dispatch(
-      navigateToPaymentTransactionSummaryScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount")
-      })
-    ),
+  goBack: () => dispatch(navigateBack()),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
       props.navigation.getParam("rptId"),

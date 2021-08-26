@@ -18,7 +18,12 @@ const ResizeMessage = t.type({
   })
 });
 
+const ScrollEndMessage = t.type({
+  type: t.literal("SCROLL_END_MESSAGE")
+});
+
 export const WebViewMessage = t.taggedUnion("type", [
   LinkMessage,
-  ResizeMessage
+  ResizeMessage,
+  ScrollEndMessage
 ]);

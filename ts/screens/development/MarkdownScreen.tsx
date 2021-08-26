@@ -44,7 +44,7 @@ Ordered list:
 3. Angular
 `;
 
-type Props = {};
+type Props = Record<string, unknown>;
 
 type State = {
   markdown: string;

@@ -12,12 +12,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export class EdgeBorderComponent extends React.PureComponent<{}> {
+export class EdgeBorderComponent extends React.PureComponent {
   public render() {
     return (
-      <View style={styles.emptyListWrapper}>
-        <Image source={require("../../../img/messages/smile.png")} />
-      </View>
+      <React.Fragment>
+        <View style={styles.emptyListWrapper}>
+          <Image source={require("../../../img/messages/smile.png")} />
+        </View>
+        <View spacer={true} />
+      </React.Fragment>
     );
   }
 }

@@ -4,10 +4,14 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import CalendarsListContainer from "../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+import {
+  preferredCalendarRemoveSuccess,
+  preferredCalendarSaveSuccess
+} from "../../store/actions/persistedPreferences";
 import { Dispatch } from "../../store/actions/types";
 
 type OwnProps = NavigationInjectedProps;
@@ -16,6 +20,11 @@ type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 type State = {
   isLoading: boolean;
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.calendar.contextualHelpTitle",
+  body: "profile.preferences.calendar.contextualHelpContent"
 };
 
 /**
@@ -29,11 +38,6 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  private onCalendarSelected = (calendar: Calendar) => {
-    this.props.preferredCalendarSaveSuccess(calendar);
-    this.props.navigation.goBack();
-  };
-
   private onCalendarsLoaded = () => {
     this.setState({ isLoading: false });
   };
@@ -43,6 +47,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     return (
       <LoadingSpinnerOverlay isLoading={isLoading}>
         <TopScreenComponent
+          contextualHelpMarkdown={contextualHelpMarkdown}
           headerTitle={I18n.t("profile.preferences.title")}
           goBack={this.props.navigation.goBack}
         >
@@ -51,7 +56,8 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
             subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
           >
             <CalendarsListContainer
-              onCalendarSelected={this.onCalendarSelected}
+              onCalendarSelected={this.props.preferredCalendarSaveSuccess}
+              onCalendarRemove={this.props.preferredCalendarRemoveSuccess}
               onCalendarsLoaded={this.onCalendarsLoaded}
             />
           </ScreenContent>
@@ -67,7 +73,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferredCalendarSaveSuccess({
         preferredCalendar: calendar
       })
-    )
+    ),
+  preferredCalendarRemoveSuccess: () =>
+    dispatch(preferredCalendarRemoveSuccess())
 });
 
 export default connect(

@@ -12,9 +12,11 @@ import { Reporter } from "io-ts/lib/Reporter";
  */
 function getContextPath(context: Context): string {
   const keysPath = context.map(({ key }) => key).join(".");
-  const lastType = context[context.length - 1].type;
+  const lastType = context[context.length - 1]
+    ? context[context.length - 1].type
+    : undefined;
 
-  if ("never" === lastType.name) {
+  if (lastType === undefined || "never" === lastType.name) {
     return `${keysPath}] is not a known property`;
   }
 

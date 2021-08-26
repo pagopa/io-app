@@ -4,7 +4,15 @@
  */
 
 import React from "react";
-import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  Easing,
+  Modal,
+  StyleSheet,
+  View
+} from "react-native";
+import { isScreenReaderEnabled } from "../../utils/accessibility";
 
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
@@ -15,6 +23,8 @@ export type LightModalContextInterface = Readonly<{
     animatedValue?: AnimationLightModal
   ) => void;
   hideModal: () => void;
+  onHiddenModal: () => void;
+  setOnHiddenModal: (callback: () => void) => void;
 }>;
 
 export const LightModalContext = React.createContext<
@@ -24,10 +34,12 @@ export const LightModalContext = React.createContext<
   showModal: () => undefined,
   showModalFadeInAnimation: () => undefined,
   showAnimatedModal: () => undefined,
-  hideModal: () => undefined
+  hideModal: () => undefined,
+  onHiddenModal: () => undefined,
+  setOnHiddenModal: () => undefined
 });
 
-type Props = {};
+type Props = Record<string, unknown>;
 
 type State = LightModalContextInterface;
 
@@ -109,6 +121,7 @@ export const ScaleAnimation = {
 
 const fadeAnim = new Animated.Value(0);
 const FadeInAnimation = Animated.timing(fadeAnim, {
+  useNativeDriver: false,
   toValue: 1,
   duration: 250
 });
@@ -123,13 +136,18 @@ export type AnimationLightModal =
 export const LightModalConsumer = LightModalContext.Consumer;
 
 export class LightModalProvider extends React.Component<Props, State> {
-  public showAnimatedModal = (
+  public showAnimatedModal = async (
     childComponent: React.ReactNode,
     styledAnimation: AnimationLightModal = RightLeftAnimation
   ) => {
+    const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
       <Animated.View style={[styles.container, styledAnimation]}>
-        {childComponent}
+        {isScreenReaderActive ? (
+          <Modal>{childComponent}</Modal>
+        ) : (
+          childComponent
+        )}
       </Animated.View>
     );
     this.setState(
@@ -140,10 +158,15 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
-  public showModalFadeInAnimation = (childComponent: React.ReactNode) => {
+  public showModalFadeInAnimation = async (childComponent: React.ReactNode) => {
+    const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
-      <Animated.View style={styles.container} opacity={fadeAnim}>
-        {childComponent}
+      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+        {isScreenReaderActive ? (
+          <Modal>{childComponent}</Modal>
+        ) : (
+          childComponent
+        )}
       </Animated.View>
     );
     this.setState(
@@ -156,19 +179,37 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
-  public showModal = (childComponent: React.ReactNode) => {
-    const component = <View style={[styles.container]}>{childComponent}</View>;
+  public showModal = async (childComponent: React.ReactNode) => {
+    const isScreenReaderActive = await isScreenReaderEnabled();
+    const component = (
+      <View style={[styles.container]}>
+        {isScreenReaderActive ? (
+          <Modal>{childComponent}</Modal>
+        ) : (
+          childComponent
+        )}
+      </View>
+    );
     this.setState({
       component
     });
   };
 
   public hideModal = () => {
-    this.setState({
-      component: null
-    });
     fadeAnim.setValue(0);
     FadeInAnimation.stop();
+    this.setState(
+      {
+        component: null
+      },
+      () => {
+        this.state.onHiddenModal();
+      }
+    );
+  };
+
+  public setOnHiddenModal = (onHiddenModal: () => void) => {
+    this.setState({ onHiddenModal });
   };
 
   public state = {
@@ -176,7 +217,9 @@ export class LightModalProvider extends React.Component<Props, State> {
     showModal: this.showModal,
     showAnimatedModal: this.showAnimatedModal,
     showModalFadeInAnimation: this.showModalFadeInAnimation,
-    hideModal: this.hideModal
+    hideModal: this.hideModal,
+    onHiddenModal: () => undefined,
+    setOnHiddenModal: this.setOnHiddenModal
   };
 
   public render() {

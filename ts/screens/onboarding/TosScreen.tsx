@@ -2,31 +2,47 @@
  * A screen to show the app Terms of Service. If the user accepted an old version
  * of ToS and a new version is available, an alert is displayed to highlight the user
  * has to accept the new version of ToS.
+ * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
+import { Alert, Image, StyleSheet, SafeAreaView } from "react-native";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { Alert, StyleSheet } from "react-native";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import H4 from "../../components/ui/H4";
-import Markdown from "../../components/ui/Markdown";
-import { tosVersion } from "../../config";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { WebViewMessage } from "../../components/ui/Markdown/types";
+import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
 type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
+type State = {
+  isLoading: boolean;
+  hasError: boolean;
+};
+
+import brokenLinkImage from "../../../img/broken-link.png";
+import { openWebUrl } from "../../utils/url";
 
 const styles = StyleSheet.create({
   alert: {
@@ -46,59 +62,152 @@ const styles = StyleSheet.create({
   },
   horizontalPadding: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  webViewContainer: {
+    flex: 1
+  },
+  errorContainer: {
+    padding: 20,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  errorTitle: {
+    fontSize: 20,
+    marginTop: 10
+  },
+
+  errorBody: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+
+  errorButtonsContainer: {
+    position: "absolute",
+    bottom: 30,
+    flex: 1,
+    flexDirection: "row"
+  },
+  cancelButtonStyle: {
+    flex: 1,
+    marginEnd: 10
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
+  body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
+};
 
 /**
  * A screen to show the ToS to the user.
  */
-class TosScreen extends React.PureComponent<Props> {
-  public render() {
-    const { navigation, dispatch } = this.props;
+class TosScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    // it start with loading webview
+    this.state = { isLoading: true, hasError: false };
+  }
 
-    const isProfile = navigation.getParam("isProfile", false);
+  public componentDidUpdate() {
+    if (this.props.hasProfileError) {
+      showToast(I18n.t("global.genericError"));
+    }
+  }
 
+  private handleLoadEnd = () => {
+    this.setState({ isLoading: false });
+  };
+
+  private handleError = () => {
+    this.setState({ isLoading: false, hasError: true });
+  };
+
+  private renderError = () => {
+    if (!this.state.hasError) {
+      return null;
+    }
     return (
+      <View style={styles.errorContainer}>
+        <Image source={brokenLinkImage} resizeMode="contain" />
+        <Text style={styles.errorTitle} bold={true}>
+          {I18n.t("onboarding.tos.error")}
+        </Text>
+
+        <View style={styles.errorButtonsContainer}>
+          <ButtonDefaultOpacity
+            onPress={() => {
+              this.setState({ isLoading: true, hasError: false });
+            }}
+            style={{ flex: 2 }}
+            block={true}
+            primary={true}
+          >
+            <Text>{I18n.t("global.buttons.retry")}</Text>
+          </ButtonDefaultOpacity>
+        </View>
+      </View>
+    );
+  };
+
+  // A function that handles message sent by the WebView component
+  private handleWebViewMessage = (event: WebViewMessageEvent) =>
+    WebViewMessage.decode(JSON.parse(event.nativeEvent.data)).map(m => {
+      if (m.type === "LINK_MESSAGE") {
+        void openWebUrl(m.payload.href);
+      }
+    });
+
+  public render() {
+    const { dispatch } = this.props;
+
+    const shouldFooterRender =
+      !this.state.hasError &&
+      !this.state.isLoading &&
+      !this.props.isOnbardingCompleted;
+
+    const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={this.handleGoBack}
+        goBack={this.props.isOnbardingCompleted || this.handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["privacy"]}
         headerTitle={
-          isProfile
-            ? I18n.t("profile.main.screenTitle")
+          this.props.isOnbardingCompleted
+            ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        <Content noPadded={true}>
-          <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-            {I18n.t("profile.main.privacy.header")}
-          </H4>
-          {this.props.hasAcceptedOldTosVersion && (
+        <SafeAreaView style={styles.webViewContainer}>
+          {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>
-              <Text>{I18n.t("profile.main.privacy.updated")}</Text>
+              <Text>
+                {this.props.hasAcceptedOldTosVersion
+                  ? I18n.t("profile.main.privacy.privacyPolicy.updated")
+                  : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
+              </Text>
             </View>
           )}
-          <View style={styles.horizontalPadding}>
-            <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
-          </View>
-        </Content>
-        {isProfile === false && (
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={{
-              block: true,
-              light: true,
-              bordered: true,
-              onPress: this.handleGoBack,
-              title: I18n.t("global.buttons.exit")
-            }}
-            rightButton={{
-              block: true,
-              primary: true,
-              onPress: () => dispatch(tosAccepted(tosVersion)),
-              title: I18n.t("onboarding.tos.continue")
-            }}
-          />
-        )}
+          {this.renderError()}
+          {!this.state.hasError && (
+            <TosWebviewComponent
+              handleError={this.handleError}
+              handleLoadEnd={this.handleLoadEnd}
+              handleWebViewMessage={this.handleWebViewMessage}
+              url={privacyUrl}
+              shouldFooterRender={shouldFooterRender}
+              onExit={this.handleGoBack}
+              onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
+            />
+          )}
+        </SafeAreaView>
       </BaseScreenComponent>
+    ));
+    return (
+      <ContainerComponent
+        isLoading={this.state.isLoading || this.props.isLoading}
+      />
     );
   }
 
@@ -123,11 +232,23 @@ class TosScreen extends React.PureComponent<Props> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    hasAcceptedOldTosVersion:
-      pot.isSome(potProfile) &&
-      "accepted_tos_version" in potProfile.value &&
-      potProfile.value.accepted_tos_version &&
-      potProfile.value.accepted_tos_version < tosVersion
+    isOnbardingCompleted: isOnboardingCompletedSelector(state),
+    isLoading: pot.isUpdating(potProfile),
+    hasAcceptedCurrentTos: pot.getOrElse(
+      pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
+      false
+    ),
+    hasAcceptedOldTosVersion: pot.getOrElse(
+      pot.map(
+        potProfile,
+        p =>
+          !isProfileFirstOnBoarding(p) && // it's not the first onboarding
+          p.accepted_tos_version !== undefined &&
+          p.accepted_tos_version < tosVersion
+      ),
+      false
+    ),
+    hasProfileError: pot.isError(potProfile)
   };
 }
 

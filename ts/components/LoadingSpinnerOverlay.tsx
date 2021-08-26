@@ -42,11 +42,13 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
           isLoading && (
             <BoxedRefreshIndicator
               caption={
-                loadingCaption && (
-                  <Text alignCenter={true} style={styles.textCaption}>
-                    {loadingCaption}
-                  </Text>
-                )
+                <Text
+                  alignCenter={true}
+                  style={styles.textCaption}
+                  accessible={true}
+                >
+                  {loadingCaption || I18n.t("global.remoteStates.wait")}
+                </Text>
               }
               action={
                 onCancel && (

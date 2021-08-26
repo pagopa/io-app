@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BackHandler } from "react-native";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
-
+import I18n from "../i18n";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
@@ -50,10 +50,13 @@ class GoBackButton extends React.PureComponent<Props> {
     };
 
     return (
-      <ButtonDefaultOpacity {...buttonProps}>
+      <ButtonDefaultOpacity
+        {...buttonProps}
+        accessibilityLabel={I18n.t("global.buttons.back")}
+      >
         <IconFont
-          name="io-back"
-          style={{ color: white ? variables.colorWhite : undefined }}
+          name={"io-back"}
+          style={{ color: white ? variables.colorWhite : variables.colorBlack }}
         />
       </ButtonDefaultOpacity>
     );

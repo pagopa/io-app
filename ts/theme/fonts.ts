@@ -28,7 +28,7 @@ const fontWeights = {
 
 type FontFamily = keyof typeof fonts;
 export type FontWeight = keyof typeof fontWeights;
-const enum FontStyle {
+enum FontStyle {
   "normal" = "normal",
   "italic" = "italic"
 }
@@ -49,6 +49,7 @@ const makeFontFamilyName = (
   isItalic: boolean = false
 ): string =>
   osSelect({
+    default: "undefined",
     android: `${fonts[font]}-${fontWeights[weight || "400"]}${
       isItalic ? "Italic" : ""
     }`,
@@ -58,6 +59,7 @@ const makeFontFamilyName = (
 /**
  * This function returns an object containing all the properties needed to use
  * a Font correctly on both Android and iOS.
+ * @deprecated
  */
 export const makeFontStyleObject = (
   osSelect: PlatformSelectType,
@@ -66,6 +68,9 @@ export const makeFontStyleObject = (
   font: FontFamily | undefined = "TitilliumWeb"
 ): FontStyleObject =>
   osSelect({
+    default: {
+      fontFamily: "undefined"
+    },
     android: {
       fontFamily: makeFontFamilyName(osSelect, font, weight, isItalic)
     },

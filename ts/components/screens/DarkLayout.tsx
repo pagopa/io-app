@@ -1,23 +1,35 @@
-import { View } from "native-base";
+/**
+ * A component to display a brandDarkGray background color on the screen using it
+ */
+import { Content, View } from "native-base";
 import * as React from "react";
 import {
+  Animated,
   ImageSourcePropType,
-  RefreshControlProps,
-  StatusBar,
   StyleProp,
+  StyleSheet,
   ViewStyle
 } from "react-native";
-import { StyleSheet } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
+  accessibilityLabel?: string;
   allowGoBack?: boolean;
   headerBody?: React.ReactNode;
   title?: string;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -27,28 +39,66 @@ type Props = Readonly<{
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
-  contextualHelp?: { title: string; body: () => React.ReactNode };
-  banner?: React.ReactNode;
-  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  contentRefreshControl?: Animated.ComponentProps<Content>["refreshControl"];
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  customGoBack?: React.ReactNode;
+  gradientHeader?: boolean;
+  headerPaddingMin?: boolean;
+  footerFullWidth?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
   headerContents: {
-    backgroundColor: customVariables.brandDarkGray,
     paddingHorizontal: customVariables.contentPadding
+  },
+  headerContentsMin: {
+    paddingHorizontal: 16
   }
 });
 
 export default class DarkLayout extends React.Component<Props> {
+  public componentDidMount() {
+    setStatusBarColorAndBackground(
+      "light-content",
+      customVariables.brandDarkGray
+    );
+  }
+
   private screenContent() {
-    const { banner } = this.props;
+    const wrapper = (children: React.ReactNode) =>
+      this.props.gradientHeader ? (
+        <LinearGradient
+          colors={[customVariables.brandDarkGray, "#42484F"]}
+          style={
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents
+          }
+        >
+          {children}
+        </LinearGradient>
+      ) : (
+        <View
+          style={[
+            this.props.headerPaddingMin
+              ? styles.headerContentsMin
+              : styles.headerContents,
+            { backgroundColor: customVariables.brandDarkGray }
+          ]}
+        >
+          {children}
+        </View>
+      );
     return (
       <React.Fragment>
-        <View style={styles.headerContents}>
-          <View spacer={true} />
-          {this.props.topContent}
-        </View>
-        {banner}
+        {wrapper(
+          <React.Fragment>
+            <View spacer={true} />
+            {this.props.topContent}
+          </React.Fragment>
+        )}
         {this.props.children}
       </React.Fragment>
     );
@@ -56,23 +106,24 @@ export default class DarkLayout extends React.Component<Props> {
   public render() {
     return (
       <TopScreenComponent
+        accessibilityLabel={this.props.accessibilityLabel}
         goBack={this.props.allowGoBack}
-        title={this.props.title ? this.props.title : ""}
+        customGoBack={this.props.customGoBack}
+        headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
+        faqCategories={this.props.faqCategories}
+        titleColor={"white"}
       >
-        <StatusBar
-          backgroundColor={customVariables.brandDarkGray}
-          barStyle={"light-content"}
-        />
-
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             dynamicSubHeader={this.props.dynamicSubHeader}
@@ -89,6 +140,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             bounces={
@@ -100,6 +152,7 @@ export default class DarkLayout extends React.Component<Props> {
             {this.screenContent()}
           </ScreenContent>
         )}
+        {this.props.footerFullWidth}
         {this.props.footerContent && (
           <View footer={true}>{this.props.footerContent}</View>
         )}

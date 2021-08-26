@@ -1,4 +1,4 @@
-**SPID**, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password). [Per saperne di più](https://www.spid.interno.gov.it)
+**SPID**, il Sistema Pubblico di Identità Digitale, ti permette di accedere a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale (username e password). [Per saperne di più](https://www.spid.gov.it)
 
 ## SPID è sicuro
 

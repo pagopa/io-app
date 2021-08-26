@@ -1,21 +1,24 @@
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
+import { ReactElement, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
+import IconFont from "../../components/ui/IconFont";
 import {
   BottomTopAnimation,
   LightModalContextInterface
 } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
+import I18n from "../../i18n";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
@@ -24,6 +27,7 @@ import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type Props = ReturnType<typeof mapStateToProps> &
+  NavigationInjectedProps &
   ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 
@@ -59,98 +63,127 @@ const styles = StyleSheet.create({
   }
 });
 
-class FiscalCodeScreen extends React.PureComponent<Props> {
-  private showModal(showBackSide: boolean = false) {
-    if (this.props.profile) {
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.fiscalCode.title",
+  body: "profile.fiscalCode.help"
+};
+
+
+const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
+
+  const handleBackPress = () => {
+    props.navigation.goBack();
+    return true;
+  };
+
+  // Decode codice catastale effect manager
+  useEffect(() => {
+    if (props.profile !== undefined) {
+      const maybeCodiceCatastale = CodiceCatastale.decode(
+        props.profile.fiscal_code.substring(11, 15)
+      );
+      maybeCodiceCatastale.map(code => props.loadMunicipality(code));
+    }
+  }, [props.profile]);
+
+  const showModal = (showBackSide: boolean = false) => {
+    if (props.profile) {
       const component = (
         <FiscalCodeLandscapeOverlay
-          onCancel={this.props.hideModal}
-          profile={this.props.profile}
-          municipality={this.props.municipality.data}
+          onCancel={props.hideModal}
+          profile={props.profile}
+          municipality={props.municipality.data}
           showBackSide={showBackSide}
         />
       );
-      this.props.showAnimatedModal(component, BottomTopAnimation);
+      props.showAnimatedModal(component, BottomTopAnimation);
     }
-  }
+  };
 
-  public componentDidMount() {
-    if (this.props.profile !== undefined) {
-      const maybeCodiceCatastale = CodiceCatastale.decode(
-        this.props.profile.fiscal_code.substring(11, 15)
-      );
-      // if municipality data are none we request a load
-      if (pot.isNone(this.props.municipality.data)) {
-        maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
-      }
-    }
-  }
+  const customGoBack: ReactElement = (
+    <TouchableDefaultOpacity
+      onPress={handleBackPress}
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont
+        name={"io-back"}
+        style={{ color: customVariables.colorWhite }}
+      />
+    </TouchableDefaultOpacity>
+  );
 
-  public render() {
-    return (
-      <React.Fragment>
-        <DarkLayout
-          allowGoBack={true}
-          headerBody={
+  return (
+    <React.Fragment>
+      <DarkLayout
+        allowGoBack={true}
+        customGoBack={customGoBack}
+        headerBody={
+          <TouchableDefaultOpacity onPress={() => props.navigation.goBack}>
             <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
-          }
-          contentStyle={styles.darkBg}
-          contextualHelp={{
-            title: I18n.t("profile.fiscalCode.title"),
-            body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
-          }}
-          hideHeader={true}
-          topContent={
-            <React.Fragment>
-              <View spacer={true} />
-              <H5 style={styles.white}>
-                {I18n.t("profile.fiscalCode.fiscalCode")}
-              </H5>
-              <View spacer={true} />
-            </React.Fragment>
-          }
-        >
-          {this.props.profile && (
-            <React.Fragment>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
+          </TouchableDefaultOpacity>
+        }
+        contentStyle={styles.darkBg}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile"]}
+        hideHeader={true}
+        topContent={
+          <React.Fragment>
+            <View spacer={true} />
+            <H5 style={styles.white}>
+              {I18n.t("profile.fiscalCode.fiscalCode")}
+            </H5>
+            <View spacer={true} />
+          </React.Fragment>
+        }
+      >
+        {props.profile && (
+          <React.Fragment>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.largeSpacer} />
+              <TouchableDefaultOpacity
+                onPress={() => showModal()}
+                accessibilityRole={"button"}
               >
-                <View style={styles.largeSpacer} />
-                <TouchableDefaultOpacity onPress={() => this.showModal()}>
-                  <View style={styles.shadow}>
-                    <FiscalCodeComponent
-                      type={"Full"}
-                      profile={this.props.profile}
-                      getBackSide={false}
-                      municipality={this.props.municipality.data}
-                    />
-                  </View>
-                </TouchableDefaultOpacity>
-                <View style={styles.spacer} />
-                <TouchableDefaultOpacity onPress={() => this.showModal(true)}>
-                  <View style={styles.shadow}>
-                    <FiscalCodeComponent
-                      type={"Full"}
-                      profile={this.props.profile}
-                      getBackSide={true}
-                      municipality={this.props.municipality.data}
-                    />
-                  </View>
-                </TouchableDefaultOpacity>
+                <View style={styles.shadow}>
+                  <FiscalCodeComponent
+                    type={"Full"}
+                    profile={props.profile}
+                    getBackSide={false}
+                    municipality={props.municipality.data}
+                  />
+                </View>
+              </TouchableDefaultOpacity>
+              <View style={styles.spacer} />
+              <TouchableDefaultOpacity
+                onPress={() => showModal(true)}
+                accessibilityRole={"button"}
+              >
+                <View style={styles.shadow}>
+                  <FiscalCodeComponent
+                    type={"Full"}
+                    profile={props.profile}
+                    getBackSide={true}
+                    municipality={props.municipality.data}
+                  />
+                </View>
+              </TouchableDefaultOpacity>
 
-                <View style={styles.largeSpacer} />
-              </ScrollView>
-              <Text white={true} style={styles.text}>
-                {I18n.t("profile.fiscalCode.content")}
-              </Text>
-            </React.Fragment>
-          )}
-        </DarkLayout>
-      </React.Fragment>
-    );
-  }
-}
+              <View style={styles.largeSpacer} />
+            </ScrollView>
+            <Text white={true} style={styles.text}>
+              {I18n.t("profile.fiscalCode.content")}
+            </Text>
+          </React.Fragment>
+        )}
+      </DarkLayout>
+    </React.Fragment>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   profile: pot.toUndefined(profileSelector(state)),

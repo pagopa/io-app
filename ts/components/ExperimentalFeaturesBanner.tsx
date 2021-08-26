@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
   },
   experimentalFeaturesBannerMessage: {
     ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: 14,
-    lineHeight: 18,
     color: variables.colorWhite
   }
 });

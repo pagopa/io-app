@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
     height: imgDimension,
     borderRadius: imgDimension / 2,
     position: "absolute",
-    bottom: boxDimension / 2 - imgDimension / 2,
-    overflow: "hidden"
+    bottom: boxDimension / 2 - imgDimension / 2
   },
   titleHeader: {
     marginTop: 35
@@ -56,53 +55,55 @@ const ringSettings = {
 /**
  *  This screen drives the user through the using of the CIE card interacting with the NFC
  */
-const CardSelectionScreen: React.SFC<Props> = props => {
-  return (
-    // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
-    <BaseScreenComponent goBack={true}>
-      <Content noPadded={true} bounces={false}>
-        <ScreenHeader
-          heading={<H2 style={styles.titleHeader}>{I18n.t("cie.title")}</H2>}
+const CardSelectionScreen: React.SFC<Props> = props => (
+  // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
+  <BaseScreenComponent goBack={true}>
+    <Content noPadded={true} bounces={false}>
+      <ScreenHeader
+        heading={
+          <H2 style={styles.titleHeader}>
+            {I18n.t("authentication.cie.card.title")}
+          </H2>
+        }
+      />
+      <Text style={styles.messageHeader}>
+        {I18n.t("authentication.cie.card.layCardMessageHeader")}
+      </Text>
+      <View style={{ alignItems: "center", height: boxDimension }}>
+        <AnimatedRing
+          dimension={ringSettings.dimension}
+          startAnimationAfter={0 as Millisecond}
+          duration={ringSettings.duration}
+          boxDimension={boxDimension}
         />
-        <Text style={styles.messageHeader}>
-          {I18n.t("cie.layCardMessageHeader")}
-        </Text>
-        <View style={{ alignItems: "center", height: boxDimension }}>
-          <AnimatedRing
-            dimension={ringSettings.dimension}
-            startAnimationAfter={0 as Millisecond}
-            duration={ringSettings.duration}
-            boxDimension={boxDimension}
-          />
-          <AnimatedRing
-            dimension={ringSettings.dimension}
-            startAnimationAfter={ringSettings.delayX1}
-            duration={ringSettings.duration}
-            boxDimension={boxDimension}
-          />
-          <AnimatedRing
-            dimension={ringSettings.dimension}
-            startAnimationAfter={ringSettings.delayX2}
-            duration={ringSettings.duration}
-            boxDimension={boxDimension}
-          />
+        <AnimatedRing
+          dimension={ringSettings.dimension}
+          startAnimationAfter={ringSettings.delayX1}
+          duration={ringSettings.duration}
+          boxDimension={boxDimension}
+        />
+        <AnimatedRing
+          dimension={ringSettings.dimension}
+          startAnimationAfter={ringSettings.delayX2}
+          duration={ringSettings.duration}
+          boxDimension={boxDimension}
+        />
 
-          <Image
-            source={require("../../../img/landing/place-card-illustration.png")}
-            style={styles.img}
-          />
-        </View>
-        <Text style={styles.messageFooter}>
-          {I18n.t("cie.layCardMessageFooter")}
-        </Text>
-      </Content>
-      <View footer={true}>
-        <Button onPress={props.navigation.goBack} cancel={true} block={true}>
-          <Text>{I18n.t("global.buttons.cancel")}</Text>
-        </Button>
+        <Image
+          source={require("../../../img/cie/place-card-illustration.png")}
+          style={styles.img}
+        />
       </View>
-    </BaseScreenComponent>
-  );
-};
+      <Text style={styles.messageFooter}>
+        {I18n.t("authentication.cie.card.layCardMessageFooter")}
+      </Text>
+    </Content>
+    <View footer={true}>
+      <Button onPress={props.navigation.goBack} cancel={true} block={true}>
+        <Text>{I18n.t("global.buttons.cancel")}</Text>
+      </Button>
+    </View>
+  </BaseScreenComponent>
+);
 
 export default CardSelectionScreen;

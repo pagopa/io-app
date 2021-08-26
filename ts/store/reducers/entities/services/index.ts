@@ -1,26 +1,21 @@
 /**
  * Services reducer
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { ScopeEnum } from "../../../../../definitions/content/Service";
-import { Service as ServiceMetadata } from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";
-import {
-  ServiceMetadataById,
-  servicesMetadataByIdSelector,
-  servicesMetadataSelector
-} from "../../content";
 import { GlobalState } from "../../types";
 import { userMetadataSelector } from "../../userMetadata";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
+import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
 import {
   firstLoadingReducer,
   FirstLoadingState,
@@ -43,8 +38,13 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
+import servicePreferenceReducer, {
+  ServicePreferenceState
+} from "./servicePreference";
 
 export type ServicesState = Readonly<{
+  // Section to hold the preference for services
+  servicePreference: ServicePreferenceState;
   byId: ServicesByIdState;
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
   visible: VisibleServicesState;
@@ -59,6 +59,7 @@ export type ServicesSectionState = Readonly<{
 }>;
 
 const reducer = combineReducers<ServicesState, Action>({
+  servicePreference: servicePreferenceReducer,
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
@@ -80,7 +81,7 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
  * - pot.some if both visible services and all services load successfully
  * @param visibleServices - list of visible services
  * @param services - collection of services related data indexed with respect to the services id
- *                   (applied for entities.services.byId state and content.servicesMetadata.byId)
+ *                   (applied for entities.services.byId state)
  */
 function getServicesLoadState<T>(
   visibleServices: VisibleServicesState,
@@ -96,7 +97,9 @@ function getServicesLoadState<T>(
     // check if there is at least one service in loading state
     const areServicesLoading =
       pot.isLoading(visibleServices) ||
-      visibleServicesById.some(vs => vs === undefined || pot.isLoading(vs));
+      visibleServicesById.some(
+        vs => vs === undefined || (pot.isNone(vs) && pot.isLoading(vs))
+      );
 
     // check if there is at least one service in error state
     const isServicesLoadFailed =
@@ -124,21 +127,11 @@ function getServicesLoadState<T>(
   }
 }
 
-// A selector to monitor the state of the service content loading
-export const visibleServicesContentLoadStateSelector = createSelector(
+// A selector to monitor the state of the service detail loading
+export const visibleServicesDetailLoadStateSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],
   (servicesById, visibleServices) =>
     getServicesLoadState<ServicePublic>(visibleServices, servicesById)
-);
-
-// A selector to monitor the state of the service metadata loading
-export const visibleServicesMetadataLoadStateSelector = createSelector(
-  [servicesMetadataByIdSelector, visibleServicesSelector],
-  (servicesMetadataById, visibleServices) =>
-    getServicesLoadState<ServiceMetadata | undefined>(
-      visibleServices,
-      servicesMetadataById
-    )
 );
 
 /**
@@ -154,20 +147,17 @@ export const organizationsOfInterestSelector = createSelector(
 
     // If the user never select areas of interest, return an undefined object
     return pot.toUndefined(
-      pot.map(
-        potUserMetadata,
-        _ =>
-          // filter organization by selecting those ones have
-          // at least 1 visible service inside
-          _.metadata.organizationsOfInterest
-            ? _.metadata.organizationsOfInterest.filter(org => {
-                const organizationServices =
-                  services.byOrgFiscalCode[org] || [];
-                return organizationServices.some(serviceId =>
-                  visibleServices.has(serviceId)
-                );
-              })
-            : []
+      pot.map(potUserMetadata, _ =>
+        // filter organization by selecting those ones having
+        // at least 1 visible service inside
+        _.metadata.organizationsOfInterest
+          ? _.metadata.organizationsOfInterest.filter(org => {
+              const organizationServices = services.byOrgFiscalCode[org] || [];
+              return organizationServices.some(serviceId =>
+                visibleServices.has(serviceId)
+              );
+            })
+          : []
       )
     );
   }
@@ -177,29 +167,46 @@ export const organizationsOfInterestSelector = createSelector(
  * Functions and selectors to get services organized in sections
  */
 
-// Check if the passed service is local or national through data included into the service metadata.
-// If the scope parameter is expressed, the corresponding item is not included into section if:
-// -  the scope paramenter is different to the service scope
-// -  service metadata load fails,
+// Check if the passed service is local or national through data included into serviceByScope store item.
+// If the scope parameter is expressed, the corresponding item is not included into the section if:
+// -  the scope parameter is different to the service scope
+// -  service detail or serviceByScope loading fails
 const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
-  servicesMetadataById: ServiceMetadataById,
-  scope?: ScopeEnum
+  scope?: ServiceScopeEnum
 ) => {
   if (scope === undefined) {
     return true;
   }
 
-  // if service is Error, the corresponding item is not included into section
-  if (pot.isSome(service)) {
-    const potServiceMetadata =
-      servicesMetadataById[service.value.service_id] || pot.none;
-    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
-      return potServiceMetadata.value.scope === scope;
-    }
-  }
-  return false;
+  // if service is in Error, the item is not included into the section
+  return pot.getOrElse(
+    pot.map(service, s => s.service_metadata?.scope === scope),
+    false
+  );
 };
+
+// NOTE: this is a workaround not a solution
+// since a service can change its organization fiscal code we could have
+// obsolete data in the store: byOrgFiscalCode could have services that don't belong to organization anymore
+// this cleaning its a workaround, this should be fixed on data loading and not when data are loaded
+// see https://www.pivotaltracker.com/story/show/172316333
+/**
+ * return true if service belongs to the given organization fiscal code
+ * @param service
+ * @param organizationFiscalCode
+ */
+const belongsToOrganization = (
+  service: pot.Pot<ServicePublic, Error>,
+  organizationsFiscalCode: ReadonlyArray<string>
+) =>
+  pot.getOrElse(
+    pot.map(
+      service,
+      s => organizationsFiscalCode.indexOf(s.organization_fiscal_code) !== -1
+    ),
+    false
+  );
 
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
@@ -210,38 +217,59 @@ const isInScope = (
 const getServices = (
   services: ServicesState,
   organizations: OrganizationNamesByFiscalCodeState,
-  servicesMetadata: {
-    byId: ServiceMetadataById;
-  },
-  scope?: ScopeEnum,
+  scope?: ServiceScopeEnum,
   selectedOrganizationsFiscalCodes?: ReadonlyArray<string>
 ) => {
   const organizationsFiscalCodes =
     selectedOrganizationsFiscalCodes === undefined
       ? Object.keys(services.byOrgFiscalCode)
       : selectedOrganizationsFiscalCodes;
-
+  // another workaround to avoid to display same organizations name that have different cf
+  // we group services by organization name
+  // to avoid duplication we keep in a set all organization fiscal code processed
+  const orgFiscalCodeProcessed = new Set<string>();
   return organizationsFiscalCodes
     .map((fiscalCode: string) => {
       const organizationName = organizations[fiscalCode] || fiscalCode;
       const organizationFiscalCode = fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      if (orgFiscalCodeProcessed.has(fiscalCode)) {
+        return {
+          organizationName,
+          organizationFiscalCode,
+          data: []
+        };
+      }
+
+      const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+        fromNullable(organizations[cf]).fold(
+          false,
+          name => organizationName === name // select all services that belong to organizations having organizationName
+        )
+      );
+      orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
+      const serviceIdsForOrg = orgsFiscalCodes.reduce(
+        (acc: ReadonlyArray<string>, curr: string) => [
+          ...acc,
+          ...(services.byOrgFiscalCode[curr] || [])
+        ],
+        []
+      );
 
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
         .filter(
           service =>
             isDefined(service) &&
-            isInScope(service, servicesMetadata.byId, scope) &&
+            belongsToOrganization(service, orgsFiscalCodes) && // workaround: see comments above this function definition
+            isInScope(service, scope) &&
             isVisibleService(services.visible, service)
         )
-        .sort(
-          (a, b) =>
-            a && pot.isSome(a) && b && pot.isSome(b)
-              ? a.value.service_name
-                  .toLocaleLowerCase()
-                  .localeCompare(b.value.service_name.toLocaleLowerCase())
-              : 0
+        .sort((a, b) =>
+          a && pot.isSome(a) && b && pot.isSome(b)
+            ? a.value.service_name
+                .toLocaleLowerCase()
+                .localeCompare(b.value.service_name.toLocaleLowerCase())
+            : 0
         );
 
       return {
@@ -260,24 +288,16 @@ const getServices = (
 
 // A selector providing sections related to national services
 export const nationalServicesSectionsSelector = createSelector(
-  [
-    servicesSelector,
-    organizationNamesByFiscalCodeSelector,
-    servicesMetadataSelector
-  ],
-  (services, organizations, servicesMetadata) =>
-    getServices(services, organizations, servicesMetadata, ScopeEnum.NATIONAL)
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
+  (services, organizations) =>
+    getServices(services, organizations, ServiceScopeEnum.NATIONAL)
 );
 
 // A selector providing sections related to local services
 export const localServicesSectionsSelector = createSelector(
-  [
-    servicesSelector,
-    organizationNamesByFiscalCodeSelector,
-    servicesMetadataSelector
-  ],
-  (services, organizations, servicesMetadata) =>
-    getServices(services, organizations, servicesMetadata, ScopeEnum.LOCAL)
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
+  (services, organizations) =>
+    getServices(services, organizations, ServiceScopeEnum.LOCAL)
 );
 
 // A selector providing sections related to the organizations selected by the user
@@ -285,17 +305,10 @@ export const selectedLocalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
-    servicesMetadataSelector,
     organizationsOfInterestSelector
   ],
-  (services, organizations, servicesMetadata, selectedOrganizations) =>
-    getServices(
-      services,
-      organizations,
-      servicesMetadata,
-      undefined,
-      selectedOrganizations
-    )
+  (services, organizations, selectedOrganizations) =>
+    getServices(services, organizations, undefined, selectedOrganizations)
 );
 
 // A selector providing sections related to:
@@ -305,32 +318,48 @@ export const notSelectedServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
-    servicesMetadataSelector,
     organizationsOfInterestSelector
   ],
-  (services, organizations, servicesMetadata, selectedOrganizations) => {
-    // tslint:disable-next-line:no-let
-    let notSelectedOrganizations;
-    if (organizations !== undefined) {
-      notSelectedOrganizations = Object.keys(organizations).filter(
+  (services, organizations, selectedOrganizations) => {
+    const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
+      // add to organizations all cf of other organizations having the same organization name
+      const organizationsWithSameNames = fromNullable(selectedOrganizations)
+        .map(so =>
+          so.reduce((acc, curr) => {
+            const orgName = fromNullable(orgs[curr]);
+            return orgName.fold(acc, on => {
+              if (organizations !== undefined) {
+                const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+                  fromNullable(organizations[cf]).fold(
+                    false,
+                    name => on === name // select all services that belong to organizations having organizationName
+                  )
+                );
+                orgsFiscalCodes.forEach(ofc => acc.add(ofc));
+              }
+              return acc;
+            });
+          }, new Set<string>())
+        )
+        .fold([], s => Array.from(s));
+      return Object.keys(orgs).filter(
         fiscalCode =>
-          selectedOrganizations &&
-          selectedOrganizations.indexOf(fiscalCode) === -1
+          organizationsWithSameNames &&
+          organizationsWithSameNames.indexOf(fiscalCode) === -1
       );
-    }
+    });
 
     return getServices(
       services,
       organizations,
-      servicesMetadata,
       undefined,
-      notSelectedOrganizations
+      notSelectedOrganizations.toUndefined()
     );
   }
 );
 
 /**
- *  Get the sum of selected local services + national services that are not yet marked as read
+ *  Get the sum of selected local services + national that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
@@ -347,18 +376,21 @@ export const servicesBadgeValueSelector = createSelector(
     isFirstVisibleServiceLoadCompleted
   ) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
+      const servicesSet: Set<ServicesSectionState> = new Set([
         ...nationalService,
         ...localService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
-      }, 0);
+      ]);
+      return [...servicesSet].reduce(
+        (acc: number, service: ServicesSectionState) => {
+          const servicesNotRead = service.data.filter(
+            data =>
+              pot.isSome(data) &&
+              readServicesById[data.value.service_id] === undefined
+          ).length;
+          return acc + servicesNotRead;
+        },
+        0
+      );
     }
     return 0;
   }

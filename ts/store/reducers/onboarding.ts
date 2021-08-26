@@ -3,7 +3,6 @@
  * @flow
  */
 import { getType } from "typesafe-actions";
-
 import { clearOnboarding, fingerprintAcknowledge } from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -15,10 +14,6 @@ export type OnboardingState = Readonly<{
 const INITIAL_STATE: OnboardingState = {
   isFingerprintAcknowledged: false
 };
-
-export const isFingerprintAcknowledgedSelector = (
-  state: GlobalState
-): boolean => state.onboarding.isFingerprintAcknowledged;
 
 const reducer = (
   state: OnboardingState = INITIAL_STATE,
@@ -40,3 +35,8 @@ const reducer = (
 };
 
 export default reducer;
+
+// Selector
+export const isFingerprintAcknowledgedSelector = (
+  state: GlobalState
+): boolean => state.onboarding.isFingerprintAcknowledged;

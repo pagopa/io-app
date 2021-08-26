@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { StyleProvider } from "native-base";
 import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
@@ -11,6 +12,10 @@ import theme from "./theme";
 
 export const { store, persistor } = configureStoreAndPersistor();
 
+// Infer the `RootState` and `AppDispatch` types from the store itselfexport
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 /**
  * Main component of the application
  *
@@ -20,11 +25,13 @@ export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
-        <LightModalProvider>
-          <MenuProvider>
-            <RootContainer />
-          </MenuProvider>
-        </LightModalProvider>
+        <BottomSheetModalProvider>
+          <LightModalProvider>
+            <MenuProvider>
+              <RootContainer />
+            </MenuProvider>
+          </LightModalProvider>
+        </BottomSheetModalProvider>
       </PersistGate>
     </Provider>
   </StyleProvider>

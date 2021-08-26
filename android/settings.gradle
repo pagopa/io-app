@@ -1,4 +1,21 @@
 rootProject.name = 'ItaliaApp'
+include ':react-native-reanimated'
+project(':react-native-reanimated').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-reanimated/android')
+include ':@react-native-clipboard_clipboard'
+project(':@react-native-clipboard_clipboard').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-clipboard/clipboard/android')
+include ':@react-native-community_cookies'
+project(':@react-native-community_cookies').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/cookies/android')
+include ':@react-native-community_cameraroll'
+project(':@react-native-community_cameraroll').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/cameraroll/android')
+include ':react-native-view-shot'
+project(':react-native-view-shot').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-shot/android')
+include ':jail-monkey'
+project(':jail-monkey').projectDir = new File(rootProject.projectDir, '../node_modules/jail-monkey/android')
+include ':react-native-linear-gradient'
+project(':react-native-linear-gradient').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-linear-gradient/android')
+include ':react-native-share'
+project(':react-native-share').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share/android')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':@react-native-community_async-storage'
 project(':@react-native-community_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/async-storage/android')
 include ':react-native-lewin-qrcode'
@@ -15,14 +32,10 @@ include ':react-native-gesture-handler'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':react-native-calendar-events'
 project(':react-native-calendar-events').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-calendar-events/android')
-include ':react-native-webview'
-project(':react-native-webview').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-webview/android')
 include ':react-native-touch-id'
 project(':react-native-touch-id').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-touch-id/android')
 include ':react-native-background-timer'
 project(':react-native-background-timer').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-background-timer/android')
-include ':instabug-reactnative'
-project(':instabug-reactnative').projectDir = new File(rootProject.projectDir, '../node_modules/instabug-reactnative/android')
 include ':react-native-svg'
 project(':react-native-svg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-svg/android')
 include ':react-native-text-input-mask'
@@ -47,5 +60,16 @@ include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-config'
 project(':react-native-config').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-config/android')
-
+include ':react-native-cie'
+project(':react-native-cie').projectDir = new File(rootProject.projectDir, '../node_modules/@pagopa/react-native-cie/android')
+include ':react-native-community-netinfo'
+project(':react-native-community-netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
+include ':react-native-screen-brightness'
+project(':react-native-screen-brightness').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-screen-brightness/android')
+include ':react-native-permissions'
+project(':react-native-permissions').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-permissions/android')
 include ':app'
+include ':@react-native-community_datetimepicker'
+project(':@react-native-community_datetimepicker').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/datetimepicker/android')
+include ':react-native-art'
+project(':react-native-art').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/art/android')

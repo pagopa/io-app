@@ -1,63 +1,53 @@
-/**
- * Screen displaying the details of a selected service. The user
- * can enable/disable the service and customize the notification settings.
- */
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Content, Grid, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import H4 from "../../components/ui/H4";
+import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
+import OrganizationHeader from "../../components/OrganizationHeader";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import Markdown from "../../components/ui/Markdown";
-import { MultiImage } from "../../components/ui/MultiImage";
-import Switch from "../../components/ui/Switch";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
-import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
-import { profileUpsert } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
-import {
-  ServiceMetadataState,
-  servicesMetadataByIdSelector
-} from "../../store/reducers/content";
+import { Dispatch } from "../../store/actions/types";
+import { contentSelector } from "../../store/reducers/content";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
-import { servicesSelector } from "../../store/reducers/entities/services";
-import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  isEmailEnabledSelector,
+  isInboxEnabledSelector,
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getServiceCTA } from "../../utils/messages";
 import {
   EnabledChannels,
-  getBlockedChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
-import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import ServiceMetadata from "../../components/services/ServiceMetadata";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReduxProps &
+  ReturnType<typeof mapDispatchToProps> &
   NavigationInjectedProps<NavigationParams>;
 
-interface State {
+type State = {
   uiEnabledChannels: EnabledChannels;
-}
+  isMarkdownLoaded: boolean;
+};
 
 const styles = StyleSheet.create({
   infoHeader: {
@@ -72,6 +62,26 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: "flex-start"
   },
+  switchRow: {
+    justifyContent: "space-between",
+    paddingVertical: 12
+  },
+  otherSwitchRow: {
+    borderTopColor: customVariables.itemSeparator,
+    borderTopWidth: 1 / 3
+  },
+  flexRow: {
+    flexDirection: "row"
+  },
+  enabledColor: {
+    color: customVariables.brandDarkestGray
+  },
+  disabledColor: {
+    color: customVariables.lightGray
+  },
+  info: {
+    marginTop: -5
+  },
   imageHeight: {
     height: 60
   },
@@ -80,66 +90,15 @@ const styles = StyleSheet.create({
   }
 });
 
-// Renders a row in the service information panel as a primary block button
-function renderInformationRow(
-  label: string,
-  info: string,
-  value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
-) {
-  return (
-    <View style={styles.infoItem}>
-      <Text>{label}</Text>
-      <ButtonDefaultOpacity
-        primary={true}
-        small={true}
-        onPress={handleItemOnPress(value, valueType)}
-      >
-        <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
-          {info}
-        </Text>
-      </ButtonDefaultOpacity>
-    </View>
-  );
-}
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "serviceDetail.headerTitle",
+  body: "serviceDetail.contextualHelpContent"
+};
 
-// Renders a row in the service information panel as a link
-function renderInformationLinkRow(
-  info: string,
-  value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
-) {
-  return (
-    <View style={styles.infoItem}>
-      <TouchableDefaultOpacity onPress={handleItemOnPress(value, valueType)}>
-        <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
-          {info}
-        </Text>
-      </TouchableDefaultOpacity>
-    </View>
-  );
-}
-
-// Renders a row in the service information panel as labelled image
-function renderInformationImageRow(
-  label: string,
-  url: string,
-  source: ImageSourcePropType
-) {
-  return (
-    <View style={styles.infoItem}>
-      <Text>{label}</Text>
-      <TouchableOpacity onPress={handleItemOnPress(url, "LINK")}>
-        <Image
-          style={styles.badgeLogo}
-          resizeMode={"contain"}
-          source={source}
-        />
-      </TouchableOpacity>
-    </View>
-  );
-}
-
+/**
+ * Screen displaying the details of a selected service. The user
+ * can enable/disable the service and customize the notification settings.
+ */
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -154,12 +113,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
         this.serviceId
-      )
+      ),
+      isMarkdownLoaded: false
     };
   }
 
-  public componentWillReceiveProps(nextProps: Props) {
-    if (pot.isError(nextProps.profile) && !pot.isError(this.props.profile)) {
+  public componentDidUpdate(prevProps: Props) {
+    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
       // in case of new or resolved errors while updating the profile, we show a toast and
       // reset the UI to match the state of the profile preferences
       showToast(
@@ -168,350 +128,131 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       );
 
       const uiEnabledChannels = getEnabledChannelsForService(
-        nextProps.profile,
-        nextProps.navigation.getParam("service").service_id
+        this.props.profile,
+        this.props.navigation.getParam("service").service_id
       );
       this.setState({
         uiEnabledChannels
       });
     }
   }
+  // collect the service
+  private service = this.props.navigation.getParam("service");
 
-  /**
-   * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
-   * profile with the new enabled channels
-   */
-  private dispatchNewEnabledChannels(newUiEnabledChannels: EnabledChannels) {
-    // if a previous update is still running, do nothing
-    // this check is to prevent user double tap on
-    // switch while its animation is running
-    if (pot.isUpdating(this.props.profile)) {
-      return;
-    }
-    this.setState({
-      uiEnabledChannels: newUiEnabledChannels
-    });
-
-    const updatedBlockedChannels = getBlockedChannels(
-      this.props.profile,
-      this.serviceId
-    );
-
-    // compute the new blocked channels preference for the user profile
-    const newblockedChannels = updatedBlockedChannels(newUiEnabledChannels);
-
-    // dispatch a request to update the profile with the new
-    // blocked channels
-    this.props.dispatch(
-      profileUpsert.request({
-        blocked_inbox_or_channels: newblockedChannels
-      })
-    );
-  }
-
-  private renderItems = (potServiceMetadata: ServiceMetadataState) => {
-    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
-      const metadata = potServiceMetadata.value;
-      return (
-        <React.Fragment>
-          {metadata.description && (
-            <Markdown animated={true}>{metadata.description}</Markdown>
-          )}
-          {metadata.description && <View spacer={true} large={true} />}
-          {metadata.tos_url &&
-            renderInformationLinkRow(
-              I18n.t("services.tosLink"),
-              metadata.tos_url
-            )}
-          {metadata.privacy_url &&
-            renderInformationLinkRow(
-              I18n.t("services.privacyLink"),
-              metadata.privacy_url
-            )}
-          {(metadata.app_android || metadata.app_ios || metadata.web_url) && (
-            <H4 style={styles.infoHeader}>
-              {I18n.t("services.otherAppsInfo")}
-            </H4>
-          )}
-          {metadata.web_url &&
-            renderInformationRow(
-              I18n.t("services.otherAppWeb"),
-              metadata.web_url,
-              metadata.web_url
-            )}
-          {metadata.app_ios &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppIos"),
-              metadata.app_ios,
-              require("../../../img/badges/app-store-badge.png")
-            )}
-          {metadata.app_android &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppAndroid"),
-              metadata.app_android,
-              require("../../../img/badges/google-play-badge.png")
-            )}
-        </React.Fragment>
-      );
-    }
-    return undefined;
+  private onMarkdownEnd = () => {
+    this.setState({ isMarkdownLoaded: true });
   };
 
-  private renderContactItems = (potServiceMetadata: ServiceMetadataState) => {
-    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
-      const metadata = potServiceMetadata.value;
-      return (
-        <React.Fragment>
-          {metadata.address &&
-            renderInformationRow(
-              I18n.t("services.contactAddress"),
-              metadata.address,
-              metadata.address,
-              "MAP"
-            )}
-          {metadata.phone &&
-            renderInformationRow(
-              I18n.t("services.contactPhone"),
-              metadata.phone,
-              `tel:${metadata.phone}`
-            )}
-          {metadata.email &&
-            renderInformationRow(
-              "Email",
-              metadata.email,
-              `mailto:${metadata.email}`
-            )}
-          {metadata.pec &&
-            renderInformationRow("PEC", metadata.pec, `mailto:${metadata.pec}`)}
-          {metadata.web_url &&
-            renderInformationRow("Web", metadata.web_url, metadata.web_url)}
-        </React.Fragment>
-      );
-    }
-    return undefined;
-  };
-
-  // show an alert describing what happen if a service is disabled on IO
-  // the alert is displayed only the first time the user disable a service
-  private showAlertOnServiceDisabling = () => {
-    Alert.alert(
-      I18n.t("serviceDetail.disableTitle"),
-      I18n.t("serviceDetail.disableMsg"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.ok"),
-          style: "destructive",
-          onPress: () => {
-            // compute the updated map of enabled channels
-            const newUiEnabledChannels = {
-              ...this.state.uiEnabledChannels,
-              inbox: false
-            };
-            this.dispatchNewEnabledChannels(newUiEnabledChannels);
-
-            // update the persisted preferences to remember the user read the alert
-            this.props.dispatch(
-              serviceAlertDisplayedOnceSuccess({
-                wasServiceAlertDisplayedOnce: true
-              })
-            );
-          }
-        }
-      ],
-      { cancelable: false }
-    );
-  };
-
-  // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
-    // collect the service
-    const service = this.props.navigation.getParam("service");
-    // finds out which channels are enabled in the user profile
-    const profileEnabledChannels = getEnabledChannelsForService(
-      this.props.profile,
-      this.serviceId
-    );
+    const { service, serviceId } = this;
 
-    const potServiceMetadata = this.props.servicesMetadataById[this.serviceId];
+    // collect the service metadata
+    const potServiceMetadata =
+      this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
-    // whether last attempt to save the preferences failed
-    const profileVersion = pot
-      .toOption(this.props.profile)
-      .mapNullable(_ => (_.has_profile ? _.version : null))
-      .getOrElse(0 as NonNegativeInteger);
+    const metadata = pot.toOption(potServiceMetadata).toUndefined();
 
-    // URIs for the service logo
-    const logoUris = logosForService(service);
+    // if markdown content is not available, render immediately what is possible
+    // but we must wait for metadata load to be completed to avoid flashes
+    const isMarkdownAvailable =
+      pot.isLoading(potServiceMetadata) || metadata?.description;
+    const isMarkdownLoaded = isMarkdownAvailable
+      ? this.state.isMarkdownLoaded
+      : true;
+    // if markdown data is available, wait for it to be rendered
+    const canRenderItems = pot.isError(potServiceMetadata) || isMarkdownLoaded;
+
+    const maybeCTA = getServiceCTA(potServiceMetadata);
+
     return (
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["services_detail"]}
       >
         <Content>
           <Grid>
-            <Row>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <H2>{service.service_name}</H2>
-              </Col>
-              <Col style={styles.imageWidth}>
-                <MultiImage
-                  style={[styles.imageHeight, styles.imageWidth]}
-                  source={logoUris}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} large={true} />
-            <Row>
-              <Col size={10}>
-                <Text
-                  primary={
-                    profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
-                  }
-                >
-                  {profileEnabledChannels.inbox
-                    ? I18n.t("services.serviceIsEnabled")
-                    : I18n.t("services.serviceNotEnabled")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-inbox-${profileVersion}`}
-                  value={this.state.uiEnabledChannels.inbox}
-                  disabled={
-                    profileEnabledChannels.inbox !==
-                      this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
-                  }
-                  onValueChange={(value: boolean) => {
-                    if (!value && !this.props.wasServiceAlertDisplayedOnce) {
-                      this.showAlertOnServiceDisabling();
-                    } else {
-                      // compute the updated map of enabled channels
-                      const newUiEnabledChannels = {
-                        ...this.state.uiEnabledChannels,
-                        inbox: value
-                      };
-                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                    }
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} />
-
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
-                <Text
-                  primary={
-                    profileEnabledChannels.push !==
-                    this.state.uiEnabledChannels.push
-                  }
-                >
-                  {I18n.t("services.pushNotifications")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-push-${profileVersion}`}
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.push
-                  }
-                  disabled={
-                    !this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
-                  }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      push: value
-                    };
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} />
-
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
-                <Text
-                  primary={
-                    profileEnabledChannels.email !==
-                    this.state.uiEnabledChannels.email
-                  }
-                >
-                  {I18n.t("services.emailForwarding")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-email-${profileVersion}`}
-                  disabled={
-                    !this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile) ||
-                    !this.props.isValidEmail
-                  }
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.email &&
-                    this.props.isValidEmail
-                  }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      email: value
-                    };
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                  }}
-                />
-              </Col>
-            </Row>
+            <OrganizationHeader service={service} />
           </Grid>
+          <View spacer={true} small={true} />
 
-          <View spacer={true} large={true} />
-          {this.renderItems(potServiceMetadata)}
-          <H4 style={styles.infoHeader}>
-            {I18n.t("services.contactsAndInfo")}
-          </H4>
-          {renderInformationRow(
-            "C.F.",
-            service.organization_fiscal_code,
-            service.organization_fiscal_code,
-            "COPY"
+          {metadata?.description && (
+            <>
+              <Markdown
+                animated={true}
+                onLoadEnd={this.onMarkdownEnd}
+                onError={this.onMarkdownEnd}
+              >
+                {metadata.description}
+              </Markdown>
+              <View spacer={true} large={true} />
+            </>
           )}
-          {this.renderContactItems(potServiceMetadata)}
-          {this.props.isDebugModeEnabled &&
-            renderInformationRow(
-              "ID",
-              service.service_id,
-              service.service_id,
-              "COPY"
-            )}
-          <View spacer={true} extralarge={true} />
+
+          {canRenderItems && (
+            <>
+              {metadata && (
+                <>
+                  <TosAndPrivacyBox
+                    tosUrl={metadata.tos_url}
+                    privacyUrl={metadata.privacy_url}
+                  />
+                  <View spacer={true} large={true} />
+                </>
+              )}
+
+              <ContactPreferencesToggles
+                serviceId={service.service_id}
+                channels={service.available_notification_channels}
+              />
+              <View spacer={true} large={true} />
+
+              <ServiceMetadata
+                servicesMetadata={metadata}
+                organizationFiscalCode={service.organization_fiscal_code}
+                getItemOnPress={handleItemOnPress}
+                serviceId={service.service_id}
+                isDebugModeEnabled={this.props.isDebugModeEnabled}
+              />
+
+              <EdgeBorderComponent />
+
+              <View spacer={true} extralarge={true} />
+            </>
+          )}
         </Content>
+
+        {maybeCTA.isSome() && (
+          <View footer={true} style={styles.flexRow}>
+            <ExtractedCTABar
+              ctas={maybeCTA.value}
+              xsmall={false}
+              dispatch={this.props.dispatch}
+              serviceMetadata={potServiceMetadata}
+              service={service}
+            />
+          </View>
+        )}
       </BaseScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
-  services: servicesSelector(state),
-  servicesMetadataById: servicesMetadataByIdSelector(state),
+  isInboxEnabled: isInboxEnabledSelector(state),
+  isEmailEnabled: isEmailEnabledSelector(state),
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  content: contentSelector(state),
   profile: profileSelector(state),
-  isDebugModeEnabled: isDebugModeEnabledSelector(state),
-  wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state)
+  isDebugModeEnabled: isDebugModeEnabledSelector(state)
 });
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatch
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ServiceDetailsScreen);

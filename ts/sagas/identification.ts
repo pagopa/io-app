@@ -1,19 +1,37 @@
-import { Effect } from "redux-saga";
-import { call, put, select, take, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  Effect,
+  put,
+  select,
+  take,
+  takeLatest
+} from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionInvalid } from "../store/actions/authentication";
+import {
+  checkCurrentSession,
+  sessionInvalid
+} from "../store/actions/authentication";
 import {
   identificationCancel,
+  identificationForceLogout,
   identificationPinReset,
   identificationRequest,
   identificationReset,
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import { navigateToMessageDetailScreenAction } from "../store/actions/navigation";
+import {
+  navigateToMessageRouterScreen,
+  navigateToOnboardingPinScreenAction
+} from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
+import { updatePin } from "../store/actions/pinset";
+import {
+  paymentDeletePayment,
+  runDeleteActivePaymentSaga
+} from "../store/actions/wallet/payment";
 import {
   IdentificationCancelData,
   IdentificationGenericData,
@@ -21,20 +39,27 @@ import {
   IdentificationSuccessData
 } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { GlobalState } from "../store/reducers/types";
+import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 
+type ResultAction =
+  | ActionType<typeof identificationCancel>
+  | ActionType<typeof identificationPinReset>
+  | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationSuccess>;
 // Wait the identification and return the result
-function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
-  const resultAction:
-    | ActionType<typeof identificationCancel>
-    | ActionType<typeof identificationPinReset>
-    | ActionType<typeof identificationSuccess> = yield take([
+function* waitIdentificationResult(): Generator<
+  Effect,
+  void | IdentificationResult,
+  any
+> {
+  const resultAction: ResultAction = yield take([
     getType(identificationCancel),
     getType(identificationPinReset),
+    getType(identificationForceLogout),
     getType(identificationSuccess)
   ]);
 
@@ -43,11 +68,24 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       return IdentificationResult.cancel;
 
     case getType(identificationPinReset): {
+      // If a payment is occurring, delete the active payment from pagoPA
+      const paymentState: ReturnType<typeof paymentsCurrentStateSelector> = yield select(
+        paymentsCurrentStateSelector
+      );
+      if (paymentState.kind === "ACTIVATED") {
+        yield put(runDeleteActivePaymentSaga());
+        // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
+        yield take([
+          paymentDeletePayment.failure,
+          paymentDeletePayment.success
+        ]);
+      }
+
       // Invalidate the session
       yield put(sessionInvalid());
 
-      // Delete the PIN
-      // tslint:disable-next-line:saga-yield-return-type
+      // Delete the unlock code
+      // eslint-disable-next-line
       yield call(deletePin);
 
       // Hide the identification screen
@@ -57,7 +95,15 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
     }
 
     case getType(identificationSuccess): {
+      // if the identification has been successfully, check if the current session is still valid
+      yield put(checkCurrentSession.request());
       return IdentificationResult.success;
+    }
+
+    case getType(identificationForceLogout): {
+      yield put(sessionInvalid());
+      yield put(identificationReset());
+      return IdentificationResult.pinreset;
     }
 
     default: {
@@ -73,17 +119,21 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
 export function* startAndReturnIdentificationResult(
   pin: PinString,
   canResetPin: boolean = true,
+  isValidatingTask: boolean = false,
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
-  identificationSuccessData?: IdentificationSuccessData
+  identificationSuccessData?: IdentificationSuccessData,
+  shufflePad: boolean = false
 ): Iterator<Effect | SagaCallReturnType<typeof waitIdentificationResult>> {
   yield put(
     identificationStart(
       pin,
       canResetPin,
+      isValidatingTask,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     )
   );
 
@@ -94,14 +144,16 @@ export function* startAndReturnIdentificationResult(
 function* startAndHandleIdentificationResult(
   pin: PinString,
   identificationRequestAction: ActionType<typeof identificationRequest>
-): IterableIterator<Effect> {
+) {
   yield put(
     identificationStart(
       pin,
       identificationRequestAction.payload.canResetPin,
+      identificationRequestAction.payload.isValidatingTask,
       identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
-      identificationRequestAction.payload.identificationSuccessData
+      identificationRequestAction.payload.identificationSuccessData,
+      identificationRequestAction.payload.shufflePad
     )
   );
   const identificationResult = yield call(waitIdentificationResult);
@@ -110,14 +162,14 @@ function* startAndHandleIdentificationResult(
     yield put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
     // Check if we have a pending notification message
-    const pendingMessageState: ReturnType<
-      typeof pendingMessageStateSelector
-    > = yield select<GlobalState>(pendingMessageStateSelector);
+    const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> = yield select(
+      pendingMessageStateSelector
+    );
 
     // Check if there is a payment ongoing
-    const isPaymentOngoing: ReturnType<
-      typeof isPaymentOngoingSelector
-    > = yield select<GlobalState>(isPaymentOngoingSelector);
+    const isPaymentOngoing: ReturnType<typeof isPaymentOngoingSelector> = yield select(
+      isPaymentOngoingSelector
+    );
 
     if (!isPaymentOngoing && pendingMessageState) {
       // We have a pending notification message to handle
@@ -126,18 +178,22 @@ function* startAndHandleIdentificationResult(
       // Remove the pending message from the notification state
       yield put(clearNotificationPendingMessage());
 
-      // Navigate to message details screen
-      yield put(navigateToMessageDetailScreenAction({ messageId }));
+      // Navigate to message router screen
+      yield put(navigateToMessageRouterScreen({ messageId }));
     }
   }
 }
 
-export function* watchIdentificationRequest(
-  pin: PinString
-): IterableIterator<Effect> {
+export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
+  // Watch for identification request
   yield takeLatest(
     getType(identificationRequest),
     startAndHandleIdentificationResult,
     pin
   );
+
+  // Watch for requests to update the unlock code.
+  yield takeLatest(getType(updatePin), function* () {
+    yield put(navigateToOnboardingPinScreenAction);
+  });
 }

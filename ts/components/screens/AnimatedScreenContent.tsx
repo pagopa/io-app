@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   },
 
   level1: {
-    zIndex: -1
+    zIndex: Platform.OS === "android" ? 1 : -1
   },
 
   level2: {
-    zIndex: -2
+    zIndex: Platform.OS === "android" ? 1 : -2
   },
 
   animatedDarkItem: {
@@ -88,8 +88,8 @@ export default class AnimatedScreenContent extends React.Component<
   private headerHeight: number =
     Platform.OS === "ios"
       ? isIphoneX()
-        ? customVariables.appHeaderHeight + 42
-        : customVariables.appHeaderHeight + 18
+        ? customVariables.appHeaderHeight + 62
+        : customVariables.appHeaderHeight + 35
       : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
@@ -124,15 +124,14 @@ export default class AnimatedScreenContent extends React.Component<
 
     return (
       <React.Fragment>
-        {Platform.OS === "ios" &&
-          this.props.dark && (
-            <Animated.View
-              style={[
-                styles.animatedDarkItem,
-                { transform: [{ translateY: dymanicOffset }] }
-              ]}
-            />
-          )}
+        {Platform.OS === "ios" && this.props.dark && (
+          <Animated.View
+            style={[
+              styles.animatedDarkItem,
+              { transform: [{ translateY: dymanicOffset }] }
+            ]}
+          />
+        )}
         <Animated.ScrollView
           style={[styles.level2, contentStyle]}
           ref={this.scrollableContentRef}
@@ -149,6 +148,7 @@ export default class AnimatedScreenContent extends React.Component<
             <ScreenContentHeader
               title={this.props.title}
               icon={this.props.icon}
+              iconFont={this.props.iconFont}
               dark={this.props.dark}
             />
           )}

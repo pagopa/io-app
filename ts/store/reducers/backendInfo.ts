@@ -2,14 +2,14 @@
  * Implements the reducers for BackendInfo.
  */
 
-import { Action } from "../actions/types";
-
 import { getType } from "typesafe-actions";
 import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 import {
   backendInfoLoadFailure,
   backendInfoLoadSuccess
 } from "../actions/backendInfo";
+import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type BackendInfoState = Readonly<{
   serverInfo?: ServerInfo;
@@ -40,3 +40,7 @@ export default function backendInfo(
       return state;
   }
 }
+
+// Selectors
+export const serverInfoDataSelector = (state: GlobalState) =>
+  state.backendInfo.serverInfo;

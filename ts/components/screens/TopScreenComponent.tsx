@@ -1,18 +1,21 @@
 import * as React from "react";
-
 import { ComponentProps } from "../../types/react";
-import { SearchType } from "../search/SearchButton";
+import { FAQsCategoriesType } from "../../utils/faq";
+import { IOColorType } from "../core/variables/IOColors";
+import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
-import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
+  accessibilityLabel?: string;
+  onAccessibilityNavigationHeaderFocus?: () => void;
   headerTitle?: string;
-  isSearchAvailable?: boolean;
-  searchType?: SearchType;
   customRightIcon?: {
     iconName: string;
     onPress: () => void;
   };
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  accessibilityEvents?: AccessibilityEvents;
+  titleColor?: IOColorType;
 }
 
 type BaseScreenComponentProps =
@@ -20,11 +23,15 @@ type BaseScreenComponentProps =
   | "appLogo"
   | "goBack"
   | "contextualHelp"
-  | "headerBody";
+  | "contextualHelpMarkdown"
+  | "headerBody"
+  | "customGoBack"
+  | "isSearchAvailable";
 
 type Props = OwnProps &
-  Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
+
+export type TopScreenComponentProps = Props;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
@@ -35,26 +42,39 @@ class TopScreenComponent extends React.PureComponent<Props> {
       dark,
       appLogo,
       goBack,
-      title,
       headerTitle,
+      accessibilityLabel,
       contextualHelp,
+      contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
-      searchType,
-      customRightIcon
+      customRightIcon,
+      customGoBack,
+      onAccessibilityNavigationHeaderFocus,
+      faqCategories,
+      accessibilityEvents,
+      titleColor
     } = this.props;
 
     return (
       <BaseScreenComponent
+        onAccessibilityNavigationHeaderFocus={
+          onAccessibilityNavigationHeaderFocus
+        }
+        accessibilityLabel={accessibilityLabel}
         appLogo={appLogo}
         dark={dark}
         goBack={goBack}
-        headerTitle={goBack ? headerTitle || title : undefined}
+        headerTitle={goBack ? headerTitle : undefined}
         contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={faqCategories}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
-        searchType={searchType}
         customRightIcon={customRightIcon}
+        customGoBack={customGoBack}
+        accessibilityEvents={accessibilityEvents}
+        titleColor={titleColor}
       >
         {this.props.children}
       </BaseScreenComponent>

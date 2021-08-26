@@ -1,14 +1,17 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
+import { Either, left, right } from "fp-ts/lib/Either";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import { mixpanelTrack } from "../../mixpanel";
 import {
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
-  paymentExecutePayment,
+  paymentExecuteStart,
+  paymentFetchAllPspsForPaymentId,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
   paymentUpdateWalletPsp,
@@ -19,6 +22,7 @@ import {
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsFailure,
+  fetchTransactionsRequest,
   fetchTransactionsSuccess,
   fetchTransactionSuccess
 } from "../../store/actions/wallet/transactions";
@@ -31,19 +35,19 @@ import {
   deleteWalletSuccess,
   fetchWalletsFailure,
   fetchWalletsSuccess,
-  payCreditCardVerificationFailure,
-  payCreditCardVerificationRequest,
-  payCreditCardVerificationSuccess,
   setFavouriteWalletFailure,
   setFavouriteWalletRequest,
-  setFavouriteWalletSuccess
+  setFavouriteWalletSuccess,
+  updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
-import { PaymentManagerToken } from "../../types/pagopa";
+import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
+import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
+import { checkCurrentSession } from "../../store/actions/authentication";
 
 //
 // Payment Manager APIs
@@ -52,16 +56,34 @@ import { SessionManager } from "../../utils/SessionManager";
 /**
  * Handles fetchWalletsRequest
  */
-export function* fetchWalletsRequestHandler(
+
+export function* getWallets(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Iterator<Effect> {
-  const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
+): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
+  return yield call(getWalletsV2, pagoPaClient, pmSessionManager);
+}
+
+// load wallet from api /v2/wallet
+// it converts walletV2 into walletV1
+export function* getWalletsV2(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>
+): Generator<Effect, Either<Error, ReadonlyArray<Wallet>>, any> {
   try {
+    void mixpanelTrack("WALLETS_LOAD_REQUEST");
+    const request = pmSessionManager.withRefresh(pagoPaClient.getWalletsV2);
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
     if (getResponse.isRight()) {
       if (getResponse.value.status === 200) {
-        yield put(fetchWalletsSuccess(getResponse.value.value.data));
+        const wallets = (getResponse.value.value.data ?? []).map(
+          convertWalletV2toWalletV1
+        );
+        void mixpanelTrack("WALLETS_LOAD_SUCCESS", {
+          count: wallets.length
+        });
+        yield put(fetchWalletsSuccess(wallets));
+        return right<Error, ReadonlyArray<Wallet>>(wallets);
       } else {
         throw Error(`response status ${getResponse.value.status}`);
       }
@@ -69,7 +91,20 @@ export function* fetchWalletsRequestHandler(
       throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
+    // this is required to handle 401 response from PM
+    // On 401 response sessionManager retries for X attempts to get a valid session
+    // If it exceeds a fixed threshold of attempts a max retries error will be dispatched
+
+    void mixpanelTrack("WALLETS_LOAD_FAILURE", {
+      reason: error.message
+    });
+
+    if (isTimeoutError(getNetworkError(error))) {
+      // check if also the IO session is expired
+      yield put(checkCurrentSession.request());
+    }
     yield put(fetchWalletsFailure(error));
+    return left<Error, ReadonlyArray<Wallet>>(error);
   }
 }
 
@@ -78,14 +113,22 @@ export function* fetchWalletsRequestHandler(
  */
 export function* fetchTransactionsRequestHandler(
   pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>
-): Iterator<Effect> {
-  const request = pmSessionManager.withRefresh(pagoPaClient.getTransactions);
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchTransactionsRequest>
+): Generator<Effect, void, any> {
+  const request = pmSessionManager.withRefresh(
+    pagoPaClient.getTransactions(action.payload.start)
+  );
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(fetchTransactionsSuccess(response.value.value.data));
+        yield put(
+          fetchTransactionsSuccess({
+            data: response.value.value.data,
+            total: fromNullable(response.value.value.total)
+          })
+        );
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -104,7 +147,7 @@ export function* fetchTransactionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransaction(action.payload)
   );
@@ -131,7 +174,7 @@ export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchPsp["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
   );
@@ -168,13 +211,55 @@ export function* fetchPspRequestHandler(
 }
 
 /**
+ * Handles the update of payment method status
+ * (enable or disable a payment method to pay with pagoPa)
+ */
+export function* updatePaymentStatusSaga(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof updatePaymentStatus.request>
+): Generator<Effect, void, any> {
+  const updatePayment = pagoPaClient.updatePaymentStatus(action.payload);
+  const request = pmSessionManager.withRefresh(updatePayment);
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        if (response.value.value.data) {
+          yield put(
+            updatePaymentStatus.success(
+              convertWalletV2toWalletV1(response.value.value.data)
+            )
+          );
+        } else {
+          // this should not never happen (payload weak typed)
+          yield put(
+            updatePaymentStatus.failure(
+              getNetworkError(Error("payload is empty"))
+            )
+          );
+        }
+      } else {
+        const errorStatus = Error(`response status ${response.value.status}`);
+        yield put(updatePaymentStatus.failure(getNetworkError(errorStatus)));
+      }
+    } else {
+      const errorDescription = Error(readablePrivacyReport(response.value));
+      yield put(updatePaymentStatus.failure(getNetworkError(errorDescription)));
+    }
+  } catch (error) {
+    yield put(updatePaymentStatus.failure(getNetworkError(error)));
+  }
+}
+
+/**
  * Handles setFavouriteWalletRequest
  */
 export function* setFavouriteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof setFavouriteWalletRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const favouriteWalletId = action.payload;
   if (favouriteWalletId === undefined) {
     // FIXME: currently there is no way to unset a favourite wallet
@@ -204,7 +289,7 @@ export function* setFavouriteWalletRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the application logic decide
  */
-// tslint:disable-next-line:cognitive-complexity
+// eslint-disable-next-line
 export function* updateWalletPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
@@ -222,44 +307,41 @@ export function* updateWalletPspRequestHandler(
     apiUpdateWalletPsp
   );
 
-  const getWalletsWithRefresh = pmSessionManager.withRefresh(
-    pagoPaClient.getWallets
-  );
-
   try {
-    const response: SagaCallReturnType<
-      typeof updateWalletPspWithRefresh
-    > = yield call(updateWalletPspWithRefresh);
+    const response: SagaCallReturnType<typeof updateWalletPspWithRefresh> = yield call(
+      updateWalletPspWithRefresh
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {
-        const getResponse: SagaCallReturnType<
-          typeof getWalletsWithRefresh
-        > = yield call(getWalletsWithRefresh);
-        if (getResponse.isRight()) {
-          if (getResponse.value.status === 200) {
-            // look for the updated wallet
-            const updatedWallet = getResponse.value.value.data.find(
-              _ => _.idWallet === wallet.idWallet
-            );
-            if (updatedWallet !== undefined) {
-              // the wallet is still there, we can proceed
-              const successAction = paymentUpdateWalletPsp.success({
-                wallets: getResponse.value.value.data,
-                updatedWallet: response.value.value.data
-              });
-              yield put(successAction);
-              if (action.payload.onSuccess) {
-                // signal the callee if requested
-                action.payload.onSuccess(successAction);
-              }
+        const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+          getWallets,
+          pagoPaClient,
+          pmSessionManager
+        );
+        if (maybeWallets.isRight()) {
+          // look for the updated wallet
+          const updatedWallet = maybeWallets.value.find(
+            _ => _.idWallet === wallet.idWallet
+          );
+          if (updatedWallet !== undefined) {
+            // the wallet is still there, we can proceed
+            const successAction = paymentUpdateWalletPsp.success({
+              wallets: maybeWallets.value,
+              // attention: updatedWallet is V1
+              updatedWallet: response.value.value.data
+            });
+            yield put(successAction);
+            if (action.payload.onSuccess) {
+              // signal the callee if requested
+              action.payload.onSuccess(successAction);
             }
           } else {
             // oops, the wallet is not there anymore!
             throw Error(`response status ${response.value.status}`);
           }
         } else {
-          throw Error(readablePrivacyReport(getResponse.value));
+          throw maybeWallets.value;
         }
       } else {
         // oops, the wallet is not there anymore!
@@ -283,39 +365,33 @@ export function* updateWalletPspRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the appliction logic decide
  */
-// tslint:disable-next-line: cognitive-complexity
+// eslint-disable-next-line
 export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
-  const getWalletsWithRefresh = pmSessionManager.withRefresh(
-    pagoPaClient.getWallets
-  );
   try {
-    const deleteResponse: SagaCallReturnType<
-      typeof deleteWalletWithRefresh
-    > = yield call(deleteWalletWithRefresh);
+    const deleteResponse: SagaCallReturnType<typeof deleteWalletWithRefresh> = yield call(
+      deleteWalletWithRefresh
+    );
     if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
-      const getResponse: SagaCallReturnType<
-        typeof getWalletsWithRefresh
-      > = yield call(getWalletsWithRefresh);
-      if (getResponse.isRight() && getResponse.value.status === 200) {
-        const successAction = deleteWalletSuccess(getResponse.value.value.data);
+      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+        getWallets,
+        pagoPaClient,
+        pmSessionManager
+      );
+      if (maybeWallets.isRight()) {
+        const successAction = deleteWalletSuccess(maybeWallets.value);
         yield put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess(successAction);
         }
       } else {
-        throw Error(
-          getResponse.fold(
-            readablePrivacyReport,
-            ({ status }) => `response status ${status}`
-          )
-        );
+        throw maybeWallets.value;
       }
     } else {
       throw Error(
@@ -350,9 +426,9 @@ export function* addWalletCreditCardRequestHandler(
   );
 
   try {
-    const response: SagaCallReturnType<
-      typeof boardCreditCardWithRefresh
-    > = yield call(boardCreditCardWithRefresh);
+    const response: SagaCallReturnType<typeof boardCreditCardWithRefresh> = yield call(
+      boardCreditCardWithRefresh
+    );
 
     if (response.isRight()) {
       if (response.value.status === 200) {
@@ -361,7 +437,7 @@ export function* addWalletCreditCardRequestHandler(
         response.value.status === 422 &&
         response.value.value.message === "creditcard.already_exists"
       ) {
-        yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+        yield put(addWalletCreditCardFailure({ kind: "ALREADY_EXISTS" }));
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -369,39 +445,12 @@ export function* addWalletCreditCardRequestHandler(
       throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
-    yield put(addWalletCreditCardFailure(e.message));
-  }
-}
-
-/**
- * Handles payCreditCardVerificationRequest
- */
-export function* payCreditCardVerificationRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof payCreditCardVerificationRequest>
-) {
-  const boardPay = pagoPaClient.payCreditCardVerification(
-    action.payload.payRequest,
-    action.payload.language
-  );
-  const boardPayWithRefresh = pmSessionManager.withRefresh(boardPay);
-  try {
-    const response: SagaCallReturnType<typeof boardPayWithRefresh> = yield call(
-      boardPayWithRefresh
+    yield put(
+      addWalletCreditCardFailure({
+        kind: "GENERIC_ERROR",
+        reason: getError(e).message
+      })
     );
-
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield put(payCreditCardVerificationSuccess(response.value.value));
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    yield put(payCreditCardVerificationFailure(e));
   }
 }
 
@@ -413,15 +462,17 @@ export function* paymentFetchPspsForWalletRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
 ) {
-  const apiGetPspList = pagoPaClient.getPspList(
+  const apiGetPspSelected = pagoPaClient.getPspSelected(
     action.payload.idPayment,
-    action.payload.idWallet
+    action.payload.idWallet.toString()
   );
-  const getPspListWithRefresh = pmSessionManager.withRefresh(apiGetPspList);
+  const apiGetPspSelectedWithRefresh = pmSessionManager.withRefresh(
+    apiGetPspSelected
+  );
   try {
-    const response: SagaCallReturnType<
-      typeof getPspListWithRefresh
-    > = yield call(getPspListWithRefresh);
+    const response: SagaCallReturnType<typeof apiGetPspSelectedWithRefresh> = yield call(
+      apiGetPspSelectedWithRefresh
+    );
     if (response.isRight()) {
       if (response.value.status === 200) {
         const successAction = paymentFetchPspsForPaymentId.success(
@@ -447,22 +498,59 @@ export function* paymentFetchPspsForWalletRequestHandler(
 }
 
 /**
+ * load all psp for a specific wallet & payment id
+ */
+export function* paymentFetchAllPspsForWalletRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof paymentFetchAllPspsForPaymentId["request"]>
+) {
+  const apiGetAllPspList = pagoPaClient.getAllPspList(
+    action.payload.idPayment,
+    action.payload.idWallet
+  );
+  const getAllPspListWithRefresh = pmSessionManager.withRefresh(
+    apiGetAllPspList
+  );
+  try {
+    const response: SagaCallReturnType<typeof getAllPspListWithRefresh> = yield call(
+      getAllPspListWithRefresh
+    );
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const successAction = paymentFetchAllPspsForPaymentId.success(
+          response.value.value.data
+        );
+        yield put(successAction);
+      } else {
+        throw Error(`response status ${response.value.status}`);
+      }
+    } else {
+      throw Error(readablePrivacyReport(response.value));
+    }
+  } catch (e) {
+    const failureAction = paymentFetchAllPspsForPaymentId.failure(e);
+    yield put(failureAction);
+  }
+}
+
+/**
  * Handles paymentCheckRequest
  */
 export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentCheck["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
   const apiCheckPayment = () => pagoPaClient.checkPayment(action.payload);
   const checkPaymentWithRefresh = pmSessionManager.withRefresh(apiCheckPayment);
   try {
-    const response: SagaCallReturnType<
-      typeof checkPaymentWithRefresh
-    > = yield call(checkPaymentWithRefresh);
+    const response: SagaCallReturnType<typeof checkPaymentWithRefresh> = yield call(
+      checkPaymentWithRefresh
+    );
     if (response.isRight()) {
       if (
         response.value.status === 200 ||
@@ -484,38 +572,25 @@ export function* paymentCheckRequestHandler(
 }
 
 /**
- * Handles paymentExecutePaymentRequest
+ * handle the start of a payment
+ * we already know which is the payment (idPayment) and the used wallet to pay (idWallet)
+ * we need a fresh PM session token to start the challenge into the PayWebViewModal
+ * @param pmSessionManager
  */
-export function* paymentExecutePaymentRequestHandler(
-  pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>,
-  action: ActionType<typeof paymentExecutePayment["request"]>
-): Iterator<Effect> {
-  const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
-    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
-  });
-  const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
-  try {
-    const response: SagaCallReturnType<
-      typeof postPaymentWithRefresh
-    > = yield call(postPaymentWithRefresh);
-
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        const newTransaction = response.value.value.data;
-        const successAction = paymentExecutePayment.success(newTransaction);
-        yield put(successAction);
-        if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
-        }
-      } else {
-        throw Error(`response status ${response.value.status}`);
-      }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
-    }
-  } catch (e) {
-    yield put(paymentExecutePayment.failure(e));
+export function* paymentStartRequest(
+  pmSessionManager: SessionManager<PaymentManagerToken>
+) {
+  const pmSessionToken: Option<PaymentManagerToken> = yield call(
+    pmSessionManager.getNewToken
+  );
+  if (pmSessionToken.isSome()) {
+    yield put(paymentExecuteStart.success(pmSessionToken.value));
+  } else {
+    yield put(
+      paymentExecuteStart.failure(
+        new Error("cannot retrieve a valid PM session token")
+      )
+    );
   }
 }
 
@@ -526,7 +601,7 @@ export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentDeletePayment["request"]>
-): Iterator<Effect> {
+): Generator<Effect, void, any> {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {
@@ -558,9 +633,9 @@ export function* paymentVerificaRequestHandler(
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
@@ -597,9 +672,9 @@ export function* paymentAttivaRequestHandler(
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
     const response: SagaCallReturnType<typeof postAttivaRpt> = yield call(
       postAttivaRpt,
@@ -639,19 +714,20 @@ export function* paymentAttivaRequestHandler(
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
-  getPaymentIdApi: ReturnType<typeof BackendClient>["getPaymentId"],
+  getPaymentIdApi: ReturnType<ReturnType<typeof BackendClient>["getPaymentId"]>,
   action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
   // now poll until a paymentId is made available
 
   try {
-    const isPagoPATestEnabled: ReturnType<
-      typeof isPagoPATestEnabledSelector
-    > = yield select<GlobalState>(isPagoPATestEnabledSelector);
+    const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
+      isPagoPATestEnabledSelector
+    );
 
-    const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
-      getPaymentIdApi,
+    const getPaymentId = getPaymentIdApi.e2;
+    const response: SagaCallReturnType<typeof getPaymentId> = yield call(
+      getPaymentId,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
         test: isPagoPATestEnabled

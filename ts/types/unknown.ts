@@ -1,14 +1,13 @@
 import { AmountInEuroCents } from "italia-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
-import { Amount } from "../types/pagopa";
-import { Wallet } from "../types/pagopa";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
+import { Amount, Wallet } from "./pagopa";
 
 const UNKNOWN_STRING = "?";
 const UNKNOWN_EMPTY_STRING = "";

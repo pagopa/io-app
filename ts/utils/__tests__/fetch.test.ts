@@ -6,28 +6,30 @@ import {
 } from "italia-ts-commons/lib/fetch";
 import { MaxRetries, withRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
+
+import ServerMock from "mock-http-server";
 import nodeFetch from "node-fetch";
 import { retryLogicForTransientResponseError } from "../fetch";
 
-const ServerMock = require("mock-http-server");
 const {
   AbortController
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
 } = require("abortcontroller-polyfill/dist/cjs-ponyfill");
 
 //
 // We need to override the global fetch and AbortController to make the tests
 // compatible with node-fetch
 //
-// tslint:disable-next-line:no-object-mutation no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
 (global as any).fetch = nodeFetch;
-// tslint:disable-next-line:no-object-mutation no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
 (global as any).AbortController = AbortController;
 
 const TEST_PATH = "transient-error";
 const TEST_HOST = "localhost";
 const TEST_PORT = 40000;
 
-// tslint:disable-next-line:no-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createServerMock(): any {
   const server = new ServerMock(
     { host: TEST_HOST, port: TEST_PORT },

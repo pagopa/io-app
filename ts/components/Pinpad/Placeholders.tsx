@@ -5,15 +5,14 @@ import { StyleSheet, ViewStyle } from "react-native";
 interface PlaceholderProps {
   color: string;
   placeHolderStyle?: ViewStyle;
+  scalableDimension?: ViewStyle;
 }
+
+export const INPUT_PLACEHOLDER_HEIGHT = 40;
 
 const styles = StyleSheet.create({
   placeholder: {
-    height: 40,
-    marginLeft: 8,
-    marginRight: 8,
-    marginTop: 18,
-    width: 36,
+    height: INPUT_PLACEHOLDER_HEIGHT,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -27,20 +26,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Bullet: React.SFC<PlaceholderProps> = ({ color }) => (
-  <View style={styles.placeholder}>
+export const Bullet: React.FunctionComponent<PlaceholderProps> = ({
+  color,
+  scalableDimension
+}) => (
+  <View style={[styles.placeholder, scalableDimension]}>
     <View style={[styles.placeholderBullet, { backgroundColor: color }]} />
   </View>
 );
 
-export const Baseline: React.SFC<PlaceholderProps> = ({
+export const Baseline: React.FunctionComponent<PlaceholderProps> = ({
   color,
-  placeHolderStyle
+  placeHolderStyle,
+  scalableDimension
 }) => (
   <View
     style={[
       styles.placeholder,
       [styles.placeholderBaseline, placeHolderStyle],
+      scalableDimension,
       { borderBottomColor: color }
     ]}
   />

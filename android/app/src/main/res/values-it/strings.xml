@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="splash_io_name">l\'app dei servizi pubblici</string>
     <string name="notification_channel_name">Messaggi</string>
     <string name="notification_channel_description">Ricevi la notifica per i nuovi messaggi</string>
     <string name="alert_device_rooted_title">Dispositivo rootato</string>

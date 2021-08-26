@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="it.teamdigitale.app.italiaapp"
+          package="it.pagopa.io.app"
+          xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
 
   <supports-screens android:smallScreens="true"
@@ -11,36 +12,91 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
+  <!-- Force removal of RECORD_AUDIO since the app doesn't need it see https://www.pivotaltracker.com/story/show/171897210 -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
   <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+  <!-- Required by @react-native-community/cameraroll -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
   <!-- Required by react-native-touch-id -->
   <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 
-  <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:theme="@style/AppTheme">
+  <application
+    android:name=".MainApplication"
+    android:label="@string/app_name"
+    android:icon="@mipmap/ic_launcher"
+    android:usesCleartextTraffic="true"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:allowBackup="false"
+    android:theme="@style/AppTheme">
 
     <!-- START Required by react-native-push-notification -->
-    <meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_name" android:value="@string/notification_channel_name"/>
-    <meta-data android:name="com.dieam.reactnativepushnotification.notification_channel_description" android:value="@string/notification_channel_description"/>
 
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_foreground"
+      android:value="true"/>
+
+
+    <meta-data  android:name="com.dieam.reactnativepushnotification.notification_color"
+      android:resource="@color/white"/>
+
+    <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
     <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
     <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
       <intent-filter>
         <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
       </intent-filter>
     </receiver>
-    <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
 
-    <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService" android:exported="false">
+    <service
+      android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService"
+      android:exported="false" >
       <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_notification" />
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_channel_id"
+      android:value="@string/default_notification_channel_id" />
+
+
     <!-- END Required by react-native-push-notification -->
 
-    <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" android:windowSoftInputMode="adjustResize">
+    <!-- Mixpanel -->
+
+    <meta-data android:name="com.mixpanel.android.MPConfig.UseIpAddressForGeolocation"
+               android:value="false" />
+    <!-- disable A/B testing see https://pagopa.atlassian.net/browse/IA-42 -->
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableGestureBindingUI" android:value="true" />
+    <meta-data android:name="com.mixpanel.android.MPConfig.DisableEmulatorBindingUI" android:value="true" />
+
+    <!-- START Required by mixpanel push notification -->
+    <service
+      android:name="com.mixpanel.android.mpmetrics.MixpanelFCMMessagingService"
+      android:enabled="true"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+      </intent-filter>
+    </service>
+
+    <!-- END Required by mixpanel push notification  -->
+
+    <!-- END Mixpanel -->
+
+
+    <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:windowSoftInputMode="adjustResize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -53,7 +109,6 @@
         <data android:scheme="ioit" android:host="ioit" />
       </intent-filter>
     </activity>
-    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
   </application>
 
 </manifest>
