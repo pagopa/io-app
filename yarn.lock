@@ -7063,17 +7063,10 @@ gitlab@^10.0.1:
     query-string "^6.8.2"
     universal-url "^2.0.0"
 
-glob-parent@^5.1.2:
+glob-parent@^5.1.2, glob-parent@~5.1.0:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
   integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
-  dependencies:
-    is-glob "^4.0.1"
-
-glob-parent@~5.1.0:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
-  integrity sha512-FnI+VGOpnlGHWZxthPGR+QhR78fuiK0sNLkHQv+bL9fQi57lNNdquIbna/WrfROrolq8GK5Ek6BiMwqL/voRYQ==
   dependencies:
     is-glob "^4.0.1"
 
@@ -11429,10 +11422,10 @@ react-native-calendar-events@2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-2.2.0.tgz#6cb78bf712457ca9928dae95b428c91e7b895ae0"
   integrity sha512-tNUbhT6Ief0JM4OQzQAaz1ri0+MCcAoHptBcEXCz2g7q3A05pg62PR2Dio4F9t2fCAD7Y2+QggdY1ycAsF3Tsg==
 
-react-native-camera@^3.4.0:
-  version "3.35.0"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.35.0.tgz#3c8b8392f9cdcac51d30fed45c1db70332fc6a1c"
-  integrity sha512-hs9ja6qc2JMB2oYDzYuzOF1GUMRZY0O7KX1e7K7WJBQzAwsXnlwm4d2r6P61kGMk1FUDUn186Yc3kb5vfEAyoA==
+react-native-camera@^3.44.3:
+  version "3.44.3"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.44.3.tgz#f8f35f2484e508b0694dee54a8801a1e0833d851"
+  integrity sha512-Efb5aKhFsE7qnqvTnbSEwFAom79L5BT4jMn+B2wYVUnZeRgWh45gNSG7Ou3MQ6zU2DpUHBPlBFKGVS5yOSfSZQ==
   dependencies:
     prop-types "^15.6.2"
 
@@ -11594,10 +11587,10 @@ react-native-permissions@^2.0.2:
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.2.2.tgz#3d2a63f6b7d6be52fc86e30f77412a9566283028"
   integrity sha512-ihf4shQDSX5Oo9ChQXb9kr13mmyyNem5MaEvOpr3dCjhBOBWyEMztXm9/uPK1Qg5PsNpaYLa1KpcPZDCw87LXg==
 
-react-native-popup-menu@^0.14.0:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.14.2.tgz#c71e6d662ce143cdfd3a640fe22f2c54f2f54eda"
-  integrity sha512-hVy9z4JLj+6/ll2UXwR2O+exzx57b0gdLbUZUY2A1hXrTGOgxDpsQ+sQBHTLeUXoSQDtZxGcunmpIc1ZjdhMHg==
+react-native-popup-menu@^0.15.11:
+  version "0.15.11"
+  resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.15.11.tgz#df96b1a909ecbba84487821061ce6e29e7c7bb20"
+  integrity sha512-f5q2GoDN99bkA24wHiwasaErcdQEgyqYZ8IYuZPOrZNFr66E4rg6f4LElSVBA3EZJTSq5OddVeaOcU340bSTEg==
 
 react-native-progress-circle@^2.1.0:
   version "2.1.0"
@@ -11651,10 +11644,10 @@ react-native-screen-brightness@^2.0.0-alpha:
   resolved "https://registry.yarnpkg.com/react-native-screen-brightness/-/react-native-screen-brightness-2.0.0-alpha.tgz#2fc30cf711cfafa5e0aec685f0fce51ce65e0052"
   integrity sha512-NdJPptcWiFwG9aypm0awYv9d/aoZSJetXPFkx6w/UuNX9SRr5YTKXMSND/2lwuSOw6uGU9mQ0f4dBuGZSNgzow==
 
-react-native-screens@^2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
-  integrity sha512-Z2kKSk4AwWRQNCBmTjViuBQK0/Lx0jc25TZptn/2gKYUCOuVRvCekoA26u0Tsb3BIQ8tWDsZW14OwDlFUXW1aw==
+react-native-screens@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.18.1.tgz#47b9991c6f762d00d0ed3233e5283d523e859885"
+  integrity sha512-r5WZLpmx2hHjC1RgMdPq5YpSU9tEhBpUaZ5M1SUtNIONyiLqQVxabhRCINdebIk4depJiIl7yw2Q85zJyeX6fw==
 
 react-native-sha256@1.2.3:
   version "1.2.3"
