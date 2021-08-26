@@ -2,11 +2,11 @@ import { TypeEnum } from "../../../definitions/pagopa/walletv2/CardInfo";
 import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
-  EnableableFunctionsTypeEnum,
   PaymentMethod,
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { isPaymentSupported, canMethodPay } from "../paymentMethodCapabilities";
+import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
 
 describe("canMethodPay", () => {
   it("should return true if the Credit card is of type CrediCardType", () => {
@@ -64,7 +64,7 @@ describe("isPaymentMethodSupported", () => {
       ...aNoMaestroCreditCard,
       kind: "CreditCard",
       pagoPA: true,
-      enableableFunctions: [EnableableFunctionsTypeEnum.pagoPA]
+      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("available");
@@ -80,7 +80,7 @@ describe("isPaymentMethodSupported", () => {
       ...aMaestroCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
@@ -97,7 +97,7 @@ describe("isPaymentMethodSupported", () => {
       ...aCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual(
@@ -110,7 +110,7 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aSatispay,
       kind: "Satispay",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
@@ -120,7 +120,7 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aBPay,
       kind: "BPay",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("arriving");
@@ -131,7 +131,7 @@ describe("isPaymentMethodSupported", () => {
     const aPaymentMethod = {
       ...aBancomat,
       kind: "Bancomat",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
@@ -150,7 +150,7 @@ describe("isPaymentMethodSupported", () => {
       ...aCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
