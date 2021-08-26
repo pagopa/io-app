@@ -47,7 +47,6 @@ import {
   AddWalletCreditCardUsingPOSTT,
   addWalletSatispayUsingPOSTDecoder,
   changePayOptionDecoder,
-  ChangePayOptionT,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -91,6 +90,7 @@ import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
+import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -565,6 +565,21 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
+
+// Request type definition
+export type ChangePayOptionT = r.IPutApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly idWallet: number;
+    readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
+  },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2Response>
+  | r.IResponseType<400, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
+>;
 
 const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
