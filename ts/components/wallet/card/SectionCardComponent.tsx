@@ -19,6 +19,8 @@ type Props = {
   isError?: boolean;
   isNew?: boolean;
   cardStyle?: ViewStyle;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 const styles = StyleSheet.create({
@@ -194,49 +196,50 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <>
-      {Platform.OS === "android" && <View style={styles.shadowBox} />}
-      <View style={[styles.rotateCard]}>
-        <TouchableDefaultOpacity
-          onPress={onPress}
-          accessible={true}
-          accessibilityRole={"button"}
+      {Platform.OS === "android" && (
+        <View
+          accessible={false}
+          accessibilityElementsHidden={true}
+          importantForAccessibility={"no-hide-descendants"}
+          style={styles.shadowBox}
+        />
+      )}
+      <TouchableDefaultOpacity
+        style={styles.rotateCard}
+        onPress={onPress}
+        accessible={true}
+        accessibilityRole={"button"}
+      >
+        <View
+          style={[styles.card, styles.flatBottom, cardStyle || styles.cardGrey]}
         >
           <View
-            style={[
-              styles.card,
-              styles.flatBottom,
-              cardStyle || styles.cardGrey
-            ]}
+            style={[styles.cardInner]}
+            accessibilityLabel={props.accessibilityLabel}
+            accessibilityHint={props.accessibilityHint}
+            accessibilityRole="button"
           >
-            <View style={[styles.cardInner]}>
-              <View style={[styles.flexRow, styles.topSpacing]}>
-                <View style={styles.flexRow2}>
-                  <Text
-                    style={[styles.brandLightGray, styles.headerText]}
-                    ellipsizeMode="tail"
-                  >
-                    {label}
-                  </Text>
-                  {isNew && (
-                    <Badge style={styles.badgeColor}>
-                      <Text
-                        semibold={true}
-                        style={styles.badgeText}
-                        dark={true}
-                      >
-                        {I18n.t("wallet.methods.newCome")}
-                      </Text>
-                    </Badge>
-                  )}
-                </View>
-                {!isError && (
-                  <View style={[styles.button]}>{rightLabel()}</View>
+            <View style={[styles.flexRow, styles.topSpacing]}>
+              <View style={styles.flexRow2}>
+                <Text
+                  style={[styles.brandLightGray, styles.headerText]}
+                  ellipsizeMode="tail"
+                >
+                  {label}
+                </Text>
+                {isNew && (
+                  <Badge style={styles.badgeColor}>
+                    <Text semibold={true} style={styles.badgeText} dark={true}>
+                      {I18n.t("wallet.methods.newCome")}
+                    </Text>
+                  </Badge>
                 )}
               </View>
+              {!isError && <View style={[styles.button]}>{rightLabel()}</View>}
             </View>
           </View>
-        </TouchableDefaultOpacity>
-      </View>
+        </View>
+      </TouchableDefaultOpacity>
     </>
   );
 };

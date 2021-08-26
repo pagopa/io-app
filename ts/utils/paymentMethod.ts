@@ -1,5 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { ImageSourcePropType, ImageURISource } from "react-native";
+import { Alert, ImageSourcePropType, ImageURISource } from "react-native";
+import { Either, right } from "fp-ts/lib/Either";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
   Card,
@@ -38,7 +39,9 @@ import {
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
 } from "../types/pagopa";
+import { mixpanelTrack } from "../mixpanel";
 import { FOUR_UNICODE_CIRCLES } from "./wallet";
+import { isExpired } from "./dates";
 
 export const getPaymentMethodHash = (
   pm: RawPaymentMethod
@@ -228,3 +231,70 @@ export const isBancomatBlocked = (pan: Card) =>
 
 export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
   pan.validityStatus === ValidityStatusEnum.BLOCK_REVERSIBLE;
+
+/**
+ * Check if the given payment method is expired
+ * right(true) if it is expired, right(false) if it is still valid
+ * left if expiring date can't be evaluated
+ * @param paymentMethod
+ */
+export const isPaymentMethodExpired = (
+  paymentMethod: RawPaymentMethod
+): Either<Error, boolean> => {
+  switch (paymentMethod.kind) {
+    case "BPay":
+    case "Satispay":
+      return right(false);
+    case "Bancomat":
+    case "Privative":
+    case "CreditCard":
+      return isExpired(
+        paymentMethod.info.expireMonth,
+        paymentMethod.info.expireYear
+      );
+  }
+};
+
+// inform the user he/she has no payment methods to pay
+export const alertNoPayablePaymentMethods = (
+  onContinue: () => void,
+  onCancel?: () => void
+) => {
+  void mixpanelTrack("NO_PAYABLE_METHODS");
+  Alert.alert(
+    I18n.t("payment.alertNoPaymentMethods.title"),
+    I18n.t("payment.alertNoPaymentMethods.message"),
+    [
+      {
+        text: I18n.t("payment.alertNoPaymentMethods.buttons.ko"),
+        onPress: onCancel
+      },
+      {
+        text: I18n.t("payment.alertNoPaymentMethods.buttons.ok"),
+        onPress: onContinue
+      }
+    ]
+  );
+};
+
+// inform the user he/she has some payable payment methods but not one of them is active
+export const alertNoActivePayablePaymentMethods = (
+  onContinue: () => void,
+  onCancel?: () => void
+) => {
+  void mixpanelTrack("NO_ACTIVE_PAYABLE_METHODS");
+  Alert.alert(
+    I18n.t("payment.alertNoActivePaymentMethods.title"),
+    I18n.t("payment.alertNoActivePaymentMethods.message"),
+    [
+      {
+        text: I18n.t("payment.alertNoActivePaymentMethods.buttons.ko"),
+        onPress: onCancel
+      },
+      {
+        text: I18n.t("payment.alertNoActivePaymentMethods.buttons.ok"),
+        onPress: onContinue
+      }
+    ]
+  );
+};

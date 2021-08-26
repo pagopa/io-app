@@ -3,7 +3,8 @@ import { none, Option } from "fp-ts/lib/Option";
 import {
   NavigationActions,
   NavigationState,
-  StackActions
+  StackActions,
+  SwitchActions
 } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -55,6 +56,7 @@ function nextState(state: NavigationState, action: Action): NavigationState {
     case StackActions.REPLACE:
     case StackActions.POP_TO_TOP:
     case StackActions.COMPLETE_TRANSITION:
+    case SwitchActions.JUMP_TO:
       return AppNavigator.router.getStateForAction(action, state);
 
     // Used to restore a saved navigation state

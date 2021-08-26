@@ -3,19 +3,15 @@
  * @constructor
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
 import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
+import { BasePaymentFeatureListItem } from "../../../wallet/component/features/BasePaymentFeatureListItem";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
 import {
   bpdPaymentMethodActivation,
@@ -37,17 +33,6 @@ type OwnProps = { paymentMethod: PaymentMethod };
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  left: {
-    ...IOStyles.flex,
-    paddingRight: 8
-  }
-});
 
 const handleValueChanged = (props: Props, changeActivation: () => void) => {
   if (pot.getOrElse(props.bpdEnabled, false)) {
@@ -86,28 +71,25 @@ const BpdPaymentMethodCapability: React.FunctionComponent<Props> = props => {
     icon: props.paymentMethod.icon
   }).present;
 
+  const bpdToggle = (
+    <BpdToggle
+      graphicalValue={graphicalState}
+      onPress={() => showExplanation("NotActivable")}
+      onValueChanged={newVal =>
+        handleValueChanged(props, () =>
+          askConfirmation(newVal, () => props.updateValue(hash as HPan, newVal))
+        )
+      }
+    />
+  );
+
   return (
-    <View style={styles.row}>
-      <View style={styles.left}>
-        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-          {I18n.t("bonus.bpd.title")}
-        </H4>
-        <H5 weight={"Regular"} color={"bluegrey"}>
-          {I18n.t("bonus.bpd.description")}
-        </H5>
-      </View>
-      <BpdToggle
-        graphicalValue={graphicalState}
-        onPress={() => showExplanation("NotActivable")}
-        onValueChanged={newVal =>
-          handleValueChanged(props, () =>
-            askConfirmation(newVal, () =>
-              props.updateValue(hash as HPan, newVal)
-            )
-          )
-        }
-      />
-    </View>
+    <BasePaymentFeatureListItem
+      testID={"BpdPaymentMethodCapability"}
+      title={I18n.t("bonus.bpd.title")}
+      description={I18n.t("bonus.bpd.description")}
+      rightElement={bpdToggle}
+    />
   );
 };
 

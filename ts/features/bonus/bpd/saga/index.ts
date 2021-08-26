@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { bpdApiUrlPrefix } from "../../../../config";
+import { bpdApiUrlPrefix, bpdTransactionsPaging } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -16,8 +16,14 @@ import {
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
-import { bpdTransactionsLoad } from "../store/actions/transactions";
-import { deleteCitizen, getCitizen, putEnrollCitizen } from "./networking";
+import {
+  bpdTransactionsLoad,
+  bpdTransactionsLoadCountByDay,
+  bpdTransactionsLoadMilestone,
+  bpdTransactionsLoadPage,
+  bpdTransactionsLoadRequiredData
+} from "../store/actions/transactions";
+import { deleteCitizen, getCitizenV2, putEnrollCitizenV2 } from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
@@ -25,7 +31,11 @@ import {
   bpdLoadPaymentMethodActivationSaga,
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
+import { handleLoadMilestone } from "./networking/ranking";
 import { bpdLoadTransactionsSaga } from "./networking/transactions";
+import { handleCountByDay } from "./networking/winning-transactions/countByDay";
+import { handleTransactionsLoadRequiredData } from "./networking/winning-transactions/loadTransactionsRequiredData";
+import { handleTransactionsPage } from "./networking/winning-transactions/transactionsPage";
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
@@ -37,15 +47,14 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // load citizen details
   yield takeLatest(
     bpdLoadActivationStatus.request,
-    getCitizen,
-    bpdBackendClient.find
+    getCitizenV2,
+    bpdBackendClient.findV2
   );
-
   // enroll citizen to the bpd
   yield takeLatest(
     bpdEnrollUserToProgram.request,
-    putEnrollCitizen,
-    bpdBackendClient.enrollCitizenIO
+    putEnrollCitizenV2,
+    bpdBackendClient.enrollCitizenV2IO
   );
 
   // delete citizen from the bpd
@@ -93,6 +102,35 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     loadPeriodsWithInfo,
     bpdBackendClient
   );
+
+  if (bpdTransactionsPaging) {
+    // Load count by day info for a period
+    yield takeEvery(
+      bpdTransactionsLoadCountByDay.request,
+      handleCountByDay,
+      bpdBackendClient.winningTransactionsV2CountByDay
+    );
+
+    // Load the milestone (pivot) information for a period
+    yield takeEvery(
+      bpdTransactionsLoadMilestone.request,
+      handleLoadMilestone,
+      bpdBackendClient.getRankingV2
+    );
+
+    // Load a transactions page for a period
+    yield takeEvery(
+      bpdTransactionsLoadPage.request,
+      handleTransactionsPage,
+      bpdBackendClient.winningTransactionsV2
+    );
+
+    // Load all the required transactions data, for a period
+    yield takeEvery(
+      bpdTransactionsLoadRequiredData.request,
+      handleTransactionsLoadRequiredData
+    );
+  }
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

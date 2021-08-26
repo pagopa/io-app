@@ -2,7 +2,7 @@ Ciao! In questa pagina abbiamo raccolto alcune informazioni utili per avere **un
 
 **Cos’è IO?**
 -------------
-Il progetto IO (io.italia.it) è un importante passo nella visione di cittadinanza digitale del Governo italiano. Ideato dal [Team per la Trasformazione Digitale](https://teamdigitale.governo.it/) e oggi sviluppato da [PagoPA S.p.A.](https://www.pagopa.gov.it/it/pagopa-spa/), ha l’obiettivo di **facilitare l’accesso dei cittadini a tutti i servizi digitali della Pubblica Amministrazione** e ai diritti che questi servizi garantiscono. 
+Il progetto IO (io.italia.it) è un importante passo nella visione di cittadinanza digitale del Governo italiano. Ideato dal [Team per la Trasformazione Digitale](https://teamdigitale.governo.it/) e oggi sviluppato da [PagoPA S.p.A.](https://www.pagopa.it/), ha l’obiettivo di **facilitare l’accesso dei cittadini a tutti i servizi digitali della Pubblica Amministrazione** e ai diritti che questi servizi garantiscono. 
 
 Il risultato di questo progetto è [IO, l’app dei servizi](https://io.italia.it/) pubblici: un unico canale attraverso cui tutti gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali) offrono i propri servizi al cittadino, in modo **semplice e personalizzato, direttamente su smartphone.**
 

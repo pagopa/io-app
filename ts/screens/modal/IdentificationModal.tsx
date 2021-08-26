@@ -6,12 +6,11 @@ import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
-import TextWithIcon from "../../components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
@@ -31,6 +30,7 @@ import {
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
+import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -72,30 +72,21 @@ const checkPinInterval = 100 as Millisecond;
 // the threshold of attempts after which it is necessary to activate the timer check
 const checkTimerThreshold = maxAttempts - freeAttempts;
 
-const renderIdentificationByBiometryState = (
-  identificationByBiometryState: IdentificationByPinState
-) => {
-  if (identificationByBiometryState === "failure") {
-    return (
-      <React.Fragment>
-        <View spacer={true} extralarge={true} />
-        <TextWithIcon danger={true}>
-          <IconFont name={"io-close"} color={"white"} />
-          <Text white={true}>{I18n.t("identification.biometric.failure")}</Text>
-        </TextWithIcon>
-      </React.Fragment>
-    );
-  }
-
-  return null;
-};
-
 const onRequestCloseHandler = () => undefined;
 
 const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     lineHeight: 22
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center"
+  },
+  contentContainerStyle: {
+    flexGrow: 1,
+    padding: customVariables.contentPadding
   }
 });
 
@@ -333,8 +324,80 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
+  private loadAlertTexts = (
+    profileName: string | undefined
+  ): [string, string] =>
+    fromNullable(profileName).fold(
+      [
+        I18n.t("identification.logout"),
+        I18n.t("identification.logoutDescription")
+      ],
+      pn => [
+        I18n.t("identification.logoutProfileName", {
+          profileName: pn
+        }),
+        I18n.t("identification.logoutDescriptionProfileName", {
+          profileName: pn
+        })
+      ]
+    );
+
+  private onLogout = () => {
+    Alert.alert(
+      ...this.loadAlertTexts(this.props.profileName),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.continue"),
+          onPress: this.props.onIdentificationForceLogout
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
+  // The generic "Try again" message appears if you make a mistake
+  // in entering the unlock code or in case of failed biometric authentication.
+  // If you fail to write the unlock code more than 4 times you should see
+  // "Try again. Number of remaining attempts". In case of failed biometric identification
+  // the message is displayed when you open the app by holding the "wrong finger" on the biometric iPhone sensor.
+  private getErrorText = () => {
+    const textTryAgain = I18n.t("global.genericRetry");
+
+    if (this.state.identificationByPinState === "failure") {
+      this.setState({
+        identificationByBiometryState: "unstarted"
+      });
+      return this.props.identificationFailState
+        .filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts)
+        .map(
+          // here if the user finished his free attempts
+          fd =>
+            `${textTryAgain}. ${I18n.t(
+              fd.remainingAttempts > 1
+                ? "identification.fail.remainingAttempts"
+                : "identification.fail.remainingAttemptSingle",
+              { attempts: fd.remainingAttempts }
+            )}`
+        )
+        .getOrElse(textTryAgain);
+    }
+
+    if (this.state.identificationByBiometryState === "failure") {
+      this.setState({
+        identificationByPinState: "unstarted"
+      });
+      return textTryAgain;
+    }
+
+    return undefined;
+  };
+
   private renderErrorDescription = () =>
-    maybeNotNullyString(this.getCodeInsertionStatus()).fold(undefined, des => (
+    maybeNotNullyString(this.getErrorText()).fold(undefined, des => (
       <Text
         alignCenter={true}
         bold={true}
@@ -346,27 +409,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         {des}
       </Text>
     ));
-
-  private getCodeInsertionStatus = () => {
-    if (this.state.identificationByPinState === "unstarted") {
-      return undefined;
-    }
-
-    const wrongCodeString = I18n.t("identification.fail.wrongCode");
-    return this.props.identificationFailState
-      .filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts)
-      .map(
-        // here if the user finished his free attempts
-        fd =>
-          `${wrongCodeString}. ${I18n.t(
-            fd.remainingAttempts > 1
-              ? "identification.fail.remainingAttempts"
-              : "identification.fail.remainingAttemptSingle",
-            { attempts: fd.remainingAttempts }
-          )}`
-      )
-      .getOrElse(wrongCodeString);
-  };
 
   public render() {
     const { identificationProgressState, isFingerprintEnabled } = this.props;
@@ -383,11 +425,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       shufflePad
     } = identificationProgressState;
 
-    const {
-      identificationByBiometryState,
-      biometryType,
-      countdown
-    } = this.state;
+    const { biometryType, countdown } = this.state;
 
     const canInsertPin =
       !this.state.biometryAuthAvailable &&
@@ -424,11 +462,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           accessible={true}
           ref={this.headerRef}
         >
-          {I18n.t(
-            isValidatingTask
-              ? "identification.titleValidation"
-              : "identification.title"
-          )}
+          {isValidatingTask
+            ? I18n.t("identification.titleValidation")
+            : fromNullable(this.props.profileName).fold(
+                I18n.t("identification.title"),
+                pN =>
+                  I18n.t("identification.titleProfileName", {
+                    profileName: pN
+                  })
+              )}
         </Text>
         <Text
           alignCenter={true}
@@ -460,7 +502,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={!isValidatingTask}>
+          <Content
+            primary={!isValidatingTask}
+            contentContainerStyle={styles.contentContainerStyle}
+            noPadded
+          >
             {renderHeader()}
             {this.renderErrorDescription()}
             <Pinpad
@@ -494,9 +540,20 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            {renderIdentificationByBiometryState(identificationByBiometryState)}
-
             <View spacer={true} large={true} />
+            {!isValidatingTask && (
+              <View style={styles.bottomContainer}>
+                <Link onPress={this.onLogout} weight="Bold" color="white">
+                  {fromNullable(this.props.profileName).fold(
+                    I18n.t("identification.logout"),
+                    pN =>
+                      I18n.t("identification.logoutProfileName", {
+                        profileName: pN
+                      })
+                  )}
+                </Link>
+              </View>
+            )}
           </Content>
         </BaseScreenComponent>
       </Modal>
@@ -588,7 +645,8 @@ const mapStateToProps = (state: GlobalState) => ({
   identificationProgressState: progressSelector(state),
   identificationFailState: identificationFailSelector(state),
   isFingerprintEnabled: isFingerprintEnabledSelector(state),
-  appState: appCurrentStateSelector(state)
+  appState: appCurrentStateSelector(state),
+  profileName: profileNameSelector(state)
 });
 
 export default connect(

@@ -19,6 +19,7 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
+import { initMixpanel } from "../mixpanel";
 import {
   loadProfile,
   watchProfile,
@@ -27,6 +28,7 @@ import {
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -41,6 +43,9 @@ jest.mock("react-native-share", () => ({
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
@@ -55,12 +60,15 @@ const profile: InitializedProfile = {
 };
 
 describe("initializeApplicationSaga", () => {
-  it("should dispatch startApplicationInitialization if installation id response is 200 but session is none", () => {
+  it("should dispatch startApplicationInitialization if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .call(initMixpanel)
+      .next()
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -72,19 +80,23 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(200) // updateInstallationSaga
+      .next(200) // checkSession
+      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(none)
       .next(none) // loadSessionInformationSaga
       .put(startApplicationInitialization());
   });
 
-  it("should dispatch sessionExpired if installation id response is 401", () => {
+  it("should dispatch sessionExpired if check session response is 401", () => {
     testSaga(initializeApplicationSaga)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
+      .next()
+      .call(initMixpanel)
+      .next()
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
@@ -96,7 +108,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(401) // updateInstallationSaga
+      .next(401) // checksession
       .put(sessionExpired());
   });
 
@@ -107,6 +119,9 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(previousInstallationDataDeleteSuccess())
       .next()
+      .call(initMixpanel)
+      .next()
+      .next()
       .select(profileSelector)
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, none)
@@ -117,7 +132,8 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next(200) // updateInstallationSaga
+      .next(200) // check session
+      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(
         some({

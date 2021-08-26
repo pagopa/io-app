@@ -1,12 +1,8 @@
 import * as React from "react";
+import { useMemo } from "react";
 import { connect } from "react-redux";
-import {
-  FlatList,
-  Keyboard,
-  ListRenderItemInfo,
-  SafeAreaView
-} from "react-native";
-import { Input, Item, View } from "native-base";
+import { Keyboard, SafeAreaView } from "react-native";
+import { Item, View } from "native-base";
 import { debounce } from "lodash";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -15,26 +11,49 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import CgnMerchantListItem from "../../components/merchants/CgnMerchantListItem";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
-import { availableMerchants } from "../../__mock__/availableMerchants";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelledItem } from "../../../../../components/LabelledItem";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import {
+  cgnOfflineMerchantsSelector,
+  cgnOnlineMerchantsSelector
+} from "../../store/reducers/merchants";
+import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
+import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
+import {
+  cgnOfflineMerchants,
+  cgnOnlineMerchants
+} from "../../store/actions/merchants";
+import {
+  getValueOrElse,
+  isLoading,
+  isReady
+} from "../../../bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-export type TmpMerchantType = {
-  name: string;
-  category: string;
-  location: string;
+const OFFLINE_FIXED_BOUNDINGBOX = {
+  userCoordinates: {
+    latitude: 41.827701462326985,
+    longitude: 12.66444625336996
+  },
+  boundingBox: {
+    coordinates: {
+      latitude: 34.845459548,
+      longitude: 6.5232427904
+    },
+    deltaLatitude: 6.9822419143,
+    deltaLongitude: 6.141203463
+  }
 };
 
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
+type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props
@@ -44,15 +63,31 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const [searchValue, setSearchValue] = React.useState("");
-  const [merchantList, setMerchantsList] = React.useState(props.merchants);
+  const [merchantList, setMerchantsList] = React.useState<
+    ReadonlyArray<MerchantsAll>
+  >([]);
+
+  // Mixes online and offline merchants to render on the same list
+  // merchants are sorted by name
+  const merchantsAll = useMemo(() => {
+    const onlineMerchants = getValueOrElse(props.onlineMerchants, []);
+    const offlineMerchants = getValueOrElse(props.offlineMerchants, []);
+
+    return [
+      ...offlineMerchants,
+      ...onlineMerchants
+    ].sort((m1: MerchantsAll, m2: MerchantsAll) =>
+      m1.name.localeCompare(m2.name)
+    );
+  }, [props.onlineMerchants, props.offlineMerchants]);
 
   const performSearch = (
     text: string,
-    merchantList: ReadonlyArray<TmpMerchantType>
+    merchantList: ReadonlyArray<MerchantsAll>
   ) => {
     // if search text is empty, restore the whole list
     if (text.length === 0) {
-      setMerchantsList(props.merchants);
+      setMerchantsList(merchantList);
       return;
     }
     const resultList = merchantList.filter(
@@ -64,70 +99,71 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   const debounceRef = React.useRef(debounce(performSearch, DEBOUNCE_SEARCH));
 
   React.useEffect(() => {
-    debounceRef.current(searchValue, props.merchants);
-  }, [searchValue, props.merchants]);
+    debounceRef.current(searchValue, merchantsAll);
+  }, [searchValue, props.onlineMerchants, props.offlineMerchants]);
 
-  const onItemPress = () => {
-    // TODO Add the dispatch of merchant selected when the complete workflow is available
-    props.navigateToMerchantDetail();
+  const initLoadingLists = () => {
+    props.requestOfflineMerchants();
+    props.requestOnlineMerchants();
+  };
+
+  React.useEffect(initLoadingLists, []);
+
+  const onItemPress = (id: Merchant["id"]) => {
+    props.navigateToMerchantDetail(id);
     Keyboard.dismiss();
   };
 
-  const renderListItem = (listItem: ListRenderItemInfo<TmpMerchantType>) => (
-    <CgnMerchantListItem
-      category={listItem.item.category}
-      name={listItem.item.name}
-      location={listItem.item.location}
-      onPress={onItemPress}
-    />
-  );
-
-  return (
+  return isReady(props.onlineMerchants) && isReady(props.offlineMerchants) ? (
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+        <View style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
           <Item>
-            <Input
-              value={searchValue}
-              autoFocus={true}
-              onChangeText={setSearchValue}
-              placeholderTextColor={IOColors.bluegreyLight}
-              placeholder={I18n.t("global.buttons.search")}
+            <LabelledItem
+              icon={"io-search"}
+              iconPosition={"right"}
+              inputProps={{
+                value: searchValue,
+                autoFocus: true,
+                onChangeText: setSearchValue,
+                placeholder: I18n.t("global.buttons.search")
+              }}
             />
-            <IconFont name="io-search" color={IOColors.bluegrey} />
           </Item>
-          <View spacer />
-          <FlatList
-            scrollEnabled={true}
-            data={merchantList}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent noPadded={true} />
-            )}
-            renderItem={renderListItem}
-            keyExtractor={c => `${c.name}-${c.category}`}
-            keyboardShouldPersistTaps={"handled"}
-            ListFooterComponent={
-              merchantList.length > 0 && <EdgeBorderComponent />
-            }
-          />
         </View>
+        <CgnMerchantsListView
+          merchantList={merchantList}
+          onItemPress={onItemPress}
+        />
       </SafeAreaView>
     </BaseScreenComponent>
+  ) : (
+    <LoadingErrorComponent
+      isLoading={
+        isLoading(props.offlineMerchants) || isLoading(props.onlineMerchants)
+      }
+      loadingCaption={I18n.t("global.remoteStates.loading")}
+      onRetry={initLoadingLists}
+    />
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({
-  // FIXME replace with selector when available
-  merchants: availableMerchants
+const mapStateToProps = (state: GlobalState) => ({
+  onlineMerchants: cgnOnlineMerchantsSelector(state),
+  offlineMerchants: cgnOfflineMerchantsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToMerchantDetail: () => dispatch(navigateToCgnMerchantDetail())
+  requestOnlineMerchants: () => dispatch(cgnOnlineMerchants.request({})),
+  requestOfflineMerchants: () =>
+    dispatch(cgnOfflineMerchants.request(OFFLINE_FIXED_BOUNDINGBOX)),
+  navigateToMerchantDetail: (id: Merchant["id"]) =>
+    dispatch(navigateToCgnMerchantDetail({ merchantID: id }))
 });
 
 export default connect(

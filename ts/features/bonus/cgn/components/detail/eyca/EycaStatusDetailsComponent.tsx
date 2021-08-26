@@ -50,8 +50,13 @@ type BadgeProps = {
 };
 
 const EycaStatusBadge = ({ text, badgeStyle, textColor }: BadgeProps) => (
-  <Badge style={badgeStyle}>
-    <H5 weight={"SemiBold"} color={textColor} style={styles.statusBadgeText}>
+  <Badge style={badgeStyle} testID={"eyca-status-badge"}>
+    <H5
+      weight={"SemiBold"}
+      color={textColor}
+      style={styles.statusBadgeText}
+      testID={"eyca-status-label"}
+    >
       {text}
     </H5>
   </Badge>
@@ -109,7 +114,9 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
         </H5>
-        <Monospace>{props.eycaCard.card_number}</Monospace>
+        <Monospace testID={"eyca-card-number"}>
+          {props.eycaCard.card_number}
+        </Monospace>
       </View>
       <View spacer small />
       <View style={[styles.rowBlock, styles.spaced]}>

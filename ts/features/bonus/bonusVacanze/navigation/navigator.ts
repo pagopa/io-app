@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import ActivateBonusCompletedScreen from "../screens/activation/ActivateBonusCompletedScreen";
 import BonusAlreadyExists from "../screens/activation/BonusAlreadyExists";
 import EligibilityExpired from "../screens/activation/EligibilityExpired";

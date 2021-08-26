@@ -9,8 +9,6 @@ import React from "react";
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
-import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
-import { ProfileState } from "../../store/reducers/profile";
 import { isDefined } from "../../utils/guards";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
@@ -19,10 +17,8 @@ import ServicesSectionsList from "./ServicesSectionsList";
 type OwnProps = {
   sectionsState: ReadonlyArray<ServicesSectionState>;
   searchText: string;
-  profile: ProfileState;
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
-  readServices: ReadStateByServicesId;
 };
 
 type Props = OwnProps;
@@ -148,13 +144,10 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     return filteredServiceSectionsStates.length > 0 ? (
       <ServicesSectionsList
         {...this.props}
-        isAll={true}
         sections={filteredServiceSectionsStates}
-        profile={this.props.profile}
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
-        isLongPressEnabled={false}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

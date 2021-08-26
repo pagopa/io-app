@@ -1,9 +1,9 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { useEffect, useState } from "react";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import AdviceComponent from "../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -13,97 +13,25 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import I18n from "../../i18n";
-import { IdentityProvider } from "../../models/IdentityProvider";
-import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
+import { GlobalState } from "../../store/reducers/types";
+import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { LocalIdpsFallback, testIdp } from "../../utils/idps";
+import { loadIdps } from "../../store/actions/content";
+import {
+  navigateBack,
+  navigateToSPIDLogin,
+  navigateToSPIDTestIDP
+} from "../../store/actions/navigation";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
 
-type Props = ReturnType<typeof mapDispatchToProps> & NavigationScreenProps;
-
-type State = Readonly<{
-  counter: number;
-}>;
-
-// since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
-// It is used has a placeholder to handle taps count on it and open when
-// taps count threadshold is reached (see https://www.pivotaltracker.com/story/show/172082895)
-const testIdp: IdentityProvider = {
-  id: "test",
-  name: "Test",
-  logo: require("../../../img/spid.png"),
-  entityID: "test-login",
-  profileUrl: "",
-  isTestIdp: true
-};
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const TAPS_TO_OPEN_TESTIDP = 5;
-
-const idps: ReadonlyArray<IdentityProvider> = [
-  {
-    id: "arubaid",
-    name: "Aruba",
-    logo: require("../../../img/spid-idp-arubaid.png"),
-    entityID: "arubaid",
-    profileUrl: "http://selfcarespid.aruba.it"
-  },
-  {
-    id: "infocertid",
-    name: "Infocert",
-    logo: require("../../../img/spid-idp-infocertid.png"),
-    entityID: "infocertid",
-    profileUrl: "https://my.infocert.it/selfcare"
-  },
-  {
-    id: "intesaid",
-    name: "Intesa",
-    logo: require("../../../img/spid-idp-intesaid.png"),
-    entityID: "intesaid",
-    profileUrl: "https://spid.intesa.it"
-  },
-  {
-    id: "lepidaid",
-    name: "Lepida",
-    logo: require("../../../img/spid-idp-lepidaid.png"),
-    entityID: "lepidaid",
-    profileUrl: "https://id.lepida.it/"
-  },
-  {
-    id: "namirialid",
-    name: "Namirial",
-    logo: require("../../../img/spid-idp-namirialid.png"),
-    entityID: "namirialid",
-    profileUrl: "https://idp.namirialtsp.com/idp"
-  },
-  {
-    id: "posteid",
-    name: "Poste",
-    logo: require("../../../img/spid-idp-posteid.png"),
-    entityID: "posteid",
-    profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  },
-  {
-    id: "sielteid",
-    name: "Sielte",
-    logo: require("../../../img/spid-idp-sielteid.png"),
-    entityID: "sielteid",
-    profileUrl: "https://myid.sieltecloud.it/profile/"
-  },
-  {
-    id: "spiditalia",
-    name: "SPIDItalia Register.it",
-    logo: require("../../../img/spid-idp-spiditalia.png"),
-    entityID: "spiditalia",
-    profileUrl: "https://spid.register.it"
-  },
-  {
-    id: "timid",
-    name: "Telecom Italia",
-    logo: require("../../../img/spid-idp-timid.png"),
-    entityID: "timid",
-    profileUrl: "https://id.tim.it/identity/private/"
-  },
-  testIdp
-];
 
 const styles = StyleSheet.create({
   gridContainer: {
@@ -121,52 +49,56 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-class IdpSelectionScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { counter: 0 };
-  }
+const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  const [counter, setCounter] = useState(0);
 
-  private onIdpSelected = (idp: IdentityProvider) => {
-    const { counter } = this.state;
+  const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
-      this.setState({ counter: newValue });
-      return;
+      setCounter(newValue);
+    } else {
+      props.setSelectedIdp(idp);
+      instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
+      props.navigateToIdpSelection();
     }
-    this.props.setSelectedIdp(idp);
-    instabugLog(`IDP selected: ${idp.id}`, TypeLogs.DEBUG, "login");
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
-  public componentDidUpdate() {
-    if (this.state.counter === TAPS_TO_OPEN_TESTIDP) {
-      this.setState({ counter: 0 });
-      this.props.setSelectedIdp(testIdp);
-      this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_TEST);
-    }
-  }
+  useEffect(() => {
+    props.requestIdps();
+  }, []);
 
-  public render() {
-    return (
-      <BaseScreenComponent
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["authentication_IPD_selection"]}
-        goBack={this.props.navigation.goBack}
-        headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-      >
+  useEffect(() => {
+    if (counter === TAPS_TO_OPEN_TESTIDP) {
+      setCounter(0);
+      props.setSelectedIdp(testIdp);
+      props.navigateToIdpTest();
+    }
+  }, [counter]);
+
+  return (
+    <BaseScreenComponent
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["authentication_IPD_selection"]}
+      goBack={true}
+      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+    >
+      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
         <Content noPadded={true} overScrollMode={"never"} bounces={false}>
           <ScreenContentHeader
             title={I18n.t("authentication.idp_selection.contentTitle")}
           />
           <View style={styles.gridContainer} testID={"idps-view"}>
-            <IdpsGrid idps={idps} onIdpSelected={this.onIdpSelected} />
+            <IdpsGrid
+              idps={[...props.idps, testIdp]}
+              onIdpSelected={onIdpSelected}
+            />
+
             <View spacer={true} />
             <ButtonDefaultOpacity
               block={true}
               light={true}
               bordered={true}
-              onPress={this.props.navigation.goBack}
+              onPress={props.goBack}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
@@ -179,13 +111,22 @@ class IdpSelectionScreen extends React.PureComponent<Props, State> {
             />
           </View>
         </Content>
-      </BaseScreenComponent>
-    );
-  }
-}
+      </LoadingSpinnerOverlay>
+    </BaseScreenComponent>
+  );
+};
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setSelectedIdp: (idp: IdentityProvider) => dispatch(idpSelected(idp))
+const mapStateToProps = (state: GlobalState) => ({
+  idps: idpsSelector(state),
+  isIdpsLoading: isLoading(idpsStateSelector(state))
 });
 
-export default connect(undefined, mapDispatchToProps)(IdpSelectionScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToIdpSelection: () => dispatch(navigateToSPIDLogin()),
+  navigateToIdpTest: () => dispatch(navigateToSPIDTestIDP()),
+  goBack: () => dispatch(navigateBack()),
+  requestIdps: () => dispatch(loadIdps.request()),
+  setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(IdpSelectionScreen);

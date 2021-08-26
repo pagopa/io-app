@@ -9,6 +9,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { delayAsync } from "./timer";
 
 const waitRetry = 8000 as Millisecond;
+
 /**
  * Provides the logic for caching and updating a session token by wrapping
  * concurrent functions that need the token and may detect expired tokens.
@@ -104,7 +105,7 @@ export class SessionManager<T> {
 
   /**
    * Returns a new function, with the same params of the provided function but
-   * the first one, the token, that gets provided by the interal logic.
+   * the first one, the token, that gets provided by the internal logic.
    */
   public withRefresh<R>(
     f: Function1<T, Promise<t.Validation<IResponseType<401, any> | R>>>

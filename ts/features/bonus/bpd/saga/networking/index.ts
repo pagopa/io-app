@@ -9,10 +9,10 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdLoadActivationStatus } from "../../store/actions/details";
 
-export function* executeAndDispatch(
+export function* executeAndDispatchV2(
   remoteCall:
-    | ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
-    | ReturnType<typeof BackendBpdClient>["find"],
+    | ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"]
+    | ReturnType<typeof BackendBpdClient>["findV2"],
   action: typeof bpdEnrollUserToProgram | typeof bpdLoadActivationStatus
 ) {
   try {
@@ -24,11 +24,16 @@ export function* executeAndDispatch(
     );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        const { enabled, payoffInstr } = enrollCitizenIOResult.value.value;
+        const {
+          enabled,
+          payoffInstr,
+          technicalAccount
+        } = enrollCitizenIOResult.value.value;
         yield put(
           action.success({
             enabled,
-            payoffInstr
+            payoffInstr,
+            technicalAccount
           })
         );
         return;
@@ -36,7 +41,8 @@ export function* executeAndDispatch(
         yield put(
           action.success({
             enabled: false,
-            payoffInstr: undefined
+            payoffInstr: undefined,
+            technicalAccount: undefined
           })
         );
         return;
@@ -50,22 +56,16 @@ export function* executeAndDispatch(
   }
 }
 
-/**
- * make a request to get the citizen status
- */
-export function* getCitizen(
-  findCitizen: ReturnType<typeof BackendBpdClient>["find"]
+export function* getCitizenV2(
+  findCitizen: ReturnType<typeof BackendBpdClient>["findV2"]
 ): SagaIterator {
-  yield call(executeAndDispatch, findCitizen, bpdLoadActivationStatus);
+  yield call(executeAndDispatchV2, findCitizen, bpdLoadActivationStatus);
 }
 
-/**
- * make a request to enroll the citizen to the bpd
- */
-export function* putEnrollCitizen(
-  enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenIO"]
+export function* putEnrollCitizenV2(
+  enrollCitizenIO: ReturnType<typeof BackendBpdClient>["enrollCitizenV2IO"]
 ): SagaIterator {
-  yield call(executeAndDispatch, enrollCitizenIO, bpdEnrollUserToProgram);
+  yield call(executeAndDispatchV2, enrollCitizenIO, bpdEnrollUserToProgram);
 }
 
 /**

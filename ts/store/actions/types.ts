@@ -10,6 +10,7 @@ import {
 
 import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { BpdActions } from "../../features/bonus/bpd/store/actions";
+import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
@@ -17,6 +18,7 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
+import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -32,6 +34,7 @@ import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
 import { InternalRouteNavigationActions } from "./internalRouteNavigation";
 import { MessagesActions } from "./messages";
+import { MixpanelActions } from "./mixpanel";
 import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
@@ -60,6 +63,7 @@ export type Action =
   | BackendInfoActions
   | DeepLinkActions
   | MessagesActions
+  | MixpanelActions
   | NavigationActions
   | NotificationsActions
   | PinSetActions
@@ -92,7 +96,9 @@ export type Action =
   | SatispayActions
   | CrossSessionsActions
   | CgnActions
-  | OutcomeCodeActions;
+  | EuCovidCertActions
+  | OutcomeCodeActions
+  | SvActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

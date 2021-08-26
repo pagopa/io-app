@@ -6,11 +6,16 @@ import { fromNullable, Option } from "fp-ts/lib/Option";
 import uuid from "uuid/v4";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { isTestEnv } from "../../utils/environment";
+import I18n from "../../i18n";
+import { InfoBox } from "../../components/box/InfoBox";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { Label } from "../../components/core/typography/Label";
 
 type Props = {
   // the uri to send the form data thought POST
@@ -40,6 +45,7 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  descriptionContainer: { paddingHorizontal: 20, paddingVertical: 14 },
   refreshIndicatorContainer: {
     position: "absolute",
     left: 0,
@@ -70,9 +76,9 @@ const crateAutoPostForm = (
 
 /**
  * return a 2-tuple
- * 0 element: boolean. true if the given {@param url} contains the given {@param finishPathName} path name
- * 0 element: string | undefined. a string contains the value of {@param outcomeQueryparamName} in query string of {@param url}
- * @param url
+ * 0 element: boolean. true if the given {@param urlParse} contains the given {@param finishPathName} path name
+ * 1 element: string | undefined. a string contains the value of {@param outcomeQueryparamName} in query string of {@param url}
+ * @param urlParse
  * @param finishPathName
  * @param outcomeQueryparamName
  */
@@ -167,6 +173,21 @@ export const PayWebViewModal = (props: Props) => {
         contextualHelp={emptyContextualHelp}
         headerTitle={props.modalHeaderTitle}
       >
+        <View
+          style={styles.descriptionContainer}
+          testID={"PayWebViewModal-description"}
+        >
+          <InfoBox
+            iconName={"io-info"}
+            iconColor={IOColors.bluegreyDark}
+            iconSize={24}
+          >
+            <Label weight={"Regular"} color={"bluegrey"}>
+              {I18n.t("wallet.challenge3ds.description")}
+            </Label>
+          </InfoBox>
+        </View>
+
         <WebView
           textZoom={100}
           source={{

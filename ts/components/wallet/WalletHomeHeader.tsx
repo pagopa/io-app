@@ -124,13 +124,18 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
         }
       ]}
     >
-      <H1 color={"white"}>{I18n.t("wallet.wallet")}</H1>
+      <H1 color={"white"} accessible={true} accessibilityRole="header">
+        {I18n.t("wallet.wallet")}
+      </H1>
       <TouchableDefaultOpacity
         style={{
           flexDirection: "row",
           alignItems: "center"
         }}
         onPress={openBS}
+        accessible={true}
+        accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
+        accessibilityRole="button"
       >
         <IconFont
           name="io-plus"

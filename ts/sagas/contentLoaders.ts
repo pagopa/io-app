@@ -13,17 +13,16 @@ import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
-  loadServiceMetadata,
-  loadVisibleServicesByScope
+  loadIdps,
+  loadServiceMetadata
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
-import { bonusVacanzeEnabled, bpdEnabled } from "../config";
+import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
@@ -52,43 +51,6 @@ function getContextualHelpData(): Promise<
       .getContextualHelp()
       .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
-}
-
-/**
- * Retrieves a view of services where the keys are the scopes and the value
- * is an array contains the id of services
- */
-function getServicesByScope(): Promise<
-  t.Validation<BasicResponseType<ServicesByScope>>
-> {
-  return new Promise((resolve, _) =>
-    contentClient
-      .getServicesByScope()
-      .then(resolve, e => resolve(left([{ context: [], value: e }])))
-  );
-}
-
-/**
- * A saga that watches for and executes requests to load services by scope
- */
-function* watchContentServicesByScopeLoad(): SagaIterator {
-  try {
-    const response: SagaCallReturnType<typeof getServicesByScope> = yield call(
-      getServicesByScope
-    );
-
-    if (response.isRight() && response.value.status === 200) {
-      yield put(loadVisibleServicesByScope.success(response.value.value));
-    } else {
-      const error = response.fold(
-        readableReport,
-        ({ status }) => `response status ${status}`
-      );
-      throw Error(error);
-    }
-  } catch (e) {
-    yield put(loadVisibleServicesByScope.failure(e));
-  }
 }
 
 /**
@@ -222,6 +184,30 @@ function* watchLoadContextualHelp(): SagaIterator {
   }
 }
 
+/**
+ * A saga that watches for and executes requests to load idps data
+ */
+function* watchLoadIdps(
+  getIdps: ReturnType<typeof ContentClient>["getIdps"]
+): SagaIterator {
+  try {
+    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield call(
+      getIdps
+    );
+    if (idpsListResponse.isRight()) {
+      if (idpsListResponse.value.status === 200) {
+        yield put(loadIdps.success(idpsListResponse.value.value));
+        return;
+      }
+      throw Error(`response status ${idpsListResponse.value.status}`);
+    } else {
+      throw Error(readableReport(idpsListResponse.value));
+    }
+  } catch (e) {
+    yield put(loadIdps.failure(e));
+  }
+}
+
 // handle available list loading
 function* handleLoadAvailableBonus(
   getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
@@ -258,22 +244,23 @@ export function* watchContentSaga() {
     watchServiceMetadataLoadSaga
   );
 
-  // watch services by scope loading request
-  yield takeEvery(
-    getType(loadVisibleServicesByScope.request),
-    watchContentServicesByScopeLoad
-  );
-
   // Watch contextual help text data loading request
   yield takeLatest(
     getType(loadContextualHelpData.request),
     watchLoadContextualHelp
   );
 
+  // Watch idps data loading request
+  yield takeLatest(
+    getType(loadIdps.request),
+    watchLoadIdps,
+    contentClient.getIdps
+  );
+
   // Load content related to the contextual help body
   yield put(loadContextualHelpData.request());
 
-  if (bonusVacanzeEnabled || bpdEnabled) {
+  if (bonusVacanzeEnabled || bpdEnabled || cgnEnabled) {
     // available bonus list request
     yield takeLatest(
       getType(loadAvailableBonuses.request),

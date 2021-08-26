@@ -22,17 +22,17 @@ import {
   sessionInformationLoadSuccess
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
-import { IdentityProvider } from "../models/IdentityProvider";
-
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 const validCreditCard: CreditCard = {
   id: 1464,
   holder: "Mario Rossi",
   pan: "************0111" as string & IPatternStringTag<string>,
   securityCode: "345" as string & IPatternStringTag<"^[0-9]{3,4}$">,
-  expireMonth: "05" as string & IPatternStringTag<"^(0[1-9]|1[0-2])$">,
-  expireYear: "22" as string & IPatternStringTag<"^[0-9]{2}$">,
+  expireMonth: "05" as string & CreditCardExpirationMonth,
+  expireYear: "22" as string & CreditCardExpirationYear,
 
   brandLogo:
     "https://acardste.vaservices.eu:1443/static/wallet/assets/img/creditcard/generic.png",
@@ -232,10 +232,10 @@ export const AuthSeq: ReadonlyArray<Action> = [
   idpSelected({
     id: "posteid",
     name: "Poste",
-    logo: 8,
+    logo: "http://placeimg.com/640/480/some",
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  } as IdentityProvider),
+  } as SpidIdp),
   loginSuccess(
     "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken
   ),

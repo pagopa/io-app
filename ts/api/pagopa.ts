@@ -46,6 +46,7 @@ import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
   addWalletSatispayUsingPOSTDecoder,
+  changePayOptionDecoder,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
@@ -63,8 +64,6 @@ import {
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
   GetWalletsUsingGETT,
-  payCreditCardVerificationUsingPOSTDecoder,
-  PayCreditCardVerificationUsingPOSTT,
   startSessionUsingGETDecoder,
   StartSessionUsingGETT,
   updateWalletUsingPUTDecoder,
@@ -90,6 +89,8 @@ import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayReque
 import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
+import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
+import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -136,10 +137,13 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
   TransactionListResponse
 >;
 
-const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
+const ParamAuthorizationBearerHeader = <
+  P extends { readonly Bearer: string; readonly LookUpId?: string }
+>(
   p: P
-): RequestHeaders<"Authorization"> => ({
-  Authorization: `Bearer ${p.Bearer}`
+): { Authorization: string; LookUpId?: string } => ({
+  Authorization: `Bearer ${p.Bearer}`,
+  ...(p.LookUpId ? { [pmLookupHeaderKey]: p.LookUpId } : {})
 });
 
 const ParamAuthorizationBearerHeaderProducer = <
@@ -395,23 +399,6 @@ const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   response_decoder: constantEmptyDecoder
 };
 
-type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
-  PayCreditCardVerificationUsingPOSTT,
-  200,
-  TransactionResponse
->;
-
-const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
-  method: "post",
-  url: () => "/v1/payments/cc/actions/pay",
-  query: () => ({}),
-  body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: payCreditCardVerificationUsingPOSTDecoder(
-    TransactionResponse
-  )
-};
-
 const deleteWallet: DeleteWalletUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
@@ -579,12 +566,43 @@ const addBPayToWallet: AddWalletsBPayUsingPOSTTExtra = {
   response_decoder: addWalletsBPayUsingPOSTDecoder(PatchedWalletV2ListResponse)
 };
 
-const withPaymentManagerToken = <P extends { Bearer: string }, R>(
+// Request type definition
+export type ChangePayOptionT = r.IPutApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly idWallet: number;
+    readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
+  },
+  "Content-Type" | "Authorization",
+  never,
+  | r.IResponseType<200, PatchedWalletV2Response>
+  | r.IResponseType<400, undefined>
+  | r.IResponseType<404, undefined>
+  | r.IResponseType<500, undefined>
+>;
+
+const updatePaymentStatus: ChangePayOptionT = {
+  method: "put",
+  url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
+  query: () => ({}),
+  body: ({ walletPaymentStatusRequest }) =>
+    JSON.stringify(walletPaymentStatusRequest),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
+};
+
+const withPaymentManagerToken = <
+  P extends { Bearer: string; LookUpId?: string },
+  R
+>(
   f: (p: P) => Promise<R>
 ) => (token: PaymentManagerToken) => async (
   po: Omit<P, "Bearer">
 ): Promise<R> => {
-  const params = Object.assign({ Bearer: String(token) }, po) as P;
+  const params = Object.assign(
+    { Bearer: String(token), LookUpId: getLookUpId() },
+    po
+  ) as P;
   return f(params);
 };
 
@@ -715,20 +733,6 @@ export function PaymentManagerClient(
       )({
         walletRequest: { data: wallet }
       }),
-    payCreditCardVerification: (
-      payRequest: TypeofApiParams<
-        PayCreditCardVerificationUsingPOSTT
-      >["payRequest"],
-      language?: TypeofApiParams<
-        PayCreditCardVerificationUsingPOSTT
-      >["language"]
-    ) =>
-      flip(
-        withPaymentManagerToken(createFetchRequestForApi(boardPay, altOptions))
-      )({
-        payRequest,
-        language
-      }),
     deleteWallet: (id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]) =>
       flip(
         withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
@@ -788,7 +792,19 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(addCobadgeToWallet, altOptions)
         )
-      )({ cobadegPaymentInstrumentsRequest })
+      )({ cobadegPaymentInstrumentsRequest }),
+    updatePaymentStatus: (payload: {
+      idWallet: number;
+      paymentEnabled: boolean;
+    }) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(updatePaymentStatus, altOptions)
+        )
+      )({
+        idWallet: payload.idWallet,
+        walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
+      })
   };
 }
 

@@ -9,12 +9,11 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import deviceInfoModule from "react-native-device-info";
 import {
-  createBottomTabNavigator,
   NavigationRoute,
   NavigationScreenProp,
-  NavigationState,
-  StackActions
+  NavigationState
 } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import NavBarLabel from "../components/NavBarLabel";
 import ProfileTabIcon from "../components/ProfileTabIcon";
@@ -51,27 +50,13 @@ const tabBarStyleFactory = () => {
     paddingLeft: 3,
     paddingRight: 3,
     borderTopWidth: 0,
-    paddingTop: 8
+    paddingTop: 8,
+    height: 64
   };
 
-  // Add space to the bottom bar for iPhone 12, which has
-  // deviceId "iPhone 13" counterintuitevely
-  // See https://gist.github.com/adamawolf/3048717 for device IDs
-
-  const isIPhone12 = deviceInfoModule.getDeviceId().indexOf("iPhone13") !== -1;
-
-  return {
-    ...defaultStyle,
-    ...(isIPhone12
-      ? {
-          paddingBottom: 30,
-          height: 84
-        }
-      : {
-          paddingBottom: 10,
-          height: 64
-        })
-  };
+  return deviceInfoModule.hasNotch()
+    ? defaultStyle
+    : { ...defaultStyle, paddingBottom: 10 };
 };
 
 const styles = StyleSheet.create({
@@ -119,11 +104,6 @@ const navigation = createBottomTabNavigator(
     [ROUTES.WALLET_HOME]: {
       screen: WalletNavigator
     },
-    // FIXME: Documents are temporarily disabled during the experimental phase
-    // see https://www.pivotaltracker.com/story/show/159490857
-    // [ROUTES.DOCUMENTS_HOME]: {
-    //   screen: PlaceholderScreen
-    // },
     [ROUTES.SERVICES_NAVIGATOR]: {
       screen: ServicesNavigator
     },
@@ -182,19 +162,6 @@ const navigation = createBottomTabNavigator(
             />
           );
         }
-      },
-      tabBarOnPress: options => {
-        if (options.navigation.state.index > 0) {
-          // Always show the first screen on tab press
-          options.navigation.dispatch(
-            StackActions.popToTop({
-              immediate: true,
-              key: options.navigation.state.key
-            })
-          );
-        } else {
-          options.defaultHandler();
-        }
       }
     }),
     tabBarOptions: {
@@ -206,8 +173,6 @@ const navigation = createBottomTabNavigator(
       inactiveTintColor: variables.brandDarkGray,
       style: [styles.tabBarStyle, styles.upsideShadow]
     },
-    animationEnabled: true,
-    swipeEnabled: false,
     initialRouteName: ROUTES.MESSAGES_NAVIGATOR
   }
 );

@@ -1,4 +1,5 @@
-import TouchID, { IsSupportedConfig } from "react-native-touch-id";
+import TouchID from "react-native-touch-id";
+import { IsSupportedConfig } from "react-native-touch-id";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
@@ -104,13 +105,7 @@ export function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
     TouchID.isSupported(isTouchIdSupportedConfig)
       .then(biometryType => {
-        resolve(
-          biometryType === true
-            ? "FINGERPRINT"
-            : biometryType === "FaceID"
-            ? "FACE_ID"
-            : "TOUCH_ID"
-        );
+        resolve(biometryType === "FaceID" ? "FACE_ID" : "TOUCH_ID");
       })
       .catch(reason => {
         resolve(reason.code === "NOT_ENROLLED" ? reason.code : "UNAVAILABLE");

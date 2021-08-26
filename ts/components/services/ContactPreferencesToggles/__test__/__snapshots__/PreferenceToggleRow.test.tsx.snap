@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PreferenceToggleRow component should match the snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      accessibilityRole="text"
+      color="bluegreyDark"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      testID="preference-toggle-row-label"
+      weight="Regular"
+      weightColorFactory={[Function]}
+    >
+      Push Notifications
+    </Text>
+  </View>
+  <RCTSwitch
+    accessibilityRole="switch"
+    accessibilityState={
+      Object {
+        "checked": true,
+        "disabled": undefined,
+      }
+    }
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onTintColor="#0073E6"
+    style={
+      Array [
+        Object {
+          "height": 31,
+          "width": 51,
+        },
+        Object {
+          "marginBottom": -5,
+          "marginTop": -5,
+        },
+      ]
+    }
+    testID="preference-toggle-row"
+    thumbTintColor="default"
+    tintColor="default"
+    value={true}
+  />
+</View>
+`;

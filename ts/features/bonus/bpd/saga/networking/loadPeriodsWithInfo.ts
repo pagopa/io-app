@@ -1,17 +1,19 @@
 import { findFirst } from "fp-ts/lib/Array";
 import { Either, isRight, right } from "fp-ts/lib/Either";
 import { all, call, put } from "redux-saga/effects";
+import { bpdTransactionsPaging } from "../../../../../config";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendBpdClient } from "../../api/backendBpdClient";
 import { bpdPeriodsAmountLoad } from "../../store/actions/periods";
 import {
   BpdPeriodWithInfo,
   BpdRanking,
-  bpdRankingNotReady
+  bpdRankingNotReady,
+  BpdRankingReady
 } from "../../store/reducers/details/periods";
 import { BpdAmount, BpdAmountError, bpdLoadAmountSaga } from "./amount";
 import { bpdLoadPeriodsSaga } from "./periods";
-import { bpdLoadRaking } from "./ranking";
+import { bpdLoadRaking, bpdLoadRakingV2 } from "./ranking";
 
 /**
  * Load the periods information list and adds the amount and ranking information
@@ -21,7 +23,7 @@ import { bpdLoadRaking } from "./ranking";
 export function* loadPeriodsWithInfo(
   bpdClient: Pick<
     ReturnType<typeof BackendBpdClient>,
-    "awardPeriods" | "totalCashback" | "getRanking"
+    "awardPeriods" | "totalCashback" | "getRanking" | "getRankingV2"
   >
 ) {
   // Request the period list
@@ -36,9 +38,9 @@ export function* loadPeriodsWithInfo(
   } else {
     const periods = maybePeriods.value;
 
-    const rankings: SagaCallReturnType<typeof bpdLoadRaking> = yield call(
-      bpdLoadRaking,
-      bpdClient.getRanking
+    const rankings: Either<Error, ReadonlyArray<BpdRankingReady>> = yield call(
+      bpdTransactionsPaging ? bpdLoadRakingV2 : bpdLoadRaking,
+      bpdTransactionsPaging ? bpdClient.getRankingV2 : bpdClient.getRanking
     );
 
     if (rankings.isLeft()) {

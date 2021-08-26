@@ -2,7 +2,14 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore, Reducer, Store } from "redux";
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+  Middleware,
+  Reducer,
+  Store
+} from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -14,6 +21,7 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
+import createDebugger from "redux-flipper";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -31,12 +39,14 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { isDevEnv } from "../utils/environment";
+import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { NotificationsState } from "../store/reducers/notifications";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 14;
+const CURRENT_REDUX_STORE_VERSION = 17;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -215,12 +225,47 @@ const migrations: MigrationManifest = {
     const newContent: ContentState = {
       servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
-      servicesByScope: content.servicesByScope,
-      contextualHelp: pot.none
+      contextualHelp: pot.none,
+      idps: remoteUndefined
     };
     return {
       ...state,
       content: newContent
+    };
+  },
+  // Version 15
+  // added isMixpanelEnabled
+  "15": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: { ...persistedPreferences, isMixpanelEnabled: null }
+    };
+  },
+  // Version 16
+  // default value for content.idps
+  "16": (state: PersistedState) => {
+    const content = (state as PersistedGlobalState).content;
+    return {
+      ...state,
+      content: { ...content, idps: remoteUndefined }
+    };
+  },
+  // Version 17
+  // default value for new field 'registeredToken' in notifications.installation
+  "17": (state: PersistedState) => {
+    const notifications: NotificationsState = (state as PersistedGlobalState)
+      .notifications;
+    return {
+      ...state,
+      notifications: {
+        ...notifications,
+        installation: {
+          ...notifications.installation,
+          registeredToken: undefined
+        }
+      }
     };
   }
 };
@@ -303,13 +348,22 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const middlewares = applyMiddleware(
+
+  const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
     logger,
     navigationHistory,
     navigation,
     analytics.actionTracking, // generic tracker for selected redux actions
-    analytics.screenTracking // tracks screen navigation,
+    analytics.screenTracking // tracks screen navigation
+  ];
+
+  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
+    ? [createDebugger()]
+    : [];
+
+  const middlewares = applyMiddleware(
+    ...[...baseMiddlewares, ...devMiddleware]
   );
   // add Reactotron enhancer if the app is running in dev mode
 
