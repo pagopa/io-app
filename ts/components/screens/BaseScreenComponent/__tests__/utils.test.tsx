@@ -1,16 +1,20 @@
 import { BugReporting } from "instabug-reactnative";
 
-import { RequestAssistancePayload } from "../../ContextualHelp";
+import { RequestAssistancePayload } from "../../../ContextualHelp";
 import {
   remoteReady,
   remoteUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import * as configureInstabugModule from "../../../boot/configureInstabug";
-import { TypeLogs } from "../../../boot/configureInstabug";
-import { testableHandleOnContextualHelpDismissed } from "../BaseScreenComponent";
+} from "../../../../features/bonus/bpd/model/RemoteValue";
+import * as configureInstabugModule from "../../../../boot/configureInstabug";
+import { TypeLogs } from "../../../../boot/configureInstabug";
+import * as utilsUrl from "../../../../utils/url";
+import * as markdownUtils from "../../../ui/Markdown/handlers/link";
+import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "../utils";
 
-// we know it's defined in test env
-const handleOnContextualHelpDismissed = testableHandleOnContextualHelpDismissed!;
+// Linking.openURL doesn't work properly in test mode
+jest.mock("react-native/Libraries/Linking/Linking", () => ({
+  openURL: jest.fn(() => Promise.resolve())
+}));
 
 const defaultAttachmentTypeConfiguration = {
   screenshot: true,
@@ -121,5 +125,34 @@ describe("handleOnContextualHelpDismissed", () => {
       );
       expect(spy).toHaveBeenCalledTimes(1);
     });
+  });
+});
+
+describe("handleOnLinkClicked", () => {
+  const spy_deriveCustomHandledLink = jest.spyOn(
+    markdownUtils,
+    "deriveCustomHandledLink"
+  );
+  const spy_handleItemOnPress = jest.spyOn(utilsUrl, "handleItemOnPress");
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should handle IO internal links", () => {
+    const hideHelp = jest.fn();
+    handleOnLinkClicked(hideHelp)(`ioit://link`);
+    expect(hideHelp).toHaveBeenCalledTimes(1);
+    expect(spy_deriveCustomHandledLink).not.toHaveBeenCalled();
+    expect(spy_handleItemOnPress).not.toHaveBeenCalled();
+  });
+
+  it("should handle non-IO internal links", () => {
+    const hideHelp = jest.fn();
+    const link = "iohandledlink://https://www.google.com";
+    handleOnLinkClicked(hideHelp)(link);
+    expect(hideHelp).not.toHaveBeenCalled();
+    expect(spy_deriveCustomHandledLink).toHaveBeenCalledWith(link);
+    expect(spy_handleItemOnPress).toHaveBeenCalled();
   });
 });

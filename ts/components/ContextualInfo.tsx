@@ -2,9 +2,9 @@ import { Body, Container, Content, H1, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, StyleSheet } from "react-native";
 
-import IconFont from "./ui/IconFont";
-
 import themeVariables from "../theme/variables";
+
+import IconFont from "./ui/IconFont";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import AppHeader from "./ui/AppHeader";
 
