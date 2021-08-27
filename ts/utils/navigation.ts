@@ -13,7 +13,9 @@ import { NavigationHistoryState } from "../store/reducers/navigationHistory";
  * Assuming that each and every NavigationRoute will eventually lead
  * to a NavigationLeafRoute.
  */
-const findLeafRoute = (branchOrLeaf: NavigationRoute): NavigationLeafRoute => {
+const findLeafRoute = (
+  branchOrLeaf: NavigationRoute
+): NavigationLeafRoute | undefined => {
   const { routes, index } = branchOrLeaf;
   if (routes) {
     return findLeafRoute(routes[index]);
@@ -22,12 +24,24 @@ const findLeafRoute = (branchOrLeaf: NavigationRoute): NavigationLeafRoute => {
   return branchOrLeaf;
 };
 
-export function getCurrentRouteName(navState: NavigationState): string {
-  return findLeafRoute(navState.routes[navState.index]).routeName;
+export function getCurrentRouteName(
+  navState: NavigationState
+): string | undefined {
+  try {
+    return findLeafRoute(navState.routes[navState.index])?.routeName;
+  } catch {
+    return undefined;
+  }
 }
 
-export function getCurrentRouteKey(navState: NavigationState): string {
-  return findLeafRoute(navState.routes[navState.index]).key;
+export function getCurrentRouteKey(
+  navState: NavigationState
+): string | undefined {
+  try {
+    return findLeafRoute(navState.routes[navState.index])?.key;
+  } catch {
+    return undefined;
+  }
 }
 
 /**

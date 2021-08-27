@@ -1,9 +1,8 @@
 import React from "react";
-import { NavigationParams, NavigationActions } from "react-navigation";
+import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 
-import EUCOVIDCERT_ROUTES from "../../../../features/euCovidCert/navigation/routes";
 import * as mixpanel from "../../../../mixpanel";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";

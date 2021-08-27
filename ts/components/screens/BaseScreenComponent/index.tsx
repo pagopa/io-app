@@ -94,8 +94,8 @@ const BaseScreenComponentFC: React.FC<Props> = ({
   showInstabugChat,
   titleColor
 }) => {
-  const currentScreenName = useSelector((store: GlobalState) =>
-    getCurrentRouteName(store.nav)
+  const currentScreenName = useSelector(
+    (store: GlobalState) => getCurrentRouteName(store.nav) || "not-found"
   );
 
   const [isHelpVisible, setIsHelpVisible] = useState(false);
