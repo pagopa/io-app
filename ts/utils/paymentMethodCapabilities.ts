@@ -3,11 +3,11 @@ import { TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   CreditCardPaymentMethod,
   CreditCardType,
-  EnableableFunctionsTypeEnum,
   isCreditCard,
   PaymentMethod
 } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { hasFunctionEnabled } from "./walletv2";
 
 export const brandsBlackList = new Set<CreditCardType>();
@@ -67,7 +67,7 @@ export const isPaymentSupported = (
 ): PaymentSupportStatus => {
   const paymentSupported: Option<PaymentSupportStatus> = hasFunctionEnabled(
     paymentMethod,
-    EnableableFunctionsTypeEnum.pagoPA
+    EnableableFunctionsEnum.pagoPA
   )
     ? some("available")
     : none;

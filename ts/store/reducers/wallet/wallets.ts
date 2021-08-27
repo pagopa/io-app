@@ -13,7 +13,6 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  EnableableFunctionsTypeEnum,
   isBancomat,
   isBPay,
   isCreditCard,
@@ -57,6 +56,7 @@ import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -190,9 +190,7 @@ export const getPagoPAMethodsSelector = createSelector(
   ): ReadonlyArray<PaymentMethod> =>
     pot.getOrElse(
       pot.map(potPm, pms =>
-        pms.filter(pm =>
-          hasFunctionEnabled(pm, EnableableFunctionsTypeEnum.pagoPA)
-        )
+        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA))
       ),
       []
     )
@@ -297,7 +295,7 @@ export const paymentMethodListVisibleInWalletSelector = createSelector(
   (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(paymentMethodsPot, paymentMethodList =>
       _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
-        hasFunctionEnabled(pm, EnableableFunctionsTypeEnum.pagoPA)
+        hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA)
           ? -1
           : pm.idWallet
       )
