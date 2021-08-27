@@ -2230,6 +2230,9 @@ bonus:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, periodo dal {{startDate}} al {{endDate}}. Importo accumulato {{amount}}  €"
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
