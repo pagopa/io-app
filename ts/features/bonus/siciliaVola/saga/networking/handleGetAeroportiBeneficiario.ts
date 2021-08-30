@@ -21,7 +21,7 @@ const convertSuccess = (
     .map(d => (d.denominazione ? d.denominazione : undefined))
     .filter(isDefined);
 
-export function* handleGetAereoportiBeneficiario(
+export function* handleGetAeroportiBeneficiario(
   getAeroportiBeneficiario:
     | ReturnType<typeof BackendSiciliaVolaClient>["getAeroportiBeneficiario"]
     | ReturnType<typeof BackendSiciliaVolaClient>["getAeroportiStato"],
