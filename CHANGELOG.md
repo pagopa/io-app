@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.9](https://github.com/pagopa/io-app/compare/1.33.0-rc.8...1.33.0-rc.9) (2021-08-27)
+
+
+### Bug Fixes
+
+* [[IA-205](https://pagopa.atlassian.net/browse/IA-205)] Some network requests could cause crash ([#3326](https://github.com/pagopa/io-app/issues/3326)) ([335c40c](https://github.com/pagopa/io-app/commit/335c40c58af87761b9bab03de861aed209a82b7c))
+
+
+### Chores
+
+* [[IA-199](https://pagopa.atlassian.net/browse/IA-199)] Update PM payment-status API ([#3325](https://github.com/pagopa/io-app/issues/3325)) ([4534c0f](https://github.com/pagopa/io-app/commit/4534c0f132f1ffb752fedd1fb9253d2d1a718028))
+* [[IA-206](https://pagopa.atlassian.net/browse/IA-206)] Replaces EnableableFunctions enumeration with generated one from API spec file [#3327](https://github.com/pagopa/io-app/issues/3327) ([1c01eec](https://github.com/pagopa/io-app/commit/1c01eec77c3a3b61948473097c870976d49e7d71))
+* **deps:** bump glob-parent from 5.1.1 to 5.1.2 ([#3118](https://github.com/pagopa/io-app/issues/3118)) ([faad279](https://github.com/pagopa/io-app/commit/faad27911ee77bbe7ba3876be60da1f79cc3e404))
+* [[IAI-29](https://pagopa.atlassian.net/browse/IAI-29)] Upgrade react-redux ([#3311](https://github.com/pagopa/io-app/issues/3311)) ([b2e246f](https://github.com/pagopa/io-app/commit/b2e246fbf903cd37a53ca3adb957e75d4abeb702))
+
 ## [1.33.0-rc.8](https://github.com/pagopa/io-app/compare/1.33.0-rc.7...1.33.0-rc.8) (2021-08-20)
 
 

@@ -209,9 +209,11 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
     all_uris = []
-    urls_black_list = {"https://assets.cdn.io.italia.it",
-                       "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
-                       "https://www.trusttechnologies.it/contatti/#form"}
+    urls_black_list = { # the article is available but the response status code is 403
+                        "https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
+                        "https://assets.cdn.io.italia.it",
+                        "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
+                        "https://www.trusttechnologies.it/contatti/#form"}
     locales = (abspath(join(dirname(__file__), "../..", "locales")),{})
     ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),{"testFaker.ts","PayWebViewModal.tsx"})
     for directory,black_list in [locales,ts_dir]:

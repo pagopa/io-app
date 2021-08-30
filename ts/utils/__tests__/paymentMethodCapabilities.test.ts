@@ -85,7 +85,7 @@ describe("isPaymentMethodSupported", () => {
 
     expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
   });
-  it("should return onboardableNotImplemented if is a cobadge card", () => {
+  it("should return notAvailable if is a cobadge card", () => {
     const aCreditCard = {
       kind: "CreditCard",
       info: {
@@ -100,9 +100,7 @@ describe("isPaymentMethodSupported", () => {
       enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
-    expect(isPaymentSupported(aPaymentMethod)).toEqual(
-      "onboardableNotImplemented"
-    );
+    expect(isPaymentSupported(aPaymentMethod)).toEqual("notAvailable");
   });
 
   it("should return arriving if the payment method is of kind Satispay", () => {
