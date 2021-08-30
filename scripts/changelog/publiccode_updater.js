@@ -19,11 +19,11 @@ module.exports.readVersion = function (contents) {
   return softwareVersionRegex.exec(contents)[2];
 };
 
-function replaceReleaseDate(match, version, p1, p2, p3) {
+function replaceReleaseDate(_, version, p1, p2, p3) {
   return [p1, version, p3].join("");
 }
 
-function replaceVersionName(match, version, p1) {
+function replaceVersionName(_, version, p1) {
   return [p1, version].join("");
 }
 
