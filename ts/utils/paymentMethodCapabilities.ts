@@ -1,4 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   CreditCardPaymentMethod,
@@ -7,7 +8,6 @@ import {
   PaymentMethod
 } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
-import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { hasFunctionEnabled } from "./walletv2";
 
 export const brandsBlackList = new Set<CreditCardType>();
@@ -42,10 +42,6 @@ const paymentNotSupportedCustomRepresentation = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
   switch (paymentMethod.kind) {
-    case "CreditCard":
-      return isCobadge(paymentMethod)
-        ? "onboardableNotImplemented"
-        : "notAvailable";
     case "Satispay":
     case "BPay":
       return "arriving";
