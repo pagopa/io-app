@@ -4,7 +4,7 @@ import { AvailableDestinations, VoucherRequest } from "./SvVoucherRequest";
 /**
  * The unique ID of a SiciliaVola Voucher
  */
-export type SvVoucherId = string & IUnitTag<"SvVoucherId">;
+export type SvVoucherId = number & IUnitTag<"SvVoucherId">;
 
 type WithSvVoucherId = {
   id: SvVoucherId;

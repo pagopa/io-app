@@ -13,27 +13,23 @@ import { getTimeoutError } from "../../../../../../utils/errors";
 import {
   Municipality,
   Province,
-  Region,
-  State
+  Region
 } from "../../../types/SvVoucherRequest";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
-const mockState: State = {
-  id: 1,
-  name: "state1"
-};
+
 const mockRegion: Region = {
   id: 1,
   name: "reg1"
 };
 const mockProvince: Province = {
-  id: 1,
+  id: "MI",
   name: "prov1"
 };
 const mockResponse: ReadonlyArray<Municipality> = [
-  { id: 1, name: "mun1" },
-  { id: 2, name: "mun2" }
+  { id: "A010", name: "mun1" },
+  { id: "A020", name: "mun2" }
 ];
 
 describe("Test availableMunicipality reducer", () => {
@@ -61,12 +57,12 @@ describe("Test availableMunicipality reducer", () => {
       store.getState().bonus.sv.voucherGeneration.availableMunicipalities
     ).toStrictEqual(pot.none);
 
-    store.dispatch(svGenerateVoucherAvailableRegion.request(mockState));
+    store.dispatch(svGenerateVoucherAvailableRegion.request());
     expect(
       store.getState().bonus.sv.voucherGeneration.availableMunicipalities
     ).toStrictEqual(pot.none);
 
-    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion));
+    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion.id));
     expect(
       store.getState().bonus.sv.voucherGeneration.availableMunicipalities
     ).toStrictEqual(pot.none);
@@ -75,7 +71,7 @@ describe("Test availableMunicipality reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      svGenerateVoucherAvailableMunicipality.request(mockProvince)
+      svGenerateVoucherAvailableMunicipality.request(mockProvince.id)
     );
 
     expect(
@@ -97,7 +93,7 @@ describe("Test availableMunicipality reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      svGenerateVoucherAvailableMunicipality.request(mockProvince)
+      svGenerateVoucherAvailableMunicipality.request(mockProvince.id)
     );
     store.dispatch(
       svGenerateVoucherAvailableMunicipality.failure(genericError)

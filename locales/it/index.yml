@@ -2495,6 +2495,7 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+        landingPage: Accedi all’agevolazione
       categories:
         theater: teatro, cinema e spettacolo
         travel: viaggi

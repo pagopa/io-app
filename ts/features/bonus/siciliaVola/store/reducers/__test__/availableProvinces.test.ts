@@ -9,22 +9,19 @@ import {
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
-import { Province, Region, State } from "../../../types/SvVoucherRequest";
+import { Province, Region } from "../../../types/SvVoucherRequest";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
-const mockState: State = {
-  id: 1,
-  name: "state1"
-};
+
 const mockRegion: Region = {
   id: 1,
   name: "reg1"
 };
 
 const mockResponse: ReadonlyArray<Province> = [
-  { id: 1, name: "prov1" },
-  { id: 2, name: "prov2" }
+  { id: "MI", name: "prov1" },
+  { id: "MI", name: "prov2" }
 ];
 
 describe("Test availableProvince reducer", () => {
@@ -52,7 +49,7 @@ describe("Test availableProvince reducer", () => {
       store.getState().bonus.sv.voucherGeneration.availableProvinces
     ).toStrictEqual(pot.none);
 
-    store.dispatch(svGenerateVoucherAvailableRegion.request(mockState));
+    store.dispatch(svGenerateVoucherAvailableRegion.request());
     expect(
       store.getState().bonus.sv.voucherGeneration.availableProvinces
     ).toStrictEqual(pot.none);
@@ -60,7 +57,7 @@ describe("Test availableProvince reducer", () => {
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion));
+    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion.id));
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableProvinces
@@ -78,7 +75,7 @@ describe("Test availableProvince reducer", () => {
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion));
+    store.dispatch(svGenerateVoucherAvailableProvince.request(mockRegion.id));
     store.dispatch(svGenerateVoucherAvailableProvince.failure(genericError));
 
     expect(
