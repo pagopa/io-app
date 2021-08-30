@@ -11,21 +11,32 @@
 
 const versionModule = require("./version_utility.js");
 
-const versionNameRegex = /(softwareVersion: )(.+)/gm;
+const softwareVersionRegex = /(softwareVersion: )(.+)/gm;
+const releaseDateRegex = /(releaseDate: ')(.+)(')/gm;
 
 module.exports.readVersion = function (contents) {
   // return the 2nd group of the regex (the version)
-  return versionNameRegex.exec(contents)[2];
+  return softwareVersionRegex.exec(contents)[2];
 };
+
+function replaceReleaseDate(match, version, p1, p2, p3) {
+  return [p1, version, p3].join("");
+}
 
 function replaceVersionName(match, version, p1) {
   return [p1, version].join("");
 }
 
 module.exports.writeVersion = function (contents, version) {
-  // replace the old version (match #2 group) of regex, with the new version
-  contents = contents.replace(versionNameRegex, (substr, ...args) =>
+  // Update version
+  contents = contents.replace(softwareVersionRegex, (substr, ...args) =>
     replaceVersionName(substr, version, ...args)
+  );
+  const today = new Date().toISOString().split("T")[0];
+
+  // update date
+  contents = contents.replace(releaseDateRegex, (substr, ...args) =>
+    replaceReleaseDate(substr, today, ...args)
   );
 
   return contents;
