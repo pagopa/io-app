@@ -5,17 +5,21 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { getTimeoutError } from "../../../../../../utils/errors";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 import { svVoucherListGet } from "../../actions/voucherList";
-import { SvVoucher, SvVoucherId } from "../../../types/svVoucher";
+import { SvVoucherId } from "../../../types/SvVoucher";
+import {
+  SvVoucherListResponse,
+  VoucherPreview
+} from "../../../types/SvVoucherResponse";
 
 const genericError = getTimeoutError();
 
-const mockResponse: ReadonlyArray<SvVoucher> = [
+const mockResponse: SvVoucherListResponse = [
   {
-    id: "abc123" as SvVoucherId
-  } as SvVoucher,
+    idVoucher: 12345 as SvVoucherId
+  } as VoucherPreview,
   {
-    id: "def456" as SvVoucherId
-  } as SvVoucher
+    idVoucher: 67890 as SvVoucherId
+  } as VoucherPreview
 ];
 
 describe("Test availableRegion reducer", () => {
@@ -26,7 +30,7 @@ describe("Test availableRegion reducer", () => {
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svVoucherListGet.request());
+    store.dispatch(svVoucherListGet.request({}));
 
     expect(store.getState().bonus.sv.voucherList).toStrictEqual(
       pot.noneLoading
@@ -38,13 +42,13 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svVoucherListGet.success(mockResponse));
 
     expect(store.getState().bonus.sv.voucherList).toStrictEqual(
-      pot.some(toIndexed(mockResponse, mR => mR.id))
+      pot.some(toIndexed(mockResponse, mR => mR.idVoucher))
     );
   });
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svVoucherListGet.request());
+    store.dispatch(svVoucherListGet.request({}));
     store.dispatch(svVoucherListGet.failure(genericError));
 
     expect(store.getState().bonus.sv.voucherList).toStrictEqual(

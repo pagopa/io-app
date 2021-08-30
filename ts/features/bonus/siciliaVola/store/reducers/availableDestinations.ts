@@ -5,6 +5,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableDestination,
+  svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherStart
 } from "../actions/voucherGeneration";
 
@@ -21,12 +22,13 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
+    case getType(svGenerateVoucherAvailableDestinationAbroad.request):
     case getType(svGenerateVoucherAvailableDestination.request):
       return pot.toLoading(state);
-
+    case getType(svGenerateVoucherAvailableDestinationAbroad.success):
     case getType(svGenerateVoucherAvailableDestination.success):
       return pot.some(action.payload);
-
+    case getType(svGenerateVoucherAvailableDestinationAbroad.failure):
     case getType(svGenerateVoucherAvailableDestination.failure):
       return pot.toError(state, action.payload);
   }

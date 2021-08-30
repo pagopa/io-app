@@ -2,7 +2,11 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { svServiceAlive, svTosAccepted } from "../actions/activation";
+import {
+  svAcceptTos,
+  svServiceAlive,
+  svTosAccepted
+} from "../actions/activation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   remoteError,
@@ -42,16 +46,19 @@ const reducer = (
         ...state,
         isAlive: remoteError(action.payload)
       };
+    case getType(svAcceptTos.request):
     case getType(svTosAccepted.request):
       return {
         ...state,
         tosAccepted: remoteLoading
       };
+    case getType(svAcceptTos.success):
     case getType(svTosAccepted.success):
       return {
         ...state,
         tosAccepted: remoteReady(action.payload)
       };
+    case getType(svAcceptTos.failure):
     case getType(svTosAccepted.failure):
       return {
         ...state,
