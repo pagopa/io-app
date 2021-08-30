@@ -2086,7 +2086,7 @@ bonus:
       description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
     accessibility:
-      preview: Bonus Vacanze, importo massimo {{value}}€, stato {{status}}
+      preview: Bonus Vacanze, importo massimo {{value}} euro, {{status}}
       card: Il tuo Bonus Vacanze con codice {{code}}, del valore massimo di {{value}} euro è {{status}}
     statusInfo:
       validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
