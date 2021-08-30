@@ -58,7 +58,9 @@ export function* handleGetAeroportiBeneficiario(
     }
     yield put(
       svGenerateVoucherAvailableDestination.failure({
-        ...getGenericError(new Error("Generic Error"))
+        ...getGenericError(
+          new Error("Invalid payload from getAeroportiBeneficiarioResult")
+        )
       })
     );
   } catch (e) {
