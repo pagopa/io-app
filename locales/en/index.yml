@@ -1080,17 +1080,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    bancomat:
-      successful: Bancomat successfully removed
-      failed: The bancomat could not be removed
-    satispay:
-      successful: Satispay successfully removed
-      failed: Satispay could not be removed
-    bPay:
-      successful: BancomatPay successfully removed
-      failed: BancomatPay could not be removed
-    successful: Payment method successfully removed
-    failed: The payment method could not be removed
+    successful: Method removed from your Wallet
+    failed: The method could not be removed from your Wallet
     alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
@@ -1406,8 +1397,8 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
-      removeCta: "Delete this payment method"
-      deleteLoading: Payment method deletion in progress
+      removeCta: "Delete this method"
+      deleteLoading: Method deletion in progress
   satispay:
     details:
       infobox:
@@ -1419,8 +1410,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this payment method?"
-    body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this method?"
+    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
