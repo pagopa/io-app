@@ -267,7 +267,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       onPress={props.onPress}
       accessible={true}
       accessibilityRole={"button"}
-      accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.previwew", {
+      accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.preview", {
         value: props.bonus.dsu_request.max_amount,
         status: I18n.t(`bonus.${props.bonus.status.toLowerCase()}`, {
           defaultValue: ""
