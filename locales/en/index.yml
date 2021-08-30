@@ -1082,7 +1082,6 @@ wallet:
   delete:
     successful: Method removed from your Wallet
     failed: The method could not be removed from your Wallet
-    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
     show: show

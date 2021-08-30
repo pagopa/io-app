@@ -1100,7 +1100,6 @@ wallet:
   delete:
     successful: Metodo rimosso dal tuo Portafoglio
     failed: Impossibile rimuovere il metodo dal tuo Portafoglio
-    alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
     show: mostra
