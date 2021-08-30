@@ -2,6 +2,7 @@ import * as React from "react";
 import { View } from "native-base";
 import { StyleSheet } from "react-native";
 import { index } from "fp-ts/lib/Array";
+import { connect } from "react-redux";
 import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -12,12 +13,16 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
+import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { useCgnDiscountDetailBottomSheet } from "./CgnDiscountDetail";
 import CgnDiscountValueBox from "./CgnDiscountValueBox";
 
 type Props = {
   discount: Discount;
-};
+} & ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: { justifyContent: "space-between", alignItems: "center" },
@@ -31,9 +36,13 @@ const styles = StyleSheet.create({
 });
 
 const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
-  discount
+  discount,
+  navigateToLandingWebview
 }: Props) => {
-  const { present } = useCgnDiscountDetailBottomSheet(discount);
+  const { present } = useCgnDiscountDetailBottomSheet(
+    discount,
+    navigateToLandingWebview
+  );
   return (
     <TouchableDefaultOpacity style={styles.verticalPadding} onPress={present}>
       <ShadowBox>
@@ -72,4 +81,18 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
   );
 };
 
-export default CgnMerchantDiscountItem;
+const mapStateToProps = (_: GlobalState) => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToLandingWebview: (url: string, referer: string) =>
+    dispatch(
+      navigateToCgnMerchantLandingWebview({
+        landingPageUrl: url,
+        landingPageReferrer: referer
+      })
+    )
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CgnMerchantDiscountItem);
