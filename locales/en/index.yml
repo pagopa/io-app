@@ -2466,6 +2466,7 @@ bonus:
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+        landingPage: Get the benefit
       categories:
         theater: theater, cinema and entertainment
         travel: travel
