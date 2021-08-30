@@ -51,7 +51,7 @@ const paymentNotSupportedCustomRepresentation = (
 };
 
 /**
- * Check if a payment method is supported or  not
+ * Check if a payment method is supported or not
  * If the payment method have the enableable function pagoPA, can always pay ("available")
  * "available" -> can pay
  * "arriving" -> will pay
