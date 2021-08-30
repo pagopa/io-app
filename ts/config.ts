@@ -43,7 +43,8 @@ export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
 
-export const bonusVacanzeEnabled: boolean = true;
+export const bonusVacanzeEnabled: boolean =
+  Config.BONUS_VACANZE_ENABLED === "YES";
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
