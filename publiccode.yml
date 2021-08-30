@@ -24,7 +24,7 @@ maintenance:
       email: matteo.boschi@pagopa.it
 legal:
   license: EUPL-1.2
-  mainCopyrightOwner: pagoPA SpA
+  mainCopyrightOwner: PagoPA S.p.A.
   repoOwner: https://www.pagopa.it/
   authorsFile: AUTHORS.md
 intendedAudience:
