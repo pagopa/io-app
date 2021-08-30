@@ -1,11 +1,13 @@
 /**
  * This is an updater for the utility "standard-version" that increase the versionName value
- * for gradle files.
- * Replace the line
- *
- * versionName "$VERSION"
- *
+ * for publiccode.yml file.
+ * Replace the line:
+ * softwareVersion: $VERSION
  * with the new generated version.
+ *
+ * and the line:
+ * releaseDate: '$DATE'
+ * with the today date.
  *
  */
 
