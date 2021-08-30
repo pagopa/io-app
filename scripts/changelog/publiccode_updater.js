@@ -18,8 +18,8 @@ module.exports.readVersion = function (contents) {
   return versionNameRegex.exec(contents)[2];
 };
 
-function replaceVersionName(match, version, p1, p2, p3) {
-  return [p1, version, p3].join("");
+function replaceVersionName(match, version, p1) {
+  return [p1, version].join("");
 }
 
 module.exports.writeVersion = function (contents, version) {
