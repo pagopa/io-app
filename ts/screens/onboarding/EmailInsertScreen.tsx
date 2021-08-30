@@ -8,7 +8,8 @@ import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -41,7 +42,7 @@ import { withKeyboard } from "../../utils/keyboard";
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   flex: {

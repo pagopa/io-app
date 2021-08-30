@@ -109,7 +109,6 @@
         <data android:scheme="ioit" android:host="ioit" />
       </intent-filter>
     </activity>
-    <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
   </application>
 
 </manifest>

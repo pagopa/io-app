@@ -9,7 +9,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -45,7 +46,7 @@ import customVariables from "../../theme/variables";
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   emailWithIcon: {

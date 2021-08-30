@@ -1,5 +1,5 @@
 import { Toast } from "native-base";
-import Clipboard from "@react-native-community/clipboard";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 import I18n from "../i18n";
 

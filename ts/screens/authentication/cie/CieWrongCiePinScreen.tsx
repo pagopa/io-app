@@ -3,7 +3,7 @@
  */
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -17,7 +17,7 @@ type NavigationParams = {
   remainingCount: number;
 };
 
-type Props = NavigationScreenProps<NavigationParams> &
+type Props = NavigationStackScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 class CieWrongCiePinScreen extends React.PureComponent<Props> {

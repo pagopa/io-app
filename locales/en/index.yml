@@ -798,6 +798,12 @@ payment:
     buttons:
       ok: Continue
       ko: Cancel
+  alertNoActivePaymentMethods:
+    title: To use this feature, turn on in-app payments
+    message: Please enable at least one method in your Wallet, or you can add a new one.
+    buttons:
+      ok: Open Wallet
+      ko: Cancel
   abortWebView:
     title: Do you want to stop the payment in progress?
     confirm: Cancel the payment
@@ -1206,14 +1212,14 @@ wallet:
     updatedAmount: Updated amount
     updateInfo: 'pagoPA automatically updates the amount to make sure you’ll pay the exact amount, avoiding you any error or additional interests'
     loadingMessage:
-      activation: I'm alerting the entity, wait a few seconds..
-      verification: I am checking the status and the amount of your notice..
-      generic: I am finishing the verification operations of your notice, wait a few seconds..
-      wallet: I am checking for payment method..
+      activation: I'm alerting the entity, wait a few seconds...
+      verification: I am checking the status and the amount of your notice...
+      generic: I am finishing the verification operations of your notice, wait a few seconds...
+      wallet: I am checking for payment method...
     contextualHelpTitle: Transaction's summary
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
-    header: Insert notice data
+    header: Enter notice data
     title: Insert the notice data
     info: which allow us to identify the transaction
     link: Where are they?
@@ -1268,7 +1274,7 @@ wallet:
         arriving: Arriving
         incompatible: Incompatible
         bottomSheetTitle: Why can’t I make in-app payments?
-        bottomSheetBody: This method doesn’t support online payments. 
+        bottomSheetBody: This method doesn’t support online payments.
         bottomSheetCTA: Learn more about supported methods
     bonus:
       name: Discount, bonus and other services
@@ -1351,11 +1357,11 @@ wallet:
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
-    wrongQrCode: Not a pagoPA QR Code!
-    byCameraTitle: Notice QR Code
+    wrongQrCode: QR Code not valid. Enter data manually.
+    byCameraTitle: Scan the QR Code
     cameraUsageInfo: Scan the QR Code on the payment notice, or
       manually enter the data (Notice Code and Payee Fiscal Code).
-    setManually: Enter the data
+    setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
@@ -1634,6 +1640,8 @@ send_email_messages:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
+  accessibility:
+    edit: Edit services setup
   optIn:
     preferences:
       completed:
@@ -2053,6 +2061,9 @@ faq:
     title: "My card has no security code."
     content: "Check well on the back (for Maestro, Mastercard, Visa) or on the front (for American Express cards). If you don't find any security code, most likely your card is not enabled for online payments. Contact your bank for more information."
 bonus:
+  accessibility:
+    sectionCardLabel: "Update bonus and discounts"
+    sectionCardHint: "Update the list of active bonuses"
   state:
     completed:
       caption: "concluded"
@@ -2580,7 +2591,12 @@ bonus:
         buttons:
           requestBonus: "Request a discount code"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Residency's region"
+        items:
+          inSicily: "I reside in Sicily"
+          notInSicily: "I reside in a different region"
+        info:
+          "Please remember that the discount is available only to residents of Sicily"
       selectBeneficiaryCategory:
         title: "I declare to be"
         categories:

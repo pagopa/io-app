@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import BPaySearchStartScreen from "../screens/search/BPaySearchStartScreen";
 import BPaySearchBankScreen from "../screens/search/BPaySearchBankScreen";
 import SearchAvailableUserBPayScreen from "../screens/searchBPay/SearchAvailableUserBPayScreen";

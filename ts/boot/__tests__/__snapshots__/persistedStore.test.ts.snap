@@ -96,6 +96,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 Object {
   "installation": Object {
     "id": "fakeInstallationId",
+    "registeredToken": undefined,
     "token": undefined,
   },
   "pendingMessage": null,

@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
 import CgnActivationPendingScreen from "../screens/activation/CgnActivationPendingScreen";

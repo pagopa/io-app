@@ -796,9 +796,9 @@ wallet:
   chooseMethod: Wählen Sie die gewünschte Zahlungsmethode
   QRtoPay:
     chooser: Bild aus der Galerie wählen
-    wrongQrCode: Kein pagoPA QR-Code!
+    wrongQrCode: QR-Code nicht gültig. Geben Sie die Daten manuell ein.
     byCameraTitle: Hinweis QR-Code
-    setManually: Geben Sie die Daten ein
+    setManually: Manuell eingeben
     cameraUsagePermissionInfobox:
       title: "IO-App Kamera-Nutzungserlaubnis"
       message: "Die IO-App muss auf die Kamera zugreifen, um den QR-Code zu fotografieren"

@@ -50,13 +50,15 @@ import {
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   updateNotificationInstallationFailure,
-  updateNotificationsInstallationToken
+  updateNotificationsInstallationToken,
+  notificationsInstallationTokenRegistered
 } from "../actions/notifications";
 import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess, updatePin } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
+  profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
   removeAccountMotivation
@@ -324,6 +326,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(updatePin):
     // profile
     case getType(profileUpsert.success):
+    case getType(profileLoadRequest):
     case getType(profileLoadSuccess):
     // userMetadata
     case getType(userMetadataUpsert.request):
@@ -366,6 +369,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // other
     case getType(loadMessage.success):
     case getType(updateNotificationsInstallationToken):
+    case getType(notificationsInstallationTokenRegistered):
     case getType(loadAllBonusActivations.request):
     case getType(loadAvailableBonuses.success):
     case getType(loadAvailableBonuses.request):

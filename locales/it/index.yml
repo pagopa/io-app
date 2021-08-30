@@ -816,6 +816,12 @@ payment:
     buttons:
       ok: Continua
       ko: Annulla
+  alertNoActivePaymentMethods:
+    title: Per usare questa funzionalità, abilita i pagamenti in app
+    message: Abilita almeno un metodo presente nel tuo Portafoglio, o aggiungine uno nuovo.
+    buttons:
+      ok: Vai al Portafoglio
+      ko: Annulla
   abortWebView:
     title: Vuoi interrompere il pagamento in corso?
     confirm: Annulla il pagamento
@@ -1373,12 +1379,12 @@ wallet:
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
-    wrongQrCode: Non è un QR Code pagoPA!
-    byCameraTitle: QR Code avviso
+    wrongQrCode: Codice QR non valido. Inserisci i dati manualmente.
+    byCameraTitle: Inquadra il codice QR
     cameraUsageInfo:
       Inquadra il codice QR che trovi nell'avviso, oppure
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
-    setManually: Inserisci tu i dati
+    setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
@@ -1662,6 +1668,8 @@ send_email_messages:
       label: Scegli servizio per servizio
       info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
+  accessibility:
+    edit: Modifica l'impostazione dei servizi
   optIn:
     preferences:
       completed:
@@ -2081,6 +2089,9 @@ faq:
     title: "La mia carta non ha alcun codice di sicurezza."
     content: "Controlla bene sul retro (per le carte Maestro, Mastercard, Visa) o sul fronte (per le carte American Express). Se non trovi alcun codice di sicurezza, molto probabilmente la tua carta non è abilitata ai pagamenti online. Contatta la tua banca per maggiori informazioni."
 bonus:
+  accessibility:
+    sectionCardLabel: "Aggiorna bonus e sconti"
+    sectionCardHint: "Aggiorna la lista dei bonus attivi"
   state:
     completed:
       caption: "concluso"
@@ -2608,7 +2619,12 @@ bonus:
         buttons:
           requestBonus: "Richiedi un codice sconto"
       checkResidence:
-        title: "CheckResidenceComponent"
+        title: "Regione di residenza"
+        items:
+          inSicily: "Risiedo in Sicilia"
+          notInSicily: "Risiedo in un'altra regione"
+        info:
+          "Ricorda che gli sconti sono diponibili solo per i cittadini residenti in Sicilia."
       selectBeneficiaryCategory:
         title: "Dichiaro di essere"
         categories:

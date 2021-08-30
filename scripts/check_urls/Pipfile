@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+urllib3 = ">=1.26.6"
 requests = "*"
 slackclient = "*"
 urlextract = "*"

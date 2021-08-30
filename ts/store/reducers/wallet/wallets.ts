@@ -2,11 +2,10 @@
  * Reducers, states, selectors and guards for the cards
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { values } from "lodash";
+import _, { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
-import _ from "lodash";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
 import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
@@ -14,7 +13,6 @@ import {
   BancomatPaymentMethod,
   BPayPaymentMethod,
   CreditCardPaymentMethod,
-  EnableableFunctionsTypeEnum,
   isBancomat,
   isBPay,
   isCreditCard,
@@ -58,6 +56,7 @@ import { GlobalState } from "../types";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
+import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -171,7 +170,7 @@ export const paymentMethodsSelector = createSelector(
     )
 );
 
-// return those payment methods that can pay within pagoPA
+// return those payment methods that can pay with pagoPA
 export const getPayablePaymentMethodsSelector = createSelector(
   paymentMethodsSelector,
   (
@@ -179,6 +178,20 @@ export const getPayablePaymentMethodsSelector = createSelector(
   ): ReadonlyArray<PaymentMethod> =>
     pot.getOrElse(
       pot.map(potPm, pms => pms.filter(canMethodPay)),
+      []
+    )
+);
+
+// return those payment methods that have pagoPA as enabled function
+export const getPagoPAMethodsSelector = createSelector(
+  paymentMethodsSelector,
+  (
+    potPm: ReturnType<typeof paymentMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> =>
+    pot.getOrElse(
+      pot.map(potPm, pms =>
+        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA))
+      ),
       []
     )
 );
@@ -282,7 +295,7 @@ export const paymentMethodListVisibleInWalletSelector = createSelector(
   (paymentMethodsPot): pot.Pot<ReadonlyArray<PaymentMethod>, Error> =>
     pot.map(paymentMethodsPot, paymentMethodList =>
       _.sortBy(paymentMethodList.filter(isVisibleInWallet), pm =>
-        hasFunctionEnabled(pm, EnableableFunctionsTypeEnum.pagoPA)
+        hasFunctionEnabled(pm, EnableableFunctionsEnum.pagoPA)
           ? -1
           : pm.idWallet
       )
