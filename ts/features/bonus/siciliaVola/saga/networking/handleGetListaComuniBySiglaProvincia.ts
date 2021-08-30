@@ -5,7 +5,6 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svGenerateVoucherAvailableMunicipality } from "../../store/actions/voucherGeneration";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { Municipality } from "../../types/SvVoucherRequest";
-import { isDefined } from "../../../../../utils/guards";
 import { ComuneBeanList } from "../../../../../../definitions/api_sicilia_vola/ComuneBeanList";
 
 // TODO: add the mapping when the swagger will be fixed
@@ -15,16 +14,16 @@ const mapKinds: Record<number, string> = {};
 const convertSuccess = (
   listaComuni: ComuneBeanList
 ): ReadonlyArray<Municipality> =>
-  listaComuni
-    .map(r =>
-      r.codiceCatastale && r.descrizioneComune
-        ? {
+  listaComuni.flatMap(r =>
+    r.codiceCatastale && r.descrizioneComune
+      ? [
+          {
             id: r.codiceCatastale,
             name: r.descrizioneComune
           }
-        : undefined
-    )
-    .filter(isDefined);
+        ]
+      : []
+  );
 
 export function* handleGetListaComuniBySiglaProvincia(
   getListaComuni: ReturnType<
