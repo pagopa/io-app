@@ -11,8 +11,6 @@
  *
  */
 
-const versionModule = require("./version_utility.js");
-
 const softwareVersionRegex = /(softwareVersion: )(.+)/gm;
 const releaseDateRegex = /(releaseDate: ')(.+)(')/gm;
 
