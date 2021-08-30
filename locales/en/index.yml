@@ -2058,6 +2058,7 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
+      previwew: Bonus Vacanze, worth {{value}}, status {{status}}
       card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
