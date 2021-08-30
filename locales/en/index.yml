@@ -1396,8 +1396,6 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
-      removeCta: "Delete this method"
-      deleteLoading: Method deletion in progress
   satispay:
     details:
       infobox:
@@ -1465,7 +1463,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
-  deleteLoading: Payment method deletion in progress
+  deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
