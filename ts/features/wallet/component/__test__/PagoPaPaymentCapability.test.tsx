@@ -114,7 +114,7 @@ describe("PagoPaPaymentCapability", () => {
     expect(component.getByText("Incompatible")).toBeTruthy();
   });
 
-  it("should render a disabled switch if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and doesn't have enableableFunction pagoPA", () => {
+  it("should render a badge with the text Incompatible if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and doesn't have enableableFunction pagoPA", () => {
     const aNonMaestroCreditCard = {
       info: {
         brand: CreditCardType.decode("VISA").value,
@@ -129,8 +129,7 @@ describe("PagoPaPaymentCapability", () => {
     } as PaymentMethod;
 
     const component = renderTestTarget(aPaymentMethod);
-    const disabledSwitch = component.queryByTestId("switchOnboardCard");
-    expect(disabledSwitch).not.toBeNull();
+    expect(component.getByText("Incompatible")).not.toBeNull();
   });
   it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
     const aNonMaestroCreditCard = {

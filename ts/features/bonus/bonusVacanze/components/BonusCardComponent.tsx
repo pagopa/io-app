@@ -262,39 +262,45 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const renderPreviewCard = () => (
-    <View style={styles.preview}>
-      <TouchableDefaultOpacity
-        style={[styles.row, styles.spaced]}
-        onPress={props.onPress}
-      >
-        <View style={[styles.row]}>
-          <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
-            {I18n.t("bonus.bonusVacanze.name")}
-          </Text>
-          <View hspacer={true} large={true} />
-          <Text
-            bold={true}
-            style={[
-              !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-              styles.colorWhite,
-              styles.previewAmount
-            ]}
-          >
-            {bonus.dsu_request.max_amount}
-          </Text>
-          <Text
-            style={[
-              !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-              styles.colorWhite,
-              { fontSize: 20 }
-            ]}
-          >
-            {"€"}
-          </Text>
-        </View>
-        <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
-      </TouchableDefaultOpacity>
-    </View>
+    <TouchableDefaultOpacity
+      style={[styles.row, styles.spaced]}
+      onPress={props.onPress}
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.preview", {
+        value: props.bonus.dsu_request.max_amount,
+        status: I18n.t(`bonus.${props.bonus.status.toLowerCase()}`, {
+          defaultValue: ""
+        })
+      })}
+    >
+      <View style={[styles.row]}>
+        <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
+          {I18n.t("bonus.bonusVacanze.name")}
+        </Text>
+        <View hspacer={true} large={true} />
+        <Text
+          bold={true}
+          style={[
+            !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+            styles.colorWhite,
+            styles.previewAmount
+          ]}
+        >
+          {bonus.dsu_request.max_amount}
+        </Text>
+        <Text
+          style={[
+            !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
+            styles.colorWhite,
+            { fontSize: 20 }
+          ]}
+        >
+          {"€"}
+        </Text>
+      </View>
+      <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
+    </TouchableDefaultOpacity>
   );
 
   return (

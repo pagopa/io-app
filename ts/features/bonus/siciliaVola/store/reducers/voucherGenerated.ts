@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as pot from "italia-ts-commons/lib/pot";
-import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
+import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import {

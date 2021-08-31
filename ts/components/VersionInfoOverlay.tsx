@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
+import DeviceInfo from "react-native-device-info";
 import { ReduxProps } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
@@ -15,7 +16,8 @@ const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
     top: Platform.select({
-      ios: 20 + (isIphoneX() ? getStatusBarHeight() : 0),
+      ios:
+        20 + (isIphoneX() || DeviceInfo.hasNotch() ? getStatusBarHeight() : 0),
       android: 0
     }),
     left: 0,

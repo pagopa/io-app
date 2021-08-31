@@ -64,8 +64,9 @@ const SummaryScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
+  // TODO: add logic to pass the regionId or to dispatch svGenerateVoucherAvailableDestinationAbroad
   availableDestination: () =>
-    dispatch(svGenerateVoucherAvailableDestination.request()),
+    dispatch(svGenerateVoucherAvailableDestination.request(1)),
   navigateToVoucherGeneratedScreen: () =>
     dispatch(navigateToSvVoucherGeneratedScreen())
 });
