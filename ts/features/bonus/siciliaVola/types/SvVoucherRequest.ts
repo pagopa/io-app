@@ -7,12 +7,12 @@ export type Region = {
   name: string;
 };
 export type Province = {
-  id: number;
+  id: string;
   name: string;
 };
 
 export type Municipality = {
-  id: number;
+  id: string;
   name: string;
 };
 export type University = {

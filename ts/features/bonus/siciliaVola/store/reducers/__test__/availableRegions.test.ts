@@ -8,14 +8,10 @@ import {
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
 import { getTimeoutError } from "../../../../../../utils/errors";
-import { Region, State } from "../../../types/SvVoucherRequest";
+import { Region } from "../../../types/SvVoucherRequest";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
 
 const genericError = getTimeoutError();
-const mockState: State = {
-  id: 1,
-  name: "state1"
-};
 
 const mockResponse: ReadonlyArray<Region> = [
   { id: 1, name: "reg1" },
@@ -50,7 +46,7 @@ describe("Test availableRegion reducer", () => {
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableRegion.request(mockState));
+    store.dispatch(svGenerateVoucherAvailableRegion.request());
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableRegions
@@ -68,7 +64,7 @@ describe("Test availableRegion reducer", () => {
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableRegion.request(mockState));
+    store.dispatch(svGenerateVoucherAvailableRegion.request());
     store.dispatch(svGenerateVoucherAvailableRegion.failure(genericError));
 
     expect(

@@ -10,6 +10,7 @@ import { getTimeoutError } from "../../../../../../utils/errors";
 import { AvailableDestinations } from "../../../types/SvVoucherRequest";
 
 const genericError = getTimeoutError();
+const mockDestination = 1;
 const mockResponse: AvailableDestinations = ["dest1", "dest2"];
 
 describe("Test availableDestination reducer", () => {
@@ -31,7 +32,9 @@ describe("Test availableDestination reducer", () => {
   it("Should be pot.noneLoading after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableDestination.request());
+    store.dispatch(
+      svGenerateVoucherAvailableDestination.request(mockDestination)
+    );
 
     expect(
       store.getState().bonus.sv.voucherGeneration.availableDestinations
@@ -49,7 +52,9 @@ describe("Test availableDestination reducer", () => {
   it("Should be pot.Error if is dispatched a failure after the first loading action dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(svGenerateVoucherAvailableDestination.request());
+    store.dispatch(
+      svGenerateVoucherAvailableDestination.request(mockDestination)
+    );
     store.dispatch(svGenerateVoucherAvailableDestination.failure(genericError));
 
     expect(
