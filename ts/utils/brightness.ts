@@ -3,7 +3,6 @@ import { useRef, useState } from "react";
 import * as React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
-import { useNavigationContext } from "./hooks/useOnFocus";
 
 const getBrightnessPlatform: () => Promise<number> = () =>
   Platform.select({
