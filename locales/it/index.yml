@@ -1098,18 +1098,8 @@ wallet:
       message: Questo metodo di pagamento sarà disponibile in una versione futura
   add: aggiungi
   delete:
-    bancomat:
-      successful: Bancomat rimosso correttamente
-      failed: Impossibile rimuovere il bancomat
-    satispay:
-      successful: Satispay rimosso correttamente
-      failed: Impossibile rimuovere Satispay
-    bPay:
-      successful: BancomatPay rimosso correttamente
-      failed: Impossibile rimuovere BancomatPay
-    successful: Metodo di pagamento rimosso correttamente
-    failed: Impossibile rimuovere il metodo di pagamento
-    alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
+    successful: Metodo rimosso dal tuo Portafoglio
+    failed: Impossibile rimuovere il metodo dal tuo Portafoglio
   newPaymentMethod:
     add: aggiungi
     show: mostra
@@ -1429,8 +1419,6 @@ wallet:
         title: "La tua carta ha più di un logo?"
         body: "Se la tua carta PagoBANCOMAT mostra altri circuiti internazionali, puoi aggiungerli cercando tutte le carte di debito (o credito) intestate a te. Attivando il metodo al Cashback, potrai accumulare anche le transazioni effettuate su questi circuiti."
         addCta: "Aggiungi secondo circuito"
-      removeCta: "Elimina questo metodo"
-      deleteLoading: Eliminazione metodo di pagamento in corso
   satispay:
     details:
       infobox:
@@ -1443,7 +1431,7 @@ wallet:
         validUntil: "Valida fino al {{expiryDate}}"
   newRemove:
     title: "Vuoi eliminare questo metodo?"
-    body: "Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
+    body: "Questo metodo verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h."
     warningCapability: "Verranno disattivate anche le funzioni: "
   capability:
     title: "Iniziative disponibili"
@@ -1500,12 +1488,12 @@ cardComponent:
   unsetFavorite: Rimuovi dai preferiti
   deleteTitle: Vuoi eliminare questo metodo?
   deleteMsg: Questo metodo di pagamento verrà rimosso. Eventuali funzioni collegate, come il Cashback, verranno disattivate entro 24h.
-  deleteLoading: Eliminazione metodo di pagamento in corso
+  deleteLoading: Eliminazione metodo in corso
   neverUsed: Mai utilizzata
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
-  removeCta: "Elimina questo metodo di pagamento"
+  removeCta: "Elimina questo metodo"
 messages:
   accessibility:
     message:
@@ -2506,6 +2494,7 @@ bonus:
         conditions: Condizioni
       cta:
         label: Vai al sito dell'esercente
+        landingPage: Accedi all’agevolazione
       categories:
         theater: teatro, cinema e spettacolo
         travel: viaggi

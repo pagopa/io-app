@@ -186,7 +186,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
   private handleContinueOnPress = (verifica: PaymentRequestsGetResponse) => {
     const { maybeFavoriteWallet, hasPayableMethods } = this.props;
     if (hasPayableMethods) {
-      this.props.startOrResumePayment(verifica, maybeFavoriteWallet, false);
+      this.props.startOrResumePayment(
+        verifica,
+        maybeFavoriteWallet,
+        hasPayableMethods
+      );
       return;
     }
     if (this.props.hasPagoPaMethods) {
