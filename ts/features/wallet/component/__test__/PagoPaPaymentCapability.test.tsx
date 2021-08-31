@@ -14,7 +14,6 @@ import {
   BancomatPaymentMethod,
   CreditCardPaymentMethod,
   CreditCardType,
-  EnableableFunctionsTypeEnum,
   PatchedWalletV2ListResponse,
   PaymentMethod,
   SatispayPaymentMethod
@@ -22,6 +21,7 @@ import {
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 const renderTestTarget = (paymentMethod: PaymentMethod) =>
   render(
@@ -45,7 +45,7 @@ describe("PagoPaPaymentCapability", () => {
       kind: "CreditCard",
       pagoPA: true,
       idWallet: 23216,
-      enableableFunctions: [EnableableFunctionsTypeEnum.pagoPA]
+      enableableFunctions: [EnableableFunctionsEnum.pagoPA]
     } as PaymentMethod;
 
     const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
@@ -80,7 +80,7 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aSatispay,
       kind: "Satispay",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     const component = renderTestTarget(aPaymentMethod);
@@ -93,7 +93,7 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aBPay,
       kind: "BPay",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     const component = renderTestTarget(aPaymentMethod);
@@ -106,7 +106,7 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aBancomat,
       kind: "Bancomat",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     const component = renderTestTarget(aPaymentMethod);
@@ -114,7 +114,7 @@ describe("PagoPaPaymentCapability", () => {
     expect(component.getByText("Incompatible")).toBeTruthy();
   });
 
-  it("should render a disabled switch if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and doesn't have enableableFunction pagoPA", () => {
+  it("should render a badge with the text Incompatible if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and doesn't have enableableFunction pagoPA", () => {
     const aNonMaestroCreditCard = {
       info: {
         brand: CreditCardType.decode("VISA").value,
@@ -125,12 +125,11 @@ describe("PagoPaPaymentCapability", () => {
       ...aNonMaestroCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD]
+      enableableFunctions: [EnableableFunctionsEnum.BPD]
     } as PaymentMethod;
 
     const component = renderTestTarget(aPaymentMethod);
-    const disabledSwitch = component.queryByTestId("switchOnboardCard");
-    expect(disabledSwitch).not.toBeNull();
+    expect(component.getByText("Incompatible")).not.toBeNull();
   });
   it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
     const aNonMaestroCreditCard = {
@@ -143,7 +142,7 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aNonMaestroCreditCard,
       kind: "CreditCard",
-      enableableFunctions: [EnableableFunctionsTypeEnum.BPD],
+      enableableFunctions: [EnableableFunctionsEnum.BPD],
       pagoPA: false
     } as PaymentMethod;
 

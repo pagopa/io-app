@@ -6,7 +6,6 @@ import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
-import { EnableableFunctionsTypeEnum } from "../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
   navigateToBpdIbanInsertion,
@@ -21,6 +20,7 @@ import {
 } from "../../store/actions/iban";
 import { bpdOnboardingCompleted } from "../../store/actions/onboarding";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
 //  which screen to display, (the user already have payment methods or not)
@@ -74,7 +74,7 @@ export function* bpdIbanInsertionWorker() {
 
       const hasAtLeastOnePaymentMethodWithBpd = pot.getOrElse(
         pot.map(paymentMethods, pm =>
-          pm.some(p => hasFunctionEnabled(p, EnableableFunctionsTypeEnum.BPD))
+          pm.some(p => hasFunctionEnabled(p, EnableableFunctionsEnum.BPD))
         ),
         false
       );
