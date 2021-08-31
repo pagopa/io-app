@@ -34,10 +34,9 @@ const HIGH_BRIGHTNESS = 1.0; // Max brightness value
  * the component is unmount or the app changes state (!== active)
  */
 export const useMaxBrightness = () => {
-  // The initial device brightness
-  const [startBrightness, setStartBrightness] = useState<number | undefined>(
-    undefined
-  );
+  const [initialBrightness, setInitialBrightness] = useState<
+    number | undefined
+  >(undefined);
   // The current app state
   const [appState, setAppState] = useState<AppStateStatus | undefined>(
     undefined
@@ -56,7 +55,7 @@ export const useMaxBrightness = () => {
   // First mount, read and save the current device brightness
   React.useEffect(() => {
     const getCurrentBrightness = async () => {
-      setStartBrightness(
+      setInitialBrightness(
         await getBrightness()
           .fold(
             () => undefined,
@@ -71,13 +70,13 @@ export const useMaxBrightness = () => {
 
   // If app state changes of currentBrightness changes, update the brightness
   React.useEffect(() => {
-    if (startBrightness === undefined) {
+    if (initialBrightness === undefined) {
       return;
     }
     const newBrightness =
       appState === "active" || appState === undefined
         ? HIGH_BRIGHTNESS
-        : startBrightness;
+        : initialBrightness;
 
     // eslint-disable-next-line functional/immutable-data
     currentTransition.current = setNewBrightness(newBrightness);
@@ -85,9 +84,9 @@ export const useMaxBrightness = () => {
     // unmount
     return () => {
       AppState.removeEventListener("change", setAppState);
-      if (startBrightness) {
-        void setNewBrightness(startBrightness);
+      if (initialBrightness) {
+        void setNewBrightness(initialBrightness);
       }
     };
-  }, [startBrightness, appState]);
+  }, [initialBrightness, appState]);
 };
