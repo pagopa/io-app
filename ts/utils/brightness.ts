@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import * as React from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
+import { useNavigationContext } from "./hooks/useOnFocus";
 
 const getBrightnessPlatform: () => Promise<number> = () =>
   Platform.select({
@@ -44,8 +45,6 @@ export const useMaxBrightness = () => {
   // Track the current async transition, in order to wait before execute the next async transition
   const currentTransition = useRef<Promise<void>>(Promise.resolve());
 
-  AppState.addEventListener("change", setAppState);
-
   // Change the device brightness
   const setNewBrightness = async (brightness: number) => {
     await currentTransition.current;
@@ -54,6 +53,7 @@ export const useMaxBrightness = () => {
 
   // First mount, read and save the current device brightness
   React.useEffect(() => {
+    AppState.addEventListener("change", setAppState);
     const getCurrentBrightness = async () => {
       setInitialBrightness(
         await getBrightness()
@@ -66,6 +66,9 @@ export const useMaxBrightness = () => {
     };
     // eslint-disable-next-line functional/immutable-data
     currentTransition.current = getCurrentBrightness();
+    return () => {
+      AppState.removeEventListener("change", setAppState);
+    };
   }, []);
 
   // If app state changes of currentBrightness changes, update the brightness
@@ -81,9 +84,8 @@ export const useMaxBrightness = () => {
     // eslint-disable-next-line functional/immutable-data
     currentTransition.current = setNewBrightness(newBrightness);
 
-    // unmount
+    // unmount and reset the initial brightness
     return () => {
-      AppState.removeEventListener("change", setAppState);
       if (initialBrightness) {
         void setNewBrightness(initialBrightness);
       }
