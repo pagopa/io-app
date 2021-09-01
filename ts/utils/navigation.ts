@@ -14,10 +14,10 @@ import { NavigationHistoryState } from "../store/reducers/navigationHistory";
  * to a NavigationLeafRoute.
  */
 const findLeafRoute = (
-  branchOrLeaf: NavigationRoute
+  branchOrLeaf: NavigationRoute | undefined
 ): NavigationLeafRoute | undefined => {
-  const { routes, index } = branchOrLeaf;
-  if (routes) {
+  if (branchOrLeaf && branchOrLeaf.routes) {
+    const { routes, index } = branchOrLeaf;
     return findLeafRoute(routes[index]);
   }
   // a branch without routes is assumed to be a leaf
