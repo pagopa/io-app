@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
 import * as React from "react";
+import { useRef, useState } from "react";
 import { AppState, AppStateStatus, Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
-import { isTestEnv } from "./environment";
 
 const getBrightness = (): Promise<number> =>
   Platform.select({
