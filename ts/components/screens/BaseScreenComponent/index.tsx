@@ -129,11 +129,11 @@ const BaseScreenComponentFC: React.FC<Props> = ({
   }, [requestAssistanceData]);
 
   const showHelp = () => {
-    void mixpanelTrack("OPEN_CONTEXTUAL_HELP", {
-      SCREEN_NAME: noAnalyticsRoutes.has(currentScreenName)
-        ? "_"
-        : currentScreenName
-    });
+    if (!noAnalyticsRoutes.has(currentScreenName)) {
+      void mixpanelTrack("OPEN_CONTEXTUAL_HELP", {
+        SCREEN_NAME: currentScreenName
+      });
+    }
 
     maybeDark(dark).map(_ =>
       setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
