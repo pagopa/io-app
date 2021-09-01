@@ -74,6 +74,3 @@ export const useMaxBrightness = () => {
     };
   }, [initialBrightness, appState]);
 };
-
-// to keep solid code encapsulation
-export const testableGetBrightness = isTestEnv ? getBrightness : undefined;
