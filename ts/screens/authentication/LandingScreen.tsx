@@ -13,7 +13,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
-import { ContextualHelp } from "../../components/ContextualInfo";
+import ContextualInfo from "../../components/ContextualInfo";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -171,7 +171,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private openUnsupportedCIEModal = () => {
     this.props.showAnimatedModal(
-      <ContextualHelp
+      <ContextualInfo
         onClose={this.props.hideModal}
         title={I18n.t("authentication.landing.cie_unsupported.title")}
         body={() => (

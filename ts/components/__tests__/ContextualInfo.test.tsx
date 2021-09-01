@@ -4,12 +4,12 @@ import { BackHandler, Text } from "react-native";
 import { createStore } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 
-import { applicationChangeState } from "../../../store/actions/application";
-import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
-import ROUTES from "../../../navigation/routes";
-import { appReducer } from "../../../store/reducers";
-import { ContextualHelp } from "../../ContextualInfo";
+import { applicationChangeState } from "../../store/actions/application";
+import { GlobalState } from "../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
+import ROUTES from "../../navigation/routes";
+import { appReducer } from "../../store/reducers";
+import ContextualInfo from "../ContextualInfo";
 
 jest.useFakeTimers();
 
@@ -38,7 +38,7 @@ const options = {
   onClose: jest.fn()
 };
 
-describe("ContextualHelp component", () => {
+describe("ContextualInfo component", () => {
   it("should render a button with the 'io-close' icon", () => {
     const component = renderComponent(options);
     // ensure that the close icon is inside an accessible button
@@ -84,10 +84,10 @@ describe("ContextualHelp component", () => {
   });
 });
 
-function renderComponent(props: React.ComponentProps<typeof ContextualHelp>) {
+function renderComponent(props: React.ComponentProps<typeof ContextualInfo>) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    () => <ContextualHelp {...props} />,
+    () => <ContextualInfo {...props} />,
     ROUTES.WALLET_CHECKOUT_3DS_SCREEN,
     {},
     createStore(appReducer, globalState as any)

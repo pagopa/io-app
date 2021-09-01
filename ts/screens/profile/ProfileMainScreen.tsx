@@ -12,7 +12,7 @@ import {
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { ContextualHelp } from "../../components/ContextualInfo";
+import ContextualInfo from "../../components/ContextualInfo";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -425,7 +425,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       body: TranslationKeys
     ) => {
       this.props.showModal(
-        <ContextualHelp
+        <ContextualInfo
           onClose={this.props.hideModal}
           title={I18n.t(title)}
           body={() => <Markdown>{I18n.t(body)}</Markdown>}

@@ -7,7 +7,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { ContextualHelp } from "../../../components/ContextualInfo";
+import ContextualInfo from "../../../components/ContextualInfo";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -140,7 +140,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
   const showHelp = () => {
     props.showModal(
-      <ContextualHelp
+      <ContextualInfo
         onClose={props.hideModal}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}

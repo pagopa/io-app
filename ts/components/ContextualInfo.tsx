@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
  * needed (e.g. ToS, explaining why fees are
  * needed)
  */
-export class ContextualHelp extends React.Component<Props> {
+export default class ContextualInfo extends React.Component<Props> {
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPressed);
   }
