@@ -1,15 +1,15 @@
-import TouchID from "react-native-touch-id";
-import { IsSupportedConfig } from "react-native-touch-id";
+import FingerprintScanner from "react-native-fingerprint-scanner";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
+import { mixpanelTrack } from "../../mixpanel";
+
 export type BiometrySimpleType =
-  | "FINGERPRINT"
+  | "BIOMETRICS"
   | "FACE_ID"
   | "TOUCH_ID"
-  | "NOT_ENROLLED"
   | "UNAVAILABLE";
 
 /**
@@ -51,7 +51,7 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
     // Set Fingerprint usage system preferences to true if available and enrolled
     yield put(
       preferenceFingerprintIsEnabledSaveSuccess({
-        isFingerprintEnabled: biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
+        isFingerprintEnabled: true
       })
     );
   } else {
@@ -87,28 +87,66 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
   }
 }
 
-const isTouchIdSupportedConfig: IsSupportedConfig = {
-  unifiedErrors: true
-};
-
 /**
  * Retrieve fingerpint settings from the base system. This function wraps the basic
- * method "isSupported" of TouchID library and simplifies the possible returned values in
+ * method "isSensorAvailable" of FingerprintScanner library and simplifies the possible returned values in
  * function of its usage:
- * * FaceID/TouchID/Fingerprint: in case of biometric recognition supported.
- * * Not Enrolled: in case of biometric recognition supported but no data registered.
- * * Unavailable: for all other negative cases.
+ * * FaceID/TouchID/Biometrics: in case of biometric recognition supported.
+ * * Throws an error in case the Biometric option is not enrolled or not available on the device
  *
- * More info about library can be found here: https://github.com/naoufal/react-native-touch-id
+ * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
  */
 export function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
-    TouchID.isSupported(isTouchIdSupportedConfig)
+    FingerprintScanner.isSensorAvailable()
       .then(biometryType => {
-        resolve(biometryType === "FaceID" ? "FACE_ID" : "TOUCH_ID");
+        switch (biometryType) {
+          case "Touch ID":
+            resolve("TOUCH_ID");
+            break;
+          case "Face ID":
+            resolve("FACE_ID");
+            break;
+          case "Biometrics":
+            resolve("BIOMETRICS");
+            break;
+          default:
+            resolve("UNAVAILABLE");
+            break;
+        }
       })
-      .catch(reason => {
-        resolve(reason.code === "NOT_ENROLLED" ? reason.code : "UNAVAILABLE");
+      .catch(e => {
+        void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
+        resolve("UNAVAILABLE");
       });
   });
 }
+// export function getFingerprintSettings(): Promise<BiometrySimpleType> {
+//   return new Promise((resolve, _) => {
+//     ReactNativeBiometrics.isSensorAvailable()
+//       .then(({ available, biometryType, error }) => {
+//         console.log(available, biometryType, error);
+//         if (!available) {
+//           resolve("UNAVAILABLE");
+//         } else {
+//           switch (biometryType) {
+//             case ReactNativeBiometrics.TouchID:
+//               resolve("TOUCH_ID");
+//               break;
+//             case ReactNativeBiometrics.FaceID:
+//               resolve("FACE_ID");
+//               break;
+//             case ReactNativeBiometrics.Biometrics:
+//               resolve("FINGERPRINT");
+//               break;
+//             default:
+//               resolve("NOT_ENROLLED");
+//               break;
+//           }
+//         }
+//       })
+//       .catch(() => {
+//         resolve("UNAVAILABLE");
+//       });
+//   });
+// }
