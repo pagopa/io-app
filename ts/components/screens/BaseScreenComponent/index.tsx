@@ -27,10 +27,10 @@ import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
 
 import { handleOnContextualHelpDismissed, handleOnLinkClicked } from "./utils";
 
-export interface ContextualHelpProps {
+export type ContextualHelpProps = {
   title: string;
   body: () => React.ReactNode;
-}
+};
 
 export interface ContextualHelpPropsMarkdown {
   title: TranslationKeys;
@@ -95,7 +95,7 @@ const BaseScreenComponentFC: React.FC<Props> = ({
   titleColor
 }) => {
   const currentScreenName = useSelector(
-    (store: GlobalState) => getCurrentRouteName(store.nav) || "not-found"
+    (store: GlobalState) => getCurrentRouteName(store.nav) ?? "n/a"
   );
 
   const [isHelpVisible, setIsHelpVisible] = useState(false);
@@ -113,6 +113,7 @@ const BaseScreenComponentFC: React.FC<Props> = ({
 
   useEffect(() => {
     if (requestAssistanceData) {
+      setIsHelpVisible(false);
       // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
       // we force handling here. The timeout is due to wait until the modal is completely hidden
       // otherwise in the Instabug screeshot we will see the contextual help content instead the screen below
@@ -158,7 +159,6 @@ const BaseScreenComponentFC: React.FC<Props> = ({
       screenshot: payload.shouldSendScreenshot ?? true
     };
     if (payload.supportType === BugReporting.reportType.bug) {
-      setIsHelpVisible(false);
       setRequestAssistanceData({ payload, attachmentConfig });
     } else {
       // don't close modal if the report isn't a bug (bug brings a screenshot)
