@@ -121,32 +121,3 @@ export function getFingerprintSettings(): Promise<BiometrySimpleType> {
       });
   });
 }
-// export function getFingerprintSettings(): Promise<BiometrySimpleType> {
-//   return new Promise((resolve, _) => {
-//     ReactNativeBiometrics.isSensorAvailable()
-//       .then(({ available, biometryType, error }) => {
-//         console.log(available, biometryType, error);
-//         if (!available) {
-//           resolve("UNAVAILABLE");
-//         } else {
-//           switch (biometryType) {
-//             case ReactNativeBiometrics.TouchID:
-//               resolve("TOUCH_ID");
-//               break;
-//             case ReactNativeBiometrics.FaceID:
-//               resolve("FACE_ID");
-//               break;
-//             case ReactNativeBiometrics.Biometrics:
-//               resolve("FINGERPRINT");
-//               break;
-//             default:
-//               resolve("NOT_ENROLLED");
-//               break;
-//           }
-//         }
-//       })
-//       .catch(() => {
-//         resolve("UNAVAILABLE");
-//       });
-//   });
-// }
