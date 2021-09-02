@@ -2058,7 +2058,8 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
+      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
+      card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
@@ -2190,6 +2191,9 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, period from {{startDate}} to {{endDate}}. Earned amount € {{amount}}"
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
