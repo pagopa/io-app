@@ -80,7 +80,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     biometryPrintableSimpleType: BiometryPrintableSimpleType
   ): DigitRpr {
     switch (biometryPrintableSimpleType) {
-      case "FINGERPRINT":
+      case "BIOMETRICS":
       case "TOUCH_ID":
         return right({
           name: "io-fingerprint",
