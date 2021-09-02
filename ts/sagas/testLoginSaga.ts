@@ -44,9 +44,11 @@ function* handleTestLogin({
     if (testLoginResponse.isRight()) {
       if (testLoginResponse.value.status === 200) {
         yield put(
-          loginSuccess(
-            (testLoginResponse.value.value.token as string) as SessionToken
-          )
+          loginSuccess({
+            token: (testLoginResponse.value.value
+              .token as string) as SessionToken,
+            idp: "posteid"
+          })
         );
         return;
       }
