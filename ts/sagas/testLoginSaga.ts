@@ -47,7 +47,7 @@ function* handleTestLogin({
           loginSuccess({
             token: (testLoginResponse.value.value
               .token as string) as SessionToken,
-            idp: "posteid"
+            idp: "idp"
           })
         );
         return;
