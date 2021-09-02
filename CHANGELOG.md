@@ -2,6 +2,93 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.12](https://github.com/pagopa/io-app/compare/1.33.0-rc.9...1.33.0-rc.12) (2021-09-02)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#179282600](https://www.pivotaltracker.com/story/show/179282600)] Integrates CGN Merchant Landing page discount option ([#3316](https://github.com/pagopa/io-app/issues/3316)) ([25f7bfa](https://github.com/pagopa/io-app/commit/25f7bfa3f07eadd260e78c1c6211515d7ce5ac68))
+* **Sicilia Vola:** [[IASV-12](https://pagopa.atlassian.net/browse/IASV-12)] SiciliaVola api integration ([#3267](https://github.com/pagopa/io-app/issues/3267)) ([84b263f](https://github.com/pagopa/io-app/commit/84b263f9b4a42927de80180d97df8697c51d1ff7))
+* [[IA-211](https://pagopa.atlassian.net/browse/IA-211)] Remove cobadge payment status disabled toggle ([#3334](https://github.com/pagopa/io-app/issues/3334)) ([1390e0b](https://github.com/pagopa/io-app/commit/1390e0b860142990ef0994dc03173487f2b40d98))
+
+
+### Bug Fixes
+
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134),[IA-114](https://pagopa.atlassian.net/browse/IA-114)] Improve accessibility of link-like components ([#3338](https://github.com/pagopa/io-app/issues/3338)) ([34ee0da](https://github.com/pagopa/io-app/commit/34ee0da0e50ea2205cf61ef2b0a52e1048c1ecd9)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134)] Use Infobox for Cashback transactions' info ([#3340](https://github.com/pagopa/io-app/issues/3340)) ([213a734](https://github.com/pagopa/io-app/commit/213a73475ac2722d0cd509e922b3e873791f5f86)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IABT-1235](https://pagopa.atlassian.net/browse/IABT-1235)] Show add new payment method even when there are payable methods ([ced6dc9](https://github.com/pagopa/io-app/commit/ced6dc97f8311205a185fa2db34c27176faa4a0a))
+* Fix stale workflow typo ([#3343](https://github.com/pagopa/io-app/issues/3343)) ([6d4f6ba](https://github.com/pagopa/io-app/commit/6d4f6bad6a37b8637337fe51d6c170507515bcc8))
+* **EU Covid Certificate:** [[IAGP-68](https://pagopa.atlassian.net/browse/IAGP-68)] When the app changes the brighness to the max and the user close the app or changes the current active app, the device brightness always remains at maximum  ([#3313](https://github.com/pagopa/io-app/issues/3313)) ([0bc1341](https://github.com/pagopa/io-app/commit/0bc134129321dc5ec49a50bcbfce77cb08474432))
+
+
+### Chores
+
+* [[IA-189](https://pagopa.atlassian.net/browse/IA-189)] Update delete methods copy ([#3332](https://github.com/pagopa/io-app/issues/3332)) ([0cfa8b6](https://github.com/pagopa/io-app/commit/0cfa8b6c8e319c615f5a9b4bb7ab1dbbe1375a9c))
+* [[IA-209](https://pagopa.atlassian.net/browse/IA-209)] Update publiccode.yml when a new version of the app is released  ([#3335](https://github.com/pagopa/io-app/issues/3335)) ([a5fe299](https://github.com/pagopa/io-app/commit/a5fe299112f5549635dea01ad3bdb6bd37e30f2d))
+* [[IA-54](https://pagopa.atlassian.net/browse/IA-54)] Implements accessibility label for cashback card ([#3330](https://github.com/pagopa/io-app/issues/3330)) ([fb29df9](https://github.com/pagopa/io-app/commit/fb29df9fc8b6379de8b6582aa7987e3aefe0987f))
+* [[IA-55](https://pagopa.atlassian.net/browse/IA-55)] Introduces Bonus Vacanze card preview accessibility label ([#3336](https://github.com/pagopa/io-app/issues/3336)) ([d319a14](https://github.com/pagopa/io-app/commit/d319a142f7344c80f3fd1aeaf3e60777e5f251ec))
+* [[IAI-43](https://pagopa.atlassian.net/browse/IAI-43)] Configuration for reactotron integration for flipper [#3328](https://github.com/pagopa/io-app/issues/3328) ([52333b2](https://github.com/pagopa/io-app/commit/52333b2e9dac10eb58f72503c3f086bb06b2b2ee))
+* [[IAI-44](https://pagopa.atlassian.net/browse/IAI-44)] Configure actions/stale [#3339](https://github.com/pagopa/io-app/issues/3339) ([aa05f4a](https://github.com/pagopa/io-app/commit/aa05f4aa2b8814ea4ff8f4bf01019096a72d7b51))
+* [[IAI-45](https://pagopa.atlassian.net/browse/IAI-45)] Update circleci images ([#3341](https://github.com/pagopa/io-app/issues/3341)) ([a126007](https://github.com/pagopa/io-app/commit/a12600777f59dd09ba6a0e5a61a7896bb3aa0817))
+
+## [1.33.0-rc.11](https://github.com/pagopa/io-app/compare/1.33.0-rc.9...1.33.0-rc.11) (2021-09-02)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#179282600](https://www.pivotaltracker.com/story/show/179282600)] Integrates CGN Merchant Landing page discount option ([#3316](https://github.com/pagopa/io-app/issues/3316)) ([25f7bfa](https://github.com/pagopa/io-app/commit/25f7bfa3f07eadd260e78c1c6211515d7ce5ac68))
+* **Sicilia Vola:** [[IASV-12](https://pagopa.atlassian.net/browse/IASV-12)] SiciliaVola api integration ([#3267](https://github.com/pagopa/io-app/issues/3267)) ([84b263f](https://github.com/pagopa/io-app/commit/84b263f9b4a42927de80180d97df8697c51d1ff7))
+* [[IA-211](https://pagopa.atlassian.net/browse/IA-211)] Remove cobadge payment status disabled toggle ([#3334](https://github.com/pagopa/io-app/issues/3334)) ([1390e0b](https://github.com/pagopa/io-app/commit/1390e0b860142990ef0994dc03173487f2b40d98))
+
+
+### Bug Fixes
+
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134),[IA-114](https://pagopa.atlassian.net/browse/IA-114)] Improve accessibility of link-like components ([#3338](https://github.com/pagopa/io-app/issues/3338)) ([34ee0da](https://github.com/pagopa/io-app/commit/34ee0da0e50ea2205cf61ef2b0a52e1048c1ecd9)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134)] Use Infobox for Cashback transactions' info ([#3340](https://github.com/pagopa/io-app/issues/3340)) ([213a734](https://github.com/pagopa/io-app/commit/213a73475ac2722d0cd509e922b3e873791f5f86)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IABT-1235](https://pagopa.atlassian.net/browse/IABT-1235)] Show add new payment method even when there are payable methods ([ced6dc9](https://github.com/pagopa/io-app/commit/ced6dc97f8311205a185fa2db34c27176faa4a0a))
+* Fix stale workflow typo ([#3343](https://github.com/pagopa/io-app/issues/3343)) ([6d4f6ba](https://github.com/pagopa/io-app/commit/6d4f6bad6a37b8637337fe51d6c170507515bcc8))
+* **EU Covid Certificate:** [[IAGP-68](https://pagopa.atlassian.net/browse/IAGP-68)] When the app changes the brighness to the max and the user close the app or changes the current active app, the device brightness always remains at maximum  ([#3313](https://github.com/pagopa/io-app/issues/3313)) ([0bc1341](https://github.com/pagopa/io-app/commit/0bc134129321dc5ec49a50bcbfce77cb08474432))
+
+
+### Chores
+
+* [[IA-189](https://pagopa.atlassian.net/browse/IA-189)] Update delete methods copy ([#3332](https://github.com/pagopa/io-app/issues/3332)) ([0cfa8b6](https://github.com/pagopa/io-app/commit/0cfa8b6c8e319c615f5a9b4bb7ab1dbbe1375a9c))
+* [[IA-209](https://pagopa.atlassian.net/browse/IA-209)] Update publiccode.yml when a new version of the app is released  ([#3335](https://github.com/pagopa/io-app/issues/3335)) ([a5fe299](https://github.com/pagopa/io-app/commit/a5fe299112f5549635dea01ad3bdb6bd37e30f2d))
+* [[IA-54](https://pagopa.atlassian.net/browse/IA-54)] Implements accessibility label for cashback card ([#3330](https://github.com/pagopa/io-app/issues/3330)) ([fb29df9](https://github.com/pagopa/io-app/commit/fb29df9fc8b6379de8b6582aa7987e3aefe0987f))
+* [[IA-55](https://pagopa.atlassian.net/browse/IA-55)] Introduces Bonus Vacanze card preview accessibility label ([#3336](https://github.com/pagopa/io-app/issues/3336)) ([d319a14](https://github.com/pagopa/io-app/commit/d319a142f7344c80f3fd1aeaf3e60777e5f251ec))
+* [[IAI-43](https://pagopa.atlassian.net/browse/IAI-43)] Configuration for reactotron integration for flipper [#3328](https://github.com/pagopa/io-app/issues/3328) ([52333b2](https://github.com/pagopa/io-app/commit/52333b2e9dac10eb58f72503c3f086bb06b2b2ee))
+* [[IAI-44](https://pagopa.atlassian.net/browse/IAI-44)] Configure actions/stale [#3339](https://github.com/pagopa/io-app/issues/3339) ([aa05f4a](https://github.com/pagopa/io-app/commit/aa05f4aa2b8814ea4ff8f4bf01019096a72d7b51))
+* [[IAI-45](https://pagopa.atlassian.net/browse/IAI-45)] Update circleci images ([#3341](https://github.com/pagopa/io-app/issues/3341)) ([a126007](https://github.com/pagopa/io-app/commit/a12600777f59dd09ba6a0e5a61a7896bb3aa0817))
+
+## [1.33.0-rc.10](https://github.com/pagopa/io-app/compare/1.33.0-rc.9...1.33.0-rc.10) (2021-09-02)
+
+
+### Features
+
+* **Carta Giovani Nazionale:** [[#179282600](https://www.pivotaltracker.com/story/show/179282600)] Integrates CGN Merchant Landing page discount option ([#3316](https://github.com/pagopa/io-app/issues/3316)) ([25f7bfa](https://github.com/pagopa/io-app/commit/25f7bfa3f07eadd260e78c1c6211515d7ce5ac68))
+* **Sicilia Vola:** [[IASV-12](https://pagopa.atlassian.net/browse/IASV-12)] SiciliaVola api integration ([#3267](https://github.com/pagopa/io-app/issues/3267)) ([84b263f](https://github.com/pagopa/io-app/commit/84b263f9b4a42927de80180d97df8697c51d1ff7))
+* [[IA-211](https://pagopa.atlassian.net/browse/IA-211)] Remove cobadge payment status disabled toggle ([#3334](https://github.com/pagopa/io-app/issues/3334)) ([1390e0b](https://github.com/pagopa/io-app/commit/1390e0b860142990ef0994dc03173487f2b40d98))
+
+
+### Bug Fixes
+
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134),[IA-114](https://pagopa.atlassian.net/browse/IA-114)] Improve accessibility of link-like components ([#3338](https://github.com/pagopa/io-app/issues/3338)) ([34ee0da](https://github.com/pagopa/io-app/commit/34ee0da0e50ea2205cf61ef2b0a52e1048c1ecd9)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IA-134](https://pagopa.atlassian.net/browse/IA-134)] Use Infobox for Cashback transactions' info ([#3340](https://github.com/pagopa/io-app/issues/3340)) ([213a734](https://github.com/pagopa/io-app/commit/213a73475ac2722d0cd509e922b3e873791f5f86)), closes [#IA-134](https://github.com/pagopa/io-app/issues/IA-134)
+* [[IABT-1235](https://pagopa.atlassian.net/browse/IABT-1235)] Show add new payment method even when there are payable methods ([ced6dc9](https://github.com/pagopa/io-app/commit/ced6dc97f8311205a185fa2db34c27176faa4a0a))
+* Fix stale workflow typo ([#3343](https://github.com/pagopa/io-app/issues/3343)) ([6d4f6ba](https://github.com/pagopa/io-app/commit/6d4f6bad6a37b8637337fe51d6c170507515bcc8))
+* **EU Covid Certificate:** [[IAGP-68](https://pagopa.atlassian.net/browse/IAGP-68)] When the app changes the brighness to the max and the user close the app or changes the current active app, the device brightness always remains at maximum  ([#3313](https://github.com/pagopa/io-app/issues/3313)) ([0bc1341](https://github.com/pagopa/io-app/commit/0bc134129321dc5ec49a50bcbfce77cb08474432))
+
+
+### Chores
+
+* [[IA-189](https://pagopa.atlassian.net/browse/IA-189)] Update delete methods copy ([#3332](https://github.com/pagopa/io-app/issues/3332)) ([0cfa8b6](https://github.com/pagopa/io-app/commit/0cfa8b6c8e319c615f5a9b4bb7ab1dbbe1375a9c))
+* [[IA-209](https://pagopa.atlassian.net/browse/IA-209)] Update publiccode.yml when a new version of the app is released  ([#3335](https://github.com/pagopa/io-app/issues/3335)) ([a5fe299](https://github.com/pagopa/io-app/commit/a5fe299112f5549635dea01ad3bdb6bd37e30f2d))
+* [[IA-54](https://pagopa.atlassian.net/browse/IA-54)] Implements accessibility label for cashback card ([#3330](https://github.com/pagopa/io-app/issues/3330)) ([fb29df9](https://github.com/pagopa/io-app/commit/fb29df9fc8b6379de8b6582aa7987e3aefe0987f))
+* [[IA-55](https://pagopa.atlassian.net/browse/IA-55)] Introduces Bonus Vacanze card preview accessibility label ([#3336](https://github.com/pagopa/io-app/issues/3336)) ([d319a14](https://github.com/pagopa/io-app/commit/d319a142f7344c80f3fd1aeaf3e60777e5f251ec))
+* [[IAI-43](https://pagopa.atlassian.net/browse/IAI-43)] Configuration for reactotron integration for flipper [#3328](https://github.com/pagopa/io-app/issues/3328) ([52333b2](https://github.com/pagopa/io-app/commit/52333b2e9dac10eb58f72503c3f086bb06b2b2ee))
+* [[IAI-44](https://pagopa.atlassian.net/browse/IAI-44)] Configure actions/stale [#3339](https://github.com/pagopa/io-app/issues/3339) ([aa05f4a](https://github.com/pagopa/io-app/commit/aa05f4aa2b8814ea4ff8f4bf01019096a72d7b51))
+* [[IAI-45](https://pagopa.atlassian.net/browse/IAI-45)] Update circleci images ([#3341](https://github.com/pagopa/io-app/issues/3341)) ([a126007](https://github.com/pagopa/io-app/commit/a12600777f59dd09ba6a0e5a61a7896bb3aa0817))
+
 ## [1.33.0-rc.9](https://github.com/pagopa/io-app/compare/1.33.0-rc.8...1.33.0-rc.9) (2021-08-27)
 
 
