@@ -361,7 +361,7 @@ jobs:
           command: |
             cp .env.local .env
             npm run postinstall
-            yarn cie-ios:ci
+            # yarn cie-ios:ci
             cd ios && bundle exec pod install --verbose
             rm -rf /tmp/metro-bundler-cache-*
             rm -rf /tmp/haste-map-react-native-packager-*
