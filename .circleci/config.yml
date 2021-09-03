@@ -21,7 +21,7 @@ release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: circleci/node:12
+    - image: cimg/node:12.22
 
 # android builds
 defaults_android: &defaults_android
@@ -490,7 +490,7 @@ jobs:
 
   pagopa_specs_diff:
     docker:
-      - image: circleci/android:api-28
+      - image: cimg/node:12.22
     steps:
       - checkout
       - run:
@@ -499,7 +499,7 @@ jobs:
 
   io_check_uris:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
@@ -512,7 +512,7 @@ jobs:
   
   io_check_cie_button_exists_ios:
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
