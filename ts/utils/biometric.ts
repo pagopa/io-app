@@ -1,28 +1,13 @@
-import { AuthenticateConfig } from "react-native-touch-id";
+import { Alert, Platform } from "react-native";
 import FingerprintScanner, {
   AuthenticateAndroid,
   AuthenticateIOS,
   FingerprintScannerError
 } from "react-native-fingerprint-scanner";
-import { Alert, Platform } from "react-native";
-import I18n from "../i18n";
-import variables from "../theme/variables";
-import { mixpanelTrack } from "../mixpanel";
 import { isDebugBiometricIdentificationEnabled } from "../config";
+import I18n from "../i18n";
+import { mixpanelTrack } from "../mixpanel";
 import { BiometrySimpleType } from "../sagas/startup/checkAcknowledgedFingerprintSaga";
-
-export const authenticateConfig: AuthenticateConfig = {
-  title: I18n.t("identification.biometric.popup.title"),
-  sensorDescription: I18n.t("identification.biometric.popup.sensorDescription"),
-  sensorErrorDescription: I18n.t(
-    "identification.biometric.popup.sensorErrorDescription"
-  ),
-  cancelText: I18n.t("global.buttons.cancel"),
-  fallbackLabel: I18n.t("identification.biometric.popup.fallbackLabel"),
-  imageColor: variables.contentPrimaryBackground,
-  imageErrorColor: variables.brandDanger,
-  unifiedErrors: true
-};
 
 /**
  * Retrieve biometric settings from the base system. This function wraps the basic
@@ -70,7 +55,7 @@ export const biometricAuthenticationRequest = (
         fallbackEnabled: false
       } as AuthenticateIOS,
       default: {
-        title: authenticateConfig.title,
+        title: I18n.t("identification.biometric.popup.title"),
         description: I18n.t("identification.biometric.popup.sensorDescription"),
         cancelButton: I18n.t("global.buttons.cancel")
       } as AuthenticateAndroid

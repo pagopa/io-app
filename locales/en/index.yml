@@ -1731,8 +1731,6 @@ identification:
       reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
-      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
-      fallbackLabel: Use the unlock code
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
