@@ -1,10 +1,9 @@
-import FingerprintScanner from "react-native-fingerprint-scanner";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
-import { mixpanelTrack } from "../../mixpanel";
+import { getFingerprintSettings } from "../../utils/biometric";
 
 export type BiometrySimpleType =
   | "BIOMETRICS"
@@ -85,39 +84,4 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
     // Navigate to the FingerprintScreen and wait for acknowledgment
     yield call(onboardFingerprintIfAvailableSaga);
   }
-}
-
-/**
- * Retrieve fingerpint settings from the base system. This function wraps the basic
- * method "isSensorAvailable" of FingerprintScanner library and simplifies the possible returned values in
- * function of its usage:
- * * FaceID/TouchID/Biometrics: in case of biometric recognition supported.
- * * Throws an error in case the Biometric option is not enrolled or not available on the device
- *
- * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
- */
-export function getFingerprintSettings(): Promise<BiometrySimpleType> {
-  return new Promise((resolve, _) => {
-    FingerprintScanner.isSensorAvailable()
-      .then(biometryType => {
-        switch (biometryType) {
-          case "Touch ID":
-            resolve("TOUCH_ID");
-            break;
-          case "Face ID":
-            resolve("FACE_ID");
-            break;
-          case "Biometrics":
-            resolve("BIOMETRICS");
-            break;
-          default:
-            resolve("UNAVAILABLE");
-            break;
-        }
-      })
-      .catch(e => {
-        void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
-        resolve("UNAVAILABLE");
-      });
-  });
 }

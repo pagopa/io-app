@@ -2,20 +2,15 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Modal, Platform, StatusBar, StyleSheet } from "react-native";
+import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import FingerprintScanner, {
-  AuthenticateAndroid,
-  AuthenticateIOS
-} from "react-native-fingerprint-scanner";
 import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import {
@@ -38,10 +33,11 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { authenticateConfig } from "../../utils/biometric";
+import {
+  biometricAuthenticationRequest,
+  getFingerprintSettings
+} from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
-import { mixpanelTrack } from "../../mixpanel";
-import { isDebugBiometricIdentificationEnabled } from "../../config";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -597,50 +593,26 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
-  private onFingerprintRequest = (
-    onIdentificationSuccessHandler: () => void
-  ) => {
-    FingerprintScanner.authenticate(
-      Platform.select({
-        ios: {
-          description: I18n.t(
-            "identification.biometric.popup.sensorDescription"
-          ),
-          fallbackEnabled: true
-        } as AuthenticateIOS,
-        default: {
-          title: authenticateConfig.title,
-          description: I18n.t(
-            "identification.biometric.popup.sensorDescription"
-          ),
-          cancelButton: I18n.t("global.buttons.cancel")
-        } as AuthenticateAndroid
-      })
-    )
-      .then(() => {
+  private onFingerprintRequest = (onIdentificationSuccessHandler: () => void) =>
+    biometricAuthenticationRequest(
+      () => {
         this.setState({
           identificationByBiometryState: "unstarted"
         });
         onIdentificationSuccessHandler();
-        void FingerprintScanner.release();
-      })
-      .catch(e => {
-        void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
+      },
+      e => {
         // some error occured, enable pin insertion
         this.setState({
           biometryAuthAvailable: false
         });
-        if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("identification.biometric.title", `KO: ${e.name}`);
-        }
         if (e.name !== "UserCancel" && e.name !== "SystemCancel") {
           this.setState({
             identificationByBiometryState: "failure"
           });
         }
-        void FingerprintScanner.release();
-      });
-  };
+      }
+    );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
