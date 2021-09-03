@@ -321,76 +321,6 @@ jobs:
       # Move to the ios project directory and run the test_build lane
       - run: cd ios && bundle exec fastlane test_build
 
-  test-ios-e2e-build-and-run:
-  # Prepare build for end-to-end iOS tests
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
-
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
-      - run:
-          name: Prepare dependencies for build
-          command: |
-            cp .env.local .env
-            npm run postinstall
-            # yarn cie-ios:ci
-            cd ios && bundle exec pod install --verbose
-            rm -rf /tmp/metro-bundler-cache-*
-            rm -rf /tmp/haste-map-react-native-packager-*
-
-      - run:
-          name: Install Detox and simulator's utils
-          command: |
-            npm install -g detox ios-sim
-            brew tap wix/brew
-            brew install applesimutils
-            ios-sim showdevicetypes
-
-      - run:
-          name: Prepare build for Detox
-          command: detox build -c ios.sim.release
-
-          # command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
-      - run:
-          name: Run E2E tests with Detox
-          command: |
-            detox test \
-              --loglevel verbose \
-              -c ios.sim.release \
-              --cleanup \
-              --artifacts-location /tmp/detox_artifacts/ \
-              --record-logs all \
-              --take-screenshots all \
-              --debug-synchronization 1000
-
   # Create a release build, submit to the store and distributes to the beta testers
   ios-beta-release:
     <<: *defaults_macos
@@ -509,6 +439,79 @@ jobs:
             pipenv install
             pipenv run python3 check_cie_button_exists_ios.py
 
+###############################################################################
+# Prepare the environment, build, and run e2e tests
+###############################################################################
+  test-ios-e2e-build-and-run:
+  # Prepare build for end-to-end iOS tests
+    <<: *defaults_macos
+
+    # Not supported with the current plan
+    # resource_class: large
+
+    steps:
+      # Restore workflow workspace
+      - attach_workspace:
+          at: /Users/distiller
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - *ios_gems_cache_key
+
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler:$BUNDLER_VERSION
+
+      # Install bundle dependencies
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: *ios_gems_cache_key
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Prepare dependencies for build
+          command: |
+            cp .env.local .env
+            npm run postinstall
+            cd ios && bundle exec pod install --verbose
+            rm -rf /tmp/metro-bundler-cache-*
+            rm -rf /tmp/haste-map-react-native-packager-*
+
+      - run:
+          name: Install Detox and simulator's utils
+          command: |
+            npm install -g detox ios-sim jest
+            brew tap wix/brew
+            brew install applesimutils
+            ios-sim showdevicetypes
+
+      - run:
+          name: Prepare build for Detox
+          command: detox build -c ios.sim.release
+
+          # command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
+      - run:
+          name: Run E2E tests with Detox
+          command: |
+            detox test \
+              --loglevel verbose \
+              -c ios.sim.release \
+              --cleanup \
+              --artifacts-location /tmp/detox_artifacts/ \
+              --record-logs all \
+              --take-screenshots all \
+              --debug-synchronization 1000
+
+
 workflows:
   version: 2
   build:
@@ -616,3 +619,6 @@ workflows:
       - pagopa_specs_diff
       - io_check_uris
       # - io_check_cie_button_exists_ios
+
+
+
