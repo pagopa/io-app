@@ -252,21 +252,28 @@
     "io-ts": "1.8.5"
   },
   "detox": {
-    "test-runner": "jest",
+    "test-runner": "./node_modules/.bin/jest",
     "specs": "e2e",
     "runner-config": "jest-e2e.config.js",
-    "configurations": {
-      "ios.sim.debug": {
+    "devices": {
+      "simulator": {
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 12 Pro Max"
+        }
+      }
+    },
+    "apps": {
+      "ios.release": {
+        "type": "ios.app",
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.simulator",
-        "name": "iPhone 11, iOS 14.5"
-      },
+        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
+      }
+    },
+    "configurations": {
       "ios.sim.release": {
-        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
-        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.simulator",
-        "name": "iPhone 11, iOS 14.5"
+        "device": "simulator",
+        "app": "ios.release"
       }
     }
   },

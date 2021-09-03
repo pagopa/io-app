@@ -618,6 +618,7 @@ workflows:
     jobs:
       - pagopa_specs_diff
       - io_check_uris
+      # see https://www.pivotaltracker.com/n/projects/2048617/stories/177755852
       # - io_check_cie_button_exists_ios
 
 
