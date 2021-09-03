@@ -32,10 +32,10 @@ export type ContextualHelpProps = {
   body: () => React.ReactNode;
 };
 
-export interface ContextualHelpPropsMarkdown {
+export type ContextualHelpPropsMarkdown = {
   title: TranslationKeys;
   body: TranslationKeys;
-}
+};
 
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;
