@@ -23,7 +23,6 @@ import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.calendarevents.RNCalendarEventsPackage;
-import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -83,8 +82,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSharePackage(), new ScreenBrightnessPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new RNCalendarEventsPackage(), new RNCWebViewPackage(),
-          new ReactNativeFingerprintScannerPackage(),
-          new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(),
+          new ReactNativeFingerprintScannerPackage(), new BackgroundTimerPackage(), new SvgPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
           new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),new RNDateTimePickerPackage(),

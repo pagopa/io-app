@@ -41,6 +41,7 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { authenticateConfig } from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
 import { mixpanelTrack } from "../../mixpanel";
+import { isDebugBiometricIdentificationEnabled } from "../../config";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -621,14 +622,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           identificationByBiometryState: "unstarted"
         });
         onIdentificationSuccessHandler();
+        void FingerprintScanner.release();
       })
       .catch(e => {
         void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
         // some error occured, enable pin insertion
         this.setState({
-          identificationByBiometryState: "failure",
           biometryAuthAvailable: false
         });
+        if (isDebugBiometricIdentificationEnabled) {
+          Alert.alert("identification.biometric.title", `KO: ${e.name}`);
+        }
+        if (e.name !== "UserCancel" && e.name !== "SystemCancel") {
+          this.setState({
+            identificationByBiometryState: "failure"
+          });
+        }
+        void FingerprintScanner.release();
       });
   };
 }

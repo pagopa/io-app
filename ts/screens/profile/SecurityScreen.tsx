@@ -77,7 +77,10 @@ const SecurityScreen: FC<Props> = ({
         } as AuthenticateAndroid
       })
     )
-      .then(() => setFingerprintPreference(biometricPreference))
+      .then(() => {
+        setFingerprintPreference(biometricPreference);
+        void FingerprintScanner.release();
+      })
       .catch(e => {
         void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
         showToast(
@@ -86,6 +89,7 @@ const SecurityScreen: FC<Props> = ({
           ),
           "danger"
         );
+        void FingerprintScanner.release();
       });
   };
 
