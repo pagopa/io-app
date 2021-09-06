@@ -3,6 +3,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucher, SvVoucherId } from "../../types/SvVoucher";
 import { VoucherBeneficiarioInputBean } from "../../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
 import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
+import { StatoVoucherBeanList } from "../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
 
 /**
  * get and handle the voucher list
@@ -14,7 +15,16 @@ export const svVoucherListGet = createAsyncAction(
 )<VoucherBeneficiarioInputBean, SvVoucherListResponse, NetworkError>();
 
 /**
- * get and handle the voucher list
+ * get and handle the possible voucher states
+ */
+export const svPossibleVoucherStateGet = createAsyncAction(
+  "SV_POSSIBLE_VOUCHER_STATE_GET_REQUEST",
+  "SV_POSSIBLE_VOUCHER_STATE_GET_SUCCESS",
+  "SV_POSSIBLE_VOUCHER_STATE_GET_FAILURE"
+)<void, StatoVoucherBeanList, NetworkError>();
+
+/**
+ * get and handle the voucher details
  */
 export const svVoucherDetailGet = createAsyncAction(
   "SV_VOUCHER_DETAIL_GET_REQUEST",
@@ -33,5 +43,6 @@ export const svVoucherRevocation = createAsyncAction(
 
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
+  | ActionType<typeof svPossibleVoucherStateGet>
   | ActionType<typeof svVoucherDetailGet>
   | ActionType<typeof svVoucherRevocation>;
