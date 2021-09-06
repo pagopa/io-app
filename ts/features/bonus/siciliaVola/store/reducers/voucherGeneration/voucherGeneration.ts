@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { Action } from "../../../../../store/actions/types";
+import { Action } from "../../../../../../store/actions/types";
 import voucherGeneratedReducer, {
   VoucherGeneratedState
 } from "./voucherGenerated";
