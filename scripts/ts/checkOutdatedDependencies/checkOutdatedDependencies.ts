@@ -76,6 +76,15 @@ const extractGroupByType = (deps: DependenciesTable): GroupByType =>
     }
   }, initGroupByType);
 
+/**
+ * The main script workflow orchestrator:
+ * - Execute yarn outdated --json and extract the JSON results
+ * - Validate the JSON as {@link DependenciesTable}
+ * - Convert {@link DependenciesTable} in {@link GroupByType}
+ *   TODO: - Save the result
+ * - Convert {@link GroupByType} to a human readable slack message (string)
+ * - Publish the report on slack channel #io_app_dev_feed
+ */
 const main = async () => {
   try {
     const rawJSON = await readOutdatedJson();
