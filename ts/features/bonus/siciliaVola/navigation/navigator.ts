@@ -19,6 +19,10 @@ import SV_ROUTES from "./routes";
 
 const SvNavigator = createStackNavigator(
   {
+    // TODO: create a different stack for the voucher list and remove it from there
+    [SV_ROUTES.VOUCHER_LIST]: {
+      screen: VoucherListScreen
+    },
     [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]: {
       screen: CheckStatusRouterScreen
     },
@@ -63,9 +67,6 @@ const SvNavigator = createStackNavigator(
     },
     [SV_ROUTES.VOUCHER_GENERATION.TIMEOUT_GENERATED_VOUCHER]: {
       screen: SvGeneratedVoucherTimeoutScreen
-    },
-    [SV_ROUTES.VOUCHER_LIST]: {
-      screen: VoucherListScreen
     }
   },
   {
