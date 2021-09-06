@@ -1,9 +1,14 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucher, SvVoucherId } from "../../types/SvVoucher";
 import { VoucherBeneficiarioInputBean } from "../../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
 import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
 import { StatoVoucherBeanList } from "../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
+import { FilterState } from "../reducers/voucherList/filters";
 
 /**
  * get and handle the voucher list
@@ -41,8 +46,20 @@ export const svVoucherRevocation = createAsyncAction(
   "SV_VOUCHER_REVOCATION_GET_FAILURE"
 )<SvVoucherId, void, NetworkError>();
 
+/**
+ * The user chooses the filter to make the voucher research
+ */
+export const svSetFilter = createStandardAction("SV_SET_FILTER")<FilterState>();
+
+/**
+ * The user reset the filters
+ */
+export const svResetFilter = createStandardAction("SV_RESET_FILTER")<void>();
+
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
   | ActionType<typeof svPossibleVoucherStateGet>
   | ActionType<typeof svVoucherDetailGet>
-  | ActionType<typeof svVoucherRevocation>;
+  | ActionType<typeof svVoucherRevocation>
+  | ActionType<typeof svSetFilter>
+  | ActionType<typeof svResetFilter>;
