@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 import { exec } from "child_process";
+import * as util from "util";
+const execAsync = util.promisify(exec);
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import * as semver from "semver";
@@ -36,44 +38,60 @@ const increaseAmount = (
   }
 });
 
-const main = () => {
-  exec("yarn outdated --json", (error, stdout, _) => {
-    if (error?.code !== undefined && error.code !== 1) {
-      console.log(
-        `Error ${error.code} while executing 'yarn outdated --json': ${error.message} `
+/**
+ * Execute the command "yarn outdated --json" and return the results as JSON any
+ */
+const readOutdatedJson = async (): Promise<any> => {
+  try {
+    const std = await execAsync("yarn outdated --json");
+    return JSON.parse(std.stdout.split("\n")[1]);
+  } catch (error) {
+    // When the command finds outdated packages, return with exit code 1
+    if (error.code === 1) {
+      return JSON.parse(error.stdout.split("\n")[1]);
+    } else {
+      throw new Error(
+        `Error ${error.code} while executing 'yarn outdated --json': ${error.message}`
       );
-      return;
     }
+  }
+};
 
-    const outdatedJson = JSON.parse(stdout.split("\n")[1]);
-    const outdatedPackages = DependenciesTable.decode(outdatedJson);
+/**
+ * Transform the raw structure {@link DependenciesTable} representing the JSON structure to {@link GroupByType} aggregated stats
+ * @param deps
+ */
+const extractGroupByType = (deps: DependenciesTable): GroupByType =>
+  deps.data.body.reduce<GroupByType>((acc, val) => {
+    const currentType = getDependencyType(val[4]);
+    try {
+      const currentSeverity = getSeverityType(semver.diff(val[1], val[3]));
+      return increaseAmount(acc, currentType, currentSeverity);
+    } catch (e) {
+      if (e.name === "TypeError") {
+        // We use some packages with no standard sem ver, in this case we increment the "unknown" severity
+        return increaseAmount(acc, currentType, "unknown");
+      }
+      return acc;
+    }
+  }, initGroupByType);
+
+const main = async () => {
+  try {
+    const rawJSON = await readOutdatedJson();
+    const outdatedPackages = DependenciesTable.decode(rawJSON).map(
+      extractGroupByType
+    );
 
     if (outdatedPackages.isRight()) {
-      console.log(outdatedPackages.value.data.body.length);
-      const aggregate = outdatedPackages.value.data.body.reduce<GroupByType>(
-        (acc, val) => {
-          const currentType = getDependencyType(val[4]);
-          try {
-            const currentSeverity = getSeverityType(
-              semver.diff(val[1], val[3])
-            );
-            return increaseAmount(acc, currentType, currentSeverity);
-          } catch (e) {
-            if (e.name === "TypeError") {
-              // We use some packages with no standard sem ver, in this case we increment the "unknown" severity
-              return increaseAmount(acc, currentType, "unknown");
-            }
-            return acc;
-          }
-        },
-        initGroupByType
-      );
-      console.log(aggregate);
+      console.log(outdatedPackages.value);
     } else {
       console.log("Error while decoding the command output");
       console.log(readableReport(outdatedPackages.value));
     }
-  });
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
-main();
+void main();
