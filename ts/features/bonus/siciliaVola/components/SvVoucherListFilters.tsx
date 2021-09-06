@@ -26,7 +26,7 @@ import DateTimePicker from "../../../../components/ui/DateTimePicker";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
-import { possibleVoucherStateSelector } from "../store/reducers/possibleVoucherState";
+import { possibleVoucherStateSelector } from "../store/reducers/voucherList/possibleVoucherState";
 import { isReady } from "../../bpd/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";

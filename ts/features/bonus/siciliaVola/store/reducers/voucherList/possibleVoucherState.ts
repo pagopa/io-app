@@ -1,17 +1,17 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../store/actions/types";
-import { svPossibleVoucherStateGet } from "../actions/voucherList";
+import { Action } from "../../../../../../store/actions/types";
+import { svPossibleVoucherStateGet } from "../../actions/voucherList";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../bpd/model/RemoteValue";
 import { createSelector } from "reselect";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { StatoVoucherBeanList } from "../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
-import { NetworkError } from "../../../../../utils/errors";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { StatoVoucherBeanList } from "../../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
+import { NetworkError } from "../../../../../../utils/errors";
 
 export type possibleVoucherStateState = RemoteValue<
   StatoVoucherBeanList,
