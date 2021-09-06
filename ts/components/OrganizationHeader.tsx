@@ -3,8 +3,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { logosForService } from "../utils/services";
-import H5 from "./ui/H5";
 import { MultiImage } from "./ui/MultiImage";
+import { H2 } from "./core/typography/H2";
 
 const styles = StyleSheet.create({
   serviceCol: {
@@ -30,7 +30,7 @@ const OrganizationHeader = (props: Props) => {
   return (
     <Grid>
       <Col style={styles.leftColumnStyle}>
-        <H5>{service.organization_name}</H5>
+        <H2>{service.organization_name}</H2>
         <Text>{service.service_name}</Text>
       </Col>
       {service.service_id && (

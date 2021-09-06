@@ -1,10 +1,11 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
+import { H1 } from "./core/typography/H1";
 
 type State = { hasError: boolean };
 
@@ -80,9 +81,9 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           />
           <View spacer={true} extralarge={true} />
         </React.Fragment>
-        <H2 style={styles.title}>
+        <H1 style={styles.title}>
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
-        </H2>
+        </H1>
         <View spacer={true} />
         <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
         <View spacer={true} />
