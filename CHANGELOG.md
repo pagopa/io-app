@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0-rc.15](https://github.com/pagopa/io-app/compare/1.33.0-rc.14...1.33.0-rc.15) (2021-09-03)
+
+## [1.33.0-rc.14](https://github.com/pagopa/io-app/compare/1.33.0-rc.13...1.33.0-rc.14) (2021-09-03)
+
+
+### Chores
+
+* [[IA-91](https://pagopa.atlassian.net/browse/IA-91)] Contextual help event ([#3329](https://github.com/pagopa/io-app/issues/3329)) ([2be0db9](https://github.com/pagopa/io-app/commit/2be0db913dc9186d3ad80b92cfd96cb71dcfccaa))
+
 ## [1.33.0-rc.13](https://github.com/pagopa/io-app/compare/1.33.0-rc.12...1.33.0-rc.13) (2021-09-02)
 
 ## [1.33.0-rc.12](https://github.com/pagopa/io-app/compare/1.33.0-rc.9...1.33.0-rc.12) (2021-09-02)
