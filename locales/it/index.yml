@@ -1759,8 +1759,6 @@ identification:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
-      sensorErrorDescription: Impronta non riconosciuta. Tocca nuovamente il sensore.
-      fallbackLabel: Usa il codice di sblocco
   fail:
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
