@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -15,12 +15,17 @@ import {
   LightModalContext
 } from "../../../../components/ui/LightModal";
 import SvVoucherListFilters from "../components/SvVoucherListFilters";
+import { svPossibleVoucherStateGet } from "../store/actions/voucherList";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const VoucherListScreen = (_: Props): React.ReactElement => {
+const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+
+  useEffect(() => {
+    props.requestVoucherState();
+  }, []);
 
   const openFiltersModal = () =>
     showAnimatedModal(
@@ -48,7 +53,9 @@ const VoucherListScreen = (_: Props): React.ReactElement => {
     </BaseScreenComponent>
   );
 };
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  requestVoucherState: () => dispatch(svPossibleVoucherStateGet.request())
+});
 const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoucherListScreen);
