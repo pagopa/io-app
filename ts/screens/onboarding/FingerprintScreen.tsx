@@ -19,7 +19,10 @@ type NavigationParams = Readonly<{
   biometryType: BiometrySimpleType;
 }>;
 
-export type BiometryPrintableSimpleType = "BIOMETRICS" | "TOUCH_ID" | "FACE_ID";
+export type BiometryPrintableSimpleType =
+  | "FINGERPRINT"
+  | "TOUCH_ID"
+  | "FACE_ID";
 
 type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
@@ -42,7 +45,7 @@ class FingerprintScreen extends React.PureComponent<Props> {
     biometryPrintableSimpleType: BiometryPrintableSimpleType
   ): string {
     switch (biometryPrintableSimpleType) {
-      case "BIOMETRICS":
+      case "FINGERPRINT":
         return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
       case "FACE_ID":
         return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
@@ -59,8 +62,9 @@ class FingerprintScreen extends React.PureComponent<Props> {
     switch (biometryType) {
       case "FACE_ID":
         return "io-face-id";
-      case "BIOMETRICS":
+      case "FINGERPRINT":
       case "TOUCH_ID":
+      case "NOT_ENROLLED":
       case "UNAVAILABLE":
         return "io-fingerprint";
     }
@@ -99,11 +103,13 @@ class FingerprintScreen extends React.PureComponent<Props> {
         />
         <Content>
           <Text>
-            {I18n.t("onboarding.fingerprint.body.enrolledText", {
-              biometryType: this.renderBiometryType(
-                biometryType as BiometryPrintableSimpleType
-              )
-            })}
+            {biometryType !== "NOT_ENROLLED"
+              ? I18n.t("onboarding.fingerprint.body.enrolledText", {
+                  biometryType: this.renderBiometryType(
+                    biometryType as BiometryPrintableSimpleType
+                  )
+                })
+              : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
           </Text>
         </Content>
         <FooterWithButtons

@@ -15,6 +15,14 @@ Created on **29/07/2020**
 - **04/03/2021** Improve track function type definition.
 
 
+
+### react-native-touch-id+4.4.1
+Created on **09/05/2019** and **20/12/2019**
+
+#### Reason:
+- Solve crash on Android and export types.
+
+
 ### reactotron-redux-saga+2.1.4
 Created on **13/12/2019**
 
