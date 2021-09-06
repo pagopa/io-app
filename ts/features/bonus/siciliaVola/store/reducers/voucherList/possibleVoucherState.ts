@@ -13,17 +13,17 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { StatoVoucherBeanList } from "../../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
 import { NetworkError } from "../../../../../../utils/errors";
 
-export type possibleVoucherStateState = RemoteValue<
+export type PossibleVoucherStateState = RemoteValue<
   StatoVoucherBeanList,
   NetworkError
 >;
 
-const INITIAL_STATE: possibleVoucherStateState = remoteUndefined;
+const INITIAL_STATE: PossibleVoucherStateState = remoteUndefined;
 
 const reducer = (
-  state: possibleVoucherStateState = INITIAL_STATE,
+  state: PossibleVoucherStateState = INITIAL_STATE,
   action: Action
-): possibleVoucherStateState => {
+): PossibleVoucherStateState => {
   switch (action.type) {
     case getType(svPossibleVoucherStateGet.request):
       return remoteLoading;
@@ -39,8 +39,8 @@ const reducer = (
 export const possibleVoucherStateSelector = createSelector(
   [(state: GlobalState) => state.bonus.sv.voucherList.possibleVoucherState],
   (
-    possibleVoucherState: possibleVoucherStateState
-  ): possibleVoucherStateState => possibleVoucherState
+    possibleVoucherState: PossibleVoucherStateState
+  ): PossibleVoucherStateState => possibleVoucherState
 );
 
 export default reducer;
