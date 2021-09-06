@@ -200,7 +200,7 @@ export const BackendSiciliaVolaClient = (
         GetVoucherBeneficiario,
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
-    getStatiVoucher: () => createFetchRequestForApi(GetStatiVoucher, options)
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
   };
 };
 
