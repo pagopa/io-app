@@ -2,6 +2,8 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
 import { svResetFilter, svSetFilter } from "../../actions/voucherList";
 import { UTCISODateFromString } from "italia-ts-commons/lib/dates";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type FilterState = {
   codiceVoucher?: string;
@@ -31,5 +33,10 @@ const reducer = (
 
   return state;
 };
+
+export const svFiltersSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherList.filters],
+  (filters: FilterState): FilterState => filters
+);
 
 export default reducer;
