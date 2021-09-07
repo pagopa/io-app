@@ -31,6 +31,8 @@ import { isReady } from "../../bpd/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { svResetFilter, svSetFilter } from "../store/actions/voucherList";
+import { FilterState } from "../store/reducers/voucherList/filters";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
@@ -69,18 +71,18 @@ const PossibleVoucherStateOption = ({
 );
 
 const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [departureDate, setDepartureDate] = useState<Date | undefined>(
     undefined
   );
   const [returnDate, setReturnDate] = useState<Date | undefined>(undefined);
 
-  const [voucherStatusState, setVoucherStatusState] = useState<
-    number | undefined
-  >(undefined);
+  const [voucherStatus, setVoucherStatus] = useState<number | undefined>(
+    undefined
+  );
 
   const onVoucherStatusSelect = (value: number) => {
-    setVoucherStatusState(value);
+    setVoucherStatus(value);
     Keyboard.dismiss();
   };
 
@@ -91,21 +93,34 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
       <PossibleVoucherStateOption
         text={listItem.item.statoDesc}
         value={listItem.item.idStato}
-        checked={listItem.item.idStato === voucherStatusState}
+        checked={listItem.item.idStato === voucherStatus}
         onPress={onVoucherStatusSelect}
       />
     ) : null;
 
   const onRemoveButton = () => {
-    setSearchValue("");
-    setVoucherStatusState(undefined);
+    setSearchValue(undefined);
+    setVoucherStatus(undefined);
+    setDepartureDate(undefined);
+    setReturnDate(undefined);
+    props.resetFilter();
+  };
+
+  const onConfirmButton = () => {
+    props.updateFilter({
+      codiceVoucher: searchValue,
+      idStato: voucherStatus,
+      dataDa: departureDate,
+      dataA: returnDate
+    });
+    props.onConfirm();
   };
 
   const selectedFilters =
-    (voucherStatusState !== undefined ? 1 : 0) +
+    (voucherStatus !== undefined ? 1 : 0) +
     (departureDate !== undefined ? 1 : 0) +
     (returnDate !== undefined ? 1 : 0) +
-    (searchValue.length > 0 ? 1 : 0);
+    (searchValue && searchValue.length > 0 ? 1 : 0);
 
   return (
     <Container>
@@ -184,7 +199,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
             I18n.t("bonus.cgn.merchantsList.filter.cta.cancel")
           )}
           rightButton={confirmButtonProps(
-            props.onConfirm,
+            onConfirmButton,
             I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
               defaultValue: I18n.t(
                 "bonus.cgn.merchantsList.filter.cta.confirm.other",
@@ -201,7 +216,10 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  updateFilter: (filter: FilterState) => dispatch(svSetFilter(filter)),
+  resetFilter: () => dispatch(svResetFilter({}))
+});
 const mapStateToProps = (state: GlobalState) => ({
   possibleVoucherState: possibleVoucherStateSelector(state)
 });
