@@ -369,43 +369,6 @@ jobs:
             cd ios
             bundle exec fastlane beta_circleci_testflight
 
-
-  # Run end-to-end iOS tests
-  test-ios-e2e-run:
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Install Detox and ios-sim utils
-      # see: https://github.com/wix/detox/
-      - run: npm install -g detox ios-sim
-
-      # Install required tools
-      # see: https://github.com/wix/detox/blob/master/docs/Guide.RunningOnCI.md
-      - run: brew tap wix/brew
-      - run: brew install applesimutils
-
-      # Enumerate device types available in simulator
-      - run: ios-sim showdevicetypes
-
-      # Start emulator in background
-      - run:
-          command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
-          background: true
-
-      # Run detox e2e tests
-      - run: detox test --loglevel verbose -c ios.sim.release --cleanup --artifacts-location /tmp/detox_artifacts/ --record-logs all --take-screenshots all --debug-synchronization 1000
-
-      # store detox artifacts
-      - store_artifacts:
-          path: /tmp/detox_artifacts
-
   pagopa_specs_diff:
     docker:
       - image: cimg/node:12.22
@@ -426,7 +389,7 @@ jobs:
             cd scripts/check_urls
             pipenv install
             pipenv run python3 check_urls.py
-  
+
   io_check_cie_button_exists_ios:
     docker:
       - image: cimg/python:3.8
@@ -498,10 +461,16 @@ jobs:
           name: Prepare build for Detox
           command: detox build -c ios.sim.release
 
-          # command: ios-sim start --verbose --log /tmp/detox.last_launch_app_log --devicetypeid "iPhone-6, 10.3"
       - run:
           name: Run E2E tests with Detox
           command: |
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch support-e2e-testing --single-branch _io-dev-api-server_
+            cd _io-dev-api-server_
+            yarn
+            ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
+            yarn start &
+            sleep 10
+            # TODO: get pid and then kill it
             detox test \
               --loglevel verbose \
               -c ios.sim.release \
@@ -511,6 +480,9 @@ jobs:
               --take-screenshots all \
               --debug-synchronization 1000
 
+      # store detox artifacts
+      - store_artifacts:
+          path: /tmp/detox_artifacts
 
 workflows:
   version: 2
