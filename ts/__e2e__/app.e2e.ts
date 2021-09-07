@@ -19,7 +19,7 @@ const config = require("../../package.json").detox;
 jest.setTimeout(5 * 60 * 1000);
 (jasmine as any).getEnv().addReporter(adapter);
 
-const WAIT_TIMEOUT_MS = 5 * 1000;
+const WAIT_TIMEOUT_MS = 10 * 1000;
 
 describe("e2e app", () => {
   const loginButtonId = "landing-button-login-spid";
