@@ -524,9 +524,6 @@ workflows:
       - test-ios-e2e-build-and-run:
           requires:
             - hold-ios-e2e-tests
-      - test-ios-e2e-run:
-          requires:
-            - test-ios-e2e-build-and-run
 
   # Release workflow triggered only when a new release tag is pushed
   release:
