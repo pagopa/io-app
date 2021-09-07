@@ -24,8 +24,10 @@ import {
 } from "../store/actions/activation";
 import {
   svPossibleVoucherStateGet,
+  svRequestVoucherPage,
+  svResetFilter,
+  svSetFilter,
   svVoucherDetailGet,
-  svVoucherListGet,
   svVoucherRevocation
 } from "../store/actions/voucherList";
 import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/voucherGeneration";
@@ -140,7 +142,11 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
 
   // SV get the vouchers list already generated
   yield takeLatest(
-    getType(svVoucherListGet.request),
+    [
+      getType(svResetFilter),
+      getType(svSetFilter),
+      getType(svRequestVoucherPage)
+    ],
     handleGetVoucherBeneficiario,
     siciliaVolaClient.getVoucherBeneficiario,
     svSessionManager
