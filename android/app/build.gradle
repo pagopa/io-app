@@ -217,10 +217,10 @@ dependencies {
 
     implementation project(':react-native-cie')
 
-    configurations.all {
-        resolutionStrategy.force 'com.squareup.okhttp3:okhttp:3.12.12'
-        resolutionStrategy.force 'com.squareup.okhttp3:logging-interceptor:3.12.12'
+    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+        force = true
     }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
     
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
