@@ -468,7 +468,7 @@ jobs:
             cd _io-dev-api-server_
             yarn
             ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
-            yarn start > /tmp/io-dev-api-server/start.log &
+            yarn start > /tmp/e2e_artifacts/io-dev-api-server.log &
             sleep 10
             cd ..
             # TODO: get pid and then kill it
@@ -476,14 +476,14 @@ jobs:
               --loglevel verbose \
               -c ios.sim.release \
               --cleanup \
-              --artifacts-location /tmp/detox_artifacts/ \
+              --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
               --debug-synchronization 1000
 
       # store detox artifacts
       - store_artifacts:
-          path: /tmp/detox_artifacts
+          path: /tmp/e2e_artifacts
 
 workflows:
   version: 2
