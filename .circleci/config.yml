@@ -468,7 +468,7 @@ jobs:
             cd _io-dev-api-server_
             yarn
             ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
-            yarn start > /tmp/e2e_artifacts/io-dev-api-server.log &
+            yarn start > /tmp/io-dev-api-server.log &
             sleep 10
             cd ..
             # TODO: get pid and then kill it
@@ -484,6 +484,10 @@ jobs:
       # store detox artifacts
       - store_artifacts:
           path: /tmp/e2e_artifacts
+
+      - store_artifacts:
+          path: /tmp/io-dev-api-server.log
+
 
 workflows:
   version: 2
