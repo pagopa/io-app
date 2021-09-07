@@ -1,27 +1,33 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";
-import { svVoucherListGet } from "../../actions/voucherList";
 import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../../../bpd/model/RemoteValue";
-import { NetworkError } from "../../../../../../utils/errors";
+  svResetFilter,
+  svSetFilter,
+  svVoucherListGet
+} from "../../actions/voucherList";
 import { svGenerateVoucherStart } from "../../actions/voucherGeneration";
 import {
   IndexedById,
   toIndexed
 } from "../../../../../../store/helpers/indexer";
-import { VoucherPreview } from "../../../types/SvVoucherResponse";
+import {
+  SvVoucherListResponse,
+  VoucherPreview
+} from "../../../types/SvVoucherResponse";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
-export type VouchersState = RemoteValue<
-  IndexedById<VoucherPreview>,
-  NetworkError
->;
+export type VouchersState = IndexedById<VoucherPreview>;
 
-const INITIAL_STATE: VouchersState = remoteUndefined;
+const INITIAL_STATE: VouchersState = {};
+
+const updateVouchers = (
+  currentVouchers: VouchersState,
+  newVouchers: SvVoucherListResponse
+): IndexedById<VoucherPreview> => {
+  const newVouchersIndexed = toIndexed(newVouchers, v => v.idVoucher);
+  return { ...currentVouchers, ...newVouchersIndexed };
+};
 
 const reducer = (
   state: VouchersState = INITIAL_STATE,
@@ -29,16 +35,22 @@ const reducer = (
 ): VouchersState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
+    case getType(svSetFilter):
+    case getType(svResetFilter):
       return INITIAL_STATE;
     case getType(svVoucherListGet.request):
-      return remoteLoading;
-    case getType(svVoucherListGet.success):
-      return remoteReady(toIndexed(action.payload, v => v.idVoucher));
     case getType(svVoucherListGet.failure):
-      return remoteError(action.payload);
+      return state;
+    case getType(svVoucherListGet.success):
+      return updateVouchers(state, action.payload);
   }
 
   return state;
 };
+
+export const svVouchersSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherList.vouchers],
+  (vouchers: VouchersState): VouchersState => vouchers
+);
 
 export default reducer;
