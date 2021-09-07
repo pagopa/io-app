@@ -468,7 +468,7 @@ jobs:
             cd _io-dev-api-server_
             yarn
             ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
-            yarn start &
+            yarn start > /tmp/io-dev-api-server/start.log &
             sleep 10
             cd ..
             # TODO: get pid and then kill it
