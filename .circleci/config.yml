@@ -506,7 +506,6 @@ jobs:
           name: check uris validity on static texts
           command: |
             cd scripts/check_urls
-            sudo pip install pipenv
             pipenv install
             pipenv run python3 check_urls.py
   
@@ -530,6 +529,7 @@ workflows:
       - compile-typescript
       - run-tests
       - eslint
+      - io_check_uris
 
       - run-danger:
           filters:
