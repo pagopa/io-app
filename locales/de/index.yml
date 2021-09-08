@@ -1045,7 +1045,6 @@ identification:
       reason: Identifikation durch TouchID fehlgeschlagen
       title: Identifikation erforderlich
       sensorDescription: Berührungssensor
-      fallbackLabel: Verwenden Sie den Freischaltcode
   fail:
     remainingAttempts: Sie haben noch {{attempts}} Versuche übrig.
     remainingAttemptSingle: Sie haben noch {{attempts}} Versuche übrig.

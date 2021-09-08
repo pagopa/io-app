@@ -2,54 +2,46 @@
 
 import { index } from "fp-ts/lib/Array";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import { NavigationRoute } from "react-navigation";
+import {
+  NavigationLeafRoute,
+  NavigationRoute,
+  NavigationState
+} from "react-navigation";
 import { NavigationHistoryState } from "../store/reducers/navigationHistory";
 
-// TODO: Need to be fixed https://www.pivotaltracker.com/story/show/170819360
-export function getCurrentRouteName(navNode: any): string | undefined {
-  if (!navNode) {
+/**
+ * Assuming that each and every NavigationRoute will eventually lead
+ * to a NavigationLeafRoute.
+ */
+const findLeafRoute = (
+  branchOrLeaf: NavigationRoute | undefined
+): NavigationLeafRoute | undefined => {
+  if (branchOrLeaf?.routes) {
+    const { routes, index } = branchOrLeaf;
+    return findLeafRoute(routes[index]);
+  }
+  // a branch without routes is assumed to be a leaf
+  return branchOrLeaf;
+};
+
+export function getCurrentRouteName(
+  navState: NavigationState
+): string | undefined {
+  try {
+    return findLeafRoute(navState.routes[navState.index])?.routeName;
+  } catch {
     return undefined;
   }
-  if (
-    navNode.index === undefined &&
-    navNode.routeName &&
-    typeof navNode.routeName === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.routeName;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteName(route);
-  }
-  return undefined;
 }
 
-export function getCurrentRouteKey(navNode: any): string | undefined {
-  if (!navNode) {
+export function getCurrentRouteKey(
+  navState: NavigationState
+): string | undefined {
+  try {
+    return findLeafRoute(navState.routes[navState.index])?.key;
+  } catch {
     return undefined;
   }
-  if (
-    navNode.index === undefined &&
-    navNode.key &&
-    typeof navNode.key === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.key;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteKey(route);
-  }
-  return undefined;
 }
 
 /**
