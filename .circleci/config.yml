@@ -506,7 +506,6 @@ jobs:
           name: check uris validity on static texts
           command: |
             cd scripts/check_urls
-            sudo pip install pipenv
             pipenv install
             pipenv run python3 check_urls.py
   
@@ -519,7 +518,6 @@ jobs:
           name: check cie button existence
           command: |
             cd scripts/check_cie_button_exists
-            sudo pip install pipenv
             pipenv install
             pipenv run python3 check_cie_button_exists_ios.py
 

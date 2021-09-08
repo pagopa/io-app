@@ -119,7 +119,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
-        versionName "1.33.0.15"
+        versionName "1.34.0.0"
         multiDexEnabled true
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
@@ -216,6 +216,12 @@ dependencies {
     }
 
     implementation project(':react-native-cie')
+
+    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
+        force = true
+    }
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.12'
+    
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
