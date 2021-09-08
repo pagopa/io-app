@@ -4,7 +4,12 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
-import React, { useState, useEffect, ComponentProps } from "react";
+import React, {
+  useState,
+  useEffect,
+  ComponentProps,
+  PropsWithChildren
+} from "react";
 import { useSelector } from "react-redux";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
 
@@ -54,9 +59,11 @@ interface OwnProps {
   shouldAskForScreenshotWithInitialValue?: boolean;
 }
 
-export type Props = OwnProps &
-  ComponentProps<typeof BaseHeader> &
-  Pick<ComponentProps<typeof ContextualHelp>, "faqCategories">;
+export type Props = PropsWithChildren<
+  OwnProps &
+    ComponentProps<typeof BaseHeader> &
+    Pick<ComponentProps<typeof ContextualHelp>, "faqCategories">
+>;
 
 const maybeDark = fromPredicate(
   (isDark: boolean | undefined = undefined) => isDark === true
@@ -71,29 +78,30 @@ const contextualHelpModalAnimation = Platform.select<
   default: "none"
 });
 
-const BaseScreenComponentFC: React.FC<Props> = ({
-  accessibilityEvents,
-  accessibilityLabel,
-  appLogo,
-  children,
-  contextualHelp,
-  contextualHelpMarkdown,
-  customGoBack,
-  customRightIcon,
-  dark,
-  faqCategories,
-  goBack,
-  headerBackgroundColor,
-  headerBody,
-  headerTitle,
-  isSearchAvailable,
-  onAccessibilityNavigationHeaderFocus,
-  primary,
-  reportAttachmentTypes,
-  shouldAskForScreenshotWithInitialValue,
-  showInstabugChat,
-  titleColor
-}) => {
+const BaseScreenComponentFC = React.forwardRef((props: Props, _) => {
+  const {
+    accessibilityEvents,
+    accessibilityLabel,
+    appLogo,
+    children,
+    contextualHelp,
+    contextualHelpMarkdown,
+    customGoBack,
+    customRightIcon,
+    dark,
+    faqCategories,
+    goBack,
+    headerBackgroundColor,
+    headerBody,
+    headerTitle,
+    isSearchAvailable,
+    onAccessibilityNavigationHeaderFocus,
+    primary,
+    reportAttachmentTypes,
+    shouldAskForScreenshotWithInitialValue,
+    showInstabugChat,
+    titleColor
+  } = props;
   const currentScreenName = useSelector(
     (store: GlobalState) => getCurrentRouteName(store.nav) ?? "n/a"
   );
@@ -225,7 +233,7 @@ const BaseScreenComponentFC: React.FC<Props> = ({
       )}
     </Container>
   );
-};
+});
 
 export default connectStyle(
   "UIComponent.BaseScreenComponent",
