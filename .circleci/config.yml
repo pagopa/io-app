@@ -526,9 +526,9 @@ workflows:
   version: 2
   build:
     jobs:
-      - compile-typescript
-      - run-tests
-      - eslint
+#      - compile-typescript
+#      - run-tests
+#      - eslint
       - io_check_uris
 
       - run-danger:
