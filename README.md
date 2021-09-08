@@ -52,7 +52,7 @@
   - [Io-Icon-Font](#io-icon-font)
   - [Theming](#theming)
   - [Custom UI components](#custom-ui-components)
-  - [End to end test with Detox (experimental)](#end-to-end-test-with-detox-experimental)
+  - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
 ## FAQ
@@ -669,10 +669,6 @@ Example of use:
 ```
 
 To change the wrapper, icon or text theme, edit the `ts/theme/components/TextWithIcon.ts` file.
-
-### End to end test with Detox
-
-Please see [TESTING_E2E](./TESTING_E2E.md)
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
