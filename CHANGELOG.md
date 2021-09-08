@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.34.0-rc.0](https://github.com/pagopa/io-app/compare/1.33.0-rc.16...1.34.0-rc.0) (2021-09-08)
+
+
+### Bug Fixes
+
+* [[IAI-50](https://pagopa.atlassian.net/browse/IAI-50)] Check url fails on CircleCI ([#3350](https://github.com/pagopa/io-app/issues/3350)) ([c4f3a1a](https://github.com/pagopa/io-app/commit/c4f3a1acfd62c50d66ed56ae753a763dc1ced66c))
+
+
+### Chores
+
+* [[IAI-25](https://pagopa.atlassian.net/browse/IAI-25)] Replaces biometric library to support more devices biometric options ([#3344](https://github.com/pagopa/io-app/issues/3344)) ([618a766](https://github.com/pagopa/io-app/commit/618a7667703ca92832d7ffc736e40b4b4526cae0))
+* [[IAI-30](https://pagopa.atlassian.net/browse/IAI-30)] Remove unused dependencies ([#3352](https://github.com/pagopa/io-app/issues/3352)) ([6b2a3b0](https://github.com/pagopa/io-app/commit/6b2a3b041c924b908cf6cdaceee1bd55126b4c88))
+
 ## [1.33.0-rc.16](https://github.com/pagopa/io-app/compare/1.33.0-rc.15...1.33.0-rc.16) (2021-09-07)
 
 
