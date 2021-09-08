@@ -383,7 +383,7 @@ jobs:
           name: Prepare dependencies for build
           command: |
             cp .env.local .env
-            npm run postinstall
+            yarn run postinstall
             cd ios && bundle exec pod install --verbose
             rm -rf /tmp/metro-bundler-cache-*
             rm -rf /tmp/haste-map-react-native-packager-*
@@ -411,6 +411,8 @@ jobs:
             # wait for the server to be up and running
             sleep 10
             cd ..
+            yarn detox clean-framework-cache
+            yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
               -c ios.sim.release \
@@ -448,6 +450,9 @@ workflows:
           filters:
             tags:
               only: *release_tag
+              # branches:
+              # ignore: /.*/
+
 
       # TODO: Native Android e2e tests run automatically on release tag
 
