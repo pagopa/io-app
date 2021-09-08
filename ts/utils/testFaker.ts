@@ -8,13 +8,7 @@ import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentReq
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
-import {
-  CreditCard,
-  EnableableFunctionsTypeEnum,
-  PatchedWalletV2,
-  Psp,
-  Wallet
-} from "../types/pagopa";
+import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
 // import { applicationChangeState } from "../store/actions/application";
 import {
   loginSuccess,
@@ -24,6 +18,7 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 const validCreditCard: CreditCard = {
@@ -207,7 +202,7 @@ export const myWalletNoCreditCard: { [key: string]: any } = {
 export const bancomat = {
   walletType: WalletTypeEnum.Bancomat,
   createDate: "2021-04-05",
-  enableableFunctions: [EnableableFunctionsTypeEnum.BPD],
+  enableableFunctions: [EnableableFunctionsEnum.BPD],
   favourite: false,
   idWallet: 24415,
   info: {

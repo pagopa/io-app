@@ -630,7 +630,6 @@ wallet:
   delete:
     successful: Karte erfolgreich entfernt
     failed: Die Karte konnte nicht entfernt werden
-    alert: 'Die für die Zahlung der Transaktion verwendete Zahlungsmethode wurde aus den Zahlungsmethoden entfernt'
   newPaymentMethod:
     add: hinzufügen
     refresh: Aktualisieren
@@ -1046,7 +1045,6 @@ identification:
       reason: Identifikation durch TouchID fehlgeschlagen
       title: Identifikation erforderlich
       sensorDescription: Berührungssensor
-      fallbackLabel: Verwenden Sie den Freischaltcode
   fail:
     remainingAttempts: Sie haben noch {{attempts}} Versuche übrig.
     remainingAttemptSingle: Sie haben noch {{attempts}} Versuche übrig.

@@ -2,13 +2,11 @@ import { NavigationNavigateAction } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
-import {
-  EnableableFunctionsTypeEnum,
-  PaymentMethod
-} from "../../../../../types/pagopa";
+import { PaymentMethod } from "../../../../../types/pagopa";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import { navigateToSuggestBpdActivation } from "../../../../wallet/onboarding/bancomat/navigation/action";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { isBpdEnabled } from "./onboarding/startOnboarding";
 
 /**
@@ -19,7 +17,7 @@ export function* activateBpdOnNewPaymentMethods(
   navigateToActivateNewMethods: NavigationNavigateAction
 ) {
   const atLeastOnePaymentMethodWithBpdCapability = paymentMethods.some(b =>
-    hasFunctionEnabled(b, EnableableFunctionsTypeEnum.BPD)
+    hasFunctionEnabled(b, EnableableFunctionsEnum.BPD)
   );
 
   // No payment method with bpd capability added in the current workflow, return to wallet home

@@ -1080,18 +1080,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    bancomat:
-      successful: Bancomat successfully removed
-      failed: The bancomat could not be removed
-    satispay:
-      successful: Satispay successfully removed
-      failed: Satispay could not be removed
-    bPay:
-      successful: BancomatPay successfully removed
-      failed: BancomatPay could not be removed
-    successful: Payment method successfully removed
-    failed: The payment method could not be removed
-    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
+    successful: Method removed from your Wallet
+    failed: The method could not be removed from your Wallet
   newPaymentMethod:
     add: add
     show: show
@@ -1406,8 +1396,6 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
-      removeCta: "Delete this payment method"
-      deleteLoading: Payment method deletion in progress
   satispay:
     details:
       infobox:
@@ -1419,8 +1407,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this payment method?"
-    body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this method?"
+    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1476,7 +1464,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
-  deleteLoading: Payment method deletion in progress
+  deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1744,8 +1732,6 @@ identification:
       reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
-      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
-      fallbackLabel: Use the unlock code
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
@@ -2071,7 +2057,8 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
+      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
+      card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
@@ -2203,6 +2190,9 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, period from {{startDate}} to {{endDate}}. Earned amount € {{amount}}"
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
@@ -2479,6 +2469,7 @@ bonus:
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+        landingPage: Get the benefit
       categories:
         theater: theater, cinema and entertainment
         travel: travel

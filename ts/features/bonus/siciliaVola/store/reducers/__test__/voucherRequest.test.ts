@@ -28,22 +28,22 @@ const mockCompany: Company = {
   vat: "1234abcd",
   state: { id: 1, name: "state1" },
   region: { id: 1, name: "reg1" },
-  province: { id: 1, name: "prov1" },
-  municipality: { id: 1, name: "mun1" }
+  province: { id: "MI", name: "prov1" },
+  municipality: { id: "A010", name: "mun1" }
 };
 const mockHospital: Hospital = {
   hospitalName: "myHospital",
   state: { id: 1, name: "state1" },
   region: { id: 1, name: "reg1" },
-  province: { id: 1, name: "prov1" },
-  municipality: { id: 1, name: "mun1" }
+  province: { id: "MI", name: "prov1" },
+  municipality: { id: "A010", name: "mun1" }
 };
 const mockUniversity: University = {
   universityName: "myUniversity",
   state: { id: 1, name: "state1" },
   region: { id: 1, name: "reg1" },
-  province: { id: 1, name: "prov1" },
-  municipality: { id: 1, name: "mun1" }
+  province: { id: "MI", name: "prov1" },
+  municipality: { id: "A010", name: "mun1" }
 };
 const mockFlightsDate: FlightsDate = {
   departureDate: new Date(),
