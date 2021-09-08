@@ -3,7 +3,6 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
-import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
@@ -11,9 +10,7 @@ import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { isDebugBiometricIdentificationEnabled } from "../../config";
 import I18n from "../../i18n";
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import {
@@ -36,7 +33,10 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { authenticateConfig } from "../../utils/biometric";
+import {
+  biometricAuthenticationRequest,
+  getFingerprintSettings
+} from "../../utils/biometric";
 import { maybeNotNullyString } from "../../utils/strings";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -157,9 +157,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         biometryType =>
           this.setState({
             biometryType:
-              biometryType !== "NOT_ENROLLED" && biometryType !== "UNAVAILABLE"
-                ? biometryType
-                : undefined
+              biometryType !== "UNAVAILABLE" ? biometryType : undefined
           }),
         _ => 0
       );
@@ -210,13 +208,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             if (updateBiometrySupportProp) {
               this.setState({
                 biometryType:
-                  biometryType !== "NOT_ENROLLED" &&
-                  biometryType !== "UNAVAILABLE"
-                    ? biometryType
-                    : undefined,
-                biometryAuthAvailable:
-                  biometryType !== "NOT_ENROLLED" &&
-                  biometryType !== "UNAVAILABLE"
+                  biometryType !== "UNAVAILABLE" ? biometryType : undefined,
+                biometryAuthAvailable: biometryType !== "UNAVAILABLE"
               });
             }
           },
@@ -566,7 +559,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    */
   private getInstructions(): string {
     switch (this.state.biometryType) {
-      case "FINGERPRINT":
+      case "BIOMETRICS":
         return I18n.t("identification.subtitleCodeFingerprint");
       case "FACE_ID":
         return I18n.t("identification.subtitleCodeFaceId");
@@ -600,37 +593,26 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   };
 
-  private onFingerprintRequest = (
-    onIdentificationSuccessHandler: () => void
-  ) => {
-    TouchID.authenticate(
-      I18n.t("identification.biometric.popup.title"),
-      authenticateConfig
-    )
-      .then(() => {
+  private onFingerprintRequest = (onIdentificationSuccessHandler: () => void) =>
+    biometricAuthenticationRequest(
+      () => {
         this.setState({
           identificationByBiometryState: "unstarted"
         });
         onIdentificationSuccessHandler();
-      })
-      .catch((error: AuthenticationError) => {
+      },
+      e => {
         // some error occured, enable pin insertion
         this.setState({
           biometryAuthAvailable: false
         });
-        if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("identification.biometric.title", `KO: ${error.code}`);
-        }
-        if (
-          error.code !== "USER_CANCELED" &&
-          error.code !== "SYSTEM_CANCELED"
-        ) {
+        if (e.name !== "UserCancel" && e.name !== "SystemCancel") {
           this.setState({
             identificationByBiometryState: "failure"
           });
         }
-      });
-  };
+      }
+    );
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

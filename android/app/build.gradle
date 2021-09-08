@@ -231,6 +231,7 @@ dependencies {
     }
     implementation project(':@react-native-community_datetimepicker')
     implementation project(':@react-native-clipboard_clipboard')
+    implementation project(':react-native-fingerprint-scanner')
     implementation project(':react-native-art')
 }
 
