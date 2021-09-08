@@ -450,8 +450,8 @@ workflows:
           filters:
             tags:
               only: *release_tag
-              # branches:
-              # ignore: /.*/
+            branches:
+              ignore: /.*/
 
 
       # TODO: Native Android e2e tests run automatically on release tag
