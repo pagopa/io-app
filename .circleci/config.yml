@@ -391,14 +391,14 @@ jobs:
       - run:
           name: Install Detox and simulator's utils
           command: |
-            npm install -g detox ios-sim jest
+            npm install -g ios-sim
             brew tap wix/brew
             brew install applesimutils
             ios-sim showdevicetypes
 
       - run:
           name: Prepare build for Detox
-          command: detox build -c ios.sim.release
+          command: yarn detox build -c ios.sim.release
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -411,7 +411,7 @@ jobs:
             # wait for the server to be up and running
             sleep 10
             cd ..
-            detox test \
+            yarn detox test \
               --loglevel verbose \
               -c ios.sim.release \
               --cleanup \
