@@ -122,8 +122,8 @@ jobs:
       - run: ./scripts/codecov.sh
     parallelism: 8
 
-  # Runs Danger checks on PR
-  eslint:
+  # Runs ESlint checks on PR
+  run-eslint:
     <<: *defaults_js
 
     steps:
@@ -265,62 +265,6 @@ jobs:
           path: android/app/build/outputs/bundle
           destination: bundle
 
-  # Test ios build
-  test-ios:
-    <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler
-
-      # Remove watchman from node global packages
-      - run:
-          name: Remove watchman from node global packages
-          command: npm r -g watchman
-
-      # Install watchman with brew
-      - run:
-          name: Install watchman
-          command: |
-            brew update
-            brew install watchman || exit 0
-
-      # Install bundle dependencies
-      - run:
-          name: Bundle Install
-          command: bundle check || bundle install
-
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
-      # Fetch CocoaPods specs
-      - run: curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-
-      # Re-run postinstall scripts (setup of react-native libs)
-      - run: npm run postinstall
-
-      # Move to the ios project directory and run the test_build lane
-      - run: cd ios && bundle exec fastlane test_build
-
   # Create a release build, submit to the store and distributes to the beta testers
   ios-beta-release:
     <<: *defaults_macos
@@ -405,12 +349,8 @@ jobs:
 ###############################################################################
 # Prepare the environment, build, and run e2e tests
 ###############################################################################
-  test-ios-e2e-build-and-run:
-  # Prepare build for end-to-end iOS tests
+  run-e2e-test-IOS:
     <<: *defaults_macos
-
-    # Not supported with the current plan
-    # resource_class: large
 
     steps:
       # Restore workflow workspace
@@ -429,9 +369,8 @@ jobs:
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
-      # Install bundle dependencies
       - run:
-          name: Bundle Install
+          name: Install Bundle
           command: bundle check || bundle install
 
       # Store bundle cache
@@ -462,16 +401,16 @@ jobs:
           command: detox build -c ios.sim.release
 
       - run:
-          name: Run E2E tests with Detox
+          name: Run E2E tests with io-dev-api server
           command: |
-            git clone git@github.com:pagopa/io-dev-api-server.git --branch support-e2e-testing --single-branch _io-dev-api-server_
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
             cd _io-dev-api-server_
             yarn
             ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
             yarn start > /tmp/io-dev-api-server.log &
+            # wait for the server to be up and running
             sleep 10
             cd ..
-            # TODO: get pid and then kill it
             detox test \
               --loglevel verbose \
               -c ios.sim.release \
@@ -494,41 +433,23 @@ workflows:
   build:
     jobs:
       - compile-typescript
-        # - run-tests
-        # - eslint
+      - run-tests
+      - run-eslint
 
-        #      - run-danger:
-        # filters:
-        #  branches:
-        #    ignore: master
+      - run-danger:
+          filters:
+            branches:
+              ignore: master
 
-
-
-      # To avoid running too many (long) native builds and tests, this step
-      # waits the approval for the Android native tests.
-#      - hold-android-native:
-#          type: approval
-#          requires:
-#            - compile-typescript
-#            - run-tests
-#            - lint-typescript
-#          filters:
-#            branches:
-#              ignore: master
-
-      # Build Android release
-#      - android-release:
-#          requires:
-#            - hold-android-native
-
-      # Native iOS e2e tests
-      - hold-ios-e2e-tests:
-          type: approval
+      # Native iOS e2e tests run automatically on release tag
+      - run-e2e-test-IOS:
           requires:
             - compile-typescript
-      - test-ios-e2e-build-and-run:
-          requires:
-            - hold-ios-e2e-tests
+          filters:
+            tags:
+              only: *release_tag
+
+      # TODO: Native Android e2e tests run automatically on release tag
 
   # Release workflow triggered only when a new release tag is pushed
   release:
@@ -547,7 +468,7 @@ workflows:
             branches:
               ignore: /.*/
 
-      - eslint:
+      - run-eslint:
           filters:
             tags:
               only: *release_tag
@@ -559,7 +480,7 @@ workflows:
           requires:
             - compile-typescript
             - run-tests
-            - eslint
+            - run-eslint
           filters:
             tags:
               only: *release_tag
@@ -571,7 +492,7 @@ workflows:
           requires:
             - compile-typescript
             - run-tests
-            - eslint
+            - run-eslint
           filters:
             tags:
               only: *release_tag
