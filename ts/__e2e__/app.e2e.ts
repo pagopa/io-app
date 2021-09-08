@@ -10,8 +10,6 @@ declare const by: Detox.Matchers;
 
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
-// import { Millisecond } from "italia-ts-commons/lib/units";
-// import { delayAsync } from "../utils/timer";
 
 const config = require("../../package.json").detox;
 
@@ -19,6 +17,8 @@ const config = require("../../package.json").detox;
 jest.setTimeout(5 * 60 * 1000);
 (jasmine as any).getEnv().addReporter(adapter);
 
+// 10 seconds seems a lot in development, but lower values are causing false positives
+// on the CI environment. Don't touch it if you don't know what you are doing.
 const WAIT_TIMEOUT_MS = 10 * 1000;
 
 describe("e2e app", () => {
@@ -59,14 +59,5 @@ describe("e2e app", () => {
         .toBeVisible()
         .withTimeout(WAIT_TIMEOUT_MS);
     });
-
-    /* TODO: continue
-    it("should let the user share the personal data", async () => {
-      await element(by.text("Share data")).tap();
-      await waitFor(element(by.text("Choose an unlock code")))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-    });
-    */
   });
 });

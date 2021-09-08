@@ -52,8 +52,6 @@ const InstabugLogger: InstabugLoggerType = {
 };
 
 export const initialiseInstabug = () => {
-  return;
-
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
   // it seems NetworkLogger.setEnabled(false) turns off all network interceptions
