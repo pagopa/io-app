@@ -8,7 +8,8 @@ import {
   fromPredicate,
   none,
   Option,
-  some
+  some,
+  tryCatch
 } from "fp-ts/lib/Option";
 import FM from "front-matter";
 import { Linking } from "react-native";
@@ -243,13 +244,7 @@ const extractCTA = (
   serviceMetadata: MaybePotMetadata
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
-    .mapNullable(m => {
-      try {
-        return FM<MessageCTA>(m).attributes;
-      } catch {
-        return null;
-      }
-    })
+    .chain(m => tryCatch(() => FM<MessageCTA>(m).attributes))
     .chain(attrs =>
       CTAS.decode(attrs[getRemoteLocale()]).fold(
         _ => none,
