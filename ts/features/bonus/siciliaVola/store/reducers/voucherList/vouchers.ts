@@ -6,7 +6,7 @@ import {
   svSetFilter,
   svVoucherListGet
 } from "../../actions/voucherList";
-import { svGenerateVoucherStart } from "../../actions/voucherGeneration";
+import { svGenerateVoucherCompleted } from "../../actions/voucherGeneration";
 import {
   IndexedById,
   toIndexed
@@ -34,7 +34,7 @@ const reducer = (
   action: Action
 ): VouchersState => {
   switch (action.type) {
-    case getType(svGenerateVoucherStart):
+    case getType(svGenerateVoucherCompleted):
     case getType(svSetFilter):
     case getType(svResetFilter):
       return INITIAL_STATE;
