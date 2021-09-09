@@ -3,45 +3,45 @@ import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { GlobalState } from "../../../../store/reducers/types";
-import I18n from "../../../../i18n";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { GlobalState } from "../../../../../store/reducers/types";
+import I18n from "../../../../../i18n";
 import {
   BottomTopAnimation,
   LightModalContext
-} from "../../../../components/ui/LightModal";
-import SvVoucherListFilters from "../components/SvVoucherListFilters";
+} from "../../../../../components/ui/LightModal";
+import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
   svResetFilter,
   svVoucherListGet
-} from "../store/actions/voucherList";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { svVouchersSelector } from "../store/reducers/voucherList/vouchers";
-import { toArray } from "../../../../store/helpers/indexer";
-import { formatDateAsLocal } from "../../../../utils/dates";
+} from "../../store/actions/voucherList";
+import ListItemComponent from "../../../../../components/screens/ListItemComponent";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
+import { toArray } from "../../../../../store/helpers/indexer";
+import { formatDateAsLocal } from "../../../../../utils/dates";
 import { View } from "native-base";
 import {
   FilterState,
   svFiltersSelector
-} from "../store/reducers/voucherList/filters";
-import { VoucherPreview } from "../types/SvVoucherResponse";
+} from "../../store/reducers/voucherList/filters";
+import { VoucherPreview } from "../../types/SvVoucherResponse";
 import {
   svRequiredDataLoadedSelector,
   svVouchersListUiSelector
-} from "../store/reducers/voucherList/ui";
-import { isLoading, isReady } from "../../bpd/model/RemoteValue";
-import { svGenerateVoucherStart } from "../store/actions/voucherGeneration";
-import { useIODispatch } from "../../../../store/hooks";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import image from "../../../../../img/messages/empty-message-list-icon.png";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+} from "../../store/reducers/voucherList/ui";
+import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { svGenerateVoucherStart } from "../../store/actions/voucherGeneration";
+import { useIODispatch } from "../../../../../store/hooks";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
+import image from "../../../../../../img/landing/session_expired.png";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -88,8 +88,8 @@ const EmptyVoucherList = () => {
     <>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
-        title={I18n.t("bonus.cgn.activation.ineligible.title")}
-        body={I18n.t("bonus.cgn.activation.ineligible.body")}
+        title={I18n.t("bonus.sv.voucherList.emptyList.title")}
+        body={I18n.t("bonus.sv.voucherList.emptyList.subtitle")}
       />
       <FooterWithButtons
         type={"SingleButton"}
