@@ -94,10 +94,11 @@ const main = async () => {
     );
 
     if (outdatedPackages.isRight()) {
-      console.log("Send slack message to ");
+      console.log(`Send slack message to ${destinationChannel}`);
       const boh = await slackPostMessage(
         generateSlackMessage(outdatedPackages.value),
-        destinationChannel
+        destinationChannel,
+        false
       );
       console.log(boh);
     } else {
