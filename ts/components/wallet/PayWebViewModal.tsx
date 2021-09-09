@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
 import _ from "lodash";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
