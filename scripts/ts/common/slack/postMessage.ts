@@ -3,6 +3,11 @@ import fetch from "node-fetch";
 const endpoint = "https://slack.com/api/chat.postMessage";
 const slackToken = process.env.IO_APP_SLACK_HELPER_BOT_TOKEN;
 
+/**
+ * Use the Slack API to post a message in a specific channel, using the IO-App helper bot
+ * @param text The message to post
+ * @param channel The target channel
+ */
 export const slackPostMessage = async (
   text: string,
   channel: string

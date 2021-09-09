@@ -1,0 +1,93 @@
+import { anyOutdated, GroupBySeverity } from "./types/GroupBySeverity";
+import { getTotalSeverity } from "./types/GroupByType";
+import {
+  compareByDeltaMajorVersion,
+  getDeltaMajorVersion,
+  OutdatedPackage,
+  OutdatedStats
+} from "./types/OutdatedStats";
+
+const maxFirstColWidth = 20;
+const maxColWidth = 10;
+
+const tableCell = (text: string, maxWidth: number): string =>
+  `${text}${" ".repeat(maxWidth - text.length)}`;
+
+const tableRow = (name: string, severity: GroupBySeverity) =>
+  anyOutdated(severity)
+    ? tableCell(name, maxFirstColWidth) +
+      tableCell(severity.major.toString(), maxColWidth) +
+      tableCell(severity.minor.toString(), maxColWidth) +
+      tableCell(severity.patch.toString(), maxColWidth) +
+      tableCell(severity.unknown.toString(), maxColWidth) +
+      "\n"
+    : "";
+
+const outdatedEmoji = [
+  ":older_man:",
+  ":spider_web:",
+  ":older_woman:",
+  ":older_adult:",
+  ":male_zombie:",
+  ":female_zombie:",
+  ":fallen_leaf:",
+  ":wilted_flower:",
+  ":construction:",
+  ":presidente:"
+];
+
+const getOutdatedSymbol = (outdated: OutdatedPackage): string => {
+  const outdatedDelta = getDeltaMajorVersion(outdated);
+  if (outdatedDelta >= 5) {
+    return ":red_circle:";
+  }
+  if (outdatedDelta >= 4) {
+    return ":large_orange_circle:";
+  }
+  return ":large_yellow_circle:";
+};
+
+export const generateSlackMessage = (stats: OutdatedStats) => {
+  const outdatedPackages = stats.groupByType;
+  const header =
+    " ".repeat(maxFirstColWidth) +
+    tableCell("Major", maxColWidth) +
+    tableCell("Minor", maxColWidth) +
+    tableCell("Patch", maxColWidth) +
+    tableCell("Unknown", maxColWidth) +
+    "\n";
+
+  const table =
+    "```" +
+    header +
+    tableRow("Dependencies", outdatedPackages.dependencies) +
+    tableRow("DevDependencies", outdatedPackages.devDependencies) +
+    tableRow("ResDependencies", outdatedPackages.resolutionDependencies) +
+    tableRow("Others", outdatedPackages.others) +
+    tableRow("Total", getTotalSeverity(outdatedPackages)) +
+    "```\n";
+
+  const mostOutdatedLines = stats.mostOutdated
+    .concat()
+    .sort(compareByDeltaMajorVersion)
+    .map(
+      x =>
+        `${getOutdatedSymbol(x)} *${getDeltaMajorVersion(
+          x
+        )}* new major versions: <${x.url}|${x.name}> \`${
+          x.currentVersion
+        }\` -> \`${x.latestVersion}\``
+    );
+
+  const mostOutdatedSection =
+    mostOutdatedLines.length > 0
+      ? "*Most outdated packages:*\n" + mostOutdatedLines.join("\n")
+      : "";
+
+  return (
+    outdatedEmoji[Math.floor(Math.random() * outdatedEmoji.length)] +
+    " `yarn outdated` weekly report for :io-app: App:\n" +
+    table +
+    mostOutdatedSection
+  );
+};
