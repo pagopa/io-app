@@ -35,7 +35,7 @@ const readOutdatedJson = async (): Promise<any> => {
 };
 
 /**
- * Transform the raw structure {@link DependenciesTable} representing the JSON to {@link GroupByType} aggregated stats
+ * Transform the raw structure {@link DependenciesTable} representing the JSON to {@link OutdatedStats} aggregated stats
  * @param deps
  */
 const extractGroupByType = (deps: DependenciesTable): OutdatedStats =>
@@ -72,26 +72,32 @@ const extractGroupByType = (deps: DependenciesTable): OutdatedStats =>
     }
   }, initOutdatedStats);
 
+// const destinationChannel = "#io_dev_app_feed";
+const destinationChannel = "#test";
+
 /**
  * The main script workflow orchestrator:
  * - Execute yarn outdated --json and extract the JSON results
  * - Decode the JSON as {@link DependenciesTable}
- * - Convert {@link DependenciesTable} in {@link GroupByType} (aggregate stats by type, severity)
+ * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats by type, severity)
  *   TODO: - Save the result
- * - Convert {@link GroupByType} to a human readable slack message (string)
+ * - Convert {@link OutdatedStats} to a human readable slack message (string)
  * - Publish the report on slack channel #io_app_dev_feed
  */
 const main = async () => {
   try {
+    console.log("Executing yarn outdated --json");
     const rawJSON = await readOutdatedJson();
+    console.log("Convert the json to OutdatedStats");
     const outdatedPackages = DependenciesTable.decode(rawJSON).map(
       extractGroupByType
     );
 
     if (outdatedPackages.isRight()) {
+      console.log("Send slack message to ");
       const boh = await slackPostMessage(
         generateSlackMessage(outdatedPackages.value),
-        "#test"
+        destinationChannel
       );
       console.log(boh);
     } else {

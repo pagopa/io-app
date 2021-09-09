@@ -7,10 +7,12 @@ const slackToken = process.env.IO_APP_SLACK_HELPER_BOT_TOKEN;
  * Use the Slack API to post a message in a specific channel, using the IO-App helper bot
  * @param text The message to post
  * @param channel The target channel
+ * @param unfurlMessage default true, the message will unfurl the links
  */
 export const slackPostMessage = async (
   text: string,
-  channel: string
+  channel: string,
+  unfurlMessage: boolean = true
 ): Promise<unknown> => {
   const url = new URL(endpoint);
   const res = await fetch(url, {
@@ -21,7 +23,9 @@ export const slackPostMessage = async (
     },
     body: JSON.stringify({
       channel,
-      text
+      text,
+      unfurl_links: unfurlMessage,
+      unfurl_media: unfurlMessage
     })
   });
   if (res.status !== 200) {

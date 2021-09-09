@@ -47,8 +47,14 @@ const getOutdatedSymbol = (outdated: OutdatedPackage): string => {
   return ":large_yellow_circle:";
 };
 
+/**
+ * Generate a slack message from stats.
+ * The message shows a table with the outdated dependencies type and severity, followed by a list of the most outdated dependencies
+ * @param stats
+ */
 export const generateSlackMessage = (stats: OutdatedStats) => {
-  const outdatedPackages = stats.groupByType;
+  const { groupByType, mostOutdated } = stats;
+  // Table header with the severity type
   const header =
     " ".repeat(maxFirstColWidth) +
     tableCell("Major", maxColWidth) +
@@ -57,17 +63,19 @@ export const generateSlackMessage = (stats: OutdatedStats) => {
     tableCell("Unknown", maxColWidth) +
     "\n";
 
+  // Each row is a package type
   const table =
     "```" +
     header +
-    tableRow("Dependencies", outdatedPackages.dependencies) +
-    tableRow("DevDependencies", outdatedPackages.devDependencies) +
-    tableRow("ResDependencies", outdatedPackages.resolutionDependencies) +
-    tableRow("Others", outdatedPackages.others) +
-    tableRow("Total", getTotalSeverity(outdatedPackages)) +
+    tableRow("Dependencies", groupByType.dependencies) +
+    tableRow("DevDependencies", groupByType.devDependencies) +
+    tableRow("ResDependencies", groupByType.resolutionDependencies) +
+    tableRow("Others", groupByType.others) +
+    tableRow("Total", getTotalSeverity(groupByType)) +
     "```\n";
 
-  const mostOutdatedLines = stats.mostOutdated
+  // The most outdated dependencies, order by the most outdated
+  const mostOutdatedLines = mostOutdated
     .concat()
     .sort(compareByDeltaMajorVersion)
     .map(
