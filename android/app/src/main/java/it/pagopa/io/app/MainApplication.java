@@ -70,26 +70,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(),
-            new ReanimatedPackage(),
-            new ARTPackage(),
-            new CookieManagerPackage(),
-            new ClipboardPackage(),
-            new CameraRollPackage(),
-            new RNViewShotPackage(),
-            new JailMonkeyPackage(),
-            new LinearGradientPackage(),
-            new RNSharePackage(), new ScreenBrightnessPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
-          new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
-          new RNGestureHandlerPackage(), new RNCalendarEventsPackage(), new RNCWebViewPackage(),
-          new ReactNativeFingerprintScannerPackage(), new BackgroundTimerPackage(), new SvgPackage(),
-          new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
-          new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
-          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),new RNPermissionsPackage(),new RNDateTimePickerPackage(),
-          new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
-              .setInvocationEvent("none").setPrimaryColor("#0073E6").build());
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      packages.add(new RNPermissionsPackage());
+      packages.add(new CiePackage());
+      packages.add(new ARTPackage());
+      return packages;
     }
-
   };
 
   @Override
@@ -101,6 +87,10 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
 
     super.onCreate();
+    new RNInstabugReactnativePackage
+      .Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
+      .setInvocationEvent("none")
+      .setPrimaryColor("#0073E6").build();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
