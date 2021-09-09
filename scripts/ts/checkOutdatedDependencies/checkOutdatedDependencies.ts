@@ -72,8 +72,7 @@ const extractGroupByType = (deps: DependenciesTable): OutdatedStats =>
     }
   }, initOutdatedStats);
 
-// const destinationChannel = "#io_dev_app_feed";
-const destinationChannel = "#test";
+const destinationChannel = "#io_dev_app_feed";
 
 /**
  * The main script workflow orchestrator:
@@ -95,18 +94,17 @@ const main = async () => {
 
     if (outdatedPackages.isRight()) {
       console.log(`Send slack message to ${destinationChannel}`);
-      const boh = await slackPostMessage(
+      await slackPostMessage(
         generateSlackMessage(outdatedPackages.value),
         destinationChannel,
         false
       );
-      console.log(boh);
     } else {
-      console.log("Error while decoding the command output");
+      console.log("Error while decoding the command output:");
       console.log(readableReport(outdatedPackages.value));
     }
   } catch (e) {
-    console.log("ERROR");
+    console.log("Generic error while executing the script:");
     console.log(e.message);
   }
 };
