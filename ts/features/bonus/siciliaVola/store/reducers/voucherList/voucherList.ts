@@ -1,9 +1,8 @@
+import { combineReducers } from "redux";
 import { Action } from "../../../../../../store/actions/types";
-
 import svPossibleVoucherStateReducer, {
   PossibleVoucherStateState
 } from "./possibleVoucherState";
-import { combineReducers } from "redux";
 import svVouchersStateReducer, { VouchersState } from "./vouchers";
 import svFilterStateReducer, { FilterState } from "./filters";
 import svVouchersListUiReducer, { VouchersListUiState } from "./ui";

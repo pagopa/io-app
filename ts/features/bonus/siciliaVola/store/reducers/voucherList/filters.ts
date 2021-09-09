@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../../store/actions/types";
-import { svResetFilter, svSetFilter } from "../../actions/voucherList";
 import { UTCISODateFromString } from "italia-ts-commons/lib/dates";
 import { createSelector } from "reselect";
+import { Action } from "../../../../../../store/actions/types";
+import { svResetFilter, svSetFilter } from "../../actions/voucherList";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type FilterState = {

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import {
   svResetFilter,
@@ -14,7 +15,6 @@ import {
   SvVoucherListResponse,
   VoucherPreview
 } from "../../../types/SvVoucherResponse";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VouchersState = IndexedById<VoucherPreview>;

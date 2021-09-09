@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -24,7 +25,6 @@ import ItemSeparatorComponent from "../../../../../components/ItemSeparatorCompo
 import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
 import { toArray } from "../../../../../store/helpers/indexer";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { View } from "native-base";
 import {
   FilterState,
   svFiltersSelector

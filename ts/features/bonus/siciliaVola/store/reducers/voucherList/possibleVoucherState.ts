@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { svPossibleVoucherStateGet } from "../../actions/voucherList";
 import {
@@ -8,7 +9,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../bpd/model/RemoteValue";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { StatoVoucherBeanList } from "../../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
 import { NetworkError } from "../../../../../../utils/errors";

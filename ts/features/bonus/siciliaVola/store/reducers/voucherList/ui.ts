@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import {
   svResetFilter,
@@ -15,7 +16,6 @@ import {
 } from "../../../../bpd/model/RemoteValue";
 import { svGenerateVoucherCompleted } from "../../actions/voucherGeneration";
 import { NetworkError } from "../../../../../../utils/errors";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VouchersListUiState = {

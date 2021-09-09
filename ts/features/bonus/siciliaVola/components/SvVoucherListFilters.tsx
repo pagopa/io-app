@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { Body, Container, Left, ListItem, Right, View } from "native-base";
 import {
   FlatList,
@@ -23,8 +25,6 @@ import {
 } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import DateTimePicker from "../../../../components/ui/DateTimePicker";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
 import { possibleVoucherStateSelector } from "../store/reducers/voucherList/possibleVoucherState";
 import { isReady } from "../../bpd/model/RemoteValue";
