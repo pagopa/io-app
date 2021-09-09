@@ -58,18 +58,10 @@ export const svResetFilter = createStandardAction("SV_RESET_FILTER")<
   FilterState
 >();
 
-/**
- * Request a voucher page
- */
-export const svRequestVoucherPage = createStandardAction(
-  "SV_REQUEST_VOUCHER_PAGE"
-)<FilterState>();
-
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
   | ActionType<typeof svPossibleVoucherStateGet>
   | ActionType<typeof svVoucherDetailGet>
   | ActionType<typeof svVoucherRevocation>
   | ActionType<typeof svSetFilter>
-  | ActionType<typeof svResetFilter>
-  | ActionType<typeof svRequestVoucherPage>;
+  | ActionType<typeof svResetFilter>;

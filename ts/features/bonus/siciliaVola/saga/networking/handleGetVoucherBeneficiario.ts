@@ -4,12 +4,7 @@ import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { isDefined } from "../../../../../utils/guards";
-import {
-  svRequestVoucherPage,
-  svResetFilter,
-  svSetFilter,
-  svVoucherListGet
-} from "../../store/actions/voucherList";
+import { svVoucherListGet } from "../../store/actions/voucherList";
 import { ListaVoucherBeneficiarioOutputBean } from "../../../../../../definitions/api_sicilia_vola/ListaVoucherBeneficiarioOutputBean";
 import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
 import { SvVoucherId } from "../../types/SvVoucher";
@@ -48,10 +43,7 @@ export function* handleGetVoucherBeneficiario(
     typeof BackendSiciliaVolaClient
   >["getVoucherBeneficiario"],
   _: SessionManager<MitVoucherToken>,
-  action:
-    | ActionType<typeof svSetFilter>
-    | ActionType<typeof svResetFilter>
-    | ActionType<typeof svRequestVoucherPage>
+  action: ActionType<typeof svVoucherListGet.request>
 ) {
   try {
     const {
