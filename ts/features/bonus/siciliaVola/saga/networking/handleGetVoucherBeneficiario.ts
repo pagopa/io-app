@@ -4,16 +4,16 @@ import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { isDefined } from "../../../../../utils/guards";
-import { svVoucherListGet } from "../../store/actions/voucherList";
+import {
+  svUpdateNextPageNumber,
+  svVoucherListGet
+} from "../../store/actions/voucherList";
 import { ListaVoucherBeneficiarioOutputBean } from "../../../../../../definitions/api_sicilia_vola/ListaVoucherBeneficiarioOutputBean";
 import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
 import { SvVoucherId } from "../../types/SvVoucher";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svVouchersListUiSelector } from "../../store/reducers/voucherList/ui";
-
-// TODO: add the mapping when the swagger will be fixed
-const mapKinds: Record<number, string> = {};
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (
@@ -72,16 +72,16 @@ export function* handleGetVoucherBeneficiario(
             convertSuccess(getVoucherBeneficiarioResult.value.value)
           )
         );
+        if (nextPage !== undefined) {
+          yield put(svUpdateNextPageNumber(nextPage + 1));
+        }
         return;
       }
-      if (mapKinds[getVoucherBeneficiarioResult.value.status] !== undefined) {
-        yield put(
-          svVoucherListGet.failure({
-            ...getGenericError(
-              new Error(mapKinds[getVoucherBeneficiarioResult.value.status])
-            )
-          })
-        );
+
+      // TODO: manage error case and dispatch of last page when the swagger will be updated
+      if (getVoucherBeneficiarioResult.value.status === 500) {
+        yield put(svUpdateNextPageNumber(undefined));
+        yield put(svVoucherListGet.success([]));
         return;
       }
     }

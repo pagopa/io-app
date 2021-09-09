@@ -3,6 +3,7 @@ import { Action } from "../../../../../../store/actions/types";
 import {
   svResetFilter,
   svSetFilter,
+  svUpdateNextPageNumber,
   svVoucherListGet
 } from "../../actions/voucherList";
 import {
@@ -26,7 +27,7 @@ export type VouchersListUiState = {
 
 const INITIAL_STATE: VouchersListUiState = {
   nextPage: 1,
-  elementNumber: 5,
+  elementNumber: 10,
   pagination: true,
   requiredDataLoaded: remoteUndefined
 };
@@ -46,6 +47,8 @@ const reducer = (
       return { ...state, requiredDataLoaded: remoteReady(true) };
     case getType(svVoucherListGet.failure):
       return { ...state, requiredDataLoaded: remoteError(action.payload) };
+    case getType(svUpdateNextPageNumber):
+      return { ...state, nextPage: action.payload };
   }
 
   return state;
