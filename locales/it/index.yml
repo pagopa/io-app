@@ -2672,6 +2672,7 @@ bonus:
           body: "Riceverai un messaggio in app IO quando sarà pronto."
     voucherList:
       title: "I tuoi codici sconto disponibili"
+      loading: "Caricamento in corso"
       filter:
         title: "Filtra voucher"
         searchValuePlaceholder: "Cerca codice buono"

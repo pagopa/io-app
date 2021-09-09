@@ -2644,6 +2644,7 @@ bonus:
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
       title: "Your discount codes available"
+      loading: "Loading"
       filter:
         title: "Filter vouchers"
         searchValuePlaceholder: "Search coupon code"
