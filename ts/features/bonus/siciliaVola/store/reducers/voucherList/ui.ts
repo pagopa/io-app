@@ -56,4 +56,11 @@ export const svVouchersListUiSelector = createSelector(
   (uiParameters: VouchersListUiState): VouchersListUiState => uiParameters
 );
 
+export const svRequiredDataLoadedSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherList.ui.requiredDataLoaded],
+  (
+    requiredDataLoaded: RemoteValue<true, NetworkError>
+  ): RemoteValue<true, NetworkError> => requiredDataLoaded
+);
+
 export default reducer;
