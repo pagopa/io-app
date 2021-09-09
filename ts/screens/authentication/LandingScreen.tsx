@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const IdpCIE: IdentityProvider = {
+export const IdpCIE: IdentityProvider = {
   id: "cie",
   name: "CIE",
   logo: "",

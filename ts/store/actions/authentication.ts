@@ -42,9 +42,10 @@ export const idpLoginUrlChanged = createStandardAction(
   "AUTHENTICATION_WEBVIEW_URL_CHANGED"
 )<{ url: string }>();
 
-export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
-  SessionToken
->();
+export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
+  token: SessionToken;
+  idp: string;
+}>();
 
 export const loginFailure = createStandardAction("LOGIN_FAILURE")<Error>();
 
