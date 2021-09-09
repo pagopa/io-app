@@ -49,10 +49,13 @@ const getOutdatedSymbol = (outdated: OutdatedPackage): string => {
 
 /**
  * Generate a slack message from stats.
- * The message shows a table with the outdated dependencies type and severity, followed by a list of the most outdated dependencies
+ * The message shows a table with the outdated dependencies type and severity, followed by a list of the most outdated dependencies.
+ * The returned message is split in chunk, in order to avoid the slack API limit
  * @param stats
  */
-export const generateSlackMessage = (stats: OutdatedStats) => {
+export const generateSlackMessage = (
+  stats: OutdatedStats
+): ReadonlyArray<string> => {
   const { groupByType, mostOutdated } = stats;
   // Table header with the severity type
   const header =
@@ -92,10 +95,10 @@ export const generateSlackMessage = (stats: OutdatedStats) => {
       ? "*Most outdated packages:*\n" + mostOutdatedLines.join("\n")
       : "";
 
-  return (
+  return [
     outdatedEmoji[Math.floor(Math.random() * outdatedEmoji.length)] +
-    " `yarn outdated` weekly report for :io-app: App:\n" +
-    table +
+      " `yarn outdated` weekly report for :io-app: App:\n" +
+      table,
     mostOutdatedSection
-  );
+  ];
 };

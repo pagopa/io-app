@@ -80,7 +80,7 @@ const destinationChannel = "#io_dev_app_feed";
  * - Decode the JSON as {@link DependenciesTable}
  * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats by type, severity)
  *   TODO: - Save the result
- * - Convert {@link OutdatedStats} to a human readable slack message (string)
+ * - Convert {@link OutdatedStats} to a human readable slack message, split in chunk (string)
  * - Publish the report on slack channel #io_app_dev_feed
  */
 const main = async () => {
@@ -94,10 +94,10 @@ const main = async () => {
 
     if (outdatedPackages.isRight()) {
       console.log(`Send slack message to ${destinationChannel}`);
-      await slackPostMessage(
-        generateSlackMessage(outdatedPackages.value),
-        destinationChannel,
-        false
+      await Promise.all(
+        generateSlackMessage(outdatedPackages.value).map(line =>
+          slackPostMessage(line, destinationChannel, false)
+        )
       );
     } else {
       console.log("Error while decoding the command output:");

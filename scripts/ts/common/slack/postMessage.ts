@@ -28,8 +28,16 @@ export const slackPostMessage = async (
       unfurl_media: unfurlMessage
     })
   });
+
   if (res.status !== 200) {
     throw new Error(`Response status ${res.status} ${res.statusText}`);
   }
-  return await res.json();
+  const jsonResponse = await res.json();
+  if (jsonResponse.ok === false) {
+    throw new Error(
+      `An error occured with the Slack API: ${jsonResponse.error}`
+    );
+  }
+
+  return jsonResponse;
 };
