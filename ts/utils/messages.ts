@@ -8,8 +8,7 @@ import {
   fromPredicate,
   none,
   Option,
-  some,
-  tryCatch
+  some
 } from "fp-ts/lib/Option";
 import FM from "front-matter";
 import { Linking } from "react-native";
@@ -30,9 +29,12 @@ import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import ROUTES from "../navigation/routes";
 import { localeFallback } from "../i18n";
 import { Locales } from "../../locales/locales";
+import { ServiceId } from "../../definitions/backend/ServiceId";
+import { mixpanelTrack } from "../mixpanel";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
+import { getError } from "./errors";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -241,10 +243,21 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
 
 const extractCTA = (
   text: string,
-  serviceMetadata: MaybePotMetadata
+  serviceMetadata: MaybePotMetadata,
+  serviceId?: ServiceId
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
-    .chain(m => tryCatch(() => FM<MessageCTA>(m).attributes))
+    .mapNullable(m => {
+      try {
+        return FM<MessageCTA>(m).attributes;
+      } catch (e) {
+        void mixpanelTrack("CTA_FRONT_MATTER_ERROR", {
+          reason: getError(e).message,
+          serviceId
+        });
+        return null;
+      }
+    })
     .chain(attrs =>
       CTAS.decode(attrs[getRemoteLocale()]).fold(
         _ => none,
@@ -261,13 +274,14 @@ const extractCTA = (
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  serviceMetadata?: MaybePotMetadata
-): Option<CTAS> => extractCTA(message.content.markdown, serviceMetadata);
+  serviceMetadata?: MaybePotMetadata,
+  serviceId?: ServiceId
+): Option<CTAS> =>
+  extractCTA(message.content.markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
  * if some CTAs are been found, the localized version will be returned
- * @param cta
  * @param serviceMetadata
  */
 export const getServiceCTA = (
