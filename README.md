@@ -52,7 +52,7 @@
   - [Io-Icon-Font](#io-icon-font)
   - [Theming](#theming)
   - [Custom UI components](#custom-ui-components)
-  - [End to end test with Detox (experimental)](#end-to-end-test-with-detox-experimental)
+  - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
 ## FAQ
@@ -670,32 +670,6 @@ Example of use:
 
 To change the wrapper, icon or text theme, edit the `ts/theme/components/TextWithIcon.ts` file.
 
-### End to end test with Detox (experimental)
-
-For integration tests on simulators we use [Detox](https://github.com/wix/detox).
-
-End to end tests are found in [ts/__e2e__/](ts/__e2e__/).
-
-To compile the app in preparation for the test:
-
-```
-$ detox build
-```
-
-(optional) Launch the iOS simulator (with [ios-sim](https://www.npmjs.com/package/ios-sim) for convenience):
-
-```
-$ ios-sim start --devicetypeid "iPhone-6, 10.2"
-```
-
-In case you do not launch the simulator, Detox will launch one in the background.
-
-Launch of the tests:
-
-```
-$ detox test
-```
-
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
 ### Troubleshooting
@@ -709,4 +683,4 @@ If you get an error like this `Can't find gem bundler (>= 0.a) with executable b
 If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
 1. Open the project io-app/ios with Xcode
 1. Select the library (es. RNTextInputMask) in 'Libraries'
-1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0 
+1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0
