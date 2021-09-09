@@ -2661,6 +2661,7 @@ bonus:
       emptyList:
         title: "There are no discount codes available"
         subtitle: "Search to see your used or expired codes or request a new code"
+        cta: "Generate a new code"
 features:
   euCovidCertificate:
     save:

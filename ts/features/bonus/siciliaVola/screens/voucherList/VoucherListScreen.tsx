@@ -95,7 +95,7 @@ const EmptyVoucherList = () => {
         type={"SingleButton"}
         leftButton={confirmButtonProps(
           () => dispatch(svGenerateVoucherStart()),
-          "Genera un nuovo codice"
+          I18n.t("bonus.sv.voucherList.emptyList.cta")
         )}
       />
     </>

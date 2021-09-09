@@ -2689,6 +2689,7 @@ bonus:
       emptyList:
         title: "Non ci sono codici sconto disponibili"
         subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
+        cta: "Genera un nuovo codice"
 features:
   euCovidCertificate:
     save:
