@@ -14,7 +14,7 @@ import SvCheckIncomeKoScreen from "../screens/voucherGeneration/ko/SvCheckIncome
 import SvCheckResidenceKoScreen from "../screens/voucherGeneration/ko/SvCheckResidenceKoScreen";
 import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko/SvSelectBeneficiaryCategoryKoScreen";
 import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
-import VoucherListScreen from "../screens/VoucherListScreen";
+import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
 import SV_ROUTES from "./routes";
 
 const SvNavigator = createStackNavigator(
