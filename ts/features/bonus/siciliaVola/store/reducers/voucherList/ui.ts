@@ -13,7 +13,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../bpd/model/RemoteValue";
-import { svGenerateVoucherStart } from "../../actions/voucherGeneration";
+import { svGenerateVoucherCompleted } from "../../actions/voucherGeneration";
 import { NetworkError } from "../../../../../../utils/errors";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -37,7 +37,7 @@ const reducer = (
   action: Action
 ): VouchersListUiState => {
   switch (action.type) {
-    case getType(svGenerateVoucherStart):
+    case getType(svGenerateVoucherCompleted):
     case getType(svSetFilter):
     case getType(svResetFilter):
       return INITIAL_STATE;
