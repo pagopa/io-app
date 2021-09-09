@@ -1,46 +1,13 @@
 package it.pagopa.io.app;
 
-import com.robinpowered.react.ScreenBrightness.ScreenBrightnessPackage;
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
-import com.sha256lib.Sha256Package;
-import com.kevinejohn.RNMixpanel.RNMixpanel;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
-import com.swmansion.reanimated.ReanimatedPackage;
-import com.reactnativecommunity.clipboard.ClipboardPackage;
-import com.reactnativecommunity.cookies.CookieManagerPackage;
-import com.reactnativecommunity.cameraroll.CameraRollPackage;
-import fr.greweb.reactnativeviewshot.RNViewShotPackage;
-import com.gantix.JailMonkey.JailMonkeyPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
-import cl.json.RNSharePackage;
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
-import com.lewin.qrcode.QRScanReaderPackage;
-import com.imagepicker.ImagePickerPackage;
-import com.kristiansorens.flagsecure.FlagSecurePackage;
-import com.rnfs.RNFSPackage;
-import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.calendarevents.RNCalendarEventsPackage;
-import com.ocetnik.timer.BackgroundTimerPackage;
-import com.horcrux.svg.SvgPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
-import org.reactnative.camera.RNCameraPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.oblador.keychain.KeychainPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
 import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
-import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.reactnativecommunity.art.ARTPackage;
-import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 
 import com.facebook.react.PackageList;
 
@@ -49,8 +16,6 @@ import android.content.Context;
 import com.facebook.react.ReactInstanceManager;
 import java.lang.reflect.InvocationTargetException;
 
-
-import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
