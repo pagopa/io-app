@@ -15,7 +15,7 @@ export type PaidReason = Readonly<
   | {
       kind: "COMPLETED";
       // TODO Transaction is not available, add it when PM makes it available again
-      // see https://www.pivotaltracker.com/story/show/177067134
+      // see https://pagopa.atlassian.net/browse/IA-227
       transactionId: number | undefined;
     }
   | {
