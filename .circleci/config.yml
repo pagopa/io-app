@@ -154,8 +154,6 @@ jobs:
       - checkout
       - *restore_node_cache
       - *install_node_modules
-
-      # Run DangerJS
       - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
        ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
 
@@ -538,10 +536,9 @@ workflows:
   version: 2
   build:
     jobs:
-#      - compile-typescript
-#      - run-tests
-#      - eslint
-      - check-outdated-dependencies
+      - compile-typescript
+      - run-tests
+      - eslint
 
       - run-danger:
           filters:

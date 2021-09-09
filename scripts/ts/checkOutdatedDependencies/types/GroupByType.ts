@@ -1,3 +1,4 @@
+import { initSeverityByType } from "./defaultValues";
 import { GroupBySeverity } from "./GroupBySeverity";
 
 const keyOfGroupByType = [
@@ -27,12 +28,7 @@ export const getTotalSeverity = (groupByType: GroupByType): GroupBySeverity =>
       patch: groupByType[val as KeyGroupByType].patch + acc.patch,
       unknown: groupByType[val as KeyGroupByType].unknown + acc.unknown
     }),
-    {
-      major: 0,
-      minor: 0,
-      patch: 0,
-      unknown: 0
-    }
+    initSeverityByType
   );
 
 /**
