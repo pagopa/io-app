@@ -159,7 +159,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleLoginSuccess = (token: SessionToken) => {
     instabugLog(`login success`, TypeLogs.DEBUG, "login");
     Instabug.resetTags();
-    this.props.dispatchLoginSuccess(token);
+    this.props.dispatchLoginSuccess(
+      token,
+      this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a"
+    );
   };
 
   private setRequestStateToLoading = (): void =>
@@ -338,7 +341,8 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
-  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  dispatchLoginSuccess: (token: SessionToken, idp: string) =>
+    dispatch(loginSuccess({ token, idp })),
   dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
