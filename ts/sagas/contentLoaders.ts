@@ -55,9 +55,6 @@ function getContextualHelpData(): Promise<
 
 /**
  * A saga that watches for and executes requests to load service metadata.
- *
- * TODO: do not retrieve the metadata on each request, rely on cache headers
- * https://www.pivotaltracker.com/story/show/159440224
  */
 function* watchServiceMetadataLoadSaga(
   action: ActionType<typeof loadServiceMetadata["request"]>
