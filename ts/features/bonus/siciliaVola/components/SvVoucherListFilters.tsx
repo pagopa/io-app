@@ -40,6 +40,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
     onConfirm: () => void;
   };
 
+/**
+ * Component used to show and select the possible voucher state option using a radio button
+ * @param text
+ * @param value
+ * @param onPress
+ * @param checked
+ * @constructor
+ */
 const PossibleVoucherStateOption = ({
   text,
   value,
@@ -104,6 +112,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
     setDepartureDate(undefined);
     setReturnDate(undefined);
     props.resetFilter();
+    props.onClose();
   };
 
   const onConfirmButton = () => {
@@ -128,7 +137,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         <Left />
         <Body style={{ alignItems: "center" }}>
           <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {"Filter vouchers"}
+            {I18n.t("bonus.sv.voucherList.filter.title")}
           </H5>
         </Body>
         <Right>
@@ -149,14 +158,18 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
               inputProps={{
                 value: searchValue,
                 onChangeText: setSearchValue,
-                placeholder: "Cerca codice buono"
+                placeholder: I18n.t(
+                  "bonus.sv.voucherList.filter.searchValuePlaceholder"
+                )
               }}
               icon="io-search"
             />
             <View spacer large />
             {isReady(props.possibleVoucherState) && (
               <>
-                <H2>{"Stato"}</H2>
+                <H2>
+                  {I18n.t("bonus.sv.voucherList.filter.stateSection.title")}
+                </H2>
                 <View spacer small />
                 <FlatList
                   data={props.possibleVoucherState.value}
@@ -171,20 +184,18 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
               </>
             )}
             <>
-              <H2>{"Data"}</H2>
+              <H2>{I18n.t("bonus.sv.voucherList.filter.dateSection.title")}</H2>
               <View spacer small />
               <DateTimePicker
                 label={I18n.t(
-                  "bonus.sv.voucherGeneration.selectFlightsDate.labels.departure"
+                  "bonus.sv.voucherList.filter.dateSection.departure"
                 )}
                 date={departureDate}
                 onConfirm={setDepartureDate}
               />
               <View spacer />
               <DateTimePicker
-                label={I18n.t(
-                  "bonus.sv.voucherGeneration.selectFlightsDate.labels.return"
-                )}
+                label={I18n.t("bonus.sv.voucherList.filter.dateSection.return")}
                 date={returnDate}
                 onConfirm={setReturnDate}
                 minimumDate={departureDate}
@@ -196,13 +207,13 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
             onRemoveButton,
-            I18n.t("bonus.cgn.merchantsList.filter.cta.cancel")
+            I18n.t("bonus.sv.voucherList.filter.cta.removeFilter")
           )}
           rightButton={confirmButtonProps(
             onConfirmButton,
-            I18n.t("bonus.cgn.merchantsList.filter.cta.confirm", {
+            I18n.t("bonus.sv.voucherList.filter.cta.applyFilter", {
               defaultValue: I18n.t(
-                "bonus.cgn.merchantsList.filter.cta.confirm.other",
+                "bonus.sv.voucherList.filter.cta.applyFilter.other",
                 {
                   count: selectedFilters
                 }

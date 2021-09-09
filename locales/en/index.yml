@@ -2643,7 +2643,21 @@ bonus:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
-      title: "VoucherListScreen"
+      title: "Your discount codes available"
+      filter:
+        title: "Filter vouchers"
+        searchValuePlaceholder: "Search coupon code"
+        stateSection:
+          title: "State"
+        dateSection:
+          title: "Date"
+          departure: "Departure date"
+          return: "Return date"
+        cta:
+          removeFilter: "Remove"
+          applyFilter:
+            zero: "Apply filters"
+            other: "Apply filters ({{count}})"
 features:
   euCovidCertificate:
     save:
