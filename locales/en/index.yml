@@ -2658,6 +2658,9 @@ bonus:
           applyFilter:
             zero: "Apply filters"
             other: "Apply filters ({{count}})"
+      emptyList:
+        title: "There are no discount codes available"
+        subtitle: "Search to see your used or expired codes or request a new code"
 features:
   euCovidCertificate:
     save:
