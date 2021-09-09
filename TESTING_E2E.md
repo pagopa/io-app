@@ -27,7 +27,7 @@ yarn detox build --configuration ios.sim.release
 Launching the test suite:
 
 ```
-yar detox test --configuration ios.sim.releas
+yarn detox test --configuration ios.sim.release
 ```
 
 Please look at [CircleCI config](./circleci/config.yml) for more options and to see how the
