@@ -41,6 +41,9 @@ export type GroupBySeverity = {
   [k in KeyOfGroupBySeverity]: number;
 };
 
+export const anyOutdated = (severity: GroupBySeverity) =>
+  Object.keys(severity).some(x => severity[x as KeyOfGroupBySeverity] !== 0);
+
 export const getSeverityType = (plain: string | null): KeyOfGroupBySeverity => {
   if (
     plain !== null &&
@@ -63,6 +66,35 @@ type KeyGroupByType = typeof keyOfGroupByType[number];
 export type GroupByType = {
   [k in KeyGroupByType]: GroupBySeverity;
 };
+
+export type OutdatedPackage = {
+  name: string;
+  currentVersion: string;
+  latestVersion: string;
+  type: string;
+  url: string;
+};
+
+export type OutdatedStats = {
+  groupByType: GroupByType;
+  mostOutdated: ReadonlyArray<OutdatedPackage>;
+};
+
+export const getTotalSeverity = (groupByType: GroupByType): GroupBySeverity =>
+  Object.keys(groupByType).reduce(
+    (acc, val) => ({
+      major: groupByType[val as KeyGroupByType].major + acc.major,
+      minor: groupByType[val as KeyGroupByType].minor + acc.minor,
+      patch: groupByType[val as KeyGroupByType].patch + acc.patch,
+      unknown: groupByType[val as KeyGroupByType].unknown + acc.unknown
+    }),
+    {
+      major: 0,
+      minor: 0,
+      patch: 0,
+      unknown: 0
+    }
+  );
 
 export const getDependencyType = (plain: string): KeyGroupByType => {
   if (keyOfGroupByType.includes(plain as KeyGroupByType)) {
