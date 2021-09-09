@@ -243,7 +243,13 @@ const extractCTA = (
   serviceMetadata: MaybePotMetadata
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
-    .map(m => FM<MessageCTA>(m).attributes)
+    .mapNullable(m => {
+      try {
+        return FM<MessageCTA>(m).attributes;
+      } catch {
+        return null;
+      }
+    })
     .chain(attrs =>
       CTAS.decode(attrs[getRemoteLocale()]).fold(
         _ => none,
