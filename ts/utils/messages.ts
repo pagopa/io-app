@@ -251,7 +251,7 @@ const extractCTA = (
       try {
         return FM<MessageCTA>(m).attributes;
       } catch (e) {
-        void mixpanelTrack("CTA_FRONT_MATTER_ERROR", {
+        void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
           reason: getError(e).message,
           serviceId
         });
