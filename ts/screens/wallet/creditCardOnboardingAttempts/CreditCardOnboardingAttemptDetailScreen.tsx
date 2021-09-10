@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -15,7 +14,6 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import I18n from "../../../i18n";
-import { profileSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { CreditCardInsertion } from "../../../store/reducers/wallet/creditCard";
@@ -26,7 +24,6 @@ import { formatDateAsLocal } from "../../../utils/dates";
 import { H3 } from "../../../components/core/typography/H3";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
-import { getProfileDetailsLog } from "../../../utils/profile";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
 import { getPaymentOutcomeCodeDescription } from "../../../utils/payment";
 
@@ -73,11 +70,7 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
 ) => {
   const attempt = props.navigation.getParam("attempt");
   const instabugLogAndOpenReport = () => {
-    pot.map(props.profile, p => {
-      const profileDetails = getProfileDetailsLog(p);
-      instabugLog(profileDetails, TypeLogs.INFO, instabugTag);
-      instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
-    });
+    instabugLog(JSON.stringify(attempt), TypeLogs.INFO, instabugTag);
     openInstabugQuestionReport();
   };
 
@@ -189,7 +182,6 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state),
   outcomeCodes: outcomeCodesSelector(state)
 });
 
