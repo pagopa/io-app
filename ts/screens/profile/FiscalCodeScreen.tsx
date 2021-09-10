@@ -6,13 +6,13 @@ import { ScrollView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { H2 } from "../../components/core/typography/H2";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import {
   BottomTopAnimation,
@@ -68,9 +68,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-
 const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
-
   const handleBackPress = () => {
     props.navigation.goBack();
     return true;
@@ -131,9 +129,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
         topContent={
           <React.Fragment>
             <View spacer={true} />
-            <H5 style={styles.white}>
-              {I18n.t("profile.fiscalCode.fiscalCode")}
-            </H5>
+            <H2 color={"white"}>{I18n.t("profile.fiscalCode.fiscalCode")}</H2>
             <View spacer={true} />
           </React.Fragment>
         }
