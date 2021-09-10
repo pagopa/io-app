@@ -2,7 +2,6 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
   NavigationEventSubscription,
@@ -47,6 +46,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { navigateToLogout } from "../../store/actions/navigation";
+import { getDeviceId } from "../../utils/device";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -112,7 +112,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       tapsOnAppVersion: 0,
-      deviceUniqueId: DeviceInfo.getUniqueId()
+      deviceUniqueId: getDeviceId()
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
