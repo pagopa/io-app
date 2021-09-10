@@ -92,6 +92,7 @@ import { isUpdateNeeded } from "../../utils/appVersion";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { Body } from "../../components/core/typography/Body";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -402,12 +403,15 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   ): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
-      <Text style={alignCenter ? styles.centered : undefined}>
+      <Body style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
-        <Text style={alignCenter ? styles.centered : undefined} bold={true}>
+        <Body
+          weight={"SemiBold"}
+          style={alignCenter ? styles.centered : undefined}
+        >
           {I18n.t("wallet.transactionHelpMessage.text2")}
-        </Text>
-      </Text>
+        </Body>
+      </Body>
     </React.Fragment>
   );
 
@@ -432,7 +436,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
-          <Text primary={true}>{I18n.t("wallet.transactionsShow")}</Text>
+          <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
         <View spacer={true} />
@@ -445,9 +449,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
           {renderHelpInfoBox && this.renderHelpMessage(true)}
-          <Text style={styles.emptyListContentTitle}>
+          <Body style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
-          </Text>
+          </Body>
           <Image
             source={require("../../../img/messages/empty-transaction-list-icon.png")}
           />
