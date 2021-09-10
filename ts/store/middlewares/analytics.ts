@@ -306,9 +306,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Actions (without properties)
     //
     // authentication
+    case getType(loginSuccess):
+      return mp.track(action.type, {
+        idp: action.payload.idp
+      });
     case getType(analyticsAuthenticationStarted):
     case getType(analyticsAuthenticationCompleted):
-    case getType(loginSuccess):
     case getType(sessionInformationLoadSuccess):
     case getType(sessionExpired):
     case getType(sessionInvalid):

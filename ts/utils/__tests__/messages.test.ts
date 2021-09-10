@@ -57,6 +57,18 @@ en:
 ---
 ` + messageBody;
 
+const CTA_MALFORMED =
+  `---
+it:
+    cta_1: 
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+    cta_1: 
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---
+` + messageBody;
+
 const messageWithoutPaymentData = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
@@ -285,6 +297,17 @@ some noise`;
       content: {
         ...messageWithContent.content,
         markdown: CTA_WEBVIEW as MessageBodyMarkdown
+      }
+    });
+    expect(maybeCTAs.isSome()).toBeFalsy();
+  });
+
+  it("should not have a valid CTA since the frontmatter is malformed", () => {
+    const maybeCTAs = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: CTA_MALFORMED as MessageBodyMarkdown
       }
     });
     expect(maybeCTAs.isSome()).toBeFalsy();
