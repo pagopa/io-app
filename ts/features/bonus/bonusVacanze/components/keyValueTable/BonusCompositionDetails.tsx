@@ -1,11 +1,11 @@
 import { View } from "native-base";
 import React from "react";
 import { StyleProp, StyleSheet, TextStyle } from "react-native";
-import H5 from "../../../../../components/ui/H5";
-import H6 from "../../../../../components/ui/H6";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H2 } from "../../../../../components/core/typography/H2";
 import {
   KeyValueRow,
   KeyValueTable,
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
  */
 const header = (key: string, value: string) => (
   <View style={keyValueTableStyle.baseRow} accessible={true}>
-    <H6>{key}</H6>
-    <H5>{value}</H5>
+    <Body weight={"SemiBold"}>{key}</Body>
+    <H2 weight={"SemiBold"}>{value}</H2>
   </View>
 );
 

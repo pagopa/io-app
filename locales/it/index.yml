@@ -397,7 +397,7 @@ profile:
           confirmToast: "Preferenze aggiornate!"
         alert:
           title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
-          body: "Se confermi quest’opzione, il team di IO non sarà sempre in grado di fornirti tutta l’assistenza necessaria in caso di problemi."
+          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
         whyBottomSheet:
           title: "Per quali finalità raccogliamo informazioni?"
           body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
