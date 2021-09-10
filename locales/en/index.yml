@@ -397,7 +397,7 @@ profile:
           confirmToast: "Preferences updated!"
         alert:
           title: "You are not giving IO consent to collect your usage data"
-          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
         whyBottomSheet:
           title: "For what purposes do we collect information?"
           body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
