@@ -80,7 +80,7 @@ const contextualHelpModalAnimation = Platform.select<
 });
 
 const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
-  (props: Props, _) => {
+  (props: Props) => {
     const {
       accessibilityEvents,
       accessibilityLabel,
