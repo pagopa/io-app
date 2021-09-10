@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { InteractionManager, Modal, ModalBaseProps } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
@@ -170,9 +169,6 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
       supportToken: options.sendPersonalInfo
         ? props.supportToken
         : remoteUndefined,
-      deviceUniqueId: options.sendPersonalInfo
-        ? DeviceInfo.getUniqueId()
-        : undefined,
       shouldSendScreenshot: options.sendScreenshot
     });
     setAuthenticatedSupportType(null);
