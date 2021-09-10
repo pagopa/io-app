@@ -146,7 +146,11 @@ class MessageListCTABar extends React.PureComponent<Props> {
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const euCovidCertCTA = this.renderEUCovidViewCTA();
-    const maybeCTA = getCTA(this.props.message, this.props.serviceMetadata);
+    const maybeCTA = getCTA(
+      this.props.message,
+      this.props.serviceMetadata,
+      this.props.service?.service_id
+    );
     const isPaymentStillValid =
       !this.isPaymentExpirable || !this.isPaymentExpired;
     const nestedCTA =
