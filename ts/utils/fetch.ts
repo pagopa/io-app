@@ -97,7 +97,7 @@ export const constantPollingFetch = (
   shouldAbort: Promise<boolean>,
   retries: number,
   delay: number,
-  timeout: Millisecond = 1000 as Millisecond
+  timeout: Millisecond = fetchTimeout
 ) => {
   // Override default react-native fetch with whatwg's that supports aborting
   // eslint-disable-next-line
