@@ -113,7 +113,8 @@ Because different platforms have different types of Permissions below we have tw
 | WRITE_CALENDAR                   | Allows an application to write the user's calendar data. Used to automatically set reminders.                                                               |
 | READ_EXTERNAL_STORAGE            | Allows an application to read from external storage. Used to pick images from gallery with payment QRCode.                                                                   |
 | WRITE_EXTERNAL_STORAGE           | Allows an application to write to external storage. Used to store images, e.g.: save bonus information (QRCode for Bonus Vacanze or EuCovid Certificate, etc.)                                                                 |
-| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification                                                 |
+| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification required from API level 23 until API level 28                                                |
+| USE_BIOMETRIC                    | Allows an app to use device's available biometric identification system (Face unlock, Iris unlock, Fingerprint) required from API Level 28                                                 |
 
 Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
 
