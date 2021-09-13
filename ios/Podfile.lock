@@ -315,6 +315,8 @@ PODS:
     - React
   - react-native-flipper (0.103.0):
     - React-Core
+  - react-native-get-random-values (1.7.0):
+    - React-Core
   - react-native-image-picker (4.0.6):
     - React-Core
   - react-native-mixpanel (1.2.0):
@@ -497,6 +499,7 @@ DEPENDENCIES:
   - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -624,6 +627,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fingerprint-scanner"
   react-native-flipper:
     :path: "../node_modules/react-native-flipper"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
@@ -753,6 +758,7 @@ SPEC CHECKSUMS:
   react-native-cookies: ff2e6865dff2e5feeca8f1ed082ae7898e4fa912
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-flipper: 169e8ba429b73ad637ce007337ce4b415e783799
+  react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
