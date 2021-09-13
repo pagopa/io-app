@@ -46,14 +46,13 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   };
 
   private handleForcedClose = () => {
+    console.log("handleForcedClose");
     // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
     // when the user is in onboarding phase and he asks to go to insert email screen
     // the navigation is forced reset
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [navigateToEmailInsertScreen()]
-    });
+    const resetAction = StackActions.popToTop();
     this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(navigateToEmailInsertScreen());
   };
 
   public render() {

@@ -128,12 +128,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         title: I18n.t("email.edit.cta"),
         onPress: () => {
           if (!isOnboardingCompleted) {
-            const resetAction = StackActions.reset({
-              index: 0,
-              actions: [navigateToEmailInsertScreen()]
-            });
+            const resetAction = StackActions.popToTop();
             this.props.navigation.dispatch(resetAction);
-            return;
           }
           this.props.navigateToEmailInsertScreen();
         }
