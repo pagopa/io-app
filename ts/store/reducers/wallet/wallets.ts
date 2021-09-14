@@ -418,6 +418,11 @@ export const pagoPaCreditCardWalletV1Selector = createSelector(
     )
 );
 
+export const deleteAllPaymentMethodsByFunctionSelector = (
+  state: GlobalState
+): WalletsState["deleteAllByFunction"] =>
+  state.wallet.wallets.deleteAllByFunction;
+
 // reducer
 // eslint-disable-next-line complexity
 const reducer = (
