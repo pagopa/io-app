@@ -28,62 +28,60 @@ const styles = StyleSheet.create({
   }
 });
 
-const VoucherInformationComponent = (props: Props): React.ReactElement => {
-  return (
-    <>
-      <H5 weight={"Regular"}>
-        {I18n.t("bonus.sv.components.voucherVisualDetails.uniqueCode")}
-      </H5>
-      <View spacer small />
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row"
+const VoucherInformationComponent = (props: Props): React.ReactElement => (
+  <>
+    <H5 weight={"Regular"}>
+      {I18n.t("bonus.sv.components.voucherVisualDetails.uniqueCode")}
+    </H5>
+    <View spacer small />
+    <View
+      style={{
+        flex: 1,
+        flexDirection: "row"
+      }}
+    >
+      <H3 color={"bluegreyDark"}>{props.voucherCode}</H3>
+      <View hspacer />
+      <CopyButtonComponent
+        textToCopy={props.voucherCode}
+        onPressWithGestureHandler={true}
+      />
+    </View>
+    <View spacer />
+    <H5 weight={"Regular"}>
+      {I18n.t("bonus.sv.components.voucherVisualDetails.qrCode")}
+    </H5>
+    <View style={styles.centerContentRow}>
+      <Image
+        accessible={true}
+        accessibilityRole={"image"}
+        accessibilityLabel={I18n.t(
+          "bonus.sv.components.voucherVisualDetails.qrCode"
+        )}
+        source={{
+          uri: `data:image/png;base64,${props.qrCode}`
         }}
-      >
-        <H3 color={"bluegreyDark"}>{props.voucherCode}</H3>
-        <View hspacer />
-        <CopyButtonComponent
-          textToCopy={props.voucherCode}
-          onPressWithGestureHandler={true}
-        />
-      </View>
-      <View spacer />
-      <H5 weight={"Regular"}>
-        {I18n.t("bonus.sv.components.voucherVisualDetails.qrCode")}
-      </H5>
-      <View style={styles.centerContentRow}>
-        <Image
-          accessible={true}
-          accessibilityRole={"image"}
-          accessibilityLabel={I18n.t(
-            "bonus.sv.components.voucherVisualDetails.qrCode"
-          )}
-          source={{
-            uri: `data:image/png;base64,${props.qrCode}`
-          }}
-          style={styles.qrCode}
-        />
-      </View>
-      <H5 weight={"Regular"}>
-        {I18n.t("bonus.sv.components.voucherVisualDetails.barCode")}
-      </H5>
-      <View spacer />
-      <View style={styles.centerContentRow}>
-        <Image
-          accessible={true}
-          accessibilityRole={"image"}
-          accessibilityLabel={I18n.t(
-            "bonus.sv.components.voucherVisualDetails.barCode"
-          )}
-          source={{
-            uri: `data:image/png;base64,${props.barCode}`
-          }}
-          style={styles.barCode}
-        />
-      </View>
-    </>
-  );
-};
+        style={styles.qrCode}
+      />
+    </View>
+    <H5 weight={"Regular"}>
+      {I18n.t("bonus.sv.components.voucherVisualDetails.barCode")}
+    </H5>
+    <View spacer />
+    <View style={styles.centerContentRow}>
+      <Image
+        accessible={true}
+        accessibilityRole={"image"}
+        accessibilityLabel={I18n.t(
+          "bonus.sv.components.voucherVisualDetails.barCode"
+        )}
+        source={{
+          uri: `data:image/png;base64,${props.barCode}`
+        }}
+        style={styles.barCode}
+      />
+    </View>
+  </>
+);
 
 export default VoucherInformationComponent;
