@@ -55,6 +55,7 @@ import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMe
 import I18n from "../../i18n";
 import {
   navigateBack,
+  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -92,8 +93,6 @@ import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { Body } from "../../components/core/typography/Body";
-import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
-import { EnableableFunctionsEnum } from "../../../definitions/pagopa/EnableableFunctions";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -640,10 +639,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
-  navigateToPaymentScanQrCode: () =>
-    dispatch(
-      deleteAllPaymentMethodsByFunction.request(EnableableFunctionsEnum.BPD)
-    ),
+  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

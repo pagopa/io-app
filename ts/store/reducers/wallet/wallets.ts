@@ -9,6 +9,9 @@ import { getType, isOfType } from "typesafe-actions";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
 import {
   getValueOrElse,
+  remoteError,
+  remoteLoading,
+  remoteReady,
   remoteUndefined,
   RemoteValue
 } from "../../../features/bonus/bpd/model/RemoteValue";
@@ -63,7 +66,8 @@ import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import {
   DeleteAllByFunctionError,
-  DeleteAllByFunctionSuccess
+  DeleteAllByFunctionSuccess,
+  deleteAllPaymentMethodsByFunction
 } from "../../actions/wallet/delete";
 
 export type WalletsState = Readonly<{
@@ -73,7 +77,7 @@ export type WalletsState = Readonly<{
     typeof addWalletCreditCardFailure
   >;
   deleteAllByFunction: RemoteValue<
-    DeleteAllByFunctionSuccess,
+    Pick<DeleteAllByFunctionSuccess, "deletedMethodsCount">,
     DeleteAllByFunctionError
   >;
 }>;
@@ -421,6 +425,23 @@ const reducer = (
   action: Action
 ): WalletsState => {
   switch (action.type) {
+    //
+    // delete all payments method by function
+    //
+    case getType(deleteAllPaymentMethodsByFunction.request):
+      return { ...state, deleteAllByFunction: remoteLoading };
+    case getType(deleteAllPaymentMethodsByFunction.success):
+      return {
+        ...state,
+        walletById: pot.some(
+          toIndexed(action.payload.wallets, _ => _.idWallet)
+        ),
+        deleteAllByFunction: remoteReady({
+          deletedMethodsCount: action.payload.deletedMethodsCount
+        })
+      };
+    case getType(deleteAllPaymentMethodsByFunction.failure):
+      return { ...state, deleteAllByFunction: remoteError(action.payload) };
     //
     // fetch wallets
     //
