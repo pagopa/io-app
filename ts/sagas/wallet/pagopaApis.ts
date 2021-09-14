@@ -420,16 +420,15 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
         );
       }
     } else {
+      const error = Error(
+        deleteResponse.fold(
+          readablePrivacyReport,
+          ({ status }) => `response status ${status}`
+        )
+      );
       yield put(
         deleteAllPaymentMethodsByFunction.failure({
-          error: getNetworkError(
-            Error(
-              deleteResponse.fold(
-                readablePrivacyReport,
-                ({ status }) => `response status ${status}`
-              )
-            )
-          )
+          error: getNetworkError(error)
         })
       );
     }
