@@ -34,6 +34,7 @@ import {
   updatePaymentStatus
 } from "../../../actions/wallet/wallets";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
+import { deleteAllPaymentMethodsByFunction } from "../../../actions/wallet/delete";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -352,9 +353,18 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
       }
     ];
     const maybeWalletsV2 = PatchedWalletV2ListResponse.decode({ data: wallet });
+    const maybeWalletsExceptBPDV2 = PatchedWalletV2ListResponse.decode({
+      data: wallet.filter(w =>
+        w.enableableFunctions.includes(EnableableFunctionsEnum.BPD)
+      )
+    });
     const convertedWallets = (maybeWalletsV2.value as PatchedWalletV2ListResponse).data!.map(
       convertWalletV2toWalletV1
     );
+    const convertedWalletsExceptBPD = (maybeWalletsExceptBPDV2.value as PatchedWalletV2ListResponse).data!.map(
+      convertWalletV2toWalletV1
+    );
+
     const globalState: GlobalState = appReducer(
       undefined,
       fetchWalletsSuccess(convertedWallets)
@@ -362,7 +372,23 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
     const walletFull = getWalletsById(globalState);
     expect(pot.isSome(walletFull)).toBeTruthy();
     if (pot.isSome(walletFull)) {
-      expect(Object.keys(walletFull.value).length).toEqual(3);
+      expect(Object.keys(walletFull.value).length).toEqual(
+        convertedWallets.length
+      );
+    }
+    const updatedState: GlobalState = appReducer(
+      globalState,
+      deleteAllPaymentMethodsByFunction.success({
+        wallets: convertedWalletsExceptBPD,
+        deletedMethodsCount: 1
+      })
+    );
+    const walletUpdated = getWalletsById(updatedState);
+    expect(pot.isSome(walletUpdated)).toBeTruthy();
+    if (pot.isSome(walletUpdated)) {
+      expect(Object.keys(walletUpdated.value).length).toEqual(
+        convertedWalletsExceptBPD.length
+      );
     }
   });
 });
