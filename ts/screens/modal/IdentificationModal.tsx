@@ -23,6 +23,7 @@ import {
 import { appCurrentStateSelector } from "../../store/reducers/appState";
 import {
   freeAttempts,
+  IdentificationCancelData,
   identificationFailSelector,
   maxAttempts,
   progressSelector
@@ -403,48 +404,21 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       </Text>
     ));
 
-  public render() {
-    const { identificationProgressState, isFingerprintEnabled } = this.props;
-
-    if (identificationProgressState.kind !== "started") {
-      return null;
+  /**
+   * Create handlers merging default internal actions (to manage the identification state)
+   * with, if available, custom actions passed as props.
+   */
+  private onIdentificationCancelHandler(
+    identificationCancelData?: IdentificationCancelData
+  ) {
+    if (identificationCancelData) {
+      identificationCancelData.onCancel();
     }
+    this.props.onCancelIdentification();
+  }
 
-    // The identification is started, we need to show the modal
-    const {
-      pin,
-      isValidatingTask,
-      identificationCancelData,
-      shufflePad
-    } = identificationProgressState;
-
-    const { biometryType, countdown } = this.state;
-
-    const canInsertPin =
-      !this.state.biometryAuthAvailable &&
-      this.state.canInsertPinTooManyAttempts;
-
-    // display the remaining attempts number only if start to lock the application for too many attempts
-    const displayRemainingAttempts = this.props.identificationFailState.fold(
-      undefined,
-      failState =>
-        failState.remainingAttempts <= maxAttempts - freeAttempts
-          ? failState.remainingAttempts
-          : undefined
-    );
-
-    /**
-     * Create handlers merging default internal actions (to manage the identification state)
-     * with, if available, custom actions passed as props.
-     */
-    const onIdentificationCancelHandler = () => {
-      if (identificationCancelData) {
-        identificationCancelData.onCancel();
-      }
-      this.props.onCancelIdentification();
-    };
-
-    const renderHeader = () => (
+  private renderHeader(isValidatingTask: boolean) {
+    return (
       <React.Fragment>
         <Text
           bold={true}
@@ -474,6 +448,41 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         </Text>
       </React.Fragment>
     );
+  }
+
+  public render() {
+    const { identificationProgressState, isFingerprintEnabled } = this.props;
+
+    if (identificationProgressState.kind !== "started") {
+      return null;
+    }
+
+    // The identification is started, we need to show the modal
+    const {
+      pin,
+      isValidatingTask,
+      identificationCancelData,
+      shufflePad
+    } = identificationProgressState;
+
+    const {
+      biometryType,
+      countdown,
+      identificationByBiometryState
+    } = this.state;
+
+    const canInsertPin =
+      !this.state.biometryAuthAvailable &&
+      this.state.canInsertPinTooManyAttempts;
+
+    // display the remaining attempts number only if start to lock the application for too many attempts
+    const displayRemainingAttempts = this.props.identificationFailState.fold(
+      undefined,
+      failState =>
+        failState.remainingAttempts <= maxAttempts - freeAttempts
+          ? failState.remainingAttempts
+          : undefined
+    );
 
     const defaultColor = isValidatingTask
       ? customVariables.contentPrimaryBackground
@@ -500,12 +509,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             contentContainerStyle={styles.contentContainerStyle}
             noPadded
           >
-            {renderHeader()}
+            {this.renderHeader(isValidatingTask)}
             {this.renderErrorDescription()}
             <Pinpad
               onPinResetHandler={this.props.onPinResetHandler}
               isValidatingTask={isValidatingTask}
-              isFingerprintEnabled={isFingerprintEnabled}
+              isFingerprintEnabled={
+                isFingerprintEnabled &&
+                identificationByBiometryState !== "failure"
+              }
               biometryType={biometryType}
               onFingerPrintReq={() =>
                 this.onFingerprintRequest(this.onIdentificationSuccessHandler)
@@ -528,7 +540,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               clearOnInvalid={true}
               onCancel={
                 identificationCancelData
-                  ? onIdentificationCancelHandler
+                  ? () =>
+                      this.onIdentificationCancelHandler(
+                        identificationCancelData
+                      )
                   : undefined
               }
               remainingAttempts={displayRemainingAttempts}
@@ -558,6 +573,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * @param biometrySimplePrintableType
    */
   private getInstructions(): string {
+    // We have a failure cause the biometry auth responded with a DeviceLocked or DeviceLockedPermanent code.
+    // message should not include biometry instructions
+    if (this.state.identificationByBiometryState === "failure") {
+      return I18n.t("identification.subtitleCode");
+    }
+
     switch (this.state.biometryType) {
       case "BIOMETRICS":
         return I18n.t("identification.subtitleCodeFingerprint");
@@ -606,7 +627,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         this.setState({
           biometryAuthAvailable: false
         });
-        if (e.name !== "UserCancel" && e.name !== "SystemCancel") {
+        if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
           this.setState({
             identificationByBiometryState: "failure"
           });
