@@ -18,7 +18,9 @@ import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
-import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
+import CieReadingCardAnimation, {
+  ReadingState
+} from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -56,13 +58,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   }
 });
-
-export enum ReadingState {
-  "reading" = "reading",
-  "error" = "error",
-  "completed" = "completed",
-  "waiting_card" = "waiting_card"
-}
 
 type State = {
   // Get the current status of the card reading
