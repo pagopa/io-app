@@ -595,7 +595,7 @@ const updatePaymentStatus: ChangePayOptionT = {
 
 const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
   method: "delete",
-  url: ({ service }) => `/v2/delete-wallets?service=${service}`,
+  url: ({ service }) => `/v2/wallet/delete-wallets?service=${service}`,
   query: () => ({}),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
@@ -815,7 +815,7 @@ export function PaymentManagerClient(
         idWallet: payload.idWallet,
         walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
       }),
-    deleteWalletsWithFunction: (service: string) =>
+    deleteAllPaymentMethodsByFunction: (service: string) =>
       flip(
         withPaymentManagerToken(
           createFetchRequestForApi(deleteWallets, altOptions)

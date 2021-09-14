@@ -7,7 +7,11 @@ import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
-import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  getValueOrElse,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
   BancomatPaymentMethod,
@@ -57,6 +61,10 @@ import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
+import {
+  DeleteAllByFunctionError,
+  DeleteAllByFunctionSuccess
+} from "../../actions/wallet/delete";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -64,13 +72,18 @@ export type WalletsState = Readonly<{
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
   >;
+  deleteAllByFunction: RemoteValue<
+    DeleteAllByFunctionSuccess,
+    DeleteAllByFunctionError
+  >;
 }>;
 
 export type PersistedWalletsState = WalletsState & PersistPartial;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
-  creditCardAddWallet: pot.none
+  creditCardAddWallet: pot.none,
+  deleteAllByFunction: remoteUndefined
 };
 
 // Selectors

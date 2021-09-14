@@ -48,6 +48,7 @@ import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
 import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
+import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
 
 //
 // Payment Manager APIs
@@ -357,6 +358,81 @@ export function* updateWalletPspRequestHandler(
       // signal the callee if requested
       action.payload.onFailure(failureAction);
     }
+  }
+}
+
+export function* deleteAllPaymentMethodsByFunctionRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof deleteAllPaymentMethodsByFunction>
+): Generator<Effect, void, any> {
+  const deleteAllByFunctionApi = pagoPaClient.deleteAllPaymentMethodsByFunction(
+    action.payload as string
+  );
+  const deleteAllByFunctionApiWithRefresh = pmSessionManager.withRefresh(
+    deleteAllByFunctionApi
+  );
+
+  try {
+    const deleteResponse: SagaCallReturnType<typeof deleteAllByFunctionApiWithRefresh> = yield call(
+      deleteAllByFunctionApiWithRefresh
+    );
+    if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
+      const notDeletedMethodsCount =
+        deleteResponse.value.value.data?.notDeletedWallets ?? -1;
+      // some error occurred while deletion
+      if (notDeletedMethodsCount !== 0) {
+        yield put(
+          deleteAllPaymentMethodsByFunction.failure({
+            error: getNetworkError(Error("can't delete some methods")),
+            notDeletedMethodsCount
+          })
+        );
+        return;
+      }
+      const deletedMethodsCount =
+        deleteResponse.value.value.data?.deletedWallets ?? -1;
+
+      // this should be avoided, see https://pagopa.atlassian.net/browse/PM-150
+      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+        getWallets,
+        pagoPaClient,
+        pmSessionManager
+      );
+      if (maybeWallets.isRight()) {
+        const successAction = deleteAllPaymentMethodsByFunction.success({
+          wallets: maybeWallets.value,
+          deletedMethodsCount
+        });
+        yield put(successAction);
+      } else {
+        yield put(
+          deleteAllPaymentMethodsByFunction.failure({
+            error: getNetworkError(Error("loading wallets failure")),
+            notDeletedMethodsCount
+          })
+        );
+      }
+    } else {
+      yield put(
+        deleteAllPaymentMethodsByFunction.failure({
+          error: getNetworkError(
+            Error(
+              deleteResponse.fold(
+                readablePrivacyReport,
+                ({ status }) => `response status ${status}`
+              )
+            )
+          )
+        })
+      );
+    }
+  } catch (e) {
+    yield put(
+      deleteAllPaymentMethodsByFunction.failure({
+        error: getNetworkError(e)
+      })
+    );
   }
 }
 

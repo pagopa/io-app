@@ -37,6 +37,8 @@ export const walletsPersistConfig: PersistConfig = {
   key: "wallets",
   storage: AsyncStorage,
   whitelist: ["walletById"],
+  // not persisted
+  blacklist: ["deleteAllByFunction"],
   transforms: [DateISO8601Transform, PotTransform]
 };
 
