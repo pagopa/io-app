@@ -12,7 +12,6 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
 import I18n from "../i18n";
 
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
 import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
@@ -35,7 +34,6 @@ import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
-import { getProfileDetailsLog } from "./profile";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -171,13 +169,8 @@ export const getErrorDescription = (
   }
 };
 
-export const getPaymentHistoryDetails = (
-  payment: PaymentHistory,
-  profile: InitializedProfile
-): string => {
-  const profileDetails = getProfileDetailsLog(profile, " / ");
-  return JSON.stringify({ payment, profileDetails });
-};
+export const getPaymentHistoryDetails = (payment: PaymentHistory): string =>
+  JSON.stringify({ payment });
 
 // return the transaction fee it transaction is defined and its fee property too
 export const getTransactionFee = (

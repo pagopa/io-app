@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -29,7 +28,6 @@ import {
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -95,13 +93,11 @@ const instabugTag = "payment-support";
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
     Instabug.appendTags([instabugTag]);
-    pot.map(this.props.profile, p => {
-      instabugLog(
-        getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
-        TypeLogs.INFO,
-        instabugTag
-      );
-    });
+    instabugLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
+      TypeLogs.INFO,
+      instabugTag
+    );
     openInstabugQuestionReport();
   };
 
@@ -342,7 +338,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state),
   outcomeCodes: outcomeCodesSelector(state)
 });
 

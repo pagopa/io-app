@@ -3,10 +3,16 @@ import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
 import IconFont from "../ui/IconFont";
+
+export enum ReadingState {
+  "reading" = "reading",
+  "error" = "error",
+  "completed" = "completed",
+  "waiting_card" = "waiting_card"
+}
 
 type Props = Readonly<{
   readingState: ReadingState;

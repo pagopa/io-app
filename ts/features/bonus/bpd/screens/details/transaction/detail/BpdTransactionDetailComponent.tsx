@@ -168,7 +168,7 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = pro
       <View spacer={true} />
       <Body>{paymentMethod}</Body>
       <View spacer={true} />
-      <View style={[IOStyles.flex, IOStyles.row]}>
+      <View style={IOStyles.row}>
         <Image
           source={props.transaction.image}
           style={styles.image}
