@@ -595,8 +595,8 @@ const updatePaymentStatus: ChangePayOptionT = {
 
 const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
   method: "delete",
-  url: ({ service }) => `/v2/wallet/delete-wallets?service=${service}`,
-  query: () => ({}),
+  url: () => `/v2/wallet/delete-wallets`,
+  query: ({ service }) => ({ service }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
 };
