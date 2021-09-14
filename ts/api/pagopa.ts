@@ -50,6 +50,8 @@ import {
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
+  deleteWalletsByServiceUsingDELETEDefaultDecoder,
+  DeleteWalletsByServiceUsingDELETET,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
@@ -591,6 +593,14 @@ const updatePaymentStatus: ChangePayOptionT = {
   response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
 };
 
+const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
+  method: "delete",
+  url: ({ service }) => `/v2/delete-wallets?service=${service}`,
+  query: () => ({}),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
+};
+
 const withPaymentManagerToken = <
   P extends { Bearer: string; LookUpId?: string },
   R
@@ -804,7 +814,13 @@ export function PaymentManagerClient(
       )({
         idWallet: payload.idWallet,
         walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
-      })
+      }),
+    deleteWalletsWithFunction: (service: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(deleteWallets, altOptions)
+        )
+      )({ service })
   };
 }
 
