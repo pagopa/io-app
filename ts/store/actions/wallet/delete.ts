@@ -13,7 +13,7 @@ export type DeleteAllByFunctionError = {
   notDeletedMethodsCount?: number;
 };
 /**
- * used to delete all those wallets that have specified function enabled
+ * used to delete all those payment methods that have a specified function enabled
  */
 export const deleteAllPaymentMethodsByFunction = createAsyncAction(
   "WALLETS_DELETE_ALL_BY_FUNCTION_REQUEST",

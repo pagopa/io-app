@@ -361,6 +361,12 @@ export function* updateWalletPspRequestHandler(
   }
 }
 
+/**
+ * delete all those payment methods that have the specified function enabled
+ * @param pagoPaClient
+ * @param pmSessionManager
+ * @param action
+ */
 export function* deleteAllPaymentMethodsByFunctionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
@@ -408,7 +414,7 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       } else {
         yield put(
           deleteAllPaymentMethodsByFunction.failure({
-            error: getNetworkError(Error("loading wallets failure")),
+            error: getNetworkError(maybeWallets.value),
             notDeletedMethodsCount
           })
         );
