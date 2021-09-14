@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
+import { View } from "native-base";
 import I18n from "../../../../i18n";
 import { H5 } from "../../../../components/core/typography/H5";
-import { View } from "native-base";
 import { H3 } from "../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 
