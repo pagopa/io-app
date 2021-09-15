@@ -46,7 +46,12 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
+import {
+  getError,
+  getErrorFromNetworkError,
+  getNetworkError,
+  isTimeoutError
+} from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
 import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
 
@@ -390,7 +395,7 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       if (notDeletedMethodsCount !== 0) {
         yield put(
           deleteAllPaymentMethodsByFunction.failure({
-            error: getNetworkError(Error("can't delete some methods")),
+            error: Error("can't delete some methods"),
             notDeletedMethodsCount
           })
         );
@@ -414,7 +419,7 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       } else {
         yield put(
           deleteAllPaymentMethodsByFunction.failure({
-            error: getNetworkError(maybeWallets.value),
+            error: maybeWallets.value,
             notDeletedMethodsCount
           })
         );
@@ -428,14 +433,14 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       );
       yield put(
         deleteAllPaymentMethodsByFunction.failure({
-          error: getNetworkError(error)
+          error
         })
       );
     }
   } catch (e) {
     yield put(
       deleteAllPaymentMethodsByFunction.failure({
-        error: getNetworkError(e)
+        error: getErrorFromNetworkError(getNetworkError(e))
       })
     );
   }

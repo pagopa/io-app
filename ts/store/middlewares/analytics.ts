@@ -117,6 +117,7 @@ import {
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getNetworkErrorMessage } from "../../utils/errors";
 import { searchMessagesEnabled } from "../actions/search";
+import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -255,7 +256,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(instabugReportOpened):
       return mp.track(action.type, action.payload);
 
-    // logout / load message / failure
+    // logout / load message / delete wallets / failure
+    case getType(deleteAllPaymentMethodsByFunction.failure):
     case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
@@ -343,6 +345,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(addWalletNewCreditCardSuccess):
+    case getType(deleteAllPaymentMethodsByFunction.request):
+    case getType(deleteAllPaymentMethodsByFunction.success):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
     case getType(setFavouriteWalletRequest):

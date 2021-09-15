@@ -1,7 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import { Wallet } from "../../../types/pagopa";
-import { NetworkError } from "../../../utils/errors";
 
 export type DeleteAllByFunctionSuccess = {
   wallets: ReadonlyArray<Wallet>;
@@ -9,7 +8,7 @@ export type DeleteAllByFunctionSuccess = {
 };
 
 export type DeleteAllByFunctionError = {
-  error: NetworkError;
+  error: Error;
   notDeletedMethodsCount?: number;
 };
 /**
