@@ -58,18 +58,10 @@ export const svResetFilter = createStandardAction("SV_RESET_FILTER")<
   FilterState
 >();
 
-/**
- * Update the page number to be requested via api
- */
-export const svUpdateNextPageNumber = createStandardAction(
-  "SV_UPDATE_NEXT_PAGE_NUMBER"
-)<number | undefined>();
-
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
   | ActionType<typeof svPossibleVoucherStateGet>
   | ActionType<typeof svVoucherDetailGet>
   | ActionType<typeof svVoucherRevocation>
   | ActionType<typeof svSetFilter>
-  | ActionType<typeof svResetFilter>
-  | ActionType<typeof svUpdateNextPageNumber>;
+  | ActionType<typeof svResetFilter>;

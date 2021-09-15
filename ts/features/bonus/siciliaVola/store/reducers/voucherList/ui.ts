@@ -4,7 +4,6 @@ import { Action } from "../../../../../../store/actions/types";
 import {
   svResetFilter,
   svSetFilter,
-  svUpdateNextPageNumber,
   svVoucherListGet
 } from "../../actions/voucherList";
 import {
@@ -40,11 +39,15 @@ const reducer = (
     case getType(svVoucherListGet.request):
       return { ...state, requiredDataLoaded: remoteLoading };
     case getType(svVoucherListGet.success):
-      return { ...state, requiredDataLoaded: remoteReady(true) };
+      return {
+        nextPage:
+          action.payload.length > 0 && state.nextPage !== undefined
+            ? state.nextPage + 1
+            : undefined,
+        requiredDataLoaded: remoteReady(true)
+      };
     case getType(svVoucherListGet.failure):
       return { ...state, requiredDataLoaded: remoteError(action.payload) };
-    case getType(svUpdateNextPageNumber):
-      return { ...state, nextPage: action.payload };
   }
 
   return state;
