@@ -308,7 +308,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginFailure):
       return mp.track(action.type, {
         idp: action.payload.idp,
-        error: action.payload.error
+        reason: action.payload.error.message
       });
     case getType(loginSuccess):
       return mp.track(action.type, {
