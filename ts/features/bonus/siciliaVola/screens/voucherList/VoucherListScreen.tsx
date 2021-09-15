@@ -134,7 +134,14 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
-      isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
+      isSearchAvailable={
+        isReady(props.possibleVoucherState)
+          ? {
+              enabled: true,
+              onSearchTap: openFiltersModal
+            }
+          : undefined
+      }
     >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherListScreen"}>
         {!isReady(props.possibleVoucherState) ? (
