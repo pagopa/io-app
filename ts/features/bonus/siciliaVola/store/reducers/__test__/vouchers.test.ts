@@ -3,11 +3,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { getTimeoutError } from "../../../../../../utils/errors";
 import { toIndexed } from "../../../../../../store/helpers/indexer";
-import {
-  svResetFilter,
-  svSetFilter,
-  svVoucherListGet
-} from "../../actions/voucherList";
+import { svSetFilter, svVoucherListGet } from "../../actions/voucherList";
 import { SvVoucherId } from "../../../types/SvVoucher";
 import {
   SvVoucherListResponse,
@@ -40,12 +36,10 @@ describe("Test vouchers reducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.bonus.sv.voucherList.vouchers).toStrictEqual({});
   });
-  it("Should be in the initial state after the svSetFilter, svResetFilter or svGenerateVoucherCompleted actions are dispatched", () => {
+  it("Should be in the initial state after the svSetFilter or svGenerateVoucherCompleted actions are dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(svSetFilter({}));
-    expect(store.getState().bonus.sv.voucherList.vouchers).toStrictEqual({});
-    store.dispatch(svResetFilter({}));
     expect(store.getState().bonus.sv.voucherList.vouchers).toStrictEqual({});
     store.dispatch(svGenerateVoucherCompleted());
     expect(store.getState().bonus.sv.voucherList.vouchers).toStrictEqual({});

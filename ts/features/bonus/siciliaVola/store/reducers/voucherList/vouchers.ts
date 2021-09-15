@@ -1,11 +1,7 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
-import {
-  svResetFilter,
-  svSetFilter,
-  svVoucherListGet
-} from "../../actions/voucherList";
+import { svSetFilter, svVoucherListGet } from "../../actions/voucherList";
 import { svGenerateVoucherCompleted } from "../../actions/voucherGeneration";
 import {
   IndexedById,
@@ -36,7 +32,6 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherCompleted):
     case getType(svSetFilter):
-    case getType(svResetFilter):
       return INITIAL_STATE;
     case getType(svVoucherListGet.request):
     case getType(svVoucherListGet.failure):

@@ -31,7 +31,7 @@ import { isReady } from "../../bpd/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { svResetFilter, svSetFilter } from "../store/actions/voucherList";
+import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -106,12 +106,15 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
       />
     ) : null;
 
+  /**
+   * Clean the filter locally and in the store
+   */
   const onRemoveButton = () => {
     setSearchValue(undefined);
     setVoucherStatus(undefined);
     setDepartureDate(undefined);
     setReturnDate(undefined);
-    props.resetFilter();
+    props.updateFilter({});
     props.onClose();
   };
 
@@ -228,8 +231,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateFilter: (filter: FilterState) => dispatch(svSetFilter(filter)),
-  resetFilter: () => dispatch(svResetFilter({}))
+  updateFilter: (filter: FilterState) => dispatch(svSetFilter(filter))
 });
 const mapStateToProps = (state: GlobalState) => ({
   possibleVoucherState: possibleVoucherStateSelector(state)

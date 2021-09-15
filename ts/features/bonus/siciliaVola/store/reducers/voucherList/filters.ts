@@ -2,7 +2,7 @@ import { getType } from "typesafe-actions";
 import { UTCISODateFromString } from "italia-ts-commons/lib/dates";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
-import { svResetFilter, svSetFilter } from "../../actions/voucherList";
+import { svSetFilter } from "../../actions/voucherList";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type FilterState = {
@@ -24,8 +24,6 @@ const reducer = (
   action: Action
 ): FilterState => {
   switch (action.type) {
-    case getType(svResetFilter):
-      return INITIAL_STATE;
     case getType(svSetFilter):
       const { codiceVoucher, idStato, dataDa, dataA } = action.payload;
       return { codiceVoucher, idStato, dataDa, dataA };

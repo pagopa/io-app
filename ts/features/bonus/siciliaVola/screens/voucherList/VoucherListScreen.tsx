@@ -17,7 +17,7 @@ import {
 import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
-  svResetFilter,
+  svSetFilter,
   svVoucherListGet
 } from "../../store/actions/voucherList";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
@@ -188,7 +188,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestVoucherState: () => dispatch(svPossibleVoucherStateGet.request()),
-  resetFilter: () => dispatch(svResetFilter({})),
+  resetFilter: () => dispatch(svSetFilter({})),
   requestVoucherPage: (filters: FilterState) =>
     dispatch(svVoucherListGet.request(filters)),
   start: () => dispatch(svGenerateVoucherStart())

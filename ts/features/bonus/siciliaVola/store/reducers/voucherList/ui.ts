@@ -1,11 +1,7 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
-import {
-  svResetFilter,
-  svSetFilter,
-  svVoucherListGet
-} from "../../actions/voucherList";
+import { svSetFilter, svVoucherListGet } from "../../actions/voucherList";
 import {
   remoteError,
   remoteLoading,
@@ -34,7 +30,6 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherCompleted):
     case getType(svSetFilter):
-    case getType(svResetFilter):
       return INITIAL_STATE;
     case getType(svVoucherListGet.request):
       return { ...state, requiredDataLoaded: remoteLoading };
