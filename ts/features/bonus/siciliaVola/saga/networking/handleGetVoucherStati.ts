@@ -51,6 +51,6 @@ export function* handleGetVoucheStati(
       })
     );
   } catch (e) {
-    yield put(svVoucherListGet.failure({ ...getNetworkError(e) }));
+    yield put(svVoucherListGet.failure(getNetworkError(e)));
   }
 }
