@@ -9,7 +9,8 @@ export type Props = ReturnType<typeof mapDispatchToProps>;
 // this is a dummy screen reachable only from a message CTA
 // when the component is mounted the checkBonusEligibility action will be dispatched
 const BonusCTAEligibilityStartScreen = (props: Props) => {
-  useEffect(() => props.startEligibilityCheck(), []);
+  const { startEligibilityCheck } = props;
+  useEffect(() => startEligibilityCheck(), [startEligibilityCheck]);
 
   return <LoadBonusEligibilityScreen />;
 };

@@ -227,12 +227,14 @@ async function run(rootPath: string): Promise<void> {
         )} keys in master locale "${chalk.bold(masterKeys.locale)}"`
       )
     );
+
+    const partialLocalesToString = Array.from(partialLocales)
+      .map(l => `"${l}"`)
+      .join(",");
     console.log(
       chalk.yellowBright(
         `These locales can be partial defined: ${chalk.whiteBright(
-          Array.from(partialLocales)
-            .map(l => `"${l}"`)
-            .join(",")
+          partialLocalesToString
         )}`
       )
     );

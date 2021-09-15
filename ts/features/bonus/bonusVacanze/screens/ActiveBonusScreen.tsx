@@ -2,6 +2,7 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, Toast, View } from "native-base";
+import { useCallback } from "react";
 import * as React from "react";
 import {
   Animated,
@@ -309,6 +310,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     };
   }, []);
 
+  // return an option containing the capture function
+
+  const captureScreenshot = useCallback(
+    (): Option<() => Promise<string>> =>
+      fromNullable(
+        screenShotRef && screenShotRef.current && screenShotRef.current.capture
+      ),
+    [screenShotRef]
+  );
+
   React.useEffect(() => {
     if (screenShotState.isPrintable) {
       {
@@ -332,7 +343,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return;
       }
     }
-  }, [screenShotState.isPrintable]);
+  }, [screenShotState.isPrintable, backgroundAnimation, captureScreenshot]);
 
   React.useEffect(() => {
     // if the screenShotUri is defined start saving image and restore default style
@@ -359,7 +370,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         });
       setScreenShotState(screenShortInitialState);
     }
-  }, [screenShotState.screenShotUri]);
+  }, [screenShotState.screenShotUri, backgroundAnimation]);
 
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(
@@ -369,13 +380,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         })
       : ""
   );
-
-  // return an option containing the capture function
-
-  const captureScreenshot = (): Option<() => Promise<string>> =>
-    fromNullable(
-      screenShotRef && screenShotRef.current && screenShotRef.current.capture
-    );
 
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {
