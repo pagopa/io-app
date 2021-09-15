@@ -2,7 +2,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -69,36 +69,40 @@ const styles = StyleSheet.create({
 const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
   const navigation = useNavigationContext();
-  const retry = () => {
+  const isFocused = navigation.isFocused();
+  const { bpdPotActivation, hPan, loadActualValue } = props;
+
+  const retry = useCallback(() => {
     timerRetry.current = undefined;
-    props.loadActualValue(props.hPan);
-  };
+    loadActualValue(hPan);
+  }, [loadActualValue, hPan]);
 
   /**
    * When the focus change, clear the timer (if any) and reset the value to undefined
    * focus: true  -> a new schedule is allowed
    * focus: false -> clear all the pending schedule
    */
+
   useEffect(() => {
     clearTimeout(timerRetry.current);
     timerRetry.current = undefined;
-  }, [navigation.isFocused()]);
+  }, [isFocused]);
 
   useEffect(() => {
     // Initial state, request the state
-    if (props.bpdPotActivation === pot.none) {
-      props.loadActualValue(props.hPan);
+    if (bpdPotActivation === pot.none) {
+      loadActualValue(hPan);
     } else if (
-      pot.isNone(props.bpdPotActivation) &&
-      pot.isError(props.bpdPotActivation) &&
+      pot.isNone(bpdPotActivation) &&
+      pot.isError(bpdPotActivation) &&
       timerRetry.current === undefined &&
-      navigation.isFocused()
+      isFocused
     ) {
       // If the pot is NoneError, the navigation focus is on the element
       // and no other retry are scheduled
       timerRetry.current = setTimeout(retry, fetchPaymentManagerLongTimeout);
     }
-  }, [props.bpdPotActivation, timerRetry.current, navigation.isFocused()]);
+  }, [bpdPotActivation, hPan, loadActualValue, retry, isFocused]);
 
   // Component unmount, clear scheduled
   useEffect(
