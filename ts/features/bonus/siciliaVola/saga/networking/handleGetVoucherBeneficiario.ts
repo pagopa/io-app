@@ -45,11 +45,12 @@ export function* handleGetVoucherBeneficiario(
   _: SessionManager<MitVoucherToken>,
   action: ActionType<typeof svVoucherListGet.request>
 ) {
+  const pagination = true;
+  const elementsXPage = 10;
+
   try {
     const {
-      nextPage,
-      pagination,
-      elementNumber
+      nextPage
     }: ReturnType<typeof svVouchersListUiSelector> = yield select(
       svVouchersListUiSelector
     );
@@ -61,7 +62,7 @@ export function* handleGetVoucherBeneficiario(
         ...action.payload,
         pagination,
         pageNum: nextPage,
-        elementsXPage: elementNumber
+        elementsXPage
       }
     );
 

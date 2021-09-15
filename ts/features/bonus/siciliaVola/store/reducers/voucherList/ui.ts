@@ -20,15 +20,11 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VouchersListUiState = {
   nextPage?: number;
-  pagination: true;
-  elementNumber: number;
   requiredDataLoaded: RemoteValue<true, NetworkError>;
 };
 
 const INITIAL_STATE: VouchersListUiState = {
   nextPage: 1,
-  elementNumber: 10,
-  pagination: true,
   requiredDataLoaded: remoteUndefined
 };
 
