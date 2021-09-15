@@ -3,13 +3,7 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body, Container, Left, ListItem, Right, View } from "native-base";
-import {
-  FlatList,
-  Keyboard,
-  ListRenderItemInfo,
-  SafeAreaView,
-  ScrollView
-} from "react-native";
+import { Keyboard, SafeAreaView, ScrollView } from "react-native";
 import AppHeader from "../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -94,14 +88,12 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
     Keyboard.dismiss();
   };
 
-  const renderVoucherStateItem = (
-    listItem: ListRenderItemInfo<StatoVoucherBean>
-  ) =>
-    listItem.item.idStato && listItem.item.statoDesc ? (
+  const renderVoucherStateItem = (possibleState: StatoVoucherBean) =>
+    possibleState.idStato && possibleState.statoDesc ? (
       <PossibleVoucherStateOption
-        text={listItem.item.statoDesc}
-        value={listItem.item.idStato}
-        checked={listItem.item.idStato === voucherStatus}
+        text={possibleState.statoDesc}
+        value={possibleState.idStato}
+        checked={possibleState.idStato === voucherStatus}
         onPress={onVoucherStatusSelect}
       />
     ) : null;
@@ -174,15 +166,14 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                   {I18n.t("bonus.sv.voucherList.filter.stateSection.title")}
                 </H2>
                 <View spacer small />
-                <FlatList
-                  data={props.possibleVoucherState.value}
-                  keyExtractor={pVS => pVS.statoDesc ?? ""}
-                  ItemSeparatorComponent={() => (
-                    <ItemSeparatorComponent noPadded={true} />
-                  )}
-                  renderItem={renderVoucherStateItem}
-                  keyboardShouldPersistTaps={"handled"}
-                />
+                {props.possibleVoucherState.value.map((pVS, i) => {
+                  return (
+                    <View key={i}>
+                      {renderVoucherStateItem(pVS)}
+                      <ItemSeparatorComponent noPadded={true} />
+                    </View>
+                  );
+                })}
                 <View spacer large />
               </>
             )}
