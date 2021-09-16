@@ -185,7 +185,6 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
                     props.requestVoucherPage(props.filters);
                   }
                 }}
-                onEndReachedThreshold={0.5}
                 renderItem={v => (
                   <RenderItem
                     idVoucher={v.item.idVoucher}
