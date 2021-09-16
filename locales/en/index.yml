@@ -225,8 +225,8 @@ permissionRationale:
     title: "TMP title storage"
     message: "TMP message storage"
   camera:
-    title: "TMP title camera"
-    message: "TMP message camera"
+    title: "IO Camera usage permission"
+    message: "IO app needs Camera usage permission to shoot at the QR code"
 startup:
   title: Initialization
   authentication: User authenticated
