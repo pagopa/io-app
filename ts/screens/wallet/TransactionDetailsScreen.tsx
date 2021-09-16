@@ -2,16 +2,12 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import {
-  BackHandler,
-  Image,
-  StyleSheet,
-  TouchableWithoutFeedback
-} from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
+import { Link } from "../../components/core/typography/Link";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -22,6 +18,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
@@ -122,7 +119,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     if (
       whereAmIFrom(this.props.nav).fold(
         false,
-        r => r === "WALLET_HOME" || r === "WALLET_CARD_TRANSACTION"
+        r => r === ROUTES.WALLET_HOME || r === ROUTES.WALLET_CREDIT_CARD_DETAIL
       )
     ) {
       return this.props.navigation.goBack();
@@ -221,9 +218,9 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
-          <TouchableWithoutFeedback onPress={this.handleOnFullReasonPress}>
-            <Text link={true}>{I18n.t("wallet.transactionFullReason")}</Text>
-          </TouchableWithoutFeedback>
+          <Link onPress={this.handleOnFullReasonPress}>
+            {I18n.t("wallet.transactionFullReason")}
+          </Link>
           {this.state.showFullReason && (
             <Text
               selectable={true}

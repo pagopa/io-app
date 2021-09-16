@@ -1,4 +1,5 @@
 import { fromNullable, isSome, none, some } from "fp-ts/lib/Option";
+import { right } from "fp-ts/lib/Either";
 import MockDate from "mockdate";
 import {
   CreditCardCVC,
@@ -15,6 +16,7 @@ import { testableAddCardScreen } from "../../screens/wallet/AddCardScreen";
 
 describe("CreditCardPan", () => {
   const validPANs: ReadonlyArray<string> = [
+    "12341234123412",
     "123412341234123",
     "1234123412341234",
     "************1234",
@@ -34,7 +36,7 @@ describe("CreditCardPan", () => {
   const invalidPANs: ReadonlyArray<string> = [
     "1234 1234 1234 1234",
     "123412341234123_123",
-    "12341234123412",
+    "1234123412",
     "12341234123412341234"
   ];
 
@@ -204,7 +206,7 @@ describe("isValidCardHolder", () => {
     "ú",
     "ù",
     "û"
-  ].map(accentedCardHolder =>
+  ].forEach(accentedCardHolder =>
     it(`should return false if the input string contains the accented character ${accentedCardHolder}`, () => {
       expect(isValidCardHolder(some(accentedCardHolder))).toBeFalsy();
     })
@@ -218,7 +220,7 @@ describe("isValidCardHolder", () => {
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "0123456789",
     "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-  ].map(notAccentedCardHolder =>
+  ].forEach(notAccentedCardHolder =>
     it(`should return true if the input string is composed by character different from accented character: ${notAccentedCardHolder}`, () => {
       expect(isValidCardHolder(some(notAccentedCardHolder))).toBeTruthy();
     })
@@ -234,6 +236,7 @@ describe("getCreditCardFromState", () => {
   const anInvalidExpirationDate = "99/9";
   const aValidSecurityCode = "123";
   const anInvalidSecurityCode = "1";
+
   it.each`
     pan                   | expirationDate                   | securityCode                   | holder
     ${none}               | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(aValidCardHolder)}
@@ -245,7 +248,7 @@ describe("getCreditCardFromState", () => {
     ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(anInvalidSecurityCode)} | ${some(aValidCardHolder)}
     ${some(aValidPan)}    | ${some(aValidExpirationDate)}    | ${some(aValidSecurityCode)}    | ${some(anInvalidCardHolder)}
   `(
-    "should return none if at least one field of the credit card is none or is invalid",
+    "should return left<string> if at least one field of the credit card is none or is invalid",
     async ({ pan, expirationDate, securityCode, holder }) => {
       const cardState: CreditCardState = {
         pan,
@@ -253,7 +256,10 @@ describe("getCreditCardFromState", () => {
         securityCode,
         holder
       };
-      expect(getCreditCardFromState(cardState)).toBe(none);
+      expect(getCreditCardFromState(cardState).isLeft()).toBeTruthy();
+      expect(
+        typeof getCreditCardFromState(cardState).value === "string"
+      ).toBeTruthy();
     }
   );
 
@@ -278,7 +284,7 @@ describe("getCreditCardFromState", () => {
         holder: aValidCardHolder
       };
       expect(getCreditCardFromState(cardState)).toStrictEqual(
-        some(expectedCreditCard)
+        right(expectedCreditCard)
       );
     }
   });

@@ -6,11 +6,8 @@ import * as React from "react";
 import { Alert, BackHandler } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
-import {
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
@@ -25,6 +22,7 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
+import { IdpCIE } from "../LandingScreen";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -41,7 +39,7 @@ type State = {
 
 type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
-  NavigationScreenProps<NavigationParams> &
+  NavigationStackScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
@@ -174,7 +172,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNavigation: () => dispatch(resetToAuthenticationRoute),
-  loginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  loginSuccess: (token: SessionToken) =>
+    dispatch(loginSuccess({ token, idp: IdpCIE.id })),
   loginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 

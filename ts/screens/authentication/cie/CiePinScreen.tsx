@@ -180,7 +180,6 @@ const CiePinScreen: React.FC<Props> = props => {
       </ScrollView>
       {pin.length === CIE_PIN_LENGTH && (
         <FooterWithButtons
-          accessible={true}
           ref={continueButtonRef}
           type={"SingleButton"}
           leftButton={{

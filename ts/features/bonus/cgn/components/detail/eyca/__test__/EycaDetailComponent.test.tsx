@@ -35,6 +35,7 @@ const eycaCardPending: EycaCard = {
 };
 
 describe("EycaDetailComponent", () => {
+  jest.useFakeTimers();
   it("Should show EYCA Status component for an Active card", () => {
     const store = mockEYCAState(eycaCardActive);
     const component = getComponent(store);

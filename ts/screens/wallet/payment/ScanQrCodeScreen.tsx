@@ -1,13 +1,16 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
+import { head } from "fp-ts/lib/Array";
+import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
 
-import ImagePicker from "react-native-image-picker";
+import * as ImagePicker from "react-native-image-picker";
+import { ImageLibraryOptions } from "react-native-image-picker/src/types";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
@@ -57,7 +60,6 @@ const styles = StyleSheet.create({
   },
 
   bottomText: {
-    textAlign: "center",
     paddingTop: cameraTextOverlapping
   },
 
@@ -88,22 +90,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
-    height: screenWidth,
     width: screenWidth
   },
 
   notAuthorizedContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    alignSelf: "stretch",
+    marginBottom: 14
   },
   notAuthorizedText: {
-    textAlign: "justify",
     marginBottom: 25
   },
   notAuthorizedBtn: {
     flex: 1,
-    alignSelf: "center"
+    alignSelf: "stretch"
   }
 });
 
@@ -165,31 +167,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Start image chooser
    */
   private showImagePicker = () => {
-    const options = {
-      storageOptions: {
-        skipBackup: true,
-        path: "images"
-      },
-      // PermissionDenied message only for Android
-      permissionDenied: {
-        title: I18n.t("wallet.QRtoPay.settingsAlert.title"),
-        text: I18n.t("wallet.QRtoPay.settingsAlert.message"),
-        okTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
-        reTryTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings")
-      }
+    const options: ImageLibraryOptions = {
+      mediaType: "photo"
     };
     // Open Image Library
     ImagePicker.launchImageLibrary(options, response => {
-      const path = response.path ? response.path : response.uri;
-      if (path != null) {
-        ReaderQR.readerQR(path)
+      // With the current settings the user is allowed to pick only one image
+      const maybePickedImage = fromNullable(response.assets).chain(assets =>
+        head([...assets])
+      );
+      if (isSome(maybePickedImage)) {
+        ReaderQR.readerQR(maybePickedImage.value.uri)
           .then((data: string) => {
             this.onQrCodeData(data);
           })
           .catch(() => {
             this.onInvalidQrCode();
           });
-      } else if (response.error !== undefined) {
+      } else if (response.errorMessage !== undefined) {
         // Alert to invite user to enable the permissions
         Alert.alert(
           I18n.t("wallet.QRtoPay.settingsAlert.title"),
@@ -225,7 +220,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     }
   }
 
-  private handleDidFocus = () => this.setState({ isFocused: true });
+  private handleWillFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
@@ -249,7 +244,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     return (
       <Container style={styles.white}>
         <NavigationEvents
-          onDidFocus={this.handleDidFocus}
+          onWillFocus={this.handleWillFocus}
           onWillBlur={this.handleWillBlur}
         />
         <BaseScreenComponent
@@ -319,9 +314,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                       onPress={openAppSettings}
                       style={styles.notAuthorizedBtn}
                     >
-                      <Text>
-                        {I18n.t("biometric_recognition.enroll_btnLabel")}
-                      </Text>
+                      <Text>{I18n.t("global.buttons.settings")}</Text>
                     </ButtonDefaultOpacity>
                   </View>
                 }

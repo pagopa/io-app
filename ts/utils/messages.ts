@@ -24,12 +24,17 @@ import {
   handleInternalLink
 } from "../components/ui/Markdown/handlers/internalLink";
 import { deriveCustomHandledLink } from "../components/ui/Markdown/handlers/link";
-import { CTA, CTAS, MessageCTA } from "../types/MessageCTA";
+import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import ROUTES from "../navigation/routes";
+import { localeFallback } from "../i18n";
+import { Locales } from "../../locales/locales";
+import { ServiceId } from "../../definitions/backend/ServiceId";
+import { mixpanelTrack } from "../mixpanel";
 import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
+import { getError } from "./errors";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -57,6 +62,7 @@ export function messageNeedsCTABar(
   message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return (
+    message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
     messageNeedsPaymentCTA(message) ||
     getCTA(message).isSome()
@@ -77,8 +83,8 @@ export const handleCtaAction = (
     );
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
-    if (maybeHandledAction.isSome()) {
-      Linking.openURL(maybeHandledAction.value).catch(() => 0);
+    if (maybeHandledAction.isRight()) {
+      Linking.openURL(maybeHandledAction.value.url).catch(() => 0);
     }
   }
 };
@@ -225,14 +231,35 @@ const internalRoutePredicates: Map<
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
+/**
+ * since remote payload can have a subset of supported locales, this function
+ * return the locale supported by the app. If the remote locale is not supported
+ * a fallback will be returned
+ */
+export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
+  MessageCTALocales.decode(getLocalePrimaryWithFallback()).getOrElse(
+    localeFallback.locale
+  );
+
 const extractCTA = (
   text: string,
-  serviceMetadata: MaybePotMetadata
+  serviceMetadata: MaybePotMetadata,
+  serviceId?: ServiceId
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
-    .map(m => FM<MessageCTA>(m).attributes)
+    .mapNullable(m => {
+      try {
+        return FM<MessageCTA>(m).attributes;
+      } catch (e) {
+        void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
+          reason: getError(e).message,
+          serviceId
+        });
+        return null;
+      }
+    })
     .chain(attrs =>
-      CTAS.decode(attrs[getLocalePrimaryWithFallback()]).fold(
+      CTAS.decode(attrs[getRemoteLocale()]).fold(
         _ => none,
         // check if the decoded actions are valid
         cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
@@ -247,13 +274,14 @@ const extractCTA = (
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  serviceMetadata?: MaybePotMetadata
-): Option<CTAS> => extractCTA(message.content.markdown, serviceMetadata);
+  serviceMetadata?: MaybePotMetadata,
+  serviceId?: ServiceId
+): Option<CTAS> =>
+  extractCTA(message.content.markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
  * if some CTAs are been found, the localized version will be returned
- * @param cta
  * @param serviceMetadata
  */
 export const getServiceCTA = (
@@ -291,12 +319,9 @@ export const isCtaActionValid = (
       .map(f => f(serviceMetadata))
       .getOrElse(true);
   }
-  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   // check if it is a custom action (it should be composed in a specific format)
-  if (maybeCustomHandledAction.isSome()) {
-    return true;
-  }
-  return false;
+  const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
+  return maybeCustomHandledAction.isRight();
 };
 
 /**

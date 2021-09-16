@@ -1,4 +1,7 @@
 import { NavigationActions } from "react-navigation";
+import { InferNavigationParams } from "../../../../types/react";
+import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
+import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
 
 export const navigateToCgnActivationLoadActivationStatus = () =>
@@ -63,7 +66,23 @@ export const navigateToCgnMerchantsList = () =>
     routeName: CGN_ROUTES.MERCHANTS.LIST
   });
 
-export const navigateToCgnMerchantDetail = () =>
+export const navigateToCgnMerchantsTabs = () =>
   NavigationActions.navigate({
-    routeName: CGN_ROUTES.MERCHANTS.DETAIL
+    routeName: CGN_ROUTES.MERCHANTS.TABS
+  });
+
+export const navigateToCgnMerchantDetail = (
+  params: InferNavigationParams<typeof CgnMerchantDetailScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.MERCHANTS.DETAIL,
+    params
+  });
+
+export const navigateToCgnMerchantLandingWebview = (
+  params: InferNavigationParams<typeof CgnMerchantLandingWebview>
+) =>
+  NavigationActions.navigate({
+    routeName: CGN_ROUTES.MERCHANTS.LANDING_WEBVIEW,
+    params
   });

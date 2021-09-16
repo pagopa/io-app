@@ -36,9 +36,7 @@ export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
-export const backendStatusUrl: string = Config.BACKEND_STATUS_URL;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
@@ -55,7 +53,6 @@ export const bpdTestOverlay: boolean = Config.BPD_TEST_OVERLAY === "YES";
 
 export const bpdTransactionsPaging: boolean =
   Config.BPD_TRANSACTIONS_PAGING === "YES";
-export const bpdTechnicalIban: boolean = Config.BPD_TECHNICAL_IBAN === "YES";
 
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
@@ -69,8 +66,15 @@ export const isPlaygroundsEnabled: boolean =
 export const cgnEnabled: boolean = Config.CGN_ENABLED === "YES";
 export const cgnTestOverlay: boolean = Config.CGN_TEST_OVERLAY === "YES";
 
+// EU Covid Certificate feature flag
+export const euCovidCertificateEnabled: boolean =
+  Config.EU_COVID_CERT_ENABLED === "YES";
+
+// SiciliaVola Feature Flag
+export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
+
 // version of ToS
-export const tosVersion: NonNegativeNumber = 2.1 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(
   parseInt(Config.FETCH_TIMEOUT_MS, 10)

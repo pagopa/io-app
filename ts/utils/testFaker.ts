@@ -8,13 +8,7 @@ import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentReq
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
-import {
-  CreditCard,
-  EnableableFunctionsTypeEnum,
-  PatchedWalletV2,
-  Psp,
-  Wallet
-} from "../types/pagopa";
+import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
 // import { applicationChangeState } from "../store/actions/application";
 import {
   loginSuccess,
@@ -22,9 +16,9 @@ import {
   sessionInformationLoadSuccess
 } from "../store/actions/authentication";
 import { SessionToken } from "../types/SessionToken";
-import { IdentityProvider } from "../models/IdentityProvider";
-
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 
 const validCreditCard: CreditCard = {
@@ -208,7 +202,7 @@ export const myWalletNoCreditCard: { [key: string]: any } = {
 export const bancomat = {
   walletType: WalletTypeEnum.Bancomat,
   createDate: "2021-04-05",
-  enableableFunctions: [EnableableFunctionsTypeEnum.BPD],
+  enableableFunctions: [EnableableFunctionsEnum.BPD],
   favourite: false,
   idWallet: 24415,
   info: {
@@ -233,13 +227,14 @@ export const AuthSeq: ReadonlyArray<Action> = [
   idpSelected({
     id: "posteid",
     name: "Poste",
-    logo: 8,
+    logo: "http://placeimg.com/640/480/some",
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
-  } as IdentityProvider),
-  loginSuccess(
-    "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken
-  ),
+  } as SpidIdp),
+  loginSuccess({
+    token: "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken,
+    idp: "posteid"
+  }),
   sessionInformationLoadSuccess({
     bpdToken:
       "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99cd5",

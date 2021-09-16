@@ -1,11 +1,9 @@
 import * as React from "react";
-import {
-  EnableableFunctionsTypeEnum,
-  PaymentMethod
-} from "../../../../../types/pagopa";
+import { PaymentMethod } from "../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import { HPan } from "../../store/actions/paymentMethods";
 import { getPaymentMethodHash } from "../../../../../utils/paymentMethod";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import PaymentMethodBpdToggle from "./base/PaymentMethodBpdToggle";
 
 /**
@@ -21,7 +19,7 @@ export const bpdToggleFactory = (paymentMethod: PaymentMethod) => {
       icon={paymentMethod.icon}
       hasBpdCapability={hasFunctionEnabled(
         paymentMethod,
-        EnableableFunctionsTypeEnum.BPD
+        EnableableFunctionsEnum.BPD
       )}
       caption={paymentMethod.caption}
     />

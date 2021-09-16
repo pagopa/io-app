@@ -23,7 +23,6 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "../../store/reducers/entities/services/visibleServices";
-import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import {
   isEmailEnabledSelector,
   profileEmailSelector,
@@ -168,24 +167,28 @@ class EmailForwardingScreen extends React.Component<Props, State> {
               }
             )}
             {/* CASE BY CASE */}
-            {renderListItem(
-              I18n.t("send_email_messages.options.by_service.label"),
-              I18n.t("send_email_messages.options.by_service.info"),
-              this.props.isEmailEnabled &&
-                this.props.isCustomEmailChannelEnabled,
-              // Enable custom set of the email notification for each visible service
-              () => {
-                if (this.state.isLoading) {
-                  return;
-                }
-                this.setState(
-                  { isCustomChannelEnabledChoice: true, isLoading: true },
-                  () => {
-                    this.props.setEmailChannel(true);
-                  }
-                );
-              }
-            )}
+            {/* ByService option is disabled until it will be persisted on backend as a proper attribute */}
+            {
+              // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
+              // renderListItem(
+              //   I18n.t("send_email_messages.options.by_service.label"),
+              //   I18n.t("send_email_messages.options.by_service.info"),
+              //   this.props.isEmailEnabled &&
+              //     this.props.isCustomEmailChannelEnabled,
+              //   // Enable custom set of the email notification for each visible service
+              //   () => {
+              //     if (this.state.isLoading) {
+              //       return;
+              //     }
+              //     this.setState(
+              //       { isCustomChannelEnabledChoice: true, isLoading: true },
+              //       () => {
+              //         this.props.setEmailChannel(true);
+              //       }
+              //     );
+              //   }
+              // )
+            }
 
             <EdgeBorderComponent />
           </List>
@@ -207,13 +210,12 @@ const mapStateToProps = (state: GlobalState) => {
   );
 
   const potProfile = profileSelector(state);
-  const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
-    state
-  );
-  const isCustomEmailChannelEnabled = pot.getOrElse(
-    potIsCustomEmailChannelEnabled,
-    false
-  );
+  // const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
+  //   state
+  // );
+  // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
+  const isCustomEmailChannelEnabled = false;
+  // : pot.getOrElse(potIsCustomEmailChannelEnabled, false);
 
   const potUserEmail = profileEmailSelector(state);
   const userEmail = potUserEmail.fold(

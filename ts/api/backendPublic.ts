@@ -10,7 +10,7 @@ import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { BackendStatus } from "../types/backendStatus";
+import { BackendStatus } from "../../definitions/content/BackendStatus";
 
 type GetServerInfoT = IGetApiRequestType<
   Record<string, unknown>,
@@ -45,7 +45,7 @@ export function CdnBackendStatusClient(
   const getStatusT: GetStatusT = {
     method: "get",
     // to avoid response caching
-    url: () => `backend.json?ms=${new Date().getTime()}`,
+    url: () => `status/backend.json?ms=${new Date().getTime()}`,
     query: _ => ({}),
     headers: () => ({}),
     response_decoder: basicResponseDecoder(BackendStatus)

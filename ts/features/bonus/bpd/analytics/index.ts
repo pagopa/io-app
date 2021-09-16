@@ -77,13 +77,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdTransactionsLoadRequiredData.success):
       return mp.track(action.type, { awardPeriodId: action.payload });
     case getType(bpdTransactionsLoad.success):
+    case getType(bpdSelectPeriod): // SelectedPeriod
       return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId,
-        hashPan: action.payload.results.map(r => r.hashPan),
-        idTrxAcquirer: action.payload.results.map(r => r.idTrxAcquirer),
-        idTrxIssuer: action.payload.results.map(r => r.idTrxIssuer),
-        trxDate: action.payload.results.map(r => r.trxDate.toString()),
-        circuitType: action.payload.results.map(r => r.circuitType)
+        awardPeriodId: action.payload.awardPeriodId
       });
     // CashBack details
     case getType(bpdAllData.request):
@@ -98,34 +94,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(bpdLoadActivationStatus.failure):
       return mp.track(action.type, { reason: action.payload.message });
 
-    // Amount
-    case getType(bpdSelectPeriod): // SelectedPeriod
-      return mp.track(action.type, {
-        awardPeriodId: action.payload.awardPeriodId
-      });
-
     // PaymentMethod
     case getType(bpdPaymentMethodActivation.request):
-      return mp.track(action.type, { hashPan: action.payload });
     case getType(bpdUpdatePaymentMethodActivation.request):
-      return mp.track(action.type, {
-        hashPan: action.payload.hPan,
-        value: action.payload.value
-      });
     case getType(bpdPaymentMethodActivation.success):
     case getType(bpdUpdatePaymentMethodActivation.success):
-      return mp.track(action.type, {
-        hashPan: action.payload.hPan,
-        activationStatus: action.payload.activationStatus,
-        activationDate: action.payload.activationDate,
-        deactivationDate: action.payload.deactivationDate
-      });
     case getType(bpdPaymentMethodActivation.failure):
     case getType(bpdUpdatePaymentMethodActivation.failure):
-      return mp.track(action.type, {
-        hashPan: action.payload.hPan,
-        reason: action.payload.error.message
-      });
+      return mp.track(action.type);
   }
   return Promise.resolve();
 };

@@ -1,5 +1,3 @@
-import React from "react";
-import { View } from "native-base";
 import { ContextualHelpProps } from "../components/screens/BaseScreenComponent";
 
 /**
@@ -9,5 +7,5 @@ import { ContextualHelpProps } from "../components/screens/BaseScreenComponent";
  */
 export const emptyContextualHelp: ContextualHelpProps = {
   title: "",
-  body: () => <View />
+  body: () => null
 };

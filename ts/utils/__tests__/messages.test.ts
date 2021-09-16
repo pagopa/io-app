@@ -13,6 +13,7 @@ import {
   cleanMarkdownFromCTAs,
   getCTA,
   getMessagePaymentExpirationInfo,
+  getRemoteLocale,
   getServiceCTA,
   isCtaActionValid,
   MaybePotMetadata,
@@ -50,6 +51,18 @@ it:
         text: "Interno con params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 en:
+    cta_1: 
+        text: "Internal with params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
+---
+` + messageBody;
+
+const CTA_MALFORMED =
+  `---
+it:
+    cta_1: 
+        text: "Interno con params"
+        action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
     cta_1: 
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
@@ -131,6 +144,28 @@ const serviceMetadataBase = {
 // test "it" as default language
 beforeAll(() => setLocale("it" as Locales));
 
+describe("getRemoteLocale", () => {
+  it("should return it if locale is it", () => {
+    setLocale("it" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+
+  it("should return en if locale is en", () => {
+    setLocale("en" as Locales);
+    expect(getRemoteLocale()).toEqual("en");
+  });
+
+  it("should return it if locale is a supported language but is not in MessageCTALocales", () => {
+    setLocale("de" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+
+  it("should return it if locale is not a supported language and is not in MessageCTALocales", () => {
+    setLocale("xyz" as Locales);
+    expect(getRemoteLocale()).toEqual("it");
+  });
+});
+
 describe("getCTA", () => {
   it("should have 2 valid CTA", () => {
     const maybeCTAs = getCTA(messageWithContent);
@@ -152,14 +187,14 @@ describe("getCTA", () => {
     );
   });
 
-  it("should return the english CTA when the language is not supported", () => {
+  it("should return the italian CTA when the language is not supported", () => {
     setLocale("fr" as Locales);
     const maybeCTAs = getCTA(messageWithContent);
     test2CTA(
       maybeCTAs,
-      "go1",
+      "premi",
       "ioit://PROFILE_MAIN",
-      "go2",
+      "premi2",
       "ioit://PROFILE_MAIN2"
     );
     setLocale("it" as Locales); // restore default
@@ -262,6 +297,17 @@ some noise`;
       content: {
         ...messageWithContent.content,
         markdown: CTA_WEBVIEW as MessageBodyMarkdown
+      }
+    });
+    expect(maybeCTAs.isSome()).toBeFalsy();
+  });
+
+  it("should not have a valid CTA since the frontmatter is malformed", () => {
+    const maybeCTAs = getCTA({
+      ...messageWithContent,
+      content: {
+        ...messageWithContent.content,
+        markdown: CTA_MALFORMED as MessageBodyMarkdown
       }
     });
     expect(maybeCTAs.isSome()).toBeFalsy();

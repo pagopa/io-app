@@ -151,7 +151,7 @@ describe("Test the paginated transaction normalization", () => {
 
   it(
     "When a pivot is present and the pivot transaction has been found," +
-      " the cashback amount should be must be normalized appropriately  ",
+      " the cashback amount should be must be normalized appropriately (same day transactions in multiple pages)",
     () => {
       const globalState = appReducer(
         undefined,
@@ -188,6 +188,95 @@ describe("Test the paginated transaction normalization", () => {
           ...awardPeriodTemplate,
           results: {
             transactions: [pageThree]
+          }
+        })
+      );
+
+      const transactionsEntities = store.getState().bonus.bpd.details
+        .transactionsV2.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
+
+      const expectedResults: ReadonlyArray<TransactionTestCheck> = [
+        {
+          idTrx: "1",
+          cashback: 0,
+          validForCashback: false
+        },
+        {
+          idTrx: "2",
+          cashback: 0,
+          validForCashback: false
+        },
+        {
+          idTrx: "3",
+          cashback: 0,
+          validForCashback: false
+        },
+        {
+          idTrx: "A",
+          cashback: templateMilestone.result?.amount ?? 0,
+          validForCashback: true
+        },
+        {
+          idTrx: "B",
+          cashback: 0,
+          validForCashback: true
+        },
+        {
+          idTrx: "C",
+          cashback: transactionTemplate.cashback,
+          validForCashback: true
+        },
+        {
+          idTrx: "D",
+          cashback: transactionTemplate.cashback,
+          validForCashback: true
+        },
+        {
+          idTrx: "E",
+          cashback: 15,
+          validForCashback: true
+        }
+      ];
+
+      expect(transactionsEntities).toBeDefined();
+      expect(transactionsEntities?.pivot).toStrictEqual(
+        pot.some(templateMilestone.result)
+      );
+      if (transactionsEntities) {
+        verifyTransactions(expectedResults, transactionsEntities);
+      }
+    }
+  );
+  it(
+    "When a pivot is present and the pivot transaction has been found," +
+      " the cashback amount should be must be normalized appropriately (pivot with multiple days in same page)",
+    () => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const store = createStore(appReducer, globalState as any);
+
+      store.dispatch(
+        bpdTransactionsLoadMilestone.request(awardPeriodTemplate.awardPeriodId)
+      );
+      store.dispatch(bpdTransactionsLoadMilestone.success(templateMilestone));
+
+      store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
+      store.dispatch(
+        bpdTransactionsLoadPage.success({
+          ...awardPeriodTemplate,
+          results: {
+            transactions: [pageOne]
+          }
+        })
+      );
+      store.dispatch(bpdTransactionsLoadPage.request(awardPeriodTemplate));
+      store.dispatch(
+        bpdTransactionsLoadPage.success({
+          ...awardPeriodTemplate,
+          results: {
+            transactions: [pageTwo, pageThree]
           }
         })
       );

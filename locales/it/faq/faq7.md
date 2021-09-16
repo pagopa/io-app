@@ -5,4 +5,4 @@ Gli Identity Provider forniscono diverse modalità di registrazione gratuitament
 - Se sei già cliente di uno degli Identity Provider, potresti avere un flusso di registrazione semplificato;
 - Se sei un cittadino italiano residente all’estero, fai attenzione a chi offre il servizio per l’estero.
 
-Per maggiori informazioni puoi consultare il sito di [SPID](https://www.spid.gov.it/richiedi-spid).
+Per maggiori informazioni puoi consultare il sito di [SPID](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).

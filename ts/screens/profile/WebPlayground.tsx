@@ -132,7 +132,6 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             {saveCookie && (
               <>
                 <LabelledItem
-                  type={"text"}
                   label={"Cookie name"}
                   inputProps={{
                     value: cookieName,
@@ -141,7 +140,6 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
                   }}
                 />
                 <LabelledItem
-                  type={"text"}
                   label={"Cookie value"}
                   inputProps={{
                     value: cookieValue,

@@ -5,11 +5,11 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Link } from "../../../../../../components/core/typography/Link";
 import I18n from "../../../../../../i18n";
-import { EnableableFunctionsTypeEnum } from "../../../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../../../utils/walletv2";
 import { useWhyOtherCardsBottomSheet } from "../../../screens/details/components/bottomsheet/WhyOtherCards";
 import { PaymentMethodWithActivation } from "../../../store/reducers/details/combiner";
 import { useOtherChannelInformationBottomSheet } from "../bottomsheet/OtherChannelInformation";
+import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
 type Props = { paymentList: ReadonlyArray<PaymentMethodWithActivation> };
@@ -23,7 +23,7 @@ const isOtherChannel = (w: PaymentMethodWithActivation) =>
 
 const isNotActivable = (w: PaymentMethodWithActivation) =>
   w.activationStatus === "notActivable" ||
-  !hasFunctionEnabled(w, EnableableFunctionsTypeEnum.BPD);
+  !hasFunctionEnabled(w, EnableableFunctionsEnum.BPD);
 
 /**
  * A quick solution, not the best but the cardinality of the entities

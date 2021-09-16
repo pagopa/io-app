@@ -19,6 +19,7 @@ import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
+import { SpidIdps } from "../../definitions/content/SpidIdps";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -128,6 +129,20 @@ const getPrivativeServicesT: GetPrivativeServicesT = {
   response_decoder: basicResponseDecoder(PrivativeServices)
 };
 
+type GetIdpsListT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<SpidIdps>
+>;
+
+const getIdpsT: GetIdpsListT = {
+  method: "get",
+  url: () => "/spid/idps/list.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(SpidIdps)
+};
 /**
  * A client for the static content
  */
@@ -147,6 +162,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getPrivativeServices: createFetchRequestForApi(
       getPrivativeServicesT,
       options
-    )
+    ),
+    getIdps: createFetchRequestForApi(getIdpsT, options)
   };
 }

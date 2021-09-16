@@ -105,6 +105,7 @@ import {
   backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
+  paymentCompletedSuccess,
   paymentDeletePayment,
   paymentExecuteStart,
   paymentFetchAllPspsForPaymentId,
@@ -142,8 +143,10 @@ import {
   runSendAddCobadgeTrackSaga,
   runStartOrResumeAddCreditCardSaga,
   setFavouriteWalletRequest,
-  setWalletSessionEnabled
+  setWalletSessionEnabled,
+  updatePaymentStatus
 } from "../store/actions/wallet/wallets";
+import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import { getTransactionsRead } from "../store/reducers/entities/readTransactions";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -151,7 +154,6 @@ import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcome
 import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
-  EnableableFunctionsTypeEnum,
   isRawCreditCard,
   NullableWallet,
   PaymentManagerToken
@@ -181,13 +183,17 @@ import {
   paymentStartRequest,
   paymentVerificaRequestHandler,
   setFavouriteWalletRequestHandler,
+  updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import { waitBackoffError } from "../utils/backoffError";
+import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 
 const successScreenDelay = 2000 as Millisecond;
+
 /**
  * This saga manages the flow for adding a new card.
  *
@@ -220,6 +226,7 @@ function* startOrResumeAddCreditCardSaga(
     creditCard: action.payload.creditCard,
     psp: undefined
   };
+  newLookUpId();
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
@@ -249,7 +256,7 @@ function* startOrResumeAddCreditCardSaga(
           // if the card already exists, run onFailure before exiting the flow
           action.payload.onFailure(responseAction.payload.kind);
         }
-        return;
+        break;
       }
       // all is ok, continue to the next step
       continue;
@@ -333,15 +340,19 @@ function* startOrResumeAddCreditCardSaga(
                   );
                   const hasBpdFeature = hasFunctionEnabled(
                     maybeAddedWallet.paymentMethod,
-                    EnableableFunctionsTypeEnum.BPD
+                    EnableableFunctionsEnum.BPD
                   );
                   // if the method is bpd compliant check if we have info about bpd activation
                   if (hasBpdFeature && pot.isSome(bpdEnroll)) {
+                    const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> = yield select(
+                      bpdRemoteConfigSelector
+                    );
                     // if bdp is active navigate to a screen where it asked to enroll that method in bpd
                     // otherwise navigate to a screen where is asked to join bpd
                     if (
                       bpdEnroll.value &&
-                      isRawCreditCard(maybeAddedWallet.paymentMethod)
+                      isRawCreditCard(maybeAddedWallet.paymentMethod) &&
+                      bpdRemoteConfig?.program_active
                     ) {
                       yield put(
                         navigateToActivateBpdOnNewCreditCard({
@@ -358,14 +369,18 @@ function* startOrResumeAddCreditCardSaga(
                           ]
                         })
                       );
-                    } else {
+                    } else if (
+                      bpdRemoteConfig?.enroll_bpd_after_add_payment_method
+                    ) {
                       yield put(navigateToSuggestBpdActivation());
+                    } else {
+                      yield call(waitAndNavigateToWalletHome);
                     }
                     // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
                     // this pop could be easily break when this flow is entered by other points
-                    // different from the current ones (i.e see https://www.pivotaltracker.com/story/show/175757212)
+                    // different from the current ones
                     yield put(navigationHistoryPop(4));
-                    return;
+                    break;
                   }
                 }
                 if (action.payload.setAsFavorite) {
@@ -384,7 +399,7 @@ function* startOrResumeAddCreditCardSaga(
             } else {
               // cant load wallets but credit card is added successfully
               yield call(waitAndNavigateToWalletHome);
-              return;
+              break;
             }
           } else {
             // outcome is different from success
@@ -402,16 +417,16 @@ function* startOrResumeAddCreditCardSaga(
         );
         // Cannot refresh wallet token
         yield call(dispatchAddNewCreditCardFailure);
-        return;
+        break;
       }
     } catch (e) {
       if (action.payload.onFailure) {
         action.payload.onFailure(e.message);
       }
-      return;
     }
     break;
   }
+  resetLookUpId();
 }
 
 /**
@@ -801,6 +816,13 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield takeLatest(
+    getType(updatePaymentStatus.request),
+    updatePaymentStatusSaga,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
   if (bpdEnabled) {
     const contentClient = ContentClient();
 
@@ -925,7 +947,10 @@ function* checkProfile(
     | ActionType<typeof profileUpsert.success>
     | ActionType<typeof profileLoadSuccess>
 ) {
-  const enabled = action.payload.is_email_validated === true;
+  const enabled =
+    action.type === getType(profileUpsert.success)
+      ? action.payload.newValue.is_email_validated === true
+      : action.payload.is_email_validated === true;
   yield put(setWalletSessionEnabled(enabled));
 }
 
@@ -965,6 +990,19 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
         })
       );
     }
+  });
+
+  /**
+   * create and destroy the PM lookUpID through the payment flow
+   * more details https://www.pivotaltracker.com/story/show/177132354
+   */
+  yield takeEvery(getType(paymentInitializeState), function* () {
+    newLookUpId();
+    yield take([
+      getType(paymentCompletedSuccess),
+      getType(runDeleteActivePaymentSaga)
+    ]);
+    resetLookUpId();
   });
 }
 

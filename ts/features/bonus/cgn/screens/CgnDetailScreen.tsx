@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { View } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
 import { SafeAreaView, ScrollView } from "react-native";
+import { cgnMerchantVersionSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
 import I18n from "../../../../i18n";
@@ -29,21 +30,18 @@ import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
   navigateToCgnDetailsOtp,
-  navigateToCgnMerchantsList
+  navigateToCgnMerchantsList,
+  navigateToCgnMerchantsTabs
 } from "../navigation/actions";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { cgnDetails } from "../store/actions/details";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import {
-  eycaDetailSelector,
-  EycaDetailsState,
-  EycaDetailStatus
-} from "../store/reducers/eyca/details";
+import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { navigateBack } from "../../../../store/actions/navigation";
-import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { canEycaCardBeShown } from "../utils/eyca";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -51,26 +49,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 const HEADER_BACKGROUND_COLOR = "#C2DBEC";
 const GRADIENT_END_COLOR = "#94C0DD";
 
-// return true if the EYCA details component can be shown
-const canEycaCardBeShown = (card: EycaDetailsState): boolean => {
-  if (isLoading(card)) {
-    return true;
-  }
-  const evaluateReady = (status: EycaDetailStatus): boolean => {
-    switch (status) {
-      case "FOUND":
-      case "NOT_FOUND":
-      case "ERROR":
-        return true;
-      case "INELIGIBLE":
-        return false;
-    }
-  };
-  if (isReady(card)) {
-    return evaluateReady(card.value.status);
-  }
-  return false;
-};
 /**
  * Screen to display all the information about the active CGN
  */
@@ -95,6 +73,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   });
 
   const canDisplayEycaDetails = canEycaCardBeShown(props.eycaDetails);
+
   return props.cgnDetails || props.isCgnInfoLoading ? (
     <LoadingSpinnerOverlay isLoading={props.isCgnInfoLoading || cardLoading}>
       <BaseScreenComponent
@@ -149,7 +128,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
           <FooterWithButtons
             type={"TwoButtonsInlineHalf"}
             leftButton={cancelButtonProps(
-              props.navigateToMerchants,
+              props.isMerchantV2Enabled
+                ? props.navigateToMerchantsTabs
+                : props.navigateToMerchantsList,
               I18n.t("bonus.cgn.detail.cta.buyers")
             )}
             rightButton={confirmButtonProps(
@@ -173,6 +154,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 const mapStateToProps = (state: GlobalState) => ({
   cgnDetails: cgnDetailsInformationSelector(state),
   isCgnInfoLoading: isCgnDetailsLoading(state),
+  isMerchantV2Enabled: cgnMerchantVersionSelector(state),
   cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
   eycaDetails: eycaDetailSelector(state)
 });
@@ -181,7 +163,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => dispatch(navigateBack()),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToMerchantsList: () => dispatch(navigateToCgnMerchantsList()),
+  navigateToMerchantsTabs: () => dispatch(navigateToCgnMerchantsTabs()),
   navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
 });
 

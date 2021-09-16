@@ -22,6 +22,7 @@ import {
 import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSessions";
 import { GlobalState } from "../../store/reducers/types";
 import { appReducer } from "../../store/reducers";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
@@ -35,6 +36,9 @@ jest.mock("react-native-share", () => ({
 }));
 
 const mockedProfile: InitializedProfile = {
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
@@ -91,33 +95,26 @@ describe("watchProfile", () => {
       .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
       .run());
 
-  it("checkStoreHashedFiscalCode should not dispatch newProfileLoggedIn action - empty store", () =>
-    expectSaga(
-      profileSagaTestable!.checkStoreHashedFiscalCode,
-      profileLoadSuccess(mockedProfile)
-    )
-      .withState({
-        ...globalState,
-        crossSessions: { hashedFiscalCode: undefined }
-      })
-      .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-      .not.put(differentProfileLoggedIn())
-      .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
-      .run());
-
-  it("checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action", () =>
-    expectSaga(
-      profileSagaTestable!.checkStoreHashedFiscalCode,
-      profileLoadSuccess(mockedProfile)
-    )
-      .withState({
-        ...globalState,
-        crossSessions: {
-          hashedFiscalCode: hash(`${mockedProfile.fiscal_code}xxx`)
-        }
-      })
-      .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-      .put(differentProfileLoggedIn())
-      .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
-      .run());
+  it.each`
+    state          | storedFiscalCode
+    ${"different"} | ${hash(`${mockedProfile.fiscal_code}xxx`)}
+    ${"undefined"} | ${undefined}
+  `(
+    "checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action if the stored hashed fiscal code is $state",
+    async ({ storedFiscalCode }) =>
+      expectSaga(
+        profileSagaTestable!.checkStoreHashedFiscalCode,
+        profileLoadSuccess(mockedProfile)
+      )
+        .withState({
+          ...globalState,
+          crossSessions: {
+            hashedFiscalCode: storedFiscalCode
+          }
+        })
+        .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
+        .put(differentProfileLoggedIn())
+        .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
+        .run()
+  );
 });

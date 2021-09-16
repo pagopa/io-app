@@ -13,8 +13,6 @@ import {
 import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
 import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import CgnCardComponent from "../CgnCardComponent";
-import I18n from "../../../../../../i18n";
-import { localeDateFormat } from "../../../../../../utils/locale";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { appReducer } from "../../../../../../store/reducers";
 import { profileLoadSuccess } from "../../../../../../store/actions/profile";
@@ -23,9 +21,13 @@ import { profileNameSurnameSelector } from "../../../../../../store/reducers/pro
 import { EmailAddress } from "../../../../../../../definitions/backend/EmailAddress";
 import { PreferredLanguages } from "../../../../../../../definitions/backend/PreferredLanguages";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { ServicesPreferencesModeEnum } from "../../../../../../../definitions/backend/ServicesPreferencesMode";
 
 const mockedProfile: InitializedProfile = {
   accepted_tos_version: 2.1,
+  service_preferences_settings: {
+    mode: ServicesPreferencesModeEnum.AUTO
+  },
   email: "mario.rossi@email.it" as EmailAddress,
   family_name: "Rossi",
   has_profile: true,
@@ -73,14 +75,6 @@ const baseCardTestCase = (store: any, card: Card) => {
   const webView = component.queryByTestId("background-webview");
   expect(webView).not.toBeNull();
 
-  const validityDate = component.queryByTestId("validity-date");
-  expect(validityDate).not.toBeNull();
-  expect(validityDate).toHaveTextContent(
-    `${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
-      cgnStatusActivated.expiration_date,
-      I18n.t("global.dateFormats.shortFormat")
-    )}`
-  );
   const nameSurname = component.queryByTestId("profile-name-surname");
   if (pot.isSome(store.getState().profile)) {
     expect(nameSurname).not.toBeNull();
