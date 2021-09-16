@@ -2708,7 +2708,7 @@ features:
     revoked:
       title: "Questo certificato \nnon è più valido"
     expired:
-      title: "Questo certifcato è scaduto"
+      title: "Questo certificato è scaduto"
     ko:
       genericError:
         title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
