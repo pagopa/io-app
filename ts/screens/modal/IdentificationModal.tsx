@@ -409,11 +409,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * with, if available, custom actions passed as props.
    */
   private onIdentificationCancelHandler(
-    identificationCancelData?: IdentificationCancelData
+    identificationCancelData: IdentificationCancelData
   ) {
-    if (identificationCancelData) {
-      identificationCancelData.onCancel();
-    }
+    identificationCancelData.onCancel();
     this.props.onCancelIdentification();
   }
 
