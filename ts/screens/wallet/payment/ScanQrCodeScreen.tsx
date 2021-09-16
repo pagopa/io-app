@@ -245,7 +245,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         I18n.t("permissionRationale.camera.message"),
         [
           {
-            text: I18n.t("global.buttons.ok"),
+            text: I18n.t("global.buttons.choose"),
             style: "default"
           }
         ]

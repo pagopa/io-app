@@ -160,6 +160,7 @@ global:
     update: "Update"
     findOutMore: "Find out more"
     details: "Details"
+    choose: "Scegli"
   navigator:
     messages: messages
     wallet: wallet
@@ -222,11 +223,11 @@ errors:
   profileUpdateError: An error occurred while updating your profile.
 permissionRationale:
   storage:
-    title: "TMP title storage"
-    message: "TMP message storage"
+    title: "Allow gallery access"
+    message: "You’ll be able to save bonuses, certificates and upload screenshots or payment notices."
   camera:
-    title: "IO Camera usage permission"
-    message: "IO app needs Camera usage permission to shoot at the QR code"
+    title: "Allow camera access"
+    message: "You’ll be able to read QR codes and pay pagoPA notices."
 startup:
   title: Initialization
   authentication: User authenticated
