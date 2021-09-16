@@ -163,11 +163,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToEmailReadScreen = () => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [navigateToEmailReadScreen()]
-    });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(StackActions.popToTop());
+    this.props.navigation.dispatch(navigateToEmailReadScreen());
   };
 
   public componentDidMount() {
