@@ -11,6 +11,7 @@ import { SvVoucherId } from "../../types/SvVoucher";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { svVouchersListUiSelector } from "../../store/reducers/voucherList/ui";
+import { waitBackoffError } from "../../../../../utils/backoffError";
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (
@@ -46,6 +47,7 @@ export function* handleGetVoucherBeneficiario(
   const elementsXPage = 10;
 
   try {
+    yield call(waitBackoffError, svVoucherListGet.failure);
     const {
       nextPage
     }: ReturnType<typeof svVouchersListUiSelector> = yield select(

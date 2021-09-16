@@ -23,7 +23,10 @@ import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/
 import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
 import { GlobalState } from "./types";
-import { svPossibleVoucherStateGet } from "../../features/bonus/siciliaVola/store/actions/voucherList";
+import {
+  svPossibleVoucherStateGet,
+  svVoucherListGet
+} from "../../features/bonus/siciliaVola/store/actions/voucherList";
 
 /**
  * list of monitored actions
@@ -46,7 +49,8 @@ const monitoredActions: ReadonlyArray<[
     bpdTransactionsLoadRequiredData.success
   ],
   [euCovidCertificateGet.failure, euCovidCertificateGet.success],
-  [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success]
+  [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
+  [svVoucherListGet.failure, svVoucherListGet.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);
