@@ -27,11 +27,9 @@ export const requestIOAndroidPermission = async (
     return true;
   }
 
-  if (rationale !== undefined) {
-    await AsyncAlert(rationale.title, rationale.message, [
-      { text: rationale.buttonPositive, style: "default" }
-    ]);
-  }
+  await AsyncAlert(rationale.title, rationale.message, [
+    { text: rationale.buttonPositive, style: "default" }
+  ]);
 
   const status = await PermissionsAndroid.request(permission);
   return status === "granted";

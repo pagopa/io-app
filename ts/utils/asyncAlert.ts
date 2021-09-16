@@ -1,4 +1,5 @@
 import { Alert, AlertButton, AlertOptions } from "react-native";
+import I18n from "../i18n";
 
 /**
  * The result of the Alert.
@@ -25,7 +26,7 @@ export const AsyncAlert = (
   options?: AlertOptions
 ): Promise<AlertResult> => {
   const newButtons: Array<AlertButton> = buttons ?? [
-    { text: "OK", style: "default" }
+    { text: I18n.t("global.buttons.ok"), style: "default" }
   ];
 
   return new Promise(resolve => {

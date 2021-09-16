@@ -224,11 +224,9 @@ permissionRationale:
   storage:
     title: "TMP title storage"
     message: "TMP message storage"
-    buttonPositive: "TMP buttonPositive storage"
   camera:
-    title: "TMP title camera"
-    message: "TMP message camera"
-    buttonPositive: "TMP buttonPositive camera"
+    title: "Permesso per utilizzare la fotocamera da parte di IO"
+    message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -1385,9 +1383,6 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
-    cameraUsagePermissionInfobox:
-      title: "Permesso per utilizzare la fotocamera da parte di IO"
-      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento

@@ -48,7 +48,7 @@ export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {
         {
           title: I18n.t("permissionRationale.storage.title"),
           message: I18n.t("permissionRationale.storage.message"),
-          buttonPositive: I18n.t("permissionRationale.storage.buttonPositive")
+          buttonPositive: I18n.t("global.buttons.ok")
         }
       ),
     errorMsg => new Error(String(errorMsg))
