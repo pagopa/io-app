@@ -2691,6 +2691,7 @@ bonus:
         title: "Non ci sono codici sconto disponibili"
         subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
         cta: "Genera un nuovo codice"
+      error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
 features:
   euCovidCertificate:
     save:

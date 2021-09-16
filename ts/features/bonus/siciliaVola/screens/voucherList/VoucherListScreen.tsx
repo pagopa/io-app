@@ -35,6 +35,7 @@ import {
   svVouchersListUiSelector
 } from "../../store/reducers/voucherList/ui";
 import {
+  isError,
   isLoading,
   isReady,
   isUndefined
@@ -47,6 +48,7 @@ import EmptyListImage from "../../../../../../img/bonus/siciliaVola/emptyVoucher
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
+import { showToast } from "../../../../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -111,6 +113,8 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
   const vouchers = toArray(props.indexedVouchers);
+  const isDataLoadedUndefined = isUndefined(props.requiredDataLoaded);
+  const isDataLoadedError = isError(props.requiredDataLoaded);
 
   useEffect(() => {
     props.requestVoucherState();
@@ -118,10 +122,16 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (isUndefined(props.requiredDataLoaded)) {
+    if (isDataLoadedUndefined) {
       props.requestVoucherPage(props.filters);
     }
-  }, [props.filters, props.requiredDataLoaded]);
+  }, [props.filters, isDataLoadedUndefined]);
+
+  useEffect(() => {
+    if (isDataLoadedError) {
+      showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
+    }
+  }, [isDataLoadedError]);
 
   const openFiltersModal = () =>
     showAnimatedModal(
