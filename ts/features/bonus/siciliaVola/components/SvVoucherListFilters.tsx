@@ -155,7 +155,8 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                 onChangeText: setSearchValue,
                 placeholder: I18n.t(
                   "bonus.sv.voucherList.filter.searchValuePlaceholder"
-                )
+                ),
+                maxLength: 10
               }}
               icon="io-search"
             />
