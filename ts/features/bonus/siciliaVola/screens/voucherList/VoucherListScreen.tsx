@@ -68,7 +68,7 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement | null => (
 export const RenderItem = React.memo(
   RenderItemBase,
   (prev: VoucherPreview, curr: VoucherPreview) =>
-    prev.idVoucher !== curr.idVoucher
+    prev.idVoucher === curr.idVoucher
 );
 
 /**
