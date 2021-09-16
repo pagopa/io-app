@@ -62,8 +62,8 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement | null => (
 );
 
 /**
- * In order to optimize the rendering of the item, we use the keyId as unique identifier to avoid to redraw the component.
- * The trx data cannot change while consulting the list and we use this information to avoid a deep comparison
+ * In order to optimize the rendering of the item, we use the idVoucher as unique identifier to avoid to redraw the component.
+ * The VoucherPreview data cannot change while consulting the list and we use this information to avoid a deep comparison
  */
 export const RenderItem = React.memo(
   RenderItemBase,
