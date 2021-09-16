@@ -167,14 +167,12 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
                   {I18n.t("bonus.sv.voucherList.filter.stateSection.title")}
                 </H2>
                 <View spacer small />
-                {props.possibleVoucherState.value.map((pVS, i) => {
-                  return (
-                    <View key={i}>
-                      {renderVoucherStateItem(pVS)}
-                      <ItemSeparatorComponent noPadded={true} />
-                    </View>
-                  );
-                })}
+                {props.possibleVoucherState.value.map((pVS, i) => (
+                  <View key={i}>
+                    {renderVoucherStateItem(pVS)}
+                    <ItemSeparatorComponent noPadded={true} />
+                  </View>
+                ))}
                 <View spacer large />
               </>
             )}

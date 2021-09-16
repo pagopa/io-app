@@ -22,11 +22,11 @@ import {
 import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
-import { GlobalState } from "./types";
 import {
   svPossibleVoucherStateGet,
   svVoucherListGet
 } from "../../features/bonus/siciliaVola/store/actions/voucherList";
+import { GlobalState } from "./types";
 
 /**
  * list of monitored actions
