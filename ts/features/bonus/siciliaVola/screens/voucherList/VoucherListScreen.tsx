@@ -206,8 +206,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestVoucherState: () => dispatch(svPossibleVoucherStateGet.request()),
   resetFilter: () => dispatch(svSetFilter({})),
   requestVoucherPage: (filters: FilterState) =>
-    dispatch(svVoucherListGet.request(filters)),
-  start: () => dispatch(svGenerateVoucherStart())
+    dispatch(svVoucherListGet.request(filters))
 });
 const mapStateToProps = (state: GlobalState) => ({
   indexedVouchers: svVouchersSelector(state),
