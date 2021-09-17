@@ -108,7 +108,7 @@ const paymentHistoryFailed: PaymentHistory = {
       IPatternStringTag<"^[0-9]{11}$">
   },
   started_at: "2020-04-05T15:51:16.237Z",
-  failure: "DOMAIN_UNKNOWN"
+  failure: "PPT_DOMINIO_SCONOSCIUTO"
 };
 
 describe("test the checkPaymentOutcome function", () => {

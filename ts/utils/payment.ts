@@ -172,11 +172,8 @@ export const getErrorDescription = (
   }
 };
 
-const v2ErrorMacrosMap: Record<
-  string,
-  ReadonlyArray<keyof typeof Detail_v2Enum>
-> = {
-  technical: [
+const v2ErrorMacrosMap: Record<MainMacros, Set<keyof typeof Detail_v2Enum>> = {
+  TECHNICAL: new Set([
     "PPT_PSP_SCONOSCIUTO",
     "PPT_PSP_DISABILITATO",
     "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
@@ -192,15 +189,15 @@ const v2ErrorMacrosMap: Record<
     "PPT_SEMANTICA",
     "PPT_SYSTEM_ERROR",
     "PAA_SEMANTICA"
-  ],
-  data: [
+  ]),
+  DATA: new Set([
     "PPT_SINTASSI_EXTRAXSD",
     "PPT_SINTASSI_XSD",
     "PPT_DOMINIO_SCONOSCIUTO",
     "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
     "PAA_PAGAMENTO_SCONOSCIUTO"
-  ],
-  ec: [
+  ]),
+  EC: new Set([
     "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
     "PPT_STAZIONE_INT_PA_TIMEOUT",
     "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
@@ -211,13 +208,13 @@ const v2ErrorMacrosMap: Record<
     "PAA_ID_INTERMEDIARIO_ERRATO",
     "PAA_STAZIONE_INT_ERRATA",
     "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
-  ]
+  ])
 };
 
+type MainMacros = "TECHNICAL" | "DATA" | "EC";
+
 type ErrorMacros =
-  | "TECHNICAL"
-  | "DATA"
-  | "EC"
+  | MainMacros
   | "REVOKED"
   | "EXPIRED"
   | "ONGOING"
@@ -231,13 +228,13 @@ export const getV2ErrorMacro = (
     return undefined;
   }
 
-  if (v2ErrorMacrosMap.technical.includes(error)) {
+  if (v2ErrorMacrosMap.TECHNICAL.has(error)) {
     return "TECHNICAL";
   }
-  if (v2ErrorMacrosMap.data.includes(error)) {
+  if (v2ErrorMacrosMap.DATA.has(error)) {
     return "DATA";
   }
-  if (v2ErrorMacrosMap.ec.includes(error)) {
+  if (v2ErrorMacrosMap.EC.has(error)) {
     return "EC";
   }
 
