@@ -160,6 +160,7 @@ global:
     update: "Aggiorna"
     findOutMore: "Scopri di più"
     details: "Dettagli"
+    choose: "Scegli"
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -220,6 +221,13 @@ exit:
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
+permissionRationale:
+  storage:
+    title: "Consenti l’accesso alla galleria"
+    message: "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento."
+  camera:
+    title: "Consenti l’accesso alla fotocamera"
+    message: "Potrai leggere codici QR e pagare gli avvisi pagoPA."
 startup:
   title: Inizializzazione
   authentication: Utente autenticato
@@ -1376,9 +1384,6 @@ wallet:
       inserisci manualmente i dati (Codice Avviso e Codice Fiscale Ente Creditore).
     setManually: Inserisci manualmente
     enroll_cta: Per inquadrare il codice QR presente sull'avviso, devi prima consentire ad IO l'uso della fotocamera. Puoi farlo dal menu 'Impostazioni' del tuo dispositivo.
-    cameraUsagePermissionInfobox:
-      title: "Permesso per utilizzare la fotocamera da parte di IO"
-      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alla tua galleria per salvare bonus e certificati, o caricare screenshot e avvisi di pagamento
@@ -2704,7 +2709,7 @@ features:
     revoked:
       title: "Questo certificato \nnon è più valido"
     expired:
-      title: "Questo certifcato è scaduto"
+      title: "Questo certificato è scaduto"
     ko:
       genericError:
         title: "Non è stato possibile recuperare i dati del tuo certificato: riprova"
