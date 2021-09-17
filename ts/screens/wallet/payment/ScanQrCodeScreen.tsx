@@ -7,7 +7,14 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  PermissionsAndroid,
+  Platform,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
@@ -34,6 +41,7 @@ import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
+import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 
@@ -44,6 +52,9 @@ type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
+  // The package react-native-qrcode-scanner automatically asks for android permission, but we have to display before an alert with
+  // the rationale
+  permissionRationaleDisplayed: boolean;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -209,7 +220,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       scanningState: "SCANNING",
-      isFocused: false
+      isFocused: false,
+      permissionRationaleDisplayed: Platform.OS !== "android"
     };
   }
 
@@ -218,6 +230,28 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
+  }
+
+  public async componentDidMount() {
+    if (Platform.OS !== "android") {
+      return;
+    }
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.CAMERA
+    );
+    if (!hasPermission) {
+      await AsyncAlert(
+        I18n.t("permissionRationale.camera.title"),
+        I18n.t("permissionRationale.camera.message"),
+        [
+          {
+            text: I18n.t("global.buttons.choose"),
+            style: "default"
+          }
+        ]
+      );
+    }
+    this.setState({ permissionRationaleDisplayed: true });
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
@@ -254,7 +288,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           faqCategories={["wallet"]}
         >
           <ScrollView bounces={false}>
-            {this.state.isFocused && (
+            {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner
                 onRead={(reading: { data: string }) =>
                   this.onQrCodeData(reading.data)
@@ -292,12 +326,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 // "checkAndroid6Permissions" property enables permission checking for
                 // Android versions greater than 6.0 (23+).
                 checkAndroid6Permissions={true}
-                permissionDialogTitle={I18n.t(
-                  "wallet.QRtoPay.cameraUsagePermissionInfobox.title"
-                )}
-                permissionDialogMessage={I18n.t(
-                  "wallet.QRtoPay.cameraUsagePermissionInfobox.message"
-                )}
                 // "notAuthorizedView" is by default available on iOS systems ONLY.
                 // In order to make Android systems act the same as iOSs you MUST
                 // enable "checkAndroid6Permissions" property as well.

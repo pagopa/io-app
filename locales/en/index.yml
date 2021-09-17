@@ -160,6 +160,7 @@ global:
     update: "Update"
     findOutMore: "Find out more"
     details: "Details"
+    choose: "Scegli"
   navigator:
     messages: messages
     wallet: wallet
@@ -220,6 +221,13 @@ exit:
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
+permissionRationale:
+  storage:
+    title: "Allow gallery access"
+    message: "You’ll be able to save bonuses, certificates and upload screenshots or payment notices."
+  camera:
+    title: "Allow camera access"
+    message: "You’ll be able to read QR codes and pay pagoPA notices."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -1353,9 +1361,6 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
-    cameraUsagePermissionInfobox:
-      title: "IO Camera usage permission"
-      message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1730,7 +1735,7 @@ identification:
     popup:
       reason: Identification by touch ID failed
       title: Identification required
-      sensorDescription: Touch sensor
+      sensorDescription: Login quickly
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
