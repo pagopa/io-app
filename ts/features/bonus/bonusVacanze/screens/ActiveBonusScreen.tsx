@@ -65,8 +65,8 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
-import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 import { withBase64Uri } from "../../../../utils/image";
+import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
   [key: string]: string;
