@@ -14,6 +14,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { withBase64Uri } from "../../../../utils/image";
 
 type NavigationParams = Readonly<{
   qrCodeContent: string;
@@ -51,9 +52,10 @@ export const EuCovidCertQrCodeFullScreen = (
               "features.euCovidCertificate.valid.accessibility.qrCode"
             )}
             source={{
-              uri: `data:image/png;base64,${props.navigation.getParam(
-                "qrCodeContent"
-              )}`
+              uri: withBase64Uri(
+                props.navigation.getParam("qrCodeContent"),
+                "png"
+              )
             }}
             style={styles.qrCode}
           />

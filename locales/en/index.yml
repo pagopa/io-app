@@ -2669,6 +2669,11 @@ bonus:
         subtitle: "Search to see your used or expired codes or request a new code"
         cta: "Generate a new code"
       error: "We are unable to recover your vouchers, please try again."
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Unique code"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
 features:
   euCovidCertificate:
     save:
