@@ -121,6 +121,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
   }
 
+  get idp(): string {
+    return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
+  }
+
   private updateLoginTrace = (url: string): void => {
     this.setState({ loginTrace: url });
   };
@@ -140,7 +144,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleLoginFailure = (errorCode?: string) => {
     this.props.dispatchLoginFailure(
-      new Error(`login failure with code ${errorCode || "n/a"}`)
+      new Error(`login failure with code ${errorCode || "n/a"}`),
+      this.idp
     );
     const logText = fromNullable(errorCode).fold(
       "login failed with no error code available",
@@ -159,10 +164,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleLoginSuccess = (token: SessionToken) => {
     instabugLog(`login success`, TypeLogs.DEBUG, "login");
     Instabug.resetTags();
-    this.props.dispatchLoginSuccess(
-      token,
-      this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a"
-    );
+    this.props.dispatchLoginSuccess(token, this.idp);
   };
 
   private setRequestStateToLoading = (): void =>
@@ -343,7 +345,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(idpLoginUrlChanged({ url })),
   dispatchLoginSuccess: (token: SessionToken, idp: string) =>
     dispatch(loginSuccess({ token, idp })),
-  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
+  dispatchLoginFailure: (error: Error, idp: string) =>
+    dispatch(loginFailure({ error, idp }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IdpLoginScreen);
