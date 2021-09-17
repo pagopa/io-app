@@ -1763,7 +1763,7 @@ identification:
     popup:
       reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
-      sensorDescription: Tocca il sensore
+      sensorDescription: Accedi velocemente
   fail:
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
