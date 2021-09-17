@@ -3,10 +3,7 @@ import { call, put } from "redux-saga/effects";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import {
-  svPossibleVoucherStateGet,
-  svVoucherListGet
-} from "../../store/actions/voucherList";
+import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { waitBackoffError } from "../../../../../utils/backoffError";
@@ -54,6 +51,6 @@ export function* handleGetVoucheStati(
       })
     );
   } catch (e) {
-    yield put(svVoucherListGet.failure(getNetworkError(e)));
+    yield put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
   }
 }
