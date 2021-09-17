@@ -10,6 +10,7 @@ type Props = {
   voucherCode: string;
   qrCode: string;
   barCode: string;
+  onPressWithGestureHandler?: true;
 };
 
 const styles = StyleSheet.create({
@@ -44,7 +45,7 @@ const VoucherInformationComponent = (props: Props): React.ReactElement => (
       <View hspacer />
       <CopyButtonComponent
         textToCopy={props.voucherCode}
-        onPressWithGestureHandler={true}
+        onPressWithGestureHandler={props.onPressWithGestureHandler}
       />
     </View>
     <View spacer />
