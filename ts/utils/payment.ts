@@ -14,7 +14,6 @@ import I18n from "../i18n";
 
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
-import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import {
   BancomatPaymentMethod,
@@ -29,6 +28,10 @@ import {
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
+import {
+  Detail_v2Enum,
+  DetailEnum
+} from "../../definitions/backend/PaymentProblemJson";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -166,6 +169,118 @@ export const getErrorDescription = (
       return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
     default:
       return undefined;
+  }
+};
+
+const v2ErrorMacrosMap: Record<
+  string,
+  ReadonlyArray<keyof typeof Detail_v2Enum>
+> = {
+  technical: [
+    "PPT_PSP_SCONOSCIUTO",
+    "PPT_PSP_DISABILITATO",
+    "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
+    "PPT_INTERMEDIARIO_PSP_DISABILITATO",
+    "PPT_CANALE_SCONOSCIUTO",
+    "PPT_CANALE_DISABILITATO",
+    "PPT_AUTENTICAZIONE",
+    "PPT_AUTORIZZAZIONE",
+    "PPT_DOMINIO_DISABILITATO",
+    "PPT_INTERMEDIARIO_PA_DISABILITATO",
+    "PPT_STAZIONE_INT_PA_DISABILITATA",
+    "PPT_CODIFICA_PSP_SCONOSCIUTA",
+    "PPT_SEMANTICA",
+    "PPT_SYSTEM_ERROR",
+    "PAA_SEMANTICA"
+  ],
+  data: [
+    "PPT_SINTASSI_EXTRAXSD",
+    "PPT_SINTASSI_XSD",
+    "PPT_DOMINIO_SCONOSCIUTO",
+    "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
+    "PAA_PAGAMENTO_SCONOSCIUTO"
+  ],
+  ec: [
+    "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
+    "PPT_STAZIONE_INT_PA_TIMEOUT",
+    "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
+    "PPT_IBAN_NON_CENSITO",
+    "PAA_SINTASSI_EXTRAXSD",
+    "PAA_SINTASSI_XSD",
+    "PAA_ID_DOMINIO_ERRATO",
+    "PAA_ID_INTERMEDIARIO_ERRATO",
+    "PAA_STAZIONE_INT_ERRATA",
+    "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
+  ]
+};
+
+type ErrorMacros =
+  | "TECHNICAL"
+  | "DATA"
+  | "EC"
+  | "REVOKED"
+  | "EXPIRED"
+  | "ONGOING"
+  | "DUPLICATED"
+  | "UNCOVERED";
+
+export const getV2ErrorMacro = (
+  error?: keyof typeof Detail_v2Enum
+): ErrorMacros | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+
+  if (v2ErrorMacrosMap.technical.includes(error)) {
+    return "TECHNICAL";
+  }
+  if (v2ErrorMacrosMap.data.includes(error)) {
+    return "DATA";
+  }
+  if (v2ErrorMacrosMap.ec.includes(error)) {
+    return "EC";
+  }
+
+  switch (error) {
+    case "PAA_PAGAMENTO_IN_CORSO":
+      return "ONGOING";
+    case "PAA_PAGAMENTO_ANNULLATO":
+      return "REVOKED";
+    case "PAA_PAGAMENTO_SCADUTO":
+      return "EXPIRED";
+    case "PAA_PAGAMENTO_DUPLICATO":
+      return "DUPLICATED";
+    default:
+      return "UNCOVERED";
+  }
+};
+
+export const getErrorDescriptionV2 = (
+  error?: keyof typeof Detail_v2Enum
+): string | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+
+  const errorMacro = getV2ErrorMacro(error);
+
+  switch (errorMacro) {
+    case "TECHNICAL":
+      return "Errore Tecnico";
+    case "DATA":
+      return "Errore Dati";
+    case "EC":
+      return "Errore EC";
+    case "ONGOING":
+      return "Pagamento in corso";
+    case "REVOKED":
+      return "Pagamento Annullato";
+    case "EXPIRED":
+      return "Pagamento scaduto";
+    case "DUPLICATED":
+      return "Pagamento Duplicato";
+    default:
+      return "Errore non censito";
   }
 };
 

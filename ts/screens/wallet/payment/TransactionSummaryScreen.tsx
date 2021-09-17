@@ -113,7 +113,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
       // already completed for this notice, we update the payment state so that
       // the notice result paid
       error
-        .filter(_ => _ === "PAYMENT_DUPLICATED")
+        .filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
         this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
@@ -231,7 +231,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   private getFooterButtons = () =>
     this.props.error.fold(this.renderFooterButtons(), error =>
-      error === "PAYMENT_DUPLICATED"
+      error === "PAA_PAGAMENTO_DUPLICATO"
         ? this.renderFooterSingleButton()
         : this.renderFooterButtons()
     );
@@ -550,7 +550,7 @@ const mergeProps = (
     // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
     // go back to the screen to allow the user to modify the data
     if (
-      stateProps.error.toUndefined() === "INVALID_AMOUNT" &&
+      stateProps.error.toUndefined() === "PPT_IMPORTO_ERRATO" &&
       dispatchProps.isManualPaymentInsertion
     ) {
       dispatchProps.dispatchNavigateToPaymentManualDataInsertion();

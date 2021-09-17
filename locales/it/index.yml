@@ -1391,19 +1391,27 @@ wallet:
     title: Perché i costi di transazione?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato!
+    TECHNICAL: Spiacenti, c’è un problema tecnico con questo avviso
+    DATA: Spiacenti, i codici inseriti non sono corretti
+    EC: Spiacenti, l’Ente Creditore sta avendo problemi nella risposta
+    PAYMENT_ONGOING: C’è già un pagamento in corso, riprova tra qualche minuto
+    ONGOING_SUBTITLE: Se è passato troppo tempo, segnalacelo!
+    REVOKED: Spiacenti, l’Ente Creditore ha revocato questo avviso
+    EXPIRED: Spiacenti, l’avviso è scaduto e non è più possibile pagarlo
+    GENERIC_ERROR: Spiacenti, si è verificato un errore imprevisto
+    GENERIC_ERROR_SUBTITLE: Riprova il pagamento, oppure aprire una segnalazione per ricevere assistenza.
+    PAYMENT_DUPLICATED: Questo avviso è stato già pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
-    PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
     DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
-    GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
     PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
+    contactECsubtitle: Contatta l’Ente per maggiori informazioni.
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
   walletCardTransaction:
