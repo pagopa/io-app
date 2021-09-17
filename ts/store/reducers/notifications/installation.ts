@@ -48,7 +48,7 @@ const reducer = (
     case getType(sessionInvalid):
     case getType(logoutRequest): // even if the logout fails
     case getType(clearCache):
-      return state;
+      return getInitialState();
     default:
       return state;
   }
