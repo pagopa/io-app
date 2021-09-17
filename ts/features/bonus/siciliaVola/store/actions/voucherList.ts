@@ -51,6 +51,13 @@ export const svVoucherRevocation = createAsyncAction(
  */
 export const svSetFilter = createStandardAction("SV_SET_FILTER")<FilterState>();
 
+/**
+ * The user chooses the voucher to see the details
+ */
+export const svSelectVoucher = createStandardAction("SV_SELECT_VOUCHER")<
+  SvVoucherId
+>();
+
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
   | ActionType<typeof svPossibleVoucherStateGet>
