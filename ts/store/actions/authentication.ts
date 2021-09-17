@@ -47,7 +47,10 @@ export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
   idp: string;
 }>();
 
-export const loginFailure = createStandardAction("LOGIN_FAILURE")<Error>();
+export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
+  error: Error;
+  idp: string;
+}>();
 
 export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<
   LogoutOption
