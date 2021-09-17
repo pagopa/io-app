@@ -5,6 +5,7 @@ import I18n from "../../../../i18n";
 import { H5 } from "../../../../components/core/typography/H5";
 import { H3 } from "../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import { withBase64Uri } from "../../../../utils/image";
 
 type Props = {
   voucherCode: string;
@@ -60,7 +61,7 @@ const VoucherInformationComponent = (props: Props): React.ReactElement => (
           "bonus.sv.components.voucherVisualDetails.qrCode"
         )}
         source={{
-          uri: `data:image/png;base64,${props.qrCode}`
+          uri: withBase64Uri(props.qrCode, "png")
         }}
         style={styles.qrCode}
       />
@@ -77,7 +78,7 @@ const VoucherInformationComponent = (props: Props): React.ReactElement => (
           "bonus.sv.components.voucherVisualDetails.barCode"
         )}
         source={{
-          uri: `data:image/png;base64,${props.barCode}`
+          uri: withBase64Uri(props.barCode, "png")
         }}
         style={styles.barCode}
       />
