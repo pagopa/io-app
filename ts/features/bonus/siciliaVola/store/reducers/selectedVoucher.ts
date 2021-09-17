@@ -1,13 +1,24 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
 import { SvVoucher } from "../../types/SvVoucher";
 import { svVoucherDetailGet } from "../actions/voucherList";
 import { NetworkError } from "../../../../../utils/errors";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../bpd/model/RemoteValue";
 
-export type SelectedVoucherState = pot.Pot<SvVoucher, NetworkError>;
-const INITIAL_STATE: SelectedVoucherState = pot.none;
+export type SelectedVoucherState = {
+  voucherCode?: string;
+  voucher: RemoteValue<SvVoucher, NetworkError>;
+};
+const INITIAL_STATE: SelectedVoucherState = {
+  voucher: remoteUndefined
+};
 
 const reducer = (
   state: SelectedVoucherState = INITIAL_STATE,
@@ -17,11 +28,11 @@ const reducer = (
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
     case getType(svVoucherDetailGet.request):
-      return pot.toLoading(state);
+      return { ...state, voucher: remoteLoading };
     case getType(svVoucherDetailGet.success):
-      return pot.some(action.payload);
+      return { ...state, voucher: remoteReady(action.payload) };
     case getType(svVoucherDetailGet.failure):
-      return pot.toError(state, action.payload);
+      return { ...state, voucher: remoteError(action.payload) };
   }
 
   return state;
