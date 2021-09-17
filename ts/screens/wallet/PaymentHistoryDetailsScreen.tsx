@@ -35,7 +35,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
   getCodiceAvviso,
-  getErrorDescription,
+  getErrorDescriptionV2,
   getPaymentHistoryDetails,
   getPaymentOutcomeCodeDescription,
   getTransactionFee
@@ -113,7 +113,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // the error could be on attiva or while the payment execution
     // so the description is built first checking the attiva failure, alternatively
     // it checks about the outcome if the payment went wrong
-    const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
+    const errorDetail = fromNullable(
+      getErrorDescriptionV2(payment.failure)
+    ).alt(
       fromNullable(payment.outcomeCode).chain(oc =>
         getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
       )

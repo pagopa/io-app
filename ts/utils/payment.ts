@@ -266,21 +266,21 @@ export const getErrorDescriptionV2 = (
 
   switch (errorMacro) {
     case "TECHNICAL":
-      return "Errore Tecnico";
+      return I18n.t("wallet.errors.TECHNICAL");
     case "DATA":
-      return "Errore Dati";
+      return I18n.t("wallet.errors.DATA");
     case "EC":
-      return "Errore EC";
+      return I18n.t("wallet.errors.EC");
     case "ONGOING":
-      return "Pagamento in corso";
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
     case "REVOKED":
-      return "Pagamento Annullato";
+      return I18n.t("wallet.errors.REVOKED");
     case "EXPIRED":
-      return "Pagamento scaduto";
+      return I18n.t("wallet.errors.EXPIRED");
     case "DUPLICATED":
-      return "Pagamento Duplicato";
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
     default:
-      return "Errore non censito";
+      return I18n.t("wallet.errors.GENERIC_ERROR");
   }
 };
 
