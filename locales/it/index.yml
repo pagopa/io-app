@@ -2677,6 +2677,12 @@ bonus:
           body: "Riceverai un messaggio in app IO quando sarà pronto."
     voucherList:
       title: "VoucherListScreen"
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Codice univoco"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
+
 features:
   euCovidCertificate:
     save:

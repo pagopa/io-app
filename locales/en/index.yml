@@ -2649,6 +2649,11 @@ bonus:
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
       title: "VoucherListScreen"
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Unique code"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
 features:
   euCovidCertificate:
     save:
