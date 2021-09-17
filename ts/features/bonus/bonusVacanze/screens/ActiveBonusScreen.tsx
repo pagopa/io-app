@@ -66,6 +66,7 @@ import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
+import { withBase64Uri } from "../../../../utils/image";
 
 type QRCodeContents = {
   [key: string]: string;
@@ -223,7 +224,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string) => {
-  const shared = await share(`data:image/png;base64,${content}`, code).run();
+  const shared = await share(withBase64Uri(content, "png"), code).run();
   shared.mapLeft(_ => showToastGenericError());
 };
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
