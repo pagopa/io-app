@@ -17,6 +17,7 @@ import {
 import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
+  svSelectVoucher,
   svSetFilter,
   svVoucherListGet
 } from "../../store/actions/voucherList";
@@ -53,13 +54,18 @@ import { showToast } from "../../../../../utils/showToast";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const RenderItemBase = (voucher: VoucherPreview): React.ReactElement | null => (
-  <ListItemComponent
-    title={voucher.destination}
-    subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
-    onPress={() => true}
-  />
-);
+const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
+  const dispatch = useIODispatch();
+  return (
+    <ListItemComponent
+      title={voucher.destination}
+      subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
+      onPress={() => {
+        dispatch(svSelectVoucher(voucher.idVoucher));
+      }}
+    />
+  );
+};
 
 /**
  * In order to optimize the rendering of the item, we use the idVoucher as unique identifier to avoid to redraw the component.
