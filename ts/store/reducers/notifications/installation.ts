@@ -11,6 +11,12 @@ import {
 } from "../../actions/notifications";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
+import {
+  logoutRequest,
+  sessionExpired,
+  sessionInvalid
+} from "../../actions/authentication";
+import { clearCache } from "../../actions/profile";
 
 export type InstallationState = Readonly<{
   id: string;
@@ -37,6 +43,12 @@ const reducer = (
       return { ...state, token: action.payload };
     case getType(notificationsInstallationTokenRegistered):
       return { ...state, registeredToken: action.payload };
+    // clear the state when the authentication is not longer valid
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
+    case getType(logoutRequest): // even if the logout fails
+    case getType(clearCache):
+      return state;
     default:
       return state;
   }
