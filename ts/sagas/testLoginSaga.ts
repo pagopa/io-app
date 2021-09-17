@@ -56,7 +56,7 @@ function* handleTestLogin({
     }
     throw new Error(readableReport(testLoginResponse.value));
   } catch (e) {
-    yield put(loginFailure(e));
+    yield put(loginFailure({ error: e, idp: "testIdp" }));
   }
 }
 

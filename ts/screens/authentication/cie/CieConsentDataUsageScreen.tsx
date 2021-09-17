@@ -174,7 +174,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNavigation: () => dispatch(resetToAuthenticationRoute),
   loginSuccess: (token: SessionToken) =>
     dispatch(loginSuccess({ token, idp: IdpCIE.id })),
-  loginFailure: (error: Error) => dispatch(loginFailure(error))
+  loginFailure: (error: Error) =>
+    dispatch(loginFailure({ error, idp: IdpCIE.id }))
 });
 
 export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
