@@ -7,7 +7,6 @@ import { useTypographyFactory } from "./Factory";
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
   IOColorType,
-  // tslint:disable-next-line:max-union-size
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "blue" | "white" | "red"
 >;
 

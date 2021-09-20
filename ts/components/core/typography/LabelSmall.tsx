@@ -6,7 +6,6 @@ import { useTypographyFactory } from "./Factory";
 
 type AllowedColors = Extract<
   IOColorType,
-  // tslint:disable-next-line:max-union-size
   "blue" | "bluegrey" | "red" | "white"
 >;
 type AllowedWeight = Extract<IOFontWeight, "Bold">;

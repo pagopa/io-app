@@ -19,7 +19,6 @@ type AllowedSemiBoldColors = Extract<
 // these colors are allowed only when the weight is Regular
 type AllowedRegularColors = Extract<
   IOColorType,
-  // tslint:disable-next-line:max-union-size
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "white"
 >;
 
