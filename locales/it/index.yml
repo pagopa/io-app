@@ -1417,6 +1417,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     contactECsubtitle: Contatta l’Ente per maggiori informazioni.
+    assistanceLabel: "Codice di errore per l’assistenza:"
     sendReport: Invia segnalazione
     loadingData: errore durante il caricamento, riprova.
   walletCardTransaction:

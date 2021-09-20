@@ -1394,6 +1394,7 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     contactECsubtitle: Contact the organisation for more information.
+    assistanceLabel: "Error code for assistance:"
     sendReport: Send report
     loadingData: loading failure, try again.
   walletCardTransaction:

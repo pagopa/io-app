@@ -80,7 +80,7 @@ const ErrorCodeCopyComponent = ({
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
   <>
-    <H4 weight={"Regular"}>{"Codice per l'assistenza"}</H4>
+    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
     <H4 weight={"Bold"}>{error}</H4>
     <View spacer />
     <CopyButtonComponent textToCopy={error} />
