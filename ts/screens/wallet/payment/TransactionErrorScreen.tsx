@@ -183,7 +183,7 @@ export const errorTransactionUIElements = (
           image: require(baseIconPath + "pictograms/hourglass.png"),
           title: I18n.t("wallet.errors.PAYMENT_ONGOING"),
           subtitle: (
-            <H4 weight={"Regular"}>
+            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
               {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
             </H4>
           ),
@@ -204,7 +204,7 @@ export const errorTransactionUIElements = (
           image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
           title: I18n.t("wallet.errors.EXPIRED"),
           subtitle: (
-            <H4 weight={"Regular"}>
+            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
               {I18n.t("wallet.errors.contactECsubtitle")}
             </H4>
           ),
@@ -221,7 +221,7 @@ export const errorTransactionUIElements = (
           image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
           title: I18n.t("wallet.errors.REVOKED"),
           subtitle: (
-            <H4 weight={"Regular"}>
+            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
               {I18n.t("wallet.errors.contactECsubtitle")}
             </H4>
           ),
@@ -240,7 +240,7 @@ export const errorTransactionUIElements = (
             "/wallet/errors/generic-error-icon.png"),
           title: I18n.t("wallet.errors.GENERIC_ERROR"),
           subtitle: (
-            <H4 weight={"Regular"}>
+            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
               {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
             </H4>
           ),
