@@ -68,3 +68,7 @@ export const navigateToSvVoucherListScreen = () =>
   NavigationActions.navigate({
     routeName: SV_ROUTES.VOUCHER_LIST.LIST
   });
+export const navigateToSvVoucherDetailsScreen = () =>
+  NavigationActions.navigate({
+    routeName: SV_ROUTES.VOUCHER_LIST.DETAILS
+  });

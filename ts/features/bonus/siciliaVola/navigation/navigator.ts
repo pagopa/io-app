@@ -15,10 +15,14 @@ import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko
 import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
 import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
 import SV_ROUTES from "./routes";
+import VoucherDetailsScreen from "../screens/voucherList/VoucherDetailsScreen";
 
 export const SvVoucherListNavigator = {
   [SV_ROUTES.VOUCHER_LIST.LIST]: {
     screen: VoucherListScreen
+  },
+  [SV_ROUTES.VOUCHER_LIST.DETAILS]: {
+    screen: VoucherDetailsScreen
   }
 };
 
