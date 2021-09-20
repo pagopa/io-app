@@ -79,7 +79,7 @@ const renderLoyaltyLogo = (
     );
   });
 
-const renderGdoLogo = (gdoLogo: ImageURISource) =>
+const useRenderGdoLogo = (gdoLogo: ImageURISource) =>
   useImageResize(BASE_IMG_W, BASE_IMG_H, gdoLogo.uri).fold(
     undefined,
     imgDim => {
@@ -113,7 +113,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
       topLeftCorner={
         <>
           <View style={styles.topLeftContainer}>
-            {props.gdoLogo && renderGdoLogo(props.gdoLogo)}
+            {props.gdoLogo && useRenderGdoLogo(props.gdoLogo)}
 
             {props.blocked && (
               <Badge

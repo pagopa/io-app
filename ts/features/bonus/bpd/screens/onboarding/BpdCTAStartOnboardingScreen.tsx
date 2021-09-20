@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import * as React from "react";
 import { Alert } from "react-native";
 import { Dispatch } from "redux";
@@ -38,7 +39,7 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // bpdOnboardingStart navigate to ToS screen that needs availableBonus data
     if (props.availableBonus.length > 0) {
       props.startBpd();
