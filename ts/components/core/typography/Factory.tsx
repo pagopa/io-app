@@ -71,7 +71,7 @@ function isDefaultFactoryProps<WeightPropsType, ColorsPropsType>(
  * or with a factory function to define some custom behaviour using {@link DefaultFactoryProps}
  * @param props
  */
-export function typographyFactory<
+export function useTypographyFactory<
   WeightPropsType extends IOFontWeight,
   ColorsPropsType extends IOColorType
 >(props: FactoryProps<WeightPropsType, ColorsPropsType>) {

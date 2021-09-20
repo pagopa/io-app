@@ -2,7 +2,7 @@ import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
-import { typographyFactory } from "./Factory";
+import { useTypographyFactory } from "./Factory";
 
 type AllowedColors = Extract<
   IOColorType,
@@ -25,7 +25,7 @@ const fontSize = 14;
  * @constructor
  */
 export const LabelSmall: React.FunctionComponent<OwnProps> = props =>
-  typographyFactory<AllowedWeight, AllowedColors>({
+  useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "blue",
