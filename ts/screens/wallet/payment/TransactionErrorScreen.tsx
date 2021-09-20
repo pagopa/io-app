@@ -299,10 +299,7 @@ const TransactionErrorScreen = (props: Props) => {
   useHardwareBackButton(handleBackPress);
 
   return (
-    <BaseScreenComponent
-      goBack={onCancel}
-      headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
-    >
+    <BaseScreenComponent>
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={<Image source={image} />}
