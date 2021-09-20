@@ -22,6 +22,22 @@ export const initializeMixPanel = async () => {
   await setupMixpanel(mixpanel);
 };
 
+type IOBiometricTechnology =
+  | "FINGERPRINT"
+  | "FACEID"
+  | "IRIS"
+  | "PALMPRINT"
+  | "RETINA"
+  | "HANDGEOMETRY"
+  | "VOICE";
+
+type IOBiometricStatus = "UNAVAILABLE" | "DISABLED";
+type IOBiometric = IOBiometricTechnology | IOBiometricStatus;
+
+function getBiometricTechnology(): IOBiometric {
+  return "UNAVAILABLE";
+}
+
 const setupMixpanel = async (mp: MixpanelInstance) => {
   const screenReaderEnabled: boolean = await isScreenReaderEnabled();
   await mp.optInTracking();
@@ -36,7 +52,8 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
     isScreenReaderEnabled: screenReaderEnabled,
     fontScale,
     appReadableVersion: getAppVersion(),
-    colorScheme: Appearance.getColorScheme()
+    colorScheme: Appearance.getColorScheme(),
+    biometricTechnology: getBiometricTechnology()
   });
   // Identify the user using the device uniqueId
   await mp.identify(getDeviceId());

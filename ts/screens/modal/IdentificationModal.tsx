@@ -12,7 +12,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
-import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
   identificationFailure,
@@ -36,8 +35,10 @@ import customVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   biometricAuthenticationRequest,
-  getFingerprintSettings
-} from "../../utils/biometric";
+  BiometricsValidType,
+  getBiometricsType,
+  isBiometricsValidType
+} from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -56,7 +57,7 @@ type IdentificationByBiometryState = "unstarted" | "failure";
 type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
-  biometryType?: BiometryPrintableSimpleType;
+  biometryType?: BiometricsValidType;
   biometryAuthAvailable: boolean;
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
@@ -135,7 +136,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   /**
    * Activate the interval check on the pin state if the condition is satisfied
-   * @param remainingAttempts
    */
   private scheduleCanInsertPinUpdate = () => {
     this.props.identificationFailState.map(failState => {
@@ -154,11 +154,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const { isFingerprintEnabled } = this.props;
     setAccessibilityFocus(this.headerRef);
     if (isFingerprintEnabled) {
-      getFingerprintSettings().then(
-        biometryType =>
+      getBiometricsType().then(
+        biometricsType =>
           this.setState({
-            biometryType:
-              biometryType !== "UNAVAILABLE" ? biometryType : undefined
+            biometryType: isBiometricsValidType(biometricsType)
+              ? biometricsType
+              : undefined
           }),
         _ => 0
       );
@@ -203,14 +204,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
     // Check for global properties to know if biometric recognition is enabled
     if (isFingerprintEnabled) {
-      getFingerprintSettings()
+      getBiometricsType()
         .then(
-          biometryType => {
+          biometricsType => {
             if (updateBiometrySupportProp) {
               this.setState({
-                biometryType:
-                  biometryType !== "UNAVAILABLE" ? biometryType : undefined,
-                biometryAuthAvailable: biometryType !== "UNAVAILABLE"
+                biometryType: isBiometricsValidType(biometricsType)
+                  ? biometricsType
+                  : undefined,
+                biometryAuthAvailable: isBiometricsValidType(biometricsType)
               });
             }
           },
