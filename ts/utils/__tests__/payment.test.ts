@@ -12,6 +12,7 @@ import {
   cleanTransactionDescription,
   ErrorMacros,
   getCodiceAvviso,
+  getErrorDescriptionV2,
   getTransactionFee,
   getTransactionIUV,
   getV2ErrorMacro
@@ -21,7 +22,7 @@ import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../payment";
-import I18n from "react-native-i18n";
+import I18n from "../../i18n";
 import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
 
 describe("getAmountFromPaymentAmount", () => {
@@ -325,6 +326,51 @@ describe("getV2ErrorMacro", () => {
       )
     ].forEach(t => {
       expect(getV2ErrorMacro(t.e1)).toBe(t.e2);
+    });
+  });
+});
+
+describe("getErrorDescriptionV2", () => {
+  it("Should return correct error description given a specific error code", () => {
+    [
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PPT_CANALE_DISABILITATO",
+        I18n.t("wallet.errors.TECHNICAL")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PPT_SINTASSI_EXTRAXSD",
+        I18n.t("wallet.errors.DATA")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PPT_STAZIONE_INT_PA_TIMEOUT",
+        I18n.t("wallet.errors.EC")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PAA_PAGAMENTO_IN_CORSO",
+        I18n.t("wallet.errors.PAYMENT_ONGOING")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PAA_PAGAMENTO_ANNULLATO",
+        I18n.t("wallet.errors.REVOKED")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PAA_PAGAMENTO_SCADUTO",
+        I18n.t("wallet.errors.EXPIRED")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PAA_PAGAMENTO_DUPLICATO",
+        I18n.t("wallet.errors.PAYMENT_DUPLICATED")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+        "PPT_RT_SCONOSCIUTA",
+        I18n.t("wallet.errors.GENERIC_ERROR")
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, undefined>(
+        undefined,
+        undefined
+      )
+    ].forEach(t => {
+      expect(getErrorDescriptionV2(t.e1)).toBe(t.e2);
     });
   });
 });
