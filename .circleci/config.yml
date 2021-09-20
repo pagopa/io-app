@@ -533,14 +533,15 @@ workflows:
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - compile-typescript
-      - run-e2e-test-IOS
-
+      - run-e2e-test-IOS:
+          requires:
+            - compile-typescript
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:
     triggers:
       - schedule:
-          cron: "0 16 * * 5"
+          cron: "0 14 * * 5"
           filters:
             branches:
               only:
