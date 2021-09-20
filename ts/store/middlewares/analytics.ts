@@ -273,7 +273,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     case getType(userMetadataUpsert.failure):
     case getType(userMetadataLoad.failure):
-    case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(refreshPMTokenWhileAddCreditCard.failure):
     case getType(deleteWalletFailure):
@@ -308,6 +307,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // Actions (without properties)
     //
     // authentication
+    case getType(loginFailure):
+      return mp.track(action.type, {
+        idp: action.payload.idp,
+        reason: action.payload.error.message
+      });
     case getType(loginSuccess):
       return mp.track(action.type, {
         idp: action.payload.idp
