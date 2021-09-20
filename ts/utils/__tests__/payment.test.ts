@@ -10,9 +10,11 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
+  ErrorMacros,
   getCodiceAvviso,
   getTransactionFee,
-  getTransactionIUV
+  getTransactionIUV,
+  getV2ErrorMacro
 } from "../payment";
 import {
   decodePagoPaQrCode,
@@ -20,6 +22,7 @@ import {
   getRptIdFromNoticeNumber
 } from "../payment";
 import I18n from "react-native-i18n";
+import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
@@ -278,5 +281,50 @@ describe("getCodiceAvviso", () => {
     )
   ].forEach(tuple => {
     expect(getCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
+  });
+});
+
+describe("getV2ErrorMacro", () => {
+  it("Should return correct macro error type given a specific error code", () => {
+    [
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PPT_CANALE_DISABILITATO",
+        "TECHNICAL"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PPT_SINTASSI_EXTRAXSD",
+        "DATA"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PPT_STAZIONE_INT_PA_TIMEOUT",
+        "EC"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PAA_PAGAMENTO_IN_CORSO",
+        "ONGOING"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PAA_PAGAMENTO_ANNULLATO",
+        "REVOKED"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PAA_PAGAMENTO_SCADUTO",
+        "EXPIRED"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PAA_PAGAMENTO_DUPLICATO",
+        "DUPLICATED"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
+        "PPT_RT_SCONOSCIUTA",
+        "UNCOVERED"
+      ),
+      Tuple2<keyof typeof Detail_v2Enum | undefined, undefined>(
+        undefined,
+        undefined
+      )
+    ].forEach(t => {
+      expect(getV2ErrorMacro(t.e1)).toBe(t.e2);
+    });
   });
 });

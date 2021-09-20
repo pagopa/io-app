@@ -172,54 +172,62 @@ export const getErrorDescription = (
   }
 };
 
-const v2ErrorMacrosMap: Record<MainMacros, Set<keyof typeof Detail_v2Enum>> = {
-  TECHNICAL: new Set([
-    "PPT_PSP_SCONOSCIUTO",
-    "PPT_PSP_DISABILITATO",
-    "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
-    "PPT_INTERMEDIARIO_PSP_DISABILITATO",
-    "PPT_CANALE_SCONOSCIUTO",
-    "PPT_CANALE_DISABILITATO",
-    "PPT_AUTENTICAZIONE",
-    "PPT_AUTORIZZAZIONE",
-    "PPT_DOMINIO_DISABILITATO",
-    "PPT_INTERMEDIARIO_PA_DISABILITATO",
-    "PPT_STAZIONE_INT_PA_DISABILITATA",
-    "PPT_CODIFICA_PSP_SCONOSCIUTA",
-    "PPT_SEMANTICA",
-    "PPT_SYSTEM_ERROR",
-    "PAA_SEMANTICA"
-  ]),
-  DATA: new Set([
-    "PPT_SINTASSI_EXTRAXSD",
-    "PPT_SINTASSI_XSD",
-    "PPT_DOMINIO_SCONOSCIUTO",
-    "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
-    "PAA_PAGAMENTO_SCONOSCIUTO"
-  ]),
-  EC: new Set([
-    "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
-    "PPT_STAZIONE_INT_PA_TIMEOUT",
-    "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
-    "PPT_IBAN_NON_CENSITO",
-    "PAA_SINTASSI_EXTRAXSD",
-    "PAA_SINTASSI_XSD",
-    "PAA_ID_DOMINIO_ERRATO",
-    "PAA_ID_INTERMEDIARIO_ERRATO",
-    "PAA_STAZIONE_INT_ERRATA",
-    "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
-  ])
-};
-
 type MainMacros = "TECHNICAL" | "DATA" | "EC";
 
-type ErrorMacros =
+export type ErrorMacros =
   | MainMacros
   | "REVOKED"
   | "EXPIRED"
   | "ONGOING"
   | "DUPLICATED"
   | "UNCOVERED";
+
+const technicalSet: Set<keyof typeof Detail_v2Enum> = new Set<
+  keyof typeof Detail_v2Enum
+>([
+  "PPT_PSP_SCONOSCIUTO",
+  "PPT_PSP_DISABILITATO",
+  "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
+  "PPT_INTERMEDIARIO_PSP_DISABILITATO",
+  "PPT_CANALE_SCONOSCIUTO",
+  "PPT_CANALE_DISABILITATO",
+  "PPT_AUTENTICAZIONE",
+  "PPT_AUTORIZZAZIONE",
+  "PPT_DOMINIO_DISABILITATO",
+  "PPT_INTERMEDIARIO_PA_DISABILITATO",
+  "PPT_STAZIONE_INT_PA_DISABILITATA",
+  "PPT_CODIFICA_PSP_SCONOSCIUTA",
+  "PPT_SEMANTICA",
+  "PPT_SYSTEM_ERROR",
+  "PAA_SEMANTICA"
+]);
+
+const dataSet = new Set<keyof typeof Detail_v2Enum>([
+  "PPT_SINTASSI_EXTRAXSD",
+  "PPT_SINTASSI_XSD",
+  "PPT_DOMINIO_SCONOSCIUTO",
+  "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
+  "PAA_PAGAMENTO_SCONOSCIUTO"
+]);
+
+const ecSet = new Set<keyof typeof Detail_v2Enum>([
+  "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
+  "PPT_STAZIONE_INT_PA_TIMEOUT",
+  "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
+  "PPT_IBAN_NON_CENSITO",
+  "PAA_SINTASSI_EXTRAXSD",
+  "PAA_SINTASSI_XSD",
+  "PAA_ID_DOMINIO_ERRATO",
+  "PAA_ID_INTERMEDIARIO_ERRATO",
+  "PAA_STAZIONE_INT_ERRATA",
+  "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
+]);
+
+const v2ErrorMacrosMap = new Map<MainMacros, Set<keyof typeof Detail_v2Enum>>([
+  ["TECHNICAL", technicalSet],
+  ["DATA", dataSet],
+  ["EC", ecSet]
+]);
 
 export const getV2ErrorMacro = (
   error?: keyof typeof Detail_v2Enum
@@ -228,14 +236,12 @@ export const getV2ErrorMacro = (
     return undefined;
   }
 
-  if (v2ErrorMacrosMap.TECHNICAL.has(error)) {
-    return "TECHNICAL";
-  }
-  if (v2ErrorMacrosMap.DATA.has(error)) {
-    return "DATA";
-  }
-  if (v2ErrorMacrosMap.EC.has(error)) {
-    return "EC";
+  const errorInMap = [...v2ErrorMacrosMap.keys()].find(k =>
+    fromNullable(v2ErrorMacrosMap.get(k)).fold(false, s => s.has(error))
+  );
+
+  if (errorInMap !== undefined) {
+    return errorInMap;
   }
 
   switch (error) {
