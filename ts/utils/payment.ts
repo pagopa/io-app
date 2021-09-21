@@ -23,15 +23,8 @@ import {
   Transaction,
   Wallet
 } from "../types/pagopa";
-import {
-  OutcomeCode,
-  OutcomeCodes,
-  OutcomeCodesKey
-} from "../types/outcomeCode";
-import {
-  Detail_v2Enum,
-  DetailEnum
-} from "../../definitions/backend/PaymentProblemJson";
+import { OutcomeCode, OutcomeCodes, OutcomeCodesKey } from "../types/outcomeCode";
+import { Detail_v2Enum, DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -154,11 +147,11 @@ export const getErrorDescription = (
   }
   switch (error) {
     case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+      return I18n.t("wallet.errors.DUPLICATED");
     case "INVALID_AMOUNT":
       return I18n.t("wallet.errors.INVALID_AMOUNT");
     case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+      return I18n.t("wallet.errors.ONGOING");
     case "PAYMENT_EXPIRED":
       return I18n.t("wallet.errors.PAYMENT_EXPIRED");
     case "PAYMENT_UNAVAILABLE":
@@ -172,19 +165,19 @@ export const getErrorDescription = (
   }
 };
 
-type MainMacros = "TECHNICAL" | "DATA" | "EC";
+type MainErrorType = "TECHNICAL" | "DATA" | "EC";
 
-export type ErrorMacros =
-  | MainMacros
+export type ErrorTypes =
+  | MainErrorType
   | "REVOKED"
   | "EXPIRED"
   | "ONGOING"
   | "DUPLICATED"
   | "UNCOVERED";
 
-const technicalSet: Set<keyof typeof Detail_v2Enum> = new Set<
-  keyof typeof Detail_v2Enum
->([
+export type DetailV2Keys = keyof typeof Detail_v2Enum;
+
+const technicalSet: Set<DetailV2Keys> = new Set<DetailV2Keys>([
   "PPT_PSP_SCONOSCIUTO",
   "PPT_PSP_DISABILITATO",
   "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
@@ -202,7 +195,7 @@ const technicalSet: Set<keyof typeof Detail_v2Enum> = new Set<
   "PAA_SEMANTICA"
 ]);
 
-const dataSet = new Set<keyof typeof Detail_v2Enum>([
+const dataSet = new Set<DetailV2Keys>([
   "PPT_SINTASSI_EXTRAXSD",
   "PPT_SINTASSI_XSD",
   "PPT_DOMINIO_SCONOSCIUTO",
@@ -210,7 +203,7 @@ const dataSet = new Set<keyof typeof Detail_v2Enum>([
   "PAA_PAGAMENTO_SCONOSCIUTO"
 ]);
 
-const ecSet = new Set<keyof typeof Detail_v2Enum>([
+const ecSet = new Set<DetailV2Keys>([
   "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
   "PPT_STAZIONE_INT_PA_TIMEOUT",
   "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
@@ -223,18 +216,20 @@ const ecSet = new Set<keyof typeof Detail_v2Enum>([
   "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
 ]);
 
-const v2ErrorMacrosMap = new Map<MainMacros, Set<keyof typeof Detail_v2Enum>>([
+const v2ErrorMacrosMap = new Map<MainErrorType, Set<DetailV2Keys>>([
   ["TECHNICAL", technicalSet],
   ["DATA", dataSet],
   ["EC", ecSet]
 ]);
 
-export const getV2ErrorMacro = (
-  error?: keyof typeof Detail_v2Enum
-): ErrorMacros | undefined => {
-  if (error === undefined) {
-    return undefined;
-  }
+/**
+ * This function is used to convert the raw error code to the main error type.
+ * Main error types is represented by the union type ErrorTypes.
+ * @param error
+ */
+export const getV2ErrorMainType = (
+  error: DetailV2Keys
+): ErrorTypes | undefined => {
 
   const errorInMap = [...v2ErrorMacrosMap.keys()].find(k =>
     fromNullable(v2ErrorMacrosMap.get(k)).fold(false, s => s.has(error))
@@ -259,32 +254,17 @@ export const getV2ErrorMacro = (
 };
 
 export const getErrorDescriptionV2 = (
-  error?: keyof typeof Detail_v2Enum
+  error?: DetailV2Keys
 ): string | undefined => {
   if (error === undefined) {
     return undefined;
   }
 
-  const errorMacro = getV2ErrorMacro(error);
+  const errorMacro = getV2ErrorMainType(error);
 
-  switch (errorMacro) {
-    case "TECHNICAL":
-      return I18n.t("wallet.errors.TECHNICAL");
-    case "DATA":
-      return I18n.t("wallet.errors.DATA");
-    case "EC":
-      return I18n.t("wallet.errors.EC");
-    case "ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "REVOKED":
-      return I18n.t("wallet.errors.REVOKED");
-    case "EXPIRED":
-      return I18n.t("wallet.errors.EXPIRED");
-    case "DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    default:
-      return I18n.t("wallet.errors.GENERIC_ERROR");
-  }
+  return I18n.t(`"wallet.errors.${errorMacro}`, {
+    defaultValue: I18n.t("wallet.errors.GENERIC_ERROR")
+  });
 };
 
 export const getPaymentHistoryDetails = (payment: PaymentHistory): string =>

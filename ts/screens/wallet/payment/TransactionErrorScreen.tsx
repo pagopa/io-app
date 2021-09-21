@@ -24,7 +24,7 @@ import {
 import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
 import { PayloadForAction } from "../../../types/utils";
-import { getV2ErrorMacro } from "../../../utils/payment";
+import { getV2ErrorMainType } from "../../../utils/payment";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
@@ -57,7 +57,7 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
 // Save the rptId as attribute and open the Instabug chat.
-const sendPaymentBlockedBug = (rptId: RptId) => {
+const requestAssistanceForPaymentFailure = (rptId: RptId) => {
   setInstabugUserAttribute(
     "blockedPaymentRptId",
     RptIdFromString.encode(rptId)
@@ -70,8 +70,8 @@ const sendPaymentBlockedBug = (rptId: RptId) => {
 type ScreenUIContents = {
   image: ImageSourcePropType;
   title: string;
-  subtitle: React.ReactElement;
-  footer: React.ReactElement;
+  footer: React.ReactNode;
+  subtitle?: React.ReactNode;
 };
 
 const ErrorCodeCopyComponent = ({
@@ -89,7 +89,9 @@ const ErrorCodeCopyComponent = ({
 
 /**
  * Convert the error code into a user-readable string
- * @param error
+ * @param maybeError
+ * @param rptId
+ * @param onCancel
  */
 export const errorTransactionUIElements = (
   maybeError: NavigationParams["error"],
@@ -104,14 +106,19 @@ export const errorTransactionUIElements = (
       image: require(baseIconPath +
         "wallet/errors/missing-payment-id-icon.png"),
       title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
-      subtitle: <></>,
-      footer: <></>
+      footer: (
+        <FooterStackButton
+          buttons={[
+            cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
+          ]}
+        />
+      )
     };
   }
 
-  const errorMacro = getV2ErrorMacro(errorORUndefined);
-
   if (errorORUndefined) {
+    const errorMacro = getV2ErrorMainType(errorORUndefined);
+
     switch (errorMacro) {
       case "TECHNICAL":
         return {
@@ -122,7 +129,7 @@ export const errorTransactionUIElements = (
             <FooterStackButton
               buttons={[
                 confirmButtonProps(
-                  () => sendPaymentBlockedBug(rptId),
+                  () => requestAssistanceForPaymentFailure(rptId),
                   I18n.t("wallet.errors.sendReport")
                 ),
                 cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
@@ -140,7 +147,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.back")),
                 cancelButtonProps(
-                  () => sendPaymentBlockedBug(rptId),
+                  () => requestAssistanceForPaymentFailure(rptId),
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -157,7 +164,7 @@ export const errorTransactionUIElements = (
             <FooterStackButton
               buttons={[
                 confirmButtonProps(
-                  () => sendPaymentBlockedBug(rptId),
+                  () => requestAssistanceForPaymentFailure(rptId),
                   I18n.t("wallet.errors.sendReport")
                 ),
                 cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
@@ -168,8 +175,7 @@ export const errorTransactionUIElements = (
       case "DUPLICATED":
         return {
           image: require(baseIconPath + "pictograms/fireworks.png"),
-          title: I18n.t("wallet.errors.PAYMENT_DUPLICATED"),
-          subtitle: <></>,
+          title: I18n.t("wallet.errors.DUPLICATED"),
           footer: (
             <FooterStackButton
               buttons={[
@@ -181,7 +187,7 @@ export const errorTransactionUIElements = (
       case "ONGOING":
         return {
           image: require(baseIconPath + "pictograms/hourglass.png"),
-          title: I18n.t("wallet.errors.PAYMENT_ONGOING"),
+          title: I18n.t("wallet.errors.ONGOING"),
           subtitle: (
             <H4 weight={"Regular"} style={{ textAlign: "center" }}>
               {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
@@ -192,7 +198,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
                 cancelButtonProps(
-                  () => sendPaymentBlockedBug(rptId),
+                  () => requestAssistanceForPaymentFailure(rptId),
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -249,7 +255,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
                 cancelButtonProps(
-                  () => sendPaymentBlockedBug(rptId),
+                  () => requestAssistanceForPaymentFailure(rptId),
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -271,7 +277,7 @@ export const errorTransactionUIElements = (
         buttons={[
           confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
           cancelButtonProps(
-            () => sendPaymentBlockedBug(rptId),
+            () => requestAssistanceForPaymentFailure(rptId),
             I18n.t("wallet.errors.sendReport")
           )
         ]}

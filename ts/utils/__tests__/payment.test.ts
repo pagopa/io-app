@@ -10,20 +10,18 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
-  ErrorMacros,
+  decodePagoPaQrCode,
+  DetailV2Keys,
+  ErrorTypes,
+  getAmountFromPaymentAmount,
   getCodiceAvviso,
   getErrorDescriptionV2,
+  getRptIdFromNoticeNumber,
   getTransactionFee,
   getTransactionIUV,
-  getV2ErrorMacro
-} from "../payment";
-import {
-  decodePagoPaQrCode,
-  getAmountFromPaymentAmount,
-  getRptIdFromNoticeNumber
+  getV2ErrorMainType
 } from "../payment";
 import I18n from "../../i18n";
-import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
@@ -288,44 +286,16 @@ describe("getCodiceAvviso", () => {
 describe("getV2ErrorMacro", () => {
   it("Should return correct macro error type given a specific error code", () => {
     [
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PPT_CANALE_DISABILITATO",
-        "TECHNICAL"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PPT_SINTASSI_EXTRAXSD",
-        "DATA"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PPT_STAZIONE_INT_PA_TIMEOUT",
-        "EC"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PAA_PAGAMENTO_IN_CORSO",
-        "ONGOING"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PAA_PAGAMENTO_ANNULLATO",
-        "REVOKED"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PAA_PAGAMENTO_SCADUTO",
-        "EXPIRED"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PAA_PAGAMENTO_DUPLICATO",
-        "DUPLICATED"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, ErrorMacros>(
-        "PPT_RT_SCONOSCIUTA",
-        "UNCOVERED"
-      ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, undefined>(
-        undefined,
-        undefined
-      )
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_CANALE_DISABILITATO", "TECHNICAL"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_SINTASSI_EXTRAXSD", "DATA"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_STAZIONE_INT_PA_TIMEOUT", "EC"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_IN_CORSO", "ONGOING"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_ANNULLATO", "REVOKED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_SCADUTO", "EXPIRED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_DUPLICATO", "DUPLICATED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED")
     ].forEach(t => {
-      expect(getV2ErrorMacro(t.e1)).toBe(t.e2);
+      expect(getV2ErrorMainType(t.e1)).toBe(t.e2);
     });
   });
 });
@@ -333,39 +303,39 @@ describe("getV2ErrorMacro", () => {
 describe("getErrorDescriptionV2", () => {
   it("Should return correct error description given a specific error code", () => {
     [
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PPT_CANALE_DISABILITATO",
         I18n.t("wallet.errors.TECHNICAL")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PPT_SINTASSI_EXTRAXSD",
         I18n.t("wallet.errors.DATA")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PPT_STAZIONE_INT_PA_TIMEOUT",
         I18n.t("wallet.errors.EC")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_IN_CORSO",
-        I18n.t("wallet.errors.PAYMENT_ONGOING")
+        I18n.t("wallet.errors.ONGOING")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_ANNULLATO",
         I18n.t("wallet.errors.REVOKED")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_SCADUTO",
         I18n.t("wallet.errors.EXPIRED")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_DUPLICATO",
-        I18n.t("wallet.errors.PAYMENT_DUPLICATED")
+        I18n.t("wallet.errors.DUPLICATED")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, string>(
+      Tuple2<DetailV2Keys | undefined, string>(
         "PPT_RT_SCONOSCIUTA",
         I18n.t("wallet.errors.GENERIC_ERROR")
       ),
-      Tuple2<keyof typeof Detail_v2Enum | undefined, undefined>(
+      Tuple2<DetailV2Keys | undefined, undefined>(
         undefined,
         undefined
       )

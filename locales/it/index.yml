@@ -1399,13 +1399,13 @@ wallet:
     TECHNICAL: Spiacenti, c’è un problema tecnico con questo avviso
     DATA: Spiacenti, i dati dell’avviso non sono corretti
     EC: Spiacenti, l’Ente Creditore sta avendo problemi nella risposta
-    PAYMENT_ONGOING: Il pagamento è già in corso, riprova tra qualche minuto
+    ONGOING: Il pagamento è già in corso, riprova tra qualche minuto
     ONGOING_SUBTITLE: Se è passato troppo tempo, segnalacelo!
     REVOKED: Spiacenti, l’Ente Creditore ha revocato questo avviso
     EXPIRED: Spiacenti, l’avviso è scaduto e non è più possibile pagarlo
     GENERIC_ERROR: Spiacenti, si è verificato un errore imprevisto
     GENERIC_ERROR_SUBTITLE: Prova di nuovo o contattaci per ricevere assistenza.
-    PAYMENT_DUPLICATED: Questo avviso è stato già pagato!
+    DUPLICATED: Questo avviso è stato già pagato!
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.

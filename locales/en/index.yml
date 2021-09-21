@@ -1376,13 +1376,13 @@ wallet:
     TECHNICAL: Sorry, a technical problem has occurred with this notice
     DATA: Sorry, the payment information is incorrect
     EC: Sorry, Payee is having problems in responding
-    PAYMENT_ONGOING: This payment is still ongoing, please try again in a few minutes
+    ONGOING: This payment is still ongoing, please try again in a few minutes
     ONGOING_SUBTITLE: If it has been too long, please let us know!
     REVOKED: Sorry, the Payee has revoked this notice
     EXPIRED: Sorry, the notice has expired, it is not possible to pay it
     GENERIC_ERROR: Sorry, an unexpected error has occurred
     GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
-    PAYMENT_DUPLICATED: This notice has been already paid!
+    DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
