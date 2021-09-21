@@ -6,7 +6,6 @@ import { Content } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { SectionStatusKey } from "../../../../../types/backendStatus";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { isError, isLoading } from "../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../store/abi";
@@ -18,7 +17,8 @@ import {
   confirmButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../../../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { SearchStartComponent } from "./SearchStartComponent";
 
 type MethodType = "bancomatPay" | "bancomat" | "cobadge";
@@ -29,7 +29,7 @@ type Props = WithTestID<{
   navigateToSearchBank?: () => void;
   onCancel: () => void;
   handleTosModal: () => void;
-  handlePartecipatingBanksModal?: () => void;
+  handleParticipatingBanksModal?: () => void;
   bankName?: string;
 }> &
   ReturnType<typeof mapStateToProps> &
@@ -92,7 +92,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             onSearch={props.navigateToSearchBank}
             methodType={props.methodType}
             bankName={props.bankName}
-            openPartecipatingBanksModal={props.handlePartecipatingBanksModal}
+            openParticipatingBanksModal={props.handleParticipatingBanksModal}
             showCircuitLogo={props.methodType === "cobadge"}
           />
         </Content>

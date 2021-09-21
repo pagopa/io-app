@@ -8,7 +8,6 @@ import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
 import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
 import {
-  EnableableFunctionsTypeEnum,
   PatchedPaymentMethodInfo,
   PatchedWalletV2,
   RawBPayPaymentMethod,
@@ -16,6 +15,7 @@ import {
   RawSatispayPaymentMethod,
   Wallet
 } from "../types/pagopa";
+import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import {
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
@@ -23,13 +23,13 @@ import {
 } from "./input";
 
 /**
- * true if the given wallet support the given walletFunction
- * @param wallet
+ * true if the given paymentMethod supports the given walletFunction
+ * @param paymentMethod
  * @param walletFunction
  */
 export const hasFunctionEnabled = (
   paymentMethod: RawPaymentMethod | undefined,
-  walletFunction: EnableableFunctionsTypeEnum
+  walletFunction: EnableableFunctions
 ): boolean =>
   paymentMethod !== undefined &&
   paymentMethod.enableableFunctions.includes(walletFunction);

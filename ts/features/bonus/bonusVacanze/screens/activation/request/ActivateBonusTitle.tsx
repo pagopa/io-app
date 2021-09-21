@@ -1,7 +1,8 @@
-import { H3, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import H5 from "../../../../../../components/ui/H5";
+import { H2 } from "../../../../../../components/core/typography/H2";
+import { H1 } from "../../../../../../components/core/typography/H1";
 
 type Props = {
   title: string;
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
 export const ActivateBonusTitle: React.FunctionComponent<Props> = props => (
   <View>
     <View style={styles.row}>
-      <H3 style={styles.text}>{props.title}</H3>
+      <H1 style={styles.text}>{props.title}</H1>
       {props.image ? (
         <Image
           source={{ uri: props.image }}
@@ -42,7 +43,7 @@ export const ActivateBonusTitle: React.FunctionComponent<Props> = props => (
       ) : null}
     </View>
     <View style={styles.row}>
-      <H5 style={styles.text}>{props.description}</H5>
+      <H2 style={styles.text}>{props.description}</H2>
       <View style={styles.image} />
     </View>
   </View>

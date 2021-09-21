@@ -1,12 +1,19 @@
 /**
  * A mocked version of the instabug-reactnative package.
  */
+
+enum reportType {
+  bug,
+  feedback,
+  question
+}
+
 const BugReporting = {
   onSDKDismissedHandler: jest.fn(),
   setReportTypes: jest.fn(),
-  reportType: {},
   showWithOptions: jest.fn(),
-  option: {}
+  option: {},
+  reportType
 };
 
 const Replies = {
@@ -25,10 +32,23 @@ const Chats = {
 export { BugReporting, Replies, Chats };
 
 export default {
-  startWithToken: jest.fn(),
-  locale: jest.fn(),
-  setChatNotificationEnabled: jest.fn(),
   invocationEvent: {},
+  instabugLog: jest.fn(),
+  locale: jest.fn(),
+  logDebug: jest.fn(),
+  logError: jest.fn(),
+  logInfo: jest.fn(),
+  logVerbose: jest.fn(),
+  logWarn: jest.fn(),
+  openInstabugReplies: jest.fn(),
+  openInstabugQuestionReport: jest.fn(),
+  removeUserAttribute: jest.fn(),
+  setChatNotificationEnabled: jest.fn(),
+  setEnabledAttachmentTypes: jest.fn(),
+  setInstabugSupportTokenAttribute: jest.fn(),
+  setInstabugUserAttribute: jest.fn(),
+  setUserAttribute: jest.fn(),
+  startWithToken: jest.fn(),
   BugReporting,
   Replies,
   Chats

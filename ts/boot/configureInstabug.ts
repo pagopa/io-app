@@ -8,27 +8,28 @@ import Instabug, {
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
-import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import { getAppVersion } from "../utils/appVersion";
 import { isDevEnv } from "../utils/environment";
 import { SupportToken } from "../../definitions/backend/SupportToken";
+import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
 type InstabugUserAttributeKeys =
   | "backendVersion"
   | "activeScreen"
-  | "fiscalcode"
   | "identityProvider"
   | "lastSeenMessageID"
   | "appVersion"
   | "blockedPaymentRptId"
-  | "supportToken";
+  | "supportToken"
+  | "deviceUniqueID";
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
-  it: Instabug.locale.italian
+  it: Instabug.locale.italian,
+  de: Instabug.locale.german
 };
 
 export enum TypeLogs {
@@ -118,22 +119,36 @@ export const setInstabugUserAttribute = (
   Instabug.setUserAttribute(attributeKey, attributeValue);
 };
 
-export const setInstabugProfileAttributes = (
-  maybeIdp: Option<IdentityProvider>
-) => {
-  maybeIdp.fold(undefined, (idp: IdentityProvider) =>
-    setInstabugUserAttribute("identityProvider", idp.entityID)
+export const setInstabugProfileAttributes = (maybeIdp: Option<SpidIdp>) => {
+  maybeIdp.fold(undefined, (idp: SpidIdp) =>
+    setInstabugUserAttribute("identityProvider", idp.id)
   );
 };
 
-// if support token is defined set it as user property
-// otherwise remove that attribute
-export const setInstabugSupportTokenAttribute = (
-  supportToken: SupportToken | undefined
+/**
+ * Set the supportToken attribute.
+ * If supportToken is undefined, the attribute is removed.
+ */
+export const setInstabugSupportTokenAttribute = (supportToken?: SupportToken) =>
+  setOrUnsetInstabugUserAttribute(
+    "supportToken",
+    fromNullable(supportToken).map(st => st.access_token)
+  );
+
+/**
+ * Set the deviceId attribute.
+ * If deviceId is undefined, the attribute is removed.
+ */
+export const setInstabugDeviceIdAttribute = (deviceId?: string) =>
+  setOrUnsetInstabugUserAttribute("deviceUniqueID", fromNullable(deviceId));
+
+const setOrUnsetInstabugUserAttribute = (
+  attributeKey: InstabugUserAttributeKeys,
+  attributeValue: Option<string>
 ) =>
-  fromNullable(supportToken).foldL(
-    () => Instabug.removeUserAttribute("supportToken"),
-    st => setInstabugUserAttribute("supportToken", st.access_token)
+  attributeValue.foldL(
+    () => Instabug.removeUserAttribute(attributeKey),
+    value => Instabug.setUserAttribute(attributeKey, value)
   );
 
 // The maximum log length accepted by Instabug

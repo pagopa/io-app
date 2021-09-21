@@ -3,10 +3,13 @@ import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
-import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
-import { NavigationScreenProps } from "react-navigation";
+import {
+  WebViewErrorEvent,
+  WebViewNavigation
+} from "react-native-webview/lib/WebViewTypes";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
@@ -32,11 +35,17 @@ import {
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
+import {
+  getIdpLoginUri,
+  getIntentFallbackUrl,
+  onLoginUriChanged
+} from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import { getUrlBasepath } from "../../utils/url";
+import { mixpanelTrack } from "../../mixpanel";
+import { isDevEnv } from "../../utils/environment";
 
-type Props = NavigationScreenProps &
+type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
@@ -94,6 +103,12 @@ const styles = StyleSheet.create({
   }
 });
 
+// if the app is running in dev env, add "http" to allow the dev-server usage
+const originSchemasWhiteList = [
+  "https://*",
+  "intent://*",
+  ...(isDevEnv ? ["http://*"] : [])
+];
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -106,11 +121,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
   }
 
+  get idp(): string {
+    return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
+  }
+
   private updateLoginTrace = (url: string): void => {
     this.setState({ loginTrace: url });
   };
 
-  private handleLoadingError = (): void => {
+  private handleLoadingError = (error: WebViewErrorEvent): void => {
+    const { code, description, domain } = error.nativeEvent;
+    void mixpanelTrack("SPID_ERROR", {
+      idp: this.props.loggedOutWithIdpAuth?.idp.id,
+      code,
+      description,
+      domain
+    });
     this.setState({
       requestState: pot.noneError(ErrorType.LOADING_ERROR)
     });
@@ -118,7 +144,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleLoginFailure = (errorCode?: string) => {
     this.props.dispatchLoginFailure(
-      new Error(`login failure with code ${errorCode || "n/a"}`)
+      new Error(`login failure with code ${errorCode || "n/a"}`),
+      this.idp
     );
     const logText = fromNullable(errorCode).fold(
       "login failed with no error code available",
@@ -137,7 +164,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleLoginSuccess = (token: SessionToken) => {
     instabugLog(`login success`, TypeLogs.DEBUG, "login");
     Instabug.resetTags();
-    this.props.dispatchLoginSuccess(token);
+    this.props.dispatchLoginSuccess(token, this.idp);
   };
 
   private setRequestStateToLoading = (): void =>
@@ -162,6 +189,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
+    const url = event.url;
+    // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
+    const idpIntent = getIntentFallbackUrl(url);
+    if (idpIntent.isSome()) {
+      void mixpanelTrack("SPID_LOGIN_INTENT", {
+        idp: this.props.loggedOutWithIdpAuth?.idp
+      });
+      void Linking.openURL(idpIntent.value);
+      return false;
+    }
+
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess
@@ -257,8 +295,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       // before the redux state is updated succesfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
-    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.entityID);
-
+    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
     return (
       <BaseScreenComponent
         goBack={true}
@@ -271,6 +308,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
         {!hasError && (
           <WebView
             textZoom={100}
+            originWhitelist={originSchemasWhiteList}
             source={{ uri: loginUri }}
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
@@ -305,8 +343,10 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
-  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
+  dispatchLoginSuccess: (token: SessionToken, idp: string) =>
+    dispatch(loginSuccess({ token, idp })),
+  dispatchLoginFailure: (error: Error, idp: string) =>
+    dispatch(loginFailure({ error, idp }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IdpLoginScreen);

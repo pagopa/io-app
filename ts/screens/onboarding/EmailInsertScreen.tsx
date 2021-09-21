@@ -8,7 +8,8 @@ import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Keyboard, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -16,7 +17,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import H4 from "../../components/ui/H4";
 import I18n from "../../i18n";
 import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
@@ -37,11 +37,12 @@ import customVariables from "../../theme/variables";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
+import { H1 } from "../../components/core/typography/H1";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -50,17 +51,8 @@ const styles = StyleSheet.create({
   horizontalPadding: {
     paddingHorizontal: customVariables.contentPadding
   },
-  boldH4: {
-    fontWeight: customVariables.textBoldWeight,
-    paddingTop: customVariables.spacerLargeHeight
-  },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
-  },
-  emailInput: {
-    fontWeight: customVariables.h1FontWeight,
-    color: customVariables.h1Color,
-    fontSize: 18
   },
   darkestGray: {
     color: customVariables.brandDarkestGray
@@ -171,11 +163,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToEmailReadScreen = () => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [navigateToEmailReadScreen()]
-    });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(StackActions.popToTop());
+    this.props.navigation.dispatch(navigateToEmailReadScreen());
   };
 
   public componentDidMount() {
@@ -185,7 +174,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (!this.state.isMounted) {
+    const isPrevCurrentSameState =
+      prevProps.profile.kind === this.props.profile.kind;
+    // do nothing if prev profile is in the same state of the current
+    if (!this.state.isMounted || isPrevCurrentSameState) {
       return;
     }
     // if we were updating the profile
@@ -247,18 +239,22 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         goBack={this.handleGoBack}
         headerTitle={
           isFromProfileSection
-            ? I18n.t("profile.preferences.list.email")
+            ? I18n.t("profile.data.list.email")
             : I18n.t("email.insert.header")
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <View style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H4 style={[styles.boldH4, styles.horizontalPadding]}>
+            <H1
+              color={"bluegreyDark"}
+              weight={"Bold"}
+              style={[styles.horizontalPadding]}
+            >
               {isFromProfileSection
                 ? I18n.t("email.edit.title")
                 : I18n.t("email.insert.title")}
-            </H4>
+            </H1>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
               <Text>
@@ -278,7 +274,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem
-                  type={"text"}
                   label={
                     isFromProfileSection
                       ? I18n.t("email.edit.label")
@@ -292,8 +287,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     autoCapitalize: "none",
                     keyboardType: "email-address",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: this.handleOnChangeEmailText,
-                    style: styles.emailInput
+                    onChangeText: this.handleOnChangeEmailText
                   }}
                   iconStyle={styles.icon}
                 />

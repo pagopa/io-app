@@ -1,4 +1,4 @@
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
 import CgnActivationPendingScreen from "../screens/activation/CgnActivationPendingScreen";
@@ -12,7 +12,9 @@ import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
 import CgnOtpScreen from "../screens/CgnOtpScreen";
 import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
+import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
 
+import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
 
 const CgnNavigator = createStackNavigator(
@@ -44,8 +46,14 @@ const CgnNavigator = createStackNavigator(
     [CGN_ROUTES.MERCHANTS.LIST]: {
       screen: MerchantsListScreen
     },
+    [CGN_ROUTES.MERCHANTS.TABS]: {
+      screen: CgnMerchantsTabsScreen
+    },
     [CGN_ROUTES.MERCHANTS.DETAIL]: {
       screen: CgnMerchantDetailScreen
+    },
+    [CGN_ROUTES.MERCHANTS.LANDING_WEBVIEW]: {
+      screen: CgnMerchantLandingWebview
     },
     [CGN_ROUTES.DETAILS]: {
       screen: CgnDetailScreen

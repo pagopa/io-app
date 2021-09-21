@@ -13,7 +13,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
-import { ContextualHelp } from "../../components/ContextualHelp";
+import ContextualInfo from "../../components/ContextualInfo";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -48,7 +48,8 @@ import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
+import { Link } from "../../components/core/typography/Link";
 
 type Props = NavigationInjectedProps &
   LightModalContextInterface &
@@ -120,10 +121,16 @@ const styles = StyleSheet.create({
   },
   fullOpacity: {
     backgroundColor: variables.brandPrimary
+  },
+  link: {
+    textAlign: "center",
+    paddingBottom: 5,
+    paddingTop: 4.5,
+    lineHeight: 30
   }
 });
 
-const IdpCIE: IdentityProvider = {
+export const IdpCIE: IdentityProvider = {
   id: "cie",
   name: "CIE",
   logo: "",
@@ -164,7 +171,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private openUnsupportedCIEModal = () => {
     this.props.showAnimatedModal(
-      <ContextualHelp
+      <ContextualInfo
         onClose={this.props.hideModal}
         title={I18n.t("authentication.landing.cie_unsupported.title")}
         body={() => (
@@ -292,19 +299,14 @@ class LandingScreen extends React.PureComponent<Props, State> {
             </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
-
-          <ButtonDefaultOpacity
-            block={true}
-            small={true}
-            transparent={true}
+          <Link
+            style={styles.link}
             onPress={this.navigateToSpidCieInformationRequest}
           >
-            <Text style={styles.noPadded} link={true}>
-              {this.isCieSupported()
-                ? I18n.t("authentication.landing.nospid-nocie")
-                : I18n.t("authentication.landing.nospid")}
-            </Text>
-          </ButtonDefaultOpacity>
+            {this.isCieSupported()
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Link>
         </View>
       </BaseScreenComponent>
     );

@@ -21,9 +21,9 @@ HEADERS = {
 }
 MAX_TIMEOUT = 20
 global_uris = set()
-SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
-tagged_people = ["<@UTVS9R0SF>"]
-SLACK_CHANNEL = "#io_status"
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
+tagged_people = ["<!here>"]
+SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
 remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/vacanze/bonuses_available.json",
@@ -165,7 +165,7 @@ def send_slack_message(invalid_uris: List[IOUrl]):
         )
         if len(invalid_uris) > 0:
             tags = " ".join(tagged_people)
-            message = ":warning: %s There are %d uris in *IO App* that are not working" % (tags,len(invalid_uris))
+            message = "[URLs Check] :warning: %s There are %d uris in *IO App* that are not working" % (tags,len(invalid_uris))
             message_blocks = []
             message_blocks.append({
                 "type": "section",
@@ -209,9 +209,11 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning local folders...")
     all_uris = []
-    urls_black_list = {"https://assets.cdn.io.italia.it",
-                       "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
-                       "https://www.trusttechnologies.it/contatti/#form"}
+    urls_black_list = { # the article is available but the response status code is 403
+                        "https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
+                        "https://assets.cdn.io.italia.it",
+                        "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
+                        "https://www.trusttechnologies.it/contatti/#form"}
     locales = (abspath(join(dirname(__file__), "../..", "locales")),{})
     ts_dir = (abspath(join(dirname(__file__), "../..", "ts")),{"testFaker.ts","PayWebViewModal.tsx"})
     for directory,black_list in [locales,ts_dir]:

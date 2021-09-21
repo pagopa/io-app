@@ -12,7 +12,6 @@ import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { contentRepoUrl } from "../config";
@@ -20,6 +19,7 @@ import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
+import { SpidIdps } from "../../definitions/content/SpidIdps";
 
 type GetServiceT = IGetApiRequestType<
   {
@@ -54,21 +54,6 @@ const getMunicipalityT: GetMunicipalityT = {
   query: _ => ({}),
   headers: _ => ({}),
   response_decoder: basicResponseDecoder(MunicipalityMedadata)
-};
-
-type GetServicesByScopeT = IGetApiRequestType<
-  void,
-  never,
-  never,
-  BasicResponseType<ServicesByScope>
->;
-
-const getServicesByScopeT: GetServicesByScopeT = {
-  method: "get",
-  url: () => `/services/servicesByScope.json`,
-  query: _ => ({}),
-  headers: _ => ({}),
-  response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
 type GetContextualHelpT = IGetApiRequestType<
@@ -144,6 +129,20 @@ const getPrivativeServicesT: GetPrivativeServicesT = {
   response_decoder: basicResponseDecoder(PrivativeServices)
 };
 
+type GetIdpsListT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<SpidIdps>
+>;
+
+const getIdpsT: GetIdpsListT = {
+  method: "get",
+  url: () => "/spid/idps/list.json",
+  query: _ => ({}),
+  headers: () => ({}),
+  response_decoder: basicResponseDecoder(SpidIdps)
+};
 /**
  * A client for the static content
  */
@@ -157,13 +156,13 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
     getBonusAvailable: createFetchRequestForApi(getAvailableBonusesT, options),
     getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
-    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
     getAbiList: createFetchRequestForApi(getAbisListT, options),
     getCobadgeServices: createFetchRequestForApi(getCobadgeServicesT, options),
     getPrivativeServices: createFetchRequestForApi(
       getPrivativeServicesT,
       options
-    )
+    ),
+    getIdps: createFetchRequestForApi(getIdpsT, options)
   };
 }

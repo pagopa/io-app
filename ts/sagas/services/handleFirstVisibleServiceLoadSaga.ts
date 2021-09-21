@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { firstServiceLoadSuccess } from "../../store/actions/services";
-import { servicesByScopeSelector } from "../../store/reducers/content";
 import { visibleServicesDetailLoadStateSelector } from "../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 
@@ -15,16 +14,10 @@ export function* handleFirstVisibleServiceLoadSaga(): SagaIterator {
     isFirstVisibleServiceLoadCompletedSelector
   );
   if (!isFirstVisibleServiceLoadCompleted) {
-    const servicesByScope: ReturnType<typeof servicesByScopeSelector> = yield select(
-      servicesByScopeSelector
-    );
     const visibleServicesDetailsLoadState: ReturnType<typeof visibleServicesDetailLoadStateSelector> = yield select(
       visibleServicesDetailLoadStateSelector
     );
-    if (
-      pot.isSome(visibleServicesDetailsLoadState) &&
-      pot.isSome(servicesByScope)
-    ) {
+    if (pot.isSome(visibleServicesDetailsLoadState)) {
       yield put(firstServiceLoadSuccess());
     }
   }

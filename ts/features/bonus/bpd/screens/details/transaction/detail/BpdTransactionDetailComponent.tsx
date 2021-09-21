@@ -14,10 +14,17 @@ import { formatNumberAmount } from "../../../../../../../utils/stringBuilder";
 import { EnhancedBpdTransaction } from "../../../../components/transactionItem/BpdTransactionItem";
 import { BpdTransactionWarning } from "./BpdTransactionWarning";
 
+/**
+ * @deprecated
+ */
 export type BpdTransactionDetailRepresentation = EnhancedBpdTransaction & {
   // false if the transaction is not valid for the cashback (eg: the user has
   // already reached the maximum cashback value for the period )
   validForCashback: boolean;
+};
+
+export type BpdTransactionDetailRepresentationV2 = BpdTransactionDetailRepresentation & {
+  isPivot: boolean;
 };
 
 type Props = { transaction: BpdTransactionDetailRepresentation };
@@ -161,8 +168,12 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = pro
       <View spacer={true} />
       <Body>{paymentMethod}</Body>
       <View spacer={true} />
-      <View style={[IOStyles.flex, IOStyles.row]}>
-        <Image source={props.transaction.image} style={styles.image} />
+      <View style={IOStyles.row}>
+        <Image
+          source={props.transaction.image}
+          style={styles.image}
+          resizeMode={"contain"}
+        />
         <View hspacer={true} small={true} />
         <H4>{props.transaction.title}</H4>
       </View>

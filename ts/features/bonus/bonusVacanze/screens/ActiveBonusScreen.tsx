@@ -30,7 +30,6 @@ import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
-import { getLocalePrimaryWithFallback } from "../../../../utils/locale";
 import {
   isShareEnabled,
   saveImageToGallery,
@@ -64,6 +63,9 @@ import {
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
+import { getRemoteLocale } from "../../../../utils/messages";
+import { Link } from "../../../../components/core/typography/Link";
+import { withBase64Uri } from "../../../../utils/image";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -222,7 +224,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string) => {
-  const shared = await share(`data:image/png;base64,${content}`, code).run();
+  const shared = await share(withBase64Uri(content, "png"), code).run();
   shared.mapLeft(_ => showToastGenericError());
 };
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
@@ -524,7 +526,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   const maybeBonusInfo = fromNullable(props.bonusInfo);
   const bonusInfoFromLocale = maybeBonusInfo
-    .map(b => b[getLocalePrimaryWithFallback()])
+    .map(b => b[getRemoteLocale()])
     .toUndefined();
   const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
     maybeNotNullyString(b.tos_url)
@@ -648,17 +650,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     <View spacer={true} />
                     <ItemSeparatorComponent noPadded={true} />
                     <View spacer={true} large={true} />
-                    <TouchableDefaultOpacity
+                    <Link
                       onPress={() => handleModalPress(maybeBonusTos.value)}
+                      numberOfLines={1}
                     >
-                      <Text
-                        link={true}
-                        ellipsizeMode={"tail"}
-                        numberOfLines={1}
-                      >
-                        {I18n.t("bonus.tos.title")}
-                      </Text>
-                    </TouchableDefaultOpacity>
+                      {I18n.t("bonus.tos.title")}
+                    </Link>
                   </>
                 )}
                 {/* add extra bottom space when capturing screenshot */}

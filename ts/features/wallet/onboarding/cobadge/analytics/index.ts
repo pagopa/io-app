@@ -5,6 +5,7 @@ import { ExecutionStatusEnum } from "../../../../../../definitions/pagopa/wallet
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../../utils/errors";
+import { sendAddCobadgeMessage } from "../../../../../store/actions/wallet/wallets";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
@@ -51,6 +52,8 @@ export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload
       });
+    case getType(sendAddCobadgeMessage):
+      return mp.track(action.type, { canAdd: action.payload });
   }
   return Promise.resolve();
 };

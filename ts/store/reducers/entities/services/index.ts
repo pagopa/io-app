@@ -6,18 +6,16 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { ScopeEnum } from "../../../../../definitions/content/Service";
-import { ServicesByScope } from "../../../../../definitions/content/ServicesByScope";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";
-import { servicesByScopeSelector } from "../../content";
 import { GlobalState } from "../../types";
 import { userMetadataSelector } from "../../userMetadata";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
+import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
 import {
   firstLoadingReducer,
   FirstLoadingState,
@@ -40,8 +38,13 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
+import servicePreferenceReducer, {
+  ServicePreferenceState
+} from "./servicePreference";
 
 export type ServicesState = Readonly<{
+  // Section to hold the preference for services
+  servicePreference: ServicePreferenceState;
   byId: ServicesByIdState;
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
   visible: VisibleServicesState;
@@ -56,6 +59,7 @@ export type ServicesSectionState = Readonly<{
 }>;
 
 const reducer = combineReducers<ServicesState, Action>({
+  servicePreference: servicePreferenceReducer,
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
@@ -165,24 +169,21 @@ export const organizationsOfInterestSelector = createSelector(
 
 // Check if the passed service is local or national through data included into serviceByScope store item.
 // If the scope parameter is expressed, the corresponding item is not included into the section if:
-// -  the scope paramenter is different to the service scope
+// -  the scope parameter is different to the service scope
 // -  service detail or serviceByScope loading fails
 const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
-  servicesByScope: pot.Pot<ServicesByScope, Error>,
-  scope?: ScopeEnum
+  scope?: ServiceScopeEnum
 ) => {
   if (scope === undefined) {
     return true;
   }
 
-  // if service or servicesByScope are Error, the item is not included into the section
-  if (pot.isSome(service) && pot.isSome(servicesByScope)) {
-    const serviceId = service.value.service_id;
-    return servicesByScope.value[scope].indexOf(serviceId) !== -1;
-  }
-
-  return false;
+  // if service is in Error, the item is not included into the section
+  return pot.getOrElse(
+    pot.map(service, s => s.service_metadata?.scope === scope),
+    false
+  );
 };
 
 // NOTE: this is a workaround not a solution
@@ -216,8 +217,7 @@ const belongsToOrganization = (
 const getServices = (
   services: ServicesState,
   organizations: OrganizationNamesByFiscalCodeState,
-  servicesByScope: pot.Pot<ServicesByScope, Error>,
-  scope?: ScopeEnum,
+  scope?: ServiceScopeEnum,
   selectedOrganizationsFiscalCodes?: ReadonlyArray<string>
 ) => {
   const organizationsFiscalCodes =
@@ -261,7 +261,7 @@ const getServices = (
           service =>
             isDefined(service) &&
             belongsToOrganization(service, orgsFiscalCodes) && // workaround: see comments above this function definition
-            isInScope(service, servicesByScope, scope) &&
+            isInScope(service, scope) &&
             isVisibleService(services.visible, service)
         )
         .sort((a, b) =>
@@ -288,24 +288,16 @@ const getServices = (
 
 // A selector providing sections related to national services
 export const nationalServicesSectionsSelector = createSelector(
-  [
-    servicesSelector,
-    organizationNamesByFiscalCodeSelector,
-    servicesByScopeSelector
-  ],
-  (services, organizations, servicesByScope) =>
-    getServices(services, organizations, servicesByScope, ScopeEnum.NATIONAL)
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
+  (services, organizations) =>
+    getServices(services, organizations, ServiceScopeEnum.NATIONAL)
 );
 
 // A selector providing sections related to local services
 export const localServicesSectionsSelector = createSelector(
-  [
-    servicesSelector,
-    organizationNamesByFiscalCodeSelector,
-    servicesByScopeSelector
-  ],
-  (services, organizations, servicesByScope) =>
-    getServices(services, organizations, servicesByScope, ScopeEnum.LOCAL)
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
+  (services, organizations) =>
+    getServices(services, organizations, ServiceScopeEnum.LOCAL)
 );
 
 // A selector providing sections related to the organizations selected by the user
@@ -313,17 +305,10 @@ export const selectedLocalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
-    servicesByScopeSelector,
     organizationsOfInterestSelector
   ],
-  (services, organizations, servicesByScope, selectedOrganizations) =>
-    getServices(
-      services,
-      organizations,
-      servicesByScope,
-      undefined,
-      selectedOrganizations
-    )
+  (services, organizations, selectedOrganizations) =>
+    getServices(services, organizations, undefined, selectedOrganizations)
 );
 
 // A selector providing sections related to:
@@ -333,10 +318,9 @@ export const notSelectedServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
-    servicesByScopeSelector,
     organizationsOfInterestSelector
   ],
-  (services, organizations, servicesByScope, selectedOrganizations) => {
+  (services, organizations, selectedOrganizations) => {
     const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
       // add to organizations all cf of other organizations having the same organization name
       const organizationsWithSameNames = fromNullable(selectedOrganizations)
@@ -368,7 +352,6 @@ export const notSelectedServicesSectionsSelector = createSelector(
     return getServices(
       services,
       organizations,
-      servicesByScope,
       undefined,
       notSelectedOrganizations.toUndefined()
     );

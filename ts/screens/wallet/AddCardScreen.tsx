@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   NavigationInjectedProps,
@@ -13,7 +13,15 @@ import {
 import { Content, View } from "native-base";
 import { Col, Grid } from "react-native-easy-grid";
 
-import { isNone, Option, fromPredicate, isSome } from "fp-ts/lib/Option";
+import {
+  isNone,
+  Option,
+  fromPredicate,
+  isSome,
+  some,
+  none,
+  fromEither
+} from "fp-ts/lib/Option";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -28,34 +36,39 @@ import {
   navigateToWalletConfirmCardDetails
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { addWalletCreditCardInit } from "../../store/actions/wallet/wallets";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import {
   isValidPan,
-  isValidExpirationDate,
   isValidSecurityCode,
   CreditCardState,
   getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
   CreditCardStateKeys,
-  isValidCardHolder
+  isValidCardHolder,
+  CreditCardExpirationYear,
+  CreditCardExpirationMonth,
+  MIN_PAN_DIGITS
 } from "../../utils/input";
 
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { GlobalState } from "../../store/reducers/types";
 import { Link } from "../../components/core/typography/Link";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { openWebUrl } from "../../utils/url";
 import { showToast } from "../../utils/showToast";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
 import { Body } from "../../components/core/typography/Body";
 import { CreditCard } from "../../types/pagopa";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
+import { isExpired } from "../../utils/dates";
+import { isTestEnv } from "../../utils/environment";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { useLuhnValidation } from "../../utils/hooks/useLuhnValidation";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -118,7 +131,9 @@ const openSupportedCardsPage = (): void => {
 
 const primaryButtonPropsFromState = (
   state: CreditCardState,
-  onNavigate: (card: CreditCard) => NavigationNavigateAction
+  onNavigate: (card: CreditCard) => NavigationNavigateAction,
+  isHolderValid: boolean,
+  isExpirationDateValid?: boolean
 ): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
   const baseButtonProps = {
     block: true,
@@ -126,22 +141,93 @@ const primaryButtonPropsFromState = (
     title: I18n.t("global.buttons.continue")
   };
 
+  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
+    state.pan.getOrElse(""),
+    state.securityCode.getOrElse("")
+  );
+
   const card = getCreditCardFromState(state);
 
   return card.fold<BlockButtonProps>(
-    {
+    (e: string | undefined) => ({
       ...baseButtonProps,
-      disabled: true
-    },
+      disabled: true,
+      accessibilityRole: "button",
+      accessibilityLabel: e
+    }),
     c => ({
       ...baseButtonProps,
-      disabled: false,
+      disabled:
+        !isCardNumberValid ||
+        !isCvvValid ||
+        !isHolderValid ||
+        !isExpirationDateValid,
       onPress: () => {
+        Keyboard.dismiss();
         onNavigate(c);
       }
     })
   );
 };
+
+// return some(true) if the date is invalid or expired
+// none if it can't be evaluated
+const isCreditCardDateExpiredOrInvalid = (
+  expireDate: Option<string>
+): Option<boolean> =>
+  expireDate
+    .chain(date => {
+      // split the date in two parts: month, year
+      const splitted = date.split("/");
+      if (splitted.length !== 2) {
+        return none;
+      }
+
+      return some([splitted[0], splitted[1]]);
+    })
+    .chain(my => {
+      // if the input is not in the required format mm/yy
+      if (
+        !CreditCardExpirationMonth.is(my[0]) ||
+        !CreditCardExpirationYear.is(my[1])
+      ) {
+        return some(true);
+      }
+      return fromEither(isExpired(my[0], my[1]));
+    });
+
+const maybeCreditcardValidOrExpired = (
+  creditCard: CreditCardState
+): Option<boolean> =>
+  isCreditCardDateExpiredOrInvalid(creditCard.expirationDate).map(v => !v);
+
+const getAccessiblityLabels = (creditCard: CreditCardState) => ({
+  cardHolder:
+    isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
+      ? I18n.t("wallet.dummyCard.accessibility.holder.base")
+      : I18n.t("wallet.dummyCard.accessibility.holder.error"),
+  pan:
+    isNone(creditCard.pan) || isValidPan(creditCard.pan)
+      ? I18n.t("wallet.dummyCard.accessibility.pan.base")
+      : I18n.t("wallet.dummyCard.accessibility.pan.error", {
+          minLength: MIN_PAN_DIGITS
+        }),
+  expirationDate:
+    isNone(maybeCreditcardValidOrExpired(creditCard)) ||
+    maybeCreditcardValidOrExpired(creditCard).toUndefined()
+      ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
+      : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
+  securityCode3D:
+    isNone(creditCard.securityCode) ||
+    isValidSecurityCode(creditCard.securityCode)
+      ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
+      : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
+  securityCode4D:
+    isNone(creditCard.securityCode) ||
+    isValidSecurityCode(creditCard.securityCode)
+      ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
+      : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
+});
 
 const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
@@ -173,6 +259,11 @@ const AddCardScreen: React.FC<Props> = props => {
     creditCard.pan
   );
 
+  const { isCardNumberValid, isCvvValid } = useLuhnValidation(
+    creditCard.pan.getOrElse(""),
+    creditCard.securityCode.getOrElse("")
+  );
+
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
@@ -186,6 +277,22 @@ const AddCardScreen: React.FC<Props> = props => {
     onPress: props.navigateBack,
     title: I18n.t("global.buttons.back")
   };
+
+  const isScreenReaderEnabled = !useScreenReaderEnabled();
+  const placeholders = isScreenReaderEnabled
+    ? {
+        placeholderCard: I18n.t("wallet.dummyCard.values.pan"),
+        placeholderHolder: I18n.t("wallet.dummyCard.values.holder"),
+        placeholderDate: I18n.t("wallet.dummyCard.values.expirationDate"),
+        placeholderSecureCode: I18n.t(
+          detectedBrand.cvvLength === 4
+            ? "wallet.dummyCard.values.securityCode4D"
+            : "wallet.dummyCard.values.securityCode"
+        )
+      }
+    : {};
+
+  const accessiblityLabels = getAccessiblityLabels(creditCard);
 
   return (
     <BaseScreenComponent
@@ -202,7 +309,6 @@ const AddCardScreen: React.FC<Props> = props => {
       >
         <Content scrollEnabled={false}>
           <LabelledItem
-            type={"text"}
             label={I18n.t("wallet.dummyCard.labels.holder.label")}
             description={
               isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
@@ -215,9 +321,10 @@ const AddCardScreen: React.FC<Props> = props => {
                 ? undefined
                 : isValidCardHolder(creditCard.holder)
             }
+            accessibilityLabel={accessiblityLabels.cardHolder}
             inputProps={{
               value: creditCard.holder.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.holder"),
+              placeholder: placeholders.placeholderHolder,
               autoCapitalize: "words",
               keyboardType: "default",
               returnKeyType: "done",
@@ -229,14 +336,13 @@ const AddCardScreen: React.FC<Props> = props => {
           <View spacer={true} />
 
           <LabelledItem
-            type={"masked"}
             label={I18n.t("wallet.dummyCard.labels.pan")}
             icon={detectedBrand.iconForm}
             iconStyle={styles.creditCardForm}
-            isValid={isValidPan(creditCard.pan)}
+            isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
             inputMaskProps={{
               value: creditCard.pan.getOrElse(""),
-              placeholder: I18n.t("wallet.dummyCard.values.pan"),
+              placeholder: placeholders.placeholderCard,
               keyboardType: "numeric",
               returnKeyType: "done",
               maxLength: 23,
@@ -252,6 +358,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 }
               }
             }}
+            accessibilityLabel={accessiblityLabels.pan}
             testID={"pan"}
           />
 
@@ -259,13 +366,15 @@ const AddCardScreen: React.FC<Props> = props => {
           <Grid>
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                 icon="io-calendario"
-                isValid={isValidExpirationDate(creditCard.expirationDate)}
+                accessibilityLabel={accessiblityLabels.expirationDate}
+                isValid={maybeCreditcardValidOrExpired(
+                  creditCard
+                ).toUndefined()}
                 inputMaskProps={{
                   value: creditCard.expirationDate.getOrElse(""),
-                  placeholder: I18n.t("wallet.dummyCard.values.expirationDate"),
+                  placeholder: placeholders.placeholderDate,
                   keyboardType: "numeric",
                   returnKeyType: "done",
                   type: "custom",
@@ -279,21 +388,23 @@ const AddCardScreen: React.FC<Props> = props => {
             <Col style={styles.verticalSpacing} />
             <Col>
               <LabelledItem
-                type={"masked"}
                 label={I18n.t(
                   detectedBrand.cvvLength === 4
                     ? "wallet.dummyCard.labels.securityCode4D"
                     : "wallet.dummyCard.labels.securityCode"
                 )}
                 icon="io-lucchetto"
-                isValid={isValidSecurityCode(creditCard.securityCode)}
+                isValid={
+                  creditCard.securityCode.getOrElse("") ? isCvvValid : undefined
+                }
+                accessibilityLabel={
+                  detectedBrand.cvvLength === 4
+                    ? accessiblityLabels.securityCode4D
+                    : accessiblityLabels.securityCode3D
+                }
                 inputMaskProps={{
                   value: creditCard.securityCode.getOrElse(""),
-                  placeholder: I18n.t(
-                    detectedBrand.cvvLength === 4
-                      ? "wallet.dummyCard.values.securityCode4D"
-                      : "wallet.dummyCard.values.securityCode"
-                  ),
+                  placeholder: placeholders.placeholderSecureCode,
                   returnKeyType: "done",
                   maxLength: 4,
                   type: "custom",
@@ -311,12 +422,22 @@ const AddCardScreen: React.FC<Props> = props => {
           {!isSome(inPayment) && (
             <>
               <View spacer={true} />
-              <Link onPress={present}>{I18n.t("wallet.missingDataCTA")}</Link>
+              <Link
+                accessibilityRole="link"
+                accessibilityLabel={I18n.t("wallet.missingDataCTA")}
+                onPress={present}
+              >
+                {I18n.t("wallet.missingDataCTA")}
+              </Link>
             </>
           )}
           <View spacer />
 
-          <Link onPress={openSupportedCardsPage}>
+          <Link
+            accessibilityRole="link"
+            accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
+            onPress={openSupportedCardsPage}
+          >
             {I18n.t("wallet.openAcceptedCardsPageCTA")}
           </Link>
         </Content>
@@ -327,7 +448,9 @@ const AddCardScreen: React.FC<Props> = props => {
         leftButton={secondaryButtonProps}
         rightButton={primaryButtonPropsFromState(
           creditCard,
-          props.navigateToConfirmCardDetailsScreen
+          props.navigateToConfirmCardDetailsScreen,
+          isValidCardHolder(creditCard.holder),
+          maybeCreditcardValidOrExpired(creditCard).toUndefined()
         )}
       />
     </BaseScreenComponent>
@@ -338,7 +461,6 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
-  addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
   navigateBack: () => dispatch(navigateBack()),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     dispatch(
@@ -351,3 +473,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
+// keep encapsulation strong
+export const testableAddCardScreen = isTestEnv
+  ? { isCreditCardDateExpiredOrInvalid }
+  : undefined;

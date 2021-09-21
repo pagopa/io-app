@@ -2,8 +2,9 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import DeviceInfo from "react-native-device-info";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { loadServiceMetadata } from "../../store/actions/content";
@@ -33,7 +34,8 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingBottom: Platform.OS === "ios" && DeviceInfo.hasNotch() ? 28 : 15
   }
 });
 
@@ -113,7 +115,11 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const maybeCtas = getCTA(this.props.message, this.props.serviceMetadata);
+    const maybeCtas = getCTA(
+      this.props.message,
+      this.props.serviceMetadata,
+      this.props.service?.service_id
+    );
     const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
         <ExtractedCTABar

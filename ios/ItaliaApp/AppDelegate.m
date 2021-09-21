@@ -53,7 +53,11 @@ static void InitializeFlipper(UIApplication *application) {
                                                        moduleName:@"ItaliaApp"
                                                 initialProperties:nil];
       
-      rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+      if (@available(iOS 13.0, *)) {
+          rootView.backgroundColor = [UIColor systemBackgroundColor];
+      } else {
+          rootView.backgroundColor = [UIColor whiteColor];
+      }
       
       self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
       UIViewController *rootViewController = [UIViewController new];
@@ -124,39 +128,6 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
   completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
-}
-
-
-// Code used to replace the main view with a blank one when application is in background.
-// Taken from @https://pinkstone.co.uk/how-to-control-the-preview-screenshot-in-the-ios-multitasking-switcher/
-- (void)applicationWillResignActive:(UIApplication *)application {
-
-     // Fill screen with our own colour
-    UIView *colourView = [[UIView alloc]initWithFrame:self.window.frame];
-    colourView.backgroundColor = [UIColor whiteColor];
-    colourView.tag = 1234;
-    colourView.alpha = 0;
-    [self.window addSubview:colourView];
-    [self.window bringSubviewToFront:colourView];
-
-     // Fade in the view
-    [UIView animateWithDuration:0.5 animations:^{
-        colourView.alpha = 1;
-    }];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-
-     // Grab a reference to our coloured view
-    UIView *colourView = [self.window viewWithTag:1234];
-
-     // Fade away colour view from main view
-    [UIView animateWithDuration:0.5 animations:^{
-        colourView.alpha = 0;
-    } completion:^(BOOL finished) {
-        // Remove when finished fading
-        [colourView removeFromSuperview];
-    }];
 }
 
 @end

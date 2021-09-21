@@ -17,11 +17,13 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { BrandImage } from "../../../component/card/BrandImage";
 import { useImageResize } from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
   abi: Abi;
   expiringDate?: Date;
+  isExpired?: boolean;
   user: string;
   blocked?: boolean;
 };
@@ -61,11 +63,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "baseline"
-  },
-  bancomatLogo: {
-    width: 60,
-    height: 36,
-    resizeMode: "contain"
   },
   badgeInfo: {
     borderWidth: 1,
@@ -118,7 +115,6 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
     BASE_IMG_H,
     props.abi?.logoUrl
   );
-
   return (
     <>
       {Platform.OS === "android" && <View style={styles.shadowBox} />}
@@ -140,9 +136,10 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           </View>
           <View spacer={true} />
           {props.expiringDate && (
-            <H5 color={"bluegrey"} weight={"Regular"}>{`${I18n.t(
-              "cardComponent.expiresOn"
-            )} ${localeDateFormat(
+            <H5
+              color={props.isExpired ? "red" : "bluegreyDark"}
+              weight={"SemiBold"}
+            >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
               props.expiringDate,
               I18n.t("global.dateFormats.numericMonthYear")
             )}`}</H5>
@@ -150,7 +147,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
         </View>
         <View style={styles.bottomRow}>
           <Body>{props.user.toLocaleUpperCase()}</Body>
-          <Image style={styles.bancomatLogo} source={pagoBancomatLogo} />
+          <BrandImage image={pagoBancomatLogo} />
         </View>
       </View>
     </>

@@ -13,7 +13,7 @@ type Props = {
   methodType: "bancomatPay" | "bancomat" | "cobadge";
   showCircuitLogo?: boolean;
   bankName?: string;
-  openPartecipatingBanksModal?: () => void;
+  openParticipatingBanksModal?: () => void;
 };
 
 const bancomatLocales = () => ({
@@ -75,7 +75,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
           <Link
             onPress={
               props.methodType === "cobadge"
-                ? props.openPartecipatingBanksModal
+                ? props.openParticipatingBanksModal
                 : props.openTosModal
             }
           >
@@ -85,7 +85,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
       </Body>
 
       <View spacer={true} large={true} />
-      <Body>
+      <Body accessibilityRole="link">
         <H4 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text3}
         </H4>

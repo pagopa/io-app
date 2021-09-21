@@ -3,7 +3,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
   all,
   call,
@@ -53,6 +52,9 @@ import {
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { mixpanelTrack } from "../mixpanel";
+import { readablePrivacyReport } from "../utils/reporters";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -66,7 +68,7 @@ export function* loadProfile(
     const response = yield call(getProfile, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -103,7 +105,7 @@ function* createOrUpdateProfileSaga(
   );
 
   if (pot.isNone(profileState)) {
-    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
+    // something's wrong, we don't even have an AuthenticatedProfile meaning
     // the user didn't yet authenticated: ignore this upsert request.
     return;
   }
@@ -115,6 +117,8 @@ function* createOrUpdateProfileSaga(
   // FIXME: perhaps this is responsibility of the caller?
   const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
+        service_preferences_settings:
+          currentProfile.service_preferences_settings,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         is_email_validated: currentProfile.is_email_validated || false,
@@ -127,6 +131,9 @@ function* createOrUpdateProfileSaga(
         ...action.payload
       }
     : {
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.LEGACY
+        },
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
@@ -144,7 +151,7 @@ function* createOrUpdateProfileSaga(
     );
 
     if (response.isLeft()) {
-      throw new Error(readableReport(response.value));
+      throw new Error(readablePrivacyReport(response.value));
     }
 
     if (response.value.status === 409) {
@@ -166,11 +173,56 @@ function* createOrUpdateProfileSaga(
       throw new Error(response.value.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-      yield put(profileUpsert.success(response.value.value));
+      yield put(
+        profileUpsert.success({
+          value: currentProfile,
+          newValue: response.value.value
+        })
+      );
     }
   } catch (e) {
     const error: Error = e || Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
+  }
+}
+
+/**
+ * collection of predicates to forward chosen information:
+ * - first element contains the handler to check if the event should be dispatched
+ * - second element contains the callback to execute if the first element condition is verified
+ */
+const profileChangePredicates: ReadonlyArray<[
+  (value: InitializedProfile, newValue: InitializedProfile) => boolean,
+  (value: InitializedProfile) => Promise<void> | undefined
+]> = [
+  [
+    (value, newValue) => value.is_email_enabled !== newValue.is_email_enabled,
+    value =>
+      mixpanelTrack("EMAIL_FORWARDING_MODE_SET", {
+        mode: value.is_email_enabled ? "ALL" : "NONE"
+      })
+  ],
+  [
+    (value, newValue) =>
+      value.service_preferences_settings.mode !==
+      newValue.service_preferences_settings.mode,
+    value =>
+      mixpanelTrack("SERVICE_CONTACT_MODE_SET", {
+        mode: value.service_preferences_settings.mode
+      })
+  ]
+];
+
+// execute a list of predicates to detect interesting scenario and execute action when profile changes
+function* handleProfileChangesSaga(
+  action: ActionType<typeof profileUpsert["success"]>
+) {
+  const { value, newValue } = action.payload;
+
+  for (const item of profileChangePredicates) {
+    if (item[0](value, newValue)) {
+      yield call(item[1], newValue);
+    }
   }
 }
 
@@ -185,6 +237,8 @@ export function* watchProfileUpsertRequestsSaga(
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );
+
+  yield takeLatest(getType(profileUpsert.success), handleProfileChangesSaga);
 }
 
 // This function listens for Profile refresh requests and calls the needed saga.
@@ -209,7 +263,7 @@ function* startEmailValidationProcessSaga(
     const response = yield call(startEmailValidationProcess, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 202) {
       yield put(startEmailValidation.success());
@@ -329,8 +383,11 @@ function* checkStoreHashedFiscalCode(
     isDifferentFiscalCodeSelector,
     profileLoadSuccessAction.payload.fiscal_code
   );
-  // the current logged user has a different fiscal code from the stored hashed one
-  if (checkIsDifferentFiscalCode === true) {
+  // the current logged user has a different fiscal code from the stored hashed one or there isn't a stored one
+  if (
+    checkIsDifferentFiscalCode === true ||
+    checkIsDifferentFiscalCode === undefined
+  ) {
     // delete current store pin
     yield call(deletePin);
     yield put(differentProfileLoggedIn());

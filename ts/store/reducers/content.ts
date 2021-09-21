@@ -7,30 +7,35 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import {
-  ScopeEnum,
-  Service as ServiceMetadata
-} from "../../../definitions/content/Service";
-import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
-  loadServiceMetadata,
-  loadVisibleServicesByScope
+  loadIdps,
+  loadServiceMetadata
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import {
+  isReady,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../features/bonus/bpd/model/RemoteValue";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
+import { getRemoteLocale } from "../../utils/messages";
 import { navSelector } from "./navigationHistory";
 import { GlobalState } from "./types";
 
@@ -43,8 +48,8 @@ export type ContentState = Readonly<{
     byId: ServiceMetadataById;
   };
   municipality: MunicipalityState;
-  servicesByScope: pot.Pot<ServicesByScope, Error>;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
+  idps: RemoteValue<SpidIdps, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -66,8 +71,8 @@ export const initialContentState: ContentState = {
     codiceCatastale: pot.none,
     data: pot.none
   },
-  servicesByScope: pot.none,
-  contextualHelp: pot.none
+  contextualHelp: pot.none,
+  idps: remoteUndefined
 };
 
 // Selectors
@@ -86,75 +91,35 @@ export const serviceMetadataByIdSelector = (serviceId: string) => (
   state: GlobalState
 ) => servicesMetadataByIdSelector(state)[serviceId];
 
-export const servicesByScopeSelector = (state: GlobalState) =>
-  state.content.servicesByScope;
-
-/**
- * returns true if the given serviceId is contained in the relative scope
- * @param serviceId
- * @param scope
- */
-export const isServiceIdInScopeSelector = (
-  serviceId: ServiceId,
-  scope: ScopeEnum
-) =>
-  createSelector(servicesByScopeSelector, maybeServicesByScope =>
-    pot.getOrElse(
-      pot.map(
-        maybeServicesByScope,
-        sbs => sbs[scope].indexOf(serviceId) !== -1
-      ),
-      false
-    )
-  );
-
-/**
- * returns true if the given service is contained in the relative scope
- * @param service
- * @param scope
- */
-export const isServiceInScopeSelector = (
-  service: ServicePublic,
-  scope: ScopeEnum
-) => isServiceIdInScopeSelector(service.service_id, scope);
-
-/**
- * from the given services returns only these contained in the given scope
- * @param services
- * @param scope
- */
-export const servicesInScopeSelector = (
-  services: ReadonlyArray<ServicePublic>,
-  scope: ScopeEnum
-) =>
-  createSelector(servicesByScopeSelector, maybeServicesByScope =>
-    pot.getOrElse(
-      pot.map(maybeServicesByScope, sbs =>
-        services.filter(service =>
-          sbs[scope].some(sId => sId === service.service_id)
-        )
-      ),
-      []
-    )
-  );
-
 export const contextualHelpDataSelector = (
   state: GlobalState
 ): pot.Pot<ContextualHelp, Error> => state.content.contextualHelp;
+
+export const idpsStateSelector = createSelector(
+  contentSelector,
+  (content: ContentState): ContentState["idps"] => content.idps
+);
+
+export const idpsSelector = createSelector(
+  idpsStateSelector,
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | LocalIdpsFallback> =>
+    isReady(idps) ? idps.value.items : idpsFallback
+);
 
 /**
  * return an option with Idp contextual help data if they are loaded and defined
  * @param id
  */
-export const idpContextualHelpDataFromIdSelector = (id: IdentityProviderId) =>
+export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
-          const locale = getLocalePrimaryWithFallback();
-          return fromNullable(
-            data[locale] !== undefined ? data[locale].idps[id] : undefined
+          const locale = getRemoteLocale();
+
+          return fromNullable(data[locale]).chain(l =>
+            fromNullable(l.idps[id as IdentityProviderId])
           );
         }),
         none
@@ -176,7 +141,7 @@ export const screenContextualHelpDataSelector = createSelector<
     if (currentRouteName === undefined) {
       return none;
     }
-    const locale = getLocalePrimaryWithFallback();
+    const locale = getRemoteLocale();
     const screenData =
       data[locale] !== undefined
         ? data[locale].screens.find(
@@ -263,26 +228,7 @@ export default function content(
         }
       };
 
-    // services by scope
-    case getType(loadVisibleServicesByScope.request):
-      return {
-        ...state,
-        servicesByScope: pot.toLoading(state.servicesByScope)
-      };
-
-    case getType(loadVisibleServicesByScope.success):
-      return {
-        ...state,
-        servicesByScope: pot.some(action.payload)
-      };
-
-    case getType(loadVisibleServicesByScope.failure):
-      return {
-        ...state,
-        servicesByScope: pot.toError(state.servicesByScope, action.payload)
-      };
-
-    // idps text data
+    // contextualHelp text data
     case getType(loadContextualHelpData.request):
       return {
         ...state,
@@ -299,6 +245,25 @@ export default function content(
       return {
         ...state,
         contextualHelp: pot.toError(state.contextualHelp, action.payload)
+      };
+
+    // idps data
+    case getType(loadIdps.request):
+      return {
+        ...state,
+        idps: remoteLoading
+      };
+
+    case getType(loadIdps.success):
+      return {
+        ...state,
+        idps: remoteReady(action.payload)
+      };
+
+    case getType(loadIdps.failure):
+      return {
+        ...state,
+        idps: remoteError(action.payload)
       };
 
     case getType(clearCache):

@@ -21,7 +21,6 @@ export type BottomSheetProps = {
  * @param title
  * @param snapPoint
  * @param onClose
- * @param footer TODO: temp param
  */
 export const bottomSheetContent = async (
   content: React.ReactNode,
@@ -59,7 +58,7 @@ export const bottomSheetContent = async (
  */
 export const bottomSheetRawConfig = (
   content: React.ReactNode,
-  title: string,
+  title: string | React.ReactNode,
   snapPoint: number,
   onClose: () => void
 ): BottomSheetProps => ({
@@ -115,7 +114,10 @@ export const useIOBottomSheetRaw = (
 ) => {
   const { present, dismiss } = useBottomSheetModal();
   const setBSOpened = useHardwareBackButtonToDismiss(dismiss);
-  const openModalBox = async (component: React.ReactNode, title: string) => {
+  const openModalBox = async (
+    component: React.ReactNode,
+    title: string | React.ReactNode
+  ) => {
     const bottomSheetProps = bsContent
       ? await bsContent(component, title, snapPoint, dismiss)
       : bottomSheetRawConfig(component, title, snapPoint, dismiss);

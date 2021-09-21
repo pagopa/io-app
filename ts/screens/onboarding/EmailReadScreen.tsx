@@ -9,14 +9,15 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps, StackActions } from "react-navigation";
+import { StackActions } from "react-navigation";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatusComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import {
   SingleButton,
   TwoButtonsInlineHalf
@@ -45,7 +46,7 @@ import customVariables from "../../theme/variables";
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps;
+  NavigationStackScreenProps;
 
 const styles = StyleSheet.create({
   emailWithIcon: {
@@ -72,8 +73,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.email.contextualHelpTitle",
-  body: "profile.preferences.email.contextualHelpContent"
+  title: "profile.data.email.contextualHelpTitle",
+  body: "profile.data.email.contextualHelpContent"
 };
 
 export class EmailReadScreen extends React.PureComponent<Props> {
@@ -127,12 +128,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         title: I18n.t("email.edit.cta"),
         onPress: () => {
           if (!isOnboardingCompleted) {
-            const resetAction = StackActions.reset({
-              index: 0,
-              actions: [navigateToEmailInsertScreen()]
-            });
-            this.props.navigation.dispatch(resetAction);
-            return;
+            this.props.navigation.dispatch(StackActions.popToTop());
           }
           this.props.navigateToEmailInsertScreen();
         }
@@ -148,7 +144,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        headerTitle={I18n.t("profile.preferences.list.email")}
+        headerTitle={I18n.t("profile.data.list.email")}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent

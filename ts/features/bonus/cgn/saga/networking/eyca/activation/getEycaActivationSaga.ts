@@ -30,7 +30,7 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
  * ask for starting activation of EYCA card
  * @param startEycaActivation
  */
-function* handleStartActivation(
+export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): Generator<Effect, Either<NetworkError, StartEycaStatus>, any> {
   try {
@@ -111,11 +111,9 @@ export function* getActivation(
  * first it checks for the status activation
  * depending on that, it could start a polling to wait about completion or ends with a defined state
  * @param getEycaActivation asks for the status of EYCA card activation
- * @param startEycaActivation asks for the activation of EYCA card
  */
 export function* handleEycaActivationSaga(
-  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
-  startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
+  getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ) {
   const startPollingTime = new Date().getTime();
   while (true) {
@@ -127,30 +125,14 @@ export function* handleEycaActivationSaga(
       yield put(cgnEycaActivation.failure(activationInfo.value));
       return;
     }
-    const status: GetEycaStatus = activationInfo.value;
-    switch (status) {
+    switch (activationInfo.value) {
       case "COMPLETED":
         yield put(cgnEycaActivation.success("COMPLETED"));
         return;
       case "NOT_FOUND":
+        yield put(cgnEycaActivation.success("NOT_FOUND"));
         // ask for activation
-        const startActivation = yield call(
-          handleStartActivation,
-          startEycaActivation
-        );
-        // activation not handled error, stop
-        if (startActivation.isLeft()) {
-          yield put(cgnEycaActivation.failure(startActivation.value));
-          return;
-        } else {
-          const startActivationStatus: StartEycaStatus = startActivation.value;
-          // could be: ALREADY_ACTIVE, INELIGIBLE
-          if (startActivationStatus !== "PROCESSING") {
-            yield put(cgnEycaActivation.success(startActivation.value));
-            return;
-          }
-        }
-        break;
+        return;
       case "ERROR":
         // activation logic error
         yield put(cgnEycaActivation.success("ERROR"));

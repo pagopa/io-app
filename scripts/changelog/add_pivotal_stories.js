@@ -2,6 +2,8 @@ const fs = require("fs-extra");
 const Pivotal = require("pivotaljs");
 const pivotal = new Pivotal();
 
+const jiraTicketBaseUrl = "https://pagopa.atlassian.net/browse/";
+
 /**
  * Skip the use of API to find the story url if the url is already retrieved (contains pivotaltracker.com)
  * or the id length is < 9 (not a pivotal id)
@@ -32,21 +34,53 @@ async function replacePivotalUrl(match, storyId, url) {
   }
 }
 
-async function replacePivotalStories() {
+async function addJiraUrl(match, ticketKeys) {
+  return `[${ticketKeys
+    .split(",")
+    .map(x => `[${x}](${new URL(x, jiraTicketBaseUrl).toString()})`)}]`;
+}
+
+async function replaceJiraStories(content) {
+  // capture [JIRAID-123], avoid already linked ticket with pattern [JIRAID-123](http://jiraurl)
+  const jiraTagRegex = /\[([A-Z0-9]+-\d+(,[a-zA-Z]+-\d+)*)](?!\()/g;
+  return await replaceAsync(content, jiraTagRegex, addJiraUrl);
+}
+
+/**
+ * replace the changelog content by removing the repetition of "closes [#idPivotalorJiraStory](url)"
+ * @param content
+ * @return {Promise<string>}
+ */
+async function cleanCloses(content) {
+  const closesRegex = /,\s+closes(\s+\[((#\d+)|[A-Z0-9]+-\d+)\]\(.*\))+/gm;
+  return await replaceAsync(content, closesRegex, () => Promise.resolve(""));
+}
+
+async function addTasksUrls() {
   // read changelog
-  const content = fs.readFileSync("CHANGELOG.md").toString("utf8");
+  const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
+
+  const updatedChangelog = await [
+    // Add pivotal stories url
+    replacePivotalStories,
+    // Add jira ticket url
+    replaceJiraStories,
+    // clean closes
+    cleanCloses
+  ].reduce(
+    (promiseChain, currentTask) => promiseChain.then(currentTask),
+    Promise.resolve(rawChangelog)
+  );
+  // write the new modified changelog
+  fs.writeFileSync("CHANGELOG.md", updatedChangelog);
+}
+
+async function replacePivotalStories(content) {
   // identify the pattern [#XXXXX](url) for markdown link
   const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z:\/\.\d-@:%._\+~#=]+)\)/g;
 
   // check for all the matches if is a pivotal story and update the url
-  const updatedChangelog = await replaceAsync(
-    content,
-    pivotalTagRegex,
-    replacePivotalUrl
-  );
-
-  // write the new modified changelog
-  fs.writeFileSync("CHANGELOG.md", updatedChangelog);
+  return await replaceAsync(content, pivotalTagRegex, replacePivotalUrl);
 }
 
 /**
@@ -71,8 +105,8 @@ async function replaceAsync(str, regex, asyncFn) {
  * @param storyId
  * @return {Promise<Pivotal.Story>}
  */
-getStory = storyId => {
-  return new Promise((resolve, reject) => {
+getStory = storyId =>
+  new Promise((resolve, reject) => {
     pivotal.getStory(storyId, (err, story) => {
       if (err) {
         return reject(err);
@@ -80,9 +114,9 @@ getStory = storyId => {
       resolve(story);
     });
   });
-};
 
-// Execute the script to find the pivotal stories id in order to associate the right url in the changelog
-replacePivotalStories()
+// Execute the script to find the pivotal stories and jira ticket id in order to associate
+// the right url in the changelog
+addTasksUrls()
   .then(() => console.log("done"))
   .catch(ex => console.log(ex));

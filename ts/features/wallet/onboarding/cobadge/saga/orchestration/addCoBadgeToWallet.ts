@@ -2,6 +2,7 @@ import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
 import {
   executeWorkUnit,
+  withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
@@ -45,35 +46,36 @@ function* coBadgeWorkUnit() {
  * Chain the add co-badge to wallet with "activate bpd on the new co-badge cards"
  */
 export function* addCoBadgeToWalletAndActivateBpd() {
+  const sagaExecution = () =>
+    withFailureHandling(() => withResetNavigationStack(coBadgeWorkUnit));
+
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
-    withResetNavigationStack,
-    coBadgeWorkUnit
+    sagaExecution
   );
-  if (res !== "back") {
-    // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE" or from "WALLET_ADD_CARD", remove from stack
+
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+    navigationCurrentRouteSelector
+  );
+  if (res !== "back" && res !== "failure" && currentRoute.isSome()) {
+    // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-      navigationCurrentRouteSelector
-    );
 
-    if (currentRoute.isSome()) {
-      if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
-        yield put(navigationHistoryPop(1));
-        yield put(NavigationActions.back());
-      }
+    if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
+      yield put(navigationHistoryPop(1));
+      yield put(NavigationActions.back());
+    }
 
-      if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+    if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
+      yield put(NavigationActions.back());
+      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
+        navigationCurrentRouteSelector
+      );
+      if (
+        res === "completed" &&
+        newRoute.isSome() &&
+        newRoute.value === ROUTES.WALLET_BANCOMAT_DETAIL
+      ) {
         yield put(NavigationActions.back());
-        const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-          navigationCurrentRouteSelector
-        );
-        if (
-          res === "completed" &&
-          newRoute.isSome() &&
-          newRoute.value === "WALLET_BANCOMAT_DETAIL"
-        ) {
-          yield put(NavigationActions.back());
-        }
       }
     }
   }

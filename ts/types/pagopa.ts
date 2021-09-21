@@ -36,6 +36,7 @@ import {
   CreditCardPan
 } from "../utils/input";
 import { TypeEnum as CreditCardTypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
+import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 
 /**
  * Union of all possible credit card types
@@ -104,14 +105,7 @@ export type Psp = t.TypeOf<typeof Psp>;
  * - createDate and updateDate are generated from spec as UTCISODateFromString but they have an invalid format (2020-11-03 22:20:29)
  * - info is required
  * - info is CardInfo and not PaymentMethodInfo (empty interface)
- * - enableableFunctions is build as an array of strings instead of array of enum (io-utils code generation limit)
  */
-
-export enum EnableableFunctionsTypeEnum {
-  "pagoPA" = "pagoPA",
-  "BPD" = "BPD",
-  "FA" = "FA"
-}
 
 // required attributes
 const PatchedPaymentMethodInfo = t.union([
@@ -132,10 +126,7 @@ const WalletV2O = t.partial({
 // optional attributes
 const WalletV2R = t.interface({
   enableableFunctions: t.readonlyArray(
-    enumType<EnableableFunctionsTypeEnum>(
-      EnableableFunctionsTypeEnum,
-      "enableableFunctions"
-    ),
+    EnableableFunctions,
     "array of enableableFunctions"
   ),
   info: PatchedPaymentMethodInfo,
