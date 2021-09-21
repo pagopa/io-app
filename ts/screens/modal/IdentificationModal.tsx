@@ -221,7 +221,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         .then(
           () => {
             if (this.state.biometryType) {
-              this.onFingerprintRequest(this.onIdentificationSuccessHandler);
+              void this.onFingerprintRequest(
+                this.onIdentificationSuccessHandler
+              );
             }
           },
           _ => undefined

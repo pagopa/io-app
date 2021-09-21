@@ -55,7 +55,7 @@ const SecurityScreen: FC<Props> = ({
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
-    biometricAuthenticationRequest(
+    void biometricAuthenticationRequest(
       () => setFingerprintPreference(biometricPreference),
       _ =>
         showToast(
