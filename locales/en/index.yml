@@ -1373,16 +1373,16 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    TECHNICAL: Apologies, there is a technical problem with this notice
-    DATA: Apologies, the codes entered are incorrect
-    EC: Apologies, the Creditor Body is having trouble responding
-    PAYMENT_ONGOING: There is already a payment in progress, please try again in a few minutes.
-    ONGOING_SUBTITLE: If too much time has passed, please let us know!
-    REVOKED: Apologies, the Creditor Body has withdrawn this notice
-    EXPIRED: Apologies, the notice has expired and it is no longer possible to pay it
-    GENERIC_ERROR: Apologies, an unexpected error has occurred
-    GENERIC_ERROR_SUBTITLE: Try the payment again, or open a report for assistance.
-    PAYMENT_DUPLICATED: This notice has already been paid!
+    TECHNICAL: Sorry, a technical problem has occurred with this notice
+    DATA: Sorry, the payment information is incorrect
+    EC: Sorry, Payee is having problems in responding
+    PAYMENT_ONGOING: This payment is still ongoing, please try again in a few minutes
+    ONGOING_SUBTITLE: If it has been too long, please let us know!
+    REVOKED: Sorry, the Payee has revoked this notice
+    EXPIRED: Sorry, the notice has expired, it is not possible to pay it
+    GENERIC_ERROR: Sorry, an unexpected error has occurred
+    GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
+    PAYMENT_DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
@@ -1393,8 +1393,8 @@ wallet:
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
-    contactECsubtitle: Contact the organisation for more information.
-    assistanceLabel: "Error code for assistance:"
+    contactECsubtitle: Contact the Institution for more information.
+    assistanceLabel: "Use this code to get support:"
     sendReport: Send report
     loadingData: loading failure, try again.
   walletCardTransaction:
