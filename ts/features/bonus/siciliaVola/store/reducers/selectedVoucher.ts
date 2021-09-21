@@ -1,8 +1,8 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
-import { SvVoucher } from "../../types/SvVoucher";
-import { svVoucherDetailGet } from "../actions/voucherList";
+import { SvVoucher, SvVoucherId } from "../../types/SvVoucher";
+import { svSelectVoucher, svVoucherDetailGet } from "../actions/voucherList";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   remoteError,
@@ -11,9 +11,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bpd/model/RemoteValue";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export type SelectedVoucherState = {
-  voucherCode?: string;
+  voucherCode?: SvVoucherId;
   voucher: RemoteValue<SvVoucher, NetworkError>;
 };
 const INITIAL_STATE: SelectedVoucherState = {
@@ -33,9 +35,22 @@ const reducer = (
       return { ...state, voucher: remoteReady(action.payload) };
     case getType(svVoucherDetailGet.failure):
       return { ...state, voucher: remoteError(action.payload) };
+    case getType(svSelectVoucher):
+      return { ...state, voucherCode: action.payload };
   }
 
   return state;
 };
+
+export const selectedVoucherCodeSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.selectedVoucher.voucherCode],
+  (voucherCode?: SvVoucherId): SvVoucherId | undefined => voucherCode
+);
+export const selectedVoucherSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.selectedVoucher.voucher],
+  (
+    voucher: RemoteValue<SvVoucher, NetworkError>
+  ): RemoteValue<SvVoucher, NetworkError> => voucher
+);
 
 export default reducer;
