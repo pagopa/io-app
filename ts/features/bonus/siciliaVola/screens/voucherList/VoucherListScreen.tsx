@@ -50,6 +50,7 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
 import { showToast } from "../../../../../utils/showToast";
+import { navigateToSvVoucherDetailsScreen } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -62,6 +63,7 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
+        dispatch(navigateToSvVoucherDetailsScreen());
       }}
     />
   );
