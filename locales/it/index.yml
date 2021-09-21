@@ -2702,6 +2702,12 @@ bonus:
         uniqueCode: "Codice univoco"
         qrCode: "QR Code"
         barCode: "Bar Code"
+      destinationLabels:
+        universityName: "Nome ateneo"
+        companyName: "Ragione sociale azienda"
+        hospitalName: "Nome struttura o professionista"
+        municipality: "Comune"
+
 features:
   euCovidCertificate:
     save:

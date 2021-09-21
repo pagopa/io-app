@@ -2674,6 +2674,11 @@ bonus:
         uniqueCode: "Unique code"
         qrCode: "QR Code"
         barCode: "Bar Code"
+      destinationLabels:
+        universityName: "University name"
+        companyName: "Company name"
+        hospitalName: "Hospital or professional name"
+        municipality: "Municipality"
 features:
   euCovidCertificate:
     save:
