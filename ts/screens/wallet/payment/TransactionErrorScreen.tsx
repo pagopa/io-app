@@ -113,6 +113,7 @@ const renderErrorCodeCopy = (error: DetailV2Keys): React.ReactNode => {
  * @param maybeError
  * @param rptId
  * @param onCancel
+ * @param payment
  */
 export const errorTransactionUIElements = (
   maybeError: NavigationParams["error"],
