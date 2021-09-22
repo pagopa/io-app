@@ -99,7 +99,6 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    console.log("handleShouldStartLoading" + event.url);
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.handleLoginSuccess

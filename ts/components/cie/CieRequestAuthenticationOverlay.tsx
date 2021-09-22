@@ -107,7 +107,6 @@ const CieWebView = (props: Props) => {
     // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       dispatch({ kind: "foundAuthUrl", authUrl: event.url });
-      console.log("return false");
       return false;
     }
     return true;
