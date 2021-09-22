@@ -35,9 +35,9 @@ describe("getBiometricsType function", () => {
       expect(result).toMatch("UNAVAILABLE");
     });
 
-    it("reports BIOMETRIC_ERROR to mixpanel", async () => {
+    it("reports BIOMETRIC_ERROR to mixpanel with the relevant message", async () => {
       const sensorSpy = jest.spyOn(FingerprintScanner, "isSensorAvailable");
-      sensorSpy.mockRejectedValue("it exploded");
+      sensorSpy.mockRejectedValue(new Error("it exploded"));
       const mixpanelSpy = jest.spyOn(mixpanel, "mixpanelTrack");
       await getBiometricsType();
       expect(mixpanelSpy).toHaveBeenCalledWith("BIOMETRIC_ERROR", {

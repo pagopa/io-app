@@ -9,12 +9,15 @@ import { isDebugBiometricIdentificationEnabled } from "../config";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 
-export type BiometricsErrorType =
+const biometricErrors = [
   // possibly working, but the string returned is undocumented
-  | "UNKNOWN"
+  "UNKNOWN",
 
   // unspeakable horrors happened somewhere under the hood
-  | "UNAVAILABLE";
+  "UNAVAILABLE"
+] as const;
+
+export type BiometricsErrorType = typeof biometricErrors[number];
 
 export type BiometricsValidType =
   // happy path
@@ -44,13 +47,14 @@ export const getBiometricsType = (): Promise<BiometricsType> =>
       }
     })
     .catch(e => {
-      void mixpanelTrack("BIOMETRIC_ERROR", { error: e });
+      void mixpanelTrack("BIOMETRIC_ERROR", { error: e.message ?? "unknown" });
       return "UNAVAILABLE";
     });
 
 export const isBiometricsValidType = (
   biometrics: BiometricsType
-): biometrics is BiometricsValidType => !biometrics.startsWith("UN");
+): biometrics is BiometricsValidType =>
+  !biometricErrors.some(err => biometrics === err);
 
 export const biometricAuthenticationRequest = (
   onSuccess: () => void,
