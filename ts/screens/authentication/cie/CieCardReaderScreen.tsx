@@ -317,6 +317,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
+    console.log("cieConsentUri" + cieConsentUri);
+    // return;
     if (this.state.readingState === ReadingState.completed) {
       return;
     }
