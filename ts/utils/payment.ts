@@ -262,7 +262,7 @@ export const getErrorDescriptionV2 = (
 
   const errorMacro = getV2ErrorMainType(error);
 
-  return I18n.t(`"wallet.errors.${errorMacro}`, {
+  return I18n.t(`wallet.errors.${errorMacro}`, {
     defaultValue: I18n.t("wallet.errors.GENERIC_ERROR")
   });
 };
