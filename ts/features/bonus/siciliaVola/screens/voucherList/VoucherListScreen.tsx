@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
@@ -112,8 +112,14 @@ const EmptyVoucherList = () => {
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
+  const [
+    isFirstPageLoadedSuccesfully,
+    setIsFirstPageLoadedSuccesfully
+  ] = useState<boolean>(false);
+
   const vouchers = toArray(props.indexedVouchers);
   const isDataLoadedUndefined = isUndefined(props.requiredDataLoaded);
+  const isDataLoadedLoading = isLoading(props.requiredDataLoaded);
   const isDataLoadedError = isError(props.requiredDataLoaded);
 
   useEffect(() => {
@@ -123,12 +129,13 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     if (isDataLoadedUndefined) {
+      setIsFirstPageLoadedSuccesfully(false);
       props.requestVoucherPage(props.filters);
     }
   }, [props.filters, isDataLoadedUndefined]);
 
   useEffect(() => {
-    if (isDataLoadedError) {
+    if (isDataLoadedError && isFirstPageLoadedSuccesfully) {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
   }, [isDataLoadedError]);
@@ -138,6 +145,38 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       <SvVoucherListFilters onClose={hideModal} onConfirm={hideModal} />,
       BottomTopAnimation
     );
+
+  if (
+    !isReady(props.possibleVoucherState) ||
+    ((isDataLoadedError || isDataLoadedLoading) &&
+      !isFirstPageLoadedSuccesfully)
+  ) {
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
+        <LoadingErrorComponent
+          isLoading={
+            isLoading(props.possibleVoucherState) || isDataLoadedLoading
+          }
+          loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
+          onRetry={() => {
+            if (isDataLoadedError) {
+              props.requestVoucherPage(props.filters);
+            }
+            if (isError(props.possibleVoucherState)) {
+              props.requestVoucherState();
+            }
+          }}
+        />
+      </BaseScreenComponent>
+    );
+  }
+  if (!isFirstPageLoadedSuccesfully) {
+    setIsFirstPageLoadedSuccesfully(true);
+  }
 
   return (
     <BaseScreenComponent
@@ -156,7 +195,10 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID={"VoucherListScreen"}>
         {!isReady(props.possibleVoucherState) ? (
           <LoadingErrorComponent
-            isLoading={isLoading(props.possibleVoucherState)}
+            isLoading={
+              isLoading(props.possibleVoucherState) &&
+              !isError(props.uiParameters.requiredDataLoaded)
+            }
             loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
             onRetry={props.requestVoucherState}
           />
