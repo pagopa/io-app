@@ -29,10 +29,12 @@ import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
-import VoucherInformationComponent from "../../components/VoucherInformationComponent";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
+import { fromVoucherToDestinationLabels } from "../../utils";
+import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -45,108 +47,49 @@ const styles = StyleSheet.create({
   }
 });
 
-type bottomSheetProps = {
-  qrCode: string;
-  barCode: string;
-};
-
-export const ShowVoucherCodeBottomSheet = (props: bottomSheetProps) => (
-  <BottomSheetContent>
-    <View>
-      <View spacer={true} />
-      <VoucherInformationComponent
-        voucherCode={"1324123"}
-        onPressWithGestureHandler={true}
-        barCode={props.barCode}
-        qrCode={props.qrCode}
-      />
-    </View>
-  </BottomSheetContent>
-);
-
-const VoucherDetailsScreen = (props: Props): React.ReactElement => {
+const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   useEffect(() => {
     if (props.selectedVoucherCode !== undefined) {
       props.getVoucherDetail(props.selectedVoucherCode);
     }
   }, []);
+  const { present, dismiss } = useIOBottomSheetRaw(650);
 
+  // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
-    return (
+    return fromNullable(props.selectedVoucherCode).fold(null, svc => (
       <LoadingErrorComponent
         isLoading={isLoading(props.selectedVoucher)}
-        loadingCaption={"loading"}
-        onRetry={() => true}
+        loadingCaption={I18n.t("global.remoteStates.loading")}
+        onRetry={() => props.getVoucherDetail(svc)}
       />
-    );
+    ));
   }
 
-  const { present, dismiss } = useIOBottomSheetRaw(650);
   const selectedVoucher = props.selectedVoucher.value;
   const openBottomSheet = () =>
     present(
-      <ShowVoucherCodeBottomSheet
+      <VoucherDetailBottomSheet
         barCode={selectedVoucher.barCode}
         qrCode={selectedVoucher.qrCode}
+        onExit={() => dismiss()}
       />,
-      I18n.t("wallet.newRemove.title")
+      I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
-  const backButtonProps = {
+  const voucherRevocationButtonProps = {
     bordered: true,
     style: {
       borderColor: IOColors.red
     },
-    textStyle: {
-      color: IOColors.red
-    },
-    color: IOColors.red,
+    labelColor: IOColors.red,
     onPress: props.back,
-    title: "Revoca codice"
+    title: I18n.t("bonus.sv.voucherList.details.cta.voucherRevocation")
   };
-  const continueButtonProps = {
+  const openQrButtonProps = {
     primary: true,
     bordered: false,
     onPress: () => openBottomSheet(),
-    title: "Apri QR code"
-  };
-
-  const destination = () => {
-    switch (selectedVoucher.category) {
-      case "student":
-        return [
-          {
-            label: "Nome ateneo",
-            value: selectedVoucher.university.universityName
-          },
-          {
-            label: "Comune",
-            value: selectedVoucher.university.municipality.name
-          }
-        ];
-      case "worker":
-        return [
-          {
-            label: "Nome azienda",
-            value: selectedVoucher.company.businessName
-          },
-          {
-            label: "Comune",
-            value: selectedVoucher.company.municipality.name
-          }
-        ];
-      case "sick":
-        return [
-          {
-            label: "Nome azienda",
-            value: selectedVoucher.hospital.hospitalName
-          },
-          {
-            label: "Comune",
-            value: selectedVoucher.hospital.municipality.name
-          }
-        ];
-    }
-    return [];
+    title: I18n.t("bonus.sv.voucherList.details.cta.openQr")
   };
 
   const voucherId = selectedVoucher.id ? selectedVoucher.id.toString() : "";
@@ -159,10 +102,10 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
-          <H1>{"Il tuo codice sconto"}</H1>
+          <H1>{I18n.t("bonus.sv.voucherList.details.title")}</H1>
           <View spacer large />
           <View style={styles.itemRow}>
-            <H4>{"Codice univoco"}</H4>
+            <H4>{I18n.t("bonus.sv.voucherList.details.fields.uniqueCode")}</H4>
 
             <View
               style={{
@@ -176,33 +119,47 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement => {
           </View>
           <View spacer large />
           <View style={styles.itemRow}>
-            <H4 weight={"Regular"}>{"Beneficiario"}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t("bonus.sv.voucherList.details.fields.beneficiary")}
+            </H4>
             <H4>{selectedVoucher.beneficiary}</H4>
           </View>
           <View style={styles.itemRow}>
-            <H4 weight={"Regular"}>{"Residenza"}</H4>
-            <H4>{"Sicilia"}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t("bonus.sv.voucherList.details.fields.residence.label")}
+            </H4>
+            <H4>
+              {I18n.t("bonus.sv.voucherList.details.fields.residence.value")}
+            </H4>
           </View>
           <View style={styles.itemRow}>
-            <H4 weight={"Regular"}>{"Categoria"}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t("bonus.sv.voucherList.details.fields.category")}
+            </H4>
             <H4>{selectedVoucher.category}</H4>
           </View>
 
-          {destination().map(d => (
-            <View style={styles.itemRow}>
+          {fromVoucherToDestinationLabels(selectedVoucher).map(d => (
+            <View style={styles.itemRow} key={d.value}>
               <H4 weight={"Regular"}>{d.label}</H4>
               <H4>{d.value}</H4>
             </View>
           ))}
           <View style={styles.itemRow}>
-            <H4 weight={"Regular"}>{"Data del volo"}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t("bonus.sv.voucherList.details.fields.flightDate")}
+            </H4>
             <H4>
               {formatDateAsLocal(selectedVoucher.departureDate, true, true)}
             </H4>
           </View>
           <View spacer large />
           <View style={styles.itemRow}>
-            <H4 weight={"Regular"}>{"Possibili destinazioni"}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t(
+                "bonus.sv.voucherList.details.fields.possibleDestination"
+              )}
+            </H4>
             <View style={{ flex: 1, alignItems: "flex-end" }}>
               {selectedVoucher.availableDestination.map(d => (
                 <H4 key={d}>{d}</H4>
@@ -212,8 +169,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement => {
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
-          rightButton={continueButtonProps}
+          leftButton={voucherRevocationButtonProps}
+          rightButton={openQrButtonProps}
         />
       </SafeAreaView>
     </BaseScreenComponent>
@@ -225,7 +182,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
     dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
-    dispatch(svVoucherDetailGet.request(voucherId))
+    dispatch(svVoucherDetailGet.request(voucherId)),
+  navigateToGenericFailure: () => navigateToWorkunitGenericFailureScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),

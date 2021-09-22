@@ -2697,6 +2697,20 @@ bonus:
         subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
         cta: "Genera un nuovo codice"
       error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
+      details:
+        title: "Il tuo codice sconto"
+        fields:
+          uniqueCode: "Codice univoco"
+          beneficiary: "Beneficiario"
+          residence:
+            label: "Residenza"
+            value: "Sicilia"
+          category: "Categoria"
+          flightDate: "Data del volo"
+          possibleDestination: "Possibili destinazioni"
+        cta:
+          voucherRevocation: "Revoca voucher"
+          openQr: "Apri QR code"
     components:
       voucherVisualDetails:
         uniqueCode: "Codice univoco"
@@ -2708,6 +2722,7 @@ bonus:
         hospitalName: "Nome struttura o professionista"
         municipality: "Comune"
       voucherBottomsheet:
+        title: "Codice sconto Sicilia Vola"
         cta:
           exit: "Esci"
           voucherRevocation: "Revoca voucher"
