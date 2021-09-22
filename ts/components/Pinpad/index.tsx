@@ -7,13 +7,13 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
-import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import customVariables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { Link } from "../core/typography/Link";
+import { BiometricsValidType } from "../../utils/biometrics";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -77,7 +77,7 @@ class Pinpad extends React.PureComponent<Props, State> {
    * the available biometry functionality available on the device
    */
   private getBiometryIconName(
-    biometryPrintableSimpleType: BiometryPrintableSimpleType
+    biometryPrintableSimpleType: BiometricsValidType
   ): DigitRpr {
     switch (biometryPrintableSimpleType) {
       case "BIOMETRICS":
@@ -113,10 +113,10 @@ class Pinpad extends React.PureComponent<Props, State> {
   };
 
   /**
-   * the pad can be componed by
+   * The pad can be composed by
    * - strings
    * - chars
-   * - icons (from icon font): they has to be declared as 'icon:<ICONAME>' (width 48) or 'sicon:<ICONAME>' (width 17)
+   * - icons (from icon font): they has to be declared as 'icon:<ICON_NAME>' (width 48) or 'sicon:<ICON_NAME>' (width 17)
    */
   private pinPadDigits = (): ComponentProps<typeof KeyPad>["digits"] => {
     const { pinPadValues } = this.state;
