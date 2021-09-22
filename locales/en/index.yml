@@ -2679,6 +2679,11 @@ bonus:
         companyName: "Company name"
         hospitalName: "Hospital or professional name"
         municipality: "Municipality"
+      voucherBottomsheet:
+        cta:
+          exit: "Exit"
+          voucherRevocation: "Voucher revocation"
+
 features:
   euCovidCertificate:
     save:

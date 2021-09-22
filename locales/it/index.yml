@@ -2707,6 +2707,10 @@ bonus:
         companyName: "Ragione sociale azienda"
         hospitalName: "Nome struttura o professionista"
         municipality: "Comune"
+      voucherBottomsheet:
+        cta:
+          exit: "Esci"
+          voucherRevocation: "Revoca voucher"
 
 features:
   euCovidCertificate:
