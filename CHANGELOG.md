@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.34.0-rc.2](https://github.com/pagopa/io-app/compare/1.34.0-rc.1...1.34.0-rc.2) (2021-09-20)
+
+
+### Bug Fixes
+
+* [[IAI-59](https://pagopa.atlassian.net/browse/IAI-59)] Wrong time for workflow [#3389](https://github.com/pagopa/io-app/issues/3389) ([768c82b](https://github.com/pagopa/io-app/commit/768c82b0a48ddbd5fc6f948dd352982bc41b087e))
+* E2E tests fail to run ([#3390](https://github.com/pagopa/io-app/issues/3390)) ([28eca8a](https://github.com/pagopa/io-app/commit/28eca8a62f2d5a8bc725798d18c91f78ba040c8a))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-114](https://pagopa.atlassian.net/browse/IAC-114)] Update BPD API endpoints ([#3388](https://github.com/pagopa/io-app/issues/3388)) ([35edbec](https://github.com/pagopa/io-app/commit/35edbecd6a5c0a5b308a3c84be4a73b2625a25bc))
+
 ## [1.34.0-rc.1](https://github.com/pagopa/io-app/compare/1.34.0-rc.0...1.34.0-rc.1) (2021-09-17)
 
 
