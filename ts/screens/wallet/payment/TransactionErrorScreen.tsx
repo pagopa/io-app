@@ -4,14 +4,19 @@
  */
 import * as t from "io-ts";
 import { Option } from "fp-ts/lib/Option";
-import { BugReporting } from "instabug-reactnative";
+import Instabug from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as React from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { View } from "native-base";
-import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
+import {
+  instabugLog,
+  openInstabugQuestionReport,
+  setInstabugUserAttribute,
+  TypeLogs
+} from "../../../boot/configureInstabug";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
@@ -22,10 +27,14 @@ import {
   paymentIdPolling,
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
-import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
 import { PayloadForAction } from "../../../types/utils";
-import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
+import {
+  DetailV2Keys,
+  getCodiceAvviso,
+  getPaymentHistoryDetails,
+  getV2ErrorMainType
+} from "../../../utils/payment";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H4 } from "../../../components/core/typography/H4";
@@ -37,6 +46,10 @@ import {
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import {
+  PaymentHistory,
+  paymentsHistorySelector
+} from "../../../store/reducers/payments/history";
 
 type NavigationParams = {
   error: Option<
@@ -57,16 +70,24 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const instabugTag = "payment-support";
+
 // Save the rptId as attribute and open the Instabug chat.
-const requestAssistanceForPaymentFailure = (rptId: RptId) => {
+const requestAssistanceForPaymentFailure = (
+  rptId: RptId,
+  payment?: PaymentHistory
+) => {
+  Instabug.appendTags([instabugTag]);
   setInstabugUserAttribute(
     "blockedPaymentRptId",
     RptIdFromString.encode(rptId)
   );
-  BugReporting.showWithOptions(BugReporting.reportType.bug, [
-    BugReporting.option.commentFieldRequired
-  ]);
+  if (payment) {
+    instabugLog(getPaymentHistoryDetails(payment), TypeLogs.INFO, instabugTag);
+  }
+  openInstabugQuestionReport();
 };
+
 
 type ScreenUIContents = {
   image: ImageSourcePropType;
@@ -96,7 +117,8 @@ const renderErrorCodeCopy = (error: DetailV2Keys): React.ReactNode => {
 export const errorTransactionUIElements = (
   maybeError: NavigationParams["error"],
   rptId: RptId,
-  onCancel: () => void
+  onCancel: () => void,
+  payment?: PaymentHistory
 ): ScreenUIContents => {
   const baseIconPath = "../../../../img/";
   const errorORUndefined = maybeError.toUndefined();
@@ -116,6 +138,9 @@ export const errorTransactionUIElements = (
     };
   }
 
+  const requestAssistance = () =>
+    requestAssistanceForPaymentFailure(rptId, payment);
+
   if (errorORUndefined) {
     const errorMacro = getV2ErrorMainType(errorORUndefined);
 
@@ -129,7 +154,7 @@ export const errorTransactionUIElements = (
             <FooterStackButton
               buttons={[
                 confirmButtonProps(
-                  () => requestAssistanceForPaymentFailure(rptId),
+                  requestAssistance,
                   I18n.t("wallet.errors.sendReport")
                 ),
                 cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
@@ -147,7 +172,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.back")),
                 cancelButtonProps(
-                  () => requestAssistanceForPaymentFailure(rptId),
+                  requestAssistance,
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -164,7 +189,7 @@ export const errorTransactionUIElements = (
             <FooterStackButton
               buttons={[
                 confirmButtonProps(
-                  () => requestAssistanceForPaymentFailure(rptId),
+                  requestAssistance,
                   I18n.t("wallet.errors.sendReport")
                 ),
                 cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
@@ -198,7 +223,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
                 cancelButtonProps(
-                  () => requestAssistanceForPaymentFailure(rptId),
+                  requestAssistance,
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -255,7 +280,7 @@ export const errorTransactionUIElements = (
               buttons={[
                 confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
                 cancelButtonProps(
-                  () => requestAssistanceForPaymentFailure(rptId),
+                  requestAssistance,
                   I18n.t("wallet.errors.sendReport")
                 )
               ]}
@@ -277,7 +302,7 @@ export const errorTransactionUIElements = (
         buttons={[
           confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
           cancelButtonProps(
-            () => requestAssistanceForPaymentFailure(rptId),
+            requestAssistance,
             I18n.t("wallet.errors.sendReport")
           )
         ]}
@@ -290,13 +315,20 @@ const TransactionErrorScreen = (props: Props) => {
   const rptId = props.navigation.getParam("rptId");
   const error = props.navigation.getParam("error");
   const onCancel = props.navigation.getParam("onCancel");
+  const { paymentsHistory } = props;
+
+  const codiceAvviso = getCodiceAvviso(rptId);
+
+  const payment = paymentsHistory.find(
+    p => codiceAvviso === getCodiceAvviso(p.data)
+  );
 
   const { title, subtitle, footer, image } = errorTransactionUIElements(
     error,
     rptId,
-    onCancel
+    onCancel,
+    payment
   );
-
   const handleBackPress = () => {
     props.backToEntrypointPayment();
     return true;
@@ -319,7 +351,7 @@ const TransactionErrorScreen = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  lastDeleted: paymentsLastDeletedStateSelector(state)
+  paymentsHistory: paymentsHistorySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
