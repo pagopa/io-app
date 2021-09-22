@@ -2,6 +2,7 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
+import * as t from "io-ts";
 import { Option } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
@@ -24,10 +25,9 @@ import {
 import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
 import { PayloadForAction } from "../../../types/utils";
-import { getV2ErrorMainType } from "../../../utils/payment";
+import { DetailV2Keys, getV2ErrorMainType } from "../../../utils/payment";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { H4 } from "../../../components/core/typography/H4";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
@@ -36,6 +36,7 @@ import {
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 
 type NavigationParams = {
   error: Option<
@@ -74,18 +75,17 @@ type ScreenUIContents = {
   subtitle?: React.ReactNode;
 };
 
-const ErrorCodeCopyComponent = ({
-  error
-}: {
-  error: keyof typeof Detail_v2Enum;
-}): React.ReactElement => (
-  <>
-    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
-    <H4 weight={"Bold"}>{error}</H4>
-    <View spacer />
-    <CopyButtonComponent textToCopy={error} />
-  </>
-);
+const renderErrorCodeCopy = (error: DetailV2Keys): React.ReactNode => {
+  const validError = t.keyof(Detail_v2Enum).decode(error);
+  return validError.isRight() ? (
+    <>
+      <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
+      <H4 weight={"Bold"}>{error}</H4>
+      <View spacer />
+      <CopyButtonComponent textToCopy={error} />
+    </>
+  ) : null;
+};
 
 /**
  * Convert the error code into a user-readable string
@@ -124,7 +124,7 @@ export const errorTransactionUIElements = (
         return {
           image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
           title: I18n.t("wallet.errors.TECHNICAL"),
-          subtitle: <ErrorCodeCopyComponent error={errorORUndefined} />,
+          subtitle: renderErrorCodeCopy(errorORUndefined),
           footer: (
             <FooterStackButton
               buttons={[
@@ -141,7 +141,7 @@ export const errorTransactionUIElements = (
         return {
           image: require(baseIconPath + "pictograms/doubt.png"),
           title: I18n.t("wallet.errors.DATA"),
-          subtitle: <ErrorCodeCopyComponent error={errorORUndefined} />,
+          subtitle: renderErrorCodeCopy(errorORUndefined),
           footer: (
             <FooterStackButton
               buttons={[
@@ -159,7 +159,7 @@ export const errorTransactionUIElements = (
           image: require(baseIconPath +
             "wallet/errors/payment-unavailable-icon.png"),
           title: I18n.t("wallet.errors.EC"),
-          subtitle: <ErrorCodeCopyComponent error={errorORUndefined} />,
+          subtitle: renderErrorCodeCopy(errorORUndefined),
           footer: (
             <FooterStackButton
               buttons={[
