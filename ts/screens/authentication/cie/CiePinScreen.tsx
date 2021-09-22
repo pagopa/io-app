@@ -135,7 +135,7 @@ const CiePinScreen: React.FC<Props> = props => {
     showAnimatedModal(
       <CieRequestAuthenticationOverlay
         onClose={handleAuthenticationOverlayOnClose}
-        onSuccess={url => setAuthUrlGenerated(url)}
+        onSuccess={setAuthUrlGenerated}
       />,
       BottomTopAnimation
     );
