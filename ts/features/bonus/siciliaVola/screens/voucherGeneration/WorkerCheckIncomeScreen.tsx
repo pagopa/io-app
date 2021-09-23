@@ -5,7 +5,7 @@ import { isSome } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { svGenerateVoucherFailure } from "../../store/actions/voucherGeneration";
 import { navigateToSvWorkerSelectDestinationScreen } from "../../navigation/actions";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
