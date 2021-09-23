@@ -52,7 +52,7 @@ const regex = /(changelog-scope:|epic-)(.*)/m;
  */
 export const getRawTitle = (title: string): string => {
   // clean the title from existing tags (multiple commit on the same branch)
-  const rawTitle = title.match(cleanChangelogRegex)?.pop();
+  const rawTitle = title.match(cleanChangelogRegex)!.pop();
   return rawTitle !== undefined ? rawTitle : title;
 };
 
@@ -105,7 +105,7 @@ export const getStoryChangelogScope = (
   // search for scope labels associated with the story
   const maybeChangelogScopeTag = story.tags
     .filter(l => l.match(regex))
-    .map(l => l.match(regex)?.pop())
+    .map(l => l.match(regex)!.pop())
     .filter(tag => tag && allowedScope.has(tag));
 
   // multiple scope labels found on the story
