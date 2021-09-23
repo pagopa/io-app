@@ -70,12 +70,14 @@ const useInitialValue = (props: Props) => {
   const timerRetry = useRef<number | undefined>(undefined);
   const navigation = useNavigationContext();
   const isFocused = navigation.isFocused();
-  const { bpdPotActivation, hPan, loadActualValue } = props;
+  const { bpdPotActivation, hPan, loadActualValue, hasBpdCapability } = props;
 
   const retry = useCallback(() => {
     timerRetry.current = undefined;
-    loadActualValue(hPan);
-  }, [loadActualValue, hPan]);
+    if (hasBpdCapability) {
+      loadActualValue(hPan);
+    }
+  }, [loadActualValue, hPan, hasBpdCapability]);
 
   /**
    * When the focus change, clear the timer (if any) and reset the value to undefined
@@ -89,6 +91,9 @@ const useInitialValue = (props: Props) => {
   }, [isFocused]);
 
   useEffect(() => {
+    if (!hasBpdCapability) {
+      return;
+    }
     // Initial state, request the state
     if (bpdPotActivation === pot.none) {
       loadActualValue(hPan);
@@ -102,7 +107,14 @@ const useInitialValue = (props: Props) => {
       // and no other retry are scheduled
       timerRetry.current = setTimeout(retry, fetchPaymentManagerLongTimeout);
     }
-  }, [bpdPotActivation, hPan, loadActualValue, retry, isFocused]);
+  }, [
+    bpdPotActivation,
+    hPan,
+    loadActualValue,
+    retry,
+    isFocused,
+    hasBpdCapability
+  ]);
 
   // Component unmount, clear scheduled
   useEffect(
@@ -152,10 +164,9 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
   const graphicalState: GraphicalValue = props.hasBpdCapability
     ? calculateBpdToggleGraphicalState(props.bpdPotActivation)
     : { state: "ready", value: "notActivable" };
-  if (props.hasBpdCapability) {
-    // trigger the initial loading / retry only if the method has the bpd capability
-    useInitialValue(props);
-  }
+
+  // trigger the initial loading / retry
+  useInitialValue(props);
 
   // a simplification because the onPress is dispatched only when is not activable / compatible
   const notActivableType: NotActivableType = !props.hasBpdCapability
