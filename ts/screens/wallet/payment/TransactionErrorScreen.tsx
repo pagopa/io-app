@@ -7,6 +7,7 @@ import { Option } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as React from "react";
+import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -30,7 +31,7 @@ import {
 import { GlobalState } from "../../../store/reducers/types";
 import { PayloadForAction } from "../../../types/utils";
 import {
-  DetailV2Keys,
+  ErrorTypes,
   getCodiceAvviso,
   getPaymentHistoryDetails,
   getV2ErrorMainType,
@@ -40,7 +41,6 @@ import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/comp
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H4 } from "../../../components/core/typography/H4";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -51,6 +51,7 @@ import {
   PaymentHistory,
   paymentsHistorySelector
 } from "../../../store/reducers/payments/history";
+import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 
 type NavigationParams = {
   error: Option<
@@ -73,6 +74,17 @@ type Props = OwnProps &
 
 const baseIconPath = "../../../../img/";
 
+const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
+  DATA: require(baseIconPath + "pictograms/doubt.png"),
+  DUPLICATED: require(baseIconPath + "pictograms/fireworks.png"),
+  EC: require(baseIconPath + "wallet/errors/payment-unavailable-icon.png"),
+  EXPIRED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
+  ONGOING: require(baseIconPath + "pictograms/hourglass.png"),
+  REVOKED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
+  UNCOVERED: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
+  TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png")
+};
+
 // Save the rptId as attribute and open the Instabug chat.
 const requestAssistanceForPaymentFailure = (
   rptId: RptId,
@@ -93,25 +105,25 @@ const requestAssistanceForPaymentFailure = (
   openInstabugQuestionReport();
 };
 
-
 type ScreenUIContents = {
   image: ImageSourcePropType;
   title: string;
-  footer: React.ReactNode;
   subtitle?: React.ReactNode;
+  footerButtons?: ComponentProps<typeof FooterStackButton>["buttons"];
 };
 
-const renderErrorCodeCopy = (error: DetailV2Keys): React.ReactNode => {
-  const validError = t.keyof(Detail_v2Enum).decode(error);
-  return validError.isRight() ? (
-    <>
-      <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
-      <H4 weight={"Bold"}>{error}</H4>
-      <View spacer />
-      <CopyButtonComponent textToCopy={error} />
-    </>
-  ) : null;
-};
+const ErrorCodeCopyComponent = ({
+  error
+}: {
+  error: keyof typeof Detail_v2Enum;
+}): React.ReactElement => (
+  <>
+    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
+    <H4 weight={"Bold"}>{error}</H4>
+    <View spacer />
+    <CopyButtonComponent textToCopy={error} />
+  </>
+);
 
 /**
  * Convert the error code into a user-readable string
@@ -132,188 +144,120 @@ export const errorTransactionUIElements = (
     return {
       image: require(baseIconPath +
         "wallet/errors/missing-payment-id-icon.png"),
-      title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
-      footer: (
-        <FooterStackButton
-          buttons={[
-            cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-          ]}
-        />
-      )
+      title: I18n.t("wallet.errors.MISSING_PAYMENT_ID")
     };
   }
-
   const requestAssistance = () =>
     requestAssistanceForPaymentFailure(rptId, payment);
 
-  if (errorORUndefined) {
-    const errorMacro = getV2ErrorMainType(errorORUndefined);
-
-    switch (errorMacro) {
-      case "TECHNICAL":
-        return {
-          image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-          title: I18n.t("wallet.errors.TECHNICAL"),
-          subtitle: renderErrorCodeCopy(errorORUndefined),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                confirmButtonProps(
-                  requestAssistance,
-                  I18n.t("wallet.errors.sendReport")
-                ),
-                cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-              ]}
-            />
-          )
-        };
-      case "DATA":
-        return {
-          image: require(baseIconPath + "pictograms/doubt.png"),
-          title: I18n.t("wallet.errors.DATA"),
-          subtitle: renderErrorCodeCopy(errorORUndefined),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                confirmButtonProps(onCancel, I18n.t("global.buttons.back")),
-                cancelButtonProps(
-                  requestAssistance,
-                  I18n.t("wallet.errors.sendReport")
-                )
-              ]}
-            />
-          )
-        };
-      case "EC":
-        return {
-          image: require(baseIconPath +
-            "wallet/errors/payment-unavailable-icon.png"),
-          title: I18n.t("wallet.errors.EC"),
-          subtitle: renderErrorCodeCopy(errorORUndefined),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                confirmButtonProps(
-                  requestAssistance,
-                  I18n.t("wallet.errors.sendReport")
-                ),
-                cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-              ]}
-            />
-          )
-        };
-      case "DUPLICATED":
-        return {
-          image: require(baseIconPath + "pictograms/fireworks.png"),
-          title: I18n.t("wallet.errors.DUPLICATED"),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-              ]}
-            />
-          )
-        };
-      case "ONGOING":
-        return {
-          image: require(baseIconPath + "pictograms/hourglass.png"),
-          title: I18n.t("wallet.errors.ONGOING"),
-          subtitle: (
-            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
-              {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
-            </H4>
-          ),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
-                cancelButtonProps(
-                  requestAssistance,
-                  I18n.t("wallet.errors.sendReport")
-                )
-              ]}
-            />
-          )
-        };
-      case "EXPIRED":
-        return {
-          image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-          title: I18n.t("wallet.errors.EXPIRED"),
-          subtitle: (
-            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
-              {I18n.t("wallet.errors.contactECsubtitle")}
-            </H4>
-          ),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-              ]}
-            />
-          )
-        };
-      case "REVOKED":
-        return {
-          image: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-          title: I18n.t("wallet.errors.REVOKED"),
-          subtitle: (
-            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
-              {I18n.t("wallet.errors.contactECsubtitle")}
-            </H4>
-          ),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-              ]}
-            />
-          )
-        };
-      case "UNCOVERED":
-      default:
-        return {
-          image: require(baseIconPath +
-            "/wallet/errors/generic-error-icon.png"),
-          title: I18n.t("wallet.errors.GENERIC_ERROR"),
-          subtitle: (
-            <H4 weight={"Regular"} style={{ textAlign: "center" }}>
-              {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-            </H4>
-          ),
-          footer: (
-            <FooterStackButton
-              buttons={[
-                confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
-                cancelButtonProps(
-                  requestAssistance,
-                  I18n.t("wallet.errors.sendReport")
-                )
-              ]}
-            />
-          )
-        };
-    }
-  }
-  return {
-    image: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
-    title: I18n.t("wallet.errors.GENERIC_ERROR"),
-    subtitle: (
+  const errorMacro = getV2ErrorMainType(errorORUndefined);
+  const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
+  const subtitle = validError.fold(
+    _ => (
       <H4 weight={"Regular"}>
         {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
       </H4>
     ),
-    footer: (
-      <FooterStackButton
-        buttons={[
-          confirmButtonProps(onCancel, I18n.t("global.buttons.close")),
-          cancelButtonProps(
-            requestAssistance,
-            I18n.t("wallet.errors.sendReport")
-          )
-        ]}
-      />
-    )
-  };
+    error => <ErrorCodeCopyComponent error={error} />
+  );
+
+  const image = errorMacro
+    ? imageMapping[errorMacro]
+    : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
+
+  const sendReportButtonConfirm = [
+    confirmButtonProps(requestAssistance, I18n.t("wallet.errors.sendReport"))
+  ];
+  const sendReportButtonCancel = [
+    cancelButtonProps(requestAssistance, I18n.t("wallet.errors.sendReport"))
+  ];
+  const closeButtonCancel = [
+    cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
+  ];
+  const closeButtonConfirm = [
+    confirmButtonProps(onCancel, I18n.t("global.buttons.close"))
+  ];
+
+  switch (errorMacro) {
+    case "TECHNICAL":
+      return {
+        image,
+        title: I18n.t("wallet.errors.TECHNICAL"),
+        subtitle,
+        footerButtons: [
+          ...sendReportButtonConfirm,
+          cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
+        ]
+      };
+    case "DATA":
+      return {
+        image,
+        title: I18n.t("wallet.errors.DATA"),
+        subtitle,
+        footerButtons: [
+          confirmButtonProps(onCancel, I18n.t("global.buttons.back")),
+          ...sendReportButtonCancel
+        ]
+      };
+    case "EC":
+      return {
+        image,
+        title: I18n.t("wallet.errors.EC"),
+        subtitle,
+        footerButtons: [...sendReportButtonConfirm, ...closeButtonCancel]
+      };
+    case "DUPLICATED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.DUPLICATED"),
+        footerButtons: closeButtonCancel
+      };
+    case "ONGOING":
+      return {
+        image,
+        title: I18n.t("wallet.errors.ONGOING"),
+        subtitle: (
+          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+            {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
+      };
+    case "EXPIRED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.EXPIRED"),
+        subtitle: (
+          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+            {I18n.t("wallet.errors.contactECsubtitle")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonCancel]
+      };
+    case "REVOKED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.REVOKED"),
+        subtitle: (
+          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+            {I18n.t("wallet.errors.contactECsubtitle")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonCancel]
+      };
+    case "UNCOVERED":
+    default:
+      return {
+        image,
+        title: I18n.t("wallet.errors.GENERIC_ERROR"),
+        subtitle: (
+          <H4 weight={"Regular"}>
+            {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
+      };
+  }
 };
 
 const TransactionErrorScreen = (props: Props) => {
@@ -328,7 +272,7 @@ const TransactionErrorScreen = (props: Props) => {
     p => codiceAvviso === getCodiceAvviso(p.data)
   );
 
-  const { title, subtitle, footer, image } = errorTransactionUIElements(
+  const { title, subtitle, footerButtons, image } = errorTransactionUIElements(
     error,
     rptId,
     onCancel,
@@ -349,7 +293,7 @@ const TransactionErrorScreen = (props: Props) => {
           title={title}
           body={subtitle}
         />
-        {footer}
+        {footerButtons && <FooterStackButton buttons={footerButtons} />}
       </SafeAreaView>
     </BaseScreenComponent>
   );
