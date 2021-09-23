@@ -63,7 +63,6 @@ type NavigationParams = {
   >;
   rptId: RptId;
   onCancel: () => void;
-  onRetry: () => void;
 };
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -117,12 +116,14 @@ const ErrorCodeCopyComponent = ({
 }: {
   error: keyof typeof Detail_v2Enum;
 }): React.ReactElement => (
-  <>
+  <View testID={"error-code-copy-component"}>
     <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
-    <H4 weight={"Bold"}>{error}</H4>
+    <H4 weight={"Bold"} testID={"error-code"}>
+      {error}
+    </H4>
     <View spacer />
     <CopyButtonComponent textToCopy={error} />
-  </>
+  </View>
 );
 
 /**
@@ -152,9 +153,10 @@ export const errorTransactionUIElements = (
 
   const errorMacro = getV2ErrorMainType(errorORUndefined);
   const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
+  const genericErrorSubTestID = "generic-error-subtitle";
   const subtitle = validError.fold(
     _ => (
-      <H4 weight={"Regular"}>
+      <H4 weight={"Regular"} testID={genericErrorSubTestID}>
         {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
       </H4>
     ),
@@ -166,16 +168,44 @@ export const errorTransactionUIElements = (
     : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
 
   const sendReportButtonConfirm = [
-    confirmButtonProps(requestAssistance, I18n.t("wallet.errors.sendReport"))
+    confirmButtonProps(
+      requestAssistance,
+      I18n.t("wallet.errors.sendReport"),
+      undefined,
+      "sendReportButtonConfirm"
+    )
   ];
   const sendReportButtonCancel = [
-    cancelButtonProps(requestAssistance, I18n.t("wallet.errors.sendReport"))
+    cancelButtonProps(
+      requestAssistance,
+      I18n.t("wallet.errors.sendReport"),
+      undefined,
+      "sendReportButtonCancel"
+    )
   ];
   const closeButtonCancel = [
-    cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
+    cancelButtonProps(
+      onCancel,
+      I18n.t("global.buttons.close"),
+      undefined,
+      "closeButtonCancel"
+    )
   ];
   const closeButtonConfirm = [
-    confirmButtonProps(onCancel, I18n.t("global.buttons.close"))
+    confirmButtonProps(
+      onCancel,
+      I18n.t("global.buttons.close"),
+      undefined,
+      "closeButtonConfirm"
+    )
+  ];
+  const backButtonConfirm = [
+    confirmButtonProps(
+      onCancel,
+      I18n.t("global.buttons.back"),
+      undefined,
+      "backButtonConfirm"
+    )
   ];
 
   switch (errorMacro) {
@@ -184,20 +214,14 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.TECHNICAL"),
         subtitle,
-        footerButtons: [
-          ...sendReportButtonConfirm,
-          cancelButtonProps(onCancel, I18n.t("global.buttons.close"))
-        ]
+        footerButtons: [...sendReportButtonConfirm, ...closeButtonCancel]
       };
     case "DATA":
       return {
         image,
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
-        footerButtons: [
-          confirmButtonProps(onCancel, I18n.t("global.buttons.back")),
-          ...sendReportButtonCancel
-        ]
+        footerButtons: [...backButtonConfirm, ...sendReportButtonCancel]
       };
     case "EC":
       return {
@@ -210,14 +234,18 @@ export const errorTransactionUIElements = (
       return {
         image,
         title: I18n.t("wallet.errors.DUPLICATED"),
-        footerButtons: closeButtonCancel
+        footerButtons: [...closeButtonCancel]
       };
     case "ONGOING":
       return {
         image,
         title: I18n.t("wallet.errors.ONGOING"),
         subtitle: (
-          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"ongoing-subtitle"}
+          >
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H4>
         ),
@@ -228,7 +256,11 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.EXPIRED"),
         subtitle: (
-          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"expired-subtitle"}
+          >
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),
@@ -239,7 +271,11 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.REVOKED"),
         subtitle: (
-          <H4 weight={"Regular"} style={{ textAlign: "center" }}>
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"revoked-subtitle"}
+          >
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),
@@ -251,7 +287,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.GENERIC_ERROR"),
         subtitle: (
-          <H4 weight={"Regular"}>
+          <H4 weight={"Regular"} testID={genericErrorSubTestID}>
             {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           </H4>
         ),

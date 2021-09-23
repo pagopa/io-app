@@ -65,15 +65,10 @@ export type NavigationParams = Readonly<{
   isManualPaymentInsertion?: boolean;
 }>;
 
-type ReduxMergedProps = Readonly<{
-  onRetry: () => void;
-}>;
-
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxMergedProps &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -116,16 +111,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
         .filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
-        this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
+        this.props.navigateToPaymentTransactionError(error);
       }
     } else if (
       potVerifica !== prevProps.potVerifica &&
       pot.isError(potVerifica)
     ) {
-      this.props.navigateToPaymentTransactionError(
-        some(potVerifica.error),
-        this.props.onRetry
-      );
+      this.props.navigateToPaymentTransactionError(some(potVerifica.error));
     } else if (
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
@@ -473,14 +465,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         | typeof paymentAttiva["failure"]
         | typeof paymentIdPolling["failure"]
       >
-    >,
-    onRetry: () => void
+    >
   ) =>
     dispatch(
       navigateToPaymentTransactionErrorScreen({
         error,
         onCancel,
-        onRetry,
         rptId
       })
     );
@@ -514,23 +504,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     },
     resetPayment,
     onCancel,
-    onRetryWithPotVerifica: (
-      potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
-      maybeFavoriteWallet: ReturnType<
-        typeof mapStateToProps
-      >["maybeFavoriteWallet"],
-      hasWallets: ReturnType<typeof mapStateToProps>["hasPayableMethods"]
-    ) => {
-      if (pot.isSome(potVerifica)) {
-        startOrResumePayment(
-          potVerifica.value,
-          maybeFavoriteWallet,
-          hasWallets
-        );
-      } else {
-        dispatchPaymentVerificaRequest();
-      }
-    },
     onDuplicatedPayment: () =>
       dispatch(
         paymentCompletedSuccess({
@@ -541,39 +514,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
 };
 
-const mergeProps = (
-  stateProps: ReturnType<typeof mapStateToProps>,
-  dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: OwnProps
-) => {
-  const onRetry = () => {
-    // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
-    // go back to the screen to allow the user to modify the data
-    if (
-      stateProps.error.toUndefined() === "PPT_IMPORTO_ERRATO" &&
-      dispatchProps.isManualPaymentInsertion
-    ) {
-      dispatchProps.dispatchNavigateToPaymentManualDataInsertion();
-    } else {
-      dispatchProps.onRetryWithPotVerifica(
-        stateProps.potVerifica,
-        stateProps.maybeFavoriteWallet,
-        stateProps.hasPayableMethods
-      );
-    }
-  };
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    ...{
-      onRetry
-    }
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(withLoadingSpinner(TransactionSummaryScreen));
