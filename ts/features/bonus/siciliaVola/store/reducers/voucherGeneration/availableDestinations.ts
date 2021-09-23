@@ -1,13 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { AvailableDestinations } from "../../types/SvVoucherRequest";
-import { NetworkError } from "../../../../../utils/errors";
-import { Action } from "../../../../../store/actions/types";
+import { AvailableDestinations } from "../../../types/SvVoucherRequest";
+import { NetworkError } from "../../../../../../utils/errors";
+import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherStart
-} from "../actions/voucherGeneration";
+} from "../../actions/voucherGeneration";
 
 export type AvailableDestinationsState = pot.Pot<
   AvailableDestinations,

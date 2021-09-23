@@ -214,6 +214,10 @@ definitions:
         format: "int64"
       statoDesc:
         type: "string"
+  StatoVoucherBeanList:
+    type: "array"
+    items:
+      $ref: "#/definitions/StatoVoucherBean"
   SimpleResponseBean:
     type: "object"
     properties:
@@ -673,9 +677,7 @@ paths:
         200:
           description: "Tutto OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/StatoVoucherBean"
+            $ref: "#/definitions/StatoVoucherBeanList"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/ultimoVoucher:

@@ -25,6 +25,7 @@ const myPortalRoutes = myPortalEnabled
     }
   : {};
 
+// TODO: create a different stack for the voucher list
 const svConfigMap = svEnabled
   ? {
       [SV_ROUTES.MAIN]: {
