@@ -22,6 +22,10 @@ import {
 import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
+import {
+  svPossibleVoucherStateGet,
+  svVoucherListGet
+} from "../../features/bonus/siciliaVola/store/actions/voucherList";
 import { GlobalState } from "./types";
 
 /**
@@ -44,7 +48,9 @@ const monitoredActions: ReadonlyArray<[
     bpdTransactionsLoadRequiredData.failure,
     bpdTransactionsLoadRequiredData.success
   ],
-  [euCovidCertificateGet.failure, euCovidCertificateGet.success]
+  [euCovidCertificateGet.failure, euCovidCertificateGet.success],
+  [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
+  [svVoucherListGet.failure, svVoucherListGet.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);

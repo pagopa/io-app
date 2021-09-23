@@ -7,7 +7,7 @@ import {
   PartialVoucherRequest,
   University,
   SvBeneficiaryCategory
-} from "../../types/SvVoucherRequest";
+} from "../../../types/SvVoucherRequest";
 import {
   FlightsDate,
   svGenerateVoucherSelectCategory,
@@ -17,9 +17,9 @@ import {
   svGenerateVoucherSelectUniversity,
   svGenerateVoucherStart,
   svGenerateVoucherUnderThresholdIncome
-} from "../actions/voucherGeneration";
-import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
+} from "../../actions/voucherGeneration";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VoucherRequestState = Option<PartialVoucherRequest>;
 const INITIAL_STATE: VoucherRequestState = none;

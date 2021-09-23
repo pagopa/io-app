@@ -2685,13 +2685,32 @@ bonus:
           title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
           body: "Riceverai un messaggio in app IO quando sarà pronto."
     voucherList:
-      title: "VoucherListScreen"
+      title: "I tuoi codici sconto disponibili"
+      loading: "Caricamento in corso"
+      filter:
+        title: "Filtra voucher"
+        searchValuePlaceholder: "Cerca codice buono"
+        stateSection:
+          title: "Stato"
+        dateSection:
+          title: "Data"
+          departure: "Data di partenza"
+          return: "Data di ritorno"
+        cta:
+          removeFilter: "Rimuovi"
+          applyFilter:
+            zero: "Applica filtri"
+            other: "Applica filtri ({{count}})"
+      emptyList:
+        title: "Non ci sono codici sconto disponibili"
+        subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
+        cta: "Genera un nuovo codice"
+      error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
     components:
       voucherVisualDetails:
         uniqueCode: "Codice univoco"
         qrCode: "QR Code"
         barCode: "Bar Code"
-
 features:
   euCovidCertificate:
     save:
