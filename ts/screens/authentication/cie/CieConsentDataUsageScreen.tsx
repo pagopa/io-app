@@ -2,14 +2,17 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onbording process
  */
+import { View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler } from "react-native";
 import WebView from "react-native-webview";
-import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
+import {
+  WebViewHttpErrorEvent,
+  WebViewNavigation
+} from "react-native-webview/lib/WebViewTypes";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { View } from "native-base";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -92,6 +95,14 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.setState({ hasError: true });
   };
 
+  private handleHttpError = (event: WebViewHttpErrorEvent) => {
+    this.props.loginFailure(
+      new Error(
+        `HTTP error ${event.nativeEvent.description} with Authorization uri`
+      )
+    );
+  };
+
   private handleLoginSuccess = (token: SessionToken) => {
     this.setState({ isLoginSuccess: true }, () => {
       this.props.loginSuccess(token);
@@ -153,6 +164,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           renderLoading={() => loaderComponent}
           onError={this.handleWebViewError}
+          onHttpError={this.handleHttpError}
         />
       );
     }
