@@ -60,7 +60,6 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   );
 
   const loadMerchantDetail = useCallback(() => {
-    console.log("loadmerchant!");
     requestMerchantDetail(merchantID);
   }, [merchantID, requestMerchantDetail]);
 
