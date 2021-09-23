@@ -23,19 +23,7 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
-const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
-  const navigation = useNavigationContext();
-  if (!props.bpdRemoteConfig?.program_active) {
-    Alert.alert(
-      I18n.t("bonus.bpd.title"),
-      I18n.t("bonus.state.completed.description")
-    );
-    navigation.goBack();
-    return null;
-  }
+const BaseBpdCTAStartOnboardingComponent = (props: Props) => {
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
@@ -55,6 +43,23 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
       />
     </BaseScreenComponent>
   );
+};
+
+/**
+ * this is a dummy screen reachable only from a message CTA
+ */
+const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
+  const navigation = useNavigationContext();
+  if (!props.bpdRemoteConfig?.program_active) {
+    Alert.alert(
+      I18n.t("bonus.bpd.title"),
+      I18n.t("bonus.state.completed.description")
+    );
+    navigation.goBack();
+    return null;
+  } else {
+    return <BaseBpdCTAStartOnboardingComponent {...props} />;
+  }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
