@@ -33,7 +33,8 @@ import {
   DetailV2Keys,
   getCodiceAvviso,
   getPaymentHistoryDetails,
-  getV2ErrorMainType
+  getV2ErrorMainType,
+  paymentInstabugTag
 } from "../../../utils/payment";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -70,14 +71,12 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const instabugTag = "payment-support";
-
 // Save the rptId as attribute and open the Instabug chat.
 const requestAssistanceForPaymentFailure = (
   rptId: RptId,
   payment?: PaymentHistory
 ) => {
-  Instabug.appendTags([instabugTag]);
+  Instabug.appendTags([paymentInstabugTag]);
   setInstabugUserAttribute(
     "blockedPaymentRptId",
     RptIdFromString.encode(rptId)

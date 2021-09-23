@@ -23,13 +23,22 @@ import {
   Transaction,
   Wallet
 } from "../types/pagopa";
-import { OutcomeCode, OutcomeCodes, OutcomeCodesKey } from "../types/outcomeCode";
-import { Detail_v2Enum, DetailEnum } from "../../definitions/backend/PaymentProblemJson";
+import {
+  OutcomeCode,
+  OutcomeCodes,
+  OutcomeCodesKey
+} from "../types/outcomeCode";
+import {
+  Detail_v2Enum,
+  DetailEnum
+} from "../../definitions/backend/PaymentProblemJson";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
+
+export const paymentInstabugTag = "payment-support";
 
 /**
  * A method to convert an payment amount in a proper formatted string

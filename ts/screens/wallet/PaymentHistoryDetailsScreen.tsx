@@ -38,7 +38,8 @@ import {
   getErrorDescriptionV2,
   getPaymentHistoryDetails,
   getPaymentOutcomeCodeDescription,
-  getTransactionFee
+  getTransactionFee,
+  paymentInstabugTag
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -86,17 +87,16 @@ const renderItem = (label: string, value?: string) => {
   );
 };
 
-const instabugTag = "payment-support";
 /**
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
-    Instabug.appendTags([instabugTag]);
+    Instabug.appendTags([paymentInstabugTag]);
     instabugLog(
       getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
       TypeLogs.INFO,
-      instabugTag
+      paymentInstabugTag
     );
     openInstabugQuestionReport();
   };
