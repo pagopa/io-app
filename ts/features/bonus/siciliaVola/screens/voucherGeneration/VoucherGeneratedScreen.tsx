@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -16,26 +15,38 @@ import {
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
 import I18n from "../../../../../i18n";
+import { View } from "native-base";
+import { H5 } from "../../../../../components/core/typography/H5";
+import VoucherInformationComponent from "../../components/VoucherInformationComponent";
+import { useEffect } from "react";
+import { voucherRequestSelector } from "../../store/reducers/voucherRequest";
+import { isVoucherRequest } from "../../utils";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const VoucherGeneratedScreen = (props: Props): React.ReactElement => {
-  const elementRef = useRef(null);
+  useEffect(() => {
+    props.voucherRequest.map(vR => {
+      if (isVoucherRequest(vR)) {
+        props.generateVoucherRequest(vR);
+      }
+    });
+  }, []);
+
   const backButtonProps = {
     primary: false,
     bordered: true,
-    onPress: props.back,
-    title: "Back"
-  };
-  const continueButtonProps = {
-    primary: false,
-    bordered: true,
     onPress: props.completed,
-    title: "Esci"
+    title: I18n.t("global.buttons.exit")
   };
 
-  // TODO: dispatch props.generateVoucherRequest when the component is mounted
+  // TODO: substitute the onPress function with the voucher pdf request
+  const continueButtonProps = {
+    primary: true,
+    onPress: () => true,
+    title: I18n.t("global.genericSave")
+  };
 
   // TODO: manage loading/error/timeout(SvGeneratedVoucherTimeoutScreen) state on generateVoucherRequest selector
   return (
@@ -44,13 +55,19 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"VoucherGeneratedScreen"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.voucherGenerated.title")}</H1>
+          <View spacer />
+          <H5 weight={"Regular"}>
+            {I18n.t("bonus.sv.voucherGeneration.voucherGenerated.subtitle")}
+          </H5>
+          <View spacer />
+          <VoucherInformationComponent
+            voucherCode={"123456"}
+            qrCode={"abc"}
+            barCode={"abc"}
+          />
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
@@ -67,7 +84,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
     dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest))
 });
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  voucherRequest: voucherRequestSelector(state)
+});
 
 export default connect(
   mapStateToProps,
