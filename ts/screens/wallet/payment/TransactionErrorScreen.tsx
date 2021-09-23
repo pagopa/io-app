@@ -82,7 +82,11 @@ const requestAssistanceForPaymentFailure = (
     RptIdFromString.encode(rptId)
   );
   if (payment) {
-    instabugLog(getPaymentHistoryDetails(payment), TypeLogs.INFO, instabugTag);
+    instabugLog(
+      getPaymentHistoryDetails(payment),
+      TypeLogs.INFO,
+      paymentInstabugTag
+    );
   }
   openInstabugQuestionReport();
 };
