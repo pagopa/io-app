@@ -98,7 +98,6 @@ const SearchAvailableCoBadgeScreen = (
 ): React.ReactElement | null => {
   const { search, abiSelected } = props;
   useEffect(() => {
-    console.log("search abi selected");
     search(abiSelected);
   }, [search, abiSelected]);
 
