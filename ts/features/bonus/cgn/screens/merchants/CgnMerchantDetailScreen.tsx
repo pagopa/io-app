@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View } from "native-base";
 import { connect } from "react-redux";
 import {
@@ -53,16 +53,18 @@ const styles = StyleSheet.create({
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { merchantDetail } = props;
+  const { merchantDetail, requestMerchantDetail } = props;
+  const merchantID = props.navigation.getParam("merchantID");
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) => (
     <CgnMerchantDiscountItem discount={item} />
   );
 
-  const loadMerchantDetail = () => {
-    props.requestMerchantDetail(props.navigation.getParam("merchantID"));
-  };
+  const loadMerchantDetail = useCallback(() => {
+    console.log("loadmerchant!");
+    requestMerchantDetail(merchantID);
+  }, [merchantID, requestMerchantDetail]);
 
-  useEffect(loadMerchantDetail, []);
+  useEffect(loadMerchantDetail, [loadMerchantDetail]);
 
   return isReady(merchantDetail) ? (
     <BaseScreenComponent

@@ -24,15 +24,16 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
 const BaseBpdCTAStartOnboardingComponent = (props: Props) => {
+  const { availableBonus, startBpd } = props;
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
   useEffect(() => {
     // bpdOnboardingStart navigate to ToS screen that needs availableBonus data
-    if (props.availableBonus.length > 0) {
-      props.startBpd();
+    if (availableBonus.length > 0) {
+      startBpd();
     }
-  }, [props.availableBonus]);
+  }, [availableBonus, startBpd]);
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
