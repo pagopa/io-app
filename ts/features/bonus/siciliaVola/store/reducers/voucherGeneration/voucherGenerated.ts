@@ -1,12 +1,12 @@
 import { getType } from "typesafe-actions";
 import * as pot from "italia-ts-commons/lib/pot";
-import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
-import { NetworkError } from "../../../../../utils/errors";
-import { Action } from "../../../../../store/actions/types";
+import { SvVoucherGeneratedResponse } from "../../../types/SvVoucherResponse";
+import { NetworkError } from "../../../../../../utils/errors";
+import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherStart
-} from "../actions/voucherGeneration";
+} from "../../actions/voucherGeneration";
 
 export type VoucherGeneratedState = pot.Pot<
   SvVoucherGeneratedResponse,
