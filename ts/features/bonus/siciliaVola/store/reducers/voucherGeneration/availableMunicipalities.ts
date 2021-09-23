@@ -1,16 +1,19 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
-import { Municipality } from "../../types/SvVoucherRequest";
-import { NetworkError } from "../../../../../utils/errors";
-import { Action } from "../../../../../store/actions/types";
+import {
+  IndexedById,
+  toIndexed
+} from "../../../../../../store/helpers/indexer";
+import { Municipality } from "../../../types/SvVoucherRequest";
+import { NetworkError } from "../../../../../../utils/errors";
+import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableProvince,
   svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
-} from "../actions/voucherGeneration";
+} from "../../actions/voucherGeneration";
 
 export type AvailableMunicipalitiesState = pot.Pot<
   IndexedById<Municipality>,
