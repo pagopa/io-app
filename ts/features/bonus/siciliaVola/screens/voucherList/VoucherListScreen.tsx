@@ -183,63 +183,48 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
-      isSearchAvailable={
-        isReady(props.possibleVoucherState)
-          ? {
-              enabled: true,
-              onSearchTap: openFiltersModal
-            }
-          : undefined
-      }
+      isSearchAvailable={{
+        enabled: true,
+        onSearchTap: openFiltersModal
+      }}
     >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherListScreen"}>
-        {!isReady(props.possibleVoucherState) ? (
-          <LoadingErrorComponent
-            isLoading={
-              isLoading(props.possibleVoucherState) &&
-              !isError(props.uiParameters.requiredDataLoaded)
-            }
-            loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
-            onRetry={props.requestVoucherState}
-          />
-        ) : (
-          <>
-            <H1 style={IOStyles.horizontalContentPadding}>
-              {I18n.t("bonus.sv.voucherList.title")}
-            </H1>
-            <View spacer />
+        <>
+          <H1 style={IOStyles.horizontalContentPadding}>
+            {I18n.t("bonus.sv.voucherList.title")}
+          </H1>
+          <View spacer />
 
-            {isReady(props.requiredDataLoaded) && vouchers.length === 0 ? (
-              <EmptyVoucherList />
-            ) : (
-              <FlatList
-                style={[IOStyles.horizontalContentPadding]}
-                data={vouchers}
-                ListFooterComponent={
-                  isLoading(props.requiredDataLoaded) && <FooterLoading />
+          {isReady(props.requiredDataLoaded) && vouchers.length === 0 ? (
+            <EmptyVoucherList />
+          ) : (
+            <FlatList
+              style={[IOStyles.horizontalContentPadding]}
+              data={vouchers}
+              ListFooterComponent={
+                isLoading(props.requiredDataLoaded) && <FooterLoading />
+              }
+              keyExtractor={v => v.idVoucher.toString()}
+              ItemSeparatorComponent={() => (
+                <ItemSeparatorComponent noPadded={true} />
+              )}
+              onEndReached={() => {
+                if (props.uiParameters.nextPage !== undefined) {
+                  props.requestVoucherPage(props.filters);
                 }
-                keyExtractor={v => v.idVoucher.toString()}
-                ItemSeparatorComponent={() => (
-                  <ItemSeparatorComponent noPadded={true} />
-                )}
-                onEndReached={() => {
-                  if (props.uiParameters.nextPage !== undefined) {
-                    props.requestVoucherPage(props.filters);
-                  }
-                }}
-                renderItem={v => (
-                  <RenderItem
-                    idVoucher={v.item.idVoucher}
-                    departureDate={v.item.departureDate}
-                    destination={v.item.destination}
-                  />
-                )}
-                scrollEnabled={true}
-                keyboardShouldPersistTaps={"handled"}
-              />
-            )}
-          </>
-        )}
+              }}
+              renderItem={v => (
+                <RenderItem
+                  idVoucher={v.item.idVoucher}
+                  departureDate={v.item.departureDate}
+                  destination={v.item.destination}
+                />
+              )}
+              scrollEnabled={true}
+              keyboardShouldPersistTaps={"handled"}
+            />
+          )}
+        </>
       </SafeAreaView>
     </BaseScreenComponent>
   );
