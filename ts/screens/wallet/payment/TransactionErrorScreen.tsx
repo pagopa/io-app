@@ -71,6 +71,8 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const baseIconPath = "../../../../img/";
+
 // Save the rptId as attribute and open the Instabug chat.
 const requestAssistanceForPaymentFailure = (
   rptId: RptId,
@@ -124,7 +126,6 @@ export const errorTransactionUIElements = (
   onCancel: () => void,
   payment?: PaymentHistory
 ): ScreenUIContents => {
-  const baseIconPath = "../../../../img/";
   const errorORUndefined = maybeError.toUndefined();
 
   if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
