@@ -8,22 +8,7 @@ import { MaxRetries, withRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
 
 import ServerMock from "mock-http-server";
-import nodeFetch from "node-fetch";
-import { retryLogicForTransientResponseError } from "../fetch";
-
-const {
-  AbortController
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-} = require("abortcontroller-polyfill/dist/cjs-ponyfill");
-
-//
-// We need to override the global fetch and AbortController to make the tests
-// compatible with node-fetch
-//
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
-(global as any).fetch = nodeFetch;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,functional/immutable-data
-(global as any).AbortController = AbortController;
+import { testableRetryLogicForTransientResponseError } from "../fetch";
 
 const TEST_PATH = "transient-error";
 const TEST_HOST = "localhost";
@@ -49,10 +34,7 @@ function createServerMock(): any {
 
 const longDelayUrl = `http://${TEST_HOST}:${TEST_PORT}/${TEST_PATH}`;
 
-export const transientConfigurableFetch = (
-  retries: number,
-  httpErrorCode: number
-) => {
+const transientConfigurableFetch = (retries: number, httpErrorCode: number) => {
   const delay = 10 as Millisecond;
   const timeout: Millisecond = 1000 as Millisecond;
   const abortableFetch = AbortableFetch(fetch);
@@ -61,7 +43,7 @@ export const transientConfigurableFetch = (
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map specific http error code to transient errors (by default only
   // timeouts are transient)
-  const retryWithTransientError = retryLogicForTransientResponseError(
+  const retryWithTransientError = testableRetryLogicForTransientResponseError!(
     _ => _.status === httpErrorCode,
     retryLogic
   );

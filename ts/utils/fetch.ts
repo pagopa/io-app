@@ -19,6 +19,7 @@ import {
 } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { fetchMaxRetries, fetchTimeout } from "../config";
+import { isTestEnv } from "./environment";
 
 /**
  * Returns a fetch wrapped with timeout and retry logic
@@ -55,6 +56,7 @@ export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
   maxRetries: number = fetchMaxRetries
 ) {
+  // TODO: remove override once tests are implemented
   // Override default react-native fetch with whatwg's that supports aborting
   // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
@@ -66,7 +68,7 @@ export function defaultRetryingFetch(
 /**
  * Fetch with transient error handling. Handle error that occurs once or at unpredictable intervals.
  */
-export function retryLogicForTransientResponseError(
+function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
   retryLogic: (
     t: RetriableTask<Error, Response>,
@@ -88,6 +90,11 @@ export function retryLogicForTransientResponseError(
     );
 }
 
+// exported for testing purposes only
+export const testableRetryLogicForTransientResponseError = isTestEnv
+  ? retryLogicForTransientResponseError
+  : undefined;
+
 /**
  * This is a fetch with timeouts, constant backoff and with the logic
  * that handles 404s as transient errors, this "fetch" must be passed to
@@ -99,6 +106,7 @@ export const constantPollingFetch = (
   delay: number,
   timeout: Millisecond = fetchTimeout
 ) => {
+  // TODO: remove override once tests are implemented
   // Override default react-native fetch with whatwg's that supports aborting
   // eslint-disable-next-line
   (global as any).AbortController = require("abort-controller");
@@ -118,9 +126,5 @@ export const constantPollingFetch = (
     retryLogic
   );
 
-  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(
-    retryWithTransient404s,
-    shouldAbort
-  )(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient404s, shouldAbort)(timeoutFetch);
 };
