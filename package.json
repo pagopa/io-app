@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.34.0-rc.0",
+  "version": "1.34.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.18.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.15.6/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "^1.0.7",
+    "@pagopa/react-native-cie": "^1.1.2",
     "@pagopa/ts-commons": "^9.4.0",
     "@react-native-clipboard/clipboard": "^1.8.4",
     "@react-native-community/async-storage": "^1.6.1",
@@ -141,7 +141,7 @@
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^7.0.0",
     "react-native-view-shot": "3.1.2",
-    "react-native-webview": "10.4.0",
+    "react-native-webview": "^11.13.0",
     "react-navigation": "^4.4.4",
     "react-navigation-drawer": "^1.4.0",
     "react-navigation-redux-helpers": "^3.0.0",
@@ -166,7 +166,7 @@
     "tslib": "^1.9.3",
     "typesafe-actions": "^4.0.0",
     "url-parse": "^1.4.7",
-    "uuid": "^3.3.2",
+    "uuid": "^8.3.2",
     "validator": "^10.7.0",
     "whatwg-fetch": "git://github.com/github/fetch#141665b1477bb25ac1427b2cb3e05203453e30cb",
     "xss": "1.0.6"
@@ -202,7 +202,7 @@
     "@types/sha.js": "^2.4.0",
     "@types/stacktrace-js": "^0.0.32",
     "@types/url-parse": "^1.4.3",
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^8.3.1",
     "@types/validator": "^9.4.2",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
@@ -235,6 +235,7 @@
     "postinstall-postinstall": "^1.0.0",
     "prettier": "2.1.0",
     "react-native-bundle-visualizer": "^2.2.1",
+    "react-native-get-random-values": "^1.7.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "17.0.1",
     "redux-mock-store": "^1.5.4",
@@ -249,7 +250,8 @@
     "@types/react": "16.7.18",
     "@types/prop-types": "15.5.5",
     "fp-ts": "1.12.0",
-    "io-ts": "1.8.5"
+    "io-ts": "1.8.5",
+    "react-devtools-core": "4.13.0"
   },
   "detox": {
     "test-runner": "./node_modules/.bin/jest",

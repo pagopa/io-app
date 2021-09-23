@@ -8,7 +8,7 @@ import {
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { navigateToSvSickSelectDestinationScreen } from "../../navigation/actions";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
 

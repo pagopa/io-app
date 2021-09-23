@@ -798,9 +798,6 @@ wallet:
     wrongQrCode: QR-Code nicht gültig. Geben Sie die Daten manuell ein.
     byCameraTitle: Hinweis QR-Code
     setManually: Manuell eingeben
-    cameraUsagePermissionInfobox:
-      title: "IO-App Kamera-Nutzungserlaubnis"
-      message: "Die IO-App muss auf die Kamera zugreifen, um den QR-Code zu fotografieren"
     settingsAlert:
       title: Es scheint, dass der Zugriff auf die Fotogalerie verweigert wurde
       buttonText:

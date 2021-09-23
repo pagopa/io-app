@@ -35,7 +35,7 @@ type Props = OwnProps &
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    paddingBottom: Platform.OS === 'ios' && DeviceInfo.hasNotch() ? 28 : 15,
+    paddingBottom: Platform.OS === "ios" && DeviceInfo.hasNotch() ? 28 : 15
   }
 });
 
@@ -115,7 +115,11 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const maybeCtas = getCTA(this.props.message, this.props.serviceMetadata);
+    const maybeCtas = getCTA(
+      this.props.message,
+      this.props.serviceMetadata,
+      this.props.service?.service_id
+    );
     const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
         <ExtractedCTABar

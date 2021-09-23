@@ -160,6 +160,7 @@ global:
     update: "Update"
     findOutMore: "Find out more"
     details: "Details"
+    choose: "Scegli"
   navigator:
     messages: messages
     wallet: wallet
@@ -220,6 +221,13 @@ exit:
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
+permissionRationale:
+  storage:
+    title: "Allow gallery access"
+    message: "You’ll be able to save bonuses, certificates and upload screenshots or payment notices."
+  camera:
+    title: "Allow camera access"
+    message: "You’ll be able to read QR codes and pay pagoPA notices."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -397,7 +405,7 @@ profile:
           confirmToast: "Preferences updated!"
         alert:
           title: "You are not giving IO consent to collect your usage data"
-          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
         whyBottomSheet:
           title: "For what purposes do we collect information?"
           body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
@@ -1353,9 +1361,6 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
-    cameraUsagePermissionInfobox:
-      title: "IO Camera usage permission"
-      message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1730,7 +1735,7 @@ identification:
     popup:
       reason: Identification by touch ID failed
       title: Identification required
-      sensorDescription: Touch sensor
+      sensorDescription: Login quickly
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
@@ -2643,7 +2648,32 @@ bonus:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
-      title: "VoucherListScreen"
+      title: "Your discount codes available"
+      loading: "Loading"
+      filter:
+        title: "Filter vouchers"
+        searchValuePlaceholder: "Search coupon code"
+        stateSection:
+          title: "State"
+        dateSection:
+          title: "Date"
+          departure: "Departure date"
+          return: "Return date"
+        cta:
+          removeFilter: "Remove"
+          applyFilter:
+            zero: "Apply filters"
+            other: "Apply filters ({{count}})"
+      emptyList:
+        title: "There are no discount codes available"
+        subtitle: "Search to see your used or expired codes or request a new code"
+        cta: "Generate a new code"
+      error: "We are unable to recover your vouchers, please try again."
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Unique code"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
 features:
   euCovidCertificate:
     save:

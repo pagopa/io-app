@@ -1,10 +1,11 @@
 import { Appearance } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { MixpanelInstance } from "react-native-mixpanel";
 import { mixpanelToken } from "./config";
 import { isScreenReaderEnabled } from "./utils/accessibility";
 import { getAppVersion } from "./utils/appVersion";
 import { isAndroid, isIos } from "./utils/platform";
+import { getDeviceId, getFontScale } from "./utils/device";
+import { getBiometricsType } from "./utils/biometrics";
 
 // eslint-disable-next-line
 export let mixpanel: MixpanelInstance | undefined;
@@ -31,14 +32,17 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   if (isIos) {
     await mp.disableIpAddressGeolocalization();
   }
+  const fontScale = await getFontScale();
+  const biometricTechnology = await getBiometricsType();
   await mp.registerSuperProperties({
     isScreenReaderEnabled: screenReaderEnabled,
-    fontScale: DeviceInfo.getFontScaleSync(),
+    fontScale,
     appReadableVersion: getAppVersion(),
-    colorScheme: Appearance.getColorScheme()
+    colorScheme: Appearance.getColorScheme(),
+    biometricTechnology
   });
   // Identify the user using the device uniqueId
-  await mp.identify(DeviceInfo.getUniqueId());
+  await mp.identify(getDeviceId());
 };
 
 export const terminateMixpanel = async () => {
