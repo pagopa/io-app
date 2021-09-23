@@ -113,8 +113,8 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
   const [
-    isFirstPageLoadedSuccesfully,
-    setIsFirstPageLoadedSuccesfully
+    isFirstPageLoadedSuccessfully,
+    setIsFirstPageLoadedSuccessfully
   ] = useState<boolean>(false);
 
   const vouchers = toArray(props.indexedVouchers);
@@ -129,13 +129,13 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     if (isDataLoadedUndefined) {
-      setIsFirstPageLoadedSuccesfully(false);
+      setIsFirstPageLoadedSuccessfully(false);
       props.requestVoucherPage(props.filters);
     }
   }, [props.filters, isDataLoadedUndefined]);
 
   useEffect(() => {
-    if (isDataLoadedError && isFirstPageLoadedSuccesfully) {
+    if (isDataLoadedError && isFirstPageLoadedSuccessfully) {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
   }, [isDataLoadedError]);
@@ -149,7 +149,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   if (
     !isReady(props.possibleVoucherState) ||
     ((isDataLoadedError || isDataLoadedLoading) &&
-      !isFirstPageLoadedSuccesfully)
+      !isFirstPageLoadedSuccessfully)
   ) {
     return (
       <BaseScreenComponent
@@ -174,8 +174,8 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       </BaseScreenComponent>
     );
   }
-  if (!isFirstPageLoadedSuccesfully) {
-    setIsFirstPageLoadedSuccesfully(true);
+  if (!isFirstPageLoadedSuccessfully) {
+    setIsFirstPageLoadedSuccessfully(true);
   }
 
   return (
