@@ -96,9 +96,11 @@ const CobadgePayloadRight = (p: {
 const SearchAvailableCoBadgeScreen = (
   props: Props
 ): React.ReactElement | null => {
+  const { search, abiSelected } = props;
   useEffect(() => {
-    props.search(props.abiSelected);
-  }, []);
+    console.log("search abi selected");
+    search(abiSelected);
+  }, [search, abiSelected]);
 
   useAvoidHardwareBackButton();
 
