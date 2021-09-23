@@ -34,49 +34,77 @@ function createServerMock(): any {
 
 const longDelayUrl = `http://${TEST_HOST}:${TEST_PORT}/${TEST_PATH}`;
 
-const transientConfigurableFetch = (retries: number, httpErrorCode: number) => {
-  const delay = 10 as Millisecond;
-  const timeout: Millisecond = 1000 as Millisecond;
-  const abortableFetch = AbortableFetch(fetch);
-  const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
-  const constantBackoff = () => delay;
-  const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
-  // makes the retry logic map specific http error code to transient errors (by default only
-  // timeouts are transient)
-  const retryWithTransientError = testableRetryLogicForTransientResponseError!(
-    _ => _.status === httpErrorCode,
-    retryLogic
-  );
-  return retriableFetch(retryWithTransientError)(timeoutFetch as typeof fetch);
-};
-
-describe("Fetch with transient error", () => {
+describe("retryLogicForTransientResponseError function", () => {
   const server = createServerMock();
 
   beforeEach(server.start);
   afterEach(server.stop);
 
-  it("Fetch should reach max retry on transient error", async () => {
+  const transientConfigurableFetch = (
+    retries: number,
+    httpErrorCode: number
+  ) => {
+    const delay = 10 as Millisecond;
+    const timeout: Millisecond = 1000 as Millisecond;
+    const abortableFetch = AbortableFetch(fetch);
+    const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
+    const constantBackoff = () => delay;
+    const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
+    // makes the retry logic map specific http error code to transient errors (by default only
+    // timeouts are transient)
+    const retryWithTransientError = testableRetryLogicForTransientResponseError!(
+      _ => _.status === httpErrorCode,
+      retryLogic
+    );
+    return retriableFetch(retryWithTransientError)(
+      timeoutFetch as typeof fetch
+    );
+  };
+
+  describe(`when the exact transient error code is returned`, () => {
     // Set error 404 as transient error.
-    const fetchWithRetries = transientConfigurableFetch(3, 404);
-    try {
-      // start the fetch request
-      await fetchWithRetries(longDelayUrl);
-    } catch (e) {
-      // fetch should abort with MaxRetries
-      expect(server.requests().length).toEqual(3);
-      expect(e).toEqual(MaxRetries);
-    }
+    const httpErrorCode = 404;
+    const retries = 3;
+
+    it(`should fail with ${MaxRetries} error`, async () => {
+      const fetchWithRetries = transientConfigurableFetch(
+        retries,
+        httpErrorCode
+      );
+      await expect(fetchWithRetries(longDelayUrl)).rejects.toEqual(MaxRetries);
+    });
+
+    it(`should send exactly ${retries} requests`, async () => {
+      const fetchWithRetries = transientConfigurableFetch(
+        retries,
+        httpErrorCode
+      );
+      await fetchWithRetries(longDelayUrl).catch(_ => void 0);
+      expect(server.requests().length).toEqual(retries);
+    });
   });
 
-  it("Fetch one time retry", async () => {
-    // Set error 401 as transient error, the server response is 404.
-    // In this case no other retry are performed.
-    const fetchWithRetries = transientConfigurableFetch(3, 401);
+  describe(`when a different transient error code is returned`, () => {
+    const httpErrorCode = 401;
+    const retries = 1000;
 
-    // start the fetch request
-    await fetchWithRetries(longDelayUrl);
+    // Please note that I'm re-writing these tests following the expected behaviour.
+    // Not sure as to why an error condition is returning a positive response.
+    it(`should resolve with defined response`, async () => {
+      const fetchWithRetries = transientConfigurableFetch(
+        retries,
+        httpErrorCode
+      );
+      await expect(fetchWithRetries(longDelayUrl)).resolves.toBeDefined();
+    });
 
-    expect(server.requests().length).toEqual(1);
+    it(`should send exactly 1 request`, async () => {
+      const fetchWithRetries = transientConfigurableFetch(
+        retries,
+        httpErrorCode
+      );
+      await fetchWithRetries(longDelayUrl).catch(_ => void 0);
+      expect(server.requests().length).toEqual(1);
+    });
   });
 });
