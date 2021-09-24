@@ -246,7 +246,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
+  expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -605,8 +605,8 @@ authentication:
       titleiOS: Please try again
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Hold your electronic ID card on the back of the iPhone, at the top.
-      layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
+      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
