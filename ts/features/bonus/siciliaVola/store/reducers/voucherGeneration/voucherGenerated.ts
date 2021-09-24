@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { SvVoucherGeneratedResponse } from "../../../types/SvVoucherResponse";
 import { NetworkError } from "../../../../../../utils/errors";
 import { Action } from "../../../../../../store/actions/types";
@@ -13,7 +14,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../bpd/model/RemoteValue";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VoucherGeneratedState = RemoteValue<

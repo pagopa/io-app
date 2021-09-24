@@ -2,6 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
+import { View } from "native-base";
+import { useEffect } from "react";
+import { isNone } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -16,16 +19,13 @@ import {
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
 import I18n from "../../../../../i18n";
-import { View } from "native-base";
 import { H5 } from "../../../../../components/core/typography/H5";
 import VoucherInformationComponent from "../../components/VoucherInformationComponent";
-import { useEffect } from "react";
 import { isVoucherRequest } from "../../utils";
 import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isNone } from "fp-ts/lib/Option";
 import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

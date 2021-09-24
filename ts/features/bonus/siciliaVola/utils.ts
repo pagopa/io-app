@@ -1,3 +1,4 @@
+import I18n from "../../../i18n";
 import { SvVoucher } from "./types/SvVoucher";
 import {
   DisabledVoucherRequest,
@@ -7,7 +8,6 @@ import {
   VoucherRequest,
   WorkerVoucherRequest
 } from "./types/SvVoucherRequest";
-import I18n from "../../../i18n";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   switch (voucher.category) {

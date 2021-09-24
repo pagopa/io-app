@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View } from "native-base";
+import { fromNullable } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -22,7 +24,6 @@ import {
   selectedVoucherCodeSelector,
   selectedVoucherSelector
 } from "../../store/reducers/selectedVoucher";
-import { View } from "native-base";
 import { H3 } from "../../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
@@ -34,7 +35,6 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

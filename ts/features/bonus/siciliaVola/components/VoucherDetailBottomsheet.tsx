@@ -2,8 +2,8 @@ import React from "react";
 import { View } from "native-base";
 import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import VoucherInformationComponent from "./VoucherInformationComponent";
 import I18n from "../../../../i18n";
+import VoucherInformationComponent from "./VoucherInformationComponent";
 
 type Props = {
   qrCode: string;
