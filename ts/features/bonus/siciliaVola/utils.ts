@@ -1,4 +1,12 @@
 import { SvVoucher } from "./types/SvVoucher";
+import {
+  DisabledVoucherRequest,
+  PartialVoucherRequest,
+  SickVoucherRequest,
+  StudentVoucherRequest,
+  VoucherRequest,
+  WorkerVoucherRequest
+} from "./types/SvVoucherRequest";
 import I18n from "../../../i18n";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
@@ -39,15 +47,6 @@ export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   }
   return [];
 };
-
-import {
-  DisabledVoucherRequest,
-  PartialVoucherRequest,
-  SickVoucherRequest,
-  StudentVoucherRequest,
-  VoucherRequest,
-  WorkerVoucherRequest
-} from "./types/SvVoucherRequest";
 
 const isStudentVoucherRequest = (
   partialVoucherRequest: PartialVoucherRequest
