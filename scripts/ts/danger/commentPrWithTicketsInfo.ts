@@ -44,12 +44,12 @@ const renderTicket = (ticket: GenericTicket) =>
 
 const renderTickets = (ticketList: ReadonlyArray<GenericTicket>) => {
   const ticketListToString = ticketList
-    .map(
-      s =>
-        `  * ${renderTicket(s)}${
-          s.parent ? ` \n _subtask of_\n     * ${renderTicket(s.parent)}` : ""
-        }`
-    )
+    .map(s => {
+      const subtask = s.parent
+        ? ` \n _subtask of_\n     * ${renderTicket(s.parent)}`
+        : "";
+      return `  * ${renderTicket(s)}${subtask}`;
+    })
     .join("\n");
 
   markdown(`
