@@ -1,5 +1,5 @@
-import { SvVoucher } from "./types/SvVoucher";
 import I18n from "../../../i18n";
+import { SvVoucher } from "./types/SvVoucher";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   switch (voucher.category) {

@@ -14,8 +14,8 @@ import SvCheckResidenceKoScreen from "../screens/voucherGeneration/ko/SvCheckRes
 import SvSelectBeneficiaryCategoryKoScreen from "../screens/voucherGeneration/ko/SvSelectBeneficiaryCategoryKoScreen";
 import SvGeneratedVoucherTimeoutScreen from "../screens/voucherGeneration/ko/SvGeneratedVoucherTimeoutScreen";
 import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
-import SV_ROUTES from "./routes";
 import VoucherDetailsScreen from "../screens/voucherList/VoucherDetailsScreen";
+import SV_ROUTES from "./routes";
 
 export const SvVoucherListNavigator = {
   [SV_ROUTES.VOUCHER_LIST.LIST]: {

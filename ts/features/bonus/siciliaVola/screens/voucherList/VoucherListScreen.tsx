@@ -18,8 +18,8 @@ import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
   svSetFilter,
-  svVoucherListGet
-  svSelectVoucher,
+  svVoucherListGet,
+  svSelectVoucher
 } from "../../store/actions/voucherList";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
