@@ -31,6 +31,8 @@ const WebviewComponent = (props: Props) => {
       ) : (
         <LoadingSpinnerOverlay isLoading={loading}>
           <WebView
+            androidCameraAccessDisabled={false}
+            androidMicrophoneAccessDisabled={false}
             style={IOStyles.flex}
             ref={ref}
             onLoadEnd={() => setLoading(false)}
