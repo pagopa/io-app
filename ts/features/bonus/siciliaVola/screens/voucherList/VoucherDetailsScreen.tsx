@@ -58,11 +58,17 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
     return fromNullable(props.selectedVoucherCode).fold(null, svc => (
-      <LoadingErrorComponent
-        isLoading={isLoading(props.selectedVoucher)}
-        loadingCaption={I18n.t("global.remoteStates.loading")}
-        onRetry={() => props.getVoucherDetail(svc)}
-      />
+      <BaseScreenComponent
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
+        <LoadingErrorComponent
+          isLoading={isLoading(props.selectedVoucher)}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={() => props.getVoucherDetail(svc)}
+        />
+      </BaseScreenComponent>
     ));
   }
 

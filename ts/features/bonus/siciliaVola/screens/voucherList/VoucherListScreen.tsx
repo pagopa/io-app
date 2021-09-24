@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
@@ -17,9 +17,9 @@ import {
 import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
-  svSelectVoucher,
   svSetFilter,
-  svVoucherListGet
+  svVoucherListGet,
+  svSelectVoucher
 } from "../../store/actions/voucherList";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
@@ -95,7 +95,6 @@ const FooterLoading = () => (
     />
   </>
 );
-
 const EmptyVoucherList = () => {
   const dispatch = useIODispatch();
 
@@ -120,8 +119,14 @@ const EmptyVoucherList = () => {
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
 
+  const [
+    isFirstPageLoadedSuccessfully,
+    setIsFirstPageLoadedSuccessfully
+  ] = useState<boolean>(false);
+
   const vouchers = toArray(props.indexedVouchers);
   const isDataLoadedUndefined = isUndefined(props.requiredDataLoaded);
+  const isDataLoadedLoading = isLoading(props.requiredDataLoaded);
   const isDataLoadedError = isError(props.requiredDataLoaded);
 
   useEffect(() => {
@@ -131,12 +136,13 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
 
   useEffect(() => {
     if (isDataLoadedUndefined) {
+      setIsFirstPageLoadedSuccessfully(false);
       props.requestVoucherPage(props.filters);
     }
   }, [props.filters, isDataLoadedUndefined]);
 
   useEffect(() => {
-    if (isDataLoadedError) {
+    if (isDataLoadedError && isFirstPageLoadedSuccessfully) {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
   }, [isDataLoadedError]);
@@ -147,65 +153,85 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       BottomTopAnimation
     );
 
+  if (
+    !isReady(props.possibleVoucherState) ||
+    ((isDataLoadedError || isDataLoadedLoading) &&
+      !isFirstPageLoadedSuccessfully)
+  ) {
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
+        <LoadingErrorComponent
+          isLoading={
+            isLoading(props.possibleVoucherState) || isDataLoadedLoading
+          }
+          loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
+          onRetry={() => {
+            if (isDataLoadedError) {
+              props.requestVoucherPage(props.filters);
+            }
+            if (isError(props.possibleVoucherState)) {
+              props.requestVoucherState();
+            }
+          }}
+        />
+      </BaseScreenComponent>
+    );
+  }
+  if (!isFirstPageLoadedSuccessfully) {
+    setIsFirstPageLoadedSuccessfully(true);
+  }
+
   return (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
-      isSearchAvailable={
-        isReady(props.possibleVoucherState)
-          ? {
-              enabled: true,
-              onSearchTap: openFiltersModal
-            }
-          : undefined
-      }
+      isSearchAvailable={{
+        enabled: true,
+        onSearchTap: openFiltersModal
+      }}
     >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherListScreen"}>
-        {!isReady(props.possibleVoucherState) ? (
-          <LoadingErrorComponent
-            isLoading={isLoading(props.possibleVoucherState)}
-            loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
-            onRetry={props.requestVoucherState}
-          />
-        ) : (
-          <>
-            <H1 style={IOStyles.horizontalContentPadding}>
-              {I18n.t("bonus.sv.voucherList.title")}
-            </H1>
-            <View spacer />
+        <>
+          <H1 style={IOStyles.horizontalContentPadding}>
+            {I18n.t("bonus.sv.voucherList.title")}
+          </H1>
+          <View spacer />
 
-            {isReady(props.requiredDataLoaded) && vouchers.length === 0 ? (
-              <EmptyVoucherList />
-            ) : (
-              <FlatList
-                style={[IOStyles.horizontalContentPadding]}
-                data={vouchers}
-                ListFooterComponent={
-                  isLoading(props.requiredDataLoaded) && <FooterLoading />
+          {isReady(props.requiredDataLoaded) && vouchers.length === 0 ? (
+            <EmptyVoucherList />
+          ) : (
+            <FlatList
+              style={[IOStyles.horizontalContentPadding]}
+              data={vouchers}
+              ListFooterComponent={
+                isLoading(props.requiredDataLoaded) && <FooterLoading />
+              }
+              keyExtractor={v => v.idVoucher.toString()}
+              ItemSeparatorComponent={() => (
+                <ItemSeparatorComponent noPadded={true} />
+              )}
+              onEndReached={() => {
+                if (props.uiParameters.nextPage !== undefined) {
+                  props.requestVoucherPage(props.filters);
                 }
-                keyExtractor={v => v.idVoucher.toString()}
-                ItemSeparatorComponent={() => (
-                  <ItemSeparatorComponent noPadded={true} />
-                )}
-                onEndReached={() => {
-                  if (props.uiParameters.nextPage !== undefined) {
-                    props.requestVoucherPage(props.filters);
-                  }
-                }}
-                renderItem={v => (
-                  <RenderItem
-                    idVoucher={v.item.idVoucher}
-                    departureDate={v.item.departureDate}
-                    destination={v.item.destination}
-                  />
-                )}
-                scrollEnabled={true}
-                keyboardShouldPersistTaps={"handled"}
-              />
-            )}
-          </>
-        )}
+              }}
+              renderItem={v => (
+                <RenderItem
+                  idVoucher={v.item.idVoucher}
+                  departureDate={v.item.departureDate}
+                  destination={v.item.destination}
+                />
+              )}
+              scrollEnabled={true}
+              keyboardShouldPersistTaps={"handled"}
+            />
+          )}
+        </>
       </SafeAreaView>
     </BaseScreenComponent>
   );
