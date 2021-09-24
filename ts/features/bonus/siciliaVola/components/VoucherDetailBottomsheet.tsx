@@ -26,9 +26,7 @@ const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
           primary: true,
           // TODO: Request the download of the voucher in pdf format
           onPress: () => true,
-          title: I18n.t(
-            "bonus.sv.components.voucherBottomsheet.cta.voucherRevocation"
-          ),
+          title: I18n.t("global.genericSave"),
           onPressWithGestureHandler: true
         }}
       />
