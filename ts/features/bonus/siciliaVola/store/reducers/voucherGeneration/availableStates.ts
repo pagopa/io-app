@@ -1,13 +1,16 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { IndexedById, toIndexed } from "../../../../../store/helpers/indexer";
-import { State } from "../../types/SvVoucherRequest";
-import { NetworkError } from "../../../../../utils/errors";
-import { Action } from "../../../../../store/actions/types";
+import {
+  IndexedById,
+  toIndexed
+} from "../../../../../../store/helpers/indexer";
+import { State } from "../../../types/SvVoucherRequest";
+import { NetworkError } from "../../../../../../utils/errors";
+import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
-} from "../actions/voucherGeneration";
+} from "../../actions/voucherGeneration";
 
 export type AvailableStatesState = pot.Pot<IndexedById<State>, NetworkError>;
 const INITIAL_STATE: AvailableStatesState = pot.none;
