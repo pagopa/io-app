@@ -73,7 +73,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   if (!isReady(remoteVoucherGenerated)) {
     return (
       <BaseScreenComponent
-        goBack={true}
+        goBack={false}
         contextualHelp={emptyContextualHelp}
         headerTitle={I18n.t("bonus.sv.headerTitle")}
       >
@@ -93,7 +93,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
     case "success":
       return (
         <BaseScreenComponent
-          goBack={true}
+          goBack={false}
           contextualHelp={emptyContextualHelp}
           headerTitle={I18n.t("bonus.sv.headerTitle")}
         >
