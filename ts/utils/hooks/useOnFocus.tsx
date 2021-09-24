@@ -14,6 +14,7 @@ export const useActionOnFocus = (
   const [lastUpdate, setLastUpdate] = useState<Date | undefined>(undefined);
 
   const navigation = useNavigationContext();
+  const isFocused = navigation.isFocused();
   useEffect(() => {
     const now = new Date();
     const shouldRefreshDelay =
@@ -25,7 +26,7 @@ export const useActionOnFocus = (
       loadAction();
       setLastUpdate(now);
     }
-  }, [navigation.isFocused()]);
+  }, [isFocused]);
 };
 
 export const useNavigationContext = () => useContext(NavigationContext);
