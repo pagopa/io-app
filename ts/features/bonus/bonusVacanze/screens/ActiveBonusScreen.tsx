@@ -292,6 +292,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
 
+  // TODO: this hooks doesn't follow the hooks rule but this functionality will be dismissed in December 2021. Otherwise rewrite this hook following all the rules.
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
     const delayedPolling = setTimeout(() => {
