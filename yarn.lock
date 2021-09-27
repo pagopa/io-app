@@ -6874,9 +6874,9 @@ form-data@~2.3.2:
     mime-types "^2.1.12"
 
 fp-ts@1.12.0, fp-ts@1.17.4, fp-ts@^1.0.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.12.0.tgz#d333310e4ac104cdcb6bea47908e381bb09978e7"
-  integrity sha512-fWwnAgVlTsV26Ruo9nx+fxNHIm6l1puE1VJ/C0XJ3nRQJJJIgRHYw6sigB3MuNFZL1o4fpGlhwFhcbxHK0RsOA==
+  version "1.17.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.17.4.tgz#f41eeeb2a8924b51b11521f93f5f59d28d0503be"
+  integrity sha512-OaIM5w0FceJm6zO0OjMY05Rdg02nlFCpilTrMitzGnHORh/8neP0NH9OcRvnGQdOEh2T5xjtcutzzctvWOQtCQ==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -8236,14 +8236,18 @@ italia-ts-commons@5.1.1:
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
-italia-ts-commons@5.1.11:
-  version "5.1.11"
-  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.11.tgz#323a5727371f995cd70c6f3b10a9407de687d83e"
-  integrity sha512-8TPHDzK1mZtn4QRH6KypTfFBxYOEShsc8nVLCdVlwVAEJwMiFWr6bL2CeO5WZ+Dt3RmUZz0MXCpN5u8WPKGT5Q==
+italia-ts-commons@8.6.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-8.6.0.tgz#d0e944ae7fb52d63ec016e172e6950529924f2fb"
+  integrity sha512-fMBhaqcGa5GD7/PmXWbjnCVUGcUWuRnZ5wF0hswkh0UMCGSozg3t3neSAqZGTF3eZaUEUk9WLkYSpTNxfeH1jw==
   dependencies:
-    fp-ts "1.12.0"
+    abort-controller "^3.0.0"
+    agentkeepalive "^4.1.2"
+    applicationinsights "^1.7.4"
+    fp-ts "1.17.4"
     io-ts "1.8.5"
     json-set-map "^1.0.2"
+    node-fetch "^2.6.0"
     validator "^10.1.0"
 
 italia-ts-commons@^5.0.1:
