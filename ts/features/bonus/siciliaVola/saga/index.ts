@@ -30,7 +30,6 @@ import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/vo
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
-import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
 import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
 import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
@@ -90,13 +89,6 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getType(svGenerateVoucherAvailableState.request),
     handleGetStatiUE,
     siciliaVolaClient.getStatiUE
-  );
-
-  // SV get the list of the Italian regions
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableRegion.request),
-    handleGetListaRegioni,
-    siciliaVolaClient.getListaRegioni
   );
 
   // SV get the list municipalities given a province
