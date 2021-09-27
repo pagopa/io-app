@@ -58,12 +58,11 @@ type Tuplize<T extends any[]> = Pick<
   Exclude<keyof T, Extract<keyof any[], string> | number>
 >;
 
-type _OneOf<T extends {}> = Values<
-  {
-    [K in keyof T]: T[K] &
-      { [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined };
-  }
->;
+type _OneOf<T extends {}> = Values<{
+  [K in keyof T]: T[K] & {
+    [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined;
+  };
+}>;
 
 /**
  * Ensure that the types T extends any[] are mutually exclusive

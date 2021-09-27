@@ -60,9 +60,8 @@ export const cancelBonusVacanzeRequest = createStandardAction(
   "BONUS_VACANZE_REQUEST_CANCEL"
 )<void>();
 
-export const showBonusVacanze = createStandardAction("BONUS_VACANZE_SHOW")<
-  void
->();
+export const showBonusVacanze =
+  createStandardAction("BONUS_VACANZE_SHOW")<void>();
 
 // Complete the bonus activation phase with success
 export const completeBonusVacanzeActivation = createStandardAction(

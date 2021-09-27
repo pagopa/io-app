@@ -9,24 +9,24 @@ import {
   isEuCovidCertificateSuccessResponse
 } from "../types/EUCovidCertificateResponse";
 
-const trackEuCovidCertificateActions = (mp: NonNullable<typeof mixpanel>) => (
-  action: Action
-): Promise<void> => {
-  switch (action.type) {
-    case getType(euCovidCertificateGet.request):
-      return mp.track(action.type);
-    case getType(euCovidCertificateGet.success):
-      return mp.track(
-        action.type,
-        trackEuCovidCertificateGetSuccessResponse(action.payload)
-      );
-    case getType(euCovidCertificateGet.failure):
-      return mp.track(action.type, {
-        reason: getNetworkErrorMessage(action.payload)
-      });
-  }
-  return Promise.resolve();
-};
+const trackEuCovidCertificateActions =
+  (mp: NonNullable<typeof mixpanel>) =>
+  (action: Action): Promise<void> => {
+    switch (action.type) {
+      case getType(euCovidCertificateGet.request):
+        return mp.track(action.type);
+      case getType(euCovidCertificateGet.success):
+        return mp.track(
+          action.type,
+          trackEuCovidCertificateGetSuccessResponse(action.payload)
+        );
+      case getType(euCovidCertificateGet.failure):
+        return mp.track(action.type, {
+          reason: getNetworkErrorMessage(action.payload)
+        });
+    }
+    return Promise.resolve();
+  };
 
 const trackEuCovidCertificateGetSuccessResponse = (
   response: EUCovidCertificateResponse

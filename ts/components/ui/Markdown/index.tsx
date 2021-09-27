@@ -258,13 +258,8 @@ class Markdown extends React.PureComponent<Props, State> {
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevChildren } = prevProps;
-    const {
-      children,
-      animated,
-      onError,
-      cssStyle,
-      useCustomSortedList
-    } = this.props;
+    const { children, animated, onError, cssStyle, useCustomSortedList } =
+      this.props;
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {

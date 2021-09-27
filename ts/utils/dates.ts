@@ -164,7 +164,8 @@ export class DateFromISOStringType extends t.Type<Date, string, unknown> {
   }
 }
 
-export const DateFromISOString: DateFromISOStringType = new DateFromISOStringType();
+export const DateFromISOString: DateFromISOStringType =
+  new DateFromISOStringType();
 
 /**
  *

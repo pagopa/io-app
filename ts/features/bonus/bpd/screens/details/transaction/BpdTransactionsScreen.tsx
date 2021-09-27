@@ -40,11 +40,8 @@ const handleTransactionsStatus = (
  * @constructor
  */
 const BpdTransactionsScreen: React.FC<Props> = (props: Props) => {
-  const {
-    bpdLastUpdate,
-    transactionForSelectedPeriod,
-    loadTransactions
-  } = props;
+  const { bpdLastUpdate, transactionForSelectedPeriod, loadTransactions } =
+    props;
   React.useEffect(() => {
     if (
       pot.isError(bpdLastUpdate) ||

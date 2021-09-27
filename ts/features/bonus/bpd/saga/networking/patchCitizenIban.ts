@@ -62,9 +62,9 @@ export function* patchCitizenIban(
       throw new Error(`profile is None`);
     }
     const iban: Iban = action.payload;
-    const updatePaymentMethodResult: SagaCallReturnType<ReturnType<
-      typeof updatePaymentMethod
-    >> = yield call(updatePaymentMethod(iban, profileState.value), {});
+    const updatePaymentMethodResult: SagaCallReturnType<
+      ReturnType<typeof updatePaymentMethod>
+    > = yield call(updatePaymentMethod(iban, profileState.value), {});
     if (updatePaymentMethodResult.isRight()) {
       const statusCode = updatePaymentMethodResult.value.status;
       if (statusCode === 200 && updatePaymentMethodResult.value.value) {

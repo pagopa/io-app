@@ -86,9 +86,10 @@ describe("credit card history", () => {
   });
 
   it("should limit the stored attempts to a maximum", () => {
-    const finalState = range(1, MAX_HISTORY_LENGTH + 10).reduce<
-      CreditCardInsertionState
-    >(
+    const finalState = range(
+      1,
+      MAX_HISTORY_LENGTH + 10
+    ).reduce<CreditCardInsertionState>(
       acc => runReducer(acc, addWalletCreditCardRequest(getNewCreditCard())),
       []
     );

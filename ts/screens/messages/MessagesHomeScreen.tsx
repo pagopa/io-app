@@ -83,9 +83,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
-  ScreenContentHeader
-);
+const AnimatedScreenContentHeader =
+  Animated.createAnimatedComponent(ScreenContentHeader);
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 

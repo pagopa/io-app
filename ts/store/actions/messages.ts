@@ -39,9 +39,8 @@ export const loadMessagesCancelled = createStandardAction(
   "MESSAGES_LOAD_CANCELLED"
 )();
 
-export const removeMessages = createStandardAction("MESSAGES_REMOVE")<
-  ReadonlyArray<string>
->();
+export const removeMessages =
+  createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",

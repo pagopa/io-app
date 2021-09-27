@@ -63,73 +63,74 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * @param props
  * @constructor
  */
-export const ActivateBonusRequestComponent: React.FunctionComponent<Props> = props => {
-  const {
-    headerTitle,
-    title,
-    description,
-    discrepancies,
-    reminder,
-    activateBonusText
-  } = loadLocales();
+export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
+  props => {
+    const {
+      headerTitle,
+      title,
+      description,
+      discrepancies,
+      reminder,
+      activateBonusText
+    } = loadLocales();
 
-  return (
-    <BaseScreenComponent
-      goBack={props.onCancel}
-      headerTitle={headerTitle}
-      faqCategories={
-        props.hasDiscrepancies
-          ? ["bonus_eligible", "bonus_eligible_discrepancies"]
-          : ["bonus_eligible"]
-      }
-      contextualHelpMarkdown={contextualHelpMarkdown}
-    >
-      <SafeAreaView style={bonusVacanzeStyle.flex}>
-        <ScrollView>
-          <View style={bonusVacanzeStyle.horizontalPadding}>
-            <View spacer={true} large={true} />
-            <ActivateBonusTitle
-              title={title}
-              description={description}
-              image={props.logo}
-            />
-            <View spacer={true} large={true} />
-            <BonusCompositionDetails
-              bonusAmount={props.bonusAmount}
-              taxBenefit={props.taxBenefit}
-            />
-            <View spacer={true} />
-          </View>
+    return (
+      <BaseScreenComponent
+        goBack={props.onCancel}
+        headerTitle={headerTitle}
+        faqCategories={
+          props.hasDiscrepancies
+            ? ["bonus_eligible", "bonus_eligible_discrepancies"]
+            : ["bonus_eligible"]
+        }
+        contextualHelpMarkdown={contextualHelpMarkdown}
+      >
+        <SafeAreaView style={bonusVacanzeStyle.flex}>
+          <ScrollView>
+            <View style={bonusVacanzeStyle.horizontalPadding}>
+              <View spacer={true} large={true} />
+              <ActivateBonusTitle
+                title={title}
+                description={description}
+                image={props.logo}
+              />
+              <View spacer={true} large={true} />
+              <BonusCompositionDetails
+                bonusAmount={props.bonusAmount}
+                taxBenefit={props.taxBenefit}
+              />
+              <View spacer={true} />
+            </View>
 
-          {props.hasDiscrepancies ? (
-            <ActivateBonusDiscrepancies
-              text={discrepancies.text}
-              attention={discrepancies.attention}
-            />
-          ) : (
-            <ItemSeparatorComponent />
-          )}
-          <View style={bonusVacanzeStyle.horizontalPadding}>
-            <View spacer={true} />
-            {props.familyMembers.length > 0 && (
-              <>
-                <FamilyComposition familyMembers={props.familyMembers} />
-                <View spacer={true} />
-                <ItemSeparatorComponent />
-                <View spacer={true} />
-              </>
+            {props.hasDiscrepancies ? (
+              <ActivateBonusDiscrepancies
+                text={discrepancies.text}
+                attention={discrepancies.attention}
+              />
+            ) : (
+              <ItemSeparatorComponent />
             )}
+            <View style={bonusVacanzeStyle.horizontalPadding}>
+              <View spacer={true} />
+              {props.familyMembers.length > 0 && (
+                <>
+                  <FamilyComposition familyMembers={props.familyMembers} />
+                  <View spacer={true} />
+                  <ItemSeparatorComponent />
+                  <View spacer={true} />
+                </>
+              )}
 
-            <ActivateBonusReminder text={reminder} />
-            <EdgeBorderComponent />
-          </View>
-        </ScrollView>
-        <FooterTwoButtons
-          onCancel={props.onCancel}
-          onRight={props.onRequestBonus}
-          rightText={activateBonusText}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+              <ActivateBonusReminder text={reminder} />
+              <EdgeBorderComponent />
+            </View>
+          </ScrollView>
+          <FooterTwoButtons
+            onCancel={props.onCancel}
+            onRight={props.onRequestBonus}
+            rightText={activateBonusText}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
+    );
+  };

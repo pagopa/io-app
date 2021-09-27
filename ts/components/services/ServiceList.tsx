@@ -91,12 +91,8 @@ class ServiceList extends React.Component<Props> {
   );
 
   public render() {
-    const {
-      sections,
-      isRefreshing,
-      onRefresh,
-      ListEmptyComponent
-    } = this.props;
+    const { sections, isRefreshing, onRefresh, ListEmptyComponent } =
+      this.props;
 
     const refreshControl = (
       <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />

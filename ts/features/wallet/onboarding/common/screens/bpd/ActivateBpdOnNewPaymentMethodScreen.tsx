@@ -64,32 +64,33 @@ const getFooter = (props: Props) => {
   );
 };
 
-const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
-  const { title, body1, body2 } = loadLocales();
+const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> =
+  props => {
+    const { title, body1, body2 } = loadLocales();
 
-  return (
-    <BaseScreenComponent
-      headerTitle={props.title}
-      contextualHelp={props.contextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView>
-          <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} large={true} />
-            <H1>{title}</H1>
-            <View spacer={true} large={true} />
-            <Body>{body1}</Body>
-            <View spacer={true} large={true} />
-            <PaymentMethodRawList paymentList={props.paymentMethods} />
-            <View spacer={true} large={true} />
-            <Body>{body2}</Body>
-          </View>
-        </ScrollView>
-        {getFooter(props)}
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+    return (
+      <BaseScreenComponent
+        headerTitle={props.title}
+        contextualHelp={props.contextualHelp}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView>
+            <View style={IOStyles.horizontalContentPadding}>
+              <View spacer={true} large={true} />
+              <H1>{title}</H1>
+              <View spacer={true} large={true} />
+              <Body>{body1}</Body>
+              <View spacer={true} large={true} />
+              <PaymentMethodRawList paymentList={props.paymentMethods} />
+              <View spacer={true} large={true} />
+              <Body>{body2}</Body>
+            </View>
+          </ScrollView>
+          {getFooter(props)}
+        </SafeAreaView>
+      </BaseScreenComponent>
+    );
+  };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => dispatch(NavigationActions.back())
