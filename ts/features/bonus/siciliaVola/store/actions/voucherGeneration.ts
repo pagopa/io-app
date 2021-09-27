@@ -101,22 +101,13 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
 export type avilableDestinationRequest = Pick<State, "id"> &
   Pick<Municipality, "longitude" | "latitude">;
 /**
- * get and handle available destination for a voucher request when the user select as destination state Italy
+ * get and handle available destination for a voucher request
  */
 export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
 )<avilableDestinationRequest, AvailableDestinations, NetworkError>();
-
-/**
- * get and handle available destination for a voucher request when the user select as destination state an abroad state
- */
-export const svGenerateVoucherAvailableDestinationAbroad = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_ABROAD_FAILURE"
-)<number, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
