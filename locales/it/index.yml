@@ -2495,6 +2495,7 @@ bonus:
         deals: Offerte
         description: Descrizione
         services: Servizi
+        addresses: Indirizzi
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto

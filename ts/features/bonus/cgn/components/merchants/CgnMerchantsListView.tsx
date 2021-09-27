@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View } from "native-base";
 import { FlatList, ListRenderItemInfo } from "react-native";
-import { index } from "fp-ts/lib/Array";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
@@ -25,7 +24,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
       : listItem.item.websiteUrl;
     return (
       <CgnMerchantListItem
-        category={index(0, [...listItem.item.productCategories]).toUndefined()}
+        categories={listItem.item.productCategories}
         name={listItem.item.name}
         location={location}
         onPress={() => props.onItemPress(listItem.item.id)}

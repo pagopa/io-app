@@ -2467,6 +2467,7 @@ bonus:
         deals: Discounts
         description: Description
         services: Services
+        addresses: Addresses
         hours: Working Hours
         validity: Validity
         discountCode: Discount code

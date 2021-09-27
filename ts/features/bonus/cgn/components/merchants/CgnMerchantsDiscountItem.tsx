@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   verticalPadding: {
     flex: 1,
-    paddingVertical: 16
+    paddingVertical: 7
   }
 });
 
@@ -48,6 +48,12 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
       <ShadowBox>
         <View style={[styles.row, styles.container]}>
           <View style={IOStyles.flex}>
+            <View style={IOStyles.flex}>
+              <H4 weight={"SemiBold"} color={"blue"}>
+                {discount.name}
+              </H4>
+            </View>
+            <View spacer xsmall />
             {index(0, [...discount.productCategories]).fold(
               undefined,
               categoryKey =>
@@ -65,12 +71,6 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
                   </View>
                 ))
             )}
-            <View spacer xsmall />
-            <View style={IOStyles.flex}>
-              <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-                {discount.name}
-              </H4>
-            </View>
           </View>
           {discount.discount && (
             <CgnDiscountValueBox value={discount.discount} small={true} />
