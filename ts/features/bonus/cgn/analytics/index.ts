@@ -21,7 +21,8 @@ import {
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnGenerateOtp } from "../store/actions/otp";
 
-const trackCgnAction = (mp: NonNullable<typeof mixpanel>) =>
+const trackCgnAction =
+  (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
   (action: Action): Promise<void> => {
     switch (action.type) {

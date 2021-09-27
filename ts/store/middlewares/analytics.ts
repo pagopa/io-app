@@ -120,7 +120,8 @@ import { searchMessagesEnabled } from "../actions/search";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
-const trackAction = (mp: NonNullable<typeof mixpanel>) =>
+const trackAction =
+  (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
   (action: Action): Promise<void | ReadonlyArray<null>> => {
     // eslint-disable-next-line sonarjs/max-switch-cases
@@ -407,27 +408,28 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) =>
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
-  action: Action
-): Action => {
-  if (mixpanel !== undefined) {
-    // call mixpanel tracking only after we have initialized mixpanel with the
-    // API token
-    void trackAction(mixpanel)(action);
-    void trackBpdAction(mixpanel)(action);
-    void trackBancomatAction(mixpanel)(action);
-    // TODO: activate simultaneously with the activation of satispay
-    // void trackSatispayAction(mixpanel)(action);
-    void trackBPayAction(mixpanel)(action);
-    void trackCoBadgeAction(mixpanel)(action);
-    void trackPrivativeAction(mixpanel)(action);
-    void trackCgnAction(mixpanel)(action);
-    void trackContentAction(mixpanel)(action);
-    void trackServiceAction(mixpanel)(action);
-    void trackEuCovidCertificateActions(mixpanel)(action);
-  }
-  return next(action);
-};
+export const actionTracking =
+  (_: MiddlewareAPI) =>
+  (next: Dispatch) =>
+  (action: Action): Action => {
+    if (mixpanel !== undefined) {
+      // call mixpanel tracking only after we have initialized mixpanel with the
+      // API token
+      void trackAction(mixpanel)(action);
+      void trackBpdAction(mixpanel)(action);
+      void trackBancomatAction(mixpanel)(action);
+      // TODO: activate simultaneously with the activation of satispay
+      // void trackSatispayAction(mixpanel)(action);
+      void trackBPayAction(mixpanel)(action);
+      void trackCoBadgeAction(mixpanel)(action);
+      void trackPrivativeAction(mixpanel)(action);
+      void trackCgnAction(mixpanel)(action);
+      void trackContentAction(mixpanel)(action);
+      void trackServiceAction(mixpanel)(action);
+      void trackEuCovidCertificateActions(mixpanel)(action);
+    }
+    return next(action);
+  };
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
@@ -436,33 +438,32 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
 export function screenTracking(
   store: MiddlewareAPI
 ): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) => (
-    action: Action
-  ): Action => {
-    if (
-      action.type !== NavigationActions.NAVIGATE &&
-      action.type !== NavigationActions.BACK
-    ) {
-      return next(action);
-    }
-    const currentScreen = getCurrentRouteName(store.getState().nav);
-    const result = next(action);
-    const nextScreen = getCurrentRouteName(store.getState().nav);
-    if (nextScreen !== currentScreen && mixpanel) {
-      if (nextScreen) {
-        setInstabugUserAttribute("activeScreen", nextScreen);
+  return (next: Dispatch): ((_: Action) => Action) =>
+    (action: Action): Action => {
+      if (
+        action.type !== NavigationActions.NAVIGATE &&
+        action.type !== NavigationActions.BACK
+      ) {
+        return next(action);
       }
-      // track only those events that are not included in the blacklist
-      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
-        void mixpanel.track("SCREEN_CHANGE_V2", {
+      const currentScreen = getCurrentRouteName(store.getState().nav);
+      const result = next(action);
+      const nextScreen = getCurrentRouteName(store.getState().nav);
+      if (nextScreen !== currentScreen && mixpanel) {
+        if (nextScreen) {
+          setInstabugUserAttribute("activeScreen", nextScreen);
+        }
+        // track only those events that are not included in the blacklist
+        if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+          void mixpanel.track("SCREEN_CHANGE_V2", {
+            SCREEN_NAME: nextScreen
+          });
+        }
+        // sent to 10-days retention project
+        void mixpanel.track("SCREEN_CHANGE", {
           SCREEN_NAME: nextScreen
         });
       }
-      // sent to 10-days retention project
-      void mixpanel.track("SCREEN_CHANGE", {
-        SCREEN_NAME: nextScreen
-      });
-    }
-    return result;
-  };
+      return result;
+    };
 }
