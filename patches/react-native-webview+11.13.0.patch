@@ -74,11 +74,11 @@ index f743bbc..7e46417 100644
 +      }
 +
 +      private void setMicrophoneAccessDisabled(boolean b) {
-+        cameraAccess = !b;
++        microphoneAccess = !b;
 +      }
 +
 +      private void setCameraAccessDisabled(boolean b) {
-+        microphoneAccess = !b;
++        cameraAccess = !b;
 +      }
 +    }
    }
