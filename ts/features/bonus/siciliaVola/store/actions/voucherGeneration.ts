@@ -8,8 +8,6 @@ import {
   Company,
   Hospital,
   Municipality,
-  Province,
-  Region,
   State,
   SvBeneficiaryCategory,
   University,
@@ -138,24 +136,6 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 )<void, ReadonlyArray<State>, NetworkError>();
 
 /**
- * get and handle the available region
- */
-export const svGenerateVoucherAvailableRegion = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_FAILURE"
-)<void, ReadonlyArray<Region>, NetworkError>();
-
-/**
- * get and handle the available province
- */
-export const svGenerateVoucherAvailableProvince = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_FAILURE"
-)<number, ReadonlyArray<Province>, NetworkError>();
-
-/**
  * get and handle the available municipality
  */
 export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
@@ -180,6 +160,4 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherAvailableDestinationAbroad>
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
-  | ActionType<typeof svGenerateVoucherAvailableRegion>
-  | ActionType<typeof svGenerateVoucherAvailableProvince>
   | ActionType<typeof svGenerateVoucherAvailableMunicipality>;

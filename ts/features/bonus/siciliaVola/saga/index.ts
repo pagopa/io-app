@@ -8,8 +8,6 @@ import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
   svGenerateVoucherStart
@@ -33,7 +31,6 @@ import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
 import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
-import { handleGetListaProvinceByIdRegione } from "./networking/handleGetListaProvinceByIdRegione";
 import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
 import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
@@ -100,13 +97,6 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getType(svGenerateVoucherAvailableRegion.request),
     handleGetListaRegioni,
     siciliaVolaClient.getListaRegioni
-  );
-
-  // SV get the list of province given a region id
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableProvince.request),
-    handleGetListaProvinceByIdRegione,
-    siciliaVolaClient.getListaProvinceByIdRegione
   );
 
   // SV get the list municipalities given a province
