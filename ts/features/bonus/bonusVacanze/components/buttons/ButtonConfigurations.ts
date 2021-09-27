@@ -5,31 +5,39 @@ import I18n from "../../../../../i18n";
  * A common configuration for all the buttons that represent a cancel/abort action
  * @param onPress
  * @param title
+ * @param iconName
+ * @param testID
  */
 export const cancelButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string
+  iconName?: string,
+  testID?: string
 ): BlockButtonProps => ({
   bordered: true,
   title: title ? title : I18n.t("global.buttons.cancel"),
   iconName,
-  onPress
+  onPress,
+  testID
 });
 /**
  * A common configuration for all the buttons that represent a confirm/active action
  * @param onPress
  * @param title
+ * @param iconName
+ * @param testID
  */
 export const confirmButtonProps = (
   onPress: () => void,
   title?: string,
-  iconName?: string
+  iconName?: string,
+  testID?: string
 ): BlockButtonProps => ({
   primary: true,
   title: title ? title : I18n.t("global.buttons.confirm"),
   iconName,
-  onPress
+  onPress,
+  testID
 });
 
 /**
