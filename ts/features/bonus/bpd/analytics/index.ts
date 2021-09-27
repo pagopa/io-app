@@ -30,9 +30,8 @@ import {
   bpdUpdatePaymentMethodActivation
 } from "../store/actions/paymentMethods";
 
-// eslint-disable-next-line complexity
-const trackAction =
-  (mp: NonNullable<typeof mixpanel>) =>
+const trackAction = (mp: NonNullable<typeof mixpanel>) =>
+  // eslint-disable-next-line complexity
   (action: Action): Promise<void> => {
     switch (action.type) {
       // onboarding
