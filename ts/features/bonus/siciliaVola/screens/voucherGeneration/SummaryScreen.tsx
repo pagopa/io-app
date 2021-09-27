@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -24,7 +23,6 @@ const SummaryScreen = (props: Props): React.ReactElement => {
   // TODO: dispatch availableDestination when the component is mounted
 
   // TODO: manage loading/error state on availableDestination
-  const elementRef = useRef(null);
   const backButtonProps = {
     primary: false,
     bordered: true,
@@ -44,11 +42,7 @@ const SummaryScreen = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"SummaryScreen"}
-        ref={elementRef}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"SummaryScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.summary.title")}</H1>
         </ScrollView>
