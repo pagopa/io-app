@@ -134,6 +134,18 @@ jobs:
       # Run linter
       - run: yarn lint
 
+  # Check if all files respect the prettier rules
+  run-prettier:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+
+      # Run linter
+      - run: yarn prettier --check "ts/**/*.ts*"
+
   # Runs Danger checks on PR
   run-danger:
     <<: *defaults_js
@@ -448,6 +460,7 @@ workflows:
       - compile-typescript
       - run-tests
       - run-eslint
+      - run-prettier
 
       - run-danger:
           filters:
@@ -477,6 +490,12 @@ workflows:
               only: *release_tag
             branches:
               ignore: /.*/
+      - run-prettier:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
 
       # Build Android alpha release & submit to play store
       - alpha-release-android:
@@ -484,6 +503,7 @@ workflows:
             - compile-typescript
             - run-tests
             - run-eslint
+            - run-prettier
           filters:
             tags:
               only: *release_tag
@@ -496,6 +516,7 @@ workflows:
             - compile-typescript
             - run-tests
             - run-eslint
+            - run-prettier
           filters:
             tags:
               only: *release_tag
