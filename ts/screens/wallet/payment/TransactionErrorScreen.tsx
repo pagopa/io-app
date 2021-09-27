@@ -118,7 +118,7 @@ const ErrorCodeCopyComponent = ({
 }): React.ReactElement => (
   <View testID={"error-code-copy-component"}>
     <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
-    <H4 weight={"Bold"} testID={"error-code"}>
+    <H4 weight={"Bold"} testID={"error-code"}  style={{textAlign: "center"}}>
       {error}
     </H4>
     <View spacer />
