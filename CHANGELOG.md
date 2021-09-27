@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.34.0-rc.3](https://github.com/pagopa/io-app/compare/1.34.0-rc.2...1.34.0-rc.3) (2021-09-24)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-14](https://pagopa.atlassian.net/browse/IASV-14),[IASV-15](https://pagopa.atlassian.net/browse/IASV-15)] Voucher list screen with filters  ([#3361](https://github.com/pagopa/io-app/issues/3361)) ([23340bd](https://github.com/pagopa/io-app/commit/23340bd1d133e8c2d3fb044add3c11d0dca1a182))
+
+
+### Bug Fixes
+
+* [[IA-224](https://pagopa.atlassian.net/browse/IA-224)] Upgrade react-native-webview and fix cie login ([#3394](https://github.com/pagopa/io-app/issues/3394)) ([5580921](https://github.com/pagopa/io-app/commit/558092100be04b0a6b529e4b97e957d3b7e19b1c))
+* [[IAI-61](https://pagopa.atlassian.net/browse/IAI-61)] Fix Xcode 13 build error ([#3392](https://github.com/pagopa/io-app/issues/3392)) ([97db442](https://github.com/pagopa/io-app/commit/97db442e4bc9a4bfbd7259444eb1a687b204fd31))
+
+
+### Chores
+
+* [[IA-217](https://pagopa.atlassian.net/browse/IA-217)] Track biometric capabilities ([#3393](https://github.com/pagopa/io-app/issues/3393)) ([22a1e49](https://github.com/pagopa/io-app/commit/22a1e495589017987606390c5ed56747895c2bba))
+* [[IA-219](https://pagopa.atlassian.net/browse/IA-219)] CIE copy update ([#3399](https://github.com/pagopa/io-app/issues/3399)) ([c9f43e9](https://github.com/pagopa/io-app/commit/c9f43e98d6d2ee146b6be30aa3a85450bea6db74))
+* [[IA-251](https://pagopa.atlassian.net/browse/IA-251)] Reset notification token state when the authentication is not longer valid ([#3387](https://github.com/pagopa/io-app/issues/3387)) ([7ce9e46](https://github.com/pagopa/io-app/commit/7ce9e461708b704821eadfc76cf31e65e488afa9))
+* [[IAI-60](https://pagopa.atlassian.net/browse/IAI-60)] Updgrade react-native-cie ([#3395](https://github.com/pagopa/io-app/issues/3395)) ([fadfb18](https://github.com/pagopa/io-app/commit/fadfb180ff0993844e22d779745a7cc03b12bc65))
+* **deps:** bump tmpl from 1.0.4 to 1.0.5 ([#3391](https://github.com/pagopa/io-app/issues/3391)) ([32450a9](https://github.com/pagopa/io-app/commit/32450a9831fd0ea91adea214a79b670a3545e059))
+* **deps:** bump y18n from 3.2.1 to 3.2.2 ([#2945](https://github.com/pagopa/io-app/issues/2945)) ([b9c04e0](https://github.com/pagopa/io-app/commit/b9c04e09ed56930cad96449025ddd71dc1504974))
+
 ## [1.34.0-rc.2](https://github.com/pagopa/io-app/compare/1.34.0-rc.1...1.34.0-rc.2) (2021-09-20)
 
 
