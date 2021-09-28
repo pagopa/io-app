@@ -6,7 +6,6 @@ import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
 import {
   svGenerateVoucherAvailableDestination,
-  svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
@@ -35,7 +34,7 @@ import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVouche
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
 import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBeneficiario";
 import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
-import { handleGetAeroportiBeneficiario } from "./networking/handleGetAeroportiBeneficiario";
+import { handleGetAeroportiAmmessi } from "./networking/handleGetAeroportAmmessi";
 import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
 import { handleGetVoucheStati } from "./networking/handleGetVoucherStati";
 
@@ -101,15 +100,8 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // SV get the list of available destination given a region when the selected state is Italy
   yield takeLatest(
     getType(svGenerateVoucherAvailableDestination.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiBeneficiario,
-    svSessionManager
-  );
-  // SV get the list of available destination given a state when the selected state is an abroad state
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableDestinationAbroad.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiStato,
+    handleGetAeroportiAmmessi,
+    siciliaVolaClient.getAeroportiAmmessi,
     svSessionManager
   );
 
