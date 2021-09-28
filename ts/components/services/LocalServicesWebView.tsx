@@ -111,6 +111,8 @@ const LocalServicesWebView = (props: Props) => {
       {isLoadingServiceLoading && renderLoading()}
 
       <WebView
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
         ref={webViewRef}
         injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
         style={{ flex: 1 }}

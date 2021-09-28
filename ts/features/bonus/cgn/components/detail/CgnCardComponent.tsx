@@ -150,6 +150,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         style={styles.cardContainer}
       >
         <WebView
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
           style={{ top: -1, left: -1 }}
           testID={"background-webview"}
           onLoadEnd={props.onCardLoadEnd}

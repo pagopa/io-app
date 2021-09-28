@@ -324,6 +324,8 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                androidCameraAccessDisabled={true}
+                androidMicrophoneAccessDisabled={true}
                 testID={this.props.testID}
                 accessible={false}
                 key={this.state.webviewKey}
