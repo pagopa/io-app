@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.0-rc.0](https://github.com/pagopa/io-app/compare/1.34.0-rc.3...1.35.0-rc.0) (2021-09-28)
+
+
+### Features
+
+* [[IA-241](https://pagopa.atlassian.net/browse/IA-241)] Implements new Payment Transaction error screen ([#3386](https://github.com/pagopa/io-app/issues/3386)) ([e654153](https://github.com/pagopa/io-app/commit/e654153dde8b4aec46376843736642dfe007b593))
+
+
+### Chores
+
+* [[IA-258](https://pagopa.atlassian.net/browse/IA-258)] Add patch react-native-webview (Android) ([#3398](https://github.com/pagopa/io-app/issues/3398)) ([7ae5062](https://github.com/pagopa/io-app/commit/7ae5062b9cfb4445319f4e79af11c000f8da6833))
+
 ## [1.34.0-rc.3](https://github.com/pagopa/io-app/compare/1.34.0-rc.2...1.34.0-rc.3) (2021-09-24)
 
 
