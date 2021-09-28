@@ -2631,7 +2631,9 @@ bonus:
           departure: "Departure date"
           return: "Return date"
       summary:
-        title: "SummaryScreen"
+        title: "Summary"
+        subtitle:
+          line1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts (art.76 of the Presidential Decree of 28 December 2000, n.445) that you meet the following requirements:"
       voucherGenerated:
         title: "Here is your discount code"
         subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
