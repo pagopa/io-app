@@ -15,7 +15,7 @@ import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
-import { DetailEnum } from "../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
@@ -41,7 +41,7 @@ export type PaymentHistory = {
   // see https://www.pivotaltracker.com/story/show/177067134
   transaction?: Transaction;
   verified_data?: PaymentRequestsGetResponse;
-  failure?: keyof typeof DetailEnum;
+  failure?: keyof typeof Detail_v2Enum;
   outcomeCode?: string;
   success?: true;
   payNavigationUrls?: ReadonlyArray<string>;
