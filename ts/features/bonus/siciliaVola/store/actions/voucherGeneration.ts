@@ -98,7 +98,7 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_FLIGHTS_DATE"
 )<FlightsDate>();
 
-export type avilableDestinationRequest = Pick<State, "id"> &
+export type AvailableDestinationRequest = Pick<State, "id"> &
   Pick<Municipality, "longitude" | "latitude">;
 /**
  * get and handle available destination for a voucher request
@@ -107,7 +107,7 @@ export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<avilableDestinationRequest, AvailableDestinations, NetworkError>();
+)<AvailableDestinationRequest, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
@@ -150,7 +150,6 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherSelectHospital>
   | ActionType<typeof svGenerateVoucherSelectFlightsDate>
   | ActionType<typeof svGenerateVoucherAvailableDestination>
-  | ActionType<typeof svGenerateVoucherAvailableDestinationAbroad>
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
   | ActionType<typeof svGenerateVoucherAvailableMunicipality>;
