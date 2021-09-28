@@ -139,6 +139,8 @@ const CieWebView = (props: Props) => {
     <View style={IOStyles.flex}>
       {authUrl === undefined && (
         <WebView
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
           ref={webView}
           userAgent={userAgent}
           javaScriptEnabled={true}
