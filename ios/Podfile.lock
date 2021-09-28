@@ -412,7 +412,7 @@ PODS:
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
-  - RNDeviceInfo (8.1.3):
+  - RNDeviceInfo (8.3.3):
     - React-Core
   - RNFS (2.16.6):
     - React
@@ -786,7 +786,7 @@ SPEC CHECKSUMS:
   RNCClipboard: ddd4d291537f1667209c9c405aaa4307297e252e
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
-  RNDeviceInfo: 8d3a29207835f972bce883723882980143270d55
+  RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
