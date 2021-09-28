@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { AvailableDestinations } from "../../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -7,12 +6,21 @@ import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
 
-export type AvailableDestinationsState = pot.Pot<
+export type AvailableDestinationsState = RemoteValue<
   AvailableDestinations,
   NetworkError
 >;
-const INITIAL_STATE: AvailableDestinationsState = pot.none;
+const INITIAL_STATE: AvailableDestinationsState = remoteUndefined;
 
 const reducer = (
   state: AvailableDestinationsState = INITIAL_STATE,
@@ -22,13 +30,23 @@ const reducer = (
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableDestination.request):
-      return pot.toLoading(state);
+      return remoteLoading;
     case getType(svGenerateVoucherAvailableDestination.success):
-      return pot.some(action.payload);
+      return remoteReady(action.payload);
     case getType(svGenerateVoucherAvailableDestination.failure):
-      return pot.toError(state, action.payload);
+      return remoteError(action.payload);
   }
   return state;
 };
+
+export const availableDestinationsSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.sv.voucherGeneration.availableDestinations
+  ],
+  (
+    availableDestinations: AvailableDestinationsState
+  ): AvailableDestinationsState => availableDestinations
+);
 
 export default reducer;
