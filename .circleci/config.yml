@@ -459,6 +459,7 @@ workflows:
       - compile-typescript
       - run-tests
       - run-eslint
+      - notify-new-app-version
 
       - run-danger:
           filters:
