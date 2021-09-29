@@ -64,6 +64,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
   onLandingCtaPress
 }: Props) => {
   const [isTap, setIsTap] = React.useState(false);
+  const [isCodeVisible, setIsCodeVisible] = React.useState(false);
   const timerRetry = React.useRef<number | undefined>(undefined);
 
   React.useEffect(
@@ -87,10 +88,10 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
         getCategorySpecs(categoryKey).fold(undefined, c => (
           <View style={styles.row}>
-            <IconFont
-              name={c.icon}
-              size={CATEGORY_ICON_SIZE}
-              color={IOColors.bluegrey}
+            <c.icon
+              width={CATEGORY_ICON_SIZE}
+              height={CATEGORY_ICON_SIZE}
+              fill={IOColors.bluegrey}
             />
             <View hspacer small />
             <H5 weight={"SemiBold"} color={"bluegrey"}>
@@ -116,7 +117,9 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
           </H3>
           <TouchableWithoutFeedback
-            onPress={handleCopyPress}
+            onPress={
+              isCodeVisible ? handleCopyPress : () => setIsCodeVisible(true)
+            }
             accessible={true}
             accessibilityRole={"button"}
             accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
@@ -128,14 +131,24 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                 font={"RobotoMono"}
                 style={styles.codeText}
               >
-                {addEvery(discount.staticCode, " ", 3)}
+                {isCodeVisible
+                  ? addEvery(discount.staticCode, " ", 3)
+                  : "••••••••••"}
               </BaseTypography>
-              <IconFont
-                name={isTap ? "io-complete" : "io-copy"}
-                size={COPY_ICON_SIZE}
-                color={IOColors.blue}
-                style={styles.flexEnd}
-              />
+              {
+                <IconFont
+                  name={
+                    isCodeVisible
+                      ? isTap
+                        ? "io-complete"
+                        : "io-copy"
+                      : "io-eye"
+                  }
+                  size={COPY_ICON_SIZE}
+                  color={IOColors.blue}
+                  style={styles.flexEnd}
+                />
+              }
             </View>
           </TouchableWithoutFeedback>
         </>
@@ -147,6 +160,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
             {I18n.t("bonus.cgn.merchantDetail.title.conditions")}
           </H3>
           <H4 weight={"Regular"}>{discount.condition}</H4>
+          <View spacer />
         </>
       )}
       {discount.landingPageUrl && discount.landingPageReferrer && (
@@ -170,7 +184,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
 };
 
 const CgnDiscountDetailHeader = ({ discount }: Props) => (
-  <View style={[IOStyles.row, { alignItems: "center" }]}>
+  <View style={[IOStyles.row, { alignItems: "center" }, IOStyles.flex]}>
     {discount.discount && (
       <>
         <CgnDiscountValueBox value={discount.discount} small />
@@ -186,7 +200,7 @@ export const useCgnDiscountDetailBottomSheet = (
   landingPageHandler?: (url: string, referer: string) => void
 ) => {
   const { present: openBottomSheet, dismiss } = useIOBottomSheetRaw(
-    385,
+    440,
     bottomSheetContent
   );
 

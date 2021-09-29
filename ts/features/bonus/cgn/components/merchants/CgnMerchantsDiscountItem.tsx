@@ -3,7 +3,6 @@ import { View } from "native-base";
 import { StyleSheet } from "react-native";
 import { index } from "fp-ts/lib/Array";
 import { connect } from "react-redux";
-import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -59,11 +58,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               categoryKey =>
                 getCategorySpecs(categoryKey).fold(undefined, c => (
                   <View style={styles.row}>
-                    <IconFont
-                      name={c.icon}
-                      size={22}
-                      color={IOColors.bluegrey}
-                    />
+                    <c.icon width={22} height={22} fill={IOColors.bluegrey} />
                     <View hspacer small />
                     <H5 weight={"SemiBold"} color={"bluegrey"}>
                       {I18n.t(c.nameKey).toLocaleUpperCase()}

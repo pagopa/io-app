@@ -36,6 +36,7 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -68,7 +69,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
 
   const renderAddressesListItem = ({ item }: ListRenderItemInfo<Address>) => (
     <TouchableDefaultOpacity
-      style={[IOStyles.row, styles.spaced]}
+      style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
       onPress={() => clipboardSetStringWithFeedback(item.full_address)}
     >
       <H4 weight={"Regular"} style={IOStyles.flex}>
@@ -114,6 +115,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
             <FlatList
               data={merchantDetail.value.discounts}
               renderItem={renderDiscountListItem}
+              keyExtractor={(item: Discount) => item.name}
             />
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
             <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
@@ -125,6 +127,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                   <FlatList
                     data={merchantDetail.value.addresses}
                     renderItem={renderAddressesListItem}
+                    keyExtractor={(item: Address) => item.full_address}
+                    ItemSeparatorComponent={() => (
+                      <ItemSeparatorComponent noPadded />
+                    )}
                   />
                 </>
               )}
