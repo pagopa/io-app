@@ -8,6 +8,7 @@ import {
   VoucherRequest,
   WorkerVoucherRequest
 } from "./types/SvVoucherRequest";
+import { AvailableDestinationRequest } from "./store/actions/voucherGeneration";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   switch (voucher.category) {
@@ -84,3 +85,23 @@ export const isVoucherRequest = (
   isWorkerVoucherRequest(partialVoucherRequest) ||
   isSickVoucherRequest(partialVoucherRequest) ||
   isDisabledVoucherRequest(partialVoucherRequest);
+
+export const destinationsInfoFromVoucherRequest = (
+  voucherRequest:
+    | StudentVoucherRequest
+    | WorkerVoucherRequest
+    | SickVoucherRequest
+): AvailableDestinationRequest => {
+  const destination =
+    voucherRequest.category === "student"
+      ? voucherRequest.university
+      : voucherRequest.category === "worker"
+      ? voucherRequest.company
+      : voucherRequest.hospital;
+
+  return {
+    id: destination.state.id,
+    latitude: destination.municipality.latitude,
+    longitude: destination.municipality.longitude
+  };
+};
