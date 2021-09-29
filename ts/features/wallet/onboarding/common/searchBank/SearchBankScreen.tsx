@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -53,15 +54,17 @@ const getSectionName = (methodType: MethodType): SectionStatusKey => {
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
-  // eslint-disable-next-line functional/no-let
-  let errorRetry: number | undefined;
+  const errorRetry = useRef<number | undefined>(undefined);
+  const { bankRemoteValue, loadAbis } = props;
+
   React.useEffect(() => {
-    if (isUndefined(props.bankRemoteValue)) {
-      props.loadAbis();
-    } else if (isError(props.bankRemoteValue)) {
-      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
+    if (isUndefined(bankRemoteValue)) {
+      loadAbis();
+    } else if (isError(bankRemoteValue)) {
+      // eslint-disable-next-line functional/immutable-data
+      errorRetry.current = setTimeout(loadAbis, fetchPagoPaTimeout);
     }
-  }, [props.bankRemoteValue]);
+  }, [bankRemoteValue, loadAbis]);
 
   return (
     <BaseScreenComponent
@@ -74,7 +77,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       })}
       contextualHelp={emptyContextualHelp}
     >
-      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
+      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry.current)} />
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <SearchBankComponent

@@ -1,6 +1,11 @@
-import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import {
+  Image,
+  ImageStyle,
+  ImageURISource,
+  StyleProp,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import unknownGdo from "../../../../../img/wallet/unknown-gdo.png";
@@ -41,8 +46,11 @@ const fallbackLoyaltyLogo: React.ReactElement = (
   />
 );
 
-const renderRight = (props: Props, size: Option<[number, number]>) =>
-  size.fold(fallbackLoyaltyLogo, imgDim => {
+const Right = (
+  props: Props & Pick<ImageURISource, "uri">
+): React.ReactElement => {
+  const size = useImageResize(BASE_IMG_W, BASE_IMG_H, props.uri);
+  return size.fold(fallbackLoyaltyLogo, imgDim => {
     const imageUrl = props.privative.icon;
 
     const imageStyle: StyleProp<ImageStyle> = {
@@ -59,6 +67,7 @@ const renderRight = (props: Props, size: Option<[number, number]>) =>
       />
     );
   });
+};
 
 const getAccessibilityRepresentation = (privative: PrivativePaymentMethod) => {
   const cardRepresentation = I18n.t("wallet.accessibility.folded.privative", {
@@ -74,12 +83,11 @@ const getAccessibilityRepresentation = (privative: PrivativePaymentMethod) => {
  * @constructor
  */
 const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
-  const rightElement = isImageURISource(props.privative.icon)
-    ? renderRight(
-        props,
-        useImageResize(BASE_IMG_W, BASE_IMG_H, props.privative.icon.uri)
-      )
-    : fallbackLoyaltyLogo;
+  const rightElement = isImageURISource(props.privative.icon) ? (
+    <Right {...props} uri={props.privative.icon.uri} />
+  ) : (
+    fallbackLoyaltyLogo
+  );
 
   return (
     <CardLayoutPreview

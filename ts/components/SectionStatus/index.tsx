@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { Pressable, View } from "react-native";
@@ -37,21 +37,13 @@ const statusIconMap: Record<LevelEnum, string> = {
 };
 const color = IOColors.white;
 
-/**
- * this component shows a full width banner with an icon and text
- * it could be tappable if the web url is defined
- * it renders nothing if for the given props.sectionKey there is no data or it is not visible
- */
-const SectionStatus: React.FC<Props> = (props: Props) => {
-  if (props.sectionStatus === undefined) {
-    return null;
+const InnerSectionStatus = (
+  props: Omit<Props, "sectionStatus"> & {
+    sectionStatus: NonNullable<Props["sectionStatus"]>;
   }
-  if (props.sectionStatus.is_visible !== true) {
-    return null;
-  }
-
+) => {
   const viewRef = React.createRef<View>();
-  const sectionStatus = props.sectionStatus;
+  const { sectionStatus, onSectionRef } = props;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const locale = getFullLocale();
@@ -60,17 +52,17 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
   );
   const navigation = useNavigationContext();
 
-  const handleOnSectionRef = () => {
+  const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {
-      props.onSectionRef?.(viewRef);
+      onSectionRef?.(viewRef);
     }
-  };
+  }, [onSectionRef, viewRef]);
 
   React.useEffect(() => {
     handleOnSectionRef();
     const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
     return () => unsubscribe?.remove();
-  }, [viewRef]);
+  }, [handleOnSectionRef, navigation, viewRef]);
 
   return maybeWebUrl.fold(
     // render text only
@@ -119,6 +111,21 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
       </Pressable>
     )
   );
+};
+
+/**
+ * this component shows a full width banner with an icon and text
+ * it could be tappable if the web url is defined
+ * it renders nothing if for the given props.sectionKey there is no data or it is not visible
+ */
+const SectionStatus: React.FC<Props> = (props: Props) => {
+  if (props.sectionStatus === undefined) {
+    return null;
+  }
+  if (props.sectionStatus.is_visible !== true) {
+    return null;
+  }
+  return <InnerSectionStatus {...props} sectionStatus={props.sectionStatus} />;
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
