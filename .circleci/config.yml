@@ -459,7 +459,6 @@ workflows:
       - compile-typescript
       - run-tests
       - run-eslint
-      - notify-new-app-version
 
       - run-danger:
           filters:
@@ -508,6 +507,17 @@ workflows:
             - compile-typescript
             - run-tests
             - run-eslint
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      # Send a Slack message to notify the release of a new app version in beta
+      - notify-new-app-version:
+          requires:
+            - ios-beta-release
+            - alpha-release-android
           filters:
             tags:
               only: *release_tag

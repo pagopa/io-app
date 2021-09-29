@@ -2,7 +2,7 @@
 import * as fs from "fs-extra";
 import { slackPostMessage } from "../common/slack/postMessage";
 
-const destinationChannel = "#test";
+const destinationChannel = "#prod_io";
 const packagePath = "package.json";
 
 const main = async () => {
