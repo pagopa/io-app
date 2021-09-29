@@ -39,15 +39,16 @@ export const BetaTestingOverlay: FC<Props> = ({ title, body }): JSX.Element => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleVisibility = (): void => setIsVisible(!isVisible);
+  const bodyString = body ? `- ${body}` : "";
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
       {isVisible && (
         <TouchableOpacity onPress={handleVisibility}>
           <Label style={styles.versionText}>{title}</Label>
-          <Body style={styles.versionText}>{`${getAppVersion()} ${
-            body ? `- ${body}` : ""
-          }`}</Body>
+          <Body
+            style={styles.versionText}
+          >{`${getAppVersion()} ${bodyString}`}</Body>
         </TouchableOpacity>
       )}
     </View>

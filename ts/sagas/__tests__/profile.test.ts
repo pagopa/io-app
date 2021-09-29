@@ -53,6 +53,8 @@ const mockedProfile: InitializedProfile = {
   version: 1 as Version
 };
 
+const fiscalCodeHash = hash(`${mockedProfile.fiscal_code}xxx`);
+
 describe("watchProfile", () => {
   it("the all saga steps", () => {
     const startEmailValidationProcess = jest.fn();
@@ -97,7 +99,7 @@ describe("watchProfile", () => {
 
   it.each`
     state          | storedFiscalCode
-    ${"different"} | ${hash(`${mockedProfile.fiscal_code}xxx`)}
+    ${"different"} | ${fiscalCodeHash}
     ${"undefined"} | ${undefined}
   `(
     "checkStoreHashedFiscalCode should dispatch newProfileLoggedIn action if the stored hashed fiscal code is $state",

@@ -2,6 +2,7 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, Toast, View } from "native-base";
+import { useCallback } from "react";
 import * as React from "react";
 import {
   Animated,
@@ -291,6 +292,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
 
+  // TODO: this hooks doesn't follow the hooks rule but this functionality will be dismissed in December 2021. Otherwise rewrite this hook following all the rules.
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
     const delayedPolling = setTimeout(() => {
@@ -309,6 +311,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       clearTimeout(delayedPolling);
     };
   }, []);
+
+  // return an option containing the capture function
+
+  const captureScreenshot = useCallback(
+    (): Option<() => Promise<string>> =>
+      fromNullable(
+        screenShotRef && screenShotRef.current && screenShotRef.current.capture
+      ),
+    [screenShotRef]
+  );
 
   React.useEffect(() => {
     if (screenShotState.isPrintable) {
@@ -333,7 +345,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return;
       }
     }
-  }, [screenShotState.isPrintable]);
+  }, [screenShotState.isPrintable, backgroundAnimation, captureScreenshot]);
 
   React.useEffect(() => {
     // if the screenShotUri is defined start saving image and restore default style
@@ -360,7 +372,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         });
       setScreenShotState(screenShortInitialState);
     }
-  }, [screenShotState.screenShotUri]);
+  }, [screenShotState.screenShotUri, backgroundAnimation]);
 
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(
@@ -370,13 +382,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         })
       : ""
   );
-
-  // return an option containing the capture function
-
-  const captureScreenshot = (): Option<() => Promise<string>> =>
-    fromNullable(
-      screenShotRef && screenShotRef.current && screenShotRef.current.capture
-    );
 
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {

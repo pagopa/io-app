@@ -129,7 +129,7 @@ const openSupportedCardsPage = (): void => {
   );
 };
 
-const primaryButtonPropsFromState = (
+const usePrimaryButtonPropsFromState = (
   state: CreditCardState,
   onNavigate: (card: CreditCard) => NavigationNavigateAction,
   isHolderValid: boolean,
@@ -446,7 +446,7 @@ const AddCardScreen: React.FC<Props> = props => {
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={secondaryButtonProps}
-        rightButton={primaryButtonPropsFromState(
+        rightButton={usePrimaryButtonPropsFromState(
           creditCard,
           props.navigateToConfirmCardDetailsScreen,
           isValidCardHolder(creditCard.holder),

@@ -63,15 +63,16 @@ const formId = `io-form-id-${uuid()}`;
 // the javascript submit command
 const injectedJSPostForm: string = `<script type="application/javascript">document.getElementById("${formId}").submit();</script>`;
 
+const kvToString = (kv: [string, unknown]) =>
+  `<input type="text" name="${kv[0]}" value="${kv[1]}">`;
+
 // create an html form giving a form data and an uri
 const crateAutoPostForm = (
   form: Record<string, unknown>,
   uri: string
 ): string =>
   `<html><body><form action="${uri}" method="post" id="${formId}" enctype="application/x-www-form-urlencoded" style="display: none;">
-    ${_.toPairs(form)
-      .map(kv => `<input type="text" name="${kv[0]}" value="${kv[1]}">`)
-      .join("<br/>")}
+    ${_.toPairs(form).map(kvToString).join("<br/>")}
   </form></body></html>`;
 
 /**

@@ -111,6 +111,12 @@ const EmptyVoucherList = () => {
 
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+  const {
+    requestVoucherState,
+    resetFilter,
+    filters,
+    requestVoucherPage
+  } = props;
 
   const [
     isFirstPageLoadedSuccessfully,
@@ -123,22 +129,22 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   const isDataLoadedError = isError(props.requiredDataLoaded);
 
   useEffect(() => {
-    props.requestVoucherState();
-    props.resetFilter();
-  }, []);
+    requestVoucherState();
+    resetFilter();
+  }, [requestVoucherState, resetFilter]);
 
   useEffect(() => {
     if (isDataLoadedUndefined) {
       setIsFirstPageLoadedSuccessfully(false);
-      props.requestVoucherPage(props.filters);
+      requestVoucherPage(filters);
     }
-  }, [props.filters, isDataLoadedUndefined]);
+  }, [filters, isDataLoadedUndefined, requestVoucherPage]);
 
   useEffect(() => {
     if (isDataLoadedError && isFirstPageLoadedSuccessfully) {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
-  }, [isDataLoadedError]);
+  }, [isDataLoadedError, isFirstPageLoadedSuccessfully]);
 
   const openFiltersModal = () =>
     showAnimatedModal(
