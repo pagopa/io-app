@@ -78,7 +78,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <VoucherDetailBottomSheet
         barCode={selectedVoucher.barCode}
         qrCode={selectedVoucher.qrCode}
-        onExit={() => dismiss()}
+        onExit={dismiss}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
@@ -94,11 +94,11 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   const openQrButtonProps = {
     primary: true,
     bordered: false,
-    onPress: () => openBottomSheet(),
+    onPress: openBottomSheet,
     title: I18n.t("bonus.sv.voucherList.details.cta.openQr")
   };
 
-  const voucherId = selectedVoucher.id ? selectedVoucher.id.toString() : "";
+  const voucherId = selectedVoucher.id?.toString() ?? "";
 
   return (
     <BaseScreenComponent
