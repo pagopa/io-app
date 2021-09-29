@@ -77,8 +77,8 @@ function retryLogicForTransientResponseError(
 }
 
 /**
- * This is a fetch with timeouts, constant backoff and with the logic
- * that handles 404s as transient errors.
+ * This is a fetch with timeout for single request, constant backoff, and
+ * the logic to handle 404s as transient errors.
  */
 export const constantPollingFetch = (
   shouldAbort: Promise<boolean>,
