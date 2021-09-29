@@ -12,7 +12,7 @@ import { onboardingBancomatFoundPansSelector } from "../../store/reducers/pans";
 import AddBancomatScreen from "../add-pans/AddBancomatScreen";
 import { isTimeoutError } from "../../../../../../utils/errors";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { avoidHardwareBackButton } from "../../../../../../utils/avoidHardwareBackButton";
+import { useAvoidHardwareBackButton } from "../../../../../../utils/useAvoidHardwareBackButton";
 import BancomatKoNotFound from "./BancomatKoNotFound";
 import BancomatKoSingleBankNotFound from "./BancomatKoSingleBankNotFound";
 import BancomatKoTimeout from "./BancomatKoTimeout";
@@ -37,7 +37,7 @@ const servicesSuccessCodes = [
  * @constructor
  */
 const SearchAvailableUserBancomatScreen: React.FunctionComponent<Props> = props => {
-  avoidHardwareBackButton();
+  useAvoidHardwareBackButton();
 
   const pans = props.pans;
   const noBancomatFound = isReady(pans) && pans.value.cards.length === 0;

@@ -1,6 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -82,15 +82,21 @@ const EuCovidCertificateRouterScreen = (
 ): React.ReactElement | null => {
   const authCode = props.navigation.getParam("authCode");
   const messageId = props.navigation.getParam("messageId");
+  const { setMessageRead, shouldBeLoaded, loadCertificate } = props;
+  const firstLoading = useRef<boolean>(true);
 
   useEffect(() => {
-    // At the first rendering, set the message to read
-    props.setMessageRead(messageId);
-    // check if a load is required
-    if (props.shouldBeLoaded(authCode)) {
-      props.loadCertificate(authCode);
+    if (firstLoading.current) {
+      // At the first rendering, set the message to read
+      setMessageRead(messageId);
+      // check if a load is required
+      if (shouldBeLoaded(authCode)) {
+        loadCertificate(authCode);
+      }
+      // eslint-disable-next-line functional/immutable-data
+      firstLoading.current = false;
     }
-  }, []);
+  }, [setMessageRead, shouldBeLoaded, loadCertificate, messageId, authCode]);
 
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
   return pot.fold(

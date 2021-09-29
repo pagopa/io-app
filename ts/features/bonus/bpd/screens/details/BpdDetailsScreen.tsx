@@ -57,16 +57,25 @@ const styles = StyleSheet.create({
  */
 const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   const loading = isLoading(props.unsubscription);
+  const {
+    unsubscription,
+    completeUnsubscriptionSuccess,
+    completeUnsubscriptionFailure
+  } = props;
 
   useEffect(() => {
-    if (isError(props.unsubscription)) {
+    if (isError(unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.failure"), "danger");
-      props.completeUnsubscriptionFailure();
-    } else if (isReady(props.unsubscription)) {
+      completeUnsubscriptionFailure();
+    } else if (isReady(unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.success"), "success");
-      props.completeUnsubscriptionSuccess();
+      completeUnsubscriptionSuccess();
     }
-  }, [props.unsubscription]);
+  }, [
+    unsubscription,
+    completeUnsubscriptionSuccess,
+    completeUnsubscriptionFailure
+  ]);
 
   useHardwareBackButton(() => {
     props.goBack();
