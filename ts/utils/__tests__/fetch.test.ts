@@ -1,16 +1,15 @@
 import { MaxRetries, RetryAborted } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import * as Mockttp from "mockttp";
-
-import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
-import { fetchMaxRetries } from "../../config";
-import { CompletedRequest, MaybePromise } from "mockttp";
 import {
   CallbackResponseMessageResult,
   CallbackResponseResult
 } from "mockttp/dist/rules/requests/request-handlers";
+import * as Mockttp from "mockttp";
+import { CompletedRequest, MaybePromise } from "mockttp";
 
+import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
+import { fetchMaxRetries } from "../../config";
 const mockServer = Mockttp.getLocal();
 
 const TEST_PATH = "/transient-error";
