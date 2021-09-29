@@ -167,9 +167,9 @@ describe("payments history", () => {
   });
 
   it("should update the existing payment history with failure value", () => {
-    state = reducer(state, paymentVerifica.failure("INVALID_AMOUNT"));
+    state = reducer(state, paymentVerifica.failure("PPT_IMPORTO_ERRATO"));
     expect(state.length).toEqual(1);
-    expect(state[0].failure).toEqual("INVALID_AMOUNT");
+    expect(state[0].failure).toEqual("PPT_IMPORTO_ERRATO");
   });
 
   it("should recognize a failed payment", () => {

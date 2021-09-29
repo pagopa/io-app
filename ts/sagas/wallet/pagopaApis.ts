@@ -651,7 +651,7 @@ export function* paymentVerificaRequestHandler(
       } else if (response.value.status === 500) {
         // Verifica failed with a 500, that usually means there was an error
         // interacting with pagoPA that we can interpret
-        yield put(paymentVerifica.failure(response.value.value.detail));
+        yield put(paymentVerifica.failure(response.value.value.detail_v2));
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -695,7 +695,7 @@ export function* paymentAttivaRequestHandler(
         yield put(paymentAttiva.success(response.value.value));
       } else if (response.value.status === 500) {
         // Attiva failed
-        throw Error(response.value.value.detail);
+        throw Error(response.value.value.detail_v2);
       } else {
         throw Error(`response status ${response.value.status}`);
       }

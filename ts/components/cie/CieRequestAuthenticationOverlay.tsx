@@ -75,12 +75,13 @@ const reducer = (state: State, action: InnerAction): State => {
 const CieWebView = (props: Props) => {
   const [{ authUrl, key, error }, dispatch] = useReducer(reducer, initState);
   const webView = createRef<WebView>();
+  const { onSuccess } = props;
 
   useEffect(() => {
     if (authUrl !== undefined) {
-      props.onSuccess(authUrl);
+      onSuccess(authUrl);
     }
-  }, [authUrl]);
+  }, [authUrl, onSuccess]);
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
@@ -139,6 +140,8 @@ const CieWebView = (props: Props) => {
     <View style={IOStyles.flex}>
       {authUrl === undefined && (
         <WebView
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
           ref={webView}
           userAgent={userAgent}
           javaScriptEnabled={true}

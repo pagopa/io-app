@@ -126,6 +126,8 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
           {!hasError && (
             <View style={styles.flex1}>
               <WebView
+                androidCameraAccessDisabled={true}
+                androidMicrophoneAccessDisabled={true}
                 textZoom={100}
                 style={styles.flex2}
                 onLoadEnd={handleLoadEnd}
