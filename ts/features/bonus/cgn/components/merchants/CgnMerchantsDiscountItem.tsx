@@ -58,7 +58,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               categoryKey =>
                 getCategorySpecs(categoryKey).fold(undefined, c => (
                   <View style={styles.row}>
-                    <c.icon width={22} height={22} fill={IOColors.bluegrey} />
+                    {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
                     <View hspacer small />
                     <H5 weight={"SemiBold"} color={"bluegrey"}>
                       {I18n.t(c.nameKey).toLocaleUpperCase()}

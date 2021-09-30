@@ -88,11 +88,11 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
       {index(0, [...discount.productCategories]).fold(undefined, categoryKey =>
         getCategorySpecs(categoryKey).fold(undefined, c => (
           <View style={styles.row}>
-            <c.icon
-              width={CATEGORY_ICON_SIZE}
-              height={CATEGORY_ICON_SIZE}
-              fill={IOColors.bluegrey}
-            />
+            {c.icon({
+              height: CATEGORY_ICON_SIZE,
+              width: CATEGORY_ICON_SIZE,
+              fill: IOColors.bluegrey
+            })}
             <View hspacer small />
             <H5 weight={"SemiBold"} color={"bluegrey"}>
               {I18n.t(c.nameKey).toLocaleUpperCase()}
