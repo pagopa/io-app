@@ -3,6 +3,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { put } from "redux-saga/effects";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
+
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
@@ -18,7 +19,10 @@ import {
 } from "../../../store/reducers/entities/messages/messagesById";
 import { messagesStatusSelector } from "../../../store/reducers/entities/messages/messagesStatus";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { loadMessages } from "../../startup/watchLoadMessagesSaga";
+
+import { testLoadMessages } from "../watchLoadMessagesSaga";
+
+const loadMessages = testLoadMessages!;
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
@@ -102,7 +106,7 @@ const cachedMessagesAllIds: ReadonlyArray<string> = [
   testMessageId2
 ];
 
-describe("watchLoadMessages", () => {
+describe.only("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       const getMessages = jest.fn();
