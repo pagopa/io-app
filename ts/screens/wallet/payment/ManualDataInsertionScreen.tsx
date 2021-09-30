@@ -10,7 +10,7 @@
 
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { Keyboard, ScrollView, StyleSheet } from "react-native";
+import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Either, isRight } from "fp-ts/lib/Either";
@@ -53,6 +53,8 @@ import {
   alertNoPayablePaymentMethods
 } from "../../../utils/paymentMethod";
 import { H1 } from "../../../components/core/typography/H1";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -151,13 +153,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.continue")
     };
 
-    const secondaryButtonProps = {
-      block: true,
-      cancel: true,
-      onPress: this.props.goBack,
-      title: I18n.t("global.buttons.cancel")
-    };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -165,61 +160,73 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_insert_notice_data"]}
       >
-        <NavigationEvents />
-        <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
-          <Content scrollEnabled={false}>
-            <H1>{I18n.t("wallet.insertManually.title")}</H1>
-            <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <Link onPress={this.showModal}>
-              {I18n.t("wallet.insertManually.link")}
-            </Link>
-            <View spacer />
-            <Form>
-              <LabelledItem
-                isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
-                label={I18n.t("wallet.insertManually.noticeCode")}
-                accessibilityLabel={I18n.t("wallet.insertManually.noticeCode")}
-                inputProps={{
-                  keyboardType: "numeric",
-                  returnKeyType: "done",
-                  maxLength: 18,
-                  onChangeText: value => {
-                    this.setState({
-                      paymentNoticeNumber: some(value)
-                        .filter(NonEmptyString.is)
-                        .map(_ => PaymentNoticeNumberFromString.decode(_))
-                    });
-                  }
-                }}
-              />
+        <SafeAreaView style={IOStyles.flex}>
+          <NavigationEvents />
+          <ScrollView
+            style={styles.whiteBg}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Content scrollEnabled={false}>
+              <H1>{I18n.t("wallet.insertManually.title")}</H1>
+              <Text>{I18n.t("wallet.insertManually.info")}</Text>
+              <Link onPress={this.showModal}>
+                {I18n.t("wallet.insertManually.link")}
+              </Link>
               <View spacer />
-              <LabelledItem
-                isValid={unwrapOptionalEither(
-                  this.state.organizationFiscalCode
-                )}
-                label={I18n.t("wallet.insertManually.entityCode")}
-                accessibilityLabel={I18n.t("wallet.insertManually.entityCode")}
-                inputProps={{
-                  keyboardType: "numeric",
-                  returnKeyType: "done",
-                  maxLength: 11,
-                  onChangeText: value => {
-                    this.setState({
-                      organizationFiscalCode: some(value)
-                        .filter(NonEmptyString.is)
-                        .map(_ => OrganizationFiscalCode.decode(_))
-                    });
-                  }
-                }}
-              />
-            </Form>
-          </Content>
-        </ScrollView>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
+              <Form>
+                <LabelledItem
+                  isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
+                  label={I18n.t("wallet.insertManually.noticeCode")}
+                  accessibilityLabel={I18n.t(
+                    "wallet.insertManually.noticeCode"
+                  )}
+                  inputProps={{
+                    keyboardType: "numeric",
+                    returnKeyType: "done",
+                    maxLength: 18,
+                    onChangeText: value => {
+                      this.setState({
+                        paymentNoticeNumber: some(value)
+                          .filter(NonEmptyString.is)
+                          .map(_ => PaymentNoticeNumberFromString.decode(_))
+                      });
+                    }
+                  }}
+                />
+                <View spacer />
+                <LabelledItem
+                  isValid={unwrapOptionalEither(
+                    this.state.organizationFiscalCode
+                  )}
+                  label={I18n.t("wallet.insertManually.entityCode")}
+                  accessibilityLabel={I18n.t(
+                    "wallet.insertManually.entityCode"
+                  )}
+                  inputProps={{
+                    keyboardType: "numeric",
+                    returnKeyType: "done",
+                    maxLength: 11,
+                    onChangeText: value => {
+                      this.setState({
+                        organizationFiscalCode: some(value)
+                          .filter(NonEmptyString.is)
+                          .map(_ => OrganizationFiscalCode.decode(_))
+                      });
+                    }
+                  }}
+                />
+              </Form>
+            </Content>
+          </ScrollView>
+          <FooterWithButtons
+            type="TwoButtonsInlineHalf"
+            leftButton={cancelButtonProps(
+              this.props.goBack,
+              I18n.t("global.buttons.cancel")
+            )}
+            rightButton={primaryButtonProps}
+          />
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
