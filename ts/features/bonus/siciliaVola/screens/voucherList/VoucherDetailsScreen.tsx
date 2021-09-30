@@ -48,16 +48,18 @@ const styles = StyleSheet.create({
 });
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
+  const { selectedVoucherCode, getVoucherDetail } = props;
+
   useEffect(() => {
-    if (props.selectedVoucherCode !== undefined) {
-      props.getVoucherDetail(props.selectedVoucherCode);
+    if (selectedVoucherCode !== undefined) {
+      getVoucherDetail(selectedVoucherCode);
     }
-  }, []);
+  }, [selectedVoucherCode, getVoucherDetail]);
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
   // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
-    return fromNullable(props.selectedVoucherCode).fold(null, svc => (
+    return fromNullable(selectedVoucherCode).fold(null, svc => (
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
@@ -66,7 +68,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         <LoadingErrorComponent
           isLoading={isLoading(props.selectedVoucher)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={() => props.getVoucherDetail(svc)}
+          onRetry={() => getVoucherDetail(svc)}
         />
       </BaseScreenComponent>
     ));
