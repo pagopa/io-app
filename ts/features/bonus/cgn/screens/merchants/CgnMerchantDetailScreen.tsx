@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View } from "native-base";
 import { connect } from "react-redux";
 import {
@@ -62,10 +62,15 @@ const COPY_ICON_SIZE = 24;
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { merchantDetail } = props;
+  const { merchantDetail, requestMerchantDetail } = props;
+  const merchantID = props.navigation.getParam("merchantID");
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) => (
     <CgnMerchantDiscountItem discount={item} />
   );
+
+  const loadMerchantDetail = useCallback(() => {
+    requestMerchantDetail(merchantID);
+  }, [merchantID, requestMerchantDetail]);
 
   const renderAddressesListItem = ({ item }: ListRenderItemInfo<Address>) => (
     <TouchableDefaultOpacity
@@ -84,11 +89,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
     </TouchableDefaultOpacity>
   );
 
-  const loadMerchantDetail = () => {
-    props.requestMerchantDetail(props.navigation.getParam("merchantID"));
-  };
-
-  useEffect(loadMerchantDetail, []);
+  useEffect(loadMerchantDetail, [loadMerchantDetail]);
 
   return isReady(merchantDetail) ? (
     <BaseScreenComponent

@@ -45,19 +45,17 @@ const AddBancomatScreen: React.FunctionComponent<Props> = (props: Props) => {
     index: 0,
     skip: false
   });
+  const { isAddingReady, onCompleted, cards } = props;
 
   const currentIndex = currentAction.index;
 
   React.useEffect(() => {
     // call onCompleted when the end of pans has been reached
     // and the adding phase has been completed (or it was skipped step)
-    if (
-      currentIndex >= props.cards.length &&
-      (currentAction.skip || props.isAddingReady)
-    ) {
-      props.onCompleted();
+    if (currentIndex >= cards.length && (currentAction.skip || isAddingReady)) {
+      onCompleted();
     }
-  }, [currentAction, props.isAddingReady]);
+  }, [currentAction, isAddingReady, cards, onCompleted, currentIndex]);
 
   const nextPan = (skip: boolean) => {
     const nextIndex = currentIndex + 1;

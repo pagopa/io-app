@@ -11,6 +11,7 @@ import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
+import variables from "../../theme/variables";
 import {
   format,
   formatDateAsDay,
@@ -23,7 +24,6 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
-import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
 import CalendarIconComponent from "./CalendarIconComponent";
@@ -203,7 +203,7 @@ const getNoticePaid = () => (
   <View style={styles.messagePaidBg}>
     <IconFont name="io-complete" color={IOColors.bluegreyDark} />
     <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
-      {I18n.t("wallet.errors.PAYMENT_DUPLICATED")}
+      {I18n.t("wallet.errors.DUPLICATED")}
     </Text>
   </View>
 );

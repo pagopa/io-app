@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { StatusEnum } from "../../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeService";
@@ -31,16 +31,22 @@ const trackOutput = (screenState: StartScreenState, abi?: string) =>
  * @param props
  */
 const CoBadgeStartComponent = (props: Props): React.ReactElement => {
+  const { loadAbiConfig, maybeAbiSelected } = props;
+  const firstLoading = useRef(true);
+  // If a single ABI is selected, we should check the abiConfiguration
+  useEffect(() => {
+    if (maybeAbiSelected !== undefined && firstLoading.current) {
+      loadAbiConfig();
+      // eslint-disable-next-line functional/immutable-data
+      firstLoading.current = false;
+    }
+  }, [loadAbiConfig, maybeAbiSelected]);
+
   // All ABI selected
   if (props.maybeAbiSelected === undefined) {
     void trackOutput("All");
     return <CoBadgeChosenBankScreen testID={"CoBadgeChosenBankScreenAll"} />;
   }
-
-  // If a single ABI is selected, we should check the abiConfiguration
-  useEffect(() => {
-    props.loadAbiConfig();
-  }, []);
 
   // The ABI configuration is loading
   if (props.abiSelectedConfiguration.kind !== "PotSome") {

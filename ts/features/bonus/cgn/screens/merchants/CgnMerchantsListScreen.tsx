@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
 import { Item, View } from "native-base";
@@ -107,14 +107,21 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   React.useEffect(() => {
     debounceRef.current(searchValue, merchantsAll);
-  }, [searchValue, props.onlineMerchants, props.offlineMerchants]);
+  }, [
+    searchValue,
+    props.onlineMerchants,
+    props.offlineMerchants,
+    merchantsAll
+  ]);
 
-  const initLoadingLists = () => {
-    props.requestOfflineMerchants();
-    props.requestOnlineMerchants();
-  };
+  const { requestOfflineMerchants, requestOnlineMerchants } = props;
 
-  React.useEffect(initLoadingLists, []);
+  const initLoadingLists = useCallback(() => {
+    requestOfflineMerchants();
+    requestOnlineMerchants();
+  }, [requestOfflineMerchants, requestOnlineMerchants]);
+
+  React.useEffect(initLoadingLists, [initLoadingLists]);
 
   const onItemPress = (id: Merchant["id"]) => {
     props.navigateToMerchantDetail(id);

@@ -74,15 +74,17 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
     return true;
   };
 
+  const { profile, loadMunicipality } = props;
+
   // Decode codice catastale effect manager
   useEffect(() => {
-    if (props.profile !== undefined) {
+    if (profile !== undefined) {
       const maybeCodiceCatastale = CodiceCatastale.decode(
-        props.profile.fiscal_code.substring(11, 15)
+        profile.fiscal_code.substring(11, 15)
       );
-      maybeCodiceCatastale.map(code => props.loadMunicipality(code));
+      maybeCodiceCatastale.map(code => loadMunicipality(code));
     }
-  }, [props.profile]);
+  }, [profile, loadMunicipality]);
 
   const showModal = (showBackSide: boolean = false) => {
     if (props.profile) {
