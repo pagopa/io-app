@@ -167,9 +167,11 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                     "bonus.sv.voucherGeneration.summary.fields.residence.label"
                   )}
                 </H4>
-
-                <H4 style={{ paddingRight: 10, paddingLeft: 10 }}>
-                  {mapCategory[voucherRequest.category]}
+                <View hspacer small />
+                <H4 style={{ flexShrink: 1 }}>
+                  {I18n.t(
+                    "bonus.sv.voucherGeneration.summary.fields.residence.value"
+                  )}
                 </H4>
               </View>
               <View
@@ -184,8 +186,9 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                   )}
                 </H4>
                 <View hspacer small />
-
-                <H4>{mapCategory[voucherRequest.category]}</H4>
+                <H4 style={{ flexShrink: 1 }}>
+                  {mapCategory[voucherRequest.category]}
+                </H4>
               </View>
             </View>
           </View>
@@ -224,7 +227,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                   )}
                 </H4>
                 {destinations.map(d => (
-                  <H4>{mapCategory[voucherRequest.category]}</H4>
+                  <H4>{d}</H4>
                 ))}
               </View>
             </View>
