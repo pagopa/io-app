@@ -128,7 +128,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
             <H4 weight={"Regular"}>
               {I18n.t("bonus.sv.voucherList.details.fields.beneficiary")}
             </H4>
-            <H4>{selectedVoucher.beneficiary}</H4>
+            <View hspacer />
+            <H4 style={{ flexShrink: 1 }}>{selectedVoucher.beneficiary}</H4>
           </View>
           <View style={styles.itemRow}>
             <H4 weight={"Regular"}>
@@ -148,7 +149,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           {fromVoucherToDestinationLabels(selectedVoucher).map(d => (
             <View style={styles.itemRow} key={d.value}>
               <H4 weight={"Regular"}>{d.label}</H4>
-              <H4>{d.value}</H4>
+              <View hspacer />
+              <H4 style={{ flexShrink: 1 }}>{d.value}</H4>
             </View>
           ))}
           <View style={styles.itemRow}>
