@@ -106,7 +106,7 @@ const cachedMessagesAllIds: ReadonlyArray<string> = [
   testMessageId2
 ];
 
-describe.only("watchLoadMessages", () => {
+describe("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
       const getMessages = jest.fn();
