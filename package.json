@@ -166,7 +166,7 @@
     "semver": "^5.7.0",
     "sha.js": "^2.4.11",
     "tslib": "^1.9.3",
-    "typesafe-actions": "^4.0.0",
+    "typesafe-actions": "4.4.2",
     "url-parse": "^1.4.7",
     "uuid": "^8.3.2",
     "validator": "^10.7.0",
