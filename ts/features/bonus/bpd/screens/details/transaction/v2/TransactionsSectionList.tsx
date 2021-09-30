@@ -114,19 +114,21 @@ const TransactionsHeader = (
 ) => (
   <View style={IOStyles.horizontalContentPadding}>
     <View spacer={true} />
-    {props.selectedPeriod && pot.isSome(props.maybeLastUpdateDate) && (
-      <>
-        <BpdTransactionSummaryComponent
-          lastUpdateDate={localeDateFormat(
-            props.maybeLastUpdateDate.value,
-            I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-          )}
-          period={props.selectedPeriod}
-          totalAmount={props.selectedPeriod.amount}
-        />
-        <View spacer={true} />
-      </>
-    )}
+    {props.selectedPeriod &&
+      pot.isSome(props.maybeLastUpdateDate) &&
+      props.selectedPeriod.amount.transactionNumber > 0 && (
+        <>
+          <BpdTransactionSummaryComponent
+            lastUpdateDate={localeDateFormat(
+              props.maybeLastUpdateDate.value,
+              I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+            )}
+            period={props.selectedPeriod}
+            totalAmount={props.selectedPeriod.amount}
+          />
+          <View spacer={true} />
+        </>
+      )}
   </View>
 );
 
