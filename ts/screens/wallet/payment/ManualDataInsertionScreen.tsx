@@ -8,14 +8,13 @@
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  */
 
-import { Content, Form, H1, Text, View } from "native-base";
+import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { isRight } from "fp-ts/lib/Either";
+import { Either, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
-import { Either } from "fp-ts/lib/Either";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -53,6 +52,7 @@ import {
   alertNoActivePayablePaymentMethods,
   alertNoPayablePaymentMethods
 } from "../../../utils/paymentMethod";
+import { H1 } from "../../../components/core/typography/H1";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -178,6 +178,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <LabelledItem
                 isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
                 label={I18n.t("wallet.insertManually.noticeCode")}
+                accessibilityLabel={I18n.t("wallet.insertManually.noticeCode")}
                 inputProps={{
                   keyboardType: "numeric",
                   returnKeyType: "done",
@@ -197,6 +198,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   this.state.organizationFiscalCode
                 )}
                 label={I18n.t("wallet.insertManually.entityCode")}
+                accessibilityLabel={I18n.t("wallet.insertManually.entityCode")}
                 inputProps={{
                   keyboardType: "numeric",
                   returnKeyType: "done",
