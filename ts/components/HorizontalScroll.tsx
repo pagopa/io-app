@@ -60,9 +60,10 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
     (props.indexToScroll ?? 0) * Dimensions.get("window").width;
   const animVal = new Animated.Value(scrollOffset);
   const scrollRef = React.useRef<ScrollView>(null);
+  const { indexToScroll } = props;
 
   React.useEffect(() => {
-    fromNullable(props.indexToScroll).map(_ =>
+    fromNullable(indexToScroll).map(_ =>
       setTimeout(() => {
         if (scrollRef.current) {
           scrollRef.current.scrollTo({
@@ -73,7 +74,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         }
       }, 0)
     );
-  }, [scrollRef]);
+  }, [scrollRef, scrollOffset, indexToScroll]);
 
   const barArray = props.cards.map((_, i) => {
     const scrollBarVal = animVal.interpolate({

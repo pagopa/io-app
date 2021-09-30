@@ -805,9 +805,9 @@ wallet:
           cancel: Abbrechen
     contextualHelpTitle: Wie man eine Zahlungsmitteilung bezahlt
   errors:
-    PAYMENT_DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
+    DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
     INVALID_AMOUNT: Der eingegebene Betrag ist nicht korrekt. Wenn Sie den Betrag manuell eingegeben haben, überprüfen Sie bitte, ob er korrekt ist und versuchen Sie es erneut.
-    PAYMENT_ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
+    ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
     PAYMENT_EXPIRED: Diese Zahlungsmitteilung ist bereits ungültig und kann nicht mehr bezahlt werden.
     PAYMENT_UNAVAILABLE: Ihr Zahlungsversuch für diese Zahlungsmitteilung kann derzeit nicht gestartet werden, bitte versuchen Sie es später erneut.
     PAYMENT_UNKNOWN: Diese Zahlungsmitteilung wird von der Körperschaft, die sie erstellt hat, nicht anerkannt, die Zahlung kann nicht ausgeführt werden.
@@ -920,7 +920,7 @@ messages:
   deadlines:
     emptyMessage:
       title: Sie haben keine Fälligkeiten.
-      subtitle:  Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen. 
+      subtitle: Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen.
   medical:
     not_available: "n/v"
     prescription: Elektronische Verschreibung

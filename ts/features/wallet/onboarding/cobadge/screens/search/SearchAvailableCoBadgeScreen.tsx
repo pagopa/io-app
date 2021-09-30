@@ -12,7 +12,7 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
-import { avoidHardwareBackButton } from "../../../../../../utils/avoidHardwareBackButton";
+import { useAvoidHardwareBackButton } from "../../../../../../utils/useAvoidHardwareBackButton";
 import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserCoBadge } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
@@ -96,11 +96,12 @@ const CobadgePayloadRight = (p: {
 const SearchAvailableCoBadgeScreen = (
   props: Props
 ): React.ReactElement | null => {
+  const { search, abiSelected } = props;
   useEffect(() => {
-    props.search(props.abiSelected);
-  }, []);
+    search(abiSelected);
+  }, [search, abiSelected]);
 
-  avoidHardwareBackButton();
+  useAvoidHardwareBackButton();
 
   const coBadgeFound = props.coBadgeFound;
 

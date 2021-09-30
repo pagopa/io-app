@@ -36,13 +36,15 @@ export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
   | r.IResponseType<500, undefined>
 >;
 
+const cursorToQueryString = (cursor: number) => `&nextCursor=${cursor}`;
+
 export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT = {
   method: "get",
   url: ({ awardPeriodId, nextCursor }) =>
     `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
       nextCursor
     )
-      .map(c => `&nextCursor=${c}`)
+      .map(cursorToQueryString)
       .getOrElse("")}`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),
