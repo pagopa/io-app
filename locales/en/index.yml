@@ -2681,11 +2681,36 @@ bonus:
         subtitle: "Search to see your used or expired codes or request a new code"
         cta: "Generate a new code"
       error: "We are unable to recover your vouchers, please try again."
+      details:
+        title: "Your discount code"
+        fields:
+          uniqueCode: "Unique code"
+          beneficiary: "Beneficiary"
+          residence:
+            label: "Residence"
+            value: "Sicily"
+          category: "Category"
+          flightDate: "Flight date"
+          possibleDestination: "Possible destinations"
+        cta:
+          voucherRevocation: "Voucher revocation"
+          openQr: "Open QR code"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"
         qrCode: "QR Code"
         barCode: "Bar Code"
+      destinationLabels:
+        universityName: "University name"
+        companyName: "Company name"
+        hospitalName: "Hospital or professional name"
+        municipality: "Municipality"
+      voucherBottomsheet:
+        title: "Sicilia Vola discount code"
+        cta:
+          exit: "Exit"
+          voucherRevocation: "Voucher revocation"
+
 features:
   euCovidCertificate:
     save:
