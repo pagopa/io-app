@@ -33,7 +33,6 @@ import { formatDateAsLocal } from "../../../../../utils/dates";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { openWebUrl } from "../../../../../utils/url";
 import { Link } from "../../../../../components/core/typography/Link";
-import themeVariables from "../../../../../theme/variables";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -52,10 +51,14 @@ const mapCategory: Record<SvBeneficiaryCategory, string> = {
 };
 
 const styles = StyleSheet.create({
-  ring: {
-    position: "absolute",
-    borderWidth: 2,
-    borderColor: themeVariables.brandPrimary
+  borderedContainer: {
+    borderLeftWidth: 2,
+    borderLeftColor: IOColors.greyLight,
+    paddingLeft: 10
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row"
   }
 });
 
@@ -130,7 +133,11 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
 
   const destinations: ReadonlyArray<string> =
     voucherRequest.category === "disabled"
-      ? ["Tutte"]
+      ? [
+          I18n.t(
+            "bonus.sv.voucherGeneration.summary.fields.flightDate.disabled"
+          )
+        ]
       : isReady(availableDestinations)
       ? availableDestinations.value
       : [];
@@ -153,15 +160,9 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.normal2")}
           </H4>
           <View spacer />
-          <View
-            style={{
-              borderLeftWidth: 2,
-              borderLeftColor: IOColors.greyLight,
-              paddingLeft: 10
-            }}
-          >
+          <View style={styles.borderedContainer}>
             <View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={styles.row}>
                 <H4 weight={"Regular"}>
                   {I18n.t(
                     "bonus.sv.voucherGeneration.summary.fields.residence.label"
@@ -174,12 +175,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                   )}
                 </H4>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row"
-                }}
-              >
+              <View style={styles.row}>
                 <H4 weight={"Regular"}>
                   {I18n.t(
                     "bonus.sv.voucherGeneration.summary.fields.category.label"
@@ -199,20 +195,12 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
           </H4>
 
           <View spacer />
-          <View
-            style={{
-              borderLeftWidth: 2,
-              borderLeftColor: IOColors.greyLight,
-              flex: 1,
-              flexDirection: "row"
-            }}
-          >
-            <View hspacer />
+          <View style={styles.borderedContainer}>
             <View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={styles.row}>
                 <H4 weight={"Regular"}>
                   {I18n.t(
-                    "bonus.sv.voucherGeneration.summary.fields.flightDate"
+                    "bonus.sv.voucherGeneration.summary.fields.flightDate.label"
                   )}
                 </H4>
                 <View hspacer small />

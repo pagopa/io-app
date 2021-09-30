@@ -2657,7 +2657,9 @@ bonus:
               student: "Off-site student"
               worker: "Employee with a workplace outside Sicily"
               sick: "Patient in need of treatment outside the Sicily region"
-          flightDate: "Flight date:"
+          flightDate:
+            label: "Flight date:"
+            disabled: "All"
           availableDestination: "Possible destinations:"
       voucherGenerated:
         title: "Here is your discount code"

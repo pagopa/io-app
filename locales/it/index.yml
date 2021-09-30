@@ -2685,7 +2685,9 @@ bonus:
               student: "Studente fuori sede"
               worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
               sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
-          flightDate: "Data del volo:"
+          flightDate:
+            label: "Data del volo:"
+            disabled: "Tutte"
           availableDestination: "Possibili destinazioni:"
       voucherGenerated:
         title: "Ecco il tuo codice sconto"
