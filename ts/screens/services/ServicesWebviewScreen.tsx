@@ -43,6 +43,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
     CookieManager.clearAll().catch(_ => setCookieError(true));
   };
 
+  // TODO: rewrite this hook following all the hooks rules
   React.useEffect(() => {
     const { navigationParams, token } = props;
     // if params can't be decoded or the service has not a valid token name in its metadata (token is none)

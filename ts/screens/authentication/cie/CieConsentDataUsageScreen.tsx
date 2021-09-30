@@ -158,6 +158,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     } else {
       return (
         <WebView
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
           textZoom={100}
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}

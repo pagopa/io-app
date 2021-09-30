@@ -48,16 +48,18 @@ const styles = StyleSheet.create({
 });
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
+  const { selectedVoucherCode, getVoucherDetail } = props;
+
   useEffect(() => {
-    if (props.selectedVoucherCode !== undefined) {
-      props.getVoucherDetail(props.selectedVoucherCode);
+    if (selectedVoucherCode !== undefined) {
+      getVoucherDetail(selectedVoucherCode);
     }
-  }, []);
+  }, [selectedVoucherCode, getVoucherDetail]);
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
   // The selectedVoucherCode can't be undefined in this screen
   if (!isReady(props.selectedVoucher)) {
-    return fromNullable(props.selectedVoucherCode).fold(null, svc => (
+    return fromNullable(selectedVoucherCode).fold(null, svc => (
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
@@ -66,7 +68,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         <LoadingErrorComponent
           isLoading={isLoading(props.selectedVoucher)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
-          onRetry={() => props.getVoucherDetail(svc)}
+          onRetry={() => getVoucherDetail(svc)}
         />
       </BaseScreenComponent>
     ));
@@ -78,7 +80,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <VoucherDetailBottomSheet
         barCode={selectedVoucher.barCode}
         qrCode={selectedVoucher.qrCode}
-        onExit={() => dismiss()}
+        onExit={dismiss}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
@@ -94,11 +96,11 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   const openQrButtonProps = {
     primary: true,
     bordered: false,
-    onPress: () => openBottomSheet(),
+    onPress: openBottomSheet,
     title: I18n.t("bonus.sv.voucherList.details.cta.openQr")
   };
 
-  const voucherId = selectedVoucher.id ? selectedVoucher.id.toString() : "";
+  const voucherId = selectedVoucher.id?.toString() ?? "";
 
   return (
     <BaseScreenComponent
@@ -128,7 +130,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
             <H4 weight={"Regular"}>
               {I18n.t("bonus.sv.voucherList.details.fields.beneficiary")}
             </H4>
-            <H4>{selectedVoucher.beneficiary}</H4>
+            <View hspacer />
+            <H4 style={{ flexShrink: 1 }}>{selectedVoucher.beneficiary}</H4>
           </View>
           <View style={styles.itemRow}>
             <H4 weight={"Regular"}>
@@ -148,7 +151,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           {fromVoucherToDestinationLabels(selectedVoucher).map(d => (
             <View style={styles.itemRow} key={d.value}>
               <H4 weight={"Regular"}>{d.label}</H4>
-              <H4>{d.value}</H4>
+              <View hspacer />
+              <H4 style={{ flexShrink: 1 }}>{d.value}</H4>
             </View>
           ))}
           <View style={styles.itemRow}>

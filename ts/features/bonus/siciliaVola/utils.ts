@@ -45,8 +45,9 @@ export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
           value: voucher.hospital.municipality.name
         }
       ];
+    case "disabled":
+      return [];
   }
-  return [];
 };
 
 const isStudentVoucherRequest = (

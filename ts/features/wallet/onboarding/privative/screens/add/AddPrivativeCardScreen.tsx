@@ -38,11 +38,12 @@ const UnexpectedValueFailure = (props: Props) => {
  * @constructor
  */
 const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
+  const { addingResult, complete } = props;
   useEffect(() => {
-    if (isReady(props.addingResult)) {
-      props.complete();
+    if (isReady(addingResult)) {
+      complete();
     }
-  }, [props.addingResult]);
+  }, [addingResult, complete]);
 
   const addToWallet = () => props.foundPrivative.map(p => props.addToWallet(p));
   const loadErrorAddPrivativeCard = (isLoading: boolean) => (
