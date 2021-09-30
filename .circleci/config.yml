@@ -337,7 +337,7 @@ jobs:
 
   pagopa_specs_diff:
     docker:
-      - image: cimg/node:12.22
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
