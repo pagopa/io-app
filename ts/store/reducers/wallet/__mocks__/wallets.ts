@@ -1,17 +1,21 @@
 // 2 bancomat, 1 credit card. All compliant with pagoPa
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/WalletV2";
 import {
-  EnableableFunctionsTypeEnum,
   PrivativePaymentMethod,
   RawBPayPaymentMethod
 } from "../../../../types/pagopa";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 
 export const walletsV2_1 = {
   data: [
     {
       walletType: "Bancomat",
       createDate: "2021-08-28",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 23190,
       info: {
@@ -35,7 +39,11 @@ export const walletsV2_1 = {
     {
       walletType: "Bancomat",
       createDate: "2021-07-22",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 29371,
       info: {
@@ -59,7 +67,11 @@ export const walletsV2_1 = {
     {
       walletType: "Card",
       createDate: "2020-12-28",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 23216,
       info: {
@@ -88,7 +100,11 @@ export const walletsV2_2 = {
     {
       walletType: "Bancomat",
       createDate: "2021-08-28",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 23190,
       info: {
@@ -112,7 +128,11 @@ export const walletsV2_2 = {
     {
       walletType: "Card",
       createDate: "2020-12-28",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 23216,
       info: {
@@ -142,7 +162,11 @@ export const walletsV2_3 = {
     {
       walletType: "Bancomat",
       createDate: "2021-10-22",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 20341,
       info: {
@@ -166,7 +190,11 @@ export const walletsV2_3 = {
     {
       walletType: "Card",
       createDate: "2021-04-15",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 21750,
       info: {
@@ -190,7 +218,11 @@ export const walletsV2_3 = {
     {
       walletType: "Satispay",
       createDate: "2021-11-16",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 25924,
       info: {
@@ -205,7 +237,11 @@ export const walletsV2_3 = {
     {
       walletType: "BPay",
       createDate: "2021-07-08",
-      enableableFunctions: ["FA", "pagoPA", "BPD"],
+      enableableFunctions: [
+        EnableableFunctionsEnum.FA,
+        EnableableFunctionsEnum.pagoPA,
+        EnableableFunctionsEnum.BPD
+      ],
       favourite: false,
       idWallet: 25572,
       info: {
@@ -227,9 +263,9 @@ export const rawBPay: RawBPayPaymentMethod = {
   walletType: WalletTypeEnum.BPay,
   createDate: "2021-07-08",
   enableableFunctions: [
-    EnableableFunctionsTypeEnum.FA,
-    EnableableFunctionsTypeEnum.pagoPA,
-    EnableableFunctionsTypeEnum.BPD
+    EnableableFunctionsEnum.FA,
+    EnableableFunctionsEnum.pagoPA,
+    EnableableFunctionsEnum.BPD
   ],
   favourite: false,
   idWallet: 1,
@@ -250,7 +286,11 @@ export const rawBPay: RawBPayPaymentMethod = {
 export const mockPrivativeCard: PrivativePaymentMethod = {
   walletType: "Card",
   createDate: "2021-07-08",
-  enableableFunctions: ["FA", "pagoPA", "BPD"],
+  enableableFunctions: [
+    EnableableFunctionsEnum.FA,
+    EnableableFunctionsEnum.pagoPA,
+    EnableableFunctionsEnum.BPD
+  ],
   favourite: false,
   idWallet: 25572,
   info: {

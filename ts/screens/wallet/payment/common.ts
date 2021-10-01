@@ -41,7 +41,11 @@ export const dispatchUpdatePspForWalletAndConfirm = (dispatch: Dispatch) => (
       wallet,
       onSuccess: (
         action: ActionType<typeof paymentUpdateWalletPsp["success"]>
-      ) =>
+      ) => {
+        const psp = action.payload.updatedWallet.psp;
+        if (psp !== undefined) {
+          dispatch(paymentFetchPspsForPaymentId.success([psp]));
+        }
         dispatch(
           navigateToPaymentConfirmPaymentMethodScreen({
             rptId,
@@ -51,7 +55,8 @@ export const dispatchUpdatePspForWalletAndConfirm = (dispatch: Dispatch) => (
             wallet: action.payload.updatedWallet, // the updated wallet
             psps
           })
-        ),
+        );
+      },
       onFailure
     })
   );

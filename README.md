@@ -52,7 +52,7 @@
   - [Io-Icon-Font](#io-icon-font)
   - [Theming](#theming)
   - [Custom UI components](#custom-ui-components)
-  - [End to end test with Detox (experimental)](#end-to-end-test-with-detox-experimental)
+  - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
 ## FAQ
@@ -113,7 +113,8 @@ Because different platforms have different types of Permissions below we have tw
 | WRITE_CALENDAR                   | Allows an application to write the user's calendar data. Used to automatically set reminders.                                                               |
 | READ_EXTERNAL_STORAGE            | Allows an application to read from external storage. Used to pick images from gallery with payment QRCode.                                                                   |
 | WRITE_EXTERNAL_STORAGE           | Allows an application to write to external storage. Used to store images, e.g.: save bonus information (QRCode for Bonus Vacanze or EuCovid Certificate, etc.)                                                                 |
-| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification                                                 |
+| USE_FINGERPRINT                  | Allows an app to use fingerprint hardware for biometric identification required from API level 23 until API level 28                                                |
+| USE_BIOMETRIC                    | Allows an app to use device's available biometric identification system (Face unlock, Iris unlock, Fingerprint) required from API Level 28                                                 |
 
 Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
 
@@ -670,32 +671,6 @@ Example of use:
 
 To change the wrapper, icon or text theme, edit the `ts/theme/components/TextWithIcon.ts` file.
 
-### End to end test with Detox (experimental)
-
-For integration tests on simulators we use [Detox](https://github.com/wix/detox).
-
-End to end tests are found in [ts/__e2e__/](ts/__e2e__/).
-
-To compile the app in preparation for the test:
-
-```
-$ detox build
-```
-
-(optional) Launch the iOS simulator (with [ios-sim](https://www.npmjs.com/package/ios-sim) for convenience):
-
-```
-$ ios-sim start --devicetypeid "iPhone-6, 10.2"
-```
-
-In case you do not launch the simulator, Detox will launch one in the background.
-
-Launch of the tests:
-
-```
-$ detox test
-```
-
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
 ### Troubleshooting
@@ -709,4 +684,4 @@ If you get an error like this `Can't find gem bundler (>= 0.a) with executable b
 If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
 1. Open the project io-app/ios with Xcode
 1. Select the library (es. RNTextInputMask) in 'Libraries'
-1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0 
+1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0

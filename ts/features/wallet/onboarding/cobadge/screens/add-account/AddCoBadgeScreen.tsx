@@ -46,18 +46,20 @@ const AddCoBadgeScreen = (props: Props): React.ReactElement | null => {
     skip: false
   });
 
+  const { coBadgeList, isAddingReady, onCompleted } = props;
+
   const currentIndex = currentAction.index;
 
   React.useEffect(() => {
     // call onCompleted when the end of co-badge list has been reached
     // and the adding phase has been completed (or it was skipped step)
     if (
-      currentIndex >= props.coBadgeList.length &&
-      (currentAction.skip || props.isAddingReady)
+      currentIndex >= coBadgeList.length &&
+      (currentAction.skip || isAddingReady)
     ) {
-      props.onCompleted();
+      onCompleted();
     }
-  }, [currentAction, props.isAddingReady]);
+  }, [currentAction, coBadgeList, isAddingReady, onCompleted, currentIndex]);
 
   const nextPan = (skip: boolean) => {
     const nextIndex = currentIndex + 1;

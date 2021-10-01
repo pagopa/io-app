@@ -9,7 +9,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
-import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
+import { Detail_v2Enum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
 import {

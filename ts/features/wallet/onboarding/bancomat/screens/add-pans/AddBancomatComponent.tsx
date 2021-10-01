@@ -44,13 +44,12 @@ const styles = StyleSheet.create({
 
 const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
+  const { pan, abiList } = props;
 
   React.useEffect(() => {
-    const abi: Abi | undefined = props.abiList.find(
-      elem => elem.abi === props.pan.abi
-    );
+    const abi: Abi | undefined = abiList.find(elem => elem.abi === pan.abi);
     setAbiInfo(abi ?? {});
-  }, [props.pan.abi]);
+  }, [pan, abiList]);
 
   return (
     <BaseScreenComponent

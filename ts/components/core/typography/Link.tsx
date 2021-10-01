@@ -2,7 +2,7 @@ import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
-import { typographyFactory } from "./Factory";
+import { useTypographyFactory } from "./Factory";
 
 type AllowedColors = Extract<IOColorType, "blue" | "white">;
 type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Bold">;
@@ -21,7 +21,7 @@ const fontSize = 16;
  * @constructor
  */
 export const Link: React.FunctionComponent<OwnProps> = props =>
-  typographyFactory<AllowedWeight, AllowedColors>({
+  useTypographyFactory<AllowedWeight, AllowedColors>({
     accessibilityRole: props.onPress ? "link" : undefined,
     ...props,
     defaultWeight: "SemiBold",

@@ -44,6 +44,7 @@ import {
   FlashAnimationState
 } from "../../components/FlashAnimatedComponent";
 import { euCovidCertCurrentSelector } from "../../store/reducers/current";
+import { withBase64Uri } from "../../../../utils/image";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -107,7 +108,7 @@ const EuCovidCertValidComponent = (
         >
           <Image
             source={{
-              uri: `data:image/png;base64,${props.validCertificate.qrCode.content}`
+              uri: withBase64Uri(props.validCertificate.qrCode.content, "png")
             }}
             style={styles.qrCode}
             onError={() => {

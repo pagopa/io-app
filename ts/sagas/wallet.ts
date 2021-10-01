@@ -154,7 +154,6 @@ import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcome
 import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
-  EnableableFunctionsTypeEnum,
   isRawCreditCard,
   NullableWallet,
   PaymentManagerToken
@@ -191,6 +190,7 @@ import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -340,7 +340,7 @@ function* startOrResumeAddCreditCardSaga(
                   );
                   const hasBpdFeature = hasFunctionEnabled(
                     maybeAddedWallet.paymentMethod,
-                    EnableableFunctionsTypeEnum.BPD
+                    EnableableFunctionsEnum.BPD
                   );
                   // if the method is bpd compliant check if we have info about bpd activation
                   if (hasBpdFeature && pot.isSome(bpdEnroll)) {

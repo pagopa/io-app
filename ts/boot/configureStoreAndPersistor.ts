@@ -391,4 +391,4 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   return { store, persistor };
 }
 
-export default configureStoreAndPersistor;
+export const { store, persistor } = configureStoreAndPersistor();

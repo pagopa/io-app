@@ -4,7 +4,6 @@ import { myPortalEnabled, svEnabled } from "../config";
 import ServiceDetailsScreen from "../screens/services/ServiceDetailsScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import ServicesWebviewScreen from "../screens/services/ServicesWebviewScreen";
-import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import SvNavigator from "../features/bonus/siciliaVola/navigation/navigator";
 import ROUTES from "./routes";
 
@@ -25,13 +24,7 @@ const myPortalRoutes = myPortalEnabled
     }
   : {};
 
-const svConfigMap = svEnabled
-  ? {
-      [SV_ROUTES.MAIN]: {
-        screen: SvNavigator
-      }
-    }
-  : {};
+const svConfigMap = svEnabled ? SvNavigator : {};
 
 const routeConfig = { ...servicesRoutes, ...myPortalRoutes, ...svConfigMap };
 

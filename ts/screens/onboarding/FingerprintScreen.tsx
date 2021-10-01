@@ -8,21 +8,45 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
 import { Dispatch } from "../../store/actions/types";
+import { BiometricsValidType } from "../../utils/biometrics";
 
 type NavigationParams = Readonly<{
-  biometryType: BiometrySimpleType;
+  biometryType: BiometricsValidType;
 }>;
 
-export type BiometryPrintableSimpleType =
-  | "FINGERPRINT"
-  | "TOUCH_ID"
-  | "FACE_ID";
+/**
+ * Print the only BiometrySimplePrintableType values that are passed to the UI
+ */
+function localizeBiometricsType(
+  biometryPrintableSimpleType: BiometricsValidType
+): string {
+  switch (biometryPrintableSimpleType) {
+    case "BIOMETRICS":
+      return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
+    case "FACE_ID":
+      return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
+    case "TOUCH_ID":
+      return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
+  }
+}
+
+/**
+ * Print the icon according to current biometry status
+ */
+function getBiometryIconName(biometryType: BiometricsValidType): string {
+  switch (biometryType) {
+    case "FACE_ID":
+      return "io-face-id";
+    case "BIOMETRICS":
+    case "TOUCH_ID":
+      return "io-fingerprint";
+  }
+}
 
 type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
@@ -37,39 +61,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 class FingerprintScreen extends React.PureComponent<Props> {
-  /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
-   */
-  private renderBiometryType(
-    biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): string {
-    switch (biometryPrintableSimpleType) {
-      case "FINGERPRINT":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.fingerprint");
-      case "FACE_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
-      case "TOUCH_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
-    }
-  }
-
-  /**
-   * Print the icon according to current biometry status
-   * @param biometrySimplePrintableType
-   */
-  private getBiometryIconName(biometryType: BiometrySimpleType) {
-    switch (biometryType) {
-      case "FACE_ID":
-        return "io-face-id";
-      case "FINGERPRINT":
-      case "TOUCH_ID":
-      case "NOT_ENROLLED":
-      case "UNAVAILABLE":
-        return "io-fingerprint";
-    }
-  }
-
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -99,17 +90,13 @@ class FingerprintScreen extends React.PureComponent<Props> {
       >
         <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
-          iconFont={{ name: this.getBiometryIconName(biometryType) }}
+          iconFont={{ name: getBiometryIconName(biometryType) }}
         />
         <Content>
           <Text>
-            {biometryType !== "NOT_ENROLLED"
-              ? I18n.t("onboarding.fingerprint.body.enrolledText", {
-                  biometryType: this.renderBiometryType(
-                    biometryType as BiometryPrintableSimpleType
-                  )
-                })
-              : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
+            {I18n.t("onboarding.fingerprint.body.enrolledText", {
+              biometryType: localizeBiometricsType(biometryType)
+            })}
           </Text>
         </Content>
         <FooterWithButtons

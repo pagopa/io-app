@@ -160,6 +160,7 @@ global:
     update: "Update"
     findOutMore: "Find out more"
     details: "Details"
+    choose: "Scegli"
   navigator:
     messages: messages
     wallet: wallet
@@ -220,6 +221,13 @@ exit:
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
+permissionRationale:
+  storage:
+    title: "Allow gallery access"
+    message: "You’ll be able to save bonuses, certificates and upload screenshots or payment notices."
+  camera:
+    title: "Allow camera access"
+    message: "You’ll be able to read QR codes and pay pagoPA notices."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -238,7 +246,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
+  expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -397,7 +405,7 @@ profile:
           confirmToast: "Preferences updated!"
         alert:
           title: "You are not giving IO consent to collect your usage data"
-          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
         whyBottomSheet:
           title: "For what purposes do we collect information?"
           body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
@@ -597,8 +605,8 @@ authentication:
       titleiOS: Please try again
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Hold your electronic ID card on the back of the iPhone, at the top.
-      layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
+      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
@@ -827,7 +835,7 @@ payment:
     info:
       buttons:
         copy: copy
-        help: Contact support
+        help: Get support
       title: Payment Detail
       enteCreditore: Payee institution
       causaleVersamento: Payment description
@@ -1080,18 +1088,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    bancomat:
-      successful: Bancomat successfully removed
-      failed: The bancomat could not be removed
-    satispay:
-      successful: Satispay successfully removed
-      failed: Satispay could not be removed
-    bPay:
-      successful: BancomatPay successfully removed
-      failed: BancomatPay could not be removed
-    successful: Payment method successfully removed
-    failed: The payment method could not be removed
-    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
+    successful: Method removed from your Wallet
+    failed: The method could not be removed from your Wallet
   newPaymentMethod:
     add: add
     show: show
@@ -1363,9 +1361,6 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
-    cameraUsagePermissionInfobox:
-      title: "IO Camera usage permission"
-      message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1378,19 +1373,28 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid!
+    TECHNICAL: Sorry, a technical problem has occurred with this notice
+    DATA: Sorry, the payment information is incorrect
+    EC: Sorry, Payee is having problems in responding
+    ONGOING: This payment is still ongoing, please try again in a few minutes
+    ONGOING_SUBTITLE: If it has been too long, please let us know!
+    REVOKED: Sorry, the Payee has revoked this notice
+    EXPIRED: Sorry, the notice has expired, it is not possible to pay it
+    GENERIC_ERROR: Sorry, an unexpected error has occurred
+    GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
+    DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
     DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the pagoPA network, the payment cannot be started.
-    GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
     MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
     PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
+    contactECsubtitle: Contact the Institution for more information.
+    assistanceLabel: "Use this code to get support:"
     sendReport: Send report
     loadingData: loading failure, try again.
   walletCardTransaction:
@@ -1406,8 +1410,6 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
-      removeCta: "Delete this payment method"
-      deleteLoading: Payment method deletion in progress
   satispay:
     details:
       infobox:
@@ -1419,8 +1421,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this payment method?"
-    body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this method?"
+    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1475,7 +1477,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
-  deleteLoading: Payment method deletion in progress
+  deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1742,9 +1744,7 @@ identification:
     popup:
       reason: Identification by touch ID failed
       title: Identification required
-      sensorDescription: Touch sensor
-      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
-      fallbackLabel: Use the unlock code
+      sensorDescription: Login quickly
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
@@ -2070,7 +2070,8 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
+      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
+      card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
@@ -2202,6 +2203,9 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, period from {{startDate}} to {{endDate}}. Earned amount € {{amount}}"
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
@@ -2478,6 +2482,7 @@ bonus:
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+        landingPage: Get the benefit
       categories:
         theater: theater, cinema and entertainment
         travel: travel
@@ -2652,7 +2657,57 @@ bonus:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
-      title: "VoucherListScreen"
+      title: "Your discount codes available"
+      loading: "Loading"
+      filter:
+        title: "Filter vouchers"
+        searchValuePlaceholder: "Search coupon code"
+        stateSection:
+          title: "State"
+        dateSection:
+          title: "Date"
+          departure: "Departure date"
+          return: "Return date"
+        cta:
+          removeFilter: "Remove"
+          applyFilter:
+            zero: "Apply filters"
+            other: "Apply filters ({{count}})"
+      emptyList:
+        title: "There are no discount codes available"
+        subtitle: "Search to see your used or expired codes or request a new code"
+        cta: "Generate a new code"
+      error: "We are unable to recover your vouchers, please try again."
+      details:
+        title: "Your discount code"
+        fields:
+          uniqueCode: "Unique code"
+          beneficiary: "Beneficiary"
+          residence:
+            label: "Residence"
+            value: "Sicily"
+          category: "Category"
+          flightDate: "Flight date"
+          possibleDestination: "Possible destinations"
+        cta:
+          voucherRevocation: "Voucher revocation"
+          openQr: "Open QR code"
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Unique code"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
+      destinationLabels:
+        universityName: "University name"
+        companyName: "Company name"
+        hospitalName: "Hospital or professional name"
+        municipality: "Municipality"
+      voucherBottomsheet:
+        title: "Sicilia Vola discount code"
+        cta:
+          exit: "Exit"
+          voucherRevocation: "Voucher revocation"
+
 features:
   euCovidCertificate:
     save:
@@ -2693,7 +2748,7 @@ features:
       notFound:
         title: "It seems that the certificate does not \nexist: contact support"
         subtitle: "Details to receive support:"
-        cta: "Contact support"
+        cta: "Get support"
       notOperational:
         title: "The EU Digital COVID Certificate is not currently operational"
         subtitle: "TMP"
@@ -2703,7 +2758,7 @@ features:
       wrongFormat:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
-        cta: "Contact support"
+        cta: "Get support"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

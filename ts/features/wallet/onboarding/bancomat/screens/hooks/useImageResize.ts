@@ -40,6 +40,6 @@ export const useImageResize = (
         )
       )
     );
-  }, [imageUrl]);
+  }, [imageUrl, maxHeight, maxWidth]);
   return size;
 };

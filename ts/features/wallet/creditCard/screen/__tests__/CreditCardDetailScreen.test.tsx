@@ -12,20 +12,20 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { walletsV2_1 } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import {
   CreditCardPaymentMethod,
-  EnableableFunctionsTypeEnum,
   PatchedWalletV2ListResponse
 } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 // import I18n from "../../../../../i18n";
 
 const creditCard: CreditCardPaymentMethod = {
   walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",
   enableableFunctions: [
-    EnableableFunctionsTypeEnum.BPD,
-    EnableableFunctionsTypeEnum.pagoPA
+    EnableableFunctionsEnum.BPD,
+    EnableableFunctionsEnum.pagoPA
   ],
   favourite: false,
   idWallet: 23216,
@@ -51,7 +51,6 @@ const creditCard: CreditCardPaymentMethod = {
 };
 
 jest.mock("../../../../../config", () => ({
-  pmActivatePaymentEnabled: true,
   bpdEnabled: true
 }));
 
@@ -64,7 +63,7 @@ describe("Test CreditCardDetailScreen", () => {
     expect(screen.getByTestId("WorkunitGenericFailure")).not.toBeNull();
   });
   it(
-    "When pmActivatePaymentEnabled===true and pagoPA=false the CreditCardDetailScreen should contains" +
+    "When pagoPA=false the CreditCardDetailScreen should contains" +
       " the CreditCardComponent and PaymentStatusSwitch",
     () => {
       const globalState = appReducer(
@@ -87,7 +86,7 @@ describe("Test CreditCardDetailScreen", () => {
     }
   );
   it(
-    "When pmActivatePaymentEnabled===true and pagoPA=true the CreditCardDetailScreen should contains" +
+    "When pagoPA=true the CreditCardDetailScreen should contains" +
       " CreditCardComponent, FavoritePaymentMethodSwitch and PaymentStatusSwitch",
     () => {
       const globalState = appReducer(

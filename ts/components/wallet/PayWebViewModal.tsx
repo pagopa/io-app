@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
 import _ from "lodash";
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
@@ -63,15 +63,16 @@ const formId = `io-form-id-${uuid()}`;
 // the javascript submit command
 const injectedJSPostForm: string = `<script type="application/javascript">document.getElementById("${formId}").submit();</script>`;
 
+const kvToString = (kv: [string, unknown]) =>
+  `<input type="text" name="${kv[0]}" value="${kv[1]}">`;
+
 // create an html form giving a form data and an uri
 const crateAutoPostForm = (
   form: Record<string, unknown>,
   uri: string
 ): string =>
   `<html><body><form action="${uri}" method="post" id="${formId}" enctype="application/x-www-form-urlencoded" style="display: none;">
-    ${_.toPairs(form)
-      .map(kv => `<input type="text" name="${kv[0]}" value="${kv[1]}">`)
-      .join("<br/>")}
+    ${_.toPairs(form).map(kvToString).join("<br/>")}
   </form></body></html>`;
 
 /**
@@ -195,6 +196,8 @@ export const PayWebViewModal = (props: Props) => {
               crateAutoPostForm(props.formData, props.postUri) +
               injectedJSPostForm
           }}
+          androidCameraAccessDisabled={true}
+          androidMicrophoneAccessDisabled={true}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           startInLoadingState={true}
           renderLoading={renderLoading}

@@ -3,7 +3,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
   all,
   call,
@@ -55,6 +54,7 @@ import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../mixpanel";
+import { readablePrivacyReport } from "../utils/reporters";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -68,7 +68,7 @@ export function* loadProfile(
     const response = yield call(getProfile, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -151,7 +151,7 @@ function* createOrUpdateProfileSaga(
     );
 
     if (response.isLeft()) {
-      throw new Error(readableReport(response.value));
+      throw new Error(readablePrivacyReport(response.value));
     }
 
     if (response.value.status === 409) {
@@ -263,7 +263,7 @@ function* startEmailValidationProcessSaga(
     const response = yield call(startEmailValidationProcess, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 202) {
       yield put(startEmailValidation.success());

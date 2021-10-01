@@ -2,10 +2,13 @@ import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
-import { typographyFactory } from "./Factory";
+import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = Extract<IOColorType, "bluegreyDark" | "white" | "blue">;
-type AllowedWeight = Extract<IOFontWeight, "Bold">;
+type AllowedColors = Extract<
+  IOColorType,
+  "bluegreyDark" | "white" | "blue" | "bluegrey"
+>;
+type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
@@ -21,7 +24,7 @@ const fontSize = 20;
  * @constructor
  */
 export const H2: React.FunctionComponent<OwnProps> = props =>
-  typographyFactory<AllowedWeight, AllowedColors>({
+  useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     defaultWeight: "Bold",
     defaultColor: "bluegreyDark",

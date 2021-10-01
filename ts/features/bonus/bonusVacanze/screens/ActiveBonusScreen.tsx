@@ -2,6 +2,7 @@ import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Badge, Text, Toast, View } from "native-base";
+import { useCallback } from "react";
 import * as React from "react";
 import {
   Animated,
@@ -65,6 +66,7 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { Link } from "../../../../components/core/typography/Link";
+import { withBase64Uri } from "../../../../utils/image";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -223,7 +225,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string) => {
-  const shared = await share(`data:image/png;base64,${content}`, code).run();
+  const shared = await share(withBase64Uri(content, "png"), code).run();
   shared.mapLeft(_ => showToastGenericError());
 };
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
@@ -290,6 +292,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
 
+  // TODO: this hooks doesn't follow the hooks rule but this functionality will be dismissed in December 2021. Otherwise rewrite this hook following all the rules.
   React.useEffect(() => {
     // start refresh polling after startRefreshPollingAfter
     const delayedPolling = setTimeout(() => {
@@ -308,6 +311,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       clearTimeout(delayedPolling);
     };
   }, []);
+
+  // return an option containing the capture function
+
+  const captureScreenshot = useCallback(
+    (): Option<() => Promise<string>> =>
+      fromNullable(
+        screenShotRef && screenShotRef.current && screenShotRef.current.capture
+      ),
+    [screenShotRef]
+  );
 
   React.useEffect(() => {
     if (screenShotState.isPrintable) {
@@ -332,7 +345,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return;
       }
     }
-  }, [screenShotState.isPrintable]);
+  }, [screenShotState.isPrintable, backgroundAnimation, captureScreenshot]);
 
   React.useEffect(() => {
     // if the screenShotUri is defined start saving image and restore default style
@@ -359,7 +372,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         });
       setScreenShotState(screenShortInitialState);
     }
-  }, [screenShotState.screenShotUri]);
+  }, [screenShotState.screenShotUri, backgroundAnimation]);
 
   // translate the bonus status. If no mapping found -> empty string
   const maybeStatusDescription = maybeNotNullyString(
@@ -369,13 +382,6 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         })
       : ""
   );
-
-  // return an option containing the capture function
-
-  const captureScreenshot = (): Option<() => Promise<string>> =>
-    fromNullable(
-      screenShotRef && screenShotRef.current && screenShotRef.current.capture
-    );
 
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {

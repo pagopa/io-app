@@ -247,6 +247,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       {!hasError && (
         <View style={{ flex: 1 }}>
           <WebView
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
             ref={ref}
             source={{ uri: props.uri }}
             textZoom={100}
