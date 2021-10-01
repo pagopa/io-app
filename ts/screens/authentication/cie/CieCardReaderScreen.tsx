@@ -115,6 +115,41 @@ const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
 const accessibityTimeout = 100 as Millisecond;
 
+// some texts changes depending on current running Platform
+/* waiting card */
+const getWaitingCardTextiOS = () => ({
+  title: I18n.t("authentication.cie.card.titleiOS"),
+  subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
+  content: ""
+});
+const getWaitingCardTextDefault = () => ({
+  title: I18n.t("authentication.cie.card.title"),
+  subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+  content: I18n.t("authentication.cie.card.layCardMessageFooter")
+});
+const getWaitingCardText = Platform.select({
+  ios: getWaitingCardTextiOS,
+  default: getWaitingCardTextDefault
+});
+
+/* error */
+const getErrorTextiOS = (errorMessage: string) => ({
+  title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
+  subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeaderiOS"),
+  content: errorMessage
+});
+
+const getErrorTextDefault = (errorMessage: string) => ({
+  title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+  subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
+  content: errorMessage
+});
+const getErrorText = (errorMessage: string = "") =>
+  Platform.select({
+    ios: getErrorTextiOS(""),
+    default: getErrorTextDefault(errorMessage)
+  });
+
 /**
  *  This screen shown while reading the card
  */
@@ -132,9 +167,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      title: I18n.t("authentication.cie.card.title"),
-      subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-      content: I18n.t("authentication.cie.card.layCardMessageFooter"),
+      ...getWaitingCardText(),
       isScreenReaderEnabled: false
     };
     this.startCieiOS = this.startCieiOS.bind(this);
@@ -258,19 +291,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          {
-            title: I18n.t(
-              isIos
-                ? "authentication.cie.card.error.readerCardLostTitleiOS"
-                : "authentication.cie.card.error.readerCardLostTitle"
-            ),
-            subtitle: I18n.t(
-              isIos
-                ? "authentication.cie.card.error.readerCardLostHeaderiOS"
-                : "authentication.cie.card.error.readerCardLostHeader"
-            ),
-            content: isIos ? "" : this.state.errorMessage
-          },
+          getErrorText(this.state.errorMessage),
           this.announceUpdate
         );
         break;
@@ -289,24 +310,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       // waiting_card state
       default:
-        this.setState(
-          {
-            title: I18n.t(
-              isIos
-                ? "authentication.cie.card.titleiOS"
-                : "authentication.cie.card.title"
-            ),
-            subtitle: I18n.t(
-              isIos
-                ? "authentication.cie.card.layCardMessageHeaderiOS"
-                : "authentication.cie.card.layCardMessageHeader"
-            ),
-            content: isIos
-              ? ""
-              : I18n.t("authentication.cie.card.layCardMessageFooter")
-          },
-          this.announceUpdate
-        );
+        this.setState(getWaitingCardText(), this.announceUpdate);
     }
   };
 
@@ -333,9 +337,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.state.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : // if is iOS don't wait. The thank you page is shown natively
-          Platform.OS === "ios"
-          ? 0
-          : WAIT_TIMEOUT_NAVIGATION
+            Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     });
   };
