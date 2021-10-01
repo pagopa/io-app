@@ -2,29 +2,16 @@
  * Generators to manage messages and related services.
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Task } from "redux-saga";
-import {
-  all,
-  call,
-  cancel,
-  cancelled,
-  Effect,
-  fork,
-  put,
-  select,
-  take
-} from "redux-saga/effects";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
-  loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -170,45 +157,18 @@ function* loadMessages(
   } catch (error) {
     // Dispatch failure action
     yield put(loadMessagesAction.failure(error));
-  } finally {
-    if (yield cancelled()) {
-      // If the task is cancelled send a loadMessagesCancelled action.
-      yield put(loadMessagesCancelled());
-    }
   }
 }
 
 /**
- * This generator is an 'always running' task that waits for MESSAGES_LOAD_REQUEST and MESSAGES_LOAD_CANCEL actions.
- * Instead of using takeLatest we are creating an ad-hoc while(true) loop that also manages task cancellation
- * with a custom action.
- * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
+ * This generator is an 'always running' task that waits for MESSAGES_LOAD_REQUEST.
  */
 export function* watchLoadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
-  // We store the latest task so we can also cancel it
-  // eslint-disable-next-line
-  let lastTask: Option<Task> = none;
-  while (true) {
-    // FIXME: why not takeLatest?
-    // Wait for MESSAGES_LOAD_REQUEST
-    const action: ActionType<typeof loadMessagesAction["request"]> = yield take(
-      getType(loadMessagesAction.request)
-    );
-    if (lastTask.isSome()) {
-      // If there is an already running task cancel it
-      yield cancel(lastTask.value);
-      lastTask = none;
-    }
-
-    // If the action received is a MESSAGES_LOAD_REQUEST send the request
-    // Otherwise it is a MESSAGES_LOAD_CANCELED and we just need to continue the loop
-    if (isActionOf(loadMessagesAction.request, action)) {
-      // Call the generator to load messages
-      lastTask = some(yield fork(loadMessages, getMessages));
-    }
-  }
+  yield takeLatest(getType(loadMessagesAction.request), () =>
+    loadMessages(getMessages)
+  );
 }
 
 export const testLoadMessages = isDevEnv ? loadMessages : undefined;

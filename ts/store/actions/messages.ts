@@ -38,10 +38,6 @@ export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_FAILURE"
 )<void, ReadonlyArray<string>, Error>();
 
-export const loadMessagesCancelled = createStandardAction(
-  "MESSAGES_LOAD_CANCELED"
-)();
-
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
