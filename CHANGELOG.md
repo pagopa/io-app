@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.0-rc.1](https://github.com/pagopa/io-app/compare/1.35.0-rc.0...1.35.0-rc.1) (2021-10-01)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-42](https://pagopa.atlassian.net/browse/IASV-42),[IASV-43](https://pagopa.atlassian.net/browse/IASV-43)] Voucher details screen ([#3400](https://github.com/pagopa/io-app/issues/3400)) ([185bb41](https://github.com/pagopa/io-app/commit/185bb41d019209ecfbb3b446c684dca47bc237dc))
+* [[IAI-5](https://pagopa.atlassian.net/browse/IAI-5)] Automatically notify when a new app version is available ([#3405](https://github.com/pagopa/io-app/issues/3405)) ([05a443f](https://github.com/pagopa/io-app/commit/05a443fe572e4b023ecdafa4ea6624cedbc2d784))
+
+
+### Bug Fixes
+
+* [[IA-263](https://pagopa.atlassian.net/browse/IA-263)] Wrong spacing in navigation bar for iPhone 13 ([#3404](https://github.com/pagopa/io-app/issues/3404)) ([cedbf65](https://github.com/pagopa/io-app/commit/cedbf65f781e1562677edddf8c0260d08f1fddb5))
+* [[IA-271](https://pagopa.atlassian.net/browse/IA-271)] Fixes accessibility on Manual Data insertion screen ([#3409](https://github.com/pagopa/io-app/issues/3409)) ([c7812f5](https://github.com/pagopa/io-app/commit/c7812f52ad47ebbad4f632382d88c8a09ba892eb))
+
+
+### Chores
+
+* **Bonus Pagamenti Digitali:** [[IAC-81](https://pagopa.atlassian.net/browse/IAC-81)] Enable bpd transactions pagination ([#3408](https://github.com/pagopa/io-app/issues/3408)) ([9277018](https://github.com/pagopa/io-app/commit/9277018a193b1e44c4a9c0da5cf56975f542e7cc))
+* [[IA-212](https://pagopa.atlassian.net/browse/IA-212)] Add delete-wallets PM API ([#3381](https://github.com/pagopa/io-app/issues/3381)) ([1fc01df](https://github.com/pagopa/io-app/commit/1fc01df6dd1791e206d7eebacdb4cb8c7d304a97))
+* [[IA-272](https://pagopa.atlassian.net/browse/IA-272)] Minor refactoring for messages ([#3407](https://github.com/pagopa/io-app/issues/3407)) ([c843dd3](https://github.com/pagopa/io-app/commit/c843dd34aad3a9b7ae853c9f0d97b666c1bc88b8))
+* [[IAI-23](https://pagopa.atlassian.net/browse/IAI-23)] Remove obsolete fetch polyfill ([#3402](https://github.com/pagopa/io-app/issues/3402)) ([c34ad32](https://github.com/pagopa/io-app/commit/c34ad32ba8c3a2fde2d877a6d0269ad7c0321235))
+* [[IAI-27](https://pagopa.atlassian.net/browse/IAI-27)] Reactivate eslint react-hooks/recommended and remove errors and warnings ([#3397](https://github.com/pagopa/io-app/issues/3397)) ([19a1a18](https://github.com/pagopa/io-app/commit/19a1a18233a8d6c5d524fc055c6d95fa673a8bae))
+* [[IAI-67](https://pagopa.atlassian.net/browse/IAI-67)] Upgrade eslint & prettier ([#3403](https://github.com/pagopa/io-app/issues/3403)) ([a805c86](https://github.com/pagopa/io-app/commit/a805c86a372e87e13ee6f9c7aa5ca49b2ee196b4))
+
 ## [1.35.0-rc.0](https://github.com/pagopa/io-app/compare/1.34.0-rc.3...1.35.0-rc.0) (2021-09-28)
 
 
