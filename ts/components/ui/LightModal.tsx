@@ -27,17 +27,16 @@ export type LightModalContextInterface = Readonly<{
   setOnHiddenModal: (callback: () => void) => void;
 }>;
 
-export const LightModalContext = React.createContext<
-  LightModalContextInterface
->({
-  component: null,
-  showModal: () => undefined,
-  showModalFadeInAnimation: () => undefined,
-  showAnimatedModal: () => undefined,
-  hideModal: () => undefined,
-  onHiddenModal: () => undefined,
-  setOnHiddenModal: () => undefined
-});
+export const LightModalContext =
+  React.createContext<LightModalContextInterface>({
+    component: null,
+    showModal: () => undefined,
+    showModalFadeInAnimation: () => undefined,
+    showAnimatedModal: () => undefined,
+    hideModal: () => undefined,
+    onHiddenModal: () => undefined,
+    setOnHiddenModal: () => undefined
+  });
 
 type Props = Record<string, unknown>;
 

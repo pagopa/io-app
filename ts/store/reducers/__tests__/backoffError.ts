@@ -36,7 +36,7 @@ describe("backoffError reducer", () => {
     range(1, backoffConfig.maxAttempts + 1).forEach(attempts => {
       state = appReducer(
         state,
-        (aFailureAction() as any) as Action
+        aFailureAction() as any as Action
       ) as GlobalState;
       expect(state.backoffError).toEqual({
         [failureActionType]: {
@@ -52,10 +52,7 @@ describe("backoffError reducer", () => {
       );
     });
     // success action should empty the state
-    state = appReducer(
-      state,
-      (aSuccessAction() as any) as Action
-    ) as GlobalState;
+    state = appReducer(state, aSuccessAction() as any as Action) as GlobalState;
     expect(state.backoffError).toEqual({});
   });
 });

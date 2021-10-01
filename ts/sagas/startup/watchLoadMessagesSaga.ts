@@ -2,29 +2,16 @@
  * Generators to manage messages and related services.
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { Task } from "redux-saga";
-import {
-  all,
-  call,
-  cancel,
-  cancelled,
-  Effect,
-  fork,
-  put,
-  select,
-  take
-} from "redux-saga/effects";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { all, call, Effect, put, select, takeLatest } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
-  loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -34,20 +21,23 @@ import { messagesStatusSelector } from "../../store/reducers/entities/messages/m
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
+import { isDevEnv } from "../../utils/environment";
 
 /**
  * A generator to load messages from the Backend.
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
-// eslint-disable-next-line
-export function* loadMessages(
+// eslint-disable-next-line sonarjs/cognitive-complexity
+function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
     // Request the list of messages from the Backend
+    // TODO: we will have to forward PaginationResponse data (page size, next)
+    //       and persist it somewhere
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
       {}
@@ -76,9 +66,9 @@ export function* loadMessages(
         yield put(loadMessagesAction.success(responseItemsIds));
 
         // Load already cached messages ids from the store
-        const potCachedMessagesAllIds: ReturnType<typeof messagesAllIdsSelector> = yield select(
-          messagesAllIdsSelector
-        );
+        const potCachedMessagesAllIds: ReturnType<
+          typeof messagesAllIdsSelector
+        > = yield select(messagesAllIdsSelector);
         const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
         // Calculate the ids of the message no more visible that we need
@@ -88,9 +78,8 @@ export function* loadMessages(
         );
 
         // Load already cached messages status ids from the store
-        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> = yield select(
-          messagesStatusSelector
-        );
+        const messagesStatusMapping: ReturnType<typeof messagesStatusSelector> =
+          yield select(messagesStatusSelector);
         const messagesStatusIds = Object.keys(messagesStatusMapping).filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -110,13 +99,14 @@ export function* loadMessages(
         // The Backend returns the items from the oldest to the latest
         // but we want to process them from latest to oldest so we
         // reverse the order.
+        // TODO: we will rely on API sorting since we use pagination
         const reversedItems = [...response.value.value.items].reverse();
 
         // Load already cached messages from the store
-        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> = yield select(
-          messagesStateByIdSelector
-        );
+        const cachedMessagesById: ReturnType<typeof messagesStateByIdSelector> =
+          yield select(messagesStateByIdSelector);
 
+        // TODO: with the enrichment, we don't need to discern which messages to reload
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
           return (
@@ -130,9 +120,8 @@ export function* loadMessages(
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
         // Load already cached services from the store
-        const cachedServicesById: ReturnType<typeof servicesByIdSelector> = yield select(
-          servicesByIdSelector
-        );
+        const cachedServicesById: ReturnType<typeof servicesByIdSelector> =
+          yield select(servicesByIdSelector);
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
@@ -161,49 +150,25 @@ export function* loadMessages(
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
+        // TODO: with the enrichment, we don't need to load each message anymore
         yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
       }
     }
   } catch (error) {
     // Dispatch failure action
     yield put(loadMessagesAction.failure(error));
-  } finally {
-    if (yield cancelled()) {
-      // If the task is cancelled send a loadMessagesCancelled action.
-      yield put(loadMessagesCancelled());
-    }
   }
 }
 
 /**
- * This generator is an 'always running' task that waits for MESSAGES_LOAD_REQUEST and MESSAGES_LOAD_CANCEL actions.
- * Instead of using takeLatest we are creating an ad-hoc while(true) loop that also manages task cancellation
- * with a custom action.
- * More info @https://github.com/redux-saga/redux-saga/blob/master/docs/advanced/Concurrency.md#takelatest
+ * This generator is an 'always running' task that waits for MESSAGES_LOAD_REQUEST.
  */
-export function* watchMessagesLoadOrCancelSaga(
+export function* watchLoadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
-  // We store the latest task so we can also cancel it
-  // eslint-disable-next-line
-  let lastTask: Option<Task> = none;
-  while (true) {
-    // FIXME: why not takeLatest?
-    // Wait for MESSAGES_LOAD_REQUEST
-    const action: ActionType<typeof loadMessagesAction["request"]> = yield take(
-      getType(loadMessagesAction.request)
-    );
-    if (lastTask.isSome()) {
-      // If there is an already running task cancel it
-      yield cancel(lastTask.value);
-      lastTask = none;
-    }
-
-    // If the action received is a MESSAGES_LOAD_REQUEST send the request
-    // Otherwise it is a MESSAGES_LOAD_CANCEL and we just need to continue the loop
-    if (isActionOf(loadMessagesAction.request, action)) {
-      // Call the generator to load messages
-      lastTask = some(yield fork(loadMessages, getMessages));
-    }
-  }
+  yield takeLatest(getType(loadMessagesAction.request), () =>
+    loadMessages(getMessages)
+  );
 }
+
+export const testLoadMessages = isDevEnv ? loadMessages : undefined;

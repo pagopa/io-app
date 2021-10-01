@@ -66,8 +66,10 @@ describe("Test the paginated transaction normalization", () => {
       })
     );
 
-    const transactionsEntities = store.getState().bonus.bpd.details
-      .transactionsV2.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
+    const transactionsEntities =
+      store.getState().bonus.bpd.details.transactionsV2.entitiesByPeriod[
+        awardPeriodTemplate.awardPeriodId
+      ];
 
     const expectedResults = [
       {
@@ -118,8 +120,10 @@ describe("Test the paginated transaction normalization", () => {
         })
       );
 
-      const transactionsEntities = store.getState().bonus.bpd.details
-        .transactionsV2.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
+      const transactionsEntities =
+        store.getState().bonus.bpd.details.transactionsV2.entitiesByPeriod[
+          awardPeriodTemplate.awardPeriodId
+        ];
 
       const expectedResults: ReadonlyArray<TransactionTestCheck> = [
         {
@@ -192,8 +196,10 @@ describe("Test the paginated transaction normalization", () => {
         })
       );
 
-      const transactionsEntities = store.getState().bonus.bpd.details
-        .transactionsV2.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
+      const transactionsEntities =
+        store.getState().bonus.bpd.details.transactionsV2.entitiesByPeriod[
+          awardPeriodTemplate.awardPeriodId
+        ];
 
       const expectedResults: ReadonlyArray<TransactionTestCheck> = [
         {
@@ -281,8 +287,10 @@ describe("Test the paginated transaction normalization", () => {
         })
       );
 
-      const transactionsEntities = store.getState().bonus.bpd.details
-        .transactionsV2.entitiesByPeriod[awardPeriodTemplate.awardPeriodId];
+      const transactionsEntities =
+        store.getState().bonus.bpd.details.transactionsV2.entitiesByPeriod[
+          awardPeriodTemplate.awardPeriodId
+        ];
 
       const expectedResults: ReadonlyArray<TransactionTestCheck> = [
         {

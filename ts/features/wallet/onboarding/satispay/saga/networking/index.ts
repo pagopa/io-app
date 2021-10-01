@@ -27,9 +27,9 @@ export function* handleSearchUserSatispay(
       searchSatispay({})
     );
 
-    const searchSatispayWithRefreshResult: SagaCallReturnType<typeof searchSatispayWithRefresh> = yield call(
-      searchSatispayWithRefresh
-    );
+    const searchSatispayWithRefreshResult: SagaCallReturnType<
+      typeof searchSatispayWithRefresh
+    > = yield call(searchSatispayWithRefresh);
     if (searchSatispayWithRefreshResult.isRight()) {
       const statusCode = searchSatispayWithRefreshResult.value.status;
       if (statusCode === 200) {
@@ -83,9 +83,9 @@ export function* handleAddUserSatispayToWallet(
       addSatispayToWalletClient({ data: action.payload })
     );
 
-    const addSatispayToWalletWithRefreshResult: SagaCallReturnType<typeof addSatispayToWalletWithRefresh> = yield call(
-      addSatispayToWalletWithRefresh
-    );
+    const addSatispayToWalletWithRefreshResult: SagaCallReturnType<
+      typeof addSatispayToWalletWithRefresh
+    > = yield call(addSatispayToWalletWithRefresh);
     if (addSatispayToWalletWithRefreshResult.isRight()) {
       const statusCode = addSatispayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {

@@ -221,11 +221,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when we have all data to properly render the content of the screen.
    */
   private renderFullState = (message: CreatedMessageWithContent) => {
-    const {
-      potServiceDetail,
-      potServiceMetadata,
-      paymentsByRptId
-    } = this.props;
+    const { potServiceDetail, potServiceMetadata, paymentsByRptId } =
+      this.props;
 
     return (
       <MessageDetailComponent

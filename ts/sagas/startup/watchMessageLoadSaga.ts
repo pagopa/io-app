@@ -7,7 +7,7 @@ import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { loadMessage } from "../messages/messages";
 
 /**
- * This generator listen for loadMessage.request actions and forward them
+ * This generator listens for loadMessage.request actions and forwards them
  * to a pool of created handlers.
  *
  * @param getMessage API call to fetch the message detail
@@ -17,12 +17,11 @@ export function* watchMessageLoadSaga(
 ) {
   // Create the channel used for the communication with the handlers.
   // The channel has a buffer with initial size of 10 requests.
-  const requestsChannel: Channel<ActionType<
-    typeof loadMessageAction.request
-  >> = yield call(channel, buffers.expanding());
+  const requestsChannel: Channel<ActionType<typeof loadMessageAction.request>> =
+    yield call(channel, buffers.expanding());
 
   // Start the handlers
-  // eslint-disable-next-line
+  // eslint-disable-next-line functional/no-let
   for (let i = 0; i < totMessageFetchWorkers; i++) {
     yield fork(handleMessageLoadRequest, requestsChannel, getMessage);
   }
@@ -36,13 +35,13 @@ export function* watchMessageLoadSaga(
 }
 
 /**
- * A generator that listen for loadMessage.request from a channel and perform the
+ * A generator that listens for loadMessage.request from a channel and perform the
  * handling.
  *
  * @param requestsChannel The channel where to take the loadMessage.request actions
  * @param getMessage API call to fetch the message detail
  */
-export function* handleMessageLoadRequest(
+function* handleMessageLoadRequest(
   requestsChannel: Channel<ActionType<typeof loadMessageAction.request>>,
   getMessage: ReturnType<typeof BackendClient>["getMessage"]
 ) {

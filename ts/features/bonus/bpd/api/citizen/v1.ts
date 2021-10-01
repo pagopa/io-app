@@ -88,25 +88,30 @@ export function patchIbanDecoders<A, O>(type: t.Type<A, O>) {
 
 // custom implementation of patch request
 // TODO abstract the usage of fetch
-export const citizenPaymentMethodPATCH = (
-  options: PatchOptions,
-  token: string,
-  payload: CitizenPatchDTO,
-  headers: Record<string, string>
-): (() => Promise<t.Validation<finalType>>) => async () => {
-  const response = await options.fetchApi(`${options.baseUrl}/bpd/io/citizen`, {
-    method: "patch",
-    headers: { ...headers, Authorization: `Bearer ${token}` },
-    body: JSON.stringify(payload)
-  });
-  const decode = await patchIbanDecoders(PatchIban)(response);
-  return (
-    decode ??
-    left([
+export const citizenPaymentMethodPATCH =
+  (
+    options: PatchOptions,
+    token: string,
+    payload: CitizenPatchDTO,
+    headers: Record<string, string>
+  ): (() => Promise<t.Validation<finalType>>) =>
+  async () => {
+    const response = await options.fetchApi(
+      `${options.baseUrl}/bpd/io/citizen`,
       {
-        context: [],
-        value: response
+        method: "patch",
+        headers: { ...headers, Authorization: `Bearer ${token}` },
+        body: JSON.stringify(payload)
       }
-    ])
-  );
-};
+    );
+    const decode = await patchIbanDecoders(PatchIban)(response);
+    return (
+      decode ??
+      left([
+        {
+          context: [],
+          value: response
+        }
+      ])
+    );
+  };

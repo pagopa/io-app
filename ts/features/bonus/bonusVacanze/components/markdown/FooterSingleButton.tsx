@@ -10,9 +10,10 @@ export type OnCancelProps = {
  * A preset for {@link MarkdownBaseView} with a single cancel button
  * @param props
  */
-export const FooterSingleButton: React.FunctionComponent<OnCancelProps> = props => (
-  <FooterWithButtons
-    type={"SingleButton"}
-    leftButton={cancelButtonProps(props.onCancel)}
-  />
-);
+export const FooterSingleButton: React.FunctionComponent<OnCancelProps> =
+  props => (
+    <FooterWithButtons
+      type={"SingleButton"}
+      leftButton={cancelButtonProps(props.onCancel)}
+    />
+  );
