@@ -614,8 +614,8 @@ authentication:
       iosAlert:
         readingInstructions: Keep your electronic ID card on the back of the iPhone, at the top.
         moreTags: More NFC cards have been identified. Please bring one card at a time.
-        readingInProgress: Reading in progress, hold the card still for a few seconds...
-        readingSuccess: Successful reading.\nYou can remove the card while we complete the data verification.
+        readingInProgress: "READING IN PROGRESS\nhold the card still for a few seconds..."
+        readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
         invalidCard: The card used does not appear to be an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
         cardLocked: CIE card locked

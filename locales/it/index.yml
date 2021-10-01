@@ -622,8 +622,8 @@ authentication:
       iosAlert:
         readingInstructions: Tieni la tua carta d'identità elettronica sul retro dell'iPhone, nella parte in alto.
         moreTags: Sono stati individuate più carte NFC. Per favore avvicina una carta alla volta.
-        readingInProgress: Lettura in corso, tieni ferma la carta ancora per qualche secondo...
-        readingSuccess: Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati.
+        readingInProgress: "LETTURA IN CORSO\ntieni ferma la carta per qualche secondo..."
+        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.
         cardLocked: Carta CIE bloccata
