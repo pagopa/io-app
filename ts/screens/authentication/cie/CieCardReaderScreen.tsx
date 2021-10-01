@@ -415,7 +415,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             title: I18n.t("global.buttons.cancel")
           }}
           rightButton={{
-            onPress: async () => await this.startCieiOS(),
+            onPress: this.startCieiOS,
             title: I18n.t("authentication.cie.nfc.retry")
           }}
         />
