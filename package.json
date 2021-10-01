@@ -170,7 +170,6 @@
     "sha.js": "^2.4.11",
     "tslib": "^1.9.3",
     "typesafe-actions": "4.4.2",
-    "unified": "^10.1.0",
     "unist-util-visit": "^4.1.0",
     "url-parse": "^1.4.7",
     "uuid": "^8.3.2",
