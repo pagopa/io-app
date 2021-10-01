@@ -17,9 +17,8 @@ export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD;
 
 function* enrollToBpdWorker() {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
-  );
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+    yield select(navigationCurrentRouteSelector);
 
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page while communicate with the server for the activation
@@ -30,9 +29,8 @@ function* enrollToBpdWorker() {
   // enroll the user and wait for the result
   yield put(bpdEnrollUserToProgram.request());
 
-  const enrollResult: ActionType<typeof bpdEnrollUserToProgram.success> = yield take(
-    bpdEnrollUserToProgram.success
-  );
+  const enrollResult: ActionType<typeof bpdEnrollUserToProgram.success> =
+    yield take(bpdEnrollUserToProgram.success);
 
   if (enrollResult.payload.enabled) {
     yield put(bpdAllData.request());

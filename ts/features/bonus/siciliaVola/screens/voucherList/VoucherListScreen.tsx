@@ -118,17 +118,11 @@ const EmptyVoucherList = () => {
 
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const {
-    requestVoucherState,
-    resetFilter,
-    filters,
-    requestVoucherPage
-  } = props;
+  const { requestVoucherState, resetFilter, filters, requestVoucherPage } =
+    props;
 
-  const [
-    isFirstPageLoadedSuccessfully,
-    setIsFirstPageLoadedSuccessfully
-  ] = useState<boolean>(false);
+  const [isFirstPageLoadedSuccessfully, setIsFirstPageLoadedSuccessfully] =
+    useState<boolean>(false);
 
   const vouchers = toArray(props.indexedVouchers);
   const isDataLoadedUndefined = isUndefined(props.requiredDataLoaded);

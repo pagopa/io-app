@@ -90,9 +90,8 @@ export function* handleGetEuCovidCertificate(
   );
 
   try {
-    const getCertificateResult: SagaCallReturnType<typeof getCertificate> = yield call(
-      getCertificate,
-      {
+    const getCertificateResult: SagaCallReturnType<typeof getCertificate> =
+      yield call(getCertificate, {
         getCertificateParams: {
           auth_code: authCode,
           preferred_languages: pot.getOrElse(
@@ -100,8 +99,7 @@ export function* handleGetEuCovidCertificate(
             [PreferredLanguageEnum.it_IT]
           )
         }
-      }
-    );
+      });
     if (getCertificateResult.isRight()) {
       if (getCertificateResult.value.status === 200) {
         // handled success

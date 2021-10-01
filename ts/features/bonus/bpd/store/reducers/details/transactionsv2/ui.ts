@@ -109,9 +109,10 @@ export const bpdTransactionsUiReducer = (
       };
     case getType(bpdTransactionsLoadPage.success):
       const currentSectionItems = pot.getOrElse(state.sectionItems, {});
-      const newSectionItems = fromWinningTransactionPageResourceToBpdTransactionsSectionItem(
-        action.payload.results
-      );
+      const newSectionItems =
+        fromWinningTransactionPageResourceToBpdTransactionsSectionItem(
+          action.payload.results
+        );
 
       return {
         ...state,

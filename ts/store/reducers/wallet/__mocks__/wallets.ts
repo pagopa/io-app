@@ -227,8 +227,7 @@ export const walletsV2_3 = {
       idWallet: 25924,
       info: {
         brandLogo: "http://placeimg.com/640/480/technics",
-        uuid:
-          "2f969cf41246000a4f5a3b6e100e1826bd58205a0feba80f64c2a853fb8f4fa50000"
+        uuid: "2f969cf41246000a4f5a3b6e100e1826bd58205a0feba80f64c2a853fb8f4fa50000"
       },
       onboardingChannel: "I",
       pagoPA: true,

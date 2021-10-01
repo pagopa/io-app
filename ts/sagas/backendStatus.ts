@@ -44,9 +44,8 @@ export function* backendStatusWatcherLoop(
       backendStatusSaga,
       getStatus
     );
-    const currentState: ReturnType<typeof backendServicesStatusSelector> = yield select(
-      backendServicesStatusSelector
-    );
+    const currentState: ReturnType<typeof backendServicesStatusSelector> =
+      yield select(backendServicesStatusSelector);
 
     // if we have no information increase rate
     if (response === false) {

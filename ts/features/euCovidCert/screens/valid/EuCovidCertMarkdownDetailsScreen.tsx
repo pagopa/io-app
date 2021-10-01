@@ -42,9 +42,8 @@ export const EuCovidCertMarkdownDetailsScreen = (
 ): React.ReactElement => {
   const [loadMarkdownComplete, setLoadMarkdownComplete] = useState(false);
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
-  const [flashAnimationState, setFlashAnimationState] = useState<
-    FlashAnimationState
-  >();
+  const [flashAnimationState, setFlashAnimationState] =
+    useState<FlashAnimationState>();
   const screenShotViewContainerRef = React.createRef<View>();
 
   React.useEffect(() => {

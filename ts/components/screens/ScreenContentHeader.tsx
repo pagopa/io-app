@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const shouldCollapse = (1 as unknown) as Animated.AnimatedInterpolation;
-const shouldExpand = (0 as unknown) as Animated.AnimatedInterpolation;
+const shouldCollapse = 1 as unknown as Animated.AnimatedInterpolation;
+const shouldExpand = 0 as unknown as Animated.AnimatedInterpolation;
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   private heightAnimation: Animated.Value;

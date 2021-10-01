@@ -215,9 +215,8 @@ const mapStateToProps = (state: GlobalState) => ({
   selectedPeriod: bpdSelectedPeriodSelector(state),
   maybeLastUpdateDate: bpdLastUpdateSelector(state),
   potWallets: paymentMethodsWithActivationStatusSelector(state),
-  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
-    state
-  ),
+  atLeastOnePaymentMethodActive:
+    atLeastOnePaymentMethodHasBpdEnabledSelector(state),
   potTransactions: bpdTransactionsSelector(state),
   nextCursor: bpdTransactionsGetNextCursor(state),
   bpdTransactionByIdSelector: (trxId: BpdTransactionId) =>
