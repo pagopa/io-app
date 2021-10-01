@@ -116,39 +116,42 @@ const VIBRATION = 100 as Millisecond;
 const accessibityTimeout = 100 as Millisecond;
 
 // some texts changes depending on current running Platform
-/* waiting card */
-const getWaitingCardTextiOS = () => ({
-  title: I18n.t("authentication.cie.card.titleiOS"),
-  subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
-  content: ""
-});
-const getWaitingCardTextDefault = () => ({
-  title: I18n.t("authentication.cie.card.title"),
-  subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-  content: I18n.t("authentication.cie.card.layCardMessageFooter")
-});
-const getWaitingCardText = Platform.select({
-  ios: getWaitingCardTextiOS,
-  default: getWaitingCardTextDefault
-});
-
-/* error */
-const getErrorTextiOS = (errorMessage: string) => ({
-  title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
-  subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeaderiOS"),
-  content: errorMessage
-});
-
-const getErrorTextDefault = (errorMessage: string) => ({
-  title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-  subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
-  content: errorMessage
-});
-const getErrorText = (errorMessage: string = "") =>
-  Platform.select({
-    ios: getErrorTextiOS(""),
-    default: getErrorTextDefault(errorMessage)
-  });
+const getTextForState = (
+  state: ReadingState.waiting_card | ReadingState.error,
+  errorMessage: string = ""
+) => {
+  const texts = {
+    [ReadingState.waiting_card]: {
+      default: {
+        title: I18n.t("authentication.cie.card.title"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+        content: I18n.t("authentication.cie.card.layCardMessageFooter")
+      },
+      ios: {
+        title: I18n.t("authentication.cie.card.titleiOS"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
+        // the native alert hides the screen content and shows a message it self
+        content: ""
+      }
+    },
+    [ReadingState.error]: {
+      default: {
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
+        content: errorMessage
+      },
+      ios: {
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
+        subtitle: I18n.t(
+          "authentication.cie.card.error.readerCardLostHeaderiOS"
+        ),
+        // the native alert hides the screen content and shows a message it self
+        content: ""
+      }
+    }
+  };
+  return texts[state][isIos ? "ios" : "default"];
+};
 
 /**
  *  This screen shown while reading the card
@@ -167,7 +170,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      ...getWaitingCardText(),
+      ...getTextForState(ReadingState.waiting_card),
       isScreenReaderEnabled: false
     };
     this.startCieiOS = this.startCieiOS.bind(this);
@@ -291,7 +294,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          getErrorText(this.state.errorMessage),
+          getTextForState(ReadingState.error, this.state.errorMessage),
           this.announceUpdate
         );
         break;
@@ -310,7 +313,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       // waiting_card state
       default:
-        this.setState(getWaitingCardText(), this.announceUpdate);
+        this.setState(
+          getTextForState(ReadingState.waiting_card),
+          this.announceUpdate
+        );
     }
   };
 
@@ -367,7 +373,27 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
-      .start()
+      .start({
+        readingInstructions: I18n.t(
+          "authentication.cie.card.iosAlert.readingInstructions"
+        ),
+        moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
+        readingInProgress: I18n.t(
+          "authentication.cie.card.iosAlert.readingInProgress"
+        ),
+        readingSuccess: I18n.t(
+          "authentication.cie.card.iosAlert.readingSuccess"
+        ),
+        invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
+        tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
+        cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
+        wrongPin1AttemptLeft: I18n.t(
+          "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
+        ),
+        wrongPin2AttemptLeft: I18n.t(
+          "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
+        )
+      })
       .then(async () => {
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
