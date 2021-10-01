@@ -135,7 +135,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                   ? addEvery(discount.staticCode, " ", 3)
                   : "••••••••••"}
               </BaseTypography>
-              {
+              
                 <IconFont
                   name={
                     isCodeVisible
@@ -148,7 +148,7 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                   color={IOColors.blue}
                   style={styles.flexEnd}
                 />
-              }
+              
             </View>
           </TouchableWithoutFeedback>
         </>
