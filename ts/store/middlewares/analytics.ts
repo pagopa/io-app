@@ -117,11 +117,11 @@ import {
 import { noAnalyticsRoutes } from "../../utils/analytics";
 import { getNetworkErrorMessage } from "../../utils/errors";
 import { searchMessagesEnabled } from "../actions/search";
+import { deleteAllPaymentMethodsByFunction } from "../actions/wallet/delete";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
-const trackAction =
-  (mp: NonNullable<typeof mixpanel>) =>
+const trackAction = (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
   (action: Action): Promise<void | ReadonlyArray<null>> => {
     // eslint-disable-next-line sonarjs/max-switch-cases
@@ -255,7 +255,8 @@ const trackAction =
       case getType(instabugReportOpened):
         return mp.track(action.type, action.payload);
 
-      // logout / load message / failure
+      // logout / load message / delete wallets / failure
+      case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
       case getType(loadMessage.failure):
       case getType(logoutFailure):
@@ -347,6 +348,8 @@ const trackAction =
       case getType(addWalletCreditCardInit):
       case getType(addWalletCreditCardRequest):
       case getType(addWalletNewCreditCardSuccess):
+      case getType(deleteAllPaymentMethodsByFunction.request):
+      case getType(deleteAllPaymentMethodsByFunction.success):
       case getType(deleteWalletRequest):
       case getType(deleteWalletSuccess):
       case getType(setFavouriteWalletRequest):
@@ -408,28 +411,27 @@ const trackAction =
 /*
  * The middleware acts as a general hook in order to track any meaningful action
  */
-export const actionTracking =
-  (_: MiddlewareAPI) =>
-  (next: Dispatch) =>
-  (action: Action): Action => {
-    if (mixpanel !== undefined) {
-      // call mixpanel tracking only after we have initialized mixpanel with the
-      // API token
-      void trackAction(mixpanel)(action);
-      void trackBpdAction(mixpanel)(action);
-      void trackBancomatAction(mixpanel)(action);
-      // TODO: activate simultaneously with the activation of satispay
-      // void trackSatispayAction(mixpanel)(action);
-      void trackBPayAction(mixpanel)(action);
-      void trackCoBadgeAction(mixpanel)(action);
-      void trackPrivativeAction(mixpanel)(action);
-      void trackCgnAction(mixpanel)(action);
-      void trackContentAction(mixpanel)(action);
-      void trackServiceAction(mixpanel)(action);
-      void trackEuCovidCertificateActions(mixpanel)(action);
-    }
-    return next(action);
-  };
+export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
+  action: Action
+): Action => {
+  if (mixpanel !== undefined) {
+    // call mixpanel tracking only after we have initialized mixpanel with the
+    // API token
+    void trackAction(mixpanel)(action);
+    void trackBpdAction(mixpanel)(action);
+    void trackBancomatAction(mixpanel)(action);
+    // TODO: activate simultaneously with the activation of satispay
+    // void trackSatispayAction(mixpanel)(action);
+    void trackBPayAction(mixpanel)(action);
+    void trackCoBadgeAction(mixpanel)(action);
+    void trackPrivativeAction(mixpanel)(action);
+    void trackCgnAction(mixpanel)(action);
+    void trackContentAction(mixpanel)(action);
+    void trackServiceAction(mixpanel)(action);
+    void trackEuCovidCertificateActions(mixpanel)(action);
+  }
+  return next(action);
+};
 
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
@@ -438,32 +440,33 @@ export const actionTracking =
 export function screenTracking(
   store: MiddlewareAPI
 ): (_: Dispatch) => (__: Action) => Action {
-  return (next: Dispatch): ((_: Action) => Action) =>
-    (action: Action): Action => {
-      if (
-        action.type !== NavigationActions.NAVIGATE &&
-        action.type !== NavigationActions.BACK
-      ) {
-        return next(action);
+  return (next: Dispatch): ((_: Action) => Action) => (
+    action: Action
+  ): Action => {
+    if (
+      action.type !== NavigationActions.NAVIGATE &&
+      action.type !== NavigationActions.BACK
+    ) {
+      return next(action);
+    }
+    const currentScreen = getCurrentRouteName(store.getState().nav);
+    const result = next(action);
+    const nextScreen = getCurrentRouteName(store.getState().nav);
+    if (nextScreen !== currentScreen && mixpanel) {
+      if (nextScreen) {
+        setInstabugUserAttribute("activeScreen", nextScreen);
       }
-      const currentScreen = getCurrentRouteName(store.getState().nav);
-      const result = next(action);
-      const nextScreen = getCurrentRouteName(store.getState().nav);
-      if (nextScreen !== currentScreen && mixpanel) {
-        if (nextScreen) {
-          setInstabugUserAttribute("activeScreen", nextScreen);
-        }
-        // track only those events that are not included in the blacklist
-        if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
-          void mixpanel.track("SCREEN_CHANGE_V2", {
-            SCREEN_NAME: nextScreen
-          });
-        }
-        // sent to 10-days retention project
-        void mixpanel.track("SCREEN_CHANGE", {
+      // track only those events that are not included in the blacklist
+      if (nextScreen && !noAnalyticsRoutes.has(nextScreen)) {
+        void mixpanel.track("SCREEN_CHANGE_V2", {
           SCREEN_NAME: nextScreen
         });
       }
-      return result;
-    };
+      // sent to 10-days retention project
+      void mixpanel.track("SCREEN_CHANGE", {
+        SCREEN_NAME: nextScreen
+      });
+    }
+    return result;
+  };
 }
