@@ -38,6 +38,80 @@ const loadLocales = () => ({
   )
 });
 
+const InnerIbanCTAEditScreen = (props: Props) => {
+  useActionOnFocus(props.load);
+  // keep track if loading has been completed or not
+  // to avoid to handle not update data coming from the store
+  const [isLoadingComplete, setLoadingComplete] =
+    React.useState<boolean>(false);
+  const { title, loadingCaption } = loadLocales();
+  const {
+    bpdLoadState,
+    bpdEnabled,
+    goBack,
+    navigateToBPDPeriodDetails,
+    bpdPeriods
+  } = props;
+  React.useEffect(() => {
+    const {
+      alertNotActiveTitle,
+      alertNotActiveMessage,
+      alertNotPeriodActiveTitle,
+      alertNotPeriodActiveMessage
+    } = loadLocales();
+    if (!pot.isNone(bpdLoadState) && !pot.isNone(bpdEnabled)) {
+      setLoadingComplete(true);
+    }
+    if (
+      isLoadingComplete &&
+      isStrictSome(bpdLoadState) &&
+      pot.isSome(bpdEnabled)
+    ) {
+      // citizen not active to BPD
+      if (!bpdEnabled.value) {
+        Alert.alert(alertNotActiveTitle, alertNotActiveMessage, [
+          {
+            onPress: goBack
+          }
+        ]);
+        return;
+      }
+      const activePeriod = pot
+        .getOrElse(bpdPeriods, [])
+        .find(p => p.status === "Active");
+      if (activePeriod) {
+        navigateToBPDPeriodDetails(activePeriod);
+      }
+      // no active period
+      else {
+        Alert.alert(alertNotPeriodActiveTitle, alertNotPeriodActiveMessage, [
+          {
+            onPress: goBack
+          }
+        ]);
+      }
+    }
+  }, [
+    bpdLoadState,
+    bpdEnabled,
+    isLoadingComplete,
+    bpdPeriods,
+    goBack,
+    navigateToBPDPeriodDetails
+  ]);
+
+  const hasErrors = pot.isError(props.bpdLoadState);
+  return (
+    <BaseScreenComponent goBack={true} headerTitle={title}>
+      <LoadingErrorComponent
+        isLoading={!hasErrors}
+        loadingCaption={loadingCaption}
+        onRetry={props.load}
+      />
+    </BaseScreenComponent>
+  );
+};
+
 /**
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
@@ -51,65 +125,7 @@ const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
     navigation.goBack();
     return null;
   }
-  useActionOnFocus(props.load);
-  // keep track if loading has been completed or not
-  // to avoid to handle not update data coming from the store
-  const [isLoadingComplete, setLoadingComplete] = React.useState<boolean>(
-    false
-  );
-  const {
-    title,
-    alertNotActiveTitle,
-    alertNotActiveMessage,
-    alertNotPeriodActiveTitle,
-    alertNotPeriodActiveMessage,
-    loadingCaption
-  } = loadLocales();
-  React.useEffect(() => {
-    if (!pot.isNone(props.bpdLoadState) && !pot.isNone(props.bpdEnabled)) {
-      setLoadingComplete(true);
-    }
-    if (
-      isLoadingComplete &&
-      isStrictSome(props.bpdLoadState) &&
-      pot.isSome(props.bpdEnabled)
-    ) {
-      // citizen not active to BPD
-      if (!props.bpdEnabled.value) {
-        Alert.alert(alertNotActiveTitle, alertNotActiveMessage, [
-          {
-            onPress: props.goBack
-          }
-        ]);
-        return;
-      }
-      const activePeriod = pot
-        .getOrElse(props.bpdPeriods, [])
-        .find(p => p.status === "Active");
-      if (activePeriod) {
-        props.navigateToBPDPeriodDetails(activePeriod);
-      }
-      // no active period
-      else {
-        Alert.alert(alertNotPeriodActiveTitle, alertNotPeriodActiveMessage, [
-          {
-            onPress: props.goBack
-          }
-        ]);
-      }
-    }
-  }, [props.bpdLoadState, props.bpdEnabled, isLoadingComplete]);
-
-  const hasErrors = pot.isError(props.bpdLoadState);
-  return (
-    <BaseScreenComponent goBack={true} headerTitle={title}>
-      <LoadingErrorComponent
-        isLoading={!hasErrors}
-        loadingCaption={loadingCaption}
-        onRetry={props.load}
-      />
-    </BaseScreenComponent>
-  );
+  return <InnerIbanCTAEditScreen {...props} />;
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

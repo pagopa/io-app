@@ -44,14 +44,14 @@ describe("walletV2 selectors", () => {
     ),
     w => w.idWallet
   );
-  const globalState = ({
+  const globalState = {
     wallet: {
       wallets: {
         walletById: pot.some(indexedWallets)
       },
       abi: remoteUndefined
     }
-  } as any) as GlobalState;
+  } as any as GlobalState;
   it("should decode walletv2 list", () => {
     expect(maybeWalletsV2.isRight()).toBeTruthy();
   });
@@ -163,13 +163,13 @@ describe("walletV2 favoriteId Selector", () => {
   );
 
   it("should return pot none - no wallets", () => {
-    const noWallets = ({
+    const noWallets = {
       wallet: {
         wallets: {
           walletById: pot.none
         }
       }
-    } as any) as GlobalState;
+    } as any as GlobalState;
     expect(getFavoriteWalletId(noWallets)).toEqual(pot.none);
     expect(getFavoriteWallet(noWallets)).toEqual(pot.none);
   });

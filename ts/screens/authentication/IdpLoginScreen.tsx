@@ -307,6 +307,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
             source={{ uri: loginUri }}

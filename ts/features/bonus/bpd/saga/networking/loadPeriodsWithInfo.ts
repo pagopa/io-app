@@ -27,10 +27,8 @@ export function* loadPeriodsWithInfo(
   >
 ) {
   // Request the period list
-  const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> = yield call(
-    bpdLoadPeriodsSaga,
-    bpdClient.awardPeriods
-  );
+  const maybePeriods: SagaCallReturnType<typeof bpdLoadPeriodsSaga> =
+    yield call(bpdLoadPeriodsSaga, bpdClient.awardPeriods);
 
   if (maybePeriods.isLeft()) {
     // Error while receiving the period list
@@ -51,16 +49,19 @@ export function* loadPeriodsWithInfo(
     }
 
     // request the amounts for all the required periods
-    const amounts: ReadonlyArray<SagaCallReturnType<
-      typeof bpdLoadAmountSaga
-    >> = yield all(
-      periods
-        // no need to request the inactive period, the amount and transaction number is always 0
-        .filter(p => p.status !== "Inactive")
-        .map(period =>
-          call(bpdLoadAmountSaga, bpdClient.totalCashback, period.awardPeriodId)
-        )
-    );
+    const amounts: ReadonlyArray<SagaCallReturnType<typeof bpdLoadAmountSaga>> =
+      yield all(
+        periods
+          // no need to request the inactive period, the amount and transaction number is always 0
+          .filter(p => p.status !== "Inactive")
+          .map(period =>
+            call(
+              bpdLoadAmountSaga,
+              bpdClient.totalCashback,
+              period.awardPeriodId
+            )
+          )
+      );
 
     // Check if the required period amount are without error
     // With a single error, we can't display the periods list

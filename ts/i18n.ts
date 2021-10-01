@@ -52,9 +52,8 @@ I18n.translations = {
   de: locales.localeDE
 };
 
-export const availableTranslations: ReadonlyArray<locales.Locales> = Object.keys(
-  I18n.translations
-).map(k => k as locales.Locales);
+export const availableTranslations: ReadonlyArray<locales.Locales> =
+  Object.keys(I18n.translations).map(k => k as locales.Locales);
 
 export function setLocale(lang: locales.Locales) {
   // eslint-disable-next-line

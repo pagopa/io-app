@@ -395,58 +395,57 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderItem: SectionListRenderItem<
-    MessageAgendaItem | FakeItem
-  > = info => {
-    if (isFakeItem(info.item)) {
-      return getFakeItemComponent();
-    }
+  private renderItem: SectionListRenderItem<MessageAgendaItem | FakeItem> =
+    info => {
+      if (isFakeItem(info.item)) {
+        return getFakeItemComponent();
+      }
 
-    const message = info.item.e1;
-    const { isRead } = info.item.e2;
-    const {
-      paymentsByRptId,
-      onPressItem,
-      onLongPressItem,
-      selectedMessageIds
-    } = this.props;
+      const message = info.item.e1;
+      const { isRead } = info.item.e2;
+      const {
+        paymentsByRptId,
+        onPressItem,
+        onLongPressItem,
+        selectedMessageIds
+      } = this.props;
 
-    const potService = this.props.servicesById[message.sender_service_id];
+      const potService = this.props.servicesById[message.sender_service_id];
 
-    const service =
-      potService !== undefined
-        ? pot.isNone(potService)
-          ? ({
-              organization_name: I18n.t("messages.errorLoading.senderInfo"),
-              department_name: I18n.t("messages.errorLoading.serviceInfo")
-            } as ServicePublic)
-          : pot.toUndefined(potService)
-        : undefined;
+      const service =
+        potService !== undefined
+          ? pot.isNone(potService)
+            ? ({
+                organization_name: I18n.t("messages.errorLoading.senderInfo"),
+                department_name: I18n.t("messages.errorLoading.serviceInfo")
+              } as ServicePublic)
+            : pot.toUndefined(potService)
+          : undefined;
 
-    const payment =
-      message.content.payment_data !== undefined && service !== undefined
-        ? paymentsByRptId[
-            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
-          ]
-        : undefined;
+      const payment =
+        message.content.payment_data !== undefined && service !== undefined
+          ? paymentsByRptId[
+              `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
+            ]
+          : undefined;
 
-    return (
-      <View style={styles.padded}>
-        <MessageListItem
-          isRead={isRead}
-          message={message}
-          service={service}
-          payment={payment}
-          onPress={onPressItem}
-          onLongPress={onLongPressItem}
-          isSelectionModeEnabled={selectedMessageIds.isSome()}
-          isSelected={selectedMessageIds
-            .map(_ => _.has(message.id))
-            .getOrElse(false)}
-        />
-      </View>
-    );
-  };
+      return (
+        <View style={styles.padded}>
+          <MessageListItem
+            isRead={isRead}
+            message={message}
+            service={service}
+            payment={payment}
+            onPress={onPressItem}
+            onLongPress={onLongPressItem}
+            isSelectionModeEnabled={selectedMessageIds.isSome()}
+            isSelected={selectedMessageIds
+              .map(_ => _.has(message.id))
+              .getOrElse(false)}
+          />
+        </View>
+      );
+    };
 
   private getItemLayout = (_: Sections | null, index: number) =>
     this.state.itemLayouts[index];

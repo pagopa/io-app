@@ -106,23 +106,19 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
-  const onProceedToCardReaderScreen = (url: string) => {
-    setPin("");
-    navigate({
-      routeName: ROUTES.CIE_CARD_READER_SCREEN,
-      params: {
-        ciePin: pin,
-        authorizationUri: url
-      }
-    });
-    hideModal();
-  };
-
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      onProceedToCardReaderScreen(authUrlGenerated);
+      setPin("");
+      navigate({
+        routeName: ROUTES.CIE_CARD_READER_SCREEN,
+        params: {
+          ciePin: pin,
+          authorizationUri: authUrlGenerated
+        }
+      });
+      hideModal();
     }
-  }, [authUrlGenerated]);
+  }, [authUrlGenerated, hideModal, navigate, pin]);
 
   const handleAuthenticationOverlayOnClose = () => {
     setPin("");

@@ -151,9 +151,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
     ? pagoPaApiUrlPrefixTest
     : pagoPaApiUrlPrefix;
 
-  const verifica: PaymentRequestsGetResponse = props.navigation.getParam(
-    "verifica"
-  );
+  const verifica: PaymentRequestsGetResponse =
+    props.navigation.getParam("verifica");
   const wallet: Wallet = props.navigation.getParam("wallet");
   const idPayment: string = props.navigation.getParam("idPayment");
   const paymentReason = verifica.causaleVersamento;

@@ -40,14 +40,16 @@ const handleTransactionsStatus = (
  * @constructor
  */
 const BpdTransactionsScreen: React.FC<Props> = (props: Props) => {
+  const { bpdLastUpdate, transactionForSelectedPeriod, loadTransactions } =
+    props;
   React.useEffect(() => {
     if (
-      pot.isError(props.bpdLastUpdate) ||
-      pot.isError(props.transactionForSelectedPeriod)
+      pot.isError(bpdLastUpdate) ||
+      pot.isError(transactionForSelectedPeriod)
     ) {
-      props.loadTransactions();
+      loadTransactions();
     }
-  }, []);
+  }, [bpdLastUpdate, transactionForSelectedPeriod, loadTransactions]);
   return pot.fold(
     props.bpdLastUpdate,
     () => <TransactionsUnavailable />,

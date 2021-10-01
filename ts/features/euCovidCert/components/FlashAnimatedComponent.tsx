@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Animated, Easing, StyleSheet } from "react-native";
 import * as React from "react";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -30,33 +31,36 @@ export const FlashAnimatedComponent = (props: Props) => {
     inputRange: [0, 1],
     outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   });
-  const fadeOut = () => {
+  const { state, onFadeInCompleted, onFadeOutCompleted, animationDuration } =
+    props;
+
+  const fadeOut = useCallback(() => {
     animation.current?.stop();
     // eslint-disable-next-line functional/immutable-data
     animation.current = Animated.timing(backgroundAnimation, {
-      duration: props.animationDuration ?? defaultAnimationDuration,
+      duration: animationDuration ?? defaultAnimationDuration,
       toValue: 0,
       useNativeDriver: false,
       easing: Easing.cubic
     });
-    animation.current.start(() => props.onFadeOutCompleted?.());
-  };
+    animation.current.start(() => onFadeOutCompleted?.());
+  }, [animationDuration, backgroundAnimation, onFadeOutCompleted]);
 
-  const fadeIn = () => {
+  const fadeIn = useCallback(() => {
     animation.current?.stop();
     // eslint-disable-next-line functional/immutable-data
     animation.current = Animated.timing(backgroundAnimation, {
-      duration: props.animationDuration ?? defaultAnimationDuration,
+      duration: animationDuration ?? defaultAnimationDuration,
       toValue: 1,
       useNativeDriver: false,
       easing: Easing.cubic
     });
-    animation.current.start(() => props.onFadeInCompleted?.());
-  };
+    animation.current.start(() => onFadeInCompleted?.());
+  }, [backgroundAnimation, onFadeInCompleted, animationDuration]);
 
   React.useEffect(() => {
-    if (props.state) {
-      switch (props.state) {
+    if (state) {
+      switch (state) {
         case "fadeIn":
           fadeIn();
           break;
@@ -68,7 +72,7 @@ export const FlashAnimatedComponent = (props: Props) => {
     return () => {
       animation.current?.stop();
     };
-  }, [props.state]);
+  }, [state, fadeIn, fadeOut]);
   return (
     <Animated.View
       pointerEvents={"none"}

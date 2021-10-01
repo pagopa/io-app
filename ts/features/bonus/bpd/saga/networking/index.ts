@@ -16,19 +16,17 @@ export function* executeAndDispatchV2(
   action: typeof bpdEnrollUserToProgram | typeof bpdLoadActivationStatus
 ) {
   try {
-    const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> = yield call(
-      remoteCall,
-      // due to avoid required headers coming from code autogenerate
-      // (note the required header will be injected automatically)
-      {} as any
-    );
+    const enrollCitizenIOResult: SagaCallReturnType<typeof remoteCall> =
+      yield call(
+        remoteCall,
+        // due to avoid required headers coming from code autogenerate
+        // (note the required header will be injected automatically)
+        {} as any
+      );
     if (enrollCitizenIOResult.isRight()) {
       if (enrollCitizenIOResult.value.status === 200) {
-        const {
-          enabled,
-          payoffInstr,
-          technicalAccount
-        } = enrollCitizenIOResult.value.value;
+        const { enabled, payoffInstr, technicalAccount } =
+          enrollCitizenIOResult.value.value;
         yield put(
           action.success({
             enabled,
@@ -75,10 +73,8 @@ export function* deleteCitizen(
   deleteCitizenIO: ReturnType<typeof BackendBpdClient>["deleteCitizenIO"]
 ): SagaIterator {
   try {
-    const deleteCitizenIOResult: SagaCallReturnType<typeof deleteCitizenIO> = yield call(
-      deleteCitizenIO,
-      {} as any
-    );
+    const deleteCitizenIOResult: SagaCallReturnType<typeof deleteCitizenIO> =
+      yield call(deleteCitizenIO, {} as any);
     if (deleteCitizenIOResult.isRight()) {
       if (deleteCitizenIOResult.value.status === 204) {
         yield put(bpdDeleteUserFromProgram.success());

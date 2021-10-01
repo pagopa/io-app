@@ -148,6 +148,8 @@ export const OtpCodeComponent = (props: Props) => {
   // reset interval timer
   const stopInterval = () => clearInterval(intervalRef.current);
 
+  const { otp, onEnd } = props;
+
   /**
    * when otp changes
    * - reset elapsed seconds
@@ -155,7 +157,7 @@ export const OtpCodeComponent = (props: Props) => {
    * - start progress width animation
    */
   useEffect(() => {
-    const currentDuration = getOtpTTL(props.otp);
+    const currentDuration = getOtpTTL(otp);
     setDuration((currentDuration / 1000) as Second);
     setElapsedSeconds(0);
     progressWidth.setValue(startPercentage);
@@ -169,14 +171,14 @@ export const OtpCodeComponent = (props: Props) => {
       // when animation end
       setElapsedSeconds(cv => cv + 1);
       stopInterval();
-      props.onEnd();
+      onEnd();
     });
     // eslint-disable-next-line functional/immutable-data
     intervalRef.current = setInterval(() => {
       setElapsedSeconds(cv => cv + 1);
     }, 1000);
     return stopInterval;
-  }, [props.otp.code]);
+  }, [otp, onEnd, progressWidth, startPercentage, endPercentage]);
 
   // update the remaining time
   useEffect(() => {

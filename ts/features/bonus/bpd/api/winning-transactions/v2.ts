@@ -36,17 +36,20 @@ export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
   | r.IResponseType<500, undefined>
 >;
 
-export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT = {
-  method: "get",
-  url: ({ awardPeriodId, nextCursor }) =>
-    `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
-      nextCursor
+const cursorToQueryString = (cursor: number) => `&nextCursor=${cursor}`;
+
+export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
+  {
+    method: "get",
+    url: ({ awardPeriodId, nextCursor }) =>
+      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
+        nextCursor
+      )
+        .map(cursorToQueryString)
+        .getOrElse("")}`,
+    query: _ => ({}),
+    headers: bpdHeadersProducers(),
+    response_decoder: findWinningTransactionsUsingGETDecoder(
+      PatchedWinningTransactionPageResource
     )
-      .map(c => `&nextCursor=${c}`)
-      .getOrElse("")}`,
-  query: _ => ({}),
-  headers: bpdHeadersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDecoder(
-    PatchedWinningTransactionPageResource
-  )
-};
+  };

@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import { GlobalState } from "../../../store/reducers/types";
@@ -61,12 +61,16 @@ const getChannelPreference = (
 const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const { isLoading, isError } = props;
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const { serviceId, loadServicePreference } = props;
 
-  const loadPreferences = () => props.loadServicePreference(props.serviceId);
+  const loadPreferences = useCallback(
+    () => loadServicePreference(serviceId),
+    [serviceId, loadServicePreference]
+  );
 
   useEffect(() => {
     loadPreferences();
-  }, [props.serviceId]);
+  }, [serviceId, loadPreferences]);
 
   useEffect(() => {
     if (!isFirstRender) {
@@ -76,7 +80,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
     } else {
       setIsFirstRender(false);
     }
-  }, [isError]);
+  }, [isError, isFirstRender]);
 
   const onValueChange = (value: boolean, type: Item) => {
     if (

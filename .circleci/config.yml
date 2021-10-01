@@ -21,7 +21,7 @@ release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: cimg/node:12.22
+    - image: cimg/node:14.17.4
 
 # android builds
 defaults_android: &defaults_android
@@ -134,6 +134,18 @@ jobs:
       # Run linter
       - run: yarn lint
 
+  # Check if all files respect the prettier rules
+  run-prettier:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+
+      # Run linter
+      - run: yarn prettier:check
+
   # Runs Danger checks on PR
   run-danger:
     <<: *defaults_js
@@ -156,6 +168,17 @@ jobs:
       - *install_node_modules
       - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
        ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
+
+  # Send a Slack message to notify the release of a new app version in beta
+  notify-new-app-version:
+    <<: *defaults_js
+
+    steps:
+      - checkout
+      - *restore_node_cache
+      - *install_node_modules
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
+       ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
 
   # Create signed Android release
   android-release:
@@ -326,7 +349,7 @@ jobs:
 
   pagopa_specs_diff:
     docker:
-      - image: cimg/node:12.22
+      - image: cimg/python:3.8
     steps:
       - checkout
       - run:
@@ -448,6 +471,7 @@ workflows:
       - compile-typescript
       - run-tests
       - run-eslint
+      - run-prettier
 
       - run-danger:
           filters:
@@ -477,6 +501,12 @@ workflows:
               only: *release_tag
             branches:
               ignore: /.*/
+      - run-prettier:
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
 
       # Build Android alpha release & submit to play store
       - alpha-release-android:
@@ -484,6 +514,7 @@ workflows:
             - compile-typescript
             - run-tests
             - run-eslint
+            - run-prettier
           filters:
             tags:
               only: *release_tag
@@ -496,6 +527,18 @@ workflows:
             - compile-typescript
             - run-tests
             - run-eslint
+            - run-prettier
+          filters:
+            tags:
+              only: *release_tag
+            branches:
+              ignore: /.*/
+
+      # Send a Slack message to notify the release of a new app version in beta
+      - notify-new-app-version:
+          requires:
+            - ios-beta-release
+            - alpha-release-android
           filters:
             tags:
               only: *release_tag

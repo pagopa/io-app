@@ -18,7 +18,8 @@ import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import {
   svPossibleVoucherStateGet,
   svSetFilter,
-  svVoucherListGet
+  svVoucherListGet,
+  svSelectVoucher
 } from "../../store/actions/voucherList";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
@@ -49,17 +50,24 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
 import { showToast } from "../../../../../utils/showToast";
+import { navigateToSvVoucherDetailsScreen } from "../../navigation/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const RenderItemBase = (voucher: VoucherPreview): React.ReactElement | null => (
-  <ListItemComponent
-    title={voucher.destination}
-    subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
-    onPress={() => true}
-  />
-);
+const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
+  const dispatch = useIODispatch();
+  return (
+    <ListItemComponent
+      title={voucher.destination}
+      subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
+      onPress={() => {
+        dispatch(svSelectVoucher(voucher.idVoucher));
+        dispatch(navigateToSvVoucherDetailsScreen());
+      }}
+    />
+  );
+};
 
 /**
  * In order to optimize the rendering of the item, we use the idVoucher as unique identifier to avoid to redraw the component.
@@ -87,7 +95,6 @@ const FooterLoading = () => (
     />
   </>
 );
-
 const EmptyVoucherList = () => {
   const dispatch = useIODispatch();
 
@@ -111,11 +118,11 @@ const EmptyVoucherList = () => {
 
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
+  const { requestVoucherState, resetFilter, filters, requestVoucherPage } =
+    props;
 
-  const [
-    isFirstPageLoadedSuccessfully,
-    setIsFirstPageLoadedSuccessfully
-  ] = useState<boolean>(false);
+  const [isFirstPageLoadedSuccessfully, setIsFirstPageLoadedSuccessfully] =
+    useState<boolean>(false);
 
   const vouchers = toArray(props.indexedVouchers);
   const isDataLoadedUndefined = isUndefined(props.requiredDataLoaded);
@@ -123,22 +130,22 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
   const isDataLoadedError = isError(props.requiredDataLoaded);
 
   useEffect(() => {
-    props.requestVoucherState();
-    props.resetFilter();
-  }, []);
+    requestVoucherState();
+    resetFilter();
+  }, [requestVoucherState, resetFilter]);
 
   useEffect(() => {
     if (isDataLoadedUndefined) {
       setIsFirstPageLoadedSuccessfully(false);
-      props.requestVoucherPage(props.filters);
+      requestVoucherPage(filters);
     }
-  }, [props.filters, isDataLoadedUndefined]);
+  }, [filters, isDataLoadedUndefined, requestVoucherPage]);
 
   useEffect(() => {
     if (isDataLoadedError && isFirstPageLoadedSuccessfully) {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
-  }, [isDataLoadedError]);
+  }, [isDataLoadedError, isFirstPageLoadedSuccessfully]);
 
   const openFiltersModal = () =>
     showAnimatedModal(

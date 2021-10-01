@@ -52,9 +52,8 @@ export function* addBancomatToWalletAndActivateBpd() {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-      navigationCurrentRouteSelector
-    );
+    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+      yield select(navigationCurrentRouteSelector);
     if (
       currentRoute.isSome() &&
       currentRoute.value === ROUTES.WALLET_ADD_PAYMENT_METHOD
@@ -67,9 +66,9 @@ export function* addBancomatToWalletAndActivateBpd() {
     // refresh wallets list
     yield put(fetchWalletsRequest());
     // read the new added bancomat
-    const bancomatAdded: ReturnType<typeof onboardingBancomatAddedPansSelector> = yield select(
-      onboardingBancomatAddedPansSelector
-    );
+    const bancomatAdded: ReturnType<
+      typeof onboardingBancomatAddedPansSelector
+    > = yield select(onboardingBancomatAddedPansSelector);
 
     yield call(
       activateBpdOnNewPaymentMethods,

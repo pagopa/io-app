@@ -35,7 +35,7 @@ export const svVoucherDetailGet = createAsyncAction(
   "SV_VOUCHER_DETAIL_GET_REQUEST",
   "SV_VOUCHER_DETAIL_GET_SUCCESS",
   "SV_VOUCHER_DETAIL_GET_FAILURE"
-)<number, SvVoucher, NetworkError>();
+)<SvVoucherId, SvVoucher, NetworkError>();
 
 /**
  * handle the voucher revocation
@@ -51,9 +51,16 @@ export const svVoucherRevocation = createAsyncAction(
  */
 export const svSetFilter = createStandardAction("SV_SET_FILTER")<FilterState>();
 
+/**
+ * The user chooses the voucher to see the details
+ */
+export const svSelectVoucher =
+  createStandardAction("SV_SELECT_VOUCHER")<SvVoucherId>();
+
 export type SvVoucherListActions =
   | ActionType<typeof svVoucherListGet>
   | ActionType<typeof svPossibleVoucherStateGet>
   | ActionType<typeof svVoucherDetailGet>
   | ActionType<typeof svVoucherRevocation>
-  | ActionType<typeof svSetFilter>;
+  | ActionType<typeof svSetFilter>
+  | ActionType<typeof svSelectVoucher>;

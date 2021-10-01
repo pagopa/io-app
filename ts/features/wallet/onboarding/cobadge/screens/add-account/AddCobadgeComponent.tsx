@@ -57,20 +57,13 @@ const loadLocales = (props: Props) => ({
 
 const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
   const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-  const {
-    headerTitle,
-    screenTitle,
-    label,
-    blockedCard,
-    warning1,
-    warning2
-  } = loadLocales(props);
+  const { pan, abiList } = props;
+  const { headerTitle, screenTitle, label, blockedCard, warning1, warning2 } =
+    loadLocales(props);
   React.useEffect(() => {
-    const abi: Abi | undefined = props.abiList.find(
-      elem => elem.abi === props.pan.abiCode
-    );
+    const abi: Abi | undefined = abiList.find(elem => elem.abi === pan.abiCode);
     setAbiInfo(abi ?? {});
-  }, [props.pan.abiCode]);
+  }, [pan, abiList]);
 
   return (
     <BaseScreenComponent

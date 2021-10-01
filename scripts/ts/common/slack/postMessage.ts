@@ -35,7 +35,7 @@ export const slackPostMessage = async (
   const jsonResponse = await res.json();
   if (jsonResponse.ok === false) {
     throw new Error(
-      `An error occured with the Slack API: ${jsonResponse.error}`
+      `An error occurred with the Slack API: ${jsonResponse.error}`
     );
   }
 

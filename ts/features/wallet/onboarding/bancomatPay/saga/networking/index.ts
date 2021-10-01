@@ -32,9 +32,9 @@ export function* handleSearchUserBPay(
       searchBPay(action.payload)
     );
 
-    const searchBPayWithRefreshResult: SagaCallReturnType<typeof searchBPayWithRefresh> = yield call(
-      searchBPayWithRefresh
-    );
+    const searchBPayWithRefreshResult: SagaCallReturnType<
+      typeof searchBPayWithRefresh
+    > = yield call(searchBPayWithRefresh);
     if (searchBPayWithRefreshResult.isRight()) {
       const statusCode = searchBPayWithRefreshResult.value.status;
       if (statusCode === 200) {
@@ -83,9 +83,9 @@ export function* handleAddpayToWallet(
       addBPayToWallet({ data: [action.payload] })
     );
 
-    const addBPayToWalletWithRefreshResult: SagaCallReturnType<typeof addBPayToWalletWithRefresh> = yield call(
-      addBPayToWalletWithRefresh
-    );
+    const addBPayToWalletWithRefreshResult: SagaCallReturnType<
+      typeof addBPayToWalletWithRefresh
+    > = yield call(addBPayToWalletWithRefresh);
     if (addBPayToWalletWithRefreshResult.isRight()) {
       const statusCode = addBPayToWalletWithRefreshResult.value.status;
       if (statusCode === 200) {
