@@ -6,7 +6,9 @@ import { testSaga } from "redux-saga-test-plan";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { loadMessage as loadMessageAction } from "../../../store/actions/messages";
-import { fetchMessage, loadMessage } from "../messages";
+import { testFetchMessage, loadMessage } from "../messages";
+
+const fetchMessage = testFetchMessage!;
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";

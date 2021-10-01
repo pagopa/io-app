@@ -13,6 +13,7 @@ import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
+import { isDevEnv } from "../../utils/environment";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
@@ -64,7 +65,7 @@ export function* loadMessage(
 /**
  * A saga to fetch a message from the Backend
  */
-export function* fetchMessage(
+function* fetchMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   meta: CreatedMessageWithoutContent
 ): Generator<
@@ -97,3 +98,5 @@ export function* fetchMessage(
     return left<Error, CreatedMessageWithContentAndAttachments>(error);
   }
 }
+
+export const testFetchMessage = isDevEnv ? fetchMessage : undefined;
