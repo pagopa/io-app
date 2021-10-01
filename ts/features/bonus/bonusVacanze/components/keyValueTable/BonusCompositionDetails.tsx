@@ -69,26 +69,27 @@ const getRow = (
  * @param props
  * @constructor
  */
-export const BonusCompositionDetails: React.FunctionComponent<Props> = props => {
-  const amountTitle = I18n.t("bonus.bonusVacanze.composition.amount");
-  const expendableText = I18n.t("bonus.bonusVacanze.composition.expendable");
-  const taxBenefitText = I18n.t("bonus.bonusVacanze.composition.taxBenefit");
+export const BonusCompositionDetails: React.FunctionComponent<Props> =
+  props => {
+    const amountTitle = I18n.t("bonus.bonusVacanze.composition.amount");
+    const expendableText = I18n.t("bonus.bonusVacanze.composition.expendable");
+    const taxBenefitText = I18n.t("bonus.bonusVacanze.composition.taxBenefit");
 
-  const expendableAmount = props.bonusAmount - props.taxBenefit;
+    const expendableAmount = props.bonusAmount - props.taxBenefit;
 
-  const displayBonusAmount = formatNumberAmount(props.bonusAmount, true);
-  const displayExpendableAmount = formatNumberAmount(expendableAmount, true);
-  const displayTaxBenefit = formatNumberAmount(props.taxBenefit, true);
+    const displayBonusAmount = formatNumberAmount(props.bonusAmount, true);
+    const displayExpendableAmount = formatNumberAmount(expendableAmount, true);
+    const displayTaxBenefit = formatNumberAmount(props.taxBenefit, true);
 
-  const rows: ReadonlyArray<KeyValueRow> = [
-    getRow(expendableText, displayExpendableAmount, undefined, styles.bold),
-    getRow(taxBenefitText, displayTaxBenefit)
-  ];
+    const rows: ReadonlyArray<KeyValueRow> = [
+      getRow(expendableText, displayExpendableAmount, undefined, styles.bold),
+      getRow(taxBenefitText, displayTaxBenefit)
+    ];
 
-  return (
-    <View>
-      {header(amountTitle, displayBonusAmount)}
-      <KeyValueTable leftFlex={3} rightFlex={1} rows={rows} />
-    </View>
-  );
-};
+    return (
+      <View>
+        {header(amountTitle, displayBonusAmount)}
+        <KeyValueTable leftFlex={3} rightFlex={1} rows={rows} />
+      </View>
+    );
+  };

@@ -7,7 +7,14 @@ import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/walletv2/WalletV2";
-import { getValueOrElse } from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  getValueOrElse,
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
   BancomatPaymentMethod,
@@ -57,6 +64,11 @@ import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import { canMethodPay } from "../../../utils/paymentMethodCapabilities";
 import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
+import {
+  DeleteAllByFunctionError,
+  DeleteAllByFunctionSuccess,
+  deleteAllPaymentMethodsByFunction
+} from "../../actions/wallet/delete";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -64,13 +76,18 @@ export type WalletsState = Readonly<{
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
   >;
+  deleteAllByFunction: RemoteValue<
+    Pick<DeleteAllByFunctionSuccess, "deletedMethodsCount">,
+    DeleteAllByFunctionError
+  >;
 }>;
 
 export type PersistedWalletsState = WalletsState & PersistPartial;
 
 const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
-  creditCardAddWallet: pot.none
+  creditCardAddWallet: pot.none,
+  deleteAllByFunction: remoteUndefined
 };
 
 // Selectors
@@ -401,6 +418,11 @@ export const pagoPaCreditCardWalletV1Selector = createSelector(
     )
 );
 
+export const deleteAllPaymentMethodsByFunctionSelector = (
+  state: GlobalState
+): WalletsState["deleteAllByFunction"] =>
+  state.wallet.wallets.deleteAllByFunction;
+
 // reducer
 // eslint-disable-next-line complexity
 const reducer = (
@@ -408,6 +430,23 @@ const reducer = (
   action: Action
 ): WalletsState => {
   switch (action.type) {
+    //
+    // delete all payments method by function
+    //
+    case getType(deleteAllPaymentMethodsByFunction.request):
+      return { ...state, deleteAllByFunction: remoteLoading };
+    case getType(deleteAllPaymentMethodsByFunction.success):
+      return {
+        ...state,
+        walletById: pot.some(
+          toIndexed(action.payload.wallets, _ => _.idWallet)
+        ),
+        deleteAllByFunction: remoteReady({
+          deletedMethodsCount: action.payload.deletedMethodsCount
+        })
+      };
+    case getType(deleteAllPaymentMethodsByFunction.failure):
+      return { ...state, deleteAllByFunction: remoteError(action.payload) };
     //
     // fetch wallets
     //

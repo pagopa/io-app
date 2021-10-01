@@ -56,7 +56,6 @@ type State = {
  * The icon has a badge if there are unread messages from the assistance
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
-  
   constructor(props: Props) {
     super(props);
     this.state = {

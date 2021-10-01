@@ -85,9 +85,7 @@ const styles = StyleSheet.create({
 
 // helper to translate Option<Either> to true|false|void semantics
 const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
-  o
-    .map<boolean | undefined>(e => e.isRight())
-    .getOrElse(undefined);
+  o.map<boolean | undefined>(e => e.isRight()).getOrElse(undefined);
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",

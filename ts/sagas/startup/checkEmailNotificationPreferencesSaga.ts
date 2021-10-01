@@ -31,9 +31,9 @@ export function* watchEmailNotificationPreferencesSaga(): Generator<
   void,
   any
 > {
-  const isCustomEmailChannelEnabled: ReturnType<typeof isCustomEmailChannelEnabledSelector> = yield select(
-    isCustomEmailChannelEnabledSelector
-  );
+  const isCustomEmailChannelEnabled: ReturnType<
+    typeof isCustomEmailChannelEnabledSelector
+  > = yield select(isCustomEmailChannelEnabledSelector);
 
   // if we know about user choice do nothing
   if (pot.isSome(isCustomEmailChannelEnabled)) {

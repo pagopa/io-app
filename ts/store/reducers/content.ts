@@ -87,9 +87,9 @@ export const municipalitySelector = (state: GlobalState) =>
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
 
-export const serviceMetadataByIdSelector = (serviceId: string) => (
-  state: GlobalState
-) => servicesMetadataByIdSelector(state)[serviceId];
+export const serviceMetadataByIdSelector =
+  (serviceId: string) => (state: GlobalState) =>
+    servicesMetadataByIdSelector(state)[serviceId];
 
 export const contextualHelpDataSelector = (
   state: GlobalState

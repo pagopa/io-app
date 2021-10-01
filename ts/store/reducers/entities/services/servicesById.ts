@@ -76,9 +76,9 @@ const reducer = (
 export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
   state.entities.services.byId;
 
-export const serviceByIdSelector = (id: string) => (
-  state: GlobalState
-): pot.Pot<ServicePublic, Error> | undefined =>
-  state.entities.services.byId[id];
+export const serviceByIdSelector =
+  (id: string) =>
+  (state: GlobalState): pot.Pot<ServicePublic, Error> | undefined =>
+    state.entities.services.byId[id];
 
 export default reducer;

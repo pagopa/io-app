@@ -32,9 +32,8 @@ export function* handleGetAeroportiBeneficiario(
     const request = svSessionManager.withRefresh(
       getAeroportiBeneficiario(action.payload)
     );
-    const getAeroportiBeneficiarioResult: SagaCallReturnType<typeof request> = yield call(
-      request
-    );
+    const getAeroportiBeneficiarioResult: SagaCallReturnType<typeof request> =
+      yield call(request);
 
     if (getAeroportiBeneficiarioResult.isRight()) {
       if (getAeroportiBeneficiarioResult.value.status === 200) {

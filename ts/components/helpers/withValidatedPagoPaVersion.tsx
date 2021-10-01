@@ -12,9 +12,7 @@ import { withLightModalContext } from "./withLightModalContext";
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapStateToProps>;
 
-class ModalControlMinPagoPaAppVersionOverlay extends React.Component<
-  ModalProps
-> {
+class ModalControlMinPagoPaAppVersionOverlay extends React.Component<ModalProps> {
   public componentWillUnmount() {
     this.hideModal();
   }
