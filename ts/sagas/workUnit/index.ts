@@ -45,9 +45,8 @@ function* ensureScreen(
   navigateTo: NavigationNavigateAction,
   startScreen: string
 ) {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
-  );
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+    yield select(navigationCurrentRouteSelector);
 
   if (currentRoute.isSome() && currentRoute.value !== startScreen) {
     yield put(navigateTo);
@@ -62,13 +61,13 @@ function* ensureScreen(
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
 ): Generator<Effect, T, any> {
-  const currentNavigationStackSize: ReturnType<typeof navigationHistorySizeSelector> = yield select(
-    navigationHistorySizeSelector
-  );
+  const currentNavigationStackSize: ReturnType<
+    typeof navigationHistorySizeSelector
+  > = yield select(navigationHistorySizeSelector);
   const res: T = yield call(g);
-  const newNavigationStackSize: ReturnType<typeof navigationHistorySizeSelector> = yield select(
-    navigationHistorySizeSelector
-  );
+  const newNavigationStackSize: ReturnType<
+    typeof navigationHistorySizeSelector
+  > = yield select(navigationHistorySizeSelector);
   const deltaNavigation = newNavigationStackSize - currentNavigationStackSize;
   if (deltaNavigation > 1) {
     yield put(navigationHistoryPop(deltaNavigation - 1));

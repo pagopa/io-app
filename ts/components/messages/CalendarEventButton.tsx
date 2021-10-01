@@ -174,49 +174,48 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     });
   };
 
-  private addCalendarEventToDeviceCalendar = (
-    message: CreatedMessageWithContent,
-    dueDate: Date
-  ) => (calendar: Calendar) => {
-    const title = I18n.t("messages.cta.reminderTitle", {
-      title: message.content.subject
-    });
+  private addCalendarEventToDeviceCalendar =
+    (message: CreatedMessageWithContent, dueDate: Date) =>
+    (calendar: Calendar) => {
+      const title = I18n.t("messages.cta.reminderTitle", {
+        title: message.content.subject
+      });
 
-    const { preferredCalendar } = this.props;
+      const { preferredCalendar } = this.props;
 
-    this.props.hideModal();
+      this.props.hideModal();
 
-    if (preferredCalendar === undefined) {
-      this.props.preferredCalendarSaveSuccess(calendar);
-    }
+      if (preferredCalendar === undefined) {
+        this.props.preferredCalendarSaveSuccess(calendar);
+      }
 
-    searchEventInCalendar(dueDate, title)
-      .then(mayBeEventId =>
-        mayBeEventId.foldL(
-          () => {
-            saveCalendarEvent(
-              calendar,
-              message,
-              dueDate,
-              title,
-              this.addCalendarEvent
-            );
-          },
-          async eventId => {
-            this.confirmSaveCalendarEventAlert(
-              calendar,
-              message,
-              dueDate,
-              title,
-              eventId
-            );
-          }
+      searchEventInCalendar(dueDate, title)
+        .then(mayBeEventId =>
+          mayBeEventId.foldL(
+            () => {
+              saveCalendarEvent(
+                calendar,
+                message,
+                dueDate,
+                title,
+                this.addCalendarEvent
+              );
+            },
+            async eventId => {
+              this.confirmSaveCalendarEventAlert(
+                calendar,
+                message,
+                dueDate,
+                title,
+                eventId
+              );
+            }
+          )
         )
-      )
-      .catch(() =>
-        saveCalendarEvent(calendar, message, dueDate, title, addCalendarEvent)
-      );
-  };
+        .catch(() =>
+          saveCalendarEvent(calendar, message, dueDate, title, addCalendarEvent)
+        );
+    };
 
   private onRemoveCalendarEvent = (calendarEvent: CalendarEvent) => {
     this.props.removeCalendarEvent({

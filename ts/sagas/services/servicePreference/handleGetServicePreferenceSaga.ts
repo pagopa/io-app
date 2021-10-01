@@ -28,10 +28,8 @@ export function* handleGetServicePreference(
   action: ActionType<typeof loadServicePreference.request>
 ) {
   try {
-    const response: SagaCallReturnType<typeof getServicePreference> = yield call(
-      getServicePreference,
-      { service_id: action.payload }
-    );
+    const response: SagaCallReturnType<typeof getServicePreference> =
+      yield call(getServicePreference, { service_id: action.payload });
 
     if (response.isRight()) {
       if (response.value.status === 200) {

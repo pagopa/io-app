@@ -279,13 +279,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   };
 
   private renderLeft = () => {
-    const {
-      isSearchEnabled,
-      appLogo,
-      primary,
-      dark,
-      isPagoPATestEnabled
-    } = this.props;
+    const { isSearchEnabled, appLogo, primary, dark, isPagoPATestEnabled } =
+      this.props;
 
     const iconColor = isPagoPATestEnabled
       ? variables.brandHighlight

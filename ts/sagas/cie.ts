@@ -39,9 +39,8 @@ export function* checkHasApiLevelSupportSaga(
   hasApiLevelSupported: typeof cieManager["hasApiLevelSupport"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof hasApiLevelSupported> = yield call(
-      hasApiLevelSupported
-    );
+    const response: SagaCallReturnType<typeof hasApiLevelSupported> =
+      yield call(hasApiLevelSupported);
     yield put(hasApiLevelSupport.success(response));
   } catch (e) {
     yield put(hasApiLevelSupport.failure(new Error(e)));
@@ -56,9 +55,8 @@ export function* checkHasNfcFeatureSaga(
   hasNfcFeatureSupported: typeof cieManager["hasNFCFeature"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof hasNfcFeatureSupported> = yield call(
-      hasNfcFeatureSupported
-    );
+    const response: SagaCallReturnType<typeof hasNfcFeatureSupported> =
+      yield call(hasNfcFeatureSupported);
     yield put(hasNFCFeature.success(response));
   } catch (e) {
     yield put(hasNFCFeature.failure(new Error(e)));
@@ -73,9 +71,8 @@ export function* checkCieAvailabilitySaga(
   isCIEAuthenticationSupported: typeof cieManager["isCIEAuthenticationSupported"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> = yield call(
-      isCIEAuthenticationSupported
-    );
+    const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> =
+      yield call(isCIEAuthenticationSupported);
     yield put(cieIsSupported.success(response));
   } catch (e) {
     yield put(cieIsSupported.failure(new Error(e)));
@@ -88,9 +85,8 @@ const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
 export function* checkNfcEnablementSaga(): SagaIterator {
   try {
     while (true) {
-      const isNfcEnabled: SagaCallReturnType<typeof cieManager.isNFCEnabled> = yield call(
-        cieManager.isNFCEnabled
-      );
+      const isNfcEnabled: SagaCallReturnType<typeof cieManager.isNFCEnabled> =
+        yield call(cieManager.isNFCEnabled);
       yield put(nfcIsEnabled.success(isNfcEnabled));
       if (isNfcEnabled) {
         return;

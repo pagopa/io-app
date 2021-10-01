@@ -103,8 +103,8 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
-import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
+import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -142,9 +142,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // Get last logged in Profile from the state
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> = yield select(
-    profileSelector
-  );
+  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
+    yield select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
     ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
@@ -158,14 +157,14 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield put(resetProfileState());
 
   // Whether the user is currently logged in.
-  const previousSessionToken: ReturnType<typeof sessionTokenSelector> = yield select(
-    sessionTokenSelector
-  );
+  const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
+    yield select(sessionTokenSelector);
 
   // Unless we have a valid session token already, login until we have one.
-  const sessionToken: SagaCallReturnType<typeof authenticationSaga> = previousSessionToken
-    ? previousSessionToken
-    : yield call(authenticationSaga);
+  const sessionToken: SagaCallReturnType<typeof authenticationSaga> =
+    previousSessionToken
+      ? previousSessionToken
+      : yield call(authenticationSaga);
 
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
@@ -176,10 +175,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     sessionToken
   );
   // check if the current session is still valid
-  const checkSessionResponse: SagaCallReturnType<typeof checkSession> = yield call(
-    checkSession,
-    backendClient.getSession
-  );
+  const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
+    yield call(checkSession, backendClient.getSession);
   if (checkSessionResponse === 401) {
     // This is the first API call we make to the backend, it may happen that
     // when we're using the previous session token, that session has expired
@@ -202,9 +199,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   //        time we get a session token, think about merging the
   //        two steps.
   // eslint-disable-next-line
-  let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> = yield select(
-    sessionInfoSelector
-  );
+  let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
+    yield select(sessionInfoSelector);
   if (isSessionRefreshed || maybeSessionInformation.isNone()) {
     // let's try to load the session information from the backend.
     maybeSessionInformation = yield call(
@@ -316,10 +312,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       // The user was previously logged in, so no onboarding is needed
       // The session was valid so the user didn't event had to do a full login,
       // in this case we ask the user to identify using the unlock code.
-      const identificationResult: SagaCallReturnType<typeof startAndReturnIdentificationResult> = yield call(
-        startAndReturnIdentificationResult,
-        storedPin
-      );
+      const identificationResult: SagaCallReturnType<
+        typeof startAndReturnIdentificationResult
+      > = yield call(startAndReturnIdentificationResult, storedPin);
       if (identificationResult === IdentificationResult.pinreset) {
         // If we are here the user had chosen to reset the unlock code
         yield put(startApplicationInitialization());
@@ -374,9 +369,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
 
-  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> = yield select(
-    isPagoPATestEnabledSelector
-  );
+  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
+    yield select(isPagoPATestEnabledSelector);
 
   yield fork(
     watchWalletSaga,
@@ -460,16 +454,16 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
-  // Load messages when requested
-  yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);
+  // Load all messages when requested
+  yield fork(watchLoadMessages, backendClient.getMessages);
 
-  // Load messages when requested
+  // Load a message when requested
   yield fork(watchMessageLoadSaga, backendClient.getMessage);
 
   // Load message and related entities (ex. the sender service)
   yield takeEvery(
     getType(loadMessageWithRelations.request),
-    loadMessageWithRelationsSaga,
+    watchLoadMessageWithRelationsSaga,
     backendClient.getMessage
   );
 
@@ -485,9 +479,8 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   yield fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
-  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> = yield select(
-    pendingMessageStateSelector
-  );
+  const pendingMessageState: ReturnType<typeof pendingMessageStateSelector> =
+    yield select(pendingMessageStateSelector);
 
   if (pendingMessageState) {
     // We have a pending notification message to handle

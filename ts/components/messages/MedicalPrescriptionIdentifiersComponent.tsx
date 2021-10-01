@@ -29,9 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<
-  Props
-> {
+export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<Props> {
   private renderItem = (label: string, value: string) => (
     <React.Fragment>
       <Text>{label}</Text>

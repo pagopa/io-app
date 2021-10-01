@@ -24,9 +24,8 @@ export function* handleLoadAbi(
   getAbi: ReturnType<typeof ContentClient>["getAbiList"]
 ) {
   try {
-    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> = yield call(
-      getAbi
-    );
+    const getAbiWithRefreshResult: SagaCallReturnType<typeof getAbi> =
+      yield call(getAbi);
     if (getAbiWithRefreshResult.isRight()) {
       if (getAbiWithRefreshResult.value.status === 200) {
         yield put(loadAbi.success(getAbiWithRefreshResult.value.value));
@@ -54,9 +53,9 @@ export function* handleLoadPans(
       getPans(action.payload)
     );
 
-    const getPansWithRefreshResult: SagaCallReturnType<typeof getPansWithRefresh> = yield call(
-      getPansWithRefresh
-    );
+    const getPansWithRefreshResult: SagaCallReturnType<
+      typeof getPansWithRefresh
+    > = yield call(getPansWithRefresh);
     if (getPansWithRefreshResult.isRight()) {
       if (getPansWithRefreshResult.value.status === 200) {
         const response = getPansWithRefreshResult.value.value.data;
@@ -110,9 +109,9 @@ export function* handleAddPan(
       // add a card as an array of one element
       addPans({ data: { data: [action.payload] } })
     );
-    const addPansWithRefreshResult: SagaCallReturnType<typeof addPansWithRefresh> = yield call(
-      addPansWithRefresh
-    );
+    const addPansWithRefreshResult: SagaCallReturnType<
+      typeof addPansWithRefresh
+    > = yield call(addPansWithRefresh);
     if (addPansWithRefreshResult.isRight()) {
       if (addPansWithRefreshResult.value.status === 200) {
         const wallets = (addPansWithRefreshResult.value.value.data ?? []).map(

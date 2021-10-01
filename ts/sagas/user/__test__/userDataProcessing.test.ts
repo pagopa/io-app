@@ -163,7 +163,9 @@ describe("deleteUserDataProcessingSaga", () => {
     payload: UserDataProcessingChoiceEnum.DELETE
   };
 
-  const requestActionDownload: ActionType<typeof deleteUserDataProcessing.request> = {
+  const requestActionDownload: ActionType<
+    typeof deleteUserDataProcessing.request
+  > = {
     type: "DELETE_USER_DATA_PROCESSING_REQUEST",
     payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };

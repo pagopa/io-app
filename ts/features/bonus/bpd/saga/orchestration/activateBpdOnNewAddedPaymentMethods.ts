@@ -24,13 +24,11 @@ export function* activateBpdOnNewPaymentMethods(
   if (!atLeastOnePaymentMethodWithBpdCapability) {
     return yield put(navigateToWalletHome());
   }
-  const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> = yield call(
-    isBpdEnabled
-  );
+  const isBpdEnabledResponse: SagaCallReturnType<typeof isBpdEnabled> =
+    yield call(isBpdEnabled);
 
-  const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> = yield select(
-    bpdRemoteConfigSelector
-  );
+  const bpdRemoteConfig: ReturnType<typeof bpdRemoteConfigSelector> =
+    yield select(bpdRemoteConfigSelector);
 
   // Error while reading the bpdEnabled, return to wallet
   if (isBpdEnabledResponse.isLeft()) {
