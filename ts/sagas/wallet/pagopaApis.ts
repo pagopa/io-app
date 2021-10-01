@@ -46,8 +46,14 @@ import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { getError, getNetworkError, isTimeoutError } from "../../utils/errors";
+import {
+  getError,
+  getErrorFromNetworkError,
+  getNetworkError,
+  isTimeoutError
+} from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
+import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
 
 //
 // Payment Manager APIs
@@ -355,6 +361,91 @@ export function* updateWalletPspRequestHandler(
       // signal the callee if requested
       action.payload.onFailure(failureAction);
     }
+  }
+}
+
+/**
+ * delete all those payment methods that have the specified function enabled
+ * @param pagoPaClient
+ * @param pmSessionManager
+ * @param action
+ */
+export function* deleteAllPaymentMethodsByFunctionRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof deleteAllPaymentMethodsByFunction>
+): Generator<Effect, void, any> {
+  const deleteAllByFunctionApi = pagoPaClient.deleteAllPaymentMethodsByFunction(
+    action.payload as string
+  );
+  const deleteAllByFunctionApiWithRefresh = pmSessionManager.withRefresh(
+    deleteAllByFunctionApi
+  );
+
+  try {
+    const deleteResponse: SagaCallReturnType<
+      typeof deleteAllByFunctionApiWithRefresh
+    > = yield call(deleteAllByFunctionApiWithRefresh);
+    if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
+      const notDeletedMethodsCount =
+        deleteResponse.value.value.data?.notDeletedWallets ?? -1;
+      // some error occurred while deletion
+      if (notDeletedMethodsCount !== 0) {
+        yield put(
+          deleteAllPaymentMethodsByFunction.failure({
+            error: Error("can't delete some methods"),
+            notDeletedMethodsCount
+          })
+        );
+        return;
+      }
+      const deletedMethodsCount =
+        deleteResponse.value.value.data?.deletedWallets ?? -1;
+      /**
+       * this API should do 2 things (but it doesn't):
+       * 1. delete payment methods
+       * 2. return the updated list of the payment methods
+       * ATM the app does both but this should be avoided, see https://pagopa.atlassian.net/browse/PM-150
+       * If one of these request fail, it's a failure
+       */
+      const maybeWallets: SagaCallReturnType<typeof getWallets> = yield call(
+        getWallets,
+        pagoPaClient,
+        pmSessionManager
+      );
+      if (maybeWallets.isRight()) {
+        const successAction = deleteAllPaymentMethodsByFunction.success({
+          wallets: maybeWallets.value,
+          deletedMethodsCount
+        });
+        yield put(successAction);
+      } else {
+        yield put(
+          deleteAllPaymentMethodsByFunction.failure({
+            error: maybeWallets.value,
+            notDeletedMethodsCount
+          })
+        );
+      }
+    } else {
+      const error = Error(
+        deleteResponse.fold(
+          readablePrivacyReport,
+          ({ status }) => `response status ${status}`
+        )
+      );
+      yield put(
+        deleteAllPaymentMethodsByFunction.failure({
+          error
+        })
+      );
+    }
+  } catch (e) {
+    yield put(
+      deleteAllPaymentMethodsByFunction.failure({
+        error: getErrorFromNetworkError(getNetworkError(e))
+      })
+    );
   }
 }
 

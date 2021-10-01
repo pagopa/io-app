@@ -169,6 +169,7 @@ import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
+  deleteAllPaymentMethodsByFunctionRequestHandler,
   deleteWalletRequestHandler,
   fetchPspRequestHandler,
   fetchTransactionRequestHandler,
@@ -191,6 +192,7 @@ import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
+import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -728,6 +730,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentUpdateWalletPsp.request),
     updateWalletPspRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(deleteAllPaymentMethodsByFunction.request),
+    deleteAllPaymentMethodsByFunctionRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
