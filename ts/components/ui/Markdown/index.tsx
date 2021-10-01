@@ -188,7 +188,7 @@ const OLD_DEMO_TAG_MARKDOWN_REGEX = /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/;
 const convertOldDemoMarkdownTag = (markdown: string) =>
   markdown.replace(
     OLD_DEMO_TAG_MARKDOWN_REGEX,
-    (_, g1: string) => `[[IO-DEMO]]\n| ${g1}\n`
+    (_, g1: string) => `::div[${g1}]{.io-demo-block}\n`
   );
 
 type OwnProps = {
