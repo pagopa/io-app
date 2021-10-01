@@ -30,7 +30,7 @@ const onCancel = jest.fn();
 
 describe("TransactionErrorScreen", () => {
   jest.useFakeTimers();
-  
+
   it("Should render technical screen", () => {
     const { component } = renderComponent(
       some(Detail_v2Enum.PPT_CANALE_DISABILITATO)

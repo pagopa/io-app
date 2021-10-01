@@ -17,43 +17,43 @@ import {
   walletAddPrivativeStart
 } from "../store/actions";
 
-export const trackPrivativeAction = (mp: NonNullable<typeof mixpanel>) => (
-  action: Action
-): Promise<void> => {
-  switch (action.type) {
-    case getType(walletAddPrivativeStart):
-    case getType(walletAddPrivativeCompleted):
-    case getType(walletAddPrivativeCancel):
-    case getType(walletAddPrivativeBack):
-    case getType(addPrivativeToWallet.request):
-    case getType(loadPrivativeIssuers.request):
-    case getType(walletAddPrivativeInsertCardNumber):
-      return mp.track(action.type);
-    case getType(walletAddPrivativeChooseIssuer):
-      return mp.track(action.type, { issuer: action.payload });
-    case getType(searchUserPrivative.request):
-      return mp.track(action.type, { issuer: action.payload.id });
-    case getType(loadPrivativeIssuers.success):
-      return mp.track(action.type, trackPrivativeIssuers(action.payload));
-    case getType(searchUserPrivative.success):
-      return mp.track(action.type, trackCobadgeResponse(action.payload));
-    case getType(addPrivativeToWallet.success):
-      return mp.track(action.type, {
-        issuer: action.payload.info.issuerAbiCode
-      });
-    case getType(addPrivativeToWallet.failure):
-    case getType(loadPrivativeIssuers.failure):
-    case getType(searchUserPrivative.failure):
-      return mp.track(action.type, {
-        reason: getNetworkErrorMessage(action.payload)
-      });
-    case getType(walletAddPrivativeFailure):
-      return mp.track(action.type, {
-        reason: action.payload
-      });
-  }
-  return Promise.resolve();
-};
+export const trackPrivativeAction =
+  (mp: NonNullable<typeof mixpanel>) =>
+  (action: Action): Promise<void> => {
+    switch (action.type) {
+      case getType(walletAddPrivativeStart):
+      case getType(walletAddPrivativeCompleted):
+      case getType(walletAddPrivativeCancel):
+      case getType(walletAddPrivativeBack):
+      case getType(addPrivativeToWallet.request):
+      case getType(loadPrivativeIssuers.request):
+      case getType(walletAddPrivativeInsertCardNumber):
+        return mp.track(action.type);
+      case getType(walletAddPrivativeChooseIssuer):
+        return mp.track(action.type, { issuer: action.payload });
+      case getType(searchUserPrivative.request):
+        return mp.track(action.type, { issuer: action.payload.id });
+      case getType(loadPrivativeIssuers.success):
+        return mp.track(action.type, trackPrivativeIssuers(action.payload));
+      case getType(searchUserPrivative.success):
+        return mp.track(action.type, trackCobadgeResponse(action.payload));
+      case getType(addPrivativeToWallet.success):
+        return mp.track(action.type, {
+          issuer: action.payload.info.issuerAbiCode
+        });
+      case getType(addPrivativeToWallet.failure):
+      case getType(loadPrivativeIssuers.failure):
+      case getType(searchUserPrivative.failure):
+        return mp.track(action.type, {
+          reason: getNetworkErrorMessage(action.payload)
+        });
+      case getType(walletAddPrivativeFailure):
+        return mp.track(action.type, {
+          reason: action.payload
+        });
+    }
+    return Promise.resolve();
+  };
 
 /**
  * Transform a {@link PrivativeServices} into a MixpanelPayload

@@ -13,9 +13,8 @@ export const searchServicesEnabled = createStandardAction(
   "SEARCH_SERVICES_ENABLED"
 )<boolean>();
 
-export const updateSearchText = createStandardAction("UPDATE_SEARCH_TEXT")<
-  Option<string>
->();
+export const updateSearchText =
+  createStandardAction("UPDATE_SEARCH_TEXT")<Option<string>>();
 
 export const disableSearch = createStandardAction("DISABLE_SEARCH")();
 

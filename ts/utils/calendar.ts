@@ -25,9 +25,7 @@ type CalendarAuthorization = { authorized: boolean; asked: boolean };
  * A function that checks if the user has already permission to read/write to Calendars
  * and in case of not already defined permission try to get the authorization.
  */
-export async function checkAndRequestPermission(): Promise<
-  CalendarAuthorization
-> {
+export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
     const status = await RNCalendarEvents.checkPermissions();
     // If the user already selected to deny permission just return false

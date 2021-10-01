@@ -33,7 +33,8 @@ const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString
@@ -54,7 +55,8 @@ const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
   fiscal_code: "" as any,
   created_at: new Date(),
   content: {
-    markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
+    markdown:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget fringilla neque, laoreet volutpat elit. Nunc leo nisi, dignissim eget lobortis non, faucibus in augue." as any,
     subject: "Lorem ipsum..." as any
   },
   sender_service_id: testServiceId1 as NonEmptyString

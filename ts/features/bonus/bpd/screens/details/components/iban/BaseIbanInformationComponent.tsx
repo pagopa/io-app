@@ -59,28 +59,31 @@ const TechnicalIbanComponent = (props: { technicalIban: string }) => (
   <Body>{props.technicalIban}</Body>
 );
 
-export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps> = props => (
-  <View style={IOStyles.flex}>
-    <View style={styles.row}>
-      <H4>{I18n.t("bonus.bpd.details.components.iban.title")}</H4>
-      {!isStringNullyOrEmpty(props.iban) && (
-        <Link onPress={props.onInsertIban}>
-          {I18n.t("global.buttons.edit").toLowerCase()}
-        </Link>
-      )}
-    </View>
-    <View spacer={true} />
-    {/* Also if it is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
-    {props.iban ? (
-      isReady(props.technicalAccount) &&
-      props.technicalAccount.value !== undefined ? (
-        <TechnicalIbanComponent technicalIban={props.technicalAccount.value} />
+export const BaseIbanInformationComponent: React.FunctionComponent<BaseIbanProps> =
+  props => (
+    <View style={IOStyles.flex}>
+      <View style={styles.row}>
+        <H4>{I18n.t("bonus.bpd.details.components.iban.title")}</H4>
+        {!isStringNullyOrEmpty(props.iban) && (
+          <Link onPress={props.onInsertIban}>
+            {I18n.t("global.buttons.edit").toLowerCase()}
+          </Link>
+        )}
+      </View>
+      <View spacer={true} />
+      {/* Also if it is a technical IBAN the field IBAN is filled (with a fake IBAN). */}
+      {props.iban ? (
+        isReady(props.technicalAccount) &&
+        props.technicalAccount.value !== undefined ? (
+          <TechnicalIbanComponent
+            technicalIban={props.technicalAccount.value}
+          />
+        ) : (
+          <IbanComponent iban={props.iban} />
+        )
       ) : (
-        <IbanComponent iban={props.iban} />
-      )
-    ) : (
-      <NoIbanComponent onPress={props.onInsertIban} />
-    )}
-    <View spacer={true} />
-  </View>
-);
+        <NoIbanComponent onPress={props.onInsertIban} />
+      )}
+      <View spacer={true} />
+    </View>
+  );

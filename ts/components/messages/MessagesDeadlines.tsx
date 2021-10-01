@@ -191,7 +191,8 @@ const generateSections = (
                 // We need to add the message to the last section.
                 // We are sure that pop will return at least one element because
                 // of the previous `if` step.
-                const prevSection = accumulator.sections.pop() as MessageAgendaSection;
+                const prevSection =
+                  accumulator.sections.pop() as MessageAgendaSection;
                 const newSection = {
                   title,
                   data: [...prevSection.data, messageAgendaItem]
@@ -453,9 +454,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             });
           }
 
-          const lastLoadedStartOfMonthTime = maybeLastLoadedStartOfMonthTime.getOrElse(
-            startOfMonth(new Date()).getTime()
-          );
+          const lastLoadedStartOfMonthTime =
+            maybeLastLoadedStartOfMonthTime.getOrElse(
+              startOfMonth(new Date()).getTime()
+            );
 
           return {
             isWorking: false,
@@ -518,9 +520,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       isWorking: false,
       sections,
       sectionsToRender,
-      allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
-        sectionsToRender
-      ),
+      allMessageIdsState:
+        this.generateMessagesIdsFromMessageAgendaSection(sectionsToRender),
       isContinuosScrollEnabled,
       lastDeadlineId,
       nextDeadlineId
@@ -557,9 +558,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         isWorking: false,
         sections,
         sectionsToRender,
-        allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
-          sectionsToRender
-        ),
+        allMessageIdsState:
+          this.generateMessagesIdsFromMessageAgendaSection(sectionsToRender),
         isContinuosScrollEnabled,
         lastDeadlineId,
         nextDeadlineId

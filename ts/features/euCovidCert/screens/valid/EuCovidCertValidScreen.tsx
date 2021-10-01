@@ -217,9 +217,8 @@ const Footer = (props: FooterProps): React.ReactElement => {
 
 const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   const screenShotViewContainer = React.createRef<View>();
-  const [flashAnimationState, setFlashAnimationState] = useState<
-    FlashAnimationState
-  >();
+  const [flashAnimationState, setFlashAnimationState] =
+    useState<FlashAnimationState>();
   const [isCapturingScreenShoot, setIsCapturingScreenShoot] = useState(false);
   React.useEffect(() => {
     if (isCapturingScreenShoot) {

@@ -34,10 +34,9 @@ export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): Generator<Effect, Either<NetworkError, StartEycaStatus>, any> {
   try {
-    const startEycaActivationResult: SagaCallReturnType<typeof startEycaActivation> = yield call(
-      startEycaActivation,
-      {}
-    );
+    const startEycaActivationResult: SagaCallReturnType<
+      typeof startEycaActivation
+    > = yield call(startEycaActivation, {});
     if (startEycaActivationResult.isRight()) {
       const status = startEycaActivationResult.value.status;
       const activationStatus = mapStatus.get(status);
@@ -64,10 +63,9 @@ export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ): Generator<Effect, Either<NetworkError, GetEycaStatus>, any> {
   try {
-    const getEycaActivationResult: SagaCallReturnType<typeof getEycaActivation> = yield call(
-      getEycaActivation,
-      {}
-    );
+    const getEycaActivationResult: SagaCallReturnType<
+      typeof getEycaActivation
+    > = yield call(getEycaActivation, {});
     if (getEycaActivationResult.isRight()) {
       if (getEycaActivationResult.value.status === 200) {
         const result = getEycaActivationResult.value.value;

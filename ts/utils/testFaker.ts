@@ -232,7 +232,8 @@ export const AuthSeq: ReadonlyArray<Action> = [
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   } as SpidIdp),
   loginSuccess({
-    token: "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken,
+    token:
+      "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken,
     idp: "posteid"
   }),
   sessionInformationLoadSuccess({
