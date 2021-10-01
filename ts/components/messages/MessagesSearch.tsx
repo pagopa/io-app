@@ -96,11 +96,12 @@ class MessagesSearch extends React.PureComponent<Props, State> {
     });
 
     // Start filtering messages
-    const filteredMessageStates = await generateMessagesStateMatchingSearchTextArrayAsync(
-      messagesState,
-      servicesById,
-      searchText
-    );
+    const filteredMessageStates =
+      await generateMessagesStateMatchingSearchTextArrayAsync(
+        messagesState,
+        servicesById,
+        searchText
+      );
 
     // Unset filtering status
     this.setState({
@@ -109,10 +110,8 @@ class MessagesSearch extends React.PureComponent<Props, State> {
   }
 
   public async componentDidUpdate(prevProps: Props) {
-    const {
-      messagesState: prevMessagesState,
-      searchText: prevSearchText
-    } = prevProps;
+    const { messagesState: prevMessagesState, searchText: prevSearchText } =
+      prevProps;
     const { messagesState, servicesById, searchText } = this.props;
     const { potFilteredMessageStates } = this.state;
 
@@ -123,11 +122,12 @@ class MessagesSearch extends React.PureComponent<Props, State> {
       });
 
       // Start filtering messages
-      const filteredMessageStates = await generateMessagesStateMatchingSearchTextArrayAsync(
-        messagesState,
-        servicesById,
-        searchText
-      );
+      const filteredMessageStates =
+        await generateMessagesStateMatchingSearchTextArrayAsync(
+          messagesState,
+          servicesById,
+          searchText
+        );
 
       // Unset filtering status
       this.setState({

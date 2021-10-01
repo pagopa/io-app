@@ -44,9 +44,8 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
     );
   yield call(sagaExecution);
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
-  );
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+    yield select(navigationCurrentRouteSelector);
   const route = currentRoute.toUndefined();
   if (
     // if the activation started from the CTA -> go back

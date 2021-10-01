@@ -8,9 +8,9 @@ export const setSelectedOrganizations = createStandardAction(
   "SET_SELECTED_ORGANIZATIONS"
 )<ReadonlyArray<string>>();
 
-export const updateOrganizations = createStandardAction("UPDATE_ORGANIZATIONS")<
-  ServicePublic
->();
+export const updateOrganizations = createStandardAction(
+  "UPDATE_ORGANIZATIONS"
+)<ServicePublic>();
 
 export type OrganizationsActions =
   | ActionType<typeof setSelectedOrganizations>

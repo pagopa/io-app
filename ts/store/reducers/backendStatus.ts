@@ -39,10 +39,10 @@ export const backendStatusSelector = (
 
 // return the section status for the given key. if it is not present, returns undefined
 export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
-  createSelector(backendStatusSelector, (backendStatus):
-    | SectionStatus
-    | undefined =>
-    backendStatus.map(bs => bs.sections[sectionStatusKey]).toUndefined()
+  createSelector(
+    backendStatusSelector,
+    (backendStatus): SectionStatus | undefined =>
+      backendStatus.map(bs => bs.sections[sectionStatusKey]).toUndefined()
   );
 
 export const bpdRankingEnabledSelector = createSelector(

@@ -21,9 +21,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const PrivativeDetailScreen: React.FunctionComponent<Props> = props => {
-  const privative: PrivativePaymentMethod = props.navigation.getParam(
-    "privative"
-  );
+  const privative: PrivativePaymentMethod =
+    props.navigation.getParam("privative");
   return (
     <BasePaymentMethodScreen
       paymentMethod={privative}

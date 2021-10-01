@@ -22,10 +22,8 @@ export function* handleGetVoucheStati(
     yield call(waitBackoffError, svPossibleVoucherStateGet.failure);
 
     // TODO: add MitVoucherToken
-    const getStatiVoucherResult: SagaCallReturnType<typeof getStatiVoucher> = yield call(
-      getStatiVoucher,
-      {}
-    );
+    const getStatiVoucherResult: SagaCallReturnType<typeof getStatiVoucher> =
+      yield call(getStatiVoucher, {});
 
     if (getStatiVoucherResult.isRight()) {
       if (getStatiVoucherResult.value.status === 200) {

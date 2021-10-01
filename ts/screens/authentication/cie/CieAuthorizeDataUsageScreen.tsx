@@ -33,9 +33,8 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };
-    this.handleMarkdownLoadingCompleted = this.handleMarkdownLoadingCompleted.bind(
-      this
-    );
+    this.handleMarkdownLoadingCompleted =
+      this.handleMarkdownLoadingCompleted.bind(this);
   }
 
   private readonly handleMarkdownLoadingCompleted = () => {

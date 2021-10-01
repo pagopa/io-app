@@ -55,9 +55,8 @@ export function* handleSearchUserPrivative(
   searchAction: ActionType<typeof searchUserPrivative.request>
 ) {
   // try to retrieve the searchRequestId for privative search
-  const searchRequestId: ReturnType<typeof onboardingPrivativeSearchRequestId> = yield select(
-    onboardingPrivativeSearchRequestId
-  );
+  const searchRequestId: ReturnType<typeof onboardingPrivativeSearchRequestId> =
+    yield select(onboardingPrivativeSearchRequestId);
 
   // get the results
   const result: SagaCallReturnType<typeof searchUserCobadge> = yield call(

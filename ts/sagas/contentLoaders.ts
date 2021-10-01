@@ -134,11 +134,12 @@ function* watchContentMunicipalityLoadSaga(
 ): SagaIterator {
   const codiceCatastale = action.payload;
   try {
-    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> = yield call(
-      fetchMunicipalityMetadata,
-      contentClient.getMunicipality,
-      codiceCatastale
-    );
+    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> =
+      yield call(
+        fetchMunicipalityMetadata,
+        contentClient.getMunicipality,
+        codiceCatastale
+      );
 
     if (response.isRight()) {
       yield put(
@@ -165,9 +166,8 @@ function* watchContentMunicipalityLoadSaga(
  */
 function* watchLoadContextualHelp(): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof getContextualHelpData> = yield call(
-      getContextualHelpData
-    );
+    const response: SagaCallReturnType<typeof getContextualHelpData> =
+      yield call(getContextualHelpData);
     if (response.isRight()) {
       if (response.value.status === 200) {
         yield put(loadContextualHelpData.success(response.value.value));
@@ -210,10 +210,8 @@ function* handleLoadAvailableBonus(
   getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
 ): SagaIterator {
   try {
-    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> = yield call(
-      getBonusAvailable,
-      {}
-    );
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
+      yield call(getBonusAvailable, {});
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
         yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
