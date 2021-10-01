@@ -199,14 +199,6 @@ export const errorTransactionUIElements = (
       "closeButtonConfirm"
     )
   ];
-  const backButtonConfirm = [
-    confirmButtonProps(
-      onCancel,
-      I18n.t("global.buttons.back"),
-      undefined,
-      "backButtonConfirm"
-    )
-  ];
 
   switch (errorMacro) {
     case "TECHNICAL":
@@ -221,7 +213,7 @@ export const errorTransactionUIElements = (
         image,
         title: I18n.t("wallet.errors.DATA"),
         subtitle,
-        footerButtons: [...backButtonConfirm, ...sendReportButtonCancel]
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
       };
     case "EC":
       return {
