@@ -20,6 +20,7 @@ import { Hospital } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { navigateToSvSelectFlightsDateScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
+import TextboxAutocomplete from "../../../../../components/ui/TextboxAutocomplete";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -64,6 +65,8 @@ const SickSelectDestinationScreen = (
           <H1>
             {I18n.t("bonus.sv.voucherGeneration.sick.selectDestination.title")}
           </H1>
+
+          <TextboxAutocomplete />
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
