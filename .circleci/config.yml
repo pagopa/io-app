@@ -144,7 +144,7 @@ jobs:
       - *install_node_modules
 
       # Run linter
-      - run: yarn prettier --check "ts/**/*.ts*"
+      - run: yarn prettier:check
 
   # Runs Danger checks on PR
   run-danger:
