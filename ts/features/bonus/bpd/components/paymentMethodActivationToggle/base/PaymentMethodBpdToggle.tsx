@@ -173,8 +173,8 @@ const PaymentMethodActivationToggle: React.FunctionComponent<Props> = props => {
     ? "NotCompatible"
     : "NotActivable";
 
-  const askConfirmation = useChangeActivationConfirmationBottomSheet(props)
-    .present;
+  const askConfirmation =
+    useChangeActivationConfirmationBottomSheet(props).present;
 
   const showExplanation = useNotActivableInformationBottomSheet(props).present;
 

@@ -31,10 +31,11 @@ const mockMeta: CreatedMessageWithoutContent = {
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
     subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-    markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-      80,
-      10001
-    >,
+    markdown:
+      "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+        80,
+        10001
+      >,
     due_date: new Date(),
     payment_data: {
       amount: 1 as PaymentAmount,
@@ -67,10 +68,11 @@ const mockEUCovidMessage: pot.Pot<
     content: {
       eu_covid_cert: { auth_code: "eu_covid_cert" },
       subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-      markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-        80,
-        10001
-      >,
+      markdown:
+        "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+          80,
+          10001
+        >,
       due_date: new Date(),
       payment_data: {
         amount: 1 as PaymentAmount,

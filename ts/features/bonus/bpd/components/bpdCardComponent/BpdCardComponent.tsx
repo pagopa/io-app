@@ -249,19 +249,16 @@ const statusHandlersMap = new Map<
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
 const calculateGraphicalState = (props: Props) =>
-  fromNullable(
-    statusHandlersMap.get(props.period.status)
-  ).fold(initialGraphicalState, handler => handler(props));
+  fromNullable(statusHandlersMap.get(props.period.status)).fold(
+    initialGraphicalState,
+    handler => handler(props)
+  );
 
 export const BpdCardComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const {
-    amount,
-    isInGracePeriod,
-    iconName,
-    statusBadge
-  } = calculateGraphicalState(props);
+  const { amount, isInGracePeriod, iconName, statusBadge } =
+    calculateGraphicalState(props);
 
   const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
   const isPeriodInactive = props.period.status === "Inactive";

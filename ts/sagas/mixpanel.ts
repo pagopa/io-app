@@ -7,9 +7,8 @@ import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import ROUTES from "../navigation/routes";
 
 export function* initMixpanel(): Generator<Effect, void, boolean> {
-  const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> = yield select(
-    isMixpanelEnabled
-  );
+  const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
+    yield select(isMixpanelEnabled);
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
@@ -31,9 +30,8 @@ export function* handleSetMixpanelEnabled(
  * check, and eventually ask, about mixpanel opt-in
  */
 export function* askMixpanelOptIn() {
-  const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> = yield select(
-    isMixpanelEnabled
-  );
+  const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
+    yield select(isMixpanelEnabled);
   // user already express a preference
   // do nothing
   if (isMixpanelEnabledResult !== null) {

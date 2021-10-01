@@ -44,43 +44,43 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
-const renderItem = (props: Props) => (
-  info: ListRenderItemInfo<LocalIdpsFallback>
-): React.ReactElement => {
-  const { onIdpSelected } = props;
-  const { item } = info;
+const renderItem =
+  (props: Props) =>
+  (info: ListRenderItemInfo<LocalIdpsFallback>): React.ReactElement => {
+    const { onIdpSelected } = props;
+    const { item } = info;
 
-  const onPress = () => onIdpSelected(item);
-  if (item.isTestIdp === true) {
+    const onPress = () => onIdpSelected(item);
+    if (item.isTestIdp === true) {
+      return (
+        // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
+        <Button
+          transparent={true}
+          onPress={onPress}
+          style={styles.gridItem}
+          accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
+        />
+      );
+    }
     return (
-      // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
-      <Button
-        transparent={true}
-        onPress={onPress}
+      <ButtonDefaultOpacity
+        key={item.id}
+        accessible={true}
+        accessibilityLabel={item.name}
         style={styles.gridItem}
-        accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
-      />
+        transparent={true}
+        block={true}
+        white={true}
+        onPress={onPress}
+        testID={`idp-${item.id}-button`}
+      >
+        <Image
+          source={item.localLogo ? item.localLogo : { uri: item.logo }}
+          style={styles.idpLogo}
+        />
+      </ButtonDefaultOpacity>
     );
-  }
-  return (
-    <ButtonDefaultOpacity
-      key={item.id}
-      accessible={true}
-      accessibilityLabel={item.name}
-      style={styles.gridItem}
-      transparent={true}
-      block={true}
-      white={true}
-      onPress={onPress}
-      testID={`idp-${item.id}-button`}
-    >
-      <Image
-        source={item.localLogo ? item.localLogo : { uri: item.logo }}
-        style={styles.idpLogo}
-      />
-    </ButtonDefaultOpacity>
-  );
-};
+  };
 
 const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
   <FlatList

@@ -17,9 +17,9 @@ export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 export const profileLoadRequest = createStandardAction(
   "PROFILE_LOAD_REQUEST"
 )();
-export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
-  InitializedProfile
->();
+export const profileLoadSuccess = createStandardAction(
+  "PROFILE_LOAD_SUCCESS"
+)<InitializedProfile>();
 
 export const profileLoadFailure = createAction(
   "PROFILE_LOAD_FAILURE",

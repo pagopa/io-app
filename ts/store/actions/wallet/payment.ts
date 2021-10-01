@@ -190,9 +190,9 @@ export const paymentExecuteStart = createAsyncAction(
 
 export type PaymentWebViewEndReason = "USER_ABORT" | "EXIT_PATH";
 // event fired when the paywebview ends its challenge (used to reset payment values)
-export const paymentWebViewEnd = createStandardAction("PAYMENT_WEB_VIEW_END")<
-  PaymentWebViewEndReason
->();
+export const paymentWebViewEnd = createStandardAction(
+  "PAYMENT_WEB_VIEW_END"
+)<PaymentWebViewEndReason>();
 
 // used to accumulate all the urls browsed into the pay webview
 export const paymentRedirectionUrls = createStandardAction(

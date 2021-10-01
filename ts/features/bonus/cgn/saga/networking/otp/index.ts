@@ -10,10 +10,8 @@ export function* cgnGenerateOtp(
   generateOtp: ReturnType<typeof BackendCGN>["generateOtp"]
 ) {
   try {
-    const generateOtpResult: SagaCallReturnType<typeof generateOtp> = yield call(
-      generateOtp,
-      {}
-    );
+    const generateOtpResult: SagaCallReturnType<typeof generateOtp> =
+      yield call(generateOtp, {});
     if (generateOtpResult.isRight()) {
       if (generateOtpResult.value.status === 200) {
         yield put(cgnGenerateOtpAction.success(generateOtpResult.value.value));

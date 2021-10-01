@@ -51,12 +51,14 @@ const validCertificate: ValidCertificate = {
 const authCode = "123" as EUCovidCertificateAuthCode;
 const requestAction = euCovidCertificateGet.request(authCode);
 
-const cases: ReadonlyArray<[
-  apiResponse: Either<Error, { status: number; value?: Certificate }>,
-  expectedAction:
-    | ActionType<typeof euCovidCertificateGet.success>
-    | ActionType<typeof euCovidCertificateGet.failure>
-]> = [
+const cases: ReadonlyArray<
+  [
+    apiResponse: Either<Error, { status: number; value?: Certificate }>,
+    expectedAction:
+      | ActionType<typeof euCovidCertificateGet.success>
+      | ActionType<typeof euCovidCertificateGet.failure>
+  ]
+> = [
   [
     right({ status: 200, value: revokedCertificate }),
     euCovidCertificateGet.success({
@@ -101,7 +103,7 @@ const cases: ReadonlyArray<[
   [
     right({
       status: 200,
-      value: ({ kind: "strangeKind" } as unknown) as Certificate
+      value: { kind: "strangeKind" } as unknown as Certificate
     }), // should not never happen
     euCovidCertificateGet.success({ kind: "wrongFormat", authCode })
   ],

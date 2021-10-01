@@ -51,9 +51,8 @@ export function* addSatispayToWalletAndActivateBpd() {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit (hope soon!)
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-      navigationCurrentRouteSelector
-    );
+    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+      yield select(navigationCurrentRouteSelector);
 
     if (
       // TODO: The page will be WALLET_ADD_DIGITAL_PAYMENT_METHOD and should do two back
@@ -68,9 +67,9 @@ export function* addSatispayToWalletAndActivateBpd() {
     // refresh wallets list
     yield put(fetchWalletsRequest());
     // read the new added satispay
-    const satispayAdded: ReturnType<typeof onboardingSatispayAddedResultSelector> = yield select(
-      onboardingSatispayAddedResultSelector
-    );
+    const satispayAdded: ReturnType<
+      typeof onboardingSatispayAddedResultSelector
+    > = yield select(onboardingSatispayAddedResultSelector);
 
     if (satispayAdded) {
       yield call(

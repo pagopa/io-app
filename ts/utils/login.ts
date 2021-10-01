@@ -90,23 +90,25 @@ export const getIdpLoginUri = (idpId: string) =>
  * Extract the login result from the given url.
  * Return true if the url contains login pattern & token
  */
-export const onLoginUriChanged = (
-  onFailure: (errorCode: string | undefined) => void,
-  onSuccess: (_: SessionToken) => void
-) => (navState: WebViewNavigation): boolean => {
-  if (navState.url) {
-    // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(navState.url);
-    if (loginResult) {
-      if (loginResult.success) {
-        // In case of successful login
-        onSuccess(loginResult.token);
-        return true;
-      } else {
-        // In case of login failure
-        onFailure(loginResult.errorCode);
+export const onLoginUriChanged =
+  (
+    onFailure: (errorCode: string | undefined) => void,
+    onSuccess: (_: SessionToken) => void
+  ) =>
+  (navState: WebViewNavigation): boolean => {
+    if (navState.url) {
+      // If the url is not related to login this will be `null`
+      const loginResult = extractLoginResult(navState.url);
+      if (loginResult) {
+        if (loginResult.success) {
+          // In case of successful login
+          onSuccess(loginResult.token);
+          return true;
+        } else {
+          // In case of login failure
+          onFailure(loginResult.errorCode);
+        }
       }
     }
-  }
-  return false;
-};
+    return false;
+  };

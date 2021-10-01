@@ -223,9 +223,8 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
-  ScreenContentHeader
-);
+const AnimatedScreenContentHeader =
+  Animated.createAnimatedComponent(ScreenContentHeader);
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "services.contextualHelpTitle",
   body: "services.contextualHelpContent"
@@ -257,8 +256,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
     const disabledServices: number = Object.keys(
       currentTabServicesChannels
-    ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
-      .length;
+    ).filter(
+      id => currentTabServicesChannels[id].indexOf("INBOX") !== -1
+    ).length;
 
     return (
       disabledServices > 0 &&
@@ -519,11 +519,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    * Render Locals, Nationals and Other services tabs.
    */
   private renderTabs = () => {
-    const {
-      nationalTabSections,
-      potUserMetadata,
-      isLoadingServices
-    } = this.props;
+    const { nationalTabSections, potUserMetadata, isLoadingServices } =
+      this.props;
     const isRefreshing =
       isLoadingServices ||
       pot.isLoading(potUserMetadata) ||
@@ -604,9 +601,8 @@ const mapStateToProps = (state: GlobalState) => {
     [2]: getTabSevicesId(allTabSections)
   };
 
-  const visibleServicesContentLoadState = visibleServicesDetailLoadStateSelector(
-    state
-  );
+  const visibleServicesContentLoadState =
+    visibleServicesDetailLoadStateSelector(state);
 
   const isLoadingServices = pot.isLoading(visibleServicesContentLoadState);
 
