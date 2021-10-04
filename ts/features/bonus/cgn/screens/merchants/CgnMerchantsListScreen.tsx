@@ -83,8 +83,8 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       ).values()
     ];
 
-    return [...offlineMerchants, ...onlineMerchants].sort(
-      (m1: MerchantsAll, m2: MerchantsAll) => m1.name.localeCompare(m2.name)
+    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
+      m1.name.localeCompare(m2.name)
     );
   }, [props.onlineMerchants, props.offlineMerchants]);
 
