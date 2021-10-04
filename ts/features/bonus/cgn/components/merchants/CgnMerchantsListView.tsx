@@ -19,12 +19,12 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
   const renderListItem = (
     listItem: ListRenderItemInfo<OfflineMerchant | OnlineMerchant>
   ) => (
-      <CgnMerchantListItem
-        categories={listItem.item.productCategories}
-        name={listItem.item.name}
-        onPress={() => props.onItemPress(listItem.item.id)}
-      />
-    );
+    <CgnMerchantListItem
+      categories={listItem.item.productCategories}
+      name={listItem.item.name}
+      onPress={() => props.onItemPress(listItem.item.id)}
+    />
+  );
 
   return (
     <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>

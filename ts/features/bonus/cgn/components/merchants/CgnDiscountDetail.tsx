@@ -135,20 +135,15 @@ const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                   ? addEvery(discount.staticCode, " ", 3)
                   : "••••••••••"}
               </BaseTypography>
-              
-                <IconFont
-                  name={
-                    isCodeVisible
-                      ? isTap
-                        ? "io-complete"
-                        : "io-copy"
-                      : "io-eye"
-                  }
-                  size={COPY_ICON_SIZE}
-                  color={IOColors.blue}
-                  style={styles.flexEnd}
-                />
-              
+
+              <IconFont
+                name={
+                  isCodeVisible ? (isTap ? "io-complete" : "io-copy") : "io-eye"
+                }
+                size={COPY_ICON_SIZE}
+                color={IOColors.blue}
+                style={styles.flexEnd}
+              />
             </View>
           </TouchableWithoutFeedback>
         </>
