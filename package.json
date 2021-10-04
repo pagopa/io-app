@@ -275,12 +275,21 @@
         "type": "ios.app",
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
+      },
+      "ios.debug": {
+        "type": "ios.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
       }
     },
     "configurations": {
       "ios.sim.release": {
         "device": "simulator",
         "app": "ios.release"
+      },
+      "ios.sim.debug": {
+        "device": "simulator",
+        "app": "ios.debug"
       }
     }
   },
