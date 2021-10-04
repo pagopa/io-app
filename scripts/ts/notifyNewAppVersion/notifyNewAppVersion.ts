@@ -19,7 +19,8 @@ const main = async () => {
       "<https://github.com/pagopa/io-app/blob/master/CHANGELOG.md|:memo: Changelog> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/345932988/Release+produzione+beta#Frequenza-rilasci|:calendar: Calendario rilasci> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna|:test_tube: Come partecipo alla beta interna?> - " +
-      "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>",
+      "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>\n" +
+      "cc @devioapp",
     destinationChannel,
     false
   );
