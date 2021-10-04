@@ -24,31 +24,32 @@ const renderBody = (first: string, second: string, third: string) => (
   </Text>
 );
 
-const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> = props => {
-  const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
-  const first = I18n.t(
-    "bonus.bonusVacanze.eligibility.timeout.description.first"
-  );
-  const second = I18n.t(
-    "bonus.bonusVacanze.eligibility.timeout.description.second"
-  );
-  const third = I18n.t(
-    "bonus.bonusVacanze.eligibility.timeout.description.third"
-  );
+const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> =
+  props => {
+    const title = I18n.t("bonus.bonusVacanze.eligibility.timeout.title");
+    const first = I18n.t(
+      "bonus.bonusVacanze.eligibility.timeout.description.first"
+    );
+    const second = I18n.t(
+      "bonus.bonusVacanze.eligibility.timeout.description.second"
+    );
+    const third = I18n.t(
+      "bonus.bonusVacanze.eligibility.timeout.description.third"
+    );
 
-  useHardwareBackButton(() => {
-    props.onCancel();
-    return true;
-  });
+    useHardwareBackButton(() => {
+      props.onCancel();
+      return true;
+    });
 
-  return (
-    <BaseTimeoutScreen
-      title={title}
-      body={renderBody(first, second, third)}
-      onExit={props.onCancel}
-    />
-  );
-};
+    return (
+      <BaseTimeoutScreen
+        title={title}
+        body={renderBody(first, second, third)}
+        onExit={props.onCancel}
+      />
+    );
+  };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(cancelBonusVacanzeRequest())

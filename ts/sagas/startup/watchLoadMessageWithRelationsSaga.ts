@@ -9,9 +9,12 @@ import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/messages";
 
 /**
- * Load message with related entities (ex. the sender service).
+ * Load message with related entities (e.g. the sender service).
+ *
+ * @param getMessage API call to fetch the message detail
+ * @param messageWithRelationsLoadRequest
  */
-export function* loadMessageWithRelationsSaga(
+export function* watchLoadMessageWithRelationsSaga(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
   messageWithRelationsLoadRequest: ActionType<
     typeof loadMessageWithRelations["request"]

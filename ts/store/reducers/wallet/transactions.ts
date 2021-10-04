@@ -44,9 +44,9 @@ export const getTransactions = createSelector(
     pot.map(
       potTransactions,
       txs =>
-        values(txs).filter(_ => isSuccessTransaction(_)) as ReadonlyArray<
-          Transaction
-        >
+        values(txs).filter(_ =>
+          isSuccessTransaction(_)
+        ) as ReadonlyArray<Transaction>
     )
 );
 

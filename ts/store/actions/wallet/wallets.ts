@@ -27,9 +27,9 @@ export const fetchWalletsSuccess = createStandardAction("WALLETS_LOAD_SUCCESS")<
   ReadonlyArray<Wallet>
 >();
 
-export const fetchWalletsFailure = createStandardAction("WALLETS_LOAD_FAILURE")<
-  Error
->();
+export const fetchWalletsFailure = createStandardAction(
+  "WALLETS_LOAD_FAILURE"
+)<Error>();
 
 export const addWalletCreditCardInit = createStandardAction(
   "WALLET_ADD_CREDITCARD_INIT"

@@ -40,10 +40,9 @@ export const cgnActivationSaga = (
 ) =>
   function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
     try {
-      const startCgnActivationResult: SagaCallReturnType<typeof startCgnActivation> = yield call(
-        startCgnActivation,
-        {}
-      );
+      const startCgnActivationResult: SagaCallReturnType<
+        typeof startCgnActivation
+      > = yield call(startCgnActivation, {});
 
       if (startCgnActivationResult.isRight()) {
         const status = startCgnActivationResult.value.status;
@@ -84,10 +83,8 @@ export const handleCgnStatusPolling = (
   function* (): Generator<Effect, ActionType<typeof cgnActivationStatus>, any> {
     const startPollingTime = new Date().getTime();
     while (true) {
-      const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> = yield call(
-        getCgnActivation,
-        {}
-      );
+      const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
+        yield call(getCgnActivation, {});
       // blocking error -> stop polling
       if (cgnActivationResult.isLeft()) {
         throw cgnActivationResult.value;
@@ -108,7 +105,7 @@ export const handleCgnStatusPolling = (
               `CGN Activation status ${cgnActivationResult.value.value.status}`
             );
             break;
-           // activation is still pending skip
+          // activation is still pending skip
           case StatusEnum.PENDING:
             break;
           default:

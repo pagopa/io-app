@@ -236,7 +236,9 @@ const v2ErrorMacrosMap = new Map<MainErrorType, Set<DetailV2Keys>>([
  * Main error types is represented by the union type ErrorTypes.
  * @param error
  */
-export const getV2ErrorMainType = (error?: DetailV2Keys): ErrorTypes | undefined => {
+export const getV2ErrorMainType = (
+  error?: DetailV2Keys
+): ErrorTypes | undefined => {
   if (error === undefined) {
     return undefined;
   }

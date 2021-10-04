@@ -272,9 +272,8 @@ describe("getCreditCardFromState", () => {
     };
 
     if (isSome(cardState.expirationDate)) {
-      const [expireMonth, expireYear] = cardState.expirationDate.value.split(
-        "/"
-      );
+      const [expireMonth, expireYear] =
+        cardState.expirationDate.value.split("/");
 
       const expectedCreditCard = {
         pan: aValidPan,
