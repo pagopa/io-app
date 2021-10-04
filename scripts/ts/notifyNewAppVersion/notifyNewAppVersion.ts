@@ -10,7 +10,7 @@ const packagePath = "package.json";
  */
 const main = async () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
-  const appVersion = packageJson.version as string;
+  const appVersion = (packageJson.version as string).replace("-rc", "");
 
   await slackPostMessage(
     "È disponibile la nuova versione `" +
