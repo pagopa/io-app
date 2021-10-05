@@ -1,9 +1,5 @@
 import * as React from "react";
-import { LabelledItem } from "../LabelledItem";
 import { useContext, useState } from "react";
-import { LightModalContext } from "./LightModal";
-import { H4 } from "../core/typography/H4";
-import { IOColors } from "../core/variables/IOColors";
 import {
   Body,
   Container,
@@ -13,18 +9,22 @@ import {
   Right,
   View
 } from "native-base";
-import { H5 } from "../core/typography/H5";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import {
   ActivityIndicator,
   FlatList,
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
-import { IOStyles } from "../core/variables/IOStyles";
 import { SafeAreaView } from "react-native";
-import AppHeader from "./AppHeader";
+import { H4 } from "../core/typography/H4";
+import { IOColors } from "../core/variables/IOColors";
+import { H5 } from "../core/typography/H5";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
+import { IOStyles } from "../core/variables/IOStyles";
+import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import AppHeader from "./AppHeader";
+import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
