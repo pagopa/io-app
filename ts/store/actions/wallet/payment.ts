@@ -223,7 +223,7 @@ export const paymentCompletedSuccess = createStandardAction(
 
 export const paymentCompletedFailure = createStandardAction(
   "PAYMENT_COMPLETED_FAILURE"
-)<OutcomeCodesKey | undefined>();
+)<{ outcomeCode: OutcomeCodesKey | undefined; paymentId: string }>();
 
 //
 // delete an ongoing payment
