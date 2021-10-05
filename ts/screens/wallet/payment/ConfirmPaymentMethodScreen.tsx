@@ -185,10 +185,8 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       props.loadTransactions();
     } else {
       props.dispatchPaymentFailure(
-        maybeOutcomeCode.fold(undefined, oc => {
-          const maybeCode = OutcomeCodesKey.decode(oc);
-          return maybeCode.isRight() ? maybeCode.value : undefined;
-        })
+        maybeOutcomeCode.filter(OutcomeCodesKey.is).toUndefined(),
+        idPayment
       );
     }
     props.dispatchEndPaymentWebview("EXIT_PATH");
@@ -412,8 +410,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           transaction: undefined
         })
       ),
-    dispatchPaymentFailure: (outcomeCode: OutcomeCodesKey | undefined) =>
-      dispatch(paymentCompletedFailure(outcomeCode))
+    dispatchPaymentFailure: (
+      outcomeCode: OutcomeCodesKey | undefined,
+      paymentId: string
+    ) => dispatch(paymentCompletedFailure({ outcomeCode, paymentId }))
   };
 };
 
