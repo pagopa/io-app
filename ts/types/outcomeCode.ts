@@ -21,7 +21,7 @@ const OutcomeCodeO = t.partial({
 });
 
 const OutcomeCode = t.intersection([OutcomeCodeR, OutcomeCodeO]);
-// This are the errors that we want to map specifically at the moment.
+// These are the errors that we want to map specifically at the moment.
 // All the other errors will fall back in the generic error category.
 const OutcomeCodes = {
   "0": OutcomeCodeR,

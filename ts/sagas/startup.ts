@@ -103,8 +103,8 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
-import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
+import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -454,16 +454,16 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
-  // Load messages when requested
-  yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);
+  // Load all messages when requested
+  yield fork(watchLoadMessages, backendClient.getMessages);
 
-  // Load messages when requested
+  // Load a message when requested
   yield fork(watchMessageLoadSaga, backendClient.getMessage);
 
   // Load message and related entities (ex. the sender service)
   yield takeEvery(
     getType(loadMessageWithRelations.request),
-    loadMessageWithRelationsSaga,
+    watchLoadMessageWithRelationsSaga,
     backendClient.getMessage
   );
 
