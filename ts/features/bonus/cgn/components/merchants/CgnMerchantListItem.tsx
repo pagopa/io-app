@@ -9,6 +9,7 @@ import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultO
 import { getCategorySpecs } from "../../utils/filters";
 import I18n from "../../../../../i18n";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = {
   categories: ReadonlyArray<ProductCategory>;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  categories: { display: "flex", flexDirection: "row", flexWrap: "wrap" },
   row: {
     flexDirection: "row"
   },
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
 });
 const renderCategoryElement = (category: ProductCategory) =>
   getCategorySpecs(category).fold(undefined, c => (
-    <View style={styles.row}>
+    <View style={[styles.row]}>
       {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
       <View hspacer small />
       <H5 weight={"SemiBold"} color={"bluegrey"}>
@@ -39,7 +41,7 @@ const renderCategoryElement = (category: ProductCategory) =>
 // if there's more than 2 categories available we render a placeholder text to enumerate how many categories
 // are missing from the list
 const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
-  <>
+  <View style={[styles.categories, IOStyles.flex]}>
     {categories.length > 2
       ? index(0, [...categories]).fold(undefined, c => (
           <>
@@ -78,7 +80,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             )}
           </>
         ))}
-  </>
+  </View>
 );
 
 /**
@@ -93,9 +95,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   >
     <H2>{props.name}</H2>
     <View spacer small />
-    <View style={styles.row}>
-      <CategoriesRow categories={props.categories} />
-    </View>
+    <CategoriesRow categories={props.categories} />
   </TouchableDefaultOpacity>
 );
 
