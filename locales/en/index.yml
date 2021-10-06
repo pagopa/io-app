@@ -1218,9 +1218,9 @@ wallet:
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Enter notice data
-    title: Insert the notice data
-    info: which allow us to identify the transaction
-    link: Where are they?
+    title: What do you have to pay for?
+    info: Enter the information as shown on the payment notice.
+    link: Where can I find the data?
     noticeCode: Notice Code
     entityCode: Creditor Entity Fiscal Code
     amount: Amount (€)

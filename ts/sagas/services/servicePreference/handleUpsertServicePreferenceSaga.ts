@@ -59,9 +59,8 @@ export function* handleUpsertServicePreference(
   >["upsertServicePreference"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
-  const currentPreferences: ReturnType<typeof servicePreferenceSelector> = yield select(
-    servicePreferenceSelector
-  );
+  const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
+    yield select(servicePreferenceSelector);
 
   const updatingPreference = calculateUpdatingPreference(
     currentPreferences,
@@ -69,13 +68,11 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    const response: SagaCallReturnType<typeof upsertServicePreferences> = yield call(
-      upsertServicePreferences,
-      {
+    const response: SagaCallReturnType<typeof upsertServicePreferences> =
+      yield call(upsertServicePreferences, {
         service_id: action.payload.id,
         servicePreference: updatingPreference
-      }
-    );
+      });
 
     if (response.isRight()) {
       if (response.value.status === 200) {

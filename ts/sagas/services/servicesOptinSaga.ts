@@ -13,9 +13,9 @@ import {
  * @param isFirstOnboarding
  */
 export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {
-  const profileServicePreferenceMode: ReturnType<typeof profileServicePreferencesModeSelector> = yield select(
-    profileServicePreferencesModeSelector
-  );
+  const profileServicePreferenceMode: ReturnType<
+    typeof profileServicePreferencesModeSelector
+  > = yield select(profileServicePreferencesModeSelector);
   // if the user's preference is set, do nothing
   if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
     return;

@@ -41,9 +41,9 @@ export const bpdUnsubscribeFailure = createStandardAction(
 /**
  * Start the onboarding workflow
  */
-export const bpdOnboardingStart = createStandardAction("BPD_ONBOARDING_START")<
-  void
->();
+export const bpdOnboardingStart = createStandardAction(
+  "BPD_ONBOARDING_START"
+)<void>();
 
 /**
  * The user choose to activate the bpd

@@ -35,7 +35,8 @@ export const addCobadgeToWallet = async (
         data: { payload: { paymentInstruments: [paymentInstrument] } }
       })
     );
-    const addCobadgeToWalletWithRefreshResult = await addCobadgeToWalletWithRefresh();
+    const addCobadgeToWalletWithRefreshResult =
+      await addCobadgeToWalletWithRefresh();
     if (addCobadgeToWalletWithRefreshResult.isRight()) {
       if (addCobadgeToWalletWithRefreshResult.value.status === 200) {
         const wallets = (

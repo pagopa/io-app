@@ -1246,9 +1246,9 @@ wallet:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
-    title: Inserisci i dati dell'avviso
-    info: che ci consentono di identificare il pagamento
-    link: Dove si trovano?
+    title: Cosa devi pagare?
+    info: Inserisci i dati come riportato sull'avviso di pagamento.
+    link: Dove trovo i dati?
     noticeCode: Codice Avviso
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)

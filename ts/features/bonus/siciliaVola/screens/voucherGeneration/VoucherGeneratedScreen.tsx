@@ -112,6 +112,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
                 qrCode={voucherGenerated.value.qrCode}
                 barCode={voucherGenerated.value.barCode}
               />
+              <View spacer large={true} />
             </ScrollView>
             <FooterWithButtons
               type={"TwoButtonsInlineHalf"}

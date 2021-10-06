@@ -8,9 +8,10 @@ export const euCertificateNotOperational: EUCovidCertificateResponseFailure = {
   kind: "notOperational"
 };
 
-export const euCertificateTemporarilyNotAvailable: EUCovidCertificateResponseFailure = {
-  kind: "temporarilyNotAvailable"
-};
+export const euCertificateTemporarilyNotAvailable: EUCovidCertificateResponseFailure =
+  {
+    kind: "temporarilyNotAvailable"
+  };
 
 export const euCertificateWrongFormat: EUCovidCertificateResponseFailure = {
   kind: "wrongFormat"

@@ -67,9 +67,8 @@ describe("searchUserCobadge", () => {
   getCobadgePans.mockReturnValue(() => response200SuccessOk);
   searchCobadgePans.mockReturnValue(() => response200SuccessOk);
   const aPMToken = "1234" as PaymentManagerToken;
-  const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
-    jest.fn(() => Promise.resolve(some(aPMToken)))
-  );
+  const aPmSessionManager: SessionManager<PaymentManagerToken> =
+    new SessionManager(jest.fn(() => Promise.resolve(some(aPMToken))));
   beforeEach(() => {
     getCobadgePans.mockClear();
     searchCobadgePans.mockClear();

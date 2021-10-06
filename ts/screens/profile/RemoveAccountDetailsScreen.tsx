@@ -59,9 +59,10 @@ const getMotivationItems = (): ReadonlyArray<{
  */
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
-  const [selectedMotivation, setSelectedMotivation] = React.useState<
-    RemoveAccountMotivationEnum
-  >(RemoveAccountMotivationEnum.UNDEFINED);
+  const [selectedMotivation, setSelectedMotivation] =
+    React.useState<RemoveAccountMotivationEnum>(
+      RemoveAccountMotivationEnum.UNDEFINED
+    );
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 

@@ -94,19 +94,19 @@ const NotActivablesSection = (props: {
  * @param props
  * @constructor
  */
-export const PaymentMethodGroupedList: React.FunctionComponent<Props> = props => {
-  const { activables, otherChannels, notActivable } = clusterizePaymentMethods(
-    props.paymentList
-  );
-  return (
-    <View>
-      <PaymentMethodRawList paymentList={activables} />
-      {otherChannels.length > 0 && (
-        <OtherChannelsSection paymentMethods={otherChannels} />
-      )}
-      {notActivable.length > 0 && (
-        <NotActivablesSection paymentMethods={notActivable} />
-      )}
-    </View>
-  );
-};
+export const PaymentMethodGroupedList: React.FunctionComponent<Props> =
+  props => {
+    const { activables, otherChannels, notActivable } =
+      clusterizePaymentMethods(props.paymentList);
+    return (
+      <View>
+        <PaymentMethodRawList paymentList={activables} />
+        {otherChannels.length > 0 && (
+          <OtherChannelsSection paymentMethods={otherChannels} />
+        )}
+        {notActivable.length > 0 && (
+          <NotActivablesSection paymentMethods={notActivable} />
+        )}
+      </View>
+    );
+  };

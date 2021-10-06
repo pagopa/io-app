@@ -21,14 +21,15 @@ export const paymentInstrumentsFindGET: FindPaymentUsingGETT = {
   response_decoder: findUsingGETDefaultDecoder()
 };
 
-export const paymentInstrumentsEnrollPUT: EnrollmentPaymentInstrumentIOUsingPUTT = {
-  method: "put",
-  url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
-  query: _ => ({}),
-  body: () => "",
-  headers: composeHeaderProducers(ApiHeaderJson, bpdHeadersProducers()),
-  response_decoder: enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder()
-};
+export const paymentInstrumentsEnrollPUT: EnrollmentPaymentInstrumentIOUsingPUTT =
+  {
+    method: "put",
+    url: ({ id }) => `/bpd/io/payment-instruments/${id}`,
+    query: _ => ({}),
+    body: () => "",
+    headers: composeHeaderProducers(ApiHeaderJson, bpdHeadersProducers()),
+    response_decoder: enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder()
+  };
 
 const deletePaymentResponseDecoders = r.composeResponseDecoders(
   r.composeResponseDecoders(

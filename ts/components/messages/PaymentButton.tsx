@@ -94,13 +94,8 @@ class PaymentButton extends React.PureComponent<Props> {
   }
 
   private handleOnPress = () => {
-    const {
-      messagePaymentExpirationInfo,
-      service,
-      paid,
-      disabled,
-      message
-    } = this.props;
+    const { messagePaymentExpirationInfo, service, paid, disabled, message } =
+      this.props;
 
     const amount = getAmountFromPaymentAmount(
       messagePaymentExpirationInfo.amount

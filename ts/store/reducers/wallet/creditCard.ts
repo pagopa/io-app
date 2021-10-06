@@ -93,9 +93,9 @@ const reducer = (
   switch (action.type) {
     case getType(addWalletCreditCardRequest):
       const payload = action.payload;
-      return fromNullable(payload.creditcard?.creditCard).fold<
-        CreditCardInsertionState
-      >(state, c => {
+      return fromNullable(
+        payload.creditcard?.creditCard
+      ).fold<CreditCardInsertionState>(state, c => {
         const hashedPan = sha("sha256").update(c.pan).digest("hex");
         // ensure to have only a single item representing the card insertion
         const newState = state.filter(c => c.hashedPan !== hashedPan);

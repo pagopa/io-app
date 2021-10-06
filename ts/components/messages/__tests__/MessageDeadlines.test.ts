@@ -89,8 +89,9 @@ const generateSections = (
                 // We need to add the message to the last section.
                 // We are sure that pop will return at least one element because
                 // of the previous `if` step.
-                // eslint-disable-next-line functional/immutable-data
-                const prevSection = accumulator.sections.pop() as MessageAgendaSection;
+                const prevSection =
+                  // eslint-disable-next-line functional/immutable-data
+                  accumulator.sections.pop() as MessageAgendaSection;
                 const newSection = {
                   title,
                   data: [...prevSection.data, messageAgendaItem]
@@ -140,14 +141,16 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         kind: "PotSome",
         value: {
           content: {
-            subject: "test wrong organization name 9 😊 😋 😎" as WithinRangeString<
-              10,
-              121
-            >,
-            markdown: "😊 😋 😎 organization name test wrong organization…ng organization name test wrong organization name" as WithinRangeString<
-              80,
-              10001
-            >,
+            subject:
+              "test wrong organization name 9 😊 😋 😎" as WithinRangeString<
+                10,
+                121
+              >,
+            markdown:
+              "😊 😋 😎 organization name test wrong organization…ng organization name test wrong organization name" as WithinRangeString<
+                80,
+                10001
+              >,
             due_date: setDate(-1, 12)
           },
           created_at: setDate(-1, 12),
@@ -173,10 +176,11 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         value: {
           content: {
             subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-            markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-              80,
-              10001
-            >,
+            markdown:
+              "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+                80,
+                10001
+              >,
             due_date: setDate(0, 15),
             payment_data: {
               amount: 1 as PaymentAmount,
@@ -208,10 +212,11 @@ const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
         value: {
           content: {
             subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-            markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-              80,
-              10001
-            >,
+            markdown:
+              "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+                80,
+                10001
+              >,
             due_date: setDate(1, 12),
             payment_data: {
               amount: 1 as PaymentAmount,

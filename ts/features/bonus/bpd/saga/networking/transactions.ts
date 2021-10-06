@@ -71,10 +71,9 @@ export function* bpdLoadTransactionsSaga(
 ) {
   const awardPeriodId = action.payload;
   try {
-    const winningTransactionsResult: SagaCallReturnType<typeof winningTransactions> = yield call(
-      winningTransactions,
-      { awardPeriodId } as any
-    );
+    const winningTransactionsResult: SagaCallReturnType<
+      typeof winningTransactions
+    > = yield call(winningTransactions, { awardPeriodId } as any);
     if (winningTransactionsResult.isRight()) {
       if (winningTransactionsResult.value.status === 200) {
         const transactions = convertTransactions(
