@@ -620,9 +620,9 @@ authentication:
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
       iosAlert:
-        readingInstructions: Tieni la tua carta d'identità elettronica sul retro dell'iPhone, nella parte in alto.
-        moreTags: Sono stati individuate più carte NFC. Per favore avvicina una carta alla volta.
-        readingInProgress: "LETTURA IN CORSO\ntieni ferma la carta per qualche secondo..."
+        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
+        moreTags: Sono state individuate più carte NFC. Per favore avvicina una carta alla volta.
+        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
         readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
         invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         tagLost: Hai rimosso la carta troppo presto.

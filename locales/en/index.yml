@@ -612,14 +612,14 @@ authentication:
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
       iosAlert:
-        readingInstructions: Keep your electronic ID card on the back of the iPhone, at the top.
-        moreTags: More NFC cards have been identified. Please bring one card at a time.
-        readingInProgress: "READING IN PROGRESS\nhold the card still for a few seconds..."
+        readingInstructions: Keep your electronic ID card on the top of the iPhone.
+        moreTags: More ID cards have been identified. Please bring one card at a time.
+        readingInProgress: "READING IN PROGRESS\nHold the card still for a few seconds..."
         readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
         invalidCard: The card used does not appear to be an Electronic Identity Card (CIE).
         tagLost: You removed the card too soon.
         cardLocked: CIE card locked
-        wrongPin1AttemptLeft: Wrong PIN, you still have 1 try
+        wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
         wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
       error:
         readerCardLostTitle: Hold the card again for a few seconds
