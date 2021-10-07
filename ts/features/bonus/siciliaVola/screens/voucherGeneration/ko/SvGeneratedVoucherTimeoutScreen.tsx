@@ -3,8 +3,7 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { SafeAreaView } from "react-native";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
-import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
+import RequestTimeoutImage from "../../../../../../../img/bonus/siciliaVola/generateVoucherTimeout.svg";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { svGenerateVoucherCancel } from "../../../store/actions/voucherGeneration";
@@ -18,7 +17,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const SvGeneratedVoucherTimeoutScreen: React.FC<Props> = (props: Props) => (
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
-      image={renderInfoRasterImage(image)}
+      image={<RequestTimeoutImage width={104} height={104} />}
       title={I18n.t("bonus.sv.voucherGeneration.ko.timeout.title")}
       body={I18n.t("bonus.sv.voucherGeneration.ko.timeout.body")}
     />
