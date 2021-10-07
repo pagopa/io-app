@@ -79,7 +79,7 @@ const TextboxAutocompleteModal = <T extends unknown>(props: ModalProps<T>) => {
             <IconFont name="io-close" />
           </ButtonDefaultOpacity>
         </Left>
-        <Body style={{ alignItems: "center" }}>
+        <Body style={{ alignItems: "center", marginRight: 32 }}>
           <H5 weight={"SemiBold"} color={"bluegrey"}>
             {props.title}
           </H5>
