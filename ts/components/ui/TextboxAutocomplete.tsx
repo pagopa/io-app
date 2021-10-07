@@ -39,28 +39,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
+type CommonProps<T> = {
+  data: ReadonlyArray<T>;
+  keyExtractor: (item: T, index: number) => string;
+  onChangeText: (value: string) => void;
+  renderItem: (item: ListRenderItemInfo<T>) => React.ReactElement;
+  title: string;
+  label: string;
+  placeholder: string;
+  isLoading: boolean;
+};
 type Props<T> = {
-  data: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  onChangeText: (value: string) => void;
   onSelectValue: (value: T) => string;
-  renderItem: (item: ListRenderItemInfo<T>) => React.ReactElement;
-  title: string;
-  label: string;
-  placeholder: string;
-  isLoading: boolean;
-};
+} & CommonProps<T>;
+
 type ModalProps<T> = {
-  data: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  renderItem: (item: ListRenderItemInfo<T>) => React.ReactElement;
-  title: string;
-  label: string;
-  placeholder: string;
-  onChangeText: (value: string) => void;
   onClose: () => void;
-  isLoading: boolean;
-};
+} & CommonProps<T>;
+
 const FooterLoading = () => (
   <>
     <View spacer={true} />
