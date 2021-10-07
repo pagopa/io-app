@@ -17,7 +17,6 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isDevEnv } from "../utils/environment";
-import { RTron } from "./configureStoreAndPersistor";
 
 /**
  * Helper type used to validate the notification payload.
@@ -54,7 +53,6 @@ const configurePushNotifications = (): Promise<string | undefined> => {
   );
 
   return new Promise<string | undefined>(resolve => {
-    RTron.log("pushNotificationDispatch", pushNotificationDispatch);
     PushNotification.configure({
       // Called when token is generated
       onRegister: token => {
