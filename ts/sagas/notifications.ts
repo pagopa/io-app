@@ -87,7 +87,7 @@ export function* updateInstallationSaga(
     const pushNotificationToken: SagaCallReturnType<
       typeof configurePushNotification
     > = yield call(configurePushNotification);
-    // undefined -> dev env
+    // undefined -> app is running in dev mode
     if (pushNotificationToken !== undefined) {
       // send push notification token to the backend
       yield call(
@@ -99,7 +99,7 @@ export function* updateInstallationSaga(
     }
     return undefined;
   }
-  // Check if the notification token is changed from the one registered in the backend
+  // Check if the notification token is changed from the one saved in the backend
   if (
     storedPushNotificationToken.token ===
     storedPushNotificationToken.registeredToken
