@@ -30,13 +30,19 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-
 import { setLocale } from "./i18n";
 import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const bpdEndpointStr =
+  bpdApiUrlPrefix === bpdApiSitUrlPrefix
+    ? "SIT"
+    : bpdApiUrlPrefix === bpdApiUatUrlPrefix
+    ? "UAT"
+    : "PROD";
 
 /**
  * The main container of the application with:
@@ -132,14 +138,6 @@ class RootContainer extends React.PureComponent<Props> {
     //        the redux state (i.e. background)
 
     // if we have no information about the backend, don't force the update
-
-    const bpdEndpointStr =
-      bpdApiUrlPrefix === bpdApiSitUrlPrefix
-        ? "SIT"
-        : bpdApiUrlPrefix === bpdApiUatUrlPrefix
-        ? "UAT"
-        : "PROD";
-
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
