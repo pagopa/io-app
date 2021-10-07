@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10
   },
   inputContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
   }
