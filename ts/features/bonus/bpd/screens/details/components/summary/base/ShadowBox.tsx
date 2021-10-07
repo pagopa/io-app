@@ -6,15 +6,16 @@ const styles = StyleSheet.create({
   body: {
     borderRadius: 8,
     backgroundColor: "white",
-    shadowColor: "#00274e",
+    shadowColor: "#17324D",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 3
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 1.41,
-    elevation: 2,
-    flex: 1
+    shadowOpacity: 0.2,
+    shadowRadius: 2.0,
+    elevation: 4,
+    flex: 1,
+    marginHorizontal: 2
   },
   container: {
     paddingVertical: 12,
