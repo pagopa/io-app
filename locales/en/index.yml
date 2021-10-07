@@ -2645,7 +2645,8 @@ bonus:
       summary:
         title: "SummaryScreen"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Here is your discount code"
+        subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
       ko:
         checkIncome:
           title: "Sorry, you do not have the features to access the discounts."

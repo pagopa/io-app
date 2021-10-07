@@ -2673,7 +2673,8 @@ bonus:
       summary:
         title: "SummaryScreen"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Ecco il tuo codice sconto"
+        subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
       ko:
         checkIncome:
           title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
