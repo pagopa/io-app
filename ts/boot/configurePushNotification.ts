@@ -15,6 +15,7 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
+import { isDevEnv } from "../utils/environment";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -30,9 +31,9 @@ const NotificationPayload = t.partial({
 
 const configurePushNotifications = (): Promise<string | undefined> => {
   // if isDevEnv, disable push notification to avoid crash for missing firebase settings
-  // if (isDevEnv) {
-  //  return Promise.resolve(undefined);
-  // }
+  if (isDevEnv) {
+    return Promise.resolve(undefined);
+  }
 
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(

@@ -15,7 +15,6 @@ import { SagaCallReturnType } from "../types/utils";
 import { mixpanelTrack } from "../mixpanel";
 import configurePushNotification from "../boot/configurePushNotification";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
@@ -73,17 +72,14 @@ export function* updateInstallationSaga(
   const storedPushNotificationToken: ReturnType<
     typeof notificationsInstallationSelector
   > = yield select(notificationsInstallationSelector);
-  RTron.log("storedPushNotificationToken", storedPushNotificationToken);
   // Check if the there is push notification token
   if (storedPushNotificationToken.token === undefined) {
     // retrieve a push notification token from Firebase/APNS
     const pushNotificationToken: SagaCallReturnType<
       typeof configurePushNotification
     > = yield call(configurePushNotification);
-    RTron.log("pushNotificationToken", pushNotificationToken);
     // undefined -> dev env
     if (pushNotificationToken !== undefined) {
-      RTron.log("send", pushNotificationToken);
       // send push notification token to the backend
       yield call(
         updateNotificationToken,
@@ -99,11 +95,9 @@ export function* updateInstallationSaga(
     storedPushNotificationToken.token ===
     storedPushNotificationToken.registeredToken
   ) {
-    RTron?.log("same");
     void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
     return undefined;
   }
-  RTron.log("update", storedPushNotificationToken.token);
   // update - send push notification token to the backend
   yield call(
     updateNotificationToken,
