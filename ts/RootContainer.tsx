@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
@@ -34,8 +35,10 @@ import { setLocale } from "./i18n";
 import RootModal from "./screens/modal/RootModal";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
+import { setPushNotificationDispatch } from "./boot/configurePushNotification";
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const bpdEndpointStr =
   bpdApiUrlPrefix === bpdApiSitUrlPrefix
@@ -53,6 +56,12 @@ const bpdEndpointStr =
  * - the root for displaying light modals
  */
 class RootContainer extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    /* Configure the application to receive push notifications */
+    setPushNotificationDispatch(this.props.dispatch);
+  }
   private handleBackButton = () => {
     this.props.navigateBack();
     return true;
@@ -165,11 +174,12 @@ const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink
 });
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   applicationChangeState,
   setDeepLink,
   navigateToDeepLink,
-  navigateBack
-};
+  navigateBack,
+  dispatch
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

@@ -8,6 +8,7 @@ import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
+import { Dispatch } from "redux";
 import { debugRemotePushNotification } from "../config";
 import { setMixpanelPushNotificationToken } from "../mixpanel";
 import { loadMessages } from "../store/actions/messages";
@@ -16,7 +17,7 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isDevEnv } from "../utils/environment";
-import { store } from "./configureStoreAndPersistor";
+import { RTron } from "./configureStoreAndPersistor";
 
 /**
  * Helper type used to validate the notification payload.
@@ -28,7 +29,11 @@ const NotificationPayload = t.partial({
     message_id: NonEmptyString
   })
 });
-
+// eslint-disable-next-line functional/no-let
+let pushNotificationDispatch: Dispatch;
+export const setPushNotificationDispatch = (dispatch: Dispatch) => {
+  pushNotificationDispatch = dispatch;
+};
 const configurePushNotifications = (): Promise<string | undefined> => {
   // if isDevEnv, disable push notification to avoid crash for missing firebase settings
   if (isDevEnv) {
@@ -48,7 +53,8 @@ const configurePushNotifications = (): Promise<string | undefined> => {
     constNull
   );
 
-  return new Promise<string | undefined>(res => {
+  return new Promise<string | undefined>(resolve => {
+    RTron.log("pushNotificationDispatch", pushNotificationDispatch);
     PushNotification.configure({
       // Called when token is generated
       onRegister: token => {
@@ -58,8 +64,10 @@ const configurePushNotifications = (): Promise<string | undefined> => {
           constNull
         );
         // Dispatch an action to save the token in the store
-        store.dispatch(updateNotificationsInstallationToken(token.token));
-        res(token.token);
+        pushNotificationDispatch(
+          updateNotificationsInstallationToken(token.token)
+        );
+        resolve(token.token);
       },
 
       // Called when a remote or local notification is opened or received
@@ -80,14 +88,14 @@ const configurePushNotifications = (): Promise<string | undefined> => {
           // We just received a push notification about a new message
           if (notification.foreground) {
             // The App is in foreground so just refresh the messages list
-            store.dispatch(loadMessages.request());
+            pushNotificationDispatch(loadMessages.request());
           } else {
             // The App was closed/in background and has been now opened clicking
             // on the push notification.
             // Save the message id of the notification in the store so the App can
             // navigate to the message detail screen as soon as possible (if
             // needed after the user login/insert the unlock code)
-            store.dispatch(
+            pushNotificationDispatch(
               updateNotificationsPendingMessage(
                 messageId,
                 notification.foreground
@@ -96,7 +104,7 @@ const configurePushNotifications = (): Promise<string | undefined> => {
 
             // finally, refresh the message list to start loading the content of
             // the new message
-            store.dispatch(loadMessages.request());
+            pushNotificationDispatch(loadMessages.request());
           }
         });
 
