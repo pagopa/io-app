@@ -139,9 +139,7 @@ export const LabelledItem: React.FC<Props> = ({
   });
 
   const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    if (props.inputProps && props.inputProps.onFocus) {
-      props.inputProps.onFocus(e);
-    }
+    props.inputProps?.onFocus?.(e);
     setHasFocus(true);
   };
 
