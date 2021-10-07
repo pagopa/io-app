@@ -22,6 +22,12 @@ const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   default: PlatformEnum.gcm
 });
 
+/**
+ * send the push notification token to the backend
+ * @param pushNotificationToken
+ * @param installationID
+ * @param createOrUpdateInstallation
+ */
 export function* updateNotificationToken(
   pushNotificationToken: string,
   installationID: string,
@@ -62,7 +68,10 @@ export function* updateNotificationToken(
 }
 
 /**
- * This generator function calls the ProxyApi `installation` endpoint
+ * do some check on push notification token
+ * - if there is no push notification, ask for a new and then save it to the backend
+ * - if there is a push notification token, check if it is the same of the saved one. If not, update it to the backend
+ * @param createOrUpdateInstallation
  */
 export function* updateInstallationSaga(
   createOrUpdateInstallation: ReturnType<
