@@ -11,9 +11,11 @@ import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure
 } from "../store/actions/notifications";
-import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { SagaCallReturnType } from "../types/utils";
 import { mixpanelTrack } from "../mixpanel";
+import configurePushNotification from "../boot/configurePushNotification";
+import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   ios: PlatformEnum.apns,
@@ -21,38 +23,21 @@ const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
   default: PlatformEnum.gcm
 });
 
-/**
- * This generator function calls the ProxyApi `installation` endpoint
- */
-export function* updateInstallationSaga(
+export function* updateNotificationToken(
+  pushNotificationToken: string,
+  installationID: string,
   createOrUpdateInstallation: ReturnType<
     typeof BackendClient
   >["createOrUpdateInstallation"]
-): SagaIterator {
-  // Get the notifications installation data from the store
-  const notificationsInstallation: ReturnType<
-    typeof notificationsInstallationSelector
-  > = yield select(notificationsInstallationSelector);
-  // Check if the notification server token is available (non available on iOS simulator)
-  if (notificationsInstallation.token === undefined) {
-    return undefined;
-  }
-  // Check if the notification token is changed from the one registered in the backend
-  if (
-    notificationsInstallation.token ===
-    notificationsInstallation.registeredToken
-  ) {
-    void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
-    return undefined;
-  }
+) {
   try {
     // Send the request to the backend
     const response: SagaCallReturnType<typeof createOrUpdateInstallation> =
       yield call(createOrUpdateInstallation, {
-        installationID: notificationsInstallation.id,
+        installationID,
         installation: {
           platform: notificationsPlatform,
-          pushChannel: notificationsInstallation.token
+          pushChannel: pushNotificationToken
         }
       });
     /**
@@ -63,9 +48,7 @@ export function* updateInstallationSaga(
     }
     if (response.value.status === 200) {
       yield put(
-        notificationsInstallationTokenRegistered(
-          notificationsInstallation.token
-        )
+        notificationsInstallationTokenRegistered(pushNotificationToken)
       );
     } else {
       yield put(
@@ -77,4 +60,55 @@ export function* updateInstallationSaga(
   } catch (error) {
     yield put(updateNotificationInstallationFailure(error));
   }
+}
+
+/**
+ * This generator function calls the ProxyApi `installation` endpoint
+ */
+export function* updateInstallationSaga(
+  createOrUpdateInstallation: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateInstallation"]
+): SagaIterator {
+  const storedPushNotificationToken: ReturnType<
+    typeof notificationsInstallationSelector
+  > = yield select(notificationsInstallationSelector);
+  RTron.log("storedPushNotificationToken", storedPushNotificationToken);
+  // Check if the there is push notification token
+  if (storedPushNotificationToken.token === undefined) {
+    // retrieve a push notification token from Firebase/APNS
+    const pushNotificationToken: SagaCallReturnType<
+      typeof configurePushNotification
+    > = yield call(configurePushNotification);
+    RTron.log("pushNotificationToken", pushNotificationToken);
+    // undefined -> dev env
+    if (pushNotificationToken !== undefined) {
+      RTron.log("send", pushNotificationToken);
+      // send push notification token to the backend
+      yield call(
+        updateNotificationToken,
+        pushNotificationToken,
+        storedPushNotificationToken.id,
+        createOrUpdateInstallation
+      );
+    }
+    return undefined;
+  }
+  // Check if the notification token is changed from the one registered in the backend
+  if (
+    storedPushNotificationToken.token ===
+    storedPushNotificationToken.registeredToken
+  ) {
+    RTron?.log("same");
+    void mixpanelTrack("NOTIFICATIONS_INSTALLATION_TOKEN_NOT_CHANGED");
+    return undefined;
+  }
+  RTron.log("update", storedPushNotificationToken.token);
+  // update - send push notification token to the backend
+  yield call(
+    updateNotificationToken,
+    storedPushNotificationToken.token,
+    storedPushNotificationToken.id,
+    createOrUpdateInstallation
+  );
 }

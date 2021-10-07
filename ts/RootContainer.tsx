@@ -10,7 +10,6 @@ import {
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
-import configurePushNotifications from "./boot/configurePushNotification";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
@@ -48,13 +47,6 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
  * - the root for displaying light modals
  */
 class RootContainer extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-
-    /* Configure the application to receive push notifications */
-    configurePushNotifications();
-  }
-
   private handleBackButton = () => {
     this.props.navigateBack();
     return true;

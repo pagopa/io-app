@@ -187,7 +187,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
-  yield call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+  yield fork(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;

@@ -15,7 +15,6 @@ import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
-import { isDevEnv } from "../utils/environment";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -29,11 +28,11 @@ const NotificationPayload = t.partial({
   })
 });
 
-function configurePushNotifications() {
+const configurePushNotifications = (): Promise<string | undefined> => {
   // if isDevEnv, disable push notification to avoid crash for missing firebase settings
-  if (isDevEnv) {
-    return;
-  }
+  // if (isDevEnv) {
+  //  return Promise.resolve(undefined);
+  // }
 
   // Create the default channel used for notifications, the callback return false if the channel already exists
   PushNotification.createChannel(
@@ -48,57 +47,63 @@ function configurePushNotifications() {
     constNull
   );
 
-  PushNotification.configure({
-    // Called when token is generated
-    onRegister: token => {
-      // send token to enable PN through Mixpanel
-      setMixpanelPushNotificationToken(token.token).then(constNull, constNull);
-      // Dispatch an action to save the token in the store
-      store.dispatch(updateNotificationsInstallationToken(token.token));
-    },
+  return new Promise<string | undefined>(res => {
+    PushNotification.configure({
+      // Called when token is generated
+      onRegister: token => {
+        // send token to enable PN through Mixpanel
+        setMixpanelPushNotificationToken(token.token).then(
+          constNull,
+          constNull
+        );
+        // Dispatch an action to save the token in the store
+        store.dispatch(updateNotificationsInstallationToken(token.token));
+        res(token.token);
+      },
 
-    // Called when a remote or local notification is opened or received
-    onNotification: notification => {
-      if (debugRemotePushNotification) {
-        Alert.alert("Notification", JSON.stringify(notification));
-      }
-
-      const maybeMessageId = fromEither(
-        NotificationPayload.decode(notification)
-      ).chain(payload =>
-        fromNullable(payload.message_id).alt(
-          fromNullable(payload.data).mapNullable(_ => _.message_id)
-        )
-      );
-
-      maybeMessageId.map(messageId => {
-        // We just received a push notification about a new message
-        if (notification.foreground) {
-          // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessages.request());
-        } else {
-          // The App was closed/in background and has been now opened clicking
-          // on the push notification.
-          // Save the message id of the notification in the store so the App can
-          // navigate to the message detail screen as soon as possible (if
-          // needed after the user login/insert the unlock code)
-          store.dispatch(
-            updateNotificationsPendingMessage(
-              messageId,
-              notification.foreground
-            )
-          );
-
-          // finally, refresh the message list to start loading the content of
-          // the new message
-          store.dispatch(loadMessages.request());
+      // Called when a remote or local notification is opened or received
+      onNotification: notification => {
+        if (debugRemotePushNotification) {
+          Alert.alert("Notification", JSON.stringify(notification));
         }
-      });
 
-      // On iOS we need to call this when the remote notification handling is complete
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
-    }
+        const maybeMessageId = fromEither(
+          NotificationPayload.decode(notification)
+        ).chain(payload =>
+          fromNullable(payload.message_id).alt(
+            fromNullable(payload.data).mapNullable(_ => _.message_id)
+          )
+        );
+
+        maybeMessageId.map(messageId => {
+          // We just received a push notification about a new message
+          if (notification.foreground) {
+            // The App is in foreground so just refresh the messages list
+            store.dispatch(loadMessages.request());
+          } else {
+            // The App was closed/in background and has been now opened clicking
+            // on the push notification.
+            // Save the message id of the notification in the store so the App can
+            // navigate to the message detail screen as soon as possible (if
+            // needed after the user login/insert the unlock code)
+            store.dispatch(
+              updateNotificationsPendingMessage(
+                messageId,
+                notification.foreground
+              )
+            );
+
+            // finally, refresh the message list to start loading the content of
+            // the new message
+            store.dispatch(loadMessages.request());
+          }
+        });
+
+        // On iOS we need to call this when the remote notification handling is complete
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      }
+    });
   });
-}
+};
 
 export default configurePushNotifications;
