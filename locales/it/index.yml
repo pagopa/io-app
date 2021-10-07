@@ -2504,6 +2504,7 @@ bonus:
         deals: Offerte
         description: Descrizione
         services: Servizi
+        addresses: Indirizzi
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
@@ -2512,12 +2513,14 @@ bonus:
         label: Vai al sito dell'esercente
         landingPage: Accedi all’agevolazione
       categories:
-        theater: teatro, cinema e spettacolo
-        travel: viaggi
-        mobility: carsharing e mobilità
-        telco: telefonia, servizi internet
-        book: libri, audiolibri, e-book
-        museum: musei, gallerie, parchi
+        counting: e altre {{count}}
+        theater: tempo libero
+        travel: viaggi, trasporti e mobilità
+        food: ristoranti e cucina
+        hotel: hotel
+        service: servizi
+        book: istruzione e formazione
+        shopping: shopping
         sport: sport
         health: salute e benessere
     cta:
@@ -2525,7 +2528,7 @@ bonus:
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
-        buyers: Vedi esercenti
+        buyers: Vedi agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
