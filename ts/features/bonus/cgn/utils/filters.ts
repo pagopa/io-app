@@ -1,61 +1,72 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
+import { FC } from "react";
+import { SvgProps } from "react-native-svg";
 import { TranslationKeys } from "../../../../../locales/locales";
 import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
+import Books from "../../../../../img/bonus/cgn/categories/books.svg";
+import Hotel from "../../../../../img/bonus/cgn/categories/hotel.svg";
+import Restaurant from "../../../../../img/bonus/cgn/categories/restaurant.svg";
+import Shopping from "../../../../../img/bonus/cgn/categories/shopping.svg";
+import Sport from "../../../../../img/bonus/cgn/categories/sport.svg";
+import Telefonia from "../../../../../img/bonus/cgn/categories/telefonia.svg";
+import Theater from "../../../../../img/bonus/cgn/categories/theater.svg";
+import Travel from "../../../../../img/bonus/cgn/categories/travel.svg";
+import Wellness from "../../../../../img/bonus/cgn/categories/wellness.svg";
 
 export type Category = {
   type: ProductCategory;
-  icon: string;
+  icon: FC<SvgProps>;
   nameKey: TranslationKeys;
 };
 
 export const categories: Record<ProductCategory, Category> = {
-  [ProductCategoryEnum.foodDrink]: {
-    type: ProductCategoryEnum.foodDrink,
-    icon: "io-theater",
+  [ProductCategoryEnum.entertainment]: {
+    type: ProductCategoryEnum.entertainment,
+    icon: Theater,
     nameKey: "bonus.cgn.merchantDetail.categories.theater"
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
-    icon: "io-travel",
+    icon: Travel,
     nameKey: "bonus.cgn.merchantDetail.categories.travel"
   },
-  [ProductCategoryEnum.shopping]: {
-    type: ProductCategoryEnum.shopping,
-    icon: "io-car",
-    nameKey: "bonus.cgn.merchantDetail.categories.mobility"
+  [ProductCategoryEnum.foodDrink]: {
+    type: ProductCategoryEnum.foodDrink,
+    icon: Restaurant,
+    nameKey: "bonus.cgn.merchantDetail.categories.food"
   },
   [ProductCategoryEnum.services]: {
     type: ProductCategoryEnum.services,
-    icon: "io-phone-vibration",
-    nameKey: "bonus.cgn.merchantDetail.categories.telco"
+    icon: Telefonia,
+    nameKey: "bonus.cgn.merchantDetail.categories.service"
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
-    icon: "io-books",
+    icon: Books,
     nameKey: "bonus.cgn.merchantDetail.categories.book"
   },
-  [ProductCategoryEnum.entertainment]: {
-    type: ProductCategoryEnum.entertainment,
-    icon: "io-museums",
-    nameKey: "bonus.cgn.merchantDetail.categories.museum"
+  [ProductCategoryEnum.hotels]: {
+    type: ProductCategoryEnum.hotels,
+    icon: Hotel,
+    nameKey: "bonus.cgn.merchantDetail.categories.hotel"
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
-    icon: "io-sports",
+    icon: Sport,
     nameKey: "bonus.cgn.merchantDetail.categories.sport"
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
-    icon: "io-wellness",
+    icon: Wellness,
     nameKey: "bonus.cgn.merchantDetail.categories.health"
   },
-  [ProductCategoryEnum.hotels]: {
-    type: ProductCategoryEnum.hotels,
-    icon: "io-wellness",
-    nameKey: "bonus.cgn.merchantDetail.categories.health"
+  [ProductCategoryEnum.shopping]: {
+    type: ProductCategoryEnum.shopping,
+    icon: Shopping,
+    nameKey: "bonus.cgn.merchantDetail.categories.shopping"
   }
 };
 
