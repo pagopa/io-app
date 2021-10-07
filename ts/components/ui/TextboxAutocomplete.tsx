@@ -70,7 +70,7 @@ const FooterLoading = () => (
   </>
 );
 
-const TextboxAutocompleteModal = <T extends any>(props: ModalProps<T>) => {
+const TextboxAutocompleteModal = <T extends unknown>(props: ModalProps<T>) => {
   const [inputValue, setInputValue] = useState<string>("");
   return (
     <Container>
@@ -126,7 +126,7 @@ const TextboxAutocompleteModal = <T extends any>(props: ModalProps<T>) => {
  * @param props
  * @constructor
  */
-const TextboxAutocomplete = <T extends any>(props: Props<T>) => {
+const TextboxAutocomplete = <T extends unknown>(props: Props<T>) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
     undefined
