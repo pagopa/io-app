@@ -69,7 +69,9 @@ const FooterLoading = () => (
   </>
 );
 
-const TextboxAutocompleteModal = <T extends unknown>(props: ModalProps<T>) => {
+const TextboxWithSuggestionModal = <T extends unknown>(
+  props: ModalProps<T>
+) => {
   const [inputValue, setInputValue] = useState<string>("");
   return (
     <Container>
@@ -125,7 +127,7 @@ const TextboxAutocompleteModal = <T extends unknown>(props: ModalProps<T>) => {
  * @param props
  * @constructor
  */
-const TextboxAutocomplete = <T extends unknown>(props: Props<T>) => {
+const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
     undefined
@@ -140,7 +142,7 @@ const TextboxAutocomplete = <T extends unknown>(props: Props<T>) => {
           style={styles.inputContainer}
           onPress={() =>
             showModal(
-              <TextboxAutocompleteModal<T>
+              <TextboxWithSuggestionModal<T>
                 data={props.data}
                 keyExtractor={props.keyExtractor}
                 renderItem={i => (
@@ -179,4 +181,4 @@ const TextboxAutocomplete = <T extends unknown>(props: Props<T>) => {
   );
 };
 
-export default TextboxAutocomplete;
+export default TextboxWithSuggestion;
