@@ -13,7 +13,11 @@ import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { getCurrentRouteName } from "../../utils/navigation";
-import { contentMunicipalityLoad, loadContextualHelpData, loadIdps } from "../actions/content";
+import {
+  contentMunicipalityLoad,
+  loadContextualHelpData,
+  loadIdps
+} from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
@@ -129,7 +133,6 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-
     case getType(contentMunicipalityLoad.request):
       const codiceCatastale = state.municipality.codiceCatastale;
       const municipalityData = state.municipality.data;

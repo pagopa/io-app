@@ -1,8 +1,15 @@
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../mixpanel";
 import { Action } from "../actions/types";
-import { loadServiceDetail, loadServicesDetail, loadVisibleServices } from "../actions/services";
-import { loadServicePreference, upsertServicePreference } from "../actions/services/servicePreference";
+import {
+  loadServiceDetail,
+  loadServicesDetail,
+  loadVisibleServices
+} from "../actions/services";
+import {
+  loadServicePreference,
+  upsertServicePreference
+} from "../actions/services/servicePreference";
 import { getNetworkErrorMessage } from "../../utils/errors";
 
 // Isolated tracker for services actions

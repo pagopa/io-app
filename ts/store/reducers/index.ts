@@ -8,7 +8,11 @@ import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresReducer } from "../../features/common/store/reducers";
-import { logoutFailure, logoutSuccess, sessionExpired } from "../actions/authentication";
+import {
+  logoutFailure,
+  logoutSuccess,
+  sessionExpired
+} from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
@@ -17,11 +21,16 @@ import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
 import cieReducer from "./cie";
-import contentReducer, { initialContentState as contentInitialContentState } from "./content";
+import contentReducer, {
+  initialContentState as contentInitialContentState
+} from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
-import entitiesReducer, { entitiesPersistConfig, EntitiesState } from "./entities";
+import entitiesReducer, {
+  entitiesPersistConfig,
+  EntitiesState
+} from "./entities";
 import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
@@ -30,7 +39,9 @@ import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
-import persistedPreferencesReducer, { initialPreferencesState } from "./persistedPreferences";
+import persistedPreferencesReducer, {
+  initialPreferencesState
+} from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import crossSessionsReducer from "./crossSessions";
@@ -169,7 +180,7 @@ export function createRootReducer(
               crossSessions: state.crossSessions,
               // keep servicesMetadata from content section
               content: {
-                ...contentInitialContentState,
+                ...contentInitialContentState
               },
               // isMixpanelEnabled must be kept
               persistedPreferences: {

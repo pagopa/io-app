@@ -2,7 +2,14 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import { applyMiddleware, compose, createStore, Middleware, Reducer, Store } from "redux";
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+  Middleware,
+  Reducer,
+  Store
+} from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -21,7 +28,10 @@ import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
-import { authenticationPersistConfig, createRootReducer } from "../store/reducers";
+import {
+  authenticationPersistConfig,
+  createRootReducer
+} from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
