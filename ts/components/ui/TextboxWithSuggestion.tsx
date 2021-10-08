@@ -38,6 +38,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
+
+/**
+ * Props explanation:
+ * - data -> array of suggested items, shown in the modal.
+ * - keyExtractor -> method that given an item of the array and the index return the unique value to use as key for the item.
+ * - onChangeText -> method that notify when the user changes the searching text in the modal.
+ * - renderItem -> method that given an item return a ReactElement which will be inserted inside a ListItem.
+ * - title -> the title of the modal screen.
+ * - label -> displayed on top the search text-box both.
+ * - placeholder -> placeholder of the search text-box.
+ * - isLoading -> when true show a loader at the middle of the modal.
+ */
 type CommonProps<T> = {
   data: ReadonlyArray<T>;
   keyExtractor: (item: T, index: number) => string;
@@ -48,6 +60,11 @@ type CommonProps<T> = {
   placeholder: string;
   isLoading: boolean;
 };
+
+/**
+ * Props explanation:
+ * - onSelectValue -> method that inform about selected value from the suggested ones. The returned string will be used to set the search text-box.
+ */
 type Props<T> = {
   onSelectValue: (value: T) => string;
 } & CommonProps<T>;
