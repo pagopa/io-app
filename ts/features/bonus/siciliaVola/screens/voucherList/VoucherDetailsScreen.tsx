@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -35,6 +35,7 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
+import { constNull } from "fp-ts/lib/function";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -46,6 +47,30 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
+
+const handleVoucherRevocation = () => {
+  Alert.alert(
+    I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.title"),
+    I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.message"),
+    [
+      {
+        text: I18n.t(
+          "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ok"
+        ),
+        style: "default",
+        // TODO replace with the effective implementation
+        onPress: constNull
+      },
+      {
+        text: I18n.t(
+          "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ko"
+        ),
+        style: "default",
+        onPress: constNull
+      }
+    ]
+  );
+};
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   const { selectedVoucherCode, getVoucherDetail } = props;
@@ -90,7 +115,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       borderColor: IOColors.red
     },
     labelColor: IOColors.red,
-    onPress: props.back,
+    onPress: handleVoucherRevocation,
     title: I18n.t("bonus.sv.voucherList.details.cta.voucherRevocation")
   };
   const openQrButtonProps = {
