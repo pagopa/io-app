@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import React, { ReactElement } from "react";
 import { Dispatch } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   ServicePublic,
   ServicePublicService_metadata
@@ -17,7 +16,7 @@ type Props = {
   // service and serviceMetadata could come from message or service detail
   // they could be useful to determine if a cta action is valid or not
   service?: ServicePublic;
-  serviceMetadata?: pot.Pot<ServicePublicService_metadata | undefined, Error>;
+  serviceMetadata?: ServicePublicService_metadata;
 };
 
 /**

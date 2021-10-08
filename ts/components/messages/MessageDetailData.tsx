@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContent;
   serviceDetail: pot.Pot<ServicePublic, Error>;
-  serviceMetadata?: pot.Pot<ServicePublicService_metadata | undefined, Error>;
+  serviceMetadata?: ServicePublicService_metadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -60,10 +60,7 @@ class MessageDetailData extends React.PureComponent<Props> {
 
   get data(): MessageData {
     const serviceDetail = pot.toOption(this.props.serviceDetail);
-    const metadata =
-      this.props.serviceMetadata === undefined
-        ? none
-        : pot.toOption(this.props.serviceMetadata);
+    const metadata = fromNullable(this.props.serviceMetadata);
     return {
       service_detail: serviceDetail,
       organization_name: serviceDetail.map(s => s.organization_name),

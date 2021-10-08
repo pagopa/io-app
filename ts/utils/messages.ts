@@ -2,7 +2,6 @@
  * Generic utilities for messages
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   fromNullable,
   fromPredicate,
@@ -212,26 +211,20 @@ export const getPrescriptionDataFromName = (
     return none;
   });
 
-export type MaybePotMetadata =
-  | pot.Pot<ServicePublicService_metadata | undefined, Error>
-  | undefined;
-
-const hasMetadataTokenName = (metadata: MaybePotMetadata): boolean =>
-  fromNullable(metadata)
-    .map(m =>
-      pot.getOrElse(
-        pot.map(m, m => m !== undefined && m.token_name !== undefined),
-        false
-      )
-    )
-    .getOrElse(false);
+const hasMetadataTokenName = (
+  metadata?: ServicePublicService_metadata
+): boolean =>
+  fromNullable(metadata).fold(
+    false,
+    m => m !== undefined && m.token_name !== undefined
+  );
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
 const internalRoutePredicates: Map<
   string,
-  Predicate<MaybePotMetadata>
-> = new Map<string, Predicate<MaybePotMetadata>>([
+  Predicate<ServicePublicService_metadata | undefined>
+> = new Map<string, Predicate<ServicePublicService_metadata | undefined>>([
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
@@ -247,7 +240,7 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
 
 const extractCTA = (
   text: string,
-  serviceMetadata: MaybePotMetadata,
+  serviceMetadata?: ServicePublicService_metadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
   fromPredicate((t: string) => FM.test(t))(text)
@@ -279,7 +272,7 @@ const extractCTA = (
  */
 export const getCTA = (
   message: CreatedMessageWithContent,
-  serviceMetadata?: MaybePotMetadata,
+  serviceMetadata?: ServicePublicService_metadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>
   extractCTA(message.content.markdown, serviceMetadata, serviceId);
@@ -289,17 +282,12 @@ export const getCTA = (
  * if some CTAs are been found, the localized version will be returned
  * @param serviceMetadata
  */
-export const getServiceCTA = (serviceMetadata: MaybePotMetadata): Option<CTAS> =>
+export const getServiceCTA = (
+  serviceMetadata?: ServicePublicService_metadata
+): Option<CTAS> =>
   fromNullable(serviceMetadata)
-    .map(s =>
-      pot.getOrElse(
-        pot.map(s, metadata =>
-          fromNullable(metadata)
-            .chain(m => fromNullable(m.cta))
-            .getOrElse("" as string & INonEmptyStringTag)
-        ),
-        "" as string & INonEmptyStringTag
-      )
+    .map(sm =>
+      fromNullable(sm.cta).getOrElse("" as string & INonEmptyStringTag)
     )
     .chain(cta => extractCTA(cta, serviceMetadata));
 
@@ -311,7 +299,7 @@ export const getServiceCTA = (serviceMetadata: MaybePotMetadata): Option<CTAS> =
  */
 export const isCtaActionValid = (
   cta: CTA,
-  serviceMetadata?: MaybePotMetadata
+  serviceMetadata?: ServicePublicService_metadata
 ): boolean => {
   // check if it is an internal navigation
   const maybeInternalRoute = getInternalRoute(cta.action);
@@ -334,7 +322,7 @@ export const isCtaActionValid = (
  */
 export const hasCtaValidActions = (
   ctas: CTAS,
-  serviceMetadata?: pot.Pot<ServicePublicService_metadata | undefined, Error>
+  serviceMetadata?: ServicePublicService_metadata
 ): boolean => {
   const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
   if (ctas.cta_2 === undefined) {

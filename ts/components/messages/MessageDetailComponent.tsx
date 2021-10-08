@@ -29,7 +29,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   potServiceDetail: pot.Pot<ServicePublic, Error>;
-  potServiceMetadata: pot.Pot<ServicePublicService_metadata | undefined, Error>;
+  serviceMetadata?: ServicePublicService_metadata;
   onServiceLinkPress?: () => void;
 }>;
 
@@ -140,12 +140,8 @@ export default class MessageDetailComponent extends React.PureComponent<
     );
 
   public render() {
-    const {
-      message,
-      potServiceDetail,
-      potServiceMetadata,
-      onServiceLinkPress
-    } = this.props;
+    const { message, potServiceDetail, serviceMetadata, onServiceLinkPress } =
+      this.props;
     const { maybeMedicalData, service, payment } = this;
 
     return (
@@ -209,7 +205,7 @@ export default class MessageDetailComponent extends React.PureComponent<
               <MessageDetailData
                 message={message}
                 serviceDetail={potServiceDetail}
-                serviceMetadata={potServiceMetadata}
+                serviceMetadata={serviceMetadata}
                 goToServiceDetail={onServiceLinkPress}
               />
             </React.Fragment>
