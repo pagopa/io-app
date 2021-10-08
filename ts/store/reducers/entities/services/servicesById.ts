@@ -5,7 +5,10 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import {
+  ServicePublic,
+  ServicePublicService_metadata
+} from "../../../../../definitions/backend/ServicePublic";
 import {
   loadServiceDetail,
   removeServiceTuples
@@ -81,4 +84,13 @@ export const serviceByIdSelector =
   (state: GlobalState): pot.Pot<ServicePublic, Error> | undefined =>
     state.entities.services.byId[id];
 
+export const serviceMetadataByIdSelector =
+  (id: string) =>
+  (state: GlobalState): ServicePublicService_metadata | undefined => {
+    const maybeServiceById = serviceByIdSelector(id)(state);
+
+    return maybeServiceById
+      ? pot.toUndefined(maybeServiceById)?.service_metadata
+      : undefined;
+  };
 export default reducer;

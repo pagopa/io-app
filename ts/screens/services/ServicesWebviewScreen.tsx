@@ -1,5 +1,4 @@
 import CookieManager, { Cookie } from "@react-native-community/cookies";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
@@ -15,11 +14,11 @@ import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { internalRouteNavigationParamsSelector } from "../../store/reducers/internalRouteNavigation";
 import { GlobalState } from "../../store/reducers/types";
 import { ServicesWebviewParams } from "../../types/ServicesWebviewParams";
 import { resetInternalRouteNavigation } from "../../store/actions/internalRouteNavigation";
+import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -103,16 +102,13 @@ const mapStateToProps = (state: GlobalState) => {
     internalRouteNavigationParamsSelector(state)
   );
 
-  // Get TokenName parameter from service metadata
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
   const tokenName = maybeParams.fold(
     () => none,
     params => {
-      const metadata = servicesMetadataByID[params.serviceId];
-      const token = pot.getOrElse(
-        pot.map(metadata, m => m && m.token_name),
-        undefined
+      const metadata = serviceMetadataByIdSelector(params.serviceId)(state);
+      const token = fromNullable(metadata).fold(
+        undefined,
+        m => m && m.token_name
       );
       return fromNullable(token);
     }

@@ -5,9 +5,10 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { Service } from "../../../definitions/content/Service";
-import { ServiceMetadataState } from "../../store/reducers/content";
+import {
+  ServicePublic,
+  ServicePublicService_metadata
+} from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { format, formatDateAsLocal } from "../../utils/dates";
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContent;
   serviceDetail: pot.Pot<ServicePublic, Error>;
-  serviceMetadata?: ServiceMetadataState;
+  serviceMetadata?: pot.Pot<ServicePublicService_metadata | undefined, Error>;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -46,7 +47,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<Service>;
+  metadata: Option<ServicePublicService_metadata>;
 };
 
 /**

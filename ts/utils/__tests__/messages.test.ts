@@ -5,7 +5,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../../definitions/ba
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
-import { ScopeEnum } from "../../../definitions/content/Service";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
@@ -20,6 +19,8 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
+import { ServicePublicService_metadata } from "../../../definitions/backend/ServicePublic";
+import { ServiceScope } from "../../../definitions/backend/ServiceScope";
 
 const messageBody = `### this is a message
 
@@ -115,19 +116,24 @@ const messageInvalidAfterDueDate = {
   }
 };
 
-const serviceMetadataBase = {
-  description: "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>",
-  scope: "LOCAL" as ScopeEnum,
-  address: "Piazza di Spagna, Roma, Italia",
-  email: "mock.service@email.com",
-  pec: "mock.pec@email.com",
-  phone: "5555555",
-  web_url: "https://www.google.com",
-  app_android: "https://www.google.com",
-  app_ios: "https://www.google.com",
-  support_url: "https://www.sos.com",
-  tos_url: "https://www.tos.com",
-  privacy_url: "https://www.privacy.com",
+const serviceMetadataBase: ServicePublicService_metadata = {
+  description:
+    "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>" as ServicePublicService_metadata["description"],
+  scope: "LOCAL" as ServiceScope,
+  address:
+    "Piazza di Spagna, Roma, Italia" as ServicePublicService_metadata["address"],
+  email: "mock.service@email.com" as ServicePublicService_metadata["email"],
+  pec: "mock.pec@email.com" as ServicePublicService_metadata["pec"],
+  phone: "5555555" as ServicePublicService_metadata["phone"],
+  web_url: "https://www.google.com" as ServicePublicService_metadata["web_url"],
+  app_android:
+    "https://www.google.com" as ServicePublicService_metadata["app_android"],
+  app_ios: "https://www.google.com" as ServicePublicService_metadata["app_ios"],
+  support_url:
+    "https://www.sos.com" as ServicePublicService_metadata["support_url"],
+  tos_url: "https://www.tos.com" as ServicePublicService_metadata["tos_url"],
+  privacy_url:
+    "https://www.privacy.com" as ServicePublicService_metadata["privacy_url"],
   cta: `---
   it:
       cta_1: 
@@ -138,7 +144,7 @@ const serviceMetadataBase = {
           text: "go1"
           action: "ioit://SERVICE_WEBVIEW"
   ---
-  `
+  ` as ServicePublicService_metadata["cta"]
 };
 
 // test "it" as default language
@@ -251,7 +257,7 @@ some noise`;
   it("should have a valid CTA for service", () => {
     const validServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
     });
     const maybeCTAs = getCTA(
       {
@@ -349,8 +355,9 @@ en:
 ---`;
     const validServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase,
-      token_name: "myPortalToken",
-      cta: CTA_SERVICE
+      token_name:
+        "myPortalToken" as ServicePublicService_metadata["token_name"],
+      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
     });
     const maybeCTA = getServiceCTA(validServiceMetadata);
     expect(maybeCTA.isSome()).toBeTruthy();
@@ -367,7 +374,7 @@ en:
   it("Should not extract a CTA for the service without cta attribute", () => {
     const invalidServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
     });
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
@@ -386,7 +393,7 @@ en:
 ---`;
     const invalidServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase,
-      cta: CTA_SERVICE
+      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
     });
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
@@ -397,7 +404,7 @@ describe("isCtaActionValid", () => {
   it("should be a valid action for service", () => {
     const validServiceMetadata: MaybePotMetadata = pot.some({
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
     });
     const CTA = {
       text: "dummy",

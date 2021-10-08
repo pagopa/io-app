@@ -2,14 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-import {
-  applyMiddleware,
-  compose,
-  createStore,
-  Middleware,
-  Reducer,
-  Store
-} from "redux";
+import { applyMiddleware, compose, createStore, Middleware, Reducer, Store } from "redux";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -22,15 +15,13 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import createDebugger from "redux-flipper";
+import _ from "lodash";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
 import { createNavigationHistoryMiddleware } from "../store/middlewares/navigationHistory";
 import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
-import {
-  authenticationPersistConfig,
-  createRootReducer
-} from "../store/reducers";
+import { authenticationPersistConfig, createRootReducer } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
@@ -46,7 +37,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 17;
+const CURRENT_REDUX_STORE_VERSION = 18;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -163,10 +154,7 @@ const migrations: MigrationManifest = {
     ...state,
     content: {
       ...(state as PersistedGlobalState).content,
-      servicesMetadata: {
-        ...(state as PersistedGlobalState).content.servicesMetadata,
-        byId: {}
-      }
+      servicesMetadata: {}
     }
   }),
 
@@ -223,7 +211,6 @@ const migrations: MigrationManifest = {
   "14": (state: PersistedState) => {
     const content = (state as PersistedGlobalState).content;
     const newContent: ContentState = {
-      servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
       contextualHelp: pot.none,
       idps: remoteUndefined
@@ -265,6 +252,17 @@ const migrations: MigrationManifest = {
           ...notifications.installation,
           registeredToken: undefined
         }
+      }
+    };
+  },
+  // Version 18
+  // since we removed servicesMetadata content section we need to migrate previous store versions
+  "18": (state: PersistedState) => {
+    const content: ContentState = (state as PersistedGlobalState).content;
+    return {
+      ...state,
+      content: {
+        ..._.omit(content, "servicesMetadata")
       }
     };
   }

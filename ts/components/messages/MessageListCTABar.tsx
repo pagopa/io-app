@@ -7,9 +7,7 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { loadServiceMetadata } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -91,12 +89,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return fromNullable(this.props.message.content.due_date);
   }
 
-  public componentDidMount() {
-    if (!this.props.serviceMetadata && this.props.service) {
-      this.props.loadServiceMetadata(this.props.service);
-    }
-  }
-
   private renderEUCovidViewCTA() {
     return (
       euCovidCertificateEnabled &&
@@ -143,12 +135,15 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ));
 
   public render() {
+    const potServiceMeta = this.props.service?.service_metadata
+      ? pot.some(this.props.service?.service_metadata)
+      : undefined;
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const euCovidCertCTA = this.renderEUCovidViewCTA();
     const maybeCTA = getCTA(
       this.props.message,
-      this.props.serviceMetadata,
+      potServiceMeta,
       this.props.service?.service_id
     );
     const isPaymentStillValid =
@@ -159,7 +154,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           ctas={maybeCTA.value}
           xsmall={true}
           dispatch={this.props.dispatch}
-          serviceMetadata={this.props.serviceMetadata}
+          serviceMetadata={potServiceMeta}
           service={this.props.service}
         />
       ) : null;
@@ -199,19 +194,9 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
-  return {
-    serviceMetadata: ownProps.service
-      ? servicesMetadataByID[ownProps.service.service_id]
-      : pot.none
-  };
-};
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadServiceMetadata: (service: ServicePublic) =>
-    dispatch(loadServiceMetadata.request(service.service_id)),
   dispatch
 });
 
