@@ -16,6 +16,8 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
+  annullaVoucherDefaultDecoder,
+  AnnullaVoucherT,
   getAeroportiBeneficiarioDefaultDecoder,
   GetAeroportiBeneficiarioT,
   getAeroportiStatoDefaultDecoder,
@@ -35,6 +37,7 @@ import {
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
+import { VoucherCodeInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherCodeInputBean";
 
 /**
  * Get the Sicilia Vola session token
@@ -122,6 +125,18 @@ const GetAeroportiStato: GetAeroportiStatoT = {
 };
 
 /**
+ * Get the list of the airports available for the voucher given a stateId when the selected state is an abroad state
+ */
+const PostAnnullaVoucher: AnnullaVoucherT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/`,
+  query: _ => ({}),
+  body: voucherCode => JSON.stringify(voucherCode),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: annullaVoucherDefaultDecoder()
+};
+
+/**
  * Get the list of user's vouchers
  *
  * TODO: modify post in get and add auth header when the swagger will be fixed
@@ -201,7 +216,13 @@ export const BackendSiciliaVolaClient = (
         GetVoucherBeneficiario,
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
-    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
+    postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(PostAnnullaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode })
   };
 };
 
