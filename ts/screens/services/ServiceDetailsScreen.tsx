@@ -157,7 +157,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // if markdown data is available, wait for it to be rendered
     const canRenderItems = isMarkdownLoaded;
 
-    const maybeCTA = getServiceCTA(pot.some(metadata));
+    const maybeCTA = getServiceCTA(metadata);
 
     return (
       <BaseScreenComponent
@@ -224,7 +224,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               ctas={maybeCTA.value}
               xsmall={false}
               dispatch={this.props.dispatch}
-              serviceMetadata={pot.some(metadata)}
+              serviceMetadata={metadata}
               service={service}
             />
           </View>

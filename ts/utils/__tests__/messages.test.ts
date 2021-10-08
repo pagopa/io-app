@@ -1,5 +1,4 @@
 import { isNone, isSome, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
@@ -15,7 +14,6 @@ import {
   getRemoteLocale,
   getServiceCTA,
   isCtaActionValid,
-  MaybePotMetadata,
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
@@ -255,10 +253,10 @@ some noise`;
   });
 
   it("should have a valid CTA for service", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
       token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
-    });
+    };
     const maybeCTAs = getCTA(
       {
         ...messageWithContent,
@@ -281,9 +279,9 @@ some noise`;
   });
 
   it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase
-    });
+    };
     const maybeCTAs = getCTA(
       {
         ...messageWithContent,
@@ -353,12 +351,12 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
       token_name:
         "myPortalToken" as ServicePublicService_metadata["token_name"],
       cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
-    });
+    };
     const maybeCTA = getServiceCTA(validServiceMetadata);
     expect(maybeCTA.isSome()).toBeTruthy();
     if (maybeCTA.isSome()) {
@@ -372,10 +370,10 @@ en:
   });
 
   it("Should not extract a CTA for the service without cta attribute", () => {
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
       token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
-    });
+    };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
   });
@@ -391,10 +389,10 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
       cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
-    });
+    };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
   });
@@ -402,10 +400,10 @@ en:
 
 describe("isCtaActionValid", () => {
   it("should be a valid action for service", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
       token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
-    });
+    };
     const CTA = {
       text: "dummy",
       action:
@@ -416,9 +414,9 @@ describe("isCtaActionValid", () => {
   });
 
   it("should NOT be a valid action for service", () => {
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase
-    });
+    };
     const CTA = {
       text: "dummy",
       action:

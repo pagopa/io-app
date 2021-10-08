@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { View } from "native-base";
@@ -135,15 +134,13 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ));
 
   public render() {
-    const potServiceMeta = this.props.service?.service_metadata
-      ? pot.some(this.props.service?.service_metadata)
-      : undefined;
+    const maybeServiceMetadata = this.props.service?.service_metadata;
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const euCovidCertCTA = this.renderEUCovidViewCTA();
     const maybeCTA = getCTA(
       this.props.message,
-      potServiceMeta,
+      maybeServiceMetadata,
       this.props.service?.service_id
     );
     const isPaymentStillValid =
@@ -154,7 +151,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           ctas={maybeCTA.value}
           xsmall={true}
           dispatch={this.props.dispatch}
-          serviceMetadata={potServiceMeta}
+          serviceMetadata={maybeServiceMetadata}
           service={this.props.service}
         />
       ) : null;

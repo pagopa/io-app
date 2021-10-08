@@ -4,7 +4,6 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import DeviceInfo from "react-native-device-info";
-import * as pot from "italia-ts-commons/lib/pot";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaidReason } from "../../store/reducers/entities/payments";
@@ -98,9 +97,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   }
 
   public render() {
-    const potServiceMeta = this.props.service?.service_metadata
-      ? pot.some(this.props.service?.service_metadata)
-      : undefined;
+    const maybeServiceMetadata = this.props.service?.service_metadata;
 
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
@@ -113,7 +110,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     );
     const maybeCtas = getCTA(
       this.props.message,
-      potServiceMeta,
+      maybeServiceMetadata,
       this.props.service?.service_id
     );
     const footer2 = maybeCtas.isSome() && (
@@ -122,7 +119,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
           ctas={maybeCtas.value}
           xsmall={false}
           dispatch={this.props.dispatch}
-          serviceMetadata={potServiceMeta}
+          serviceMetadata={maybeServiceMetadata}
           service={this.props.service}
         />
       </View>

@@ -220,7 +220,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when we have all data to properly render the content of the screen.
    */
   private renderFullState = (message: CreatedMessageWithContent) => {
-    const { potServiceDetail, potServiceMetadata, paymentsByRptId } =
+    const { potServiceDetail, maybeServiceMetadata, paymentsByRptId } =
       this.props;
 
     return (
@@ -228,7 +228,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         message={message}
         paymentsByRptId={paymentsByRptId}
         potServiceDetail={potServiceDetail}
-        potServiceMetadata={potServiceMetadata}
+        serviceMetadata={maybeServiceMetadata}
         onServiceLinkPress={
           pot.isSome(potServiceDetail)
             ? () => this.onServiceLinkPressHandler(potServiceDetail.value)
@@ -325,13 +325,11 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     .getOrElse(pot.none);
 
   // Map the potential message to the potential service
-  const potServiceMetadata = pot.getOrElse(
+  const maybeServiceMetadata = pot.getOrElse(
     pot.mapNullable(potMessage, m =>
       serviceMetadataByIdSelector(m.sender_service_id)(state)
-        ? pot.some(serviceMetadataByIdSelector(m.sender_service_id)(state))
-        : pot.none
     ),
-    pot.none
+    undefined
   );
 
   return {
@@ -339,7 +337,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     isRead,
     potMessage,
     potServiceDetail,
-    potServiceMetadata,
+    maybeServiceMetadata,
     paymentsByRptId: paymentsByRptIdSelector(state)
   };
 };
