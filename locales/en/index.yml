@@ -2486,6 +2486,7 @@ bonus:
         deals: Discounts
         description: Description
         services: Services
+        addresses: Addresses
         hours: Working Hours
         validity: Validity
         discountCode: Discount code
@@ -2494,12 +2495,14 @@ bonus:
         label: Navigate to merchant website
         landingPage: Get the benefit
       categories:
-        theater: theater, cinema and entertainment
-        travel: travel
-        mobility: carsharing and mobility
-        telco: telecommunications, internet services
-        book: books, audiobooks, e-books
-        museum: museums, galleries, parks
+        counting: and other {{count}}
+        theater: free time
+        travel: travels, transportation and mobility
+        food: restaurant and cooking
+        hotel: hotel
+        service: services
+        book: instruction
+        shopping: shopping
         sport: sport
         health: health and wellness
     cta:
@@ -2507,7 +2510,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See merchants
+        buyers: See benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2652,7 +2655,8 @@ bonus:
       summary:
         title: "SummaryScreen"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Here is your discount code"
+        subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
       ko:
         checkIncome:
           title: "Sorry, you do not have the features to access the discounts."
