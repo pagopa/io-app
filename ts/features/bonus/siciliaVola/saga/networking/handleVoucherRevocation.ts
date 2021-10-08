@@ -6,6 +6,7 @@ import {
 } from "../../store/actions/voucherList";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import { navigateBack } from "../../../../../store/actions/navigation";
 
 /**
  * Handle the remote call to check if the service is alive
@@ -21,6 +22,7 @@ export function* handleVoucherRevocation(
   yield delay(500);
   yield put(svVoucherRevocation.success());
 
+  yield put(navigateBack());
   // TODO: handle filter
   yield put(svVoucherListGet.request({}));
 }
