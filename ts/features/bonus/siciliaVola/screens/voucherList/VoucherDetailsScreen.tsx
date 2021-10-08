@@ -18,7 +18,10 @@ import {
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
 import I18n from "../../../../../i18n";
-import { svVoucherDetailGet } from "../../store/actions/voucherList";
+import {
+  svVoucherDetailGet,
+  svVoucherRevocation
+} from "../../store/actions/voucherList";
 import { SvVoucherId } from "../../types/SvVoucher";
 import {
   selectedVoucherCodeSelector,
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const handleVoucherRevocation = () => {
+const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
   Alert.alert(
     I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.title"),
     I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.message"),
@@ -58,8 +61,7 @@ const handleVoucherRevocation = () => {
           "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ok"
         ),
         style: "default",
-        // TODO replace with the effective implementation
-        onPress: constNull
+        onPress: onVoucherRevocation
       },
       {
         text: I18n.t(
@@ -115,7 +117,10 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       borderColor: IOColors.red
     },
     labelColor: IOColors.red,
-    onPress: handleVoucherRevocation,
+    onPress: () =>
+      handleVoucherRevocation(() =>
+        props.voucherRevocationRequest(selectedVoucher.id)
+      ),
     title: I18n.t("bonus.sv.voucherList.details.cta.voucherRevocation")
   };
   const openQrButtonProps = {
@@ -216,6 +221,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   completed: () => dispatch(svGenerateVoucherCompleted()),
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
     dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
+  voucherRevocationRequest: (voucherId: SvVoucherId) =>
+    dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
     dispatch(svVoucherDetailGet.request(voucherId)),
   navigateToGenericFailure: () => navigateToWorkunitGenericFailureScreen()
