@@ -1,4 +1,5 @@
 import {
+  NavigationAction,
   NavigationActions,
   NavigationContainerComponent,
   NavigationParams
@@ -12,9 +13,14 @@ function setTopLevelNavigator(
 ) {
   navigator = navigatorRef;
 }
-function navigate(routeName: string, params?: NavigationParams) {
+
+const navigate = (routeName: string, params?: NavigationParams) => {
   navigator?.dispatch(NavigationActions.navigate({ routeName, params }));
-}
+};
+
+const dispatchNavigationAction = (action: NavigationAction) => {
+  navigator?.dispatch(action);
+};
 
 // add other navigation functions that you need and export them
-export default { navigate, setTopLevelNavigator };
+export default { navigate, setTopLevelNavigator, dispatchNavigationAction };

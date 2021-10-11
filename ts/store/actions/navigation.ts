@@ -6,6 +6,7 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
@@ -55,15 +56,21 @@ export const resetToAuthenticationRoute: NavigationResetAction =
     ]
   });
 
-export const navigateToMainNavigatorAction = StackActions.reset({
-  key: "StackRouterRoot",
-  index: 0,
-  actions: [
-    NavigationActions.navigate({
-      routeName: ROUTES.MAIN
+/**
+ * @deprecated
+ */
+export const navigateToMainNavigatorAction = () =>
+  NavigationService.dispatchNavigationAction(
+    StackActions.reset({
+      key: "StackRouterRoot",
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: ROUTES.MAIN
+        })
+      ]
     })
-  ]
-});
+  );
 
 export const navigateBack = NavigationActions.back;
 

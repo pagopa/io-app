@@ -503,7 +503,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
       )
     );
   } else {
-    yield put(navigateToMainNavigatorAction);
+    yield call(navigateToMainNavigatorAction);
   }
 }
 
