@@ -39,7 +39,6 @@ const reducer = (
       return { ...state, voucher: remoteLoading, revocation: remoteUndefined };
     case getType(svVoucherDetailGet.success):
       return { ...state, voucher: remoteReady(action.payload) };
-    case getType(svVoucherRevocation.failure):
     case getType(svVoucherDetailGet.failure):
       return { ...state, voucher: remoteError(action.payload) };
     case getType(svSelectVoucher):
@@ -48,6 +47,8 @@ const reducer = (
       return { ...state, revocation: remoteLoading };
     case getType(svVoucherRevocation.success):
       return { ...state, revocation: remoteReady(true) };
+    case getType(svVoucherRevocation.failure):
+      return { ...state, revocation: remoteError(action.payload) };
   }
 
   return state;
