@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
 });
 
 const MAX_BADGE_VALUE = 99;
+// get the width multiplier relative to the count of digits to display
 const getWidthMultiplier = (text: string) => {
   const digits = text.length;
   if (digits <= 1) {
@@ -39,6 +40,7 @@ const getWidthMultiplier = (text: string) => {
   if (digits <= 2) {
     return 1.1;
   }
+  // more than 2 digits
   return 1.4;
 };
 
