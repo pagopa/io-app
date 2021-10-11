@@ -1,7 +1,7 @@
 import { none, Option } from "fp-ts/lib/Option";
 import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { openInstabugReplies } from "../boot/configureInstabug";
 import I18n from "../i18n";
@@ -9,7 +9,6 @@ import { instabugReportOpened } from "../store/actions/debug";
 import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
-import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
@@ -17,29 +16,6 @@ import IconFont from "./ui/IconFont";
 interface OwnProps {
   color?: string;
 }
-
-const styles = StyleSheet.create({
-  textStyle: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  badgeStyle: {
-    backgroundColor: variables.brandPrimary,
-    borderColor: "white",
-    borderWidth: 2,
-    position: "absolute",
-    elevation: 0.1,
-    shadowColor: "white",
-    height: 19,
-    width: 19,
-    left: 20,
-    bottom: 20,
-    paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-    alignContent: "center"
-  }
-});
 
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
@@ -115,11 +91,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
             >
               <IconFont name="io-chat" color={this.props.color} />
             </ButtonDefaultOpacity>
-            <CustomBadge
-              badgeStyle={styles.badgeStyle}
-              textStyle={styles.textStyle}
-              badgeValue={this.props.badge}
-            />
+            <CustomBadge badgeValue={this.props.badge} />
           </View>
         )}
       </React.Fragment>
