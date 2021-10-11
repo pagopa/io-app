@@ -238,29 +238,26 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => {
-    dispatch(navigateBack());
+    navigateBack();
   },
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateToWalletHome: () => navigateToWalletHome(),
   navigateToWalletAddPaymentMethod: () =>
-    dispatch(
-      navigateToWalletAddPaymentMethod({
-        inPayment: none,
-        showOnlyPayablePaymentMethods: true
-      })
-    ),
+    navigateToWalletAddPaymentMethod({
+      inPayment: none,
+      showOnlyPayablePaymentMethods: true
+    }),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
     Keyboard.dismiss();
     dispatch(paymentInitializeState());
-    dispatch(
-      navigateToPaymentTransactionSummaryScreen({
-        rptId,
-        initialAmount,
-        isManualPaymentInsertion: true
-      })
-    );
+
+    navigateToPaymentTransactionSummaryScreen({
+      rptId,
+      initialAmount,
+      isManualPaymentInsertion: true
+    });
   }
 });
 

@@ -47,9 +47,9 @@ const CreditCardWalletPreview = (props: Props): React.ReactElement => (
   />
 );
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToCreditCardDetail: (creditCard: CreditCardPaymentMethod) =>
-    dispatch(navigateToCreditCardDetailScreen({ creditCard }))
+    navigateToCreditCardDetailScreen({ creditCard })
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

@@ -461,15 +461,13 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddCobadgeWorkflow: () => dispatch(walletAddCoBadgeStart(undefined)),
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
-    dispatch(
-      navigateToWalletConfirmCardDetails({
-        creditCard,
-        inPayment: props.navigation.getParam("inPayment"),
-        keyFrom: props.navigation.getParam("keyFrom")
-      })
-    )
+    navigateToWalletConfirmCardDetails({
+      creditCard,
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);

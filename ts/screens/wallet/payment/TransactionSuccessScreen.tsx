@@ -87,12 +87,10 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToReceipt: (transaction: Transaction) =>
-    dispatch(
-      navigateToTransactionDetailsScreen({
-        isPaymentCompletedTransaction: true,
-        transaction
-      })
-    ),
+    navigateToTransactionDetailsScreen({
+      isPaymentCompletedTransaction: true,
+      transaction
+    }),
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 

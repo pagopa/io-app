@@ -86,9 +86,9 @@ const CobadgeWalletPreview: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToCobadgeDetails: (cobadge: CreditCardPaymentMethod) =>
-    dispatch(navigateToCobadgeDetailScreen(cobadge))
+    navigateToCobadgeDetailScreen(cobadge)
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

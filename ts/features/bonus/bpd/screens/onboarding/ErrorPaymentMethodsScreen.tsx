@@ -69,7 +69,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => {
     dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
+    navigateToWalletHome();
   }
 });
 

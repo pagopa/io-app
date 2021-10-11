@@ -638,16 +638,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+    navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
+  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
-    dispatch(
-      navigateToTransactionDetailsScreen({
-        transaction,
-        isPaymentCompletedTransaction: false
-      })
-    );
+
+    navigateToTransactionDetailsScreen({
+      transaction,
+      isPaymentCompletedTransaction: false
+    });
   },
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
@@ -658,7 +657,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   ) =>
     dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
-  navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
+  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

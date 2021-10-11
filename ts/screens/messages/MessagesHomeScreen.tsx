@@ -350,7 +350,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadServiceDetail.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId })),
+    navigateToMessageRouterScreen({ messageId }),
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean

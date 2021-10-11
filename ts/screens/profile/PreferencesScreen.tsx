@@ -206,15 +206,14 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToServiceContactPreferenceScreen: () =>
-    dispatch(navigateToServicePreferenceScreen()),
+    navigateToServicePreferenceScreen(),
   navigateToEmailForwardingPreferenceScreen: () =>
-    dispatch(navigateToEmailForwardingPreferenceScreen()),
+    navigateToEmailForwardingPreferenceScreen(),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToLanguagePreferenceScreen: () =>
-    dispatch(navigateToLanguagePreferenceScreen())
+    navigateToCalendarPreferenceScreen(),
+  navigateToLanguagePreferenceScreen: () => navigateToLanguagePreferenceScreen()
 });
 
 export default connect(

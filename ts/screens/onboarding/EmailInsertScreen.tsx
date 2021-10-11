@@ -164,7 +164,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private navigateToEmailReadScreen = () => {
     this.props.navigation.dispatch(StackActions.popToTop());
-    this.props.navigation.dispatch(navigateToEmailReadScreen());
+    navigateToEmailReadScreen();
   };
 
   public componentDidMount() {
@@ -321,7 +321,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   navigateToEmailReadScreen: () => {
-    dispatch(navigateToEmailReadScreen());
+    navigateToEmailReadScreen();
   },
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),

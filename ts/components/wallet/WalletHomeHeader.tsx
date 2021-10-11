@@ -157,7 +157,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
+    navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
   navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen())
 });
 

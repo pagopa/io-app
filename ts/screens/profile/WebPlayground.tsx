@@ -171,7 +171,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack())
+  goBack: () => navigateBack()
 });
 
 export default connect(undefined, mapDispatchToProps)(WebPlayground);

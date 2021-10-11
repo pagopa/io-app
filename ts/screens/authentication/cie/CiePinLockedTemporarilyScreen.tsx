@@ -64,7 +64,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
       />
     );
   };
-  private handleGoBack = () => this.props.dispatch(resetToAuthenticationRoute);
+  private handleGoBack = () => resetToAuthenticationRoute();
 
   public render(): React.ReactNode {
     return (

@@ -127,7 +127,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBackAndResetInternalNavigationInfo: () => {
     dispatch(resetInternalRouteNavigation());
-    dispatch(navigateBack());
+    navigateBack();
   }
 });
 

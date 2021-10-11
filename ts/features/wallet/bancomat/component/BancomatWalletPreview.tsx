@@ -76,9 +76,9 @@ const BancomatWalletPreview: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToBancomatDetails: (bancomat: BancomatPaymentMethod) =>
-    dispatch(navigateToBancomatDetailScreen(bancomat))
+    navigateToBancomatDetailScreen(bancomat)
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

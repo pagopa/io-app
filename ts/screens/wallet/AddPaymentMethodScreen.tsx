@@ -177,29 +177,25 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
-    dispatch(navigateToWalletAddDigitalPaymentMethod()),
+    navigateToWalletAddDigitalPaymentMethod(),
   navigateToTransactionSummary: () => {
     const maybeInPayment = props.navigation.getParam("inPayment");
     maybeInPayment.map(inPayment =>
-      dispatch(
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: inPayment.rptId,
-          initialAmount: inPayment.initialAmount
-        })
-      )
+      navigateToPaymentTransactionSummaryScreen({
+        rptId: inPayment.rptId,
+        initialAmount: inPayment.initialAmount
+      })
     );
   },
   navigateToAddCreditCard: () =>
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: props.navigation.getParam("inPayment"),
-        keyFrom: props.navigation.getParam("keyFrom")
-      })
-    )
+    navigateToWalletAddCreditCard({
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
+    })
 });
 
 export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);

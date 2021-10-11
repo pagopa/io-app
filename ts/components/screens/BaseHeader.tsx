@@ -312,10 +312,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => {
-    dispatch(navigateBack());
-  }
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export const BaseHeader = connect(

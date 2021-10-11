@@ -51,7 +51,6 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBonus: () => dispatch(loadBonusBeforeRemoveAccount()),
-  navigateToRemoveAccountDetail: () =>
-    dispatch(navigateToRemoveAccountDetailScreen())
+  navigateToRemoveAccountDetail: () => navigateToRemoveAccountDetailScreen()
 });
 export default connect(undefined, mapDispatchToProps)(RemoveAccountInfo);

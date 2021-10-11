@@ -20,7 +20,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
     super(props);
   }
 
-  private handleGoBack = () => this.props.dispatch(resetToAuthenticationRoute);
+  private handleGoBack = () => resetToAuthenticationRoute();
 
   public render(): React.ReactNode {
     return (

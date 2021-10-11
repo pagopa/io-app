@@ -185,7 +185,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetNavigation: () => dispatch(resetToAuthenticationRoute),
+  resetNavigation: () => resetToAuthenticationRoute(),
   loginSuccess: (token: SessionToken) =>
     dispatch(loginSuccess({ token, idp: IdpCIE.id })),
   loginFailure: (error: Error) =>

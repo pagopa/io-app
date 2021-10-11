@@ -59,12 +59,12 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => {
     dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
+    navigateToWalletHome();
   },
   addPaymentMethod: () => {
     dispatch(navigationHistoryPop(1));
-    dispatch(navigateToWalletHome());
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none }));
+    navigateToWalletHome();
+    navigateToWalletAddPaymentMethod({ inPayment: none });
   }
 });
 

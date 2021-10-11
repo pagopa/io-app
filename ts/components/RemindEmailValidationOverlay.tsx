@@ -411,13 +411,13 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   sendEmailValidation: () => dispatch(startEmailValidation.request()),
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   reloadProfile: () => {
     // Refresh profile to check if the email address has been validated
     dispatch(profileLoadRequest());
   },
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen());
+    navigateToEmailInsertScreen();
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
   dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>

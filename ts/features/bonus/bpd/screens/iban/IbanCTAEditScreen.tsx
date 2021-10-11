@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => {
     dispatch(bpdAllData.request());
   },
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
     dispatch(navigateToBpdDetails(bpdPeriod));
     dispatch(navigationHistoryPop(1));

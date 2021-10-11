@@ -214,7 +214,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           shufflePinPadOnPayment
         )
       ),
-    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+    navigateToWalletHomeScreen: () => navigateToWalletHome()
   };
 };
 

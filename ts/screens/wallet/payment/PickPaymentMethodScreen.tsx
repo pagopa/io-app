@@ -204,7 +204,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
       props.navigation.getParam("rptId"),
@@ -229,16 +229,14 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     );
   },
   navigateToAddPaymentMethod: () =>
-    dispatch(
-      navigateToWalletAddPaymentMethod({
-        inPayment: some({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
+    navigateToWalletAddPaymentMethod({
+      inPayment: some({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
       })
-    )
+    })
 });
 
 export default connect(

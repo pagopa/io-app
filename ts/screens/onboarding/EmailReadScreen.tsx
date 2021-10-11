@@ -204,11 +204,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen());
+    navigateToEmailInsertScreen();
   },
-  navigateBack: () => {
-    dispatch(navigateBack());
-  }
+  navigateBack: () => navigateBack()
 });
 
 export default withValidatedEmail(

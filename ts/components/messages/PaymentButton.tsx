@@ -174,14 +174,14 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
   navigateToMessageDetail: () =>
-    dispatch(navigateToMessageRouterScreen({ messageId: ownProps.message.id })),
+    navigateToMessageRouterScreen({ messageId: ownProps.message.id }),
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
   paymentInitializeState: () => dispatch(paymentInitializeState()),
   navigateToPaymentTransactionSummaryScreen: (
     params: InferNavigationParams<typeof TransactionSummaryScreen>
-  ) => dispatch(navigateToPaymentTransactionSummaryScreen(params)),
-  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+  ) => navigateToPaymentTransactionSummaryScreen(params),
+  navigateToWalletHomeScreen: () => navigateToWalletHome()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentButton);

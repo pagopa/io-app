@@ -110,7 +110,7 @@ const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   skip: () => {
-    dispatch(navigateToWalletHome());
+    navigateToWalletHome();
     dispatch(navigationHistoryPop(1));
   }
 });

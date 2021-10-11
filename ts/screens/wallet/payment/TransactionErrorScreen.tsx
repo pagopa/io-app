@@ -333,7 +333,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
-    dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount })),
+    navigateToPaymentManualDataInsertion({ isInvalidAmount }),
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 

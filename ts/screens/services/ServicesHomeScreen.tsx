@@ -639,8 +639,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToServicePreference: () =>
-    dispatch(navigateToServicePreferenceScreen()),
+  navigateToServicePreference: () => navigateToServicePreferenceScreen(),
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
@@ -682,7 +681,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params)),
+  ) => navigateToServiceDetailsScreen(params),
   serviceDetailsLoad: (service: ServicePublic) => {
     dispatch(loadServiceMetadata.request(service.service_id));
     dispatch(showServiceDetails(service));

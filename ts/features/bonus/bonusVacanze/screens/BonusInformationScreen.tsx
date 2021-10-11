@@ -48,7 +48,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
+  navigateBack: () => navigateBack()
 });
 
 export default connect(

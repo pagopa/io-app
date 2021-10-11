@@ -163,11 +163,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   addCoBadge: (abi: string | undefined) => dispatch(walletAddCoBadgeStart(abi)),
   addCreditCard: (popScreenNumber: number = 0) => {
     navigateBack(popScreenNumber, dispatch);
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: none
-      })
-    );
+    navigateToWalletAddCreditCard({
+      inPayment: none
+    });
   }
 });
 

@@ -12,7 +12,10 @@ import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUC
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { loadMessages } from "../../store/actions/messages";
-import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToMessageDetailScreenAction
+} from "../../store/actions/navigation";
 import { useIODispatch } from "../../store/hooks";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -74,13 +77,13 @@ const navigateToScreenHandler = (
     authCode: EUCovidCertificateAuthCode,
     messageId: string
   ) => {
-    dispatch(NavigationActions.back());
+    navigateBack();
     dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
   };
 
   const navigateToDetails = (messageId: string) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToMessageDetailScreenAction({ messageId }));
+    navigateBack();
+    navigateToMessageDetailScreenAction({ messageId });
   };
 
   if (
@@ -130,18 +133,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(NavigationActions.back()),
-  loadMessages: () => dispatch(loadMessages.request()),
-  navigateToDetails: (messageId: string) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToMessageDetailScreenAction({ messageId }));
-  },
-  navigateToEuCovidCertificate: (
-    authCode: EUCovidCertificateAuthCode,
-    messageId: string
-  ) => {
-    dispatch(NavigationActions.back());
-    dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
-  }
+  loadMessages: () => dispatch(loadMessages.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
   messageState: (messageId: string) =>
