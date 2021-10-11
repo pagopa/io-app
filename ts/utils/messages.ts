@@ -14,7 +14,6 @@ import FM from "front-matter";
 import { Linking } from "react-native";
 import { Dispatch } from "redux";
 import { Predicate } from "fp-ts/lib/function";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
@@ -157,7 +156,9 @@ export function getMessagePaymentExpirationInfo(
  * Given a message return an object of type MessagePaymentExpirationInfo
  * @param message
  */
-export const paymentExpirationInfo = (message: CreatedMessageWithContent) => {
+export const paymentExpirationInfo = (
+  message: CreatedMessageWithContentAndAttachments
+) => {
   const { payment_data, due_date } = message.content;
   return fromNullable(payment_data).map(paymentData =>
     getMessagePaymentExpirationInfo(paymentData, due_date)
@@ -273,7 +274,7 @@ const extractCTA = (
  * @param serviceMetadata
  */
 export const getCTA = (
-  message: CreatedMessageWithContent,
+  message: CreatedMessageWithContentAndAttachments,
   serviceMetadata?: MaybePotMetadata,
   serviceId?: ServiceId
 ): Option<CTAS> =>

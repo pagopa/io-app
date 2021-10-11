@@ -2,11 +2,11 @@ import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { Task } from "fp-ts/lib/Task";
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { formatDateAsReminder } from "./dates";
 import { showToast } from "./showToast";
 
@@ -139,7 +139,7 @@ export const searchEventInCalendar = async (
 
 export const saveCalendarEvent = (
   calendar: Calendar,
-  message: CreatedMessageWithContent,
+  message: CreatedMessageWithContentAndAttachments,
   dueDate: Date,
   title: string,
   onAddCalendarEvent?: (calendarEvent: AddCalendarEventPayload) => void

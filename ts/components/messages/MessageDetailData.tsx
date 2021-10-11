@@ -4,7 +4,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Service } from "../../../definitions/content/Service";
 import { ServiceMetadataState } from "../../store/reducers/content";
@@ -14,6 +13,7 @@ import { format, formatDateAsLocal } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   serviceDetail: pot.Pot<ServicePublic, Error>;
   serviceMetadata?: ServiceMetadataState;
   paymentsByRptId?: PaymentByRptIdState;
