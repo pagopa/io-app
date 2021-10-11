@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { delay, Effect, put } from "redux-saga/effects";
+import { call, delay, Effect, put } from "redux-saga/effects";
 import {
   svVoucherListGet,
   svVoucherRevocation
@@ -7,22 +7,39 @@ import {
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { navigateBack } from "../../../../../store/actions/navigation";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { SagaCallReturnType } from "../../../../../types/utils";
 
 /**
- * Handle the remote call to check if the service is alive
- * @param __
- * @param _
+ * Handle the voucher revocation
+ * @param postAnnullaVoucher
+ * @param svSessionManager
+ * @param action
  */
 // TODO: add client as parameter when the client will be created
 export function* handleVoucherRevocation(
-  __: SessionManager<MitVoucherToken>,
-  _: ActionType<typeof svVoucherRevocation.request>
+  postAnnullaVoucher: ReturnType<
+    typeof BackendSiciliaVolaClient
+  >["postAnnullaVoucher"],
+  svSessionManager: SessionManager<MitVoucherToken>,
+  action: ActionType<typeof svVoucherRevocation.request>
 ): Generator<Effect, void> {
-  // TODO: add networking logic
-  yield delay(500);
-  yield put(svVoucherRevocation.success());
+  const request = svSessionManager.withRefresh(
+    postAnnullaVoucher(action.payload)
+  );
+  try {
+    const postAnnullaVoucherResult: SagaCallReturnType<typeof request> =
+      yield call(request());
 
-  yield put(navigateBack());
-  // TODO: handle filter
-  yield put(svVoucherListGet.request({}));
+    if (postAnnullaVoucherResult.isRight()) {
+    }
+    // TODO: add networking logic
+    yield delay(500);
+    yield put(svVoucherRevocation.success());
+    // yield put(svVoucherRevocation.failure({} as GenericError));
+
+    yield put(navigateBack());
+    // TODO: handle filter
+    yield put(svVoucherListGet.request({}));
+  } catch (e) {}
 }

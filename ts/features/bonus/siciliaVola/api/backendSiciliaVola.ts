@@ -104,9 +104,7 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   url: params =>
     `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idRegione}`,
   query: _ => ({}),
-  headers: h => ({
-    Authorization: h.Bearer
-  }),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
 };
 
