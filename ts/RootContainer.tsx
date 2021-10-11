@@ -8,9 +8,11 @@ import {
   StatusBar
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
+import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
@@ -22,22 +24,23 @@ import {
   cgnTestOverlay,
   shouldDisplayVersionInfoOverlay
 } from "./config";
-import Navigation from "./navigation";
+
+import { setLocale } from "./i18n";
+import AppNavigator from "./navigation/AppNavigator";
+import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-import { setLocale } from "./i18n";
-import RootModal from "./screens/modal/RootModal";
-import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
-import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
-
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const AppContainer = createAppContainer(AppNavigator);
 
 /**
  * The main container of the application with:
@@ -152,7 +155,7 @@ class RootContainer extends React.PureComponent<Props> {
       <Root>
         <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        <Navigation />
+        <AppContainer />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {cgnTestOverlay && (
           <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />

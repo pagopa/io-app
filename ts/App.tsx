@@ -5,7 +5,7 @@ import { MenuProvider } from "react-native-popup-menu";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { store, persistor } from "./boot/configureStoreAndPersistor";
+import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
