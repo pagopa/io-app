@@ -45,12 +45,15 @@ const getWidthMultiplier = (text: string): number => {
 };
 
 /**
- * A simple badge used for show the number of messages to read
+ * A simple round badge to display a positive number
+ * Display all numbers less or equal of MAX_BADGE_VALUE
+ * otherwise ${MAX_BADGE_VALUE}"+" will be displayed
  *
+ * if badgeValue is nullish or negative, null element will be returned
  */
 const CustomBadge = (props: Props) => {
   const badgeValue = props.badgeValue ?? 0;
-  if (badgeValue === 0) {
+  if (badgeValue <= 0) {
     return null;
   }
   const badge = `${Math.min(badgeValue, MAX_BADGE_VALUE)}${
