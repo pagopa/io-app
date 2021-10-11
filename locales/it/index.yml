@@ -2731,6 +2731,9 @@ bonus:
             cta:
               ok: "Continua"
               ko: "Annulla la richiesta"
+          toast:
+            ok: "Voucher eliminato correttamente"
+            ko: "Errore durante l'eliminazione del voucher. Riprova"
     components:
       voucherVisualDetails:
         uniqueCode: "Codice univoco"

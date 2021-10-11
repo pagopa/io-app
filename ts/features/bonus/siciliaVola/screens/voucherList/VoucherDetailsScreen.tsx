@@ -25,11 +25,12 @@ import {
 import { SvVoucherId } from "../../types/SvVoucher";
 import {
   selectedVoucherCodeSelector,
+  selectedVoucherRevocationStateSelector,
   selectedVoucherSelector
 } from "../../store/reducers/selectedVoucher";
 import { H3 } from "../../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { isError, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
@@ -39,6 +40,7 @@ import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet"
 import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
 import { constNull } from "fp-ts/lib/function";
+import { showToast } from "../../../../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -75,13 +77,22 @@ const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
 };
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
-  const { selectedVoucherCode, getVoucherDetail } = props;
+  const { selectedVoucherCode, getVoucherDetail, revocationState } = props;
 
   useEffect(() => {
     if (selectedVoucherCode !== undefined) {
       getVoucherDetail(selectedVoucherCode);
     }
   }, [selectedVoucherCode, getVoucherDetail]);
+
+  useEffect(() => {
+    if (isError(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ko")
+      );
+    }
+  }, [revocationState]);
+
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
   // The selectedVoucherCode can't be undefined in this screen
@@ -131,6 +142,22 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   };
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
+
+  if (isLoading(revocationState)) {
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
+        <LoadingErrorComponent
+          isLoading={true}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={() => null}
+        />
+      </BaseScreenComponent>
+    );
+  }
 
   return (
     <BaseScreenComponent
@@ -229,7 +256,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),
-  selectedVoucherCode: selectedVoucherCodeSelector(state)
+  selectedVoucherCode: selectedVoucherCodeSelector(state),
+  revocationState: selectedVoucherRevocationStateSelector(state)
 });
 
 export default connect(

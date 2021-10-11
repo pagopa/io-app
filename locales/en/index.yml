@@ -2703,6 +2703,9 @@ bonus:
             cta:
               ok: "Continue"
               ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"
