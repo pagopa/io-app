@@ -54,7 +54,7 @@ describe("convertDateToWordDistance", () => {
     const twoYearsAgo = subYears(Date.now(), 2);
 
     expect(convertDateToWordDistance(twoYearsAgo, "")).toBe(
-      formatDateAsLocal(twoYearsAgo, true, true)
+      formatDateAsLocal(twoYearsAgo, true)
     );
   });
 });

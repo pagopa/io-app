@@ -41,7 +41,7 @@ export function convertDateToWordDistance(
     );
   } else {
     // distance > current year
-    return formatDateAsLocal(date, true, true);
+    return formatDateAsLocal(date, true);
   }
 }
 
