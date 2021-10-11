@@ -63,5 +63,11 @@ export const selectedVoucherSelector = createSelector(
     voucher: RemoteValue<SvVoucher, NetworkError>
   ): RemoteValue<SvVoucher, NetworkError> => voucher
 );
+export const selectedVoucherRevocationStateSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.selectedVoucher.revocation],
+  (
+    revocationState: RemoteValue<true, NetworkError>
+  ): RemoteValue<true, NetworkError> => revocationState
+);
 
 export default reducer;
