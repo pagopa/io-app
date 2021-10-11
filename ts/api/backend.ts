@@ -39,7 +39,6 @@ import {
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
-  // GetUserMessagesT,
   GetUserMessageT,
   getUserMetadataDefaultDecoder,
   GetUserMetadataT,
@@ -64,7 +63,6 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
-import { paramsToQueryString } from "./utils";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -203,13 +201,7 @@ export function BackendClient(
 
   const getMessagesT: GetUserMessagesTCustom = {
     method: "get",
-    url: params =>
-      paramsToQueryString("/api/v1/messages", params, [
-        "enrich_result_data",
-        "page_size",
-        "maximum_id",
-        "minimum_id"
-      ]),
+    url: _ => "/api/v1/messages",
     query: _ => ({}),
     headers: tokenHeaderProducer,
     response_decoder: getUserMessagesDefaultDecoder()

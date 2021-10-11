@@ -1,37 +1,12 @@
 import { none, some } from "fp-ts/lib/Option";
-import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { Version } from "../../../definitions/backend/Version";
 import { profileLoadSuccess } from "../../store/actions/profile";
 import { profileEmailValidationChanged } from "../../store/actions/profileEmailValidationChange";
 import {
   isProfileEmailValidatedChanged,
   testableCheckProfileEmailChanged as checkProfileEmailChanged
 } from "../watchProfileEmailValidationChangedSaga";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-
-const profile: InitializedProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_webhook_enabled: true,
-  is_email_enabled: true,
-  is_email_validated: true,
-  email: "test@example.com" as EmailString,
-  spid_email: "test@example.com" as EmailString,
-  family_name: "Connor",
-  name: "John",
-  fiscal_code: "ABCDEF83A12L719R" as FiscalCode,
-  spid_mobile_phone: "123" as NonEmptyString,
-  version: 1 as Version
-};
+import mockedProfile from "../../__mocks__/initializedProfile";
 
 describe("isEmailValidatedChanged", () => {
   it("test all the combination for the method isEmailValidatedChanged", () => {
@@ -57,7 +32,7 @@ describe("isEmailValidatedChanged", () => {
 describe("checkProfileEmailChanged", () => {
   it("should end with no action dispatched", () => {
     if (checkProfileEmailChanged !== undefined) {
-      testSaga(checkProfileEmailChanged, profileLoadSuccess(profile))
+      testSaga(checkProfileEmailChanged, profileLoadSuccess(mockedProfile))
         .next()
         .isDone();
     }
@@ -67,7 +42,7 @@ describe("checkProfileEmailChanged", () => {
     if (checkProfileEmailChanged !== undefined) {
       testSaga(
         checkProfileEmailChanged,
-        profileLoadSuccess({ ...profile, is_email_validated: false })
+        profileLoadSuccess({ ...mockedProfile, is_email_validated: false })
       )
         .next()
         .put(profileEmailValidationChanged(false))
@@ -80,7 +55,7 @@ describe("checkProfileEmailChanged", () => {
     if (checkProfileEmailChanged !== undefined) {
       testSaga(
         checkProfileEmailChanged,
-        profileLoadSuccess({ ...profile, is_email_validated: false })
+        profileLoadSuccess({ ...mockedProfile, is_email_validated: false })
       )
         .next()
         .isDone();
@@ -91,7 +66,7 @@ describe("checkProfileEmailChanged", () => {
     if (checkProfileEmailChanged !== undefined) {
       testSaga(
         checkProfileEmailChanged,
-        profileLoadSuccess({ ...profile, is_email_validated: true })
+        profileLoadSuccess({ ...mockedProfile, is_email_validated: true })
       )
         .next()
         .put(profileEmailValidationChanged(true))
@@ -104,7 +79,7 @@ describe("checkProfileEmailChanged", () => {
     if (checkProfileEmailChanged !== undefined) {
       testSaga(
         checkProfileEmailChanged,
-        profileLoadSuccess({ ...profile, is_email_validated: true })
+        profileLoadSuccess({ ...mockedProfile, is_email_validated: true })
       )
         .next()
         .isDone();
@@ -115,7 +90,7 @@ describe("checkProfileEmailChanged", () => {
     if (checkProfileEmailChanged !== undefined) {
       testSaga(
         checkProfileEmailChanged,
-        profileLoadSuccess({ ...profile, is_email_validated: undefined })
+        profileLoadSuccess({ ...mockedProfile, is_email_validated: undefined })
       )
         .next()
         .isDone();

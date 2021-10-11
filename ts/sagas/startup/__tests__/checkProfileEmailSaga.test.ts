@@ -1,13 +1,6 @@
 import { expectSaga } from "redux-saga-test-plan";
 
 import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { Version } from "../../../../definitions/backend/Version";
-import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../../store/actions/navigation";
@@ -15,38 +8,20 @@ import {
   emailAcknowledged,
   emailInsert
 } from "../../../store/actions/onboarding";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
-
-const userProfileWithEmailAndValidated: InitializedProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_webhook_enabled: true,
-  is_email_enabled: true,
-  is_email_validated: true,
-  email: "test@example.com" as EmailString,
-  spid_email: "test@example.com" as EmailString,
-  family_name: "Connor",
-  name: "John",
-  fiscal_code: "ABCDEF83A12L719R" as FiscalCode,
-  spid_mobile_phone: "123" as NonEmptyString,
-  version: 1 as Version
-};
 
 describe("checkAcceptedTosSaga", () => {
   describe("when user has an email and it is validated", () => {
     it("should do nothing", () =>
-      expectSaga(checkAcknowledgedEmailSaga, userProfileWithEmailAndValidated)
+      expectSaga(checkAcknowledgedEmailSaga, mockedProfile)
         .not.put(navigateToEmailReadScreen())
         .run());
   });
 
   describe("when user is on his first onboarding and he has an email and it is validated", () => {
-    const profileEmailValidatedFirstOnboarding: InitializedProfile = {
-      ...userProfileWithEmailAndValidated,
+    const profileEmailValidatedFirstOnboarding = {
+      ...mockedProfile,
       version: 0
     };
     it("should show email read screen", () =>
@@ -59,8 +34,8 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has an email and it not is validated", () => {
-    const profileWithEmailNotValidated: InitializedProfile = {
-      ...userProfileWithEmailAndValidated,
+    const profileWithEmailNotValidated = {
+      ...mockedProfile,
       is_email_validated: false
     };
     it("should prompt the screen to remember to validate", () =>
@@ -73,8 +48,8 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has not an email", () => {
-    const profileWithNoEmail: InitializedProfile = {
-      ...userProfileWithEmailAndValidated,
+    const profileWithNoEmail = {
+      ...mockedProfile,
       is_email_validated: false,
       email: undefined
     };

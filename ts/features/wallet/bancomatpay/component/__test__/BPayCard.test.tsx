@@ -8,11 +8,7 @@ import { none, some } from "fp-ts/lib/Option";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import BPayCard from "../BPayCard";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-
-const profile: InitializedProfile = {
-  family_name: "Rossi",
-  name: "Maria"
-} as InitializedProfile;
+import mockedProfile from "../../../../../__mocks__/initializedProfile";
 
 const aBankName = "Bank Name";
 const aPhone = "+39 34*******0000";
@@ -23,7 +19,7 @@ describe("BPayWalletPreview component", () => {
   let store: ReturnType<typeof mockStore>;
 
   beforeEach(() => {
-    store = mockStore(mockProfileNameSurnameState(profile));
+    store = mockStore(mockProfileNameSurnameState(mockedProfile));
   });
   it("should show the bankName if there isn't the abiLogo", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
@@ -58,7 +54,7 @@ describe("BPayWalletPreview component", () => {
 
     expect(nameSurname).not.toBeNull();
     expect(nameSurname).toHaveTextContent(
-      `${profile.name.toUpperCase()} ${profile.family_name.toLocaleUpperCase()}`
+      `${mockedProfile.name.toUpperCase()} ${mockedProfile.family_name.toLocaleUpperCase()}`
     );
   });
 });
