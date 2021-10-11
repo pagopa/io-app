@@ -27,6 +27,7 @@ import {
 
 import { setLocale } from "./i18n";
 import AppNavigator from "./navigation/AppNavigator";
+import NavigationService from "./navigation/NavigationService";
 import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
@@ -155,7 +156,11 @@ class RootContainer extends React.PureComponent<Props> {
       <Root>
         <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        <AppContainer />
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {cgnTestOverlay && (
           <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
