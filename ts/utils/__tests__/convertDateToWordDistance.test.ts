@@ -3,6 +3,7 @@ import { convertDateToWordDistance } from "../convertDateToWordDistance";
 import { formatDateAsLocal } from "../dates";
 
 import I18n from "../../i18n";
+import { localeDateFormat } from "../locale";
 
 describe("convertDateToWordDistance", () => {
   it("should be in H:mm format", () => {
@@ -37,11 +38,23 @@ describe("convertDateToWordDistance", () => {
     );
   });
 
+  it("should be the localized date with day and month", () => {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    expect(convertDateToWordDistance(twoDaysAgo, "")).toBe(
+      localeDateFormat(
+        twoDaysAgo,
+        I18n.t("global.dateFormats.dayMonthWithoutTime")
+      )
+    );
+  });
+
   it("should be the localized date with the year", () => {
     const twoYearsAgo = subYears(Date.now(), 2);
 
     expect(convertDateToWordDistance(twoYearsAgo, "")).toBe(
-      formatDateAsLocal(twoYearsAgo, true)
+      formatDateAsLocal(twoYearsAgo, true, true)
     );
   });
 });
