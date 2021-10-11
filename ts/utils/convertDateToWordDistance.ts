@@ -16,7 +16,8 @@ export function convertDateToWordDistance(
   invalidDateLabel?: string,
   todayAtLabel?: string
 ): string {
-  const distance = differenceInCalendarDays(new Date(), date);
+  const today = new Date();
+  const distance = differenceInCalendarDays(today, date);
   // 0 days, distance < one day
   if (distance < 1) {
     const formatted = format(date, "H:mm");
@@ -27,8 +28,8 @@ export function convertDateToWordDistance(
   } // distance = 1 day
   else if (distance === 1) {
     return lastDayLabel;
-  } // 1 day < distance < 365 days, current year
-  else if (distance > 1 && distance < 365) {
+  } // 1 day < distance, year is the current year
+  else if (distance > 1 && date.getFullYear() === today.getFullYear()) {
     return localeDateFormat(
       date,
       I18n.t("global.dateFormats.dayMonthWithoutTime")
