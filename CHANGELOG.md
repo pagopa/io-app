@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.0-rc.2](https://github.com/pagopa/io-app/compare/1.35.0-rc.1...1.35.0-rc.2) (2021-10-08)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-33](https://pagopa.atlassian.net/browse/IASV-33),[IASV-8](https://pagopa.atlassian.net/browse/IASV-8)] Show voucher generated screen ([#3401](https://github.com/pagopa/io-app/issues/3401)) ([4ad7321](https://github.com/pagopa/io-app/commit/4ad732147d38e3836cd9fe63f3dae2f70e4fb267))
+
+
+### Chores
+
+* [[IA-261](https://pagopa.atlassian.net/browse/IA-261)] Changes on UI Elements for CGN Merchants and discounts ([#3406](https://github.com/pagopa/io-app/issues/3406)) ([40a4b4f](https://github.com/pagopa/io-app/commit/40a4b4f1cc19f6ba0d74eba56dc1b687ab5b722b))
+* [[IAI-71](https://pagopa.atlassian.net/browse/IAI-71)] Replaces remark-html and remark-custom-plugin to update remark and avoid security alert ([#3411](https://github.com/pagopa/io-app/issues/3411)) ([ff9ae50](https://github.com/pagopa/io-app/commit/ff9ae50353a278075321df9e318247ba46c1a714))
+* [[IAI-72](https://pagopa.atlassian.net/browse/IAI-72)] Change app version format for release message ([#3415](https://github.com/pagopa/io-app/issues/3415)) ([5707d9a](https://github.com/pagopa/io-app/commit/5707d9a8a638d9ac1206860490141068de63dcf2))
+
 ## [1.35.0-rc.1](https://github.com/pagopa/io-app/compare/1.35.0-rc.0...1.35.0-rc.1) (2021-10-01)
 
 
