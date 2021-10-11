@@ -31,17 +31,17 @@ const styles = StyleSheet.create({
 });
 
 const MAX_BADGE_VALUE = 99;
+const multiplierFallback = 1.4;
+// map the digits to display within the badge with the relative width multiplier factor
+// (the badge displays value below MAX_BADGE_VALUE)
+const multiplierMap: Record<number, number> = {
+  1: 1,
+  2: 1.2
+};
 // get the width multiplier relative to the count of digits to display
-const getWidthMultiplier = (text: string) => {
+const getWidthMultiplier = (text: string): number => {
   const digits = text.length;
-  if (digits <= 1) {
-    return 1;
-  }
-  if (digits <= 2) {
-    return 1.1;
-  }
-  // more than 2 digits
-  return 1.4;
+  return multiplierMap[digits] ?? multiplierFallback;
 };
 
 /**
