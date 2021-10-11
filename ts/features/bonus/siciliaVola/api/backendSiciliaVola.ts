@@ -123,7 +123,7 @@ const GetAeroportiStato: GetAeroportiStatoT = {
 };
 
 /**
- * Get the list of the airports available for the voucher given a stateId when the selected state is an abroad state
+ * Revoke a voucher identified by id
  */
 const PostAnnullaVoucher: AnnullaVoucherT = {
   method: "post",
