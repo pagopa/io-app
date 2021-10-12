@@ -32,13 +32,11 @@ export function* handleVoucherRevocation(
     const postAnnullaVoucherResult: SagaCallReturnType<typeof request> =
       yield call(request);
 
-    console.log(postAnnullaVoucherResult);
     if (postAnnullaVoucherResult.isRight()) {
       if (postAnnullaVoucherResult.value.status === 200) {
         yield put(svVoucherRevocation.success());
         return;
       }
-      console.log(mapKinds[postAnnullaVoucherResult.value.status]);
       if (mapKinds[postAnnullaVoucherResult.value.status] !== undefined) {
         yield put(
           svVoucherRevocation.failure({
@@ -56,7 +54,6 @@ export function* handleVoucherRevocation(
       })
     );
   } catch (e) {
-    console.log(e);
     yield put(svVoucherRevocation.failure({ ...getNetworkError(e) }));
   }
 }

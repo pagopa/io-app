@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
+import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -33,7 +34,6 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateBack } from "../../../../../store/actions/navigation";
-import { constNull } from "fp-ts/lib/function";
 import { showToast } from "../../../../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
