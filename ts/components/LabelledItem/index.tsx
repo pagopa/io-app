@@ -12,7 +12,13 @@
 import { Item, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { ImageSourcePropType, StyleSheet, TextInputProps } from "react-native";
+import {
+  ImageSourcePropType,
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInputFocusEventData,
+  TextInputProps
+} from "react-native";
 import { NavigationEvents } from "react-navigation";
 import color from "color";
 import { Input as InputNativeBase } from "native-base";
@@ -132,7 +138,8 @@ export const LabelledItem: React.FC<Props> = ({
     isValid: props.isValid
   });
 
-  const handleOnFocus = () => {
+  const handleOnFocus = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    props.inputProps?.onFocus?.(e);
     setHasFocus(true);
   };
 

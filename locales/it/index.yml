@@ -619,6 +619,16 @@ authentication:
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+      iosAlert:
+        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
+        moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
+        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
+        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        tagLost: Hai rimosso la carta troppo presto.
+        cardLocked: Carta CIE bloccata
+        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
+        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
