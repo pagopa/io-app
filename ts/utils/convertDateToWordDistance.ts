@@ -3,10 +3,11 @@ import I18n from "../i18n";
 import { dateToAccessibilityReadableFormat } from "./accessibility";
 import { format, formatDateAsLocal } from "./dates";
 import { maybeNotNullyString } from "./strings";
+import { localeDateFormat } from "./locale";
 
 /**
  * This function converts the distance from now to date in :
- * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YY (or DD/MM/YY) depending on the system locale
+ * H.mm, yesterday, MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system locale
  */
 
 export function convertDateToWordDistance(
@@ -15,7 +16,8 @@ export function convertDateToWordDistance(
   invalidDateLabel?: string,
   todayAtLabel?: string
 ): string {
-  const distance = differenceInCalendarDays(new Date(), date);
+  const today = new Date();
+  const distance = differenceInCalendarDays(today, date);
   // 0 days, distance < one day
   if (distance < 1) {
     const formatted = format(date, "H:mm");
@@ -26,9 +28,12 @@ export function convertDateToWordDistance(
   } // distance = 1 day
   else if (distance === 1) {
     return lastDayLabel;
-  } // 1 day < distance < 365 days, current year
-  else if (distance > 1 && distance < 365) {
-    return formatDateAsLocal(date);
+  } // 1 day < distance, year is the current year
+  else if (distance > 1 && date.getFullYear() === today.getFullYear()) {
+    return localeDateFormat(
+      date,
+      I18n.t("global.dateFormats.dayMonthWithoutTime")
+    );
   } else if (isNaN(distance)) {
     return maybeNotNullyString(invalidDateLabel).fold(
       I18n.t("datetimes.notValid"),

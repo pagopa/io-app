@@ -220,7 +220,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             type="TwoButtonsInlineHalf"
             leftButton={cancelButtonProps(
               this.props.goBack,
-              I18n.t("global.buttons.cancel")
+              I18n.t("global.buttons.back")
             )}
             rightButton={primaryButtonProps}
           />
