@@ -2,6 +2,7 @@ import { Badge, Text } from "native-base";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import variables from "../../theme/variables";
+import { isTestEnv } from "../../utils/environment";
 
 type Props = {
   badgeValue?: number;
@@ -61,6 +62,7 @@ const CustomBadge = (props: Props) => {
   }`;
   return (
     <Badge
+      testID={"badgeTestID"}
       style={[
         styles.badgeStyle,
         { width: styles.badgeStyle.width * getWidthMultiplier(badge) }
@@ -82,3 +84,8 @@ export default memo(
   CustomBadge,
   (prev, next) => prev.badgeValue === next.badgeValue
 );
+
+// to ensure right code encapsulation we export functions/variables just for tests purposes
+export const customBadgeTestable = isTestEnv
+  ? { getWidthMultiplier, styles }
+  : undefined;
