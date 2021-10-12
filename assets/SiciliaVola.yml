@@ -63,7 +63,8 @@ definitions:
     type: object
     properties:
       codiceVoucher:
-        type: string
+        type: "integer"
+        format: "int64"
   VoucherBean:
     type: "object"
     properties:
