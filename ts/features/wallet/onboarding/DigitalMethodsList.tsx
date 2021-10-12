@@ -60,6 +60,7 @@ const getMethods = (props: Props): ReadonlyArray<DigitalPaymentItem> => [
   {
     name: I18n.t("wallet.methods.paypal.name"),
     logo: require("../../../../img/wallet/cards-icons/paypal.png"),
+    // TODO replace with effective dispatch
     onPress: constNull,
     implemented: payPalEnabled
   },
