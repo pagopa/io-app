@@ -1255,7 +1255,7 @@ wallet:
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
-  addPaymentMethodTitle: Add payment method
+  addPaymentMethodTitle: Add app and other methods
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
@@ -1294,7 +1294,6 @@ wallet:
       description: Pay with Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Pay with BANCOMAT Pay
     postepayApp:
       name: Postepay
       description: your Postepay app
