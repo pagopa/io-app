@@ -176,7 +176,7 @@ function* startAndHandleIdentificationResult(
       yield put(clearNotificationPendingMessage());
 
       // Navigate to message router screen
-      yield put(navigateToMessageRouterScreen({ messageId }));
+      yield call(navigateToMessageRouterScreen, { messageId });
     }
   }
 }
@@ -191,6 +191,6 @@ export function* watchIdentification(pin: PinString): IterableIterator<Effect> {
 
   // Watch for requests to update the unlock code.
   yield takeLatest(getType(updatePin), function* () {
-    yield put(navigateToOnboardingPinScreenAction);
+    yield call(navigateToOnboardingPinScreenAction);
   });
 }

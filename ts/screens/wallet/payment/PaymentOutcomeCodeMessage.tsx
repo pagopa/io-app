@@ -89,8 +89,8 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   ) : null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateToWalletHome: () => navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({

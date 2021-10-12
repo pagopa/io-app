@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import {
   cgnActivationBack,
   cgnActivationCancel,
@@ -46,6 +46,6 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     // if the activation started from the bonus list and user aborted the activation -> go back
     (res === "cancel" && route === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST)
   ) {
-    yield put(navigateBack());
+    yield call(navigateBack);
   }
 }

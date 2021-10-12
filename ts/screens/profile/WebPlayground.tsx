@@ -170,7 +170,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   goBack: () => navigateBack()
 });
 

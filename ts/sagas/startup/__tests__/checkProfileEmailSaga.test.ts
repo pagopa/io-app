@@ -40,7 +40,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has an email and it is validated", () => {
     it("should do nothing", () =>
       expectSaga(checkAcknowledgedEmailSaga, userProfileWithEmailAndValidated)
-        .not.put(navigateToEmailReadScreen())
+        .not.call(navigateToEmailReadScreen)
         .run());
   });
 
@@ -54,7 +54,7 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
-        .put(navigateToEmailReadScreen())
+        .call(navigateToEmailReadScreen)
         .run());
   });
 
@@ -67,7 +67,7 @@ describe("checkAcceptedTosSaga", () => {
       expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
-        .put(navigateToEmailReadScreen())
+        .call(navigateToEmailReadScreen)
         .dispatch(emailAcknowledged())
         .run());
   });
@@ -80,9 +80,9 @@ describe("checkAcceptedTosSaga", () => {
     };
     it("should prompt the screen to insert it", () =>
       expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
-        .put(navigateToEmailInsertScreen()) // go to email insert screen
+        .call(navigateToEmailInsertScreen) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
-        .dispatch(navigateToEmailReadScreen()) // navigate to email read screen to remember the user to validate id
+        .call(navigateToEmailReadScreen) // navigate to email read screen to remember the user to validate id
         .dispatch(emailAcknowledged()) // press continue
         .run());
   });

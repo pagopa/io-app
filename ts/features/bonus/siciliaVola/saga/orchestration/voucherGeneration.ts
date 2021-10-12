@@ -1,4 +1,4 @@
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import {
   executeWorkUnit,
@@ -56,10 +56,10 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
     // if the activation started from the CTA -> go back
     route === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   ) {
-    yield put(navigateBack());
+    yield call(navigateBack);
   }
 
   if (res === "failure") {
-    yield put(navigateToWorkunitGenericFailureScreen());
+    yield call(navigateToWorkunitGenericFailureScreen);
   }
 }

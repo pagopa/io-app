@@ -23,11 +23,9 @@ describe("watchNotificationSaga", () => {
       .next(mockedPendingMessageState)
       .put(clearNotificationPendingMessage())
       .next()
-      .put(
-        navigateToMessageRouterScreen({
-          messageId: mockedPendingMessageState.id
-        })
-      )
+      .call(navigateToMessageRouterScreen, {
+        messageId: mockedPendingMessageState.id
+      })
       .next()
       .isDone();
   });

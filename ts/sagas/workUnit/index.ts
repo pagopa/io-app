@@ -85,7 +85,7 @@ export function* withFailureHandling<T>(
 ) {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
   if (res === "failure") {
-    yield put(navigateToWorkunitGenericFailureScreen());
+    yield call(navigateToWorkunitGenericFailureScreen);
   }
   return res;
 }

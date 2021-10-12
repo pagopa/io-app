@@ -78,9 +78,9 @@ const mapStateToProps = (state: GlobalState) => ({
   historyPayments: paymentsHistorySelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToPaymentHistoryDetail: (param: { payment: PaymentHistory }) =>
-    dispatch(navigateToPaymentHistoryDetail(param))
+    navigateToPaymentHistoryDetail(param)
 });
 
 export default withValidatedPagoPaVersion(

@@ -21,6 +21,7 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
@@ -99,6 +100,7 @@ import {
 } from "../store/actions/navigation";
 import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
 import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
 import {
   abortRunningPayment,
@@ -152,6 +154,7 @@ import { getTransactionsRead } from "../store/reducers/entities/readTransactions
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
+import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { getAllWallets } from "../store/reducers/wallet/wallets";
 
 import {
@@ -160,14 +163,17 @@ import {
   PaymentManagerToken
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
+import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 
 import { defaultRetryingFetch } from "../utils/fetch";
 import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { getTitleFromCard } from "../utils/paymentMethod";
+import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { SessionManager } from "../utils/SessionManager";
 import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
+import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import {
   addWalletCreditCardRequestHandler,
   deleteAllPaymentMethodsByFunctionRequestHandler,
@@ -188,12 +194,6 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-import { paymentIdSelector } from "../store/reducers/wallet/payment";
-import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
-import { waitBackoffError } from "../utils/backoffError";
-import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
-import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
-import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -278,7 +278,7 @@ function* startOrResumeAddCreditCardSaga(
       // Add a delay to allow the user to see the thank you page
       yield delay(successScreenDelay);
       yield put(navigationHistoryPop(4));
-      yield put(navigateToWalletHome());
+      yield call(navigateToWalletHome);
     }
 
     /**
@@ -1031,15 +1031,15 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
     if (entrypointRoute !== undefined) {
       const key = entrypointRoute ? entrypointRoute.key : undefined;
       const routeName = entrypointRoute ? entrypointRoute.name : undefined;
-      yield put(navigateBack({ key }));
+      yield call(navigateBack, { key });
       // back to the wallet home from PAYMENT_MANUAL_DATA_INSERTION
       if (routeName === ROUTES.PAYMENT_MANUAL_DATA_INSERTION) {
-        yield put(navigateBack());
-        yield put(navigateBack());
+        yield call(navigateBack);
+        yield call(navigateBack);
       }
       // back to the wallet home from PAYMENT_SCAN_QR_CODE
       else if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
-        yield put(navigateBack());
+        yield call(navigateBack);
       }
       yield put(paymentInitializeState());
     }

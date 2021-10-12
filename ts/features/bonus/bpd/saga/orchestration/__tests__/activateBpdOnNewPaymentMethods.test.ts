@@ -36,7 +36,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative()
     )
       .withState(store.getState())
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
       .not.put(navigateToActivateBpdOnNewPrivative())
@@ -55,7 +55,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .call(isBpdEnabled)
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .select(bpdRemoteConfigSelector)
       .not.put(navigateToActivateBpdOnNewPrivative())
       .not.put(navigateToSuggestBpdActivation())
@@ -80,7 +80,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
         [matchers.call(isBpdEnabled), right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
       .not.put(navigateToActivateBpdOnNewPrivative())
@@ -98,7 +98,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
         [matchers.call(isBpdEnabled), right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
-      .not.put(navigateToWalletHome())
+      .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
       .put(navigateToActivateBpdOnNewPrivative())
@@ -119,7 +119,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
           { ...enrollAfterAddFalse, program_active: false }
         ]
       ])
-      .not.put(navigateToWalletHome())
+      .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
       .not.put(navigateToActivateBpdOnNewPrivative())

@@ -84,10 +84,10 @@ const mapStateToProps = (state: GlobalState) => ({
   creditCardOnboardingAttempts: creditCardAttemptsSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToCreditCardAttemptDetail: (param: {
     attempt: CreditCardInsertion;
-  }) => dispatch(navigateToCreditCardOnboardingAttempt(param))
+  }) => navigateToCreditCardOnboardingAttempt(param)
 });
 
 export default withValidatedPagoPaVersion(

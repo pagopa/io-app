@@ -31,11 +31,9 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
     // If biometric recognition is available, navigate to the Fingerprint
     // Screen and wait for the user to press "Continue". Otherwise the whole
     // step is bypassed
-    yield put(
-      navigateToOnboardingFingerprintScreenAction({
-        biometryType: biometricsType
-      })
-    );
+    yield call(navigateToOnboardingFingerprintScreenAction, {
+      biometryType: biometricsType
+    });
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
