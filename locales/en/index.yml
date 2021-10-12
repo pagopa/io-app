@@ -1302,7 +1302,7 @@ wallet:
       name: BancoPosta or Postepay card
       description: Cards issued by Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
     bancomat:
       name: PagoBANCOMAT
     cobadge:

@@ -1324,7 +1324,7 @@ wallet:
       name: Carta BancoPosta o Postepay
       description: Le carte emesse da Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
     bancomat:
       name: PagoBANCOMAT
     cobadge:
