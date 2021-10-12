@@ -115,32 +115,29 @@ const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
 const accessibityTimeout = 100 as Millisecond;
 
+type TextForState = {
+  title: string;
+  subtitle: string;
+  content: string;
+};
+
 // some texts changes depending on current running Platform
 const getTextForState = (
   state: ReadingState.waiting_card | ReadingState.error,
   errorMessage: string = ""
-) => {
-  const texts = {
-    [ReadingState.waiting_card]: {
-      default: {
-        title: I18n.t("authentication.cie.card.title"),
-        subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-        content: I18n.t("authentication.cie.card.layCardMessageFooter")
-      },
-      ios: {
+): TextForState => {
+  const texts: Record<
+    ReadingState.waiting_card | ReadingState.error,
+    TextForState
+  > = Platform.select({
+    ios: {
+      [ReadingState.waiting_card]: {
         title: I18n.t("authentication.cie.card.titleiOS"),
         subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
         // the native alert hides the screen content and shows a message it self
         content: ""
-      }
-    },
-    [ReadingState.error]: {
-      default: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
-        content: errorMessage
       },
-      ios: {
+      [ReadingState.error]: {
         title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
         subtitle: I18n.t(
           "authentication.cie.card.error.readerCardLostHeaderiOS"
@@ -148,9 +145,21 @@ const getTextForState = (
         // the native alert hides the screen content and shows a message it self
         content: ""
       }
+    },
+    default: {
+      [ReadingState.waiting_card]: {
+        title: I18n.t("authentication.cie.card.title"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+        content: I18n.t("authentication.cie.card.layCardMessageFooter")
+      },
+      [ReadingState.error]: {
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
+        content: errorMessage
+      }
     }
-  };
-  return texts[state][isIos ? "ios" : "default"];
+  });
+  return texts[state];
 };
 
 /**
