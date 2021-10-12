@@ -127,9 +127,9 @@ const GetAeroportiStato: GetAeroportiStatoT = {
  */
 const PostAnnullaVoucher: AnnullaVoucherT = {
   method: "post",
-  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/`,
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
   query: _ => ({}),
-  body: voucherCode => JSON.stringify(voucherCode),
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: annullaVoucherDefaultDecoder()
 };
