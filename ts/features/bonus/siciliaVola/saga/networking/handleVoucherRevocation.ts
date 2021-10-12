@@ -1,14 +1,16 @@
 import { ActionType } from "typesafe-actions";
-import { call, delay, Effect, put } from "redux-saga/effects";
-import {
-  svVoucherListGet,
-  svVoucherRevocation
-} from "../../store/actions/voucherList";
+import { call, put } from "redux-saga/effects";
+import { svVoucherRevocation } from "../../store/actions/voucherList";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
-import { navigateBack } from "../../../../../store/actions/navigation";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+
+const mapKinds: Record<number, string> = {
+  400: "wrongFormat",
+  500: "internalServerError"
+};
 
 /**
  * Handle the voucher revocation
@@ -16,30 +18,45 @@ import { SagaCallReturnType } from "../../../../../types/utils";
  * @param svSessionManager
  * @param action
  */
-// TODO: add client as parameter when the client will be created
 export function* handleVoucherRevocation(
   postAnnullaVoucher: ReturnType<
     typeof BackendSiciliaVolaClient
   >["postAnnullaVoucher"],
   svSessionManager: SessionManager<MitVoucherToken>,
   action: ActionType<typeof svVoucherRevocation.request>
-): Generator<Effect, void> {
-  const request = svSessionManager.withRefresh(
-    postAnnullaVoucher(action.payload)
-  );
+) {
   try {
+    const request = svSessionManager.withRefresh(
+      postAnnullaVoucher({ codiceVoucher: action.payload })
+    );
     const postAnnullaVoucherResult: SagaCallReturnType<typeof request> =
-      yield call(request());
+      yield call(request);
 
+    console.log(postAnnullaVoucherResult);
     if (postAnnullaVoucherResult.isRight()) {
+      if (postAnnullaVoucherResult.value.status === 200) {
+        yield put(svVoucherRevocation.success());
+        return;
+      }
+      console.log(mapKinds[postAnnullaVoucherResult.value.status]);
+      if (mapKinds[postAnnullaVoucherResult.value.status] !== undefined) {
+        yield put(
+          svVoucherRevocation.failure({
+            ...getGenericError(
+              new Error(mapKinds[postAnnullaVoucherResult.value.status])
+            )
+          })
+        );
+        return;
+      }
     }
-    // TODO: add networking logic
-    yield delay(500);
-    yield put(svVoucherRevocation.success());
-    // yield put(svVoucherRevocation.failure({} as GenericError));
-
-    yield put(navigateBack());
-    // TODO: handle filter
-    yield put(svVoucherListGet.request({}));
-  } catch (e) {}
+    yield put(
+      svVoucherRevocation.failure({
+        ...getGenericError(new Error("Generic Error"))
+      })
+    );
+  } catch (e) {
+    console.log(e);
+    yield put(svVoucherRevocation.failure({ ...getNetworkError(e) }));
+  }
 }
