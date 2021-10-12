@@ -67,8 +67,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: add logic to pass the regionId or to dispatch svGenerateVoucherAvailableDestinationAbroad
   availableDestination: () =>
     dispatch(svGenerateVoucherAvailableDestination.request(1)),
-  navigateToVoucherGeneratedScreen: () =>
-    dispatch(navigateToSvVoucherGeneratedScreen())
+  navigateToVoucherGeneratedScreen: () => navigateToSvVoucherGeneratedScreen()
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

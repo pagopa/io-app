@@ -2,17 +2,28 @@ import {
   NavigationAction,
   NavigationActions,
   NavigationContainerComponent,
-  NavigationParams
+  NavigationParams,
+  NavigationState
 } from "react-navigation";
+import {
+  getCurrentRouteName as deprecatedGetCurrentRouteName,
+  getCurrentRouteKey as deprecatedGetCurrentRouteKey
+} from "../utils/navigation";
 
 // eslint-disable-next-line functional/no-let
 let navigator: NavigationContainerComponent | null;
+// eslint-disable-next-line functional/no-let
+let currentRouteState: NavigationState | null;
 
-function setTopLevelNavigator(
+const setTopLevelNavigator = (
   navigatorRef: NavigationContainerComponent | null
-) {
+) => {
   navigator = navigatorRef;
-}
+};
+
+const setCurrentState = (state: NavigationState) => {
+  currentRouteState = state;
+};
 
 const navigate = (routeName: string, params?: NavigationParams) => {
   navigator?.dispatch(NavigationActions.navigate({ routeName, params }));
@@ -22,5 +33,22 @@ const dispatchNavigationAction = (action: NavigationAction) => {
   navigator?.dispatch(action);
 };
 
+const getCurrentRouteName = (): string | undefined =>
+  currentRouteState
+    ? deprecatedGetCurrentRouteName(currentRouteState)
+    : undefined;
+
+const getCurrentRouteKey = (): string | undefined =>
+  currentRouteState
+    ? deprecatedGetCurrentRouteKey(currentRouteState)
+    : undefined;
+
 // add other navigation functions that you need and export them
-export default { navigate, setTopLevelNavigator, dispatchNavigationAction };
+export default {
+  navigate,
+  setTopLevelNavigator,
+  dispatchNavigationAction,
+  setCurrentState,
+  getCurrentRouteName,
+  getCurrentRouteKey
+};

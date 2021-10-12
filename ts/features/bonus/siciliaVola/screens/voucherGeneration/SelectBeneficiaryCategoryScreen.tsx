@@ -156,15 +156,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectCategory: (category: SvBeneficiaryCategory) =>
     dispatch(svGenerateVoucherSelectCategory(category)),
   navigateToSvStudentSelectDestination: () =>
-    dispatch(navigateToSvStudentSelectDestinationScreen()),
+    navigateToSvStudentSelectDestinationScreen(),
   navigateToSvDisabledAdditionalInfo: () =>
-    dispatch(navigateToSvDisabledAdditionalInfoScreen()),
+    navigateToSvDisabledAdditionalInfoScreen(),
   navigateToSvWorkerCheckIncomeThreshold: () =>
-    dispatch(navigateToSvWorkerCheckIncomeThresholdScreen()),
+    navigateToSvWorkerCheckIncomeThresholdScreen(),
   navigateToSvSickCheckIncomeThreshold: () =>
-    dispatch(navigateToSvSickCheckIncomeThresholdScreen()),
+    navigateToSvSickCheckIncomeThresholdScreen(),
   navigateToSvKoSelectBeneficiaryCategory: () =>
-    dispatch(navigateToSvKoSelectBeneficiaryCategoryScreen())
+    navigateToSvKoSelectBeneficiaryCategoryScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

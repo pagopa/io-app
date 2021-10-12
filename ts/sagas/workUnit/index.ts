@@ -1,4 +1,4 @@
-import { NavigationActions, NavigationNavigateAction } from "react-navigation";
+import { NavigationActions } from "react-navigation";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import {
   ActionCreator,
@@ -7,10 +7,10 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
+import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -18,7 +18,7 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export type WorkUnit = {
   // The navigation action that will be used if the current screen isn't the `startScreenName`
-  startScreenNavigation: NavigationNavigateAction;
+  startScreenNavigation: () => void;
   // The expected first screen of the workflow
   startScreenName: string;
   // The action that will be taken when the workflow is completed
@@ -41,15 +41,12 @@ export type SagaResult = "cancel" | "completed" | "back" | "failure";
  * @param navigateTo
  * @param startScreen
  */
-function* ensureScreen(
-  navigateTo: NavigationNavigateAction,
-  startScreen: string
-) {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
+function* ensureScreen(navigateTo: () => void, startScreen: string) {
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
-  if (currentRoute.isSome() && currentRoute.value !== startScreen) {
-    yield put(navigateTo);
+  if (currentRoute !== undefined && currentRoute !== startScreen) {
+    yield call(navigateTo);
   }
 }
 

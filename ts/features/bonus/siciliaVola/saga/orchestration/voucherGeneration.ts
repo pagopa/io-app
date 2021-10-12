@@ -1,23 +1,23 @@
-import { call, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
+import { call, select } from "redux-saga/effects";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../sagas/workUnit";
-import {
-  svGenerateVoucherBack,
-  svGenerateVoucherCancel,
-  svGenerateVoucherCompleted,
-  svGenerateVoucherFailure
-} from "../../store/actions/voucherGeneration";
-import SV_ROUTES from "../../navigation/routes";
-import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
 import {
   navigateBack,
   navigateToWorkunitGenericFailureScreen
 } from "../../../../../store/actions/navigation";
 import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
+import SV_ROUTES from "../../navigation/routes";
+import {
+  svGenerateVoucherBack,
+  svGenerateVoucherCancel,
+  svGenerateVoucherCompleted,
+  svGenerateVoucherFailure
+} from "../../store/actions/voucherGeneration";
 
 /**
  * Define the workflow that allows the user to generate a new voucher.
@@ -28,7 +28,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
  */
 function* svVoucherGenerationWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToSvCheckStatusRouterScreen(),
+    startScreenNavigation: navigateToSvCheckStatusRouterScreen,
     startScreenName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS,
     complete: svGenerateVoucherCompleted,
     back: svGenerateVoucherBack,

@@ -103,7 +103,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvKoCheckIncomeThreshold: () =>
-    dispatch(navigateToSvKoCheckIncomeThresholdScreen()),
+    navigateToSvKoCheckIncomeThresholdScreen(),
   underThresholdIncome: (isUnderThresholdIncome: boolean) =>
     dispatch(svGenerateVoucherUnderThresholdIncome(isUnderThresholdIncome))
 });

@@ -38,6 +38,7 @@ import { navigateBack } from "./store/actions/navigation";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
+import { getCurrentRouteKey, getCurrentRouteName } from "./utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -159,6 +160,9 @@ class RootContainer extends React.PureComponent<Props> {
         <AppContainer
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+          onNavigationStateChange={(_, currentState) => {
+            NavigationService.setCurrentState(currentState);
           }}
         />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
