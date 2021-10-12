@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^1.4.1",
-    "@pagopa/react-native-cie": "^1.1.2",
+    "@pagopa/react-native-cie": "^1.1.3",
     "@pagopa/ts-commons": "^9.4.0",
     "@react-native-clipboard/clipboard": "^1.8.4",
     "@react-native-community/async-storage": "^1.6.1",
