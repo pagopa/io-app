@@ -97,9 +97,10 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
  */
 const GetAeroportiAmmessi: GetAeroportiAmmessiT = {
   method: "post",
-  url: _ => `/api/v1/mitvoucher/data/rest/secured/aeroportiAmmessi/`,
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/aeroportiAmmessi`,
   query: _ => ({}),
-  body: availableAirportRequest => JSON.stringify(availableAirportRequest),
+  body: ({ aeroportiAmmessiInputBean }) =>
+    JSON.stringify(aeroportiAmmessiInputBean),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiAmmessiDefaultDecoder()
 };
