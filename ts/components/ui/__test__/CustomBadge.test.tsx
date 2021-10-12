@@ -4,24 +4,19 @@ import CustomBadge, { customBadgeTestable } from "../CustomBadge";
 
 const testID = "badgeTestID";
 describe("CustomBadge component", () => {
+  jest.useFakeTimers();
   it(`match snapshot for 0`, () => {
-    const component = render(<CustomBadge badgeValue={0} />).queryByTestId(
-      testID
-    );
+    const component = render(<CustomBadge badgeValue={0} />);
     expect(component).toMatchSnapshot();
   });
 
   it(`match snapshot for 10`, () => {
-    const component = render(<CustomBadge badgeValue={10} />).queryByTestId(
-      testID
-    );
+    const component = render(<CustomBadge badgeValue={10} />);
     expect(component).toMatchSnapshot();
   });
 
   it(`match snapshot for 100`, () => {
-    const component = render(<CustomBadge badgeValue={100} />).queryByTestId(
-      testID
-    );
+    const component = render(<CustomBadge badgeValue={100} />);
     expect(component).toMatchSnapshot();
   });
 
