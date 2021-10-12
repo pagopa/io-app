@@ -118,15 +118,13 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
     );
   }
 
-  const backButtonProps = {
-    primary: false,
+  const cancelButtonProps = {
     bordered: true,
     onPress: props.back,
-    title: "Back"
+    title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
-    primary: false,
-    bordered: true,
+    primary: true,
     onPress: props.navigateToVoucherGeneratedScreen,
     title: "Continue"
   };
@@ -223,7 +221,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineHalf"}
-          leftButton={backButtonProps}
+          leftButton={cancelButtonProps}
           rightButton={continueButtonProps}
         />
       </SafeAreaView>
