@@ -2,18 +2,39 @@ import { render } from "@testing-library/react-native";
 import React from "react";
 import CustomBadge, { customBadgeTestable } from "../CustomBadge";
 
-const textId = "badgeTestID";
+const testID = "badgeTestID";
 describe("CustomBadge component", () => {
+  it(`match snapshot for 0`, () => {
+    const component = render(<CustomBadge badgeValue={0} />).queryByTestId(
+      testID
+    );
+    expect(component).toMatchSnapshot();
+  });
+
+  it(`match snapshot for 10`, () => {
+    const component = render(<CustomBadge badgeValue={10} />).queryByTestId(
+      testID
+    );
+    expect(component).toMatchSnapshot();
+  });
+
+  it(`match snapshot for 100`, () => {
+    const component = render(<CustomBadge badgeValue={100} />).queryByTestId(
+      testID
+    );
+    expect(component).toMatchSnapshot();
+  });
+
   it(`should be defined for 1 as badge value`, () => {
     const component = render(<CustomBadge badgeValue={1} />).queryByTestId(
-      textId
+      testID
     );
     expect(component).toBeDefined();
   });
 
   it(`should be not defined for 0 as badge value`, () => {
     const component = render(<CustomBadge badgeValue={0} />).queryByTestId(
-      textId
+      testID
     );
     expect(component).toBeNull();
   });
@@ -21,7 +42,7 @@ describe("CustomBadge component", () => {
   it(`should be not defined for undefined as badge value`, () => {
     const component = render(
       <CustomBadge badgeValue={undefined} />
-    ).queryByTestId(textId);
+    ).queryByTestId(testID);
     expect(component).toBeNull();
   });
 
@@ -30,7 +51,7 @@ describe("CustomBadge component", () => {
     digits.forEach(digit => {
       const component = render(
         <CustomBadge badgeValue={digit} />
-      ).queryByTestId(textId);
+      ).queryByTestId(testID);
 
       expect(component).toBeDefined();
       if (component) {
