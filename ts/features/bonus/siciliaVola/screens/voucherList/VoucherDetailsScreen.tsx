@@ -71,7 +71,8 @@ const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
 };
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
-  const { selectedVoucherCode, getVoucherDetail, revocationState } = props;
+  const { selectedVoucherCode, getVoucherDetail, revocationState, back } =
+    props;
 
   useEffect(() => {
     if (selectedVoucherCode !== undefined) {
@@ -86,9 +87,9 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       );
     }
     if (isReady(revocationState)) {
-      props.back();
+      back();
     }
-  }, [revocationState]);
+  }, [revocationState, back]);
 
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
