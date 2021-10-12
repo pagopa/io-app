@@ -10,13 +10,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  svGenerateVoucherBack,
-  svGenerateVoucherCompleted,
-  svGenerateVoucherGeneratedVoucher
-} from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { VoucherRequest } from "../../types/SvVoucherRequest";
 import I18n from "../../../../../i18n";
 import {
   svVoucherDetailGet,
@@ -38,7 +32,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { fromVoucherToDestinationLabels } from "../../utils";
-import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
+import { navigateBack } from "../../../../../store/actions/navigation";
 import { constNull } from "fp-ts/lib/function";
 import { showToast } from "../../../../../utils/showToast";
 
@@ -90,6 +84,9 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       showToast(
         I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ko")
       );
+    }
+    if (isReady(revocationState)) {
+      props.back();
     }
   }, [revocationState]);
 
@@ -143,7 +140,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
 
-  if (isLoading(revocationState)) {
+  if (isLoading(revocationState) || isReady(revocationState)) {
     return (
       <BaseScreenComponent
         goBack={true}
@@ -244,15 +241,11 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(svGenerateVoucherBack()),
-  completed: () => dispatch(svGenerateVoucherCompleted()),
-  generateVoucherRequest: (voucherRequest: VoucherRequest) =>
-    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
+  back: () => dispatch(navigateBack()),
   voucherRevocationRequest: (voucherId: SvVoucherId) =>
     dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
-    dispatch(svVoucherDetailGet.request(voucherId)),
-  navigateToGenericFailure: () => navigateToWorkunitGenericFailureScreen()
+    dispatch(svVoucherDetailGet.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),
