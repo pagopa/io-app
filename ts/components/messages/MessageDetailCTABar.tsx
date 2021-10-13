@@ -5,7 +5,6 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import DeviceInfo from "react-native-device-info";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { loadServiceMetadata } from "../../store/actions/content";
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
@@ -19,11 +18,12 @@ import {
 } from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
 };

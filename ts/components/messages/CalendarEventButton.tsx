@@ -4,7 +4,6 @@ import { Alert, Dimensions, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import I18n from "../../i18n";
 import {
   addCalendarEvent,
@@ -32,9 +31,10 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   small?: boolean;
   medium?: boolean;
   disabled?: boolean;
@@ -116,7 +116,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
 
   private confirmSaveCalendarEventAlert = (
     calendar: Calendar,
-    message: CreatedMessageWithContent,
+    message: CreatedMessageWithContentAndAttachments,
     dueDate: Date,
     title: string,
     eventId: string
@@ -175,7 +175,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
   };
 
   private addCalendarEventToDeviceCalendar =
-    (message: CreatedMessageWithContent, dueDate: Date) =>
+    (message: CreatedMessageWithContentAndAttachments, dueDate: Date) =>
     (calendar: Calendar) => {
       const title = I18n.t("messages.cta.reminderTitle", {
         title: message.content.subject
