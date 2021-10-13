@@ -1,11 +1,6 @@
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { Version } from "../../../../definitions/backend/Version";
 import {
   hasProfileEmail,
@@ -14,29 +9,10 @@ import {
   profileEmailSelector,
   ProfileState
 } from "../profile";
-import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
-
-const userProfileWithEmailAndValidated: InitializedProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_webhook_enabled: true,
-  is_email_enabled: true,
-  is_email_validated: true,
-  email: "test@example.com" as EmailString,
-  spid_email: "test@example.com" as EmailString,
-  family_name: "Connor",
-  name: "John",
-  fiscal_code: "ABCDEF83A12L719R" as FiscalCode,
-  spid_mobile_phone: "123" as NonEmptyString,
-  version: 1 as Version
-};
 
 describe("email profile selector", () => {
-  const potProfile: ProfileState = pot.some(userProfileWithEmailAndValidated);
-  const someEmail = some(userProfileWithEmailAndValidated.email);
+  const potProfile: ProfileState = pot.some(mockedProfile);
+  const someEmail = some(mockedProfile.email);
   it("should return the user's email address", () => {
     expect(profileEmailSelector.resultFunc(potProfile)).toStrictEqual(
       someEmail
@@ -44,7 +20,7 @@ describe("email profile selector", () => {
   });
 
   const potProfileWithNoEmail: ProfileState = pot.some({
-    ...userProfileWithEmailAndValidated,
+    ...mockedProfile,
     email: undefined
   });
   it("should return the user's email address", () => {
