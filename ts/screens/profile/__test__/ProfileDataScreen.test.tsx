@@ -9,7 +9,6 @@ import {
   hasProfileEmailSelector,
   profileEmailSelector,
   profileNameSurnameSelector,
-  profileSpidEmailSelector,
   isProfileEmailValidatedSelector
 } from "../../../store/reducers/profile";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
@@ -97,52 +96,6 @@ describe("Test ProfileDataScreen", () => {
       expect(listItemComponent).toHaveTextContent(nameSurname);
     } else {
       expect(listItemComponent).toBeNull();
-    }
-  });
-  it("should render View spid data if spid email exists", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-    } else {
-      expect(viewComponent).toBeNull();
-    }
-  });
-  it("should render ListItemComponent spid email with the right title and subtitle if spid email exists", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-      const listItemComponent = component.queryByTestId("spid-email");
-      expect(listItemComponent).not.toBeNull();
-      expect(listItemComponent).toHaveTextContent(
-        I18n.t("profile.data.list.spid.email")
-      );
-      expect(listItemComponent).toHaveTextContent(spidEmail.value);
-    } else {
-      expect(viewComponent).toBeNull();
-    }
-  });
-  it("when press ListItemComponent spid email, should call useIOBottomSheet present function", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-      const listItemComponent = component.getByTestId("spid-email");
-      expect(listItemComponent).not.toBeNull();
-      fireEvent.press(listItemComponent);
-      expect(mockPresentFn).toHaveBeenCalled();
-    } else {
-      expect(viewComponent).toBeNull();
     }
   });
 });
