@@ -2,7 +2,6 @@ import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { Provider } from "react-redux";
 import * as pot from "italia-ts-commons/lib/pot";
-import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
 import configureMockStore from "redux-mock-store";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
@@ -16,33 +15,9 @@ import CgnCardComponent from "../CgnCardComponent";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { appReducer } from "../../../../../../store/reducers";
 import { profileLoadSuccess } from "../../../../../../store/actions/profile";
-import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
 import { profileNameSurnameSelector } from "../../../../../../store/reducers/profile";
-import { EmailAddress } from "../../../../../../../definitions/backend/EmailAddress";
-import { PreferredLanguages } from "../../../../../../../definitions/backend/PreferredLanguages";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { ServicesPreferencesModeEnum } from "../../../../../../../definitions/backend/ServicesPreferencesMode";
-
-const mockedProfile: InitializedProfile = {
-  accepted_tos_version: 2.1,
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  email: "mario.rossi@email.it" as EmailAddress,
-  family_name: "Rossi",
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_email_enabled: true,
-  is_email_validated: true,
-  is_webhook_enabled: true,
-  name: "Mario",
-  spid_email: "mario.rossi@spid-email.it" as EmailAddress,
-  spid_mobile_phone: "555555555" as NonEmptyString,
-  version: 2,
-  date_of_birth: new Date(1991, 0, 6),
-  fiscal_code: "TAMMRA80A41H501I" as FiscalCode,
-  preferred_languages: ["it_IT"] as PreferredLanguages
-};
+import mockedProfile from "../../../../../../__mocks__/initializedProfile";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,
