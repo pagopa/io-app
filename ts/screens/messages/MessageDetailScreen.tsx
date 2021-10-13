@@ -5,7 +5,6 @@ import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -36,6 +35,7 @@ import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -220,7 +220,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   /**
    * Used when we have all data to properly render the content of the screen.
    */
-  private renderFullState = (message: CreatedMessageWithContent) => {
+  private renderFullState = (
+    message: CreatedMessageWithContentAndAttachments
+  ) => {
     const { potServiceDetail, potServiceMetadata, paymentsByRptId } =
       this.props;
 
