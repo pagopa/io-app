@@ -8,7 +8,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
-  AvailableDestinationRequest,
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
@@ -33,6 +32,7 @@ import { formatDateAsLocal } from "../../../../../utils/dates";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { openWebUrl } from "../../../../../utils/url";
 import { Link } from "../../../../../components/core/typography/Link";
+import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -233,7 +233,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   failure: () => dispatch(svGenerateVoucherFailure("Request not complete")),
   requestAvailableDestinations: (
-    availableDestinationRequest: AvailableDestinationRequest
+    availableDestinationRequest: AeroportiAmmessiInputBean
   ) =>
     dispatch(
       svGenerateVoucherAvailableDestination.request(availableDestinationRequest)

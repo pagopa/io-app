@@ -15,6 +15,7 @@ import {
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
+import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -98,8 +99,6 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
   "SV_GENERATE_VOUCHER_SELECT_FLIGHTS_DATE"
 )<FlightsDate>();
 
-export type AvailableDestinationRequest = Pick<State, "id"> &
-  Pick<Municipality, "longitude" | "latitude">;
 /**
  * get and handle available destination for a voucher request
  */
@@ -107,7 +106,7 @@ export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<AvailableDestinationRequest, AvailableDestinations, NetworkError>();
+)<AeroportiAmmessiInputBean, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher

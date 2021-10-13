@@ -101,7 +101,7 @@ const GetAeroportiAmmessi: GetAeroportiAmmessiT = {
     `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiAmmessi`,
   query: _ => ({}),
   body: ({ aeroportiAmmessiInputBean }) =>
-    JSON.stringify(aeroportiAmmessiInputBean),
+    JSON.stringify({ aeroportiAmmessiInputBean }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiAmmessiDefaultDecoder()
 };

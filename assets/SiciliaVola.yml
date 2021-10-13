@@ -31,6 +31,10 @@ definitions:
         format: double
       stato:
         type: string
+    required:
+      - latitudine
+      - longitudine
+      - stato
   BeneficiarioBean:
     type: "object"
     properties:

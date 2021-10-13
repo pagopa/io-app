@@ -8,7 +8,7 @@ import {
   VoucherRequest,
   WorkerVoucherRequest
 } from "./types/SvVoucherRequest";
-import { AvailableDestinationRequest } from "./store/actions/voucherGeneration";
+import { AeroportiAmmessiInputBean } from "../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   switch (voucher.category) {
@@ -92,7 +92,7 @@ export const destinationsInfoFromVoucherRequest = (
     | StudentVoucherRequest
     | WorkerVoucherRequest
     | SickVoucherRequest
-): AvailableDestinationRequest => {
+): AeroportiAmmessiInputBean => {
   const destination =
     voucherRequest.category === "student"
       ? voucherRequest.university
@@ -101,8 +101,9 @@ export const destinationsInfoFromVoucherRequest = (
       : voucherRequest.hospital;
 
   return {
-    id: destination.state.id,
-    latitude: destination.municipality.latitude,
-    longitude: destination.municipality.longitude
+    // TODO: check consistency between type in swagger.
+    stato: destination.state.id.toString(),
+    latitudine: destination.municipality.latitude,
+    longitudine: destination.municipality.longitude
   };
 };

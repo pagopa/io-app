@@ -10,7 +10,7 @@ import { getTimeoutError } from "../../../../../../utils/errors";
 import { AvailableDestinations } from "../../../types/SvVoucherRequest";
 
 const genericError = getTimeoutError();
-const mockDestination = { id: 1, latitude: 1, longitude: 1 };
+const mockDestination = { stato: "1", latitudine: 1, longitudine: 1 };
 const mockResponse: AvailableDestinations = ["dest1", "dest2"];
 
 describe("Test availableDestination reducer", () => {
