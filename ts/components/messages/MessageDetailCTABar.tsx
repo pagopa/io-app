@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate, Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
@@ -14,6 +14,7 @@ import {
   getCTA,
   isExpirable,
   isExpired,
+  MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
  * - a button to show/start a payment
  */
 class MessageDetailCTABar extends React.PureComponent<Props> {
-  get paymentExpirationInfo() {
+  get paymentExpirationInfo(): Option<MessagePaymentExpirationInfo> {
     return paymentExpirationInfo(this.props.message);
   }
 
@@ -93,13 +94,12 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     }
     // The button is displayed if the payment has an expiration date in the future
     return this.paymentExpirationInfo.fold(null, pei => {
-      const { message, service } = this.props;
+      const { amount, noticeNumber, organizationFiscalCode } = pei;
       return (
         <PaymentButton
-          paid={this.paid}
-          messagePaymentExpirationInfo={pei}
-          service={service}
-          message={message}
+          amount={amount}
+          noticeNumber={noticeNumber}
+          organizationFiscalCode={organizationFiscalCode}
         />
       );
     });
