@@ -2,6 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { View } from "native-base";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -17,7 +19,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { navigateToSvVoucherGeneratedScreen } from "../../navigation/actions";
 import I18n from "../../../../../i18n";
 import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { useEffect } from "react";
 import {
   destinationsInfoFromVoucherRequest,
   isVoucherRequest
@@ -25,7 +26,6 @@ import {
 import { availableDestinationsSelector } from "../../store/reducers/voucherGeneration/availableDestinations";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { View } from "native-base";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { formatDateAsLocal } from "../../../../../utils/dates";
@@ -213,7 +213,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
                   )}
                 </H4>
                 {destinations.map(d => (
-                  <H4>{d}</H4>
+                  <H4 key={d}>{d}</H4>
                 ))}
               </View>
             </View>

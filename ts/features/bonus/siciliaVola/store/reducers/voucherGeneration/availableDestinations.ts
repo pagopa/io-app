@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { AvailableDestinations } from "../../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../../utils/errors";
 import { Action } from "../../../../../../store/actions/types";
@@ -6,7 +7,6 @@ import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,

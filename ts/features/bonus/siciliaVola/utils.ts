@@ -1,4 +1,5 @@
 import I18n from "../../../i18n";
+import { AeroportiAmmessiInputBean } from "../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 import { SvVoucher } from "./types/SvVoucher";
 import {
   DisabledVoucherRequest,
@@ -8,7 +9,6 @@ import {
   VoucherRequest,
   WorkerVoucherRequest
 } from "./types/SvVoucherRequest";
-import { AeroportiAmmessiInputBean } from "../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 export const fromVoucherToDestinationLabels = (voucher: SvVoucher) => {
   switch (voucher.category) {
