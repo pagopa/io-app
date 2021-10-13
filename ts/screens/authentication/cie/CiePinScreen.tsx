@@ -37,8 +37,6 @@ import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
-
-import { isIos } from "../../../utils/platform";
 import { openWebUrl } from "../../../utils/url";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -168,14 +166,6 @@ const CiePinScreen: React.FC<Props> = props => {
             onPinChanged={setPin}
             onSubmit={showModal}
           />
-          <View spacer={true} />
-          {isIos && (
-            <AdviceComponent
-              iconName={"io-bug"}
-              text={I18n.t("global.disclaimer_beta")}
-              iconColor={"black"}
-            />
-          )}
           <View spacer={true} />
           <AdviceComponent
             text={I18n.t("login.expiration_info")}

@@ -4,7 +4,6 @@ import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Dispatch } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
@@ -21,11 +20,12 @@ import {
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
 import { euCovidCertificateEnabled } from "../../config";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   onEUCovidCTAPress?: () => void;
   service?: ServicePublic;
   payment?: PaidReason;
