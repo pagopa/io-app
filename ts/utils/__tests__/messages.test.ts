@@ -1,4 +1,5 @@
 import { isNone, isSome, Option } from "fp-ts/lib/Option";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
@@ -92,7 +93,10 @@ const messageWithContentWithoutDueDate = {
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
-      invalid_after_due_date: false
+      invalid_after_due_date: false,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   } as MessageContent
 } as CreatedMessageWithContent;
@@ -109,7 +113,10 @@ const messageInvalidAfterDueDate = {
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
-      invalid_after_due_date: true
+      invalid_after_due_date: true,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   }
 };
@@ -502,7 +509,9 @@ describe("getMessagePaymentExpirationInfo", () => {
       kind: "UNEXPIRABLE",
       noticeNumber:
         messageWithContentWithoutDueDate.content.payment_data?.notice_number,
-      amount: messageWithContentWithoutDueDate.content.payment_data?.amount
+      amount: messageWithContentWithoutDueDate.content.payment_data?.amount,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -518,7 +527,9 @@ describe("getMessagePaymentExpirationInfo", () => {
       noticeNumber: messageWithContent.content.payment_data?.notice_number,
       amount: messageWithContent.content.payment_data?.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageWithContent.content.due_date
+      dueDate: messageWithContent.content.due_date,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -536,7 +547,9 @@ describe("getMessagePaymentExpirationInfo", () => {
         messageInvalidAfterDueDate.content.payment_data.notice_number,
       amount: messageInvalidAfterDueDate.content.payment_data.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageInvalidAfterDueDate.content.due_date
+      dueDate: messageInvalidAfterDueDate.content.due_date,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });

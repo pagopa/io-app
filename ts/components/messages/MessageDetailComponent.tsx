@@ -118,14 +118,10 @@ export default class MessageDetailComponent extends React.PureComponent<
 
   get payment() {
     const { message, paymentsByRptId } = this.props;
-    return this.service.fold(undefined, service => {
-      if (message.content.payment_data !== undefined) {
-        return paymentsByRptId[
-          `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
-        ];
-      }
-      return undefined;
-    });
+    const payment_data = message.content.payment_data;
+    return paymentsByRptId[
+      `${payment_data?.payee.fiscal_code}${payment_data?.notice_number}`
+    ];
   }
 
   private getTitle = () =>
