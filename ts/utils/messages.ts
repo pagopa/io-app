@@ -13,7 +13,6 @@ import FM from "front-matter";
 import { Linking } from "react-native";
 import { Dispatch } from "redux";
 import { Predicate } from "fp-ts/lib/function";
-import { INonEmptyStringTag } from "italia-ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
@@ -214,11 +213,7 @@ export const getPrescriptionDataFromName = (
 
 const hasMetadataTokenName = (
   metadata?: ServicePublicService_metadata
-): boolean =>
-  fromNullable(metadata).fold(
-    false,
-    m => m !== undefined && m.token_name !== undefined
-  );
+): boolean => metadata?.token_name !== undefined;
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
@@ -286,11 +281,9 @@ export const getCTA = (
 export const getServiceCTA = (
   serviceMetadata?: ServicePublicService_metadata
 ): Option<CTAS> =>
-  fromNullable(serviceMetadata)
-    .map(sm =>
-      fromNullable(sm.cta).getOrElse("" as string & INonEmptyStringTag)
-    )
-    .chain(cta => extractCTA(cta, serviceMetadata));
+  fromNullable(serviceMetadata?.cta).chain(cta =>
+    extractCTA(cta, serviceMetadata)
+  );
 
 /**
  * return a boolean indicating if the cta action is valid or not

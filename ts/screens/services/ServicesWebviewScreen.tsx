@@ -4,7 +4,7 @@ import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -102,21 +102,16 @@ const mapStateToProps = (state: GlobalState) => {
     internalRouteNavigationParamsSelector(state)
   );
 
-  const tokenName = maybeParams.fold(
-    () => none,
-    params => {
-      const metadata = serviceMetadataByIdSelector(params.serviceId)(state);
-      const token = fromNullable(metadata).fold(
-        undefined,
-        m => m && m.token_name
-      );
-      return fromNullable(token);
-    }
-  );
+  const token = fromEither(maybeParams)
+    .chain(params =>
+      fromNullable(serviceMetadataByIdSelector(params.serviceId)(state))
+    )
+    .mapNullable(m => m.token_name)
+    .chain(t => tokenFromNameSelector(t as TokenName)(state));
 
   return {
     navigationParams: maybeParams,
-    token: tokenName.chain(t => tokenFromNameSelector(t as TokenName)(state))
+    token
   };
 };
 

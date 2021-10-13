@@ -15,6 +15,7 @@ import {
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 export type ServicesByIdState = Readonly<{
   [key: string]: pot.Pot<ServicePublic, Error> | undefined;
@@ -80,12 +81,12 @@ export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
   state.entities.services.byId;
 
 export const serviceByIdSelector =
-  (id: string) =>
+  (id: ServiceId) =>
   (state: GlobalState): pot.Pot<ServicePublic, Error> | undefined =>
     state.entities.services.byId[id];
 
 export const serviceMetadataByIdSelector =
-  (id: string) =>
+  (id: ServiceId) =>
   (state: GlobalState): ServicePublicService_metadata | undefined => {
     const maybeServiceById = serviceByIdSelector(id)(state);
 
