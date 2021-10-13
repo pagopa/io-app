@@ -227,7 +227,9 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
             </H4>
             <View style={{ flex: 1, alignItems: "flex-end" }}>
               {selectedVoucher.availableDestination.map(d => (
-                <H4 key={d}>{d}</H4>
+                <H4 style={{ textAlign: "right" }} key={d}>
+                  {d}
+                </H4>
               ))}
             </View>
           </View>
