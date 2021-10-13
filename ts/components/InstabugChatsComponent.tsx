@@ -37,7 +37,7 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       instabugReportType: none,
-      hasChats: true,
+      hasChats: false,
       isMounted: false
     };
   }
