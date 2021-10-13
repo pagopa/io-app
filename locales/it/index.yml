@@ -1287,7 +1287,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi metodo di pagamento
+  addPaymentMethodTitle: Aggiungi app e altri metodi
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
@@ -1326,7 +1326,6 @@ wallet:
       description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1334,7 +1333,7 @@ wallet:
       name: Carta BancoPosta o Postepay
       description: Le carte emesse da Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
     bancomat:
       name: PagoBANCOMAT
     cobadge:
