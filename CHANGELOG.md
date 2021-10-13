@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.36.0-rc.0](https://github.com/pagopa/io-app/compare/1.35.0-rc.2...1.36.0-rc.0) (2021-10-13)
+
+
+### Bug Fixes
+
+* [[IA-265](https://pagopa.atlassian.net/browse/IA-265),[IA-264](https://pagopa.atlassian.net/browse/IA-264),[IA-260](https://pagopa.atlassian.net/browse/IA-260)] Improve and update UI/Copy CIE ([#3412](https://github.com/pagopa/io-app/issues/3412)) ([3fa05ac](https://github.com/pagopa/io-app/commit/3fa05ac0d108341cf581a770fef54b478f8a6dde))
+* The devIoApp team is not tagged in the final notification message after successfully complete a release ([#3422](https://github.com/pagopa/io-app/issues/3422)) ([b5748e5](https://github.com/pagopa/io-app/commit/b5748e587edcd78245832cf5b556079a4bd39166))
+
+
+### Chores
+
+* [[IA-277](https://pagopa.atlassian.net/browse/IA-277)] Remove services from persisted store configuration [#3420](https://github.com/pagopa/io-app/issues/3420) ([91149e0](https://github.com/pagopa/io-app/commit/91149e0f5cc1b5c7299d6c95c3aea41b5b5e7ba0))
+* [[IA-283](https://pagopa.atlassian.net/browse/IA-283)] Upgrade io-backend 7.21.1 ([#3425](https://github.com/pagopa/io-app/issues/3425)) ([4dd2750](https://github.com/pagopa/io-app/commit/4dd27500525d15da63e33361998289ff210de69b))
+* [[IA-284](https://pagopa.atlassian.net/browse/IA-284),[IA-274](https://pagopa.atlassian.net/browse/IA-274)] Fixes copy formats on messages dates and back button label ([#3427](https://github.com/pagopa/io-app/issues/3427)) ([8f3824e](https://github.com/pagopa/io-app/commit/8f3824ec8c6bddbd1f88369ef2228210feb50cf5))
+* [[IA-286](https://pagopa.atlassian.net/browse/IA-286)] Improve bottom tab badge displaying ([#3426](https://github.com/pagopa/io-app/issues/3426)) ([050ff92](https://github.com/pagopa/io-app/commit/050ff924283e9d2a1c756e7670d89e250f8ffb05))
+* **Sicilia Vola:** [[IASV-45](https://pagopa.atlassian.net/browse/IASV-45)] Autocomplete component ([#3419](https://github.com/pagopa/io-app/issues/3419)) ([9a9fba9](https://github.com/pagopa/io-app/commit/9a9fba9be59758761612c7ede2230adaa2daec80))
+
 ## [1.35.0-rc.2](https://github.com/pagopa/io-app/compare/1.35.0-rc.1...1.35.0-rc.2) (2021-10-08)
 
 
