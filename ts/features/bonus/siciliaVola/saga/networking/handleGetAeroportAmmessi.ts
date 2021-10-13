@@ -34,9 +34,8 @@ export function* handleGetAeroportiAmmessi(
     const request = svSessionManager.withRefresh(
       getAeroportiAmmessi(action.payload)
     );
-    const getAeroportiAmmessiResult: SagaCallReturnType<typeof request> = yield call(
-      request
-    );
+    const getAeroportiAmmessiResult: SagaCallReturnType<typeof request> =
+      yield call(request);
 
     if (getAeroportiAmmessiResult.isRight()) {
       if (getAeroportiAmmessiResult.value.status === 200) {
