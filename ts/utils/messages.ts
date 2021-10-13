@@ -14,7 +14,6 @@ import { Linking } from "react-native";
 import { Dispatch } from "redux";
 import { Predicate } from "fp-ts/lib/function";
 import { INonEmptyStringTag } from "italia-ts-commons/lib/strings";
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
