@@ -251,11 +251,9 @@ class MessageList extends React.Component<Props, State> {
         : undefined;
 
     const payment =
-      message.content.payment_data !== undefined && service !== undefined
-        ? paymentsByRptId[
-            `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
-          ]
-        : undefined;
+      paymentsByRptId[
+        `${message.content.payment_data?.payee.fiscal_code}${message.content.payment_data?.notice_number}`
+      ];
 
     return (
       <MessageListItem
