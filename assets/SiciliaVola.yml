@@ -665,6 +665,25 @@ paths:
             $ref: "#/definitions/ListaVoucherBeneficiarioOutputBean"
         500:
           description: "Errore interno."
+  /rest/secured/beneficiario/stampaVoucher:
+    get:
+      tags:
+        - "securedBeneficiario"
+      operationId: getPdf
+      requestBody:
+        $ref: '#/definitions/VoucherBean'
+      responses:
+        200:
+          description: Tutto OK
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/definitions/VoucherBean'
+            application/problem+json:
+              schema:
+                $ref: '#/definitions/VoucherBean'
+        500:
+          description: "Errore interno."
   /rest/secured/beneficiario/statiVoucher:
     get:
       tags:
