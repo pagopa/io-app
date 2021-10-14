@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { List, View } from "native-base";
+import { List } from "native-base";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../i18n";
@@ -9,7 +8,6 @@ import {
   profileEmailSelector,
   isProfileEmailValidatedSelector,
   hasProfileEmailSelector,
-  profileSpidEmailSelector,
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -20,16 +18,6 @@ import {
   navigateToEmailReadScreen
 } from "../../store/actions/navigation";
 import ScreenContent from "../../components/screens/ScreenContent";
-import { H3 } from "../../components/core/typography/H3";
-import Markdown from "../../components/ui/Markdown";
-import { useIOBottomSheet } from "../../utils/bottomSheet";
-
-const styles = StyleSheet.create({
-  headerSPID: {
-    marginTop: 30,
-    marginBottom: 7
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -45,20 +33,8 @@ const ProfileDataScreen: React.FC<Props> = ({
   navigateToEmailReadScreen,
   navigateToEmailInsertScreen,
   hasProfileEmail,
-  spidEmail,
   nameSurname
 }): React.ReactElement => {
-  const { present } = useIOBottomSheet(
-    <>
-      <View spacer />
-      <Markdown>
-        {I18n.t("profile.data.spid_email.contextualHelpContent")}
-      </Markdown>
-    </>,
-    I18n.t("profile.data.spid_email.contextualHelpTitle"),
-    300
-  );
-
   const onPressEmail = () =>
     hasProfileEmail
       ? navigateToEmailReadScreen()
@@ -98,26 +74,6 @@ const ProfileDataScreen: React.FC<Props> = ({
             onPress={onPressEmail}
             testID="insert-or-edit-email"
           />
-          {/* Check if spid email exists */}
-          {spidEmail.isSome() && (
-            <View testID="spid-data">
-              <View style={styles.headerSPID}>
-                <H3 color="bluegrey">
-                  {I18n.t("profile.data.list.spid.headerTitle")}
-                </H3>
-              </View>
-              {/* Show spid email info */}
-              <ListItemComponent
-                title={I18n.t("profile.data.list.spid.email")}
-                subTitle={spidEmail.value}
-                onPress={present}
-                iconName="io-info"
-                smallIconSize
-                iconOnTop
-                testID="spid-email"
-              />
-            </View>
-          )}
         </List>
       </ScreenContent>
     </TopScreenComponent>
@@ -133,7 +89,6 @@ const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
   hasProfileEmail: hasProfileEmailSelector(state),
-  spidEmail: profileSpidEmailSelector(state),
   nameSurname: profileNameSurnameSelector(state)
 });
 

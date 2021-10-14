@@ -1,15 +1,11 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { loadServiceMetadata } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -24,11 +20,12 @@ import {
 import ExtractedCTABar from "../cta/ExtractedCTABar";
 import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
 import { euCovidCertificateEnabled } from "../../config";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   onEUCovidCTAPress?: () => void;
   service?: ServicePublic;
   payment?: PaidReason;
@@ -91,12 +88,6 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return fromNullable(this.props.message.content.due_date);
   }
 
-  public componentDidMount() {
-    if (!this.props.serviceMetadata && this.props.service) {
-      this.props.loadServiceMetadata(this.props.service);
-    }
-  }
-
   private renderEUCovidViewCTA() {
     return (
       euCovidCertificateEnabled &&
@@ -143,12 +134,13 @@ class MessageListCTABar extends React.PureComponent<Props> {
       ));
 
   public render() {
+    const maybeServiceMetadata = this.props.service?.service_metadata;
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
     const euCovidCertCTA = this.renderEUCovidViewCTA();
     const maybeCTA = getCTA(
       this.props.message,
-      this.props.serviceMetadata,
+      maybeServiceMetadata,
       this.props.service?.service_id
     );
     const isPaymentStillValid =
@@ -159,7 +151,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           ctas={maybeCTA.value}
           xsmall={true}
           dispatch={this.props.dispatch}
-          serviceMetadata={this.props.serviceMetadata}
+          serviceMetadata={maybeServiceMetadata}
           service={this.props.service}
         />
       ) : null;
@@ -199,19 +191,9 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
-  return {
-    serviceMetadata: ownProps.service
-      ? servicesMetadataByID[ownProps.service.service_id]
-      : pot.none
-  };
-};
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadServiceMetadata: (service: ServicePublic) =>
-    dispatch(loadServiceMetadata.request(service.service_id)),
   dispatch
 });
 

@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export type FakeItem = {
-  fake: true;
+export type PlaceholderItem = {
+  isPlaceholder: true;
 };
 
 export type MessageAgendaItemMetadata = {
@@ -144,7 +144,7 @@ export type MessageAgendaItem = ITuple2<
 >;
 
 export type MessageAgendaSection = SectionListData<
-  MessageAgendaItem | FakeItem
+  MessageAgendaItem | PlaceholderItem
 >;
 
 // eslint-disable-next-line
@@ -183,13 +183,17 @@ type State = {
   isFirstLoading: boolean;
 };
 
-export const isFakeItem = (item: any): item is FakeItem => item.fake;
+export const isPlaceholderItem = (
+  item: MessageAgendaItem | PlaceholderItem
+): item is PlaceholderItem => (item as PlaceholderItem).isPlaceholder;
 
 // Min number of items to activate continuos scroll
 const minItemsToScroll = 4;
 
-const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
-  isFakeItem(_) ? `item-${index}` : _.e1.id;
+const keyExtractor = (
+  item: MessageAgendaItem | PlaceholderItem,
+  index: number
+) => (isPlaceholderItem(item) ? `item-${index}` : item.e1.id);
 
 /**
  * Generate item layouts from sections.
@@ -220,9 +224,9 @@ const generateItemLayouts = (sections: Sections) => {
     offset += SECTION_HEADER_HEIGHT;
     index++;
 
-    section.data.forEach((_, dataIndex, data) => {
+    section.data.forEach((item, dataIndex, data) => {
       // Push the info about the ITEM + ITEM_SEPARATOR cell.
-      const isFake = isFakeItem(_);
+      const isFake = isPlaceholderItem(item);
       const isLastItem = dataIndex === data.length - 1;
 
       const itemHeight = isFake ? FAKE_ITEM_HEIGHT : ITEM_HEIGHT;
@@ -256,7 +260,7 @@ const generateItemLayouts = (sections: Sections) => {
   return itemLayouts;
 };
 
-const getFakeItemComponent = () => (
+const getEmpytReminderComponent = () => (
   <View style={styles.itemEmptyWrapper}>
     <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
@@ -367,7 +371,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       : undefined;
 
     const item = info.section.data[0];
-    const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+    const sectionId = !isPlaceholderItem(item) ? item.e1.id : undefined;
 
     return (
       <View style={styles.sectionHeaderWrapper}>
@@ -395,57 +399,56 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderItem: SectionListRenderItem<MessageAgendaItem | FakeItem> =
-    info => {
-      if (isFakeItem(info.item)) {
-        return getFakeItemComponent();
-      }
+  private renderItem: SectionListRenderItem<
+    MessageAgendaItem | PlaceholderItem
+  > = info => {
+    if (isPlaceholderItem(info.item)) {
+      return getEmpytReminderComponent();
+    }
 
-      const message = info.item.e1;
-      const { isRead } = info.item.e2;
-      const {
-        paymentsByRptId,
-        onPressItem,
-        onLongPressItem,
-        selectedMessageIds
-      } = this.props;
+    const message = info.item.e1;
+    const { isRead } = info.item.e2;
+    const {
+      paymentsByRptId,
+      onPressItem,
+      onLongPressItem,
+      selectedMessageIds
+    } = this.props;
 
-      const potService = this.props.servicesById[message.sender_service_id];
+    const potService = this.props.servicesById[message.sender_service_id];
 
-      const service =
-        potService !== undefined
-          ? pot.isNone(potService)
-            ? ({
-                organization_name: I18n.t("messages.errorLoading.senderInfo"),
-                department_name: I18n.t("messages.errorLoading.serviceInfo")
-              } as ServicePublic)
-            : pot.toUndefined(potService)
-          : undefined;
+    const service =
+      potService !== undefined
+        ? pot.isNone(potService)
+          ? ({
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.serviceInfo")
+            } as ServicePublic)
+          : pot.toUndefined(potService)
+        : undefined;
 
-      const payment =
-        message.content.payment_data !== undefined && service !== undefined
-          ? paymentsByRptId[
-              `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
-            ]
-          : undefined;
+    const payment =
+      paymentsByRptId[
+        `${message.content.payment_data?.payee.fiscal_code}${message.content.payment_data?.notice_number}`
+      ];
 
-      return (
-        <View style={styles.padded}>
-          <MessageListItem
-            isRead={isRead}
-            message={message}
-            service={service}
-            payment={payment}
-            onPress={onPressItem}
-            onLongPress={onLongPressItem}
-            isSelectionModeEnabled={selectedMessageIds.isSome()}
-            isSelected={selectedMessageIds
-              .map(_ => _.has(message.id))
-              .getOrElse(false)}
-          />
-        </View>
-      );
-    };
+    return (
+      <View style={styles.padded}>
+        <MessageListItem
+          isRead={isRead}
+          message={message}
+          service={service}
+          payment={payment}
+          onPress={onPressItem}
+          onLongPress={onLongPressItem}
+          isSelectionModeEnabled={selectedMessageIds.isSome()}
+          isSelected={selectedMessageIds
+            .map(_ => _.has(message.id))
+            .getOrElse(false)}
+        />
+      </View>
+    );
+  };
 
   private getItemLayout = (_: Sections | null, index: number) =>
     this.state.itemLayouts[index];

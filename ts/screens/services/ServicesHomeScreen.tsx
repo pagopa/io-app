@@ -47,7 +47,6 @@ import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { loadServiceMetadata } from "../../store/actions/content";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -682,10 +681,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => navigateToServiceDetailsScreen(params),
-  serviceDetailsLoad: (service: ServicePublic) => {
-    dispatch(loadServiceMetadata.request(service.service_id));
-    dispatch(showServiceDetails(service));
-  }
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service))
 });
 
 const mergeProps = (

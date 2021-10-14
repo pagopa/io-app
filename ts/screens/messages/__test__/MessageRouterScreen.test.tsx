@@ -8,6 +8,7 @@ import {
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
@@ -41,7 +42,10 @@ const mockMessage: CreatedMessageWithContentAndAttachments = {
       amount: 1 as PaymentAmount,
       notice_number: "002718270840468918" as string &
         IPatternStringTag<"^[0123][0-9]{17}$">,
-      invalid_after_due_date: true
+      invalid_after_due_date: true,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   },
   created_at: new Date(),
@@ -78,7 +82,10 @@ const mockEUCovidMessage: pot.Pot<
         amount: 1 as PaymentAmount,
         notice_number: "002718270840468918" as string &
           IPatternStringTag<"^[0123][0-9]{17}$">,
-        invalid_after_due_date: true
+        invalid_after_due_date: true,
+        payee: {
+          fiscal_code: "00000000001" as OrganizationFiscalCode
+        }
       }
     },
     created_at: new Date(),
