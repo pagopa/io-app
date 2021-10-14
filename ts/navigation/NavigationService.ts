@@ -2,12 +2,14 @@ import {
   NavigationAction,
   NavigationActions,
   NavigationContainerComponent,
+  NavigationLeafRoute,
   NavigationParams,
   NavigationState
 } from "react-navigation";
 import {
   getCurrentRouteName as deprecatedGetCurrentRouteName,
-  getCurrentRouteKey as deprecatedGetCurrentRouteKey
+  getCurrentRouteKey as deprecatedGetCurrentRouteKey,
+  getCurrentRoute as utilsGetCurrentRoute
 } from "../utils/navigation";
 
 // eslint-disable-next-line functional/no-let
@@ -43,6 +45,9 @@ const getCurrentRouteKey = (): string | undefined =>
     ? deprecatedGetCurrentRouteKey(currentRouteState)
     : undefined;
 
+const getCurrentRoute = (): NavigationLeafRoute | undefined =>
+  currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
+
 // add other navigation functions that you need and export them
 export default {
   navigate,
@@ -50,5 +55,6 @@ export default {
   dispatchNavigationAction,
   setCurrentState,
   getCurrentRouteName,
-  getCurrentRouteKey
+  getCurrentRouteKey,
+  getCurrentRoute
 };

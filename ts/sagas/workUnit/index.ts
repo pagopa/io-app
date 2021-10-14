@@ -56,14 +56,16 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
 ): Generator<Effect, T, any> {
-  const initialScreenName: ReturnType<
-    typeof NavigationService.getCurrentRouteKey
-  > = yield call(NavigationService.getCurrentRouteName);
+  const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
+    yield call(NavigationService.getCurrentRoute);
   const res: T = yield call(g);
-  if (initialScreenName !== undefined) {
+  if (initialScreen?.routeName !== undefined) {
     yield call(
       NavigationService.dispatchNavigationAction,
-      NavigationActions.navigate({ routeName: initialScreenName })
+      NavigationActions.navigate({
+        routeName: initialScreen.routeName,
+        params: initialScreen?.params
+      })
     );
   }
   return res;
