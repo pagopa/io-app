@@ -4,12 +4,12 @@ import {
   requiredProp1 as reqP
 } from "italia-ts-commons/lib/types";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { MessageContent } from "../../definitions/backend/MessageContent";
+import { NewMessageContent } from "../../definitions/backend/NewMessageContent";
 
 const CreatedMessageWithContentAndDueDate = repP(
   CreatedMessageWithContentAndAttachments,
   "content",
-  reqP(MessageContent, "due_date")
+  reqP(NewMessageContent, "due_date")
 );
 
 export type CreatedMessageWithContentAndDueDate = t.TypeOf<
