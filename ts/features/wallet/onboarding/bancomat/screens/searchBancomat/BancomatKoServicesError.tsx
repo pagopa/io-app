@@ -66,7 +66,7 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   navigateToBancomatChooseBankScreen: () => {
-    dispatch(navigateToOnboardingBancomatChooseBank());
+    navigateToOnboardingBancomatChooseBank();
     dispatch(navigationHistoryPop());
   }
 });

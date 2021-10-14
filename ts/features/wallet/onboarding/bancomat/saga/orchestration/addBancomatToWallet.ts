@@ -1,11 +1,12 @@
-import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
@@ -20,7 +21,6 @@ import {
   walletAddBancomatFailure
 } from "../../store/actions";
 import { onboardingBancomatAddedPansSelector } from "../../store/reducers/addedPans";
-import ROUTES from "../../../../../../navigation/routes";
 
 /**
  * Define the workflow that allows the user to add a bancomat to the wallet.
@@ -31,7 +31,7 @@ import ROUTES from "../../../../../../navigation/routes";
  */
 function* bancomatWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBancomatSearchStartScreen(),
+    startScreenNavigation: navigateToOnboardingBancomatSearchStartScreen,
     startScreenName: WALLET_ONBOARDING_BANCOMAT_ROUTES.BANCOMAT_START,
     complete: walletAddBancomatCompleted,
     back: walletAddBancomatBack,
@@ -44,22 +44,24 @@ function* bancomatWorkUnit() {
  * Chain the add bancomat to wallet with "activate bpd on the new bancomat"
  */
 export function* addBancomatToWalletAndActivateBpd() {
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteKey
+  > = yield call(NavigationService.getCurrentRouteName);
+
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
     bancomatWorkUnit
   );
-  if (res !== "back") {
+  if (
+    res !== "back" &&
+    initialScreenName !== undefined &&
+    initialScreenName === ROUTES.WALLET_ADD_PAYMENT_METHOD
+  ) {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-      yield select(navigationCurrentRouteSelector);
-    if (
-      currentRoute.isSome() &&
-      currentRoute.value === ROUTES.WALLET_ADD_PAYMENT_METHOD
-    ) {
-      yield put(NavigationActions.back());
-    }
+
+    yield call(navigateToWalletHome);
   }
 
   if (res === "completed") {
@@ -69,11 +71,10 @@ export function* addBancomatToWalletAndActivateBpd() {
     const bancomatAdded: ReturnType<
       typeof onboardingBancomatAddedPansSelector
     > = yield select(onboardingBancomatAddedPansSelector);
-
     yield call(
       activateBpdOnNewPaymentMethods,
       bancomatAdded,
-      navigateToActivateBpdOnNewBancomat()
+      navigateToActivateBpdOnNewBancomat
     );
   }
 }

@@ -356,25 +356,23 @@ function* startOrResumeAddCreditCardSaga(
                       isRawCreditCard(maybeAddedWallet.paymentMethod) &&
                       bpdRemoteConfig?.program_active
                     ) {
-                      yield put(
-                        navigateToActivateBpdOnNewCreditCard({
-                          creditCards: [
-                            {
-                              ...maybeAddedWallet.paymentMethod,
-                              icon: getCardIconFromBrandLogo(
-                                maybeAddedWallet.paymentMethod.info
-                              ),
-                              caption: getTitleFromCard(
-                                maybeAddedWallet.paymentMethod
-                              )
-                            }
-                          ]
-                        })
-                      );
+                      yield call(navigateToActivateBpdOnNewCreditCard, {
+                        creditCards: [
+                          {
+                            ...maybeAddedWallet.paymentMethod,
+                            icon: getCardIconFromBrandLogo(
+                              maybeAddedWallet.paymentMethod.info
+                            ),
+                            caption: getTitleFromCard(
+                              maybeAddedWallet.paymentMethod
+                            )
+                          }
+                        ]
+                      });
                     } else if (
                       bpdRemoteConfig?.enroll_bpd_after_add_payment_method
                     ) {
-                      yield put(navigateToSuggestBpdActivation());
+                      yield call(navigateToSuggestBpdActivation);
                     } else {
                       yield call(waitAndNavigateToWalletHome);
                     }

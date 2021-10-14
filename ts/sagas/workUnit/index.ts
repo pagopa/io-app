@@ -1,5 +1,5 @@
 import { NavigationActions } from "react-navigation";
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { call, Effect, take } from "redux-saga/effects";
 import {
   ActionCreator,
   ActionType,
@@ -9,8 +9,6 @@ import {
 } from "typesafe-actions";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
-import { navigationHistoryPop } from "../../store/actions/navigationHistory";
-import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -58,18 +56,16 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
 ): Generator<Effect, T, any> {
-  const currentNavigationStackSize: ReturnType<
-    typeof navigationHistorySizeSelector
-  > = yield select(navigationHistorySizeSelector);
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteKey
+  > = yield call(NavigationService.getCurrentRouteName);
   const res: T = yield call(g);
-  const newNavigationStackSize: ReturnType<
-    typeof navigationHistorySizeSelector
-  > = yield select(navigationHistorySizeSelector);
-  const deltaNavigation = newNavigationStackSize - currentNavigationStackSize;
-  if (deltaNavigation > 1) {
-    yield put(navigationHistoryPop(deltaNavigation - 1));
+  if (initialScreenName !== undefined) {
+    yield call(
+      NavigationService.dispatchNavigationAction,
+      NavigationActions.navigate({ routeName: initialScreenName })
+    );
   }
-  yield put(NavigationActions.back());
   return res;
 }
 

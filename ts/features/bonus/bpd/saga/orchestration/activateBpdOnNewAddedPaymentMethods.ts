@@ -1,5 +1,4 @@
-import { NavigationNavigateAction } from "react-navigation";
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
@@ -14,7 +13,7 @@ import { isBpdEnabled } from "./onboarding/startOnboarding";
  */
 export function* activateBpdOnNewPaymentMethods(
   paymentMethods: ReadonlyArray<PaymentMethod>,
-  navigateToActivateNewMethods: NavigationNavigateAction
+  navigateToActivateNewMethods: () => void
 ) {
   const atLeastOnePaymentMethodWithBpdCapability = paymentMethods.some(b =>
     hasFunctionEnabled(b, EnableableFunctionsEnum.BPD)
@@ -36,10 +35,10 @@ export function* activateBpdOnNewPaymentMethods(
   } else {
     if (isBpdEnabledResponse.value && bpdRemoteConfig?.program_active) {
       // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
-      yield put(navigateToActivateNewMethods);
+      yield call(navigateToActivateNewMethods);
     } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {
       // navigate to "ask if you want to start bpd onboarding"
-      yield put(navigateToSuggestBpdActivation());
+      yield call(navigateToSuggestBpdActivation);
     }
   }
 }
