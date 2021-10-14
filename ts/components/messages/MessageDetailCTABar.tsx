@@ -69,7 +69,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
       .fold(null, _ => <CalendarEventButton message={this.props.message} />);
 
-  // return a payment button only the advice is not paid or the payment_data are defined
+  // return a payment button only when the advice is not paid and the payment_data is defined
   private renderPaymentButton(): React.ReactNode {
     if (this.paid || this.props.message.content.payment_data === undefined) {
       return null;
