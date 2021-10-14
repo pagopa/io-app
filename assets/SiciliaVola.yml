@@ -515,6 +515,13 @@ definitions:
         format: "int64"
       descrizione:
         type: "string"
+  PdfData:
+    type: "object"
+    properties:
+      data:
+        type: "string"
+    required:
+      - data
 paths:
   /rest/secured/beneficiario/aeroportiSede/{idRegione}:
     get:
@@ -697,19 +704,16 @@ paths:
     get:
       tags:
         - "securedBeneficiario"
-      operationId: getPdf
+      operationId: "getPdf"
+      produces:
+        - "application/json"
       requestBody:
         $ref: '#/definitions/VoucherBean'
       responses:
         200:
-          description: Tutto OK
-          content:
-            application/pdf:
-              schema:
-                $ref: '#/definitions/VoucherBean'
-            application/problem+json:
-              schema:
-                $ref: '#/definitions/VoucherBean'
+          description: "a base64 string representing the image to be shown"
+          schema:
+            $ref: "#/definitions/PdfData"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/statiVoucher:

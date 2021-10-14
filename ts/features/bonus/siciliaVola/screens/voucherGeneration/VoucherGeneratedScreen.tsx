@@ -14,7 +14,8 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCompleted,
   svGenerateVoucherFailure,
-  svGenerateVoucherGeneratedVoucher
+  svGenerateVoucherGeneratedVoucher,
+  svGetPdfVoucher
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
@@ -53,10 +54,9 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
     title: I18n.t("global.buttons.exit")
   };
 
-  // TODO: substitute the onPress function with the voucher pdf request
   const continueButtonProps = {
     primary: true,
-    onPress: () => true,
+    onPress: props.stampaVoucher,
     title: I18n.t("global.genericSave")
   };
 
@@ -131,7 +131,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   completed: () => dispatch(svGenerateVoucherCompleted()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
-    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest))
+    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
+  stampaVoucher: () => dispatch(svGetPdfVoucher.request())
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),
