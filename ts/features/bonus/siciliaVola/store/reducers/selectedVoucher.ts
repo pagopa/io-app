@@ -3,7 +3,11 @@ import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
 import { svGenerateVoucherStart } from "../actions/voucherGeneration";
 import { SvVoucher, SvVoucherId } from "../../types/SvVoucher";
-import { svSelectVoucher, svVoucherDetailGet } from "../actions/voucherList";
+import {
+  svSelectVoucher,
+  svVoucherDetailGet,
+  svVoucherRevocation
+} from "../actions/voucherList";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   remoteError,
@@ -17,9 +21,11 @@ import { GlobalState } from "../../../../../store/reducers/types";
 export type SelectedVoucherState = {
   voucherCode?: SvVoucherId;
   voucher: RemoteValue<SvVoucher, NetworkError>;
+  revocation: RemoteValue<true, NetworkError>;
 };
 const INITIAL_STATE: SelectedVoucherState = {
-  voucher: remoteUndefined
+  voucher: remoteUndefined,
+  revocation: remoteUndefined
 };
 
 const reducer = (
@@ -36,7 +42,17 @@ const reducer = (
     case getType(svVoucherDetailGet.failure):
       return { ...state, voucher: remoteError(action.payload) };
     case getType(svSelectVoucher):
-      return { ...state, voucherCode: action.payload };
+      return {
+        ...state,
+        voucherCode: action.payload,
+        revocation: remoteUndefined
+      };
+    case getType(svVoucherRevocation.request):
+      return { ...state, revocation: remoteLoading };
+    case getType(svVoucherRevocation.success):
+      return { ...state, revocation: remoteReady(true) };
+    case getType(svVoucherRevocation.failure):
+      return { ...state, revocation: remoteError(action.payload) };
   }
 
   return state;
@@ -51,6 +67,12 @@ export const selectedVoucherSelector = createSelector(
   (
     voucher: RemoteValue<SvVoucher, NetworkError>
   ): RemoteValue<SvVoucher, NetworkError> => voucher
+);
+export const selectedVoucherRevocationStateSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.selectedVoucher.revocation],
+  (
+    revocationState: RemoteValue<true, NetworkError>
+  ): RemoteValue<true, NetworkError> => revocationState
 );
 
 export default reducer;
