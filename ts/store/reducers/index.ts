@@ -180,8 +180,7 @@ export function createRootReducer(
               crossSessions: state.crossSessions,
               // keep servicesMetadata from content section
               content: {
-                ...contentInitialContentState,
-                servicesMetadata: state.content.servicesMetadata
+                ...contentInitialContentState
               },
               // isMixpanelEnabled must be kept
               persistedPreferences: {
