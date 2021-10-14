@@ -8,7 +8,6 @@ import {
   Reducer,
   Store
 } from "redux";
-import createDebugger from "redux-flipper";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
