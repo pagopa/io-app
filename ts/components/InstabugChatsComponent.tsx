@@ -12,7 +12,6 @@ import { instabugMessageStateSelector } from "../store/reducers/instabug/instabu
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 
 interface OwnProps {
   color?: string;
@@ -82,24 +81,19 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     }
     const accessibilityHint = this.getUnreadMessagesDescription();
     return (
-      <View>
-        <ButtonDefaultOpacity
-          onPress={this.handleIBChatPress}
-          transparent={true}
-          accessibilityLabel={I18n.t("global.accessibility.chat.description")}
-          accessibilityHint={accessibilityHint}
-        >
-          <IconFont name="io-chat" color={this.props.color} />
-        </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        onPress={this.handleIBChatPress}
+        transparent={true}
+        accessibilityLabel={I18n.t("global.accessibility.chat.description")}
+        accessibilityHint={accessibilityHint}
+      >
+        <IconFont name="io-chat" color={this.props.color} />
         {this.props.badge > 0 && (
-          <TouchableDefaultOpacity
-            onPress={this.handleIBChatPress}
-            style={{ marginLeft: 6, bottom: 10 }}
-          >
+          <View style={{ position: "absolute", left: 6, bottom: 10 }}>
             <CustomBadge badgeValue={this.props.badge} />
-          </TouchableDefaultOpacity>
+          </View>
         )}
-      </View>
+      </ButtonDefaultOpacity>
     );
   }
 }
