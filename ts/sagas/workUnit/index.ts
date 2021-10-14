@@ -64,6 +64,7 @@ export function* withResetNavigationStack<T>(
       NavigationService.dispatchNavigationAction,
       NavigationActions.navigate({
         routeName: initialScreen.routeName,
+        // TODO: are the params needed?
         params: initialScreen?.params
       })
     );

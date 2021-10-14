@@ -38,7 +38,6 @@ import { navigateBack } from "./store/actions/navigation";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-import { getCurrentRouteKey, getCurrentRouteName } from "./utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
