@@ -39,7 +39,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -57,7 +57,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(isBpdEnabled)
       .call(navigateToWalletHome)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -83,7 +83,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -101,7 +101,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .put(navigateToActivateBpdOnNewPrivative())
+      .call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -122,7 +122,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -139,7 +139,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
 
@@ -154,7 +154,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .not.call(navigateToSuggestBpdActivation)
       .run();
   });
@@ -171,7 +171,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
+      .not.call(navigateToActivateBpdOnNewPrivative)
       .call(navigateToSuggestBpdActivation)
       .run();
   });
