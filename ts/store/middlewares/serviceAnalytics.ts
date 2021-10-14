@@ -1,7 +1,6 @@
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../mixpanel";
 import { Action } from "../actions/types";
-import { loadServiceMetadata } from "../actions/content";
 import {
   loadServiceDetail,
   loadServicesDetail,
@@ -23,7 +22,6 @@ export const trackServiceAction =
           count: action.payload.length
         });
       case getType(loadServiceDetail.failure):
-      case getType(loadServiceMetadata.failure):
         return mp.track(action.type, {
           reason: action.payload.error.message
         });
@@ -41,8 +39,6 @@ export const trackServiceAction =
       case getType(loadVisibleServices.success):
       case getType(loadServiceDetail.request):
       case getType(loadServiceDetail.success):
-      case getType(loadServiceMetadata.request):
-      case getType(loadServiceMetadata.success):
       case getType(loadServicePreference.request):
         return mp.track(action.type);
       case getType(upsertServicePreference.request):
