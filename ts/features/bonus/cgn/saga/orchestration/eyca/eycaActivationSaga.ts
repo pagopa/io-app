@@ -35,7 +35,7 @@ export function* eycaActivationWorker(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"],
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
-  yield put(navigateToEycaActivationLoading());
+  yield call(navigateToEycaActivationLoading);
   yield put(navigationHistoryPop(1));
 
   const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
@@ -61,7 +61,7 @@ export function* eycaActivationWorker(
           )
         ) {
           yield put(cgnEycaActivation.success(startActivation.value));
-          yield put(navigateToCgnDetails());
+          yield call(navigateToCgnDetails);
           yield put(navigationHistoryPop(1));
           return;
         } else {
@@ -74,7 +74,7 @@ export function* eycaActivationWorker(
   // Activation saga ended, request again the details
   yield put(cgnEycaStatus.request());
 
-  yield put(navigateToCgnDetails());
+  yield call(navigateToCgnDetails);
   yield put(navigationHistoryPop(1));
 }
 

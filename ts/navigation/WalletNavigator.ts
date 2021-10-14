@@ -4,7 +4,11 @@ import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/nav
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
-import CgnNavigator from "../features/bonus/cgn/navigation/navigator";
+import CgnNavigator, {
+  CgnActivationNavigator,
+  CgnDetailsNavigator,
+  CgnEYCAActivationNavigator
+} from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
@@ -158,8 +162,14 @@ const bpdConfigMap = bpdEnabled
 
 const cgnConfigMap = cgnEnabled
   ? {
-      [CGN_ROUTES.MAIN]: {
-        screen: CgnNavigator
+      [CGN_ROUTES.ACTIVATION.MAIN]: {
+        screen: CgnActivationNavigator
+      },
+      [CGN_ROUTES.DETAILS.MAIN]: {
+        screen: CgnDetailsNavigator
+      },
+      [CGN_ROUTES.EYCA.ACTIVATION.MAIN]: {
+        screen: CgnEYCAActivationNavigator
       }
     }
   : {};

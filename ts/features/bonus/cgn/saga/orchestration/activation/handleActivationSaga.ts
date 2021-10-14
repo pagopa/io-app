@@ -1,13 +1,10 @@
+import { fromNullable } from "fp-ts/lib/Option";
+import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, select, take } from "redux-saga/effects";
-import { NavigationActions, NavigationNavigateAction } from "react-navigation";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import {
-  cgnActivationCancel,
-  cgnActivationStatus
-} from "../../../store/actions/activation";
+import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationIneligible,
@@ -16,15 +13,15 @@ import {
   navigateToCgnActivationTimeout,
   navigateToCgnAlreadyActive
 } from "../../../navigation/actions";
-import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import CGN_ROUTES from "../../../navigation/routes";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
+import {
+  cgnActivationCancel,
+  cgnActivationStatus
+} from "../../../store/actions/activation";
+import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
 
-const mapEnumToNavigation = new Map<
-  CgnActivationProgressEnum,
-  () => NavigationNavigateAction
->([
+const mapEnumToNavigation = new Map<CgnActivationProgressEnum, () => void>([
   [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],
   [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
   [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
@@ -40,7 +37,7 @@ type NavigationCurrentRouteSelectorType = ReturnType<
 // Get the next activation steps from the saga call function based on status ENUM
 const getNextNavigationStep = (
   action: ActionType<typeof cgnActivationStatus>
-): (() => NavigationNavigateAction) =>
+): (() => void) =>
   isActionOf(cgnActivationStatus.success, action)
     ? fromNullable(mapEnumToNavigation.get(action.payload.status)).getOrElse(
         navigateToCgnActivationLoading
@@ -56,7 +53,7 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   );
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page for the CGN activation
-    yield put(navigateToCgnActivationLoading());
+    yield call(navigateToCgnActivationLoading);
     yield put(navigationHistoryPop(1));
   }
 
@@ -65,7 +62,7 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
 
   const nextNavigationStep = getNextNavigationStep(progress);
   if (nextNavigationStep !== navigateToCgnActivationLoading) {
-    yield put(nextNavigationStep());
+    yield call(nextNavigationStep);
     yield put(navigationHistoryPop(1));
   }
 }

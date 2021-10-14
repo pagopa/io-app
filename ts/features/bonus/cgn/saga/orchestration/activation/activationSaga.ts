@@ -1,25 +1,25 @@
 import { SagaIterator } from "redux-saga";
-import { call, select } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import {
+  executeWorkUnit,
+  withResetNavigationStack
+} from "../../../../../../sagas/workUnit";
+import { navigateBack } from "../../../../../../store/actions/navigation";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
+import { navigateToCgnActivationInformationTos } from "../../../navigation/actions";
+import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
   cgnActivationCancel,
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
-import { navigateToCgnActivationInformationTos } from "../../../navigation/actions";
-import {
-  executeWorkUnit,
-  withResetNavigationStack
-} from "../../../../../../sagas/workUnit";
-import CGN_ROUTES from "../../../navigation/routes";
-import { SagaCallReturnType } from "../../../../../../types/utils";
-import { navigateBack } from "../../../../../../store/actions/navigation";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToCgnActivationInformationTos(),
+    startScreenNavigation: navigateToCgnActivationInformationTos,
     startScreenName: CGN_ROUTES.ACTIVATION.INFORMATION_TOS,
     complete: cgnActivationComplete,
     back: cgnActivationBack,
@@ -32,20 +32,22 @@ function* cgnActivationWorkUnit() {
  * This saga handles the CGN activation workflow
  */
 export function* handleCgnStartActivationSaga(): SagaIterator {
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteKey
+  > = yield call(NavigationService.getCurrentRouteName);
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
     cgnActivationWorkUnit
   );
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
-  const route = currentRoute.toUndefined();
-  if (
-    // if the activation started from the CTA -> go back
-    route === CGN_ROUTES.CTA_START_CGN ||
-    // if the activation started from the bonus list and user aborted the activation -> go back
-    (res === "cancel" && route === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST)
-  ) {
+  const initialRouteRequireBack =
+    initialScreenName !== undefined &&
+    (initialScreenName === CGN_ROUTES.CTA_START_CGN ||
+      (res === "cancel" &&
+        initialScreenName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST));
+
+  // if the activation started from the CTA or the bonus list and user aborted the activation -> go back
+  if (initialRouteRequireBack) {
     yield call(navigateBack);
   }
 }

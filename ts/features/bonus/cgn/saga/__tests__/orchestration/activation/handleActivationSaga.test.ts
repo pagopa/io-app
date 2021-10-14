@@ -28,7 +28,7 @@ describe("cgnActivationWorker", () => {
       .next()
       .select(navigationCurrentRouteSelector)
       .next(some("ANY_ROUTE"))
-      .put(navigateToCgnActivationLoading())
+      .call(navigateToCgnActivationLoading)
       .next()
       .put(navigationHistoryPop(1))
       .next()
@@ -36,7 +36,7 @@ describe("cgnActivationWorker", () => {
       .next(returnedAction)
       .put(returnedAction)
       .next()
-      .put(navigateToCgnActivationCompleted())
+      .call(navigateToCgnActivationCompleted)
       .next()
       .put(navigationHistoryPop(1));
   });
@@ -54,7 +54,7 @@ describe("cgnActivationWorker", () => {
       .next(returnedAction)
       .put(returnedAction)
       .next()
-      .put(navigateToCgnActivationCompleted())
+      .call(navigateToCgnActivationCompleted)
       .next()
       .put(navigationHistoryPop(1));
   });
@@ -68,7 +68,7 @@ describe("cgnActivationWorker", () => {
       .next()
       .select(navigationCurrentRouteSelector)
       .next(some("ANY_ROUTE"))
-      .put(navigateToCgnActivationLoading())
+      .call(navigateToCgnActivationLoading)
       .next()
       .put(navigationHistoryPop(1))
       .next()
@@ -76,7 +76,7 @@ describe("cgnActivationWorker", () => {
       .next(returnedAction)
       .put(returnedAction)
       .next()
-      .put(navigateToCgnActivationTimeout())
+      .call(navigateToCgnActivationTimeout)
       .next()
       .put(navigationHistoryPop(1));
   });

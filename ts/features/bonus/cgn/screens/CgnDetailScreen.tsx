@@ -163,9 +163,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => navigateBack(),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
   loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsList: () => dispatch(navigateToCgnMerchantsList()),
-  navigateToMerchantsTabs: () => dispatch(navigateToCgnMerchantsTabs()),
-  navigateToOtp: () => dispatch(navigateToCgnDetailsOtp())
+  navigateToMerchantsList: () => navigateToCgnMerchantsList(),
+  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs(),
+  navigateToOtp: () => navigateToCgnDetailsOtp()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
