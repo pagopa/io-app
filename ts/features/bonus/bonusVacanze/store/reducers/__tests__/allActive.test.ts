@@ -1,37 +1,14 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
-import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
-import { Version } from "../../../../../../../definitions/backend/Version";
+import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../../definitions/bonus_vacanze/BonusCode";
+import mockedProfile from "../../../../../../__mocks__/initializedProfile";
 import { mockedBonus } from "../../../__mock__/mockData";
 import { ownedActiveOrRedeemedBonus } from "../allActive";
-import { ServicesPreferencesModeEnum } from "../../../../../../../definitions/backend/ServicesPreferencesMode";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;
-const profile: InitializedProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_webhook_enabled: true,
-  is_email_enabled: true,
-  is_email_validated: true,
-  email: "test@example.com" as EmailString,
-  spid_email: "test@example.com" as EmailString,
-  family_name: "Connor",
-  name: "John",
-  fiscal_code: fiscalCode,
-  spid_mobile_phone: "123" as NonEmptyString,
-  version: 1 as Version
-};
 
-const potProfile = pot.some(profile);
+const potProfile = pot.some(mockedProfile);
 const bonusDifferentApplicant = pot.some({
   ...mockedBonus,
   status: BonusActivationStatusEnum.ACTIVE,
