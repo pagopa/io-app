@@ -250,7 +250,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   // TODO: Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
-    dispatch(navigateToBonusRequestInformation({ bonusItem }));
+    navigateToBonusRequestInformation({ bonusItem });
     dispatch(navigationHistoryPop(1));
   },
   startBpdOnboarding: () => dispatch(bpdOnboardingStart()),

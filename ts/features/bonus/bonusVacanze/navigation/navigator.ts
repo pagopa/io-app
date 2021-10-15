@@ -25,9 +25,6 @@ const BonusVacanzeNavigator = createStackNavigator(
     [BONUSVACANZE_ROUTES.BONUS_REQUEST_INFORMATION]: {
       screen: BonusInformationScreen
     },
-    [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
-      screen: ActiveBonusScreen
-    },
     [BONUSVACANZE_ROUTES.ELIGIBILITY.CHECK_LOADING]: {
       screen: LoadBonusEligibilityScreen
     },

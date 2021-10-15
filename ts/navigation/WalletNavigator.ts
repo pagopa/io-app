@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
+import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import {
@@ -133,6 +134,9 @@ const bonusVacanzeConfigMap = bonusVacanzeEnabled
   ? {
       [BONUSVACANZE_ROUTES.MAIN]: {
         screen: BonusVacanzeNavigator
+      },
+      [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: {
+        screen: ActiveBonusScreen
       }
     }
   : {};

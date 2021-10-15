@@ -155,10 +155,10 @@ const mapStateToProps = (state: GlobalState) => ({
   nav: navSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen())
+  navigateToBonusList: () => navigateToAvailableBonusScreen()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletHomeHeader);

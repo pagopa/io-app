@@ -654,9 +654,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,
     validTo?: Date
-  ) =>
-    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
+  ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
+  navigateToBonusList: () => navigateToAvailableBonusScreen(),
   navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
