@@ -78,8 +78,6 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     props.selectedPeriod?.awardPeriodId
   ]);
 
-  console.log(initialPeriod);
-
   return (
     <View style={[IOStyles.flex]}>
       {pot.isSome(props.periodsWithAmount) &&
