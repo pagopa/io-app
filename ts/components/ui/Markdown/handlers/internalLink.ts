@@ -10,6 +10,7 @@ import {
   myPortalEnabled,
   svEnabled
 } from "../../../../config";
+import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
@@ -120,7 +121,7 @@ export function handleInternalLink(
         params: { ...internalNavigation.params, serviceId }
       })
     );
-    dispatch(
+    NavigationService.dispatchNavigationAction(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName
       })

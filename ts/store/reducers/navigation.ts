@@ -1,15 +1,11 @@
-import { index } from "fp-ts/lib/Array";
-import { none, Option } from "fp-ts/lib/Option";
 import {
   NavigationActions,
   NavigationState,
   StackActions,
   SwitchActions
 } from "react-navigation";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import AppNavigator from "../../navigation/AppNavigator";
-import { getRouteName } from "../../utils/navigation";
 import { navigationRestore } from "../actions/navigation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -19,6 +15,7 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 );
 
 // Selectors
+// TODO: DELETE
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
 
@@ -27,21 +24,25 @@ export const navigationStateSelector = (state: GlobalState): NavigationState =>
  * Don't use this as conditional param to update the rendering of a component or to compute
  * another selector because return always a different {@link Option} each time the state is updated
  * @param state
+ * TODO: DELETE
  */
-export const navigationCurrentRouteSelector = (
-  state: GlobalState
-): Option<string> =>
-  index(state.nav.index, [...state.nav.routes]).fold(none, ln =>
-    "routes" in ln && "index" in ln
-      ? getRouteName(ln.routes[ln.index])
-      : getRouteName(ln)
-  );
+// export const navigationCurrentRouteSelector = (
+//   state: GlobalState
+// ): Option<string> =>
+//   index(state.nav.index, [...state.nav.routes]).fold(none, ln =>
+//     "routes" in ln && "index" in ln
+//       ? getRouteName(ln.routes[ln.index])
+//       : getRouteName(ln)
+//   );
 
-// Return a string that represent the current route
-export const plainNavigationCurrentRouteSelector = createSelector(
-  navigationCurrentRouteSelector,
-  maybeRoute => maybeRoute.getOrElse("")
-);
+/**
+ * Return a string that represent the current route
+ * TODO: DELETE
+ */
+// export const plainNavigationCurrentRouteSelector = createSelector(
+//   navigationCurrentRouteSelector,
+//   maybeRoute => maybeRoute.getOrElse("")
+// );
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
