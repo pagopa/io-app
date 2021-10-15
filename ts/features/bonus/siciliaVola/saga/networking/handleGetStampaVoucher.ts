@@ -40,7 +40,7 @@ export function* handleGetStampaVoucher(
       if (getStampaVoucherResult.value.status === 200) {
         if (fPath) {
           RNFS.writeFile(
-            `${fPath}/${voucherFilename}.pdf"`,
+            `${fPath}/${voucherFilename}.pdf`,
             getStampaVoucherResult.value.value.data,
             "base64"
           );
