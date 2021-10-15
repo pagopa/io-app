@@ -49,7 +49,7 @@ export type PaymentHistory = {
   payNavigationUrls?: ReadonlyArray<string>;
   webViewCloseReason?: PaymentWebViewEndReason;
   lookupId?: string;
-  // say where the payment starts (message, manual insertion, qrcode scan)
+  // where the payment started (message, manual insertion, qrcode scan)
   startOrigin?: PaymentStartOrigin;
 };
 
