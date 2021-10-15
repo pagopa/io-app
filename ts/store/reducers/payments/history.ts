@@ -24,6 +24,7 @@ import {
   paymentCompletedSuccess,
   paymentIdPolling,
   paymentRedirectionUrls,
+  PaymentStartOrigin,
   paymentVerifica,
   paymentWebViewEnd,
   PaymentWebViewEndReason
@@ -32,6 +33,7 @@ import { GlobalState } from "../types";
 import { paymentOutcomeCode } from "../../actions/wallet/outcomeCode";
 import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import { getLookUpId } from "../../../utils/pmLookUpId";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
 
 export type PaymentHistory = {
   started_at: string;
@@ -47,6 +49,8 @@ export type PaymentHistory = {
   payNavigationUrls?: ReadonlyArray<string>;
   webViewCloseReason?: PaymentWebViewEndReason;
   lookupId?: string;
+  // say where the payment starts (message, manual insertion, qrcode scan)
+  startOrigin?: PaymentStartOrigin;
 };
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
@@ -89,9 +93,10 @@ const reducer = (
       return [
         ...updateState,
         {
-          data: { ...action.payload },
+          data: { ...action.payload.rptId },
           started_at: new Date().toISOString(),
-          lookupId: getLookUpId()
+          lookupId: getLookUpId(),
+          startOrigin: action.payload.startOrigin
         }
       ];
     case getType(paymentIdPolling.success):
@@ -143,6 +148,7 @@ const reducer = (
         ...state[state.length - 1],
         webViewCloseReason: action.payload
       });
+    case getType(differentProfileLoggedIn):
     case getType(clearCache): {
       return INITIAL_STATE;
     }

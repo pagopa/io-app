@@ -53,7 +53,7 @@ const paymentsCurrentReducer = (
           ...state,
           kind: "INITIALIZED",
           initializationData: {
-            rptId: action.payload
+            rptId: action.payload.rptId
           }
         };
       }
