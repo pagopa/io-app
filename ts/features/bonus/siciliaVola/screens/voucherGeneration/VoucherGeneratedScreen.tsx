@@ -25,9 +25,11 @@ import VoucherInformationComponent from "../../components/VoucherInformationComp
 import { isVoucherRequest } from "../../utils";
 import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
+import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVoucher";
+import { showToast } from "../../../../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -36,7 +38,8 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   const {
     remoteVoucherGenerated,
     maybeVoucherRequest,
-    generateVoucherRequest
+    generateVoucherRequest,
+    pdfVoucherState
   } = props;
 
   useEffect(() => {
@@ -46,6 +49,16 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
       }
     });
   }, [maybeVoucherRequest, generateVoucherRequest]);
+
+  useEffect(() => {
+    fold(
+      pdfVoucherState,
+      () => null,
+      () => null,
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ok"), "success"),
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ko"))
+    );
+  }, [pdfVoucherState]);
 
   const backButtonProps = {
     primary: false,
@@ -136,7 +149,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),
-  remoteVoucherGenerated: voucherGeneratedSelector(state)
+  remoteVoucherGenerated: voucherGeneratedSelector(state),
+  pdfVoucherState: selectedPdfVoucherStateSelector(state)
 });
 
 export default connect(

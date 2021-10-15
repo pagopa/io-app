@@ -2758,6 +2758,10 @@ bonus:
         cta:
           exit: "Esci"
           voucherRevocation: "Revoca voucher"
+    pdfVoucher:
+      toast:
+        ok: "Voucher salvato con successo"
+        ko: "Problemi durante il salvataggio del voucher"
 
 features:
   euCovidCertificate:
