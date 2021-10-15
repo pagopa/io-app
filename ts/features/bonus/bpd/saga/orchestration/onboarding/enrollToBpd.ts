@@ -1,9 +1,9 @@
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, select, take } from "redux-saga/effects";
+import { call, put, race, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/actions";
 import BPD_ROUTES from "../../../navigation/routes";
 import { bpdAllData } from "../../../store/actions/details";
@@ -16,14 +16,17 @@ import {
 export const isLoadingScreen = (screenName: string) =>
   screenName === BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD;
 
+/**
+ * Old style orchestrator, please don't use this as reference for future development
+ * @deprecated
+ */
 function* enrollToBpdWorker() {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
-  if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
+  if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
     // show the loading page while communicate with the server for the activation
     yield call(navigateToBpdOnboardingLoadActivate);
-    yield put(navigationHistoryPop(1));
   }
 
   // enroll the user and wait for the result
