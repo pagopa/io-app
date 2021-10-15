@@ -27,6 +27,7 @@ import {
   svVoucherListGet
 } from "../../features/bonus/siciliaVola/store/actions/voucherList";
 import { GlobalState } from "./types";
+import { svGetPdfVoucher } from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
 
 /**
  * list of monitored actions
@@ -49,7 +50,8 @@ const monitoredActions: ReadonlyArray<
   ],
   [euCovidCertificateGet.failure, euCovidCertificateGet.success],
   [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
-  [svVoucherListGet.failure, svVoucherListGet.success]
+  [svVoucherListGet.failure, svVoucherListGet.success],
+  [svGetPdfVoucher.failure, svGetPdfVoucher.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);
