@@ -80,7 +80,7 @@ const reducer = (
     case getType(paymentVerifica.request):
       // if already in, remove the previous one
       const updateState = [...state].filter(
-        ph => !_.isEqual(ph.data, action.payload)
+        ph => !_.isEqual(ph.data, action.payload.rptId)
       );
       // if size exceeded, remove the ones exceeding (here we consider the one we will add in it)
       if (updateState.length + 1 >= HISTORY_SIZE) {
