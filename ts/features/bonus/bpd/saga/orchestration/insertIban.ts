@@ -3,8 +3,9 @@ import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
+import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
+import NavigationService from "../../../../../navigation/NavigationService";
+import { navigateBack } from "../../../../../store/actions/navigation";
 import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
@@ -20,7 +21,6 @@ import {
 } from "../../store/actions/iban";
 import { bpdOnboardingCompleted } from "../../store/actions/onboarding";
 import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing";
-import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
 //  which screen to display, (the user already have payment methods or not)
@@ -33,14 +33,18 @@ export const isMainScreen = (screenName: string) =>
   screenName === BPD_ROUTES.IBAN;
 
 function* ensureMainScreen() {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
-  if (currentRoute.isSome() && !isMainScreen(currentRoute.value)) {
-    yield put(navigateToBpdIbanInsertion());
+  if (currentRoute !== undefined && !isMainScreen(currentRoute)) {
+    yield call(navigateToBpdIbanInsertion);
   }
 }
 
+/**
+ * Old style orchestrator, please don't use this as reference for future development
+ * @deprecated
+ */
 export function* bpdIbanInsertionWorker() {
   const onboardingOngoing: ReturnType<typeof isBpdOnboardingOngoing> =
     yield select(isBpdOnboardingOngoing);
@@ -55,7 +59,7 @@ export function* bpdIbanInsertionWorker() {
     getType(bpdIbanInsertionContinue)
   ]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
-    yield put(NavigationActions.back());
+    yield call(navigateBack);
   } else {
     if (onboardingOngoing) {
       const paymentMethods: ReturnType<typeof paymentMethodsSelector> =
@@ -63,8 +67,7 @@ export function* bpdIbanInsertionWorker() {
 
       // Error while loading the wallet, display a message that informs the user about the error
       if (paymentMethods.kind === "PotNoneError") {
-        yield put(navigateToBpdOnboardingErrorPaymentMethods());
-        yield put(navigationHistoryPop(1));
+        yield call(navigateToBpdOnboardingErrorPaymentMethods);
         yield put(bpdOnboardingCompleted());
         return;
       }
@@ -76,13 +79,12 @@ export function* bpdIbanInsertionWorker() {
         false
       );
       const nextAction = hasAtLeastOnePaymentMethodWithBpd
-        ? navigateToBpdOnboardingEnrollPaymentMethod()
-        : navigateToBpdOnboardingNoPaymentMethods();
-      yield put(nextAction);
-      yield put(navigationHistoryPop(1));
+        ? navigateToBpdOnboardingEnrollPaymentMethod
+        : navigateToBpdOnboardingNoPaymentMethods;
+      yield call(nextAction);
       yield put(bpdOnboardingCompleted());
     } else {
-      yield put(NavigationActions.back());
+      yield call(navigateBack);
     }
   }
 }

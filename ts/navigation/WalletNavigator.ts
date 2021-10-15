@@ -3,7 +3,11 @@ import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
-import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
+import {
+  BpdDetailsNavigator,
+  BpdIBANNavigator,
+  BpdOnboardingNavigator
+} from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import {
   CgnActivationNavigator,
@@ -143,8 +147,14 @@ const bonusVacanzeConfigMap = bonusVacanzeEnabled
 
 const bpdConfigMap = bpdEnabled
   ? {
-      [BPD_ROUTES.MAIN]: {
-        screen: BpdNavigator
+      [BPD_ROUTES.ONBOARDING.MAIN]: {
+        screen: BpdOnboardingNavigator
+      },
+      [BPD_ROUTES.IBAN_MAIN]: {
+        screen: BpdIBANNavigator
+      },
+      [BPD_ROUTES.DETAILS_MAIN]: {
+        screen: BpdDetailsNavigator
       },
       [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
         screen: WalletAddBancomatNavigator

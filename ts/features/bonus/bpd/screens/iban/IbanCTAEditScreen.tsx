@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   goBack: () => navigateBack(),
   navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
-    dispatch(navigateToBpdDetails(bpdPeriod));
+    navigateToBpdDetails(bpdPeriod);
     dispatch(navigationHistoryPop(1));
   }
 });

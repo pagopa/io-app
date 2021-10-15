@@ -68,7 +68,7 @@ export function* bpdStartOnboardingWorker() {
 
   // go to the loading page (if I'm not on that screen)
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
-    yield put(navigateToBpdOnboardingLoadActivationStatus());
+    yield call(navigateToBpdOnboardingLoadActivationStatus);
 
     if (currentRoute.value !== ROUTES.WALLET_HOME) {
       yield put(navigationHistoryPop(1));
@@ -84,14 +84,14 @@ export function* bpdStartOnboardingWorker() {
     // Refresh the wallets to prevent that added cards are not visible
     yield put(fetchWalletsRequest());
 
-    yield put(navigateToBpdOnboardingInformationTos());
+    yield call(navigateToBpdOnboardingInformationTos);
     yield put(navigationHistoryPop(1));
 
     // wait for the user that choose to continue
     yield take(bpdUserActivate);
 
     // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-    yield put(navigateToBpdOnboardingDeclaration());
+    yield call(navigateToBpdOnboardingDeclaration);
     yield put(navigationHistoryPop(1));
   }
 

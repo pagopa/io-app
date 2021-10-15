@@ -18,7 +18,6 @@ import {
   bpdTransactionsLoad
 } from "../../../../store/actions/transactions";
 import { AwardPeriodId } from "../../../../store/actions/periods";
-import { navigateToBpdDetails } from "../../../../navigation/actions";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 
 // Be sure that navigation is unmocked
@@ -216,12 +215,13 @@ describe("BpdTransactionsScreen", () => {
   });
   it("should show the BpdAvailableTransactionsScreen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.none", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success()
     ];
+    // TODO: this is needed?
+    // navigateToBpdDetails({
+    //   awardPeriodId: 1 as AwardPeriodId
+    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -244,13 +244,15 @@ describe("BpdTransactionsScreen", () => {
   });
   it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.noneLoading", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId)
     ];
+
+    // TODO: This is needed?
+    // navigateToBpdDetails({
+    //   awardPeriodId: 1 as AwardPeriodId
+    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -315,9 +317,6 @@ describe("BpdTransactionsScreen", () => {
       .mockReturnValue(pot.noneError({} as Error));
 
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId),
@@ -326,6 +325,11 @@ describe("BpdTransactionsScreen", () => {
         error: {} as Error
       })
     ];
+
+    // TODO: This is needed?
+    // navigateToBpdDetails({
+    //   awardPeriodId: 1 as AwardPeriodId
+    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -350,9 +354,6 @@ describe("BpdTransactionsScreen", () => {
   });
   it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.someLoading", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId),
@@ -373,6 +374,11 @@ describe("BpdTransactionsScreen", () => {
       } as BpdTransactions),
       bpdTransactionsLoad.request(1 as AwardPeriodId)
     ];
+
+    // TODO: This is needed?
+    // navigateToBpdDetails({
+    //   awardPeriodId: 1 as AwardPeriodId
+    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -438,9 +444,6 @@ describe("BpdTransactionsScreen", () => {
       .mockReturnValue(pot.someError([], {} as Error));
 
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId),
@@ -451,6 +454,11 @@ describe("BpdTransactionsScreen", () => {
         error: {} as Error
       })
     ];
+
+    // TODO: This is needed?
+    // navigateToBpdDetails({
+    //   awardPeriodId: 1 as AwardPeriodId
+    // } as BpdPeriodWithInfo),
 
     const finalState = reproduceSequence(
       {} as GlobalState,

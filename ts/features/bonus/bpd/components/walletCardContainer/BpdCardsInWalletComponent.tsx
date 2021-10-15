@@ -58,7 +58,7 @@ const BpdCardsInWalletContainer = (props: Props) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(bpdAllData.request()),
   navigateToCashbackDetails: (period: BpdPeriodWithInfo) =>
-    dispatch(navigateToBpdDetails(period))
+    navigateToBpdDetails(period)
 });
 
 const mapStateToProps = (state: GlobalState) => ({

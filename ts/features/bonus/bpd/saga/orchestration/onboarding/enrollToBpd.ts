@@ -22,7 +22,7 @@ function* enrollToBpdWorker() {
 
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
     // show the loading page while communicate with the server for the activation
-    yield put(navigateToBpdOnboardingLoadActivate());
+    yield call(navigateToBpdOnboardingLoadActivate);
     yield put(navigationHistoryPop(1));
   }
 

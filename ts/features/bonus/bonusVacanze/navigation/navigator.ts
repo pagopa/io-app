@@ -5,7 +5,6 @@ import EligibilityExpired from "../screens/activation/EligibilityExpired";
 import LoadActivateBonusScreen from "../screens/activation/LoadActivateBonusScreen";
 import ActivateBonusRequestScreen from "../screens/activation/request/ActivateBonusRequestScreen";
 import TimeoutActivationInfoScreen from "../screens/activation/TimeoutActivationInfoScreen";
-import ActiveBonusScreen from "../screens/ActiveBonusScreen";
 import AvailableBonusScreen from "../screens/AvailableBonusScreen";
 import BonusCTAEligibilityStartScreen from "../screens/BonusCTAEligibilityStartScreen";
 import BonusInformationScreen from "../screens/BonusInformationScreen";
