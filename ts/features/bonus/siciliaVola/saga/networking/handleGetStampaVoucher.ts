@@ -9,6 +9,7 @@ import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 import { getGenericError } from "../../../../../utils/errors";
 import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
+import { waitBackoffError } from "../../../../../utils/backoffError";
 
 const mapKinds: Record<number, string> = { 500: "InternalServerError" };
 
@@ -31,6 +32,7 @@ export function* handleGetStampaVoucher(
   const voucherFilename = "sicilia_vola";
 
   try {
+    yield call(waitBackoffError, svGetPdfVoucher.failure);
     const getStampaVoucherResult: SagaCallReturnType<typeof getStampaVoucher> =
       yield call(getStampaVoucher, {});
 
