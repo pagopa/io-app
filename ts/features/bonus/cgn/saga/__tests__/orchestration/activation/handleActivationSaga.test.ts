@@ -1,16 +1,15 @@
 import { testSaga } from "redux-saga-test-plan";
-import { some } from "fp-ts/lib/Option";
-import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
-import { navigationCurrentRouteSelector } from "../../../../../../../store/reducers/navigation";
+import NavigationService from "../../../../../../../navigation/NavigationService";
+import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
   navigateToCgnActivationTimeout
 } from "../../../../navigation/actions";
-import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
+import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
-import CGN_ROUTES from "../../../../navigation/routes";
+import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()
@@ -26,8 +25,8 @@ describe("cgnActivationWorker", () => {
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
       .next()
-      .select(navigationCurrentRouteSelector)
-      .next(some("ANY_ROUTE"))
+      .call(NavigationService.getCurrentRouteName)
+      .next("ANY_ROUTE")
       .call(navigateToCgnActivationLoading)
       .next()
       .put(navigationHistoryPop(1))
@@ -48,8 +47,8 @@ describe("cgnActivationWorker", () => {
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
       .next()
-      .select(navigationCurrentRouteSelector)
-      .next(some(CGN_ROUTES.ACTIVATION.LOADING))
+      .call(NavigationService.getCurrentRouteName)
+      .next(CGN_ROUTES.ACTIVATION.LOADING)
       .call(cgnActivationSaga)
       .next(returnedAction)
       .put(returnedAction)
@@ -66,8 +65,8 @@ describe("cgnActivationWorker", () => {
 
     testSaga(cgnActivationWorker, cgnActivationSaga)
       .next()
-      .select(navigationCurrentRouteSelector)
-      .next(some("ANY_ROUTE"))
+      .call(NavigationService.getCurrentRouteName)
+      .next("ANY_ROUTE")
       .call(navigateToCgnActivationLoading)
       .next()
       .put(navigationHistoryPop(1))

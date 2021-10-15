@@ -1,22 +1,21 @@
-import { testSaga } from "redux-saga-test-plan";
-import { some } from "fp-ts/lib/Option";
 import { right } from "fp-ts/lib/Either";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
-import {
-  bpdStartOnboardingWorker,
-  isBpdEnabled
-} from "../../orchestration/onboarding/startOnboarding";
+import { testSaga } from "redux-saga-test-plan";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
+import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import {
   navigateToBpdOnboardingDeclaration,
   navigateToBpdOnboardingInformationTos,
   navigateToBpdOnboardingLoadActivationStatus
 } from "../../../navigation/actions";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   bpdOnboardingAcceptDeclaration,
   bpdUserActivate
 } from "../../../store/actions/onboarding";
-import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
+import {
+  bpdStartOnboardingWorker,
+  isBpdEnabled
+} from "../../orchestration/onboarding/startOnboarding";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()
@@ -28,8 +27,8 @@ describe("bpdStartOnboardingWorker", () => {
 
     testSaga(bpdStartOnboardingWorker)
       .next()
-      .select(navigationCurrentRouteSelector)
-      .next(some(notLoadingScreenRoute))
+      .call(NavigationService.getCurrentRouteName)
+      .next(notLoadingScreenRoute)
       .call(navigateToBpdOnboardingLoadActivationStatus)
       .next()
       .put(navigationHistoryPop(1))

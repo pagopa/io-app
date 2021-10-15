@@ -1,10 +1,10 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { NavigationActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, select, take } from "redux-saga/effects";
+import { call, put, race, take } from "redux-saga/effects";
 import { ActionType, isActionOf } from "typesafe-actions";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationIneligible,
@@ -30,9 +30,6 @@ const mapEnumToNavigation = new Map<CgnActivationProgressEnum, () => void>([
 ]);
 
 type CgnActivationType = ReturnType<typeof cgnActivationSaga>;
-type NavigationCurrentRouteSelectorType = ReturnType<
-  typeof navigationCurrentRouteSelector
->;
 
 // Get the next activation steps from the saga call function based on status ENUM
 const getNextNavigationStep = (
@@ -48,13 +45,11 @@ export const isLoadingScreen = (screenName: string) =>
   screenName === CGN_ROUTES.ACTIVATION.LOADING;
 
 export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
-  const currentRoute: NavigationCurrentRouteSelectorType = yield select(
-    navigationCurrentRouteSelector
-  );
-  if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
+  if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
     // show the loading page for the CGN activation
     yield call(navigateToCgnActivationLoading);
-    yield put(navigationHistoryPop(1));
   }
 
   const progress = yield call(cgnActivationSaga);

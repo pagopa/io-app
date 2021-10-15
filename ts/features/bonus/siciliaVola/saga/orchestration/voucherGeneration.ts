@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
-import { call, select } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
+import NavigationService from "../../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -8,7 +9,6 @@ import {
   navigateBack,
   navigateToWorkunitGenericFailureScreen
 } from "../../../../../store/actions/navigation";
-import { navigationCurrentRouteSelector } from "../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
 import SV_ROUTES from "../../navigation/routes";
@@ -48,13 +48,12 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
     sagaExecution
   );
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
-  const route = currentRoute.toUndefined();
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
   if (
     // if the activation started from the CTA -> go back
-    route === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+    currentRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   ) {
     yield call(navigateBack);
   }
