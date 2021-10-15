@@ -4,7 +4,7 @@ import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/nav
 import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
 import BpdNavigator from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
-import CgnNavigator, {
+import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
   CgnEYCAActivationNavigator

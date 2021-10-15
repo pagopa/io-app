@@ -42,7 +42,7 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
 
   const initialRouteRequireBack =
     initialScreenName !== undefined &&
-    (initialScreenName === CGN_ROUTES.CTA_START_CGN ||
+    (initialScreenName === CGN_ROUTES.ACTIVATION.CTA_START_CGN ||
       (res === "cancel" &&
         initialScreenName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST));
 
