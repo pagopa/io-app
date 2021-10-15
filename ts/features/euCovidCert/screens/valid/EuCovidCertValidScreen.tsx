@@ -295,13 +295,11 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToQrCodeFullScreen: (qrCodeContent: string) =>
-    dispatch(navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent })),
+    navigateToEuCovidCertificateQrCodeFullScreen({ qrCodeContent }),
   navigateToMarkdown: (markdownDetails: string) =>
-    dispatch(
-      navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
-    )
+    navigateToEuCovidCertificateMarkdownDetailsScreen({ markdownDetails })
 });
 const mapStateToProps = (state: GlobalState) => ({
   euCovidCert: euCovidCertCurrentSelector(state)

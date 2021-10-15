@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { NavigationActions, NavigationInjectedProps } from "react-navigation";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { euCovidCertificateEnabled } from "../../config";
@@ -16,7 +16,6 @@ import {
   navigateBack,
   navigateToMessageDetailScreenAction
 } from "../../store/actions/navigation";
-import { useIODispatch } from "../../store/hooks";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -67,18 +66,16 @@ const getLoadingState = (
 /**
  * Choose the screen where to navigate, based on the message.content.eu_covid_cert
  * @param message
- * @param dispatch
  */
 const navigateToScreenHandler = (
-  message: CreatedMessageWithContentAndAttachments,
-  dispatch: ReturnType<typeof useIODispatch>
+  message: CreatedMessageWithContentAndAttachments
 ) => {
   const navigateToEuCovidCertificate = (
     authCode: EUCovidCertificateAuthCode,
     messageId: string
   ) => {
     navigateBack();
-    dispatch(navigateToEuCovidCertificateDetailScreen({ authCode, messageId }));
+    navigateToEuCovidCertificateDetailScreen({ authCode, messageId });
   };
 
   const navigateToDetails = (messageId: string) => {
@@ -106,12 +103,11 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
   const loadingState = getLoadingState(props);
   const isLoading = !pot.isError(loadingState);
   const { loadMessages } = props;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // all the messages data are ready, exit condition, navigate to the right screen
     if (isStrictSome(loadingState) && loadingState.value !== undefined) {
-      navigateToScreenHandler(loadingState.value, dispatch);
+      navigateToScreenHandler(loadingState.value);
       return;
     }
     if (firstRendering.current) {
@@ -119,7 +115,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
       // eslint-disable-next-line functional/immutable-data
       firstRendering.current = false;
     }
-  }, [loadingState, loadMessages, dispatch]);
+  }, [loadingState, loadMessages]);
 
   return (
     <LoadingErrorComponent
