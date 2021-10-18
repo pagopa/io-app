@@ -27,9 +27,10 @@ import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/v
 import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
 import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVoucher";
 import { showToast } from "../../../../../utils/showToast";
+import { SvVoucherId } from "../../types/SvVoucher";
+import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -59,19 +60,6 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
       _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ko"))
     );
   }, [pdfVoucherState]);
-
-  const backButtonProps = {
-    primary: false,
-    bordered: true,
-    onPress: props.completed,
-    title: I18n.t("global.buttons.exit")
-  };
-
-  const continueButtonProps = {
-    primary: true,
-    onPress: props.stampaVoucher,
-    title: I18n.t("global.genericSave")
-  };
 
   if (isNone(maybeVoucherRequest)) {
     props.failure("Voucher request is None");
@@ -104,6 +92,18 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   switch (voucherGenerated.kind) {
     // TODO: manage conflict and other state when the final swagger is available
     case "success":
+      const backButtonProps = {
+        primary: false,
+        bordered: true,
+        onPress: props.completed,
+        title: I18n.t("global.buttons.exit")
+      };
+
+      const continueButtonProps = {
+        primary: true,
+        onPress: () => props.stampaVoucher(voucherGenerated.value.id),
+        title: I18n.t("global.genericSave")
+      };
       return (
         <BaseScreenComponent
           goBack={false}
@@ -145,7 +145,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
     dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
-  stampaVoucher: () => dispatch(svGetPdfVoucher.request())
+  stampaVoucher: (voucherId: SvVoucherId) =>
+    dispatch(svGetPdfVoucher.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),

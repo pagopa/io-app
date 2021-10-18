@@ -141,7 +141,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         onExit={dismiss}
         onSaveVoucher={() => {
           dismiss();
-          props.stampaVoucher();
+          props.stampaVoucher(selectedVoucher.id);
         }}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
@@ -275,7 +275,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
     dispatch(svVoucherDetailGet.request(voucherId)),
-  stampaVoucher: () => dispatch(svGetPdfVoucher.request())
+  stampaVoucher: (voucherId: SvVoucherId) =>
+    dispatch(svGetPdfVoucher.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),

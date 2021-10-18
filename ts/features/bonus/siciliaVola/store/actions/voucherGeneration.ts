@@ -17,6 +17,7 @@ import {
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
+import { SvVoucherId } from "../../types/SvVoucher";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -171,7 +172,7 @@ export const svGetPdfVoucher = createAsyncAction(
   "SV_GENERATE_GET_VOUCHER_PDF_REQUEST",
   "SV_GENERATE_GET_VOUCHER_PDF_SUCCESS",
   "SV_GENERATE_GET_VOUCHER_PDF_FAILURE"
-)<void, string, NetworkError>();
+)<SvVoucherId, string, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
