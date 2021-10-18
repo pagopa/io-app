@@ -5,7 +5,6 @@ import { Dispatch } from "redux";
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
-import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -63,8 +62,7 @@ const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
         text: I18n.t(
           "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ko"
         ),
-        style: "default",
-        onPress: constNull
+        style: "default"
       }
     ]
   );
