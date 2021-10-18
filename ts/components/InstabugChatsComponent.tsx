@@ -7,8 +7,8 @@ import { openInstabugReplies } from "../boot/configureInstabug";
 import I18n from "../i18n";
 import { instabugReportOpened } from "../store/actions/debug";
 import { Dispatch } from "../store/actions/types";
-import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
+import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
@@ -76,25 +76,24 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
   public render() {
     // we render the chat icon if the user has previous or new chats with the support team
     const canRenderChatsIcon = this.state.hasChats || this.props.badge > 0;
+    if (!canRenderChatsIcon) {
+      return null;
+    }
     const accessibilityHint = this.getUnreadMessagesDescription();
     return (
-      <React.Fragment>
-        {canRenderChatsIcon && (
-          <View>
-            <ButtonDefaultOpacity
-              onPress={this.handleIBChatPress}
-              transparent={true}
-              accessibilityLabel={I18n.t(
-                "global.accessibility.chat.description"
-              )}
-              accessibilityHint={accessibilityHint}
-            >
-              <IconFont name="io-chat" color={this.props.color} />
-            </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        onPress={this.handleIBChatPress}
+        transparent={true}
+        accessibilityLabel={I18n.t("global.accessibility.chat.description")}
+        accessibilityHint={accessibilityHint}
+      >
+        <IconFont name="io-chat" color={this.props.color} />
+        {this.props.badge > 0 && (
+          <View style={{ position: "absolute", left: 6, bottom: 10 }}>
             <CustomBadge badgeValue={this.props.badge} />
           </View>
         )}
-      </React.Fragment>
+      </ButtonDefaultOpacity>
     );
   }
 }
