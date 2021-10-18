@@ -7,11 +7,6 @@ import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 
-const mapKinds: Record<number, string> = {
-  400: "wrongFormat",
-  500: "internalServerError"
-};
-
 /**
  * Handle the voucher revocation
  * @param postAnnullaVoucher
@@ -37,16 +32,16 @@ export function* handleVoucherRevocation(
         yield put(svVoucherRevocation.success());
         return;
       }
-      if (mapKinds[postAnnullaVoucherResult.value.status] !== undefined) {
-        yield put(
-          svVoucherRevocation.failure({
-            ...getGenericError(
-              new Error(mapKinds[postAnnullaVoucherResult.value.status])
+      yield put(
+        svVoucherRevocation.failure({
+          ...getGenericError(
+            new Error(
+              `response status ${postAnnullaVoucherResult.value.status}`
             )
-          })
-        );
-        return;
-      }
+          )
+        })
+      );
+      return;
     }
     yield put(
       svVoucherRevocation.failure({
