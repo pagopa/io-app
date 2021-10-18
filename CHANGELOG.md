@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.36.0-rc.1](https://github.com/pagopa/io-app/compare/1.36.0-rc.0...1.36.0-rc.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* [[IA-280](https://pagopa.atlassian.net/browse/IA-280)] Push notification token is not sent to the backend on first run after session invalid detected ([#3423](https://github.com/pagopa/io-app/issues/3423)) ([b34158f](https://github.com/pagopa/io-app/commit/b34158fc76aab98d6b424f0dcf1194f848a641aa))
+
+
+### Chores
+
+* [[IA-290](https://pagopa.atlassian.net/browse/IA-290)] Enable Paypal in DigitalPayment list ([#3430](https://github.com/pagopa/io-app/issues/3430)) ([ade1000](https://github.com/pagopa/io-app/commit/ade100071f417a2022ea50559e984803e3f92655))
+* [[IA-291](https://pagopa.atlassian.net/browse/IA-291)] Payment from message has to consider payee fiscal code ([#3432](https://github.com/pagopa/io-app/issues/3432)) ([59cd5ad](https://github.com/pagopa/io-app/commit/59cd5ad982b50c1e0c0b414458aa9b88b43ccd4c))
+* [[IAI-74](https://pagopa.atlassian.net/browse/IAI-74)] Removes serviceMetadata load from CDN ([#3424](https://github.com/pagopa/io-app/issues/3424)) ([0b62638](https://github.com/pagopa/io-app/commit/0b6263873b75da2cc8020f4e2f854d6e798d97ba))
+
 ## [1.36.0-rc.0](https://github.com/pagopa/io-app/compare/1.35.0-rc.2...1.36.0-rc.0) (2021-10-13)
 
 

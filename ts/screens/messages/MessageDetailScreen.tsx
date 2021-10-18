@@ -6,7 +6,6 @@ import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
@@ -14,7 +13,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { loadServiceMetadata } from "../../store/actions/content";
 import {
   loadMessageWithRelations,
   setMessageReadState
@@ -22,14 +20,16 @@ import {
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import {
   isMessageRead,
   messagesStatusSelector
 } from "../../store/reducers/entities/messages/messagesStatus";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
-import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import {
+  serviceByIdSelector,
+  serviceMetadataByIdSelector
+} from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
@@ -127,7 +127,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a loadServiceMetadata request to refresh the service metadata
-    this.props.loadServiceMetadata(service.service_id);
     this.props.navigateToServiceDetailsScreen({
       service
     });
@@ -223,7 +222,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private renderFullState = (
     message: CreatedMessageWithContentAndAttachments
   ) => {
-    const { potServiceDetail, potServiceMetadata, paymentsByRptId } =
+    const { potServiceDetail, maybeServiceMetadata, paymentsByRptId } =
       this.props;
 
     return (
@@ -231,7 +230,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         message={message}
         paymentsByRptId={paymentsByRptId}
         potServiceDetail={potServiceDetail}
-        potServiceMetadata={potServiceMetadata}
+        serviceMetadata={maybeServiceMetadata}
         onServiceLinkPress={
           pot.isSome(potServiceDetail)
             ? () => this.onServiceLinkPressHandler(potServiceDetail.value)
@@ -274,7 +273,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !pot.isLoading(potServiceDetail)) {
       refreshService(potMessage.value.sender_service_id);
     }
-    this.loadServicesMetadata();
     this.setMessageReadState();
   }
 
@@ -288,17 +286,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       if (!pot.isLoading(potServiceDetail)) {
         refreshService(potMessage.value.sender_service_id);
       }
-      this.loadServicesMetadata();
-    }
-  }
-
-  // force load service metadata to get information about email & phone (needed in MessageDetailData)
-  // the last version is preferred (fresh updates)
-  private loadServicesMetadata() {
-    if (!pot.isLoading(this.props.potServiceMetadata)) {
-      pot.map(this.props.potMessage, m => {
-        this.props.loadServiceMetadata(m.sender_service_id);
-      });
     }
   }
 
@@ -340,11 +327,11 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     .getOrElse(pot.none);
 
   // Map the potential message to the potential service
-  const potServiceMetadata = pot.getOrElse(
+  const maybeServiceMetadata = pot.getOrElse(
     pot.mapNullable(potMessage, m =>
       serviceMetadataByIdSelector(m.sender_service_id)(state)
     ),
-    pot.none
+    undefined
   );
 
   return {
@@ -352,7 +339,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     isRead,
     potMessage,
     potServiceDetail,
-    potServiceMetadata,
+    maybeServiceMetadata,
     paymentsByRptId: paymentsByRptIdSelector(state)
   };
 };
@@ -360,8 +347,6 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadServiceMetadata: (serviceId: string) =>
-    dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
   loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
     dispatch(loadMessageWithRelations.request(meta)),
   setMessageReadState: (messageId: string, isRead: boolean) =>

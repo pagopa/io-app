@@ -116,10 +116,10 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         pagingEnabled={true}
         onScroll={event => {
           const currentIndex = Platform.select({
-            ios: Math.floor(
+            ios: Math.round(
               event.nativeEvent.contentOffset.x / Dimensions.get("window").width
             ),
-            default: Math.floor(
+            default: Math.round(
               roundToThirdDecimal(event.nativeEvent.contentOffset.x) /
                 roundToThirdDecimal(Dimensions.get("window").width)
             )
