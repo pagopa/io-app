@@ -61,7 +61,9 @@ const generateMessagesStateArchivedArray = (
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(messageState => messageState.isArchived)
+      _.filter(messageState => messageState.clientStatus.isArchived).map(
+        _ => _.message
+      )
     ),
     []
   );
@@ -89,7 +91,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
       );
       const allMessagesIdsArray = messagesStateArchived.map(_ =>
         pot
-          .toOption(_.message)
+          .toOption(_)
           .map(m => m.id)
           .getOrElse("NOT_FOUND")
       );

@@ -13,11 +13,7 @@ import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-export type MessageState = {
-  message: pot.Pot<CreatedMessageWithContentAndAttachments, string | undefined>;
-};
-
-export type PotentialMessage = pot.Pot<
+export type MessageState = pot.Pot<
   CreatedMessageWithContentAndAttachments,
   string | undefined
 >;
@@ -37,9 +33,7 @@ const reducer = (
     case getType(loadMessage.request):
       return {
         ...state,
-        [action.payload]: {
-          message: pot.noneLoading
-        }
+        [action.payload]: pot.noneLoading
       };
 
     case getType(loadMessage.success): {
@@ -51,7 +45,7 @@ const reducer = (
       }
       return {
         ...state,
-        [id]: { ...prevState, message: pot.some(action.payload) }
+        [id]: pot.some(action.payload)
       };
     }
     case getType(loadMessage.failure): {
@@ -63,10 +57,7 @@ const reducer = (
       }
       return {
         ...state,
-        [id]: {
-          ...prevState,
-          message: pot.noneError(action.payload.error.message)
-        }
+        [id]: pot.noneError(action.payload.error.message)
       };
     }
     case getType(removeMessages): {

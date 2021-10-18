@@ -68,7 +68,9 @@ const generateMessagesStateNotArchivedArray = (
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(messageState => messageState.isArchived === false)
+      _.filter(
+        messageState => messageState.clientStatus.isArchived === false
+      ).map(_ => _.message)
     ),
     []
   );
@@ -98,7 +100,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       );
       const allMessagesIdsArray = messagesStateNotArchived.map(_ =>
         pot
-          .toOption(_.message)
+          .toOption(_)
           .map(m => m.id)
           .getOrElse("NOT_FOUND")
       );

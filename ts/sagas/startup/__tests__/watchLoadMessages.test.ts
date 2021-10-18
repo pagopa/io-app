@@ -95,12 +95,8 @@ describe("loadMessages test plan", () => {
           .select(messagesStateByIdSelector)
           // Return an object as messagesByIdSelectors response with the first two messages
           .next({
-            [messageId_1]: {
-              message: pot.some(successPayload.messages[0]) as any
-            },
-            [messageId_2]: {
-              message: pot.some(successPayload.messages[1]) as any
-            }
+            [messageId_1]: pot.some(successPayload.messages[0]) as any,
+            [messageId_2]: pot.some(successPayload.messages[1]) as any
           } as ReturnType<typeof messagesStateByIdSelector>)
           .select(servicesByIdSelector)
           .next({})

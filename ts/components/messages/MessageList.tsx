@@ -106,18 +106,16 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (_: MessageState, index: number): string =>
   pot
-    .toOption(_.message)
+    .toOption(_)
     .map(m => m.id)
     .getOrElse(`${index}`);
 
 const getItemHeight = (messageState: MessageState): number => {
-  const message = messageState.message;
-
-  if (pot.isLoading(message)) {
+  if (pot.isLoading(messageState)) {
     return ITEM_LOADING_HEIGHT;
   }
 
-  return pot.isSome(message) && messageNeedsCTABar(message.value)
+  return pot.isSome(messageState) && messageNeedsCTABar(messageState.value)
     ? ITEM_WITH_CTABAR_HEIGHT
     : ITEM_WITHOUT_CTABAR_HEIGHT;
 };
@@ -219,9 +217,7 @@ class MessageList extends React.Component<Props, State> {
     return null;
   }
 
-  getServicePot(
-    message?: MessageState["message"]
-  ): pot.Pot<ServicePublic, Error> {
+  getServicePot(message?: MessageState): pot.Pot<ServicePublic, Error> {
     if (message !== undefined && pot.isSome(message)) {
       return (
         this.props.servicesById[message.value.sender_service_id] || pot.none
@@ -231,7 +227,8 @@ class MessageList extends React.Component<Props, State> {
   }
 
   private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
-    const { message: potMessage, isRead } = info.item;
+    const { message: potMessage, clientStatus } = info.item;
+    const { isRead } = clientStatus;
     const { paymentsByRptId, onPressItem } = this.props;
     const potService = this.getServicePot(potMessage);
     const isServiceLoading = potService
@@ -296,7 +293,7 @@ class MessageList extends React.Component<Props, State> {
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;
     const lastMessageId = pot
-      .toOption(messageStates[lastIndex]?.message)
+      .toOption(messageStates[lastIndex])
       .map(m => m.id)
       .getOrElse("not-found");
     if (id === lastMessageId) {

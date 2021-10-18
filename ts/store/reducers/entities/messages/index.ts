@@ -53,7 +53,9 @@ export const lexicallyOrderedMessagesIds = createSelector(
 
 // this type is need to combine message data to message status. Note
 // that message status is a data held only by the app (isRead / isArchived)
-export type MessagesStateAndStatus = MessageState & MessageStatus;
+export type MessagesStateAndStatus = { message: MessageState } & {
+  clientStatus: MessageStatus;
+};
 /**
  * A selector that using the inversely lexically ordered messages IDs
  * returned by lexicallyOrderedMessagesIds returns an array of the
@@ -71,13 +73,13 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
           if (message === undefined) {
             return acc;
           }
-          const messageStatus =
+          const clientStatus =
             messagesStatus[messageId] || EMPTY_MESSAGE_STATUS;
           return [
             ...acc,
             {
-              ...message,
-              ...messageStatus
+              message,
+              clientStatus
             }
           ];
         },
@@ -92,7 +94,7 @@ export const messagesUnreadedAndUnarchivedSelector = createSelector(
     pot.getOrElse(
       pot.map(potMessagesState, _ =>
         _.filter(
-          messageState => !messageState.isRead && !messageState.isArchived
+          ({ clientStatus }) => !clientStatus.isRead && !clientStatus.isArchived
         )
       ),
       []

@@ -49,7 +49,7 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
         _.filter(messageState =>
           pot.getOrElse(
             pot.map(
-              messageState.message,
+              messageState,
               message =>
                 // Search in message properties
                 messageContainsText(message, searchText) ||
@@ -95,10 +95,14 @@ class MessagesSearch extends React.PureComponent<Props, State> {
       potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
     });
 
+    const potOfMessageStates = pot.map(messagesState, _ =>
+      _.map(_ => _.message)
+    );
+
     // Start filtering messages
     const filteredMessageStates =
       await generateMessagesStateMatchingSearchTextArrayAsync(
-        messagesState,
+        potOfMessageStates,
         servicesById,
         searchText
       );
@@ -121,10 +125,14 @@ class MessagesSearch extends React.PureComponent<Props, State> {
         potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
       });
 
+      const potOfMessageStates = pot.map(messagesState, _ =>
+        _.map(_ => _.message)
+      );
+
       // Start filtering messages
       const filteredMessageStates =
         await generateMessagesStateMatchingSearchTextArrayAsync(
-          messagesState,
+          potOfMessageStates,
           servicesById,
           searchText
         );

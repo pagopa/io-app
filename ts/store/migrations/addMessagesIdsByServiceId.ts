@@ -19,8 +19,8 @@ export const addMessagesIdsByServiceId = (
   ).reduce<MessagesIdsByServiceId>((accumulator, messageId) => {
     const messageState = messageStatesById[messageId];
 
-    if (messageState !== undefined && pot.isSome(messageState.message)) {
-      const serviceId = messageState.message.value.sender_service_id;
+    if (messageState !== undefined && pot.isSome(messageState)) {
+      const serviceId = messageState.value.sender_service_id;
       const messagesIds = accumulator[serviceId];
       const newMessagesIds =
         messagesIds === undefined ? [messageId] : messagesIds.concat(messageId);

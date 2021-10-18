@@ -35,7 +35,7 @@ const generateSections = (
   // eslint-disable-next-line
   messagesState
     .reduce<Array<MessageAgendaItem>>((accumulator, messageState) => {
-      const { isRead } = messageState;
+      const { isRead } = messageState.clientStatus;
       const message = pot.toUndefined(messageState.message);
       if (message && isCreatedMessageWithContentAndDueDate(message)) {
         return [
@@ -128,8 +128,10 @@ const baseMeta = {
   time_to_live: 3600 as TimeToLiveSeconds
 };
 const baseMessage = {
-  isRead: true,
-  isArchived: false
+  clientStatus: {
+    isRead: true,
+    isArchived: false
+  }
 };
 
 const messagesState: Array<MessagesStateAndStatus> = [

@@ -119,9 +119,9 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const isRead = isMessageRead(messagesStatus, messageId);
   const paymentsByRptId = paymentsByRptIdSelector(state);
   const goBack = () => ownProps.navigation.goBack();
-  const potMessage = fromNullable(messageStateByIdSelector(messageId)(state))
-    .map(_ => _.message)
-    .getOrElse(pot.none);
+  const potMessage = fromNullable(
+    messageStateByIdSelector(messageId)(state)
+  ).getOrElse(pot.none);
   const maybeServiceId = pot.toOption(potMessage).map(_ => _.sender_service_id);
   const maybeService = maybeServiceId
     .map(_ => serviceByIdSelector(_)(state))

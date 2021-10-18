@@ -139,9 +139,7 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: {
-              message: mockPotMessage
-            }
+            messageId: mockPotMessage
           }
         }
       }
@@ -162,9 +160,7 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: {
-              message: mockEUCovidMessage
-            }
+            messageId: mockEUCovidMessage
           }
         }
       }
@@ -266,9 +262,7 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: {
-              message: pot.noneError("Error")
-            }
+            messageId: pot.noneError("Error")
           }
         }
       }

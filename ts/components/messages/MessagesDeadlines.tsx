@@ -140,7 +140,8 @@ const generateSections = (
       _ =>
         // eslint-disable-next-line
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { message, isArchived, isRead } = messageState;
+          const { isArchived, isRead } = messageState.clientStatus;
+          const { message } = messageState;
           if (
             !isArchived &&
             pot.isSome(message) &&

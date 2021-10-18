@@ -31,9 +31,9 @@ export function* loadMessage(
     yield select(messageStateByIdSelector(messageId));
 
   // If we already have the message in the store just return it
-  if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
+  if (cachedMessage !== undefined && pot.isSome(cachedMessage)) {
     return right<Error, CreatedMessageWithContentAndAttachments>(
-      cachedMessage.message.value
+      cachedMessage.value
     );
   }
   try {
