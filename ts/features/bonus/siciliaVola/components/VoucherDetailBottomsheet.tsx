@@ -9,6 +9,7 @@ type Props = {
   qrCode: string;
   barCode: string;
   onExit?: () => void;
+  onSaveVoucher: () => void;
 };
 
 const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
@@ -24,8 +25,7 @@ const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
         }}
         rightButton={{
           primary: true,
-          // TODO: Request the download of the voucher in pdf format
-          onPress: () => true,
+          onPress: props.onSaveVoucher,
           title: I18n.t("global.genericSave"),
           onPressWithGestureHandler: true
         }}
