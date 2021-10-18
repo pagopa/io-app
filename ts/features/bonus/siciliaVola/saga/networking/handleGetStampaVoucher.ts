@@ -36,21 +36,22 @@ export function* handleGetStampaVoucher(
     if (getStampaVoucherResult.isRight()) {
       if (getStampaVoucherResult.value.status === 200) {
         if (fPath) {
-          RNFS.writeFile(
-            `${fPath}/${voucherFilename}.pdf`,
-            getStampaVoucherResult.value.value.data,
-            "base64"
-          )
-            .then(function* () {
-              yield put(svGetPdfVoucher.success(fPath));
-            })
-            .catch(function* () {
-              yield put(
-                svPossibleVoucherStateGet.failure({
-                  ...getGenericError(new Error("error during saving voucher"))
-                })
-              );
-            });
+          try {
+            yield call(
+              RNFS.writeFile,
+              `${fPath}/${voucherFilename}.pdf`,
+              getStampaVoucherResult.value.value.data,
+              "base64"
+            );
+            yield put(svGetPdfVoucher.success(fPath));
+          } catch (_) {
+            yield put(
+              svPossibleVoucherStateGet.failure({
+                ...getGenericError(new Error("error during saving voucher"))
+              })
+            );
+          }
+
           return;
         }
       }
