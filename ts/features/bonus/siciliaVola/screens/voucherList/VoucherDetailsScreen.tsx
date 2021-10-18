@@ -139,6 +139,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
 
+  // The check isReady(revocationState) is needed in order to avoid glitch while change screen
   if (isLoading(revocationState) || isReady(revocationState)) {
     return (
       <BaseScreenComponent
