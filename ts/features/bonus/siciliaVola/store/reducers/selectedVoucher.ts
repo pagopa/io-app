@@ -50,7 +50,8 @@ const reducer = (
       return {
         ...state,
         voucherCode: action.payload,
-        revocation: remoteUndefined
+        revocation: remoteUndefined,
+        voucherPdf: remoteUndefined
       };
     case getType(svVoucherRevocation.request):
       return { ...state, revocation: remoteLoading };
