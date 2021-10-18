@@ -21,7 +21,7 @@ export function* watchLoadMessageWithRelationsSaga(
   >
 ): Generator<Effect, void, any> {
   // Extract the message id from the action payload
-  const messageId = messageWithRelationsLoadRequest.payload;
+  const messageId = messageWithRelationsLoadRequest.payload.id;
 
   try {
     const messageOrError: SagaCallReturnType<typeof loadMessage> = yield call(
