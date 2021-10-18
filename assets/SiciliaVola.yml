@@ -701,19 +701,29 @@ paths:
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/stampaVoucher:
-    get:
+    post:
       tags:
         - "securedBeneficiario"
       operationId: "getPdf"
-      produces:
-        - "application/json"
-      requestBody:
-        $ref: '#/definitions/VoucherBean'
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "VoucherCodeInputBean"
+          required: true
+          schema:
+            $ref: "#/definitions/VoucherCodeInputBean"
       responses:
         200:
           description: "a base64 string representing the image to be shown"
           schema:
             $ref: "#/definitions/PdfData"
+        400:
+          description: "Validazioni non superate"
+          schema:
+            $ref: "#/definitions/ProblemBean"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/statiVoucher:

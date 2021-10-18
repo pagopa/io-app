@@ -1,9 +1,9 @@
 import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
-import { SessionManager } from "../../../../../utils/SessionManager";
-import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
+import { SessionManager } from "../../../../../utils/SessionManager";
+import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
@@ -18,8 +18,8 @@ export function* handleGetStampaVoucher(
   getStampaVoucher: ReturnType<
     typeof BackendSiciliaVolaClient
   >["getStampaVoucher"],
-  __: SessionManager<MitVoucherToken>,
-  _: ActionType<typeof svGetPdfVoucher.request>
+  svSessionManager: SessionManager<MitVoucherToken>,
+  action: ActionType<typeof svGetPdfVoucher.request>
 ) {
   const fPath = Platform.select({
     ios: RNFS.DocumentDirectoryPath,
@@ -30,30 +30,31 @@ export function* handleGetStampaVoucher(
 
   try {
     yield call(waitBackoffError, svGetPdfVoucher.failure);
-    const getStampaVoucherResult: SagaCallReturnType<typeof getStampaVoucher> =
-      yield call(getStampaVoucher, {});
+    const request = svSessionManager.withRefresh(
+      getStampaVoucher({ codiceVoucher: action.payload })
+    );
+    const getStampaVoucherResult: SagaCallReturnType<typeof request> =
+      yield call(request);
 
     if (getStampaVoucherResult.isRight()) {
-      if (getStampaVoucherResult.value.status === 200) {
-        if (fPath) {
-          try {
-            yield call(
-              RNFS.writeFile,
-              `${fPath}/${voucherFilename}.pdf`,
-              getStampaVoucherResult.value.value.data,
-              "base64"
-            );
-            yield put(svGetPdfVoucher.success(fPath));
-          } catch (_) {
-            yield put(
-              svPossibleVoucherStateGet.failure({
-                ...getGenericError(new Error("error during saving voucher"))
-              })
-            );
-          }
-
-          return;
+      if (getStampaVoucherResult.value.status === 200 && fPath) {
+        try {
+          yield call(
+            RNFS.writeFile,
+            `${fPath}/${voucherFilename}.pdf`,
+            getStampaVoucherResult.value.value.data,
+            "base64"
+          );
+          yield put(svGetPdfVoucher.success(fPath));
+        } catch (_) {
+          yield put(
+            svPossibleVoucherStateGet.failure({
+              ...getGenericError(new Error("error during saving voucher"))
+            })
+          );
         }
+
+        return;
       }
 
       yield put(

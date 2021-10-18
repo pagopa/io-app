@@ -168,10 +168,11 @@ const GetStatiVoucher: GetStatiVoucherT = {
  *
  */
 const GetStampaVoucher: GetPdfT = {
-  method: "get",
+  method: "post",
   url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/stampaVoucher`,
   query: _ => ({}),
-  headers: ApiHeaderJson,
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getPdfDefaultDecoder()
 };
 
@@ -229,7 +230,12 @@ export const BackendSiciliaVolaClient = (
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
     getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
-    getStampaVoucher: createFetchRequestForApi(GetStampaVoucher, options),
+    getStampaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(GetStampaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode }),
     postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
       flip(
         withSiciliaVolaToken(
