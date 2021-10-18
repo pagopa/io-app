@@ -43,12 +43,13 @@ const reducer = (
       return { ...state, token: action.payload };
     case getType(notificationsInstallationTokenRegistered):
       return { ...state, registeredToken: action.payload };
-    // clear the state when the authentication is not longer valid
+    // clear registeredToken when the authentication is not longer valid
+    // IO backend will automatically delete it on the next user login
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutRequest): // even if the logout fails
     case getType(clearCache):
-      return getInitialState();
+      return { ...state, registeredToken: undefined };
     default:
       return state;
   }

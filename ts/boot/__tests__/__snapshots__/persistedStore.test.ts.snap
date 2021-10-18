@@ -27,9 +27,6 @@ Object {
       "kind": "PotNone",
     },
   },
-  "servicesMetadata": Object {
-    "byId": Object {},
-  },
 }
 `;
 
