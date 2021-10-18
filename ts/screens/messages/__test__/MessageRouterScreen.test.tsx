@@ -19,6 +19,7 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
+import { successPayload } from "../../../__mocks__/messages";
 
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
@@ -299,7 +300,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(loadMessages.success(["messageId"]));
+    routerScreen.store.dispatch(loadMessages.success(successPayload));
     routerScreen.store.dispatch(
       loadMessage.failure({ id: "messageId", error: new Error("An error") })
     );
@@ -316,7 +317,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(loadMessages.success(["notMessageId"]));
+    routerScreen.store.dispatch(loadMessages.success(successPayload));
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")

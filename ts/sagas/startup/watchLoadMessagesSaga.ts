@@ -22,6 +22,7 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 import { isDevEnv } from "../../utils/environment";
+import { enrichedToMessage } from "../../utils/messages";
 
 /**
  * A generator to load messages from the Backend.
@@ -61,9 +62,16 @@ function* loadMessages(
         yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
-        const responseItemsIds = response.value.value.items.map(_ => _.id);
+        const { items, next, prev } = response.value.value;
+        const pagination = { next, prev };
+        yield put(
+          loadMessagesAction.success({
+            messages: items.map(enrichedToMessage),
+            pagination
+          })
+        );
 
-        yield put(loadMessagesAction.success(responseItemsIds));
+        const responseItemsIds = response.value.value.items.map(_ => _.id);
 
         // Load already cached messages ids from the store
         const potCachedMessagesAllIds: ReturnType<

@@ -26,7 +26,7 @@ const reducer = (
       return pot.toLoading(state);
 
     case getType(loadMessages.success):
-      return pot.some(action.payload);
+      return pot.some(action.payload.messages.map(_ => _.id));
 
     case getType(loadMessages.failure):
       return pot.toError(state, action.payload.message);

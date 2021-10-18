@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (_: MessageState): string =>
+const keyExtractor = (_: MessageState, index: number): string =>
   pot
     .toOption(_.message)
     .map(m => m.id)
-    .getOrElse("not-found");
+    .getOrElse(`${index}`);
 
 const getItemHeight = (messageState: MessageState): number => {
   const message = messageState.message;

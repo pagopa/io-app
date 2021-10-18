@@ -12,6 +12,7 @@ import {
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
+import { Message } from "../../utils/messages";
 
 /**
  * Load a single message's details given its ID
@@ -36,11 +37,15 @@ export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
 )<string, CreatedMessageWithoutContent, Error>();
 
+export type MessagesPayload = {
+  messages: ReadonlyArray<Message>;
+  pagination: { next?: string; prev?: string };
+};
 export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_REQUEST",
   "MESSAGES_LOAD_SUCCESS",
   "MESSAGES_LOAD_FAILURE"
-)<void, ReadonlyArray<string>, Error>();
+)<void, MessagesPayload, Error>();
 
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
