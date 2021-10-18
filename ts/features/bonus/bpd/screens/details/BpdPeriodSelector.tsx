@@ -2,6 +2,7 @@ import { findIndex } from "fp-ts/lib/Array";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
  */
 const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
   const periodWithAmountList = pot.getOrElse(props.periodsWithAmount, []);
+  const [initialPeriod, setInitialperiod] = useState<number | undefined>();
   const constructPeriodList = () =>
     periodWithAmountList.map((periodWithAmount, i) => (
       <View
@@ -61,17 +63,27 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
       props.changeSelectPeriod(currentItem);
     });
 
-  const indexOfSelectedPeriod = findIndex(
+  useEffect(() => {
+    if (initialPeriod === undefined) {
+      setInitialperiod(
+        findIndex(
+          periodWithAmountList,
+          elem => elem.awardPeriodId === props.selectedPeriod?.awardPeriodId
+        ).getOrElse(0)
+      );
+    }
+  }, [
+    initialPeriod,
     periodWithAmountList,
-    elem => elem.awardPeriodId === props.selectedPeriod?.awardPeriodId
-  ).getOrElse(0);
+    props.selectedPeriod?.awardPeriodId
+  ]);
 
   return (
     <View style={[IOStyles.flex]}>
       {pot.isSome(props.periodsWithAmount) &&
         props.periodsWithAmount.value.length > 0 && (
           <HorizontalScroll
-            indexToScroll={indexOfSelectedPeriod}
+            indexToScroll={initialPeriod ?? 0}
             onCurrentElement={selectPeriod}
             cards={constructPeriodList()}
           />
