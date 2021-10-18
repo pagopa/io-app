@@ -49,9 +49,9 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
     // Spy on showModa
     const mySpy = jest.fn();
 
-    const ToBeTested: React.FunctionComponent<React.ComponentProps<
-      typeof ConfirmPaymentMethodScreen
-    >> = (props: React.ComponentProps<typeof ConfirmPaymentMethodScreen>) => (
+    const ToBeTested: React.FunctionComponent<
+      React.ComponentProps<typeof ConfirmPaymentMethodScreen>
+    > = (props: React.ComponentProps<typeof ConfirmPaymentMethodScreen>) => (
       <LightModalContext.Provider
         value={{
           component: null,

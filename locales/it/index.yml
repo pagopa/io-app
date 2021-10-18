@@ -619,6 +619,16 @@ authentication:
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+      iosAlert:
+        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
+        moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
+        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
+        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        tagLost: Hai rimosso la carta troppo presto.
+        cardLocked: Carta CIE bloccata
+        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
+        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
@@ -1246,9 +1256,9 @@ wallet:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona '?' in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
-    title: Inserisci i dati dell'avviso
-    info: che ci consentono di identificare il pagamento
-    link: Dove si trovano?
+    title: Cosa devi pagare?
+    info: Inserisci i dati come riportato sull'avviso di pagamento.
+    link: Dove trovo i dati?
     noticeCode: Codice Avviso
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)
@@ -1277,7 +1287,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi metodo di pagamento
+  addPaymentMethodTitle: Aggiungi app e altri metodi
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
@@ -1316,7 +1326,6 @@ wallet:
       description: Abbina il tuo account Satispay
     bancomatPay:
       name: BANCOMAT Pay
-      description: Abbina il tuo account BANCOMAT Pay
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1324,7 +1333,7 @@ wallet:
       name: Carta BancoPosta o Postepay
       description: Le carte emesse da Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -2504,6 +2513,7 @@ bonus:
         deals: Offerte
         description: Descrizione
         services: Servizi
+        addresses: Indirizzi
         hours: Orari
         validity: Validità
         discountCode: Codice Sconto
@@ -2512,12 +2522,14 @@ bonus:
         label: Vai al sito dell'esercente
         landingPage: Accedi all’agevolazione
       categories:
-        theater: teatro, cinema e spettacolo
-        travel: viaggi
-        mobility: carsharing e mobilità
-        telco: telefonia, servizi internet
-        book: libri, audiolibri, e-book
-        museum: musei, gallerie, parchi
+        counting: e altre {{count}}
+        theater: tempo libero
+        travel: viaggi, trasporti e mobilità
+        food: ristoranti e cucina
+        hotel: hotel
+        service: servizi
+        book: istruzione e formazione
+        shopping: shopping
         sport: sport
         health: salute e benessere
     cta:
@@ -2525,7 +2537,7 @@ bonus:
       goToDetail: Visualizza la Carta Giovani
     detail:
       cta:
-        buyers: Vedi esercenti
+        buyers: Vedi agevolazioni
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
@@ -2670,7 +2682,8 @@ bonus:
       summary:
         title: "SummaryScreen"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Ecco il tuo codice sconto"
+        subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
       ko:
         checkIncome:
           title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."

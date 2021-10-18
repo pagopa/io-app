@@ -28,6 +28,7 @@ const allowedScope = new Map<string, string>([
   ["security", "Security"],
   ["accessibility", "Accessibility"],
   ["bpd", "Bonus Pagamenti Digitali"],
+  ["cgn", "Carta Giovani Nazionale"],
   ["myportal", "MyPortal"]
 ]);
 
@@ -140,14 +141,14 @@ export const getStoryChangelogScope = (
     return scopeDisplayName !== undefined
       ? right(some(scopeDisplayName))
       : left(
-          new Error(
-            `The scope ${
-              maybeChangelogScopeTag[0]
-            } is not present in the allowed scopes: ${Array.from(
-              allowedScope.keys()
-            ).join(",")}`
-          )
-        );
+        new Error(
+          `The scope ${
+            maybeChangelogScopeTag[0]
+          } is not present in the allowed scopes: ${Array.from(
+            allowedScope.keys()
+          ).join(",")}`
+        )
+      );
   }
   // neither project scope nor scope label found
   return right(none);
@@ -189,11 +190,11 @@ export const getChangelogScope = (
   return scopesList.every((scope, _, arr) => scope === arr[0])
     ? right(some(scopesList[0]))
     : left([
-        new Error(
-          `Different scopes were found on the stories related to the pull request: [${scopesList.join(
-            ","
-          )}].\n
+      new Error(
+        `Different scopes were found on the stories related to the pull request: [${scopesList.join(
+          ","
+        )}].\n
            It is not possible to assign a single scope to this pull request!`
-        )
-      ]);
+      )
+    ]);
 };

@@ -725,9 +725,6 @@ wallet:
     contextualHelpTitle: Zusammenfassung der Transaktion
   insertManually:
     header: Zahlungsmitteilungsdaten einfügen
-    title: Geben Sie Ihre Zahlungsmitteilungsdaten ein,
-    info: welche es uns ermöglichen, die Transaktion zu erkennen
-    link: Wo befinden sich diese?
     noticeCode: Zahlungsmitteilungscode
     entityCode: Steuernummer der Körperschaft
     amount: Betrag (€)

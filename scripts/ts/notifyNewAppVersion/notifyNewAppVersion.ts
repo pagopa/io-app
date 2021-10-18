@@ -10,7 +10,7 @@ const packagePath = "package.json";
  */
 const main = async () => {
   const packageJson = JSON.parse(fs.readFileSync(packagePath).toString("utf8"));
-  const appVersion = packageJson.version as string;
+  const appVersion = (packageJson.version as string).replace("-rc", "");
 
   await slackPostMessage(
     "È disponibile la nuova versione `" +
@@ -19,7 +19,8 @@ const main = async () => {
       "<https://github.com/pagopa/io-app/blob/master/CHANGELOG.md|:memo: Changelog> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/345932988/Release+produzione+beta#Frequenza-rilasci|:calendar: Calendario rilasci> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna|:test_tube: Come partecipo alla beta interna?> - " +
-      "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>",
+      "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>\n" +
+      "cc <!subteam^S02GBHCR486>",
     destinationChannel,
     false
   );

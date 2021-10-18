@@ -89,10 +89,8 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
-  const [
-    authenticatedSupportType,
-    setAuthenticatedSupportType
-  ] = useState<BugReporting.reportType | null>(null);
+  const [authenticatedSupportType, setAuthenticatedSupportType] =
+    useState<BugReporting.reportType | null>(null);
 
   const { potContextualData, loadContextualHelpData } = props;
 

@@ -24,9 +24,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
-  const paramCreditCard: CreditCardPaymentMethod = props.navigation.getParam(
-    "creditCard"
-  );
+  const paramCreditCard: CreditCardPaymentMethod =
+    props.navigation.getParam("creditCard");
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);

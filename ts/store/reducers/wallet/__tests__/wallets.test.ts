@@ -20,6 +20,7 @@ import {
   getFavoriteWalletId,
   getPagoPAMethodsSelector,
   getPayablePaymentMethodsSelector,
+  getWalletsById,
   pagoPaCreditCardWalletV1Selector,
   satispayListSelector
 } from "../wallets";
@@ -33,6 +34,7 @@ import {
   updatePaymentStatus
 } from "../../../actions/wallet/wallets";
 import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
+import { deleteAllPaymentMethodsByFunction } from "../../../actions/wallet/delete";
 
 describe("walletV2 selectors", () => {
   const maybeWalletsV2 = PatchedWalletV2ListResponse.decode(walletsV2_1);
@@ -42,14 +44,14 @@ describe("walletV2 selectors", () => {
     ),
     w => w.idWallet
   );
-  const globalState = ({
+  const globalState = {
     wallet: {
       wallets: {
         walletById: pot.some(indexedWallets)
       },
       abi: remoteUndefined
     }
-  } as any) as GlobalState;
+  } as any as GlobalState;
   it("should decode walletv2 list", () => {
     expect(maybeWalletsV2.isRight()).toBeTruthy();
   });
@@ -161,13 +163,13 @@ describe("walletV2 favoriteId Selector", () => {
   );
 
   it("should return pot none - no wallets", () => {
-    const noWallets = ({
+    const noWallets = {
       wallet: {
         wallets: {
           walletById: pot.none
         }
       }
-    } as any) as GlobalState;
+    } as any as GlobalState;
     expect(getFavoriteWalletId(noWallets)).toEqual(pot.none);
     expect(getFavoriteWallet(noWallets)).toEqual(pot.none);
   });
@@ -326,6 +328,68 @@ describe("getPagoPAMethodsSelector", () => {
     expect(
       getPayablePaymentMethodsSelector(withWallets).length
     ).toBeGreaterThan(0);
+  });
+});
+
+describe("walletV2 reducer - deleteAllByFunction", () => {
+  it("should delete only those payment method whose have specified function enabled", () => {
+    const aPaymentMethod = walletsV2_1.data[0];
+    // 2 pagoPA + 1 BPD
+    const wallet = [
+      {
+        ...aPaymentMethod,
+        idWallet: 1,
+        enableableFunctions: [EnableableFunctionsEnum.pagoPA]
+      },
+      {
+        ...aPaymentMethod,
+        idWallet: 2,
+        enableableFunctions: [EnableableFunctionsEnum.pagoPA]
+      },
+      {
+        ...aPaymentMethod,
+        idWallet: 3,
+        enableableFunctions: [EnableableFunctionsEnum.BPD]
+      }
+    ];
+    const maybeWalletsV2 = PatchedWalletV2ListResponse.decode({ data: wallet });
+    const maybeWalletsExceptBPDV2 = PatchedWalletV2ListResponse.decode({
+      data: wallet.filter(w =>
+        w.enableableFunctions.includes(EnableableFunctionsEnum.BPD)
+      )
+    });
+    const convertedWallets = (
+      maybeWalletsV2.value as PatchedWalletV2ListResponse
+    ).data!.map(convertWalletV2toWalletV1);
+    const convertedWalletsExceptBPD = (
+      maybeWalletsExceptBPDV2.value as PatchedWalletV2ListResponse
+    ).data!.map(convertWalletV2toWalletV1);
+
+    const globalState: GlobalState = appReducer(
+      undefined,
+      fetchWalletsSuccess(convertedWallets)
+    );
+    const walletFull = getWalletsById(globalState);
+    expect(pot.isSome(walletFull)).toBeTruthy();
+    if (pot.isSome(walletFull)) {
+      expect(Object.keys(walletFull.value).length).toEqual(
+        convertedWallets.length
+      );
+    }
+    const updatedState: GlobalState = appReducer(
+      globalState,
+      deleteAllPaymentMethodsByFunction.success({
+        wallets: convertedWalletsExceptBPD,
+        deletedMethodsCount: 1
+      })
+    );
+    const walletUpdated = getWalletsById(updatedState);
+    expect(pot.isSome(walletUpdated)).toBeTruthy();
+    if (pot.isSome(walletUpdated)) {
+      expect(Object.keys(walletUpdated.value).length).toEqual(
+        convertedWalletsExceptBPD.length
+      );
+    }
   });
 });
 

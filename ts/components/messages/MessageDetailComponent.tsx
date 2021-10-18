@@ -5,9 +5,11 @@ import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import {
+  ServicePublic,
+  ServicePublicService_metadata
+} from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import {
@@ -27,7 +29,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   potServiceDetail: pot.Pot<ServicePublic, Error>;
-  potServiceMetadata: ServiceMetadataState;
+  serviceMetadata?: ServicePublicService_metadata;
   onServiceLinkPress?: () => void;
 }>;
 
@@ -116,14 +118,10 @@ export default class MessageDetailComponent extends React.PureComponent<
 
   get payment() {
     const { message, paymentsByRptId } = this.props;
-    return this.service.fold(undefined, service => {
-      if (message.content.payment_data !== undefined) {
-        return paymentsByRptId[
-          `${service.organization_fiscal_code}${message.content.payment_data.notice_number}`
-        ];
-      }
-      return undefined;
-    });
+    const payment_data = message.content.payment_data;
+    return paymentsByRptId[
+      `${payment_data?.payee.fiscal_code}${payment_data?.notice_number}`
+    ];
   }
 
   private getTitle = () =>
@@ -138,12 +136,8 @@ export default class MessageDetailComponent extends React.PureComponent<
     );
 
   public render() {
-    const {
-      message,
-      potServiceDetail,
-      potServiceMetadata,
-      onServiceLinkPress
-    } = this.props;
+    const { message, potServiceDetail, serviceMetadata, onServiceLinkPress } =
+      this.props;
     const { maybeMedicalData, service, payment } = this;
 
     return (
@@ -207,7 +201,7 @@ export default class MessageDetailComponent extends React.PureComponent<
               <MessageDetailData
                 message={message}
                 serviceDetail={potServiceDetail}
-                serviceMetadata={potServiceMetadata}
+                serviceMetadata={serviceMetadata}
                 goToServiceDetail={onServiceLinkPress}
               />
             </React.Fragment>

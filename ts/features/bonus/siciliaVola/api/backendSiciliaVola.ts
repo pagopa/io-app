@@ -148,12 +148,13 @@ const GetStatiVoucher: GetStatiVoucherT = {
   response_decoder: getStatiVoucherDefaultDecoder()
 };
 
-const withSiciliaVolaToken = <P extends { Bearer: string }, R>(
-  f: (p: P) => Promise<R>
-) => (token: MitVoucherToken) => async (po: Omit<P, "Bearer">): Promise<R> => {
-  const params = Object.assign({ Bearer: String(token.token) }, po) as P;
-  return f(params);
-};
+const withSiciliaVolaToken =
+  <P extends { Bearer: string }, R>(f: (p: P) => Promise<R>) =>
+  (token: MitVoucherToken) =>
+  async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token.token) }, po) as P;
+    return f(params);
+  };
 
 // client for SiciliaVola to handle API communications
 export const BackendSiciliaVolaClient = (

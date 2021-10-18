@@ -47,14 +47,8 @@ const upperCaseAndNoBlanks = (text: string) =>
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState<string | undefined>(props.startIban);
   const isValidIban = iban && Iban.decode(iban).isRight();
-  const {
-    headerTitle,
-    title,
-    body1,
-    body1Bold,
-    body2,
-    ibanDescription
-  } = loadLocales();
+  const { headerTitle, title, body1, body1Bold, body2, ibanDescription } =
+    loadLocales();
   return (
     <BaseScreenComponent
       goBack={props.onBack}

@@ -87,8 +87,8 @@ type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
   const isEmailValidated = isProfileEmailValidatedSelector(state);
-  const acknowledgeOnEmailValidated = emailValidationSelector(state)
-    .acknowledgeOnEmailValidated;
+  const acknowledgeOnEmailValidated =
+    emailValidationSelector(state).acknowledgeOnEmailValidated;
   // we consider the email validated (-> hide the reminder screen) when
   // the profile has the email validated flag on ON AND (if it is some) when the user
   // knows about the validation completed

@@ -20,9 +20,8 @@ jest.mock("react-native-background-timer", () => ({
 describe("paymentStartRequest", () => {
   it("can get a pm token", () => {
     const mockToken = "1234" as PaymentManagerToken;
-    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
-      jest.fn()
-    );
+    const aPmSessionManager: SessionManager<PaymentManagerToken> =
+      new SessionManager(jest.fn());
     jest
       .spyOn(aPmSessionManager, "getNewToken")
       .mockReturnValue(Promise.resolve(some(mockToken)));
@@ -35,9 +34,8 @@ describe("paymentStartRequest", () => {
   });
 
   it("cannot get a pm token", () => {
-    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
-      jest.fn()
-    );
+    const aPmSessionManager: SessionManager<PaymentManagerToken> =
+      new SessionManager(jest.fn());
     jest
       .spyOn(aPmSessionManager, "getNewToken")
       .mockReturnValue(Promise.resolve(none));

@@ -143,12 +143,10 @@ function* createOrUpdateProfileSaga(
         version: 0
       };
   try {
-    const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
-      createOrUpdateProfile,
-      {
+    const response: SagaCallReturnType<typeof createOrUpdateProfile> =
+      yield call(createOrUpdateProfile, {
         profile: newProfile
-      }
-    );
+      });
 
     if (response.isLeft()) {
       throw new Error(readablePrivacyReport(response.value));
@@ -191,10 +189,12 @@ function* createOrUpdateProfileSaga(
  * - first element contains the handler to check if the event should be dispatched
  * - second element contains the callback to execute if the first element condition is verified
  */
-const profileChangePredicates: ReadonlyArray<[
-  (value: InitializedProfile, newValue: InitializedProfile) => boolean,
-  (value: InitializedProfile) => Promise<void> | undefined
-]> = [
+const profileChangePredicates: ReadonlyArray<
+  [
+    (value: InitializedProfile, newValue: InitializedProfile) => boolean,
+    (value: InitializedProfile) => Promise<void> | undefined
+  ]
+> = [
   [
     (value, newValue) => value.is_email_enabled !== newValue.is_email_enabled,
     value =>
@@ -288,9 +288,8 @@ function* checkPreferredLanguage(
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
-  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
-    preferredLanguageSelector
-  );
+  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
+    yield select(preferredLanguageSelector);
   // deviceLocale could be the one stored or the one retrieved from the running device
   const deviceLocale = currentStoredLocale.getOrElse(
     getLocalePrimaryWithFallback()
@@ -337,9 +336,8 @@ function* handleLoadBonusBeforeRemoveAccount() {
     ]);
   }
 
-  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> = yield select(
-    allBonusActiveSelector
-  );
+  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> =
+    yield select(allBonusActiveSelector);
 
   // check if there are some bonus vacanze
   if (bonusVacanzeBonus.length === 0) {

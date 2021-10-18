@@ -11,17 +11,19 @@ import { visibleServicesSelector } from "../../../store/reducers/entities/servic
 import { mockedService } from "../../startup/__tests__/loadServiceDetailRequestHandler.test";
 import { handleOrganizationNameUpdateSaga } from "../handleOrganizationNameUpdateSaga";
 
-const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState = {
-  ["01"]: "ente1" as NonEmptyString,
-  ["02"]: "ente2" as NonEmptyString,
-  ["03"]: "ente3" as NonEmptyString
-};
+const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState =
+  {
+    ["01"]: "ente1" as NonEmptyString,
+    ["02"]: "ente2" as NonEmptyString,
+    ["03"]: "ente3" as NonEmptyString
+  };
 
-const mockedOrganizationsNameByFiscalCodeUpdated: OrganizationNamesByFiscalCodeState = {
-  ["01"]: "ente1 - nuovo nome" as NonEmptyString,
-  ["02"]: "ente2" as NonEmptyString,
-  ["03"]: "ente3" as NonEmptyString
-};
+const mockedOrganizationsNameByFiscalCodeUpdated: OrganizationNamesByFiscalCodeState =
+  {
+    ["01"]: "ente1 - nuovo nome" as NonEmptyString,
+    ["02"]: "ente2" as NonEmptyString,
+    ["03"]: "ente3" as NonEmptyString
+  };
 
 const mockedVisibleServices = pot.some([
   { service_id: "A01" as ServiceId, version: 1 },

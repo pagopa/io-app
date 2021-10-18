@@ -42,14 +42,15 @@ const getTitle = (type: NotActivableType) => {
   }
 };
 
-export const BpdNotActivableInformation: React.FunctionComponent<Props> = props => (
-  <View style={[styles.body, IOStyles.horizontalContentPadding]}>
-    <View spacer={true} />
-    <PaymentMethodRepresentationComponent {...props.representation} />
-    <View spacer={true} />
-    <Markdown>{getBody(props.type)}</Markdown>
-  </View>
-);
+export const BpdNotActivableInformation: React.FunctionComponent<Props> =
+  props => (
+    <View style={[styles.body, IOStyles.horizontalContentPadding]}>
+      <View spacer={true} />
+      <PaymentMethodRepresentationComponent {...props.representation} />
+      <View spacer={true} />
+      <Markdown>{getBody(props.type)}</Markdown>
+    </View>
+  );
 
 export const useNotActivableInformationBottomSheet = (
   representation: PaymentMethodRepresentation

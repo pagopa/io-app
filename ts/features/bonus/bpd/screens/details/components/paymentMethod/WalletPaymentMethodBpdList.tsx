@@ -201,9 +201,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: paymentMethodsWithActivationStatusSelector(state),
-  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
-    state
-  )
+  atLeastOnePaymentMethodActive:
+    atLeastOnePaymentMethodHasBpdEnabledSelector(state)
 });
 
 export default connect(

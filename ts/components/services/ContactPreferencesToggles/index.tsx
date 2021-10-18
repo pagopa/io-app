@@ -63,10 +63,10 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const { serviceId, loadServicePreference } = props;
 
-  const loadPreferences = useCallback(() => loadServicePreference(serviceId), [
-    serviceId,
-    loadServicePreference
-  ]);
+  const loadPreferences = useCallback(
+    () => loadServicePreference(serviceId),
+    [serviceId, loadServicePreference]
+  );
 
   useEffect(() => {
     loadPreferences();

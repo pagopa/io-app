@@ -14,10 +14,9 @@ export function* handleLoadBonusVacanzeFromId(
   action: ActionType<typeof loadBonusVacanzeFromId["request"]>
 ): SagaIterator {
   try {
-    const bonusVacanzeResponse: SagaCallReturnType<typeof getLatestBonusVacanzeFromId> = yield call(
-      getLatestBonusVacanzeFromId,
-      { bonus_id: action.payload }
-    );
+    const bonusVacanzeResponse: SagaCallReturnType<
+      typeof getLatestBonusVacanzeFromId
+    > = yield call(getLatestBonusVacanzeFromId, { bonus_id: action.payload });
     if (bonusVacanzeResponse.isRight()) {
       if (bonusVacanzeResponse.value.status === 200) {
         yield put(

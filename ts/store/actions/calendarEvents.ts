@@ -9,9 +9,8 @@ export type AddCalendarEventPayload = {
   eventId: string;
 };
 
-export const addCalendarEvent = createStandardAction("CALENDAR_EVENT_ADD")<
-  AddCalendarEventPayload
->();
+export const addCalendarEvent =
+  createStandardAction("CALENDAR_EVENT_ADD")<AddCalendarEventPayload>();
 
 export type RemoveCalendarEventPayload = {
   messageId: string;

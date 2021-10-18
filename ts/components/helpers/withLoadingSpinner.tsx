@@ -18,12 +18,8 @@ export function withLoadingSpinner<
 >(WrappedComponent: React.ComponentType<P>) {
   class WithLoadingSpinner extends React.Component<P> {
     public render() {
-      const {
-        isLoading,
-        loadingCaption,
-        loadingOpacity,
-        onCancel
-      } = this.props;
+      const { isLoading, loadingCaption, loadingOpacity, onCancel } =
+        this.props;
       return (
         <LoadingSpinnerOverlay
           isLoading={isLoading}

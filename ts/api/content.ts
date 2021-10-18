@@ -8,10 +8,8 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
-import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { CoBadgeServices } from "../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { PrivativeServices } from "../../definitions/pagopa/privative/configuration/PrivativeServices";
 import { contentRepoUrl } from "../config";
@@ -20,23 +18,6 @@ import { defaultRetryingFetch } from "../utils/fetch";
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { AbiListResponse } from "../../definitions/pagopa/walletv2/AbiListResponse";
 import { SpidIdps } from "../../definitions/content/SpidIdps";
-
-type GetServiceT = IGetApiRequestType<
-  {
-    serviceId: ServiceId;
-  },
-  never,
-  never,
-  BasicResponseType<ServiceMetadata>
->;
-
-const getServiceT: GetServiceT = {
-  method: "get",
-  url: params => `/services/${params.serviceId.toLowerCase()}.json`,
-  query: _ => ({}),
-  headers: _ => ({}),
-  response_decoder: basicResponseDecoder(ServiceMetadata)
-};
 
 type GetMunicipalityT = IGetApiRequestType<
   {
@@ -154,7 +135,6 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
 
   return {
     getBonusAvailable: createFetchRequestForApi(getAvailableBonusesT, options),
-    getService: createFetchRequestForApi(getServiceT, options),
     getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
     getContextualHelp: createFetchRequestForApi(getContextualHelpT, options),
     getAbiList: createFetchRequestForApi(getAbisListT, options),

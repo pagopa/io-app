@@ -199,9 +199,8 @@ class EmailForwardingScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potVisibleServices: VisibleServicesState = visibleServicesSelector(
-    state
-  );
+  const potVisibleServices: VisibleServicesState =
+    visibleServicesSelector(state);
   const visibleServicesId = pot.getOrElse(
     pot.map(potVisibleServices, services =>
       services.map(service => service.service_id)

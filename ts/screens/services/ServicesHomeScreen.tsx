@@ -47,7 +47,6 @@ import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import { loadServiceMetadata } from "../../store/actions/content";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -223,9 +222,8 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
-  ScreenContentHeader
-);
+const AnimatedScreenContentHeader =
+  Animated.createAnimatedComponent(ScreenContentHeader);
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "services.contextualHelpTitle",
   body: "services.contextualHelpContent"
@@ -257,8 +255,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
     const disabledServices: number = Object.keys(
       currentTabServicesChannels
-    ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
-      .length;
+    ).filter(
+      id => currentTabServicesChannels[id].indexOf("INBOX") !== -1
+    ).length;
 
     return (
       disabledServices > 0 &&
@@ -519,11 +518,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    * Render Locals, Nationals and Other services tabs.
    */
   private renderTabs = () => {
-    const {
-      nationalTabSections,
-      potUserMetadata,
-      isLoadingServices
-    } = this.props;
+    const { nationalTabSections, potUserMetadata, isLoadingServices } =
+      this.props;
     const isRefreshing =
       isLoadingServices ||
       pot.isLoading(potUserMetadata) ||
@@ -604,9 +600,8 @@ const mapStateToProps = (state: GlobalState) => {
     [2]: getTabSevicesId(allTabSections)
   };
 
-  const visibleServicesContentLoadState = visibleServicesDetailLoadStateSelector(
-    state
-  );
+  const visibleServicesContentLoadState =
+    visibleServicesDetailLoadStateSelector(state);
 
   const isLoadingServices = pot.isLoading(visibleServicesContentLoadState);
 
@@ -687,10 +682,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
-  serviceDetailsLoad: (service: ServicePublic) => {
-    dispatch(loadServiceMetadata.request(service.service_id));
-    dispatch(showServiceDetails(service));
-  }
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service))
 });
 
 const mergeProps = (

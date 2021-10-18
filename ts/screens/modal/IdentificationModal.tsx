@@ -277,9 +277,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) {
       // trigger a state update based on the current props and use the results to choose what to do
       // with the scheduled interval
-      const caninsertPin = this.updateCanInsertPinTooManyAttempts().getOrElse(
-        true
-      );
+      const caninsertPin =
+        this.updateCanInsertPinTooManyAttempts().getOrElse(true);
       // if the pin can be inserted, the timer is no longer needed
       if (caninsertPin) {
         clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
@@ -460,18 +459,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
 
     // The identification is started, we need to show the modal
-    const {
-      pin,
-      isValidatingTask,
-      identificationCancelData,
-      shufflePad
-    } = identificationProgressState;
+    const { pin, isValidatingTask, identificationCancelData, shufflePad } =
+      identificationProgressState;
 
-    const {
-      biometryType,
-      countdown,
-      identificationByBiometryState
-    } = this.state;
+    const { biometryType, countdown, identificationByBiometryState } =
+      this.state;
 
     const canInsertPin =
       !this.state.biometryAuthAvailable &&

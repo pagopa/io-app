@@ -5,13 +5,14 @@ import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Container, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
   Dimensions,
   PermissionsAndroid,
   Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet
 } from "react-native";
@@ -44,6 +45,8 @@ import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -267,26 +270,18 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       title: I18n.t("wallet.QRtoPay.setManually")
     };
 
-    const secondaryButtonProps = {
-      buttonFontSize: customVariables.btnFontSize - 1,
-      block: true,
-      cancel: true,
-      onPress: this.props.navigation.goBack,
-      title: I18n.t("global.buttons.cancel")
-    };
-
     return (
-      <Container style={styles.white}>
+      <BaseScreenComponent
+        headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
+        goBack={this.goBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet"]}
+      >
         <NavigationEvents
           onWillFocus={this.handleWillFocus}
           onWillBlur={this.handleWillBlur}
         />
-        <BaseScreenComponent
-          headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
-          goBack={this.goBack}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["wallet"]}
-        >
+        <SafeAreaView style={IOStyles.flex}>
           <ScrollView bounces={false}>
             {this.state.isFocused && this.state.permissionRationaleDisplayed && (
               <QRCodeScanner
@@ -349,13 +344,16 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               />
             )}
           </ScrollView>
-        </BaseScreenComponent>
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
-      </Container>
+          <FooterWithButtons
+            type="TwoButtonsInlineThird"
+            leftButton={cancelButtonProps(
+              this.props.navigation.goBack,
+              I18n.t("global.buttons.cancel")
+            )}
+            rightButton={primaryButtonProps}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   }
 }

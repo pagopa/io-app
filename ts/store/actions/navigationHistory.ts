@@ -15,7 +15,9 @@ export const navigationHistoryReset = createStandardAction(
 
 export const navigationHistoryPop = createAction(
   "NAVIGATION_HISTORY_POP",
-  action => (howMany: number = 1) => action(howMany)
+  action =>
+    (howMany: number = 1) =>
+      action(howMany)
 );
 
 export type NavigationHistoryActions = ActionType<

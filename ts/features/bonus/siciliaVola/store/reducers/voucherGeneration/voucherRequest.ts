@@ -142,3 +142,8 @@ export const selectedBeneficiaryCategorySelector = createSelector(
   (voucherRequest: VoucherRequestState): Option<SvBeneficiaryCategory> =>
     voucherRequest.fold(none, vR => some(vR.category))
 );
+
+export const voucherRequestSelector = createSelector(
+  [(state: GlobalState) => state.bonus.sv.voucherGeneration.voucherRequest],
+  (voucherRequest: VoucherRequestState): VoucherRequestState => voucherRequest
+);

@@ -91,10 +91,8 @@ export function* handleTransactionsLoadRequiredData(
   action: ActionType<typeof bpdTransactionsLoadRequiredData.request>
 ) {
   // get the results
-  const result: SagaCallReturnType<typeof loadTransactionsRequiredData> = yield call(
-    loadTransactionsRequiredData,
-    action.payload
-  );
+  const result: SagaCallReturnType<typeof loadTransactionsRequiredData> =
+    yield call(loadTransactionsRequiredData, action.payload);
 
   if (result.isRight()) {
     yield put(bpdTransactionsLoadRequiredData.success(action.payload));

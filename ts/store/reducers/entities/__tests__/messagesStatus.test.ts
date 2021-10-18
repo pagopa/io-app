@@ -38,7 +38,7 @@ const messageWithContent = {
 
 describe("messagesStatus reducer", () => {
   it("should return the initial state", () => {
-    expect(reducer(undefined, (dymmyAction as unknown) as Action)).toEqual({});
+    expect(reducer(undefined, dymmyAction as unknown as Action)).toEqual({});
   });
 
   it("should return the loaded message with default value", () => {

@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
@@ -91,10 +90,9 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   const canRenderButton = fromNullable(props.selectedPeriod).fold(false, sp => {
     switch (sp.status) {
       case "Closed":
-        return pot.getOrElse(
-          pot.map(props.transactions, val => val.length > 0),
-          false
-        );
+        return fromNullable(props.selectedPeriod?.amount?.transactionNumber)
+          .map(trx => trx > 0)
+          .getOrElse(false);
       case "Inactive":
         return false;
       default:
@@ -116,8 +114,11 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         hideHeader={true}
         contextualHelp={emptyContextualHelp}
         footerContent={
-          canRenderButton && (
+          canRenderButton ? (
             <GoToTransactions goToTransactions={props.goToTransactions} />
+          ) : (
+            // We need to render a footer element in order to have the right spacing when the device has the notch
+            <View />
           )
         }
         footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}

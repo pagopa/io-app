@@ -11,9 +11,9 @@ type ActivationStatus = {
   activation?: CgnActivationDetail;
 };
 
-export const cgnActivationStart = createStandardAction("CGN_ACTIVATION_START")<
-  void
->();
+export const cgnActivationStart = createStandardAction(
+  "CGN_ACTIVATION_START"
+)<void>();
 
 /**
  * Completed the activation workflow
@@ -39,9 +39,9 @@ export const cgnActivationFailure = createStandardAction(
 /**
  * Back from the activation workflow
  */
-export const cgnActivationBack = createStandardAction("CGN_ACTIVATION_BACK")<
-  void
->();
+export const cgnActivationBack = createStandardAction(
+  "CGN_ACTIVATION_BACK"
+)<void>();
 
 /**
  * get and handle activation state of a CGN

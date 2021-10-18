@@ -38,17 +38,18 @@ export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
 
 const cursorToQueryString = (cursor: number) => `&nextCursor=${cursor}`;
 
-export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT = {
-  method: "get",
-  url: ({ awardPeriodId, nextCursor }) =>
-    `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
-      nextCursor
+export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
+  {
+    method: "get",
+    url: ({ awardPeriodId, nextCursor }) =>
+      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
+        nextCursor
+      )
+        .map(cursorToQueryString)
+        .getOrElse("")}`,
+    query: _ => ({}),
+    headers: bpdHeadersProducers(),
+    response_decoder: findWinningTransactionsUsingGETDecoder(
+      PatchedWinningTransactionPageResource
     )
-      .map(cursorToQueryString)
-      .getOrElse("")}`,
-  query: _ => ({}),
-  headers: bpdHeadersProducers(),
-  response_decoder: findWinningTransactionsUsingGETDecoder(
-    PatchedWinningTransactionPageResource
-  )
-};
+  };

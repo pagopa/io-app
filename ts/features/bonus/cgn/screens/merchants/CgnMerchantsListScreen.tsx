@@ -73,10 +73,17 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     const onlineMerchants = getValueOrElse(props.onlineMerchants, []);
     const offlineMerchants = getValueOrElse(props.offlineMerchants, []);
 
-    return [
-      ...offlineMerchants,
-      ...onlineMerchants
-    ].sort((m1: MerchantsAll, m2: MerchantsAll) =>
+    const merchantsAll = [...offlineMerchants, ...onlineMerchants];
+
+    // Removes possible duplicated merchant:
+    // a merchant can be both online and offline, or may have multiple result by offlineMerchant search API
+    const uniquesMerchants = [
+      ...new Map<OfflineMerchant["id"] | OnlineMerchant["id"], MerchantsAll>(
+        merchantsAll.map(m => [m.id, m])
+      ).values()
+    ];
+
+    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
       m1.name.localeCompare(m2.name)
     );
   }, [props.onlineMerchants, props.offlineMerchants]);

@@ -1,11 +1,10 @@
 import { isNone, isSome, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
-import { ScopeEnum } from "../../../definitions/content/Service";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
@@ -16,10 +15,11 @@ import {
   getRemoteLocale,
   getServiceCTA,
   isCtaActionValid,
-  MaybePotMetadata,
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
+import { ServicePublicService_metadata } from "../../../definitions/backend/ServicePublic";
+import { ServiceScope } from "../../../definitions/backend/ServiceScope";
 
 const messageBody = `### this is a message
 
@@ -93,7 +93,10 @@ const messageWithContentWithoutDueDate = {
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
-      invalid_after_due_date: false
+      invalid_after_due_date: false,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   } as MessageContent
 } as CreatedMessageWithContent;
@@ -110,24 +113,32 @@ const messageInvalidAfterDueDate = {
     payment_data: {
       notice_number: "012345678912345678",
       amount: 406,
-      invalid_after_due_date: true
+      invalid_after_due_date: true,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   }
 };
 
-const serviceMetadataBase = {
-  description: "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>",
-  scope: "LOCAL" as ScopeEnum,
-  address: "Piazza di Spagna, Roma, Italia",
-  email: "mock.service@email.com",
-  pec: "mock.pec@email.com",
-  phone: "5555555",
-  web_url: "https://www.google.com",
-  app_android: "https://www.google.com",
-  app_ios: "https://www.google.com",
-  support_url: "https://www.sos.com",
-  tos_url: "https://www.tos.com",
-  privacy_url: "https://www.privacy.com",
+const serviceMetadataBase: ServicePublicService_metadata = {
+  description:
+    "demo demo <br/>demo demo <br/>demo demo <br/>demo demo <br/>" as ServicePublicService_metadata["description"],
+  scope: "LOCAL" as ServiceScope,
+  address:
+    "Piazza di Spagna, Roma, Italia" as ServicePublicService_metadata["address"],
+  email: "mock.service@email.com" as ServicePublicService_metadata["email"],
+  pec: "mock.pec@email.com" as ServicePublicService_metadata["pec"],
+  phone: "5555555" as ServicePublicService_metadata["phone"],
+  web_url: "https://www.google.com" as ServicePublicService_metadata["web_url"],
+  app_android:
+    "https://www.google.com" as ServicePublicService_metadata["app_android"],
+  app_ios: "https://www.google.com" as ServicePublicService_metadata["app_ios"],
+  support_url:
+    "https://www.sos.com" as ServicePublicService_metadata["support_url"],
+  tos_url: "https://www.tos.com" as ServicePublicService_metadata["tos_url"],
+  privacy_url:
+    "https://www.privacy.com" as ServicePublicService_metadata["privacy_url"],
   cta: `---
   it:
       cta_1: 
@@ -138,7 +149,7 @@ const serviceMetadataBase = {
           text: "go1"
           action: "ioit://SERVICE_WEBVIEW"
   ---
-  `
+  ` as ServicePublicService_metadata["cta"]
 };
 
 // test "it" as default language
@@ -249,10 +260,10 @@ some noise`;
   });
 
   it("should have a valid CTA for service", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
-    });
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+    };
     const maybeCTAs = getCTA(
       {
         ...messageWithContent,
@@ -275,9 +286,9 @@ some noise`;
   });
 
   it("should not have a valid CTA for service (for the given route 'SERVICE_WEBVIEW' token_name must present in service metadata)", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase
-    });
+    };
     const maybeCTAs = getCTA(
       {
         ...messageWithContent,
@@ -347,11 +358,12 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken",
-      cta: CTA_SERVICE
-    });
+      token_name:
+        "myPortalToken" as ServicePublicService_metadata["token_name"],
+      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
+    };
     const maybeCTA = getServiceCTA(validServiceMetadata);
     expect(maybeCTA.isSome()).toBeTruthy();
     if (maybeCTA.isSome()) {
@@ -365,10 +377,10 @@ en:
   });
 
   it("Should not extract a CTA for the service without cta attribute", () => {
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
-    });
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+    };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
   });
@@ -384,10 +396,10 @@ en:
         text: "Internal with params"
         action: "ioit://SERVICE_WEBVIEW?url=http://192.168.1.10:3000/myportal_playground.html"
 ---`;
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
-      cta: CTA_SERVICE
-    });
+      cta: CTA_SERVICE as ServicePublicService_metadata["cta"]
+    };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
     expect(maybeCTA.isSome()).toBeFalsy();
   });
@@ -395,10 +407,10 @@ en:
 
 describe("isCtaActionValid", () => {
   it("should be a valid action for service", () => {
-    const validServiceMetadata: MaybePotMetadata = pot.some({
+    const validServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase,
-      token_name: "myPortalToken"
-    });
+      token_name: "myPortalToken" as ServicePublicService_metadata["token_name"]
+    };
     const CTA = {
       text: "dummy",
       action:
@@ -409,9 +421,9 @@ describe("isCtaActionValid", () => {
   });
 
   it("should NOT be a valid action for service", () => {
-    const invalidServiceMetadata: MaybePotMetadata = pot.some({
+    const invalidServiceMetadata: ServicePublicService_metadata = {
       ...serviceMetadataBase
-    });
+    };
     const CTA = {
       text: "dummy",
       action:
@@ -497,7 +509,9 @@ describe("getMessagePaymentExpirationInfo", () => {
       kind: "UNEXPIRABLE",
       noticeNumber:
         messageWithContentWithoutDueDate.content.payment_data?.notice_number,
-      amount: messageWithContentWithoutDueDate.content.payment_data?.amount
+      amount: messageWithContentWithoutDueDate.content.payment_data?.amount,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -513,7 +527,9 @@ describe("getMessagePaymentExpirationInfo", () => {
       noticeNumber: messageWithContent.content.payment_data?.notice_number,
       amount: messageWithContent.content.payment_data?.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageWithContent.content.due_date
+      dueDate: messageWithContent.content.due_date,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -531,7 +547,9 @@ describe("getMessagePaymentExpirationInfo", () => {
         messageInvalidAfterDueDate.content.payment_data.notice_number,
       amount: messageInvalidAfterDueDate.content.payment_data.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageInvalidAfterDueDate.content.due_date
+      dueDate: messageInvalidAfterDueDate.content.due_date,
+      organizationFiscalCode:
+        messageWithContent.content.payment_data!.payee.fiscal_code
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });

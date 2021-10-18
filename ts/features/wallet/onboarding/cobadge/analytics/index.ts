@@ -17,46 +17,46 @@ import {
   walletAddCoBadgeStart
 } from "../store/actions";
 
-export const trackCoBadgeAction = (mp: NonNullable<typeof mixpanel>) => (
-  action: Action
-): Promise<void> => {
-  switch (action.type) {
-    case getType(walletAddCoBadgeStart):
-      return mp.track(action.type, {
-        abi: action.payload
-      });
-    case getType(walletAddCoBadgeCompleted):
-    case getType(walletAddCoBadgeCancel):
-    case getType(walletAddCoBadgeBack):
-    case getType(addCoBadgeToWallet.request):
-    case getType(loadCoBadgeAbiConfiguration.request):
-      return mp.track(action.type);
-    case getType(searchUserCoBadge.request):
-      return mp.track(action.type, { abi: action.payload ?? "all" });
-    case getType(loadCoBadgeAbiConfiguration.success):
-      return mp.track(action.type, trackCoBadgeServices(action.payload));
-    case getType(searchUserCoBadge.success):
-      return mp.track(action.type, trackCobadgeResponse(action.payload));
-    case getType(addCoBadgeToWallet.success):
-      return mp.track(action.type, {
-        abi: action.payload.info.issuerAbiCode
-      });
-    case getType(addCoBadgeToWallet.failure):
-    case getType(loadCoBadgeAbiConfiguration.failure):
-    case getType(searchUserCoBadge.failure):
-      return mp.track(action.type, {
-        reason: getNetworkErrorMessage(action.payload)
-      });
+export const trackCoBadgeAction =
+  (mp: NonNullable<typeof mixpanel>) =>
+  (action: Action): Promise<void> => {
+    switch (action.type) {
+      case getType(walletAddCoBadgeStart):
+        return mp.track(action.type, {
+          abi: action.payload
+        });
+      case getType(walletAddCoBadgeCompleted):
+      case getType(walletAddCoBadgeCancel):
+      case getType(walletAddCoBadgeBack):
+      case getType(addCoBadgeToWallet.request):
+      case getType(loadCoBadgeAbiConfiguration.request):
+        return mp.track(action.type);
+      case getType(searchUserCoBadge.request):
+        return mp.track(action.type, { abi: action.payload ?? "all" });
+      case getType(loadCoBadgeAbiConfiguration.success):
+        return mp.track(action.type, trackCoBadgeServices(action.payload));
+      case getType(searchUserCoBadge.success):
+        return mp.track(action.type, trackCobadgeResponse(action.payload));
+      case getType(addCoBadgeToWallet.success):
+        return mp.track(action.type, {
+          abi: action.payload.info.issuerAbiCode
+        });
+      case getType(addCoBadgeToWallet.failure):
+      case getType(loadCoBadgeAbiConfiguration.failure):
+      case getType(searchUserCoBadge.failure):
+        return mp.track(action.type, {
+          reason: getNetworkErrorMessage(action.payload)
+        });
 
-    case getType(walletAddCoBadgeFailure):
-      return mp.track(action.type, {
-        reason: action.payload
-      });
-    case getType(sendAddCobadgeMessage):
-      return mp.track(action.type, { canAdd: action.payload });
-  }
-  return Promise.resolve();
-};
+      case getType(walletAddCoBadgeFailure):
+        return mp.track(action.type, {
+          reason: action.payload
+        });
+      case getType(sendAddCobadgeMessage):
+        return mp.track(action.type, { canAdd: action.payload });
+    }
+    return Promise.resolve();
+  };
 
 /**
  * Transform a {@link CobadgeResponse} into a {@link MixpanelPayload}
@@ -71,7 +71,8 @@ export const trackCobadgeResponse = (
         return {
           ...acc,
           [`${val.serviceProviderName}executionStatus`]: val.executionStatus,
-          [`${val.serviceProviderName}retrievedInstrumentsCount`]: val.retrievedInstrumentsCount
+          [`${val.serviceProviderName}retrievedInstrumentsCount`]:
+            val.retrievedInstrumentsCount
         };
       }
       return acc;

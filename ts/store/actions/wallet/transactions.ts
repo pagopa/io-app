@@ -28,17 +28,15 @@ export const fetchTransactionsSuccess = createStandardAction(
 )<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
 
 // on transactions refresh all stored transactions are cleared
-export const clearTransactions = createStandardAction("CLEAR_TRANSACTIONS")<
-  void
->();
+export const clearTransactions =
+  createStandardAction("CLEAR_TRANSACTIONS")<void>();
 
 export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
 
-export const readTransaction = createStandardAction("READ_TRANSACTION")<
-  Transaction
->();
+export const readTransaction =
+  createStandardAction("READ_TRANSACTION")<Transaction>();
 
 // all transactions id to remove from the store
 export const deleteReadTransaction = createStandardAction(

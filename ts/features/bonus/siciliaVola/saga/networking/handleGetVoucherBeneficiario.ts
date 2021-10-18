@@ -48,22 +48,18 @@ export function* handleGetVoucherBeneficiario(
 
   try {
     yield call(waitBackoffError, svVoucherListGet.failure);
-    const {
-      nextPage
-    }: ReturnType<typeof svVouchersListUiSelector> = yield select(
-      svVouchersListUiSelector
-    );
+    const { nextPage }: ReturnType<typeof svVouchersListUiSelector> =
+      yield select(svVouchersListUiSelector);
 
     // TODO: add MitVoucherToken
-    const getVoucherBeneficiarioResult: SagaCallReturnType<typeof getVoucherBeneficiario> = yield call(
-      getVoucherBeneficiario,
-      {
-        ...action.payload,
-        pagination,
-        pageNum: nextPage,
-        elementsXPage
-      }
-    );
+    const getVoucherBeneficiarioResult: SagaCallReturnType<
+      typeof getVoucherBeneficiario
+    > = yield call(getVoucherBeneficiario, {
+      ...action.payload,
+      pagination,
+      pageNum: nextPage,
+      elementsXPage
+    });
 
     if (getVoucherBeneficiarioResult.isRight()) {
       if (getVoucherBeneficiarioResult.value.status === 200) {

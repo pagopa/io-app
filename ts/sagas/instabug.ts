@@ -43,9 +43,8 @@ function* watchIBSDKdismiss() {
     });
   while (true) {
     const ibHowDismissed = yield call(onDismissPromise);
-    const type: ReturnType<typeof instabugLastOpenReportTypeSelector> = yield select(
-      instabugLastOpenReportTypeSelector
-    );
+    const type: ReturnType<typeof instabugLastOpenReportTypeSelector> =
+      yield select(instabugLastOpenReportTypeSelector);
     if (type) {
       yield put(instabugReportClosed({ type, how: ibHowDismissed }));
     }

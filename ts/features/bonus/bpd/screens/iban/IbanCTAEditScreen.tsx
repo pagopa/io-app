@@ -42,9 +42,8 @@ const InnerIbanCTAEditScreen = (props: Props) => {
   useActionOnFocus(props.load);
   // keep track if loading has been completed or not
   // to avoid to handle not update data coming from the store
-  const [isLoadingComplete, setLoadingComplete] = React.useState<boolean>(
-    false
-  );
+  const [isLoadingComplete, setLoadingComplete] =
+    React.useState<boolean>(false);
   const { title, loadingCaption } = loadLocales();
   const {
     bpdLoadState,

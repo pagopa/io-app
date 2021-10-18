@@ -61,17 +61,20 @@ const generateCapabilityItems = (
   paymentMethod: PaymentMethod,
   bpdRemoteConfig?: BpdConfig
 ): ReadonlyArray<React.ReactNode> =>
-  paymentMethod.enableableFunctions.reduce((acc, val, i): ReadonlyArray<
-    React.ReactNode
-  > => {
-    const handlerForCapability = capabilityFactory(
-      paymentMethod,
-      val,
-      i,
-      bpdRemoteConfig
-    );
-    return handlerForCapability === null ? acc : [...acc, handlerForCapability];
-  }, [] as ReadonlyArray<React.ReactNode>);
+  paymentMethod.enableableFunctions.reduce(
+    (acc, val, i): ReadonlyArray<React.ReactNode> => {
+      const handlerForCapability = capabilityFactory(
+        paymentMethod,
+        val,
+        i,
+        bpdRemoteConfig
+      );
+      return handlerForCapability === null
+        ? acc
+        : [...acc, handlerForCapability];
+    },
+    [] as ReadonlyArray<React.ReactNode>
+  );
 
 /**
  * This component enlists the different initiatives active on the payment methods

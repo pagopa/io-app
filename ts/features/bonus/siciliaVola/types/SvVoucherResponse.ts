@@ -12,7 +12,8 @@ export type SvVoucherGeneratedResponseTimeout = {
   kind: "timeout";
 };
 
-export type SvVoucherGeneratedResponseFailure = SvVoucherGeneratedResponseTimeout;
+export type SvVoucherGeneratedResponseFailure =
+  SvVoucherGeneratedResponseTimeout;
 
 /**
  * This type represents all the possible remote responses

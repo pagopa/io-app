@@ -6,6 +6,7 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { H3 } from "../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { withBase64Uri } from "../../../../utils/image";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 
 type Props = {
   voucherCode: string;
@@ -42,7 +43,9 @@ const VoucherInformationComponent = (props: Props): React.ReactElement => (
         flexDirection: "row"
       }}
     >
-      <H3 color={"bluegreyDark"}>{props.voucherCode}</H3>
+      <H3 color={"bluegreyDark"} style={IOStyles.flex}>
+        {props.voucherCode}
+      </H3>
       <View hspacer />
       <CopyButtonComponent
         textToCopy={props.voucherCode}

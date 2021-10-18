@@ -2,7 +2,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { ImageBackground, StyleSheet, Image, Platform } from "react-native";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { navigateToCgnDetails } from "../navigation/actions";
 import { isCgnInformationAvailableSelector } from "../store/reducers/details";
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   paddedContentPreview: {
     paddingLeft: 18,
     paddingBottom: 10,
+    paddingTop: 16,
     paddingRight: 22
   },
   spaced: {

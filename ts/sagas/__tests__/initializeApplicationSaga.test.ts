@@ -1,13 +1,7 @@
 import { none, some } from "fp-ts/lib/Option";
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  EmailString,
-  FiscalCode,
-  NonEmptyString
-} from "italia-ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+
 import { startApplicationInitialization } from "../../store/actions/application";
 import { sessionExpired } from "../../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../../store/actions/installation";
@@ -28,7 +22,8 @@ import {
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import mockedProfile from "../../__mocks__/initializedProfile";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -43,20 +38,9 @@ jest.mock("react-native-share", () => ({
 jest.mock("../../api/backend");
 
 const profile: InitializedProfile = {
-  service_preferences_settings: {
-    mode: ServicesPreferencesModeEnum.AUTO
-  },
-  has_profile: true,
-  is_inbox_enabled: true,
-  is_webhook_enabled: true,
+  ...mockedProfile,
   is_email_enabled: false,
-  email: "test@example.com" as EmailString,
-  spid_email: "test@example.com" as EmailString,
-  family_name: "Connor",
-  name: "John",
-  fiscal_code: "XYZ" as FiscalCode,
-  spid_mobile_phone: "123" as NonEmptyString,
-  version: 0 as NonNegativeInteger
+  is_email_validated: undefined
 };
 
 describe("initializeApplicationSaga", () => {

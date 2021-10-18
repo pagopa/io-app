@@ -342,11 +342,13 @@ const mapStateToProps = (state: GlobalState) => {
 
   const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
 
-  const error: Option<PayloadForAction<
-    | typeof paymentVerifica["failure"]
-    | typeof paymentAttiva["failure"]
-    | typeof paymentIdPolling["failure"]
-  >> = pot.isError(verifica)
+  const error: Option<
+    PayloadForAction<
+      | typeof paymentVerifica["failure"]
+      | typeof paymentAttiva["failure"]
+      | typeof paymentIdPolling["failure"]
+    >
+  > = pot.isError(verifica)
     ? some(verifica.error)
     : pot.isError(attiva)
     ? some(attiva.error)

@@ -13,22 +13,23 @@ import {
  */
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
-  resolve => (
-    canResetPin: boolean = true,
-    isValidatingTask: boolean = false,
-    identificationGenericData?: IdentificationGenericData,
-    identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData,
-    shufflePad: boolean = false
-  ) =>
-    resolve({
-      canResetPin,
-      isValidatingTask,
-      identificationGenericData,
-      identificationCancelData,
-      identificationSuccessData,
-      shufflePad
-    })
+  resolve =>
+    (
+      canResetPin: boolean = true,
+      isValidatingTask: boolean = false,
+      identificationGenericData?: IdentificationGenericData,
+      identificationCancelData?: IdentificationCancelData,
+      identificationSuccessData?: IdentificationSuccessData,
+      shufflePad: boolean = false
+    ) =>
+      resolve({
+        canResetPin,
+        isValidatingTask,
+        identificationGenericData,
+        identificationCancelData,
+        identificationSuccessData,
+        shufflePad
+      })
 );
 
 /**
@@ -36,24 +37,25 @@ export const identificationRequest = createAction(
  */
 export const identificationStart = createAction(
   "IDENTIFICATION_START",
-  resolve => (
-    pin: PinString,
-    canResetPin: boolean = true,
-    isValidatingTask: boolean = false,
-    identificationGenericData?: IdentificationGenericData,
-    identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData,
-    shufflePad: boolean = false
-  ) =>
-    resolve({
-      pin,
-      canResetPin,
-      isValidatingTask,
-      identificationGenericData,
-      identificationCancelData,
-      identificationSuccessData,
-      shufflePad
-    })
+  resolve =>
+    (
+      pin: PinString,
+      canResetPin: boolean = true,
+      isValidatingTask: boolean = false,
+      identificationGenericData?: IdentificationGenericData,
+      identificationCancelData?: IdentificationCancelData,
+      identificationSuccessData?: IdentificationSuccessData,
+      shufflePad: boolean = false
+    ) =>
+      resolve({
+        pin,
+        canResetPin,
+        isValidatingTask,
+        identificationGenericData,
+        identificationCancelData,
+        identificationSuccessData,
+        shufflePad
+      })
 );
 
 export const identificationCancel = createAction("IDENTIFICATION_CANCEL");

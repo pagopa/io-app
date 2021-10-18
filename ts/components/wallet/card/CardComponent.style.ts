@@ -3,13 +3,13 @@ import { makeFontStyleObject } from "../../../theme/fonts";
 import variables from "../../../theme/variables";
 
 export default StyleSheet.create({
-  cardHeader:{
+  cardHeader: {
     marginTop: -20,
     marginLeft: 12,
     marginRight: 12,
     paddingBottom: 10,
     borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderBottomRightRadius: 8
   },
   cardShadow: {
     shadowColor: "#000",

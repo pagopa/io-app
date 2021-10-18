@@ -335,10 +335,7 @@ describe("getErrorDescriptionV2", () => {
         "PPT_RT_SCONOSCIUTA",
         I18n.t("wallet.errors.GENERIC_ERROR")
       ),
-      Tuple2<DetailV2Keys | undefined, undefined>(
-        undefined,
-        undefined
-      )
+      Tuple2<DetailV2Keys | undefined, undefined>(undefined, undefined)
     ].forEach(t => {
       expect(getErrorDescriptionV2(t.e1)).toBe(t.e2);
     });

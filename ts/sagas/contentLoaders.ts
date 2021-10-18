@@ -3,22 +3,18 @@
  */
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { SagaIterator } from "redux-saga";
 import { call, Effect, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
-import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
-  loadIdps,
-  loadServiceMetadata
+  loadIdps
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -26,19 +22,6 @@ import { bonusVacanzeEnabled, bpdEnabled, cgnEnabled } from "../config";
 import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 const contentClient = ContentClient();
-
-/**
- * Retrieves a service metadata from the static content repository
- */
-function getServiceMetadata(
-  serviceId: ServiceId
-): Promise<t.Validation<BasicResponseType<ServiceMetadata>>> {
-  return new Promise((resolve, _) =>
-    contentClient
-      .getService({ serviceId })
-      .then(resolve, e => resolve(left([{ context: [], value: e }])))
-  );
-}
 
 /**
  * Retrieves idps text data from the static content repository
@@ -51,50 +34,6 @@ function getContextualHelpData(): Promise<
       .getContextualHelp()
       .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
-}
-
-/**
- * A saga that watches for and executes requests to load service metadata.
- */
-function* watchServiceMetadataLoadSaga(
-  action: ActionType<typeof loadServiceMetadata["request"]>
-): SagaIterator {
-  const serviceId = action.payload;
-  try {
-    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
-      getServiceMetadata,
-      serviceId
-    );
-
-    if (response.isLeft()) {
-      const error = response.fold(
-        readableReport,
-        ({ status }) => `response status ${status}`
-      );
-      throw Error(error);
-    }
-    if (response.isRight()) {
-      if (response.value.status === 200 || response.value.status === 404) {
-        // If 404, the service has no saved metadata
-        const data =
-          response.value.status === 200
-            ? pot.some(response.value.value)
-            : pot.some(undefined);
-        yield put(loadServiceMetadata.success({ serviceId, data }));
-      } else {
-        throw Error(`[${serviceId}] response status ${response.value.status}`);
-      }
-    }
-  } catch (e) {
-    yield put(
-      loadServiceMetadata.failure({
-        serviceId,
-        error: e
-          ? new Error(`[${serviceId}] ${typeof e === "string" ? e : e.message}`)
-          : Error(`[${serviceId}] Unable to load metadata for service`)
-      })
-    );
-  }
 }
 
 /**
@@ -134,11 +73,12 @@ function* watchContentMunicipalityLoadSaga(
 ): SagaIterator {
   const codiceCatastale = action.payload;
   try {
-    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> = yield call(
-      fetchMunicipalityMetadata,
-      contentClient.getMunicipality,
-      codiceCatastale
-    );
+    const response: SagaCallReturnType<typeof fetchMunicipalityMetadata> =
+      yield call(
+        fetchMunicipalityMetadata,
+        contentClient.getMunicipality,
+        codiceCatastale
+      );
 
     if (response.isRight()) {
       yield put(
@@ -165,9 +105,8 @@ function* watchContentMunicipalityLoadSaga(
  */
 function* watchLoadContextualHelp(): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof getContextualHelpData> = yield call(
-      getContextualHelpData
-    );
+    const response: SagaCallReturnType<typeof getContextualHelpData> =
+      yield call(getContextualHelpData);
     if (response.isRight()) {
       if (response.value.status === 200) {
         yield put(loadContextualHelpData.success(response.value.value));
@@ -210,10 +149,8 @@ function* handleLoadAvailableBonus(
   getBonusAvailable: ReturnType<typeof ContentClient>["getBonusAvailable"]
 ): SagaIterator {
   try {
-    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> = yield call(
-      getBonusAvailable,
-      {}
-    );
+    const bonusListReponse: SagaCallReturnType<typeof getBonusAvailable> =
+      yield call(getBonusAvailable, {});
     if (bonusListReponse.isRight()) {
       if (bonusListReponse.value.status === 200) {
         yield put(loadAvailableBonuses.success(bonusListReponse.value.value));
@@ -233,12 +170,6 @@ export function* watchContentSaga() {
   yield takeEvery(
     getType(contentMunicipalityLoad.request),
     watchContentMunicipalityLoadSaga
-  );
-
-  // watch service metadata loading request
-  yield takeEvery(
-    getType(loadServiceMetadata.request),
-    watchServiceMetadataLoadSaga
   );
 
   // Watch contextual help text data loading request

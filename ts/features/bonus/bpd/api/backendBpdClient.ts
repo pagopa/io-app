@@ -53,12 +53,12 @@ export function BackendBpdClient(
     ["Ocp-Apim-Subscription-Key"]?: string;
   };
 
-  const withBearerToken = <P extends extendHeaders, R>(
-    f: (p: P) => Promise<R>
-  ) => async (po: P): Promise<R> => {
-    const params = Object.assign({ Bearer: token }, po) as P;
-    return f(params);
-  };
+  const withBearerToken =
+    <P extends extendHeaders, R>(f: (p: P) => Promise<R>) =>
+    async (po: P): Promise<R> => {
+      const params = Object.assign({ Bearer: token }, po) as P;
+      return f(params);
+    };
 
   return {
     findV2: withBearerToken(
