@@ -3,6 +3,7 @@ import { convertDateToWordDistance } from "../convertDateToWordDistance";
 import { formatDateAsLocal } from "../dates";
 
 import I18n from "../../i18n";
+import { localeDateFormat } from "../locale";
 
 describe("convertDateToWordDistance", () => {
   it("should be in H:mm format", () => {
@@ -34,6 +35,18 @@ describe("convertDateToWordDistance", () => {
   it("should be the invalid date message defined in locales.'", () => {
     expect(convertDateToWordDistance(new Date(NaN), "")).toBe(
       I18n.t("datetimes.notValid")
+    );
+  });
+
+  it("should be the localized date with day and month", () => {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    expect(convertDateToWordDistance(twoDaysAgo, "")).toBe(
+      localeDateFormat(
+        twoDaysAgo,
+        I18n.t("global.dateFormats.dayMonthWithoutTime")
+      )
     );
   });
 

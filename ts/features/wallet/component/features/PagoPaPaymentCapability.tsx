@@ -8,7 +8,6 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
-import { pmActivatePaymentEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
@@ -62,16 +61,10 @@ const availabilityBadge = (
   badgeType: PaymentSupportStatus,
   paymentMethod: PaymentMethod
 ) => {
-  const { available, arriving, incompatible } = getLocales();
+  const { arriving, incompatible } = getLocales();
   switch (badgeType) {
     case "available":
-      return pmActivatePaymentEnabled ? (
-        <PaymentStatusSwitch paymentMethod={paymentMethod} />
-      ) : (
-        <Badge style={[styles.badgeInfo, styles.badgeAvailable]}>
-          <H5 color="white">{available}</H5>
-        </Badge>
-      );
+      return <PaymentStatusSwitch paymentMethod={paymentMethod} />;
     case "arriving":
       return (
         <Badge style={[styles.badgeInfo, styles.badgeArriving]}>

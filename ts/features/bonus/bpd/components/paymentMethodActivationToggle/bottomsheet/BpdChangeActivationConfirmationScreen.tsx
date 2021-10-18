@@ -39,47 +39,48 @@ const getText = (confirmationType: ConfirmationType) => ({
  * @param props
  * @constructor
  */
-export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Props> = props => {
-  const { cta, body } = getText(props.type);
+export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Props> =
+  props => {
+    const { cta, body } = getText(props.type);
 
-  return (
-    <BottomSheetContent
-      footer={
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            ...cancelButtonProps(props.onCancel),
-            onPressWithGestureHandler: true
-          }}
-          rightButton={{
-            ...confirmButtonProps(props.onConfirm, cta),
-            onPressWithGestureHandler: true
-          }}
-        />
-      }
-    >
-      <View>
-        <View spacer={true} />
-        <PaymentMethodRepresentationComponent {...props.representation} />
-        <View spacer={true} />
-        <Markdown>{body}</Markdown>
-        {props.type === "Activation" && (
-          <>
-            <View spacer={true} large={true} />
-            <InfoBox>
-              <Body>
-                {I18n.t(
-                  "bonus.bpd.details.paymentMethods.activate.disclaimer",
-                  { activate: I18n.t("global.buttons.activate") }
-                )}
-              </Body>
-            </InfoBox>
-          </>
-        )}
-      </View>
-    </BottomSheetContent>
-  );
-};
+    return (
+      <BottomSheetContent
+        footer={
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={{
+              ...cancelButtonProps(props.onCancel),
+              onPressWithGestureHandler: true
+            }}
+            rightButton={{
+              ...confirmButtonProps(props.onConfirm, cta),
+              onPressWithGestureHandler: true
+            }}
+          />
+        }
+      >
+        <View>
+          <View spacer={true} />
+          <PaymentMethodRepresentationComponent {...props.representation} />
+          <View spacer={true} />
+          <Markdown>{body}</Markdown>
+          {props.type === "Activation" && (
+            <>
+              <View spacer={true} large={true} />
+              <InfoBox>
+                <Body>
+                  {I18n.t(
+                    "bonus.bpd.details.paymentMethods.activate.disclaimer",
+                    { activate: I18n.t("global.buttons.activate") }
+                  )}
+                </Body>
+              </InfoBox>
+            </>
+          )}
+        </View>
+      </BottomSheetContent>
+    );
+  };
 
 export const useChangeActivationConfirmationBottomSheet = (
   representation: PaymentMethodRepresentation

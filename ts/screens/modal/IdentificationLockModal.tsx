@@ -44,29 +44,30 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
   A countdown is displayed indicating how long it is to unlock the application.
 */
 
-export const IdentificationLockModal: React.FunctionComponent<Props> = props => {
-  const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
-    fromMillisecondsToTimeRepresentation(x)
-  );
+export const IdentificationLockModal: React.FunctionComponent<Props> =
+  props => {
+    const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
+      fromMillisecondsToTimeRepresentation(x)
+    );
 
-  return (
-    <Modal>
-      <View style={styles.spaced}>
-        <View style={styles.imageContainer}>
-          <Image source={errorIcon} />
+    return (
+      <Modal>
+        <View style={styles.spaced}>
+          <View style={styles.imageContainer}>
+            <Image source={errorIcon} />
+          </View>
+
+          <Text bold={true} style={styles.title}>
+            {wrongCodeText}
+          </Text>
+          <Text style={styles.text}>{tooManyAttemptsText}</Text>
+          <Text bold={true} style={styles.text}>
+            {waitMessageText}
+          </Text>
+          <Text bold={true} style={styles.title}>
+            {minuteSeconds}
+          </Text>
         </View>
-
-        <Text bold={true} style={styles.title}>
-          {wrongCodeText}
-        </Text>
-        <Text style={styles.text}>{tooManyAttemptsText}</Text>
-        <Text bold={true} style={styles.text}>
-          {waitMessageText}
-        </Text>
-        <Text bold={true} style={styles.title}>
-          {minuteSeconds}
-        </Text>
-      </View>
-    </Modal>
-  );
-};
+      </Modal>
+    );
+  };

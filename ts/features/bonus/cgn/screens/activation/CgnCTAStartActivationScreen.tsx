@@ -26,12 +26,14 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
+  const { availableBonus, startCgn, cgnBonus } = props;
+
   React.useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
-    if (props.availableBonus.length > 0 && props.cgnBonus) {
-      props.startCgn();
+    if (availableBonus.length > 0 && cgnBonus) {
+      startCgn();
     }
-  }, [props.availableBonus]);
+  }, [availableBonus, startCgn, cgnBonus]);
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.cgn.name")}>

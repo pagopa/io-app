@@ -3,7 +3,6 @@
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -11,18 +10,15 @@ import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
-  loadIdps,
-  loadServiceMetadata
+  loadIdps
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
-import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import {
   isReady,
@@ -44,9 +40,6 @@ import { GlobalState } from "./types";
  * help pages, etc...
  */
 export type ContentState = Readonly<{
-  servicesMetadata: {
-    byId: ServiceMetadataById;
-  };
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
   idps: RemoteValue<SpidIdps, Error>;
@@ -57,16 +50,7 @@ export type MunicipalityState = Readonly<{
   data: pot.Pot<MunicipalityMetadata, Error>;
 }>;
 
-export type ServiceMetadataState = pot.Pot<ServiceMetadata | undefined, Error>;
-
-export type ServiceMetadataById = Readonly<{
-  [key: string]: ServiceMetadataState;
-}>;
-
 export const initialContentState: ContentState = {
-  servicesMetadata: {
-    byId: {}
-  },
   municipality: {
     codiceCatastale: pot.none,
     data: pot.none
@@ -78,18 +62,8 @@ export const initialContentState: ContentState = {
 // Selectors
 export const contentSelector = (state: GlobalState) => state.content;
 
-export const servicesMetadataSelector = (state: GlobalState) =>
-  state.content.servicesMetadata;
-
 export const municipalitySelector = (state: GlobalState) =>
   state.content.municipality;
-
-export const servicesMetadataByIdSelector = (state: GlobalState) =>
-  state.content.servicesMetadata.byId;
-
-export const serviceMetadataByIdSelector = (serviceId: string) => (
-  state: GlobalState
-) => servicesMetadataByIdSelector(state)[serviceId];
 
 export const contextualHelpDataSelector = (
   state: GlobalState
@@ -159,43 +133,6 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(loadServiceMetadata.request):
-      return {
-        ...state,
-        servicesMetadata: {
-          byId: {
-            ...state.servicesMetadata.byId,
-            [action.payload]: pot.toLoading(
-              state.servicesMetadata.byId[action.payload] || pot.none
-            )
-          }
-        }
-      };
-    case getType(loadServiceMetadata.success):
-      return {
-        ...state,
-        servicesMetadata: {
-          byId: {
-            ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: action.payload.data
-          }
-        }
-      };
-
-    case getType(loadServiceMetadata.failure):
-      return {
-        ...state,
-        servicesMetadata: {
-          byId: {
-            ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: pot.toError(
-              state.servicesMetadata.byId[action.payload.serviceId] || pot.none,
-              action.payload.error
-            )
-          }
-        }
-      };
-
     case getType(contentMunicipalityLoad.request):
       const codiceCatastale = state.municipality.codiceCatastale;
       const municipalityData = state.municipality.data;
@@ -272,30 +209,6 @@ export default function content(
         municipality: { ...initialContentState.municipality },
         contextualHelp: { ...initialContentState.contextualHelp }
       };
-
-    case getType(removeServiceTuples): {
-      // removeServiceTuples is dispatched to remove from the store
-      // the service detail (and, here, metadata) related to services that are
-      // no more visible and that are not related to messages list
-
-      // references of the services to be removed from the store
-      const serviceTuples: ReadonlyArray<ITuple2<string, string | undefined>> =
-        action.payload;
-
-      const newServicesMetadataByIdState = {
-        ...state.servicesMetadata.byId
-      };
-      serviceTuples.forEach(
-        // eslint-disable-next-line
-        tuple => delete newServicesMetadataByIdState[tuple.e1]
-      );
-      return {
-        ...state,
-        servicesMetadata: {
-          byId: newServicesMetadataByIdState
-        }
-      };
-    }
 
     default:
       return state;

@@ -8,7 +8,6 @@ import * as t from "io-ts";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
-import { store } from "../App";
 import { debugRemotePushNotification } from "../config";
 import { setMixpanelPushNotificationToken } from "../mixpanel";
 import { loadMessages } from "../store/actions/messages";
@@ -17,6 +16,7 @@ import {
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
 import { isDevEnv } from "../utils/environment";
+import { store } from "./configureStoreAndPersistor";
 
 /**
  * Helper type used to validate the notification payload.

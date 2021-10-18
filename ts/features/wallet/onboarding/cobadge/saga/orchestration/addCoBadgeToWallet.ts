@@ -53,9 +53,8 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     sagaExecution
   );
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
-  );
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+    yield select(navigationCurrentRouteSelector);
   if (res !== "back" && res !== "failure" && currentRoute.isSome()) {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
@@ -67,9 +66,8 @@ export function* addCoBadgeToWalletAndActivateBpd() {
 
     if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
       yield put(NavigationActions.back());
-      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-        navigationCurrentRouteSelector
-      );
+      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+        yield select(navigationCurrentRouteSelector);
       if (
         res === "completed" &&
         newRoute.isSome() &&
@@ -84,9 +82,8 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     // refresh wallets list
     yield put(fetchWalletsRequest());
     // read the new added co-badge cards
-    const coBadgeAdded: ReturnType<typeof onboardingCoBadgeAddedSelector> = yield select(
-      onboardingCoBadgeAddedSelector
-    );
+    const coBadgeAdded: ReturnType<typeof onboardingCoBadgeAddedSelector> =
+      yield select(onboardingCoBadgeAddedSelector);
 
     yield call(
       activateBpdOnNewPaymentMethods,

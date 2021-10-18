@@ -10,28 +10,24 @@ declare const by: Detox.Matchers;
 
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { delayAsync } from "../utils/timer";
 
-const config = require("package.json").detox;
+const config = require("../../package.json").detox;
 
 // Set the default test timeout (in milliseconds)
 jest.setTimeout(5 * 60 * 1000);
 (jasmine as any).getEnv().addReporter(adapter);
 
-const WAIT_TIMEOUT_MS = 30 * 1000;
+// 10 seconds seems a lot in development, but lower values are causing false positives
+// on the CI environment. Don't touch it if you don't know what you are doing.
+const WAIT_TIMEOUT_MS = 10 * 1000;
 
 describe("e2e app", () => {
-  const loginButtonId = "landing-button-login";
-  // const idpsGridId = "idps-view";
+  const loginButtonId = "landing-button-login-spid";
   const posteIdpButtonId = "idp-posteid-button";
-  // const idpWebviewId = "idp-webview";
 
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
     await device.launchApp({ permissions: { notifications: "YES" } });
-    // await device.reloadReactNative();
-    // await device.disableSynchronization();
   });
 
   beforeEach(async () => {
@@ -43,41 +39,25 @@ describe("e2e app", () => {
     await detox.cleanup();
   });
 
-  it("should display SPID login button", async () => {
-    await waitFor(element(by.id(loginButtonId)))
-      .toBeVisible()
-      .withTimeout(WAIT_TIMEOUT_MS);
-    await expect(element(by.id(loginButtonId))).toBeVisible();
-  });
+  describe("when the user never logged in before", () => {
+    it("should let the user log in", async () => {
+      await waitFor(element(by.id(loginButtonId)))
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
 
-  it("should display SPID IdP list", async () => {
-    // await waitFor(element(by.id(loginButtonId)))
-    //   .toBeVisible()
-    //   .withTimeout(WAIT_TIMEOUT_MS);
-    await element(by.id(loginButtonId)).tap();
+      await element(by.id(loginButtonId)).tap();
 
-    await waitFor(element(by.id(posteIdpButtonId)))
-      .toBeVisible()
-      .withTimeout(WAIT_TIMEOUT_MS);
-    await expect(element(by.id(posteIdpButtonId))).toBeVisible();
-  });
+      await waitFor(element(by.id(posteIdpButtonId)))
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
 
-  it("should open posteid login", async () => {
-    // await waitFor(element(by.id(loginButtonId)))
-    //   .toBeVisible()
-    //   .withTimeout(WAIT_TIMEOUT_MS);
-    // await element(by.id(loginButtonId)).tap();
+      await element(by.id(posteIdpButtonId)).tap();
 
-    // await waitFor(element(by.id(posteIdpButtonId)))
-    //   .toBeVisible()
-    //   .withTimeout(WAIT_TIMEOUT_MS);
-    await element(by.id(posteIdpButtonId)).tap();
+      // the webview returned by the server has 250ms timeout and reloads automagically
 
-    await waitFor(element(by.id("back-button")))
-      .toBeVisible()
-      .withTimeout(WAIT_TIMEOUT_MS);
-    await expect(element(by.id("back-button"))).toBeVisible();
-    const waitTime = (5 * 1000) as Millisecond;
-    await delayAsync(waitTime); // wait 10s to let webview load
+      await waitFor(element(by.text("Your usage data")))
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+    });
   });
 });

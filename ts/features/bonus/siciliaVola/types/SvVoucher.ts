@@ -10,15 +10,9 @@ type WithSvVoucherId = {
   id: SvVoucherId;
 };
 
-type QRCode = {
-  mimeType: "image/png" | "image/svg";
-  content: string;
-};
+type QRCode = string;
 
-type BarCode = {
-  mimeType: "image/png" | "image/svg";
-  content: string;
-};
+type BarCode = string;
 
 /**
  * This type represents the Sv Voucher
@@ -26,7 +20,7 @@ type BarCode = {
 export type SvVoucher = WithSvVoucherId &
   VoucherRequest & {
     beneficiary: string;
-    qrCode: ReadonlyArray<QRCode>;
-    barCode: ReadonlyArray<BarCode>;
+    qrCode: QRCode;
+    barCode: BarCode;
     availableDestination: AvailableDestinations;
   };

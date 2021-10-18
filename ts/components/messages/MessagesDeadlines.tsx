@@ -9,13 +9,13 @@ import {
   startOfToday,
   subMonths
 } from "date-fns";
-import { index as fpIndex } from "fp-ts/lib/Array";
-import { fromNullable, isNone, none, Option, some } from "fp-ts/lib/Option";
+import { isNone, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
+
 import I18n from "../../i18n";
 import {
   lexicallyOrderedMessagesStateSelector,
@@ -25,13 +25,14 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
 import { DateFromISOString } from "../../utils/dates";
+import { isTestEnv } from "../../utils/environment";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
 import { ListSelectionBar } from "../ListSelectionBar";
 import MessageAgenda, {
-  isFakeItem,
+  isPlaceholderItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
@@ -81,29 +82,31 @@ type State = {
 };
 
 /**
- * Get the last deadline id (the oldest in time is the first in array position)
+ * Return the ID of the first non-placeholder item of the first section, if any.
  */
-export const getLastDeadlineId = (sections: Sections): Option<string> =>
-  fromNullable(sections)
-    .chain(s => fpIndex(0, s))
-    .chain(d => fpIndex(0, [...d.data]))
-    .fold(none, item => {
-      if (!isFakeItem(item)) {
-        return some(item.e1.id);
-      }
+const getLastDeadlineId = (sections: Sections): Option<string> => {
+  if (sections[0] && sections[0].data[0]) {
+    const item = sections[0].data[0];
+    if (isPlaceholderItem(item)) {
       return none;
-    });
+    }
+    return some(item.e1.id);
+  }
+  return none;
+};
+
+export const testGetLastDeadlineId = isTestEnv ? getLastDeadlineId : undefined;
 
 /**
- * Get the next deadline id
+ * Return the ID of the first upcoming non-placeholder item from start of today, if any.
  */
-export const getNextDeadlineId = (sections: Sections): Option<string> => {
+const getNextDeadlineId = (sections: Sections): Option<string> => {
   const now = startOfDay(new Date()).getTime();
   return sections
     .reduce<Option<MessageAgendaItem>>((acc, curr) => {
       const item = curr.data[0];
       // if item is fake, return the accumulator
-      if (isFakeItem(item)) {
+      if (isPlaceholderItem(item)) {
         return acc;
       }
       const newDate = new Date(item.e1.content.due_date).getTime();
@@ -114,7 +117,7 @@ export const getNextDeadlineId = (sections: Sections): Option<string> => {
         return diff >= 0 ? some(item) : none;
       }
       const lastDate = acc.value.e1.content.due_date.getTime();
-      // if the new date is about future and is less than in accomulator
+      // if the new date is about future and is less than in accumulator
       if (diff >= 0 && diff < now - lastDate) {
         return some(item);
       }
@@ -122,6 +125,8 @@ export const getNextDeadlineId = (sections: Sections): Option<string> => {
     }, none)
     .map(item => item.e1.id);
 };
+
+export const testGetNextDeadlineId = isTestEnv ? getNextDeadlineId : undefined;
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
@@ -191,7 +196,8 @@ const generateSections = (
                 // We need to add the message to the last section.
                 // We are sure that pop will return at least one element because
                 // of the previous `if` step.
-                const prevSection = accumulator.sections.pop() as MessageAgendaSection;
+                const prevSection =
+                  accumulator.sections.pop() as MessageAgendaSection;
                 const newSection = {
                   title,
                   data: [...prevSection.data, messageAgendaItem]
@@ -286,8 +292,7 @@ const selectPastMonthsData = (
     if (monthSections.length === 0) {
       const emptySection: MessageAgendaSection = {
         title: startOfSelectedMonthTime,
-        fake: true,
-        data: [{ fake: true }]
+        data: [{ isPlaceholder: true }]
       };
       monthSections.push(emptySection);
     }
@@ -307,7 +312,7 @@ const isLastSectionLoaded = (
     sections
       .map(s => s.data)
       .some(items =>
-        items.some(item => !isFakeItem(item) && item.e1.id === lastId)
+        items.some(item => !isPlaceholderItem(item) && item.e1.id === lastId)
       )
   );
 
@@ -337,27 +342,25 @@ const selectInitialSectionsToRender = (
   return sectionsToRender;
 };
 
-const selectMoreSectionsToRenderAsync = async (
+const selectMoreSectionsToRenderAsync = (
   sections: Sections,
   maybeLastLoadedStartOfMonthTime: Option<number>
-): Promise<Sections> =>
-  new Promise(resolve => {
-    const moreSectionsToRender: Sections = [];
+): Sections => {
+  const moreSectionsToRender: Sections = [];
 
-    moreSectionsToRender.push(
-      ...selectPastMonthsData(
-        sections,
-        PAST_DATA_MONTHS,
-        maybeLastLoadedStartOfMonthTime.toUndefined()
-      )
-    );
+  moreSectionsToRender.push(
+    ...selectPastMonthsData(
+      sections,
+      PAST_DATA_MONTHS,
+      maybeLastLoadedStartOfMonthTime.toUndefined()
+    )
+  );
 
-    if (maybeLastLoadedStartOfMonthTime.isNone()) {
-      moreSectionsToRender.push(...selectCurrentMonthRemainingData(sections));
-    }
-
-    resolve(moreSectionsToRender);
-  });
+  if (maybeLastLoadedStartOfMonthTime.isNone()) {
+    moreSectionsToRender.push(...selectCurrentMonthRemainingData(sections));
+  }
+  return moreSectionsToRender;
+};
 
 /**
  * A component to show the messages with a due_date.
@@ -418,70 +421,70 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     );
   };
 
-  private onLoadMoreDataRequest = () => {
+  private onLoadMoreDataRequest = (): void => {
     const { sections, maybeLastLoadedStartOfMonthTime } = this.state;
 
     this.setState({
       isWorking: true
     });
-    selectMoreSectionsToRenderAsync(sections, maybeLastLoadedStartOfMonthTime)
-      .then(moreSectionsToRender => {
-        this.setState((prevState: State) => {
-          // Save the sectionIndex we want to scroll-to onContentSizeChange.
-          if (prevState.sectionsToRender.length === 0) {
-            // If not sections are redered we need to move to the bottom after rendering more sections
-            const sectionIndex = moreSectionsToRender.length - 1;
-            const itemIndex =
-              moreSectionsToRender[moreSectionsToRender.length - 1].data
-                .length - 1;
-            // eslint-disable-next-line
-            this.scrollToLocation = some({
-              sectionIndex,
-              itemIndex,
-              viewOffset: 0,
-              viewPosition: 1,
-              animated: true
-            });
-          } else {
-            // eslint-disable-next-line
-            this.scrollToLocation = some({
-              sectionIndex: moreSectionsToRender.length,
-              itemIndex: -1,
-              viewOffset: 0,
-              viewPosition: 1,
-              animated: true
-            });
-          }
-
-          const lastLoadedStartOfMonthTime = maybeLastLoadedStartOfMonthTime.getOrElse(
-            startOfMonth(new Date()).getTime()
-          );
-
-          return {
-            isWorking: false,
-            sectionsToRender: [
-              ...moreSectionsToRender,
-              ...prevState.sectionsToRender
-            ],
-            allMessageIdsState: new Set([
-              ...this.generateMessagesIdsFromMessageAgendaSection(
-                moreSectionsToRender
-              ),
-              ...prevState.allMessageIdsState
-            ]),
-            maybeLastLoadedStartOfMonthTime: some(
-              startOfMonth(
-                subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
-              ).getTime()
-            ),
-            isContinuosScrollEnabled: !isLastSectionLoaded(
-              this.state.lastDeadlineId,
-              [...moreSectionsToRender, ...prevState.sectionsToRender]
-            )
-          };
+    const moreSectionsToRender = selectMoreSectionsToRenderAsync(
+      sections,
+      maybeLastLoadedStartOfMonthTime
+    );
+    this.setState((prevState: State) => {
+      // Save the sectionIndex we want to scroll-to onContentSizeChange.
+      if (prevState.sectionsToRender.length === 0) {
+        // If not sections are redered we need to move to the bottom after rendering more sections
+        const sectionIndex = moreSectionsToRender.length - 1;
+        const itemIndex =
+          moreSectionsToRender[moreSectionsToRender.length - 1].data.length - 1;
+        // eslint-disable-next-line
+        this.scrollToLocation = some({
+          sectionIndex,
+          itemIndex,
+          viewOffset: 0,
+          viewPosition: 1,
+          animated: true
         });
-      })
-      .catch(() => 0);
+      } else {
+        // eslint-disable-next-line
+        this.scrollToLocation = some({
+          sectionIndex: moreSectionsToRender.length,
+          itemIndex: -1,
+          viewOffset: 0,
+          viewPosition: 1,
+          animated: true
+        });
+      }
+
+      const lastLoadedStartOfMonthTime =
+        maybeLastLoadedStartOfMonthTime.getOrElse(
+          startOfMonth(new Date()).getTime()
+        );
+
+      return {
+        isWorking: false,
+        sectionsToRender: [
+          ...moreSectionsToRender,
+          ...prevState.sectionsToRender
+        ],
+        allMessageIdsState: new Set([
+          ...this.generateMessagesIdsFromMessageAgendaSection(
+            moreSectionsToRender
+          ),
+          ...prevState.allMessageIdsState
+        ]),
+        maybeLastLoadedStartOfMonthTime: some(
+          startOfMonth(
+            subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
+          ).getTime()
+        ),
+        isContinuosScrollEnabled: !isLastSectionLoaded(
+          this.state.lastDeadlineId,
+          [...moreSectionsToRender, ...prevState.sectionsToRender]
+        )
+      };
+    });
   };
 
   constructor(props: Props) {
@@ -498,36 +501,38 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     };
   }
 
-  public async componentDidMount() {
+  public componentDidMount() {
     const { messagesState } = this.props;
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
-    const sections = await Promise.resolve(generateSections(messagesState));
-    const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
-    const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
+    const sections = generateSections(messagesState);
+    const lastDeadlineId = getLastDeadlineId(sections);
+    const nextDeadlineId = getNextDeadlineId(sections);
 
-    const sectionsToRender = await Promise.resolve(
-      selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
+    const sectionsToRender = selectInitialSectionsToRender(
+      sections,
+      maybeLastLoadedStartOfMonthTime
     );
+
     // If there are older deadlines the scroll must be enabled to allow data loading when requested
-    const isContinuosScrollEnabled = await Promise.resolve(
-      !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
+    const isContinuosScrollEnabled = !isLastSectionLoaded(
+      lastDeadlineId,
+      sectionsToRender
     );
 
     this.setState({
       isWorking: false,
       sections,
       sectionsToRender,
-      allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
-        sectionsToRender
-      ),
+      allMessageIdsState:
+        this.generateMessagesIdsFromMessageAgendaSection(sectionsToRender),
       isContinuosScrollEnabled,
       lastDeadlineId,
       nextDeadlineId
     });
   }
 
-  public async componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props) {
     const { messagesState } = this.props;
     const { messagesState: prevMessagesState } = prevProps;
     const { maybeLastLoadedStartOfMonthTime } = this.state;
@@ -541,25 +546,26 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         isWorking: true
       });
 
-      const sections = await Promise.resolve(generateSections(messagesState));
-      const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
-      const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
+      const sections = generateSections(messagesState);
+      const lastDeadlineId = getLastDeadlineId(sections);
+      const nextDeadlineId = getNextDeadlineId(sections);
 
-      const sectionsToRender = await Promise.resolve(
-        selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
+      const sectionsToRender = selectInitialSectionsToRender(
+        sections,
+        maybeLastLoadedStartOfMonthTime
       );
       // If there are older deadlines the scroll must be enabled to allow data loading when requested
-      const isContinuosScrollEnabled = await Promise.resolve(
-        !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
+      const isContinuosScrollEnabled = !isLastSectionLoaded(
+        lastDeadlineId,
+        sectionsToRender
       );
 
       this.setState({
         isWorking: false,
         sections,
         sectionsToRender,
-        allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
-          sectionsToRender
-        ),
+        allMessageIdsState:
+          this.generateMessagesIdsFromMessageAgendaSection(sectionsToRender),
         isContinuosScrollEnabled,
         lastDeadlineId,
         nextDeadlineId
@@ -574,7 +580,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const messagesIds: string[] = [];
     sections.forEach(messageAgendaSection =>
       messageAgendaSection.data.forEach(item => {
-        const idMessage = !isFakeItem(item) ? item.e1.id : undefined;
+        const idMessage = !isPlaceholderItem(item) ? item.e1.id : undefined;
         if (idMessage !== undefined) {
           messagesIds.push(idMessage);
         }

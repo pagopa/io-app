@@ -30,6 +30,9 @@ export type FindWinningTransactionsUsingGETTExtra = r.IGetApiRequestType<
   | r.IResponseType<401, undefined>
   | r.IResponseType<500, undefined>
 >;
+
+const hPanToQueryString = (hPan: string) => `&hpan=${hPan}`;
+
 /**
  * @deprecated
  */
@@ -39,7 +42,7 @@ export const winningTransactionsGET: FindWinningTransactionsUsingGETTExtra = {
     `/bpd/io/winning-transactions?awardPeriodId=${awardPeriodId}${fromNullable(
       hpan
     )
-      .map(h => `&hpan=${h}`)
+      .map(hPanToQueryString)
       .getOrElse("")}`,
   query: _ => ({}),
   headers: bpdHeadersProducers(),

@@ -173,9 +173,9 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     );
 
   // bonus rules url should be the first one in the urls list
-  const maybeRegulationUrl = fromNullable(
-    bonusTypeLocalizedContent.urls
-  ).chain(urls => index(0, [...urls]));
+  const maybeRegulationUrl = fromNullable(bonusTypeLocalizedContent.urls).chain(
+    urls => index(0, [...urls])
+  );
 
   // render a stack of button each one representing a url
   const renderUrls = () => {

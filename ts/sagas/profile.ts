@@ -3,7 +3,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import {
   all,
   call,
@@ -55,6 +54,7 @@ import { isTestEnv } from "../utils/environment";
 import { deletePin } from "../utils/keychain";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../mixpanel";
+import { readablePrivacyReport } from "../utils/reporters";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -68,7 +68,7 @@ export function* loadProfile(
     const response = yield call(getProfile, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -143,15 +143,13 @@ function* createOrUpdateProfileSaga(
         version: 0
       };
   try {
-    const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
-      createOrUpdateProfile,
-      {
+    const response: SagaCallReturnType<typeof createOrUpdateProfile> =
+      yield call(createOrUpdateProfile, {
         profile: newProfile
-      }
-    );
+      });
 
     if (response.isLeft()) {
-      throw new Error(readableReport(response.value));
+      throw new Error(readablePrivacyReport(response.value));
     }
 
     if (response.value.status === 409) {
@@ -191,10 +189,12 @@ function* createOrUpdateProfileSaga(
  * - first element contains the handler to check if the event should be dispatched
  * - second element contains the callback to execute if the first element condition is verified
  */
-const profileChangePredicates: ReadonlyArray<[
-  (value: InitializedProfile, newValue: InitializedProfile) => boolean,
-  (value: InitializedProfile) => Promise<void> | undefined
-]> = [
+const profileChangePredicates: ReadonlyArray<
+  [
+    (value: InitializedProfile, newValue: InitializedProfile) => boolean,
+    (value: InitializedProfile) => Promise<void> | undefined
+  ]
+> = [
   [
     (value, newValue) => value.is_email_enabled !== newValue.is_email_enabled,
     value =>
@@ -263,7 +263,7 @@ function* startEmailValidationProcessSaga(
     const response = yield call(startEmailValidationProcess, {});
     // we got an error, throw it
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 202) {
       yield put(startEmailValidation.success());
@@ -288,9 +288,8 @@ function* checkPreferredLanguage(
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
-  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> = yield select(
-    preferredLanguageSelector
-  );
+  const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
+    yield select(preferredLanguageSelector);
   // deviceLocale could be the one stored or the one retrieved from the running device
   const deviceLocale = currentStoredLocale.getOrElse(
     getLocalePrimaryWithFallback()
@@ -337,9 +336,8 @@ function* handleLoadBonusBeforeRemoveAccount() {
     ]);
   }
 
-  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> = yield select(
-    allBonusActiveSelector
-  );
+  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> =
+    yield select(allBonusActiveSelector);
 
   // check if there are some bonus vacanze
   if (bonusVacanzeBonus.length === 0) {

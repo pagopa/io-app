@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { InteractionManager, Modal, ModalBaseProps } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
@@ -90,23 +89,21 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
-  const [
-    authenticatedSupportType,
-    setAuthenticatedSupportType
-  ] = useState<BugReporting.reportType | null>(null);
+  const [authenticatedSupportType, setAuthenticatedSupportType] =
+    useState<BugReporting.reportType | null>(null);
+
+  const { potContextualData, loadContextualHelpData } = props;
 
   useEffect(() => {
     // if the contextual data is empty or is in error -> try to reload
     if (
-      !pot.isLoading(props.potContextualData) &&
-      pot.isNone(props.potContextualData) &&
-      pot.isError(props.potContextualData)
+      !pot.isLoading(potContextualData) &&
+      pot.isNone(potContextualData) &&
+      pot.isError(potContextualData)
     ) {
-      props.loadContextualHelpData();
+      loadContextualHelpData();
     }
-  }, [
-    pot.isNone(props.potContextualData) || pot.isError(props.potContextualData)
-  ]);
+  }, [potContextualData, loadContextualHelpData]);
 
   // after the modal is fully visible, render the content -
   // in case of complex markdown this can take some time and we don't
@@ -170,9 +167,6 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
       supportToken: options.sendPersonalInfo
         ? props.supportToken
         : remoteUndefined,
-      deviceUniqueId: options.sendPersonalInfo
-        ? DeviceInfo.getUniqueId()
-        : undefined,
       shouldSendScreenshot: options.sendScreenshot
     });
     setAuthenticatedSupportType(null);

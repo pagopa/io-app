@@ -32,10 +32,8 @@ export function* handleGetListaComuniBySiglaProvincia(
   action: ActionType<typeof svGenerateVoucherAvailableMunicipality.request>
 ) {
   try {
-    const getListaComuniResult: SagaCallReturnType<typeof getListaComuni> = yield call(
-      getListaComuni,
-      { siglaProvincia: action.payload }
-    );
+    const getListaComuniResult: SagaCallReturnType<typeof getListaComuni> =
+      yield call(getListaComuni, { siglaProvincia: action.payload });
 
     if (getListaComuniResult.isRight()) {
       if (getListaComuniResult.value.status === 200) {

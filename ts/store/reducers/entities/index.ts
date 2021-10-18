@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import _ from "lodash";
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
@@ -39,7 +40,7 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 0;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 1;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
@@ -49,6 +50,22 @@ const migrations: MigrationManifest = {
       ...entities,
       services: { ..._.omit(entities.services, "currentSelectedService") }
     };
+  },
+  // version 1
+  // remove services section from persisted entities
+  "1": (state: PersistedState): PersistedEntitiesState => {
+    const entities = state as PersistedEntitiesState;
+    return {
+      ...entities,
+      services: {
+        servicePreference: pot.none,
+        byId: {},
+        byOrgFiscalCode: {},
+        readState: {},
+        visible: pot.none,
+        firstLoading: { isFirstServicesLoadingCompleted: false }
+      }
+    };
   }
 };
 
@@ -57,7 +74,7 @@ export const entitiesPersistConfig: PersistConfig = {
   key: "entities",
   storage: AsyncStorage,
   version: CURRENT_REDUX_ENTITIES_STORE_VERSION,
-  blacklist: ["messages"],
+  blacklist: ["messages", "services"],
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 

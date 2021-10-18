@@ -847,7 +847,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -888,7 +888,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -971,6 +971,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"$(SDKROOT)/usr/lib/swift\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1025,6 +1026,7 @@
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
+					"\"$(SDKROOT)/usr/lib/swift\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

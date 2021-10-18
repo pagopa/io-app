@@ -54,10 +54,9 @@ export function* bpdLoadPaymentMethodActivationSaga(
   action: ActionType<typeof bpdPaymentMethodActivation.request>
 ) {
   try {
-    const findPaymentMethodResult: SagaCallReturnType<typeof findPaymentMethod> = yield call(
-      findPaymentMethod,
-      { id: action.payload } as any
-    );
+    const findPaymentMethodResult: SagaCallReturnType<
+      typeof findPaymentMethod
+    > = yield call(findPaymentMethod, { id: action.payload } as any);
     if (findPaymentMethodResult.isRight()) {
       if (findPaymentMethodResult.value.status === 200) {
         yield put(
@@ -118,10 +117,9 @@ function* enrollPaymentMethod(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
   try {
-    const enrollPaymentMethodResult: SagaCallReturnType<typeof enrollPaymentMethod> = yield call(
-      enrollPaymentMethod,
-      { id: action.payload.hPan } as any
-    );
+    const enrollPaymentMethodResult: SagaCallReturnType<
+      typeof enrollPaymentMethod
+    > = yield call(enrollPaymentMethod, { id: action.payload.hPan } as any);
     if (enrollPaymentMethodResult.isRight()) {
       if (enrollPaymentMethodResult.value.status === 200) {
         const responsePayload = enrollPaymentMethodResult.value.value;
@@ -162,10 +160,9 @@ function* deletePaymentMethod(
   action: ActionType<typeof bpdUpdatePaymentMethodActivation.request>
 ) {
   try {
-    const deletePaymentMethodResult: SagaCallReturnType<typeof deletePaymentMethod> = yield call(
-      deletePaymentMethod,
-      { id: action.payload.hPan } as any
-    );
+    const deletePaymentMethodResult: SagaCallReturnType<
+      typeof deletePaymentMethod
+    > = yield call(deletePaymentMethod, { id: action.payload.hPan } as any);
     if (deletePaymentMethodResult.isRight()) {
       if (deletePaymentMethodResult.value.status === 204) {
         yield put(

@@ -5,6 +5,7 @@ module.exports = {
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:sonarjs/recommended",
     "prettier"
   ],
@@ -86,7 +87,6 @@ module.exports = {
     "react/display-name": "off",
     "react/jsx-key": "error",
     "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
-    "react-hooks/rules-of-hooks": "warn",
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",

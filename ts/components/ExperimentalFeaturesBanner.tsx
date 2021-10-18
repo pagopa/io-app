@@ -1,11 +1,10 @@
-import { Text } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, View } from "react-native";
-
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+import { Body } from "./core/typography/Body";
 
 const styles = StyleSheet.create({
   experimentalFeaturesBannerContainer: {
@@ -38,9 +37,9 @@ const ExperimentalFeaturesBanner = (
       />
     </View>
     <View style={styles.experimentalFeaturesBannerRight}>
-      <Text style={styles.experimentalFeaturesBannerMessage}>
+      <Body color={"white"} weight={"SemiBold"}>
         {I18n.t("profile.main.experimentalFeatures.bannerMessage")}
-      </Text>
+      </Body>
     </View>
   </View>
 );

@@ -45,9 +45,10 @@ const chooseRenderScreen = (props: Props) => {
 };
 
 const MainIbanScreen: React.FunctionComponent<Props> = props => {
+  const { reset } = props;
   useEffect(() => {
-    props.reset();
-  }, []);
+    reset();
+  }, [reset]);
   return chooseRenderScreen(props);
 };
 

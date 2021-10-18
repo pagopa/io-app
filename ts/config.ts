@@ -7,7 +7,8 @@ import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://assets.cdn.io.italia.it" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL =
+  "https://assets.cdn.io.italia.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -73,9 +74,8 @@ export const euCovidCertificateEnabled: boolean =
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
-// PM activate payment on payment method Feature Flag
-export const pmActivatePaymentEnabled: boolean =
-  Config.PM_ACTIVATE_PAYMENT_ENABLED === "YES";
+// Paypal configuration
+export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;

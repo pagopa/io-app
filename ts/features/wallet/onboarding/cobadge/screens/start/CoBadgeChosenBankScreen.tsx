@@ -55,16 +55,17 @@ const abiListLoadingError = (
  */
 const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
   const { showModal, hideModal } = useContext(LightModalContext);
+  const { abiListStatus, loadAbiList } = props;
 
   React.useEffect(() => {
     fold(
-      props.abiListStatus,
-      () => props.loadAbiList(),
+      abiListStatus,
+      () => loadAbiList(),
       () => null,
       _ => null,
-      _ => props.loadAbiList()
+      _ => loadAbiList()
     );
-  }, []);
+  }, [abiListStatus, loadAbiList]);
 
   const openTosModal = () => {
     showModal(<TosBonusComponent tos_url={tos_url} onClose={hideModal} />);

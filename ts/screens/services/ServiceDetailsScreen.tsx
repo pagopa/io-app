@@ -144,25 +144,20 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { service, serviceId } = this;
+    const { service } = this;
 
-    // collect the service metadata
-    const potServiceMetadata =
-      this.props.content.servicesMetadata.byId[serviceId] || pot.none;
-
-    const metadata = pot.toOption(potServiceMetadata).toUndefined();
+    const metadata = service.service_metadata;
 
     // if markdown content is not available, render immediately what is possible
     // but we must wait for metadata load to be completed to avoid flashes
-    const isMarkdownAvailable =
-      pot.isLoading(potServiceMetadata) || metadata?.description;
+    const isMarkdownAvailable = metadata?.description;
     const isMarkdownLoaded = isMarkdownAvailable
       ? this.state.isMarkdownLoaded
       : true;
     // if markdown data is available, wait for it to be rendered
-    const canRenderItems = pot.isError(potServiceMetadata) || isMarkdownLoaded;
+    const canRenderItems = isMarkdownLoaded;
 
-    const maybeCTA = getServiceCTA(potServiceMetadata);
+    const maybeCTA = getServiceCTA(metadata);
 
     return (
       <BaseScreenComponent
@@ -209,7 +204,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               <View spacer={true} large={true} />
 
               <ServiceMetadata
-                servicesMetadata={metadata}
+                servicesMetadata={service.service_metadata}
                 organizationFiscalCode={service.organization_fiscal_code}
                 getItemOnPress={handleItemOnPress}
                 serviceId={service.service_id}
@@ -229,7 +224,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               ctas={maybeCTA.value}
               xsmall={false}
               dispatch={this.props.dispatch}
-              serviceMetadata={potServiceMetadata}
+              serviceMetadata={metadata}
               service={service}
             />
           </View>

@@ -1,6 +1,6 @@
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { Content, H1, View } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -26,6 +26,7 @@ import {
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { H1 } from "../../components/core/typography/H1";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{

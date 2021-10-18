@@ -166,15 +166,16 @@ const addPaymentMethod = (action: () => void) =>
  */
 const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
   const [potState, setPotCurrentState] = useState(props.potWallets.kind);
+  const { potWallets } = props;
 
   useEffect(() => {
-    if (props.potWallets.kind !== potState) {
-      setPotCurrentState(props.potWallets.kind);
-      if (pot.isError(props.potWallets)) {
+    if (potWallets.kind !== potState) {
+      setPotCurrentState(potWallets.kind);
+      if (pot.isError(potWallets)) {
         showToast(I18n.t("global.genericError"), "danger");
       }
     }
-  }, [props.potWallets.kind]);
+  }, [potWallets, potState]);
 
   return pot.fold(
     props.potWallets,
@@ -200,9 +201,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: paymentMethodsWithActivationStatusSelector(state),
-  atLeastOnePaymentMethodActive: atLeastOnePaymentMethodHasBpdEnabledSelector(
-    state
-  )
+  atLeastOnePaymentMethodActive:
+    atLeastOnePaymentMethodHasBpdEnabledSelector(state)
 });
 
 export default connect(

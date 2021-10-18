@@ -52,19 +52,28 @@ const OnboardingServicesPreferenceScreen = (
   const [prevPotProfile, setPrevPotProfile] = React.useState<
     typeof props.potProfile
   >(props.potProfile);
+
+  const { profileServicePreferenceMode, potProfile, onContinue } = props;
+
   React.useEffect(() => {
     // when the user made a choice (the profile is right updated), continue to the next step
-    if (isServicesPreferenceModeSet(props.profileServicePreferenceMode)) {
-      props.onContinue(isFirstOnboarding);
+    if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
+      onContinue(isFirstOnboarding);
       return;
     }
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
-    if (!pot.isError(prevPotProfile) && pot.isError(props.potProfile)) {
+    if (!pot.isError(prevPotProfile) && pot.isError(potProfile)) {
       showToast(I18n.t("global.genericError"));
     }
-    setPrevPotProfile(props.potProfile);
-  }, [props.potProfile]);
+    setPrevPotProfile(potProfile);
+  }, [
+    isFirstOnboarding,
+    prevPotProfile,
+    potProfile,
+    profileServicePreferenceMode,
+    onContinue
+  ]);
 
   const handleOnContinue = () => {
     if (modeSelected) {

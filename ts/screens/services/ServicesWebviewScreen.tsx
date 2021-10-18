@@ -1,11 +1,10 @@
 import CookieManager, { Cookie } from "@react-native-community/cookies";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { fromNullable, none } from "fp-ts/lib/Option";
+import { fromEither, fromNullable } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -15,11 +14,11 @@ import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { internalRouteNavigationParamsSelector } from "../../store/reducers/internalRouteNavigation";
 import { GlobalState } from "../../store/reducers/types";
 import { ServicesWebviewParams } from "../../types/ServicesWebviewParams";
 import { resetInternalRouteNavigation } from "../../store/actions/internalRouteNavigation";
+import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -43,6 +42,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
     CookieManager.clearAll().catch(_ => setCookieError(true));
   };
 
+  // TODO: rewrite this hook following all the hooks rules
   React.useEffect(() => {
     const { navigationParams, token } = props;
     // if params can't be decoded or the service has not a valid token name in its metadata (token is none)
@@ -102,24 +102,16 @@ const mapStateToProps = (state: GlobalState) => {
     internalRouteNavigationParamsSelector(state)
   );
 
-  // Get TokenName parameter from service metadata
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
-  const tokenName = maybeParams.fold(
-    () => none,
-    params => {
-      const metadata = servicesMetadataByID[params.serviceId];
-      const token = pot.getOrElse(
-        pot.map(metadata, m => m && m.token_name),
-        undefined
-      );
-      return fromNullable(token);
-    }
-  );
+  const token = fromEither(maybeParams)
+    .chain(params =>
+      fromNullable(serviceMetadataByIdSelector(params.serviceId)(state))
+    )
+    .mapNullable(m => m.token_name)
+    .chain(t => tokenFromNameSelector(t as TokenName)(state));
 
   return {
     navigationParams: maybeParams,
-    token: tokenName.chain(t => tokenFromNameSelector(t as TokenName)(state))
+    token
   };
 };
 

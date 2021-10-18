@@ -10,16 +10,18 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
-  getCodiceAvviso,
-  getTransactionFee,
-  getTransactionIUV
-} from "../payment";
-import {
   decodePagoPaQrCode,
+  DetailV2Keys,
+  ErrorTypes,
   getAmountFromPaymentAmount,
-  getRptIdFromNoticeNumber
+  getCodiceAvviso,
+  getErrorDescriptionV2,
+  getRptIdFromNoticeNumber,
+  getTransactionFee,
+  getTransactionIUV,
+  getV2ErrorMainType
 } from "../payment";
-import I18n from "react-native-i18n";
+import I18n from "../../i18n";
 
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
@@ -278,5 +280,64 @@ describe("getCodiceAvviso", () => {
     )
   ].forEach(tuple => {
     expect(getCodiceAvviso(tuple.e1)).toEqual(tuple.e2);
+  });
+});
+
+describe("getV2ErrorMacro", () => {
+  it("Should return correct macro error type given a specific error code", () => {
+    [
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_CANALE_DISABILITATO", "TECHNICAL"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_SINTASSI_EXTRAXSD", "DATA"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_STAZIONE_INT_PA_TIMEOUT", "EC"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_IN_CORSO", "ONGOING"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_ANNULLATO", "REVOKED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_SCADUTO", "EXPIRED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_DUPLICATO", "DUPLICATED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED")
+    ].forEach(t => {
+      expect(getV2ErrorMainType(t.e1)).toBe(t.e2);
+    });
+  });
+});
+
+describe("getErrorDescriptionV2", () => {
+  it("Should return correct error description given a specific error code", () => {
+    [
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_CANALE_DISABILITATO",
+        I18n.t("wallet.errors.TECHNICAL")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_SINTASSI_EXTRAXSD",
+        I18n.t("wallet.errors.DATA")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_STAZIONE_INT_PA_TIMEOUT",
+        I18n.t("wallet.errors.EC")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PAA_PAGAMENTO_IN_CORSO",
+        I18n.t("wallet.errors.ONGOING")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PAA_PAGAMENTO_ANNULLATO",
+        I18n.t("wallet.errors.REVOKED")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PAA_PAGAMENTO_SCADUTO",
+        I18n.t("wallet.errors.EXPIRED")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PAA_PAGAMENTO_DUPLICATO",
+        I18n.t("wallet.errors.DUPLICATED")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_RT_SCONOSCIUTA",
+        I18n.t("wallet.errors.GENERIC_ERROR")
+      ),
+      Tuple2<DetailV2Keys | undefined, undefined>(undefined, undefined)
+    ].forEach(t => {
+      expect(getErrorDescriptionV2(t.e1)).toBe(t.e2);
+    });
   });
 });

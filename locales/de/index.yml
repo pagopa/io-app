@@ -725,9 +725,6 @@ wallet:
     contextualHelpTitle: Zusammenfassung der Transaktion
   insertManually:
     header: Zahlungsmitteilungsdaten einfügen
-    title: Geben Sie Ihre Zahlungsmitteilungsdaten ein,
-    info: welche es uns ermöglichen, die Transaktion zu erkennen
-    link: Wo befinden sich diese?
     noticeCode: Zahlungsmitteilungscode
     entityCode: Steuernummer der Körperschaft
     amount: Betrag (€)
@@ -798,9 +795,6 @@ wallet:
     wrongQrCode: QR-Code nicht gültig. Geben Sie die Daten manuell ein.
     byCameraTitle: Hinweis QR-Code
     setManually: Manuell eingeben
-    cameraUsagePermissionInfobox:
-      title: "IO-App Kamera-Nutzungserlaubnis"
-      message: "Die IO-App muss auf die Kamera zugreifen, um den QR-Code zu fotografieren"
     settingsAlert:
       title: Es scheint, dass der Zugriff auf die Fotogalerie verweigert wurde
       buttonText:
@@ -808,9 +802,9 @@ wallet:
           cancel: Abbrechen
     contextualHelpTitle: Wie man eine Zahlungsmitteilung bezahlt
   errors:
-    PAYMENT_DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
+    DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
     INVALID_AMOUNT: Der eingegebene Betrag ist nicht korrekt. Wenn Sie den Betrag manuell eingegeben haben, überprüfen Sie bitte, ob er korrekt ist und versuchen Sie es erneut.
-    PAYMENT_ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
+    ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
     PAYMENT_EXPIRED: Diese Zahlungsmitteilung ist bereits ungültig und kann nicht mehr bezahlt werden.
     PAYMENT_UNAVAILABLE: Ihr Zahlungsversuch für diese Zahlungsmitteilung kann derzeit nicht gestartet werden, bitte versuchen Sie es später erneut.
     PAYMENT_UNKNOWN: Diese Zahlungsmitteilung wird von der Körperschaft, die sie erstellt hat, nicht anerkannt, die Zahlung kann nicht ausgeführt werden.
@@ -923,7 +917,7 @@ messages:
   deadlines:
     emptyMessage:
       title: Sie haben keine Fälligkeiten.
-      subtitle:  Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen. 
+      subtitle: Verwenden Sie die obere Funktion, um frühere Fälligkeiten einzusehen.
   medical:
     not_available: "n/v"
     prescription: Elektronische Verschreibung

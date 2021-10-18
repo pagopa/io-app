@@ -2,19 +2,23 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
-import { differenceInMinutes } from "date-fns";
-import { Option, some } from "fp-ts/lib/Option";
-import { BugReporting } from "instabug-reactnative";
+import * as t from "io-ts";
+import { Option } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import { ComponentProps } from "react";
+import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { View } from "native-base";
+import {
+  instabugLog,
+  openInstabugQuestionReport,
+  setInstabugUserAttribute,
+  TypeLogs
+} from "../../../boot/configureInstabug";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -24,10 +28,30 @@ import {
   paymentIdPolling,
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
-import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
-import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
+import {
+  ErrorTypes,
+  getCodiceAvviso,
+  getPaymentHistoryDetails,
+  getV2ErrorMainType,
+  paymentInstabugTag
+} from "../../../utils/payment";
+import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { H4 } from "../../../components/core/typography/H4";
+import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import {
+  PaymentHistory,
+  paymentsHistorySelector
+} from "../../../store/reducers/payments/history";
+import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 
 type NavigationParams = {
   error: Option<
@@ -39,7 +63,6 @@ type NavigationParams = {
   >;
   rptId: RptId;
   onCancel: () => void;
-  onRetry: () => void;
 };
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -48,277 +71,264 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const styles = StyleSheet.create({
-  contentWrapper: {
-    alignItems: "center"
-  },
+const baseIconPath = "../../../../img/";
 
-  errorMessage: {
-    fontSize: customVariables.fontSize2,
-    paddingTop: customVariables.contentPadding,
-    textAlign: "center"
-  },
-
-  errorMessageSubtitle: {
-    textAlign: "center"
-  },
-
-  paddedLR: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  }
-});
-
-const MAX_MINUTES_FOR_PAYMENT_DELETION = 15;
-
-/**
- * Print the icon according to current error status
- * @param error
- */
-export const renderErrorTransactionIcon = (
-  error: NavigationParams["error"]
-) => {
-  const baseIconPath = "../../../../img/wallet/errors/";
-  switch (error.toUndefined()) {
-    case "PAYMENT_DUPLICATED":
-      return require(baseIconPath + "payment-duplicated-icon.png");
-    case "INVALID_AMOUNT":
-      return require(baseIconPath + "invalid-amount-icon.png");
-    case "PAYMENT_ONGOING":
-      return require(baseIconPath + "payment-ongoing-icon.png");
-    case "PAYMENT_EXPIRED":
-      return require(baseIconPath + "payment-expired-icon.png");
-    case "PAYMENT_UNAVAILABLE":
-      return require(baseIconPath + "payment-unavailable-icon.png");
-    case "PAYMENT_UNKNOWN":
-      return require(baseIconPath + "payment-unknown-icon.png");
-    case "DOMAIN_UNKNOWN":
-      return require(baseIconPath + "domain-unknown-icon.png");
-    case "PAYMENT_ID_TIMEOUT":
-      return require(baseIconPath + "missing-payment-id-icon.png");
-    default:
-      return require(baseIconPath + "generic-error-icon.png");
-  }
+const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
+  DATA: require(baseIconPath + "pictograms/doubt.png"),
+  DUPLICATED: require(baseIconPath + "pictograms/fireworks.png"),
+  EC: require(baseIconPath + "wallet/errors/payment-unavailable-icon.png"),
+  EXPIRED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
+  ONGOING: require(baseIconPath + "pictograms/hourglass.png"),
+  REVOKED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
+  UNCOVERED: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
+  TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png")
 };
+
+// Save the rptId as attribute and open the Instabug chat.
+const requestAssistanceForPaymentFailure = (
+  rptId: RptId,
+  payment?: PaymentHistory
+) => {
+  Instabug.appendTags([paymentInstabugTag]);
+  setInstabugUserAttribute(
+    "blockedPaymentRptId",
+    RptIdFromString.encode(rptId)
+  );
+  if (payment) {
+    instabugLog(
+      getPaymentHistoryDetails(payment),
+      TypeLogs.INFO,
+      paymentInstabugTag
+    );
+  }
+  openInstabugQuestionReport();
+};
+
+type ScreenUIContents = {
+  image: ImageSourcePropType;
+  title: string;
+  subtitle?: React.ReactNode;
+  footerButtons?: ComponentProps<typeof FooterStackButton>["buttons"];
+};
+
+const ErrorCodeCopyComponent = ({
+  error
+}: {
+  error: keyof typeof Detail_v2Enum;
+}): React.ReactElement => (
+  <View testID={"error-code-copy-component"}>
+    <H4 weight={"Regular"}>{I18n.t("wallet.errors.assistanceLabel")}</H4>
+    <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
+      {error}
+    </H4>
+    <View spacer />
+    <CopyButtonComponent textToCopy={error} />
+  </View>
+);
 
 /**
  * Convert the error code into a user-readable string
- * @param error
+ * @param maybeError
+ * @param rptId
+ * @param onCancel
+ * @param payment
  */
-export const renderErrorTransactionMessage = (
-  error: NavigationParams["error"]
-): string => {
-  switch (error.toUndefined()) {
-    case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    case "INVALID_AMOUNT":
-      return I18n.t("wallet.errors.INVALID_AMOUNT");
-    case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "PAYMENT_EXPIRED":
-      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
-    case "PAYMENT_UNAVAILABLE":
-      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
-    case "PAYMENT_UNKNOWN":
-      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
-    case "DOMAIN_UNKNOWN":
-      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
-    case "PAYMENT_ID_TIMEOUT":
-      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
+export const errorTransactionUIElements = (
+  maybeError: NavigationParams["error"],
+  rptId: RptId,
+  onCancel: () => void,
+  payment?: PaymentHistory
+): ScreenUIContents => {
+  const errorORUndefined = maybeError.toUndefined();
+
+  if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
+    return {
+      image: require(baseIconPath +
+        "wallet/errors/missing-payment-id-icon.png"),
+      title: I18n.t("wallet.errors.MISSING_PAYMENT_ID")
+    };
+  }
+  const requestAssistance = () =>
+    requestAssistanceForPaymentFailure(rptId, payment);
+
+  const errorMacro = getV2ErrorMainType(errorORUndefined);
+  const validError = t.keyof(Detail_v2Enum).decode(errorORUndefined);
+  const genericErrorSubTestID = "generic-error-subtitle";
+  const subtitle = validError.fold(
+    _ => (
+      <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+        {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+      </H4>
+    ),
+    error => <ErrorCodeCopyComponent error={error} />
+  );
+
+  const image = errorMacro
+    ? imageMapping[errorMacro]
+    : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
+
+  const sendReportButtonConfirm = [
+    confirmButtonProps(
+      requestAssistance,
+      I18n.t("wallet.errors.sendReport"),
+      undefined,
+      "sendReportButtonConfirm"
+    )
+  ];
+  const sendReportButtonCancel = [
+    cancelButtonProps(
+      requestAssistance,
+      I18n.t("wallet.errors.sendReport"),
+      undefined,
+      "sendReportButtonCancel"
+    )
+  ];
+  const closeButtonCancel = [
+    cancelButtonProps(
+      onCancel,
+      I18n.t("global.buttons.close"),
+      undefined,
+      "closeButtonCancel"
+    )
+  ];
+  const closeButtonConfirm = [
+    confirmButtonProps(
+      onCancel,
+      I18n.t("global.buttons.close"),
+      undefined,
+      "closeButtonConfirm"
+    )
+  ];
+
+  switch (errorMacro) {
+    case "TECHNICAL":
+      return {
+        image,
+        title: I18n.t("wallet.errors.TECHNICAL"),
+        subtitle,
+        footerButtons: [...sendReportButtonConfirm, ...closeButtonCancel]
+      };
+    case "DATA":
+      return {
+        image,
+        title: I18n.t("wallet.errors.DATA"),
+        subtitle,
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
+      };
+    case "EC":
+      return {
+        image,
+        title: I18n.t("wallet.errors.EC"),
+        subtitle,
+        footerButtons: [...sendReportButtonConfirm, ...closeButtonCancel]
+      };
+    case "DUPLICATED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.DUPLICATED"),
+        footerButtons: [...closeButtonCancel]
+      };
+    case "ONGOING":
+      return {
+        image,
+        title: I18n.t("wallet.errors.ONGOING"),
+        subtitle: (
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"ongoing-subtitle"}
+          >
+            {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
+      };
+    case "EXPIRED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.EXPIRED"),
+        subtitle: (
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"expired-subtitle"}
+          >
+            {I18n.t("wallet.errors.contactECsubtitle")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonCancel]
+      };
+    case "REVOKED":
+      return {
+        image,
+        title: I18n.t("wallet.errors.REVOKED"),
+        subtitle: (
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"revoked-subtitle"}
+          >
+            {I18n.t("wallet.errors.contactECsubtitle")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonCancel]
+      };
+    case "UNCOVERED":
     default:
-      return I18n.t("wallet.errors.GENERIC_ERROR");
+      return {
+        image,
+        title: I18n.t("wallet.errors.GENERIC_ERROR"),
+        subtitle: (
+          <H4 weight={"Regular"} testID={genericErrorSubTestID}>
+            {I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm, ...sendReportButtonCancel]
+      };
   }
 };
 
-class TransactionErrorScreen extends React.Component<Props> {
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
+const TransactionErrorScreen = (props: Props) => {
+  const rptId = props.navigation.getParam("rptId");
+  const error = props.navigation.getParam("error");
+  const onCancel = props.navigation.getParam("onCancel");
+  const { paymentsHistory } = props;
 
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-  }
+  const codiceAvviso = getCodiceAvviso(rptId);
 
-  private handleBackPress = () => {
-    this.props.backToEntrypointPayment();
+  const payment = paymentsHistory.find(
+    p => codiceAvviso === getCodiceAvviso(p.data)
+  );
+
+  const { title, subtitle, footerButtons, image } = errorTransactionUIElements(
+    error,
+    rptId,
+    onCancel,
+    payment
+  );
+  const handleBackPress = () => {
+    props.backToEntrypointPayment();
     return true;
   };
 
-  // Save the rptId as attribute and open the Instabug chat.
-  private sendPaymentBlockedBug = () => {
-    const rptId = this.props.navigation.getParam("rptId");
-    setInstabugUserAttribute(
-      "blockedPaymentRptId",
-      RptIdFromString.encode(rptId)
-    );
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired
-    ]);
-  };
+  useHardwareBackButton(handleBackPress);
 
-  // Render a specific screen for the ON_GOING error.
-  private renderPaymentOngoingError = () => {
-    const rptId = this.props.navigation.getParam("rptId");
-    const lastDeleted = this.props.lastDeleted;
-
-    if (
-      lastDeleted !== null &&
-      RptIdFromString.encode(lastDeleted.rptId) ===
-        RptIdFromString.encode(rptId)
-    ) {
-      // We have requested the deletion of this rptId
-      const deletedMinutesAgo = differenceInMinutes(Date.now(), lastDeleted.at);
-      // We must wait 15 minutes from the deletion
-      const deleteInProgress =
-        deletedMinutesAgo < MAX_MINUTES_FOR_PAYMENT_DELETION;
-
-      const errorMessage = deleteInProgress
-        ? I18n.t("wallet.errors.PAYMENT_ONGOING_CANCELLED", {
-            remainingMinutes: 15 - deletedMinutesAgo
-          })
-        : I18n.t("wallet.errors.PAYMENT_ONGOING_CANCELLED_TIMEOUT");
-
-      return (
-        <React.Fragment>
-          <Image source={renderErrorTransactionIcon(some("PAYMENT_ONGOING"))} />
-          <View spacer={true} />
-          <Text bold={true} style={styles.errorMessage}>
-            {errorMessage}
-          </Text>
-          {!deleteInProgress && (
-            <React.Fragment>
-              <View spacer={true} extralarge={true} />
-              <ButtonDefaultOpacity
-                block={true}
-                onPress={this.sendPaymentBlockedBug}
-              >
-                <Text>Invia segnalazione</Text>
-              </ButtonDefaultOpacity>
-            </React.Fragment>
-          )}
-        </React.Fragment>
-      );
-    }
-
-    return (
-      <React.Fragment>
-        <Image source={renderErrorTransactionIcon(some("PAYMENT_ONGOING"))} />
-        <View spacer={true} />
-        <Text bold={true} style={styles.errorMessage}>
-          {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL")}
-        </Text>
-        <View spacer={true} extralarge={true} />
-        <Text style={styles.errorMessageSubtitle}>
-          {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL_TIMEOUT")}
-        </Text>
-        <View spacer={true} extralarge={true} />
-        <ButtonDefaultOpacity block={true} onPress={this.sendPaymentBlockedBug}>
-          <Text>{I18n.t("wallet.errors.sendReport")}</Text>
-        </ButtonDefaultOpacity>
-      </React.Fragment>
-    );
-  };
-
-  public render() {
-    const error = this.props.navigation.getParam("error");
-
-    const canRetry: boolean = error
-      .filter(
-        _ =>
-          _ === "INVALID_AMOUNT" ||
-          _ === "PAYMENT_ID_TIMEOUT" ||
-          _ === "PAYMENT_UNAVAILABLE" ||
-          _ === undefined
-      )
-      .isSome();
-    return (
-      <BaseScreenComponent
-        goBack={this.onPressCancel}
-        headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
-      >
-        <Content noPadded={true} style={styles.paddedLR}>
-          <View style={styles.contentWrapper}>
-            <View spacer={true} extralarge={true} />
-
-            {error.isSome() && error.value === "PAYMENT_ONGOING" ? (
-              this.renderPaymentOngoingError()
-            ) : (
-              <React.Fragment>
-                <Image source={renderErrorTransactionIcon(error)} />
-                <View spacer={true} />
-                <Text bold={true} style={styles.errorMessage}>
-                  {renderErrorTransactionMessage(error)}
-                </Text>
-                <View spacer={true} extralarge={true} />
-
-                {canRetry && (
-                  <React.Fragment>
-                    <View spacer={true} extralarge={true} />
-                    <Text style={styles.errorMessageSubtitle}>
-                      {I18n.t("wallet.errorTransaction.submitBugText")}
-                    </Text>
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            )}
-          </View>
-        </Content>
-        {this.renderButtons(canRetry)}
-      </BaseScreenComponent>
-    );
-  }
-
-  /**
-   * Render footer buttons, cancel and retry buttons are rendered conditionally.
-   */
-  private renderButtons = (canRetry: boolean) => {
-    const cancelButtonProps = {
-      cancel: true,
-      onPress: this.onPressCancel,
-      title: I18n.t("global.buttons.cancel")
-    };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.onPressRetry,
-      title: I18n.t("global.buttons.retry")
-    };
-    const closeButtonProps = {
-      block: true,
-      bordered: true,
-      light: true,
-      onPress: this.onPressCancel,
-      title: I18n.t("global.buttons.close")
-    };
-    return canRetry ? (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={cancelButtonProps}
-        rightButton={retryButtonProps}
-      />
-    ) : (
-      <FooterWithButtons type="SingleButton" leftButton={closeButtonProps} />
-    );
-  };
-
-  private onPressCancel = () => {
-    if (this.props.navigation.state.params !== undefined) {
-      this.props.navigation.state.params.onCancel();
-    }
-  };
-
-  private onPressRetry = () => {
-    const navigationParams = this.props.navigation.state.params;
-    if (navigationParams !== undefined) {
-      // Go back in TransactionSummaryScreen
-      this.props.navigation.goBack();
-      // Retry the payment
-      navigationParams.onRetry();
-    }
-  };
-}
+  return (
+    <BaseScreenComponent>
+      <SafeAreaView style={IOStyles.flex}>
+        <InfoScreenComponent
+          image={<Image source={image} />}
+          title={title}
+          body={subtitle}
+        />
+        {footerButtons && <FooterStackButton buttons={footerButtons} />}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
-  lastDeleted: paymentsLastDeletedStateSelector(state)
+  paymentsHistory: paymentsHistorySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

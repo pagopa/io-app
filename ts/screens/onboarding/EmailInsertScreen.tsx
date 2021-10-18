@@ -17,7 +17,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import H4 from "../../components/ui/H4";
 import I18n from "../../i18n";
 import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
@@ -38,6 +37,7 @@ import customVariables from "../../theme/variables";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
+import { H1 } from "../../components/core/typography/H1";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -50,10 +50,6 @@ const styles = StyleSheet.create({
   },
   horizontalPadding: {
     paddingHorizontal: customVariables.contentPadding
-  },
-  boldH4: {
-    fontWeight: customVariables.textBoldWeight,
-    paddingTop: customVariables.spacerLargeHeight
   },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
@@ -167,11 +163,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private navigateToEmailReadScreen = () => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [navigateToEmailReadScreen()]
-    });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(StackActions.popToTop());
+    this.props.navigation.dispatch(navigateToEmailReadScreen());
   };
 
   public componentDidMount() {
@@ -253,11 +246,15 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       >
         <View style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H4 style={[styles.boldH4, styles.horizontalPadding]}>
+            <H1
+              color={"bluegreyDark"}
+              weight={"Bold"}
+              style={[styles.horizontalPadding]}
+            >
               {isFromProfileSection
                 ? I18n.t("email.edit.title")
                 : I18n.t("email.insert.title")}
-            </H4>
+            </H1>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
               <Text>

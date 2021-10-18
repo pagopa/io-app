@@ -231,9 +231,11 @@ export const AuthSeq: ReadonlyArray<Action> = [
     entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   } as SpidIdp),
-  loginSuccess(
-    "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken
-  ),
+  loginSuccess({
+    token:
+      "8990c190291504710c02ad0e500b6a369f69d8d78af51591f14bb7d03d60911e466213e159b9ee7d69cd5c64437d2adc" as SessionToken,
+    idp: "posteid"
+  }),
   sessionInformationLoadSuccess({
     bpdToken:
       "h7890416477432ecbde1f94dfe59f2d6350f716cb2cf523d8cad36fa18d71fa9924e0ea6d372ecab86447abe93d99cd5",

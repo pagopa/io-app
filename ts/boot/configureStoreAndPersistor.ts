@@ -22,6 +22,7 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import createDebugger from "redux-flipper";
+import _ from "lodash";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -46,7 +47,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 17;
+const CURRENT_REDUX_STORE_VERSION = 18;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -163,10 +164,7 @@ const migrations: MigrationManifest = {
     ...state,
     content: {
       ...(state as PersistedGlobalState).content,
-      servicesMetadata: {
-        ...(state as PersistedGlobalState).content.servicesMetadata,
-        byId: {}
-      }
+      servicesMetadata: {}
     }
   }),
 
@@ -223,7 +221,6 @@ const migrations: MigrationManifest = {
   "14": (state: PersistedState) => {
     const content = (state as PersistedGlobalState).content;
     const newContent: ContentState = {
-      servicesMetadata: content.servicesMetadata,
       municipality: content.municipality,
       contextualHelp: pot.none,
       idps: remoteUndefined
@@ -265,6 +262,17 @@ const migrations: MigrationManifest = {
           ...notifications.installation,
           registeredToken: undefined
         }
+      }
+    };
+  },
+  // Version 18
+  // since we removed servicesMetadata content section we need to migrate previous store versions
+  "18": (state: PersistedState) => {
+    const content: ContentState = (state as PersistedGlobalState).content;
+    return {
+      ...state,
+      content: {
+        ..._.omit(content, "servicesMetadata")
       }
     };
   }
@@ -391,4 +399,4 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   return { store, persistor };
 }
 
-export default configureStoreAndPersistor;
+export const { store, persistor } = configureStoreAndPersistor();

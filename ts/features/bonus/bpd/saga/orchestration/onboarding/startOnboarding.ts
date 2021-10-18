@@ -56,17 +56,15 @@ export function* isBpdEnabled(): Generator<
   if (pot.isSome(remoteActive)) {
     return right<Error, boolean>(remoteActive.value);
   } else {
-    const activationStatus: SagaCallReturnType<typeof getActivationStatus> = yield call(
-      getActivationStatus
-    );
+    const activationStatus: SagaCallReturnType<typeof getActivationStatus> =
+      yield call(getActivationStatus);
     return activationStatus.map(citizen => citizen.enabled);
   }
 }
 
 export function* bpdStartOnboardingWorker() {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> = yield select(
-    navigationCurrentRouteSelector
-  );
+  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
+    yield select(navigationCurrentRouteSelector);
 
   // go to the loading page (if I'm not on that screen)
   if (currentRoute.isSome() && !isLoadingScreen(currentRoute.value)) {

@@ -92,6 +92,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       }
     >
       <RNCWebView
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
         cacheEnabled={true}
         injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
         injectedJavaScriptForMainFrameOnly={true}

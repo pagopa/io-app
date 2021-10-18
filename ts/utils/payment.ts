@@ -12,10 +12,8 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
 import I18n from "../i18n";
 
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
-import { DetailEnum } from "../../definitions/backend/PaymentProblemJson";
 import { PaymentHistory } from "../store/reducers/payments/history";
 import {
   BancomatPaymentMethod,
@@ -30,12 +28,17 @@ import {
   OutcomeCodes,
   OutcomeCodesKey
 } from "../types/outcomeCode";
+import {
+  Detail_v2Enum,
+  DetailEnum
+} from "../../definitions/backend/PaymentProblemJson";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
 import { formatNumberCentsToAmount } from "./stringBuilder";
 import { maybeNotNullyString } from "./strings";
-import { getProfileDetailsLog } from "./profile";
+
+export const paymentInstabugTag = "payment-support";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -153,11 +156,11 @@ export const getErrorDescription = (
   }
   switch (error) {
     case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+      return I18n.t("wallet.errors.DUPLICATED");
     case "INVALID_AMOUNT":
       return I18n.t("wallet.errors.INVALID_AMOUNT");
     case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+      return I18n.t("wallet.errors.ONGOING");
     case "PAYMENT_EXPIRED":
       return I18n.t("wallet.errors.PAYMENT_EXPIRED");
     case "PAYMENT_UNAVAILABLE":
@@ -171,13 +174,113 @@ export const getErrorDescription = (
   }
 };
 
-export const getPaymentHistoryDetails = (
-  payment: PaymentHistory,
-  profile: InitializedProfile
-): string => {
-  const profileDetails = getProfileDetailsLog(profile, " / ");
-  return JSON.stringify({ payment, profileDetails });
+type MainErrorType = "TECHNICAL" | "DATA" | "EC";
+
+export type ErrorTypes =
+  | MainErrorType
+  | "REVOKED"
+  | "EXPIRED"
+  | "ONGOING"
+  | "DUPLICATED"
+  | "UNCOVERED";
+
+export type DetailV2Keys = keyof typeof Detail_v2Enum;
+
+const technicalSet: Set<DetailV2Keys> = new Set<DetailV2Keys>([
+  "PPT_PSP_SCONOSCIUTO",
+  "PPT_PSP_DISABILITATO",
+  "PPT_INTERMEDIARIO_PSP_SCONOSCIUTO",
+  "PPT_INTERMEDIARIO_PSP_DISABILITATO",
+  "PPT_CANALE_SCONOSCIUTO",
+  "PPT_CANALE_DISABILITATO",
+  "PPT_AUTENTICAZIONE",
+  "PPT_AUTORIZZAZIONE",
+  "PPT_DOMINIO_DISABILITATO",
+  "PPT_INTERMEDIARIO_PA_DISABILITATO",
+  "PPT_STAZIONE_INT_PA_DISABILITATA",
+  "PPT_CODIFICA_PSP_SCONOSCIUTA",
+  "PPT_SEMANTICA",
+  "PPT_SYSTEM_ERROR",
+  "PAA_SEMANTICA"
+]);
+
+const dataSet = new Set<DetailV2Keys>([
+  "PPT_SINTASSI_EXTRAXSD",
+  "PPT_SINTASSI_XSD",
+  "PPT_DOMINIO_SCONOSCIUTO",
+  "PPT_STAZIONE_INT_PA_SCONOSCIUTA",
+  "PAA_PAGAMENTO_SCONOSCIUTO"
+]);
+
+const ecSet = new Set<DetailV2Keys>([
+  "PPT_STAZIONE_INT_PA_IRRAGGIUNGIBILE",
+  "PPT_STAZIONE_INT_PA_TIMEOUT",
+  "PPT_STAZIONE_INT_PA_ERRORE_RESPONSE",
+  "PPT_IBAN_NON_CENSITO",
+  "PAA_SINTASSI_EXTRAXSD",
+  "PAA_SINTASSI_XSD",
+  "PAA_ID_DOMINIO_ERRATO",
+  "PAA_ID_INTERMEDIARIO_ERRATO",
+  "PAA_STAZIONE_INT_ERRATA",
+  "PAA_ATTIVA_RPT_IMPORTO_NON_VALIDO"
+]);
+
+const v2ErrorMacrosMap = new Map<MainErrorType, Set<DetailV2Keys>>([
+  ["TECHNICAL", technicalSet],
+  ["DATA", dataSet],
+  ["EC", ecSet]
+]);
+
+/**
+ * This function is used to convert the raw error code to the main error type.
+ * Main error types is represented by the union type ErrorTypes.
+ * @param error
+ */
+export const getV2ErrorMainType = (
+  error?: DetailV2Keys
+): ErrorTypes | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+
+  const errorInMap = [...v2ErrorMacrosMap.keys()].find(k =>
+    fromNullable(v2ErrorMacrosMap.get(k)).fold(false, s => s.has(error))
+  );
+
+  if (errorInMap !== undefined) {
+    return errorInMap;
+  }
+
+  switch (error) {
+    case "PAA_PAGAMENTO_IN_CORSO":
+      return "ONGOING";
+    case "PAA_PAGAMENTO_ANNULLATO":
+      return "REVOKED";
+    case "PAA_PAGAMENTO_SCADUTO":
+      return "EXPIRED";
+    case "PAA_PAGAMENTO_DUPLICATO":
+      return "DUPLICATED";
+    default:
+      return "UNCOVERED";
+  }
 };
+
+export const getErrorDescriptionV2 = (
+  error?: DetailV2Keys
+): string | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+
+  const errorMacro = getV2ErrorMainType(error);
+
+  return I18n.t(`wallet.errors.${errorMacro}`, {
+    defaultValue: I18n.t("wallet.errors.GENERIC_ERROR")
+  });
+};
+
+export const getPaymentHistoryDetails = (payment: PaymentHistory): string =>
+  JSON.stringify({ payment });
 
 // return the transaction fee it transaction is defined and its fee property too
 export const getTransactionFee = (

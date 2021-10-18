@@ -17,9 +17,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @constructor
  */
 const ChoosePrivativeIssuerScreen = (props: Props): React.ReactElement => {
+  const { loadPrivativeIssuers } = props;
   useEffect(() => {
-    props.loadPrivativeIssuers();
-  }, []);
+    loadPrivativeIssuers();
+  }, [loadPrivativeIssuers]);
 
   if (props.privativeIssuers.kind !== "PotSome") {
     return <LoadChoosePrivativeIssuer />;

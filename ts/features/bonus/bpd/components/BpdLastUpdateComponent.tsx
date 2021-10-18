@@ -36,15 +36,16 @@ const BpdLastUpdateComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const { potLastUpdate } = props;
   useEffect(() => {
     if (!isFirstRender) {
-      if (pot.isError(props.potLastUpdate)) {
+      if (pot.isError(potLastUpdate)) {
         showToast(I18n.t("global.genericError"), "danger");
       }
     } else {
       setIsFirstRender(false);
     }
-  }, [props.potLastUpdate.kind]);
+  }, [potLastUpdate, isFirstRender]);
 
   return (
     <View style={[styles.row, IOStyles.horizontalContentPadding]}>

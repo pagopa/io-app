@@ -115,10 +115,11 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
     });
 
     // Start filtering list
-    const filteredServiceSectionsStates = await this.generateListStateMatchingSearchTextAsync(
-      listState,
-      searchText
-    );
+    const filteredServiceSectionsStates =
+      await this.generateListStateMatchingSearchTextAsync(
+        listState,
+        searchText
+      );
 
     // Unset filtering status
     this.setState({
@@ -138,10 +139,11 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
       });
 
       // Start filtering list
-      const filteredListStates = await this.generateListStateMatchingSearchTextAsync(
-        listState,
-        searchText
-      );
+      const filteredListStates =
+        await this.generateListStateMatchingSearchTextAsync(
+          listState,
+          searchText
+        );
 
       // Unset filtering status
       this.setState({

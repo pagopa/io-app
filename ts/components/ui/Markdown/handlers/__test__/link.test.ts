@@ -1,10 +1,9 @@
 import { left, right } from "fp-ts/lib/Either";
 import { deriveCustomHandledLink } from "../link";
 
-const loadingCases: ReadonlyArray<[
-  input: string,
-  expectedResult: ReturnType<typeof deriveCustomHandledLink>
-]> = [
+const loadingCases: ReadonlyArray<
+  [input: string, expectedResult: ReturnType<typeof deriveCustomHandledLink>]
+> = [
   ["", left(new Error(`"" is not recognized as a valid handled link`))],
   [
     "some text",

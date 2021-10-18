@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -29,7 +28,6 @@ import {
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -37,10 +35,11 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { maybeInnerProperty } from "../../utils/options";
 import {
   getCodiceAvviso,
-  getErrorDescription,
+  getErrorDescriptionV2,
   getPaymentHistoryDetails,
   getPaymentOutcomeCodeDescription,
-  getTransactionFee
+  getTransactionFee,
+  paymentInstabugTag
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import { isStringNullyOrEmpty } from "../../utils/strings";
@@ -88,20 +87,17 @@ const renderItem = (label: string, value?: string) => {
   );
 };
 
-const instabugTag = "payment-support";
 /**
  * Payment Details
  */
 class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private instabugLogAndOpenReport = () => {
-    Instabug.appendTags([instabugTag]);
-    pot.map(this.props.profile, p => {
-      instabugLog(
-        getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
-        TypeLogs.INFO,
-        instabugTag
-      );
-    });
+    Instabug.appendTags([paymentInstabugTag]);
+    instabugLog(
+      getPaymentHistoryDetails(this.props.navigation.getParam("payment")),
+      TypeLogs.INFO,
+      paymentInstabugTag
+    );
     openInstabugQuestionReport();
   };
 
@@ -117,7 +113,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // the error could be on attiva or while the payment execution
     // so the description is built first checking the attiva failure, alternatively
     // it checks about the outcome if the payment went wrong
-    const errorDetail = fromNullable(getErrorDescription(payment.failure)).alt(
+    const errorDetail = fromNullable(
+      getErrorDescriptionV2(payment.failure)
+    ).alt(
       fromNullable(payment.outcomeCode).chain(oc =>
         getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
       )
@@ -342,7 +340,6 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: profileSelector(state),
   outcomeCodes: outcomeCodesSelector(state)
 });
 

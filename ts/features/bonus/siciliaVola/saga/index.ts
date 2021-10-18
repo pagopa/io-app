@@ -23,6 +23,7 @@ import {
   svTosAccepted
 } from "../store/actions/activation";
 import {
+  svPossibleVoucherStateGet,
   svVoucherDetailGet,
   svVoucherListGet,
   svVoucherRevocation
@@ -40,6 +41,7 @@ import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBenef
 import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
 import { handleGetAeroportiBeneficiario } from "./networking/handleGetAeroportiBeneficiario";
 import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
+import { handleGetVoucheStati } from "./networking/handleGetVoucherStati";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -141,6 +143,14 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getType(svVoucherListGet.request),
     handleGetVoucherBeneficiario,
     siciliaVolaClient.getVoucherBeneficiario,
+    svSessionManager
+  );
+
+  // SV get the list of the possible voucher state
+  yield takeLatest(
+    getType(svPossibleVoucherStateGet.request),
+    handleGetVoucheStati,
+    siciliaVolaClient.getStatiVoucher,
     svSessionManager
   );
 

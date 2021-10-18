@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
@@ -57,16 +56,25 @@ const styles = StyleSheet.create({
  */
 const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   const loading = isLoading(props.unsubscription);
+  const {
+    unsubscription,
+    completeUnsubscriptionSuccess,
+    completeUnsubscriptionFailure
+  } = props;
 
   useEffect(() => {
-    if (isError(props.unsubscription)) {
+    if (isError(unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.failure"), "danger");
-      props.completeUnsubscriptionFailure();
-    } else if (isReady(props.unsubscription)) {
+      completeUnsubscriptionFailure();
+    } else if (isReady(unsubscription)) {
       showToast(I18n.t("bonus.bpd.unsubscribe.success"), "success");
-      props.completeUnsubscriptionSuccess();
+      completeUnsubscriptionSuccess();
     }
-  }, [props.unsubscription]);
+  }, [
+    unsubscription,
+    completeUnsubscriptionSuccess,
+    completeUnsubscriptionFailure
+  ]);
 
   useHardwareBackButton(() => {
     props.goBack();
@@ -82,10 +90,9 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
   const canRenderButton = fromNullable(props.selectedPeriod).fold(false, sp => {
     switch (sp.status) {
       case "Closed":
-        return pot.getOrElse(
-          pot.map(props.transactions, val => val.length > 0),
-          false
-        );
+        return fromNullable(props.selectedPeriod?.amount?.transactionNumber)
+          .map(trx => trx > 0)
+          .getOrElse(false);
       case "Inactive":
         return false;
       default:
@@ -107,8 +114,11 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
         hideHeader={true}
         contextualHelp={emptyContextualHelp}
         footerContent={
-          canRenderButton && (
+          canRenderButton ? (
             <GoToTransactions goToTransactions={props.goToTransactions} />
+          ) : (
+            // We need to render a footer element in order to have the right spacing when the device has the notch
+            <View />
           )
         }
         footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}

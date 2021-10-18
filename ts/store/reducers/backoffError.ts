@@ -22,6 +22,10 @@ import {
 import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
+import {
+  svPossibleVoucherStateGet,
+  svVoucherListGet
+} from "../../features/bonus/siciliaVola/store/actions/voucherList";
 import { GlobalState } from "./types";
 
 /**
@@ -30,10 +34,9 @@ import { GlobalState } from "./types";
  * 0 - the failure action that is considered to create/increment the backoff delay
  * 1 - the success action that is considered to delete the previous backoff delay
  */
-const monitoredActions: ReadonlyArray<[
-  failureAction: PayloadAC<any, any>,
-  successAction: PayloadAC<any, any>
-]> = [
+const monitoredActions: ReadonlyArray<
+  [failureAction: PayloadAC<any, any>, successAction: PayloadAC<any, any>]
+> = [
   [addWalletCreditCardFailure, addWalletCreditCardSuccess],
   [fetchTransactionsFailure, fetchTransactionsSuccess],
   [fetchWalletsFailure, fetchWalletsSuccess],
@@ -44,7 +47,9 @@ const monitoredActions: ReadonlyArray<[
     bpdTransactionsLoadRequiredData.failure,
     bpdTransactionsLoadRequiredData.success
   ],
-  [euCovidCertificateGet.failure, euCovidCertificateGet.success]
+  [euCovidCertificateGet.failure, euCovidCertificateGet.success],
+  [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
+  [svVoucherListGet.failure, svVoucherListGet.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);
@@ -96,20 +101,22 @@ const reducer = (
 };
 
 // return the waiting time from a given failure action
-export const backOffWaitingTime = (state: GlobalState) => (
-  failure: FailureActions
-): Millisecond =>
-  fromNullable(state.backoffError[getType(failure)]).fold(
-    0 as Millisecond,
-    lastError => {
-      const wait =
-        Math.pow(backoffConfig().base, lastError.attempts) *
-        backoffConfig().mul;
-      // if the last attempt is older that wait -> no wait
-      return (new Date().getTime() - lastError.lastUpdate.getTime() < wait
-        ? wait
-        : 0) as Millisecond;
-    }
-  );
+export const backOffWaitingTime =
+  (state: GlobalState) =>
+  (failure: FailureActions): Millisecond =>
+    fromNullable(state.backoffError[getType(failure)]).fold(
+      0 as Millisecond,
+      lastError => {
+        const wait =
+          Math.pow(backoffConfig().base, lastError.attempts) *
+          backoffConfig().mul;
+        // if the last attempt is older that wait -> no wait
+        return (
+          new Date().getTime() - lastError.lastUpdate.getTime() < wait
+            ? wait
+            : 0
+        ) as Millisecond;
+      }
+    );
 
 export default reducer;

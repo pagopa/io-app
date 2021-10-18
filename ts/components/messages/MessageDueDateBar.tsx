@@ -5,12 +5,12 @@ import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
+import variables from "../../theme/variables";
 import {
   format,
   formatDateAsDay,
@@ -23,13 +23,13 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
-import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
 };
@@ -175,18 +175,20 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
   }
 };
 
-const isPaymentExpired = (message: CreatedMessageWithContent): boolean =>
-  paymentExpirationInfo(message).fold(false, isExpired);
+const isPaymentExpired = (
+  message: CreatedMessageWithContentAndAttachments
+): boolean => paymentExpirationInfo(message).fold(false, isExpired);
 
-const isPaymentExpiring = (message: CreatedMessageWithContent): boolean =>
-  paymentExpirationInfo(message).fold(false, isExpiring);
+const isPaymentExpiring = (
+  message: CreatedMessageWithContentAndAttachments
+): boolean => paymentExpirationInfo(message).fold(false, isExpiring);
 
 const paid = (payment: PaidReason | undefined): boolean =>
   payment !== undefined;
 
 const calculatePaymentStatus = (
   payment: PaidReason | undefined,
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): PaymentStatus => {
   if (paid(payment)) {
     return "paid";
@@ -203,7 +205,7 @@ const getNoticePaid = () => (
   <View style={styles.messagePaidBg}>
     <IconFont name="io-complete" color={IOColors.bluegreyDark} />
     <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
-      {I18n.t("wallet.errors.PAYMENT_DUPLICATED")}
+      {I18n.t("wallet.errors.DUPLICATED")}
     </Text>
   </View>
 );

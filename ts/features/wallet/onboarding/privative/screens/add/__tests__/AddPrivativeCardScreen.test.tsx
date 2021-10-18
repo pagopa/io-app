@@ -54,12 +54,12 @@ const searchRequestMetaOK: SearchRequestMetadata = {
   serviceProviderName: "ServiceNameHere"
 };
 
-const withSearchRequestMetadata = (
-  metadataList: ReadonlyArray<SearchRequestMetadata>
-) => (response: PrivativeResponse) => ({
-  ...response,
-  searchRequestMetadata: [...metadataList]
-});
+const withSearchRequestMetadata =
+  (metadataList: ReadonlyArray<SearchRequestMetadata>) =>
+  (response: PrivativeResponse) => ({
+    ...response,
+    searchRequestMetadata: [...metadataList]
+  });
 
 describe("Test AddPrivativeCardScreen", () => {
   jest.useFakeTimers();

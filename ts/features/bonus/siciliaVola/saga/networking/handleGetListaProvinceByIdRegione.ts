@@ -33,10 +33,8 @@ export function* handleGetListaProvinceByIdRegione(
   action: ActionType<typeof svGenerateVoucherAvailableProvince.request>
 ) {
   try {
-    const getListaProvinceResult: SagaCallReturnType<typeof getListaProvince> = yield call(
-      getListaProvince,
-      { idRegione: action.payload }
-    );
+    const getListaProvinceResult: SagaCallReturnType<typeof getListaProvince> =
+      yield call(getListaProvince, { idRegione: action.payload });
 
     if (getListaProvinceResult.isRight()) {
       if (getListaProvinceResult.value.status === 200) {

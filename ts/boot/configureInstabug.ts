@@ -91,7 +91,8 @@ export const attachmentTypeConfigurationNoScreenshot = {
   extraScreenshot: false
 };
 
-export type DefaultReportAttachmentTypeConfiguration = typeof defaultAttachmentTypeConfiguration;
+export type DefaultReportAttachmentTypeConfiguration =
+  typeof defaultAttachmentTypeConfiguration;
 
 export const openInstabugQuestionReport = (
   attachmentTypeConfiguration: DefaultReportAttachmentTypeConfiguration = defaultAttachmentTypeConfiguration

@@ -47,17 +47,19 @@ export function* eycaActivationWorker(
     if (eycaActivation.value === "PROCESSING") {
       yield call(handleEycaActivationSaga, getEycaActivation);
     } else {
-      const startActivation: SagaCallReturnType<typeof handleStartActivation> = yield call(
-        handleStartActivation,
-        startEycaActivation
-      );
+      const startActivation: SagaCallReturnType<typeof handleStartActivation> =
+        yield call(handleStartActivation, startEycaActivation);
       // activation not handled error, stop
       if (startActivation.isLeft()) {
         yield put(cgnEycaActivation.failure(startActivation.value));
         return;
       } else {
         // could be: ALREADY_ACTIVE, INELIGIBLE
-        if (["ALREADY_ACTIVE", "INELIGIBLE"].some(v => v === startActivation.value)) {
+        if (
+          ["ALREADY_ACTIVE", "INELIGIBLE"].some(
+            v => v === startActivation.value
+          )
+        ) {
           yield put(cgnEycaActivation.success(startActivation.value));
           yield put(navigateToCgnDetails());
           yield put(navigationHistoryPop(1));

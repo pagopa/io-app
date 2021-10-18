@@ -21,17 +21,21 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
 /**
- * Returns a fetch wrapped with timeout and retry logic
+ * Wrapper for the Fetch API configured by default with a short timeout and
+ * an exponential backoff retrying strategy.
+ * Suitable for calling the backend APIs that are supposed
+ * to respond quickly.
+ *
+ * Note that the retry is applied only upon receiving error "429 Too Many Requests".
+ * Timeout and max retries act as circuit breakers.
  */
-function retryingFetch(
-  fetchApi: typeof fetch,
-  timeout: Millisecond,
-  maxRetries: number
+export function defaultRetryingFetch(
+  timeout: Millisecond = fetchTimeout,
+  maxRetries: number = fetchMaxRetries
 ): typeof fetch {
-  // a fetch that can be aborted and that gets cancelled after fetchTimeoutMs
+  const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
   const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
-
   // configure retry logic with default exponential backoff
   // @see https://github.com/pagopa/io-ts-commons/blob/master/src/backoff.ts
   const exponentialBackoff = calculateExponentialBackoffInterval();
@@ -47,26 +51,10 @@ function retryingFetch(
 }
 
 /**
- * Default fetch configured with a short timeout and an exponential backoff
- * retrying strategy - suitable for calling the backend APIs that are supposed
- * to respond quickly.
+ * Fetch with transient error handling.
+ * Handle error that occurs once or at unpredictable intervals.
  */
-export function defaultRetryingFetch(
-  timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries
-) {
-  // Override default react-native fetch with whatwg's that supports aborting
-  // eslint-disable-next-line
-  (global as any).AbortController = require("abort-controller");
-  require("./whatwg-fetch");
-
-  return retryingFetch((global as any).fetch, timeout, maxRetries);
-}
-
-/**
- * Fetch with transient error handling. Handle error that occurs once or at unpredictable intervals.
- */
-export function retryLogicForTransientResponseError(
+function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
   retryLogic: (
     t: RetriableTask<Error, Response>,
@@ -89,25 +77,17 @@ export function retryLogicForTransientResponseError(
 }
 
 /**
- * This is a fetch with timeouts, constant backoff and with the logic
- * that handles 404s as transient errors, this "fetch" must be passed to
- * createFetchRequestForApi when creating "getPaymentId"
+ * This is a fetch with timeout for single request, constant backoff, and
+ * the logic to handle 404s as transient errors.
  */
 export const constantPollingFetch = (
   shouldAbort: Promise<boolean>,
   retries: number,
   delay: number,
-  timeout: Millisecond = 1000 as Millisecond
-) => {
-  // Override default react-native fetch with whatwg's that supports aborting
-  // eslint-disable-next-line
-  (global as any).AbortController = require("abort-controller");
-  require("./whatwg-fetch");
-
-  // fetch client that can be aborted for timeout
+  timeout: Millisecond = fetchTimeout
+): typeof fetch => {
   const abortableFetch = AbortableFetch((global as any).fetch);
   const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
-  // use a constant backoff
   const constantBackoff = () => delay as Millisecond;
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map 404s to transient errors (by default only
@@ -118,9 +98,5 @@ export const constantPollingFetch = (
     retryLogic
   );
 
-  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
-  return retriableFetch(
-    retryWithTransient404s,
-    shouldAbort
-  )(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient404s, shouldAbort)(timeoutFetch);
 };

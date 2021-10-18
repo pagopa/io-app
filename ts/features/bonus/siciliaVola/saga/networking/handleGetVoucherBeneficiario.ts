@@ -1,5 +1,5 @@
 import { ActionType } from "typesafe-actions";
-import { call, put } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -10,9 +10,8 @@ import { SvVoucherListResponse } from "../../types/SvVoucherResponse";
 import { SvVoucherId } from "../../types/SvVoucher";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
-
-// TODO: add the mapping when the swagger will be fixed
-const mapKinds: Record<number, string> = {};
+import { svVouchersListUiSelector } from "../../store/reducers/voucherList/ui";
+import { waitBackoffError } from "../../../../../utils/backoffError";
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (
@@ -21,7 +20,9 @@ const convertSuccess = (
   if (voucherBeneficiario.listaRisultati) {
     return voucherBeneficiario.listaRisultati
       .map(v =>
-        v.idVoucher && v.aeroportoDest && v.dataVolo
+        v.idVoucher !== undefined &&
+        v.aeroportoDest !== undefined &&
+        v.dataVolo !== undefined
           ? {
               idVoucher: v.idVoucher as SvVoucherId,
               departureDate: v.dataVolo,
@@ -42,12 +43,23 @@ export function* handleGetVoucherBeneficiario(
   _: SessionManager<MitVoucherToken>,
   action: ActionType<typeof svVoucherListGet.request>
 ) {
+  const pagination = true;
+  const elementsXPage = 10;
+
   try {
+    yield call(waitBackoffError, svVoucherListGet.failure);
+    const { nextPage }: ReturnType<typeof svVouchersListUiSelector> =
+      yield select(svVouchersListUiSelector);
+
     // TODO: add MitVoucherToken
-    const getVoucherBeneficiarioResult: SagaCallReturnType<typeof getVoucherBeneficiario> = yield call(
-      getVoucherBeneficiario,
-      action.payload
-    );
+    const getVoucherBeneficiarioResult: SagaCallReturnType<
+      typeof getVoucherBeneficiario
+    > = yield call(getVoucherBeneficiario, {
+      ...action.payload,
+      pagination,
+      pageNum: nextPage,
+      elementsXPage
+    });
 
     if (getVoucherBeneficiarioResult.isRight()) {
       if (getVoucherBeneficiarioResult.value.status === 200) {
@@ -58,14 +70,10 @@ export function* handleGetVoucherBeneficiario(
         );
         return;
       }
-      if (mapKinds[getVoucherBeneficiarioResult.value.status] !== undefined) {
-        yield put(
-          svVoucherListGet.failure({
-            ...getGenericError(
-              new Error(mapKinds[getVoucherBeneficiarioResult.value.status])
-            )
-          })
-        );
+
+      // TODO: manage error case and dispatch of last page when the swagger will be updated
+      if (getVoucherBeneficiarioResult.value.status === 500) {
+        yield put(svVoucherListGet.success([]));
         return;
       }
     }

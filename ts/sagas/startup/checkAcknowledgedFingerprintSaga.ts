@@ -3,13 +3,11 @@ import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
-import { getFingerprintSettings } from "../../utils/biometric";
-
-export type BiometrySimpleType =
-  | "BIOMETRICS"
-  | "FACE_ID"
-  | "TOUCH_ID"
-  | "UNAVAILABLE";
+import {
+  BiometricsType,
+  getBiometricsType,
+  isBiometricsValidType
+} from "../../utils/biometrics";
 
 /**
  * Query TouchID library to retrieve availability information. The ONLY cases
@@ -23,19 +21,19 @@ export type BiometrySimpleType =
 function* onboardFingerprintIfAvailableSaga(): Generator<
   Effect,
   void,
-  BiometrySimpleType
+  BiometricsType
 > {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometryTypeOrUnsupportedReason = yield call(getFingerprintSettings);
+  const biometricsType = yield call(getBiometricsType);
 
-  if (biometryTypeOrUnsupportedReason !== "UNAVAILABLE") {
+  if (isBiometricsValidType(biometricsType)) {
     // If biometric recognition is available, navigate to the Fingerprint
     // Screen and wait for the user to press "Continue". Otherwise the whole
     // step is bypassed
     yield put(
       navigateToOnboardingFingerprintScreenAction({
-        biometryType: biometryTypeOrUnsupportedReason
+        biometryType: biometricsType
       })
     );
 

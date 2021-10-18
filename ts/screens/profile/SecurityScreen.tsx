@@ -12,8 +12,9 @@ import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
 import {
   biometricAuthenticationRequest,
-  getFingerprintSettings
-} from "../../utils/biometric";
+  getBiometricsType,
+  isBiometricsValidType
+} from "../../utils/biometrics";
 import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
@@ -36,11 +37,9 @@ const SecurityScreen: FC<Props> = ({
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
 
   useEffect(() => {
-    getFingerprintSettings().then(
-      biometryTypeOrUnsupportedReason => {
-        setIsFingerprintAvailable(
-          biometryTypeOrUnsupportedReason !== "UNAVAILABLE"
-        );
+    getBiometricsType().then(
+      biometricsType => {
+        setIsFingerprintAvailable(isBiometricsValidType(biometricsType));
       },
       _ => undefined
     );
@@ -56,7 +55,7 @@ const SecurityScreen: FC<Props> = ({
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
-    biometricAuthenticationRequest(
+    void biometricAuthenticationRequest(
       () => setFingerprintPreference(biometricPreference),
       _ =>
         showToast(

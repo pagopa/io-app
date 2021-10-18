@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { NavigationContext } from "react-navigation";
 
 const retryTimeout = 5000 as Millisecond;
@@ -20,10 +20,11 @@ export const useLoadPotValue = <T, E>(
   const [idState, setId] = useState("");
   const timerRetry = useRef<number | undefined>(undefined);
   const navigation = useContext(NavigationContext);
-  const retry = () => {
+  const retry = useCallback(() => {
     timerRetry.current = undefined;
     loadAction();
-  };
+  }, [loadAction]);
+  const isFocused = navigation.isFocused();
 
   /**
    * When the focus change or the idRequest changes, clear the timer (if any)
@@ -34,7 +35,7 @@ export const useLoadPotValue = <T, E>(
   useEffect(() => {
     clearTimeout(timerRetry.current);
     timerRetry.current = undefined;
-  }, [navigation.isFocused(), idState]);
+  }, [isFocused, idState]);
 
   useEffect(() => {
     setId(id);
@@ -45,13 +46,13 @@ export const useLoadPotValue = <T, E>(
       pot.isNone(potValue) &&
       pot.isError(potValue) &&
       timerRetry.current === undefined &&
-      navigation.isFocused()
+      isFocused
     ) {
       // If the pot is NoneError, the navigation focus is on the element
       // and no other retry are scheduled
       timerRetry.current = setTimeout(retry, retryTimeout);
     }
-  }, [potValue, timerRetry.current, navigation.isFocused(), idState]);
+  }, [potValue, isFocused, idState, id, loadAction, retry]);
 
   // Component unmount, clear scheduled
   useEffect(

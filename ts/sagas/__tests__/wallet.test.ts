@@ -78,9 +78,8 @@ const aCreditCardWallet: NullableWallet = {
 describe("startOrResumeAddCreditCardSaga", () => {
   it("should add a card if all the 4 steps run sucessfully", () => {
     const aPMToken = "1234" as PaymentManagerToken;
-    const aPmSessionManager: SessionManager<PaymentManagerToken> = new SessionManager(
-      jest.fn(() => Promise.resolve(some(aPMToken)))
-    );
+    const aPmSessionManager: SessionManager<PaymentManagerToken> =
+      new SessionManager(jest.fn(() => Promise.resolve(some(aPMToken))));
     const aNewPMToken = "5678" as PaymentManagerToken;
     jest
       .spyOn(aPmSessionManager, "getNewToken")

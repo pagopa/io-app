@@ -7,9 +7,8 @@ import { PinString } from "../../types/PinString";
 
 export const updatePin = createStandardAction("UPDATE_PIN")();
 
-export const createPinSuccess = createStandardAction("CREATE_PIN_SUCCESS")<
-  PinString
->();
+export const createPinSuccess =
+  createStandardAction("CREATE_PIN_SUCCESS")<PinString>();
 
 export type PinSetActions = ActionType<
   typeof createPinSuccess | typeof updatePin

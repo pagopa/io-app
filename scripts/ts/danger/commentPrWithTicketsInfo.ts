@@ -43,16 +43,18 @@ const renderTicket = (ticket: GenericTicket) =>
   }](${ticket.url}): ${ticket.title}`;
 
 const renderTickets = (ticketList: ReadonlyArray<GenericTicket>) => {
+  const ticketListToString = ticketList
+    .map(s => {
+      const subtask = s.parent
+        ? ` \n _subtask of_\n     * ${renderTicket(s.parent)}`
+        : "";
+      return `  * ${renderTicket(s)}${subtask}`;
+    })
+    .join("\n");
+
   markdown(`
 ## Affected stories
-${ticketList
-  .map(
-    s =>
-      `  * ${renderTicket(s)}${
-        s.parent ? ` \n _subtask of_\n     * ${renderTicket(s.parent)}` : ""
-      }`
-  )
-  .join("\n")}\n`);
+${ticketListToString}\n`);
 };
 
 /**

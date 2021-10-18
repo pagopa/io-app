@@ -84,7 +84,7 @@ function renderComponent(props = defaultProps) {
   const store = createStore(appReducer, globalState as any);
   return {
     component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => <BaseScreenComponent {...props} />,
+      () => <BaseScreenComponent {...props} ref={undefined} />,
       ROUTES.MESSAGES_HOME,
       {},
       store

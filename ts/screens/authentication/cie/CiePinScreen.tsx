@@ -1,11 +1,11 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React, {
-  useState,
+  useCallback,
+  useContext,
   useEffect,
   useRef,
-  useContext,
-  useCallback
+  useState
 } from "react";
 import {
   Keyboard,
@@ -17,8 +17,11 @@ import {
 import { NavigationContext, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import AdviceComponent from "../../../components/AdviceComponent";
-import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
+import { Link } from "../../../components/core/typography/Link";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -26,20 +29,15 @@ import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
+import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-
-import { isIos } from "../../../utils/platform";
 import { useIOBottomSheet } from "../../../utils/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
-import { Link } from "../../../components/core/typography/Link";
-import Markdown from "../../../components/ui/Markdown";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -79,6 +77,9 @@ const CiePinScreen: React.FC<Props> = props => {
   const [pin, setPin] = useState("");
   const continueButtonRef = useRef<FooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);
+  const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (pin.length === CIE_PIN_LENGTH) {
@@ -103,17 +104,19 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
-  const onProceedToCardReaderScreen = async (url: string) => {
-    setPin("");
-    navigate({
-      routeName: ROUTES.CIE_CARD_READER_SCREEN,
-      params: {
-        ciePin: pin,
-        authorizationUri: url
-      }
-    });
-    hideModal();
-  };
+  useEffect(() => {
+    if (authUrlGenerated !== undefined) {
+      setPin("");
+      navigate({
+        routeName: ROUTES.CIE_CARD_READER_SCREEN,
+        params: {
+          ciePin: pin,
+          authorizationUri: authUrlGenerated
+        }
+      });
+      hideModal();
+    }
+  }, [authUrlGenerated, hideModal, navigate, pin]);
 
   const handleAuthenticationOverlayOnClose = () => {
     setPin("");
@@ -126,7 +129,7 @@ const CiePinScreen: React.FC<Props> = props => {
     showAnimatedModal(
       <CieRequestAuthenticationOverlay
         onClose={handleAuthenticationOverlayOnClose}
-        onSuccess={onProceedToCardReaderScreen}
+        onSuccess={setAuthUrlGenerated}
       />,
       BottomTopAnimation
     );
@@ -163,14 +166,6 @@ const CiePinScreen: React.FC<Props> = props => {
             onPinChanged={setPin}
             onSubmit={showModal}
           />
-          <View spacer={true} />
-          {isIos && (
-            <AdviceComponent
-              iconName={"io-bug"}
-              text={I18n.t("global.disclaimer_beta")}
-              iconColor={"black"}
-            />
-          )}
           <View spacer={true} />
           <AdviceComponent
             text={I18n.t("login.expiration_info")}

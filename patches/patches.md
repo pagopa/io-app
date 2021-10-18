@@ -42,13 +42,6 @@ Created on **06/08/2020**
 #### Reason:
 - Recognizes the ids of pivotal stories even if they are not at the beginning of the line
 
-
-### react-native-popup-menu+0.14.2
-Created on **12/08/2020**
-
-#### Reason:
-- Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
@@ -68,3 +61,13 @@ Created on **20/08/2021**
 - As for known issue anytime a developer launch a pod install on his own machine the podfile would be updated with 
   different hashes: [here the issue](https://github.com/facebook/react-native/issues/31193)
   To be removed when updating to `react-native` *0.65*
+
+### react-native-qrcode-scanner+1.5.3
+Created on **16/09/2021**
+
+#### Reason:
+- The package use the prop `checkAndroid6Permissions` for both display the `notAuthorizedView` and display the rationale.
+  We need always to display the rationale alert and not only when requested by the Android OS. Without this patch is impossible
+  to use the `notAuthorizedView` without displaying again the alert.
+  ⚠️ The `QRCodeScanner` component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
+  buttonPositive.

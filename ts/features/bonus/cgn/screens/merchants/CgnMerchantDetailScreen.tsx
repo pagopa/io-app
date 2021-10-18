@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { View } from "native-base";
 import { connect } from "react-redux";
 import {
@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { fromNullable } from "fp-ts/lib/Option";
-import { index } from "fp-ts/lib/Array";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -32,6 +31,12 @@ import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { Address } from "../../../../../../definitions/cgn/merchants/Address";
+import IconFont from "../../../../../components/ui/IconFont";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 
 type NavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -47,22 +52,44 @@ const styles = StyleSheet.create({
     height: 230,
     resizeMode: "cover",
     borderRadius: 12
-  }
+  },
+  spaced: { justifyContent: "space-between" },
+  flexEnd: { alignSelf: "flex-end" }
 });
+
+const COPY_ICON_SIZE = 24;
 
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const { merchantDetail } = props;
+  const { merchantDetail, requestMerchantDetail } = props;
+  const merchantID = props.navigation.getParam("merchantID");
   const renderDiscountListItem = ({ item }: ListRenderItemInfo<Discount>) => (
     <CgnMerchantDiscountItem discount={item} />
   );
 
-  const loadMerchantDetail = () => {
-    props.requestMerchantDetail(props.navigation.getParam("merchantID"));
-  };
+  const loadMerchantDetail = useCallback(() => {
+    requestMerchantDetail(merchantID);
+  }, [merchantID, requestMerchantDetail]);
 
-  useEffect(loadMerchantDetail, []);
+  const renderAddressesListItem = ({ item }: ListRenderItemInfo<Address>) => (
+    <TouchableDefaultOpacity
+      style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
+      onPress={() => clipboardSetStringWithFeedback(item.full_address)}
+    >
+      <H4 weight={"Regular"} style={IOStyles.flex}>
+        {item.full_address}
+      </H4>
+      <IconFont
+        name={"io-copy"}
+        size={COPY_ICON_SIZE}
+        color={IOColors.blue}
+        style={styles.flexEnd}
+      />
+    </TouchableDefaultOpacity>
+  );
+
+  useEffect(loadMerchantDetail, [loadMerchantDetail]);
 
   return isReady(merchantDetail) ? (
     <BaseScreenComponent
@@ -83,23 +110,31 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
           <View style={IOStyles.horizontalContentPadding}>
             <View spacer large />
             <H1>{merchantDetail.value.name}</H1>
-            {fromNullable(merchantDetail.value.addresses).fold(
-              <H4 weight={"Regular"}>{merchantDetail.value.websiteUrl}</H4>,
-              addresses =>
-                index(0, [...addresses]).fold(undefined, add => (
-                  <H4 weight={"Regular"}>{add.full_address}</H4>
-                ))
-            )}
             <View spacer />
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
             <View spacer small />
             <FlatList
               data={merchantDetail.value.discounts}
               renderItem={renderDiscountListItem}
+              keyExtractor={(item: Discount) => item.name}
             />
             <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
             <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
             <View spacer large />
+            {merchantDetail.value.addresses &&
+              merchantDetail.value.addresses.length > 0 && (
+                <>
+                  <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
+                  <FlatList
+                    data={merchantDetail.value.addresses}
+                    renderItem={renderAddressesListItem}
+                    keyExtractor={(item: Address) => item.full_address}
+                    ItemSeparatorComponent={() => (
+                      <ItemSeparatorComponent noPadded />
+                    )}
+                  />
+                </>
+              )}
           </View>
         </ScrollView>
         {fromNullable(merchantDetail.value.websiteUrl).fold(undefined, url => (

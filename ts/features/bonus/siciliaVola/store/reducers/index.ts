@@ -1,8 +1,10 @@
 import { Action, combineReducers } from "redux";
 import svVoucherGenerationReducer, {
   VoucherGenerationState
-} from "./voucherGeneration";
-import svVoucherListReducer, { VoucherListState } from "./voucherList";
+} from "./voucherGeneration/voucherGeneration";
+import svVoucherListReducer, {
+  VoucherListState
+} from "./voucherList/voucherList";
 import svActivationReducer, { ActivationState } from "./activation";
 import selectedVoucherReducer, {
   SelectedVoucherState

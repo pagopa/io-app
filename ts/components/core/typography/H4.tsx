@@ -2,7 +2,7 @@ import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
-import { typographyFactory } from "./Factory";
+import { useTypographyFactory } from "./Factory";
 
 // when the weight is bold, only these color are allowed
 type AllowedBoldColors = Extract<
@@ -19,7 +19,6 @@ type AllowedSemiBoldColors = Extract<
 // these colors are allowed only when the weight is Regular
 type AllowedRegularColors = Extract<
   IOColorType,
-  // tslint:disable-next-line:max-union-size
   "bluegreyDark" | "bluegrey" | "bluegreyLight" | "white"
 >;
 
@@ -90,7 +89,7 @@ const calculateWeightColor = (
  * @constructor
  */
 export const H4: React.FunctionComponent<OwnProps> = props =>
-  typographyFactory<AllowedWeight, AllowedColors>({
+  useTypographyFactory<AllowedWeight, AllowedColors>({
     ...props,
     weightColorFactory: calculateWeightColor,
     font: fontName,

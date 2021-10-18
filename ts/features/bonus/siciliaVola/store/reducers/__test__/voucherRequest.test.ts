@@ -18,7 +18,7 @@ import {
   SvBeneficiaryCategory,
   University
 } from "../../../types/SvVoucherRequest";
-import { VoucherRequestState } from "../voucherRequest";
+import { VoucherRequestState } from "../voucherGeneration/voucherRequest";
 
 const mockCategoryStudent: SvBeneficiaryCategory = "student";
 const mockCategoryWorker: SvBeneficiaryCategory = "worker";

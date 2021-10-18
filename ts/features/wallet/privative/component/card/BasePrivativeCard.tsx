@@ -79,9 +79,9 @@ const renderLoyaltyLogo = (
     );
   });
 
-const renderGdoLogo = (gdoLogo: ImageURISource) =>
-  useImageResize(BASE_IMG_W, BASE_IMG_H, gdoLogo.uri).fold(
-    undefined,
+const GdoLogo = (props: { gdoLogo: ImageURISource }) =>
+  useImageResize(BASE_IMG_W, BASE_IMG_H, props.gdoLogo.uri).fold(
+    null,
     imgDim => {
       const imageStyle: StyleProp<ImageStyle> = {
         width: imgDim[0],
@@ -90,7 +90,7 @@ const renderGdoLogo = (gdoLogo: ImageURISource) =>
       };
       return (
         <Image
-          source={gdoLogo}
+          source={props.gdoLogo}
           style={imageStyle}
           key={"gdoLogo"}
           testID={"gdoLogo"}
@@ -100,12 +100,15 @@ const renderGdoLogo = (gdoLogo: ImageURISource) =>
   );
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
+  const imageURI =
+    props.loyaltyLogo && isImageURISource(props.loyaltyLogo)
+      ? props.loyaltyLogo.uri
+      : undefined;
+
+  const maybeSize = useImageResize(BASE_IMG_W, BASE_IMG_H, imageURI);
   const loyaltyLogo =
     props.loyaltyLogo && isImageURISource(props.loyaltyLogo)
-      ? renderLoyaltyLogo(
-          props.loyaltyLogo,
-          useImageResize(BASE_IMG_W, BASE_IMG_H, props.loyaltyLogo.uri)
-        )
+      ? renderLoyaltyLogo(props.loyaltyLogo, maybeSize)
       : fallbackLoyaltyLogo;
 
   return (
@@ -113,7 +116,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
       topLeftCorner={
         <>
           <View style={styles.topLeftContainer}>
-            {props.gdoLogo && renderGdoLogo(props.gdoLogo)}
+            {props.gdoLogo && <GdoLogo gdoLogo={props.gdoLogo} />}
 
             {props.blocked && (
               <Badge

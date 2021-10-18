@@ -28,6 +28,8 @@ import {
   GetListaRegioniT,
   getStatiUEDefaultDecoder,
   GetStatiUET,
+  getStatiVoucherDefaultDecoder,
+  GetStatiVoucherT,
   getVoucherBeneficiarioDefaultDecoder,
   GetVoucherBeneficiarioT
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
@@ -133,12 +135,26 @@ const GetVoucherBeneficiario: GetVoucherBeneficiarioT = {
   response_decoder: getVoucherBeneficiarioDefaultDecoder()
 };
 
-const withSiciliaVolaToken = <P extends { Bearer: string }, R>(
-  f: (p: P) => Promise<R>
-) => (token: MitVoucherToken) => async (po: Omit<P, "Bearer">): Promise<R> => {
-  const params = Object.assign({ Bearer: String(token.token) }, po) as P;
-  return f(params);
+/**
+ * Get the possible voucher state
+ *
+ * TODO: modify post in get and add auth header when the swagger will be fixed
+ */
+const GetStatiVoucher: GetStatiVoucherT = {
+  method: "get",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/statiVoucher`,
+  query: _ => ({}),
+  headers: ApiHeaderJson,
+  response_decoder: getStatiVoucherDefaultDecoder()
 };
+
+const withSiciliaVolaToken =
+  <P extends { Bearer: string }, R>(f: (p: P) => Promise<R>) =>
+  (token: MitVoucherToken) =>
+  async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token.token) }, po) as P;
+    return f(params);
+  };
 
 // client for SiciliaVola to handle API communications
 export const BackendSiciliaVolaClient = (
@@ -184,7 +200,8 @@ export const BackendSiciliaVolaClient = (
       createFetchRequestForApi(
         GetVoucherBeneficiario,
         options
-      )({ voucherBeneficiarioInputBean: voucherListRequest })
+      )({ voucherBeneficiarioInputBean: voucherListRequest }),
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
   };
 };
 

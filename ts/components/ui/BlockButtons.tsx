@@ -25,6 +25,7 @@ type OwnButtonProps = {
   buttonFontSize?: number;
   iconName?: string;
   iconColor?: string;
+  labelColor?: string;
 };
 
 type CommonProps = Readonly<{
@@ -141,9 +142,14 @@ export default class BlockButtons extends React.Component<Props, never> {
         />
       )}
       <Text
-        style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({
-          fontSize: fs
-        }))}
+        style={[
+          fromNullable(props.buttonFontSize).fold(undefined, fs => ({
+            fontSize: fs
+          })),
+          fromNullable(props.labelColor).fold(undefined, lc => ({
+            color: lc
+          }))
+        ]}
       >
         {props.title}
       </Text>

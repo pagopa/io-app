@@ -51,7 +51,6 @@ const creditCard: CreditCardPaymentMethod = {
 };
 
 jest.mock("../../../../../config", () => ({
-  pmActivatePaymentEnabled: true,
   bpdEnabled: true
 }));
 
@@ -64,7 +63,7 @@ describe("Test CreditCardDetailScreen", () => {
     expect(screen.getByTestId("WorkunitGenericFailure")).not.toBeNull();
   });
   it(
-    "When pmActivatePaymentEnabled===true and pagoPA=false the CreditCardDetailScreen should contains" +
+    "When pagoPA=false the CreditCardDetailScreen should contains" +
       " the CreditCardComponent and PaymentStatusSwitch",
     () => {
       const globalState = appReducer(
@@ -87,7 +86,7 @@ describe("Test CreditCardDetailScreen", () => {
     }
   );
   it(
-    "When pmActivatePaymentEnabled===true and pagoPA=true the CreditCardDetailScreen should contains" +
+    "When pagoPA=true the CreditCardDetailScreen should contains" +
       " CreditCardComponent, FavoritePaymentMethodSwitch and PaymentStatusSwitch",
     () => {
       const globalState = appReducer(

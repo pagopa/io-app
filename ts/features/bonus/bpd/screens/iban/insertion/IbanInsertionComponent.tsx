@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, SafeAreaView, ScrollView } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { makeFontStyleObject } from "../../../../../../components/core/fonts";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -14,6 +13,7 @@ import { LabelledItem } from "../../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { maybeNotNullyString } from "../../../../../../utils/strings";
 
 type OwnProps = {
   onBack: () => void;
@@ -47,15 +47,8 @@ const upperCaseAndNoBlanks = (text: string) =>
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState<string | undefined>(props.startIban);
   const isValidIban = iban && Iban.decode(iban).isRight();
-  const {
-    headerTitle,
-    title,
-    body1,
-    body1Bold,
-    body2,
-    ibanDescription
-  } = loadLocales();
-
+  const { headerTitle, title, body1, body1Bold, body2, ibanDescription } =
+    loadLocales();
   return (
     <BaseScreenComponent
       goBack={props.onBack}
@@ -75,7 +68,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <View spacer={true} large={true} />
             <H5>{ibanDescription}</H5>
             <LabelledItem
-              isValid={fromNullable(iban).fold(undefined, _ =>
+              isValid={maybeNotNullyString(iban).fold(undefined, _ =>
                 Iban.decode(iban).isRight()
               )}
               inputProps={{

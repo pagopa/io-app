@@ -35,11 +35,13 @@ const EycaDetailComponent = (props: Props) => {
     await present();
   };
 
+  const { eyca, getEycaActivationStatus } = props;
+
   useEffect(() => {
-    if (CardPending.is(props.eyca)) {
-      props.getEycaActivationStatus();
+    if (CardPending.is(eyca)) {
+      getEycaActivationStatus();
     }
-  }, [props.eyca]);
+  }, [eyca, getEycaActivationStatus]);
 
   const errorComponent = (
     <EycaErrorComponent

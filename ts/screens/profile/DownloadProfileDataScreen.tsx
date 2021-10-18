@@ -60,9 +60,8 @@ class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
   public componentDidUpdate(prevProps: Props) {
     const prev =
       prevProps.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
-    const curr = this.props.userDataProcessing[
-      UserDataProcessingChoiceEnum.DOWNLOAD
-    ];
+    const curr =
+      this.props.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
     // the request to download has been done
     if (pot.isUpdating(prev) && pot.isSome(curr)) {
       // we got an error

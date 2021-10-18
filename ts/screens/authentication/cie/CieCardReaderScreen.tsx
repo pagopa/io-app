@@ -18,7 +18,9 @@ import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
-import CieReadingCardAnimation from "../../../components/cie/CieReadingCardAnimation";
+import CieReadingCardAnimation, {
+  ReadingState
+} from "../../../components/cie/CieReadingCardAnimation";
 import { withConditionalView } from "../../../components/helpers/withConditionalView";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -56,13 +58,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   }
 });
-
-export enum ReadingState {
-  "reading" = "reading",
-  "error" = "error",
-  "completed" = "completed",
-  "waiting_card" = "waiting_card"
-}
 
 type State = {
   // Get the current status of the card reading
@@ -120,6 +115,53 @@ const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 const VIBRATION = 100 as Millisecond;
 const accessibityTimeout = 100 as Millisecond;
 
+type TextForState = {
+  title: string;
+  subtitle: string;
+  content: string;
+};
+
+// some texts changes depending on current running Platform
+const getTextForState = (
+  state: ReadingState.waiting_card | ReadingState.error,
+  errorMessage: string = ""
+): TextForState => {
+  const texts: Record<
+    ReadingState.waiting_card | ReadingState.error,
+    TextForState
+  > = Platform.select({
+    ios: {
+      [ReadingState.waiting_card]: {
+        title: I18n.t("authentication.cie.card.titleiOS"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
+        // the native alert hides the screen content and shows a message it self
+        content: ""
+      },
+      [ReadingState.error]: {
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitleiOS"),
+        subtitle: I18n.t(
+          "authentication.cie.card.error.readerCardLostHeaderiOS"
+        ),
+        // the native alert hides the screen content and shows a message it self
+        content: ""
+      }
+    },
+    default: {
+      [ReadingState.waiting_card]: {
+        title: I18n.t("authentication.cie.card.title"),
+        subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+        content: I18n.t("authentication.cie.card.layCardMessageFooter")
+      },
+      [ReadingState.error]: {
+        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
+        content: errorMessage
+      }
+    }
+  });
+  return texts[state];
+};
+
 /**
  *  This screen shown while reading the card
  */
@@ -137,9 +179,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      title: I18n.t("authentication.cie.card.title"),
-      subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-      content: I18n.t("authentication.cie.card.layCardMessageFooter"),
+      ...getTextForState(ReadingState.waiting_card),
       isScreenReaderEnabled: false
     };
     this.startCieiOS = this.startCieiOS.bind(this);
@@ -263,19 +303,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.error:
         this.setState(
-          {
-            title: I18n.t(
-              isIos
-                ? "authentication.cie.card.error.readerCardLostTitleiOS"
-                : "authentication.cie.card.error.readerCardLostTitle"
-            ),
-            subtitle: I18n.t(
-              isIos
-                ? "authentication.cie.card.error.readerCardLostHeaderiOS"
-                : "authentication.cie.card.error.readerCardLostHeader"
-            ),
-            content: isIos ? "" : this.state.errorMessage
-          },
+          getTextForState(ReadingState.error, this.state.errorMessage),
           this.announceUpdate
         );
         break;
@@ -295,21 +323,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       // waiting_card state
       default:
         this.setState(
-          {
-            title: I18n.t(
-              isIos
-                ? "authentication.cie.card.titleiOS"
-                : "authentication.cie.card.title"
-            ),
-            subtitle: I18n.t(
-              isIos
-                ? "authentication.cie.card.layCardMessageHeaderiOS"
-                : "authentication.cie.card.layCardMessageHeader"
-            ),
-            content: isIos
-              ? ""
-              : I18n.t("authentication.cie.card.layCardMessageFooter")
-          },
+          getTextForState(ReadingState.waiting_card),
           this.announceUpdate
         );
     }
@@ -338,9 +352,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.state.isScreenReaderEnabled
           ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
           : // if is iOS don't wait. The thank you page is shown natively
-          Platform.OS === "ios"
-          ? 0
-          : WAIT_TIMEOUT_NAVIGATION
+            Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     });
   };
@@ -370,7 +382,27 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     await cieManager.setPin(this.ciePin);
     cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
-      .start()
+      .start({
+        readingInstructions: I18n.t(
+          "authentication.cie.card.iosAlert.readingInstructions"
+        ),
+        moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
+        readingInProgress: I18n.t(
+          "authentication.cie.card.iosAlert.readingInProgress"
+        ),
+        readingSuccess: I18n.t(
+          "authentication.cie.card.iosAlert.readingSuccess"
+        ),
+        invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
+        tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
+        cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
+        wrongPin1AttemptLeft: I18n.t(
+          "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
+        ),
+        wrongPin2AttemptLeft: I18n.t(
+          "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
+        )
+      })
       .then(async () => {
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
@@ -418,7 +450,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             title: I18n.t("global.buttons.cancel")
           }}
           rightButton={{
-            onPress: async () => await this.startCieiOS(),
+            onPress: this.startCieiOS,
             title: I18n.t("authentication.cie.nfc.retry")
           }}
         />

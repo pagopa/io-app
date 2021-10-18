@@ -16,7 +16,7 @@ import {
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherRequest";
+import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import {
   navigateToSvDisabledAdditionalInfoScreen,
   navigateToSvKoSelectBeneficiaryCategoryScreen,

@@ -45,6 +45,7 @@ const AddBPayScreen = (props: Props): React.ReactElement | null => {
     index: 0,
     skip: false
   });
+  const { isAddingReady, bPayAccounts, onCompleted } = props;
 
   const currentIndex = currentAction.index;
 
@@ -52,12 +53,12 @@ const AddBPayScreen = (props: Props): React.ReactElement | null => {
     // call onCompleted when the end of bpay pans has been reached
     // and the adding phase has been completed (or it was skipped step)
     if (
-      currentIndex >= props.bPayAccounts.length &&
-      (currentAction.skip || props.isAddingReady)
+      currentIndex >= bPayAccounts.length &&
+      (currentAction.skip || isAddingReady)
     ) {
-      props.onCompleted();
+      onCompleted();
     }
-  }, [currentAction, props.isAddingReady]);
+  }, [currentAction, isAddingReady, bPayAccounts, onCompleted, currentIndex]);
 
   const nextPan = (skip: boolean) => {
     const nextIndex = currentIndex + 1;

@@ -28,16 +28,18 @@ const BpdTransactionsRouterScreen = (
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
   const [unexpectedError, setUnexpectedError] = useState(false);
 
+  const { selectedPeriod, loadRequiredData } = props;
+
   // Refresh the transactions required data when the screen is open
   useEffect(() => {
-    if (props.selectedPeriod) {
+    if (selectedPeriod) {
       setFirstLoadingRequest(true);
-      props.loadRequiredData(props.selectedPeriod.awardPeriodId);
+      loadRequiredData(selectedPeriod.awardPeriodId);
     } else {
       // This should never happens
       setUnexpectedError(true);
     }
-  }, []);
+  }, [selectedPeriod, loadRequiredData]);
 
   // Handling unexpected error
   if (unexpectedError) {

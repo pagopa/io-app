@@ -23,6 +23,9 @@ export const loadMessage = createAsyncAction(
   { id: string; error: Error }
 >();
 
+/**
+ * Load a single message with the detail needed for the MessageDetailScreen.
+ */
 export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
   "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
@@ -35,13 +38,8 @@ export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_FAILURE"
 )<void, ReadonlyArray<string>, Error>();
 
-export const loadMessagesCancelled = createStandardAction(
-  "MESSAGES_LOAD_CANCELLED"
-)();
-
-export const removeMessages = createStandardAction("MESSAGES_REMOVE")<
-  ReadonlyArray<string>
->();
+export const removeMessages =
+  createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",

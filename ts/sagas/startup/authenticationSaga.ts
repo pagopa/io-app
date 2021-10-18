@@ -47,5 +47,5 @@ export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   //        LOGIN_SUCCESS?
   yield put(analyticsAuthenticationCompleted());
 
-  return action.payload;
+  return action.payload.token;
 }

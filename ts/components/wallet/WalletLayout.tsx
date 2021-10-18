@@ -19,7 +19,7 @@ import {
   ContextualHelpPropsMarkdown
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
-import H5 from "../ui/H5";
+import { H2 } from "../core/typography/H2";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -86,9 +86,7 @@ export default class WalletLayout extends React.Component<Props> {
       <View style={[styles.whiteBg, styles.flex1, styles.shadow]}>
         <View spacer={true} />
         <View style={styles.subHeaderContent}>
-          <H5 style={styles.brandDarkGray}>
-            {I18n.t("wallet.latestTransactions")}
-          </H5>
+          <H2 color={"bluegrey"}>{I18n.t("wallet.latestTransactions")}</H2>
           <Text>{I18n.t("wallet.amount")}</Text>
         </View>
         <View spacer={true} />

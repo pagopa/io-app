@@ -33,10 +33,8 @@ export function* handleGetListaRegioni(
   _: ActionType<typeof svGenerateVoucherAvailableRegion.request>
 ) {
   try {
-    const getListaRegioniResult: SagaCallReturnType<typeof getListaRegioni> = yield call(
-      getListaRegioni,
-      {}
-    );
+    const getListaRegioniResult: SagaCallReturnType<typeof getListaRegioni> =
+      yield call(getListaRegioni, {});
     if (getListaRegioniResult.isRight()) {
       if (getListaRegioniResult.value.status === 200) {
         yield put(

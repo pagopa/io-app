@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
 import { Item, View } from "native-base";
@@ -73,10 +73,17 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     const onlineMerchants = getValueOrElse(props.onlineMerchants, []);
     const offlineMerchants = getValueOrElse(props.offlineMerchants, []);
 
-    return [
-      ...offlineMerchants,
-      ...onlineMerchants
-    ].sort((m1: MerchantsAll, m2: MerchantsAll) =>
+    const merchantsAll = [...offlineMerchants, ...onlineMerchants];
+
+    // Removes possible duplicated merchant:
+    // a merchant can be both online and offline, or may have multiple result by offlineMerchant search API
+    const uniquesMerchants = [
+      ...new Map<OfflineMerchant["id"] | OnlineMerchant["id"], MerchantsAll>(
+        merchantsAll.map(m => [m.id, m])
+      ).values()
+    ];
+
+    return [...uniquesMerchants].sort((m1: MerchantsAll, m2: MerchantsAll) =>
       m1.name.localeCompare(m2.name)
     );
   }, [props.onlineMerchants, props.offlineMerchants]);
@@ -100,14 +107,21 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
 
   React.useEffect(() => {
     debounceRef.current(searchValue, merchantsAll);
-  }, [searchValue, props.onlineMerchants, props.offlineMerchants]);
+  }, [
+    searchValue,
+    props.onlineMerchants,
+    props.offlineMerchants,
+    merchantsAll
+  ]);
 
-  const initLoadingLists = () => {
-    props.requestOfflineMerchants();
-    props.requestOnlineMerchants();
-  };
+  const { requestOfflineMerchants, requestOnlineMerchants } = props;
 
-  React.useEffect(initLoadingLists, []);
+  const initLoadingLists = useCallback(() => {
+    requestOfflineMerchants();
+    requestOnlineMerchants();
+  }, [requestOfflineMerchants, requestOnlineMerchants]);
+
+  React.useEffect(initLoadingLists, [initLoadingLists]);
 
   const onItemPress = (id: Merchant["id"]) => {
     props.navigateToMerchantDetail(id);

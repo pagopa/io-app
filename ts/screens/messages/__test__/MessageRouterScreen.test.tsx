@@ -8,6 +8,7 @@ import {
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
@@ -31,16 +32,20 @@ const mockMeta: CreatedMessageWithoutContent = {
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
     subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-    markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-      80,
-      10001
-    >,
+    markdown:
+      "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+        80,
+        10001
+      >,
     due_date: new Date(),
     payment_data: {
       amount: 1 as PaymentAmount,
       notice_number: "002718270840468918" as string &
         IPatternStringTag<"^[0123][0-9]{17}$">,
-      invalid_after_due_date: true
+      invalid_after_due_date: true,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   },
   created_at: new Date(),
@@ -67,16 +72,20 @@ const mockEUCovidMessage: pot.Pot<
     content: {
       eu_covid_cert: { auth_code: "eu_covid_cert" },
       subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-      markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-        80,
-        10001
-      >,
+      markdown:
+        "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+          80,
+          10001
+        >,
       due_date: new Date(),
       payment_data: {
         amount: 1 as PaymentAmount,
         notice_number: "002718270840468918" as string &
           IPatternStringTag<"^[0123][0-9]{17}$">,
-        invalid_after_due_date: true
+        invalid_after_due_date: true,
+        payee: {
+          fiscal_code: "00000000001" as OrganizationFiscalCode
+        }
       }
     },
     created_at: new Date(),
