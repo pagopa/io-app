@@ -41,12 +41,6 @@ const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
 };
 
 const testMessageMeta1: MessageState = {
-  meta: {
-    id: testMessageWithContent1.id,
-    fiscal_code: testMessageWithContent1.fiscal_code,
-    created_at: new Date(),
-    sender_service_id: testMessageWithContent1.sender_service_id
-  },
   message: pot.some(testMessageWithContent1)
 };
 
@@ -63,12 +57,6 @@ const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
 };
 
 const testMessageMeta2: MessageState = {
-  meta: {
-    id: testMessageWithContent2.id,
-    fiscal_code: testMessageWithContent2.fiscal_code,
-    created_at: new Date(),
-    sender_service_id: testMessageWithContent2.sender_service_id
-  },
   message: pot.some(testMessageWithContent2)
 };
 
@@ -202,7 +190,7 @@ describe("watchLoadMessages", () => {
         .select(messagesStatusSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next({})
-        .put(removeMessagesAction([testMessageMeta2.meta.id]))
+        .put(removeMessagesAction([testMessageId2]))
         .next()
         .select(messagesStateByIdSelector)
         // Return an object as messagesByIdSelectors response

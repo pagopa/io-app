@@ -8,16 +8,19 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
 import { loadMessage, removeMessages } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type MessageState = {
-  meta: CreatedMessageWithoutContent;
   message: pot.Pot<CreatedMessageWithContentAndAttachments, string | undefined>;
 };
+
+export type PotentialMessage = pot.Pot<
+  CreatedMessageWithContentAndAttachments,
+  string | undefined
+>;
 
 // An object containing MessageWithContentPO keyed by id
 export type MessageStateById = Readonly<{
@@ -34,8 +37,7 @@ const reducer = (
     case getType(loadMessage.request):
       return {
         ...state,
-        [action.payload.id]: {
-          meta: action.payload,
+        [action.payload]: {
           message: pot.noneLoading
         }
       };

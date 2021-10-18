@@ -10,7 +10,6 @@ import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import ROUTES from "../../../navigation/routes";
@@ -20,14 +19,6 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
-
-const mockMeta: CreatedMessageWithoutContent = {
-  created_at: new Date(),
-  fiscal_code: "AAABBB05S09I422L" as FiscalCode,
-  id: "messageId",
-  sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
-  time_to_live: 3600 as TimeToLiveSeconds
-};
 
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
@@ -148,7 +139,6 @@ describe("Test MessageRouterScreen", () => {
           allIds: pot.some(["messageId"]),
           byId: {
             messageId: {
-              meta: mockMeta,
               message: mockPotMessage
             }
           }
@@ -172,7 +162,6 @@ describe("Test MessageRouterScreen", () => {
           allIds: pot.some(["messageId"]),
           byId: {
             messageId: {
-              meta: mockMeta,
               message: mockEUCovidMessage
             }
           }
@@ -277,7 +266,6 @@ describe("Test MessageRouterScreen", () => {
           allIds: pot.some(["messageId"]),
           byId: {
             messageId: {
-              meta: mockMeta,
               message: pot.noneError("Error")
             }
           }

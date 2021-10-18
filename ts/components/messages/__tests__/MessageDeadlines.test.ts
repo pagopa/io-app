@@ -135,11 +135,6 @@ const baseMessage = {
 const messagesState: Array<MessagesStateAndStatus> = [
   {
     ...baseMessage,
-    meta: {
-      ...baseMeta,
-      created_at: setDate(-1, 12),
-      id: oldestItemID
-    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(-1, 12),
@@ -160,11 +155,6 @@ const messagesState: Array<MessagesStateAndStatus> = [
   },
   {
     ...baseMessage,
-    meta: {
-      ...baseMeta,
-      created_at: setDate(0, 3),
-      id: nextItemAfterNowID
-    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(0, 3),
@@ -188,11 +178,6 @@ const messagesState: Array<MessagesStateAndStatus> = [
   },
   {
     ...baseMessage,
-    meta: {
-      ...baseMeta,
-      created_at: setDate(1, 12),
-      id: "01DQQGBXWSCNNY44CH2QZ95PIO"
-    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(1, 12),

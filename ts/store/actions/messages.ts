@@ -13,24 +13,28 @@ import { CreatedMessageWithContentAndAttachments } from "../../../definitions/ba
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 
+/**
+ * Load a single message's details given its ID
+ */
 export const loadMessage = createAsyncAction(
   "MESSAGE_LOAD_REQUEST",
   "MESSAGE_LOAD_SUCCESS",
   "MESSAGE_LOAD_FAILURE"
 )<
-  CreatedMessageWithoutContent,
+  string,
   CreatedMessageWithContentAndAttachments,
   { id: string; error: Error }
 >();
 
 /**
- * Load a single message with the detail needed for the MessageDetailScreen.
+ * Load a single message's details given its ID, and the sender service
+ * if needed.
  */
 export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
   "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
   "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
-)<CreatedMessageWithoutContent, void, Error>();
+)<string, CreatedMessageWithoutContent, Error>();
 
 export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_REQUEST",

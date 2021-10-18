@@ -104,7 +104,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (_: MessageState) => _.meta.id;
+const keyExtractor = (_: MessageState): string =>
+  pot
+    .toOption(_.message)
+    .map(m => m.id)
+    .getOrElse("not-found");
 
 const getItemHeight = (messageState: MessageState): number => {
   const message = messageState.message;
@@ -215,10 +219,21 @@ class MessageList extends React.Component<Props, State> {
     return null;
   }
 
+  getServicePot(
+    message?: MessageState["message"]
+  ): pot.Pot<ServicePublic, Error> {
+    if (message !== undefined && pot.isSome(message)) {
+      return (
+        this.props.servicesById[message.value.sender_service_id] || pot.none
+      );
+    }
+    return pot.none;
+  }
+
   private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
-    const { meta, message: potMessage, isRead } = info.item;
+    const { message: potMessage, isRead } = info.item;
     const { paymentsByRptId, onPressItem } = this.props;
-    const potService = this.props.servicesById[meta.sender_service_id];
+    const potService = this.getServicePot(potMessage);
     const isServiceLoading = potService
       ? pot.isNone(potService) && pot.isLoading(potService) // is none loading
       : false;
@@ -226,13 +241,15 @@ class MessageList extends React.Component<Props, State> {
       return MessageListItemPlaceholder;
     }
 
-    // Error messages have the same charateristics of normal messages.
+    // Error messages have the same features of normal messages.
     // The idea is to fill data with error strings to have it printed as shown
     // in mockups.
     const message = pot.isNone(potMessage)
       ? ({
-          ...meta,
-          created_at: new Date(meta.created_at),
+          id: "__PLACEHOLDER__",
+          fiscal_code: "__PLACEHOLDER__",
+          sender_service_id: "__PLACEHOLDER__",
+          created_at: new Date(),
           content: { subject: I18n.t("messages.errorLoading.details") }
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
@@ -240,15 +257,12 @@ class MessageList extends React.Component<Props, State> {
         } as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
-    const service =
-      potService !== undefined
-        ? pot.isNone(potService)
-          ? ({
-              organization_name: I18n.t("messages.errorLoading.senderInfo"),
-              department_name: I18n.t("messages.errorLoading.serviceInfo")
-            } as ServicePublic)
-          : pot.toUndefined(potService)
-        : undefined;
+    const service = pot.isNone(potService)
+      ? ({
+          organization_name: I18n.t("messages.errorLoading.senderInfo"),
+          department_name: I18n.t("messages.errorLoading.serviceInfo")
+        } as ServicePublic)
+      : pot.toUndefined(potService);
 
     const payment =
       paymentsByRptId[
@@ -265,7 +279,7 @@ class MessageList extends React.Component<Props, State> {
         onLongPress={this.onLongPress}
         isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
         isSelected={this.props.selectedMessageIds
-          .map(_ => _.has(info.item.meta.id))
+          .map(set => set.has(message.id))
           .getOrElse(false)}
       />
     );
@@ -281,7 +295,11 @@ class MessageList extends React.Component<Props, State> {
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;
-    if (id === messageStates[lastIndex].meta.id) {
+    const lastMessageId = pot
+      .toOption(messageStates[lastIndex]?.message)
+      .map(m => m.id)
+      .getOrElse("not-found");
+    if (id === lastMessageId) {
       this.setState({
         longPressedItemIndex: some(lastIndex)
       });

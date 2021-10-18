@@ -1,7 +1,6 @@
 /**
  * A screen that contains all the Tabs related to messages.
  */
-import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
@@ -331,20 +330,21 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshMessages: (
-    lexicallyOrderedMessagesState: ReturnType<
+    _lexicallyOrderedMessagesState: ReturnType<
       typeof lexicallyOrderedMessagesStateSelector
     >,
-    servicesById: ServicesByIdState
+    _servicesById: ServicesByIdState
   ) => {
     dispatch(loadMessages.request());
     // Refresh services related to messages received by the user
-    if (pot.isSome(lexicallyOrderedMessagesState)) {
-      lexicallyOrderedMessagesState.value.forEach(item => {
-        if (servicesById[item.meta.sender_service_id] === undefined) {
-          dispatch(loadServiceDetail.request(item.meta.sender_service_id));
-        }
-      });
-    }
+    // TODO: is this still needed?
+    // if (pot.isSome(lexicallyOrderedMessagesState)) {
+    //   lexicallyOrderedMessagesState.value.forEach(item => {
+    //     if (servicesById[item.meta.sender_service_id] === undefined) {
+    //       dispatch(loadServiceDetail.request(item.meta.sender_service_id));
+    //     }
+    //   });
+    // }
   },
   refreshService: (serviceId: string) => {
     dispatch(loadServiceDetail.request(serviceId));

@@ -73,7 +73,7 @@ describe("messages", () => {
       testSaga(loadMessage, getMessage, testMessageWithContent1.id)
         .next()
         .next()
-        .call(fetchMessage, getMessage, testMessageWithContent1);
+        .call(fetchMessage, getMessage, testMessageWithContent1.id);
     });
 
     it("should put MESSAGE_LOAD_FAILURE and return the error if the message can't be fetched", () => {
@@ -81,7 +81,7 @@ describe("messages", () => {
       testSaga(loadMessage, getMessage, testMessageWithContent1.id)
         .next()
         .next()
-        .call(fetchMessage, getMessage, testMessageWithContent1)
+        .call(fetchMessage, getMessage, testMessageWithContent1.id)
         // Return 200 with a valid message as getMessage response
         .next(left(Error("Error")))
         .put(

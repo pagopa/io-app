@@ -40,7 +40,7 @@ function* loadMessages(
     //       and persist it somewhere
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
-      {}
+      { enrich_result_data: true }
     );
 
     if (response.isLeft()) {
@@ -151,7 +151,9 @@ function* loadMessages(
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
         // TODO: with the enrichment, we don't need to load each message anymore
-        yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
+        yield all(
+          pendingMessages.map(_ => put(loadMessageAction.request(_.id)))
+        );
       }
     }
   } catch (error) {
