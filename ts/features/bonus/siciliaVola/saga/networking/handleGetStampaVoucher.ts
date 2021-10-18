@@ -7,16 +7,13 @@ import RNFS from "react-native-fs";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
-import { getGenericError } from "../../../../../utils/errors";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
 import { waitBackoffError } from "../../../../../utils/backoffError";
-
-const mapKinds: Record<number, string> = { 500: "InternalServerError" };
 
 /**
  * Handle the remote call to check if the service is alive
  */
-// TODO: add client as parameter when the client will be created
 export function* handleGetStampaVoucher(
   getStampaVoucher: ReturnType<
     typeof BackendSiciliaVolaClient
@@ -43,19 +40,29 @@ export function* handleGetStampaVoucher(
             `${fPath}/${voucherFilename}.pdf`,
             getStampaVoucherResult.value.value.data,
             "base64"
-          );
-          yield put(svGetPdfVoucher.success(fPath));
+          )
+            .then(function* () {
+              yield put(svGetPdfVoucher.success(fPath));
+            })
+            .catch(function* () {
+              yield put(
+                svPossibleVoucherStateGet.failure({
+                  ...getGenericError(new Error("error during saving voucher"))
+                })
+              );
+            });
           return;
         }
       }
-      if (mapKinds[getStampaVoucherResult.value.status] !== undefined) {
+
+      yield put(
         svGetPdfVoucher.failure({
           ...getGenericError(
-            new Error(mapKinds[getStampaVoucherResult.value.status])
+            new Error(`response status ${getStampaVoucherResult.value.status}`)
           )
-        });
-        return;
-      }
+        })
+      );
+      return;
     }
     yield put(
       svPossibleVoucherStateGet.failure({
@@ -63,10 +70,6 @@ export function* handleGetStampaVoucher(
       })
     );
   } catch (e) {
-    yield put(
-      svGetPdfVoucher.failure({
-        ...getGenericError(new Error("Generic Error"))
-      })
-    );
+    yield put(svGetPdfVoucher.failure({ ...getNetworkError(e) }));
   }
 }
