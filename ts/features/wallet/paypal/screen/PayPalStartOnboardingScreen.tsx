@@ -22,14 +22,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * this is to avoid a too big logo on narrow screens
  */
 const ovalWith = Math.min(206, Dimensions.get("window").width * 0.6);
-const logoProp = ovalWith * 0.4;
+const logoWidth = ovalWith * 0.4;
 // an oval background with PP logo on it, at the center
 const PayPalLogo = () => (
   <View style={{ alignItems: "center", justifyContent: "center" }}>
     <Oval width={ovalWith} height={ovalWith} />
     <PPLogo
-      width={logoProp}
-      height={logoProp}
+      width={logoWidth}
+      height={logoWidth}
       style={{ position: "absolute" }}
     />
   </View>
@@ -59,7 +59,10 @@ const PayPalStartOnboardingScreen = (_: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"CheckResidenceComponent"}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"PayPalStartOnboardingScreen"}
+      >
         <InfoScreenComponent
           image={<PayPalLogo />}
           title={I18n.t("wallet.onboarding.paypal.start.title")}
