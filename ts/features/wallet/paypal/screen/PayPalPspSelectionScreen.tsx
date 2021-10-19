@@ -170,10 +170,23 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
 
           {isReady(props.pspList) && (
             <ScrollView>
+              <View style={{ flexDirection: "row" }}>
+                <H4 color={"bluegreyDark"} weight={"Regular"}>
+                  {"ciao"}
+                </H4>
+                <H4
+                  color={"bluegreyDark"}
+                  weight={"Regular"}
+                  style={{
+                    flex: 1,
+                    textAlign: "right"
+                  }}
+                >
+                  {"zio"}
+                </H4>
+              </View>
+
               <RadioButtonList<PayPalPsp["id"]>
-                head={I18n.t(
-                  "profile.main.privacy.removeAccount.details.question"
-                )}
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(props.pspList.value)}
                 selectedItem={selectedPsp}

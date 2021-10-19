@@ -108,7 +108,6 @@ export const RadioButtonList = <T extends unknown>(props: Props<T>) => (
             onPress={() => props.onPress(item.id)}
             style={styles.icon}
           />
-
           {getBody(item, () => props.onPress(item.id))}
         </View>
       ))}
