@@ -45,12 +45,14 @@ const PayPalStartOnboardingScreen = (_: Props): React.ReactElement | null => {
     testID: "cancelButtonId",
     primary: false,
     bordered: true,
+    // TODO replace with the effective handler
     onPress: undefined,
     title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
+    // TODO replace with the effective handler
     onPress: undefined,
     title: I18n.t("global.buttons.continue")
   };
