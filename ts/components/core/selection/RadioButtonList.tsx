@@ -3,11 +3,24 @@ import * as React from "react";
 import { ReactNode } from "react";
 import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
+type RadioItemTypeString = {
+  kind: "string";
+  element: string;
+};
+
+type RadioItemTypeNone = {
+  kind: "node";
+  element: ReactNode;
+};
+
+export type RadioItemType = RadioItemTypeString | RadioItemTypeNone;
+
 export type RadioItem<T> = {
-  body: ReactNode;
+  body: RadioItemType;
   id: T;
 };
 
@@ -44,6 +57,33 @@ const styles = StyleSheet.create({
   }
 });
 
+const getBody = <T extends unknown>(
+  radioItemType: RadioItem<T>,
+  onPress: (selected: T) => void
+) => {
+  switch (radioItemType.body.kind) {
+    case "string":
+      return (
+        <H4
+          color={"bluegreyDark"}
+          weight={"Regular"}
+          onPress={() => onPress(radioItemType.id)}
+        >
+          {radioItemType.body.element}
+        </H4>
+      );
+    case "node":
+      return (
+        <TouchableDefaultOpacity
+          style={IOStyles.flex}
+          onPress={() => onPress(radioItemType.id)}
+        >
+          {radioItemType.body.element}
+        </TouchableDefaultOpacity>
+      );
+  }
+};
+
 /**
  * A list of radio button with an optional heading.
  * The management of the selection is demanded and derived by the `selectedItem` prop.
@@ -68,24 +108,8 @@ export const RadioButtonList = <T extends unknown>(props: Props<T>) => (
             onPress={() => props.onPress(item.id)}
             style={styles.icon}
           />
-          <View
-            style={[
-              IOStyles.flex,
-              {
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexDirection: "row"
-              }
-            ]}
-          >
-            <H4
-              color={"bluegreyDark"}
-              weight={"Regular"}
-              onPress={() => props.onPress(item.id)}
-            >
-              {item.body}
-            </H4>
-          </View>
+
+          {getBody(item, () => props.onPress(item.id))}
         </View>
       ))}
     </View>

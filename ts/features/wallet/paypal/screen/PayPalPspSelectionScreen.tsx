@@ -29,7 +29,8 @@ import { privacyUrl } from "../../../../config";
 import { isReady, remoteReady } from "../../../bonus/bpd/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../components/core/typography/H4";
-import { InfoBox } from "../../../../components/box/InfoBox";
+import IconFont from "../../../../components/ui/IconFont";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type PayPalPsp = {
   id: string;
@@ -73,7 +74,7 @@ const RadioItemBody = ({ psp }: { psp: PayPalPsp }) => {
   return (
     <View
       style={{
-        alignItems: "center",
+        alignItems: "flex-start",
         justifyContent: "space-between",
         flexDirection: "row"
       }}
@@ -88,12 +89,11 @@ const RadioItemBody = ({ psp }: { psp: PayPalPsp }) => {
       <View
         style={{
           flex: 1,
-          flexDirection: "row",
-          justifyContent: "flex-end",
-          alignItems: "center"
+          flexDirection: "column",
+          alignItems: "flex-end"
         }}
       >
-        <InfoBox iconName={"io-info"} iconSize={24} />
+        <IconFont name={"io-info"} size={24} color={IOColors.blue} />
       </View>
     </View>
   );
@@ -104,7 +104,10 @@ const getPspListRadioItems = (
 ): ReadonlyArray<RadioItem<PayPalPsp["id"]>> =>
   pspList.map(psp => ({
     id: psp.id,
-    body: <RadioItemBody psp={psp} />
+    body: {
+      kind: "node",
+      element: <RadioItemBody psp={psp} />
+    }
   }));
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -157,7 +160,6 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
 
           {isReady(props.pspList) && (
             <ScrollView>
-              <RadioItemBody psp={props.pspList.value[0]} />
               <RadioButtonList<PayPalPsp["id"]>
                 head={I18n.t(
                   "profile.main.privacy.removeAccount.details.question"

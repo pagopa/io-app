@@ -31,15 +31,21 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const getShowReturnDateItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
     id: false,
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.departure"
-    )
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.departure"
+      )
+    }
   },
   {
     id: true,
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.return"
-    )
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectFlightsDate.flights_choice.return"
+      )
+    }
   }
 ];
 

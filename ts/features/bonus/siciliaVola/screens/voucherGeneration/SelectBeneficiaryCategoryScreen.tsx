@@ -39,33 +39,48 @@ const getCategoryBeneficiaryItems = (): ReadonlyArray<
   RadioItem<BeneficiaryCategory>
 > => [
   {
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.student"
-    ),
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.student"
+      )
+    },
     id: "student"
   },
   {
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.disabled"
-    ),
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.disabled"
+      )
+    },
     id: "disabled"
   },
   {
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.worker"
-    ),
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.worker"
+      )
+    },
     id: "worker"
   },
   {
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.sick"
-    ),
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.sick"
+      )
+    },
     id: "sick"
   },
   {
-    body: I18n.t(
-      "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.other"
-    ),
+    body: {
+      kind: "string",
+      element: I18n.t(
+        "bonus.sv.voucherGeneration.selectBeneficiaryCategory.categories.other"
+      )
+    },
     id: "other"
   }
 ];

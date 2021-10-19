@@ -13,6 +13,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   row: {
+    backgroundColor: "red",
     flexDirection: "row"
   },
   shrink: {

@@ -4,7 +4,10 @@ import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import {
+  RadioButtonList,
+  RadioItemType
+} from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -33,23 +36,35 @@ type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps>;
 
 const getMotivationItems = (): ReadonlyArray<{
-  body: string;
+  body: RadioItemType;
   id: RemoveAccountMotivationEnum;
 }> => [
   {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+    body: {
+      kind: "string",
+      element: I18n.t("profile.main.privacy.removeAccount.details.answer_1")
+    },
     id: RemoveAccountMotivationEnum.NOT_UTILS
   },
   {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+    body: {
+      kind: "string",
+      element: I18n.t("profile.main.privacy.removeAccount.details.answer_2")
+    },
     id: RemoveAccountMotivationEnum.NOT_SAFE
   },
   {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+    body: {
+      kind: "string",
+      element: I18n.t("profile.main.privacy.removeAccount.details.answer_3")
+    },
     id: RemoveAccountMotivationEnum.NEVER_USED
   },
   {
-    body: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+    body: {
+      kind: "string",
+      element: I18n.t("profile.main.privacy.removeAccount.details.answer_4")
+    },
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];
