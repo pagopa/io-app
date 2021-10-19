@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
   RadioButtonList,
-  RadioItemType
+  RadioItem
 } from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
@@ -35,10 +35,9 @@ type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const getMotivationItems = (): ReadonlyArray<{
-  body: RadioItemType;
-  id: RemoveAccountMotivationEnum;
-}> => [
+const getMotivationItems = (): ReadonlyArray<
+  RadioItem<RemoveAccountMotivationEnum>
+> => [
   {
     body: {
       kind: "string",

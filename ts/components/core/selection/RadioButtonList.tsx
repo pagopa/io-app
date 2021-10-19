@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
-
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10
@@ -66,6 +65,7 @@ const getBody = <T extends unknown>(
   radioItem: RadioItem<T>,
   onPress: (selected: T) => void
 ) => {
+  const onItemPress = () => onPress(radioItem.id);
   switch (radioItem.body.kind) {
     case "string":
       return (
@@ -73,17 +73,14 @@ const getBody = <T extends unknown>(
           style={IOStyles.flex}
           color={"bluegreyDark"}
           weight={"Regular"}
-          onPress={() => onPress(radioItem.id)}
+          onPress={onItemPress}
         >
           {radioItem.body.element}
         </H4>
       );
     case "node":
       return (
-        <TouchableDefaultOpacity
-          style={IOStyles.flex}
-          onPress={() => onPress(radioItem.id)}
-        >
+        <TouchableDefaultOpacity style={IOStyles.flex} onPress={onItemPress}>
           {radioItem.body.element}
         </TouchableDefaultOpacity>
       );
