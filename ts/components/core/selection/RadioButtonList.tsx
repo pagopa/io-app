@@ -7,20 +7,20 @@ import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
-type RadioItemTypeString = {
+type RadioBodyString = {
   kind: "string";
   element: string;
 };
 
-type RadioItemTypeNone = {
+type RadioBodyNode = {
   kind: "node";
   element: ReactNode;
 };
 
-export type RadioItemType = RadioItemTypeString | RadioItemTypeNone;
+export type RadioBodyType = RadioBodyString | RadioBodyNode;
 
 export type RadioItem<T> = {
-  body: RadioItemType;
+  body: RadioBodyType;
   id: T;
 };
 
@@ -57,29 +57,34 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * return the body relying on the type of the item
+ * @param radioItem
+ * @param onPress
+ */
 const getBody = <T extends unknown>(
-  radioItemType: RadioItem<T>,
+  radioItem: RadioItem<T>,
   onPress: (selected: T) => void
 ) => {
-  switch (radioItemType.body.kind) {
+  switch (radioItem.body.kind) {
     case "string":
       return (
         <H4
           style={IOStyles.flex}
           color={"bluegreyDark"}
           weight={"Regular"}
-          onPress={() => onPress(radioItemType.id)}
+          onPress={() => onPress(radioItem.id)}
         >
-          {radioItemType.body.element}
+          {radioItem.body.element}
         </H4>
       );
     case "node":
       return (
         <TouchableDefaultOpacity
           style={IOStyles.flex}
-          onPress={() => onPress(radioItemType.id)}
+          onPress={() => onPress(radioItem.id)}
         >
-          {radioItemType.body.element}
+          {radioItem.body.element}
         </TouchableDefaultOpacity>
       );
   }
