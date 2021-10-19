@@ -55,15 +55,10 @@ const migrations: MigrationManifest = {
   // TO avoid the proliferation of too many API requests until paged messages' API has been introduced
   // we restore the persistence of services so this RULE doesn't actually migrates the store.
   // ref: https://pagopa.atlassian.net/browse/IA-292
-  "1": (state: PersistedState): PersistedEntitiesState => {
-    const entities = state as PersistedEntitiesState;
-    return {
-      ...entities,
-      services: {
-        ...entities.services
-      }
-    };
-  }
+  "1": (state: PersistedState): PersistedEntitiesState =>
+    ({
+      ...state
+    } as PersistedEntitiesState)
 };
 
 // A custom configuration to avoid to persist messages section
