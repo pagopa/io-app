@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
  * - label -> displayed on top the search text-box both.
  * - placeholder -> placeholder of the search text-box.
  * - isLoading -> when true show a loader at the middle of the modal.
+ * - showModalInputTextbox -> boolean that control the input textbox in the modal
  */
 type CommonProps<T> = {
   data: ReadonlyArray<T>;
