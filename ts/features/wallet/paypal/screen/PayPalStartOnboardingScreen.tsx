@@ -40,14 +40,16 @@ const PayPalLogo = () => (
  * It shows the PP logo and some texts
  * At the bottom 2 CTA to cancel or continue
  */
-const PayPalStartOnboardingScreen = (_: Props): React.ReactElement => {
+const PayPalStartOnboardingScreen = (_: Props): React.ReactElement | null => {
   const cancelButtonProps = {
+    testID: "cancelButtonId",
     primary: false,
     bordered: true,
     onPress: undefined,
     title: I18n.t("global.buttons.cancel")
   };
   const continueButtonProps = {
+    testID: "continueButtonId",
     bordered: false,
     onPress: undefined,
     title: I18n.t("global.buttons.continue")
