@@ -1,12 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import * as React from "react";
+import { ReactNode } from "react";
 import { H4 } from "../typography/H4";
 import { IOStyles } from "../variables/IOStyles";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
 export type RadioItem<T> = {
-  label: string;
+  body: ReactNode;
   id: T;
 };
 
@@ -24,6 +25,7 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
+
     flex: 1,
     paddingTop: 10,
     paddingBottom: 10
@@ -33,6 +35,10 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   icon: {
+    alignSelf: "center",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
     paddingBottom: 15,
     paddingRight: 20
   }
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
  * The management of the selection is demanded and derived by the `selectedItem` prop.
  * The item with the `id` equal to the `selectedItem` is the active one.
  */
-export const RadioButtonList = <T extends any>(props: Props<T>) => (
+export const RadioButtonList = <T extends unknown>(props: Props<T>) => (
   <View>
     {props.head && (
       <H4 color={"bluegreyDark"} weight={"Regular"} style={styles.head}>
@@ -62,14 +68,24 @@ export const RadioButtonList = <T extends any>(props: Props<T>) => (
             onPress={() => props.onPress(item.id)}
             style={styles.icon}
           />
-          <H4
-            color={"bluegreyDark"}
-            weight={"Regular"}
-            style={IOStyles.flex}
-            onPress={() => props.onPress(item.id)}
+          <View
+            style={[
+              IOStyles.flex,
+              {
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexDirection: "row"
+              }
+            ]}
           >
-            {item.label}
-          </H4>
+            <H4
+              color={"bluegreyDark"}
+              weight={"Regular"}
+              onPress={() => props.onPress(item.id)}
+            >
+              {item.body}
+            </H4>
+          </View>
         </View>
       ))}
     </View>
