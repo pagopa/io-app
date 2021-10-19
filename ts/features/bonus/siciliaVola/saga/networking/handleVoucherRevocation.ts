@@ -33,22 +33,20 @@ export function* handleVoucherRevocation(
         return;
       }
       yield put(
-        svVoucherRevocation.failure({
-          ...getGenericError(
+        svVoucherRevocation.failure(
+          getGenericError(
             new Error(
               `response status ${postAnnullaVoucherResult.value.status}`
             )
           )
-        })
+        )
       );
       return;
     }
     yield put(
-      svVoucherRevocation.failure({
-        ...getGenericError(new Error("Generic Error"))
-      })
+      svVoucherRevocation.failure(getGenericError(new Error("Generic Error")))
     );
   } catch (e) {
-    yield put(svVoucherRevocation.failure({ ...getNetworkError(e) }));
+    yield put(svVoucherRevocation.failure(getNetworkError(e)));
   }
 }
