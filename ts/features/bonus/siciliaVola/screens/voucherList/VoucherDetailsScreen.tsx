@@ -84,7 +84,12 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ko")
       );
     }
+    // Return to the VoucherListScreen if the revocation is completed since the voucher doesn't exist anymore.
     if (isReady(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ok"),
+        "success"
+      );
       back();
     }
   }, [revocationState, back]);
