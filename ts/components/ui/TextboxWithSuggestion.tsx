@@ -59,6 +59,7 @@ type CommonProps<T> = {
   label: string;
   placeholder: string;
   isLoading: boolean;
+  showModalInputTextbox: boolean;
 };
 
 /**
@@ -107,19 +108,23 @@ const TextboxWithSuggestionModal = <T extends unknown>(
       </AppHeader>
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
-          <LabelledItem
-            iconPosition={"right"}
-            label={props.label}
-            inputProps={{
-              value: inputValue,
-              onChangeText: v => {
-                setInputValue(v);
-                props.onChangeText(v);
-              },
-              placeholder: props.placeholder
-            }}
-          />
-          <View spacer large />
+          {props.showModalInputTextbox && (
+            <>
+              <LabelledItem
+                iconPosition={"right"}
+                label={props.label}
+                inputProps={{
+                  value: inputValue,
+                  onChangeText: v => {
+                    setInputValue(v);
+                    props.onChangeText(v);
+                  },
+                  placeholder: props.placeholder
+                }}
+              />
+              <View spacer large />
+            </>
+          )}
 
           <FlatList
             data={props.data}
@@ -179,6 +184,7 @@ const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
                 onClose={hideModal}
                 onChangeText={props.onChangeText}
                 isLoading={props.isLoading}
+                showModalInputTextbox={props.showModalInputTextbox}
               />
             )
           }
