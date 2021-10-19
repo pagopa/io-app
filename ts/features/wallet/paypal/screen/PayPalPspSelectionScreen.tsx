@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -10,7 +10,6 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
-import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import I18n from "../../../../i18n";
@@ -31,6 +30,7 @@ import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImage
 import { H4 } from "../../../../components/core/typography/H4";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type PayPalPsp = {
   id: string;
@@ -93,7 +93,16 @@ const RadioItemBody = ({ psp }: { psp: PayPalPsp }) => {
           alignItems: "flex-end"
         }}
       >
-        <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+        <TouchableDefaultOpacity
+          onPress={() => console.log("pressed")}
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            alignItems: "flex-end"
+          }}
+        >
+          <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+        </TouchableDefaultOpacity>
       </View>
     </View>
   );
@@ -126,6 +135,7 @@ const getLocales = () => ({
  */
 const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const { title, body, bodyLinkTitle } = getLocales();
+  const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"]>("");
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
@@ -166,8 +176,8 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
                 )}
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(props.pspList.value)}
-                selectedItem={undefined}
-                onPress={constNull}
+                selectedItem={selectedPsp}
+                onPress={setSelectedPsp}
               />
             </ScrollView>
           )}
