@@ -12,6 +12,8 @@ import {
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type AvailableMunicipalitiesState = pot.Pot<
   IndexedById<Municipality>,
@@ -37,5 +39,15 @@ const reducer = (
   }
   return state;
 };
+
+export const availableMunicipalitiesSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.sv.voucherGeneration.availableMunicipalities
+  ],
+  (
+    availableMunicipalities: AvailableMunicipalitiesState
+  ): AvailableMunicipalitiesState => availableMunicipalities
+);
 
 export default reducer;
