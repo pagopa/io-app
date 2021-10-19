@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -10,6 +10,7 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { View } from "native-base";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
+import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import I18n from "../../../../i18n";
@@ -32,6 +33,10 @@ import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
+
+// TODO temporary type. It will be shared in the future or replaced with a new one
 type PayPalPsp = {
   id: string;
   logoUrl: string;
@@ -39,17 +44,33 @@ type PayPalPsp = {
   fee: NonNegativeNumber;
   privacyUrl: string;
 };
-const IMAGE_WIDTH = Dimensions.get("window").width;
-const IMAGE_HEIGHT = 32;
+const PSP_IMAGE_WIDTH = Dimensions.get("window").width;
+const PSP_IMAGE_HEIGHT = 32;
 const styles = StyleSheet.create({
   pspLogo: {
     height: 32,
     flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start"
+  },
+  radioItemBody: {
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    flexDirection: "row"
+  },
+  radioItemRightContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-end"
+  },
+  radioItemRight: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-end"
   }
 });
 
+// TODO replace fake items with values coming from the store
 const pspList: ReadonlyArray<PayPalPsp> = [
   {
     id: "1",
@@ -68,17 +89,37 @@ const pspList: ReadonlyArray<PayPalPsp> = [
   }
 ];
 
-const RadioItemBody = ({ psp }: { psp: PayPalPsp }) => {
-  const imgDimensions = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, psp.logoUrl);
-
-  return (
-    <View
+const RadioListHeader = (props: {
+  leftColumnTitle: string;
+  rightColumnTitle: string;
+}) => (
+  <View style={{ flexDirection: "row" }}>
+    <H4 color={"bluegrey"} weight={"Regular"}>
+      {props.leftColumnTitle}
+    </H4>
+    <H4
+      color={"bluegrey"}
+      weight={"Regular"}
       style={{
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-        flexDirection: "row"
+        flex: 1,
+        textAlign: "right"
       }}
     >
+      {props.rightColumnTitle}
+    </H4>
+  </View>
+);
+
+// component that represents the item in the radio list
+const RadioItemBody = ({ psp }: { psp: PayPalPsp }): ReactElement => {
+  const imgDimensions = useImageResize(
+    PSP_IMAGE_WIDTH,
+    PSP_IMAGE_HEIGHT,
+    psp.logoUrl
+  );
+  return (
+    <View style={styles.radioItemBody}>
+      {/* show the psp name while its image is loading */}
       {imgDimensions.fold<React.ReactNode>(<H4>psp.name</H4>, imgDim => (
         <Image
           source={{ uri: psp.logoUrl }}
@@ -86,20 +127,10 @@ const RadioItemBody = ({ psp }: { psp: PayPalPsp }) => {
           resizeMode={"contain"}
         />
       ))}
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          alignItems: "flex-end"
-        }}
-      >
+      <View style={styles.radioItemRightContainer}>
         <TouchableDefaultOpacity
-          onPress={() => console.log("pressed")}
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            alignItems: "flex-end"
-          }}
+          onPress={constNull}
+          style={styles.radioItemRight}
         >
           <IconFont name={"io-info"} size={24} color={IOColors.blue} />
         </TouchableDefaultOpacity>
@@ -119,13 +150,14 @@ const getPspListRadioItems = (
     }
   }));
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
 const getLocales = () => ({
-  title: I18n.t("bonus.bpd.iban.insertion.title"),
-  body: I18n.t("bonus.bpd.iban.insertion.body1"),
-  bodyLinkTitle: "a link title"
+  title: I18n.t("wallet.onboarding.paypal.selectPsp.title"),
+  body: I18n.t("wallet.onboarding.paypal.selectPsp.body"),
+  link: I18n.t("wallet.onboarding.paypal.selectPsp.link"),
+  leftColumnTitle: I18n.t("wallet.onboarding.paypal.selectPsp.leftColumnTitle"),
+  rightColumnTitle: I18n.t(
+    "wallet.onboarding.paypal.selectPsp.rightColumnTitle"
+  )
 });
 
 /**
@@ -134,7 +166,7 @@ const getLocales = () => ({
  * At the bottom 2 CTA to cancel or continue
  */
 const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
-  const { title, body, bodyLinkTitle } = getLocales();
+  const locales = getLocales();
   const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"]>("");
   const cancelButtonProps = {
     testID: "cancelButtonId",
@@ -160,32 +192,20 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
       <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <View spacer={true} large={true} />
-          <H1>{title}</H1>
+          <H1>{I18n.t("wallet.onboarding.paypal.selectPsp.title")}</H1>
           <View spacer={true} large={true} />
-          <Body>{body}</Body>
+          <Body>{locales.body}</Body>
           <Link onPress={() => openWebUrl("https://www.google.com")}>
-            {bodyLinkTitle}
+            {locales.link}
           </Link>
           <View spacer={true} large={true} />
-
+          <RadioListHeader
+            leftColumnTitle={locales.leftColumnTitle}
+            rightColumnTitle={locales.rightColumnTitle}
+          />
           {isReady(props.pspList) && (
             <ScrollView>
-              <View style={{ flexDirection: "row" }}>
-                <H4 color={"bluegreyDark"} weight={"Regular"}>
-                  {"ciao"}
-                </H4>
-                <H4
-                  color={"bluegreyDark"}
-                  weight={"Regular"}
-                  style={{
-                    flex: 1,
-                    textAlign: "right"
-                  }}
-                >
-                  {"zio"}
-                </H4>
-              </View>
-
+              <View spacer={true} small={true} />
               <RadioButtonList<PayPalPsp["id"]>
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(props.pspList.value)}
