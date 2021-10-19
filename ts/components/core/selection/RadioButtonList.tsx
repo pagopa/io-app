@@ -65,6 +65,7 @@ const getBody = <T extends unknown>(
     case "string":
       return (
         <H4
+          style={IOStyles.flex}
           color={"bluegreyDark"}
           weight={"Regular"}
           onPress={() => onPress(radioItemType.id)}
