@@ -132,7 +132,7 @@ export const testGetNextDeadlineId = isTestEnv ? getNextDeadlineId : undefined;
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown>
 ): Sections =>
   pot.getOrElse(
     pot.map(

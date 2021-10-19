@@ -8,7 +8,6 @@ import {
   lexicallyOrderedMessagesStateSelector,
   MessagesStateAndStatus
 } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -49,21 +48,19 @@ type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
 
 type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
-  filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
+  filteredMessageStates: ReturnType<typeof filterArchivedMessages>;
   allMessageIdsState: Option<Set<string>>;
 };
 
 /**
  * Filter only the messages that are archived.
  */
-const generateMessagesStateArchivedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
-): ReadonlyArray<MessageState> =>
+const filterArchivedMessages = (
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown>
+): ReadonlyArray<MessagesStateAndStatus> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(messageState => messageState.clientStatus.isArchived).map(
-        _ => _.message
-      )
+      _.filter(messageState => messageState.clientStatus.isArchived)
     ),
     []
   );
@@ -86,12 +83,12 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
-      const messagesStateArchived = generateMessagesStateArchivedArray(
+      const messagesStateArchived = filterArchivedMessages(
         nextProps.messagesState
       );
       const allMessagesIdsArray = messagesStateArchived.map(_ =>
         pot
-          .toOption(_)
+          .toOption(_.message)
           .map(m => m.id)
           .getOrElse("NOT_FOUND")
       );
@@ -140,7 +137,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
         <View style={styles.listContainer}>
           <MessageList
             {...this.props}
-            messageStates={this.state.filteredMessageStates}
+            messagesStateAndStatus={this.state.filteredMessageStates}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}

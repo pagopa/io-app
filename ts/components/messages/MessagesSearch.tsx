@@ -4,8 +4,10 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
 import { serviceContainsText } from "../../utils/services";
@@ -19,7 +21,9 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
-  messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
+  messagesStateAndStatus: ReturnType<
+    typeof lexicallyOrderedMessagesStateSelector
+  >;
   searchText: string;
   navigateToMessageDetail: (id: string) => void;
 };
@@ -31,49 +35,34 @@ type Props = Pick<
   OwnProps;
 
 type State = {
-  potFilteredMessageStates: pot.Pot<ReadonlyArray<MessageState>, Error>;
+  potFilteredMessageStates: pot.Pot<
+    ReadonlyArray<MessagesStateAndStatus>,
+    Error
+  >;
 };
 
 /**
  * Filter only the messages that match the searchText.
  * The searchText is checked both in message and in service properties.
  */
-const generateMessagesStateMatchingSearchTextArrayAsync = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
+const generateMessagesStateMatchingSearchTextArray = (
+  input: ReadonlyArray<MessagesStateAndStatus>,
   servicesById: ServicesByIdState,
   searchText: string
-): Promise<ReadonlyArray<MessageState>> =>
-  new Promise(resolve => {
-    const result = pot.getOrElse(
-      pot.map(potMessagesState, _ =>
-        _.filter(messageState =>
-          pot.getOrElse(
-            pot.map(
-              messageState,
-              message =>
-                // Search in message properties
-                messageContainsText(message, searchText) ||
-                fromNullable(servicesById[message.sender_service_id])
-                  .map(potService =>
-                    pot.getOrElse(
-                      pot.map(potService, service =>
-                        // Search in service properties
-                        serviceContainsText(service, searchText)
-                      ),
-                      false
-                    )
-                  )
-                  .getOrElse(false)
-            ),
-            false
-          )
-        )
-      ),
-      []
-    );
-
-    resolve(result);
-  });
+): ReadonlyArray<MessagesStateAndStatus> =>
+  input.filter(({ message: potMessage }) =>
+    pot
+      .toOption(potMessage)
+      .map(message => [
+        messageContainsText(message, searchText),
+        fromNullable(servicesById[message.sender_service_id])
+          .chain(potService => pot.toOption(potService))
+          .map(service => serviceContainsText(service, searchText))
+          .getOrElse(false)
+      ])
+      .map(([matchMessage, matchService]) => matchMessage || matchService)
+      .getOrElse(false)
+  );
 
 /**
  * A component to render a list of messages that match a searchText.
@@ -86,26 +75,15 @@ class MessagesSearch extends React.PureComponent<Props, State> {
     };
   }
 
-  public async componentDidMount() {
-    const { messagesState, servicesById, searchText } = this.props;
-    const { potFilteredMessageStates } = this.state;
-
-    // Set filtering status
-    this.setState({
-      potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
-    });
-
-    const potOfMessageStates = pot.map(messagesState, _ =>
-      _.map(_ => _.message)
-    );
+  public componentDidMount() {
+    const { messagesStateAndStatus, servicesById, searchText } = this.props;
 
     // Start filtering messages
-    const filteredMessageStates =
-      await generateMessagesStateMatchingSearchTextArrayAsync(
-        potOfMessageStates,
-        servicesById,
-        searchText
-      );
+    const filteredMessageStates = generateMessagesStateMatchingSearchTextArray(
+      pot.getOrElse(messagesStateAndStatus, []),
+      servicesById,
+      searchText
+    );
 
     // Unset filtering status
     this.setState({
@@ -113,26 +91,27 @@ class MessagesSearch extends React.PureComponent<Props, State> {
     });
   }
 
-  public async componentDidUpdate(prevProps: Props) {
-    const { messagesState: prevMessagesState, searchText: prevSearchText } =
-      prevProps;
-    const { messagesState, servicesById, searchText } = this.props;
+  public componentDidUpdate(prevProps: Props) {
+    const {
+      messagesStateAndStatus: prevMessagesState,
+      searchText: prevSearchText
+    } = prevProps;
+    const { messagesStateAndStatus, servicesById, searchText } = this.props;
     const { potFilteredMessageStates } = this.state;
 
-    if (messagesState !== prevMessagesState || searchText !== prevSearchText) {
+    if (
+      messagesStateAndStatus !== prevMessagesState ||
+      searchText !== prevSearchText
+    ) {
       // Set filtering status
       this.setState({
         potFilteredMessageStates: pot.toLoading(potFilteredMessageStates)
       });
 
-      const potOfMessageStates = pot.map(messagesState, _ =>
-        _.map(_ => _.message)
-      );
-
       // Start filtering messages
       const filteredMessageStates =
-        await generateMessagesStateMatchingSearchTextArrayAsync(
-          potOfMessageStates,
+        generateMessagesStateMatchingSearchTextArray(
+          pot.getOrElse(messagesStateAndStatus, []),
           servicesById,
           searchText
         );
@@ -147,16 +126,17 @@ class MessagesSearch extends React.PureComponent<Props, State> {
   public render() {
     const { potFilteredMessageStates } = this.state;
 
-    const isLoading = pot.isLoading(this.props.messagesState);
+    const isLoading = pot.isLoading(this.props.messagesStateAndStatus);
     const isFiltering = pot.isLoading(potFilteredMessageStates);
 
-    const filteredMessageStates = pot.getOrElse(potFilteredMessageStates, []);
+    const filteredMessageStates: ReadonlyArray<MessagesStateAndStatus> =
+      pot.getOrElse(potFilteredMessageStates, []);
 
     return filteredMessageStates.length > 0 ? (
       <View style={styles.listWrapper}>
         <MessageList
           {...this.props}
-          messageStates={filteredMessageStates}
+          messagesStateAndStatus={filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnPressItem}
           refreshing={isLoading || isFiltering}

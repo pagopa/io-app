@@ -13,7 +13,6 @@ import {
   lexicallyOrderedMessagesStateSelector,
   MessagesStateAndStatus
 } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -64,13 +63,11 @@ type State = {
  * Filter only the messages that are not archived.
  */
 const generateMessagesStateNotArchivedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
-): ReadonlyArray<MessageState> =>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown>
+): ReadonlyArray<MessagesStateAndStatus> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(
-        messageState => messageState.clientStatus.isArchived === false
-      ).map(_ => _.message)
+      _.filter(messageState => messageState.clientStatus.isArchived === false)
     ),
     []
   );
@@ -100,9 +97,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       );
       const allMessagesIdsArray = messagesStateNotArchived.map(_ =>
         pot
-          .toOption(_)
+          .toOption(_.message)
           .map(m => m.id)
-          .getOrElse("NOT_FOUND")
+          .getOrElse("ID_NOT_FOUND")
       );
       return {
         filteredMessageStates: messagesStateNotArchived,
@@ -141,7 +138,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
         <View style={styles.listContainer}>
           <MessageList
             {...this.props}
-            messageStates={this.state.filteredMessageStates}
+            messagesStateAndStatus={this.state.filteredMessageStates}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}

@@ -306,7 +306,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <SearchNoResultMessage errorType="InvalidSearchBarText" />
         ) : (
           <MessagesSearch
-            messagesState={lexicallyOrderedMessagesState}
+            messagesStateAndStatus={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}

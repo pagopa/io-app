@@ -19,13 +19,13 @@ import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../theme/variables";
+import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -45,7 +45,7 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
-  messageStates: ReadonlyArray<MessageState>;
+  messagesStateAndStatus: ReadonlyArray<MessagesStateAndStatus>;
   servicesById: ServicesByIdState;
   paymentsByRptId: PaymentByRptIdState;
   refreshing: boolean;
@@ -61,7 +61,7 @@ type OwnProps = {
 type Props = OwnProps & AnimatedProps;
 
 type State = {
-  prevMessageStates?: ReadonlyArray<MessageState>;
+  prevMessagesStateAndStatus?: ReadonlyArray<MessagesStateAndStatus>;
   itemLayouts: ReadonlyArray<ItemLayout>;
   longPressedItemIndex: Option<number>;
   isFirstLoad: boolean;
@@ -104,23 +104,28 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (_: MessageState, index: number): string =>
+const keyExtractor = (
+  { message }: MessagesStateAndStatus,
+  index: number
+): string =>
   pot
-    .toOption(_)
+    .toOption(message)
     .map(m => m.id)
     .getOrElse(`${index}`);
 
-const getItemHeight = (messageState: MessageState): number => {
-  if (pot.isLoading(messageState)) {
+const getItemHeight = ({ message }: MessagesStateAndStatus): number => {
+  if (pot.isLoading(message)) {
     return ITEM_LOADING_HEIGHT;
   }
 
-  return pot.isSome(messageState) && messageNeedsCTABar(messageState.value)
+  return pot.isSome(message) && messageNeedsCTABar(message.value)
     ? ITEM_WITH_CTABAR_HEIGHT
     : ITEM_WITHOUT_CTABAR_HEIGHT;
 };
 
-const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
+const generateItemLayouts = (
+  messageStates: ReadonlyArray<MessagesStateAndStatus>
+) => {
   // eslint-disable-next-line
   let offset = 0;
   // eslint-disable-next-line
@@ -186,7 +191,10 @@ class MessageList extends React.Component<Props, State> {
   private flatListRef = React.createRef<FlatList>();
 
   private scrollTo = (index: number, animated: boolean = false) => {
-    if (this.flatListRef.current && this.props.messageStates.length > 0) {
+    if (
+      this.flatListRef.current &&
+      this.props.messagesStateAndStatus.length > 0
+    ) {
       this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
@@ -204,31 +212,34 @@ class MessageList extends React.Component<Props, State> {
     nextProps: Props,
     prevState: State
   ): Partial<State> | null {
-    const { messageStates } = nextProps;
-    const { prevMessageStates: prevMessages } = prevState;
+    const { messagesStateAndStatus } = nextProps;
+    const { prevMessagesStateAndStatus } = prevState;
 
-    if (messageStates !== prevMessages) {
+    if (messagesStateAndStatus !== prevMessagesStateAndStatus) {
       return {
-        prevMessageStates: messageStates,
-        itemLayouts: generateItemLayouts(messageStates)
+        prevMessagesStateAndStatus: messagesStateAndStatus,
+        itemLayouts: generateItemLayouts(messagesStateAndStatus)
       };
     }
 
     return null;
   }
 
-  getServicePot(message?: MessageState): pot.Pot<ServicePublic, Error> {
-    if (message !== undefined && pot.isSome(message)) {
+  getServicePot(
+    potMessage: MessagesStateAndStatus["message"]
+  ): pot.Pot<ServicePublic, Error> {
+    if (pot.isSome(potMessage)) {
       return (
-        this.props.servicesById[message.value.sender_service_id] || pot.none
+        this.props.servicesById[potMessage.value.sender_service_id] || pot.none
       );
     }
     return pot.none;
   }
 
   private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
-    const { message: potMessage, clientStatus } = info.item;
-    const { isRead } = clientStatus;
+    const potMessage = info.item.message;
+    const { isRead } = info.item.clientStatus;
+
     const { paymentsByRptId, onPressItem } = this.props;
     const potService = this.getServicePot(potMessage);
     const isServiceLoading = potService
@@ -289,13 +300,13 @@ class MessageList extends React.Component<Props, State> {
 
   private onLongPress = (id: string) => {
     Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
-    const { messageStates, onLongPressItem } = this.props;
+    const { messagesStateAndStatus, onLongPressItem } = this.props;
     onLongPressItem(id);
-    const lastIndex = messageStates.length - 1;
+    const lastIndex = messagesStateAndStatus.length - 1;
     const lastMessageId = pot
-      .toOption(messageStates[lastIndex])
+      .toOption(messagesStateAndStatus[lastIndex].message)
       .map(m => m.id)
-      .getOrElse("not-found");
+      .getOrElse("ID_NOT_FOUND");
     if (id === lastMessageId) {
       this.setState({
         longPressedItemIndex: some(lastIndex)
@@ -316,7 +327,7 @@ class MessageList extends React.Component<Props, State> {
   public render() {
     const {
       animated,
-      messageStates,
+      messagesStateAndStatus,
       servicesById,
       refreshing,
       onRefresh,
@@ -353,7 +364,7 @@ class MessageList extends React.Component<Props, State> {
           ref={this.flatListRef}
           style={styles.padded}
           scrollEnabled={true}
-          data={messageStates}
+          data={messagesStateAndStatus}
           extraData={{ servicesById, paymentsByRptId, refreshing }}
           refreshing={refreshing}
           keyExtractor={keyExtractor}
@@ -369,7 +380,7 @@ class MessageList extends React.Component<Props, State> {
           onScroll={animated ? animated.onScroll : undefined}
           onLayout={this.handleOnLayoutChange}
           ListFooterComponent={
-            messageStates.length > 0 && <EdgeBorderComponent />
+            messagesStateAndStatus.length > 0 && <EdgeBorderComponent />
           }
         />
       </React.Fragment>

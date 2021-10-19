@@ -65,7 +65,11 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
   lexicallyOrderedMessagesIds,
   messagesStateByIdSelector,
   messagesStatusSelector,
-  (potIds, messageStateById, messagesStatus) =>
+  (
+    potIds,
+    messageStateById,
+    messagesStatus
+  ): pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown> =>
     pot.map(potIds, ids =>
       ids.reduce(
         (acc: ReadonlyArray<MessagesStateAndStatus>, messageId: string) => {
@@ -73,13 +77,11 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
           if (message === undefined) {
             return acc;
           }
-          const clientStatus =
-            messagesStatus[messageId] || EMPTY_MESSAGE_STATUS;
           return [
             ...acc,
             {
               message,
-              clientStatus
+              clientStatus: messagesStatus[messageId] || EMPTY_MESSAGE_STATUS
             }
           ];
         },
@@ -88,7 +90,7 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
     )
 );
 
-export const messagesUnreadedAndUnarchivedSelector = createSelector(
+export const messagesUnreadAndUnarchivedSelector = createSelector(
   lexicallyOrderedMessagesStateSelector,
   potMessagesState =>
     pot.getOrElse(
