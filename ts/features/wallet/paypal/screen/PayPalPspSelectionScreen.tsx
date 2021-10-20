@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -37,6 +37,7 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { GlobalState } from "../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { usePspInfoBottomSheet } from "../components/PspInfoBottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -120,13 +121,21 @@ const RadioListHeader = (props: {
   );
 };
 
+type RadioItemProps = {
+  psp: PayPalPsp;
+};
 // component that represents the item in the radio list
-const RadioItemBody = ({ psp }: { psp: PayPalPsp }): ReactElement => {
+const RadioItemBody = (props: RadioItemProps): React.ReactElement | null => {
+  const { psp } = props;
   const imgDimensions = useImageResize(
     PSP_LOGO_MAX_WIDTH,
     PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
+  const pspInfoBottomSheet = usePspInfoBottomSheet({
+    pspName: psp.name,
+    pspFee: psp.fee
+  });
   return (
     <View style={styles.radioItemBody}>
       {/* show the psp name while its image is loading */}
@@ -144,7 +153,7 @@ const RadioItemBody = ({ psp }: { psp: PayPalPsp }): ReactElement => {
       )}
       <View style={styles.radioItemRightContainer}>
         <TouchableDefaultOpacity
-          onPress={constNull}
+          onPress={pspInfoBottomSheet.present}
           style={styles.radioItemRight}
         >
           <IconFont name={"io-info"} size={24} color={IOColors.blue} />
@@ -185,6 +194,7 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
     pspList.length === 1 ? pspList[0].id : undefined
   );
+
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,

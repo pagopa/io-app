@@ -1001,6 +1001,8 @@ wallet:
         link: "Cos’è il gestore della transazione?"
         leftColumnTitle: "Gestore"
         rightColumnTitle: "Info e costi"
+        infoBottomSheet:
+          title: "Chi è {{pspName}}?"
     coBadge:
       headerTitle: "Add international circuit"
       start:
