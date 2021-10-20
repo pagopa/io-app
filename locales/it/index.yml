@@ -1021,9 +1021,12 @@ wallet:
         rightColumnTitle: "Info e costi"
         infoBottomSheet:
           title: "Chi è {{pspName}}?"
+          ctaTitle: "Ho capito"
           row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
-          row2Description: "Quando fai un pagamento, potrà applicare un costo massimo fino a **{{pspFee}}**. Vedrai l'importo in fase di riepilogo."
-          row3Description: "Si applicano l'[Informativa Privacy e i Termini e condizioni d’uso]({{pspPrivacyUrl}}) di {{pspName}}."
+          row2Description1: "Quando fai un pagamento, potrà applicare un costo massimo fino a "
+          row2Description2: ". Vedrai l'importo in fase di riepilogo."
+          row3Description1: "Si applicano l'Informativa Privacy e i Termini e condizioni d’uso di {{pspName}}."
+          row3Description2: "Informativa Privacy e i Termini e condizioni d’uso"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Dimensions,
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { constNull } from "fp-ts/lib/function";
@@ -30,51 +24,24 @@ import {
   isReady,
   remoteReady
 } from "../../../bonus/bpd/model/RemoteValue";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H4 } from "../../../../components/core/typography/H4";
-import IconFont from "../../../../components/ui/IconFont";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { GlobalState } from "../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { PspInfoBottomSheetContent } from "../components/PspInfoBottomSheet";
-import { useIOBottomSheetRaw } from "../../../../utils/bottomSheet";
+import { PspRadioItem } from "../components/PspRadioItem";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 // TODO temporary type. It will be shared in the future or replaced with a new one
-type PayPalPsp = {
+export type PayPalPsp = {
   id: string;
   logoUrl: string;
   name: string;
   fee: NonNegativeNumber;
   privacyUrl: string;
 };
-const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
-const PSP_LOGO_MAX_HEIGHT = 32;
+
 const styles = StyleSheet.create({
-  pspLogo: {
-    height: 32,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start"
-  },
-  radioItemBody: {
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    flexDirection: "row"
-  },
-  radioItemRightContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-end"
-  },
-  radioItemRight: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-end"
-  },
   radioListHeaderRightColumn: {
     flex: 1,
     textAlign: "right"
@@ -122,58 +89,6 @@ const RadioListHeader = (props: {
   );
 };
 
-type RadioItemProps = {
-  psp: PayPalPsp;
-};
-// component that represents the item in the radio list
-const RadioItemBody = (props: RadioItemProps): React.ReactElement | null => {
-  const { psp } = props;
-  const imgDimensions = useImageResize(
-    PSP_LOGO_MAX_WIDTH,
-    PSP_LOGO_MAX_HEIGHT,
-    psp.logoUrl
-  );
-  const pspInfoBottomSheet = useIOBottomSheetRaw(460);
-  const handleInfoPress = () => {
-    void pspInfoBottomSheet.present(
-      <PspInfoBottomSheetContent
-        onButtonPress={pspInfoBottomSheet.dismiss}
-        pspFee={psp.fee}
-        pspName={psp.name}
-        pspPrivacyUrl={psp.privacyUrl}
-      />,
-      I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
-        pspName: psp.name
-      })
-    );
-  };
-  return (
-    <View style={styles.radioItemBody}>
-      {/* show the psp name while its image is loading */}
-      {imgDimensions.fold<React.ReactNode>(
-        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-          {psp.name}
-        </H4>,
-        imgDim => (
-          <Image
-            source={{ uri: psp.logoUrl }}
-            style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
-            resizeMode={"contain"}
-          />
-        )
-      )}
-      <View style={styles.radioItemRightContainer}>
-        <TouchableDefaultOpacity
-          onPress={handleInfoPress}
-          style={styles.radioItemRight}
-        >
-          <IconFont name={"io-info"} size={24} color={IOColors.blue} />
-        </TouchableDefaultOpacity>
-      </View>
-    </View>
-  );
-};
-
 const getPspListRadioItems = (
   pspList: ReadonlyArray<PayPalPsp>
 ): ReadonlyArray<RadioItem<PayPalPsp["id"]>> =>
@@ -181,7 +96,7 @@ const getPspListRadioItems = (
     id: psp.id,
     body: {
       kind: "node",
-      element: <RadioItemBody psp={psp} />
+      element: <PspRadioItem psp={psp} />
     }
   }));
 

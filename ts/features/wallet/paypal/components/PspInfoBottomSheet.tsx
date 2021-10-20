@@ -2,6 +2,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { View } from "native-base";
+import { ReactNode } from "react";
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
@@ -9,8 +11,12 @@ import { BottomSheetContent } from "../../../../components/bottomSheet/BottomShe
 import MoneyDownIcon from "../../../../../img/wallet/payment-methods/paypal/money_down.svg";
 import LabelIcon from "../../../../../img/wallet/payment-methods/paypal/label.svg";
 import EditIcon from "../../../../../img/wallet/payment-methods/paypal/edit.svg";
-import Markdown from "../../../../components/ui/Markdown";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { Body } from "../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { Label } from "../../../../components/core/typography/Label";
+import { Link } from "../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../utils/url";
 const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
@@ -27,49 +33,74 @@ type Props = {
   onButtonPress: () => void;
 };
 
-const InfoRow = (props: {
-  icon: JSX.Element;
-  description: string;
-  extraBodyHeight?: number;
-}) => (
-  <View style={styles.rowContainer}>
-    <View style={styles.rowIcon}>{props.icon}</View>
-    <Markdown
-      avoidTextSelection={true}
-      extraBodyHeight={props.extraBodyHeight ?? 0}
-    >
-      {props.description}
-    </Markdown>
-  </View>
-);
-
 const iconSize = 24;
 const infoItems = (props: Props) => [
   {
     icon: <MoneyDownIcon width={iconSize} height={iconSize} />,
-    description: I18n.t(
-      "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row1Description"
+    description: (
+      <Body>
+        {I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row1Description"
+        )}
+      </Body>
     )
   },
   {
     icon: <LabelIcon width={iconSize} height={iconSize} />,
-    description: I18n.t(
-      "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row2Description",
-      { pspFee: formatNumberCentsToAmount(props.pspFee, true) }
-    ),
-    extraBodyHeight: -20
+    description: (
+      <Body>
+        {I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row2Description1"
+        )}
+        <Label color={"bluegrey"}>
+          {formatNumberCentsToAmount(props.pspFee, true)}
+        </Label>
+        {I18n.t(
+          "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row2Description2"
+        )}
+      </Body>
+    )
   },
   {
     icon: <EditIcon width={iconSize} height={iconSize} />,
-    description: I18n.t(
-      "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description",
-      { pspPrivacyUrl: props.pspPrivacyUrl, pspName: props.pspName }
+    description: (
+      <View style={{ flexDirection: "column" }}>
+        <Body>
+          {I18n.t(
+            "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",
+            { pspName: props.pspName }
+          )}
+        </Body>
+        <TouchableWithoutFeedback
+          onPress={() => openWebUrl(props.pspPrivacyUrl)}
+        >
+          <Link weight={"SemiBold"}>
+            {I18n.t(
+              "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description2"
+            )}
+          </Link>
+        </TouchableWithoutFeedback>
+      </View>
     )
   }
 ];
 
 /**
- * Explains why there are other cards
+ * single row into the bottom sheet content
+ * icon + textual body
+ * @param props
+ * @constructor
+ */
+const InfoRow = (props: { icon: JSX.Element; description: ReactNode }) => (
+  <View style={styles.rowContainer}>
+    <View style={styles.rowIcon}>{props.icon}</View>
+    <View style={IOStyles.flex}>{props.description}</View>
+  </View>
+);
+
+/**
+ * show info about PayPal psp
+ * @param props
  * @constructor
  */
 export const PspInfoBottomSheetContent = (props: Props) => {
@@ -77,9 +108,8 @@ export const PspInfoBottomSheetContent = (props: Props) => {
     testID: "continueButtonId",
     bordered: false,
     onPressWithGestureHandler: true,
-    // TODO replace with the effective handler
     onPress: props.onButtonPress,
-    title: I18n.t("global.buttons.continue")
+    title: I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.ctaTitle")
   };
   return (
     <BottomSheetContent
