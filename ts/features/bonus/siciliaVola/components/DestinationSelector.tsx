@@ -9,11 +9,16 @@ import { IndexedById, toArray } from "../../../../store/helpers/indexer";
 import { Municipality, State } from "../types/SvVoucherRequest";
 import { debounce } from "lodash";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
+import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
+import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { useState } from "react";
 
 type OwnProps = {
   availableStates: IndexedById<State>;
-  selectedState?: number;
+  selectedState?: State;
   setSelectedState: (state: State) => void;
+  selectedMunicipality?: Municipality;
+  setSelectedMunicipality: (municipality: Municipality) => void;
 };
 
 type Props = OwnProps &
@@ -21,7 +26,8 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
-  // const debounceRef = React.useRef(debounce(performMunicipalitySearch, 300));
+  const [searchText, setSearchText] = useState<string | undefined>(undefined);
+  const debounceRef = React.useRef(debounce(performMunicipalitySearch, 300));
 
   return (
     <>
@@ -43,32 +49,42 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         placeholder={"Seleziona uno stato"}
         isLoading={false}
         showModalInputTextbox={false}
+        onRetry={() => true}
       />
       <View spacer />
-      {/*<TextboxWithSuggestion<Municipality>*/}
-      {/*  onChangeText={() => true}*/}
-      {/*  title={"Seleziona un comune"}*/}
-      {/*  keyExtractor={i => i.name}*/}
-      {/*  data={toArray(props.availableStates)}*/}
-      {/*  onSelectValue={v => {*/}
-      {/*    props.setSelectedState(v);*/}
-      {/*    return v.name;*/}
-      {/*  }}*/}
-      {/*  renderItem={i => (*/}
-      {/*    <H4 weight={"Regular"} color={"bluegreyDark"}>*/}
-      {/*      {i.item.name}*/}
-      {/*    </H4>*/}
-      {/*  )}*/}
-      {/*  label={"Comune"}*/}
-      {/*  placeholder={"Seleziona un comune"}*/}
-      {/*  isLoading={false}*/}
-      {/*  showModalInputTextbox={true}*/}
-      {/*/>*/}
+      <TextboxWithSuggestion<Municipality>
+        onChangeText={() => true}
+        title={"Seleziona un comune"}
+        keyExtractor={i => i.name}
+        data={
+          isReady(props.availableMunicipalities)
+            ? toArray(props.availableMunicipalities.value)
+            : []
+        }
+        onSelectValue={v => {
+          props.setSelectedMunicipality(v);
+          return v.name;
+        }}
+        renderItem={i => (
+          <H4 weight={"Regular"} color={"bluegreyDark"}>
+            {i.item.name}
+          </H4>
+        )}
+        label={"Comune"}
+        placeholder={"Seleziona un comune"}
+        disabled={props.selectedState === undefined}
+        isLoading={isLoading(props.availableMunicipalities)}
+        isFailed={isError(props.availableMunicipalities)}
+        showModalInputTextbox={true}
+      />
     </>
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  requestAvailableMunicipalities: (subString: string) =>
+    dispatch(svGenerateVoucherAvailableMunicipality.request(subString))
+});
 const mapStateToProps = (state: GlobalState) => ({
   availableMunicipalities: availableMunicipalitiesSelector(state)
 });
