@@ -4,11 +4,10 @@ import { StyleSheet } from "react-native";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import I18n from "../../../../i18n";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { openWebUrl } from "../../../../utils/url";
-import { Link } from "../../../../components/core/typography/Link";
-import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { Body } from "../../../../components/core/typography/Body";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
+import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
 
 const styles = StyleSheet.create({
   link: {
@@ -20,44 +19,38 @@ const styles = StyleSheet.create({
 });
 
 const findOutMore = "https://io.italia.it/cashback/faq/#n3_11";
-
+type Props = {
+  pspName: string;
+  pspFee: NonNegativeNumber;
+  onButtonPress: () => void;
+};
 /**
  * Explains why there are other cards
  * @constructor
  */
-const WhyOtherCards = () => (
-  <View>
-    <View spacer={true} />
-    <View style={{ flex: 1 }}>
+export const PspInfoBottomSheetContent = (props: Props) => {
+  const continueButtonProps: BlockButtonProps = {
+    testID: "continueButtonId",
+    bordered: false,
+    onPressWithGestureHandler: true,
+    // TODO replace with the effective handler
+    onPress: props.onButtonPress,
+    title: I18n.t("global.buttons.continue")
+  };
+  return (
+    <BottomSheetContent
+      footer={
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={continueButtonProps}
+        />
+      }
+    >
       <Body>
         {I18n.t(
           "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.body"
         )}
       </Body>
-      <ButtonDefaultOpacity
-        onPress={() => openWebUrl(findOutMore)}
-        onPressWithGestureHandler={true}
-        style={styles.link}
-      >
-        <Link>
-          {I18n.t(
-            "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.cta"
-          )}
-        </Link>
-      </ButtonDefaultOpacity>
-    </View>
-  </View>
-);
-
-type Props = {
-  pspName: string;
-  pspFee: NonNegativeNumber;
-};
-export const usePspInfoBottomSheet = (props: Props) =>
-  useIOBottomSheet(
-    <WhyOtherCards />,
-    I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
-      pspName: props.pspName
-    }),
-    300
+    </BottomSheetContent>
   );
+};

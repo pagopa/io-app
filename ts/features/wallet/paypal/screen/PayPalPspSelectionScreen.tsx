@@ -37,7 +37,8 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { GlobalState } from "../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { usePspInfoBottomSheet } from "../components/PspInfoBottomSheet";
+import { PspInfoBottomSheetContent } from "../components/PspInfoBottomSheet";
+import { useIOBottomSheetRaw } from "../../../../utils/bottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -132,10 +133,19 @@ const RadioItemBody = (props: RadioItemProps): React.ReactElement | null => {
     PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
-  const pspInfoBottomSheet = usePspInfoBottomSheet({
-    pspName: psp.name,
-    pspFee: psp.fee
-  });
+  const pspInfoBottomSheet = useIOBottomSheetRaw(360);
+  const handleInfoPress = () => {
+    void pspInfoBottomSheet.present(
+      <PspInfoBottomSheetContent
+        onButtonPress={pspInfoBottomSheet.dismiss}
+        pspFee={psp.fee}
+        pspName={psp.name}
+      />,
+      I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
+        pspName: psp.name
+      })
+    );
+  };
   return (
     <View style={styles.radioItemBody}>
       {/* show the psp name while its image is loading */}
@@ -153,7 +163,7 @@ const RadioItemBody = (props: RadioItemProps): React.ReactElement | null => {
       )}
       <View style={styles.radioItemRightContainer}>
         <TouchableDefaultOpacity
-          onPress={pspInfoBottomSheet.present}
+          onPress={handleInfoPress}
           style={styles.radioItemRight}
         >
           <IconFont name={"io-info"} size={24} color={IOColors.blue} />
