@@ -99,7 +99,7 @@ const InfoRow = (props: { icon: JSX.Element; description: ReactNode }) => (
 );
 
 /**
- * show info about PayPal psp
+ * content used to show info about PayPal psp into a bottom sheet
  * @param props
  * @constructor
  */

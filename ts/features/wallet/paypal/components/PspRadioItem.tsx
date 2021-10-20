@@ -42,6 +42,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * item used in a radio list
+ * it represent a PayPal psp with logo and info icon
+ * @param props
+ * @constructor
+ */
 export const PspRadioItem = (
   props: RadioItemProps
 ): React.ReactElement | null => {

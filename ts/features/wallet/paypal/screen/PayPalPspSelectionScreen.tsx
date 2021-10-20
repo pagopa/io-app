@@ -109,6 +109,7 @@ const getLocales = () => ({
 
 /**
  * This screen is where the user picks a PSP that will be used to handle PayPal transactions
+ * Only 1 psp can be selected
  */
 const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
