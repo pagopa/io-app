@@ -28,8 +28,6 @@ import {
   getValueOrElse,
   isError,
   isReady,
-  remoteError,
-  remoteLoading,
   remoteReady
 } from "../../../bonus/bpd/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
