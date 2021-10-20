@@ -25,21 +25,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 const getCheckResidencyRegionItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
-    body: {
-      kind: "string",
-      element: I18n.t(
-        "bonus.sv.voucherGeneration.checkResidence.items.inSicily"
-      )
-    },
+    body: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily"),
     id: true
   },
   {
-    body: {
-      kind: "string",
-      element: I18n.t(
-        "bonus.sv.voucherGeneration.checkResidence.items.notInSicily"
-      )
-    },
+    body: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.notInSicily"),
     id: false
   }
 ];
