@@ -25,7 +25,10 @@ const ovalWith = Math.min(206, Dimensions.get("window").width * 0.6);
 const logoWidth = ovalWith * 0.4;
 // an oval background with PP logo on it, at the center
 const PayPalLogo = () => (
-  <View style={{ alignItems: "center", justifyContent: "center" }}>
+  <View
+    style={{ alignItems: "center", justifyContent: "center" }}
+    testID={"payPalLogo"}
+  >
     <Oval width={ovalWith} height={ovalWith} />
     <PPLogo
       width={logoWidth}

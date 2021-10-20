@@ -8,17 +8,25 @@ import { applicationChangeState } from "../../../../../store/actions/application
 
 describe("PayPalStartOnboardingScreen", () => {
   jest.useFakeTimers();
-  it(`match snapshot`, () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  it(`screen should be defined`, () => {
     const render = renderComponent(store);
-    expect(render).toMatchSnapshot();
 
     expect(
       render.component.queryByTestId("PayPalStartOnboardingScreen")
     ).not.toBeNull();
+  });
+
+  it(`footer button should be defined`, () => {
+    const render = renderComponent(store);
     expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
     expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();
+  });
+
+  it(`PayPal logo should be defined`, () => {
+    const render = renderComponent(store);
+    expect(render.component.queryByTestId("payPalLogo")).not.toBeNull();
   });
 });
 
