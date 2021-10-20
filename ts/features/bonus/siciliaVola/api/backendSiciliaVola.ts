@@ -16,6 +16,8 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
+  annullaVoucherDefaultDecoder,
+  AnnullaVoucherT,
   getAeroportiBeneficiarioDefaultDecoder,
   GetAeroportiBeneficiarioT,
   getAeroportiStatoDefaultDecoder,
@@ -35,6 +37,7 @@ import {
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
+import { VoucherCodeInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherCodeInputBean";
 
 /**
  * Get the Sicilia Vola session token
@@ -101,9 +104,7 @@ const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
   url: params =>
     `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idRegione}`,
   query: _ => ({}),
-  headers: h => ({
-    Authorization: h.Bearer
-  }),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiBeneficiarioDefaultDecoder()
 };
 
@@ -119,6 +120,18 @@ const GetAeroportiStato: GetAeroportiStatoT = {
     Authorization: h.Bearer
   }),
   response_decoder: getAeroportiStatoDefaultDecoder()
+};
+
+/**
+ * Revoke a voucher identified by id
+ */
+const PostAnnullaVoucher: AnnullaVoucherT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
+  query: _ => ({}),
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: annullaVoucherDefaultDecoder()
 };
 
 /**
@@ -201,7 +214,13 @@ export const BackendSiciliaVolaClient = (
         GetVoucherBeneficiario,
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
-    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
+    postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(PostAnnullaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode })
   };
 };
 
