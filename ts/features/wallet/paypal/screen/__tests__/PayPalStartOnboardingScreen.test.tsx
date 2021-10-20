@@ -12,7 +12,6 @@ describe("PayPalStartOnboardingScreen", () => {
   const store = createStore(appReducer, globalState as any);
   it(`screen should be defined`, () => {
     const render = renderComponent(store);
-
     expect(
       render.component.queryByTestId("PayPalStartOnboardingScreen")
     ).not.toBeNull();
