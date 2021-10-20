@@ -989,6 +989,12 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
     coBadge:
       headerTitle: "Add international circuit"
       start:
