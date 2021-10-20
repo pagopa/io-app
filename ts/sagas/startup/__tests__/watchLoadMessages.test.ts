@@ -5,7 +5,7 @@ import { put } from "redux-saga/effects";
 
 import {
   loadMessage as loadMessageAction,
-  loadMessages as loadMessagesAction
+  reloadAllMessages as loadMessagesAction
 } from "../../../store/actions/messages";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";

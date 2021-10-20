@@ -11,7 +11,7 @@ import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovid
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { loadMessages } from "../../store/actions/messages";
+import { reloadAllMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { useIODispatch } from "../../store/hooks";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
@@ -130,7 +130,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(NavigationActions.back()),
-  loadMessages: () => dispatch(loadMessages.request()),
+  loadMessages: () => dispatch(reloadAllMessages.request()),
   navigateToDetails: (messageId: string) => {
     dispatch(NavigationActions.back());
     dispatch(navigateToMessageDetailScreenAction({ messageId }));

@@ -1,8 +1,9 @@
+import * as React from "react";
+import { StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
-import * as React from "react";
-import { ImageURISource, StyleSheet } from "react-native";
+
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -12,7 +13,7 @@ import {
   cleanMarkdownFromCTAs,
   paymentExpirationInfo
 } from "../../utils/messages";
-import { logosForService } from "../../utils/services";
+import { toUIService } from "../../store/reducers/entities/services/transformers";
 import OrganizationHeader from "../OrganizationHeader";
 
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
@@ -22,16 +23,6 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
-
-export type ServiceDataForUI = {
-  id: string;
-  name: string;
-  organizationName: string;
-  organizationFiscalCode: string;
-  email?: string;
-  phone?: string;
-  logoURLs: ReadonlyArray<ImageURISource>;
-};
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
@@ -133,17 +124,7 @@ export default class MessageDetailComponent extends React.PureComponent<
     const { message, service, onServiceLinkPress } = this.props;
     const { maybeMedicalData, payment } = this;
 
-    const serviceDataForUI = service
-      ? {
-          id: service.service_id,
-          name: service.service_name,
-          organizationName: service.organization_name,
-          organizationFiscalCode: service.organization_fiscal_code,
-          email: service.service_metadata?.email,
-          phone: service.service_metadata?.phone,
-          logoURLs: logosForService(service)
-        }
-      : undefined;
+    const serviceDataForUI = service ? toUIService(service) : undefined;
 
     return (
       <React.Fragment>

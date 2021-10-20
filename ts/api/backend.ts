@@ -185,8 +185,8 @@ export function BackendClient(
     {
       readonly enrich_result_data?: boolean;
       readonly page_size?: number;
-      readonly maximum_id?: number;
-      readonly minimum_id?: number;
+      readonly maximum_id?: string;
+      readonly minimum_id?: string;
       readonly Bearer: string;
     },
     "Authorization",

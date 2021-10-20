@@ -21,7 +21,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import {
-  loadMessages,
+  reloadAllMessages,
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
@@ -335,7 +335,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     >,
     _servicesById: ServicesByIdState
   ) => {
-    dispatch(loadMessages.request());
+    dispatch(reloadAllMessages.request());
     // Refresh services related to messages received by the user
     // TODO: is this still needed?
     // if (pot.isSome(lexicallyOrderedMessagesState)) {

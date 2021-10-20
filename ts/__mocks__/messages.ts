@@ -3,7 +3,7 @@ import { FiscalCode } from "italia-ts-commons/lib/strings";
 import { TimeToLiveSeconds } from "../../definitions/backend/TimeToLiveSeconds";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import { MessagesPayload } from "../store/actions/messages";
+import { ReloadMessagesPayload } from "../store/actions/messages";
 
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
@@ -57,7 +57,7 @@ export const apiPayload = {
   next: "00"
 };
 
-export const successPayload: MessagesPayload = {
+export const successPayload: ReloadMessagesPayload = {
   messages: [
     {
       id: messageId_1,
@@ -91,7 +91,7 @@ export const successPayload: MessagesPayload = {
     }
   ],
   pagination: {
-    prev: undefined,
+    previous: undefined,
     next: "00"
   }
 };

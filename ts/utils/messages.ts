@@ -36,11 +36,6 @@ import { getExpireStatus } from "./dates";
 import { getLocalePrimaryWithFallback } from "./locale";
 import { isTextIncludedCaseInsensitive } from "./strings";
 import { getError } from "./errors";
-import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { Timestamp } from "../../definitions/backend/Timestamp";
-import { PublicMessage } from "../../definitions/backend/PublicMessage";
-import { TimeToLiveSeconds } from "../../definitions/backend/TimeToLiveSeconds";
-import { EnrichedMessage } from "../../definitions/backend/EnrichedMessage";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -328,36 +323,3 @@ export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
   fromPredicate((t: string) => FM.test(t))(markdown)
     .map(m => FM(m).body)
     .getOrElse(markdown as string);
-
-/**
- * Representation of a message in the IO-app domain.
- */
-export type Message = {
-  id: string;
-  fiscalCode: FiscalCode;
-  createdAt: Timestamp;
-  serviceId: ServiceId;
-  serviceName?: string;
-  organizationName?: string;
-  title?: string;
-  timeToLive?: TimeToLiveSeconds;
-};
-
-/**
- * Map a message item from API to the app domain.
- *
- * @param messageFromApi
- */
-export const enrichedToMessage = (messageFromApi: PublicMessage): Message => {
-  const enriched = messageFromApi as EnrichedMessage;
-  return {
-    id: messageFromApi.id,
-    fiscalCode: messageFromApi.fiscal_code,
-    createdAt: messageFromApi.created_at,
-    serviceId: messageFromApi.sender_service_id,
-    serviceName: enriched.service_name,
-    organizationName: enriched.organization_name,
-    title: enriched.message_title,
-    timeToLive: messageFromApi.time_to_live
-  };
-};

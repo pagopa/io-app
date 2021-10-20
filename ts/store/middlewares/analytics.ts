@@ -43,7 +43,7 @@ import {
 } from "../actions/identification";
 import {
   loadMessage,
-  loadMessages,
+  reloadAllMessages,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";
@@ -165,7 +165,7 @@ const trackAction =
           total: action.payload.total.getOrElse(-1)
         });
       // messages
-      case getType(loadMessages.success):
+      case getType(reloadAllMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
       case getType(paymentWebViewEnd):
@@ -269,7 +269,7 @@ const trackAction =
       case getType(profileUpsert.failure):
       case getType(userMetadataUpsert.failure):
       case getType(userMetadataLoad.failure):
-      case getType(loadMessages.failure):
+      case getType(reloadAllMessages.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -339,7 +339,7 @@ const trackAction =
       case getType(userMetadataLoad.request):
       case getType(userMetadataLoad.success):
       // messages
-      case getType(loadMessages.request):
+      case getType(reloadAllMessages.request):
       case getType(searchMessagesEnabled):
       // wallet
       case getType(addWalletCreditCardInit):

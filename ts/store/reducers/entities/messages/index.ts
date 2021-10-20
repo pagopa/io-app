@@ -25,17 +25,20 @@ import {
   messagesStatusSelector,
   MessageStatus
 } from "./messagesStatus";
+import allPaginatedReducer, { AllPaginated } from "./allPaginated";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
   allIds: MessagesAllIdsState; // FIXME: is this used?
   idsByServiceId: MessagesIdsByServiceId;
+  allPaginated: AllPaginated;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
   allIds: messagesAllIdsReducer,
-  idsByServiceId: messagesIdsByServiceIdReducer
+  idsByServiceId: messagesIdsByServiceIdReducer,
+  allPaginated: allPaginatedReducer
 });
 
 // Selectors

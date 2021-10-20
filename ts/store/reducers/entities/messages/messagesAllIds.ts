@@ -7,7 +7,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { loadMessages } from "../../../actions/messages";
+import { reloadAllMessages } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -22,13 +22,13 @@ const reducer = (
   action: Action
 ): MessagesAllIdsState => {
   switch (action.type) {
-    case getType(loadMessages.request):
+    case getType(reloadAllMessages.request):
       return pot.toLoading(state);
 
-    case getType(loadMessages.success):
+    case getType(reloadAllMessages.success):
       return pot.some(action.payload.messages.map(_ => _.id));
 
-    case getType(loadMessages.failure):
+    case getType(reloadAllMessages.failure):
       return pot.toError(state, action.payload.message);
 
     case getType(clearCache):

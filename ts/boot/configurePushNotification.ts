@@ -10,7 +10,7 @@ import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
 import { debugRemotePushNotification } from "../config";
 import { setMixpanelPushNotificationToken } from "../mixpanel";
-import { loadMessages } from "../store/actions/messages";
+import { reloadAllMessages } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
@@ -75,7 +75,7 @@ function configurePushNotifications() {
         // We just received a push notification about a new message
         if (notification.foreground) {
           // The App is in foreground so just refresh the messages list
-          store.dispatch(loadMessages.request());
+          store.dispatch(reloadAllMessages.request());
         } else {
           // The App was closed/in background and has been now opened clicking
           // on the push notification.
@@ -91,7 +91,7 @@ function configurePushNotifications() {
 
           // finally, refresh the message list to start loading the content of
           // the new message
-          store.dispatch(loadMessages.request());
+          store.dispatch(reloadAllMessages.request());
         }
       });
 

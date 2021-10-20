@@ -14,7 +14,10 @@ import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
-import { loadMessage, loadMessages } from "../../../store/actions/messages";
+import {
+  loadMessage,
+  reloadAllMessages
+} from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
@@ -280,7 +283,9 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(loadMessages.failure(new Error("An error")));
+    routerScreen.store.dispatch(
+      reloadAllMessages.failure(new Error("An error"))
+    );
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
@@ -294,7 +299,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(loadMessages.success(successPayload));
+    routerScreen.store.dispatch(reloadAllMessages.success(successPayload));
     routerScreen.store.dispatch(
       loadMessage.failure({ id: "messageId", error: new Error("An error") })
     );
@@ -311,7 +316,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(loadMessages.success(successPayload));
+    routerScreen.store.dispatch(reloadAllMessages.success(successPayload));
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
