@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import {
   IndexedById,
@@ -14,12 +13,19 @@ import {
 } from "../../actions/voucherGeneration";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
 
-export type AvailableMunicipalitiesState = pot.Pot<
+export type AvailableMunicipalitiesState = RemoteValue<
   IndexedById<Municipality>,
   NetworkError
 >;
-const INITIAL_STATE: AvailableMunicipalitiesState = pot.none;
+const INITIAL_STATE: AvailableMunicipalitiesState = remoteUndefined;
 
 const reducer = (
   state: AvailableMunicipalitiesState = INITIAL_STATE,
@@ -27,15 +33,14 @@ const reducer = (
 ): AvailableMunicipalitiesState => {
   switch (action.type) {
     case getType(svGenerateVoucherStart):
-      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableState.request):
-      return pot.none;
+      return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableMunicipality.request):
-      return pot.toLoading(state);
+      return remoteLoading;
     case getType(svGenerateVoucherAvailableMunicipality.success):
-      return pot.some(toIndexed(action.payload, m => m.id));
+      return remoteReady(toIndexed(action.payload, m => m.id));
     case getType(svGenerateVoucherAvailableMunicipality.failure):
-      return pot.toError(state, action.payload);
+      return remoteError(action.payload);
   }
   return state;
 };
