@@ -506,12 +506,7 @@ describe("getMessagePaymentExpirationInfo", () => {
       >
     );
     const expectedInfo = {
-      kind: "UNEXPIRABLE",
-      noticeNumber:
-        messageWithContentWithoutDueDate.content.payment_data?.notice_number,
-      amount: messageWithContentWithoutDueDate.content.payment_data?.amount,
-      organizationFiscalCode:
-        messageWithContent.content.payment_data!.payee.fiscal_code
+      kind: "UNEXPIRABLE"
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -524,12 +519,8 @@ describe("getMessagePaymentExpirationInfo", () => {
     );
     const expectedInfo = {
       kind: "UNEXPIRABLE",
-      noticeNumber: messageWithContent.content.payment_data?.notice_number,
-      amount: messageWithContent.content.payment_data?.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageWithContent.content.due_date,
-      organizationFiscalCode:
-        messageWithContent.content.payment_data!.payee.fiscal_code
+      dueDate: messageWithContent.content.due_date
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
@@ -543,13 +534,8 @@ describe("getMessagePaymentExpirationInfo", () => {
 
     const expectedInfo = {
       kind: "EXPIRABLE",
-      noticeNumber:
-        messageInvalidAfterDueDate.content.payment_data.notice_number,
-      amount: messageInvalidAfterDueDate.content.payment_data.amount,
       expireStatus: "EXPIRED",
-      dueDate: messageInvalidAfterDueDate.content.due_date,
-      organizationFiscalCode:
-        messageWithContent.content.payment_data!.payee.fiscal_code
+      dueDate: messageInvalidAfterDueDate.content.due_date
     };
     expect(messagePaymentExpirationInfo).toStrictEqual(expectedInfo);
   });
