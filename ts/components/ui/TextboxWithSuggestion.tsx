@@ -26,11 +26,11 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
+import I18n from "../../i18n";
 
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,
-    borderColor: IOColors.bluegreyDark,
     paddingBottom: 10
   },
   inputContainer: {
@@ -69,6 +69,9 @@ type CommonProps<T> = {
  */
 type Props<T> = {
   onSelectValue: (value: T) => string;
+  isFailed?: boolean;
+  onRetry?: () => void;
+  disabled?: boolean;
 } & CommonProps<T>;
 
 type ModalProps<T> = {
@@ -156,13 +159,37 @@ const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
     undefined
   );
 
+  const borderBottomColor = props.disabled
+    ? IOColors.bluegreyLight
+    : IOColors.bluegreyDark;
   return (
     <>
-      <View style={styles.container}>
-        <H5 color={"bluegreyDark"}>{props.label}</H5>
+      <View style={[styles.container, { borderBottomColor }]}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <H5 color={"bluegreyDark"}>{props.label}</H5>
+          <View hspacer={true} />
+          {props.isLoading && (
+            <ActivityIndicator
+              color={"black"}
+              accessible={false}
+              importantForAccessibility={"no-hide-descendants"}
+              accessibilityElementsHidden={true}
+            />
+          )}
+          {props.isFailed && (
+            <H5
+              color={"red"}
+              style={{ textDecorationLine: "underline" }}
+              onPress={props.onRetry}
+            >
+              {I18n.t("global.genericRetry")}
+            </H5>
+          )}
+        </View>
         <View spacer={true} />
         <TouchableDefaultOpacity
           style={styles.inputContainer}
+          disabled={props.disabled}
           onPress={() =>
             showModal(
               <TextboxWithSuggestionModal<T>
