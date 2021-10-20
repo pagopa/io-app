@@ -7,20 +7,8 @@ import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "./../../ui/IconFont";
 import themeVariables from "./../../../theme/variables";
 
-type RadioBodyString = {
-  kind: "string";
-  element: string;
-};
-
-type RadioBodyNode = {
-  kind: "node";
-  element: ReactNode;
-};
-
-export type RadioBodyType = RadioBodyString | RadioBodyNode;
-
 export type RadioItem<T> = {
-  body: RadioBodyType;
+  body: ReactNode;
   id: T;
 };
 
@@ -47,10 +35,6 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   icon: {
-    alignSelf: "center",
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
     paddingBottom: 15,
     paddingRight: 20
   }
@@ -66,7 +50,8 @@ const getBody = <T extends unknown>(
   onPress: (selected: T) => void
 ) => {
   const onItemPress = () => onPress(radioItem.id);
-  switch (radioItem.body.kind) {
+  const bodyType = typeof radioItem.body === "string" ? "string" : "node";
+  switch (bodyType) {
     case "string":
       return (
         <H4
@@ -75,13 +60,13 @@ const getBody = <T extends unknown>(
           weight={"Regular"}
           onPress={onItemPress}
         >
-          {radioItem.body.element}
+          {radioItem.body}
         </H4>
       );
     case "node":
       return (
         <TouchableDefaultOpacity style={IOStyles.flex} onPress={onItemPress}>
-          {radioItem.body.element}
+          {radioItem.body}
         </TouchableDefaultOpacity>
       );
   }

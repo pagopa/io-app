@@ -39,31 +39,19 @@ const getMotivationItems = (): ReadonlyArray<
   RadioItem<RemoveAccountMotivationEnum>
 > => [
   {
-    body: {
-      kind: "string",
-      element: I18n.t("profile.main.privacy.removeAccount.details.answer_1")
-    },
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
     id: RemoveAccountMotivationEnum.NOT_UTILS
   },
   {
-    body: {
-      kind: "string",
-      element: I18n.t("profile.main.privacy.removeAccount.details.answer_2")
-    },
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
     id: RemoveAccountMotivationEnum.NOT_SAFE
   },
   {
-    body: {
-      kind: "string",
-      element: I18n.t("profile.main.privacy.removeAccount.details.answer_3")
-    },
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
     id: RemoveAccountMotivationEnum.NEVER_USED
   },
   {
-    body: {
-      kind: "string",
-      element: I18n.t("profile.main.privacy.removeAccount.details.answer_4")
-    },
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];

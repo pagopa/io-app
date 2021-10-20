@@ -94,10 +94,7 @@ const getPspListRadioItems = (
 ): ReadonlyArray<RadioItem<PayPalPsp["id"]>> =>
   pspList.map(psp => ({
     id: psp.id,
-    body: {
-      kind: "node",
-      element: <PspRadioItem psp={psp} />
-    }
+    body: <PspRadioItem psp={psp} />
   }));
 
 const getLocales = () => ({
