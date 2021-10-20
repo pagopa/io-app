@@ -1003,6 +1003,9 @@ wallet:
         rightColumnTitle: "Info e costi"
         infoBottomSheet:
           title: "Chi è {{pspName}}?"
+          row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
+          row2Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
+          row3Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
     coBadge:
       headerTitle: "Add international circuit"
       start:

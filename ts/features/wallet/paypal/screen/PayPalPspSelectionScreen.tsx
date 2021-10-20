@@ -133,13 +133,14 @@ const RadioItemBody = (props: RadioItemProps): React.ReactElement | null => {
     PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
-  const pspInfoBottomSheet = useIOBottomSheetRaw(360);
+  const pspInfoBottomSheet = useIOBottomSheetRaw(460);
   const handleInfoPress = () => {
     void pspInfoBottomSheet.present(
       <PspInfoBottomSheetContent
         onButtonPress={pspInfoBottomSheet.dismiss}
         pspFee={psp.fee}
         pspName={psp.name}
+        pspPrivacyUrl={psp.privacyUrl}
       />,
       I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
         pspName: psp.name
