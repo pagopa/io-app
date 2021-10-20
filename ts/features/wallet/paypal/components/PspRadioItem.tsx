@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
 /**
  * item used in a radio list
- * it represent a PayPal psp with logo and info icon
+ * it represents a PayPal psp with logo and info icon
  * @param props
  * @constructor
  */

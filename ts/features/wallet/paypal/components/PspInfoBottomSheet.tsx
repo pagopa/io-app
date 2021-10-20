@@ -86,7 +86,7 @@ const infoItems = (props: Props) => [
 ];
 
 /**
- * single row into the bottom sheet content
+ * single row displayed into the content
  * icon + textual body
  * @param props
  * @constructor
@@ -99,7 +99,7 @@ const InfoRow = (props: { icon: JSX.Element; description: ReactNode }) => (
 );
 
 /**
- * content used to show info about PayPal psp into a bottom sheet
+ * bottom sheet content used to show info about PayPal psp
  * @param props
  * @constructor
  */
