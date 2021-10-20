@@ -6,21 +6,19 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
 import { View } from "native-base";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { constNull } from "fp-ts/lib/function";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import I18n from "../../../../i18n";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { GlobalState } from "../../../../store/reducers/types";
 import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
 import { Link } from "../../../../components/core/typography/Link";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { openWebUrl } from "../../../../utils/url";
 import {
   RadioButtonList,
   RadioItem
@@ -28,6 +26,10 @@ import {
 import { privacyUrl } from "../../../../config";
 import {
   getValueOrElse,
+  isError,
+  isReady,
+  remoteError,
+  remoteLoading,
   remoteReady
 } from "../../../bonus/bpd/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
@@ -35,6 +37,8 @@ import { H4 } from "../../../../components/core/typography/H4";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { GlobalState } from "../../../../store/reducers/types";
+import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -47,8 +51,8 @@ type PayPalPsp = {
   fee: NonNegativeNumber;
   privacyUrl: string;
 };
-const PSP_IMAGE_WIDTH = Dimensions.get("window").width;
-const PSP_IMAGE_HEIGHT = 32;
+const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
+const PSP_LOGO_MAX_HEIGHT = 32;
 const styles = StyleSheet.create({
   pspLogo: {
     height: 32,
@@ -88,13 +92,14 @@ const pspList: ReadonlyArray<PayPalPsp> = [
   },
   {
     id: "2",
-    logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
-    name: "PayTipper",
-    fee: 100 as NonNegativeNumber,
+    logoUrl: "https://www.dropbox.com/s/smk5cyxx1qevn6a/mat_bank.png?dl=1",
+    name: "Mat Bank",
+    fee: 50 as NonNegativeNumber,
     privacyUrl
   }
 ];
 
+// an header over the psp list with 2 columns
 const RadioListHeader = (props: {
   leftColumnTitle: string;
   rightColumnTitle: string;
@@ -120,8 +125,8 @@ const RadioListHeader = (props: {
 // component that represents the item in the radio list
 const RadioItemBody = ({ psp }: { psp: PayPalPsp }): ReactElement => {
   const imgDimensions = useImageResize(
-    PSP_IMAGE_WIDTH,
-    PSP_IMAGE_HEIGHT,
+    PSP_LOGO_MAX_WIDTH,
+    PSP_LOGO_MAX_HEIGHT,
     psp.logoUrl
   );
   return (
@@ -173,14 +178,12 @@ const getLocales = () => ({
 });
 
 /**
- * This screen is the start point to onboard PayPal as payment method
- * It shows the PP logo and some texts
- * At the bottom 2 CTA to cancel or continue
+ * This screen is where the user picks a PSP that will be used to handle PayPal transactions
  */
 const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const pspList = getValueOrElse(props.pspList, []);
-  // auto select the only psp
+  // auto select if the psp list has 1 element
   const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
     pspList.length === 1 ? pspList[0].id : undefined
   );
@@ -200,24 +203,23 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
     onPress: undefined,
     title: I18n.t("global.buttons.continue")
   };
+
   return (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
-        <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-          <View spacer={true} small={true} />
-          <H1>{locales.title}</H1>
-          <View spacer={true} small={true} />
-
-          {pspList.length > 0 && (
+      {isReady(props.pspList) ? (
+        <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
+          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+            <View spacer={true} small={true} />
+            <H1>{locales.title}</H1>
+            <View spacer={true} small={true} />
             <ScrollView>
               <Body>{locales.body}</Body>
-              <Link onPress={() => openWebUrl("https://www.google.com")}>
-                {locales.link}
-              </Link>
+              {/* TODO see https://pagopa.atlassian.net/browse/IA-304 */}
+              <Link onPress={constNull}>{locales.link}</Link>
               <View spacer={true} large={true} />
               <RadioListHeader
                 leftColumnTitle={locales.leftColumnTitle}
@@ -231,14 +233,20 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
                 onPress={setSelectedPsp}
               />
             </ScrollView>
-          )}
-        </View>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+          </View>
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps}
+            rightButton={continueButtonProps}
+          />
+        </SafeAreaView>
+      ) : (
+        <LoadingErrorComponent
+          isLoading={!isError(props.pspList)}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={constNull}
         />
-      </SafeAreaView>
+      )}
     </BaseScreenComponent>
   );
 };
