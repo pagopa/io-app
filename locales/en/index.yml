@@ -2705,6 +2705,16 @@ bonus:
         cta:
           voucherRevocation: "Voucher revocation"
           openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"

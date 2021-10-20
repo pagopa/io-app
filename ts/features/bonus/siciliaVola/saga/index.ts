@@ -163,10 +163,10 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   );
 
   // SV post the voucher revocation
-  // TODO: pass the client when it will be created
   yield takeLatest(
     getType(svVoucherRevocation.request),
     handleVoucherRevocation,
+    siciliaVolaClient.postAnnullaVoucher,
     svSessionManager
   );
 }
