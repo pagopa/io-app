@@ -1007,6 +1007,12 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Aggiungi PayPal"
+      start:
+        title: "Paga su IO con PayPal"
+        body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -2733,6 +2739,16 @@ bonus:
         cta:
           voucherRevocation: "Revoca voucher"
           openQr: "Apri QR code"
+        voucherRevocation:
+          alert:
+            title: "Attenzione"
+            message: "Sei sicuro di voler procedere? Il codice sconto sarà eliminato."
+            cta:
+              ok: "Continua"
+              ko: "Annulla la richiesta"
+          toast:
+            ok: "Voucher eliminato correttamente"
+            ko: "Errore durante l'eliminazione del voucher. Riprova"
     components:
       voucherVisualDetails:
         uniqueCode: "Codice univoco"
