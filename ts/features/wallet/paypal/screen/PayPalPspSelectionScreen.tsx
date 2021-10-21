@@ -39,6 +39,7 @@ export type PayPalPsp = {
   name: string;
   fee: NonNegativeNumber;
   privacyUrl: string;
+  tosUrl: string;
 };
 
 const styles = StyleSheet.create({
@@ -55,14 +56,16 @@ const pspList: ReadonlyArray<PayPalPsp> = [
     logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
     name: "PayTipper",
     fee: 100 as NonNegativeNumber,
-    privacyUrl
+    privacyUrl,
+    tosUrl: privacyUrl
   },
   {
     id: "2",
     logoUrl: "https://www.dropbox.com/s/smk5cyxx1qevn6a/mat_bank.png?dl=1",
     name: "Mat Bank",
     fee: 50 as NonNegativeNumber,
-    privacyUrl
+    privacyUrl,
+    tosUrl: privacyUrl
   }
 ];
 

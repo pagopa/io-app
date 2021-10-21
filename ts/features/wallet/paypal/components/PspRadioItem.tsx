@@ -59,7 +59,7 @@ export const PspRadioItem = (
     psp.logoUrl
   );
   const pspInfoBottomSheet = useIOBottomSheetRaw(
-    Math.min(470, Dimensions.get("window").height)
+    Math.min(450, Dimensions.get("window").height)
   );
   const handleInfoPress = () => {
     void pspInfoBottomSheet.present(
@@ -68,6 +68,7 @@ export const PspRadioItem = (
         pspFee={psp.fee}
         pspName={psp.name}
         pspPrivacyUrl={psp.privacyUrl}
+        pspTosUrl={psp.tosUrl}
       />,
       I18n.t("wallet.onboarding.paypal.selectPsp.infoBottomSheet.title", {
         pspName: psp.name

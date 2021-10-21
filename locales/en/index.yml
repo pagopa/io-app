@@ -1007,8 +1007,8 @@ wallet:
           row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
           row2Description1: "Quando fai un pagamento, potrà applicare un costo massimo fino a "
           row2Description2: ". Vedrai l'importo in fase di riepilogo."
-          row3Description1: "Si applicano l'Informativa Privacy e i Termini e condizioni d’uso di {{pspName}}."
-          row3Description2: "Informativa Privacy e i Termini e condizioni d’uso"
+          row3Description1: "Informativa Privacy"
+          row3Description2: "Termini e condizioni d’uso"
     coBadge:
       headerTitle: "Add international circuit"
       start:
