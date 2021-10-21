@@ -35,7 +35,9 @@ type Props = {
 };
 
 const iconSize = 24;
-const infoItems = (props: Props) => [
+// items to be displayed inside the bottom sheet content
+// icon + description
+const getItem = (props: Props) => [
   {
     icon: <MoneyDownIcon width={iconSize} height={iconSize} />,
     description: (
@@ -122,7 +124,7 @@ export const PspInfoBottomSheetContent = (props: Props) => {
         />
       }
     >
-      {infoItems(props).map((item, idx) => (
+      {getItem(props).map((item, idx) => (
         <InfoRow {...item} key={`info_row_${idx}`} />
       ))}
     </BottomSheetContent>
