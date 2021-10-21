@@ -989,6 +989,12 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -2725,6 +2731,16 @@ bonus:
         cta:
           voucherRevocation: "Voucher revocation"
           openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"

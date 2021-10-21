@@ -18,6 +18,8 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   getAeroportiAmmessiDefaultDecoder,
   GetAeroportiAmmessiT,
+  AnnullaVoucherT,
+  annullaVoucherDefaultDecoder,
   getListaComuniBySiglaProvinciaDefaultDecoder,
   GetListaComuniBySiglaProvinciaT,
   getListaProvinceByIdRegioneDefaultDecoder,
@@ -34,6 +36,7 @@ import {
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
 import { AeroportiAmmessiInputBean } from "../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
+import { VoucherCodeInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherCodeInputBean";
 
 /**
  * Get the Sicilia Vola session token
@@ -104,6 +107,19 @@ const GetAeroportiAmmessi: GetAeroportiAmmessiT = {
     JSON.stringify({ aeroportiAmmessiInputBean }),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: getAeroportiAmmessiDefaultDecoder()
+};
+
+/**
+/**
+ * Revoke a voucher identified by id
+ */
+const PostAnnullaVoucher: AnnullaVoucherT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
+  query: _ => ({}),
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: annullaVoucherDefaultDecoder()
 };
 
 /**
@@ -182,7 +198,13 @@ export const BackendSiciliaVolaClient = (
         GetVoucherBeneficiario,
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
-    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
+    postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(PostAnnullaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode })
   };
 };
 
