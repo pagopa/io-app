@@ -60,7 +60,8 @@ const PaymentButton = (props: Props) => {
         props.paymentInitializeState();
         props.navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
-          initialAmount: amount.value
+          initialAmount: amount.value,
+          paymentStartOrigin: "message"
         });
       } else {
         // Navigating to Wallet home, having the email address is not validated,

@@ -11,6 +11,7 @@ import { ComuneBeanList } from "../../../../../../definitions/api_sicilia_vola/C
 const mapKinds: Record<number, string> = {};
 
 // convert a success response to the logical app representation of it
+// TODO: remove the mock when the swagger is completed
 const convertSuccess = (
   listaComuni: ComuneBeanList
 ): ReadonlyArray<Municipality> =>
@@ -19,7 +20,9 @@ const convertSuccess = (
       ? [
           {
             id: r.codiceCatastale,
-            name: r.descrizioneComune
+            name: r.descrizioneComune,
+            latitude: 1,
+            longitude: 1
           }
         ]
       : []

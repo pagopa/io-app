@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -21,12 +22,10 @@ import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privat
 import I18n from "../../i18n";
 import {
   navigateBack,
-  navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddCreditCard,
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { H1 } from "../../components/core/typography/H1";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -182,15 +181,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
     navigateToWalletAddDigitalPaymentMethod(),
-  navigateToTransactionSummary: () => {
-    const maybeInPayment = props.navigation.getParam("inPayment");
-    maybeInPayment.map(inPayment =>
-      navigateToPaymentTransactionSummaryScreen({
-        rptId: inPayment.rptId,
-        initialAmount: inPayment.initialAmount
-      })
-    );
-  },
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
       inPayment: props.navigation.getParam("inPayment"),

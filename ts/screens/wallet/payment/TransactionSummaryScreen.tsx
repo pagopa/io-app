@@ -34,6 +34,7 @@ import {
   paymentCompletedSuccess,
   paymentIdPolling,
   paymentInitializeState,
+  PaymentStartOrigin,
   paymentVerifica,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
@@ -62,7 +63,7 @@ import { dispatchPickPspOrConfirm } from "./common";
 export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
-  isManualPaymentInsertion?: boolean;
+  paymentStartOrigin: PaymentStartOrigin;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -405,12 +406,13 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
-  const isManualPaymentInsertion = props.navigation.getParam(
-    "isManualPaymentInsertion"
-  );
+  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>
-    dispatch(paymentVerifica.request(rptId));
+    dispatch(
+      paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
+    );
 
   const resetPayment = () => {
     dispatch(runDeleteActivePaymentSaga());
