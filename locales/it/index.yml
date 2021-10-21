@@ -2686,7 +2686,27 @@ bonus:
           departure: "Data di partenza"
           return: "Data di ritorno"
       summary:
-        title: "SummaryScreen"
+        title: "Riepilogo"
+        subtitle1:
+          normal1: "Proseguendo dichiari sotto la tua responsabilità e consapevole delle sanzioni penali in caso di dichiarazioni non veritiere e di falsità negli atti ("
+          link: "art. 76 del d.P.R. 28 Dicembre 2000, n.445"
+          normal2: ") di possedere i seguenti requisiti"
+        subtitle2: "E di richiedere un codice sconto per un volo con le seguenti caratteristiche:"
+        fields:
+          residence:
+            label: "Residenza:"
+            value: "Sicilia"
+          category:
+            label: "Categoria:"
+            value:
+              disabled: "Disabile grave ai sensi dell’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
+              student: "Studente fuori sede"
+              worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+              sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
+          flightDate:
+            label: "Data del volo:"
+            disabled: "Tutte"
+          availableDestination: "Possibili destinazioni:"
       voucherGenerated:
         title: "Ecco il tuo codice sconto"
         subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
