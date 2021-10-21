@@ -17,7 +17,7 @@ describe("PayPalStartOnboardingScreen", () => {
     ).not.toBeNull();
   });
 
-  it(`footer button should be defined`, () => {
+  it(`footer buttons should be defined`, () => {
     const render = renderComponent(store);
     expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
     expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();

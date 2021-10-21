@@ -27,6 +27,13 @@ describe("PspRadioItem", () => {
     expect(component).toMatchSnapshot();
   });
 
+  it(`component should be defined`, () => {
+    const component = render(
+      <PspRadioItem psp={payPalPsp} testID={"PspRadioItemTestID"} />
+    );
+    expect(component.queryByTestId("PspRadioItemTestID")).not.toBeNull();
+  });
+
   it(`should be present the info icon`, () => {
     const component = render(<PspRadioItem psp={payPalPsp} />);
     expect(component.queryByTestId("infoIconTestID")).not.toBeNull();

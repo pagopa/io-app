@@ -10,13 +10,14 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { PayPalPsp } from "../screen/PayPalPspSelectionScreen";
+import { TestID } from "../../../../types/WithTestID";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
 const PSP_LOGO_MAX_HEIGHT = 32;
 type RadioItemProps = {
   psp: PayPalPsp;
-};
+} & TestID;
 
 const styles = StyleSheet.create({
   pspLogo: {
@@ -74,7 +75,7 @@ export const PspRadioItem = (
     );
   };
   return (
-    <View style={styles.radioItemBody}>
+    <View style={styles.radioItemBody} testID={props.testID}>
       {/* show the psp name while its image is loading */}
       {imgDimensions.fold<React.ReactNode>(
         <H4 weight={"SemiBold"} color={"bluegreyDark"} testID={"pspNameTestID"}>

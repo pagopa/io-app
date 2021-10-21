@@ -22,6 +22,12 @@ describe("PayPalPpsSelectionScreen", () => {
       render.component.queryByTestId("PayPalPpsSelectionScreen")
     ).not.toBeNull();
   });
+
+  it(`footer buttons should be defined`, () => {
+    const render = renderComponent(store);
+    expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
+    expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();
+  });
 });
 
 const renderComponent = (store: Store) => ({
