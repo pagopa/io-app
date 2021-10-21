@@ -18,6 +18,7 @@ const props = {
   pspName: "pspNameTest",
   pspFee: 123 as NonNegativeNumber,
   pspPrivacyUrl: "privacyUrlTest",
+  pspTosUrl: "pspTosUrl",
   onButtonPress: mockOnPress
 };
 
