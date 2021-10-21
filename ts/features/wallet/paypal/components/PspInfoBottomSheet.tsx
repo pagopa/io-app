@@ -17,6 +17,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
+
 const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
@@ -113,6 +114,7 @@ export const PspInfoBottomSheetContent = (props: Props) => {
   };
   return (
     <BottomSheetContent
+      testID={"PspInfoBottomSheetContentTestID"}
       footer={
         <FooterWithButtons
           type={"SingleButton"}
