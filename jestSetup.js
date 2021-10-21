@@ -34,24 +34,9 @@ jest.mock("react-native-reanimated", () => {
 
   // The mock misses the `addWhitelistedUIProps` implementation
   // So we override it with a no-op
-  Reanimated.default.addWhitelistedUIProps = () => {
-  };
+  Reanimated.default.addWhitelistedUIProps = () => {};
 
   return Reanimated;
-});
-
-/**
- * adds as for issue suggestion
- * https://github.com/gorhom/react-native-bottom-sheet/issues/219
- */
-jest.mock("@gorhom/bottom-sheet", () => {
-  const react = require("react-native");
-  return {
-    __esModule: true,
-    default: react.View,
-    TouchableWithoutFeedback: react.TouchableWithoutFeedback,
-    BottomSheetScrollView: react.ScrollView
-  };
 });
 
 NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
