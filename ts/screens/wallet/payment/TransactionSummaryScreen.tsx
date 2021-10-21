@@ -47,16 +47,16 @@ import {
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -420,9 +420,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onCancel = () => {
     dispatch(abortRunningPayment());
   };
-
-  // navigateToMessageDetail: (messageId: string) =>
-  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
 
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,

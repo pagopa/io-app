@@ -8,16 +8,15 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { PaymentMethodGroupedList } from "../../components/paymentMethodActivationToggle/list/PaymentMethodGroupedList";
 import { paymentMethodsWithActivationStatusSelector } from "../../store/reducers/details/combiner";
 import { areAnyPaymentMethodsActiveSelector } from "../../store/reducers/details/paymentMethods";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 
 const loadLocales = () => ({
   headerTitle: I18n.t("bonus.bpd.title"),
@@ -108,10 +107,9 @@ const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   skip: () => {
     navigateToWalletHome();
-    dispatch(navigationHistoryPop(1));
   }
 });
 

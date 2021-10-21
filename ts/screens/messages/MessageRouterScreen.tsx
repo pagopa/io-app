@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { NavigationActions, NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -128,7 +128,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(NavigationActions.back()),
+  cancel: () => navigateBack(),
   loadMessages: () => dispatch(loadMessages.request())
 });
 const mapStateToProps = (state: GlobalState) => ({

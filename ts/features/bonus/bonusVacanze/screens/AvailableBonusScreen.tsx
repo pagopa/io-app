@@ -1,3 +1,4 @@
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import {
@@ -10,7 +11,6 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -23,14 +23,17 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { bpdEnabled, cgnEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../store/actions/navigationHistory";
 import { Dispatch } from "../../../../store/actions/types";
 import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
+import { storeUrl } from "../../../../utils/appVersion";
 import { getRemoteLocale } from "../../../../utils/messages";
+import { showToast } from "../../../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../../../utils/statusBar";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
+import { cgnActivationStart } from "../../cgn/store/actions/activation";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import {
   AvailableBonusItem,
   AvailableBonusItemState
@@ -39,9 +42,9 @@ import { bonusVacanzeStyle } from "../components/Styles";
 import { navigateToBonusRequestInformation } from "../navigation/action";
 import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
 import {
-  isAvailableBonusNoneErrorSelector,
-  isAvailableBonusLoadingSelector,
   experimentalAndVisibleBonus,
+  isAvailableBonusLoadingSelector,
+  isAvailableBonusNoneErrorSelector,
   supportedAvailableBonusSelector
 } from "../store/reducers/availableBonusesTypes";
 import {
@@ -49,10 +52,6 @@ import {
   ID_BPD_TYPE,
   ID_CGN_TYPE
 } from "../utils/bonus";
-import { actionWithAlert } from "../components/alert/ActionWithAlert";
-import { storeUrl } from "../../../../utils/appVersion";
-import { showToast } from "../../../../utils/showToast";
-import { cgnActivationStart } from "../../cgn/store/actions/activation";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -251,7 +250,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // TODO: Add the param to navigate to proper bonus by name (?)
   navigateToBonusRequest: (bonusItem: BonusAvailable) => {
     navigateToBonusRequestInformation({ bonusItem });
-    dispatch(navigationHistoryPop(1));
   },
   startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   startCgnActivation: () => dispatch(cgnActivationStart())

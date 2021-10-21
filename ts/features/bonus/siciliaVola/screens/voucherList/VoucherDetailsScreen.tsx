@@ -248,7 +248,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(navigateBack()),
+  back: () => navigateBack(),
   voucherRevocationRequest: (voucherId: SvVoucherId) =>
     dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>

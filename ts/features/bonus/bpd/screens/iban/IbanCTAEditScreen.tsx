@@ -1,28 +1,27 @@
-import { Dispatch } from "redux";
 import * as pot from "italia-ts-commons/lib/pot";
-import { connect } from "react-redux";
 import * as React from "react";
 import { Alert } from "react-native";
-import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { bpdLastUpdateSelector } from "../../store/reducers/details/lastUpdate";
-import { bpdAllData } from "../../store/actions/details";
-import { isStrictSome } from "../../../../../utils/pot";
-import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 import { navigateBack } from "../../../../../store/actions/navigation";
-import { navigateToBpdDetails } from "../../navigation/actions";
-import {
-  bpdPeriodsSelector,
-  BpdPeriodWithInfo
-} from "../../store/reducers/details/periods";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
+import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   useActionOnFocus,
   useNavigationContext
 } from "../../../../../utils/hooks/useOnFocus";
+import { isStrictSome } from "../../../../../utils/pot";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { navigateToBpdDetails } from "../../navigation/actions";
+import { bpdAllData } from "../../store/actions/details";
+import { bpdEnabledSelector } from "../../store/reducers/details/activation";
+import { bpdLastUpdateSelector } from "../../store/reducers/details/lastUpdate";
+import {
+  bpdPeriodsSelector,
+  BpdPeriodWithInfo
+} from "../../store/reducers/details/periods";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -135,7 +134,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => navigateBack(),
   navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
     navigateToBpdDetails(bpdPeriod);
-    dispatch(navigationHistoryPop(1));
   }
 });
 

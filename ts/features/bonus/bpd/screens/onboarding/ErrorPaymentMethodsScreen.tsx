@@ -12,7 +12,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
-import { navigationHistoryPop } from "../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
@@ -66,9 +65,8 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   skip: () => {
-    dispatch(navigationHistoryPop(1));
     navigateToWalletHome();
   }
 });
