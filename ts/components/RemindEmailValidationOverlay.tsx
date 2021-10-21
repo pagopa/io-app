@@ -24,7 +24,6 @@ import {
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
-import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
@@ -32,6 +31,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import { isOnboardingCompletedSelector } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -405,7 +405,7 @@ const mapStateToProps = (state: GlobalState) => {
     optionEmail: profileEmailSelector(state),
     isEmailValidated,
     potProfile,
-    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+    isOnboardingCompleted: isOnboardingCompletedSelector()
   };
 };
 

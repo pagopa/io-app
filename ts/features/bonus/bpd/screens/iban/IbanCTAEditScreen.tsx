@@ -16,6 +16,7 @@ import { isStrictSome } from "../../../../../utils/pot";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdAllData } from "../../store/actions/details";
+import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
 import { bpdLastUpdateSelector } from "../../store/reducers/details/lastUpdate";
 import {
@@ -133,6 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   goBack: () => navigateBack(),
   navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
+    dispatch(bpdSelectPeriod(bpdPeriod));
     navigateToBpdDetails(bpdPeriod);
   }
 });

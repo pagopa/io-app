@@ -22,13 +22,13 @@ import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { isOnboardingCompletedSelector } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
@@ -232,7 +232,7 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    isOnbardingCompleted: isOnboardingCompletedSelector(state),
+    isOnbardingCompleted: isOnboardingCompletedSelector(),
     isLoading: pot.isUpdating(potProfile),
     hasAcceptedCurrentTos: pot.getOrElse(
       pot.map(potProfile, p => p.accepted_tos_version === tosVersion),

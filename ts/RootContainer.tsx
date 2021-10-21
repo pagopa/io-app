@@ -33,6 +33,7 @@ import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
+import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
@@ -162,6 +163,9 @@ class RootContainer extends React.PureComponent<Props> {
           }}
           onNavigationStateChange={(_, currentState) => {
             NavigationService.setCurrentState(currentState);
+            this.props.setDebugCurrentRouteName(
+              NavigationService.getCurrentRouteName() ?? "Undefined"
+            );
           }}
         />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
@@ -190,7 +194,8 @@ const mapDispatchToProps = {
   applicationChangeState,
   setDeepLink,
   navigateToDeepLink,
-  navigateBack
+  navigateBack,
+  setDebugCurrentRouteName
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

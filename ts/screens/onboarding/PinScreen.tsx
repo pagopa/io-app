@@ -18,9 +18,9 @@ import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
+import { isOnboardingCompletedSelector } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -452,8 +452,8 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+const mapStateToProps = (_: GlobalState) => ({
+  isOnboardingCompleted: isOnboardingCompletedSelector()
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -5,23 +5,22 @@ import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { useIOBottomSheet } from "../../utils/bottomSheet";
-import { getCurrentRouteKey } from "../../utils/navigation";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
-import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -61,7 +60,9 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
       title: I18n.t("wallet.paymentMethod"),
       subtitle: I18n.t("wallet.paymentMethodDesc"),
       onPress: () =>
-        props.navigateToWalletAddPaymentMethod(getCurrentRouteKey(props.nav))
+        props.navigateToWalletAddPaymentMethod(
+          NavigationService.getCurrentRouteKey()
+        )
     },
     {
       title: I18n.t("wallet.methods.bonus.name"),
@@ -151,9 +152,7 @@ const WalletHomeHeader: React.FC<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  nav: navSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (_: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>

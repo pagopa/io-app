@@ -7,6 +7,8 @@ import {
   NavigationRoute,
   NavigationState
 } from "react-navigation";
+import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import { NavigationHistoryState } from "../store/reducers/navigationHistory";
 
 /**
@@ -88,3 +90,13 @@ export function whereAmIFrom(nav: NavigationHistoryState): Option<string> {
     getRouteName(ln.routes[ln.index])
   );
 }
+
+/**
+ * @deprecated
+ */
+export const isOnboardingCompletedSelector = () => {
+  const route = NavigationService.getCurrentRoute();
+  return route
+    ? route.routes.length > 0 && route.routes[0].routeName === ROUTES.MAIN
+    : false;
+};

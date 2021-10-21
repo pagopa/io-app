@@ -1,19 +1,15 @@
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { NavigationParams } from "react-navigation";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import EuCovidCertNotFoundKoScreen from "../EuCovidCertNotFoundKoScreen";
-import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import * as mixpanelTrack from "../../../../../mixpanel";
-import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
+import { createStore } from "redux";
 import i18n from "../../../../../i18n";
+import * as mixpanelTrack from "../../../../../mixpanel";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as openWebUrl from "../../../../../utils/url";
-
-const aMessageId = "123";
-const anAuthCode = "1234" as EUCovidCertificateAuthCode;
+import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
+import EuCovidCertNotFoundKoScreen from "../EuCovidCertNotFoundKoScreen";
 
 describe("Test EuCovidCertNotFoundKoScreen", () => {
   jest.useFakeTimers();
@@ -38,8 +34,7 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
       features: {
         ...globalState.features,
         euCovidCert: {
-          ...globalState.features.euCovidCert,
-          current: { messageId: aMessageId, authCode: anAuthCode }
+          ...globalState.features.euCovidCert
         }
       }
     });

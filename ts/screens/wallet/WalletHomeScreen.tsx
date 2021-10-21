@@ -70,7 +70,6 @@ import {
   runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
-import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
@@ -624,7 +623,6 @@ const mapStateToProps = (state: GlobalState) => {
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
-    nav: navSelector(state),
     isPagoPaVersionSupported,
     bpdLoadState: bpdLastUpdateSelector(state),
     cgnDetails: cgnDetailSelector(state),

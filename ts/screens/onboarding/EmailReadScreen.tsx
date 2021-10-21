@@ -34,7 +34,6 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   profileEmailSelector,
   profileSelector
@@ -42,6 +41,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
+import { isOnboardingCompletedSelector } from "../../utils/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -186,7 +186,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isOnboardingCompleted = isOnboardingCompletedSelector(state);
+  const isOnboardingCompleted = isOnboardingCompletedSelector();
   const potUserMetadata = userMetadataSelector(state);
 
   // If the screen is displayed as last item of the onboarding ,show loading spinner

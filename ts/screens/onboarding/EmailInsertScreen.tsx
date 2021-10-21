@@ -26,7 +26,6 @@ import {
 } from "../../store/actions/onboarding";
 import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
@@ -34,6 +33,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { isOnboardingCompletedSelector } from "../../utils/navigation";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
@@ -309,7 +309,7 @@ function mapStateToProps(state: GlobalState) {
     optionEmail: profileEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+    isOnboardingCompleted: isOnboardingCompletedSelector()
   };
 }
 

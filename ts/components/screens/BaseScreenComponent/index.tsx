@@ -20,11 +20,11 @@ import {
 } from "../../../boot/configureInstabug";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
+import NavigationService from "../../../navigation/NavigationService";
 
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
-import { getCurrentRouteName } from "../../../utils/navigation";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
@@ -105,7 +105,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       titleColor
     } = props;
     const currentScreenName = useSelector(
-      (store: GlobalState) => getCurrentRouteName(store.nav) ?? "n/a"
+      (_: GlobalState) => NavigationService.getCurrentRouteName() ?? "n/a"
     );
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);

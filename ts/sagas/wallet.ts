@@ -93,6 +93,7 @@ import {
   searchUserSatispay,
   walletAddSatispayStart
 } from "../features/wallet/onboarding/satispay/store/actions";
+import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import {
   navigateBack,
@@ -167,7 +168,6 @@ import { waitBackoffError } from "../utils/backoffError";
 import { isTestEnv } from "../utils/environment";
 
 import { defaultRetryingFetch } from "../utils/fetch";
-import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
 import { getTitleFromCard } from "../utils/paymentMethod";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { SessionManager } from "../utils/SessionManager";
@@ -990,9 +990,8 @@ function* setWalletSessionEnabledSaga(
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function* () {
-    const nav: GlobalState["nav"] = yield select(_ => _.nav);
-    const currentRouteName = getCurrentRouteName(nav);
-    const currentRouteKey = getCurrentRouteKey(nav);
+    const currentRouteName = NavigationService.getCurrentRouteName();
+    const currentRouteKey = NavigationService.getCurrentRouteKey();
     if (currentRouteName !== undefined && currentRouteKey !== undefined) {
       yield put(
         paymentInitializeEntrypointRoute({

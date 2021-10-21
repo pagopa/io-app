@@ -1,14 +1,14 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import DeviceInfo from "react-native-device-info";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-import DeviceInfo from "react-native-device-info";
+import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
+import { currentRouteDebugSelector } from "../store/reducers/debug";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
-import { getCurrentRouteName } from "../utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -49,19 +49,22 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
   const appVersion = getAppVersion();
   const serverInfo = props.serverInfo;
   const serverVersion = serverInfo ? serverInfo.version : "?";
+
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
       <Text style={styles.versionText}>
         {`app: ${appVersion}`} - {`backend: ${serverVersion}`}
       </Text>
-      <Text style={styles.routeText}>{getCurrentRouteName(props.nav)}</Text>
+      <Text style={styles.routeText}>{props.screenNameDebug}</Text>
     </View>
   );
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  nav: state.nav,
-  serverInfo: state.backendInfo.serverInfo
+  serverInfo: state.backendInfo.serverInfo,
+  // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
+  // doesn't receive the updates about the new screens
+  screenNameDebug: currentRouteDebugSelector(state)
 });
 
 export default connect(mapStateToProps)(VersionInfoOverlay);

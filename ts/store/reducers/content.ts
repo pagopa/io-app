@@ -3,23 +3,14 @@
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { IdentityProviderId } from "../../models/IdentityProvider";
-import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getCurrentRouteName } from "../../utils/navigation";
-import {
-  contentMunicipalityLoad,
-  loadContextualHelpData,
-  loadIdps
-} from "../actions/content";
-import { clearCache } from "../actions/profile";
-import { Action } from "../actions/types";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteError,
@@ -28,11 +19,18 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { IdentityProviderId } from "../../models/IdentityProvider";
+import NavigationService from "../../navigation/NavigationService";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getRemoteLocale } from "../../utils/messages";
-import { navSelector } from "./navigationHistory";
+import {
+  contentMunicipalityLoad,
+  loadContextualHelpData,
+  loadIdps
+} from "../actions/content";
+import { clearCache } from "../actions/profile";
+import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 /**
@@ -107,11 +105,10 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
 export const screenContextualHelpDataSelector = createSelector<
   GlobalState,
   pot.Pot<ContextualHelp, Error>,
-  NavigationState,
   pot.Pot<Option<ScreenCHData>, Error>
->([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) =>
+>([contextualHelpDataSelector], contextualHelpData =>
   pot.map(contextualHelpData, data => {
-    const currentRouteName = getCurrentRouteName(navState);
+    const currentRouteName = NavigationService.getCurrentRouteName();
     if (currentRouteName === undefined) {
       return none;
     }
