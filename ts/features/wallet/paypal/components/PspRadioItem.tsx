@@ -54,7 +54,7 @@ export const PspRadioItem = (
     psp.logoUrl
   );
   const pspInfoBottomSheet = useIOBottomSheetRaw(
-    Math.min(450, Dimensions.get("window").height)
+    Math.min(420, Dimensions.get("window").height)
   );
   const handleInfoPress = () => {
     void pspInfoBottomSheet.present(
