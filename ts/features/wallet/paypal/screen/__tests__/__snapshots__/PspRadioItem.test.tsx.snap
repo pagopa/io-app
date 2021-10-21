@@ -64,9 +64,6 @@ exports[`PspRadioItem match snapshot 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "alignItems": "flex-end",
-          "flex": 1,
-          "flexDirection": "column",
           "opacity": 1,
         }
       }

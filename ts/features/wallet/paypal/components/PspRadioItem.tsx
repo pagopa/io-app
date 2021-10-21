@@ -31,11 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row"
   },
-  radioItemRightContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "flex-end"
-  },
   radioItemRight: {
     flex: 1,
     flexDirection: "column",
@@ -91,11 +86,10 @@ export const PspRadioItem = (
           />
         )
       )}
-      <View style={styles.radioItemRightContainer}>
+      <View style={styles.radioItemRight}>
         <TouchableDefaultOpacity
           testID={"infoIconTestID"}
           onPress={handleInfoPress}
-          style={styles.radioItemRight}
         >
           <IconFont name={"io-info"} size={24} color={IOColors.blue} />
         </TouchableDefaultOpacity>
