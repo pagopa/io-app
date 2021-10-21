@@ -5,7 +5,10 @@ import { call, put, select, take } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import NavigationService from "../../../../../navigation/NavigationService";
-import { navigateBack } from "../../../../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToWalletHome
+} from "../../../../../store/actions/navigation";
 import { paymentMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
 import { hasFunctionEnabled } from "../../../../../utils/walletv2";
 import {
@@ -59,7 +62,11 @@ export function* bpdIbanInsertionWorker() {
     getType(bpdIbanInsertionContinue)
   ]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
-    yield call(navigateBack);
+    if (onboardingOngoing) {
+      yield call(navigateToWalletHome);
+    } else {
+      yield call(navigateBack);
+    }
   } else {
     if (onboardingOngoing) {
       const paymentMethods: ReturnType<typeof paymentMethodsSelector> =
