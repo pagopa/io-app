@@ -28,6 +28,11 @@ describe("PayPalPpsSelectionScreen", () => {
     expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
     expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();
   });
+  it.todo("psp shown should match those one in the store");
+  it.todo("loading should be shown when the data is loading");
+  it.todo(
+    "error and retry button should be shown when some error occurred while retrieving data"
+  );
 });
 
 const renderComponent = (store: Store) => ({
