@@ -110,18 +110,7 @@ const getLocales = () => ({
   )
 });
 
-/**
- * This screen is where the user picks a PSP that will be used to handle PayPal transactions
- * Only 1 psp can be selected
- */
-const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
-  const locales = getLocales();
-  const pspList = getValueOrElse(props.pspList, []);
-  // auto select if the psp list has 1 element
-  const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
-    pspList.length === 1 ? pspList[0].id : undefined
-  );
-
+const buttonsProps = () => {
   const cancelButtonProps = {
     testID: "cancelButtonId",
     primary: false,
@@ -133,11 +122,24 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const continueButtonProps = {
     testID: "continueButtonId",
     bordered: false,
-    disabled: selectedPsp === undefined,
     // TODO replace with the effective handler
     onPress: undefined,
     title: I18n.t("global.buttons.continue")
   };
+  return { cancelButtonProps, continueButtonProps };
+};
+
+/**
+ * This screen is where the user picks a PSP that will be used to handle PayPal transactions
+ * Only 1 psp can be selected
+ */
+const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
+  const locales = getLocales();
+  const pspList = getValueOrElse(props.pspList, []);
+  // auto select if the psp list has 1 element
+  const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
+    pspList.length === 1 ? pspList[0].id : undefined
+  );
 
   return (
     <BaseScreenComponent
@@ -171,8 +173,11 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
           </View>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
-            leftButton={cancelButtonProps}
-            rightButton={continueButtonProps}
+            leftButton={buttonsProps().cancelButtonProps}
+            rightButton={{
+              ...buttonsProps().continueButtonProps,
+              disabled: selectedPsp === undefined
+            }}
           />
         </SafeAreaView>
       ) : (
