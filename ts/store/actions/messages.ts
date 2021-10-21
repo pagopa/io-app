@@ -40,7 +40,7 @@ export const loadMessageWithRelations = createAsyncAction(
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
-  cursor: Cursor;
+  cursor?: Cursor;
 };
 
 type PaginatedMessagesSuccessPayload = {

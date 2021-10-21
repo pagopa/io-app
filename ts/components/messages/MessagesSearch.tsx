@@ -54,7 +54,7 @@ const generateMessagesStateMatchingSearchTextArray = (
     pot
       .toOption(potMessage)
       .map(message => [
-        messageContainsText(message, searchText),
+        message.content ? messageContainsText(message, searchText) : false,
         fromNullable(servicesById[message.sender_service_id])
           .chain(potService => pot.toOption(potService))
           .map(service => serviceContainsText(service, searchText))

@@ -63,6 +63,7 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
+import _ from "lodash";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -202,7 +203,7 @@ export function BackendClient(
   const getMessagesT: GetUserMessagesTCustom = {
     method: "get",
     url: _ => "/api/v1/messages",
-    query: _ => ({}),
+    query: params => _.pickBy(params, v => v !== undefined),
     headers: tokenHeaderProducer,
     response_decoder: getUserMessagesDefaultDecoder()
   };

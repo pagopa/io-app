@@ -4,12 +4,16 @@ import {
   NavigationStackOptions,
   NavigationStackProp
 } from "react-navigation-stack/src/types";
-import { euCovidCertificateEnabled } from "../config";
+
+import { euCovidCertificateEnabled, usePaginatedMessages } from "../config";
 import EuCovidCertNavigator from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
+import PaginatedMessagesHomeScreen from "../screens/messages/PaginatedMessagesHomeScreen";
+// import PaginatedMessagesRouterScreen from "../screens/messages/PaginatedMessagesRouterScreen";
+
 import ROUTES from "./routes";
 
 const baseMessageRouteConfig: NavigationRouteConfigMap<
@@ -17,7 +21,9 @@ const baseMessageRouteConfig: NavigationRouteConfigMap<
   NavigationStackProp<NavigationRoute, any>
 > = {
   [ROUTES.MESSAGES_HOME]: {
-    screen: MessagesHomeScreen
+    screen: usePaginatedMessages
+      ? PaginatedMessagesHomeScreen
+      : MessagesHomeScreen
   },
   [ROUTES.MESSAGE_ROUTER]: {
     screen: MessageRouterScreen

@@ -25,14 +25,12 @@ function* tryLoadNextPageMessages(
   action: LocalActionType
 ): Generator<Effect, void, SagaCallReturnType<typeof getMessages>> {
   try {
-    // TODO: now we fetch 100 that is the maximum supported by the API
-    //       a default-page size will be defined later on
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
       {
         enrich_result_data: true,
         page_size: action.payload.pageSize,
-        minimum_id: action.payload.cursor
+        maximum_id: action.payload.cursor
       }
     );
 
