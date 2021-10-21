@@ -77,11 +77,12 @@ export const PspRadioItem = (
     <View style={styles.radioItemBody}>
       {/* show the psp name while its image is loading */}
       {imgDimensions.fold<React.ReactNode>(
-        <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+        <H4 weight={"SemiBold"} color={"bluegreyDark"} testID={"pspNameTestID"}>
           {psp.name}
         </H4>,
         imgDim => (
           <Image
+            testID={"pspNameLogoID"}
             source={{ uri: psp.logoUrl }}
             style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
             resizeMode={"contain"}
@@ -90,6 +91,7 @@ export const PspRadioItem = (
       )}
       <View style={styles.radioItemRightContainer}>
         <TouchableDefaultOpacity
+          testID={"infoIconTestID"}
           onPress={handleInfoPress}
           style={styles.radioItemRight}
         >
