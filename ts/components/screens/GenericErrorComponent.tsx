@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   center: {
     alignItems: "center"
   },
+  contentContainerStyle: { flexGrow: 1, justifyContent: "center" },
   errorText: {
     fontSize: customVariables.fontSize2,
     paddingTop: customVariables.contentPadding
@@ -79,7 +80,11 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             onDidFocus={() => setAccessibilityFocus(this.elementRef)}
           />
         )}
-        <Content bounces={false} testID={this.props.testID}>
+        <Content
+          bounces={false}
+          testID={this.props.testID}
+          contentContainerStyle={styles.contentContainerStyle}
+        >
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />
             <Image
