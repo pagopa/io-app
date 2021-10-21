@@ -370,7 +370,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount
+        initialAmount,
+        paymentStartOrigin: "qrcode_scan"
       })
     );
   }
