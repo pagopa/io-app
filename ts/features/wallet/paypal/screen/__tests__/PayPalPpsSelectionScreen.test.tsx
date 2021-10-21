@@ -1,0 +1,35 @@
+import { NavigationParams } from "react-navigation";
+import { createStore, Store } from "redux";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
+
+jest.mock("@gorhom/bottom-sheet", () => ({
+  useBottomSheetModal: () => ({
+    present: jest.fn()
+  })
+}));
+
+describe("PayPalPpsSelectionScreen", () => {
+  jest.useFakeTimers();
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  it(`screen should be defined`, () => {
+    const render = renderComponent(store);
+    expect(
+      render.component.queryByTestId("PayPalPpsSelectionScreen")
+    ).not.toBeNull();
+  });
+});
+
+const renderComponent = (store: Store) => ({
+  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    PayPalPpsSelectionScreen,
+    "N/A",
+    {},
+    store
+  ),
+  store
+});

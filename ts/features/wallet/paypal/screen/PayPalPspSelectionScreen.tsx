@@ -174,6 +174,7 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent
+          testID={"PayPalPpsSelectionScreen"}
           isLoading={!isError(props.pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={constNull}
