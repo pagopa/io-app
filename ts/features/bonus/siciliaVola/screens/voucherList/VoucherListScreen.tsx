@@ -168,7 +168,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
           isLoading={
             isLoading(props.possibleVoucherState) || isDataLoadedLoading
           }
-          loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={() => {
             if (isDataLoadedError) {
               props.requestVoucherPage(props.filters);
