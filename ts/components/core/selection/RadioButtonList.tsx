@@ -51,25 +51,24 @@ const getBody = <T extends unknown>(
 ) => {
   const onItemPress = () => onPress(radioItem.id);
   const bodyType = typeof radioItem.body === "string" ? "string" : "node";
-  switch (bodyType) {
-    case "string":
-      return (
-        <H4
-          style={IOStyles.flex}
-          color={"bluegreyDark"}
-          weight={"Regular"}
-          onPress={onItemPress}
-        >
-          {radioItem.body}
-        </H4>
-      );
-    case "node":
-      return (
-        <TouchableDefaultOpacity style={IOStyles.flex} onPress={onItemPress}>
-          {radioItem.body}
-        </TouchableDefaultOpacity>
-      );
+  if (bodyType === "string") {
+    return (
+      <H4
+        style={IOStyles.flex}
+        color={"bluegreyDark"}
+        weight={"Regular"}
+        onPress={onItemPress}
+      >
+        {radioItem.body}
+      </H4>
+    );
   }
+  // node type
+  return (
+    <TouchableDefaultOpacity style={IOStyles.flex} onPress={onItemPress}>
+      {radioItem.body}
+    </TouchableDefaultOpacity>
+  );
 };
 
 /**
