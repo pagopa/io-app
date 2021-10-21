@@ -119,7 +119,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     });
 
   private onRefreshMessages = () => {
-    this.props.refreshMessages(
+    this.props.reloadAllMessages(
       this.props.lexicallyOrderedMessagesState,
       this.props.servicesById
     );
@@ -329,7 +329,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: (
+  reloadAllMessages: (
     _lexicallyOrderedMessagesState: ReturnType<
       typeof lexicallyOrderedMessagesStateSelector
     >,
