@@ -27,9 +27,9 @@ import {
 const loadMessages = testLoadMessages!;
 
 describe("loadMessages test plan", () => {
-  const defaultParameters = { enrich_result_data: true };
+  const defaultParameters = { enrich_result_data: true, page_size: 100 };
 
-  it("should call `getMessages` with the default parameters parameter `enrich_result_data`", () => {
+  it("should call `getMessages` with the default parameters", () => {
     const getMessages = jest.fn();
     testSaga(loadMessages, getMessages)
       .next()

@@ -15,4 +15,7 @@ export type UIMessage = {
   organizationName?: string;
   title?: string;
   timeToLive?: TimeToLiveSeconds;
+  paymentData?: {
+    paid: boolean;
+  };
 };
