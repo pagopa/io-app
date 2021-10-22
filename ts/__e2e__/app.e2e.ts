@@ -1,7 +1,8 @@
 /* eslint-disable */
-
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
+
+import I18n, { setLocale } from "../i18n";
 
 const config = require("../../package.json").detox;
 
@@ -20,10 +21,8 @@ describe("e2e app", () => {
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
     await device.launchApp({ permissions: { notifications: "YES" } });
-  });
-
-  beforeEach(async () => {
-    await adapter.beforeEach();
+    // enforce IT locale because that's how the API are configured
+    setLocale("it");
   });
 
   afterAll(async () => {
@@ -47,59 +46,49 @@ describe("e2e app", () => {
 
       // the webview returned by the server has 250ms timeout and reloads automagically
 
-      await waitFor(element(by.text("Your usage data")))
+      await waitFor(
+        element(by.text(I18n.t("profile.main.privacy.shareData.screen.title")))
+      )
         .toBeVisible()
         .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(
+        by.text(I18n.t("profile.main.privacy.shareData.screen.cta.shareData"))
+      ).tap();
+
+      await waitFor(
+        element(by.text(I18n.t("onboarding.unlockCode.contentTitle")))
+      )
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+
+      await waitFor(
+        element(by.text(I18n.t("onboarding.unlockCode.contentTitleConfirm")))
+      )
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+
+      await element(by.text(I18n.t("global.buttons.continue"))).tap();
     });
   });
 
   describe("when the user is already logged in", () => {
-    beforeAll(async () => {
-      await waitFor(element(by.id(loginButtonId)))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-
-      await element(by.id(loginButtonId)).tap();
-
-      await waitFor(element(by.id(posteIdpButtonId)))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-
-      await element(by.id(posteIdpButtonId)).tap();
-
-      await waitFor(element(by.text("Your usage data")))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-
-      await element(by.text("Share data")).tap();
-
-      await waitFor(element(by.text("Choose an unlock code")))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-
-      await waitFor(element(by.text("Insert your code again")))
-        .toBeVisible()
-        .withTimeout(WAIT_TIMEOUT_MS);
-
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-      await element(by.text("2")).tap();
-
-      await element(by.text("Continue")).tap();
-    });
-
     it("should load the user's messages", async () => {
-      await waitFor(element(by.text("Messages")))
+      await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
         .toBeVisible()
         .withTimeout(WAIT_TIMEOUT_MS);
 
