@@ -12,7 +12,6 @@ import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import PaginatedMessagesHomeScreen from "../screens/messages/PaginatedMessagesHomeScreen";
-// import PaginatedMessagesRouterScreen from "../screens/messages/PaginatedMessagesRouterScreen";
 
 import ROUTES from "./routes";
 

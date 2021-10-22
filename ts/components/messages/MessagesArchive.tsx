@@ -87,9 +87,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
       const messagesStateArchived = generateMessagesStateArchivedArray(
         nextProps.messagesState
       );
-      const allMessagesIdsArray = messagesStateArchived.map(
-        messageState => messageState.meta.id
-      );
+      const allMessagesIdsArray = messagesStateArchived.map(_ => _.meta.id);
       return {
         filteredMessageStates: messagesStateArchived,
         lastMessagesState: nextProps.messagesState,

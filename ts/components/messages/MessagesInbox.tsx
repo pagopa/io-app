@@ -96,9 +96,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       const messagesStateNotArchived = generateMessagesStateNotArchivedArray(
         nextProps.messagesState
       );
-      const allMessagesIdsArray = messagesStateNotArchived.map(
-        messageState => messageState.meta.id
-      );
+      const allMessagesIdsArray = messagesStateNotArchived.map(_ => _.meta.id);
       return {
         filteredMessageStates: messagesStateNotArchived,
         lastMessagesState: nextProps.messagesState,

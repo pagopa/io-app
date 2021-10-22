@@ -142,10 +142,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
     const isLoading = pot.isLoading(this.props.messagesState);
     const isFiltering = pot.isLoading(potFilteredMessageStates);
 
-    const filteredMessageStates: ReadonlyArray<MessageState> = pot.getOrElse(
-      potFilteredMessageStates,
-      []
-    );
+    const filteredMessageStates = pot.getOrElse(potFilteredMessageStates, []);
 
     return filteredMessageStates.length > 0 ? (
       <View style={styles.listWrapper}>
