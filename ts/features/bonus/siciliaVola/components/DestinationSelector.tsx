@@ -11,7 +11,7 @@ import { debounce } from "lodash";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type OwnProps = {
   availableStates: IndexedById<State>;
@@ -27,7 +27,21 @@ type Props = OwnProps &
 
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
+
+  const performMunicipalitySearch = (text: string) => {
+    if (text.length < 3) {
+      return;
+    }
+    props.requestAvailableMunicipalities(text);
+  };
+
   const debounceRef = React.useRef(debounce(performMunicipalitySearch, 300));
+
+  useEffect(() => {
+    if (searchText) {
+      debounceRef.current(searchText);
+    }
+  }, [searchText]);
 
   return (
     <>
@@ -53,7 +67,9 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
       />
       <View spacer />
       <TextboxWithSuggestion<Municipality>
-        onChangeText={() => true}
+        onChangeText={v => {
+          setSearchText(v.length === 0 ? undefined : v);
+        }}
         title={"Seleziona un comune"}
         keyExtractor={i => i.name}
         data={
