@@ -358,7 +358,7 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   private handleGoBack = () => {
     if (isOnboardingCompleted()) {
-      this.props.navigation.goBack();
+      this.props.navigation.goBack(null);
       return;
     }
     Alert.alert(
