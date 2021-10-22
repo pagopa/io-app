@@ -58,7 +58,7 @@ const getLoadingState = (
     });
     return pot.noneError("MessageState is undefined");
   }
-  return messageState;
+  return messageState.message;
 };
 
 /**

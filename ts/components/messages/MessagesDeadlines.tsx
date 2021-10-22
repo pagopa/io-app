@@ -132,7 +132,7 @@ export const testGetNextDeadlineId = isTestEnv ? getNextDeadlineId : undefined;
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): Sections =>
   pot.getOrElse(
     pot.map(
@@ -140,8 +140,7 @@ const generateSections = (
       _ =>
         // eslint-disable-next-line
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { isArchived, isRead } = messageState.clientStatus;
-          const { message } = messageState;
+          const { message, isArchived, isRead } = messageState;
           if (
             !isArchived &&
             pot.isSome(message) &&

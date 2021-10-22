@@ -7,6 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { BackendClient } from "../../api/backend";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
@@ -20,7 +21,7 @@ import { isDevEnv } from "../../utils/environment";
 
 export function* loadMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
-  messageId: string
+  meta: CreatedMessageWithoutContent
 ): Generator<
   Effect,
   Either<Error, CreatedMessageWithContentAndAttachments>,
@@ -28,18 +29,21 @@ export function* loadMessage(
 > {
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<ReturnType<typeof messageStateByIdSelector>> =
-    yield select(messageStateByIdSelector(messageId));
+    yield select(messageStateByIdSelector(meta.id));
 
   // If we already have the message in the store just return it
-  if (cachedMessage !== undefined && pot.isSome(cachedMessage)) {
+  if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
     return right<Error, CreatedMessageWithContentAndAttachments>(
-      cachedMessage.value
+      cachedMessage.message.value
     );
   }
   try {
     // Fetch the message from the Backend
-    const maybeMessage: SagaCallReturnType<typeof fetchMessageById> =
-      yield call(fetchMessageById, getMessage, messageId);
+    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
+      fetchMessage,
+      getMessage,
+      meta
+    );
 
     if (maybeMessage.isLeft()) {
       throw maybeMessage.value;
@@ -50,7 +54,7 @@ export function* loadMessage(
   } catch (error) {
     yield put(
       loadMessageAction.failure({
-        id: messageId,
+        id: meta.id,
         error
       })
     );
@@ -61,9 +65,9 @@ export function* loadMessage(
 /**
  * A saga to fetch a message from the Backend
  */
-function* fetchMessageById(
+function* fetchMessage(
   getMessage: ReturnType<typeof BackendClient>["getMessage"],
-  id: string
+  meta: CreatedMessageWithoutContent
 ): Generator<
   Effect,
   Either<Error, CreatedMessageWithContentAndAttachments>,
@@ -72,7 +76,7 @@ function* fetchMessageById(
   try {
     const response: SagaCallReturnType<typeof getMessage> = yield call(
       getMessage,
-      { id }
+      { id: meta.id }
     );
     if (response.isLeft()) {
       throw Error(readablePrivacyReport(response.value));
@@ -95,4 +99,4 @@ function* fetchMessageById(
   }
 }
 
-export const testFetchMessageById = isDevEnv ? fetchMessageById : undefined;
+export const testFetchMessage = isDevEnv ? fetchMessage : undefined;

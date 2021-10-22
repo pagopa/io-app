@@ -9,8 +9,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/messages";
 
 /**
- * Load a message given its ID. If the sender service is not present on the client,
- * fetch it immediately as well.
+ * Load message with related entities (e.g. the sender service).
  *
  * @param getMessage API call to fetch the message detail
  * @param messageWithRelationsLoadRequest
@@ -21,6 +20,7 @@ export function* watchLoadMessageWithRelationsSaga(
     typeof loadMessageWithRelations["request"]
   >
 ): Generator<Effect, void, any> {
+  // Extract the message id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
 
   try {
@@ -35,7 +35,7 @@ export function* watchLoadMessageWithRelationsSaga(
     }
 
     const message = messageOrError.value;
-    yield put(loadMessageWithRelations.success(message));
+    yield put(loadMessageWithRelations.success());
 
     const serviceById = serviceByIdSelector(message.sender_service_id);
 

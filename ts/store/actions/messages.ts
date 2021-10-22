@@ -23,7 +23,7 @@ export const loadMessage = createAsyncAction(
   "MESSAGE_LOAD_SUCCESS",
   "MESSAGE_LOAD_FAILURE"
 )<
-  string,
+  CreatedMessageWithoutContent,
   CreatedMessageWithContentAndAttachments,
   { id: string; error: Error }
 >();
@@ -36,7 +36,7 @@ export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
   "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
   "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
-)<string, CreatedMessageWithoutContent, Error>();
+)<CreatedMessageWithoutContent, void, Error>();
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
@@ -78,6 +78,12 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_LOAD_FAILURE"
 )<void, ReloadMessagesPayload, Error>();
 
+export const DEPRECATED_loadMessages = createAsyncAction(
+  "DEPRECATED_MESSAGES_LOAD_REQUEST",
+  "DEPRECATED_MESSAGES_LOAD_SUCCESS",
+  "DEPRECATED_MESSAGES_LOAD_FAILURE"
+)<void, ReadonlyArray<string>, Error>();
+
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
@@ -98,6 +104,7 @@ export type MessagesActions =
   | ActionType<typeof reloadAllMessages>
   | ActionType<typeof loadNextPageMessages>
   | ActionType<typeof loadPreviousPageMessages>
+  | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof setMessageReadState>
   | ActionType<typeof setMessagesArchivedState>;

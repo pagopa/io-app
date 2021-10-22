@@ -10,19 +10,27 @@ import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import {
   loadMessage,
-  reloadAllMessages
+  DEPRECATED_loadMessages as loadMessages
 } from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
-import { successPayload } from "../../../__mocks__/messages";
+
+const mockMeta: CreatedMessageWithoutContent = {
+  created_at: new Date(),
+  fiscal_code: "AAABBB05S09I422L" as FiscalCode,
+  id: "messageId",
+  sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ" as NonEmptyString,
+  time_to_live: 3600 as TimeToLiveSeconds
+};
 
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
@@ -142,7 +150,10 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: mockPotMessage
+            messageId: {
+              meta: mockMeta,
+              message: mockPotMessage
+            }
           }
         }
       }
@@ -163,7 +174,10 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: mockEUCovidMessage
+            messageId: {
+              meta: mockMeta,
+              message: mockEUCovidMessage
+            }
           }
         }
       }
@@ -265,7 +279,10 @@ describe("Test MessageRouterScreen", () => {
           ...globalState.entities.messages,
           allIds: pot.some(["messageId"]),
           byId: {
-            messageId: pot.noneError("Error")
+            messageId: {
+              meta: mockMeta,
+              message: pot.noneError("Error")
+            }
           }
         }
       }
@@ -283,9 +300,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(
-      reloadAllMessages.failure(new Error("An error"))
-    );
+    routerScreen.store.dispatch(loadMessages.failure(new Error("An error")));
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")
@@ -299,7 +314,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(reloadAllMessages.success(successPayload));
+    routerScreen.store.dispatch(loadMessages.success(["messageId"]));
     routerScreen.store.dispatch(
       loadMessage.failure({ id: "messageId", error: new Error("An error") })
     );
@@ -316,7 +331,7 @@ describe("Test MessageRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const routerScreen = renderComponent(globalState);
 
-    routerScreen.store.dispatch(reloadAllMessages.success(successPayload));
+    routerScreen.store.dispatch(loadMessages.success(["notMessageId"]));
 
     expect(
       routerScreen.component.queryByTestId("LoadingErrorComponentLoading")

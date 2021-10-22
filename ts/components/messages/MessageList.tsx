@@ -19,13 +19,13 @@ import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../theme/variables";
-import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -37,7 +37,7 @@ type ItemLayout = {
   index: number;
 };
 
-export type AnimatedProps = {
+type AnimatedProps = {
   animated?: {
     onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
     scrollEventThrottle?: number;
@@ -45,7 +45,7 @@ export type AnimatedProps = {
 };
 
 type OwnProps = {
-  messagesStateAndStatus: ReadonlyArray<MessagesStateAndStatus>;
+  messageStates: ReadonlyArray<MessageState>;
   servicesById: ServicesByIdState;
   paymentsByRptId: PaymentByRptIdState;
   refreshing: boolean;
@@ -61,7 +61,7 @@ type OwnProps = {
 type Props = OwnProps & AnimatedProps;
 
 type State = {
-  prevMessagesStateAndStatus?: ReadonlyArray<MessagesStateAndStatus>;
+  prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
   longPressedItemIndex: Option<number>;
   isFirstLoad: boolean;
@@ -104,16 +104,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (
-  { message }: MessagesStateAndStatus,
-  index: number
-): string =>
-  pot
-    .toOption(message)
-    .map(m => m.id)
-    .getOrElse(`${index}`);
+const keyExtractor = (_: MessageState) => _.meta.id;
 
-const getItemHeight = ({ message }: MessagesStateAndStatus): number => {
+const getItemHeight = (messageState: MessageState): number => {
+  const message = messageState.message;
+
   if (pot.isLoading(message)) {
     return ITEM_LOADING_HEIGHT;
   }
@@ -123,9 +118,7 @@ const getItemHeight = ({ message }: MessagesStateAndStatus): number => {
     : ITEM_WITHOUT_CTABAR_HEIGHT;
 };
 
-const generateItemLayouts = (
-  messageStates: ReadonlyArray<MessagesStateAndStatus>
-) => {
+const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
   // eslint-disable-next-line
   let offset = 0;
   // eslint-disable-next-line
@@ -191,10 +184,7 @@ class MessageList extends React.Component<Props, State> {
   private flatListRef = React.createRef<FlatList>();
 
   private scrollTo = (index: number, animated: boolean = false) => {
-    if (
-      this.flatListRef.current &&
-      this.props.messagesStateAndStatus.length > 0
-    ) {
+    if (this.flatListRef.current && this.props.messageStates.length > 0) {
       this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
@@ -212,36 +202,23 @@ class MessageList extends React.Component<Props, State> {
     nextProps: Props,
     prevState: State
   ): Partial<State> | null {
-    const { messagesStateAndStatus } = nextProps;
-    const { prevMessagesStateAndStatus } = prevState;
+    const { messageStates } = nextProps;
+    const { prevMessageStates: prevMessages } = prevState;
 
-    if (messagesStateAndStatus !== prevMessagesStateAndStatus) {
+    if (messageStates !== prevMessages) {
       return {
-        prevMessagesStateAndStatus: messagesStateAndStatus,
-        itemLayouts: generateItemLayouts(messagesStateAndStatus)
+        prevMessageStates: messageStates,
+        itemLayouts: generateItemLayouts(messageStates)
       };
     }
 
     return null;
   }
 
-  getServicePot(
-    potMessage: MessagesStateAndStatus["message"]
-  ): pot.Pot<ServicePublic, Error> {
-    if (pot.isSome(potMessage)) {
-      return (
-        this.props.servicesById[potMessage.value.sender_service_id] || pot.none
-      );
-    }
-    return pot.none;
-  }
-
   private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
-    const potMessage = info.item.message;
-    const { isRead } = info.item.clientStatus;
-
+    const { meta, message: potMessage, isRead } = info.item;
     const { paymentsByRptId, onPressItem } = this.props;
-    const potService = this.getServicePot(potMessage);
+    const potService = this.props.servicesById[meta.sender_service_id];
     const isServiceLoading = potService
       ? pot.isNone(potService) && pot.isLoading(potService) // is none loading
       : false;
@@ -249,15 +226,13 @@ class MessageList extends React.Component<Props, State> {
       return MessageListItemPlaceholder;
     }
 
-    // Error messages have the same features of normal messages.
+    // Error messages have the same charateristics of normal messages.
     // The idea is to fill data with error strings to have it printed as shown
     // in mockups.
     const message = pot.isNone(potMessage)
       ? ({
-          id: "__PLACEHOLDER__",
-          fiscal_code: "__PLACEHOLDER__",
-          sender_service_id: "__PLACEHOLDER__",
-          created_at: new Date(),
+          ...meta,
+          created_at: new Date(meta.created_at),
           content: { subject: I18n.t("messages.errorLoading.details") }
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
@@ -265,12 +240,15 @@ class MessageList extends React.Component<Props, State> {
         } as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
-    const service = pot.isNone(potService)
-      ? ({
-          organization_name: I18n.t("messages.errorLoading.senderInfo"),
-          department_name: I18n.t("messages.errorLoading.serviceInfo")
-        } as ServicePublic)
-      : pot.toUndefined(potService);
+    const service =
+      potService !== undefined
+        ? pot.isNone(potService)
+          ? ({
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.serviceInfo")
+            } as ServicePublic)
+          : pot.toUndefined(potService)
+        : undefined;
 
     const payment =
       paymentsByRptId[
@@ -287,7 +265,7 @@ class MessageList extends React.Component<Props, State> {
         onLongPress={this.onLongPress}
         isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
         isSelected={this.props.selectedMessageIds
-          .map(set => set.has(message.id))
+          .map(_ => _.has(info.item.meta.id))
           .getOrElse(false)}
       />
     );
@@ -300,14 +278,10 @@ class MessageList extends React.Component<Props, State> {
 
   private onLongPress = (id: string) => {
     Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
-    const { messagesStateAndStatus, onLongPressItem } = this.props;
+    const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
-    const lastIndex = messagesStateAndStatus.length - 1;
-    const lastMessageId = pot
-      .toOption(messagesStateAndStatus[lastIndex].message)
-      .map(m => m.id)
-      .getOrElse("ID_NOT_FOUND");
-    if (id === lastMessageId) {
+    const lastIndex = messageStates.length - 1;
+    if (id === messageStates[lastIndex].meta.id) {
       this.setState({
         longPressedItemIndex: some(lastIndex)
       });
@@ -327,7 +301,7 @@ class MessageList extends React.Component<Props, State> {
   public render() {
     const {
       animated,
-      messagesStateAndStatus,
+      messageStates,
       servicesById,
       refreshing,
       onRefresh,
@@ -364,7 +338,7 @@ class MessageList extends React.Component<Props, State> {
           ref={this.flatListRef}
           style={styles.padded}
           scrollEnabled={true}
-          data={messagesStateAndStatus}
+          data={messageStates}
           extraData={{ servicesById, paymentsByRptId, refreshing }}
           refreshing={refreshing}
           keyExtractor={keyExtractor}
@@ -380,7 +354,7 @@ class MessageList extends React.Component<Props, State> {
           onScroll={animated ? animated.onScroll : undefined}
           onLayout={this.handleOnLayoutChange}
           ListFooterComponent={
-            messagesStateAndStatus.length > 0 && <EdgeBorderComponent />
+            messageStates.length > 0 && <EdgeBorderComponent />
           }
         />
       </React.Fragment>

@@ -35,7 +35,7 @@ const generateSections = (
   // eslint-disable-next-line
   messagesState
     .reduce<Array<MessageAgendaItem>>((accumulator, messageState) => {
-      const { isRead } = messageState.clientStatus;
+      const { isRead } = messageState;
       const message = pot.toUndefined(messageState.message);
       if (message && isCreatedMessageWithContentAndDueDate(message)) {
         return [
@@ -128,15 +128,18 @@ const baseMeta = {
   time_to_live: 3600 as TimeToLiveSeconds
 };
 const baseMessage = {
-  clientStatus: {
-    isRead: true,
-    isArchived: false
-  }
+  isRead: true,
+  isArchived: false
 };
 
 const messagesState: Array<MessagesStateAndStatus> = [
   {
     ...baseMessage,
+    meta: {
+      ...baseMeta,
+      created_at: setDate(-1, 12),
+      id: oldestItemID
+    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(-1, 12),
@@ -157,6 +160,11 @@ const messagesState: Array<MessagesStateAndStatus> = [
   },
   {
     ...baseMessage,
+    meta: {
+      ...baseMeta,
+      created_at: setDate(0, 3),
+      id: nextItemAfterNowID
+    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(0, 3),
@@ -180,6 +188,11 @@ const messagesState: Array<MessagesStateAndStatus> = [
   },
   {
     ...baseMessage,
+    meta: {
+      ...baseMeta,
+      created_at: setDate(1, 12),
+      id: "01DQQGBXWSCNNY44CH2QZ95PIO"
+    },
     message: pot.some({
       ...baseMeta,
       created_at: setDate(1, 12),

@@ -11,7 +11,7 @@ import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovid
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { reloadAllMessages } from "../../store/actions/messages";
+import { DEPRECATED_loadMessages as loadMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { useIODispatch } from "../../store/hooks";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
@@ -58,7 +58,7 @@ const getLoadingState = (
     });
     return pot.noneError("MessageState is undefined");
   }
-  return messageState;
+  return messageState.message;
 };
 
 /**
@@ -130,7 +130,7 @@ const MessageRouterScreen = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(NavigationActions.back()),
-  loadMessages: () => dispatch(reloadAllMessages.request()),
+  loadMessages: () => dispatch(loadMessages.request()),
   navigateToDetails: (messageId: string) => {
     dispatch(NavigationActions.back());
     dispatch(navigateToMessageDetailScreenAction({ messageId }));

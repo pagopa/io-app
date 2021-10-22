@@ -51,7 +51,6 @@ function* handleMessageLoadRequest(
       requestsChannel
     );
 
-    const messageId = action.payload;
-    yield call(loadMessage, getMessage, messageId);
+    yield call(loadMessage, getMessage, action.payload);
   }
 }

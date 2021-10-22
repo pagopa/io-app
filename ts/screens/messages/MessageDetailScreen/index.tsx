@@ -14,6 +14,7 @@ import {
 } from "../../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
+import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { messageStateByIdSelector } from "../../../store/reducers/entities/messages/messagesById";
 import {
@@ -21,7 +22,10 @@ import {
   messagesStatusSelector
 } from "../../../store/reducers/entities/messages/messagesStatus";
 import { paymentsByRptIdSelector } from "../../../store/reducers/entities/payments";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import {
+  serviceByIdSelector,
+  serviceMetadataByIdSelector
+} from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import { InferNavigationParams } from "../../../types/react";
 import ServiceDetailsScreen from "../../services/ServiceDetailsScreen";
@@ -89,6 +93,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       messageId,
       paymentsByRptId,
       potMessage,
+      maybeMeta,
+      maybeServiceMetadata,
       refreshService
     } = this.props;
 
@@ -103,10 +109,11 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           goBack={goBack}
           potMessage={potMessage}
           messageId={messageId}
-          onRetry={() => loadMessageWithRelations(messageId)}
+          onRetry={() => maybeMeta.map(meta => loadMessageWithRelations(meta))}
           onServiceLinkPressHandler={(id: string) => refreshService(id)}
           paymentsByRptId={paymentsByRptId}
           service={maybeService.toUndefined()}
+          maybeServiceMetadata={maybeServiceMetadata}
         />
       </BaseScreenComponent>
     );
@@ -120,7 +127,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const paymentsByRptId = paymentsByRptIdSelector(state);
   const goBack = () => ownProps.navigation.goBack();
   const potMessage = fromNullable(
-    messageStateByIdSelector(messageId)(state)
+    messageStateByIdSelector(messageId)(state)?.message
   ).getOrElse(pot.none);
   const maybeServiceId = pot.toOption(potMessage).map(_ => _.sender_service_id);
   const maybeService = maybeServiceId
@@ -131,6 +138,15 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
       }
       return none;
     });
+  const maybeMeta = fromNullable(
+    messageStateByIdSelector(messageId)(state)?.meta
+  );
+  // Map the potential message to the potential service
+  const maybeServiceMetadata = pot.toUndefined(
+    pot.mapNullable(potMessage, m =>
+      serviceMetadataByIdSelector(m.sender_service_id)(state)
+    )
+  );
 
   return {
     goBack,
@@ -138,15 +154,17 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     messageId,
     paymentsByRptId,
     potMessage,
-    maybeService
+    maybeService,
+    maybeMeta,
+    maybeServiceMetadata
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
-  loadMessageWithRelations: (messageId: string) =>
-    dispatch(loadMessageWithRelations.request(messageId)),
+  loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
+    dispatch(loadMessageWithRelations.request(meta)),
   setMessageReadState: (messageId: string, isRead: boolean) =>
     dispatch(setMessageReadState(messageId, isRead)),
   navigateToServiceDetailsScreen: (

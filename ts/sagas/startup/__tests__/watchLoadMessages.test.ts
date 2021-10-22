@@ -18,11 +18,11 @@ import {
   apiPayload,
   messageId_1,
   messageId_2,
-  messageId_3,
   serviceId_1,
   serviceId_2,
   successPayload
 } from "../../../__mocks__/messages";
+import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 
 const loadMessages = testLoadMessages!;
 
@@ -73,14 +73,28 @@ describe("loadMessages test plan", () => {
         ])
         .next()
         .all([
-          put(loadMessageAction.request(messageId_3)),
-          put(loadMessageAction.request(messageId_2)),
-          put(loadMessageAction.request(messageId_1))
+          put(
+            loadMessageAction.request(
+              apiPayload.items[2] as unknown as CreatedMessageWithoutContent
+            )
+          ),
+          put(
+            loadMessageAction.request(
+              apiPayload.items[1] as unknown as CreatedMessageWithoutContent
+            )
+          ),
+          put(
+            loadMessageAction.request(
+              apiPayload.items[0] as unknown as CreatedMessageWithoutContent
+            )
+          )
         ]);
     });
 
     describe("and two messages are already cached", () => {
       it("should call `getMessage` and `loadServiceDetail` only once for the missing message and service", () => {
+        const metadata = apiPayload
+          .items[2] as unknown as CreatedMessageWithoutContent;
         const getMessages = jest.fn();
         testSaga(loadMessages, getMessages)
           .next()
@@ -102,7 +116,7 @@ describe("loadMessages test plan", () => {
           .next({})
           .all([put(loadServiceDetail.request(serviceId_2))])
           .next()
-          .all([put(loadMessageAction.request(messageId_3))]);
+          .all([put(loadMessageAction.request(metadata))]);
       });
     });
   });

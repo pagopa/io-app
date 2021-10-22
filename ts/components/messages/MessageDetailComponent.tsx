@@ -1,11 +1,13 @@
-import * as React from "react";
-import { StyleSheet } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Content, H3, Text, View } from "native-base";
 import DeviceInfo from "react-native-device-info";
-
+import * as React from "react";
+import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import {
+  ServicePublic,
+  ServicePublicService_metadata
+} from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
@@ -13,9 +15,7 @@ import {
   cleanMarkdownFromCTAs,
   paymentExpirationInfo
 } from "../../utils/messages";
-import { toUIService } from "../../store/reducers/entities/services/transformers";
 import OrganizationHeader from "../OrganizationHeader";
-
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -23,11 +23,13 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
+import { logosForService } from "../../utils/services";
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
-  service?: ServicePublic;
+  serviceDetail?: ServicePublic;
+  serviceMetadata?: ServicePublicService_metadata;
   onServiceLinkPress?: () => void;
 }>;
 
@@ -101,6 +103,18 @@ export default class MessageDetailComponent extends React.PureComponent<
     return paymentExpirationInfo(this.props.message);
   }
 
+  get service() {
+    const { serviceDetail } = this.props;
+    return fromNullable(
+      serviceDetail ??
+        ({
+          organization_name: I18n.t("messages.errorLoading.senderInfo"),
+          department_name: I18n.t("messages.errorLoading.departmentInfo"),
+          service_name: I18n.t("messages.errorLoading.serviceInfo")
+        } as ServicePublic)
+    );
+  }
+
   get payment() {
     const { message, paymentsByRptId } = this.props;
     const payment_data = message.content.payment_data;
@@ -121,10 +135,9 @@ export default class MessageDetailComponent extends React.PureComponent<
     );
 
   public render() {
-    const { message, service, onServiceLinkPress } = this.props;
-    const { maybeMedicalData, payment } = this;
-
-    const serviceDataForUI = service ? toUIService(service) : undefined;
+    const { message, serviceDetail, serviceMetadata, onServiceLinkPress } =
+      this.props;
+    const { maybeMedicalData, service, payment } = this;
 
     return (
       <React.Fragment>
@@ -132,13 +145,15 @@ export default class MessageDetailComponent extends React.PureComponent<
           {/** Header */}
           <View style={styles.padded}>
             <View spacer={true} />
-            {serviceDataForUI !== undefined && (
+            {service !== undefined && service.isSome() && (
               <React.Fragment>
-                <OrganizationHeader
-                  serviceName={serviceDataForUI.name}
-                  organizationName={serviceDataForUI.organizationName}
-                  logoURLs={serviceDataForUI.logoURLs}
-                />
+                {service && service.isSome() && (
+                  <OrganizationHeader
+                    serviceName={service.value.service_name}
+                    organizationName={service.value.organization_name}
+                    logoURLs={logosForService(service.value)}
+                  />
+                )}
                 <View spacer={true} large={true} />
               </React.Fragment>
             )}
@@ -171,7 +186,9 @@ export default class MessageDetailComponent extends React.PureComponent<
               <MedicalPrescriptionAttachments
                 prescriptionData={this.maybeMedicalData.toUndefined()}
                 attachments={this.attachments.value}
-                organizationName={service?.organization_name}
+                organizationName={this.service
+                  .map(s => s.organization_name)
+                  .toUndefined()}
               />
               <View spacer={true} large={true} />
             </React.Fragment>
@@ -180,13 +197,10 @@ export default class MessageDetailComponent extends React.PureComponent<
           {this.state.isContentLoadCompleted && (
             <React.Fragment>
               <MessageDetailData
+                message={message}
+                serviceDetail={fromNullable(serviceDetail)}
+                serviceMetadata={serviceMetadata}
                 goToServiceDetail={onServiceLinkPress}
-                messageCreatedAt={message.created_at}
-                messageId={message.id}
-                organizationName={serviceDataForUI?.organizationName}
-                serviceEmail={serviceDataForUI?.email}
-                serviceName={serviceDataForUI?.name}
-                servicePhone={serviceDataForUI?.phone}
               />
             </React.Fragment>
           )}
@@ -200,7 +214,7 @@ export default class MessageDetailComponent extends React.PureComponent<
         {this.maybeMedicalData.fold(
           <MessageDetailCTABar
             message={message}
-            service={service}
+            service={service.toUndefined()}
             payment={this.payment}
           />,
           _ => undefined

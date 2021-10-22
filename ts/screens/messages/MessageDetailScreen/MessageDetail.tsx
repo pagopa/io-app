@@ -2,7 +2,10 @@ import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import {
+  ServicePublic,
+  ServicePublicService_metadata
+} from "../../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../../components/messages/MessageDetailComponent";
 import I18n from "../../../i18n";
 import { PaymentByRptIdState } from "../../../store/reducers/entities/payments";
@@ -21,6 +24,7 @@ type Props = {
   onServiceLinkPressHandler: (id: string) => void;
   paymentsByRptId: PaymentByRptIdState;
   service?: ServicePublic;
+  maybeServiceMetadata?: ServicePublicService_metadata;
 };
 
 const styles = StyleSheet.create({
@@ -38,6 +42,7 @@ const styles = StyleSheet.create({
 const messageDetail = ({
   goBack,
   potMessage,
+  maybeServiceMetadata,
   messageId,
   onRetry,
   onServiceLinkPressHandler,
@@ -49,7 +54,8 @@ const messageDetail = ({
       <MessageDetailComponent
         message={potMessage.value}
         paymentsByRptId={paymentsByRptId}
-        service={service}
+        serviceMetadata={maybeServiceMetadata}
+        serviceDetail={service}
         onServiceLinkPress={() => {
           if (service) {
             onServiceLinkPressHandler(service.service_id);

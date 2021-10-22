@@ -5,6 +5,7 @@ import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { PaidReason } from "../../store/reducers/entities/payments";
@@ -29,6 +30,7 @@ import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;
+  service?: ServicePublic;
   payment?: PaidReason;
 };
 

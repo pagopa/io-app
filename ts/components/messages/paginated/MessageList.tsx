@@ -40,7 +40,7 @@ type OwnProps = {
   messages: ReadonlyArray<UIMessage>;
   refreshing: boolean;
   onRefresh: () => void;
-  onLoadMore: () => void;
+  onLoadMore?: () => void;
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
   selectedMessageIds: Option<Set<string>>;

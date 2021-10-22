@@ -1,6 +1,7 @@
 /**
  * A screen that contains all the Tabs related to messages.
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
@@ -21,7 +22,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import {
-  reloadAllMessages,
+  DEPRECATED_loadMessages as loadMessages,
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
@@ -119,7 +120,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     });
 
   private onRefreshMessages = () => {
-    this.props.reloadAllMessages(
+    this.props.refreshMessages(
       this.props.lexicallyOrderedMessagesState,
       this.props.servicesById
     );
@@ -306,7 +307,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <SearchNoResultMessage errorType="InvalidSearchBarText" />
         ) : (
           <MessagesSearch
-            messagesStateAndStatus={lexicallyOrderedMessagesState}
+            messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}
@@ -329,22 +330,21 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  reloadAllMessages: (
-    _lexicallyOrderedMessagesState: ReturnType<
+  refreshMessages: (
+    lexicallyOrderedMessagesState: ReturnType<
       typeof lexicallyOrderedMessagesStateSelector
     >,
-    _servicesById: ServicesByIdState
+    servicesById: ServicesByIdState
   ) => {
-    dispatch(reloadAllMessages.request());
+    dispatch(loadMessages.request());
     // Refresh services related to messages received by the user
-    // TODO: is this still needed?
-    // if (pot.isSome(lexicallyOrderedMessagesState)) {
-    //   lexicallyOrderedMessagesState.value.forEach(item => {
-    //     if (servicesById[item.meta.sender_service_id] === undefined) {
-    //       dispatch(loadServiceDetail.request(item.meta.sender_service_id));
-    //     }
-    //   });
-    // }
+    if (pot.isSome(lexicallyOrderedMessagesState)) {
+      lexicallyOrderedMessagesState.value.forEach(item => {
+        if (servicesById[item.meta.sender_service_id] === undefined) {
+          dispatch(loadServiceDetail.request(item.meta.sender_service_id));
+        }
+      });
+    }
   },
   refreshService: (serviceId: string) => {
     dispatch(loadServiceDetail.request(serviceId));

@@ -11,7 +11,7 @@ import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
-  reloadAllMessages as reloadMessagesAction,
+  DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -22,10 +22,9 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
 import { isDevEnv } from "../../utils/environment";
-import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
 
 /**
- * A generator to load messages from the Backend in their enriched form.
+ * A generator to load messages from the Backend.
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
@@ -36,11 +35,12 @@ function* loadMessages(
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
-    // TODO: now we fetch 100 that is the maximum supported by the API
-    //       a default-page size will be defined later on
+    // Request the list of messages from the Backend
+    // TODO: we will have to forward PaginationResponse data (page size, next)
+    //       and persist it somewhere
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
-      { enrich_result_data: true, page_size: 100 }
+      {}
     );
 
     if (response.isLeft()) {
@@ -58,18 +58,12 @@ function* loadMessages(
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(reloadMessagesAction.failure(Error(error)));
+        yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
-        const { items, next, prev } = response.value.value;
-        yield put(
-          reloadMessagesAction.success({
-            messages: items.map(toUIMessage),
-            pagination: { next, previous: prev }
-          })
-        );
-
         const responseItemsIds = response.value.value.items.map(_ => _.id);
+
+        yield put(loadMessagesAction.success(responseItemsIds));
 
         // Load already cached messages ids from the store
         const potCachedMessagesAllIds: ReturnType<
@@ -105,7 +99,7 @@ function* loadMessages(
         // The Backend returns the items from the oldest to the latest
         // but we want to process them from latest to oldest so we
         // reverse the order.
-        // TODO: we MUST rely on API sorting since we use pagination
+        // TODO: we will rely on API sorting since we use pagination
         const reversedItems = [...response.value.value.items].reverse();
 
         // Load already cached messages from the store
@@ -116,7 +110,9 @@ function* loadMessages(
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
           return (
-            cached === undefined || pot.isNone(cached) || pot.isError(cached)
+            cached === undefined ||
+            pot.isNone(cached.message) ||
+            pot.isError(cached.message)
           );
         };
 
@@ -155,14 +151,12 @@ function* loadMessages(
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
         // in this way each message is stored as soon as the detail is fetched and the UI is more reactive.
         // TODO: with the enrichment, we don't need to load each message anymore
-        yield all(
-          pendingMessages.map(_ => put(loadMessageAction.request(_.id)))
-        );
+        yield all(pendingMessages.map(_ => put(loadMessageAction.request(_))));
       }
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(reloadMessagesAction.failure(error));
+    yield put(loadMessagesAction.failure(error));
   }
 }
 
@@ -172,7 +166,7 @@ function* loadMessages(
 export function* watchLoadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): Generator<Effect, void, any> {
-  yield takeLatest(getType(reloadMessagesAction.request), () =>
+  yield takeLatest(getType(loadMessagesAction.request), () =>
     loadMessages(getMessages)
   );
 }

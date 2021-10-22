@@ -6,9 +6,9 @@ import { testSaga } from "redux-saga-test-plan";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { loadMessage as loadMessageAction } from "../../../store/actions/messages";
-import { testFetchMessageById, loadMessage } from "../messages";
+import { testFetchMessage, loadMessage } from "../messages";
 
-const fetchMessage = testFetchMessageById!;
+const fetchMessage = testFetchMessage!;
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
@@ -29,7 +29,7 @@ describe("messages", () => {
   describe("fetchMessage test plan", () => {
     it("should call getMessage with the right parameters", () => {
       const getMessage = jest.fn();
-      testSaga(fetchMessage, getMessage, testMessageWithContent1.id)
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         .call(getMessage, { id: testMessageId1 });
     });
@@ -40,7 +40,7 @@ describe("messages", () => {
         value: "some error occurred",
         context: [{ key: "", type: t.string }]
       };
-      testSaga(fetchMessage, getMessage, testMessageWithContent1.id)
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return a new `Either` holding a `Left` validatorError as getMessage response
         .next(left([validatorError]))
@@ -50,7 +50,7 @@ describe("messages", () => {
     it("should only return the error if the getMessage response status is not 200", () => {
       const getMessage = jest.fn();
       const error = Error("Backend error");
-      testSaga(fetchMessage, getMessage, testMessageWithContent1.id)
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 500 with an error message as getMessage response
         .next(right({ status: 500, value: { title: error.message } }))
@@ -59,7 +59,7 @@ describe("messages", () => {
 
     it("should return the message if the getMessage response status is 200", () => {
       const getMessage = jest.fn();
-      testSaga(fetchMessage, getMessage, testMessageWithContent1.id)
+      testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 200 with a valid value as getMessage response
         .next(right({ status: 200, value: testMessageWithContent1 }))
@@ -70,7 +70,7 @@ describe("messages", () => {
   describe("loadMessage test plan", () => {
     it("should call fetchMessage with the right parameters", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, testMessageWithContent1.id)
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
         .call(fetchMessage, getMessage, testMessageWithContent1.id);
@@ -78,10 +78,10 @@ describe("messages", () => {
 
     it("should put MESSAGE_LOAD_FAILURE and return the error if the message can't be fetched", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, testMessageWithContent1.id)
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, testMessageWithContent1.id)
+        .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
         .next(left(Error("Error")))
         .put(
@@ -96,10 +96,10 @@ describe("messages", () => {
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched successfully", () => {
       const getMessage = jest.fn();
-      testSaga(loadMessage, getMessage, testMessageWithContent1.id)
+      testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, testMessageWithContent1.id)
+        .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
         .next(right(testMessageWithContent1))
         .put(loadMessageAction.success(testMessageWithContent1))

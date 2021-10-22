@@ -8,6 +8,7 @@ import {
   lexicallyOrderedMessagesStateSelector,
   MessagesStateAndStatus
 } from "../../store/reducers/entities/messages";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -48,19 +49,19 @@ type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
 
 type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
-  filteredMessageStates: ReturnType<typeof filterArchivedMessages>;
+  filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
   allMessageIdsState: Option<Set<string>>;
 };
 
 /**
  * Filter only the messages that are archived.
  */
-const filterArchivedMessages = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, unknown>
-): ReadonlyArray<MessagesStateAndStatus> =>
+const generateMessagesStateArchivedArray = (
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
+): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(messageState => messageState.clientStatus.isArchived)
+      _.filter(messageState => messageState.isArchived)
     ),
     []
   );
@@ -83,14 +84,11 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
-      const messagesStateArchived = filterArchivedMessages(
+      const messagesStateArchived = generateMessagesStateArchivedArray(
         nextProps.messagesState
       );
-      const allMessagesIdsArray = messagesStateArchived.map(_ =>
-        pot
-          .toOption(_.message)
-          .map(m => m.id)
-          .getOrElse("NOT_FOUND")
+      const allMessagesIdsArray = messagesStateArchived.map(
+        messageState => messageState.meta.id
       );
       return {
         filteredMessageStates: messagesStateArchived,
@@ -137,7 +135,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
         <View style={styles.listContainer}>
           <MessageList
             {...this.props}
-            messagesStateAndStatus={this.state.filteredMessageStates}
+            messageStates={this.state.filteredMessageStates}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}

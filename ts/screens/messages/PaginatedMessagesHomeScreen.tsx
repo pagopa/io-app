@@ -9,8 +9,7 @@ import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import * as pot from "italia-ts-commons/lib/pot";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import MessagesSearch from "../../components/messages/MessagesSearch";
+import MessagesSearch from "../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -162,7 +161,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
   render() {
     const {
-      clientStatusPerMessage,
       isSearchEnabled,
       messagesState,
       navigateToMessageDetail,
@@ -175,24 +173,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
     const { error, isLoading, allMessages, nextCursor, previousCursor } =
       unwrapMessageState(messagesState);
-
-    // TODO: this horrible mapping is only temporary to avoid duplicating children down the line
-    const messagesStateAndStatus = pot.map(messagesState, ({ page }) =>
-      page.flatMap(message => {
-        const status = clientStatusPerMessage[message.id];
-        if (status) {
-          return [
-            {
-              message: pot.some(
-                message as unknown as CreatedMessageWithContentAndAttachments
-              ),
-              clientStatus: status
-            }
-          ];
-        }
-        return [];
-      })
-    );
 
     return (
       <TopScreenComponent
@@ -254,14 +234,15 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
                 <SearchNoResultMessage errorType="InvalidSearchBarText" />
               ) : (
                 <MessagesSearch
-                  messagesStateAndStatus={messagesStateAndStatus}
-                  servicesById={servicesById}
-                  paymentsByRptId={paymentsByRptId}
+                  messages={allMessages}
+                  // servicesById={servicesById}
+                  // paymentsByRptId={paymentsByRptId}
                   onRefresh={() => {
                     // TODO: this will load the previous page or the entire list?
                   }}
                   navigateToMessageDetail={navigateToMessageDetail}
                   searchText={_}
+                  isLoading={isLoading}
                 />
               )
             )
