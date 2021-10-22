@@ -111,6 +111,7 @@ function* loadMessages(
           const cached = cachedMessagesById[message.id];
           return (
             cached === undefined ||
+            cached.message === undefined ||
             pot.isNone(cached.message) ||
             pot.isError(cached.message)
           );
@@ -125,7 +126,7 @@ function* loadMessages(
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          // we need to load a service if (one of these is true)
+          // we need to load a service if either
           // - service is not cached
           // - service is not loading AND (service is none OR service is error)
           return (

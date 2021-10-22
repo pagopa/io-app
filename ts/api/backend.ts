@@ -15,6 +15,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import _ from "lodash";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -63,7 +64,6 @@ import {
   withBearerToken as withToken
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
-import _ from "lodash";
 
 /**
  * We will retry for as many times when polling for a payment ID.

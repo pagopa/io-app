@@ -10,9 +10,10 @@ import {
 } from "../../helpers/withItemsSelection";
 import { ListSelectionBar } from "../../ListSelectionBar";
 import { ErrorLoadingComponent } from "../ErrorLoadingComponent";
-import MessageList, { AnimatedProps } from "./MessageList";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import { EmptyListComponent } from "../EmptyListComponent";
+
+import MessageList, { AnimatedProps } from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {

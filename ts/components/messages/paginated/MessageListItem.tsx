@@ -37,19 +37,17 @@ class MessageListItem extends React.PureComponent<Props> {
     this.props.onLongPress(this.props.message.id);
   };
 
-  private announceMessage = (message: UIMessage) => {
+  private announceMessage = (message: UIMessage) =>
     // TODO: establish relation
     // const newMessage = message.isRead
     //   ? I18n.t("messages.accessibility.message.read")
     //   : I18n.t("messages.accessibility.message.unread");
-
-    return I18n.t("messages.accessibility.message.description", {
+    I18n.t("messages.accessibility.message.description", {
       organizationName: message.organizationName,
       serviceName: message.serviceName,
       subject: message.title,
       receivedAt: convertReceivedDateToAccessible(message.createdAt)
     });
-  };
 
   public render() {
     const { isRead, message, isSelectionModeEnabled, isSelected } = this.props;

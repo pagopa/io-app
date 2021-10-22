@@ -101,11 +101,12 @@ const generateItemLayouts = (
   let offset = 0;
   // eslint-disable-next-line
   const itemLayouts: ItemLayout[] = [];
+  // eslint-disable-next-line functional/no-let
   let itemHeightWithSeparator =
     ITEM_WITHOUT_CTABAR_HEIGHT + ITEM_SEPARATOR_HEIGHT;
 
-  // eslint-disable-next-line functional/no-let
   for (
+    // eslint-disable-next-line functional/no-let
     let i = 0;
     i < messages.length;
     i += 1, offset += itemHeightWithSeparator

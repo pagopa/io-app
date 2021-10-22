@@ -15,6 +15,7 @@ import {
   cleanMarkdownFromCTAs,
   paymentExpirationInfo
 } from "../../utils/messages";
+import { logosForService } from "../../utils/services";
 import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
@@ -23,7 +24,6 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
-import { logosForService } from "../../utils/services";
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;

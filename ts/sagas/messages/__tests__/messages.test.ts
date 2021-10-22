@@ -73,7 +73,7 @@ describe("messages", () => {
       testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
         .next()
-        .call(fetchMessage, getMessage, testMessageWithContent1.id);
+        .call(fetchMessage, getMessage, testMessageWithContent1);
     });
 
     it("should put MESSAGE_LOAD_FAILURE and return the error if the message can't be fetched", () => {
