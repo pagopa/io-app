@@ -41,7 +41,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
-import { isOnboardingCompletedSelector } from "../../utils/navigation";
+import { isOnboardingCompleted } from "../../utils/navigation";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -84,7 +84,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 
   get isFromProfileSection() {
-    return this.props.isOnboardingCompleted;
+    return isOnboardingCompleted();
   }
 
   private handleGoBack() {
@@ -111,7 +111,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
   public render() {
     const { isFromProfileSection } = this;
-    const { isOnboardingCompleted } = this.props;
+    const onboardingCompleted = isOnboardingCompleted();
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
@@ -127,7 +127,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         bordered: true,
         title: I18n.t("email.edit.cta"),
         onPress: () => {
-          if (!isOnboardingCompleted) {
+          if (!onboardingCompleted) {
             this.props.navigation.dispatch(StackActions.popToTop());
           }
           this.props.navigateToEmailInsertScreen();
@@ -186,16 +186,15 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isOnboardingCompleted = isOnboardingCompletedSelector();
+  const onboardingCompleted = isOnboardingCompleted();
   const potUserMetadata = userMetadataSelector(state);
 
   // If the screen is displayed as last item of the onboarding ,show loading spinner
   // until the user metadata load is completed
-  const isLoading = !isOnboardingCompleted && pot.isLoading(potUserMetadata);
+  const isLoading = !onboardingCompleted && pot.isLoading(potUserMetadata);
   return {
     optionProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
-    isOnboardingCompleted,
     isLoading
   };
 };

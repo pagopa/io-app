@@ -94,9 +94,12 @@ export function whereAmIFrom(nav: NavigationHistoryState): Option<string> {
 /**
  * @deprecated
  */
-export const isOnboardingCompletedSelector = () => {
-  const route = NavigationService.getCurrentRoute();
-  return route
+export const isOnboardingCompleted = () => {
+  const route = NavigationService.getCurrentState();
+  if (route === null) {
+    return false;
+  }
+  return route !== undefined && route.routes !== undefined
     ? route.routes.length > 0 && route.routes[0].routeName === ROUTES.MAIN
     : false;
 };

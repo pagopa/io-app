@@ -18,7 +18,7 @@ import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { setPin } from "../../utils/keychain";
-import { isOnboardingCompletedSelector } from "../../utils/navigation";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { maybeNotNullyString } from "../../utils/strings";
 import { GlobalState } from "../../store/reducers/types";
 import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
@@ -357,7 +357,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   }
 
   private handleGoBack = () => {
-    if (this.props.isOnboardingCompleted) {
+    if (isOnboardingCompleted()) {
       this.props.navigation.goBack();
       return;
     }
@@ -424,7 +424,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           instabugLog(`createPinSuccess`, TypeLogs.DEBUG, instabuglogTag);
           this.props.createPinSuccess(pin);
           // user is updating his/her pin inside the app, go back
-          if (this.props.isOnboardingCompleted) {
+          if (isOnboardingCompleted()) {
             // We need to ask the user to restart the app
             this.showModal();
             this.props.navigation.goBack();
@@ -452,9 +452,7 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 }
 
-const mapStateToProps = (_: GlobalState) => ({
-  isOnboardingCompleted: isOnboardingCompletedSelector()
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),

@@ -33,7 +33,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { isOnboardingCompletedSelector } from "../../utils/navigation";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { withKeyboard } from "../../utils/keyboard";
@@ -132,7 +132,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private handleGoBack = () => {
     // goback if the onboarding is completed
-    if (this.props.isOnboardingCompleted) {
+    if (isOnboardingCompleted()) {
       this.props.navigation.goBack();
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
@@ -168,7 +168,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    if (this.props.isOnboardingCompleted) {
+    if (isOnboardingCompleted()) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
@@ -190,10 +190,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // user is inserting his email from onboarding phase
         // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
         // and he has not an email
-        if (
-          !this.props.isOnboardingCompleted &&
-          prevProps.optionEmail.isNone()
-        ) {
+        if (!isOnboardingCompleted() && prevProps.optionEmail.isNone()) {
           // since this screen is mounted from saga it won't be unmounted because on saga
           // we have a direct navigation instead of back
           // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
@@ -233,7 +230,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const isFromProfileSection = this.props.isOnboardingCompleted;
+    const isFromProfileSection = isOnboardingCompleted();
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
@@ -308,8 +305,7 @@ function mapStateToProps(state: GlobalState) {
     profile,
     optionEmail: profileEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
-    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    isOnboardingCompleted: isOnboardingCompletedSelector()
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile)
   };
 }
 

@@ -48,6 +48,8 @@ const getCurrentRouteKey = (): string | undefined =>
 const getCurrentRoute = (): NavigationLeafRoute | undefined =>
   currentRouteState ? utilsGetCurrentRoute(currentRouteState) : undefined;
 
+const getCurrentState = (): NavigationState | null => currentRouteState;
+
 // add other navigation functions that you need and export them
 export default {
   navigate,
@@ -56,5 +58,6 @@ export default {
   setCurrentState,
   getCurrentRouteName,
   getCurrentRouteKey,
-  getCurrentRoute
+  getCurrentRoute,
+  getCurrentState
 };

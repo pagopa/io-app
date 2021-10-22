@@ -31,7 +31,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { isOnboardingCompletedSelector } from "../utils/navigation";
+import { isOnboardingCompleted } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -150,7 +150,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.dispatchAcknowledgeOnEmailValidation(none);
     this.props.reloadProfile();
-    if (!this.props.isOnboardingCompleted) {
+    if (!isOnboardingCompleted()) {
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
@@ -270,7 +270,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   private renderFooter = () => {
-    const { isOnboardingCompleted } = this.props;
+    const onboardingCompleted = isOnboardingCompleted();
     // if the email has been validated
     // show only a button to continuer
     if (this.state.emailHasBeenValidate) {
@@ -326,7 +326,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               primary: true,
               onPress: this.handleOnClose,
               disabled: this.state.isLoading,
-              title: isOnboardingCompleted
+              title: onboardingCompleted
                 ? I18n.t("global.buttons.ok")
                 : I18n.t("global.buttons.continue")
             }}
@@ -339,7 +339,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public render() {
     const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
 
-    const { isOnboardingCompleted } = this.props;
+    const onboardingCompleted = isOnboardingCompleted();
 
     const icon = this.state.emailHasBeenValidate
       ? "io-email-validated"
@@ -351,7 +351,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
-        {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
+        {...(onboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
@@ -372,7 +372,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleOnContentLoadEnd}
               cssStyle={MARKDOWN_BODY_STYLE}
             >
-              {isOnboardingCompleted
+              {onboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
@@ -404,8 +404,7 @@ const mapStateToProps = (state: GlobalState) => {
     acknowledgeOnEmailValidated: emailValidation.acknowledgeOnEmailValidated,
     optionEmail: profileEmailSelector(state),
     isEmailValidated,
-    potProfile,
-    isOnboardingCompleted: isOnboardingCompletedSelector()
+    potProfile
   };
 };
 

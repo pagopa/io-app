@@ -28,7 +28,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { isOnboardingCompletedSelector } from "../../utils/navigation";
+import { isOnboardingCompleted } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
@@ -163,18 +163,18 @@ class TosScreen extends React.PureComponent<Props, State> {
   public render() {
     const { dispatch } = this.props;
 
+    const onboardingCompleted = isOnboardingCompleted();
+
     const shouldFooterRender =
-      !this.state.hasError &&
-      !this.state.isLoading &&
-      !this.props.isOnbardingCompleted;
+      !this.state.hasError && !this.state.isLoading && !onboardingCompleted;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={this.props.isOnbardingCompleted || this.handleGoBack}
+        goBack={onboardingCompleted || this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
         headerTitle={
-          this.props.isOnbardingCompleted
+          onboardingCompleted
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
@@ -232,7 +232,6 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    isOnbardingCompleted: isOnboardingCompletedSelector(),
     isLoading: pot.isUpdating(potProfile),
     hasAcceptedCurrentTos: pot.getOrElse(
       pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
