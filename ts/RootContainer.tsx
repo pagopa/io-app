@@ -36,9 +36,11 @@ import {
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { trackScreen } from "./store/middlewares/navigation";
 import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
+import { getCurrentRouteName } from "./utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -161,11 +163,12 @@ class RootContainer extends React.PureComponent<Props> {
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
-          onNavigationStateChange={(_, currentState) => {
+          onNavigationStateChange={(prevState, currentState) => {
             NavigationService.setCurrentState(currentState);
             this.props.setDebugCurrentRouteName(
-              NavigationService.getCurrentRouteName() ?? "Undefined"
+              getCurrentRouteName(currentState) ?? "Undefined"
             );
+            trackScreen(prevState, currentState);
           }}
         />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}

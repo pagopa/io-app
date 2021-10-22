@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
+import _ from "lodash";
 import {
   applyMiddleware,
   compose,
@@ -8,6 +9,7 @@ import {
   Reducer,
   Store
 } from "redux";
+import createDebugger from "redux-flipper";
 import { createLogger } from "redux-logger";
 import {
   createMigrate,
@@ -19,8 +21,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import createDebugger from "redux-flipper";
-import _ from "lodash";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
@@ -339,8 +339,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   const baseMiddlewares: ReadonlyArray<Middleware> = [
     sagaMiddleware,
     logger,
-    analytics.actionTracking, // generic tracker for selected redux actions
-    analytics.screenTracking // tracks screen navigation
+    analytics.actionTracking // generic tracker for selected redux actions
   ];
 
   const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
