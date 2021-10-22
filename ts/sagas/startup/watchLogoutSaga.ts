@@ -8,6 +8,7 @@ import {
   logoutRequest,
   logoutSuccess
 } from "../../store/actions/authentication";
+import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -56,6 +57,7 @@ export function* watchLogoutSaga(
       } finally {
         // If keepUserData is false, startApplicationInitialization is
         // dispatched within the componentDidMount of IngressScreen
+        resetToAuthenticationRoute();
         if (action.payload.keepUserData) {
           yield put(startApplicationInitialization());
         }
