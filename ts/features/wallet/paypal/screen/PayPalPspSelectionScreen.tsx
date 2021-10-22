@@ -185,6 +185,7 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
           testID={"PayPalPpsSelectionScreen"}
           isLoading={!isError(props.pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
+          // TODO replace with the handler that retries to reload data
           onRetry={constNull}
         />
       )}
