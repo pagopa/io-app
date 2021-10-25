@@ -9,8 +9,6 @@ import { NetworkError } from "../../../../../../utils/errors";
 import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
@@ -29,10 +27,6 @@ const reducer = (
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
     case getType(svGenerateVoucherAvailableState.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableRegion.request):
-      return pot.none;
-    case getType(svGenerateVoucherAvailableProvince.request):
       return pot.none;
     case getType(svGenerateVoucherAvailableMunicipality.request):
       return pot.toLoading(state);

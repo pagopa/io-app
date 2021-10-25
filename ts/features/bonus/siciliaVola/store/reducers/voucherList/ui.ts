@@ -32,6 +32,7 @@ const reducer = (
   action: Action
 ): VouchersListUiState => {
   switch (action.type) {
+    // when a voucher has been revoked the current voucher list is obsolete
     case getType(svGenerateVoucherCompleted):
     case getType(svSetFilter):
     case getType(svVoucherRevocation.success):

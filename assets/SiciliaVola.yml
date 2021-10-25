@@ -20,6 +20,21 @@ definitions:
         type: "string"
       sigla:
         type: "string"
+  AeroportiAmmessiInputBean:
+    type: object
+    properties:
+      latitudine:
+        type: number
+        format: double
+      longitudine:
+        type: number
+        format: double
+      stato:
+        type: string
+    required:
+      - latitudine
+      - longitudine
+      - stato
   BeneficiarioBean:
     type: "object"
     properties:
@@ -523,6 +538,34 @@ definitions:
     required:
       - data
 paths:
+  /rest/secured/beneficiario/aeroportiAmmessi:
+    post:
+      tags:
+        - securedBeneficiario
+      operationId: getAeroportiAmmessi
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "voucherBean"
+        required: true
+        schema:
+          $ref: "#/definitions/AeroportiAmmessiInputBean"
+      responses:
+        200:
+          description: "Tutto OK"
+          schema:
+            $ref: "#/definitions/AeroportoSedeBeanList"
+        "400":
+          description: "Validazioni non superate"
+          schema:
+            $ref: "#/definitions/ProblemBean"
+        "500":
+          description: "Errore interno."
   /rest/secured/beneficiario/aeroportiSede/{idRegione}:
     get:
       tags:

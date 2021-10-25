@@ -39,12 +39,14 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 28,
+      "lineHeight": 34.44,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 28,
+        "lineHeight": 34.44,
       },
       Object {
         "color": "#17324D",
@@ -69,12 +71,14 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
   fontStyle={
     Object {
       "fontSize": 28,
+      "lineHeight": 34.44,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 28,
+        "lineHeight": 34.44,
       },
       Object {
         "color": "#FFFFFF",

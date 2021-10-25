@@ -33,13 +33,13 @@ const getCheckIncomeUnderThresholdItems = (): ReadonlyArray<
   RadioItem<boolean>
 > => [
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
+    body: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.under", {
       amount: formatNumberAmount(threshold, true)
     }),
     id: true
   },
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
+    body: I18n.t("bonus.sv.voucherGeneration.checkIncome.threshold.over", {
       amount: formatNumberAmount(threshold, true)
     }),
     id: false

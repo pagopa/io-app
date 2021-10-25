@@ -989,6 +989,26 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is the payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "Privacy Policy"
+          row3Description2: "Terms and Conditions"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -2652,7 +2672,27 @@ bonus:
           departure: "Departure date"
           return: "Return date"
       summary:
-        title: "SummaryScreen"
+        title: "Summary"
+        subtitle1:
+          normal1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts ("
+          link: "art.76 of the Presidential Decree of 28 December 2000, n.445"
+          normal2: ") that you meet the following requirements:"
+        subtitle2: "And to request a discount code for a flight with the following characteristics:"
+        fields:
+          residence:
+            label: "Residence:"
+            value: "Sicily"
+          category:
+            label: "Category:"
+            value:
+              disabled: "Severely disabled pursuant to article 3, paragraph 3, of law no. 104"
+              student: "Off-site student"
+              worker: "Employee with a workplace outside Sicily"
+              sick: "Patient in need of treatment outside the Sicily region"
+          flightDate:
+            label: "Flight date:"
+            disabled: "All"
+          availableDestination: "Possible destinations:"
       voucherGenerated:
         title: "Here is your discount code"
         subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."

@@ -70,8 +70,7 @@ const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
         text: I18n.t(
           "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ko"
         ),
-        style: "default",
-        onPress: constNull
+        style: "default"
       }
     ]
   );
@@ -98,7 +97,12 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ko")
       );
     }
+    // Return to the VoucherListScreen if the revocation is completed since the voucher doesn't exist anymore.
     if (isReady(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ok"),
+        "success"
+      );
       back();
     }
   }, [revocationState, back]);
@@ -167,6 +171,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
 
+  // The check isReady(revocationState) is needed in order to avoid glitch while change screen
   if (isLoading(revocationState) || isReady(revocationState)) {
     return (
       <BaseScreenComponent
