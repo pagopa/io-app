@@ -297,7 +297,7 @@ export const getTransactionFee = (
 };
 
 // try to extract IUV from transaction description
-// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo3.html
+// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo3.html
 export const getTransactionIUV = (
   transactionDescription: string
 ): Option<string> => {
