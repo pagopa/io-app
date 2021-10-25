@@ -75,7 +75,19 @@ export const BpdIBANNavigator = createStackNavigator(
   {
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
-    },
+    }
+  },
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);
+
+export const BpdCTANavigator = createStackNavigator(
+  {
     [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
       screen: IbanCTAEditScreen
     }

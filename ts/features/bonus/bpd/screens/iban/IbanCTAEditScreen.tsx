@@ -80,6 +80,7 @@ const InnerIbanCTAEditScreen = (props: Props) => {
         .getOrElse(bpdPeriods, [])
         .find(p => p.status === "Active");
       if (activePeriod) {
+        goBack();
         navigateToBPDPeriodDetails(activePeriod);
       }
       // no active period

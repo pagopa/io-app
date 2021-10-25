@@ -9,6 +9,7 @@ import {
   BpdOnboardingNavigator
 } from "../features/bonus/bpd/navigation/navigator";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,
@@ -155,6 +156,9 @@ const bpdConfigMap = bpdEnabled
       },
       [BPD_ROUTES.DETAILS_MAIN]: {
         screen: BpdDetailsNavigator
+      },
+      [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
+        screen: IbanCTAEditScreen
       },
       [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
         screen: WalletAddBancomatNavigator
