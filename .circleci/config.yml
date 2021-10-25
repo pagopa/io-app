@@ -473,7 +473,8 @@ workflows:
       - run-eslint
       - run-prettier
       - run-e2e-test-IOS:
-          type: approval
+          requires:
+            - compile-typescript
 
       - run-danger:
           filters:
