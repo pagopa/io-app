@@ -125,18 +125,6 @@ const PostAnnullaVoucher: AnnullaVoucherT = {
 };
 
 /**
- * Revoke a voucher identified by id
- */
-const PostAnnullaVoucher: AnnullaVoucherT = {
-  method: "post",
-  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
-  query: _ => ({}),
-  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: annullaVoucherDefaultDecoder()
-};
-
-/**
  * Get the list of user's vouchers
  *
  * TODO: modify post in get and add auth header when the swagger will be fixed

@@ -7,11 +7,6 @@ import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 
-const mapKinds: Record<number, string> = {
-  400: "wrongFormat",
-  500: "internalServerError"
-};
-
 /**
  * Handle the voucher revocation
  * @param postAnnullaVoucher
