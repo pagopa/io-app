@@ -1,6 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../../../../navigation/NavigationService";
-import { navigationHistoryPop } from "../../../../../../../store/actions/navigationHistory";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
@@ -29,15 +28,12 @@ describe("cgnActivationWorker", () => {
       .next("ANY_ROUTE")
       .call(navigateToCgnActivationLoading)
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
       .call(cgnActivationSaga)
       .next(returnedAction)
       .put(returnedAction)
       .next()
       .call(navigateToCgnActivationCompleted)
-      .next()
-      .put(navigationHistoryPop(1));
+      .next();
   });
 
   it("should activate user's CGN already on loading screen ", () => {
@@ -54,8 +50,7 @@ describe("cgnActivationWorker", () => {
       .put(returnedAction)
       .next()
       .call(navigateToCgnActivationCompleted)
-      .next()
-      .put(navigationHistoryPop(1));
+      .next();
   });
 
   it("should navigate to TIMEOUT SCREEN on user's CGN activation", () => {
@@ -69,14 +64,11 @@ describe("cgnActivationWorker", () => {
       .next("ANY_ROUTE")
       .call(navigateToCgnActivationLoading)
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
       .call(cgnActivationSaga)
       .next(returnedAction)
       .put(returnedAction)
       .next()
       .call(navigateToCgnActivationTimeout)
-      .next()
-      .put(navigationHistoryPop(1));
+      .next();
   });
 });

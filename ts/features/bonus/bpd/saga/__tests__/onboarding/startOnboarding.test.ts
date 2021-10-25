@@ -1,7 +1,6 @@
 import { right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../../../navigation/NavigationService";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import {
   navigateToBpdOnboardingDeclaration,
@@ -31,21 +30,15 @@ describe("bpdStartOnboardingWorker", () => {
       .next(notLoadingScreenRoute)
       .call(navigateToBpdOnboardingLoadActivationStatus)
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
       .call(isBpdEnabled)
       .next(right(true))
       .put(fetchWalletsRequest())
       .next()
       .call(navigateToBpdOnboardingInformationTos)
       .next()
-      .put(navigationHistoryPop(1))
-      .next()
       .take(bpdUserActivate)
       .next()
       .call(navigateToBpdOnboardingDeclaration)
-      .next()
-      .put(navigationHistoryPop(1))
       .next()
       .take(bpdOnboardingAcceptDeclaration);
   });

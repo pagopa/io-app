@@ -4,7 +4,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, race, take } from "redux-saga/effects";
 import { ActionType, isActionOf } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationIneligible,
@@ -58,7 +57,6 @@ export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {
   const nextNavigationStep = getNextNavigationStep(progress);
   if (nextNavigationStep !== navigateToCgnActivationLoading) {
     yield call(nextNavigationStep);
-    yield put(navigationHistoryPop(1));
   }
 }
 

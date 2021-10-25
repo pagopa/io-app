@@ -99,7 +99,6 @@ import {
   navigateBack,
   navigateToWalletHome
 } from "../store/actions/navigation";
-import { navigationHistoryPop } from "../store/actions/navigationHistory";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
 import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
@@ -277,7 +276,6 @@ function* startOrResumeAddCreditCardSaga(
     function* waitAndNavigateToWalletHome() {
       // Add a delay to allow the user to see the thank you page
       yield delay(successScreenDelay);
-      yield put(navigationHistoryPop(4));
       yield call(navigateToWalletHome);
     }
 
@@ -379,7 +377,6 @@ function* startOrResumeAddCreditCardSaga(
                     // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
                     // this pop could be easily break when this flow is entered by other points
                     // different from the current ones
-                    yield put(navigationHistoryPop(4));
                     break;
                   }
                 }

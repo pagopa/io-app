@@ -1,23 +1,22 @@
-import { call, put, race, take } from "redux-saga/effects";
-import { SagaIterator } from "redux-saga";
 import { NavigationActions } from "react-navigation";
+import { SagaIterator } from "redux-saga";
+import { call, put, race, take } from "redux-saga/effects";
+import { SagaCallReturnType } from "../../../../../../types/utils";
+import { BackendCGN } from "../../../api/backendCgn";
 import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
 } from "../../../navigation/actions";
 import {
+  cgnEycaActivation,
+  cgnEycaActivationCancel
+} from "../../../store/actions/eyca/activation";
+import { cgnEycaStatus } from "../../../store/actions/eyca/details";
+import {
   getActivation,
   handleEycaActivationSaga,
   handleStartActivation
 } from "../../networking/eyca/activation/getEycaActivationSaga";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
-import {
-  cgnEycaActivation,
-  cgnEycaActivationCancel
-} from "../../../store/actions/eyca/activation";
-import { BackendCGN } from "../../../api/backendCgn";
-import { cgnEycaStatus } from "../../../store/actions/eyca/details";
-import { SagaCallReturnType } from "../../../../../../types/utils";
 
 /**
  * This saga handles the activation request for an EYCA Card linked to the user's CGN.
@@ -36,7 +35,7 @@ export function* eycaActivationWorker(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
   yield call(navigateToEycaActivationLoading);
-  yield put(navigationHistoryPop(1));
+  // yield put(navigationHistoryPop(1));
 
   const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
     getActivation,
@@ -62,7 +61,6 @@ export function* eycaActivationWorker(
         ) {
           yield put(cgnEycaActivation.success(startActivation.value));
           yield call(navigateToCgnDetails);
-          yield put(navigationHistoryPop(1));
           return;
         } else {
           yield call(handleEycaActivationSaga, getEycaActivation);
@@ -75,7 +73,6 @@ export function* eycaActivationWorker(
   yield put(cgnEycaStatus.request());
 
   yield call(navigateToCgnDetails);
-  yield put(navigationHistoryPop(1));
 }
 
 /**
