@@ -473,9 +473,6 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
-      - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
 
       - run-danger:
           filters:
