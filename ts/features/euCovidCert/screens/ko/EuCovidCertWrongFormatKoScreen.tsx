@@ -89,7 +89,6 @@ const EuCovidCertWrongFormatKoComponent: React.FC<{
 
 const EuCovidCertWrongFormatKoScreen = (_: Props): React.ReactElement => {
   const euCovidCertCurrent = useContext(EUCovidContext);
-  console.log(euCovidCertCurrent);
 
   // Handling unexpected error
   if (euCovidCertCurrent === null) {
