@@ -58,9 +58,7 @@ export function* watchLogoutSaga(
         // If keepUserData is false, startApplicationInitialization is
         // dispatched within the componentDidMount of IngressScreen
         resetToAuthenticationRoute();
-        if (action.payload.keepUserData) {
-          yield put(startApplicationInitialization());
-        }
+        yield put(startApplicationInitialization());
       }
     }
   );
