@@ -472,6 +472,8 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
+      - run-e2e-test-IOS:
+          type: approval
 
       - run-danger:
           filters:
