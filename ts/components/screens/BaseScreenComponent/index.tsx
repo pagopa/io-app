@@ -1,4 +1,4 @@
-import { fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
@@ -12,7 +12,6 @@ import React, {
   useState
 } from "react";
 import { ColorValue, ModalBaseProps, Platform } from "react-native";
-import { useSelector } from "react-redux";
 import { TranslationKeys } from "../../../../locales/locales";
 import {
   defaultAttachmentTypeConfiguration,
@@ -20,11 +19,9 @@ import {
 } from "../../../boot/configureInstabug";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
-import NavigationService from "../../../navigation/NavigationService";
-
-import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { noAnalyticsRoutes } from "../../../utils/analytics";
+import { useNavigationContext } from "../../../utils/hooks/useOnFocus";
 import { setStatusBarColorAndBackground } from "../../../utils/statusBar";
 import ContextualHelp, { RequestAssistancePayload } from "../../ContextualHelp";
 import { SearchType } from "../../search/SearchButton";
@@ -104,9 +101,11 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       showInstabugChat,
       titleColor
     } = props;
-    const currentScreenName = useSelector(
-      (_: GlobalState) => NavigationService.getCurrentRouteName() ?? "n/a"
-    );
+
+    // We should check for undefined context because the BaseScreen is used also in the Modal layer, without the navigation context.
+    const currentScreenName = fromNullable(useNavigationContext())
+      .map(x => x.state.routeName)
+      .getOrElse("n/a");
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     // if the content is markdown we listen for load end event, otherwise the content is
