@@ -161,7 +161,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["services_detail"]}
