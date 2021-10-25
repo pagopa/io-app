@@ -41,7 +41,7 @@ export const isDebugModeEnabledSelector = (state: GlobalState) =>
   state.debug.isDebugModeEnabled;
 
 /**
- * For debug purpose only
+ * For debug / backwards compatibility  purpose only
  * @deprecated Don't use this selector to create new application logic, will be removed after the upgrade to react-navigation v6
  * @param state
  */

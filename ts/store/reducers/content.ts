@@ -20,7 +20,6 @@ import {
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { IdentityProviderId } from "../../models/IdentityProvider";
-import NavigationService from "../../navigation/NavigationService";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getRemoteLocale } from "../../utils/messages";
@@ -31,6 +30,7 @@ import {
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
+import { currentRouteDebugSelector } from "./debug";
 import { GlobalState } from "./types";
 
 /**
@@ -105,24 +105,25 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
 export const screenContextualHelpDataSelector = createSelector<
   GlobalState,
   pot.Pot<ContextualHelp, Error>,
+  string,
   pot.Pot<Option<ScreenCHData>, Error>
->([contextualHelpDataSelector], contextualHelpData =>
-  pot.map(contextualHelpData, data => {
-    const currentRouteName = NavigationService.getCurrentRouteName();
-    if (currentRouteName === undefined) {
-      return none;
-    }
-    const locale = getRemoteLocale();
-    const screenData =
-      data[locale] !== undefined
-        ? data[locale].screens.find(
-            s =>
-              s.route_name.toLowerCase() ===
-              currentRouteName.toLocaleLowerCase()
-          )
-        : undefined;
-    return fromNullable(screenData);
-  })
+>(
+  [contextualHelpDataSelector, currentRouteDebugSelector],
+  (contextualHelpData, currentRoute) =>
+    pot.map(contextualHelpData, data => {
+      if (currentRoute === undefined) {
+        return none;
+      }
+      const locale = getRemoteLocale();
+      const screenData =
+        data[locale] !== undefined
+          ? data[locale].screens.find(
+              s =>
+                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
+            )
+          : undefined;
+      return fromNullable(screenData);
+    })
 );
 
 export default function content(
