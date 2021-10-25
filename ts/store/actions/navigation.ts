@@ -1,11 +1,8 @@
 import {
-  NavigationAction,
   NavigationActions,
   NavigationBackActionPayload,
-  NavigationState,
   StackActions
 } from "react-navigation";
-import { ActionType, createStandardAction } from "typesafe-actions";
 import CreditCardDetailScreen from "../../features/wallet/creditCard/screen/CreditCardDetailScreen";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -37,13 +34,6 @@ import {
   SatispayPaymentMethod
 } from "../../types/pagopa";
 import { InferNavigationParams } from "../../types/react";
-
-export const navigationRestore =
-  createStandardAction("NAVIGATION_RESTORE")<NavigationState>();
-
-export type NavigationActions =
-  | NavigationAction
-  | ActionType<typeof navigationRestore>;
 
 /**
  * @deprecated

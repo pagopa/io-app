@@ -1,6 +1,5 @@
 // gets the current screen from navigation state
 
-import { index } from "fp-ts/lib/Array";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import {
   NavigationLeafRoute,
@@ -9,7 +8,6 @@ import {
 } from "react-navigation";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
-import { NavigationHistoryState } from "../store/reducers/navigationHistory";
 
 /**
  * Assuming that each and every NavigationRoute will eventually lead
@@ -77,18 +75,6 @@ export function getRouteName(route: NavigationRoute): Option<string> {
     return none;
   }
   return getRouteName(route.routes[route.index]);
-}
-
-/**
- * This function returns the name of the precedent navigation route to understand
- * from where the current route has been navigated
- * @deprecated
- */
-export function whereAmIFrom(nav: NavigationHistoryState): Option<string> {
-  const navLength = nav.length;
-  return index(navLength - 1, [...nav]).fold(none, ln =>
-    getRouteName(ln.routes[ln.index])
-  );
 }
 
 /**
