@@ -12,6 +12,9 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import ServiceMetadata from "../../components/services/ServiceMetadata";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
@@ -32,9 +35,6 @@ import {
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
-import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;

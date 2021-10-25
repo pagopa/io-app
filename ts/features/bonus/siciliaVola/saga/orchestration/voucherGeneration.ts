@@ -41,6 +41,9 @@ function* svVoucherGenerationWorkUnit() {
  * This saga handles the SV activation workflow
  */
 export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
+  const initialRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
+
   const sagaExecution = () =>
     withResetNavigationStack(svVoucherGenerationWorkUnit);
 
@@ -48,12 +51,9 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
     sagaExecution
   );
 
-  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
-    yield call(NavigationService.getCurrentRouteName);
-
   if (
     // if the activation started from the CTA -> go back
-    currentRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+    initialRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
   ) {
     yield call(navigateBack);
   }
