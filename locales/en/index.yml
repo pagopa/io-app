@@ -1009,6 +1009,11 @@ wallet:
           row2Description2: ". You'll see the right amount before confirming the payment."
           row3Description1: "Privacy Policy"
           row3Description2: "Terms and Conditions"
+      onBoardingCompleted:
+        title: "Fatto!"
+        body: "Scopri e gestisci le iniziative compatibili con il metodo appena aggiunto."
+        secondaryButton: "Chiudi"
+        primaryButton: "Vedi metodo"
     coBadge:
       headerTitle: "Add international circuit"
       start:
