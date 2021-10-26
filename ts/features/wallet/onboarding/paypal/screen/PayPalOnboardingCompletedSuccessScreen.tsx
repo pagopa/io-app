@@ -28,7 +28,10 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
     customGoBack={<View />}
     showInstabugChat={false}
   >
-    <SafeAreaView style={IOStyles.flex} testID={"OutcomeCode"}>
+    <SafeAreaView
+      style={IOStyles.flex}
+      testID={"PayPalOnboardingCompletedSuccessScreen"}
+    >
       <InfoScreenComponent
         image={renderInfoRasterImage(successImage)}
         title={I18n.t("wallet.onboarding.paypal.onBoardingCompleted.title")}
