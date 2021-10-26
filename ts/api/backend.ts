@@ -203,7 +203,13 @@ export function BackendClient(
   const getMessagesT: GetUserMessagesTCustom = {
     method: "get",
     url: _ => "/api/v1/messages",
-    query: params => _.pickBy(params, v => v !== undefined),
+    query: params => {
+      const { maximum_id, enrich_result_data, minimum_id, page_size } = params;
+      return _.pickBy(
+        { maximum_id, enrich_result_data, minimum_id, page_size },
+        !_.isNil
+      );
+    },
     headers: tokenHeaderProducer,
     response_decoder: getUserMessagesDefaultDecoder()
   };
