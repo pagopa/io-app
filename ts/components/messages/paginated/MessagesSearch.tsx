@@ -30,7 +30,10 @@ type Props = Pick<ComponentProps<typeof MessageList>, "onRefresh"> & OwnProps;
 const MessagesSearch = (props: Props) => {
   const { isLoading, messages, searchText, navigateToMessageDetail } = props;
   const searchResults = messages.filter(message =>
-    isTextIncludedCaseInsensitive(message.title ?? "", searchText)
+    isTextIncludedCaseInsensitive(
+      [message.title, message.organizationName, message.serviceName].join(" "),
+      searchText
+    )
   );
 
   return searchResults.length > 0 ? (

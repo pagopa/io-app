@@ -78,6 +78,9 @@ export const reloadAllMessages = createAsyncAction(
   "MESSAGES_LOAD_FAILURE"
 )<void, ReloadMessagesPayload, Error>();
 
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
 export const DEPRECATED_loadMessages = createAsyncAction(
   "DEPRECATED_MESSAGES_LOAD_REQUEST",
   "DEPRECATED_MESSAGES_LOAD_SUCCESS",

@@ -1,12 +1,12 @@
 import { call, Effect, put, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 
 import { BackendClient } from "../../api/backend";
 import { loadNextPageMessages as loadNextPageMessagesAction } from "../../store/actions/messages";
 import { SagaCallReturnType } from "../../types/utils";
 import { sessionExpired } from "../../store/actions/authentication";
 import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
+import { readablePrivacyReport } from "../../utils/reporters";
 
 type LocalActionType = ActionType<typeof loadNextPageMessagesAction["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];
@@ -37,9 +37,10 @@ function* tryLoadNextPageMessages(
     if (response.isLeft()) {
       yield put(
         loadNextPageMessagesAction.failure(
-          new Error(readableReport(response.value))
+          new Error(readablePrivacyReport(response.value))
         )
       );
+      return;
     }
 
     if (response.isRight()) {

@@ -13,7 +13,7 @@ export type UIMessage = {
   serviceId: ServiceId;
   serviceName?: string;
   organizationName?: string;
-  title?: string;
+  title: string;
   timeToLive?: TimeToLiveSeconds;
   paymentData?: {
     paid: boolean;

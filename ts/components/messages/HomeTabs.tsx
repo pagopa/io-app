@@ -9,6 +9,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../../theme/fonts";
+import { isAndroid } from "../../utils/platform";
 
 import MessagesInbox from "./paginated/MessagesInbox";
 
@@ -32,8 +33,8 @@ const styles = StyleSheet.create({
   },
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    fontSize: isAndroid ? 16 : undefined,
+    fontWeight: isAndroid ? "normal" : "bold",
     color: customVariables.brandPrimary
   },
   textStyle: {

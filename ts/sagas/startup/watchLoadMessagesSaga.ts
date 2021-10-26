@@ -111,7 +111,6 @@ function* loadMessages(
           const cached = cachedMessagesById[message.id];
           return (
             cached === undefined ||
-            cached.message === undefined ||
             pot.isNone(cached.message) ||
             pot.isError(cached.message)
           );

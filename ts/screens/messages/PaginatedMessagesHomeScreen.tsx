@@ -69,17 +69,17 @@ type UnwrappedMessageState = {
   nextCursor?: Cursor;
   previousCursor?: Cursor;
 };
-function unwrapMessageState(
+const defaultResult: UnwrappedMessageState = {
+  error: undefined,
+  allMessages: [],
+  isLoading: false,
+  nextCursor: undefined,
+  previousCursor: undefined
+};
+const unwrapMessageState = (
   messagesState: ReturnType<typeof allPaginatedMessagesSelector>
-): UnwrappedMessageState {
-  const defaultResult: UnwrappedMessageState = {
-    error: undefined,
-    allMessages: [],
-    isLoading: false,
-    nextCursor: undefined,
-    previousCursor: undefined
-  };
-  return pot.fold(
+): UnwrappedMessageState =>
+  pot.fold(
     messagesState,
     () => defaultResult,
     () => ({ ...defaultResult, isLoading: true }),
@@ -113,7 +113,6 @@ function unwrapMessageState(
       previousCursor: previous
     })
   );
-}
 
 /**
  * A screen that contains all the Tabs related to messages.

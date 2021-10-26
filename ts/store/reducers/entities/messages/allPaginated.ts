@@ -17,7 +17,9 @@ import { UIMessage } from "./types";
 
 export type Cursor = string;
 
-// An array of messages id
+/**
+ * A list of messages and pagination data.
+ */
 export type AllPaginated = pot.Pot<
   { page: ReadonlyArray<UIMessage>; previous?: Cursor; next?: Cursor },
   string
@@ -115,12 +117,15 @@ const reduceLoadPreviousPage = (
 ): AllPaginated => {
   switch (action.type) {
     case getType(loadNextPageMessages.request):
+      // TODO: update the state somehow
       return state;
 
     case getType(loadNextPageMessages.success):
+      // TODO: update the state with the previous page
       return state;
 
     case getType(loadNextPageMessages.failure):
+      // TODO: convey the error while preserving the Pot semantics
       return pot.toError(state, action.payload.message);
 
     default:

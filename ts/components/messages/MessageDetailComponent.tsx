@@ -145,15 +145,13 @@ export default class MessageDetailComponent extends React.PureComponent<
           {/** Header */}
           <View style={styles.padded}>
             <View spacer={true} />
-            {service !== undefined && service.isSome() && (
+            {service.isSome() && (
               <React.Fragment>
-                {service && service.isSome() && (
-                  <OrganizationHeader
-                    serviceName={service.value.service_name}
-                    organizationName={service.value.organization_name}
-                    logoURLs={logosForService(service.value)}
-                  />
-                )}
+                <OrganizationHeader
+                  serviceName={service.value.service_name}
+                  organizationName={service.value.organization_name}
+                  logoURLs={logosForService(service.value)}
+                />
                 <View spacer={true} large={true} />
               </React.Fragment>
             )}

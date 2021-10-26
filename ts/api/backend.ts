@@ -206,8 +206,13 @@ export function BackendClient(
     query: params => {
       const { maximum_id, enrich_result_data, minimum_id, page_size } = params;
       return _.pickBy(
-        { maximum_id, enrich_result_data, minimum_id, page_size },
-        !_.isNil
+        {
+          maximum_id,
+          enrich_result_data,
+          minimum_id,
+          page_size
+        },
+        v => !_.isUndefined(v)
       );
     },
     headers: tokenHeaderProducer,
