@@ -297,7 +297,7 @@ export const getTransactionFee = (
 };
 
 // try to extract IUV from transaction description
-// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo3.html
+// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo3.html
 export const getTransactionIUV = (
   transactionDescription: string
 ): Option<string> => {
@@ -335,7 +335,7 @@ export const getIuv = (data: RptId): string => {
 };
 
 // return the notice code from the given rptId
-// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
+// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
 export const getCodiceAvviso = (rptId: RptId) => {
   const pnn = rptId.paymentNoticeNumber;
   switch (pnn.auxDigit) {

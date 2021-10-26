@@ -995,6 +995,20 @@ wallet:
       start:
         title: "Pay on IO with PayPal"
         body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is the payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "Privacy Policy"
+          row3Description2: "Terms and Conditions"
     coBadge:
       headerTitle: "Add international circuit"
       start:
