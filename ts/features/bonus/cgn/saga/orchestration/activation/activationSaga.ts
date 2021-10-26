@@ -1,3 +1,4 @@
+import { StackActions } from "react-navigation";
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -40,14 +41,20 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     cgnActivationWorkUnit
   );
 
-  const initialRouteRequireBack =
-    initialScreenName !== undefined &&
-    (initialScreenName === CGN_ROUTES.ACTIVATION.CTA_START_CGN ||
-      (res === "cancel" &&
-        initialScreenName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST));
-
-  // if the activation started from the CTA or the bonus list and user aborted the activation -> go back
-  if (initialRouteRequireBack) {
-    yield call(navigateBack);
+  if (initialScreenName !== undefined) {
+    // If we start from the CTA, we should remove the fake CTA screen
+    if (initialScreenName === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
+      yield call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.popToTop()
+      );
+      yield call(navigateBack);
+      // If we start from the BONUS_AVAILABLE_LIST, we should return to the wallet
+    } else if (
+      res === "cancel" &&
+      initialScreenName === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST
+    ) {
+      yield call(navigateBack);
+    }
   }
 }

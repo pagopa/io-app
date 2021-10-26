@@ -1,19 +1,19 @@
 import * as React from "react";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { Dispatch } from "redux";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { cgnActivationStart } from "../../store/actions/activation";
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { cgnActivationStart } from "../../store/actions/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
