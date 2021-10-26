@@ -18,7 +18,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 /**
  * this screen shows that the onboarding is completed successfully
- * footer button can dismiss the screen o navigate to the PayPal method details
+ * footer button can dismiss the screen or navigate to the PayPal method details
  * @param props
  * @constructor
  */
@@ -40,7 +40,7 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
       <FooterStackButton
         buttons={[
           {
-            testID: "continueButtonId",
+            testID: "primaryButtonId",
             bordered: false,
             onPress: props.methodDetails,
             title: I18n.t(
@@ -51,7 +51,9 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
             props.onClose,
             I18n.t(
               "wallet.onboarding.paypal.onBoardingCompleted.secondaryButton"
-            )
+            ),
+            undefined,
+            "secondaryButtonId"
           )
         ]}
       />
