@@ -60,7 +60,8 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillBlur={() => {
             this.hideModal();
           }}
-          onWillFocus={() => {
+          onDidFocus={() => {
+            this.setState({ forceNavigationEvents: false });
             this.props.showModal(
               <RemindEmailValidationOverlay
                 closeModalAndNavigateToEmailInsertScreen={
@@ -69,9 +70,6 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
                 onClose={this.hideModal}
               />
             );
-          }}
-          onDidFocus={() => {
-            this.setState({ forceNavigationEvents: false });
           }}
         />
       </View>

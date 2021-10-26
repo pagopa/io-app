@@ -106,8 +106,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   private handleHardwareBack = () => {
-    this.props.navigateBack();
-    return undefined;
+    if (isOnboardingCompleted()) {
+      this.props.navigateBack();
+    }
+    return true;
   };
 
   public componentDidMount() {
