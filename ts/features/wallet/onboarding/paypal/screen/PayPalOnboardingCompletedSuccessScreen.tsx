@@ -16,6 +16,12 @@ import { FooterStackButton } from "../../../../bonus/bonusVacanze/components/but
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/**
+ * this screen shows that the onboarding is completed successfully
+ * footer button can dismiss the screen o navigate to the PayPal method details
+ * @param props
+ * @constructor
+ */
 const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
   <BaseScreenComponent
     goBack={false}
@@ -33,8 +39,7 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
           {
             testID: "continueButtonId",
             bordered: false,
-            // TODO replace with the effective handler
-            onPress: undefined,
+            onPress: props.methodDetails,
             title: I18n.t(
               "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
             )
@@ -52,7 +57,9 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({
-  onClose: constNull
+  // TODO replace with the effective handler
+  onClose: constNull,
+  methodDetails: constNull
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
