@@ -1,12 +1,6 @@
 import { Root } from "native-base";
 import * as React from "react";
-import {
-  AppState,
-  BackHandler,
-  Linking,
-  Platform,
-  StatusBar
-} from "react-native";
+import { AppState, Linking, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
@@ -62,11 +56,6 @@ class RootContainer extends React.PureComponent<Props> {
     configurePushNotifications();
   }
 
-  private handleBackButton = () => {
-    this.props.navigateBack();
-    return true;
-  };
-
   private handleOpenUrlEvent = (event: { url: string }): void =>
     this.navigateToUrlHandler(event.url);
 
@@ -84,7 +73,6 @@ class RootContainer extends React.PureComponent<Props> {
 
   public componentDidMount() {
     initialiseInstabug();
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (Platform.OS === "android") {
       Linking.getInitialURL()
@@ -112,8 +100,6 @@ class RootContainer extends React.PureComponent<Props> {
     });
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
-
     if (Platform.OS === "ios") {
       Linking.removeEventListener("url", this.handleOpenUrlEvent);
     }
