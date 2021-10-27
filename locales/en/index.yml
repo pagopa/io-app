@@ -2740,6 +2740,15 @@ bonus:
         cta:
           exit: "Exit"
           voucherRevocation: "Voucher revocation"
+      destinationSelector:
+        state:
+          title: "Select a state"
+          label: "State"
+          placeholder: "Select a state"
+        municipality:
+          title: "Select a municipality"
+          label: "Municipality"
+          placeholder: "Select a municipality"
 
 features:
   euCovidCertificate:

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../store/reducers/types";
 import { connect } from "react-redux";
-import { View } from "native-base";
+import { ListItem, View } from "native-base";
 import TextboxWithSuggestion from "../../../../components/ui/TextboxWithSuggestion";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IndexedById, toArray } from "../../../../store/helpers/indexer";
@@ -10,8 +10,12 @@ import { Municipality, State } from "../types/SvVoucherRequest";
 import { debounce } from "lodash";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
-import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
-import { useEffect, useState } from "react";
+import { isError, isLoading } from "../../bpd/model/RemoteValue";
+import { useContext, useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import WrappedFlatlist from "./WrappedMunicipalityFlatlist";
+import I18n from "../../../../i18n";
 
 type OwnProps = {
   availableStates: IndexedById<State>;
@@ -26,8 +30,8 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
+  const { hideModal } = useContext(LightModalContext);
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
-
   const performMunicipalitySearch = (text: string) => {
     if (text.length < 3) {
       return;
@@ -45,53 +49,59 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <>
-      <TextboxWithSuggestion<State>
-        onChangeText={() => true}
-        title={"Seleziona uno stato"}
-        keyExtractor={i => i.name}
-        data={toArray(props.availableStates)}
-        onSelectValue={v => {
-          props.setSelectedState(v);
-          return v.name;
-        }}
-        renderItem={i => (
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
-            {i.item.name}
-          </H4>
+      <TextboxWithSuggestion
+        title={I18n.t("bonus.sv.components.destinationSelector.state.title")}
+        label={I18n.t("bonus.sv.components.destinationSelector.state.label")}
+        placeholder={I18n.t(
+          "bonus.sv.components.destinationSelector.state.placeholder"
         )}
-        label={"Stato"}
-        placeholder={"Seleziona uno stato"}
         isLoading={false}
         showModalInputTextbox={false}
-        onRetry={() => true}
+        wrappedFlatlist={
+          <FlatList
+            data={toArray(props.availableStates)}
+            ListFooterComponent={false}
+            renderItem={i => (
+              <ListItem
+                icon={false}
+                onPress={() => {
+                  props.setSelectedState(i.item);
+                  hideModal();
+                }}
+              >
+                <H4 weight={"Regular"} color={"bluegreyDark"}>
+                  {i.item.name}
+                </H4>
+              </ListItem>
+            )}
+            keyExtractor={i => i.name}
+            keyboardShouldPersistTaps={"handled"}
+          />
+        }
+        selectedValue={props.selectedState?.name}
       />
       <View spacer />
-      <TextboxWithSuggestion<Municipality>
+      <TextboxWithSuggestion
         onChangeText={v => {
           setSearchText(v.length === 0 ? undefined : v);
         }}
-        title={"Seleziona un comune"}
-        keyExtractor={i => i.name}
-        data={
-          isReady(props.availableMunicipalities)
-            ? toArray(props.availableMunicipalities.value)
-            : []
-        }
-        onSelectValue={v => {
-          props.setSelectedMunicipality(v);
-          return v.name;
-        }}
-        renderItem={i => (
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
-            {i.item.name}
-          </H4>
+        title={I18n.t(
+          "bonus.sv.components.destinationSelector.municipality.title"
         )}
-        label={"Comune"}
-        placeholder={"Seleziona un comune"}
+        label={I18n.t(
+          "bonus.sv.components.destinationSelector.municipality.label"
+        )}
+        placeholder={I18n.t(
+          "bonus.sv.components.destinationSelector.municipality.placeholder"
+        )}
         disabled={props.selectedState === undefined}
         isLoading={isLoading(props.availableMunicipalities)}
         isFailed={isError(props.availableMunicipalities)}
         showModalInputTextbox={true}
+        wrappedFlatlist={
+          <WrappedFlatlist onPress={props.setSelectedMunicipality} />
+        }
+        selectedValue={props.selectedMunicipality?.name}
       />
     </>
   );
