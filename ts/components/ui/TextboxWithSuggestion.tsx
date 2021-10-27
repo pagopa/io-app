@@ -1,20 +1,7 @@
 import * as React from "react";
-import { useContext, useState } from "react";
-import {
-  Body,
-  Container,
-  Content,
-  Left,
-  ListItem,
-  Right,
-  View
-} from "native-base";
-import {
-  ActivityIndicator,
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
+import { ReactNode, useContext, useState } from "react";
+import { Body, Container, Content, Left, Right, View } from "native-base";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
@@ -41,59 +28,43 @@ const styles = StyleSheet.create({
 
 /**
  * Props explanation:
- * - data -> array of suggested items, shown in the modal.
- * - keyExtractor -> method that given an item of the array and the index return the unique value to use as key for the item.
  * - onChangeText -> method that notify when the user changes the searching text in the modal.
- * - renderItem -> method that given an item return a ReactElement which will be inserted inside a ListItem.
  * - title -> the title of the modal screen.
  * - label -> displayed on top the search text-box both.
  * - placeholder -> placeholder of the search text-box.
- * - isLoading -> when true show a loader at the middle of the modal.
  * - showModalInputTextbox -> boolean that control the input textbox in the modal
+ * - wrappedFlatlist -> the Flatlist component that show the suggestions that the user can choose from
  */
-type CommonProps<T> = {
-  data: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  onChangeText: (value: string) => void;
-  renderItem: (item: ListRenderItemInfo<T>) => React.ReactElement;
+type CommonProps = {
+  onChangeText?: (value: string) => void;
   title: string;
   label: string;
   placeholder: string;
-  isLoading: boolean;
   showModalInputTextbox: boolean;
+  wrappedFlatlist: ReactNode;
 };
 
 /**
  * Props explanation:
  * - onSelectValue -> method that inform about selected value from the suggested ones. The returned string will be used to set the search text-box.
+ * - isFailed -> if true show a label that allow to execute the function onRetry
+ * - onRetry -> method executed when the user press the "Retry" label
+ * - disabled -> if true disable the onPress on the initial textBox and show the border light gray
+ * - isLoading -> if true show a loading indicator near the label
  */
-type Props<T> = {
-  onSelectValue: (value: T) => string;
+type Props = {
+  selectedValue?: string;
   isFailed?: boolean;
   onRetry?: () => void;
   disabled?: boolean;
-} & CommonProps<T>;
+  isLoading?: boolean;
+} & CommonProps;
 
-type ModalProps<T> = {
+type ModalProps = {
   onClose: () => void;
-} & CommonProps<T>;
+} & CommonProps;
 
-const FooterLoading = () => (
-  <>
-    <View spacer={true} />
-    <ActivityIndicator
-      color={"black"}
-      accessible={false}
-      importantForAccessibility={"no-hide-descendants"}
-      accessibilityElementsHidden={true}
-      testID={"activityIndicator"}
-    />
-  </>
-);
-
-const TextboxWithSuggestionModal = <T extends unknown>(
-  props: ModalProps<T>
-) => {
+const TextboxWithSuggestionModal = (props: ModalProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   return (
     <Container>
@@ -121,7 +92,7 @@ const TextboxWithSuggestionModal = <T extends unknown>(
                   value: inputValue,
                   onChangeText: v => {
                     setInputValue(v);
-                    props.onChangeText(v);
+                    props.onChangeText?.(v);
                   },
                   placeholder: props.placeholder
                 }}
@@ -129,14 +100,7 @@ const TextboxWithSuggestionModal = <T extends unknown>(
               <View spacer large />
             </>
           )}
-
-          <FlatList
-            data={props.data}
-            ListFooterComponent={props.isLoading && <FooterLoading />}
-            renderItem={props.renderItem}
-            keyExtractor={props.keyExtractor}
-            keyboardShouldPersistTaps={"handled"}
-          />
+          {props.wrappedFlatlist}
         </Content>
       </SafeAreaView>
     </Container>
@@ -153,11 +117,8 @@ const TextboxWithSuggestionModal = <T extends unknown>(
  * @param props
  * @constructor
  */
-const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
+const TextboxWithSuggestion = (props: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    undefined
-  );
 
   const borderBottomColor = props.disabled
     ? IOColors.bluegreyLight
@@ -192,34 +153,21 @@ const TextboxWithSuggestion = <T extends unknown>(props: Props<T>) => {
           disabled={props.disabled}
           onPress={() =>
             showModal(
-              <TextboxWithSuggestionModal<T>
-                data={props.data}
-                keyExtractor={props.keyExtractor}
-                renderItem={i => (
-                  <ListItem
-                    icon={false}
-                    onPress={() => {
-                      setSelectedValue(props.onSelectValue(i.item));
-                      hideModal();
-                    }}
-                  >
-                    {props.renderItem(i)}
-                  </ListItem>
-                )}
+              <TextboxWithSuggestionModal
                 title={props.title}
                 label={props.label}
                 placeholder={props.placeholder}
                 onClose={hideModal}
                 onChangeText={props.onChangeText}
-                isLoading={props.isLoading}
                 showModalInputTextbox={props.showModalInputTextbox}
+                wrappedFlatlist={props.wrappedFlatlist}
               />
             )
           }
         >
-          {selectedValue ? (
+          {props.selectedValue ? (
             <H4 weight={"Regular"} color={"bluegrey"}>
-              {selectedValue}
+              {props.selectedValue}
             </H4>
           ) : (
             <H4 weight={"Regular"} color={"bluegreyLight"}>
