@@ -4,19 +4,19 @@ import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { View } from "native-base";
 import { ReactNode } from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
-import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
-import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
-import MoneyDownIcon from "../../../../../img/wallet/payment-methods/paypal/money_down.svg";
-import LabelIcon from "../../../../../img/wallet/payment-methods/paypal/label.svg";
-import EditIcon from "../../../../../img/wallet/payment-methods/paypal/edit.svg";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { Body } from "../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { Label } from "../../../../components/core/typography/Label";
-import { Link } from "../../../../components/core/typography/Link";
-import { openWebUrl } from "../../../../utils/url";
+import I18n from "../../../../../i18n";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import { BottomSheetContent } from "../../../../../components/bottomSheet/BottomSheetContent";
+import MoneyDownIcon from "../../../../../../img/wallet/payment-methods/paypal/money_down.svg";
+import LabelIcon from "../../../../../../img/wallet/payment-methods/paypal/label.svg";
+import EditIcon from "../../../../../../img/wallet/payment-methods/paypal/edit.svg";
+import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { Label } from "../../../../../components/core/typography/Label";
+import { Link } from "../../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../../utils/url";
 
 const styles = StyleSheet.create({
   rowContainer: {

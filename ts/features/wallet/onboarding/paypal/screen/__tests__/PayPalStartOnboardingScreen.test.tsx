@@ -1,10 +1,10 @@
 import { createStore, Store } from "redux";
 import { NavigationParams } from "react-navigation";
 import PayPalStartOnboardingScreen from "../PayPalStartOnboardingScreen";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 
 describe("PayPalStartOnboardingScreen", () => {
   jest.useFakeTimers();

@@ -1,9 +1,9 @@
 import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
 
 jest.mock("@gorhom/bottom-sheet", () => ({
