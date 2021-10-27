@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import {
   IndexedById,
   toIndexed
@@ -10,7 +11,6 @@ import {
   svGenerateVoucherAvailableState,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
-import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,

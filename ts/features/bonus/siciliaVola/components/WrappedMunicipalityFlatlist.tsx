@@ -1,15 +1,15 @@
 import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { ActivityIndicator, FlatList } from "react-native";
+import * as React from "react";
+import { ListItem, View } from "native-base";
+import { useContext } from "react";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
-import { connect } from "react-redux";
 import { isLoading, isReady } from "../../bpd/model/RemoteValue";
 import { toArray } from "../../../../store/helpers/indexer";
 import { H4 } from "../../../../components/core/typography/H4";
-import { ActivityIndicator, FlatList } from "react-native";
-import * as React from "react";
 import { Municipality } from "../types/SvVoucherRequest";
-import { ListItem, View } from "native-base";
-import { useContext } from "react";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 
 type Props = {

@@ -10,10 +10,10 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import I18n from "../../i18n";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
-import I18n from "../../i18n";
 
 const styles = StyleSheet.create({
   container: {

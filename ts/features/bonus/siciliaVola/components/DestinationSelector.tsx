@@ -1,21 +1,21 @@
 import * as React from "react";
 import { Dispatch } from "redux";
-import { GlobalState } from "../../../../store/reducers/types";
 import { connect } from "react-redux";
 import { ListItem, View } from "native-base";
+import { debounce } from "lodash";
+import { useContext, useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { GlobalState } from "../../../../store/reducers/types";
 import TextboxWithSuggestion from "../../../../components/ui/TextboxWithSuggestion";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IndexedById, toArray } from "../../../../store/helpers/indexer";
 import { Municipality, State } from "../types/SvVoucherRequest";
-import { debounce } from "lodash";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { isError, isLoading } from "../../bpd/model/RemoteValue";
-import { useContext, useEffect, useState } from "react";
-import { FlatList } from "react-native";
 import { LightModalContext } from "../../../../components/ui/LightModal";
-import WrappedFlatlist from "./WrappedMunicipalityFlatlist";
 import I18n from "../../../../i18n";
+import WrappedFlatlist from "./WrappedMunicipalityFlatlist";
 
 type OwnProps = {
   availableStates: IndexedById<State>;
