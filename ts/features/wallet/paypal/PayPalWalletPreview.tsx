@@ -9,7 +9,8 @@ import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { CardLogoPreview } from "../component/card/CardLogoPreview";
 
-export type PayPalPaymentMethod = {
+// TODO temporary type
+type PayPalPaymentMethod = {
   email: string;
 };
 
@@ -36,7 +37,7 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => (
   <CardLogoPreview
     accessibilityLabel={getAccessibilityRepresentation()}
     left={
-      <Body style={IOStyles.flex} numberOfLines={1}>
+      <Body style={[IOStyles.flex, { paddingRight: 16 }]} numberOfLines={1}>
         {props.paypal.email}
       </Body>
     }
