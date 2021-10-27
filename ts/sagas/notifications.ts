@@ -15,11 +15,12 @@ import { notificationsInstallationSelector } from "../store/reducers/notificatio
 import { SagaCallReturnType } from "../types/utils";
 import { mixpanelTrack } from "../mixpanel";
 
-const notificationsPlatform: PlatformEnum = Platform.select<PlatformEnum>({
-  ios: PlatformEnum.apns,
-  android: PlatformEnum.gcm,
-  default: PlatformEnum.gcm
-});
+export const notificationsPlatform: PlatformEnum =
+  Platform.select<PlatformEnum>({
+    ios: PlatformEnum.apns,
+    android: PlatformEnum.gcm,
+    default: PlatformEnum.gcm
+  });
 
 /**
  * This generator function calls the ProxyApi `installation` endpoint
