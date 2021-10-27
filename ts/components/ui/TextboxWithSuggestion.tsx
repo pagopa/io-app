@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ReactNode, useContext, useState } from "react";
 import { Body, Container, Content, Left, Right, View } from "native-base";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
@@ -10,7 +10,6 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import I18n from "../../i18n";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
@@ -48,17 +47,11 @@ type CommonProps = {
 /**
  * Props explanation:
  * - onSelectValue -> method that inform about selected value from the suggested ones. The returned string will be used to set the search text-box.
- * - isFailed -> if true show a label that allow to execute the function onRetry
- * - onRetry -> method executed when the user press the "Retry" label
  * - disabled -> if true disable the onPress on the initial textBox and show the border light gray
- * - isLoading -> if true show a loading indicator near the label
  */
 type Props = {
   selectedValue?: string;
-  isFailed?: boolean;
-  onRetry?: () => void;
   disabled?: boolean;
-  isLoading?: boolean;
 } & CommonProps;
 
 type ModalProps = {
@@ -130,23 +123,6 @@ const TextboxWithSuggestion = (props: Props) => {
         <View style={{ flex: 1, flexDirection: "row" }}>
           <H5 color={"bluegreyDark"}>{props.label}</H5>
           <View hspacer={true} />
-          {props.isLoading && (
-            <ActivityIndicator
-              color={"black"}
-              accessible={false}
-              importantForAccessibility={"no-hide-descendants"}
-              accessibilityElementsHidden={true}
-            />
-          )}
-          {props.isFailed && (
-            <H5
-              color={"red"}
-              style={{ textDecorationLine: "underline" }}
-              onPress={props.onRetry}
-            >
-              {I18n.t("global.genericRetry")}
-            </H5>
-          )}
         </View>
         <View spacer={true} />
         <TouchableDefaultOpacity
