@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
  * - label -> displayed on top the search text-box both.
  * - placeholder -> placeholder of the search text-box.
  * - showModalInputTextbox -> boolean that control the input textbox in the modal
- * - wrappedFlatlist -> the Flatlist component that show the suggestions that the user can choose from
+ * - wrappedFlatlist -> the Flatlist component that show the suggestions that the user can choose from. Note that if the list needs to react
+ *                      and change the showed data when the text change a connected component that wrap the Flatlist is needed.
  */
 type CommonProps = {
   onChangeText?: (value: string) => void;
