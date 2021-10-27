@@ -1029,7 +1029,7 @@ wallet:
           row3Description2: "Termini e condizioni d’uso"
       onBoardingCompleted:
         title: "Fatto!"
-        body: "Scopri e gestisci le iniziative compatibili con il metodo appena aggiunto."
+        body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
         secondaryButton: "Chiudi"
         primaryButton: "Vedi metodo"
     coBadge:

@@ -1010,10 +1010,10 @@ wallet:
           row3Description1: "Privacy Policy"
           row3Description2: "Terms and Conditions"
       onBoardingCompleted:
-        title: "Fatto!"
-        body: "Scopri e gestisci le iniziative compatibili con il metodo appena aggiunto."
-        secondaryButton: "Chiudi"
-        primaryButton: "Vedi metodo"
+        title: "That's it!"
+        body: "Now have a look at the current settings of your new method."
+        secondaryButton: "Close"
+        primaryButton: "View method"
     coBadge:
       headerTitle: "Add international circuit"
       start:
