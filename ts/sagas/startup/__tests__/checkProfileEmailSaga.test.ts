@@ -57,7 +57,6 @@ describe("checkAcceptedTosSaga", () => {
       expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(navigateToEmailInsertScreen) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
-        .call(navigateToEmailReadScreen) // navigate to email read screen to remember the user to validate id
         .dispatch(emailAcknowledged()) // press continue
         .run());
   });
