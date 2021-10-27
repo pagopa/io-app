@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.37.0-rc.0](https://github.com/pagopa/io-app/compare/1.36.0-rc.2...1.37.0-rc.0) (2021-10-26)
+
+
+### Features
+
+* [[IA-300](https://pagopa.atlassian.net/browse/IA-300)] Add PayPal psp screen selection ([#3443](https://github.com/pagopa/io-app/issues/3443)) ([b0c19af](https://github.com/pagopa/io-app/commit/b0c19aff24e7f38ca8d112a4efa9f16b3a058006))
+
+
+### Bug Fixes
+
+* [[IA-305](https://pagopa.atlassian.net/browse/IA-305)] The content of error component has bad valign ([#3445](https://github.com/pagopa/io-app/issues/3445)) ([ecac647](https://github.com/pagopa/io-app/commit/ecac64759a78fc8cea9f5e8dead1bda635107248))
+
+## [1.36.0-rc.2](https://github.com/pagopa/io-app/compare/1.36.0-rc.1...1.36.0-rc.2) (2021-10-21)
+
+
+### Features
+
+* **Sicilia Vola:** [[IASV-32](https://pagopa.atlassian.net/browse/IASV-32)] Summary screen ([#3431](https://github.com/pagopa/io-app/issues/3431)) ([3301831](https://github.com/pagopa/io-app/commit/3301831cc772f07b1418599bb0ebfc08f9b55d60))
+* [[IA-299](https://pagopa.atlassian.net/browse/IA-299)] Add PayPal start screen ([#3440](https://github.com/pagopa/io-app/issues/3440)) ([4a36337](https://github.com/pagopa/io-app/commit/4a36337a467e00f71f759c7b9e4ef707bd19ceb3))
+* **Sicilia Vola:** [[IASV-16](https://pagopa.atlassian.net/browse/IASV-16)] Voucher revocation ([#3429](https://github.com/pagopa/io-app/issues/3429)) ([180066b](https://github.com/pagopa/io-app/commit/180066b823e610b2de3a54d0d4cd58158b51317d))
+
+
+### Bug Fixes
+
+* [[IABT-1270](https://pagopa.atlassian.net/browse/IABT-1270)] Instabug chat badge blocks button tap ([#3433](https://github.com/pagopa/io-app/issues/3433)) ([126bd99](https://github.com/pagopa/io-app/commit/126bd99e28a15db7526e5ecbcf8852166ad8d9eb))
+* **Bonus Pagamenti Digitali:** [[IAC-120](https://pagopa.atlassian.net/browse/IAC-120)] Moving rapidly between periods causes graphical glitches  ([#3437](https://github.com/pagopa/io-app/issues/3437)) ([917bd89](https://github.com/pagopa/io-app/commit/917bd89234e51e2830f11868d7fc171bf73075b1))
+
+
+### Chores
+
+* [[IA-292](https://pagopa.atlassian.net/browse/IA-292)] Restore services persistence ([#3434](https://github.com/pagopa/io-app/issues/3434)) ([33a3a7d](https://github.com/pagopa/io-app/commit/33a3a7db7a538b35d4a4f406b11c1c0092eeb68b))
+* [[IA-294](https://pagopa.atlassian.net/browse/IA-294)] Payment CTA should be always shown ([#3435](https://github.com/pagopa/io-app/issues/3435)) ([141e2ba](https://github.com/pagopa/io-app/commit/141e2babfe9386a6a978e98aa270c5e9509a1a32))
+* [[IA-296](https://pagopa.atlassian.net/browse/IA-296)] Increase payment history details ([#3438](https://github.com/pagopa/io-app/issues/3438)) ([3a1054f](https://github.com/pagopa/io-app/commit/3a1054f4d54d343a3c8b5489cad9464ef95d9fea))
+
 ## [1.36.0-rc.1](https://github.com/pagopa/io-app/compare/1.36.0-rc.0...1.36.0-rc.1) (2021-10-14)
 
 

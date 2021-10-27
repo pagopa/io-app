@@ -26,6 +26,8 @@ import {
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
+// where the payment started, more info https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p
+export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
 /**
  * Resets the payment state before starting a new payment
  */
@@ -58,7 +60,7 @@ export const paymentVerifica = createAsyncAction(
   "PAYMENT_VERIFICA_SUCCESS",
   "PAYMENT_VERIFICA_FAILURE"
 )<
-  RptId,
+  { rptId: RptId; startOrigin: PaymentStartOrigin },
   PaymentRequestsGetResponse,
   keyof typeof PaymentProblemErrorEnum | undefined
 >();

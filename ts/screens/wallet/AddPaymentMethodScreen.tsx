@@ -21,7 +21,6 @@ import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privat
 import I18n from "../../i18n";
 import {
   navigateBack,
-  navigateToPaymentTransactionSummaryScreen,
   navigateToWalletAddCreditCard,
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
@@ -182,17 +181,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
     dispatch(navigateToWalletAddDigitalPaymentMethod()),
-  navigateToTransactionSummary: () => {
-    const maybeInPayment = props.navigation.getParam("inPayment");
-    maybeInPayment.map(inPayment =>
-      dispatch(
-        navigateToPaymentTransactionSummaryScreen({
-          rptId: inPayment.rptId,
-          initialAmount: inPayment.initialAmount
-        })
-      )
-    );
-  },
   navigateToAddCreditCard: () =>
     dispatch(
       navigateToWalletAddCreditCard({

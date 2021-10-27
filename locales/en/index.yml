@@ -989,6 +989,26 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is the payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "Privacy Policy"
+          row3Description2: "Terms and Conditions"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -2725,6 +2745,16 @@ bonus:
         cta:
           voucherRevocation: "Voucher revocation"
           openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"

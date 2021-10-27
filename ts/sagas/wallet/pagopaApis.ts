@@ -723,7 +723,7 @@ export function* paymentVerificaRequestHandler(
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
       {
-        rptId: RptIdFromString.encode(action.payload),
+        rptId: RptIdFromString.encode(action.payload.rptId),
         test: isPagoPATestEnabled
       }
     );
