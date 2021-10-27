@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import i18n from "../../../../../i18n";
@@ -9,6 +10,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as openWebUrl from "../../../../../utils/url";
 import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
+import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
+import { EUCovidContext } from "../../EuCovidCertificateRouterScreen";
 import EuCovidCertWrongFormatKoScreen from "../EuCovidCertWrongFormatKoScreen";
 
 describe("Test EuCovidCertNotFoundKoScreen", () => {
@@ -16,7 +19,7 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
   it("Should show the WorkunitGenericFailure and should send the mixpanel event if euCovidCertCurrentSelector return null", () => {
     const spyMixpanelTrack = jest.spyOn(mixpanelTrack, "mixpanelTrack");
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const wrongFormatScreen = renderComponent(globalState);
+    const wrongFormatScreen = renderComponent(globalState, false);
 
     expect(
       wrongFormatScreen.queryByTestId("WorkunitGenericFailure")
@@ -38,6 +41,8 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
         }
       }
     });
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(wrongFormatScreen.toJSON()));
     const requestAssistanceButton = wrongFormatScreen.queryByText(
       i18n.t("features.euCovidCertificate.ko.wrongFormat.cta")
     );
@@ -61,11 +66,24 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
   });
 });
 
-const renderComponent = (state: GlobalState) => {
+const renderComponent = (state: GlobalState, withContext: boolean = true) => {
   const store = createStore(appReducer, state as any);
 
+  const Component = withContext ? (
+    <EUCovidContext.Provider
+      value={{
+        authCode: "authCode" as EUCovidCertificateAuthCode,
+        messageId: "messageId"
+      }}
+    >
+      <EuCovidCertWrongFormatKoScreen />
+    </EUCovidContext.Provider>
+  ) : (
+    <EuCovidCertWrongFormatKoScreen />
+  );
+
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    EuCovidCertWrongFormatKoScreen,
+    () => Component,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store

@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import * as React from "react";
 import { NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import i18n from "../../../../../i18n";
@@ -9,14 +10,17 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as openWebUrl from "../../../../../utils/url";
 import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
+import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
+import { EUCovidContext } from "../../EuCovidCertificateRouterScreen";
 import EuCovidCertNotFoundKoScreen from "../EuCovidCertNotFoundKoScreen";
+import EuCovidCertWrongFormatKoScreen from "../EuCovidCertWrongFormatKoScreen";
 
 describe("Test EuCovidCertNotFoundKoScreen", () => {
   jest.useFakeTimers();
   it("Should show the WorkunitGenericFailure and should send the mixpanel event if euCovidCertCurrentSelector return null", () => {
     const spyMixpanelTrack = jest.spyOn(mixpanelTrack, "mixpanelTrack");
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const notFoundScreen = renderComponent(globalState);
+    const notFoundScreen = renderComponent(globalState, false);
 
     expect(
       notFoundScreen.queryByTestId("WorkunitGenericFailure")
@@ -59,11 +63,24 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
   });
 });
 
-const renderComponent = (state: GlobalState) => {
+const renderComponent = (state: GlobalState, withContext: boolean = true) => {
   const store = createStore(appReducer, state as any);
 
+  const Component = withContext ? (
+    <EUCovidContext.Provider
+      value={{
+        authCode: "authCode" as EUCovidCertificateAuthCode,
+        messageId: "messageId"
+      }}
+    >
+      <EuCovidCertNotFoundKoScreen />
+    </EUCovidContext.Provider>
+  ) : (
+    <EuCovidCertWrongFormatKoScreen />
+  );
+
   return renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    EuCovidCertNotFoundKoScreen,
+    () => Component,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},
     store
