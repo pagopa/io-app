@@ -998,7 +998,7 @@ wallet:
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
-        link: "What is the payment provider?"
+        link: "What is a payment provider?"
         leftColumnTitle: "Provider"
         rightColumnTitle: "Info & Fees"
         infoBottomSheet:
