@@ -5,28 +5,28 @@ import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { constNull } from "fp-ts/lib/function";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { Body } from "../../../../components/core/typography/Body";
-import { Link } from "../../../../components/core/typography/Link";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { Body } from "../../../../../components/core/typography/Body";
+import { Link } from "../../../../../components/core/typography/Link";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   RadioButtonList,
   RadioItem
-} from "../../../../components/core/selection/RadioButtonList";
-import { privacyUrl } from "../../../../config";
+} from "../../../../../components/core/selection/RadioButtonList";
+import { privacyUrl } from "../../../../../config";
 import {
   getValueOrElse,
   isError,
   isReady,
   remoteReady
-} from "../../../bonus/bpd/model/RemoteValue";
-import { H4 } from "../../../../components/core/typography/H4";
-import { GlobalState } from "../../../../store/reducers/types";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+} from "../../../../bonus/bpd/model/RemoteValue";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
