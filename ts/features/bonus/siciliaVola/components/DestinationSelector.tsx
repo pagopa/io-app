@@ -12,7 +12,6 @@ import { IndexedById, toArray } from "../../../../store/helpers/indexer";
 import { Municipality, State } from "../types/SvVoucherRequest";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
-import { isError, isLoading } from "../../bpd/model/RemoteValue";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import WrappedFlatlist from "./WrappedMunicipalityFlatlist";
@@ -55,7 +54,6 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         placeholder={I18n.t(
           "bonus.sv.components.destinationSelector.state.placeholder"
         )}
-        isLoading={false}
         showModalInputTextbox={false}
         wrappedFlatlist={
           <FlatList
@@ -95,8 +93,6 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
           "bonus.sv.components.destinationSelector.municipality.placeholder"
         )}
         disabled={props.selectedState === undefined}
-        isLoading={isLoading(props.availableMunicipalities)}
-        isFailed={isError(props.availableMunicipalities)}
         showModalInputTextbox={true}
         wrappedFlatlist={
           <WrappedFlatlist onPress={props.setSelectedMunicipality} />
