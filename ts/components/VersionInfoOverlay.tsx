@@ -6,7 +6,7 @@ import DeviceInfo from "react-native-device-info";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
-import { currentRouteDebugSelector } from "../store/reducers/navigation";
+import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 
@@ -64,7 +64,7 @@ const mapStateToProps = (state: GlobalState) => ({
   serverInfo: state.backendInfo.serverInfo,
   // We need to use the currentRouteDebugSelector because this component is outside the NavigationContext and otherwise
   // doesn't receive the updates about the new screens
-  screenNameDebug: currentRouteDebugSelector(state)
+  screenNameDebug: currentRouteSelector(state)
 });
 
 export default connect(mapStateToProps)(VersionInfoOverlay);

@@ -30,7 +30,7 @@ import {
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
-import { currentRouteDebugSelector } from "./navigation";
+import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
@@ -108,7 +108,7 @@ export const screenContextualHelpDataSelector = createSelector<
   string,
   pot.Pot<Option<ScreenCHData>, Error>
 >(
-  [contextualHelpDataSelector, currentRouteDebugSelector],
+  [contextualHelpDataSelector, currentRouteSelector],
   (contextualHelpData, currentRoute) =>
     pot.map(contextualHelpData, data => {
       if (currentRoute === undefined) {
