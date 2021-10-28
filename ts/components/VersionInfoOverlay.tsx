@@ -6,7 +6,7 @@ import DeviceInfo from "react-native-device-info";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
-import { currentRouteDebugSelector } from "../store/reducers/debug";
+import { currentRouteDebugSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 

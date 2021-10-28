@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 import ROUTES from "../../navigation/routes";
-import { currentRouteDebugSelector, isDebugModeEnabledSelector } from "./debug";
+import { isDebugModeEnabledSelector } from "./debug";
+import { currentRouteDebugSelector } from "./navigation";
 
 export const screenBlackList = new Set([ROUTES.WALLET_ADD_CARD]);
 

@@ -37,6 +37,7 @@ import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import internalRouteNavigationReducer from "./internalRouteNavigation";
+import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
@@ -84,6 +85,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   // ephemeral state
   //
   appState: appStateReducer,
+  navigation: navigationReducer,
   network: networkReducer,
   backoffError: backoffErrorReducer,
   deepLink: deepLinkReducer,

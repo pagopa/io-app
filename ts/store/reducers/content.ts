@@ -30,7 +30,7 @@ import {
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
-import { currentRouteDebugSelector } from "./debug";
+import { currentRouteDebugSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**

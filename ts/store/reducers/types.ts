@@ -19,6 +19,7 @@ import { PersistedIdentificationState } from "./identification";
 import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";
 import { InternalRouteNavigationState } from "./internalRouteNavigation";
+import { NavigationState } from "./navigation";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PaymentsState } from "./payments";
@@ -37,6 +38,7 @@ type NetworkState = Readonly<{
 
 export type GlobalState = Readonly<{
   appState: AppState;
+  navigation: NavigationState;
   authentication: PersistedAuthenticationState;
   backendStatus: BackendStatusState;
   backendInfo: BackendInfoState;
