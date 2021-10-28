@@ -35,7 +35,6 @@ export function* eycaActivationWorker(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ) {
   yield call(navigateToEycaActivationLoading);
-  // yield put(navigationHistoryPop(1));
 
   const eycaActivation: SagaCallReturnType<typeof getActivation> = yield call(
     getActivation,

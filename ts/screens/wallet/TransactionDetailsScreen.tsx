@@ -113,18 +113,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   }
 
   private handleBackPress = () => this.props.navigation.goBack();
-  // TODO: check
-  // if (
-  //   whereAmIFrom(this.props.nav).fold(
-  //     false,
-  //     r => r === ROUTES.WALLET_HOME || r === ROUTES.WALLET_CREDIT_CARD_DETAIL
-  //   )
-  // ) {
-  //   return this.props.navigation.goBack();
-  // } else {
-  //   this.props.navigateBackToEntrypointPayment();
-  //   return true;
-  // }
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");

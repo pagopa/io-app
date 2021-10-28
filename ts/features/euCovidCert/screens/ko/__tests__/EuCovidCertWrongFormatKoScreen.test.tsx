@@ -41,8 +41,6 @@ describe("Test EuCovidCertNotFoundKoScreen", () => {
         }
       }
     });
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(wrongFormatScreen.toJSON()));
     const requestAssistanceButton = wrongFormatScreen.queryByText(
       i18n.t("features.euCovidCertificate.ko.wrongFormat.cta")
     );
