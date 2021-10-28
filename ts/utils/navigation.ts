@@ -25,7 +25,6 @@ const findLeafRoute = (
 };
 
 /**
- * @deprecated
  * @param navState
  */
 export function getCurrentRouteName(
@@ -39,7 +38,6 @@ export function getCurrentRouteName(
 }
 
 /**
- * @deprecated
  * @param navState
  */
 export function getCurrentRouteKey(
@@ -65,7 +63,6 @@ export const getCurrentRoute = (
 /**
  * This function returns the route name from a given NavigationRoute param
  * using recursion to navigate through the object until the leaf node
- * @deprecated
  */
 export function getRouteName(route: NavigationRoute): Option<string> {
   if (route.index === undefined) {

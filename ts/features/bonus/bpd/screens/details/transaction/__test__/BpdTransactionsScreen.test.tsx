@@ -217,10 +217,6 @@ describe("BpdTransactionsScreen", () => {
       bpdAllData.request(),
       bpdAllData.success()
     ];
-    // TODO: this is needed?
-    // navigateToBpdDetails({
-    //   awardPeriodId: 1 as AwardPeriodId
-    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -293,11 +289,6 @@ describe("BpdTransactionsScreen", () => {
         error: {} as Error
       })
     ];
-
-    // TODO: This is needed?
-    // navigateToBpdDetails({
-    //   awardPeriodId: 1 as AwardPeriodId
-    // } as BpdPeriodWithInfo);
 
     const finalState = reproduceSequence(
       {} as GlobalState,
@@ -374,11 +365,6 @@ describe("BpdTransactionsScreen", () => {
         error: {} as Error
       })
     ];
-
-    // TODO: This is needed?
-    // navigateToBpdDetails({
-    //   awardPeriodId: 1 as AwardPeriodId
-    // } as BpdPeriodWithInfo),
 
     const finalState = reproduceSequence(
       {} as GlobalState,
