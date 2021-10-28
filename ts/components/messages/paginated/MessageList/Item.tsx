@@ -2,15 +2,16 @@
  * A component to display the list item in the MessagesHomeScreen
  */
 import React from "react";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import I18n from "../../../i18n";
-import { PaidReason } from "../../../store/reducers/entities/payments";
+
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import I18n from "../../../../i18n";
+import { PaidReason } from "../../../../store/reducers/entities/payments";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
-} from "../../../utils/convertDateToWordDistance";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
-import DetailedlistItemComponent from "../../DetailedlistItemComponent";
+} from "../../../../utils/convertDateToWordDistance";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import DetailedlistItemComponent from "../../../DetailedlistItemComponent";
 
 type Props = {
   isRead: boolean;

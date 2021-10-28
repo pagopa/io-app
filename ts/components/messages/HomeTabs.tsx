@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
 import { Tab, Tabs } from "native-base";
+import { connect } from "react-redux";
 
 import { IOStyles } from "../core/variables/IOStyles";
 import I18n from "../../i18n";
-import { UIMessage } from "../../store/reducers/entities/messages/types";
-import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
-import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../../theme/fonts";
 import { isAndroid } from "../../utils/platform";
+import { GlobalState } from "../../store/reducers/types";
+import { allMessagesSelector } from "../../store/reducers/entities/messages/allPaginated";
+import { Dispatch } from "../../store/actions/types";
+import { setMessagesArchivedState } from "../../store/actions/messages";
+import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 
 import MessagesInbox from "./paginated/MessagesInbox";
 
@@ -44,39 +47,23 @@ const styles = StyleSheet.create({
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
-type Props = {
-  allMessages: ReadonlyArray<UIMessage>;
+type OwnProps = {
   animatedTabScrollPositions: ReadonlyArray<Animated.Value>;
-  error?: string;
-  hasNextPage: boolean;
-  isLoading: boolean;
-  loadNextPage: () => void;
-  loadPreviousPage: () => void;
-  navigateToMessageDetail: (id: string) => void;
   onTabChange: (i: number) => void;
-  paymentsByRptId: PaymentByRptIdState;
-  servicesById: ServicesByIdState;
-  updateMessagesArchivedState: (
-    ids: ReadonlyArray<string>,
-    archived: boolean
-  ) => void;
 };
+
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 /**
  * Render Inbox, Deadlines and Archive tabs.
  */
 const HomeTabs = ({
-  allMessages,
   animatedTabScrollPositions,
-  error,
-  // hasNextPage,
-  isLoading,
-  loadNextPage,
-  loadPreviousPage,
+  messages,
   navigateToMessageDetail,
   onTabChange,
-  // paymentsByRptId,
-  // servicesById,
   updateMessagesArchivedState
 }: Props) => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -120,13 +107,9 @@ const HomeTabs = ({
               ]),
               scrollEventThrottle: 8
             }}
-            currentTab={currentTab}
-            error={error}
-            isLoading={isLoading}
-            messages={allMessages}
+            isActive={currentTab === 0}
+            messages={messages}
             navigateToMessageDetail={navigateToMessageDetail}
-            onPreviousPage={loadPreviousPage}
-            onNextPage={loadNextPage}
             setMessagesArchivedState={updateMessagesArchivedState}
           />
         </Tab>
@@ -135,4 +118,17 @@ const HomeTabs = ({
   );
 };
 
-export default HomeTabs;
+const mapStateToProps = (state: GlobalState) => ({
+  messages: allMessagesSelector(state)
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToMessageDetail: (messageId: string) =>
+    dispatch(navigateToMessageRouterScreen({ messageId })),
+  updateMessagesArchivedState: (
+    ids: ReadonlyArray<string>,
+    archived: boolean
+  ) => dispatch(setMessagesArchivedState(ids, archived))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeTabs);

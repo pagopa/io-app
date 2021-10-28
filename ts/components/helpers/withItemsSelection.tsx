@@ -15,7 +15,7 @@ export type InjectedWithItemsSelectionProps = {
 };
 
 /**
- * An HOC to maintain and manipulate the items selection.
+ * An HOC to maintain and manipulate a list of selected items.
  */
 export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
   WrappedComponent: React.ComponentType<P>

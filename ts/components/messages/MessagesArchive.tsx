@@ -145,8 +145,8 @@ class MessagesArchive extends React.PureComponent<Props, State> {
           />
         </View>
         <ListSelectionBar
-          selectedItemIds={selectedItemIds}
-          allItemIds={allMessageIdsState}
+          selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+          totalItems={allMessageIdsState.map(_ => _.size).getOrElse(0)}
           onToggleSelection={this.unarchiveMessages}
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}

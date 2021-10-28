@@ -3,6 +3,7 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
+import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import {
@@ -20,12 +21,20 @@ export type Cursor = string;
 /**
  * A list of messages and pagination data.
  */
-export type AllPaginated = pot.Pot<
-  { page: ReadonlyArray<UIMessage>; previous?: Cursor; next?: Cursor },
-  string
->;
+export type AllPaginated = {
+  data: pot.Pot<
+    { page: ReadonlyArray<UIMessage>; previous?: Cursor; next?: Cursor },
+    string
+  >;
 
-const INITIAL_STATE: AllPaginated = pot.none;
+  /** persist the last action type occurred */
+  lastRequest: Option<"previous" | "next" | "all">;
+};
+
+const INITIAL_STATE: AllPaginated = {
+  data: pot.none,
+  lastRequest: none
+};
 
 const reducer = (
   state: AllPaginated = INITIAL_STATE,
@@ -61,17 +70,26 @@ const reduceReloadAll = (
 ): AllPaginated => {
   switch (action.type) {
     case getType(reloadAllMessages.request):
-      return pot.toLoading(state);
+      return {
+        data: pot.toLoading(state.data),
+        lastRequest: some("all")
+      };
 
     case getType(reloadAllMessages.success):
-      return pot.some({
-        page: action.payload.messages,
-        previous: action.payload.pagination.previous,
-        next: action.payload.pagination.next
-      });
+      return {
+        data: pot.some({
+          page: action.payload.messages,
+          previous: action.payload.pagination.previous,
+          next: action.payload.pagination.next
+        }),
+        lastRequest: none
+      };
 
     case getType(reloadAllMessages.failure):
-      return pot.toError(state, action.payload.message);
+      return {
+        ...state,
+        data: pot.toError(state.data, action.payload.message)
+      };
 
     default:
       return state;
@@ -84,11 +102,11 @@ const reduceLoadNextPage = (
 ): AllPaginated => {
   switch (action.type) {
     case getType(loadNextPageMessages.request):
-      return pot.toLoading(state);
+      return { data: pot.toLoading(state.data), lastRequest: some("next") };
 
     case getType(loadNextPageMessages.success):
-      return pot
-        .toOption(state)
+      const nextData = pot
+        .toOption(state.data)
         .map(previousState =>
           pot.some({
             page: previousState.page.concat(action.payload.messages),
@@ -102,8 +120,16 @@ const reduceLoadNextPage = (
           })
         );
 
+      return {
+        data: nextData,
+        lastRequest: none
+      };
+
     case getType(loadNextPageMessages.failure):
-      return pot.toError(state, action.payload.message);
+      return {
+        ...state,
+        data: pot.toError(state.data, action.payload.message)
+      };
 
     default:
       return state;
@@ -126,7 +152,10 @@ const reduceLoadPreviousPage = (
 
     case getType(loadNextPageMessages.failure):
       // TODO: convey the error while preserving the Pot semantics
-      return pot.toError(state, action.payload.message);
+      return {
+        ...state,
+        data: pot.toError(state.data, action.payload.message)
+      };
 
     default:
       return state;
@@ -136,6 +165,28 @@ const reduceLoadPreviousPage = (
 // Selectors
 export const allPaginatedMessagesSelector = (
   state: GlobalState
-): AllPaginated => state.entities.messages.allPaginated;
+): AllPaginated["data"] => state.entities.messages.allPaginated.data;
+
+export const allMessagesSelector = (
+  state: GlobalState
+): ReadonlyArray<UIMessage> =>
+  pot.getOrElse(
+    pot.map(state.entities.messages.allPaginated.data, _ => _.page),
+    []
+  );
+
+export const isLoadingNextPage = (state: GlobalState): boolean => {
+  const { data, lastRequest } = state.entities.messages.allPaginated;
+  return lastRequest
+    .map(_ => _ === "next" && pot.isLoading(data))
+    .getOrElse(false);
+};
+
+export const isLoadingPreviousPage = (state: GlobalState): boolean => {
+  const { data, lastRequest } = state.entities.messages.allPaginated;
+  return lastRequest
+    .map(_ => _ === "previous" && pot.isLoading(data))
+    .getOrElse(false);
+};
 
 export default reducer;

@@ -628,8 +628,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           />
         </View>
         <ListSelectionBar
-          selectedItemIds={selectedItemIds}
-          allItemIds={some(allMessageIdsState)}
+          selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+          totalItems={allMessageIdsState.size}
           onToggleSelection={this.archiveMessages}
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}

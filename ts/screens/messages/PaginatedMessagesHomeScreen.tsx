@@ -7,7 +7,6 @@ import { NavigationEventSubscription } from "react-navigation";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import * as pot from "italia-ts-commons/lib/pot";
 
 import MessagesSearch from "../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -17,16 +16,9 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton"
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
-import {
-  loadNextPageMessages,
-  reloadAllMessages,
-  setMessagesArchivedState
-} from "../../store/actions/messages";
+import { loadNextPageMessages } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
-import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
-import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
@@ -38,13 +30,12 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
-  allPaginatedMessagesSelector,
-  Cursor
+  allMessagesSelector,
+  isLoadingNextPage,
+  isLoadingPreviousPage
 } from "../../store/reducers/entities/messages/allPaginated";
 import { pageSize } from "../../config";
 import HomeTabs from "../../components/messages/HomeTabs";
-import { UIMessage } from "../../store/reducers/entities/messages/types";
-import { messagesStatusSelector } from "../../store/reducers/entities/messages/messagesStatus";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -61,58 +52,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
-
-type UnwrappedMessageState = {
-  error?: string;
-  allMessages: ReadonlyArray<UIMessage>;
-  isLoading: boolean;
-  nextCursor?: Cursor;
-  previousCursor?: Cursor;
-};
-const defaultResult: UnwrappedMessageState = {
-  error: undefined,
-  allMessages: [],
-  isLoading: false,
-  nextCursor: undefined,
-  previousCursor: undefined
-};
-const unwrapMessageState = (
-  messagesState: ReturnType<typeof allPaginatedMessagesSelector>
-): UnwrappedMessageState =>
-  pot.fold(
-    messagesState,
-    () => defaultResult,
-    () => ({ ...defaultResult, isLoading: true }),
-    () => ({ ...defaultResult, isLoading: true }),
-    error => ({ ...defaultResult, error }),
-    ({ page, previous, next }) => ({
-      ...defaultResult,
-      allMessages: page,
-      nextCursor: next,
-      previousCursor: previous
-    }),
-    ({ page, previous, next }) => ({
-      ...defaultResult,
-      allMessages: page,
-      loading: true,
-      nextCursor: next,
-      previousCursor: previous
-    }),
-    ({ page, previous, next }) => ({
-      ...defaultResult,
-      loading: true,
-      allMessages: page,
-      nextCursor: next,
-      previousCursor: previous
-    }),
-    ({ page, previous, next }, error) => ({
-      ...defaultResult,
-      allMessages: page,
-      error,
-      nextCursor: next,
-      previousCursor: previous
-    })
-  );
 
 /**
  * A screen that contains all the Tabs related to messages.
@@ -134,7 +73,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    this.props.loadNextPage();
+    this.props.loadFirstPage();
     // eslint-disable-next-line functional/immutable-data
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
@@ -161,17 +100,10 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   render() {
     const {
       isSearchEnabled,
-      messagesState,
+      allMessages,
       navigateToMessageDetail,
-      loadNextPage,
-      loadPreviousPage,
-      servicesById,
-      paymentsByRptId,
-      updateMessagesArchivedState
+      isLoadingMessages
     } = this.props;
-
-    const { error, isLoading, allMessages, nextCursor, previousCursor } =
-      unwrapMessageState(messagesState);
 
     return (
       <TopScreenComponent
@@ -200,24 +132,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
               dynamicHeight={this.getHeaderHeight()}
             />
             <HomeTabs
-              error={error}
-              isLoading={isLoading}
-              allMessages={allMessages}
-              hasNextPage={!!nextCursor}
-              loadNextPage={() => {
-                if (nextCursor) {
-                  loadNextPage(nextCursor);
-                }
-              }}
-              loadPreviousPage={() => {
-                if (previousCursor) {
-                  loadPreviousPage(previousCursor);
-                }
-              }}
-              updateMessagesArchivedState={updateMessagesArchivedState}
-              servicesById={servicesById}
-              paymentsByRptId={paymentsByRptId}
-              navigateToMessageDetail={navigateToMessageDetail}
               animatedTabScrollPositions={this.animatedTabScrollPositions}
               onTabChange={(index: number) =>
                 this.setState({ currentTab: index })
@@ -234,14 +148,9 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
               ) : (
                 <MessagesSearch
                   messages={allMessages}
-                  // servicesById={servicesById}
-                  // paymentsByRptId={paymentsByRptId}
-                  onRefresh={() => {
-                    // TODO: this will load the previous page or the entire list?
-                  }}
                   navigateToMessageDetail={navigateToMessageDetail}
                   searchText={_}
-                  isLoading={isLoading}
+                  isLoading={isLoadingMessages}
                 />
               )
             )
@@ -254,36 +163,20 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  messagesState: allPaginatedMessagesSelector(state),
-  clientStatusPerMessage: messagesStatusSelector(state),
-  servicesById: servicesByIdSelector(state),
-  paymentsByRptId: paymentsByRptIdSelector(state),
-  searchText: searchTextSelector(state),
+  allMessages: allMessagesSelector(state),
+  isLoadingMessages: isLoadingNextPage(state) || isLoadingPreviousPage(state),
+  isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
-  isSearchEnabled: isSearchMessagesEnabledSelector(state)
+  searchText: searchTextSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  reloadAllMessages: () => {
-    dispatch(reloadAllMessages.request());
-  },
-  loadNextPage: (cursor?: Cursor) => {
-    dispatch(loadNextPageMessages.request({ pageSize, cursor }));
-  },
-  loadPreviousPage: (cursor: Cursor) => {
-    // We load the maximum amount of messages because we don't actually support
-    // true backwards pagination. Is just to refresh the data.
-    dispatch(loadNextPageMessages.request({ pageSize: 100, cursor }));
-  },
-  refreshService: (serviceId: string) => {
-    dispatch(loadServiceDetail.request(serviceId));
+  // used for the first rendering only
+  loadFirstPage: () => {
+    dispatch(loadNextPageMessages.request({ pageSize }));
   },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId })),
-  updateMessagesArchivedState: (
-    ids: ReadonlyArray<string>,
-    archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+    dispatch(navigateToMessageRouterScreen({ messageId }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

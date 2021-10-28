@@ -1,6 +1,5 @@
-import { none } from "fp-ts/lib/Option";
 import { View } from "native-base";
-import React, { ComponentProps } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 
 import { SearchNoResultMessage } from "../../search/SearchNoResultMessage";
@@ -15,21 +14,22 @@ const styles = StyleSheet.create({
   }
 });
 
-type OwnProps = {
+type Props = {
   messages: ReadonlyArray<UIMessage>;
   searchText: string;
   navigateToMessageDetail: (id: string) => void;
   isLoading: boolean;
 };
 
-type Props = Pick<ComponentProps<typeof MessageList>, "onRefresh"> & OwnProps;
-
 /**
  * A component to render a list of messages that match a searchText.
  */
-const MessagesSearch = (props: Props) => {
-  const { isLoading, messages, searchText, navigateToMessageDetail } = props;
-  const searchResults = messages.filter(message =>
+const MessagesSearch = ({
+  messages,
+  navigateToMessageDetail,
+  searchText
+}: Props) => {
+  const searchResults: ReadonlyArray<UIMessage> = messages.filter(message =>
     isTextIncludedCaseInsensitive(
       [message.title, message.organizationName, message.serviceName].join(" "),
       searchText
@@ -39,12 +39,10 @@ const MessagesSearch = (props: Props) => {
   return searchResults.length > 0 ? (
     <View style={styles.listWrapper}>
       <MessageList
-        {...props}
-        messages={searchResults}
+        filteredMessages={searchResults}
         onPressItem={navigateToMessageDetail}
         onLongPressItem={navigateToMessageDetail}
-        refreshing={isLoading}
-        selectedMessageIds={none}
+        selectedMessageIds={new Set()}
       />
     </View>
   ) : (

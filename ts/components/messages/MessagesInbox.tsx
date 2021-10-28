@@ -146,8 +146,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
           />
         </View>
         <ListSelectionBar
-          selectedItemIds={selectedItemIds}
-          allItemIds={allMessageIdsState}
+          selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+          totalItems={allMessageIdsState.map(_ => _.size).getOrElse(0)}
           onToggleSelection={this.archiveMessages}
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}
