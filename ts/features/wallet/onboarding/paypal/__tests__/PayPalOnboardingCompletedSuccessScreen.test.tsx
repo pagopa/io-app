@@ -14,7 +14,7 @@ describe("PayPalOnboardingCompletedSuccessScreen", () => {
     const render = renderComponent(store);
     expect(render.component.toJSON()).toMatchSnapshot();
   });
-  
+
   it(`screen should be defined`, () => {
     const render = renderComponent(store);
     expect(
