@@ -3,9 +3,9 @@ import { View } from "native-base";
 import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import VoucherInformationComponent from "./VoucherInformationComponent";
 import { NetworkError } from "../../../../utils/errors";
 import { isLoading, RemoteValue } from "../../bpd/model/RemoteValue";
+import VoucherInformationComponent from "./VoucherInformationComponent";
 
 type Props = {
   qrCode: string;

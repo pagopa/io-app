@@ -2,6 +2,7 @@ import { ActionType } from "typesafe-actions";
 import { call, put } from "redux-saga/effects";
 import { Platform } from "react-native";
 import RNFS from "react-native-fs";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -10,7 +11,6 @@ import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
 import { waitBackoffError } from "../../../../../utils/backoffError";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 
 /**
  * Handle the remote call that allow the user to download and save the voucher
