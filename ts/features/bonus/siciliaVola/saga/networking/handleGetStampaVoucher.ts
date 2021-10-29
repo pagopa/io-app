@@ -23,7 +23,7 @@ export function* handleGetStampaVoucher(
 ) {
   const fPath = Platform.select({
     ios: RNFS.DocumentDirectoryPath,
-    android: RNFS.DownloadDirectoryPath
+    default: RNFS.DownloadDirectoryPath
   });
 
   const voucherFilename = "sicilia_vola";
@@ -37,7 +37,7 @@ export function* handleGetStampaVoucher(
       yield call(request);
 
     if (getStampaVoucherResult.isRight()) {
-      if (getStampaVoucherResult.value.status === 200 && fPath) {
+      if (getStampaVoucherResult.value.status === 200) {
         try {
           yield call(
             RNFS.writeFile,
