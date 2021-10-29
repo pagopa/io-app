@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import I18n from "../../../i18n";
 import { ListSelectionBar } from "../../ListSelectionBar";
-import { useItemsSelection } from "../../helpers/useItemsSelection";
+import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import { EmptyListComponent } from "../EmptyListComponent";
 
 import MessageList, { AnimatedProps } from "./MessageList";
@@ -75,7 +75,7 @@ const MessagesInbox = ({
             }
           }}
           onLongPressItem={toggleItem}
-          selectedMessageIds={selectedItems}
+          selectedMessageIds={selectedItems.toUndefined()}
           ListEmptyComponent={ListEmptyComponent}
           animated={animated}
         />

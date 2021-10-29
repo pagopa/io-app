@@ -17,7 +17,6 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import { loadNextPageMessages } from "../../store/actions/messages";
-import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   isSearchMessagesEnabledSelector,
@@ -29,13 +28,10 @@ import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import {
-  allMessagesSelector,
-  isLoadingNextPage,
-  isLoadingPreviousPage
-} from "../../store/reducers/entities/messages/allPaginated";
+import { allMessagesSelector } from "../../store/reducers/entities/messages/allPaginated";
 import { pageSize } from "../../config";
 import HomeTabs from "../../components/messages/HomeTabs";
+import MessageList from "../../components/messages/paginated/MessageList";
 
 type Props = NavigationStackScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -98,12 +94,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     });
 
   render() {
-    const {
-      isSearchEnabled,
-      allMessages,
-      navigateToMessageDetail,
-      isLoadingMessages
-    } = this.props;
+    const { isSearchEnabled, allMessages } = this.props;
 
     return (
       <TopScreenComponent
@@ -148,9 +139,10 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
               ) : (
                 <MessagesSearch
                   messages={allMessages}
-                  navigateToMessageDetail={navigateToMessageDetail}
                   searchText={_}
-                  isLoading={isLoadingMessages}
+                  renderSearchResults={results => (
+                    <MessageList filteredMessages={results} />
+                  )}
                 />
               )
             )
@@ -164,7 +156,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   allMessages: allMessagesSelector(state),
-  isLoadingMessages: isLoadingNextPage(state) || isLoadingPreviousPage(state),
   isSearchEnabled: isSearchMessagesEnabledSelector(state),
   messageSectionStatusActive: sectionStatusSelector("messages")(state),
   searchText: searchTextSelector(state)
@@ -174,9 +165,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // used for the first rendering only
   loadFirstPage: () => {
     dispatch(loadNextPageMessages.request({ pageSize }));
-  },
-  navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId }))
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessagesHomeScreen);

@@ -25,18 +25,15 @@ export const useItemsSelection = () => {
         }
         setSelections(newSelections);
       } else {
-        // eslint-disable-next-line functional/immutable-data
         setSelections(new Set([id]));
       }
     },
 
     setAllItems: (ids: Array<string>) => {
-      // eslint-disable-next-line functional/immutable-data
       setSelections(new Set(ids));
     },
 
     resetSelection: (): void => {
-      // eslint-disable-next-line functional/immutable-data
       setSelections(null);
     }
   };

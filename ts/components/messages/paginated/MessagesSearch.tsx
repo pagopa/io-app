@@ -6,8 +6,6 @@ import { SearchNoResultMessage } from "../../search/SearchNoResultMessage";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 
-import MessageList from "./MessageList";
-
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
@@ -17,16 +15,18 @@ const styles = StyleSheet.create({
 type Props = {
   messages: ReadonlyArray<UIMessage>;
   searchText: string;
-  navigateToMessageDetail: (id: string) => void;
-  isLoading: boolean;
+
+  /** Will be called only with non-empty results */
+  renderSearchResults: (results: ReadonlyArray<UIMessage>) => React.ReactNode;
 };
 
 /**
- * A component to render a list of messages that match a searchText.
+ * A component filter a list of messages matching the search text.
+ * A default view is rendered if there are no matching messages.
  */
 const MessagesSearch = ({
   messages,
-  navigateToMessageDetail,
+  renderSearchResults,
   searchText
 }: Props) => {
   const searchResults: ReadonlyArray<UIMessage> = messages.filter(message =>
@@ -37,14 +37,7 @@ const MessagesSearch = ({
   );
 
   return searchResults.length > 0 ? (
-    <View style={styles.listWrapper}>
-      <MessageList
-        filteredMessages={searchResults}
-        onPressItem={navigateToMessageDetail}
-        onLongPressItem={navigateToMessageDetail}
-        selectedMessageIds={new Set()}
-      />
-    </View>
+    <View style={styles.listWrapper}>{renderSearchResults(searchResults)}</View>
   ) : (
     <SearchNoResultMessage errorType="NoResultsFound" />
   );

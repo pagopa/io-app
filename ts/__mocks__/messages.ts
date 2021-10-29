@@ -20,6 +20,13 @@ export const service_1 = {
   department_name: "covid-19"
 } as ServicePublic;
 
+export const service_2 = {
+  service_id: serviceId_2,
+  service_name: "alert",
+  organization_name: "Наркомвнудел",
+  department_name: "РСФСР"
+} as ServicePublic;
+
 export const apiPayload = {
   items: [
     {
@@ -85,8 +92,8 @@ export const successPayload: ReloadMessagesPayload = {
       createdAt: "2021-10-18T16:00:30.541Z" as any,
       serviceId: serviceId_2,
       timeToLive,
-      serviceName: "alert",
-      organizationName: "Наркомвнудел",
+      serviceName: service_2.service_name,
+      organizationName: service_2.organization_name,
       title: "позвоните нам!"
     }
   ],

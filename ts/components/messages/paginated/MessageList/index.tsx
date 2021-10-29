@@ -77,10 +77,15 @@ type OwnProps = {
   ListEmptyComponent?: React.ComponentProps<
     typeof FlatList
   >["ListEmptyComponent"];
+
+  /** This list is used instead of the messages from the store */
   filteredMessages?: ReadonlyArray<UIMessage>;
-  onLongPressItem: (id: string) => void;
-  onPressItem: (id: string) => void;
-  selectedMessageIds: Option<ReadonlySet<string>>;
+
+  onLongPressItem?: (id: string) => void;
+  onPressItem?: (id: string) => void;
+
+  /** An optional list of messages to mark as selected */
+  selectedMessageIds?: ReadonlySet<string>;
 };
 
 export type AnimatedProps = {
@@ -95,21 +100,39 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/**
+ * A smart-component connected to the store and dispatching actions.
+ * Takes care of mapping pagination to the pull/scroll semantics and track the loading and error states.
+ *
+ * By default renders all the available Messages in the store, but this behavior can be overruled
+ * via the optional parameter `filteredMessages`.
+ *
+ * @param ListEmptyComponent
+ * @param animated
+ * @param filteredMessages This list is used instead of the messages from the store
+ * @param onLongPressItem
+ * @param onPressItem
+ * @param selectedMessageIds An optional list of messages to mark as selected
+ * @constructor
+ */
 const MessageList = ({
   ListEmptyComponent,
   animated,
+  filteredMessages,
+  onLongPressItem,
+
+  onPressItem = (_: string) => undefined,
+  selectedMessageIds,
+
+  // extracted from the store
   error,
   isLoadingMore,
   isRefreshing,
   loadNextPage,
   loadPreviousPage,
   allMessages,
-  filteredMessages,
   nextCursor,
-  onLongPressItem,
-  onPressItem: onPress,
-  previousCursor,
-  selectedMessageIds
+  previousCursor
 }: Props) => {
   const messages = filteredMessages ?? allMessages;
 
@@ -140,6 +163,9 @@ const MessageList = ({
   };
 
   const onLongPress = (id: string) => {
+    if (!onLongPressItem) {
+      return;
+    }
     Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
     onLongPressItem(id);
     const lastIndex = messages.length - 1;
@@ -196,8 +222,8 @@ const MessageList = ({
         renderItem={renderItem({
           isRead: false, // TODO: likely an information to be added on the BE
           onLongPress,
-          onPress,
-          selectedMessageIds: selectedMessageIds.toUndefined()
+          onPress: onPressItem,
+          selectedMessageIds
         })}
         scrollEnabled={true}
         scrollEventThrottle={animated?.scrollEventThrottle}
