@@ -6,6 +6,7 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
+import rehypeSanitize from "rehype-sanitize";
 
 // This Plugin is used to convert the markdown directives to custom blocks including classes and ids
 // source https://github.com/remarkjs/remark-directive#use
@@ -31,6 +32,7 @@ export const remarkProcessor = remark()
   .use(remarkDirective)
   .use(customPlugin) // @ts-ignore
   .use(remarkRehype) // @ts-ignore
+  .use(rehypeSanitize) // @ts-ignore
   .use(rehypeFormat) // @ts-ignore
   .use(rehypeStringify) // @ts-ignore
   .use(remarkDirective);

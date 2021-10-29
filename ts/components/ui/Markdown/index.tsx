@@ -17,7 +17,6 @@ import * as RNFS from "react-native-fs";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import { filterXSS } from "xss";
 import I18n from "../../../i18n";
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
@@ -417,7 +416,7 @@ class Markdown extends React.PureComponent<Props, State> {
       remarkProcessor.process(
         convertOldDemoMarkdownTag(
           // sanitize html to prevent xss attacks
-          filterXSS(markdown, { stripIgnoreTagBody: ["script"] })
+          markdown
         ),
         (error: any, file: any) => {
           // for retro compatibility
