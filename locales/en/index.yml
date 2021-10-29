@@ -600,10 +600,10 @@ authentication:
       button: "Load/open CieID"
     card:
       headerTitle: Login with CIE
-      titleiOS: Please try again
+      titleiOS: Hold the card still
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageHeaderiOS: The sensor is located on top of the device.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
