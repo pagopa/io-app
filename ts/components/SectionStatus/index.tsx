@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { Pressable, View } from "react-native";
-import { Text } from "native-base";
 import { GlobalState } from "../../store/reducers/types";
 import {
   SectionStatusKey,
@@ -15,6 +14,7 @@ import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { Link } from "../core/typography/Link";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -99,16 +99,13 @@ const InnerSectionStatus = (
           viewRef={viewRef}
         >
           {`${sectionStatus.message[locale]} `}
-          <Text
+          <Link
             testID={"SectionStatusComponentMoreInfo"}
-            style={{
-              color,
-              textDecorationLine: "underline",
-              fontWeight: "bold"
-            }}
+            color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
+            weight={"Bold"}
           >
             {I18n.t("global.sectionStatus.moreInfo")}
-          </Text>
+          </Link>
         </StatusContent>
       </Pressable>
     )
