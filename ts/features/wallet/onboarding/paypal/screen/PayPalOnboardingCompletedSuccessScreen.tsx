@@ -9,7 +9,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import successImage from "../../../../../../img/pictograms/payment-completed.png";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { GlobalState } from "../../../../../store/reducers/types";
 import I18n from "../../../../../i18n";
 import { FooterStackButton } from "../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
@@ -46,7 +49,7 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
             ),
             undefined,
             "primaryButtonId"
-          )
+          ),
           cancelButtonProps(
             props.onClose,
             I18n.t(
