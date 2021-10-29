@@ -39,14 +39,14 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
       />
       <FooterStackButton
         buttons={[
-          {
-            testID: "primaryButtonId",
-            bordered: false,
-            onPress: props.methodDetails,
-            title: I18n.t(
+          confirmButtonProps(
+            props.methodDetails,
+            I18n.t(
               "wallet.onboarding.paypal.onBoardingCompleted.primaryButton"
-            )
-          },
+            ),
+            undefined,
+            "primaryButtonId"
+          )
           cancelButtonProps(
             props.onClose,
             I18n.t(
