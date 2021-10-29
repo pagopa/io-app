@@ -14,7 +14,7 @@ import { openWebUrl } from "../../utils/url";
 import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -24,10 +24,10 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export const statusColorMap: Record<LevelEnum, string> = {
-  [LevelEnum.normal]: IOColors.aqua,
-  [LevelEnum.critical]: IOColors.red,
-  [LevelEnum.warning]: IOColors.orange
+export const statusColorMap: Record<LevelEnum, IOColorType> = {
+  [LevelEnum.normal]: "aqua",
+  [LevelEnum.critical]: "red",
+  [LevelEnum.warning]: "orange"
 };
 
 const statusIconMap: Record<LevelEnum, string> = {
@@ -35,7 +35,6 @@ const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.critical]: "io-warning",
   [LevelEnum.warning]: "io-info"
 };
-const color = IOColors.white;
 
 const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
@@ -51,6 +50,9 @@ const InnerSectionStatus = (
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   const navigation = useNavigationContext();
+
+  const color =
+    backgroundColor === "aqua" ? IOColors.bluegreyDark : IOColors.white;
 
   const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {

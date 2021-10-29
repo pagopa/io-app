@@ -12,7 +12,7 @@ describe("StatusContent", () => {
       <StatusContent
         accessibilityLabel={"a label"}
         accessibilityRole={"link"}
-        backgroundColor={IOColors.aqua}
+        backgroundColor={"aqua"}
         iconColor={IOColors.aqua}
         iconName={"io-complete"}
         viewRef={viewRef}

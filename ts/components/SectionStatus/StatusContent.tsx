@@ -3,6 +3,7 @@ import React from "react";
 import { WithTestID } from "../../types/WithTestID";
 import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 
 const iconSize = 24;
 
@@ -25,7 +26,7 @@ type Props = WithTestID<{
   accessibilityHint?: string;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
-  backgroundColor: string;
+  backgroundColor: IOColorType;
   iconColor: string;
   iconName: string;
   viewRef: React.RefObject<View>;
@@ -47,7 +48,7 @@ const StatusContent: React.FC<Props> = ({
     accessibilityRole={accessibilityRole}
     accessible={true}
     ref={viewRef}
-    style={[styles.container, { backgroundColor }]}
+    style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
     testID={"SectionStatusContent"}
   >
     <IconFont
@@ -56,7 +57,11 @@ const StatusContent: React.FC<Props> = ({
       size={iconSize}
       style={styles.alignCenter}
     />
-    <Label color={"white"} style={styles.text} weight={"Regular"}>
+    <Label
+      color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
+      style={styles.text}
+      weight={"Regular"}
+    >
       {children}
     </Label>
   </View>
