@@ -3,7 +3,6 @@ import { bpdTransactionsPaging } from "../../../../config";
 import BpdDetailsScreen from "../screens/details/BpdDetailsScreen";
 import BpdTransactionsScreen from "../screens/details/transaction/BpdTransactionsScreen";
 import BpdTransactionsRouterScreen from "../screens/details/transaction/v2/BpdTransactionsRouterScreen";
-import IbanCTAEditScreen from "../screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../screens/iban/MainIbanScreen";
 import CtaLandingScreen from "../screens/onboarding/BpdCTAStartOnboardingScreen";
 import BpdInformationScreen from "../screens/onboarding/BpdInformationScreen";
@@ -75,21 +74,6 @@ export const BpdIBANNavigator = createStackNavigator(
   {
     [BPD_ROUTES.IBAN]: {
       screen: MainIbanScreen
-    }
-  },
-  {
-    // Let each screen handle the header and navigation
-    headerMode: "none",
-    defaultNavigationOptions: {
-      gesturesEnabled: false
-    }
-  }
-);
-
-export const BpdCTANavigator = createStackNavigator(
-  {
-    [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
-      screen: IbanCTAEditScreen
     }
   },
   {
