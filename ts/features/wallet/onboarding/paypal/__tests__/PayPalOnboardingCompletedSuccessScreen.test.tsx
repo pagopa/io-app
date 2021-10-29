@@ -10,6 +10,11 @@ describe("PayPalOnboardingCompletedSuccessScreen", () => {
   jest.useFakeTimers();
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
+  it(`should match the snapshot`, () => {
+    const render = renderComponent(store);
+    expect(render.component.toJSON()).toMatchSnapshot();
+  });
+  
   it(`screen should be defined`, () => {
     const render = renderComponent(store);
     expect(
