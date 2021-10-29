@@ -4,12 +4,15 @@ import { BottomSheetContent } from "../../../../components/bottomSheet/BottomShe
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import VoucherInformationComponent from "./VoucherInformationComponent";
+import { NetworkError } from "../../../../utils/errors";
+import { isLoading, RemoteValue } from "../../bpd/model/RemoteValue";
 
 type Props = {
   qrCode: string;
   barCode: string;
   onExit?: () => void;
   onSaveVoucher: () => void;
+  pdfVoucherState: RemoteValue<string, NetworkError>;
 };
 
 const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
@@ -27,7 +30,8 @@ const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
           primary: true,
           onPress: props.onSaveVoucher,
           title: I18n.t("global.genericSave"),
-          onPressWithGestureHandler: true
+          onPressWithGestureHandler: true,
+          disabled: isLoading(props.pdfVoucherState)
         }}
       />
     }

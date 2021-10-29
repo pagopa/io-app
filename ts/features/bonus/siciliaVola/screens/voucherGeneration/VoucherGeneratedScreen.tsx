@@ -102,7 +102,8 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
       const continueButtonProps = {
         primary: true,
         onPress: () => props.stampaVoucher(voucherGenerated.value.id),
-        title: I18n.t("global.genericSave")
+        title: I18n.t("global.genericSave"),
+        blocked: isLoading(pdfVoucherState)
       };
       return (
         <BaseScreenComponent

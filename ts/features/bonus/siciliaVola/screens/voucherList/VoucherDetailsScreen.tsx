@@ -146,6 +146,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           dismiss();
           props.stampaVoucher(selectedVoucher.id);
         }}
+        pdfVoucherState={pdfVoucherState}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
