@@ -10,6 +10,7 @@ import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
 import { waitBackoffError } from "../../../../../utils/backoffError";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 
 /**
  * Handle the remote call that allow the user to download and save the voucher
@@ -46,32 +47,28 @@ export function* handleGetStampaVoucher(
             "base64"
           );
           yield put(svGetPdfVoucher.success(fPath));
-        } catch (_) {
-          yield put(
-            svPossibleVoucherStateGet.failure({
-              ...getGenericError(new Error("error during saving voucher"))
-            })
-          );
+        } catch (e) {
+          yield put(svPossibleVoucherStateGet.failure(getNetworkError(e)));
         }
 
         return;
       }
 
       yield put(
-        svGetPdfVoucher.failure({
-          ...getGenericError(
+        svGetPdfVoucher.failure(
+          getGenericError(
             new Error(`response status ${getStampaVoucherResult.value.status}`)
           )
-        })
+        )
       );
       return;
     }
     yield put(
-      svPossibleVoucherStateGet.failure({
-        ...getGenericError(new Error("Generic Error"))
-      })
+      svPossibleVoucherStateGet.failure(
+        getGenericError(new Error(readableReport(getStampaVoucherResult.value)))
+      )
     );
   } catch (e) {
-    yield put(svGetPdfVoucher.failure({ ...getNetworkError(e) }));
+    yield put(svGetPdfVoucher.failure(getNetworkError(e)));
   }
 }
