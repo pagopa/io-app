@@ -1025,6 +1025,11 @@ wallet:
           row2Description2: ". Vedrai l'importo esatto prima della conferma."
           row3Description1: "Informativa Privacy"
           row3Description2: "Termini e condizioni d’uso"
+      onBoardingCompleted:
+        title: "Fatto!"
+        body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
+        secondaryButton: "Chiudi"
+        primaryButton: "Vedi metodo"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
