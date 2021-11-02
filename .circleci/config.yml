@@ -441,7 +441,6 @@ jobs:
             cd _io-dev-api-server_
             cp ../scripts/api-config.json config/config.json
             yarn
-            ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
             yarn start > /tmp/io-dev-api-server.log &
             # wait for the server to be up and running
             sleep 10

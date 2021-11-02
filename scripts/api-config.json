@@ -1,4 +1,7 @@
 {
+  "global": {
+    "autoLogin": true
+  },
   "profile": {
     "attrs": {
       "name": "Gian Maria"
