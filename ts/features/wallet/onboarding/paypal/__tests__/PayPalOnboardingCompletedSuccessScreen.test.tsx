@@ -29,7 +29,6 @@ describe("PayPalOnboardingCompletedSuccessScreen", () => {
   it(`buttons should be defined`, () => {
     const render = renderComponent(store);
     expect(render.component.queryByTestId("primaryButtonId")).not.toBeNull();
-    expect(render.component.queryByTestId("secondaryButtonId")).not.toBeNull();
   });
 });
 
