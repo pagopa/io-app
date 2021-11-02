@@ -13,7 +13,7 @@ import { svPossibleVoucherStateGet } from "../../store/actions/voucherList";
 import { waitBackoffError } from "../../../../../utils/backoffError";
 
 /**
- * Handle the remote call that allow the user to download and save the voucher
+ * Handle the remote call that allows the user to download and save the voucher
  */
 export function* handleGetStampaVoucher(
   getStampaVoucher: ReturnType<
