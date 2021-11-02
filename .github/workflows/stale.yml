@@ -26,6 +26,6 @@ jobs:
         days-before-close: 14
         remove-stale-when-updated: true
         exempt-all-assignees: true
-        exempt-issue-labels: '📌 Pinned'
+        exempt-issue-labels: 'keep open'
 
 
