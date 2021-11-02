@@ -2,16 +2,16 @@ import React from "react";
 import { Dimensions, SafeAreaView, View } from "react-native";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { Body } from "../../../../components/core/typography/Body";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import PPLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
-import Oval from "../../../../../img/wallet/payment-methods/paypal/oval.svg";
-import { GlobalState } from "../../../../store/reducers/types";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { Body } from "../../../../../components/core/typography/Body";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
+import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

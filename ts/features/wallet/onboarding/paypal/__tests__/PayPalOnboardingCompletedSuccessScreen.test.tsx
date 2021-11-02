@@ -1,43 +1,41 @@
-import { NavigationParams } from "react-navigation";
 import { createStore, Store } from "redux";
+import { NavigationParams } from "react-navigation";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
-import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
+import PayPalOnboardingCompletedSuccessScreen from "../screen/PayPalOnboardingCompletedSuccessScreen";
+import { setLocale } from "../../../../../i18n";
 
-jest.mock("@gorhom/bottom-sheet", () => ({
-  useBottomSheetModal: () => ({
-    present: jest.fn()
-  })
-}));
-
-describe("PayPalPpsSelectionScreen", () => {
+describe("PayPalOnboardingCompletedSuccessScreen", () => {
+  beforeAll(() => {
+    setLocale("it");
+  });
   jest.useFakeTimers();
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
+  it(`should match the snapshot`, () => {
+    const render = renderComponent(store);
+    expect(render.component.toJSON()).toMatchSnapshot();
+  });
+
   it(`screen should be defined`, () => {
     const render = renderComponent(store);
     expect(
-      render.component.queryByTestId("PayPalPpsSelectionScreen")
+      render.component.queryByTestId("PayPalOnboardingCompletedSuccessScreen")
     ).not.toBeNull();
   });
 
-  it(`footer buttons should be defined`, () => {
+  it(`buttons should be defined`, () => {
     const render = renderComponent(store);
-    expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
-    expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();
+    expect(render.component.queryByTestId("primaryButtonId")).not.toBeNull();
+    expect(render.component.queryByTestId("secondaryButtonId")).not.toBeNull();
   });
-  it.todo("psp shown should match those one in the store");
-  it.todo("loading should be shown when the data is loading");
-  it.todo(
-    "error and retry button should be shown when some error occurred while retrieving data"
-  );
 });
 
 const renderComponent = (store: Store) => ({
   component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    PayPalPpsSelectionScreen,
+    PayPalOnboardingCompletedSuccessScreen,
     "N/A",
     {},
     store

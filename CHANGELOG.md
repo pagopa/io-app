@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.37.0-rc.1](https://github.com/pagopa/io-app/compare/1.37.0-rc.0...1.37.0-rc.1) (2021-10-28)
+
+
+### Features
+
+* [[IA-310](https://pagopa.atlassian.net/browse/IA-310)] Onboarding PayPal files refactoring ([#3449](https://github.com/pagopa/io-app/issues/3449)) ([24c1e5d](https://github.com/pagopa/io-app/commit/24c1e5d8a2407e501ba98355526aba4ef1789c4c))
+
+## [1.37.0-rc.0](https://github.com/pagopa/io-app/compare/1.36.0-rc.2...1.37.0-rc.0) (2021-10-26)
+
+
+### Features
+
+* [[IA-300](https://pagopa.atlassian.net/browse/IA-300)] Add PayPal psp screen selection ([#3443](https://github.com/pagopa/io-app/issues/3443)) ([b0c19af](https://github.com/pagopa/io-app/commit/b0c19aff24e7f38ca8d112a4efa9f16b3a058006))
+
+
+### Bug Fixes
+
+* [[IA-305](https://pagopa.atlassian.net/browse/IA-305)] The content of error component has bad valign ([#3445](https://github.com/pagopa/io-app/issues/3445)) ([ecac647](https://github.com/pagopa/io-app/commit/ecac64759a78fc8cea9f5e8dead1bda635107248))
+
 ## [1.36.0-rc.2](https://github.com/pagopa/io-app/compare/1.36.0-rc.1...1.36.0-rc.2) (2021-10-21)
 
 
