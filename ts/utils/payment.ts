@@ -259,6 +259,7 @@ export const getV2ErrorMainType = (
     case "PAA_PAGAMENTO_SCADUTO":
       return "EXPIRED";
     case "PAA_PAGAMENTO_DUPLICATO":
+    case "PPT_PAGAMENTO_DUPLICATO":
       return "DUPLICATED";
     default:
       return "UNCOVERED";
