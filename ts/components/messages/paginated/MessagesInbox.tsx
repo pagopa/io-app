@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import I18n from "../../../i18n";
-import { ListSelectionBar } from "../../ListSelectionBar";
+import ListSelectionBar from "../../ListSelectionBar";
 import { useItemsSelection } from "../../../utils/hooks/useItemsSelection";
 import { EmptyListComponent } from "../EmptyListComponent";
 

@@ -18,7 +18,7 @@ import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
-import { ListSelectionBar } from "../ListSelectionBar";
+import ListSelectionBar from "../ListSelectionBar";
 import { EmptyListComponent } from "./EmptyListComponent";
 import { ErrorLoadingComponent } from "./ErrorLoadingComponent";
 import MessageList from "./MessageList";
@@ -145,14 +145,16 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             animated={animated}
           />
         </View>
-        <ListSelectionBar
-          selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
-          totalItems={allMessageIdsState.map(_ => _.size).getOrElse(0)}
-          onToggleSelection={this.archiveMessages}
-          onToggleAllSelection={this.toggleAllMessagesSelection}
-          onResetSelection={resetSelection}
-          primaryButtonText={I18n.t("messages.cta.archive")}
-        />
+        {selectedItemIds.isSome() && allMessageIdsState.isSome() && (
+          <ListSelectionBar
+            selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+            totalItems={allMessageIdsState.map(_ => _.size).getOrElse(0)}
+            onToggleSelection={this.archiveMessages}
+            onToggleAllSelection={this.toggleAllMessagesSelection}
+            onResetSelection={resetSelection}
+            primaryButtonText={I18n.t("messages.cta.archive")}
+          />
+        )}
       </View>
     );
   }
