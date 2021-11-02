@@ -77,6 +77,9 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 // Paypal configuration
 export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 
+// Zendesk Feature Flag
+export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
