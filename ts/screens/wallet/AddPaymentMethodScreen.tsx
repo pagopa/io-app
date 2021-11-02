@@ -5,6 +5,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { constNull } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -15,7 +16,7 @@ import PaymentBannerComponent from "../../components/wallet/PaymentBannerCompone
 import PaymentMethodsList, {
   IPaymentMethod
 } from "../../components/wallet/PaymentMethodsList";
-import { bpdEnabled } from "../../config";
+import { bpdEnabled, payPalEnabled } from "../../config";
 import { walletAddBancomatStart } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import I18n from "../../i18n";
@@ -26,6 +27,13 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { H1 } from "../../components/core/typography/H1";
+import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
+import SatispayLogo from "../../../img/wallet/payment-methods/satispay-logo.svg";
+import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
+import GDOLogo from "../../../img/wallet/unknown-gdo-primary.svg";
+import { walletAddBPayStart } from "../../features/wallet/onboarding/bancomatPay/store/actions";
+import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -55,41 +63,56 @@ const getpaymentMethods = (
   {
     name: I18n.t("wallet.methods.card.name"),
     description: I18n.t("wallet.methods.card.description"),
+    icon: CreditCard,
     onPress: props.navigateToAddCreditCard,
     status: "implemented",
     section: "credit_card"
   },
   {
-    name: I18n.t("wallet.methods.postepay.name"),
-    description: I18n.t("wallet.methods.postepay.description"),
-    onPress: props.navigateToAddCreditCard,
-    status: "implemented",
-    section: "credit_card"
+    name: I18n.t("wallet.methods.paypal.name"),
+    description: I18n.t("wallet.methods.digital.description"),
+    icon: PaypalLogo,
+    // TODO replace with effective dispatch
+    onPress: constNull,
+    status: payPalEnabled ? "implemented" : "notImplemented",
+    section: "digital_payments"
+  },
+  {
+    name: I18n.t("wallet.methods.bancomatPay.name"),
+    description: I18n.t("wallet.methods.bancomatPay.description"),
+    icon: BpayLogo,
+    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+    onPress: props.startBPayOnboarding,
+    section: "digital_payments"
+  },
+  {
+    name: I18n.t("wallet.methods.satispay.name"),
+    description: I18n.t("wallet.methods.satispay.description"),
+    icon: SatispayLogo,
+    onPress: props.startSatispayOnboarding,
+    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+    section: "digital_payments"
   },
   {
     name: I18n.t("wallet.methods.pagobancomat.name"),
     description: I18n.t("wallet.methods.pagobancomat.description"),
+    icon: CreditCard,
     onPress: props.startAddBancomat,
     status:
       bpdEnabled && !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
     section: "bancomat"
   },
   {
-    name: I18n.t("wallet.methods.digital.name"),
-    description: I18n.t("wallet.methods.digital.description"),
-    onPress: props.navigateToWalletAddDigitalPaymentMethod,
-    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
-    section: "digital_payments"
-  },
-  {
     name: I18n.t("wallet.methods.loyalty.name"),
     description: I18n.t("wallet.methods.loyalty.description"),
+    icon: GDOLogo,
     onPress: props.startAddPrivative,
     status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented"
   },
   {
     name: I18n.t("wallet.methods.bonus.name"),
     description: I18n.t("wallet.methods.bonus.description"),
+    icon: PaypalLogo,
     status: "notImplemented"
   }
 ];
@@ -177,6 +200,8 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateBack: () => dispatch(navigateBack()),
+  startBPayOnboarding: () => dispatch(walletAddBPayStart()),
+  startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
