@@ -436,37 +436,9 @@ PODS:
     - React
   - RNVectorIcons (7.0.0):
     - React
-  - RNZendeskChat (0.2.1):
-    - React
-    - ZendeskAnswerBotSDK
-    - ZendeskChatSDK
-    - ZendeskSupportSDK (~> 5.0.5)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZendeskAnswerBotProvidersSDK (2.0.5):
-    - ZendeskSupportProvidersSDK (~> 5.0.5)
-  - ZendeskAnswerBotSDK (2.0.5):
-    - ZendeskAnswerBotProvidersSDK (~> 2.0.5)
-    - ZendeskMessagingSDK (~> 3.6.0)
-  - ZendeskChatProvidersSDK (2.7.0)
-  - ZendeskChatSDK (2.7.0):
-    - ZendeskChatProvidersSDK (~> 2.7.0)
-    - ZendeskMessagingSDK (~> 3.6.0)
-  - ZendeskCommonUISDK (5.0.0):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.5)
-  - ZendeskCoreSDK (2.4.1)
-  - ZendeskMessagingAPISDK (3.6.0):
-    - ZendeskSDKConfigurationsSDK (~> 1.1.5)
-  - ZendeskMessagingSDK (3.6.0):
-    - ZendeskCommonUISDK (~> 5.0.0)
-    - ZendeskMessagingAPISDK (~> 3.6.0)
-  - ZendeskSDKConfigurationsSDK (1.1.8)
-  - ZendeskSupportProvidersSDK (5.0.5):
-    - ZendeskCoreSDK (~> 2.4.0)
-  - ZendeskSupportSDK (5.0.5):
-    - ZendeskMessagingSDK (~> 3.6.0)
-    - ZendeskSupportProvidersSDK (~> 5.0.5)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -567,7 +539,6 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -586,17 +557,6 @@ SPEC REPOS:
     - Mixpanel
     - OpenSSL-Universal
     - YogaKit
-    - ZendeskAnswerBotProvidersSDK
-    - ZendeskAnswerBotSDK
-    - ZendeskChatProvidersSDK
-    - ZendeskChatSDK
-    - ZendeskCommonUISDK
-    - ZendeskCoreSDK
-    - ZendeskMessagingAPISDK
-    - ZendeskMessagingSDK
-    - ZendeskSDKConfigurationsSDK
-    - ZendeskSupportProvidersSDK
-    - ZendeskSupportSDK
 
 EXTERNAL SOURCES:
   BVLinearGradient:
@@ -747,8 +707,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  RNZendeskChat:
-    :path: "../node_modules/io-react-native-zendesk"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -840,20 +798,8 @@ SPEC CHECKSUMS:
   RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  RNZendeskChat: 646aea5849def75fe3715f2658d3f44a521f5702
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZendeskAnswerBotProvidersSDK: 294a835f26545e5da4e0e9b168cceab8aca930c6
-  ZendeskAnswerBotSDK: 58889818d89e041478e2fa8266f159f4851b6ec3
-  ZendeskChatProvidersSDK: 478e7eb4c725c7b4c1c64fa1206ec369346267e4
-  ZendeskChatSDK: b972e1ef63d84fb5b908f2d9a682e98b48eafc86
-  ZendeskCommonUISDK: 0b5ae632c28545c6f7e0791902f5672494d5ccd0
-  ZendeskCoreSDK: 2dc9457ae01d024ca02f60f6134ad1ad90136c29
-  ZendeskMessagingAPISDK: 29ce93e76b4833a2257d837de17a0efaeef867e5
-  ZendeskMessagingSDK: bdb534cc75853fab1bc201ce97faadf9accdd1ab
-  ZendeskSDKConfigurationsSDK: 8371b468db0d09e9198f6c5a97818826943ee1ee
-  ZendeskSupportProvidersSDK: d21ce8eb3df1066338c7d3875bb818b32c3f124e
-  ZendeskSupportSDK: 7e29a825e862aba217b7b89f7d3397f7deef586a
 
 PODFILE CHECKSUM: eb8085af15261f979e57ec1a58985cd1ed011308
 
