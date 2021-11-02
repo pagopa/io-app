@@ -602,10 +602,10 @@ authentication:
       button: "Load/open CieID"
     card:
       headerTitle: Login with CIE
-      titleiOS: Please try again
+      titleiOS: Hold the card still
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageHeaderiOS: The sensor is located on top of the device.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
@@ -998,7 +998,7 @@ wallet:
       selectPsp:
         title: "Which payment provider do you want to use PayPal with?"
         body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
-        link: "What is the payment provider?"
+        link: "What is a payment provider?"
         leftColumnTitle: "Provider"
         rightColumnTitle: "Info & Fees"
         infoBottomSheet:
@@ -1009,6 +1009,11 @@ wallet:
           row2Description2: ". You'll see the right amount before confirming the payment."
           row3Description1: "Privacy Policy"
           row3Description2: "Terms and Conditions"
+      onBoardingCompleted:
+        title: "That's it!"
+        body: "Now have a look at the current settings of your new method."
+        secondaryButton: "Close"
+        primaryButton: "View method"
     coBadge:
       headerTitle: "Add international circuit"
       start:
