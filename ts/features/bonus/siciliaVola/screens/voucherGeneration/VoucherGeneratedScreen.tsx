@@ -31,6 +31,7 @@ import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVo
 import { showToast } from "../../../../../utils/showToast";
 import { SvVoucherId } from "../../types/SvVoucher";
 import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -92,18 +93,18 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   switch (voucherGenerated.kind) {
     // TODO: manage conflict and other state when the final swagger is available
     case "success":
-      const backButtonProps = {
+      const backButtonProps: BlockButtonProps = {
         primary: false,
         bordered: true,
         onPress: props.completed,
         title: I18n.t("global.buttons.exit")
       };
 
-      const continueButtonProps = {
+      const continueButtonProps: BlockButtonProps = {
         primary: true,
         onPress: () => props.stampaVoucher(voucherGenerated.value.id),
         title: I18n.t("global.genericSave"),
-        blocked: isLoading(pdfVoucherState)
+        disabled: isLoading(pdfVoucherState)
       };
       return (
         <BaseScreenComponent
