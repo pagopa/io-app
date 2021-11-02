@@ -1,11 +1,11 @@
 import { createStore, Store } from "redux";
 import { NavigationParams } from "react-navigation";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../store/reducers/types";
-import PayPalOnboardingCompletedSuccessScreen from "../screen/PayPalOnboardingCompletedSuccessScreen";
-import { setLocale } from "../../../../../i18n";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import PayPalOnboardingCompletedSuccessScreen from "../PayPalOnboardingCompletedSuccessScreen";
+import { setLocale } from "../../../../../../i18n";
 
 describe("PayPalOnboardingCompletedSuccessScreen", () => {
   beforeAll(() => {
