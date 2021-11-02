@@ -30,8 +30,8 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVoucher";
 import { showToast } from "../../../../../utils/showToast";
 import { SvVoucherId } from "../../types/SvVoucher";
-import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
