@@ -94,29 +94,17 @@ export const hasPrescriptionData = (
   message: CreatedMessageWithContent
 ): boolean => fromNullable(message.content.prescription_data).isSome();
 
-type MessagePayment = {
-  noticeNumber: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["notice_number"];
-  amount: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["amount"];
-  organizationFiscalCode: NonNullable<
-    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
-  >["payee"]["fiscal_code"];
-};
-
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   expireStatus?: ExpireStatus;
   dueDate?: Date;
-} & MessagePayment;
+};
 export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
   expireStatus: ExpireStatus;
   dueDate: Date;
-} & MessagePayment;
+};
 
 export type MessagePaymentExpirationInfo =
   | MessagePaymentUnexpirable
@@ -137,7 +125,7 @@ export function getMessagePaymentExpirationInfo(
   >,
   dueDate?: Date
 ): MessagePaymentExpirationInfo {
-  const { notice_number, amount, invalid_after_due_date, payee } = paymentData;
+  const { invalid_after_due_date } = paymentData;
 
   if (dueDate !== undefined) {
     const expireStatus = getExpireStatus(dueDate);
@@ -145,18 +133,12 @@ export function getMessagePaymentExpirationInfo(
     return {
       kind: invalid_after_due_date ? "EXPIRABLE" : "UNEXPIRABLE",
       expireStatus,
-      noticeNumber: notice_number,
-      organizationFiscalCode: payee.fiscal_code,
-      amount,
       dueDate
     };
   }
 
   return {
-    kind: "UNEXPIRABLE",
-    noticeNumber: notice_number,
-    amount,
-    organizationFiscalCode: payee.fiscal_code
+    kind: "UNEXPIRABLE"
   };
 }
 

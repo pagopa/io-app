@@ -610,10 +610,10 @@ authentication:
       button: "Scarica / Apri CieID"
     card:
       title: Appoggia la carta
-      titleiOS: Riprova di nuovo
+      titleiOS: Tieni ferma la carta
       headerTitle: Entra con CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageHeaderiOS: Appoggia la tua carta d'identità elettronica nella parte alta del telefono
+      layCardMessageHeaderiOS: Il sensore è posizionato nella parte alta del dispositivo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
@@ -1007,6 +1007,31 @@ wallet:
       koNotFound:
         title: "Spiacenti, non ci risulta che tu abbia ancora attivato Satispay"
         body: "Contatta Satispay per l’attivazione"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Aggiungi PayPal"
+      start:
+        title: "Paga su IO con PayPal"
+        body: "Abbina il tuo conto PayPal e paga gli avvisi pagoPA più facilmente: puoi usare anche il tuo conto corrente!"
+      selectPsp:
+        title: "Con quale gestore vuoi usare il tuo conto PayPal?"
+        body: "Quando usi pagoPA, sei tu a decidere quale gestore della transazione ti conviene di più.\nPotrai modificare tale scelta ad ogni pagamento in base alla commissione proposta."
+        link: "Cos’è il gestore della transazione?"
+        leftColumnTitle: "Gestore"
+        rightColumnTitle: "Info e costi"
+        infoBottomSheet:
+          title: "Chi è {{pspName}}?"
+          ctaTitle: "Ho capito"
+          row1Description: "È un Prestatore di Servizi di Pagamento (PSP) che può gestire le tue transazioni tramite PayPal."
+          row2Description1: "Quando paghi un avviso, potrà applicare un costo massimo fino a "
+          row2Description2: ". Vedrai l'importo esatto prima della conferma."
+          row3Description1: "Informativa Privacy"
+          row3Description2: "Termini e condizioni d’uso"
+      onBoardingCompleted:
+        title: "Fatto!"
+        body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
+        secondaryButton: "Chiudi"
+        primaryButton: "Vedi metodo"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -2680,7 +2705,27 @@ bonus:
           departure: "Data di partenza"
           return: "Data di ritorno"
       summary:
-        title: "SummaryScreen"
+        title: "Riepilogo"
+        subtitle1:
+          normal1: "Proseguendo dichiari sotto la tua responsabilità e consapevole delle sanzioni penali in caso di dichiarazioni non veritiere e di falsità negli atti ("
+          link: "art. 76 del d.P.R. 28 Dicembre 2000, n.445"
+          normal2: ") di possedere i seguenti requisiti"
+        subtitle2: "E di richiedere un codice sconto per un volo con le seguenti caratteristiche:"
+        fields:
+          residence:
+            label: "Residenza:"
+            value: "Sicilia"
+          category:
+            label: "Categoria:"
+            value:
+              disabled: "Disabile grave ai sensi dell’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
+              student: "Studente fuori sede"
+              worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
+              sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
+          flightDate:
+            label: "Data del volo:"
+            disabled: "Tutte"
+          availableDestination: "Possibili destinazioni:"
       voucherGenerated:
         title: "Ecco il tuo codice sconto"
         subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
@@ -2733,6 +2778,16 @@ bonus:
         cta:
           voucherRevocation: "Revoca voucher"
           openQr: "Apri QR code"
+        voucherRevocation:
+          alert:
+            title: "Attenzione"
+            message: "Sei sicuro di voler procedere? Il codice sconto sarà eliminato."
+            cta:
+              ok: "Continua"
+              ko: "Annulla la richiesta"
+          toast:
+            ok: "Voucher eliminato correttamente"
+            ko: "Errore durante l'eliminazione del voucher. Riprova"
     components:
       voucherVisualDetails:
         uniqueCode: "Codice univoco"

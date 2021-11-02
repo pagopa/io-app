@@ -1,4 +1,5 @@
 import I18n from "../../../i18n";
+import { AeroportiAmmessiInputBean } from "../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 import { SvVoucher } from "./types/SvVoucher";
 import {
   DisabledVoucherRequest,
@@ -85,3 +86,24 @@ export const isVoucherRequest = (
   isWorkerVoucherRequest(partialVoucherRequest) ||
   isSickVoucherRequest(partialVoucherRequest) ||
   isDisabledVoucherRequest(partialVoucherRequest);
+
+export const destinationsInfoFromVoucherRequest = (
+  voucherRequest:
+    | StudentVoucherRequest
+    | WorkerVoucherRequest
+    | SickVoucherRequest
+): AeroportiAmmessiInputBean => {
+  const destination =
+    voucherRequest.category === "student"
+      ? voucherRequest.university
+      : voucherRequest.category === "worker"
+      ? voucherRequest.company
+      : voucherRequest.hospital;
+
+  return {
+    // TODO: check consistency between type in swagger.
+    stato: destination.state.id.toString(),
+    latitudine: destination.municipality.latitude,
+    longitudine: destination.municipality.longitude
+  };
+};

@@ -49,7 +49,10 @@ describe("payments history", () => {
   }).value as PaymentRequestsGetResponse;
 
   it("should add a payment in the history", () => {
-    state = reducer(state, paymentVerifica.request(anRptId));
+    state = reducer(
+      state,
+      paymentVerifica.request({ rptId: anRptId, startOrigin: "message" })
+    );
     expect(state.length).toEqual(1);
   });
 
@@ -57,8 +60,12 @@ describe("payments history", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
   });
 
+  // eslint-disable-next-line sonarjs/no-identical-functions
   it("should not add a payment in the history because it is the same", () => {
-    state = reducer(state, paymentVerifica.request(anRptId));
+    state = reducer(
+      state,
+      paymentVerifica.request({ rptId: anRptId, startOrigin: "message" })
+    );
     expect(state.length).toEqual(1);
   });
 
@@ -181,8 +188,11 @@ describe("payments history", () => {
     state = reducer(
       state,
       paymentVerifica.request({
-        ...anRptId,
-        organizationFiscalCode: "123098" as OrganizationFiscalCode
+        rptId: {
+          ...anRptId,
+          organizationFiscalCode: "123098" as OrganizationFiscalCode
+        },
+        startOrigin: "message"
       })
     );
     expect(state.length).toEqual(2);
@@ -195,8 +205,11 @@ describe("payments history", () => {
       state = reducer(
         state,
         paymentVerifica.request({
-          ...anRptId,
-          organizationFiscalCode: `123098${_}` as OrganizationFiscalCode
+          rptId: {
+            ...anRptId,
+            organizationFiscalCode: `123098${_}` as OrganizationFiscalCode
+          },
+          startOrigin: "message"
         })
       );
     });
