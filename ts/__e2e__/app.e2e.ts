@@ -94,7 +94,7 @@ describe("e2e app", () => {
 
       // The webserver is sending us exactly 20 messages with consecutive IDs
       // in reverse order.
-      // We test that the first one is visibile on the UI and that the last one
+      // We test that the first one is visible on the UI and that the last one
       // exists (but is not visible)
 
       await waitFor(
