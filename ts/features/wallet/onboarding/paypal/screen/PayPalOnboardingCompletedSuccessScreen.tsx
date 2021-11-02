@@ -52,7 +52,6 @@ const PayPalOnboardingCompletedSuccessScreen = (props: Props) => (
 
 const mapDispatchToProps = (_: Dispatch) => ({
   // TODO replace with the effective handler
-  onClose: constNull,
   methodDetails: constNull
 });
 
