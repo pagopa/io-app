@@ -14,7 +14,8 @@ import {
   svGenerateVoucherBack,
   svGenerateVoucherCompleted,
   svGenerateVoucherFailure,
-  svGenerateVoucherGeneratedVoucher
+  svGenerateVoucherGeneratedVoucher,
+  svGetPdfVoucher
 } from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { VoucherRequest } from "../../types/SvVoucherRequest";
@@ -24,8 +25,12 @@ import VoucherInformationComponent from "../../components/VoucherInformationComp
 import { isVoucherRequest } from "../../utils";
 import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVoucher";
+import { showToast } from "../../../../../utils/showToast";
+import { SvVoucherId } from "../../types/SvVoucher";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -35,7 +40,8 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   const {
     remoteVoucherGenerated,
     maybeVoucherRequest,
-    generateVoucherRequest
+    generateVoucherRequest,
+    pdfVoucherState
   } = props;
 
   useEffect(() => {
@@ -46,19 +52,15 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
     });
   }, [maybeVoucherRequest, generateVoucherRequest]);
 
-  const backButtonProps = {
-    primary: false,
-    bordered: true,
-    onPress: props.completed,
-    title: I18n.t("global.buttons.exit")
-  };
-
-  // TODO: substitute the onPress function with the voucher pdf request
-  const continueButtonProps = {
-    primary: true,
-    onPress: () => true,
-    title: I18n.t("global.genericSave")
-  };
+  useEffect(() => {
+    fold(
+      pdfVoucherState,
+      () => null,
+      () => null,
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ok"), "success"),
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ko"))
+    );
+  }, [pdfVoucherState]);
 
   if (isNone(maybeVoucherRequest)) {
     props.failure("Voucher request is None");
@@ -91,6 +93,19 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   switch (voucherGenerated.kind) {
     // TODO: manage conflict and other state when the final swagger is available
     case "success":
+      const backButtonProps: BlockButtonProps = {
+        primary: false,
+        bordered: true,
+        onPress: props.completed,
+        title: I18n.t("global.buttons.exit")
+      };
+
+      const continueButtonProps: BlockButtonProps = {
+        primary: true,
+        onPress: () => props.stampaVoucher(voucherGenerated.value.id),
+        title: I18n.t("global.genericSave"),
+        disabled: isLoading(pdfVoucherState)
+      };
       return (
         <BaseScreenComponent
           goBack={false}
@@ -131,11 +146,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   completed: () => dispatch(svGenerateVoucherCompleted()),
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   generateVoucherRequest: (voucherRequest: VoucherRequest) =>
-    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest))
+    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
+  stampaVoucher: (voucherId: SvVoucherId) =>
+    dispatch(svGetPdfVoucher.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),
-  remoteVoucherGenerated: voucherGeneratedSelector(state)
+  remoteVoucherGenerated: voucherGeneratedSelector(state),
+  pdfVoucherState: selectedPdfVoucherStateSelector(state)
 });
 
 export default connect(

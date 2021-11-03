@@ -3,12 +3,16 @@ import { View } from "native-base";
 import { BottomSheetContent } from "../../../../components/bottomSheet/BottomSheetContent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import { NetworkError } from "../../../../utils/errors";
+import { isLoading, RemoteValue } from "../../bpd/model/RemoteValue";
 import VoucherInformationComponent from "./VoucherInformationComponent";
 
 type Props = {
   qrCode: string;
   barCode: string;
   onExit?: () => void;
+  onSaveVoucher: () => void;
+  pdfVoucherState: RemoteValue<string, NetworkError>;
 };
 
 const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
@@ -24,10 +28,10 @@ const VoucherDetailBottomSheet = (props: Props): React.ReactElement => (
         }}
         rightButton={{
           primary: true,
-          // TODO: Request the download of the voucher in pdf format
-          onPress: () => true,
+          onPress: props.onSaveVoucher,
           title: I18n.t("global.genericSave"),
-          onPressWithGestureHandler: true
+          onPressWithGestureHandler: true,
+          disabled: isLoading(props.pdfVoucherState)
         }}
       />
     }

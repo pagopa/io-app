@@ -9,7 +9,8 @@ import {
   svGenerateVoucherAvailableMunicipality,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
-  svGenerateVoucherStart
+  svGenerateVoucherStart,
+  svGetPdfVoucher
 } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -37,6 +38,7 @@ import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
 import { handleGetAeroportiAmmessi } from "./networking/handleGetAeroportAmmessi";
 import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
 import { handleGetVoucheStati } from "./networking/handleGetVoucherStati";
+import { handleGetStampaVoucher } from "./networking/handleGetStampaVoucher";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -141,6 +143,13 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     getType(svVoucherRevocation.request),
     handleVoucherRevocation,
     siciliaVolaClient.postAnnullaVoucher,
+    svSessionManager
+  );
+
+  yield takeLatest(
+    getType(svGetPdfVoucher.request),
+    handleGetStampaVoucher,
+    siciliaVolaClient.getStampaVoucher,
     svSessionManager
   );
 }
