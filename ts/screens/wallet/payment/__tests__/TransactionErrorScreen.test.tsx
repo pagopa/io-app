@@ -119,9 +119,22 @@ describe("TransactionErrorScreen", () => {
     expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
   });
 
-  it("Should render DUPLICATED screen", () => {
+  it("Should render DUPLICATED screen on PAA_PAGAMENTO_DUPLICATO error code", () => {
     const { component } = renderComponent(
       some(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+    );
+    expect(component.queryByTestId("error-code-copy-component")).toBeNull();
+    expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
+      I18n.t("wallet.errors.DUPLICATED")
+    );
+    expect(component.queryByTestId("revoked-subtitle")).toBeNull();
+    expect(component.queryByTestId("expired-subtitle")).toBeNull();
+    expect(component.queryByTestId("closeButtonCancel")).toBeDefined();
+  });
+
+  it("Should render DUPLICATED screen on PPT_PAGAMENTO_DUPLICATO error code", () => {
+    const { component } = renderComponent(
+      some(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
     );
     expect(component.queryByTestId("error-code-copy-component")).toBeNull();
     expect(component.queryByTestId("infoScreenTitle")).toHaveTextContent(
