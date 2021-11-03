@@ -119,7 +119,7 @@ jobs:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
               mkdir -p ./reports/junit/
-              yarn test $TEST
+              yarn test $TEST --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit
       - run: ./scripts/codecov.sh
