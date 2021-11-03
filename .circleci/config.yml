@@ -127,9 +127,6 @@ jobs:
       - store_test_results:
           path: ./reports/junit/
 
-      - store_artifacts:
-          path: ./reports/junit
-
     parallelism: 8
 
   # Runs ESlint checks on PR
