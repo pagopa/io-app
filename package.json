@@ -34,8 +34,8 @@
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest -w 1",
     "test:dev": "jest --detectOpenHandles --coverage=false",
-    "prettify": "prettier --write \"ts/**/*.ts*\"",
-    "prettier:check": "prettier --check \"ts/**/*.ts*\"",
+    "prettify": "prettier --write \"ts/**/*.(ts|tsx)\"",
+    "prettier:check": "prettier --check \"ts/**/*.(ts|tsx)\"",
     "packager:clear": "rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*",
     "bundle:android": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev true --entry-file index.js --bundle-output ./bundles/index.android.bundle",
     "tsc:noemit": "tsc --noemit",
@@ -90,7 +90,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^18.18.1",
+    "detox": "^18.23.1",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
@@ -174,7 +174,7 @@
     "url-parse": "^1.4.7",
     "uuid": "^8.3.2",
     "validator": "^10.7.0",
-    "xss": "1.0.6"
+    "xss": "1.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -274,6 +274,11 @@
       "ios.release": {
         "type": "ios.app",
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
+      },
+      "ios.debug": {
+        "type": "ios.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
       }
     },
@@ -281,6 +286,10 @@
       "ios.sim.release": {
         "device": "simulator",
         "app": "ios.release"
+      },
+      "ios.sim.debug": {
+        "device": "simulator",
+        "app": "ios.debug"
       }
     }
   },
