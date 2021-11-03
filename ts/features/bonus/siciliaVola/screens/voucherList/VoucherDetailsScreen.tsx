@@ -18,13 +18,19 @@ import {
 } from "../../store/actions/voucherList";
 import { SvVoucherId } from "../../types/SvVoucher";
 import {
+  selectedPdfVoucherStateSelector,
   selectedVoucherCodeSelector,
   selectedVoucherRevocationStateSelector,
   selectedVoucherSelector
 } from "../../store/reducers/selectedVoucher";
 import { H3 } from "../../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
-import { isError, isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import {
+  fold,
+  isError,
+  isLoading,
+  isReady
+} from "../../../bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
@@ -34,6 +40,7 @@ import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet"
 import { fromVoucherToDestinationLabels } from "../../utils";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { showToast } from "../../../../../utils/showToast";
+import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -69,8 +76,13 @@ const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
 };
 
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
-  const { selectedVoucherCode, getVoucherDetail, revocationState, back } =
-    props;
+  const {
+    selectedVoucherCode,
+    getVoucherDetail,
+    revocationState,
+    back,
+    pdfVoucherState
+  } = props;
 
   useEffect(() => {
     if (selectedVoucherCode !== undefined) {
@@ -93,6 +105,16 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       back();
     }
   }, [revocationState, back]);
+
+  useEffect(() => {
+    fold(
+      pdfVoucherState,
+      () => null,
+      () => null,
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ok"), "success"),
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ko"))
+    );
+  }, [pdfVoucherState]);
 
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
@@ -120,6 +142,11 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         barCode={selectedVoucher.barCode}
         qrCode={selectedVoucher.qrCode}
         onExit={dismiss}
+        onSaveVoucher={() => {
+          dismiss();
+          props.stampaVoucher(selectedVoucher.id);
+        }}
+        pdfVoucherState={pdfVoucherState}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
@@ -252,12 +279,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   voucherRevocationRequest: (voucherId: SvVoucherId) =>
     dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
-    dispatch(svVoucherDetailGet.request(voucherId))
+    dispatch(svVoucherDetailGet.request(voucherId)),
+  stampaVoucher: (voucherId: SvVoucherId) =>
+    dispatch(svGetPdfVoucher.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),
   selectedVoucherCode: selectedVoucherCodeSelector(state),
-  revocationState: selectedVoucherRevocationStateSelector(state)
+  revocationState: selectedVoucherRevocationStateSelector(state),
+  pdfVoucherState: selectedPdfVoucherStateSelector(state)
 });
 
 export default connect(

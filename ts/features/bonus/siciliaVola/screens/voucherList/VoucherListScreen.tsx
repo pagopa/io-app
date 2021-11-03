@@ -51,6 +51,7 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
 import { showToast } from "../../../../../utils/showToast";
 import { navigateToSvVoucherDetailsScreen } from "../../navigation/actions";
+import { selectedVoucherRevocationStateSelector } from "../../store/reducers/selectedVoucher";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -118,8 +119,13 @@ const EmptyVoucherList = () => {
 
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const { requestVoucherState, resetFilter, filters, requestVoucherPage } =
-    props;
+  const {
+    requestVoucherState,
+    resetFilter,
+    filters,
+    requestVoucherPage,
+    revocationState
+  } = props;
 
   const [isFirstPageLoadedSuccessfully, setIsFirstPageLoadedSuccessfully] =
     useState<boolean>(false);
@@ -146,6 +152,15 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       showToast(I18n.t("bonus.sv.voucherList.error"), "danger");
     }
   }, [isDataLoadedError, isFirstPageLoadedSuccessfully]);
+
+  useEffect(() => {
+    if (isReady(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ok"),
+        "success"
+      );
+    }
+  }, [revocationState]);
 
   const openFiltersModal = () =>
     showAnimatedModal(
@@ -247,7 +262,8 @@ const mapStateToProps = (state: GlobalState) => ({
   filters: svFiltersSelector(state),
   requiredDataLoaded: svRequiredDataLoadedSelector(state),
   uiParameters: svVouchersListUiSelector(state),
-  possibleVoucherState: possibleVoucherStateSelector(state)
+  possibleVoucherState: possibleVoucherStateSelector(state),
+  revocationState: selectedVoucherRevocationStateSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoucherListScreen);
