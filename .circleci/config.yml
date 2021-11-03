@@ -27,7 +27,7 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: circleci/android:api-23-node
+    - image: cimg/android:2021.10.2-node
   environment:
     TERM: "dumb"
     ANDROID_SDK_BUILD_TOOLS_REVISION: "28.0.3"
