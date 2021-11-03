@@ -253,6 +253,7 @@ export const getV2ErrorMainType = (
 
   switch (error) {
     case "PAA_PAGAMENTO_IN_CORSO":
+    case "PPT_PAGAMENTO_IN_CORSO":
       return "ONGOING";
     case "PAA_PAGAMENTO_ANNULLATO":
       return "REVOKED";
