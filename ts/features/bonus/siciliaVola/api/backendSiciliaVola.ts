@@ -26,6 +26,8 @@ import {
   GetListaProvinceByIdRegioneT,
   getListaRegioniDefaultDecoder,
   GetListaRegioniT,
+  getPdfDefaultDecoder,
+  GetPdfT,
   getStatiUEDefaultDecoder,
   GetStatiUET,
   getStatiVoucherDefaultDecoder,
@@ -149,6 +151,19 @@ const GetStatiVoucher: GetStatiVoucherT = {
   response_decoder: getStatiVoucherDefaultDecoder()
 };
 
+/**
+ * Get the pdf voucher
+ *
+ */
+const GetStampaVoucher: GetPdfT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/stampaVoucher`,
+  query: _ => ({}),
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getPdfDefaultDecoder()
+};
+
 const withSiciliaVolaToken =
   <P extends { Bearer: string }, R>(f: (p: P) => Promise<R>) =>
   (token: MitVoucherToken) =>
@@ -199,6 +214,12 @@ export const BackendSiciliaVolaClient = (
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
     getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
+    getStampaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(GetStampaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode }),
     postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
       flip(
         withSiciliaVolaToken(
