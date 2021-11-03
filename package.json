@@ -16,7 +16,7 @@
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_mit_voucher.yaml",
   "api_sicilia_vola": "assets/SiciliaVola.yml",
-  "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
+  "pagopa_api": "assets/paymentManager/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/privative/definitions.yml",
@@ -90,7 +90,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^18.18.1",
+    "detox": "^18.23.1",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
@@ -274,6 +274,11 @@
       "ios.release": {
         "type": "ios.app",
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+        "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
+      },
+      "ios.debug": {
+        "type": "ios.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
       }
     },
@@ -281,6 +286,10 @@
       "ios.sim.release": {
         "device": "simulator",
         "app": "ios.release"
+      },
+      "ios.sim.debug": {
+        "device": "simulator",
+        "app": "ios.debug"
       }
     }
   },
