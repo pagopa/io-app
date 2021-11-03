@@ -80,6 +80,10 @@ export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
+// Special Services Feature Flag
+export const specialServicesEnabled: boolean =
+  Config.SPECIAL_SERVICES_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 

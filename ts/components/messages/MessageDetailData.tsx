@@ -4,10 +4,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import { format, formatDateAsLocal } from "../../utils/dates";
@@ -15,6 +12,7 @@ import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +36,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   serviceDetail: pot.Pot<ServicePublic, Error>;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
@@ -47,7 +45,7 @@ type MessageData = {
   service_detail: Option<ServicePublic>;
   organization_name: Option<string>;
   service_name: Option<string>;
-  metadata: Option<ServicePublicService_metadata>;
+  metadata: Option<ServiceMetadata>;
 };
 
 /**

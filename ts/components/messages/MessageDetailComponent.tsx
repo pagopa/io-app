@@ -5,10 +5,7 @@ import DeviceInfo from "react-native-device-info";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import {
-  ServicePublic,
-  ServicePublicService_metadata
-} from "../../../definitions/backend/ServicePublic";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
@@ -17,6 +14,7 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
@@ -29,7 +27,7 @@ type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   potServiceDetail: pot.Pot<ServicePublic, Error>;
-  serviceMetadata?: ServicePublicService_metadata;
+  serviceMetadata?: ServiceMetadata;
   onServiceLinkPress?: () => void;
 }>;
 

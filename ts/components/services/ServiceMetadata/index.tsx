@@ -1,13 +1,11 @@
 import React from "react";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-
 import { isAndroid, isIos } from "../../../utils/platform";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ItemAction } from "../../../utils/url";
 import SectionHeader from ".././SectionHeader";
 import LinkRow from ".././LinkRow";
-
-import { ServicePublicService_metadata } from "../../../../definitions/backend/ServicePublic";
 import InformationRow from "./InformationRow";
 
 type Props = {
@@ -15,19 +13,19 @@ type Props = {
   isDebugModeEnabled: boolean;
   organizationFiscalCode: OrganizationFiscalCode;
   serviceId: ServiceId;
-  servicesMetadata?: ServicePublicService_metadata;
+  servicesMetadata?: ServiceMetadata;
 };
 
 /**
  * Renders a dedicated section with a service's metadata and the header.
  */
-const ServiceMetadata: React.FC<Props> = ({
-  organizationFiscalCode,
-  getItemOnPress,
-  serviceId,
-  servicesMetadata,
-  isDebugModeEnabled
-}: Props) => {
+const ServiceMetadataComponent: React.FC<Props> = ({
+                                                     organizationFiscalCode,
+                                                     getItemOnPress,
+                                                     serviceId,
+                                                     servicesMetadata,
+                                                     isDebugModeEnabled
+                                                   }: Props) => {
   const {
     address,
     app_android,
@@ -107,4 +105,4 @@ const ServiceMetadata: React.FC<Props> = ({
   );
 };
 
-export default ServiceMetadata;
+export default ServiceMetadataComponent;
