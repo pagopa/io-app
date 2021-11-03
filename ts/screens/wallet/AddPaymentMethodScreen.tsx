@@ -70,7 +70,7 @@ const getpaymentMethods = (
   },
   {
     name: I18n.t("wallet.methods.paypal.name"),
-    description: I18n.t("wallet.methods.digital.description"),
+    description: I18n.t("wallet.methods.paypal.description"),
     icon: PaypalLogo,
     // TODO replace with effective dispatch
     onPress: constNull,
