@@ -120,6 +120,10 @@ jobs:
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
               yarn test $TEST
       - run: ./scripts/codecov.sh
+
+      - store_test_results:
+          path: test-results
+
     parallelism: 8
 
   # Runs ESlint checks on PR
