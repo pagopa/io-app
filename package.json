@@ -16,7 +16,7 @@
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/master/api_mit_voucher.yaml",
   "api_sicilia_vola": "assets/SiciliaVola.yml",
-  "pagopa_api": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/pm/spec.json",
+  "pagopa_api": "assets/paymentManager/spec.json",
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/pagopa/privative/definitions.yml",
