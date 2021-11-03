@@ -14,8 +14,7 @@ describe("makeFontStyleObject behaviour on Android", () => {
   });
   it("fontWeight and fontStyle should be undefined", () => {
     const font = makeFontStyleObject();
-    // expect(font.fontStyle).toBeUndefined();
-    expect(font.fontStyle).toBeDefined();
+    expect(font.fontStyle).toBeUndefined();
     expect(font.fontWeight).toBeUndefined();
   });
   it("default font family should be Titillium if specify the weight", () => {
