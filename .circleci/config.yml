@@ -118,6 +118,7 @@ jobs:
       - run:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
+              mkdir -p test-results
               yarn test $TEST
       - run: ./scripts/codecov.sh
 
