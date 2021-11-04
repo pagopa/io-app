@@ -1009,6 +1009,9 @@ wallet:
           row2Description2: ". You'll see the right amount before confirming the payment."
           row3Description1: "Privacy Policy"
           row3Description2: "Terms and Conditions"
+        whatIsPspBottomSheet:
+          title: "Cos’è il gestore della transazione?"
+          body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
