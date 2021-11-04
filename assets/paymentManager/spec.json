@@ -1,0 +1,3314 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Api Documentation",
+    "version": "1.0",
+    "title": "Api Documentation",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host": "wisp2.pagopa.gov.it:443",
+  "basePath": "/pp-restapi-CD",
+  "tags": [
+    {
+      "name": "b-pay-controller",
+      "description": "B Pay Controller"
+    },
+    {
+      "name": "bancomat-controller",
+      "description": "Bancomat Controller"
+    },
+    {
+      "name": "otp-controller",
+      "description": "OTP Controller"
+    },
+    {
+      "name": "payments-controller",
+      "description": "Payments Controller"
+    },
+    {
+      "name": "psp-controller",
+      "description": "Psp Controller"
+    },
+    {
+      "name": "resource-controller",
+      "description": "Resource Controller"
+    },
+    {
+      "name": "satispay-controller",
+      "description": "Satispay Controller"
+    },
+    {
+      "name": "transaction-controller",
+      "description": "Transaction Controller"
+    },
+    {
+      "name": "users-controller",
+      "description": "Users Controller"
+    },
+    {
+      "name": "wallet-controller",
+      "description": "Wallet Controller"
+    },
+    {
+      "name": "wallet-v-2-controller",
+      "description": "Wallet V 2 Controller"
+    }
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/bancomat/abi": {
+      "get": {
+        "tags": [
+          "bancomat-controller"
+        ],
+        "summary": "restituisce la lista paginata degli ABI salvati a DB.size = numero di elementi da visualizzare sulla pagina (max 15).start = posizione dell'elemento da cui partire all'interno della lista.abiQuery = sottostringa a contenuta nei valori di ABI o nome dell'elemento.",
+        "operationId": "getAbiListUsingGET",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "description": "size",
+            "required": false,
+            "type": "integer",
+            "default": 10,
+            "format": "int32"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "start",
+            "required": false,
+            "type": "integer",
+            "default": 0,
+            "format": "int32"
+          },
+          {
+            "name": "abiQuery",
+            "in": "query",
+            "description": "abiQuery",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AbiListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/bancomat/add-wallets": {
+      "post": {
+        "tags": [
+          "bancomat-controller"
+        ],
+        "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [CardInfo]",
+        "operationId": "addWalletsBancomatCardUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "bancomatCardsRequest",
+            "description": "bancomatCardsRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BancomatCardsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletV2ListResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/bancomat/pans": {
+      "get": {
+        "tags": [
+          "bancomat-controller"
+        ],
+        "summary": "getPans",
+        "operationId": "getPansUsingGET",
+        "parameters": [
+          {
+            "name": "abi",
+            "in": "query",
+            "description": "abi",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RestPanResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/bpay/add-wallets": {
+      "post": {
+        "tags": [
+          "b-pay-controller"
+        ],
+        "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [BPayInfo]",
+        "operationId": "addWalletsBPayUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "bPayRequest",
+            "description": "bPayRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BPayRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletV2ListResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/bpay/list": {
+      "get": {
+        "tags": [
+          "b-pay-controller"
+        ],
+        "summary": "getBpayList",
+        "operationId": "getBpayListUsingGET",
+        "parameters": [
+          {
+            "name": "abi",
+            "in": "query",
+            "description": "abi",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RestBPayResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/payments/cc/actions/pay": {
+      "post": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
+        "operationId": "payCreditCardVerificationUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "payRequest",
+            "description": "payRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/payments/{id}": {
+      "delete": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "deletePayment",
+        "operationId": "deletePaymentUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "showWallet",
+            "in": "query",
+            "description": "showWallet",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/payments/{id}/actions/check": {
+      "get": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "checkPayment",
+        "operationId": "checkPaymentUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/payments/{id}/actions/check-internal": {
+      "get": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "getPayment",
+        "operationId": "getPaymentUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PaymentResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/payments/{id}/actions/delete": {
+      "delete": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "deleteBySessionCookieExpired",
+        "operationId": "deleteBySessionCookieExpiredUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "showWallet",
+            "in": "query",
+            "description": "showWallet",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/payments/{id}/actions/pay": {
+      "post": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
+        "operationId": "paySslUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "payRequest",
+            "description": "payRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/psps": {
+      "get": {
+        "tags": [
+          "psp-controller"
+        ],
+        "summary": "getPspList",
+        "operationId": "getPspListUsingGET",
+        "parameters": [
+          {
+            "name": "paymentType",
+            "in": "query",
+            "description": "paymentType",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "paymentModel",
+            "in": "query",
+            "description": "paymentModel",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "idPayment",
+            "in": "query",
+            "description": "idPayment",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PspListResponseCD"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/psps/all": {
+      "get": {
+        "tags": [
+          "psp-controller"
+        ],
+        "summary": "getAllPsps",
+        "operationId": "getAllPspsUsingGET",
+        "parameters": [
+          {
+            "name": "idWallet",
+            "in": "query",
+            "description": "idWallet",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idPayment",
+            "in": "query",
+            "description": "idPayment",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PspListResponseCD"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/psps/selected": {
+      "get": {
+        "tags": [
+          "psp-controller"
+        ],
+        "summary": "getSelectedPsp",
+        "operationId": "getSelectedPspUsingGET",
+        "parameters": [
+          {
+            "name": "idWallet",
+            "in": "query",
+            "description": "idWallet",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "idPayment",
+            "in": "query",
+            "description": "idPayment",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PspListResponseCD"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/psps/{id}": {
+      "get": {
+        "tags": [
+          "psp-controller"
+        ],
+        "summary": "getPsp",
+        "operationId": "getPspUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PspResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/resources": {
+      "get": {
+        "tags": [
+          "resource-controller"
+        ],
+        "summary": "getResources",
+        "operationId": "getResourcesUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResourcesResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/resources/img/{imgName}": {
+      "get": {
+        "tags": [
+          "resource-controller"
+        ],
+        "summary": "getImageWithMediaType",
+        "operationId": "getImageWithMediaTypeUsingGET",
+        "parameters": [
+          {
+            "name": "imgName",
+            "in": "path",
+            "description": "imgName",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/resources/psp/{id}": {
+      "get": {
+        "tags": [
+          "resource-controller"
+        ],
+        "summary": "getPspLogo",
+        "operationId": "getPspLogoUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/resources/service/{id}": {
+      "get": {
+        "tags": [
+          "resource-controller"
+        ],
+        "summary": "getServiceLogo",
+        "operationId": "getServiceLogoUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/satispay/add-wallet": {
+      "post": {
+        "tags": [
+          "satispay-controller"
+        ],
+        "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [SatispayInfo]",
+        "operationId": "addWalletSatispayUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "satispayRequest",
+            "description": "satispayRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SatispayRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletV2Response"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/satispay/consumers": {
+      "get": {
+        "tags": [
+          "satispay-controller"
+        ],
+        "summary": "getConsumer",
+        "operationId": "getConsumerUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RestSatispayResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/transactions": {
+      "get": {
+        "tags": [
+          "transaction-controller"
+        ],
+        "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
+        "operationId": "getTransactionsUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/transactions/{id}": {
+      "get": {
+        "tags": [
+          "transaction-controller"
+        ],
+        "summary": "valori authorizationCode: [ 00 - OK ] [ 02 - parametro duplicato ] [ 03 - formato messaggio errato, campo mancante o errato ][ 04 - MAC non corretto ] [ 06 - errore imprevisto durante l’elaborazione ][ 37 - codice di verifica mancante ] [ 40 - errore xml ] [ 41 - errore xml ] [ 98 - errore applicativo ] [ 99 - operazione fallita ]",
+        "operationId": "getTransactionUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/transactions/{id}/actions/check": {
+      "get": {
+        "tags": [
+          "transaction-controller"
+        ],
+        "summary": "checkStatus",
+        "operationId": "checkStatusUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionStatusResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/transactions/{id}/actions/resume": {
+      "post": {
+        "tags": [
+          "transaction-controller"
+        ],
+        "summary": "resume",
+        "operationId": "resumeUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "resumeRequest",
+            "description": "resumeRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResumeRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": [
+          "users-controller"
+        ],
+        "summary": "getUser",
+        "operationId": "getUserUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/actions/send-otp": {
+      "post": {
+        "tags": [
+          "otp-controller"
+        ],
+        "summary": "sendOtp",
+        "operationId": "sendOtpUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sendOtpRequest",
+            "description": "sendOtpRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendOtpRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/actions/start-session": {
+      "get": {
+        "tags": [
+          "users-controller"
+        ],
+        "summary": "startSession",
+        "operationId": "startSessionUsingGET",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SessionResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/v1/users/actions/verify-otp": {
+      "post": {
+        "tags": [
+          "otp-controller"
+        ],
+        "summary": "verifyOtp",
+        "operationId": "verifyOtpUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "verifyOtpRequest",
+            "description": "verifyOtpRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VerifyOtpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet": {
+      "get": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "getWallets",
+        "operationId": "getWalletsUsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "addWallet",
+        "operationId": "addWalletUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "walletRequest",
+            "description": "walletRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WalletRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/actions/check-card-bin": {
+      "post": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "checkCardBin",
+        "operationId": "checkCardBinUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "checkCardBinRequest",
+            "description": "checkCardBinRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CheckCardBinRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CheckCardBinResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/cc": {
+      "post": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "addWalletCreditCard",
+        "operationId": "addWalletCreditCardUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "walletRequest",
+            "description": "walletRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WalletRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/{id}": {
+      "get": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "getWallet",
+        "operationId": "getWalletUsingGET",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "updateWallet",
+        "operationId": "updateWalletUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "walletRequest",
+            "description": "walletRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WalletRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "deleteWallet",
+        "operationId": "deleteWalletUsingDELETE",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/{id}/actions/confirm": {
+      "post": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "confirmWallet",
+        "operationId": "confirmWalletUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/wallet/{id}/actions/favourite": {
+      "post": {
+        "tags": [
+          "wallet-controller"
+        ],
+        "summary": "favouriteWallet",
+        "operationId": "favouriteWalletUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v2/payments/{id}/actions/pay": {
+      "post": {
+        "tags": [
+          "payments-controller"
+        ],
+        "summary": "pay3ds",
+        "operationId": "pay3dsUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "payRequest",
+            "description": "payRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PayRequest"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "language",
+            "required": false,
+            "type": "string",
+            "default": "it"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TransactionResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v2/wallet": {
+      "get": {
+        "tags": [
+          "wallet-v-2-controller"
+        ],
+        "summary": "Possibili sottotipi del campo info (PaymentMethodInfo): [CardInfo, SatispayInfo, BPayInfo]",
+        "operationId": "getWalletsV2UsingGET",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/WalletV2ListResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v2/wallet/{idWallet}/payment-status": {
+      "put": {
+        "summary": "change the ability to pay",
+        "operationId": "changePayOption",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "idWallet",
+            "type": "integer",
+            "required": true,
+            "description": "Numeric ID of the wallet"
+          },
+          {
+            "in": "body",
+            "name": "payRequest",
+            "description": "New Status required",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WalletPaymentStatusRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New wallet State",
+            "schema": {
+              "$ref": "#/definitions/WalletV2Response"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found or Wallet not assigned to the user"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v2/wallet/delete-wallets": {
+      "delete": {
+        "operationId": "deleteWalletsByServiceUsingDELETE",
+        "parameters": [
+          {
+            "name": "service",
+            "in": "query",
+            "description": "service",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeletedWalletsResponse"
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Abi": {
+      "type": "object",
+      "properties": {
+        "abi": {
+          "type": "string"
+        },
+        "logoUrl": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "Abi"
+    },
+    "AbiListResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Abi"
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "AbiListResponse"
+    },
+    "Amount": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "currencyNumber": {
+          "type": "string"
+        },
+        "decimalDigits": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Amount"
+    },
+    "BPay": {
+      "type": "object",
+      "properties": {
+        "bankName": {
+          "type": "string"
+        },
+        "groupCode": {
+          "type": "string"
+        },
+        "instituteCode": {
+          "type": "string"
+        },
+        "nameObfuscated": {
+          "type": "string"
+        },
+        "numberEncrypted": {
+          "type": "string"
+        },
+        "numberObfuscated": {
+          "type": "string"
+        },
+        "paymentInstruments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BPayPaymentInstrument"
+          }
+        },
+        "serviceState": {
+          "type": "string"
+        },
+        "surnameObfuscated": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "uidHash": {
+          "type": "string"
+        }
+      },
+      "title": "BPay"
+    },
+    "BPayInfo": {
+      "type": "object",
+      "properties": {
+        "bankName": {
+          "type": "string"
+        },
+        "brandLogo": {
+          "type": "string"
+        },
+        "instituteCode": {
+          "type": "string"
+        },
+        "numberObfuscated": {
+          "type": "string"
+        },
+        "paymentInstruments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BPayPaymentInstrumentWallet"
+          }
+        },
+        "uidHash": {
+          "type": "string"
+        }
+      },
+      "title": "BPayInfo"
+    },
+    "BPayPaymentInstrument": {
+      "type": "object",
+      "properties": {
+        "defaultReceive": {
+          "type": "boolean"
+        },
+        "defaultSend": {
+          "type": "boolean"
+        },
+        "ibanObfuscated": {
+          "type": "string"
+        }
+      },
+      "title": "BPayPaymentInstrument"
+    },
+    "BPayPaymentInstrumentWallet": {
+      "type": "object",
+      "properties": {
+        "defaultReceive": {
+          "type": "boolean"
+        },
+        "defaultSend": {
+          "type": "boolean"
+        }
+      },
+      "title": "BPayPaymentInstrumentWallet"
+    },
+    "BPayRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BPay"
+          }
+        }
+      },
+      "title": "BPayRequest"
+    },
+    "BancomatCardsRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PanResponse"
+        }
+      },
+      "title": "BancomatCardsRequest"
+    },
+    "Card": {
+      "type": "object",
+      "properties": {
+        "abi": {
+          "type": "string"
+        },
+        "cardNumber": {
+          "type": "string"
+        },
+        "cardPartialNumber": {
+          "type": "string"
+        },
+        "expiringDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hpan": {
+          "type": "string"
+        },
+        "productType": {
+          "type": "string",
+          "enum": [
+            "PP",
+            "DEB"
+          ]
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validityState": {
+          "type": "string",
+          "enum": [
+            "V",
+            "BR"
+          ]
+        }
+      },
+      "title": "Card"
+    },
+    "CardInfo": {
+      "type": "object",
+      "properties": {
+        "blurredNumber": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "brandLogo": {
+          "type": "string"
+        },
+        "expireMonth": {
+          "type": "string"
+        },
+        "expireYear": {
+          "type": "string"
+        },
+        "hashPan": {
+          "type": "string"
+        },
+        "holder": {
+          "type": "string"
+        },
+        "htokenList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "issuerAbiCode": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "PP",
+            "DEB"
+          ]
+        }
+      },
+      "title": "CardInfo"
+    },
+    "CheckCardBin": {
+      "type": "object",
+      "properties": {
+        "cardBin": {
+          "type": "string"
+        },
+        "urlLogo": {
+          "type": "string"
+        }
+      },
+      "title": "CheckCardBin"
+    },
+    "CheckCardBinRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/CheckCardBin"
+        }
+      },
+      "title": "CheckCardBinRequest"
+    },
+    "CheckCardBinResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/CheckCardBin"
+        }
+      },
+      "title": "CheckCardBinResponse"
+    },
+    "CreditCard": {
+      "type": "object",
+      "properties": {
+        "brand": {
+          "type": "string"
+        },
+        "brandLogo": {
+          "type": "string"
+        },
+        "expireMonth": {
+          "type": "string"
+        },
+        "expireYear": {
+          "type": "string"
+        },
+        "flag3dsVerified": {
+          "type": "boolean"
+        },
+        "holder": {
+          "type": "string"
+        },
+        "hpan": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "onUs": {
+          "type": "boolean"
+        },
+        "pan": {
+          "type": "string"
+        },
+        "securityCode": {
+          "type": "string"
+        }
+      },
+      "title": "CreditCard"
+    },
+    "Dettaglio": {
+      "type": "object",
+      "properties": {
+        "CCP": {
+          "type": "string"
+        },
+        "IUV": {
+          "type": "string"
+        },
+        "codicePagatore": {
+          "type": "string"
+        },
+        "enteBeneficiario": {
+          "type": "string"
+        },
+        "idDominio": {
+          "type": "string"
+        },
+        "idPayment": {
+          "type": "string"
+        },
+        "importo": {
+          "type": "number"
+        },
+        "nomePagatore": {
+          "type": "string"
+        },
+        "tipoPagatore": {
+          "type": "string"
+        }
+      },
+      "title": "Dettaglio"
+    },
+    "JiffyInfoPsp": {
+      "type": "object",
+      "properties": {
+        "codiceEsito": {
+          "type": "string"
+        },
+        "numeroTelefonicoCriptato": {
+          "type": "string"
+        },
+        "numeroTelefonicoOffuscato": {
+          "type": "string"
+        },
+        "primitiva": {
+          "type": "string"
+        }
+      },
+      "title": "JiffyInfoPsp"
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "caName": {
+          "type": "string",
+          "enum": [
+            "ICCREA",
+            "NEXI",
+            "SIA"
+          ]
+        },
+        "cardsNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "code": {
+          "type": "string"
+        }
+      },
+      "title": "Message"
+    },
+    "Otp": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": "Otp"
+    },
+    "PanResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Card"
+          }
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        },
+        "requestId": {
+          "type": "string"
+        }
+      },
+      "title": "PanResponse"
+    },
+    "Pay": {
+      "type": "object",
+      "properties": {
+        "cvv": {
+          "type": "string"
+        },
+        "idWallet": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "mobileToken": {
+          "type": "string"
+        },
+        "tipo": {
+          "type": "string"
+        }
+      },
+      "title": "Pay"
+    },
+    "PayRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Pay"
+        }
+      },
+      "title": "PayRequest"
+    },
+    "Payment": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "bolloDigitale": {
+          "type": "boolean"
+        },
+        "detailsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dettaglio"
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "fiscalCode": {
+          "type": "string"
+        },
+        "iban": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idCarrello": {
+          "type": "string"
+        },
+        "idPayment": {
+          "type": "string"
+        },
+        "isCancelled": {
+          "type": "boolean"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "receiver": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "urlRedirectEc": {
+          "type": "string"
+        }
+      },
+      "title": "Payment"
+    },
+    "PaymentMethodInfo": {
+      "type": "object",
+      "title": "PaymentMethodInfo"
+    },
+    "PaymentResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Payment"
+        }
+      },
+      "title": "PaymentResponse"
+    },
+    "Psp": {
+      "type": "object",
+      "properties": {
+        "appChannel": {
+          "type": "boolean"
+        },
+        "businessName": {
+          "type": "string"
+        },
+        "cancelled": {
+          "type": "boolean"
+        },
+        "codiceAbi": {
+          "type": "string"
+        },
+        "codiceConvenzione": {
+          "type": "string"
+        },
+        "favoriteSellerCharge": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fixedCost": {
+          "$ref": "#/definitions/Amount"
+        },
+        "flagStamp": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idCard": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idChannel": {
+          "type": "string"
+        },
+        "idIntermediary": {
+          "type": "string"
+        },
+        "idPsp": {
+          "type": "string"
+        },
+        "isCancelled": {
+          "type": "boolean"
+        },
+        "isDirectAcquirer": {
+          "type": "boolean"
+        },
+        "isPspOnus": {
+          "type": "boolean"
+        },
+        "jiffyInfoPsp": {
+          "$ref": "#/definitions/JiffyInfoPsp"
+        },
+        "lingua": {
+          "type": "string",
+          "enum": [
+            "IT",
+            "EN",
+            "FR",
+            "DE",
+            "SL"
+          ]
+        },
+        "logoPSP": {
+          "type": "string"
+        },
+        "participant": {
+          "type": "string"
+        },
+        "paymentModel": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "paymentType": {
+          "type": "string"
+        },
+        "serviceAvailability": {
+          "type": "string"
+        },
+        "serviceDescription": {
+          "type": "string"
+        },
+        "serviceLogo": {
+          "type": "string"
+        },
+        "serviceName": {
+          "type": "string"
+        },
+        "solvedByPan": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "VISA",
+              "MASTERCARD",
+              "MAESTRO",
+              "VISA_ELECTRON",
+              "AMEX",
+              "OTHER"
+            ]
+          }
+        },
+        "urlInfoChannel": {
+          "type": "string"
+        }
+      },
+      "title": "Psp"
+    },
+    "PspListResponseCD": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Psp"
+          }
+        }
+      },
+      "title": "PspListResponseCD"
+    },
+    "PspResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Psp"
+        }
+      },
+      "title": "PspResponse"
+    },
+    "ResourcesResponse": {
+      "type": "object",
+      "title": "ResourcesResponse"
+    },
+    "RestBPayResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BPay"
+          }
+        }
+      },
+      "title": "RestBPayResponse"
+    },
+    "RestPanResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/PanResponse"
+        }
+      },
+      "title": "RestPanResponse"
+    },
+    "RestSatispayResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Satispay"
+        }
+      },
+      "title": "RestSatispayResponse"
+    },
+    "Resume": {
+      "type": "object",
+      "properties": {
+        "esito": {
+          "type": "string"
+        },
+        "paRes": {
+          "type": "string"
+        },
+        "xpay3DSResponse": {
+          "$ref": "#/definitions/Xpay3DSResponse"
+        }
+      },
+      "title": "Resume"
+    },
+    "ResumeRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Resume"
+        }
+      },
+      "title": "ResumeRequest"
+    },
+    "Satispay": {
+      "type": "object",
+      "properties": {
+        "hasMore": {
+          "type": "boolean"
+        },
+        "token": {
+          "type": "string"
+        },
+        "uidSatispay": {
+          "type": "string"
+        },
+        "uidSatispayHash": {
+          "type": "string"
+        }
+      },
+      "title": "Satispay"
+    },
+    "SatispayInfo": {
+      "type": "object",
+      "properties": {
+        "brandLogo": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      },
+      "title": "SatispayInfo"
+    },
+    "SatispayRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Satispay"
+        }
+      },
+      "title": "SatispayRequest"
+    },
+    "SendOtp": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "string",
+          "enum": [
+            "SIGNIN",
+            "SIGNIN_PUK",
+            "LOGIN",
+            "VERIFY_EMAIL",
+            "RESET_PASSWORD",
+            "MODIFY_PHONE_NUMBER",
+            "MODIFY_EMAIL",
+            "REGISTERED_PAYMENT",
+            "PAYMENT_SUCCESS",
+            "PAYMENT_STORNO"
+          ]
+        },
+        "newReceiver": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string",
+          "enum": [
+            "EMAIL",
+            "SMS",
+            "PUSH"
+          ]
+        }
+      },
+      "title": "SendOtp"
+    },
+    "SendOtpRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SendOtp"
+        }
+      },
+      "title": "SendOtpRequest"
+    },
+    "Session": {
+      "type": "object",
+      "properties": {
+        "idPayment": {
+          "type": "string"
+        },
+        "sessionToken": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "title": "Session"
+    },
+    "SessionResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Session"
+        }
+      },
+      "title": "SessionResponse"
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "accountingStatus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "amount": {
+          "$ref": "#/definitions/Amount"
+        },
+        "authorizationCode": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "description": {
+          "type": "string"
+        },
+        "detailsList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Dettaglio"
+          }
+        },
+        "directAcquirer": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "boolean"
+        },
+        "fee": {
+          "$ref": "#/definitions/Amount"
+        },
+        "grandTotal": {
+          "$ref": "#/definitions/Amount"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idPayment": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idPsp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idStatus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idWallet": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "merchant": {
+          "type": "string"
+        },
+        "nodoIdPayment": {
+          "type": "string"
+        },
+        "numAut": {
+          "type": "string"
+        },
+        "orderNumber": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "paymentCancelled": {
+          "type": "boolean"
+        },
+        "paymentModel": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rrn": {
+          "type": "string"
+        },
+        "spcNodeDescription": {
+          "type": "string"
+        },
+        "spcNodeStatus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "statusMessage": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "token": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "urlCheckout3ds": {
+          "type": "string"
+        },
+        "urlRedirectPSP": {
+          "type": "string"
+        }
+      },
+      "title": "Transaction"
+    },
+    "TransactionListResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "TransactionListResponse"
+    },
+    "TransactionResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Transaction"
+        }
+      },
+      "title": "TransactionResponse"
+    },
+    "TransactionStatus": {
+      "type": "object",
+      "properties": {
+        "acsUrl": {
+          "type": "string"
+        },
+        "authorizationCode": {
+          "type": "string"
+        },
+        "expired": {
+          "type": "boolean"
+        },
+        "finalStatus": {
+          "type": "boolean"
+        },
+        "idPayment": {
+          "type": "string"
+        },
+        "idStatus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idTransaction": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "paymentOrigin": {
+          "type": "string"
+        },
+        "result": {
+          "type": "string"
+        },
+        "statusMessage": {
+          "type": "string"
+        }
+      },
+      "title": "TransactionStatus"
+    },
+    "TransactionStatusResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/TransactionStatus"
+        }
+      },
+      "title": "TransactionStatusResponse"
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "acceptTerms": {
+          "type": "boolean"
+        },
+        "activationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "cellphone": {
+          "type": "string"
+        },
+        "cellphoneVerified": {
+          "type": "boolean"
+        },
+        "email": {
+          "type": "string"
+        },
+        "emailVerified": {
+          "type": "boolean"
+        },
+        "fiscalCode": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "notificationEmail": {
+          "type": "string"
+        },
+        "otp": {
+          "$ref": "#/definitions/Otp"
+        },
+        "puk": {
+          "type": "string"
+        },
+        "registeredDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "spidSessionId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ANONYMOUS",
+            "REGISTERED",
+            "REGISTERED_SPID",
+            "REGISTERED_CIE",
+            "NEED_OTP",
+            "NEED_PASSWORD",
+            "WAITING_NEW_PASSWORD",
+            "DELETED"
+          ]
+        },
+        "surname": {
+          "type": "string"
+        },
+        "temporaryCellphone": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "User"
+    },
+    "UserResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "title": "UserResponse"
+    },
+    "VerifyOtp": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "type": "string",
+          "enum": [
+            "SIGNIN",
+            "SIGNIN_PUK",
+            "LOGIN",
+            "VERIFY_EMAIL",
+            "RESET_PASSWORD",
+            "MODIFY_PHONE_NUMBER",
+            "MODIFY_EMAIL",
+            "REGISTERED_PAYMENT",
+            "PAYMENT_SUCCESS",
+            "PAYMENT_STORNO"
+          ]
+        },
+        "otp": {
+          "type": "string"
+        }
+      },
+      "title": "VerifyOtp"
+    },
+    "VerifyOtpRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/VerifyOtp"
+        }
+      },
+      "title": "VerifyOtpRequest"
+    },
+    "Wallet": {
+      "type": "object",
+      "properties": {
+        "bPay": {
+          "$ref": "#/definitions/BPay"
+        },
+        "bancomatCard": {
+          "$ref": "#/definitions/Card"
+        },
+        "buyerBankName": {
+          "type": "string"
+        },
+        "creditCard": {
+          "$ref": "#/definitions/CreditCard"
+        },
+        "favourite": {
+          "type": "boolean"
+        },
+        "idBuyerBank": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idPagamentoFromEC": {
+          "type": "string"
+        },
+        "idPsp": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idWallet": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "isPspToIgnore": {
+          "type": "boolean"
+        },
+        "jiffyCellphoneNumber": {
+          "type": "string"
+        },
+        "lastUsage": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "matchedPsp": {
+          "type": "boolean"
+        },
+        "onboardingChannel": {
+          "type": "string"
+        },
+        "psp": {
+          "$ref": "#/definitions/Psp"
+        },
+        "pspEditable": {
+          "type": "boolean"
+        },
+        "pspListNotOnUs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Psp"
+          }
+        },
+        "registeredNexi": {
+          "type": "boolean"
+        },
+        "satispay": {
+          "$ref": "#/definitions/Satispay"
+        },
+        "saved": {
+          "type": "boolean"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pagoPA",
+              "BPD",
+              "FA"
+            ]
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "CREDIT_CARD",
+            "BANK_ACCOUNT",
+            "EXTERNAL_PS"
+          ]
+        }
+      },
+      "title": "Wallet"
+    },
+    "WalletListResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Wallet"
+          }
+        }
+      },
+      "title": "WalletListResponse"
+    },
+    "WalletRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Wallet"
+        }
+      },
+      "title": "WalletRequest"
+    },
+    "WalletResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Wallet"
+        }
+      },
+      "title": "WalletResponse"
+    },
+    "EnableableFunctions": {
+      "type": "string",
+      "enum": [
+        "pagoPA",
+        "BPD",
+        "FA"
+      ]
+    },
+    "WalletV2": {
+      "type": "object",
+      "properties": {
+        "createDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "enableableFunctions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EnableableFunctions"
+          }
+        },
+        "favourite": {
+          "type": "boolean"
+        },
+        "idWallet": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "info": {
+          "$ref": "#/definitions/PaymentMethodInfo"
+        },
+        "onboardingChannel": {
+          "type": "string"
+        },
+        "pagoPA": {
+          "type": "boolean"
+        },
+        "updateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "walletType": {
+          "type": "string",
+          "enum": [
+            "Card",
+            "Bancomat",
+            "Satispay",
+            "BPay"
+          ]
+        }
+      },
+      "title": "WalletV2"
+    },
+    "WalletV2ListResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WalletV2"
+          }
+        }
+      },
+      "title": "WalletV2ListResponse"
+    },
+    "WalletV2Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WalletV2"
+        }
+      },
+      "title": "WalletV2Response"
+    },
+    "WalletPaymentStatus": {
+      "type": "object",
+      "properties": {
+        "pagoPA": {
+          "type": "boolean"
+        }
+      },
+      "title": "WalletPaymentStatus"
+    },
+    "WalletPaymentStatusRequest": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/WalletPaymentStatus"
+        }
+      },
+      "title": "WalletPaymentStatusRequest"
+    },
+    "Xpay3DSResponse": {
+      "type": "object",
+      "properties": {
+        "codice": {
+          "type": "string"
+        },
+        "esito": {
+          "type": "string",
+          "enum": [
+            "OK",
+            "KO"
+          ]
+        },
+        "idOperazione": {
+          "type": "string"
+        },
+        "mac": {
+          "type": "string"
+        },
+        "messaggio": {
+          "type": "string"
+        },
+        "resumeType": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "xpayNonce": {
+          "type": "string"
+        }
+      },
+      "title": "Xpay3DSResponse"
+    },
+    "DeletedWallets": {
+      "type": "object",
+      "properties": {
+        "deletedWallets": {
+          "type": "integer"
+        },
+        "notDeletedWallets": {
+          "type": "integer"
+        }
+      },
+      "title": "DeletedWallets"
+    },
+    "DeletedWalletsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/DeletedWallets"
+        }
+      },
+      "title": "DeletedWalletsResponse"
+    }
+  }
+}
