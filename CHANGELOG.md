@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.37.0-rc.3](https://github.com/pagopa/io-app/compare/1.37.0-rc.2...1.37.0-rc.3) (2021-11-04)
+
+
+### Chores
+
+* Revert "Upgrade CircleCI Android image" ([#3476](https://github.com/pagopa/io-app/issues/3476)) ([e503111](https://github.com/pagopa/io-app/commit/e5031117730860c03969ec3fcbe5d3f3363a184c))
+
 ## [1.37.0-rc.2](https://github.com/pagopa/io-app/compare/1.37.0-rc.1...1.37.0-rc.2) (2021-11-04)
 
 
