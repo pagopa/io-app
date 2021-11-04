@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -36,6 +36,10 @@ import ContactPreferencesToggles from "../../components/services/ContactPreferen
 import ServiceMetadata from "../../components/services/ServiceMetadata";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
+import { specialServicesEnabled } from "../../config";
+import { SpecialServiceCategoryEnum } from "../../../definitions/backend/SpecialServiceCategory";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -160,6 +164,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     const maybeCTA = getServiceCTA(metadata);
 
+    const isSpecialService =
+      specialServicesEnabled &&
+      service.service_metadata &&
+      service.service_metadata.category === SpecialServiceCategoryEnum.SPECIAL;
     return (
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
@@ -167,79 +175,86 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["services_detail"]}
       >
-        <Content>
-          <Grid>
-            <OrganizationHeader service={service} />
-          </Grid>
-          <View spacer={true} small={true} />
+        <SafeAreaView style={IOStyles.flex}>
+          <Content style={IOStyles.flex}>
+            <Grid>
+              <OrganizationHeader service={service} />
+            </Grid>
+            <View spacer={true} small={true} />
 
-          {metadata?.description && (
-            <>
-              <Markdown
-                animated={true}
-                onLoadEnd={this.onMarkdownEnd}
-                onError={this.onMarkdownEnd}
-              >
-                {metadata.description}
-              </Markdown>
-              <View spacer={true} large={true} />
-            </>
-          )}
-
-          {canRenderItems && (
-            <>
-              {metadata && (
-                <>
-                  <TosAndPrivacyBox
-                    tosUrl={metadata.tos_url}
-                    privacyUrl={metadata.privacy_url}
-                  />
-                  <View spacer={true} large={true} />
-                </>
-              )}
-
-              <ContactPreferencesToggles
-                serviceId={service.service_id}
-                channels={service.available_notification_channels}
-              />
-              <View spacer={true} large={true} />
-
-              <ServiceMetadata
-                servicesMetadata={service.service_metadata}
-                organizationFiscalCode={service.organization_fiscal_code}
-                getItemOnPress={handleItemOnPress}
-                serviceId={service.service_id}
-                isDebugModeEnabled={this.props.isDebugModeEnabled}
-              />
-
-              <EdgeBorderComponent />
-
-              <View spacer={true} extralarge={true} />
-            </>
-          )}
-        </Content>
-
-        {maybeCTA.isSome() && (
-          <View footer={true} style={styles.flexRow}>
-            <ExtractedCTABar
-              ctas={maybeCTA.value}
-              xsmall={false}
-              dispatch={this.props.dispatch}
-              serviceMetadata={metadata}
-              service={service}
-            />
-            {/* {specialServicesEnabled && */}
-            {/* service.service_metadata.category === */}
-            {/*  SpecialServiceCategoryEnum.SPECIAL && ( */}
-            {service.service_metadata && (
-              <SpecialServicesRouter
-                custom_special_flow={
-                  service.service_metadata.custom_special_flow ?? undefined
-                }
-              />
+            {metadata?.description && (
+              <>
+                <Markdown
+                  animated={true}
+                  onLoadEnd={this.onMarkdownEnd}
+                  onError={this.onMarkdownEnd}
+                >
+                  {metadata.description}
+                </Markdown>
+                <View spacer={true} large={true} />
+              </>
             )}
-          </View>
-        )}
+
+            {canRenderItems && (
+              <>
+                {metadata && (
+                  <>
+                    <TosAndPrivacyBox
+                      tosUrl={metadata.tos_url}
+                      privacyUrl={metadata.privacy_url}
+                    />
+                    <View spacer={true} large={true} />
+                  </>
+                )}
+
+                <ContactPreferencesToggles
+                  serviceId={service.service_id}
+                  channels={service.available_notification_channels}
+                />
+                <View spacer={true} large={true} />
+
+                <ServiceMetadata
+                  servicesMetadata={service.service_metadata}
+                  organizationFiscalCode={service.organization_fiscal_code}
+                  getItemOnPress={handleItemOnPress}
+                  serviceId={service.service_id}
+                  isDebugModeEnabled={this.props.isDebugModeEnabled}
+                />
+
+                <EdgeBorderComponent />
+
+                <View spacer={true} extralarge={true} />
+              </>
+            )}
+          </Content>
+
+          {(maybeCTA.isSome() || isSpecialService) && (
+            <FooterTopShadow>
+              {maybeCTA.isSome() && (
+                <View style={[styles.flexRow]}>
+                  <ExtractedCTABar
+                    ctas={maybeCTA.value}
+                    xsmall={false}
+                    dispatch={this.props.dispatch}
+                    serviceMetadata={metadata}
+                    service={service}
+                  />
+                </View>
+              )}
+              {maybeCTA.isSome() && isSpecialService && <View spacer small />}
+              {specialServicesEnabled &&
+                service.service_metadata &&
+                service.service_metadata.category ===
+                  SpecialServiceCategoryEnum.SPECIAL && (
+                  <SpecialServicesRouter
+                    custom_special_flow={
+                      service.service_metadata.custom_special_flow ?? undefined
+                    }
+                  />
+                )}
+            </FooterTopShadow>
+          )}
+        </SafeAreaView>
       </BaseScreenComponent>
     );
   }
