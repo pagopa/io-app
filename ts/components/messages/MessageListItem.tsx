@@ -109,6 +109,7 @@ class MessageListItem extends React.PureComponent<Props> {
           ...message,
           ...uiService
         })}
+        testID={`MessageListItem_${message.id}`}
       >
         {!hasPrescriptionData(message) && messageNeedsCTABar(message) && (
           <React.Fragment>
