@@ -172,7 +172,7 @@
     "unist-util-visit": "^4.1.0",
     "url-parse": "^1.4.7",
     "uuid": "^8.3.2",
-    "validator": "^10.7.0",
+    "validator": "^13.7.0",
     "xss": "1.0.10"
   },
   "devDependencies": {
