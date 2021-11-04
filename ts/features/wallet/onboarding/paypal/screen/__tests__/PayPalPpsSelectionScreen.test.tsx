@@ -44,7 +44,11 @@ describe("PayPalPpsSelectionScreen", () => {
 
   it(`"what is a psp" link should be defined and open a bottom sheet on onPress`, () => {
     const render = renderComponent(store);
-    const link = render.component.queryByTestId("whatIsPSPTestID");
+    const link = render.component.getByText(
+      I18n.t("wallet.onboarding.paypal.selectPsp.link")
+    );
+    fireEvent.press(link);
+    expect(mockPresentBottomSheet).toBeCalledTimes(1);
     expect(link).not.toBeNull();
     if (link) {
       fireEvent.press(link);
