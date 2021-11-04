@@ -478,6 +478,9 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
+      - alpha-release-android:
+          requires:
+            - compile-typescript
 
       - run-danger:
           filters:
