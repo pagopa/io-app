@@ -6,6 +6,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
+import I18n from "../../../../../../i18n";
 
 const mockPresentBottomSheet = jest.fn();
 jest.mock("../../../../../../utils/bottomSheet", () => {
@@ -47,8 +48,6 @@ describe("PayPalPpsSelectionScreen", () => {
     const link = render.component.getByText(
       I18n.t("wallet.onboarding.paypal.selectPsp.link")
     );
-    fireEvent.press(link);
-    expect(mockPresentBottomSheet).toBeCalledTimes(1);
     expect(link).not.toBeNull();
     if (link) {
       fireEvent.press(link);
