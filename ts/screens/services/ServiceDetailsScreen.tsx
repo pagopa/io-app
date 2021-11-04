@@ -35,6 +35,7 @@ import { handleItemOnPress } from "../../utils/url";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 import ServiceMetadata from "../../components/services/ServiceMetadata";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
+import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -227,6 +228,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               serviceMetadata={metadata}
               service={service}
             />
+            {/* {specialServicesEnabled && */}
+            {/* service.service_metadata.category === */}
+            {/*  SpecialServiceCategoryEnum.SPECIAL && ( */}
+            {service.service_metadata && (
+              <SpecialServicesRouter
+                custom_special_flow={
+                  service.service_metadata.custom_special_flow ?? undefined
+                }
+              />
+            )}
           </View>
         )}
       </BaseScreenComponent>
