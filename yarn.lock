@@ -8163,10 +8163,10 @@ ini@^1.3.2, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
-instabug-reactnative@^9.1.6:
-  version "9.1.6"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-9.1.6.tgz#23f2b00060127c10f09b3ced159dd4684d45ec13"
-  integrity sha512-Zu7wIAHZW1JXzGREwixn02skxPv2tOQzHNZOK++Ota+6VL4x4PsAetCfnQgIhMotMeBW0Lj0qVcCcc1cDkfh8g==
+instabug-reactnative@^10.9.1:
+  version "10.9.1"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-10.9.1.tgz#ac68cb8a58fc44e03bac4de0cb9670dc9f530c2b"
+  integrity sha512-akPsNa28tnFtf7y/YS1GHNIUCHCgYnn1xahzz9HYy0xg3h1/+aNURqUVwYqJjPx0VBI/4V0WfYJNwWMK9Hg1IA==
 
 internal-slot@^1.0.3:
   version "1.0.3"
