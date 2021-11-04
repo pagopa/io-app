@@ -118,14 +118,13 @@ jobs:
       - run:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
-              mkdir -p ./reports/junit/
               yarn test:ci $TEST --reporters=default --reporters=jest-junit
           environment:
-            JEST_JUNIT_OUTPUT_DIR: ./reports/junit
+            JEST_JUNIT_OUTPUT_DIR: ./tmp/reports/junit
       - run: ./scripts/codecov.sh
 
       - store_test_results:
-          path: ./reports/junit/
+          path: ./tmp/reports/junit/
 
     parallelism: 8
 
