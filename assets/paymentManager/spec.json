@@ -2481,6 +2481,15 @@
     },
     "PayPalPsp": {
       "type": "object",
+      "required": [
+        "avgFee",
+        "codiceAbi",
+        "idPsp",
+        "maxFee",
+        "onboard",
+        "privacyUrl",
+        "ragioneSociale"
+      ],
       "properties": {
         "avgFee": {
           "type": "number",
@@ -2509,6 +2518,7 @@
     },
     "PaypalPspListResponse": {
       "type": "object",
+      "required": ["data"],
       "properties": {
         "data": {
           "type": "array",
