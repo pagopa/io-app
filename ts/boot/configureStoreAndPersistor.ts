@@ -53,7 +53,7 @@ const CURRENT_REDUX_STORE_VERSION = 18;
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
 const migrations: MigrationManifest = {
   // version 0
-  // we changed the way we comput the installation ID
+  // we changed the way we compute the installation ID
   "0": (state: PersistedState): PersistedState =>
     ({
       ...state,

@@ -32,7 +32,7 @@
     "start-breaking-cycle": "yarn pre-cycle && standard-version -t \"\" --prerelease rc --release-as major",
     "attach": "react-native attach",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
-    "test": "jest -w 1",
+    "test:ci": "jest --ci --runInBand",
     "test:dev": "jest --detectOpenHandles --coverage=false",
     "prettify": "prettier --write \"ts/**/*.(ts|tsx)\"",
     "prettier:check": "prettier --check \"ts/**/*.(ts|tsx)\"",
@@ -174,7 +174,7 @@
     "unist-util-visit": "^4.1.0",
     "url-parse": "^1.4.7",
     "uuid": "^8.3.2",
-    "validator": "^10.7.0",
+    "validator": "^13.7.0",
     "xss": "1.0.10"
   },
   "devDependencies": {
@@ -228,6 +228,7 @@
     "fs-extra": "^7.0.0",
     "italia-utils": "^4.1.1",
     "jest": "^26.6.3",
+    "jest-junit": "^13.0.0",
     "js-yaml": "^3.13.1",
     "jsdoc-to-markdown": "^6.0.1",
     "metro-react-native-babel-preset": "^0.64.0",
