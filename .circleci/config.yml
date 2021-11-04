@@ -215,7 +215,7 @@ jobs:
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            gem install bundler
+            gem install bundler:$BUNDLER_VERSION
 
       # Install bundle dependencies
       - run:
@@ -274,7 +274,7 @@ jobs:
           command: |
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
-            gem install bundler
+            gem install bundler:$BUNDLER_VERSION
 
       # Install bundle dependencies
       - run:
