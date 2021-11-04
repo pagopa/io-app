@@ -1010,8 +1010,8 @@ wallet:
           row3Description1: "Privacy Policy"
           row3Description2: "Terms and Conditions"
         whatIsPspBottomSheet:
-          title: "Cos’è il gestore della transazione?"
-          body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+          title: "What is a payment provider?"
+          body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
       onBoardingCompleted:
         title: "That's it!"
         body: "Now have a look at the current settings of your new method."
