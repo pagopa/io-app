@@ -167,7 +167,12 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
             <View spacer={true} small={true} />
             <ScrollView>
               <Body>{locales.body}</Body>
-              <Link onPress={presentWhatIsPspBottomSheet}>{locales.link}</Link>
+              <Link
+                onPress={presentWhatIsPspBottomSheet}
+                testID={"whatIsPSPTestID"}
+              >
+                {locales.link}
+              </Link>
               <View spacer={true} large={true} />
               <RadioListHeader
                 leftColumnTitle={locales.leftColumnTitle}
