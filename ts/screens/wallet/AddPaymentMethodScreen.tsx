@@ -90,7 +90,7 @@ const getpaymentMethods = (
     description: I18n.t("wallet.methods.satispay.description"),
     icon: SatispayLogo,
     onPress: props.startSatispayOnboarding,
-    status: !onlyPaymentMethodCanPay ? "implemented" : "notImplemented",
+    status: "notImplemented",
     section: "digital_payments"
   },
   {
