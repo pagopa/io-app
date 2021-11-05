@@ -22,8 +22,8 @@ import {
   none,
   fromEither
 } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {

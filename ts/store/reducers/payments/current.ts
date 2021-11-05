@@ -1,6 +1,7 @@
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Omit } from "italia-ts-commons/lib/types";
 import { getType } from "typesafe-actions";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { Action } from "../../actions/types";
 import {
   paymentCompletedSuccess,

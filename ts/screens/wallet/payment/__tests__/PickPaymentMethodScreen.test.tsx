@@ -4,7 +4,8 @@ import { some } from "fp-ts/lib/Option";
 import { fireEvent } from "@testing-library/react-native";
 import { NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
