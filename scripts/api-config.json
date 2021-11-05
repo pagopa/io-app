@@ -1,0 +1,24 @@
+{
+  "global": {
+    "autoLogin": true
+  },
+  "profile": {
+    "attrs": {
+      "name": "Gian Maria"
+    }
+  },
+  "messages":{
+    "paymentsCount": 1,
+    "paymentInvalidAfterDueDateWithValidDueDateCount": 1,
+    "paymentInvalidAfterDueDateWithExpiredDueDateCount": 1,
+    "paymentWithValidDueDateCount": 1,
+    "paymentWithExpiredDueDateCount": 1,
+    "medicalCount": 1,
+    "withCTA": true,
+    "withEUCovidCert": true,
+    "withValidDueDateCount": 1,
+    "withInValidDueDateCount": 1,
+    "standardMessageCount": 1,
+    "allowRandomValues": true
+  }
+}

@@ -186,6 +186,10 @@ export function createRootReducer(
               persistedPreferences: {
                 ...initialPreferencesState,
                 isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
+              },
+              // notifications must be kept
+              notifications: {
+                ...state.notifications
               }
             } as GlobalState)
           : state;

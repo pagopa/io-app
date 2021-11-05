@@ -15,6 +15,7 @@ import {
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
 import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
+import { SvVoucherId } from "../../types/SvVoucher";
 import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 /**
@@ -136,6 +137,15 @@ export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_FAILURE"
 )<string, ReadonlyArray<Municipality>, NetworkError>();
 
+/**
+ * get and handle the voucher pdf download
+ */
+export const svGetPdfVoucher = createAsyncAction(
+  "SV_GENERATE_GET_VOUCHER_PDF_REQUEST",
+  "SV_GENERATE_GET_VOUCHER_PDF_SUCCESS",
+  "SV_GENERATE_GET_VOUCHER_PDF_FAILURE"
+)<SvVoucherId, string, NetworkError>();
+
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
   | ActionType<typeof svGenerateVoucherCompleted>
@@ -151,4 +161,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherAvailableDestination>
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
-  | ActionType<typeof svGenerateVoucherAvailableMunicipality>;
+  | ActionType<typeof svGenerateVoucherAvailableMunicipality>
+  | ActionType<typeof svGetPdfVoucher>;
