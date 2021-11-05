@@ -13,7 +13,7 @@ import { openWebUrl } from "../../utils/url";
 import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColorType } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
 import StatusContent from "./StatusContent";
 
@@ -36,6 +36,13 @@ const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.warning]: "io-info"
 };
 
+// map the text background color with the relative text color
+const textDefaultColor = "white";
+export const getStatusTextColor = (
+  level: LevelEnum
+): "bluegreyDark" | "white" =>
+  level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
+
 const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
     sectionStatus: NonNullable<Props["sectionStatus"]>;
@@ -51,8 +58,7 @@ const InnerSectionStatus = (
   );
   const navigation = useNavigationContext();
 
-  const color =
-    backgroundColor === "aqua" ? IOColors.bluegreyDark : IOColors.white;
+  const color = getStatusTextColor(sectionStatus.level);
 
   const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {
@@ -77,6 +83,7 @@ const InnerSectionStatus = (
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
+      labelColor={color}
     >
       {`${sectionStatus.message[locale]} `}
     </StatusContent>,
@@ -97,6 +104,7 @@ const InnerSectionStatus = (
           iconColor={color}
           iconName={iconName}
           viewRef={viewRef}
+          labelColor={color}
         >
           {`${sectionStatus.message[locale]} `}
           <Link
@@ -139,4 +147,5 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
 const component = React.memo(SectionStatus, (prev: Props, curr: Props) =>
   _.isEqual(prev.sectionStatus, curr.sectionStatus)
 );
+
 export default connect(mapStateToProps)(component);

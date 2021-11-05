@@ -1,5 +1,5 @@
 import { AccessibilityRole, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { WithTestID } from "../../types/WithTestID";
 import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
@@ -30,6 +30,7 @@ type Props = WithTestID<{
   iconColor: string;
   iconName: string;
   viewRef: React.RefObject<View>;
+  labelColor: ComponentProps<typeof Label>["color"];
 }>;
 
 const StatusContent: React.FC<Props> = ({
@@ -40,7 +41,8 @@ const StatusContent: React.FC<Props> = ({
   children,
   iconColor,
   iconName,
-  viewRef
+  viewRef,
+  labelColor
 }) => (
   <View
     accessibilityHint={accessibilityHint}
@@ -57,11 +59,7 @@ const StatusContent: React.FC<Props> = ({
       size={iconSize}
       style={styles.alignCenter}
     />
-    <Label
-      color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
-      style={styles.text}
-      weight={"Regular"}
-    >
+    <Label color={labelColor} style={styles.text} weight={"Regular"}>
       {children}
     </Label>
   </View>
