@@ -28,6 +28,7 @@ import { H4 } from "../../../../../components/core/typography/H4";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
+import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -107,6 +108,12 @@ const getLocales = () => ({
   leftColumnTitle: I18n.t("wallet.onboarding.paypal.selectPsp.leftColumnTitle"),
   rightColumnTitle: I18n.t(
     "wallet.onboarding.paypal.selectPsp.rightColumnTitle"
+  ),
+  whatIsPspBody: I18n.t(
+    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.body"
+  ),
+  whatIsPspTitle: I18n.t(
+    "wallet.onboarding.paypal.selectPsp.whatIsPspBottomSheet.title"
   )
 });
 
@@ -135,6 +142,11 @@ const buttonsProps = () => {
  */
 const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
+  const { present: presentWhatIsPspBottomSheet } = useIOBottomSheet(
+    <Body>{locales.whatIsPspBody}</Body>,
+    locales.whatIsPspTitle,
+    280
+  );
   const pspList = getValueOrElse(props.pspList, []);
   // auto select if the psp list has 1 element
   const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
@@ -155,8 +167,12 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
             <View spacer={true} small={true} />
             <ScrollView>
               <Body>{locales.body}</Body>
-              {/* TODO see https://pagopa.atlassian.net/browse/IA-304 */}
-              <Link onPress={constNull}>{locales.link}</Link>
+              <Link
+                onPress={presentWhatIsPspBottomSheet}
+                testID={"whatIsPSPTestID"}
+              >
+                {locales.link}
+              </Link>
               <View spacer={true} large={true} />
               <RadioListHeader
                 leftColumnTitle={locales.leftColumnTitle}
