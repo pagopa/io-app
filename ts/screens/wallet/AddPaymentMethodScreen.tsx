@@ -22,8 +22,7 @@ import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privat
 import I18n from "../../i18n";
 import {
   navigateBack,
-  navigateToWalletAddCreditCard,
-  navigateToWalletAddDigitalPaymentMethod
+  navigateToWalletAddCreditCard
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { H1 } from "../../components/core/typography/H1";
@@ -204,8 +203,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
-  navigateToWalletAddDigitalPaymentMethod: () =>
-    dispatch(navigateToWalletAddDigitalPaymentMethod()),
   navigateToAddCreditCard: () =>
     dispatch(
       navigateToWalletAddCreditCard({

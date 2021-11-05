@@ -10,7 +10,6 @@ import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDet
 import BPayDetailScreen from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
 import CobadgeDetailScreen from "../features/wallet/cobadge/screen/CobadgeDetailScreen";
 import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditCardDetailScreen";
-import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
 import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
@@ -74,9 +73,6 @@ const baseRouteConfigMap = {
   },
   [ROUTES.WALLET_ADD_CARD]: {
     screen: AddCardScreen
-  },
-  [ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD]: {
-    screen: AddDigitalMethodScreen
   },
   [ROUTES.WALLET_CONFIRM_CARD_DETAILS]: {
     screen: ConfirmCardDetailsScreen
