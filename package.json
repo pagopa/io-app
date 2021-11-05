@@ -171,7 +171,7 @@
     "tslib": "^1.9.3",
     "typesafe-actions": "4.4.2",
     "unist-util-visit": "^4.1.0",
-    "url-parse": "^1.4.7",
+    "url-parse": "^1.5.2",
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
     "xss": "1.0.10"
