@@ -178,6 +178,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.noticeCode"
                   )}
+                  testID={"NoticeCode"}
                   inputProps={{
                     keyboardType: "numeric",
                     returnKeyType: "done",
@@ -200,6 +201,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.entityCode"
                   )}
+                  testID={"EntityCode"}
                   inputProps={{
                     keyboardType: "numeric",
                     returnKeyType: "done",

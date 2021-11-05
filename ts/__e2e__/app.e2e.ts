@@ -3,6 +3,7 @@ import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
 
 import I18n, { setLocale } from "../i18n";
+import { formatNumberCentsToAmount } from "../utils/stringBuilder";
 
 const config = require("../../package.json").detox;
 
@@ -20,7 +21,9 @@ describe("e2e app", () => {
 
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
-    await device.launchApp({ permissions: { notifications: "YES" } });
+    await device.launchApp({
+      permissions: { notifications: "YES", camera: "YES" }
+    });
     // enforce IT locale because that's how the API are configured
     setLocale("it");
   });
@@ -28,6 +31,11 @@ describe("e2e app", () => {
   afterAll(async () => {
     await adapter.afterAll();
     await detox.cleanup();
+  });
+
+  afterEach(async () => {
+    // go back to the initial screen
+    await element(by.text(I18n.t("global.navigator.messages"))).tap();
   });
 
   describe("when the user never logged in before", () => {
@@ -108,6 +116,54 @@ describe("e2e app", () => {
       )
         .toExist()
         .withTimeout(WAIT_TIMEOUT_MS);
+    });
+
+    it("should let the user pay a notice", async () => {
+      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
+      await element(by.text(I18n.t("wallet.payNotice"))).tap();
+
+      await element(by.text(I18n.t("wallet.QRtoPay.setManually"))).tap();
+
+      const matchNoticeCodeInput = by.id("NoticeCodeInput");
+      await waitFor(element(matchNoticeCodeInput))
+        .toExist()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(matchNoticeCodeInput).replaceText("123123123123123123");
+      await element(by.id("EntityCodeInput")).replaceText("12345678901");
+
+      await element(by.text(I18n.t("global.buttons.continue"))).tap();
+      // await element(by.label("Continua")).tap();
+
+      await waitFor(element(by.label(I18n.t("wallet.continue"))))
+        .toExist()
+        .withTimeout(WAIT_TIMEOUT_MS);
+      await element(by.label(I18n.t("wallet.continue"))).tap();
+
+      const matchConfirmPayment = by.text(
+        `${I18n.t("wallet.ConfirmPayment.goToPay")} ${formatNumberCentsToAmount(
+          2322,
+          true
+        )}`
+      );
+      await waitFor(element(matchConfirmPayment))
+        .toExist()
+        .withTimeout(WAIT_TIMEOUT_MS);
+      await element(matchConfirmPayment).tap();
+
+      await waitFor(
+        element(
+          by.text(
+            I18n.t("payment.paidConfirm", {
+              amount: formatNumberCentsToAmount(2322, true)
+            })
+          )
+        )
+      )
+        .toExist()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(by.text(I18n.t("wallet.outcomeMessage.cta.close"))).tap();
     });
   });
 });
