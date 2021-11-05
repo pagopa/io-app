@@ -203,8 +203,10 @@ const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
 
 // a mapping between routes name (the key) and predicates (the value)
 // the predicate says if for that specific route the navigation is allowed
-const internalRoutePredicates: Map<string,
-  Predicate<ServiceMetadata | undefined>> = new Map<string, Predicate<ServiceMetadata | undefined>>([
+const internalRoutePredicates: Map<
+  string,
+  Predicate<ServiceMetadata | undefined>
+> = new Map<string, Predicate<ServiceMetadata | undefined>>([
   [ROUTES.SERVICE_WEBVIEW, hasMetadataTokenName]
 ]);
 
@@ -262,7 +264,9 @@ export const getCTA = (
  * if some CTAs are been found, the localized version will be returned
  * @param serviceMetadata
  */
-export const getServiceCTA = (serviceMetadata?: ServiceMetadata): Option<CTAS> =>
+export const getServiceCTA = (
+  serviceMetadata?: ServiceMetadata
+): Option<CTAS> =>
   fromNullable(serviceMetadata?.cta).chain(cta =>
     extractCTA(cta, serviceMetadata)
   );

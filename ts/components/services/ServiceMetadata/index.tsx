@@ -20,12 +20,12 @@ type Props = {
  * Renders a dedicated section with a service's metadata and the header.
  */
 const ServiceMetadataComponent: React.FC<Props> = ({
-                                                     organizationFiscalCode,
-                                                     getItemOnPress,
-                                                     serviceId,
-                                                     servicesMetadata,
-                                                     isDebugModeEnabled
-                                                   }: Props) => {
+  organizationFiscalCode,
+  getItemOnPress,
+  serviceId,
+  servicesMetadata,
+  isDebugModeEnabled
+}: Props) => {
   const {
     address,
     app_android,
