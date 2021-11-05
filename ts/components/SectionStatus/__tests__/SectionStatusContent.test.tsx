@@ -16,6 +16,7 @@ describe("StatusContent", () => {
         iconColor={IOColors.aqua}
         iconName={"io-complete"}
         viewRef={viewRef}
+        labelColor={"bluegreyDark"}
       />
     );
     expect(component.toJSON()).toMatchSnapshot();
