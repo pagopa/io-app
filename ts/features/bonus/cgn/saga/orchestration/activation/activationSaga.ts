@@ -34,7 +34,7 @@ function* cgnActivationWorkUnit() {
  */
 export function* handleCgnStartActivationSaga(): SagaIterator {
   const initialScreenName: ReturnType<
-    typeof NavigationService.getCurrentRouteKey
+    typeof NavigationService.getCurrentRouteName
   > = yield call(NavigationService.getCurrentRouteName);
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
