@@ -82,7 +82,5 @@ export const isOnboardingCompleted = () => {
   if (route === null) {
     return false;
   }
-  return route !== undefined && route.routes !== undefined
-    ? route.routes.length > 0 && route.routes[0].routeName === ROUTES.MAIN
-    : false;
+  return route.routes?.length > 0 && route.routes[0].routeName === ROUTES.MAIN;
 };
