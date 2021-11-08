@@ -3,10 +3,7 @@
 // It implies item 42, not having the corresponding serviceMetadata being loaded, is not included among the local sections
 // Check what happen with items 41 and 42 beign someLoading and someError
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  NonEmptyString,
-  OrganizationFiscalCode
-} from "italia-ts-commons/lib/strings";
+import { NonEmptyString, OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
@@ -27,6 +24,7 @@ import { OrganizationsState } from "../../organizations";
 import { ServicesByIdState } from "../servicesById";
 import { VisibleServicesState } from "../visibleServices";
 import { ServiceScopeEnum } from "../../../../../../definitions/backend/ServiceScope";
+import { StandardServiceCategoryEnum } from "../../../../../../definitions/backend/StandardServiceCategory";
 
 const customPotUserMetadata: UserMetadataState = pot.some({
   version: 1,
@@ -48,6 +46,7 @@ const customServices: ServicesState = {
       service_name: "service1" as ServiceName,
       version: 1,
       service_metadata: {
+        category: StandardServiceCategoryEnum.STANDARD,
         scope: ServiceScopeEnum.LOCAL
       }
     }),
@@ -69,6 +68,8 @@ const customServices: ServicesState = {
         service_name: "service1" as ServiceName,
         version: 1,
         service_metadata: {
+          category: StandardServiceCategoryEnum.STANDARD,
+
           scope: ServiceScopeEnum.LOCAL
         }
       },
