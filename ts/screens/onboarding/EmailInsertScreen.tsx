@@ -316,9 +316,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         email
       })
     ),
-  navigateToEmailReadScreen: () => {
-    navigateToEmailReadScreen();
-  },
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
