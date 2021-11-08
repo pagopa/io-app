@@ -56,7 +56,12 @@ setNativeExceptionHandler(exceptionString => {
 // import { YellowBox } from "react-native";
 // YellowBox.ignoreWarnings([""]);
 // TODO: temp only, to complete the porting to 0.63.x
-LogBox.ignoreLogs(["componentWillReceiveProps", "Animated", "Virtualized"]);
+LogBox.ignoreLogs([
+  "componentWillReceiveProps",
+  "Animated",
+  "Virtualized",
+  "currentlyFocusedField"
+]);
 
 // Disable allowFontScaling for Text/TextInput component
 Text.defaultProps = Text.defaultProps || {};
