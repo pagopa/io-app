@@ -2,8 +2,8 @@ import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { PspRadioItem } from "../../components/PspRadioItem";
-import { PayPalPsp } from "../PayPalPspSelectionScreen";
 import { privacyUrl } from "../../../../../../config";
+import { PayPalPsp } from "../../types";
 
 const mockPresent = jest.fn();
 jest.mock("@gorhom/bottom-sheet", () => ({

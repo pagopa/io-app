@@ -29,19 +29,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
+import { PayPalPsp } from "../types";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-// TODO temporary type. It will be shared in the future or replaced with a new one
-export type PayPalPsp = {
-  id: string;
-  logoUrl: string;
-  name: string;
-  fee: NonNegativeNumber;
-  privacyUrl: string;
-  tosUrl: string;
-};
 
 const styles = StyleSheet.create({
   radioListHeaderRightColumn: {
