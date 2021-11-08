@@ -31,7 +31,8 @@ import {
   apiUrlPrefix,
   bpdEnabled,
   fetchPagoPaTimeout,
-  fetchPaymentManagerLongTimeout
+  fetchPaymentManagerLongTimeout,
+  payPalEnabled
 } from "../config";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
@@ -194,6 +195,7 @@ import { waitBackoffError } from "../utils/backoffError";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
+import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -947,6 +949,14 @@ export function* watchWalletSaga(
       paymentManagerClient.addCobadgeToWallet,
       pmSessionManager
     );
+
+    if (payPalEnabled) {
+      yield fork(
+        watchPaypalOnboardingSaga,
+        paymentManagerClient,
+        pmSessionManager
+      );
+    }
   }
 
   // Check if a user has a bancomat and has not requested a cobadge yet and send

@@ -29,7 +29,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
-import { PayPalPsp } from "../types";
+import { IOPayPalPsp } from "../types";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 });
 
 // TODO replace fake items with values coming from the store
-const pspList: ReadonlyArray<PayPalPsp> = [
+const pspList: ReadonlyArray<IOPayPalPsp> = [
   {
     id: "1",
     logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
@@ -85,8 +85,8 @@ const RadioListHeader = (props: {
 };
 
 const getPspListRadioItems = (
-  pspList: ReadonlyArray<PayPalPsp>
-): ReadonlyArray<RadioItem<PayPalPsp["id"]>> =>
+  pspList: ReadonlyArray<IOPayPalPsp>
+): ReadonlyArray<RadioItem<IOPayPalPsp["id"]>> =>
   pspList.map(psp => ({
     id: psp.id,
     body: <PspRadioItem psp={psp} />
@@ -140,7 +140,7 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   );
   const pspList = getValueOrElse(props.pspList, []);
   // auto select if the psp list has 1 element
-  const [selectedPsp, setSelectedPsp] = useState<PayPalPsp["id"] | undefined>(
+  const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp["id"] | undefined>(
     pspList.length === 1 ? pspList[0].id : undefined
   );
 
@@ -170,7 +170,7 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
                 rightColumnTitle={locales.rightColumnTitle}
               />
               <View spacer={true} small={true} />
-              <RadioButtonList<PayPalPsp["id"]>
+              <RadioButtonList<IOPayPalPsp["id"]>
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(pspList)}
                 selectedItem={selectedPsp}

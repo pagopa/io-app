@@ -57,6 +57,8 @@ import {
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
   getConsumerUsingGETDefaultDecoder,
+  getPaypalPspsUsingGETDefaultDecoder,
+  GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -601,6 +603,13 @@ const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
   response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
 };
 
+const searchPayPalPsp: GetPaypalPspsUsingGETT = {
+  method: "get",
+  url: () => `/paypal/searchPSP`,
+  query: () => ({ language: getLocalePrimaryWithFallback() }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPaypalPspsUsingGETDefaultDecoder()
+};
 const withPaymentManagerToken =
   <P extends { Bearer: string; LookUpId?: string }, R>(
     f: (p: P) => Promise<R>
@@ -818,7 +827,12 @@ export function PaymentManagerClient(
         withPaymentManagerToken(
           createFetchRequestForApi(deleteWallets, altOptions)
         )
-      )({ service })
+      )({ service }),
+    searchPayPalPsp: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchPayPalPsp, options)
+      )
+    )({})
   };
 }
 

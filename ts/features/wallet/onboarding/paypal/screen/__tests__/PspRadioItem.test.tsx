@@ -3,7 +3,7 @@ import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { PspRadioItem } from "../../components/PspRadioItem";
 import { privacyUrl } from "../../../../../../config";
-import { PayPalPsp } from "../../types";
+import { IOPayPalPsp } from "../../types";
 
 const mockPresent = jest.fn();
 jest.mock("@gorhom/bottom-sheet", () => ({
@@ -12,7 +12,7 @@ jest.mock("@gorhom/bottom-sheet", () => ({
   })
 }));
 
-const payPalPsp: PayPalPsp = {
+const payPalPsp: IOPayPalPsp = {
   id: "1",
   logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
   name: "PayTipper",
