@@ -347,7 +347,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           <FooterWithButtons
             type="TwoButtonsInlineThird"
             leftButton={cancelButtonProps(
-              this.props.navigation.goBack,
+              () => this.props.navigation.goBack(),
               I18n.t("global.buttons.cancel")
             )}
             rightButton={primaryButtonProps}
