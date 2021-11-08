@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
-import { constNull } from "fp-ts/lib/function";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -27,7 +26,7 @@ import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components
 import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { IOPayPalPsp } from "../types";
-import { searchPaypalPsp } from "../store/actions";
+import { searchPaypalPsp as searchPaypalPspAction } from "../store/actions";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -123,10 +122,10 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   >();
 
   const dispatch = useDispatch();
-  const runSearchPaypalPsp = () => {
-    dispatch(searchPaypalPsp.request());
+  const searchPaypalPsp = () => {
+    dispatch(searchPaypalPspAction.request());
   };
-  useEffect(runSearchPaypalPsp, [dispatch]);
+  useEffect(searchPaypalPsp, [dispatch]);
   useEffect(() => {
     // auto select if the psp list has 1 element
     setSelectedPsp(pspList.length === 1 ? pspList[0].id : undefined);
@@ -180,8 +179,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
           testID={"PayPalPpsSelectionScreenLoadingError"}
           isLoading={!isError(props.pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
-          // TODO replace with the handler that retries to reload data
-          onRetry={constNull}
+          onRetry={searchPaypalPsp}
         />
       )}
     </BaseScreenComponent>
