@@ -177,7 +177,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
         </SafeAreaView>
       ) : (
         <LoadingErrorComponent
-          testID={"PayPalPpsSelectionScreen"}
+          testID={"PayPalPpsSelectionScreenLoadingError"}
           isLoading={!isError(props.pspList)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
           // TODO replace with the handler that retries to reload data
