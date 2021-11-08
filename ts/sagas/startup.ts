@@ -486,7 +486,6 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     yield put(clearNotificationPendingMessage());
     // Navigate to message router screen
     yield call(navigateToMessageRouterScreen, { messageId });
-    // Push the MAIN navigator in the history to handle the back button
   } else {
     yield call(navigateToMainNavigatorAction);
   }
