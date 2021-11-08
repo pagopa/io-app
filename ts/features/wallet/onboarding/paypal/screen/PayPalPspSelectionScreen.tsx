@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { constNull } from "fp-ts/lib/function";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -30,6 +30,7 @@ import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components
 import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { IOPayPalPsp } from "../types";
+import { searchPaypalPsp } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -131,7 +132,7 @@ const buttonsProps = () => {
  * This screen is where the user picks a PSP that will be used to handle PayPal transactions
  * Only 1 psp can be selected
  */
-const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
+const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const locales = getLocales();
   const { present: presentWhatIsPspBottomSheet } = useIOBottomSheet(
     <Body>{locales.whatIsPspBody}</Body>,
@@ -143,6 +144,12 @@ const PayPalPpsSelectionScreen = (props: Props): React.ReactElement | null => {
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp["id"] | undefined>(
     pspList.length === 1 ? pspList[0].id : undefined
   );
+
+  const dispatch = useDispatch();
+  const runSearchPaypalPsp = () => {
+    dispatch(searchPaypalPsp.request());
+  };
+  useEffect(runSearchPaypalPsp, []);
 
   return (
     <BaseScreenComponent
@@ -208,4 +215,4 @@ const mapStateToProps = (_: GlobalState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PayPalPpsSelectionScreen);
+)(PayPalPspSelectionScreen);

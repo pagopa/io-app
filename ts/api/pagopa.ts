@@ -605,7 +605,7 @@ const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
 
 const searchPayPalPsp: GetPaypalPspsUsingGETT = {
   method: "get",
-  url: () => `/paypal/searchPSP`,
+  url: () => `/v3/paypal/searchPSP`,
   query: () => ({ language: getLocalePrimaryWithFallback() }),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPaypalPspsUsingGETDefaultDecoder()
