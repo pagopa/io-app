@@ -455,7 +455,7 @@ jobs:
             yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.release \
+              -c ios.sim.debug \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
