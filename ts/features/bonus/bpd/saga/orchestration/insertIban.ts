@@ -62,11 +62,7 @@ export function* bpdIbanInsertionWorker() {
     getType(bpdIbanInsertionContinue)
   ]);
   if (isActionOf(bpdIbanInsertionCancel, nextAction)) {
-    if (onboardingOngoing) {
-      yield call(navigateToWalletHome);
-    } else {
-      yield call(navigateBack);
-    }
+    yield call(onboardingOngoing ? navigateToWalletHome : navigateBack);
   } else {
     if (onboardingOngoing) {
       const paymentMethods: ReturnType<typeof paymentMethodsSelector> =
