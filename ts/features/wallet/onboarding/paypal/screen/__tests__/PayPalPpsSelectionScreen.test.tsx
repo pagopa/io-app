@@ -7,6 +7,8 @@ import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
 import I18n from "../../../../../../i18n";
+import { searchPaypalPsp } from "../../store/actions";
+import { pspList } from "./__mock__/psp";
 
 const mockPresentBottomSheet = jest.fn();
 jest.mock("../../../../../../utils/bottomSheet", () => {
@@ -32,10 +34,16 @@ describe("PayPalPpsSelectionScreen", () => {
     ).not.toBeNull();
   });
 
-  it(`footer buttons should be defined`, () => {
+  it(`footer buttons should be defined when the psp list is ready`, () => {
+    const store = createStore(appReducer, globalState as any);
     const render = renderComponent(store);
-    expect(render.component.queryByTestId("cancelButtonId")).not.toBeNull();
-    expect(render.component.queryByTestId("continueButtonId")).not.toBeNull();
+    render.store.dispatch(searchPaypalPsp.success(pspList));
+    expect(
+      render.component.queryByText(I18n.t("global.buttons.cancel"))
+    ).not.toBeNull();
+    expect(
+      render.component.queryByText(I18n.t("global.buttons.continue"))
+    ).not.toBeNull();
   });
   it.todo("psp shown should match those one in the store");
   it.todo("loading should be shown when the data is loading");
@@ -43,8 +51,10 @@ describe("PayPalPpsSelectionScreen", () => {
     "error and retry button should be shown when some error occurred while retrieving data"
   );
 
-  it(`"what is a psp" link should be defined and open a bottom sheet on onPress`, () => {
+  it(`"what is a psp" link should be defined open a bottom sheet on onPress, when the psp list is ready and `, () => {
+    const store = createStore(appReducer, globalState as any);
     const render = renderComponent(store);
+    render.store.dispatch(searchPaypalPsp.success(pspList));
     const link = render.component.getByText(
       I18n.t("wallet.onboarding.paypal.selectPsp.link")
     );
