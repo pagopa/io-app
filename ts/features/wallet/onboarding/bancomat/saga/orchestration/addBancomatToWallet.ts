@@ -54,7 +54,6 @@ export function* addBancomatToWalletAndActivateBpd() {
   );
   if (
     res !== "back" &&
-    initialScreenName !== undefined &&
     initialScreenName === ROUTES.WALLET_ADD_PAYMENT_METHOD
   ) {
     // integration with the legacy "Add a payment"

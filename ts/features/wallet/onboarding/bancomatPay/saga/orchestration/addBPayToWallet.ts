@@ -54,7 +54,6 @@ export function* addBPayToWalletAndActivateBpd() {
   );
   if (
     res !== "back" &&
-    initialScreenName !== undefined &&
     initialScreenName === ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
   ) {
     // integration with the legacy "Add a payment"

@@ -56,7 +56,6 @@ export function* addPrivativeToWalletAndActivateBpd() {
   );
 
   const isInitialScreenAddPaymentMethod =
-    initialScreenName !== undefined &&
     initialScreenName === ROUTES.WALLET_ADD_PAYMENT_METHOD;
 
   if (res !== "back" && res !== "failure" && isInitialScreenAddPaymentMethod) {

@@ -53,7 +53,6 @@ export function* addSatispayToWalletAndActivateBpd() {
   );
 
   const isInitialScreenDigitalPayment =
-    initialScreenName !== undefined &&
     initialScreenName === ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD;
 
   if (res !== "back" && isInitialScreenDigitalPayment) {
