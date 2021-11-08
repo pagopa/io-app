@@ -199,8 +199,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const shouldPop =
       this.newMethodAdded && this.navigationKeyFrom !== undefined;
 
-    this.props.navigateBack(shouldPop ? this.navigationKeyFrom : undefined);
-    return true;
+    if (shouldPop) {
+      this.props.navigateBack(this.navigationKeyFrom);
+      return true;
+    }
+    return false;
   };
 
   private onFocus = () => {
