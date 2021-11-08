@@ -68,7 +68,7 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     returnToWalletRoutes.has(initialScreenName) &&
     res === "completed";
 
-  if (res !== "back" && res !== "failure" && shouldNavigateWalletHome) {
+  if (shouldNavigateWalletHome) {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
 
