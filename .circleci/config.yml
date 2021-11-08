@@ -461,6 +461,7 @@ jobs:
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
+              --record-videos all \
               --debug-synchronization 1000
 
       # store detox artifacts
