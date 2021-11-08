@@ -453,6 +453,7 @@ jobs:
             cd ..
             yarn detox clean-framework-cache
             yarn detox build-framework-cache
+            yarn detox build --configuration ios.sim.release
             yarn detox test \
               --loglevel verbose \
               -c ios.sim.release \
