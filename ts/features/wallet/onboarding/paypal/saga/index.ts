@@ -61,10 +61,12 @@ function* handlePaypalSearchPsp(
   }
 }
 
+// watch for all actions regarding paypal
 export function* watchPaypalOnboardingSaga(
   pmClient: PaymentManagerClient,
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
+  // search psp
   yield takeLatest(
     searchPaypalPsp.request,
     handlePaypalSearchPsp,
