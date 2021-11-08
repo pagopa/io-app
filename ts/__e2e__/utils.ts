@@ -1,5 +1,5 @@
 import I18n from "../i18n";
-import { E2E_PIN_CHAR, E2E_WAIT_RENDER_TIMEOUT_MS } from "./config";
+import { e2ePinChar, e2eWaitRenderTimeout } from "./config";
 
 const loginButtonId = "landing-button-login-spid";
 const posteIdpButtonId = "idp-posteid-button";
@@ -10,13 +10,13 @@ const posteIdpButtonId = "idp-posteid-button";
 export const loginWithSPID = async () => {
   await waitFor(element(by.id(loginButtonId)))
     .toBeVisible()
-    .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+    .withTimeout(e2eWaitRenderTimeout);
 
   await element(by.id(loginButtonId)).tap();
 
   await waitFor(element(by.id(posteIdpButtonId)))
     .toBeVisible()
-    .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+    .withTimeout(e2eWaitRenderTimeout);
 
   await element(by.id(posteIdpButtonId)).tap();
 
@@ -26,7 +26,7 @@ export const loginWithSPID = async () => {
     element(by.text(I18n.t("profile.main.privacy.shareData.screen.title")))
   )
     .toBeVisible()
-    .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+    .withTimeout(e2eWaitRenderTimeout);
 
   await element(
     by.text(I18n.t("profile.main.privacy.shareData.screen.cta.shareData"))
@@ -34,7 +34,7 @@ export const loginWithSPID = async () => {
 
   await waitFor(element(by.text(I18n.t("onboarding.unlockCode.contentTitle"))))
     .toBeVisible()
-    .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+    .withTimeout(e2eWaitRenderTimeout);
 
   await insertE2EPin();
 
@@ -42,7 +42,7 @@ export const loginWithSPID = async () => {
     element(by.text(I18n.t("onboarding.unlockCode.contentTitleConfirm")))
   )
     .toBeVisible()
-    .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+    .withTimeout(e2eWaitRenderTimeout);
 
   await insertE2EPin();
 
@@ -50,12 +50,12 @@ export const loginWithSPID = async () => {
 };
 
 export const insertE2EPin = async () => {
-  await element(by.text(E2E_PIN_CHAR)).tap();
-  await element(by.text(E2E_PIN_CHAR)).tap();
-  await element(by.text(E2E_PIN_CHAR)).tap();
-  await element(by.text(E2E_PIN_CHAR)).tap();
-  await element(by.text(E2E_PIN_CHAR)).tap();
-  await element(by.text(E2E_PIN_CHAR)).tap();
+  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar)).tap();
+  await element(by.text(e2ePinChar)).tap();
 };
 
 /**
@@ -65,7 +65,7 @@ export const ensureLoggedIn = async () => {
   try {
     await waitFor(element(by.text(I18n.t("identification.subtitleCode"))))
       .toBeVisible()
-      .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+      .withTimeout(e2eWaitRenderTimeout);
     await insertE2EPin();
   } catch {
     await loginWithSPID();

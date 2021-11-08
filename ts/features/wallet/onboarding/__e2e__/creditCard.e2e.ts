@@ -1,5 +1,5 @@
 import adapter from "detox/runners/jest/adapter";
-import { E2E_WAIT_RENDER_TIMEOUT_MS } from "../../../../__e2e__/config";
+import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
 
@@ -14,7 +14,7 @@ describe("Credit Card onboarding", () => {
     it("should add successfully the credit card to the wallet", async () => {
       await waitFor(element(by.text(I18n.t("global.navigator.wallet"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Footer, Wallet icon
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
@@ -23,7 +23,7 @@ describe("Credit Card onboarding", () => {
         element(by.text(I18n.t("wallet.newPaymentMethod.add").toUpperCase()))
       )
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Button "+ Add"
       await element(
@@ -32,20 +32,20 @@ describe("Credit Card onboarding", () => {
 
       await waitFor(element(by.text(I18n.t("wallet.paymentMethod"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Add payment method listItem in bottomSheet
       await element(by.text(I18n.t("wallet.paymentMethod"))).tap();
 
       await waitFor(element(by.text(I18n.t("wallet.methods.card.name"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
       // Add Credit Card List Item
       await element(by.text(I18n.t("wallet.methods.card.name"))).tap();
 
       await waitFor(element(by.id("cardHolderInput")))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Fill the credit card data
       await element(by.id("cardHolderInput")).typeText("Gian Maria Mario");
@@ -62,13 +62,13 @@ describe("Credit Card onboarding", () => {
 
       await waitFor(element(by.text(I18n.t("wallet.saveCard.save"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
       await element(by.text(I18n.t("wallet.saveCard.save"))).tap();
 
       // Wait for 3ds webview
       await waitFor(element(by.text(I18n.t("wallet.challenge3ds.description"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Wait for success screen
       await waitFor(
@@ -77,12 +77,12 @@ describe("Credit Card onboarding", () => {
         )
       )
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // Wait for return to wallet
       await waitFor(element(by.text(I18n.t("wallet.wallet"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
     });
   });
 });

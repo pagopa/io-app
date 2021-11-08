@@ -4,7 +4,7 @@ import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
 
 import I18n from "../i18n";
-import { E2E_WAIT_RENDER_TIMEOUT_MS } from "./config";
+import { e2eWaitRenderTimeout } from "./config";
 import { ensureLoggedIn } from "./utils";
 
 describe("Messages Screen", () => {
@@ -18,7 +18,7 @@ describe("Messages Screen", () => {
     it("should load the user's messages", async () => {
       await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       // The webserver is sending us exactly 20 messages with consecutive IDs
       // in reverse order.
@@ -29,13 +29,13 @@ describe("Messages Screen", () => {
         element(by.id(`MessageListItem_00000000000000000000000020`))
       )
         .toBeVisible()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
 
       await waitFor(
         element(by.id(`MessageListItem_00000000000000000000000001`))
       )
         .toExist()
-        .withTimeout(E2E_WAIT_RENDER_TIMEOUT_MS);
+        .withTimeout(e2eWaitRenderTimeout);
     });
   });
 });
