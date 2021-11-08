@@ -461,7 +461,7 @@ jobs:
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
-              --record-videos all \
+              --record-videos failing \
               --debug-synchronization 1000
 
       # store detox artifacts
@@ -480,9 +480,6 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
-      - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
 
       - run-danger:
           filters:
