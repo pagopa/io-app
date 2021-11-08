@@ -54,7 +54,7 @@ const returnToWalletRoutes = new Set([
  */
 export function* addCoBadgeToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
-    typeof NavigationService.getCurrentRouteKey
+    typeof NavigationService.getCurrentRouteName
   > = yield call(NavigationService.getCurrentRouteName);
   const sagaExecution = () =>
     withFailureHandling(() => withResetNavigationStack(coBadgeWorkUnit));

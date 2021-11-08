@@ -45,7 +45,7 @@ function* satispayWorkUnit() {
  */
 export function* addSatispayToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
-    typeof NavigationService.getCurrentRouteKey
+    typeof NavigationService.getCurrentRouteName
   > = yield call(NavigationService.getCurrentRouteName);
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,

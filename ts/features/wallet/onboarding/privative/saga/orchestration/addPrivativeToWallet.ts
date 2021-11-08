@@ -46,7 +46,7 @@ function* privativeWorkUnit() {
  */
 export function* addPrivativeToWalletAndActivateBpd() {
   const initialScreenName: ReturnType<
-    typeof NavigationService.getCurrentRouteKey
+    typeof NavigationService.getCurrentRouteName
   > = yield call(NavigationService.getCurrentRouteName);
   const sagaExecution = () =>
     withFailureHandling(() => withResetNavigationStack(privativeWorkUnit));
