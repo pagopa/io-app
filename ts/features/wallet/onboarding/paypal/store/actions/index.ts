@@ -1,4 +1,4 @@
-import { createAsyncAction } from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../../utils/errors";
 import { IOPayPalPsp } from "../../types";
 
@@ -10,3 +10,5 @@ export const searchPaypalPsp = createAsyncAction(
   "WALLET_ONBOARDING_PAYPAL_PSP_SEARCH_SUCCESS",
   "WALLET_ONBOARDING_PAYPAL_PSP_SEARCH_FAILURE"
 )<void, ReadonlyArray<IOPayPalPsp>, NetworkError>();
+
+export type PayPalOnboardingActions = ActionType<typeof searchPaypalPsp>;

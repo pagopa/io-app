@@ -19,6 +19,7 @@ import { SatispayActions } from "../../features/wallet/onboarding/satispay/store
 import { GlobalState } from "../reducers/types";
 import { CgnActions } from "../../features/bonus/cgn/store/actions";
 import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
+import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -94,6 +95,7 @@ export type Action =
   | CoBadgeActions
   | PrivativeActions
   | SatispayActions
+  | PayPalOnboardingActions
   | CrossSessionsActions
   | CgnActions
   | EuCovidCertActions

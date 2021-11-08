@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { constNull } from "fp-ts/lib/function";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -17,12 +16,10 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
-import { privacyUrl } from "../../../../../config";
 import {
   getValueOrElse,
   isError,
-  isReady,
-  remoteReady
+  isReady
 } from "../../../../bonus/bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -31,6 +28,7 @@ import { PspRadioItem } from "../components/PspRadioItem";
 import { useIOBottomSheet } from "../../../../../utils/bottomSheet";
 import { IOPayPalPsp } from "../types";
 import { searchPaypalPsp } from "../store/actions";
+import { payPalPspSelector } from "../store/reducers/searchPsp";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -41,26 +39,6 @@ const styles = StyleSheet.create({
     textAlign: "right"
   }
 });
-
-// TODO replace fake items with values coming from the store
-const pspList: ReadonlyArray<IOPayPalPsp> = [
-  {
-    id: "1",
-    logoUrl: "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
-    name: "PayTipper",
-    fee: 100 as NonNegativeNumber,
-    privacyUrl,
-    tosUrl: privacyUrl
-  },
-  {
-    id: "2",
-    logoUrl: "https://www.dropbox.com/s/smk5cyxx1qevn6a/mat_bank.png?dl=1",
-    name: "Mat Bank",
-    fee: 50 as NonNegativeNumber,
-    privacyUrl,
-    tosUrl: privacyUrl
-  }
-];
 
 // an header over the psp list with 2 columns
 const RadioListHeader = (props: {
@@ -129,7 +107,7 @@ const buttonsProps = () => {
 };
 
 /**
- * This screen is where the user picks a PSP that will be used to handle PayPal transactions
+ * This screen is where the user picks a PSP that will be used to handle PayPal transactions within PayPal
  * Only 1 psp can be selected
  */
 const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
@@ -140,16 +118,19 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     280
   );
   const pspList = getValueOrElse(props.pspList, []);
-  // auto select if the psp list has 1 element
-  const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp["id"] | undefined>(
-    pspList.length === 1 ? pspList[0].id : undefined
-  );
+  const [selectedPsp, setSelectedPsp] = useState<
+    IOPayPalPsp["id"] | undefined
+  >();
 
   const dispatch = useDispatch();
   const runSearchPaypalPsp = () => {
     dispatch(searchPaypalPsp.request());
   };
-  useEffect(runSearchPaypalPsp, []);
+  useEffect(runSearchPaypalPsp, [dispatch]);
+  useEffect(() => {
+    // auto select if the psp list has 1 element
+    setSelectedPsp(pspList.length === 1 ? pspList[0].id : undefined);
+  }, [pspList]);
 
   return (
     <BaseScreenComponent
@@ -208,8 +189,8 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (_: GlobalState) => ({
-  pspList: remoteReady(pspList)
+const mapStateToProps = (state: GlobalState) => ({
+  pspList: payPalPspSelector(state)
 });
 
 export default connect(
