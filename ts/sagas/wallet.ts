@@ -374,9 +374,6 @@ function* startOrResumeAddCreditCardSaga(
                     } else {
                       yield call(waitAndNavigateToWalletHome);
                     }
-                    // remove these screens from the navigation stack: method choice, credit card form, credit card resume and outcome code message
-                    // this pop could be easily break when this flow is entered by other points
-                    // different from the current ones
                     break;
                   }
                 }
