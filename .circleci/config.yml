@@ -478,6 +478,7 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
+      - run-e2e-test-IOS
 
       - run-danger:
           filters:
