@@ -427,7 +427,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
 
-  private handleCancel = () => resetToAuthenticationRoute;
+  private handleCancel = () => resetToAuthenticationRoute();
 
   private getFooter = () =>
     Platform.select({
