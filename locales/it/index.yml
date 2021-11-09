@@ -1363,7 +1363,7 @@ wallet:
       description: Le carte emesse da Poste Italiane
     paypal:
       name: PayPal
-      description: L’app per pagare con carte e conto corrente
+      description: Paga con la carta o conto corrente collegati
     bancomat:
       name: PagoBANCOMAT
     cobadge:

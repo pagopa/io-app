@@ -1341,7 +1341,7 @@ wallet:
       description: Cards issued by Poste Italiane
     paypal:
       name: PayPal
-      description: The app to pay with cards and bank account
+      description: Pay with your linked card or bank account
     bancomat:
       name: PagoBANCOMAT
     cobadge:
