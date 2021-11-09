@@ -33,6 +33,7 @@ const SpecialServicesRouter = (props: Props) => {
       }
       switch (custom_special_flow) {
         case "cgn":
+          // TODO Implement the correct CTA component
           return (
             <ButtonDefaultOpacity block primary onPress={constNull}>
               <Label color={"white"}>{custom_special_flow}</Label>
