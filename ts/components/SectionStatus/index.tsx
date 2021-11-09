@@ -101,7 +101,7 @@ const InnerSectionStatus = (
       >
         <StatusContent
           backgroundColor={backgroundColor}
-          iconColor={color}
+          iconColor={IOColors[color]}
           iconName={iconName}
           viewRef={viewRef}
           labelColor={color}
