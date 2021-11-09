@@ -1,4 +1,4 @@
-    import { NativeBase, Switch as NBSwitch } from "native-base";
+import { NativeBase, Switch as NBSwitch } from "native-base";
 import * as React from "react";
 import { Platform } from "react-native";
 
@@ -13,18 +13,20 @@ const maybeDisabled = fromPredicate(
  * NativeBase Switch component styled with the app's brand primary color
  */
 export default class Switch extends React.Component<NativeBase.Switch> {
-  public render(accessibleLabelText) {
+  public render() {
     const thumbColor: string = maybeDisabled(this.props.disabled)
       .map(_ => variables.brandPrimaryLight)
       .getOrElse(variables.contentPrimaryBackground);
 
     return (
       <NBSwitch
-accessible={true}
-// added accessibleLabel to manage the text read by screen readers
-// this label can be a default value or received from external call
-accessibilityLabel= {accessibleLabelText == null ? I18n.t("global.accessibility.switchLabel") : accessibleLabelText}
-      // Stick
+        accessible={true}
+        accessibilityLabel={
+          this.props.accessibilityLabel == null
+            ? I18n.t("global.accessibility.switchLabel")
+            : this.props.accessibilityLabel
+        }
+        // Stick
         trackColor={{
           false: "default",
           true:
