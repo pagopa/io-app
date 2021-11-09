@@ -1315,7 +1315,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi app e altri metodi
+  addPaymentMethodTitle: Aggiungi un metodo
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
