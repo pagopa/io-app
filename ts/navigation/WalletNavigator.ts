@@ -23,14 +23,20 @@ import CreditCardDetailScreen from "../features/wallet/creditCard/screen/CreditC
 import AddDigitalMethodScreen from "../features/wallet/onboarding/AddDigitalMethodScreen";
 import WalletAddBancomatNavigator from "../features/wallet/onboarding/bancomat/navigation/navigator";
 import WALLET_ONBOARDING_BANCOMAT_ROUTES from "../features/wallet/onboarding/bancomat/navigation/routes";
+import ActivateBpdOnNewBancomatScreen from "../features/wallet/onboarding/bancomat/screens/ActivateBpdOnNewBancomatScreen";
 import PaymentMethodOnboardingBPayNavigator from "../features/wallet/onboarding/bancomatPay/navigation/navigator";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../features/wallet/onboarding/bancomatPay/navigation/routes";
+import ActivateBpdOnNewBPayScreen from "../features/wallet/onboarding/bancomatPay/screens/ActivateBpdOnNewBPayScreen";
 import PaymentMethodOnboardingCoBadgeNavigator from "../features/wallet/onboarding/cobadge/navigation/navigator";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../features/wallet/onboarding/cobadge/navigation/routes";
+import ActivateBpdOnNewCoBadgeScreen from "../features/wallet/onboarding/cobadge/screens/ActivateBpdOnNewCoBadgeScreen";
+import { ActivateBpdOnNewCreditCardScreen } from "../features/wallet/onboarding/common/screens/bpd/ActivateBpdOnNewCreditCardScreen";
 import PaymentMethodOnboardingPrivativeNavigator from "../features/wallet/onboarding/privative/navigation/navigator";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../features/wallet/onboarding/privative/navigation/routes";
+import ActivateBpdOnNewPrivativeScreen from "../features/wallet/onboarding/privative/screens/ActivateBpdOnNewPrivativeScreen";
 import PaymentMethodOnboardingSatispayNavigator from "../features/wallet/onboarding/satispay/navigation/navigator";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../features/wallet/onboarding/satispay/navigation/routes";
+import ActivateBpdOnNewSatispayScreen from "../features/wallet/onboarding/satispay/screens/ActivateBpdOnNewSatispayScreen";
 import PrivativeDetailScreen from "../features/wallet/privative/screen/PrivativeDetailScreen";
 import SatispayDetailScreen from "../features/wallet/satispay/screen/SatispayDetailScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
@@ -156,20 +162,38 @@ const bpdConfigMap = bpdEnabled
       [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: {
         screen: IbanCTAEditScreen
       },
+      [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_CREDIT_CARD]: {
+        screen: ActivateBpdOnNewCreditCardScreen
+      },
       [WALLET_ONBOARDING_BANCOMAT_ROUTES.MAIN]: {
         screen: WalletAddBancomatNavigator
+      },
+      [WALLET_ONBOARDING_BANCOMAT_ROUTES.ACTIVATE_BPD_NEW_BANCOMAT]: {
+        screen: ActivateBpdOnNewBancomatScreen
       },
       [WALLET_ONBOARDING_SATISPAY_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingSatispayNavigator
       },
+      [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: {
+        screen: ActivateBpdOnNewSatispayScreen
+      },
       [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingBPayNavigator
+      },
+      [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: {
+        screen: ActivateBpdOnNewBPayScreen
       },
       [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingCoBadgeNavigator
       },
+      [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: {
+        screen: ActivateBpdOnNewCoBadgeScreen
+      },
       [WALLET_ONBOARDING_PRIVATIVE_ROUTES.MAIN]: {
         screen: PaymentMethodOnboardingPrivativeNavigator
+      },
+      [WALLET_ONBOARDING_PRIVATIVE_ROUTES.ACTIVATE_BPD_NEW]: {
+        screen: ActivateBpdOnNewPrivativeScreen
       }
     }
   : {};

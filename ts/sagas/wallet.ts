@@ -9,6 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import _ from "lodash";
+import { NavigationActions, StackActions } from "react-navigation";
 import {
   call,
   delay,
@@ -95,10 +96,7 @@ import {
 } from "../features/wallet/onboarding/satispay/store/actions";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
-import {
-  navigateBack,
-  navigateToWalletHome
-} from "../store/actions/navigation";
+import { navigateToWalletHome } from "../store/actions/navigation";
 import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import { deleteAllPaymentMethodsByFunction } from "../store/actions/wallet/delete";
 import { addCreditCardOutcomeCode } from "../store/actions/wallet/outcomeCode";
@@ -354,6 +352,14 @@ function* startOrResumeAddCreditCardSaga(
                       isRawCreditCard(maybeAddedWallet.paymentMethod) &&
                       bpdRemoteConfig?.program_active
                     ) {
+                      // remove all the screens from the add credit card screen
+                      // beware this is very dangerous if the screen number changes, but is the only way with this legacy flow
+                      yield call(
+                        NavigationService.dispatchNavigationAction,
+                        StackActions.pop({
+                          n: 5
+                        })
+                      );
                       yield call(navigateToActivateBpdOnNewCreditCard, {
                         creditCards: [
                           {
@@ -1020,18 +1026,23 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
     const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] =
       yield select(_ => _.wallet.payment.entrypointRoute);
     if (entrypointRoute !== undefined) {
-      const key = entrypointRoute ? entrypointRoute.key : undefined;
-      const routeName = entrypointRoute ? entrypointRoute.name : undefined;
-      yield call(navigateBack, { key });
-      // back to the wallet home from PAYMENT_MANUAL_DATA_INSERTION
-      if (routeName === ROUTES.PAYMENT_MANUAL_DATA_INSERTION) {
-        yield call(navigateBack);
-        yield call(navigateBack);
+      // If the navigation starts outside the wallet stack, we need to reset
+      if (
+        entrypointRoute.name !== ROUTES.PAYMENT_MANUAL_DATA_INSERTION &&
+        entrypointRoute.name !== ROUTES.PAYMENT_SCAN_QR_CODE
+      ) {
+        yield call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.popToTop()
+        );
       }
-      // back to the wallet home from PAYMENT_SCAN_QR_CODE
-      else if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
-        yield call(navigateBack);
-      }
+      yield call(
+        NavigationService.dispatchNavigationAction,
+        NavigationActions.navigate({
+          routeName: entrypointRoute.name,
+          key: entrypointRoute.key
+        })
+      );
       yield put(paymentInitializeState());
     }
   });
