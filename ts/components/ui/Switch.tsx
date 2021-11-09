@@ -22,9 +22,8 @@ export default class Switch extends React.Component<NativeBase.Switch> {
       <NBSwitch
         accessible={true}
         accessibilityLabel={
-          this.props.accessibilityLabel == null
-            ? I18n.t("global.accessibility.switchLabel")
-            : this.props.accessibilityLabel
+          this.props.accessibilityLabel ??
+          I18n.t("global.accessibility.switchLabel")
         }
         // Stick
         trackColor={{
