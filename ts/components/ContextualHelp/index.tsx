@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InteractionManager, Modal, ModalBaseProps } from "react-native";
 import { connect } from "react-redux";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
@@ -6,6 +6,7 @@ import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container } from "native-base";
 
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { loadContextualHelpData } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
@@ -28,8 +29,6 @@ import SendSupportRequestOptions, {
 import ContextualHelpComponent, {
   ContextualHelpData
 } from "./ContextualHelpComponent";
-import { Pot } from "italia-ts-commons/lib/pot";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 
 export type RequestAssistancePayload = {
   supportType: BugReporting.reportType;
