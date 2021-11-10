@@ -60,7 +60,7 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
     const { creditCardOnboardingAttempts } = this.props;
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
       >
         <CreditCardAttemptsList

@@ -56,7 +56,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
     const { historyPayments } = this.props;
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("payment.details.list.title")}
       >
         <PaymentHistoryList
