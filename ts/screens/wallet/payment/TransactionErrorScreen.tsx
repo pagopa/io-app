@@ -5,13 +5,14 @@
 import * as t from "io-ts";
 import { Option } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
-import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { View } from "native-base";
+import { RptIdFromString, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import {
   instabugLog,
   openInstabugQuestionReport,

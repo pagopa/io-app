@@ -1,13 +1,3 @@
-/**
- * This screen allows the user to manually insert the data which identify the transaction:
- * - Numero Avviso, which includes: aux, digit, application code, codice IUV
- * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
- * - amount of the transaction
- *  TODO:
- *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- */
-
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -19,13 +9,13 @@ import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -91,6 +81,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
   body: "wallet.insertManually.contextualHelpContent"
 };
+
+/**
+ * This screen allows the user to manually insert the data which identify the transaction:
+ * - Numero Avviso, which includes: aux, digit, application code, codice IUV
+ * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
+ * - amount of the transaction
+ *  TODO:
+ *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
+ */
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -178,6 +178,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.noticeCode"
                   )}
+                  testID={"NoticeCode"}
                   inputProps={{
                     keyboardType: "numeric",
                     returnKeyType: "done",
@@ -200,6 +201,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   accessibilityLabel={I18n.t(
                     "wallet.insertManually.entityCode"
                   )}
+                  testID={"EntityCode"}
                   inputProps={{
                     keyboardType: "numeric",
                     returnKeyType: "done",
