@@ -1,6 +1,7 @@
 {
   "global": {
-    "autoLogin": true
+    "autoLogin": true,
+    "allowRandomValues" : false
   },
   "profile": {
     "attrs": {
