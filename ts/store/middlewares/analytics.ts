@@ -43,7 +43,7 @@ import {
 } from "../actions/identification";
 import {
   loadMessage,
-  loadMessages,
+  DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   setMessageReadState
 } from "../actions/messages";

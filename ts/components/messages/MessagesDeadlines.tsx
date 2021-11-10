@@ -30,7 +30,7 @@ import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
-import { ListSelectionBar } from "../ListSelectionBar";
+import ListSelectionBar from "../ListSelectionBar";
 import MessageAgenda, {
   isPlaceholderItem,
   MessageAgendaItem,
@@ -627,14 +627,16 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             nextDeadlineId={nextDeadlineId}
           />
         </View>
-        <ListSelectionBar
-          selectedItemIds={selectedItemIds}
-          allItemIds={some(allMessageIdsState)}
-          onToggleSelection={this.archiveMessages}
-          onToggleAllSelection={this.toggleAllMessagesSelection}
-          onResetSelection={resetSelection}
-          primaryButtonText={I18n.t("messages.cta.archive")}
-        />
+        {selectedItemIds.isSome() && (
+          <ListSelectionBar
+            selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+            totalItems={allMessageIdsState.size}
+            onToggleSelection={this.archiveMessages}
+            onToggleAllSelection={this.toggleAllMessagesSelection}
+            onResetSelection={resetSelection}
+            primaryButtonText={I18n.t("messages.cta.archive")}
+          />
+        )}
       </View>
     );
   }
