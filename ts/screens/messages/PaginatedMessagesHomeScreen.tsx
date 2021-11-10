@@ -56,8 +56,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   navListener?: NavigationEventSubscription;
 
   animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
-    new Animated.Value(0),
-    new Animated.Value(0),
     new Animated.Value(0)
   ];
 
