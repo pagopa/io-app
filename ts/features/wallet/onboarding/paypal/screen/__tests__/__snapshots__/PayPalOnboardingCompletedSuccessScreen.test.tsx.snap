@@ -298,6 +298,7 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                 </Text>
               </View>
               <View
+                pointerEvents="box-none"
                 style={
                   Array [
                     Object {},
@@ -308,6 +309,7 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                     },
                   ]
                 }
+                testID="FooterWithButtons"
               >
                 <View
                   style={
@@ -336,7 +338,7 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                       Array [
                         Object {},
                         Object {
-                          "justifyContent": "flex-end",
+                          "flexDirection": "row",
                         },
                       ]
                     }
@@ -366,8 +368,9 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                       onStartShouldSetResponder={[Function]}
                       style={
                         Object {
+                          "alignContent": "center",
                           "alignItems": "center",
-                          "alignSelf": "stretch",
+                          "alignSelf": "flex-start",
                           "backgroundColor": "#007aff",
                           "borderBottomWidth": null,
                           "borderColor": "#007aff",
@@ -377,9 +380,10 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                           "borderTopWidth": null,
                           "borderWidth": undefined,
                           "elevation": 2,
+                          "flex": 1,
                           "flexDirection": "row",
                           "height": 45,
-                          "justifyContent": "space-between",
+                          "justifyContent": "center",
                           "opacity": 1,
                           "paddingBottom": 6,
                           "paddingTop": 6,
@@ -393,90 +397,23 @@ exports[`PayPalOnboardingCompletedSuccessScreen should match the snapshot 1`] = 
                     >
                       <Text
                         style={
-                          Object {
-                            "backgroundColor": "transparent",
-                            "color": "#fff",
-                            "fontFamily": "System",
-                            "fontSize": 16.5,
-                            "marginLeft": 0,
-                            "marginRight": 0,
-                            "paddingLeft": 16,
-                            "paddingRight": 16,
-                          }
+                          Array [
+                            Object {
+                              "backgroundColor": "transparent",
+                              "color": "#fff",
+                              "fontFamily": "System",
+                              "fontSize": 16.5,
+                              "marginLeft": 0,
+                              "marginRight": 0,
+                              "paddingLeft": 16,
+                              "paddingRight": 16,
+                            },
+                            undefined,
+                            undefined,
+                          ]
                         }
                       >
                         Vedi metodo
-                      </Text>
-                    </View>
-                    <View
-                      spacer={true}
-                      style={Object {}}
-                    />
-                    <View
-                      accessibilityRole="button"
-                      accessibilityState={
-                        Object {
-                          "disabled": undefined,
-                        }
-                      }
-                      accessible={true}
-                      focusable={true}
-                      forwardedRef={[Function]}
-                      hitSlop={
-                        Object {
-                          "bottom": 4,
-                          "top": 4,
-                        }
-                      }
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "alignSelf": "stretch",
-                          "backgroundColor": "transparent",
-                          "borderBottomWidth": 1,
-                          "borderColor": "#007aff",
-                          "borderLeftWidth": 1,
-                          "borderRadius": 5,
-                          "borderRightWidth": 1,
-                          "borderTopWidth": 1,
-                          "borderWidth": 1,
-                          "elevation": null,
-                          "flexDirection": "row",
-                          "height": 45,
-                          "justifyContent": "space-between",
-                          "opacity": 1,
-                          "paddingBottom": 6,
-                          "paddingTop": 6,
-                          "shadowColor": null,
-                          "shadowOffset": null,
-                          "shadowOpacity": null,
-                          "shadowRadius": null,
-                        }
-                      }
-                      testID="secondaryButtonId"
-                    >
-                      <Text
-                        style={
-                          Object {
-                            "backgroundColor": "transparent",
-                            "color": "#007aff",
-                            "fontFamily": "System",
-                            "fontSize": 16.5,
-                            "marginLeft": 0,
-                            "marginRight": 0,
-                            "paddingLeft": 16,
-                            "paddingRight": 16,
-                          }
-                        }
-                      >
-                        Chiudi
                       </Text>
                     </View>
                   </View>

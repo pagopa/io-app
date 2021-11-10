@@ -1,15 +1,8 @@
 /* eslint-disable */
-
-// FIXME: putting these declarations in detox.d.ts makes them available in all
-// test modules clashing with Jest's expect
-declare const device: Detox.Device;
-declare const element: Detox.Element;
-declare const waitFor: Detox.WaitFor;
-declare const expect: Detox.Expect<Detox.Expect<any>>;
-declare const by: Detox.Matchers;
-
 import * as detox from "detox";
 import adapter from "detox/runners/jest/adapter";
+
+import I18n, { setLocale } from "../i18n";
 
 const config = require("../../package.json").detox;
 
@@ -28,10 +21,8 @@ describe("e2e app", () => {
   beforeAll(async () => {
     await detox.init(config, { launchApp: false });
     await device.launchApp({ permissions: { notifications: "YES" } });
-  });
-
-  beforeEach(async () => {
-    await adapter.beforeEach();
+    // enforce IT locale because that's how the API are configured
+    setLocale("it");
   });
 
   afterAll(async () => {
@@ -55,8 +46,67 @@ describe("e2e app", () => {
 
       // the webview returned by the server has 250ms timeout and reloads automagically
 
-      await waitFor(element(by.text("Your usage data")))
+      await waitFor(
+        element(by.text(I18n.t("profile.main.privacy.shareData.screen.title")))
+      )
         .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(
+        by.text(I18n.t("profile.main.privacy.shareData.screen.cta.shareData"))
+      ).tap();
+
+      await waitFor(
+        element(by.text(I18n.t("onboarding.unlockCode.contentTitle")))
+      )
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+
+      await waitFor(
+        element(by.text(I18n.t("onboarding.unlockCode.contentTitleConfirm")))
+      )
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+      await element(by.text("2")).tap();
+
+      await element(by.text(I18n.t("global.buttons.continue"))).tap();
+    });
+  });
+
+  describe("when the user is already logged in", () => {
+    it("should load the user's messages", async () => {
+      await waitFor(element(by.text(I18n.t("messages.contentTitle"))))
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      // The webserver is sending us exactly 20 messages with consecutive IDs
+      // in reverse order.
+      // We test that the first one is visible on the UI and that the last one
+      // exists (but is not visible)
+
+      await waitFor(
+        element(by.id(`MessageListItem_00000000000000000000000020`))
+      )
+        .toBeVisible()
+        .withTimeout(WAIT_TIMEOUT_MS);
+
+      await waitFor(
+        element(by.id(`MessageListItem_00000000000000000000000001`))
+      )
+        .toExist()
         .withTimeout(WAIT_TIMEOUT_MS);
     });
   });
