@@ -45,6 +45,7 @@ allprojects {
       	    url "https://sdks.instabug.com/nexus/repository/instabug-cp"
        	}
        	maven { url 'https://www.jitpack.io' }
+       	maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
       }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"

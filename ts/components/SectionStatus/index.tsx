@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { Pressable, View } from "react-native";
-import { Text } from "native-base";
 import { GlobalState } from "../../store/reducers/types";
 import {
   SectionStatusKey,
@@ -14,7 +13,8 @@ import { openWebUrl } from "../../utils/url";
 import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { Link } from "../core/typography/Link";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -24,10 +24,10 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export const statusColorMap: Record<LevelEnum, string> = {
-  [LevelEnum.normal]: IOColors.aqua,
-  [LevelEnum.critical]: IOColors.red,
-  [LevelEnum.warning]: IOColors.orange
+export const statusColorMap: Record<LevelEnum, IOColorType> = {
+  [LevelEnum.normal]: "aqua",
+  [LevelEnum.critical]: "red",
+  [LevelEnum.warning]: "orange"
 };
 
 const statusIconMap: Record<LevelEnum, string> = {
@@ -35,7 +35,13 @@ const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.critical]: "io-warning",
   [LevelEnum.warning]: "io-info"
 };
-const color = IOColors.white;
+
+// map the text background color with the relative text color
+const textDefaultColor = "white";
+export const getStatusTextColor = (
+  level: LevelEnum
+): "bluegreyDark" | "white" =>
+  level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
 
 const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
@@ -51,6 +57,8 @@ const InnerSectionStatus = (
     sectionStatus.web_url && sectionStatus.web_url[locale]
   );
   const navigation = useNavigationContext();
+
+  const color = getStatusTextColor(sectionStatus.level);
 
   const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {
@@ -71,10 +79,11 @@ const InnerSectionStatus = (
         "global.accessibility.alert"
       )}`}
       backgroundColor={backgroundColor}
-      iconColor={color}
+      iconColor={IOColors[color]}
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
+      labelColor={color}
     >
       {`${sectionStatus.message[locale]} `}
     </StatusContent>,
@@ -92,21 +101,19 @@ const InnerSectionStatus = (
       >
         <StatusContent
           backgroundColor={backgroundColor}
-          iconColor={color}
+          iconColor={IOColors[color]}
           iconName={iconName}
           viewRef={viewRef}
+          labelColor={color}
         >
           {`${sectionStatus.message[locale]} `}
-          <Text
+          <Link
             testID={"SectionStatusComponentMoreInfo"}
-            style={{
-              color,
-              textDecorationLine: "underline",
-              fontWeight: "bold"
-            }}
+            color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
+            weight={"Bold"}
           >
             {I18n.t("global.sectionStatus.moreInfo")}
-          </Text>
+          </Link>
         </StatusContent>
       </Pressable>
     )
@@ -140,4 +147,5 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
 const component = React.memo(SectionStatus, (prev: Props, curr: Props) =>
   _.isEqual(prev.sectionStatus, curr.sectionStatus)
 );
+
 export default connect(mapStateToProps)(component);
