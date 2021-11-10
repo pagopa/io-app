@@ -118,8 +118,14 @@ jobs:
       - run:
           command: |
               TEST=$(circleci tests glob **/__test*__/*.ts* | circleci tests split)
-              yarn test $TEST
+              yarn test:ci $TEST --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT_DIR: ./tmp/reports/junit
       - run: ./scripts/codecov.sh
+
+      - store_test_results:
+          path: ./tmp/reports/junit/
+
     parallelism: 8
 
   # Runs ESlint checks on PR
@@ -439,8 +445,8 @@ jobs:
           command: |
             git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
             cd _io-dev-api-server_
+            cp ../scripts/api-config.json config/config.json
             yarn
-            ENV_E2E_LOGIN_HAPPY_PATH=true sh configure.sh
             yarn start > /tmp/io-dev-api-server.log &
             # wait for the server to be up and running
             sleep 10

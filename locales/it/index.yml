@@ -65,6 +65,7 @@ global:
     moreInfo: più info
   accessibility:
     reload: "Ricarica"
+    switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
@@ -1027,6 +1028,9 @@ wallet:
           row2Description2: ". Vedrai l'importo esatto prima della conferma."
           row3Description1: "Informativa Privacy"
           row3Description2: "Termini e condizioni d’uso"
+        whatIsPspBottomSheet:
+          title: "Cos’è il gestore della transazione?"
+          body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
       onBoardingCompleted:
         title: "Fatto!"
         body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
@@ -2812,6 +2816,10 @@ bonus:
           title: "Seleziona un comune"
           label: "Comune"
           placeholder: "Seleziona un comune"
+    pdfVoucher:
+      toast:
+        ok: "Voucher salvato con successo"
+        ko: "Problemi durante il salvataggio del voucher"
 
 features:
   euCovidCertificate:
