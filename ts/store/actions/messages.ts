@@ -73,18 +73,18 @@ export type ReloadMessagesPayload = PaginatedMessagesSuccessPayload & {
   pagination: { previous?: string; next?: string };
 };
 export const reloadAllMessages = createAsyncAction(
-  "MESSAGES_LOAD_REQUEST",
-  "MESSAGES_LOAD_SUCCESS",
-  "MESSAGES_LOAD_FAILURE"
+  "MESSAGES_RELOAD_REQUEST",
+  "MESSAGES_RELOAD_SUCCESS",
+  "MESSAGES_RELOAD_FAILURE"
 )<void, ReloadMessagesPayload, Error>();
 
 /**
  *  @deprecated Please use actions with pagination instead
  */
 export const DEPRECATED_loadMessages = createAsyncAction(
-  "DEPRECATED_MESSAGES_LOAD_REQUEST",
-  "DEPRECATED_MESSAGES_LOAD_SUCCESS",
-  "DEPRECATED_MESSAGES_LOAD_FAILURE"
+  "MESSAGES_LOAD_REQUEST",
+  "MESSAGES_LOAD_SUCCESS",
+  "MESSAGES_LOAD_FAILURE"
 )<void, ReadonlyArray<string>, Error>();
 
 export const removeMessages =
