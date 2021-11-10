@@ -15,7 +15,10 @@ import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
-import { loadMessage, loadMessages } from "../../../store/actions/messages";
+import {
+  loadMessage,
+  DEPRECATED_loadMessages as loadMessages
+} from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";

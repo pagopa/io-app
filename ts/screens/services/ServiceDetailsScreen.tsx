@@ -35,6 +35,7 @@ import { handleItemOnPress } from "../../utils/url";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 import ServiceMetadata from "../../components/services/ServiceMetadata";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
+import { logosForService } from "../../utils/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -168,7 +169,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       >
         <Content>
           <Grid>
-            <OrganizationHeader service={service} />
+            <OrganizationHeader
+              serviceName={service.service_name}
+              organizationName={service.organization_name}
+              logoURLs={logosForService(service)}
+            />
           </Grid>
           <View spacer={true} small={true} />
 
