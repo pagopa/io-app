@@ -123,9 +123,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToIdpSelection: () => dispatch(navigateToSPIDLogin()),
-  navigateToIdpTest: () => dispatch(navigateToSPIDTestIDP()),
-  goBack: () => dispatch(navigateBack()),
+  navigateToIdpSelection: () => navigateToSPIDLogin(),
+  navigateToIdpTest: () => navigateToSPIDTestIDP(),
+  goBack: () => navigateBack(),
   requestIdps: () => dispatch(loadIdps.request()),
   setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
 });

@@ -404,27 +404,24 @@ const mapDispatchToProps = (
             showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
           }
           // navigate to the wallet selection screen
-          dispatch(
-            navigateToPaymentPickPaymentMethodScreen({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment
-            })
-          );
+
+          navigateToPaymentPickPaymentMethodScreen({
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment
+          });
         }
       );
     } else {
-      dispatch(
-        navigateToWalletHome({
-          newMethodAdded: maybeWallet.isSome(),
-          keyFrom: props.navigation.getParam("keyFrom")
-        })
-      );
+      navigateToWalletHome({
+        newMethodAdded: maybeWallet.isSome(),
+        keyFrom: props.navigation.getParam("keyFrom")
+      });
     }
   };
   return {
-    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    navigateToWalletHome: () => navigateToWalletHome(),
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
     runStartOrResumeAddCreditCardSaga: (
@@ -456,9 +453,7 @@ const mapDispatchToProps = (
     storeCreditCardOutcome: (outcomeCode: Option<string>) =>
       dispatch(addCreditCardOutcomeCode(outcomeCode)),
     goToAddCreditCardOutcomeCode: (creditCard: Wallet) =>
-      dispatch(
-        navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard })
-      ),
+      navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard }),
     dispatchEndAddCreditCardWebview: (
       reason: AddCreditCardWebViewEndReason
     ) => {

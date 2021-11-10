@@ -171,7 +171,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   loadAllPsp: (idWallet: string, idPayment: string) => {
     dispatch(
       paymentFetchAllPspsForPaymentId.request({

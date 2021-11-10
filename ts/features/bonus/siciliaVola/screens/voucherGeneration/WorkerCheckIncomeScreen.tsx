@@ -29,7 +29,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   navigateToSvWorkerSelectDestination: () =>
-    dispatch(navigateToSvWorkerSelectDestinationScreen())
+    navigateToSvWorkerSelectDestinationScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

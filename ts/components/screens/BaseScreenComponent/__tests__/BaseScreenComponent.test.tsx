@@ -73,7 +73,7 @@ describe("BaseScreenComponent", () => {
       );
       fireEvent(helpButton, "onPress");
       expect(spy_mixpanelTrack).toHaveBeenCalledWith("OPEN_CONTEXTUAL_HELP", {
-        SCREEN_NAME: ROUTES.INGRESS
+        SCREEN_NAME: ROUTES.MESSAGES_HOME
       });
     });
   });

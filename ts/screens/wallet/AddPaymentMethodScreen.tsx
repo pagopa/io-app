@@ -7,6 +7,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -26,7 +27,6 @@ import {
   navigateToWalletAddDigitalPaymentMethod
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { H1 } from "../../components/core/typography/H1";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -177,18 +177,16 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToWalletAddDigitalPaymentMethod: () =>
-    dispatch(navigateToWalletAddDigitalPaymentMethod()),
+    navigateToWalletAddDigitalPaymentMethod(),
   navigateToAddCreditCard: () =>
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: props.navigation.getParam("inPayment"),
-        keyFrom: props.navigation.getParam("keyFrom")
-      })
-    )
+    navigateToWalletAddCreditCard({
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
+    })
 });
 
 export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);

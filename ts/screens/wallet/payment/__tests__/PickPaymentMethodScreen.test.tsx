@@ -1,31 +1,28 @@
-import { Action, Store } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { some } from "fp-ts/lib/Option";
-import { fireEvent } from "@testing-library/react-native";
-import { NavigationParams } from "react-navigation";
-import configureMockStore from "redux-mock-store";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
-import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
+import { fireEvent } from "@testing-library/react-native";
+import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { NavigationParams } from "react-navigation";
+import { Action, Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { WalletTypeEnum } from "../../../../../definitions/pagopa/walletv2/WalletV2";
+
+import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import I18n from "../../../../i18n";
-import {
-  navigateBack,
-  navigateToWalletAddPaymentMethod
-} from "../../../../store/actions/navigation";
+import { applicationChangeState } from "../../../../store/actions/application";
+import * as NavigationActions from "../../../../store/actions/navigation";
+import { paymentFetchPspsForPaymentId } from "../../../../store/actions/wallet/payment";
+import { toIndexed } from "../../../../store/helpers/indexer";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   CreditCardPaymentMethod,
   SatispayPaymentMethod
 } from "../../../../types/pagopa";
-import { toIndexed } from "../../../../store/helpers/indexer";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
-import { WalletTypeEnum } from "../../../../../definitions/pagopa/walletv2/WalletV2";
-import { paymentFetchPspsForPaymentId } from "../../../../store/actions/wallet/payment";
+import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -68,6 +65,7 @@ describe("PickPaymentMethodScreen", () => {
 
   it("should dispatch the navigateBack action if the back button is pressed", () => {
     store = mockStore(globalState);
+    const spy = jest.spyOn(NavigationActions, "navigateBack");
 
     const component = renderPickPaymentMethodScreen(store);
 
@@ -77,11 +75,16 @@ describe("PickPaymentMethodScreen", () => {
     expect(cancelButton).not.toBeNull();
     if (cancelButton !== null) {
       fireEvent.press(cancelButton);
-      expect(store.getActions()).toEqual([navigateBack()]);
+      expect(spy).toHaveBeenCalled();
     }
   });
   it("should dispatch the navigateToAddPaymentMethod action if the 'add payment method' button is pressed", () => {
     store = mockStore(globalState);
+
+    const spy = jest.spyOn(
+      NavigationActions,
+      "navigateToWalletAddPaymentMethod"
+    );
 
     const component = renderPickPaymentMethodScreen(store);
 
@@ -92,16 +95,14 @@ describe("PickPaymentMethodScreen", () => {
     expect(addPaymentMethodButton).not.toBeNull();
     if (addPaymentMethodButton !== null) {
       fireEvent.press(addPaymentMethodButton);
-      expect(store.getActions()).toEqual([
-        navigateToWalletAddPaymentMethod({
-          inPayment: some({
-            rptId,
-            initialAmount,
-            verifica,
-            idPayment
-          })
+      expect(spy).toHaveBeenCalledWith({
+        inPayment: some({
+          rptId,
+          initialAmount,
+          verifica,
+          idPayment
         })
-      ]);
+      });
     }
   });
   it("should show the no wallet message if there aren't available payment method", () => {

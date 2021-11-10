@@ -1,5 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
+import { useContext } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
@@ -12,9 +13,9 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { euCovidCertificateGet } from "../../store/actions";
-import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -50,8 +51,9 @@ const Footer = (props: FooterProps) => (
 );
 
 const EuCovidCertGenericErrorKoScreen = (props: Props): React.ReactElement => {
+  const currentCertificate = useContext(EUCovidContext);
   // read from the store the authCode for the current certificate and create the refresh callback
-  const authCode = props.currentCertificate?.authCode;
+  const authCode = currentCertificate?.authCode;
   const reloadCertificate = authCode ? () => props.reload(authCode) : undefined;
 
   // reloadCertificate === undefined should never happens, handled with WorkunitGenericFailure
@@ -70,9 +72,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   reload: (authCode: EUCovidCertificateAuthCode) =>
     dispatch(euCovidCertificateGet.request(authCode))
 });
-const mapStateToProps = (state: GlobalState) => ({
-  currentCertificate: euCovidCertCurrentSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

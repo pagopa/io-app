@@ -351,26 +351,22 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
   return {
     pickPaymentMethod: () =>
-      dispatch(
-        navigateToPaymentPickPaymentMethodScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
-      ),
+      navigateToPaymentPickPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
+      }),
     pickPsp: () =>
-      dispatch(
-        navigateToPaymentPickPspScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment"),
-          psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet"),
-          chooseToChange: true
-        })
-      ),
+      navigateToPaymentPickPspScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment"),
+        psps: props.navigation.getParam("psps"),
+        wallet: props.navigation.getParam("wallet"),
+        chooseToChange: true
+      }),
     onCancel: () => {
       ActionSheet.show(
         {
@@ -398,8 +394,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchCancelPayment,
     dispatchPaymentOutCome: (outComeCode: Option<string>) =>
       dispatch(paymentOutcomeCode(outComeCode)),
-    navigateToOutComePaymentScreen: () =>
-      dispatch(navigateToPaymentOutcomeCode()),
+    navigateToOutComePaymentScreen: () => navigateToPaymentOutcomeCode(),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 

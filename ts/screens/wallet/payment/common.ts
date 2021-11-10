@@ -46,16 +46,15 @@ export const dispatchUpdatePspForWalletAndConfirm =
           if (psp !== undefined) {
             dispatch(paymentFetchPspsForPaymentId.success([psp]));
           }
-          dispatch(
-            navigateToPaymentConfirmPaymentMethodScreen({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment,
-              wallet: action.payload.updatedWallet, // the updated wallet
-              psps
-            })
-          );
+
+          navigateToPaymentConfirmPaymentMethodScreen({
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment,
+            wallet: action.payload.updatedWallet, // the updated wallet
+            psps
+          });
         },
         onFailure
       })
@@ -105,16 +104,15 @@ export const dispatchPickPspOrConfirm =
               // The user already selected a psp in the past for this wallet, and
               // that PSP can be used for this payment, in this case we can
               // proceed to the confirmation screen
-              dispatch(
-                navigateToPaymentConfirmPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  idPayment,
-                  psps,
-                  wallet: maybeSelectedWallet.value
-                })
-              );
+
+              navigateToPaymentConfirmPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                idPayment,
+                psps,
+                wallet: maybeSelectedWallet.value
+              });
             } else if (psps.length === 1) {
               // there is only one PSP available for this payment, we can go ahead
               // and associate it to the current wallet without asking the user to
@@ -130,30 +128,28 @@ export const dispatchPickPspOrConfirm =
                 () =>
                   // associating the only available psp to the wallet has failed, go
                   // to the psp selection screen anyway
-                  dispatch(
-                    navigateToPaymentPickPspScreen({
-                      rptId,
-                      initialAmount,
-                      verifica,
-                      wallet: selectedWallet,
-                      psps,
-                      idPayment
-                    })
-                  )
+
+                  navigateToPaymentPickPspScreen({
+                    rptId,
+                    initialAmount,
+                    verifica,
+                    wallet: selectedWallet,
+                    psps,
+                    idPayment
+                  })
               );
             } else {
               // we have more than one PSP and we cannot select one automatically,
               // ask the user to select one PSP
-              dispatch(
-                navigateToPaymentPickPspScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  wallet: selectedWallet,
-                  psps,
-                  idPayment
-                })
-              );
+
+              navigateToPaymentPickPspScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                wallet: selectedWallet,
+                psps,
+                idPayment
+              });
             }
           }
         })
@@ -161,26 +157,24 @@ export const dispatchPickPspOrConfirm =
     } else {
       if (hasWallets) {
         // the user didn't select yet a wallet, ask the user to select one
-        dispatch(
-          navigateToPaymentPickPaymentMethodScreen({
+
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId,
+          initialAmount,
+          verifica,
+          idPayment
+        });
+      } else {
+        // the user never add a wallet, ask the user to add a new one
+
+        navigateToWalletAddPaymentMethod({
+          inPayment: some({
             rptId,
             initialAmount,
             verifica,
             idPayment
           })
-        );
-      } else {
-        // the user never add a wallet, ask the user to add a new one
-        dispatch(
-          navigateToWalletAddPaymentMethod({
-            inPayment: some({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment
-            })
-          })
-        );
+        });
       }
     }
   };

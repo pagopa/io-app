@@ -1,5 +1,5 @@
-import { NavigationActions, NavigationNavigateAction } from "react-navigation";
-import { call, Effect, put, select, take } from "redux-saga/effects";
+import { NavigationActions } from "react-navigation";
+import { call, Effect, take } from "redux-saga/effects";
 import {
   ActionCreator,
   ActionType,
@@ -7,10 +7,8 @@ import {
   isActionOf,
   TypeConstant
 } from "typesafe-actions";
+import NavigationService from "../../navigation/NavigationService";
 import { navigateToWorkunitGenericFailureScreen } from "../../store/actions/navigation";
-import { navigationHistoryPop } from "../../store/actions/navigationHistory";
-import { navigationHistorySizeSelector } from "../../store/middlewares/navigationHistory";
-import { navigationCurrentRouteSelector } from "../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -18,7 +16,7 @@ import { SagaCallReturnType } from "../../types/utils";
  */
 export type WorkUnit = {
   // The navigation action that will be used if the current screen isn't the `startScreenName`
-  startScreenNavigation: NavigationNavigateAction;
+  startScreenNavigation: () => void;
   // The expected first screen of the workflow
   startScreenName: string;
   // The action that will be taken when the workflow is completed
@@ -41,15 +39,12 @@ export type SagaResult = "cancel" | "completed" | "back" | "failure";
  * @param navigateTo
  * @param startScreen
  */
-function* ensureScreen(
-  navigateTo: NavigationNavigateAction,
-  startScreen: string
-) {
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
+function* ensureScreen(navigateTo: () => void, startScreen: string) {
+  const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
+    yield call(NavigationService.getCurrentRouteName);
 
-  if (currentRoute.isSome() && currentRoute.value !== startScreen) {
-    yield put(navigateTo);
+  if (currentRoute !== undefined && currentRoute !== startScreen) {
+    yield call(navigateTo);
   }
 }
 
@@ -61,18 +56,19 @@ function* ensureScreen(
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<Effect, T>
 ): Generator<Effect, T, any> {
-  const currentNavigationStackSize: ReturnType<
-    typeof navigationHistorySizeSelector
-  > = yield select(navigationHistorySizeSelector);
+  const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
+    yield call(NavigationService.getCurrentRoute);
   const res: T = yield call(g);
-  const newNavigationStackSize: ReturnType<
-    typeof navigationHistorySizeSelector
-  > = yield select(navigationHistorySizeSelector);
-  const deltaNavigation = newNavigationStackSize - currentNavigationStackSize;
-  if (deltaNavigation > 1) {
-    yield put(navigationHistoryPop(deltaNavigation - 1));
+  if (initialScreen?.routeName !== undefined) {
+    yield call(
+      NavigationService.dispatchNavigationAction,
+      NavigationActions.navigate({
+        routeName: initialScreen.routeName,
+        params: initialScreen?.params,
+        key: initialScreen?.key
+      })
+    );
   }
-  yield put(NavigationActions.back());
   return res;
 }
 
@@ -85,7 +81,7 @@ export function* withFailureHandling<T>(
 ) {
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(g);
   if (res === "failure") {
-    yield put(navigateToWorkunitGenericFailureScreen());
+    yield call(navigateToWorkunitGenericFailureScreen);
   }
   return res;
 }

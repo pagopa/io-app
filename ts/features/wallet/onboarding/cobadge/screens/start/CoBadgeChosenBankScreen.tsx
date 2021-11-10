@@ -114,7 +114,7 @@ const CoBadgeChosenBankScreen = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(walletAddCoBadgeCancel()),
-  searchAccounts: () => dispatch(navigateToOnboardingCoBadgeSearchAvailable()),
+  searchAccounts: () => navigateToOnboardingCoBadgeSearchAvailable(),
   loadAbiList: () => dispatch(loadAbi.request()),
   onGeneralError: (reason: string) => dispatch(walletAddCoBadgeFailure(reason))
 });

@@ -169,7 +169,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(setMessageReadState(messageId, isRead)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params))
+  ) => navigateToServiceDetailsScreen(params)
 });
 
 export default connect(

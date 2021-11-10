@@ -49,16 +49,16 @@ import {
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { cleanTransactionDescription } from "../../../utils/payment";
+import {
+  alertNoActivePayablePaymentMethods,
+  alertNoPayablePaymentMethods
+} from "../../../utils/paymentMethod";
 import { showToast } from "../../../utils/showToast";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import {
-  alertNoActivePayablePaymentMethods,
-  alertNoPayablePaymentMethods
-} from "../../../utils/paymentMethod";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type NavigationParams = Readonly<{
@@ -424,9 +424,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(abortRunningPayment());
   };
 
-  // navigateToMessageDetail: (messageId: string) =>
-  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
-
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
@@ -449,14 +446,13 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
               // either we cannot use the default payment method for this
               // payment, or fetching the PSPs for this payment and the
               // default wallet has failed, ask the user to pick a wallet
-              dispatch(
-                navigateToPaymentPickPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica,
-                  idPayment
-                })
-              );
+
+              navigateToPaymentPickPaymentMethodScreen({
+                rptId,
+                initialAmount,
+                verifica,
+                idPayment
+              });
             },
             hasPayableMethods
           )
@@ -472,31 +468,25 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       >
     >
   ) =>
-    dispatch(
-      navigateToPaymentTransactionErrorScreen({
-        error,
-        onCancel,
-        rptId
-      })
-    );
+    navigateToPaymentTransactionErrorScreen({
+      error,
+      onCancel,
+      rptId
+    });
 
   const dispatchNavigateToPaymentManualDataInsertion = () =>
-    dispatch(
-      navigateToPaymentManualDataInsertion({
-        isInvalidAmount: isManualPaymentInsertion
-      })
-    );
+    navigateToPaymentManualDataInsertion({
+      isInvalidAmount: isManualPaymentInsertion
+    });
 
   return {
-    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    navigateToWalletHome: () => navigateToWalletHome(),
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
-      dispatch(
-        navigateToWalletAddPaymentMethod({
-          inPayment: none,
-          showOnlyPayablePaymentMethods: true
-        })
-      ),
+      navigateToWalletAddPaymentMethod({
+        inPayment: none,
+        showOnlyPayablePaymentMethods: true
+      }),
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,

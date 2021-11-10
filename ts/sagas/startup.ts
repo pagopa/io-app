@@ -2,7 +2,6 @@ import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Alert } from "react-native";
-import { NavigationActions, NavigationState } from "react-navigation";
 import { channel } from "redux-saga";
 import {
   call,
@@ -37,9 +36,9 @@ import {
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
+import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import I18n from "../i18n";
-import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
@@ -50,7 +49,6 @@ import {
   navigateToMessageRouterScreen,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
-import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
@@ -61,7 +59,6 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import { IdentificationResult } from "../store/reducers/identification";
-import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import {
@@ -71,7 +68,6 @@ import {
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
-import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -89,6 +85,7 @@ import {
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
 } from "./profile";
+import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -106,6 +103,7 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -117,8 +115,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
-import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -442,7 +438,7 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
           );
           const action: leftOrRight = yield take(alertChoiceChannel);
           if (action === "left") {
-            yield put(navigateToPrivacyScreen);
+            yield call(navigateToPrivacyScreen);
           }
           yield cancel(checkUserDeletePendingTask);
         }
@@ -496,21 +492,9 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
     // Remove the pending message from the notification state
     yield put(clearNotificationPendingMessage());
     // Navigate to message router screen
-    yield put(navigateToMessageRouterScreen({ messageId }));
-    // Push the MAIN navigator in the history to handle the back button
-    const navigationState: NavigationState = yield select(
-      navigationStateSelector
-    );
-    yield put(
-      navigationHistoryPush(
-        AppNavigator.router.getStateForAction(
-          NavigationActions.back(),
-          navigationState
-        )
-      )
-    );
+    yield call(navigateToMessageRouterScreen, { messageId });
   } else {
-    yield put(navigateToMainNavigatorAction);
+    yield call(navigateToMainNavigatorAction);
   }
 }
 

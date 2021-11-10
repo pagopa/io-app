@@ -68,14 +68,12 @@ const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   addCoBadge: (abi: string) =>
-    dispatch(
-      navigateToOnboardingCoBadgeChooseTypeStartScreen({
-        abi,
-        legacyAddCreditCardBack: 1
-      })
-    )
+    navigateToOnboardingCoBadgeChooseTypeStartScreen({
+      abi,
+      legacyAddCreditCardBack: 1
+    })
 });
 const mapStateToProps = (_: GlobalState) => ({});
 
