@@ -20,5 +20,11 @@
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
     "allowRandomValues": true
+  },
+  "wallet": {
+    "payment": {
+      "amount": 2222,
+      "pspFeeAmount": 100
+    }
   }
 }
