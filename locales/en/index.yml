@@ -64,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
