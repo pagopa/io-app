@@ -30,7 +30,8 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  svEnabled
+  svEnabled,
+  usePaginatedMessages
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -113,6 +114,8 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
+import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
+import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**
@@ -452,6 +455,11 @@ export function* initializeApplicationSaga(): Generator<Effect, void, any> {
 
   // Load all messages when requested
   yield fork(watchLoadMessages, backendClient.getMessages);
+
+  if (usePaginatedMessages) {
+    // Load the next page of messages when requested
+    yield fork(watchLoadNextPageMessages, backendClient.getMessages);
+  }
 
   // Load a message when requested
   yield fork(watchMessageLoadSaga, backendClient.getMessage);

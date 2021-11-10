@@ -1,10 +1,11 @@
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View, H3 } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { H5 } from "../../../components/core/typography/H5";
 import { H4 } from "../../../components/core/typography/H4";

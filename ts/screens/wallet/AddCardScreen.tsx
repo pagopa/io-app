@@ -12,6 +12,7 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";

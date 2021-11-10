@@ -2,14 +2,14 @@ import {
   IPatternStringTag,
   IWithinRangeStringTag
 } from "italia-ts-commons/lib/strings";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Action } from "redux";
+
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import { CreditCard, PatchedWalletV2, Psp, Wallet } from "../types/pagopa";
-// import { applicationChangeState } from "../store/actions/application";
 import {
   loginSuccess,
   idpSelected,

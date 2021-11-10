@@ -1,7 +1,5 @@
-/* eslint-disable */
-
 import { Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
