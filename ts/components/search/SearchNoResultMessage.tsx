@@ -80,7 +80,6 @@ export class SearchNoResultMessage extends React.PureComponent<Props> {
         <View spacer={true} extralarge={true} />
 
         {renderIconErrorSearch(errorType)}
-        {/* <View spacer={true} /> */}
 
         <Text style={styles.message}>
           {renderMessageErrorSearch(errorType)}

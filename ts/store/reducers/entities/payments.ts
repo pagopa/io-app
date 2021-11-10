@@ -63,5 +63,6 @@ export const paymentByRptIdReducer = (
 
 // Selectors
 
-export const paymentsByRptIdSelector = (state: GlobalState) =>
-  state.entities.paymentByRptId;
+export const paymentsByRptIdSelector = (
+  state: GlobalState
+): PaymentByRptIdState => state.entities.paymentByRptId;

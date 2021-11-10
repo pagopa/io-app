@@ -11,7 +11,7 @@ import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovid
 import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { loadMessages } from "../../store/actions/messages";
+import { DEPRECATED_loadMessages as loadMessages } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { useIODispatch } from "../../store/hooks";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
