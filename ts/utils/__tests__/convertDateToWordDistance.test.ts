@@ -1,9 +1,5 @@
 import { format, subDays, subYears } from "date-fns";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import {
-  convertDateOnCurrentYear,
-  convertDateToWordDistance
-} from "../convertDateToWordDistance";
+import { convertDateToWordDistance } from "../convertDateToWordDistance";
 import { formatDateAsLocal } from "../dates";
 
 import I18n from "../../i18n";
@@ -61,23 +57,4 @@ describe("convertDateToWordDistance", () => {
       formatDateAsLocal(twoYearsAgo, true)
     );
   });
-});
-
-describe("convertDateOnCurrentYear", () => {
-  const today = new Date();
-  [
-    Tuple2<Date, string>(
-      today,
-      localeDateFormat(today, I18n.t("global.dateFormats.dayMonthWithoutTime"))
-    ),
-    Tuple2<Date, string>(
-      subYears(today, 2),
-      formatDateAsLocal(subYears(today, 2), true, true)
-    ),
-    Tuple2<Date, string>(new Date(NaN), I18n.t("datetimes.notValid"))
-  ].forEach((t, i) =>
-    it(`should return correct format comparing the current year ${i}`, () => {
-      expect(convertDateOnCurrentYear(t.e1)).toBe(t.e2);
-    })
-  );
 });

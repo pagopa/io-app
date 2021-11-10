@@ -3,18 +3,18 @@ import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { subDays } from "date-fns";
 import {
   ServicePublic,
   ServicePublicService_metadata
 } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { format } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { convertDateOnCurrentYear } from "../../utils/convertDateToWordDistance";
+import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 
 const styles = StyleSheet.create({
   container: {
@@ -55,8 +55,8 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private date = convertDateOnCurrentYear(this.props.message.created_at);
-  private time = format(this.props.message.created_at, "HH.mm");
+  private tmpDate = subDays(new Date(), 2);
+  private date = convertDateTimeToWordDistance(this.tmpDate);
 
   get data(): MessageData {
     const serviceDetail = this.props.serviceDetail;
@@ -97,7 +97,7 @@ class MessageDetailData extends React.PureComponent<Props> {
       <View style={styles.container}>
         <Text>
           {I18n.t("messageDetails.dateSending")}
-          <Text bold={true}>{` ${this.date} - ${this.time}`}</Text>
+          <Text bold={true}>{` ${this.date}`}</Text>
         </Text>
 
         {this.data.organization_name.isSome() && (

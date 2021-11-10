@@ -2,7 +2,7 @@ import { differenceInCalendarDays } from "date-fns";
 import I18n from "../i18n";
 import { dateToAccessibilityReadableFormat } from "./accessibility";
 import { format, formatDateAsLocal } from "./dates";
-import { maybeNotNullyString } from "./strings";
+import { capitalize, maybeNotNullyString } from "./strings";
 import { localeDateFormat } from "./locale";
 
 /**
@@ -47,22 +47,28 @@ export function convertDateToWordDistance(
 
 /**
  * This function converts the distance from now to date in :
- * MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system locale
+ * Today, H.mm; yesterday, H.mm; MM/DD/YYYY, H.mm depending on the system locale
  */
-export function convertDateOnCurrentYear(date: Date): string {
+export function convertDateTimeToWordDistance(
+  date: Date
+): string {
   const today = new Date();
-
-  if (isNaN(date.getMilliseconds())) {
-    return I18n.t("datetimes.notValid");
-  }
-  if (date.getFullYear() === today.getFullYear()) {
+  const distance = differenceInCalendarDays(today, date);
+  const formattedTime = localeDateFormat(date, I18n.t("global.dateFormats.timeFormat"));
+  // 0 days, distance < one day
+  if (distance < 1) {
+    return `${capitalize(I18n.t("global.date.today"))}, ${formattedTime}`;
+  } // distance = 1 day
+  else if (distance === 1) {
+    return `${capitalize(I18n.t("datetimes.yesterday"))}, ${formattedTime}`;
+  } // 1 day < distance, year is the current year
+  else if (distance > 1) {
     return localeDateFormat(
       date,
-      I18n.t("global.dateFormats.dayMonthWithoutTime")
+      I18n.t("global.dateFormats.shortFormatWithTime")
     );
   } else {
-    // distance > current year
-    return formatDateAsLocal(date, true, true);
+    return I18n.t("datetimes.notValid");
   }
 }
 
