@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 
 import { fromPredicate } from "fp-ts/lib/Option";
 import variables from "../../theme/variables";
+import I18n from "../../i18n";
 
 const maybeDisabled = fromPredicate(
   (isDisabled: boolean | undefined = undefined) => isDisabled === true
@@ -19,6 +20,11 @@ export default class Switch extends React.Component<NativeBase.Switch> {
 
     return (
       <NBSwitch
+        accessible={true}
+        accessibilityLabel={
+          this.props.accessibilityLabel ??
+          I18n.t("global.accessibility.switchLabel")
+        }
         // Stick
         trackColor={{
           false: "default",
