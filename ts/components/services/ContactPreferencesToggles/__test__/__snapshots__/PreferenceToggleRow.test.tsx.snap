@@ -50,6 +50,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
     </Text>
   </View>
   <RCTSwitch
+    accessibilityLabel="Select to activate"
     accessibilityRole="switch"
     accessibilityState={
       Object {
@@ -57,6 +58,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
         "disabled": undefined,
       }
     }
+    accessible={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
