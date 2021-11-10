@@ -9,11 +9,12 @@ import {
 } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
-import { format, formatDateAsLocal } from "../../utils/dates";
+import { format } from "../../utils/dates";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
 import EmailCallCTA from "../screens/EmailCallCTA";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { convertDateOnCurrentYear } from "../../utils/convertDateToWordDistance";
 
 const styles = StyleSheet.create({
   container: {
@@ -54,7 +55,7 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private date = formatDateAsLocal(this.props.message.created_at);
+  private date = convertDateOnCurrentYear(this.props.message.created_at);
   private time = format(this.props.message.created_at, "HH.mm");
 
   get data(): MessageData {

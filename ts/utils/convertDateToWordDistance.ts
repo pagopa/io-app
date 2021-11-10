@@ -46,6 +46,27 @@ export function convertDateToWordDistance(
 }
 
 /**
+ * This function converts the distance from now to date in :
+ * MM/DD (or DD/MM) and MM/DD/YYYY (or DD/MM/YYYY) depending on the system locale
+ */
+export function convertDateOnCurrentYear(date: Date): string {
+  const today = new Date();
+
+  if (isNaN(date.getMilliseconds())) {
+    return I18n.t("datetimes.notValid");
+  }
+  if (date.getFullYear() === today.getFullYear()) {
+    return localeDateFormat(
+      date,
+      I18n.t("global.dateFormats.dayMonthWithoutTime")
+    );
+  } else {
+    // distance > current year
+    return formatDateAsLocal(date, true, true);
+  }
+}
+
+/**
  * Convert a received {@link Date} in an accessible format
  * @param date
  */
