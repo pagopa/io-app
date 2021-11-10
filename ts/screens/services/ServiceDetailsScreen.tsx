@@ -33,12 +33,9 @@ import {
   EnabledChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
+import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
-import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
-import { logosForService } from "../../utils/services";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;

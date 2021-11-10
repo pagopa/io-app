@@ -1,43 +1,43 @@
+import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  NativeSyntheticEvent,
   NativeScrollEvent,
+  NativeSyntheticEvent,
   RefreshControl,
   StyleSheet,
   Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
-import * as pot from "italia-ts-commons/lib/pot";
-import { none, Option, some } from "fp-ts/lib/Option";
 import { connect } from "react-redux";
-
-import { isIos } from "../../../../utils/platform";
-import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
-import customVariables, {
-  VIBRATION_LONG_PRESS_DURATION
-} from "../../../../theme/variables";
-import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-
-import { GlobalState } from "../../../../store/reducers/types";
+import { pageSize } from "../../../../config";
+import { loadNextPageMessages } from "../../../../store/actions/messages";
+import { navigateToMessageRouterScreen } from "../../../../store/actions/navigation";
+import { Dispatch } from "../../../../store/actions/types";
 import {
   allPaginatedMessagesSelector,
   Cursor,
   isLoadingNextPage,
   isLoadingPreviousPage
 } from "../../../../store/reducers/entities/messages/allPaginated";
-import { Dispatch } from "../../../../store/actions/types";
-import { loadNextPageMessages } from "../../../../store/actions/messages";
-import { pageSize } from "../../../../config";
-import { navigateToMessageRouterScreen } from "../../../../store/actions/navigation";
+import { MessageState } from "../../../../store/reducers/entities/messages/messagesById";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+
+import { GlobalState } from "../../../../store/reducers/types";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../../../theme/variables";
+
+import { isIos } from "../../../../utils/platform";
+import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import { ErrorLoadingComponent } from "../../ErrorLoadingComponent";
 import {
   AnimatedFlatList,
+  generateItemLayout,
   ITEM_HEIGHT,
   ItemSeparator,
-  generateItemLayout,
   renderItem
 } from "./helpers";
 
@@ -283,7 +283,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadNextPageMessages.request({ pageSize: 100, cursor }));
   },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId }))
+    navigateToMessageRouterScreen({ messageId })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

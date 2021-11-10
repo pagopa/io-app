@@ -1,16 +1,13 @@
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationParams } from "react-navigation";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { WalletTypeEnum } from "../../../../../definitions/pagopa/walletv2/WalletV2";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../../../features/wallet/onboarding/privative/navigation/routes";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";

@@ -103,6 +103,7 @@ import {
 } from "./startup/watchCheckSessionSaga";
 import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
@@ -114,8 +115,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
-import { watchLoadNextPageMessages } from "./startup/watchLoadNextPageMessages";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 /**

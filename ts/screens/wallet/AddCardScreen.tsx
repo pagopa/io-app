@@ -3,6 +3,7 @@
  * (holder, pan, cvc, expiration date)
  */
 
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import {
   fromEither,
   fromPredicate,
@@ -12,9 +13,6 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, ScrollView, StyleSheet } from "react-native";
