@@ -13,7 +13,7 @@ import { openWebUrl } from "../../utils/url";
 import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColorType } from "../core/variables/IOColors";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
 import StatusContent from "./StatusContent";
 
@@ -79,7 +79,7 @@ const InnerSectionStatus = (
         "global.accessibility.alert"
       )}`}
       backgroundColor={backgroundColor}
-      iconColor={color}
+      iconColor={IOColors[color]}
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
@@ -101,7 +101,7 @@ const InnerSectionStatus = (
       >
         <StatusContent
           backgroundColor={backgroundColor}
-          iconColor={color}
+          iconColor={IOColors[color]}
           iconName={iconName}
           viewRef={viewRef}
           labelColor={color}
