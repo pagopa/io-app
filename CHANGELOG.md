@@ -2,6 +2,66 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0-rc.0](https://github.com/pagopa/io-app/compare/1.37.0-rc.4...1.38.0-rc.0) (2021-11-08)
+
+## [1.37.0-rc.4](https://github.com/pagopa/io-app/compare/1.37.0-rc.3...1.37.0-rc.4) (2021-11-05)
+
+
+### Features
+
+* [[IA-304](https://pagopa.atlassian.net/browse/IA-304)] Add "what is a psp" bottom sheet info ([#3469](https://github.com/pagopa/io-app/issues/3469)) ([53e617d](https://github.com/pagopa/io-app/commit/53e617d2a043b8daf7b37b8ef584187dcb260fef))
+
+
+### Bug Fixes
+
+* Linking.openURL doesn't open urls on Android ([#3478](https://github.com/pagopa/io-app/issues/3478)) ([ce57b85](https://github.com/pagopa/io-app/commit/ce57b859b9f6ab44683bd2d447ef3c4d952370c5))
+
+
+### Chores
+
+* **deps:** bump color-string from 1.5.3 to 1.6.0 ([#3473](https://github.com/pagopa/io-app/issues/3473)) ([f27382d](https://github.com/pagopa/io-app/commit/f27382d3a75bc2a7c61b41b86b8b668d6dc08d7d))
+* **deps:** bump ua-parser-js from 0.7.21 to 0.7.31 ([#3472](https://github.com/pagopa/io-app/issues/3472)) ([dfbd473](https://github.com/pagopa/io-app/commit/dfbd47378a53973baa5418c91c779e11771652e3))
+* **deps:** bump url-parse from 1.4.7 to 1.5.2 ([#3471](https://github.com/pagopa/io-app/issues/3471)) ([fdac5aa](https://github.com/pagopa/io-app/commit/fdac5aaf6a820b9ab8298e1861525b3658cd7229))
+
+## [1.37.0-rc.3](https://github.com/pagopa/io-app/compare/1.37.0-rc.2...1.37.0-rc.3) (2021-11-04)
+
+
+### Chores
+
+* Revert "Upgrade CircleCI Android image" ([#3476](https://github.com/pagopa/io-app/issues/3476)) ([e503111](https://github.com/pagopa/io-app/commit/e5031117730860c03969ec3fcbe5d3f3363a184c))
+
+## [1.37.0-rc.2](https://github.com/pagopa/io-app/compare/1.37.0-rc.1...1.37.0-rc.2) (2021-11-04)
+
+
+### Features
+
+* [[IA-275](https://pagopa.atlassian.net/browse/IA-275)] Add first e2e test for messages screen ([#3417](https://github.com/pagopa/io-app/issues/3417)) ([80752ed](https://github.com/pagopa/io-app/commit/80752ed6ef08cc4def6e966ada21b935905db277))
+* [[IA-311](https://pagopa.atlassian.net/browse/IA-311)] Add PayPal onboarding complete success screen ([#3450](https://github.com/pagopa/io-app/issues/3450)) ([8e6fa5b](https://github.com/pagopa/io-app/commit/8e6fa5bdb46d3125cd94acd0fccbfbd6fca1dc5a))
+* [[IA-312](https://pagopa.atlassian.net/browse/IA-312)] Add PayPal card wallet preview ([#3451](https://github.com/pagopa/io-app/issues/3451)) ([2f7432a](https://github.com/pagopa/io-app/commit/2f7432a8eb27129d75a3656c4999d33c4dd69236))
+
+
+### Bug Fixes
+
+* [[IA-316](https://pagopa.atlassian.net/browse/IA-316)] Logout purges "notification" store section ([#3454](https://github.com/pagopa/io-app/issues/3454)) ([cc050b6](https://github.com/pagopa/io-app/commit/cc050b60ba314d6d75abfdcafe9252926f5a95f5))
+* [[IA-414](https://pagopa.atlassian.net/browse/IA-414),[IA-415](https://pagopa.atlassian.net/browse/IA-415)] PTT_PAGAMENTO_DUPLICATO error code is not handled ([#3463](https://github.com/pagopa/io-app/issues/3463)) ([a75c692](https://github.com/pagopa/io-app/commit/a75c6925e6671e8a01db70d34338bb198a65c368))
+* [[IABT-1271](https://pagopa.atlassian.net/browse/IABT-1271)] On iOS the CIE the hint messages are misleading ([#3446](https://github.com/pagopa/io-app/issues/3446)) ([68f63b5](https://github.com/pagopa/io-app/commit/68f63b527f8029d271047b8bf9bf8853a3ac5a77))
+
+
+### Chores
+
+* [[IAI-83](https://pagopa.atlassian.net/browse/IAI-83)] Store test results on CircleCI ([#3467](https://github.com/pagopa/io-app/issues/3467)) ([ea64e54](https://github.com/pagopa/io-app/commit/ea64e54b443f0a75e100034af0631b54cec3b7a5))
+* **deps:** bump validator from 10.11.0 to 13.7.0 ([#3468](https://github.com/pagopa/io-app/issues/3468)) ([710178c](https://github.com/pagopa/io-app/commit/710178c71bd39a9208ff57df0d210b05c007c537))
+* [[ASZ-113](https://pagopa.atlassian.net/browse/ASZ-113)] Add Zendesk feature flag ([#3458](https://github.com/pagopa/io-app/issues/3458)) ([3609999](https://github.com/pagopa/io-app/commit/36099994744d523c032bc06c830e4ad0fbca2cce))
+* [[IAI-82](https://pagopa.atlassian.net/browse/IAI-82)] Upgrade CircleCI Android image [#3466](https://github.com/pagopa/io-app/issues/3466) ([b87f10f](https://github.com/pagopa/io-app/commit/b87f10f20b44d19bcfe6be008780bad6a0ed0af8))
+* **Zendesk:** [[ASZ-115](https://pagopa.atlassian.net/browse/ASZ-115)] Add Zendesk Id for title generation and changelog ([#3464](https://github.com/pagopa/io-app/issues/3464)) ([7504993](https://github.com/pagopa/io-app/commit/7504993e9727859d3f963c1cbcb8c64f808f05ab))
+* [[IA-408](https://pagopa.atlassian.net/browse/IA-408)] Remove close button in PayPal onboarding success screen ([#3461](https://github.com/pagopa/io-app/issues/3461)) ([8f37d40](https://github.com/pagopa/io-app/commit/8f37d40fbcae64dd1c9b9152c926e643ec9d9005))
+* [[IA-411](https://pagopa.atlassian.net/browse/IA-411)] Add PaymentManager API spec file ([#3460](https://github.com/pagopa/io-app/issues/3460)) ([3216d0d](https://github.com/pagopa/io-app/commit/3216d0d7bc6cc1bc821a4b49c9b65dfb90bfea37))
+* [[IAI-78](https://pagopa.atlassian.net/browse/IAI-78)] Increase Android targetSdkVersion to 30 ([#3455](https://github.com/pagopa/io-app/issues/3455)) ([ac4b8ae](https://github.com/pagopa/io-app/commit/ac4b8ae0c44d9948dc5348969b165bd325871b03))
+* **Sicilia Vola:** [[IASV-46](https://pagopa.atlassian.net/browse/IASV-46)] Download voucher pdf ([#3439](https://github.com/pagopa/io-app/issues/3439)) ([1beef52](https://github.com/pagopa/io-app/commit/1beef520478d1ae92ed04c9706b34976255baf2c))
+* [[IAI-80](https://pagopa.atlassian.net/browse/IAI-80)] Update stale issues / pull requests text ([#3457](https://github.com/pagopa/io-app/issues/3457)) ([fdbca88](https://github.com/pagopa/io-app/commit/fdbca880a584a903409027bd4a6b3424231dbe03))
+* **deps:** bump vm2 from 3.9.3 to 3.9.5 ([#3442](https://github.com/pagopa/io-app/issues/3442)) ([c398ca9](https://github.com/pagopa/io-app/commit/c398ca9ea714e6a36b37875fed3105407966072f))
+* [Snyk] Security upgrade xss from 1.0.6 to 1.0.10 ([#3447](https://github.com/pagopa/io-app/issues/3447)) ([41aba51](https://github.com/pagopa/io-app/commit/41aba5114f28851031c092c699712cd8dbef3698))
+
 ## [1.37.0-rc.1](https://github.com/pagopa/io-app/compare/1.37.0-rc.0...1.37.0-rc.1) (2021-10-28)
 
 
