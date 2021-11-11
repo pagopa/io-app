@@ -42,9 +42,9 @@ const SatispayWalletPreview: React.FunctionComponent<Props> = props => (
   />
 );
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToSatispayDetails: (satispay: SatispayPaymentMethod) =>
-    dispatch(navigateToSatispayDetailScreen(satispay))
+    navigateToSatispayDetailScreen(satispay)
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

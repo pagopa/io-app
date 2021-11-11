@@ -103,7 +103,7 @@ const CgnCardInWalletContainer = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => dispatch(cgnDetails.request()),
-  navigateToCgnDetailScreen: () => dispatch(navigateToCgnDetails())
+  navigateToCgnDetailScreen: () => navigateToCgnDetails()
 });
 
 const mapStateToProps = (state: GlobalState) => ({

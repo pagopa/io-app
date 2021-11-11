@@ -39,9 +39,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   startCoBadgeOnboarding: () =>
-    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen({}))
+    navigateToOnboardingCoBadgeChooseTypeStartScreen({})
 });
 
 const mapStateToProps = (state: GlobalState) => ({

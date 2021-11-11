@@ -115,8 +115,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Einige Funktionen werden nicht funktionieren.
-exit:
-  pressAgain: zum Beenden erneut drücken
 errors:
   loginError: Es gab einen Fehler bei der Anmeldung, wiederholen Sie den Vorgang.
   profileUpdateError: Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten.

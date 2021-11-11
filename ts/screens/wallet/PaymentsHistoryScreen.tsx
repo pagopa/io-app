@@ -56,7 +56,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
     const { historyPayments } = this.props;
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("payment.details.list.title")}
       >
         <PaymentHistoryList
@@ -78,9 +78,9 @@ const mapStateToProps = (state: GlobalState) => ({
   historyPayments: paymentsHistorySelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToPaymentHistoryDetail: (param: { payment: PaymentHistory }) =>
-    dispatch(navigateToPaymentHistoryDetail(param))
+    navigateToPaymentHistoryDetail(param)
 });
 
 export default withValidatedPagoPaVersion(

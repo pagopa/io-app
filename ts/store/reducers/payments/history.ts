@@ -12,9 +12,10 @@
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
 import { fromNullable, Option, some } from "fp-ts/lib/Option";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";

@@ -3,23 +3,14 @@
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationState } from "react-navigation";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { IdentityProviderId } from "../../models/IdentityProvider";
-import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { getCurrentRouteName } from "../../utils/navigation";
-import {
-  contentMunicipalityLoad,
-  loadContextualHelpData,
-  loadIdps
-} from "../actions/content";
-import { clearCache } from "../actions/profile";
-import { Action } from "../actions/types";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteError,
@@ -28,11 +19,18 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { IdentityProviderId } from "../../models/IdentityProvider";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getRemoteLocale } from "../../utils/messages";
-import { navSelector } from "./navigationHistory";
+import {
+  contentMunicipalityLoad,
+  loadContextualHelpData,
+  loadIdps
+} from "../actions/content";
+import { clearCache } from "../actions/profile";
+import { Action } from "../actions/types";
+import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
 /**
@@ -107,25 +105,25 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
 export const screenContextualHelpDataSelector = createSelector<
   GlobalState,
   pot.Pot<ContextualHelp, Error>,
-  NavigationState,
+  string,
   pot.Pot<Option<ScreenCHData>, Error>
->([contextualHelpDataSelector, navSelector], (contextualHelpData, navState) =>
-  pot.map(contextualHelpData, data => {
-    const currentRouteName = getCurrentRouteName(navState);
-    if (currentRouteName === undefined) {
-      return none;
-    }
-    const locale = getRemoteLocale();
-    const screenData =
-      data[locale] !== undefined
-        ? data[locale].screens.find(
-            s =>
-              s.route_name.toLowerCase() ===
-              currentRouteName.toLocaleLowerCase()
-          )
-        : undefined;
-    return fromNullable(screenData);
-  })
+>(
+  [contextualHelpDataSelector, currentRouteSelector],
+  (contextualHelpData, currentRoute) =>
+    pot.map(contextualHelpData, data => {
+      if (currentRoute === undefined) {
+        return none;
+      }
+      const locale = getRemoteLocale();
+      const screenData =
+        data[locale] !== undefined
+          ? data[locale].screens.find(
+              s =>
+                s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
+            )
+          : undefined;
+      return fromNullable(screenData);
+    })
 );
 
 export default function content(

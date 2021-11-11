@@ -156,7 +156,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   search: (cardNumber: string) => {
     Keyboard.dismiss();
     dispatch(walletAddPrivativeInsertCardNumber(cardNumber));
-    dispatch(navigateToOnboardingPrivativeSearchAvailable());
+    navigateToOnboardingPrivativeSearchAvailable();
   }
 });
 

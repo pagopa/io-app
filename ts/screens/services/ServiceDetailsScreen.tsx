@@ -12,6 +12,9 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import ServiceMetadata from "../../components/services/ServiceMetadata";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
@@ -30,11 +33,9 @@ import {
   EnabledChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
+import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
-import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -161,14 +162,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["services_detail"]}
       >
         <Content>
           <Grid>
-            <OrganizationHeader service={service} />
+            <OrganizationHeader
+              serviceName={service.service_name}
+              organizationName={service.organization_name}
+              logoURLs={logosForService(service)}
+            />
           </Grid>
           <View spacer={true} small={true} />
 

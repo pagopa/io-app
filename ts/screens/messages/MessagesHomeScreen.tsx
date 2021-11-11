@@ -22,7 +22,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import {
-  loadMessages,
+  DEPRECATED_loadMessages as loadMessages,
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
@@ -350,7 +350,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loadServiceDetail.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId })),
+    navigateToMessageRouterScreen({ messageId }),
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
