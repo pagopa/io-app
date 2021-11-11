@@ -6,16 +6,18 @@ import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import I18n from "../../../i18n";
 import { openAppStoreUrl } from "../../../utils/url";
 import { Label } from "../../core/typography/Label";
-import { cgnEnabled, svEnabled } from "../../../config";
+import { cgnEnabled } from "../../../config";
+import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
 
+type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
-  custom_special_flow: string;
+  custom_special_flow: CustomSpecialFlow;
 };
 
-const mapFlowFeatureFlag: Map<string, boolean> = new Map<string, boolean>([
-  ["cgn", cgnEnabled],
-  ["sv", svEnabled]
-]);
+const mapFlowFeatureFlag: Map<CustomSpecialFlow, boolean> = new Map<
+  CustomSpecialFlow,
+  boolean
+>([["cgn" as CustomSpecialFlow, cgnEnabled]]);
 
 const SpecialServicesRouter = (props: Props) => {
   const { custom_special_flow } = props;

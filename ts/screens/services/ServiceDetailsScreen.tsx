@@ -36,9 +36,6 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
-import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
 import { specialServicesEnabled } from "../../config";
 import { SpecialServiceCategoryEnum } from "../../../definitions/backend/SpecialServiceCategory";
@@ -256,7 +253,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   SpecialServiceCategoryEnum.SPECIAL && (
                   <SpecialServicesRouter
                     custom_special_flow={
-                      service.service_metadata.custom_special_flow ?? undefined
+                      service.service_metadata.custom_special_flow
                     }
                   />
                 )}
