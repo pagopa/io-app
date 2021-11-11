@@ -10,7 +10,6 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import IconFont from "../../../../components/ui/IconFont";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import I18n from "../../../../i18n";
-import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../../store/reducers/wallet/wallets";
 import variables from "../../../../theme/variables";
@@ -79,7 +78,9 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
     <BaseCardComponent
       testID={props.testID}
       topLeftCorner={topLeft(props.creditCard, favorite)}
-      bottomLeftCorner={<Body>{props.nameSurname?.toLocaleUpperCase()}</Body>}
+      bottomLeftCorner={
+        <Body>{props.creditCard?.info?.holder?.toUpperCase() ?? ""}</Body>
+      }
       bottomRightCorner={
         <BrandImage image={getCardIconFromBrandLogo(props.creditCard.info)} />
       }
@@ -89,7 +90,6 @@ const CreditCardComponent = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
-  nameSurname: profileNameSurnameSelector(state),
   favoriteWalletId: getFavoriteWalletId(state)
 });
 
