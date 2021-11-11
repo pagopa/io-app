@@ -391,8 +391,7 @@ jobs:
 ###############################################################################
   run-e2e-test-IOS:
     <<: *defaults_macos
-    
-    parallelism: 4
+
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -439,7 +438,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: yarn detox build -c ios.sim.debug
+          command: yarn detox build -c ios.sim.release
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -454,16 +453,15 @@ jobs:
             cd ..
             yarn detox clean-framework-cache
             yarn detox build-framework-cache
-            TEST=$(circleci tests glob **/__e2e__/*.e2e.ts?(x) | circleci tests split)
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.debug \
+              -c ios.sim.release \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
               --record-videos failing \
-              --debug-synchronization 1000 $TEST
+              --debug-synchronization 1000
 
       # store detox artifacts
       - store_artifacts:
