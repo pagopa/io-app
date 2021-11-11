@@ -65,7 +65,7 @@ const topLeft = (
 };
 
 /**
- * The digital representation of the credit card, displaying the pan last 4 digit, the owner name and the expiring date
+ * The digital representation of the credit card, displaying the pan last 4 digit, the holder name and the expiring date
  * @param props
  * @constructor
  */
