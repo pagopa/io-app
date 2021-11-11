@@ -1,6 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -29,26 +30,22 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
-import {
-  EnabledChannels,
-  getEnabledChannelsForService
-} from "../../utils/profile";
 import { logosForService } from "../../utils/services";
-import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { loadServiceDetail } from "../../store/actions/services";
+import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<NavigationParams>;
-
-type State = {
-  uiEnabledChannels: EnabledChannels;
-  isMarkdownLoaded: boolean;
-};
+  OwnProps;
 
 const styles = StyleSheet.create({
   infoHeader: {
@@ -100,69 +97,44 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
-class ServiceDetailsScreen extends React.Component<Props, State> {
-  get serviceId() {
-    return this.props.navigation.getParam("service").service_id;
+const ServiceDetailsScreen = (props: Props) => {
+  const serviceId = props.navigation.getParam("service").service_id;
+  const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
+
+  useEffect(() => {
+    props.loadServiceDetail(serviceId);
+  }, []);
+
+  const onMarkdownEnd = () => setIsMarkdownLoaded(true);
+
+  const { potService } = props;
+
+  // This has been considered just to avoid compiling errors
+  // once we navigate from list or a message we always have the service data since they're previously loaded
+  if (potService === undefined) {
+    return null;
+  }
+  const maybeService = pot.toOption(potService);
+
+  if (maybeService.isNone()) {
+    return null;
   }
 
-  constructor(props: Props) {
-    super(props);
-    // We initialize the UI by making the states of the channels the same
-    // as what is set in the profile. The user will be able to change the state
-    // via the UI and the profile will be updated in the background accordingly
-    this.state = {
-      uiEnabledChannels: getEnabledChannelsForService(
-        this.props.profile,
-        this.serviceId
-      ),
-      isMarkdownLoaded: false
-    };
-  }
+  const service = maybeService.value;
+  const metadata = service.service_metadata;
 
-  public componentDidUpdate(prevProps: Props) {
-    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
-      // in case of new or resolved errors while updating the profile, we show a toast and
-      // reset the UI to match the state of the profile preferences
-      showToast(
-        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
-        "danger"
-      );
+  // if markdown content is not available, render immediately what is possible
+  // but we must wait for metadata load to be completed to avoid flashes
+  const isMarkdownAvailable = metadata?.description;
+  // if markdown data is available, wait for it to be rendered
+  const canRenderItems = isMarkdownAvailable ? isMarkdownLoaded : true;
 
-      const uiEnabledChannels = getEnabledChannelsForService(
-        this.props.profile,
-        this.props.navigation.getParam("service").service_id
-      );
-      this.setState({
-        uiEnabledChannels
-      });
-    }
-  }
-  // collect the service
-  private service = this.props.navigation.getParam("service");
+  const maybeCTA = getServiceCTA(metadata);
 
-  private onMarkdownEnd = () => {
-    this.setState({ isMarkdownLoaded: true });
-  };
-
-  public render() {
-    const { service } = this;
-
-    const metadata = service.service_metadata;
-
-    // if markdown content is not available, render immediately what is possible
-    // but we must wait for metadata load to be completed to avoid flashes
-    const isMarkdownAvailable = metadata?.description;
-    const isMarkdownLoaded = isMarkdownAvailable
-      ? this.state.isMarkdownLoaded
-      : true;
-    // if markdown data is available, wait for it to be rendered
-    const canRenderItems = isMarkdownLoaded;
-
-    const maybeCTA = getServiceCTA(metadata);
-
-    return (
+  return (
+    <LoadingSpinnerOverlay isLoading={pot.isLoading(potService)}>
       <BaseScreenComponent
-        goBack={() => this.props.navigation.goBack()}
+        goBack={() => props.navigation.goBack()}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["services_detail"]}
@@ -181,8 +153,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <>
               <Markdown
                 animated={true}
-                onLoadEnd={this.onMarkdownEnd}
-                onError={this.onMarkdownEnd}
+                onLoadEnd={onMarkdownEnd}
+                onError={onMarkdownEnd}
               >
                 {metadata.description}
               </Markdown>
@@ -213,7 +185,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 organizationFiscalCode={service.organization_fiscal_code}
                 getItemOnPress={handleItemOnPress}
                 serviceId={service.service_id}
-                isDebugModeEnabled={this.props.isDebugModeEnabled}
+                isDebugModeEnabled={props.isDebugModeEnabled}
               />
 
               <EdgeBorderComponent />
@@ -228,27 +200,33 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             <ExtractedCTABar
               ctas={maybeCTA.value}
               xsmall={false}
-              dispatch={this.props.dispatch}
+              dispatch={props.dispatch}
               serviceMetadata={metadata}
               service={service}
             />
           </View>
         )}
       </BaseScreenComponent>
-    );
-  }
-}
+    </LoadingSpinnerOverlay>
+  );
+};
 
-const mapStateToProps = (state: GlobalState) => ({
-  isInboxEnabled: isInboxEnabledSelector(state),
-  isEmailEnabled: isEmailEnabledSelector(state),
-  isEmailValidated: isProfileEmailValidatedSelector(state),
-  content: contentSelector(state),
-  profile: profileSelector(state),
-  isDebugModeEnabled: isDebugModeEnabledSelector(state)
-});
+const mapStateToProps = (state: GlobalState, props: OwnProps) => {
+  const serviceId = props.navigation.getParam("service").service_id;
+
+  return {
+    potService: serviceByIdSelector(serviceId)(state),
+    isInboxEnabled: isInboxEnabledSelector(state),
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    content: contentSelector(state),
+    profile: profileSelector(state),
+    isDebugModeEnabled: isDebugModeEnabledSelector(state)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadServiceDetail: (id: ServiceId) => dispatch(loadServiceDetail.request(id)),
   dispatch
 });
 
