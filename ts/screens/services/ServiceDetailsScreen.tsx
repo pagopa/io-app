@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
