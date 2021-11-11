@@ -126,7 +126,7 @@ jobs:
       - store_test_results:
           path: ./tmp/reports/junit/
 
-    parallelism: 8
+    parallelism: 80
 
   # Runs ESlint checks on PR
   run-eslint:
@@ -438,7 +438,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: yarn detox build -c ios.sim.release
+          command: yarn detox build -c ios.sim.debug
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -455,7 +455,7 @@ jobs:
             yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.release \
+              -c ios.sim.debug \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
@@ -479,9 +479,6 @@ workflows:
       - run-tests
       - run-eslint
       - run-prettier
-      - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
 
       - run-danger:
           filters:
