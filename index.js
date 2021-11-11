@@ -52,11 +52,15 @@ setNativeExceptionHandler(exceptionString => {
   }
 });
 
-// YellowBox.ignoreWarnings(["Warning: componentWillReceiveProps is deprecated"]);
-// import { YellowBox } from "react-native";
-// YellowBox.ignoreWarnings([""]);
+// Please note that any LogBox can cause e2e tests to fail.
 // TODO: temp only, to complete the porting to 0.63.x
-LogBox.ignoreLogs(["componentWillReceiveProps", "Animated", "Virtualized"]);
+LogBox.ignoreLogs([
+  "componentWillReceiveProps",
+  "currentlyFocusedField",
+  "Function components cannot be given refs",
+  "Animated",
+  "Virtualized"
+]);
 
 // Disable allowFontScaling for Text/TextInput component
 Text.defaultProps = Text.defaultProps || {};

@@ -6,7 +6,6 @@ import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  hasProfileEmailSelector,
   profileEmailSelector,
   profileNameSurnameSelector,
   isProfileEmailValidatedSelector
@@ -15,10 +14,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import ProfileDataScreen from "../ProfileDataScreen";
 import I18n from "../../../i18n";
-import {
-  navigateToEmailReadScreen,
-  navigateToEmailInsertScreen
-} from "../../../store/actions/navigation";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -69,18 +64,12 @@ describe("Test ProfileDataScreen", () => {
     }
   });
   it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
-    const { component, store } = renderComponent();
+    const { component } = renderComponent();
 
     expect(component).not.toBeNull();
     const listItemComponent = component.getByTestId("insert-or-edit-email");
     expect(listItemComponent).not.toBeNull();
     fireEvent.press(listItemComponent);
-    const hasProfileEmail = hasProfileEmailSelector(store.getState());
-    if (hasProfileEmail) {
-      store.dispatch(navigateToEmailReadScreen());
-    } else {
-      store.dispatch(navigateToEmailInsertScreen());
-    }
   });
   it("should render ListItemComponent name and surname with the right title and subtitle", () => {
     const { component, store } = renderComponent();

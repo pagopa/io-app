@@ -1,6 +1,5 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
-  serviceDetail: pot.Pot<ServicePublic, Error>;
+  serviceDetail: Option<ServicePublic>;
   serviceMetadata?: ServicePublicService_metadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
@@ -59,7 +58,7 @@ class MessageDetailData extends React.PureComponent<Props> {
   private time = format(this.props.message.created_at, "HH.mm");
 
   get data(): MessageData {
-    const serviceDetail = pot.toOption(this.props.serviceDetail);
+    const serviceDetail = this.props.serviceDetail;
     const metadata = fromNullable(this.props.serviceMetadata);
     return {
       service_detail: serviceDetail,
@@ -89,8 +88,7 @@ class MessageDetailData extends React.PureComponent<Props> {
   };
 
   public render() {
-    const textToCopy: string = pot
-      .toOption(this.props.serviceDetail)
+    const textToCopy: string = this.props.serviceDetail
       .map(({ service_name }) => `${service_name} - ${this.props.message.id}`)
       .getOrElse(this.props.message.id);
 

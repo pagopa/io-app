@@ -1,4 +1,3 @@
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import {
   OmitStatusFromResponse,
   TypeofApiResponse
@@ -8,6 +7,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { Detail_v2Enum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";

@@ -11,7 +11,7 @@ import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
   loadMessage as loadMessageAction,
-  loadMessages as loadMessagesAction,
+  DEPRECATED_loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadServiceDetail } from "../../store/actions/services";
@@ -125,7 +125,7 @@ function* loadMessages(
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          // we need to load a service if (one of these is true)
+          // we need to load a service if either
           // - service is not cached
           // - service is not loading AND (service is none OR service is error)
           return (

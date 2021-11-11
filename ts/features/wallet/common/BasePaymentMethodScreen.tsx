@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Button, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Label } from "../../../components/core/typography/Label";
@@ -11,6 +10,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import DarkLayout from "../../../components/screens/DarkLayout";
 import I18n from "../../../i18n";
+import { navigateBack } from "../../../store/actions/navigation";
 import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
 import { GlobalState } from "../../../store/reducers/types";
 import { getWalletsById } from "../../../store/reducers/wallet/wallets";
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         walletId,
         onSuccess: _ => {
           showToast(I18n.t("wallet.delete.successful"), "success");
-          dispatch(NavigationActions.back());
+          navigateBack();
         },
         onFailure: _ => {
           showToast(I18n.t("wallet.delete.failed"), "danger");

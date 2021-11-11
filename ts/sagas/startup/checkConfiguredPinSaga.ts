@@ -1,4 +1,4 @@
-import { call, Effect, put, take } from "redux-saga/effects";
+import { call, Effect, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
@@ -18,7 +18,7 @@ export function* checkConfiguredPinSaga(): Generator<Effect, PinString, any> {
   }
 
   // Go through the unlock code configuration screen
-  yield put(navigateToOnboardingPinScreenAction);
+  yield call(navigateToOnboardingPinScreenAction);
 
   // and block until a unlock code is set
   const resultAction: ActionType<typeof createPinSuccess> = yield take(

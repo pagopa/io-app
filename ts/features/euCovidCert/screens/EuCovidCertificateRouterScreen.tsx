@@ -71,6 +71,10 @@ const routeSuccessEuCovidResponse = (
   }
 };
 
+export const EUCovidContext = React.createContext<NavigationParams | null>(
+  null
+);
+
 /**
  * Router screen that triggers the first loading of the certificate (if not present in the store)
  * and dispatch the rendering, based on the results of the certificate received
@@ -99,16 +103,34 @@ const EuCovidCertificateRouterScreen = (
   }, [setMessageRead, shouldBeLoaded, loadCertificate, messageId, authCode]);
 
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
-  return pot.fold(
-    props.euCovidCertificateResponse(authCode),
-    () => <EuCovidCertLoadingScreen />,
-    () => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertGenericErrorKoScreen />,
-    response => routeEuCovidResponse(response),
-    _ => <EuCovidCertLoadingScreen />,
-    (_, __) => <EuCovidCertLoadingScreen />,
-    _ => <EuCovidCertGenericErrorKoScreen />
+  return (
+    <EUCovidContext.Provider value={{ authCode, messageId }}>
+      {pot.fold(
+        props.euCovidCertificateResponse(authCode),
+        () => (
+          <EuCovidCertLoadingScreen />
+        ),
+        () => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertGenericErrorKoScreen />
+        ),
+        response => routeEuCovidResponse(response),
+        _ => (
+          <EuCovidCertLoadingScreen />
+        ),
+        (_, __) => (
+          <EuCovidCertLoadingScreen />
+        ),
+        _ => (
+          <EuCovidCertGenericErrorKoScreen />
+        )
+      )}
+    </EUCovidContext.Provider>
   );
 };
 

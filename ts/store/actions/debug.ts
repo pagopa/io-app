@@ -23,6 +23,15 @@ export const setDebugModeEnabled = createStandardAction(
 )<boolean>();
 
 /**
+ * Used only for debug purpose until to react-navigation v6 the upgrade
+ * TODO: Remove after the upgrade to react-navigation v6
+ * @deprecated
+ */
+export const setDebugCurrentRouteName = createStandardAction(
+  "DEBUG_SET_CURRENT_ROUTE"
+)<string>();
+
+/**
  * An Instabug report is open
  */
 export const instabugReportOpened = createStandardAction(
@@ -39,4 +48,5 @@ export const instabugReportClosed = createStandardAction(
 export type DebugActions =
   | ActionType<typeof setDebugModeEnabled>
   | ActionType<typeof instabugReportOpened>
+  | ActionType<typeof setDebugCurrentRouteName>
   | ActionType<typeof instabugReportClosed>;

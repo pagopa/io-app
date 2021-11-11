@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -198,18 +198,16 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  navigateBack: () => dispatch(navigateBack()),
+  navigateBack: () => navigateBack(),
   startBPayOnboarding: () => dispatch(walletAddBPayStart()),
   startSatispayOnboarding: () => dispatch(walletAddSatispayStart()),
   startAddBancomat: () => dispatch(walletAddBancomatStart()),
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: props.navigation.getParam("inPayment"),
-        keyFrom: props.navigation.getParam("keyFrom")
-      })
-    )
+    navigateToWalletAddCreditCard({
+      inPayment: props.navigation.getParam("inPayment"),
+      keyFrom: props.navigation.getParam("keyFrom")
+    })
 });
 
 export default connect(undefined, mapDispatchToProps)(AddPaymentMethodScreen);

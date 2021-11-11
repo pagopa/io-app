@@ -33,7 +33,7 @@ describe("authenticationSaga", () => {
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
-      .put(resetToAuthenticationRoute)
+      .call(resetToAuthenticationRoute)
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess({ token: aSessionToken, idp: "idp" }))

@@ -103,9 +103,9 @@ const PrivativeWalletPreview: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToPrivativeDetails: (privative: PrivativePaymentMethod) =>
-    dispatch(navigateToPrivativeDetailScreen(privative))
+    navigateToPrivativeDetailScreen(privative)
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
