@@ -35,7 +35,7 @@ export function* watchMessageLoadSaga(
 }
 
 /**
- * A generator that listens for loadMessage.request from a channel and perform the
+ * A generator that listens for loadMessage.request from a channel and performs the
  * handling.
  *
  * @param requestsChannel The channel where to take the loadMessage.request actions
@@ -51,7 +51,6 @@ function* handleMessageLoadRequest(
       requestsChannel
     );
 
-    const meta = action.payload;
-    yield call(loadMessage, getMessage, meta);
+    yield call(loadMessage, getMessage, action.payload);
   }
 }

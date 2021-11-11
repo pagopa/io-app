@@ -12,6 +12,9 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
+import ServiceMetadata from "../../components/services/ServiceMetadata";
+import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { Dispatch } from "../../store/actions/types";
@@ -30,6 +33,7 @@ import {
   EnabledChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
+import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
@@ -170,7 +174,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       service.service_metadata.category === SpecialServiceCategoryEnum.SPECIAL;
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["services_detail"]}
@@ -178,7 +182,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         <SafeAreaView style={IOStyles.flex}>
           <Content style={IOStyles.flex}>
             <Grid>
-              <OrganizationHeader service={service} />
+              <OrganizationHeader
+                serviceName={service.service_name}
+                organizationName={service.organization_name}
+                logoURLs={logosForService(service)}
+              />
             </Grid>
             <View spacer={true} small={true} />
 

@@ -95,8 +95,7 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  navigateToSelectFlightsDateScreen: () =>
-    dispatch(navigateToSvSelectFlightsDateScreen())
+  navigateToSelectFlightsDateScreen: () => navigateToSvSelectFlightsDateScreen()
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

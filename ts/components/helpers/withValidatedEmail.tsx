@@ -50,7 +50,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     // when the user is in onboarding phase and he asks to go to insert email screen
     // the navigation is forced reset
     this.props.navigation.dispatch(StackActions.popToTop());
-    this.props.navigation.dispatch(navigateToEmailInsertScreen());
+    navigateToEmailInsertScreen();
   };
 
   public render() {
@@ -60,7 +60,8 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillBlur={() => {
             this.hideModal();
           }}
-          onWillFocus={() => {
+          onDidFocus={() => {
+            this.setState({ forceNavigationEvents: false });
             this.props.showModal(
               <RemindEmailValidationOverlay
                 closeModalAndNavigateToEmailInsertScreen={
@@ -69,9 +70,6 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
                 onClose={this.hideModal}
               />
             );
-          }}
-          onDidFocus={() => {
-            this.setState({ forceNavigationEvents: false });
           }}
         />
       </View>

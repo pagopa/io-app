@@ -1,7 +1,8 @@
 import configureMockStore from "redux-mock-store";
 import { NavigationParams } from "react-navigation";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Option, some } from "fp-ts/lib/Option";
+
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";

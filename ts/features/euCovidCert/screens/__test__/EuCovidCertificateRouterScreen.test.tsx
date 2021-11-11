@@ -37,12 +37,10 @@ describe("Test EuCovidCertificateRouterScreen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    store.dispatch(
-      navigateToEuCovidCertificateDetailScreen({
-        authCode,
-        messageId: "messageId"
-      })
-    );
+    navigateToEuCovidCertificateDetailScreen({
+      authCode,
+      messageId: "messageId"
+    });
 
     const render = renderComponent(store);
 

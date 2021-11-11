@@ -133,7 +133,9 @@ exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -158,7 +160,9 @@ exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -183,7 +187,9 @@ exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -208,7 +214,9 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -275,7 +283,9 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -301,7 +311,9 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 2`] = `
 <RCTSwitch
+  accessibilityLabel="Select to activate"
   accessibilityRole="switch"
+  accessible={true}
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}

@@ -33,6 +33,8 @@ const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 // Default number of workers to fetch service.
 const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
+const DEFAULT_PAGE_SIZE = 8;
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
@@ -84,6 +86,10 @@ export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 export const specialServicesEnabled: boolean =
   Config.SPECIAL_SERVICES_ENABLED === "YES";
 
+// Paginated messages
+export const usePaginatedMessages: boolean =
+  Config.PAGINATED_MESSAGES === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
 
@@ -132,3 +138,5 @@ export const privacyUrl: string = t.string
 export const localServicesWebUrl: string = t.string
   .decode(Config.LOCAL_SERVICE_WEB_URL)
   .getOrElse("https://io.italia.it");
+
+export const pageSize: number = DEFAULT_PAGE_SIZE;

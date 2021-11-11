@@ -1,10 +1,11 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import ContextualInfo from "../../../components/ContextualInfo";
@@ -350,26 +351,22 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
   return {
     pickPaymentMethod: () =>
-      dispatch(
-        navigateToPaymentPickPaymentMethodScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
-      ),
+      navigateToPaymentPickPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
+      }),
     pickPsp: () =>
-      dispatch(
-        navigateToPaymentPickPspScreen({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment"),
-          psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet"),
-          chooseToChange: true
-        })
-      ),
+      navigateToPaymentPickPspScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment"),
+        psps: props.navigation.getParam("psps"),
+        wallet: props.navigation.getParam("wallet"),
+        chooseToChange: true
+      }),
     onCancel: () => {
       ActionSheet.show(
         {
@@ -397,8 +394,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatchCancelPayment,
     dispatchPaymentOutCome: (outComeCode: Option<string>) =>
       dispatch(paymentOutcomeCode(outComeCode)),
-    navigateToOutComePaymentScreen: () =>
-      dispatch(navigateToPaymentOutcomeCode()),
+    navigateToOutComePaymentScreen: () => navigateToPaymentOutcomeCode(),
     loadTransactions: () =>
       dispatch(fetchTransactionsRequestWithExpBackoff({ start: 0 })),
 

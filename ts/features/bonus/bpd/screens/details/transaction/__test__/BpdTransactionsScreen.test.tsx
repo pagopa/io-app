@@ -1,25 +1,23 @@
-import * as React from "react";
-import { Action, createStore } from "redux";
-import { NavigationParams } from "react-navigation";
 import * as pot from "italia-ts-commons/lib/pot";
-import BpdTransactionsScreen from "../BpdTransactionsScreen";
-import { appReducer } from "../../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../../../store/reducers/types";
+import * as React from "react";
+import { NavigationParams } from "react-navigation";
+import { Action, createStore } from "redux";
 import ROUTES from "../../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../../../utils/tests";
+import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import { bpdAllData } from "../../../../store/actions/details";
-import * as lastUpdateReducer from "../../../../store/reducers/details/lastUpdate";
-import * as transactionsReducer from "../../../../store/reducers/details/combiner";
+import { AwardPeriodId } from "../../../../store/actions/periods";
 import {
-  BpdTransaction,
   BpdTransactions,
   bpdTransactionsLoad
 } from "../../../../store/actions/transactions";
-import { AwardPeriodId } from "../../../../store/actions/periods";
-import { navigateToBpdDetails } from "../../../../navigation/actions";
+import * as transactionsReducer from "../../../../store/reducers/details/combiner";
+import * as lastUpdateReducer from "../../../../store/reducers/details/lastUpdate";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
+import BpdTransactionsScreen from "../BpdTransactionsScreen";
 
 // Be sure that navigation is unmocked
 jest.unmock("react-navigation");
@@ -216,9 +214,6 @@ describe("BpdTransactionsScreen", () => {
   });
   it("should show the BpdAvailableTransactionsScreen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.none", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success()
     ];
@@ -241,35 +236,6 @@ describe("BpdTransactionsScreen", () => {
     ).toBeTruthy();
     expect(component.queryByTestId("TransactionUnavailable")).toBeNull();
     expect(component.queryByTestId("LoadTransactions")).toBeNull();
-  });
-  it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.noneLoading", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
-      bpdAllData.request(),
-      bpdAllData.success(),
-      bpdTransactionsLoad.request(1 as AwardPeriodId)
-    ];
-
-    const finalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => <BpdTransactionsScreen />,
-      ROUTES.WALLET_BPAY_DETAIL,
-      {},
-      createStore(appReducer, finalState as any)
-    );
-
-    expect(component).toBeDefined();
-    expect(component.queryByTestId("LoadTransactions")).toBeTruthy();
-    expect(component.queryByTestId("TransactionUnavailable")).toBeNull();
-    expect(
-      component.queryByTestId("BpdAvailableTransactionsScreen")
-    ).toBeNull();
   });
   it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.noneUpdating", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -315,9 +281,6 @@ describe("BpdTransactionsScreen", () => {
       .mockReturnValue(pot.noneError({} as Error));
 
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId),
@@ -347,52 +310,6 @@ describe("BpdTransactionsScreen", () => {
     ).toBeNull();
     lastUpdateSpy.mockRestore();
     transactionsSpy.mockRestore();
-  });
-  it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.someLoading", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
-      bpdAllData.request(),
-      bpdAllData.success(),
-      bpdTransactionsLoad.request(1 as AwardPeriodId),
-      bpdTransactionsLoad.success({
-        awardPeriodId: 1 as AwardPeriodId,
-        results: [
-          {
-            amount: 0.7114042004081611,
-            awardPeriodId: 1 as AwardPeriodId,
-            cashback: 0.5640133257839899,
-            circuitType: "Unknown",
-            hashPan: "hashPan",
-            idTrxAcquirer: "idTrxAcquirer",
-            idTrxIssuer: "idTrxIssuer",
-            trxDate: new Date()
-          } as BpdTransaction
-        ]
-      } as BpdTransactions),
-      bpdTransactionsLoad.request(1 as AwardPeriodId)
-    ];
-
-    const finalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-
-    const component = renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-      () => <BpdTransactionsScreen />,
-      ROUTES.WALLET_BPAY_DETAIL,
-      {},
-      createStore(appReducer, finalState as any)
-    );
-
-    expect(component).toBeDefined();
-    expect(component.queryByTestId("LoadTransactions")).toBeTruthy();
-    expect(component.queryByTestId("TransactionUnavailable")).toBeNull();
-    expect(
-      component.queryByTestId("BpdAvailableTransactionsScreen")
-    ).toBeNull();
   });
   it("should show the LoadTransactions screen if bpdLastUpdate is pot.some and transactionForSelectedPeriod is pot.someUpdating", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -438,9 +355,6 @@ describe("BpdTransactionsScreen", () => {
       .mockReturnValue(pot.someError([], {} as Error));
 
     const sequenceOfActions: ReadonlyArray<Action> = [
-      navigateToBpdDetails({
-        awardPeriodId: 1 as AwardPeriodId
-      } as BpdPeriodWithInfo),
       bpdAllData.request(),
       bpdAllData.success(),
       bpdTransactionsLoad.request(1 as AwardPeriodId),

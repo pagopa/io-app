@@ -93,8 +93,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   paymentInitializeState: () => dispatch(paymentInitializeState()),
   navigateToPaymentTransactionSummaryScreen: (
     params: InferNavigationParams<typeof TransactionSummaryScreen>
-  ) => dispatch(navigateToPaymentTransactionSummaryScreen(params)),
-  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+  ) => navigateToPaymentTransactionSummaryScreen(params),
+  navigateToWalletHomeScreen: () => navigateToWalletHome()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaymentButton);

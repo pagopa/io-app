@@ -1,23 +1,24 @@
+import { View } from "native-base";
 import * as React from "react";
+import { useContext } from "react";
+import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Image, StyleSheet } from "react-native";
-import { View } from "native-base";
-import I18n from "../../../../i18n";
-import { GlobalState } from "../../../../store/reducers/types";
-import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import doubtImage from "../../../../../img/features/euCovidCert/certificate_not_found.png";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { H4 } from "../../../../components/core/typography/H4";
-import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
-import { euCovidCertCurrentSelector } from "../../store/reducers/current";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { mixpanelTrack } from "../../../../mixpanel";
-import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { openWebUrl } from "../../../../utils/url";
+import I18n from "../../../../i18n";
+import { mixpanelTrack } from "../../../../mixpanel";
+import { GlobalState } from "../../../../store/reducers/types";
 import { euCovidCertificateUrl } from "../../../../urls";
+import { openWebUrl } from "../../../../utils/url";
+import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
+import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
+import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -86,9 +87,10 @@ const EuCovidCertNotFoundKoComponent: React.FC<{
   </>
 );
 
-const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
+const EuCovidCertNotFoundKoScreen = (_: Props): React.ReactElement => {
+  const euCovidCertCurrent = useContext(EUCovidContext);
   // Handling unexpected error
-  if (props.euCovidCertCurrent === null) {
+  if (euCovidCertCurrent === null) {
     void mixpanelTrack("EUCOVIDCERT_UNEXPECTED_ERROR");
     return <WorkunitGenericFailure />;
   }
@@ -98,8 +100,8 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
       testID={"EuCovidCertNotFoundKoScreen"}
       content={
         <EuCovidCertNotFoundKoComponent
-          currentAuthCode={props.euCovidCertCurrent.authCode}
-          messageId={props.euCovidCertCurrent.messageId}
+          currentAuthCode={euCovidCertCurrent.authCode}
+          messageId={euCovidCertCurrent.messageId}
         />
       }
       footer={
@@ -115,9 +117,7 @@ const EuCovidCertNotFoundKoScreen = (props: Props): React.ReactElement => {
   );
 };
 const mapDispatchToProps = (_: Dispatch) => ({});
-const mapStateToProps = (state: GlobalState) => ({
-  euCovidCertCurrent: euCovidCertCurrentSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

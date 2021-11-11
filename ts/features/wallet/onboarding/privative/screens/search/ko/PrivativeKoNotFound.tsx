@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -10,6 +9,7 @@ import { renderInfoRasterImage } from "../../../../../../../components/infoScree
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../../i18n";
+import { navigateBack } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
@@ -65,7 +65,7 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
-  goToModifyCardNumber: () => dispatch(NavigationActions.back())
+  goToModifyCardNumber: () => navigateBack()
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
+import { StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
@@ -19,6 +20,7 @@ import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/compone
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
@@ -216,7 +218,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           shufflePinPadOnPayment
         )
       ),
-    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+    navigateToWalletHomeScreen: () => {
+      NavigationService.dispatchNavigationAction(StackActions.popToTop());
+      navigateToWalletHome();
+    }
   };
 };
 

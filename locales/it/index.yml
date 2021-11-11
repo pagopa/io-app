@@ -65,6 +65,7 @@ global:
     moreInfo: più info
   accessibility:
     reload: "Ricarica"
+    switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
@@ -216,8 +217,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
-exit:
-  pressAgain: Premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
