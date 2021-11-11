@@ -82,10 +82,6 @@ export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
-// Special Services Feature Flag
-export const specialServicesEnabled: boolean =
-  Config.SPECIAL_SERVICES_ENABLED === "YES";
-
 // Paginated messages
 export const usePaginatedMessages: boolean =
   Config.PAGINATED_MESSAGES === "YES";

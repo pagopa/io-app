@@ -4,7 +4,6 @@ import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
@@ -13,7 +12,7 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
-import ServiceMetadata from "../../components/services/ServiceMetadata";
+import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -33,12 +32,10 @@ import {
   EnabledChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
-import { logosForService } from "../../utils/services";
+import { isSpecialService, logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
 import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
-import { specialServicesEnabled } from "../../config";
-import { SpecialServiceCategoryEnum } from "../../../definitions/backend/SpecialServiceCategory";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 
@@ -165,10 +162,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     const maybeCTA = getServiceCTA(metadata);
 
-    const isSpecialService =
-      specialServicesEnabled &&
-      service.service_metadata &&
-      service.service_metadata.category === SpecialServiceCategoryEnum.SPECIAL;
     return (
       <BaseScreenComponent
         goBack={() => this.props.navigation.goBack()}
@@ -218,7 +211,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 />
                 <View spacer={true} large={true} />
 
-                <ServiceMetadata
+                <ServiceMetadataComponent
                   servicesMetadata={service.service_metadata}
                   organizationFiscalCode={service.organization_fiscal_code}
                   getItemOnPress={handleItemOnPress}
@@ -233,7 +226,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             )}
           </Content>
 
-          {(maybeCTA.isSome() || isSpecialService) && (
+          {(maybeCTA.isSome() || isSpecialService(metadata)) && (
             <FooterTopShadow>
               {maybeCTA.isSome() && (
                 <View style={[styles.flexRow]}>
@@ -246,19 +239,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   />
                 </View>
               )}
-              {specialServicesEnabled &&
-                service.service_metadata &&
-                service.service_metadata.category ===
-                  SpecialServiceCategoryEnum.SPECIAL && (
-                  <>
-                    <View spacer small />
-                    <SpecialServicesRouter
-                      custom_special_flow={
-                        service.service_metadata.custom_special_flow
-                      }
-                    />
-                  </>
-                )}
+              {isSpecialService(metadata) && (
+                <>
+                  <View spacer small />
+                  <SpecialServicesRouter
+                    custom_special_flow={metadata?.custom_special_flow}
+                  />
+                </>
+              )}
             </FooterTopShadow>
           )}
         </SafeAreaView>
