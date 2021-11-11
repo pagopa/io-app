@@ -6,7 +6,7 @@ import { fromPredicate, Option } from "fp-ts/lib/Option";
 import { TypeEnum as WalletTypeEnumV1 } from "../../definitions/pagopa/Wallet";
 import { CardInfo, TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { SatispayInfo } from "../../definitions/pagopa/walletv2/SatispayInfo";
-import { WalletTypeEnum } from "../../definitions/pagopa/walletv2/WalletV2";
+import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
   PatchedPaymentMethodInfo,
   PatchedWalletV2,

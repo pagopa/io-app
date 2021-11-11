@@ -12,6 +12,7 @@ import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
 import CreditCardWalletPreview from "../../creditCard/component/CreditCardWalletPreview";
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
+import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -20,6 +21,8 @@ const paymentMethodPreview = (pm: PaymentMethod): React.ReactElement | null => {
   switch (pm.kind) {
     case "Satispay":
       return <SatispayWalletPreview key={pm.idWallet} satispay={pm} />;
+    case "PayPal":
+      return <PayPalWalletPreview key={pm.idWallet} paypal={pm} />;
     case "Bancomat":
       return <BancomatWalletPreview key={pm.idWallet} bancomat={pm} />;
     case "CreditCard":

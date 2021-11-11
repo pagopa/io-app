@@ -2479,6 +2479,35 @@
       },
       "title": "PaymentResponse"
     },
+    "PayPalInfo": {
+      "type": "object",
+      "required": [
+        "emailPp",
+        "psp"
+      ],
+      "properties": {
+        "canceled": {
+          "type": "boolean"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "default": {
+          "type": "boolean"
+        },
+        "emailPp": {
+          "type": "string"
+        },
+        "idPp": {
+          "type": "string"
+        },
+        "psp": {
+          "$ref": "#/definitions/PayPalPsp"
+        }
+      },
+      "title": "PayPal"
+    },
     "PayPalPsp": {
       "type": "object",
       "required": [
@@ -3298,7 +3327,8 @@
             "Card",
             "Bancomat",
             "Satispay",
-            "BPay"
+            "BPay",
+            "PayPal"
           ]
         }
       },

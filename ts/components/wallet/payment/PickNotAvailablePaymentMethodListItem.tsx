@@ -109,6 +109,14 @@ const extractInfoFromPaymentMethod = (
         bottomSheetTitle: arrivingBottomSheetTitle(),
         bottomSheetBody: arrivingBottomSheetBody()
       };
+    case "PayPal":
+      return {
+        logo: paymentMethod.icon,
+        title: paymentMethod.kind,
+        description: nameSurname,
+        bottomSheetTitle: arrivingBottomSheetTitle(),
+        bottomSheetBody: arrivingBottomSheetBody()
+      };
     case "Privative":
       return {
         logo: paymentMethod.icon,
