@@ -19,6 +19,7 @@ import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/a
 import { PrivativeActions } from "../../features/wallet/onboarding/privative/store/actions";
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { GlobalState } from "../reducers/types";
+import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";

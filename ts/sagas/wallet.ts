@@ -192,6 +192,7 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { watchPaypalOnboardingSaga } from "../features/wallet/onboarding/paypal/saga";
 
 const successScreenDelay = 2000 as Millisecond;
 
