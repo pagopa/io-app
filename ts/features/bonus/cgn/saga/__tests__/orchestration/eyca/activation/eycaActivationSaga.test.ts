@@ -1,19 +1,18 @@
-import { testSaga } from "redux-saga-test-plan";
 import { left, right } from "fp-ts/lib/Either";
-import { navigationHistoryPop } from "../../../../../../../../store/actions/navigationHistory";
-import { eycaActivationWorker } from "../../../../orchestration/eyca/eycaActivationSaga";
+import { testSaga } from "redux-saga-test-plan";
+import { getGenericError } from "../../../../../../../../utils/errors";
 import {
   navigateToCgnDetails,
   navigateToEycaActivationLoading
 } from "../../../../../navigation/actions";
+import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
+import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
 import {
   getActivation,
   handleEycaActivationSaga,
   handleStartActivation
 } from "../../../../networking/eyca/activation/getEycaActivationSaga";
-import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
-import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
-import { getGenericError } from "../../../../../../../../utils/errors";
+import { eycaActivationWorker } from "../../../../orchestration/eyca/eycaActivationSaga";
 
 describe("eycaActivationWorker", () => {
   const getEycaActivation = jest.fn();
@@ -25,9 +24,7 @@ describe("eycaActivationWorker", () => {
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
-      .put(navigateToEycaActivationLoading())
-      .next()
-      .put(navigationHistoryPop(1))
+      .call(navigateToEycaActivationLoading)
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
@@ -37,9 +34,7 @@ describe("eycaActivationWorker", () => {
       .next()
       .put(cgnEycaStatus.request())
       .next()
-      .put(navigateToCgnDetails())
-      .next()
-      .put(navigationHistoryPop(1));
+      .call(navigateToCgnDetails);
   });
 
   it("should activate user's EYCA without requesting the start activation", () => {
@@ -47,9 +42,7 @@ describe("eycaActivationWorker", () => {
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
-      .put(navigateToEycaActivationLoading())
-      .next()
-      .put(navigationHistoryPop(1))
+      .call(navigateToEycaActivationLoading)
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
@@ -57,9 +50,7 @@ describe("eycaActivationWorker", () => {
       .next()
       .put(cgnEycaStatus.request())
       .next()
-      .put(navigateToCgnDetails())
-      .next()
-      .put(navigationHistoryPop(1));
+      .call(navigateToCgnDetails);
   });
 
   it("Cannot Activate EYCA", () => {
@@ -68,9 +59,7 @@ describe("eycaActivationWorker", () => {
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
-      .put(navigateToEycaActivationLoading())
-      .next()
-      .put(navigationHistoryPop(1))
+      .call(navigateToEycaActivationLoading)
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
@@ -78,9 +67,8 @@ describe("eycaActivationWorker", () => {
       .next(returnedActivation)
       .put(cgnEycaActivation.success("INELIGIBLE"))
       .next()
-      .put(navigateToCgnDetails())
-      .next()
-      .put(navigationHistoryPop(1));
+      .call(navigateToCgnDetails)
+      .next();
   });
 
   it("cannot activate user's EYCA error on status check", () => {
@@ -90,17 +78,14 @@ describe("eycaActivationWorker", () => {
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
-      .put(navigateToEycaActivationLoading())
-      .next()
-      .put(navigationHistoryPop(1))
+      .call(navigateToEycaActivationLoading)
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)
       .put(cgnEycaStatus.request())
       .next()
-      .put(navigateToCgnDetails())
-      .next()
-      .put(navigationHistoryPop(1));
+      .call(navigateToCgnDetails)
+      .next();
   });
 
   it("couldn't activate user's EYCA activation error", () => {
@@ -111,9 +96,7 @@ describe("eycaActivationWorker", () => {
 
     testSaga(eycaActivationWorker, getEycaActivation, startEycaActivation)
       .next()
-      .put(navigateToEycaActivationLoading())
-      .next()
-      .put(navigationHistoryPop(1))
+      .call(navigateToEycaActivationLoading)
       .next()
       .call(getActivation, getEycaActivation)
       .next(returnedStatus)

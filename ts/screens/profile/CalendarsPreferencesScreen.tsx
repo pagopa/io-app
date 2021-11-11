@@ -49,7 +49,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
         <TopScreenComponent
           contextualHelpMarkdown={contextualHelpMarkdown}
           headerTitle={I18n.t("profile.preferences.title")}
-          goBack={this.props.navigation.goBack}
+          goBack={() => this.props.navigation.goBack()}
         >
           <ScreenContent
             title={I18n.t("profile.preferences.list.preferred_calendar.title")}

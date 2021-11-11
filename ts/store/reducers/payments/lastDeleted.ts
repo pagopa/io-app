@@ -1,5 +1,6 @@
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { getType } from "typesafe-actions";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { paymentsLastDeletedSet } from "../../actions/payments";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
@@ -19,7 +20,7 @@ export const paymentsLastDeletedStateSelector = (state: GlobalState) =>
   state.payments.lastDeleted;
 
 /**
- * Store info about the laste deleted patmeny
+ * Store info about the last deleted payment
  */
 const paymentsLastDeletedReducer = (
   state: PaymentsLastDeletedState = INITIAL_STATE,

@@ -1,13 +1,15 @@
-import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
+
 import {
   navigateToActivateBpdOnNewBPay,
   navigateToOnboardingBPaySearchStartScreen
@@ -30,7 +32,7 @@ import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBP
  */
 function* bPayWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingBPaySearchStartScreen(),
+    startScreenNavigation: navigateToOnboardingBPaySearchStartScreen,
     startScreenName: WALLET_ONBOARDING_BPAY_ROUTES.START,
     complete: walletAddBPayCompleted,
     back: walletAddBPayBack,
@@ -43,24 +45,22 @@ function* bPayWorkUnit() {
  * Chain the add BPay to wallet with "activate bpd on the new BPay accounts"
  */
 export function* addBPayToWalletAndActivateBpd() {
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteName
+  > = yield call(NavigationService.getCurrentRouteName);
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
     bPayWorkUnit
   );
-  if (res !== "back") {
+  if (
+    res !== "back" &&
+    initialScreenName === ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
+  ) {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_DIGITAL_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-      yield select(navigationCurrentRouteSelector);
 
-    if (
-      currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_DIGITAL_PAYMENT_METHOD"
-    ) {
-      yield put(NavigationActions.back());
-      yield put(NavigationActions.back());
-    }
+    yield call(navigateToWalletHome);
   }
 
   if (res === "completed") {
@@ -73,7 +73,7 @@ export function* addBPayToWalletAndActivateBpd() {
     yield call(
       activateBpdOnNewPaymentMethods,
       bPayAdded,
-      navigateToActivateBpdOnNewBPay()
+      navigateToActivateBpdOnNewBPay
     );
   }
 }

@@ -23,7 +23,7 @@ const BPaySearchBankScreen: React.FunctionComponent<Props> = (props: Props) => (
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   searchAccounts: (abi?: string) => {
     dispatch(searchUserBPay.request(abi));
-    dispatch(navigateToOnboardingBPaySearchAvailableUserAccount());
+    navigateToOnboardingBPaySearchAvailableUserAccount();
   }
 });
 

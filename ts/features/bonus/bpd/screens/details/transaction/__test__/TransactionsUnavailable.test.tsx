@@ -1,28 +1,13 @@
-import { render } from "@testing-library/react-native";
-import configureMockStore from "redux-mock-store";
 import * as React from "react";
-import { Provider } from "react-redux";
+import { NavigationParams } from "react-navigation";
 import { Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../../i18n";
+import { GlobalState } from "../../../../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
 
-jest.mock("react-navigation", () => ({
-  NavigationEvents: "mockNavigationEvents",
-  StackActions: {
-    push: jest
-      .fn()
-      .mockImplementation(x => ({ ...x, type: "Navigation/PUSH" })),
-    replace: jest
-      .fn()
-      .mockImplementation(x => ({ ...x, type: "Navigation/REPLACE" })),
-    reset: jest.fn()
-  },
-  NavigationActions: {
-    navigate: jest.fn().mockImplementation(x => x)
-  },
-  createStackNavigator: jest.fn(),
-  withNavigation: (component: any) => component
-}));
 describe("TransactionsUnavailable component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
@@ -65,9 +50,10 @@ describe("TransactionsUnavailable component", () => {
     expect(body).not.toBeEmpty();
   });
 });
-const getComponent = (store: Store<unknown>) =>
-  render(
-    <Provider store={store}>
-      <TransactionsUnavailable />
-    </Provider>
+const getComponent = (store: Store) =>
+  renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+    () => <TransactionsUnavailable />,
+    BPD_ROUTES.TRANSACTIONS,
+    {},
+    store
   );

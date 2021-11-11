@@ -12,7 +12,12 @@ import {
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
+import { UIMessage } from "../reducers/entities/messages/types";
+import { Cursor } from "../reducers/entities/messages/allPaginated";
 
+/**
+ * Load a single message's details given its ID
+ */
 export const loadMessage = createAsyncAction(
   "MESSAGE_LOAD_REQUEST",
   "MESSAGE_LOAD_SUCCESS",
@@ -24,7 +29,8 @@ export const loadMessage = createAsyncAction(
 >();
 
 /**
- * Load a single message with the detail needed for the MessageDetailScreen.
+ * Load a single message's details given its ID, and the sender service
+ * if needed.
  */
 export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
@@ -32,7 +38,50 @@ export const loadMessageWithRelations = createAsyncAction(
   "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
 )<CreatedMessageWithoutContent, void, Error>();
 
-export const loadMessages = createAsyncAction(
+export type LoadMessagesRequestPayload = {
+  pageSize: number;
+  cursor?: Cursor;
+};
+
+type PaginatedMessagesSuccessPayload = {
+  messages: ReadonlyArray<UIMessage>;
+};
+
+// The data is appended to the state
+export type NextPageMessagesSuccessPayload = PaginatedMessagesSuccessPayload & {
+  pagination: { next?: string };
+};
+export const loadNextPageMessages = createAsyncAction(
+  "MESSAGES_LOAD_NEXT_PAGE_REQUEST",
+  "MESSAGES_LOAD_NEXT_PAGE_SUCCESS",
+  "MESSAGES_LOAD_NEXT_PAGE_FAILURE"
+)<LoadMessagesRequestPayload, NextPageMessagesSuccessPayload, Error>();
+
+// The data is prepended to the state
+export type PreviousPageMessagesSuccessPayload =
+  PaginatedMessagesSuccessPayload & {
+    pagination: { previous?: string };
+  };
+export const loadPreviousPageMessages = createAsyncAction(
+  "MESSAGES_LOAD_PREVIOUS_PAGE_REQUEST",
+  "MESSAGES_LOAD_PREVIOUS_PAGE_SUCCESS",
+  "MESSAGES_LOAD_PREVIOUS_PAGE_FAILURE"
+)<LoadMessagesRequestPayload, PreviousPageMessagesSuccessPayload, Error>();
+
+// Forces a refresh of the internal state
+export type ReloadMessagesPayload = PaginatedMessagesSuccessPayload & {
+  pagination: { previous?: string; next?: string };
+};
+export const reloadAllMessages = createAsyncAction(
+  "MESSAGES_RELOAD_REQUEST",
+  "MESSAGES_RELOAD_SUCCESS",
+  "MESSAGES_RELOAD_FAILURE"
+)<void, ReloadMessagesPayload, Error>();
+
+/**
+ *  @deprecated Please use actions with pagination instead
+ */
+export const DEPRECATED_loadMessages = createAsyncAction(
   "MESSAGES_LOAD_REQUEST",
   "MESSAGES_LOAD_SUCCESS",
   "MESSAGES_LOAD_FAILURE"
@@ -55,7 +104,10 @@ export const setMessagesArchivedState = createAction(
 export type MessagesActions =
   | ActionType<typeof loadMessage>
   | ActionType<typeof loadMessageWithRelations>
-  | ActionType<typeof loadMessages>
+  | ActionType<typeof reloadAllMessages>
+  | ActionType<typeof loadNextPageMessages>
+  | ActionType<typeof loadPreviousPageMessages>
+  | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof setMessageReadState>
   | ActionType<typeof setMessagesArchivedState>;

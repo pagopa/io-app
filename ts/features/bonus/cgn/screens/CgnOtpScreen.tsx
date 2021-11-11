@@ -125,7 +125,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   generateOtp: () => dispatch(cgnGenerateOtp.request()),
-  navigateToMerchants: () => dispatch(navigateToCgnMerchantsList())
+  navigateToMerchants: () => navigateToCgnMerchantsList()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnOtpScreen);

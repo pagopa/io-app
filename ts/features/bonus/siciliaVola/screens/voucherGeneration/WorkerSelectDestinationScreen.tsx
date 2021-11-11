@@ -82,8 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
   selectCompany: (company: Company) =>
     dispatch(svGenerateVoucherSelectCompany(company)),
-  navigateToSelectFlightsDateScreen: () =>
-    dispatch(navigateToSvSelectFlightsDateScreen())
+  navigateToSelectFlightsDateScreen: () => navigateToSvSelectFlightsDateScreen()
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

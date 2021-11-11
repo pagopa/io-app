@@ -366,7 +366,7 @@ function* handleRemoveAccount() {
       upsertUserDataProcessingResponse
     )
   ) {
-    yield put(navigateToRemoveAccountSuccess());
+    yield call(navigateToRemoveAccountSuccess);
   }
 }
 

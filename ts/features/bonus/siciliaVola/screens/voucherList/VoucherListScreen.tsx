@@ -64,7 +64,7 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
-        dispatch(navigateToSvVoucherDetailsScreen());
+        navigateToSvVoucherDetailsScreen();
       }}
     />
   );
