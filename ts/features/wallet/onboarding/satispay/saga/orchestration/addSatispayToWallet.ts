@@ -1,12 +1,18 @@
 import { call, put, select } from "redux-saga/effects";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
-import { executeWorkUnit, withResetNavigationStack } from "../../../../../../sagas/workUnit";
+import {
+  executeWorkUnit,
+  withResetNavigationStack
+} from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
-import { navigateToActivateBpdOnNewSatispay, navigateToOnboardingSatispayStart } from "../../navigation/action";
+import {
+  navigateToActivateBpdOnNewSatispay,
+  navigateToOnboardingSatispayStart
+} from "../../navigation/action";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddSatispayBack,
