@@ -24,8 +24,10 @@ describe("Payment", () => {
         .toExist()
         .withTimeout(e2eWaitRenderTimeout);
 
-      await element(matchNoticeCodeInput).replaceText("123123123123123123");
-      await element(by.id("EntityCodeInput")).replaceText("12345678901");
+      await element(matchNoticeCodeInput).typeText("123123123123123123");
+      await element(by.id("EntityCodeInput")).typeText("12345678901");
+      // Close the keyboard
+      await element(by.label("Done")).atIndex(0).tap();
 
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
       // await element(by.label("Continua")).tap();
