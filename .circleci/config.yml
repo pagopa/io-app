@@ -485,6 +485,8 @@ workflows:
             branches:
               ignore: master
 
+      # TODO: Native Android e2e tests
+      # TODO: Slack integration
       - run-e2e-test-IOS:
           requires:
             - compile-typescript
