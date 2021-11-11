@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as detox from "detox";
+import { device } from "detox";
 import adapter from "detox/runners/jest/adapter";
 
 import I18n from "../i18n";

@@ -1,6 +1,7 @@
 const detox = require("detox");
 const adapter = require("detox/runners/jest/adapter");
 const { setLocale } = require("../i18n");
+const { launchAppConfig } = require("./config");
 const config = require("../../package.json").detox;
 
 // Set the default test timeout (in milliseconds)
@@ -11,7 +12,7 @@ beforeAll(async () => {
   // custom setup
   console.log("Initializing Detox");
   await detox.init(config, { launchApp: false });
-  await device.launchApp({ permissions: { notifications: "YES" } });
+  await device.launchApp(launchAppConfig);
   // enforce IT locale because that's how the API are configured
   setLocale("it");
 });

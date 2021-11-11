@@ -1,4 +1,5 @@
 import adapter from "detox/runners/jest/adapter";
+import { launchAppConfig } from "./config";
 import { loginWithSPID } from "./utils";
 
 describe("User Login using SPID", () => {
@@ -7,7 +8,7 @@ describe("User Login using SPID", () => {
   });
 
   beforeAll(async () => {
-    await device.launchApp({ permissions: { notifications: "YES" } });
+    await device.launchApp(launchAppConfig);
   });
 
   describe("when the user never logged in before", () => {
