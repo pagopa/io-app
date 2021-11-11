@@ -1,12 +1,13 @@
-import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
@@ -21,8 +22,6 @@ import {
   walletAddCoBadgeFailure
 } from "../../store/actions";
 import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadge";
-import ROUTES from "../../../../../../navigation/routes";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 
 /**
  * Define the workflow that allows the user to add a co-badge card to the wallet.
@@ -33,7 +32,7 @@ import { navigationHistoryPop } from "../../../../../../store/actions/navigation
  */
 function* coBadgeWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingCoBadgeSearchStartScreen(),
+    startScreenNavigation: navigateToOnboardingCoBadgeSearchStartScreen,
     startScreenName: WALLET_ONBOARDING_COBADGE_ROUTES.START,
     complete: walletAddCoBadgeCompleted,
     back: walletAddCoBadgeBack,
@@ -43,9 +42,20 @@ function* coBadgeWorkUnit() {
 }
 
 /**
+ * When the workUnit start from one of these route, we should return to wallet home
+ */
+const returnToWalletRoutes = new Set([
+  ROUTES.WALLET_ADD_CARD,
+  WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE
+]);
+
+/**
  * Chain the add co-badge to wallet with "activate bpd on the new co-badge cards"
  */
 export function* addCoBadgeToWalletAndActivateBpd() {
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteName
+  > = yield call(NavigationService.getCurrentRouteName);
   const sagaExecution = () =>
     withFailureHandling(() => withResetNavigationStack(coBadgeWorkUnit));
 
@@ -53,29 +63,16 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     sagaExecution
   );
 
-  const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-    yield select(navigationCurrentRouteSelector);
-  if (res !== "back" && res !== "failure" && currentRoute.isSome()) {
+  const shouldNavigateWalletHome =
+    initialScreenName !== undefined &&
+    returnToWalletRoutes.has(initialScreenName) &&
+    res === "completed";
+
+  if (shouldNavigateWalletHome) {
     // If the addition starts from "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit
 
-    if (currentRoute.value === ROUTES.WALLET_ADD_CARD) {
-      yield put(navigationHistoryPop(1));
-      yield put(NavigationActions.back());
-    }
-
-    if (currentRoute.value === "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE") {
-      yield put(NavigationActions.back());
-      const newRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-        yield select(navigationCurrentRouteSelector);
-      if (
-        res === "completed" &&
-        newRoute.isSome() &&
-        newRoute.value === ROUTES.WALLET_BANCOMAT_DETAIL
-      ) {
-        yield put(NavigationActions.back());
-      }
-    }
+    yield call(navigateToWalletHome);
   }
 
   if (res === "completed") {
@@ -88,7 +85,7 @@ export function* addCoBadgeToWalletAndActivateBpd() {
     yield call(
       activateBpdOnNewPaymentMethods,
       coBadgeAdded,
-      navigateToActivateBpdOnNewCoBadge()
+      navigateToActivateBpdOnNewCoBadge
     );
   }
 }

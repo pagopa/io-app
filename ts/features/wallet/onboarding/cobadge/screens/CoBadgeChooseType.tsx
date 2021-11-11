@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   StyleSheet
 } from "react-native";
-import { NavigationActions, NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -20,7 +20,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
-import { navigateToWalletAddCreditCard } from "../../../../../store/actions/navigation";
+import {
+  navigateBack as legacyNavigateBack,
+  navigateToWalletAddCreditCard
+} from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
@@ -154,20 +157,18 @@ const navigateBack = (n: number, dispatch: Dispatch) => {
   if (n <= 0) {
     return;
   }
-  dispatch(NavigationActions.back());
+  legacyNavigateBack();
   navigateBack(n - 1, dispatch);
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(NavigationActions.back()),
+  back: () => legacyNavigateBack(),
   addCoBadge: (abi: string | undefined) => dispatch(walletAddCoBadgeStart(abi)),
   addCreditCard: (popScreenNumber: number = 0) => {
     navigateBack(popScreenNumber, dispatch);
-    dispatch(
-      navigateToWalletAddCreditCard({
-        inPayment: none
-      })
-    );
+    navigateToWalletAddCreditCard({
+      inPayment: none
+    });
   }
 });
 

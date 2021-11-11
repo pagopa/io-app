@@ -67,8 +67,8 @@ const AddDigitalMethodScreen: React.FunctionComponent<Props> = (
 
 const mapStateToProps = (_: GlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export default connect(

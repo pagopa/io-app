@@ -1,5 +1,4 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationState } from "react-navigation";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import {
@@ -157,45 +156,11 @@ describe("idpContextualHelpDataFromIdSelector", () => {
   };
 });
 
-const navState = {
-  key: "StackRouterRoot",
-  isTransitioning: false,
-  index: 0,
-  routes: [
-    {
-      key: "id-1593510232431-2",
-      isTransitioning: false,
-      index: 2,
-      routes: [
-        {
-          routeName: "AUTHENTICATION_LANDING",
-          key: "id-1593510232431-1"
-        },
-        {
-          routeName: "AUTHENTICATION_IPD_SELECTION",
-          key: "id-1593510232431-3"
-        },
-        {
-          routeName: "AUTHENTICATION_IDP_LOGIN",
-          key: "id-1593510232431-4"
-        }
-      ],
-      routeName: "AUTHENTICATION"
-    }
-  ]
-};
 describe("screenContextualHelpDataSelector", () => {
   it("should return no data if navigation state is empty", async () => {
-    const navigationState: NavigationState = {
-      index: 0,
-      routes: [],
-      isTransitioning: true,
-      key: "key",
-      params: {}
-    };
     const screenData = screenContextualHelpDataSelector.resultFunc(
       pot.some(chData),
-      navigationState
+      ""
     );
     expect(pot.isSome(screenData) && screenData.value.isNone()).toBeTruthy();
   });
@@ -218,7 +183,7 @@ describe("screenContextualHelpDataSelector", () => {
   const assertScreenValues = (title: string, content: string) => {
     const screenData = screenContextualHelpDataSelector.resultFunc(
       pot.some(chData),
-      navState as NavigationState
+      "AUTHENTICATION_IDP_LOGIN"
     );
     if (pot.isSome(screenData) && screenData.value.isSome()) {
       expect(screenData.value.value.title).toEqual(title);
@@ -227,36 +192,9 @@ describe("screenContextualHelpDataSelector", () => {
   };
 
   it("should return no data if the current screen is not present as key", async () => {
-    const newState = {
-      key: "StackRouterRoot",
-      isTransitioning: false,
-      index: 0,
-      routes: [
-        {
-          key: "id-1593510232431-2",
-          isTransitioning: false,
-          index: 2,
-          routes: [
-            {
-              routeName: "AUTHENTICATION_LANDING",
-              key: "id-1593510232431-1"
-            },
-            {
-              routeName: "AUTHENTICATION_IPD_SELECTION",
-              key: "id-1593510232431-3"
-            },
-            {
-              routeName: "NO_MATHING_ROUTE",
-              key: "id-1593510232431-4"
-            }
-          ],
-          routeName: "AUTHENTICATION"
-        }
-      ]
-    };
     const screenData = screenContextualHelpDataSelector.resultFunc(
       pot.some(chData),
-      newState as NavigationState
+      "NO_KEY"
     );
     expect(pot.isSome(screenData) && screenData.value.isNone()).toBeTruthy();
   });

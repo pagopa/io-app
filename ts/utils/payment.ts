@@ -6,7 +6,7 @@ import {
   RptId,
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 

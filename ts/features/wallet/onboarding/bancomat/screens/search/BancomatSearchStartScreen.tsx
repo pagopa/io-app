@@ -43,10 +43,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCancel: () => dispatch(walletAddBancomatCancel()),
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
-    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+    navigateToOnboardingBancomatSearchAvailableUserBancomat();
   },
   navigateToSearchBankScreen: () => {
-    dispatch(navigateToOnboardingBancomatChooseBank());
+    navigateToOnboardingBancomatChooseBank();
   }
 });
 

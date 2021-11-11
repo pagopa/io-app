@@ -1,11 +1,12 @@
-import { NavigationActions } from "react-navigation";
 import { call, put, select } from "redux-saga/effects";
+import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
+import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { navigationCurrentRouteSelector } from "../../../../../../store/reducers/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 import {
@@ -30,7 +31,7 @@ import { onboardingSatispayAddedResultSelector } from "../../store/reducers/adde
  */
 function* satispayWorkUnit() {
   return yield call(executeWorkUnit, {
-    startScreenNavigation: navigateToOnboardingSatispayStart(),
+    startScreenNavigation: navigateToOnboardingSatispayStart,
     startScreenName: WALLET_ONBOARDING_SATISPAY_ROUTES.START,
     complete: walletAddSatispayCompleted,
     back: walletAddSatispayBack,
@@ -43,25 +44,22 @@ function* satispayWorkUnit() {
  * Chain the add satispay to wallet with "activate bpd on the new satispay"
  */
 export function* addSatispayToWalletAndActivateBpd() {
+  const initialScreenName: ReturnType<
+    typeof NavigationService.getCurrentRouteName
+  > = yield call(NavigationService.getCurrentRouteName);
   const res: SagaCallReturnType<typeof executeWorkUnit> = yield call(
     withResetNavigationStack,
     satispayWorkUnit
   );
-  if (res !== "back") {
+
+  const isInitialScreenDigitalPayment =
+    initialScreenName === ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD;
+
+  if (res !== "back" && isInitialScreenDigitalPayment) {
     // integration with the legacy "Add a payment"
     // If the payment starts from "WALLET_ADD_PAYMENT_METHOD", remove from stack
     // This shouldn't happens if all the workflow will use the executeWorkUnit (hope soon!)
-    const currentRoute: ReturnType<typeof navigationCurrentRouteSelector> =
-      yield select(navigationCurrentRouteSelector);
-
-    if (
-      // TODO: The page will be WALLET_ADD_DIGITAL_PAYMENT_METHOD and should do two back
-      currentRoute.isSome() &&
-      currentRoute.value === "WALLET_ADD_DIGITAL_PAYMENT_METHOD"
-    ) {
-      yield put(NavigationActions.back());
-      yield put(NavigationActions.back());
-    }
+    yield call(navigateToWalletHome);
   }
   if (res === "completed") {
     // refresh wallets list
@@ -75,7 +73,7 @@ export function* addSatispayToWalletAndActivateBpd() {
       yield call(
         activateBpdOnNewPaymentMethods,
         [satispayAdded],
-        navigateToActivateBpdOnNewSatispay()
+        navigateToActivateBpdOnNewSatispay
       );
     }
   }

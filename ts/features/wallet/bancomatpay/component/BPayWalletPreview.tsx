@@ -80,9 +80,9 @@ const BPayWalletPreview: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToBPayDetails: (bPay: BPayPaymentMethod) =>
-    dispatch(navigateToBPayDetailScreen(bPay))
+    navigateToBPayDetailScreen(bPay)
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

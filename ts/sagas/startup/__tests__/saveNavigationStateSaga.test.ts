@@ -1,11 +1,11 @@
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { getType } from "typesafe-actions";
+import NavigationService from "../../../navigation/NavigationService";
 
 import { saveNavigationStateSaga } from "../saveNavigationStateSaga";
 
 import { setDeepLink } from "../../../store/actions/deepLink";
-import { navigationStateSelector } from "../../../store/reducers/navigation";
 
 import ROUTES from "../../../navigation/routes";
 
@@ -18,7 +18,7 @@ describe("saveNavigationStateSaga", () => {
     expectSaga(saveNavigationStateSaga)
       .provide([
         [
-          matchers.select(navigationStateSelector),
+          matchers.call(NavigationService.getCurrentRoute),
           {
             index: 0,
             routes: [{}]
@@ -36,7 +36,7 @@ describe("saveNavigationStateSaga", () => {
     return expectSaga(saveNavigationStateSaga)
       .provide([
         [
-          matchers.select(navigationStateSelector),
+          matchers.call(NavigationService.getCurrentRoute),
           {
             index: 0,
             routes: [

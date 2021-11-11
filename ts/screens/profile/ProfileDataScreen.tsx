@@ -80,9 +80,9 @@ const ProfileDataScreen: React.FC<Props> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
-  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateToEmailReadScreen: () => navigateToEmailReadScreen(),
+  navigateToEmailInsertScreen: () => navigateToEmailInsertScreen()
 });
 
 const mapStateToProps = (state: GlobalState) => ({

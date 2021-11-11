@@ -1,11 +1,11 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
 import { cancelButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
+import { navigateBack } from "../../store/actions/navigation";
 import { IOStyles } from "../core/variables/IOStyles";
 import { renderInfoRasterImage } from "../infoScreen/imageRendering";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
@@ -44,8 +44,8 @@ const WorkunitGenericFailure = (props: Props): React.ReactElement => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(NavigationActions.back())
+const mapDispatchToProps = (_: Dispatch) => ({
+  cancel: () => navigateBack()
 });
 
 export default connect(null, mapDispatchToProps)(WorkunitGenericFailure);

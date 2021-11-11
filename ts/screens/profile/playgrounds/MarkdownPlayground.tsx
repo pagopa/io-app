@@ -122,7 +122,7 @@ const MarkdownPlayground: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   handleCTAPress: (cta: CTA) => handleCtaAction(cta, dispatch)
 });
 

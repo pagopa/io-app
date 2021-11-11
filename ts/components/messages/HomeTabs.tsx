@@ -1,18 +1,18 @@
+import { Tab, Tabs } from "native-base";
 import React, { useState } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
-import { Tab, Tabs } from "native-base";
 import { connect } from "react-redux";
-
-import { IOStyles } from "../core/variables/IOStyles";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
-import { makeFontStyleObject } from "../../theme/fonts";
-import { isAndroid } from "../../utils/platform";
-import { GlobalState } from "../../store/reducers/types";
-import { allMessagesSelector } from "../../store/reducers/entities/messages/allPaginated";
-import { Dispatch } from "../../store/actions/types";
 import { setMessagesArchivedState } from "../../store/actions/messages";
 import { navigateToMessageRouterScreen } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
+import { allMessagesSelector } from "../../store/reducers/entities/messages/allPaginated";
+import { GlobalState } from "../../store/reducers/types";
+import { makeFontStyleObject } from "../../theme/fonts";
+import customVariables from "../../theme/variables";
+import { isAndroid } from "../../utils/platform";
+
+import { IOStyles } from "../core/variables/IOStyles";
 
 import MessagesInbox from "./paginated/MessagesInbox";
 
@@ -124,7 +124,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageRouterScreen({ messageId })),
+    navigateToMessageRouterScreen({ messageId }),
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
