@@ -246,16 +246,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   />
                 </View>
               )}
-              {maybeCTA.isSome() && isSpecialService && <View spacer small />}
               {specialServicesEnabled &&
                 service.service_metadata &&
                 service.service_metadata.category ===
                   SpecialServiceCategoryEnum.SPECIAL && (
-                  <SpecialServicesRouter
-                    custom_special_flow={
-                      service.service_metadata.custom_special_flow
-                    }
-                  />
+                  <>
+                    <View spacer small />
+                    <SpecialServicesRouter
+                      custom_special_flow={
+                        service.service_metadata.custom_special_flow
+                      }
+                    />
+                  </>
                 )}
             </FooterTopShadow>
           )}

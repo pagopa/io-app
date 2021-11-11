@@ -6,8 +6,8 @@ import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import I18n from "../../../i18n";
 import { openAppStoreUrl } from "../../../utils/url";
 import { Label } from "../../core/typography/Label";
-import { cgnEnabled } from "../../../config";
 import { SpecialServiceMetadata } from "../../../../definitions/backend/SpecialServiceMetadata";
+import { cgnEnabled } from "../../../config";
 
 type CustomSpecialFlow = SpecialServiceMetadata["custom_special_flow"];
 type Props = {
@@ -25,13 +25,14 @@ const SpecialServicesRouter = (props: Props) => {
   // utility to open
   const openAppStore = useCallback(() => openAppStoreUrl(), []);
 
-  return fromNullable(mapFlowFeatureFlag.get(custom_special_flow)).fold(
-    <ButtonDefaultOpacity block primary onPress={openAppStore}>
-      <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
-    </ButtonDefaultOpacity>,
-    isFlowEnabled => {
+  return fromNullable(custom_special_flow).fold(null, csf =>
+    fromNullable(mapFlowFeatureFlag.get(csf)).fold(null, isFlowEnabled => {
       if (!isFlowEnabled) {
-        return null;
+        return (
+          <ButtonDefaultOpacity block primary onPress={openAppStore}>
+            <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
+          </ButtonDefaultOpacity>
+        );
       }
       switch (custom_special_flow) {
         case "cgn":
@@ -42,9 +43,13 @@ const SpecialServicesRouter = (props: Props) => {
             </ButtonDefaultOpacity>
           );
         default:
-          return null;
+          return (
+            <ButtonDefaultOpacity block primary onPress={openAppStore}>
+              <Label color={"white"}>{I18n.t("btnUpdateApp")}</Label>
+            </ButtonDefaultOpacity>
+          );
       }
-    }
+    })
   );
 };
 
