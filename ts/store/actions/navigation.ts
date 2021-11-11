@@ -538,16 +538,6 @@ export const navigateToWalletAddPaymentMethod = (
 /**
  * @deprecated
  */
-export const navigateToWalletAddDigitalPaymentMethod = () =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.WALLET_ADD_DIGITAL_PAYMENT_METHOD
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToWalletAddCreditCard = (
   params: InferNavigationParams<typeof AddCardScreen>
 ) =>
