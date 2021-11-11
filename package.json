@@ -91,7 +91,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^18.23.1",
+    "detox": "^19.0.0",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
@@ -274,7 +274,7 @@
     "apps": {
       "ios.release": {
         "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
       },
       "ios.debug": {
