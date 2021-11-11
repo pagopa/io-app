@@ -485,6 +485,13 @@ workflows:
             branches:
               ignore: master
 
+      - run-e2e-test-IOS:
+          requires:
+            - compile-typescript
+          filters:
+            branches:
+              only: master
+
   # Release workflow triggered only when a new release tag is pushed
   release:
     jobs:
