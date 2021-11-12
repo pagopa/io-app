@@ -14,7 +14,6 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";

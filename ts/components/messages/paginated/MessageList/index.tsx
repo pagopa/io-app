@@ -10,7 +10,6 @@ import {
   StyleSheet,
   Vibration
 } from "react-native";
-import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { pageSize } from "../../../../config";
 import { loadNextPageMessages } from "../../../../store/actions/messages";
