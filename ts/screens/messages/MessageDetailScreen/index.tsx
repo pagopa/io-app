@@ -94,8 +94,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       paymentsByRptId,
       potMessage,
       maybeMeta,
-      maybeServiceMetadata,
-      refreshService
+      maybeServiceMetadata
     } = this.props;
 
     return (
