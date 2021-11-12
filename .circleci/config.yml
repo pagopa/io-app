@@ -438,7 +438,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: yarn detox build -c ios.sim.debug
+          command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -455,7 +455,7 @@ jobs:
             yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.debug \
+              -c ios.sim.release \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
