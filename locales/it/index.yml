@@ -217,8 +217,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
-exit:
-  pressAgain: Premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -1316,7 +1314,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi app e altri metodi
+  addPaymentMethodTitle: Aggiungi un metodo
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
@@ -1325,7 +1323,7 @@ wallet:
     card:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
-      description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      description: La carta che usi online e nei negozi
       pagoPaCapability:
         title: Pagamenti in app
         description: Paga gli avvisi che hanno il logo pagoPA
@@ -1343,18 +1341,19 @@ wallet:
       description: I tuoi strumenti digitali preferiti su IO
     loyalty:
       name: Carta di pagamento supermercati
-      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
+      description: Il circuito che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
-      description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
+      description: Il circuito che usi per pagare nei negozi
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Abbina il tuo account Satispay
+      description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1363,6 +1362,7 @@ wallet:
       description: Le carte emesse da Poste Italiane
     paypal:
       name: PayPal
+      description: Paga con la carta o conto corrente collegati
     bancomat:
       name: PagoBANCOMAT
     cobadge:

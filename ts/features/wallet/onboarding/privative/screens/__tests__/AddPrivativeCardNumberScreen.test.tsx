@@ -1,13 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as React from "react";
-import { NavigationParams } from "react-navigation";
+import { NavigationActions, NavigationParams } from "react-navigation";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../../i18n";
+import NavigationService from "../../../../../../navigation/NavigationService";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import { navigateToOnboardingPrivativeSearchAvailable } from "../../navigation/action";
 import WALLET_ONBOARDING_PRIVATIVE_ROUTES from "../../navigation/routes";
 import {
   walletAddPrivativeCancel,
@@ -58,6 +58,7 @@ describe("AddPrivativeCardNumberScreen", () => {
     const continueButton = component.getByText(
       I18n.t("global.buttons.continue")
     );
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
 
     const panInputField = component.getByTestId("PanInputFieldInputMask");
     expect(panInputField).not.toBeNull();
@@ -67,9 +68,13 @@ describe("AddPrivativeCardNumberScreen", () => {
     // Check if the button is now enabled
     fireEvent.press(continueButton);
     expect(store.getActions()).toEqual([
-      walletAddPrivativeInsertCardNumber("1"),
-      navigateToOnboardingPrivativeSearchAvailable()
+      walletAddPrivativeInsertCardNumber("1")
     ]);
+    expect(spy).toHaveBeenCalledWith(
+      NavigationActions.navigate({
+        routeName: WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE
+      })
+    );
 
     // removing all the text from the textinput will disable the continue button
     fireEvent.changeText(panInputField, "");

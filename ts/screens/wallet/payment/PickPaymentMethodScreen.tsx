@@ -2,7 +2,7 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
@@ -10,6 +10,7 @@ import { FlatList, SafeAreaView } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -204,7 +205,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  goBack: () => dispatch(navigateBack()),
+  goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
       props.navigation.getParam("rptId"),
@@ -229,16 +230,14 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     );
   },
   navigateToAddPaymentMethod: () =>
-    dispatch(
-      navigateToWalletAddPaymentMethod({
-        inPayment: some({
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          verifica: props.navigation.getParam("verifica"),
-          idPayment: props.navigation.getParam("idPayment")
-        })
+    navigateToWalletAddPaymentMethod({
+      inPayment: some({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
       })
-    )
+    })
 });
 
 export default connect(

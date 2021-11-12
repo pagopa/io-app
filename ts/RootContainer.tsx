@@ -1,16 +1,12 @@
 import { Root } from "native-base";
 import * as React from "react";
-import {
-  AppState,
-  BackHandler,
-  Linking,
-  Platform,
-  StatusBar
-} from "react-native";
+import { AppState, Linking, Platform, StatusBar } from "react-native";
 import SplashScreen from "react-native-splash-screen";
+import { createAppContainer } from "react-navigation";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
+import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
@@ -22,22 +18,27 @@ import {
   cgnTestOverlay,
   shouldDisplayVersionInfoOverlay
 } from "./config";
-import Navigation from "./navigation";
+
+import { setLocale } from "./i18n";
+import AppNavigator from "./navigation/AppNavigator";
+import NavigationService from "./navigation/NavigationService";
+import RootModal from "./screens/modal/RootModal";
 import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
+import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { trackScreen } from "./store/middlewares/navigation";
+import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-
-import { setLocale } from "./i18n";
-import RootModal from "./screens/modal/RootModal";
-import { preferredLanguageSelector } from "./store/reducers/persistedPreferences";
-import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
+import { getCurrentRouteName } from "./utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const AppContainer = createAppContainer(AppNavigator);
 
 /**
  * The main container of the application with:
@@ -54,11 +55,6 @@ class RootContainer extends React.PureComponent<Props> {
     /* Configure the application to receive push notifications */
     configurePushNotifications();
   }
-
-  private handleBackButton = () => {
-    this.props.navigateBack();
-    return true;
-  };
 
   private handleOpenUrlEvent = (event: { url: string }): void =>
     this.navigateToUrlHandler(event.url);
@@ -77,7 +73,6 @@ class RootContainer extends React.PureComponent<Props> {
 
   public componentDidMount() {
     initialiseInstabug();
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (Platform.OS === "android") {
       Linking.getInitialURL()
@@ -105,8 +100,6 @@ class RootContainer extends React.PureComponent<Props> {
     });
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackButton);
-
     if (Platform.OS === "ios") {
       Linking.removeEventListener("url", this.handleOpenUrlEvent);
     }
@@ -152,7 +145,18 @@ class RootContainer extends React.PureComponent<Props> {
       <Root>
         <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && <FlagSecureComponent />}
-        <Navigation />
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+          onNavigationStateChange={(prevState, currentState) => {
+            NavigationService.setCurrentState(currentState);
+            this.props.setDebugCurrentRouteName(
+              getCurrentRouteName(currentState) ?? "Undefined"
+            );
+            trackScreen(prevState, currentState);
+          }}
+        />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         {cgnTestOverlay && (
           <BetaTestingOverlay title="🛠️ CGN TEST VERSION 🛠️" />
@@ -179,7 +183,8 @@ const mapDispatchToProps = {
   applicationChangeState,
   setDeepLink,
   navigateToDeepLink,
-  navigateBack
+  navigateBack,
+  setDebugCurrentRouteName
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);

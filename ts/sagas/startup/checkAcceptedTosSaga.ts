@@ -32,7 +32,7 @@ export function* checkAcceptedTosSaga(
       userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
-    yield put(navigateToTosScreen);
+    yield call(navigateToTosScreen);
     // Wait the user accept the ToS
     yield take(tosAccepted);
 

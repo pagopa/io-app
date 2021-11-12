@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation-stack";
 import SuggestBpdActivationScreen from "../../common/screens/bpd/SuggestBpdActivationScreen";
-import ActivateBpdOnNewSatispayScreen from "../screens/ActivateBpdOnNewSatispayScreen";
 import SearchSatispayManagerScreen from "../screens/search/SearchSatispayManagerScreen";
 import StartSatispaySearchScreen from "../screens/StartSatispaySearchScreen";
 import WALLET_ONBOARDING_SATISPAY_ROUTES from "./routes";
@@ -15,9 +14,6 @@ const PaymentMethodOnboardingSatispayNavigator = createStackNavigator(
     },
     [WALLET_ONBOARDING_SATISPAY_ROUTES.SUGGEST_BPD_ACTIVATION]: {
       screen: SuggestBpdActivationScreen
-    },
-    [WALLET_ONBOARDING_SATISPAY_ROUTES.ACTIVATE_BPD_NEW_SATISPAY]: {
-      screen: ActivateBpdOnNewSatispayScreen
     }
   },
   {

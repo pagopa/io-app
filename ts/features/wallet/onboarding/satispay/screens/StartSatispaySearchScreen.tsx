@@ -90,7 +90,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddSatispayCancel()),
   search: () => {
     dispatch(searchUserSatispay.request());
-    dispatch(navigateToOnboardingSatispaySearchAvailableUserAccount());
+    navigateToOnboardingSatispaySearchAvailableUserAccount();
   }
 });
 

@@ -241,7 +241,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           <View style={styles.errorButtonsContainer}>
             <ButtonDefaultOpacity
-              onPress={this.props.navigation.goBack}
+              onPress={() => this.props.navigation.goBack()}
               style={styles.cancelButtonStyle}
               block={true}
               light={true}

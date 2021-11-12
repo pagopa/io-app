@@ -17,7 +17,7 @@ import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen"
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
 
-const CgnNavigator = createStackNavigator(
+export const CgnActivationNavigator = createStackNavigator(
   {
     [CGN_ROUTES.ACTIVATION.INFORMATION_TOS]: {
       screen: CgnInformationScreen
@@ -40,28 +40,37 @@ const CgnNavigator = createStackNavigator(
     [CGN_ROUTES.ACTIVATION.COMPLETED]: {
       screen: CgnActivationCompletedScreen
     },
-    [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: {
-      screen: EycaActivationLoading
-    },
-    [CGN_ROUTES.MERCHANTS.LIST]: {
-      screen: MerchantsListScreen
-    },
-    [CGN_ROUTES.MERCHANTS.TABS]: {
-      screen: CgnMerchantsTabsScreen
-    },
-    [CGN_ROUTES.MERCHANTS.DETAIL]: {
-      screen: CgnMerchantDetailScreen
-    },
-    [CGN_ROUTES.MERCHANTS.LANDING_WEBVIEW]: {
-      screen: CgnMerchantLandingWebview
-    },
-    [CGN_ROUTES.DETAILS]: {
+    [CGN_ROUTES.ACTIVATION.CTA_START_CGN]: {
+      screen: CgnCTAStartActivationScreen
+    }
+  },
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);
+
+export const CgnDetailsNavigator = createStackNavigator(
+  {
+    [CGN_ROUTES.DETAILS.DETAILS]: {
       screen: CgnDetailScreen
     },
-    [CGN_ROUTES.CTA_START_CGN]: {
-      screen: CgnCTAStartActivationScreen
+    [CGN_ROUTES.DETAILS.MERCHANTS.LIST]: {
+      screen: MerchantsListScreen
     },
-    [CGN_ROUTES.DETAILS_OTP]: {
+    [CGN_ROUTES.DETAILS.MERCHANTS.TABS]: {
+      screen: CgnMerchantsTabsScreen
+    },
+    [CGN_ROUTES.DETAILS.MERCHANTS.DETAIL]: {
+      screen: CgnMerchantDetailScreen
+    },
+    [CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW]: {
+      screen: CgnMerchantLandingWebview
+    },
+    [CGN_ROUTES.DETAILS.DETAILS_OTP]: {
       screen: CgnOtpScreen
     }
   },
@@ -74,4 +83,17 @@ const CgnNavigator = createStackNavigator(
   }
 );
 
-export default CgnNavigator;
+export const CgnEYCAActivationNavigator = createStackNavigator(
+  {
+    [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: {
+      screen: EycaActivationLoading
+    }
+  },
+  {
+    // Let each screen handle the header and navigation
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
+  }
+);

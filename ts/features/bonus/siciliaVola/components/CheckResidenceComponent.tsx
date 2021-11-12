@@ -90,9 +90,8 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvSelectBeneficiaryCategory: () =>
-    dispatch(navigateToSvSelectBeneficiaryCategoryScreen()),
-  navigateToSvKoCheckResidence: () =>
-    dispatch(navigateToSvKoCheckResidenceScreen())
+    navigateToSvSelectBeneficiaryCategoryScreen(),
+  navigateToSvKoCheckResidence: () => navigateToSvKoCheckResidenceScreen()
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

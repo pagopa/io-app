@@ -1,7 +1,6 @@
 import { none, some } from "fp-ts/lib/Option";
-import { NavigationRoute, NavigationState } from "react-navigation";
-import { NavigationHistoryState } from "../../store/reducers/navigationHistory";
-import { getRouteName, whereAmIFrom } from "../navigation";
+import { NavigationRoute } from "react-navigation";
+import { getRouteName } from "../navigation";
 
 describe("Test navigation utils", () => {
   const navRouteOK = {
@@ -38,33 +37,11 @@ describe("Test navigation utils", () => {
     ]
   } as NavigationRoute;
 
-  const navHistory: NavigationHistoryState = [
-    { ...navRouteOK } as NavigationState,
-    { ...navRouteKO } as NavigationState
-  ];
-
   it("getRouteName return the name of the route", () => {
     expect(getRouteName(navRouteOK)).toStrictEqual(some("MESSAGES_HOME"));
   });
 
   it("getRouteName return none if navigation route bad formatted", () => {
     expect(getRouteName(navRouteKO)).toBe(none);
-  });
-
-  it("whereAmIFrom return none if the object is bad formatted", () => {
-    expect(whereAmIFrom(navHistory)).toBe(none);
-  });
-
-  it("whereAmIFrom return none if an empty array is passed", () => {
-    expect(whereAmIFrom([])).toBe(none);
-  });
-
-  it("whereAmIFrom return the name of last route", () => {
-    expect(
-      whereAmIFrom([
-        { ...navRouteKO } as NavigationState,
-        { ...navRouteOK } as NavigationState
-      ])
-    ).toStrictEqual(some("MESSAGES_HOME"));
   });
 });

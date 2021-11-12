@@ -3,7 +3,7 @@
  * inserted the data required to save a new card
  */
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -12,6 +12,7 @@ import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { constNull } from "fp-ts/lib/function";
+
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -403,27 +404,24 @@ const mapDispatchToProps = (
             showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
           }
           // navigate to the wallet selection screen
-          dispatch(
-            navigateToPaymentPickPaymentMethodScreen({
-              rptId,
-              initialAmount,
-              verifica,
-              idPayment
-            })
-          );
+
+          navigateToPaymentPickPaymentMethodScreen({
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment
+          });
         }
       );
     } else {
-      dispatch(
-        navigateToWalletHome({
-          newMethodAdded: maybeWallet.isSome(),
-          keyFrom: props.navigation.getParam("keyFrom")
-        })
-      );
+      navigateToWalletHome({
+        newMethodAdded: maybeWallet.isSome(),
+        keyFrom: props.navigation.getParam("keyFrom")
+      });
     }
   };
   return {
-    navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+    navigateToWalletHome: () => navigateToWalletHome(),
     loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),
     addWalletCreditCardInit: () => dispatch(addWalletCreditCardInit()),
     runStartOrResumeAddCreditCardSaga: (
@@ -455,9 +453,7 @@ const mapDispatchToProps = (
     storeCreditCardOutcome: (outcomeCode: Option<string>) =>
       dispatch(addCreditCardOutcomeCode(outcomeCode)),
     goToAddCreditCardOutcomeCode: (creditCard: Wallet) =>
-      dispatch(
-        navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard })
-      ),
+      navigateToAddCreditCardOutcomeCode({ selectedWallet: creditCard }),
     dispatchEndAddCreditCardWebview: (
       reason: AddCreditCardWebViewEndReason
     ) => {

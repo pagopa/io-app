@@ -22,7 +22,7 @@ const BancomatSearchBankScreen: React.FunctionComponent<Props> = (
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   searchPans: (abi?: string) => {
     dispatch(searchUserPans.request(abi));
-    dispatch(navigateToOnboardingBancomatSearchAvailableUserBancomat());
+    navigateToOnboardingBancomatSearchAvailableUserBancomat();
   }
 });
 
