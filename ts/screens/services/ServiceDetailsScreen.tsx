@@ -34,7 +34,6 @@ import { handleItemOnPress } from "../../utils/url";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -131,7 +130,6 @@ const ServiceDetailsScreen = (props: Props) => {
   const maybeCTA = getServiceCTA(metadata);
 
   return (
-    <LoadingSpinnerOverlay isLoading={pot.isLoading(potService)}>
       <BaseScreenComponent
         goBack={() => props.navigation.goBack()}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
@@ -206,7 +204,6 @@ const ServiceDetailsScreen = (props: Props) => {
           </View>
         )}
       </BaseScreenComponent>
-    </LoadingSpinnerOverlay>
   );
 };
 
