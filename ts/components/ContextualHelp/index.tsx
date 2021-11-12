@@ -6,6 +6,7 @@ import { BugReporting } from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container } from "native-base";
 
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
 import { loadContextualHelpData } from "../../store/actions/content";
 import { Dispatch } from "../../store/actions/types";
@@ -73,7 +74,7 @@ const getContextualHelpData = (
         fqs.map(f => ({ title: f.title, content: f.body }))
       )
   }));
-
+const reloadContextualHelpDataThreshold = (30 * 1000) as Millisecond;
 /**
  * A modal to show the contextual help related to a screen.
  * The contextual help is characterized by:
@@ -89,21 +90,26 @@ const ContextualHelp: React.FunctionComponent<Props> = (props: Props) => {
   const [contentHasLoaded, setContentHasLoaded] = useState<boolean | undefined>(
     undefined
   );
+  const [lastContextualDataUpdate, setLastContextualDataUpdate] =
+    useState<Date>(new Date());
   const [authenticatedSupportType, setAuthenticatedSupportType] =
     useState<BugReporting.reportType | null>(null);
 
   const { potContextualData, loadContextualHelpData } = props;
 
   useEffect(() => {
-    // if the contextual data is empty or is in error -> try to reload
+    const now = new Date();
+    // if the contextual data is empty or is in error and last reload was done before the threshold -> try to reload
     if (
+      now.getTime() - lastContextualDataUpdate.getTime() >
+        reloadContextualHelpDataThreshold &&
       !pot.isLoading(potContextualData) &&
-      pot.isNone(potContextualData) &&
-      pot.isError(potContextualData)
+      pot.isNone(potContextualData)
     ) {
+      setLastContextualDataUpdate(now);
       loadContextualHelpData();
     }
-  }, [potContextualData, loadContextualHelpData]);
+  }, [lastContextualDataUpdate, potContextualData, loadContextualHelpData]);
 
   // after the modal is fully visible, render the content -
   // in case of complex markdown this can take some time and we don't
