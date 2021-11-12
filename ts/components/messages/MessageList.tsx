@@ -184,7 +184,7 @@ class MessageList extends React.Component<Props, State> {
 
   private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      // this.flatListRef.current.scrollToIndex({ animated, index });
+      this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
 
