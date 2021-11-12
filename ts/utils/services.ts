@@ -4,13 +4,9 @@
 
 import * as pot from "italia-ts-commons/lib/pot";
 import { ImageURISource } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { contentRepoUrl } from "../config";
 import { VisibleServicesState } from "../store/reducers/entities/services/visibleServices";
-import { ServiceMetadata } from "../../definitions/backend/ServiceMetadata";
-import { SpecialServiceMetadata } from "../../definitions/backend/SpecialServiceMetadata";
-import { SpecialServiceCategoryEnum } from "../../definitions/backend/SpecialServiceCategory";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 /**
@@ -59,12 +55,3 @@ export const isVisibleService = (
     )
   );
 };
-
-// Return true if metadata is defined and it is a special service type checking compatible
-export const isSpecialService = (
-  meta?: ServiceMetadata
-): meta is SpecialServiceMetadata =>
-  fromNullable(meta).fold(
-    false,
-    m => m.category === SpecialServiceCategoryEnum.SPECIAL
-  );

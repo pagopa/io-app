@@ -32,12 +32,13 @@ import {
   EnabledChannels,
   getEnabledChannelsForService
 } from "../../utils/profile";
-import { isSpecialService, logosForService } from "../../utils/services";
+import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
 import SpecialServicesRouter from "../../components/services/SpecialServices/SpecialServicesRouter";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
+import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -226,7 +227,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             )}
           </Content>
 
-          {(maybeCTA.isSome() || isSpecialService(metadata)) && (
+          {(maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) && (
             <FooterTopShadow>
               {maybeCTA.isSome() && (
                 <View style={[styles.flexRow]}>
@@ -239,11 +240,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   />
                 </View>
               )}
-              {isSpecialService(metadata) && (
+              {SpecialServiceMetadata.is(metadata) && (
                 <>
                   <View spacer small />
                   <SpecialServicesRouter
-                    custom_special_flow={metadata?.custom_special_flow}
+                    custom_special_flow={metadata.custom_special_flow}
                   />
                 </>
               )}
