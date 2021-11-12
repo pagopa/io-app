@@ -14,6 +14,10 @@ import onboardingPrivativeReducer, {
 import onboardingSatispayReducer, {
   OnboardSatispayState
 } from "../satispay/store/reducers";
+import {
+  onboardingPaypalReducer,
+  OnboardPayPalState
+} from "../paypal/store/reducers";
 
 export type PaymentMethodOnboardingState = {
   // The information related to adding new Bancomat to the wallet
@@ -22,6 +26,7 @@ export type PaymentMethodOnboardingState = {
   bPay: OnboardingBPayState;
   coBadge: OnboardingCoBadgeState;
   privative: OnboardingPrivativeState;
+  paypal: OnboardPayPalState;
 };
 
 const onboardingReducer = combineReducers<PaymentMethodOnboardingState, Action>(
@@ -30,7 +35,8 @@ const onboardingReducer = combineReducers<PaymentMethodOnboardingState, Action>(
     satispay: onboardingSatispayReducer,
     bPay: onboardingBPayReducer,
     coBadge: onboardingCoBadgeReducer,
-    privative: onboardingPrivativeReducer
+    privative: onboardingPrivativeReducer,
+    paypal: onboardingPaypalReducer
   }
 );
 
