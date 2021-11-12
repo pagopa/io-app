@@ -1,7 +1,6 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -9,6 +8,7 @@ import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
+import { navigateBack } from "../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
@@ -60,7 +60,7 @@ const SuggestBpdActivationScreen: React.FunctionComponent<Props> = props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(NavigationActions.back()),
+  skip: () => navigateBack(),
   activateBpd: () => dispatch(bpdOnboardingStart())
 });
 

@@ -43,7 +43,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.dispatch(resetToAuthenticationRoute)
+          onPress: resetToAuthenticationRoute
         }
       ]
     );

@@ -94,7 +94,7 @@ describe("messages", () => {
         .returns(left(Error("Error")));
     });
 
-    it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched sucessfully", () => {
+    it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched successfully", () => {
       const getMessage = jest.fn();
       testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()

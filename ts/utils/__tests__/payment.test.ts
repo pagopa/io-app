@@ -1,7 +1,5 @@
-/* eslint-disable */
-
-import { isSome, none, some } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { none, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
@@ -26,11 +24,10 @@ import I18n from "../../i18n";
 describe("getAmountFromPaymentAmount", () => {
   const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
   it("should convert a valid PaymentAmount into an AmountInEuroCents", () => {
-    const amountInEuroCents = getAmountFromPaymentAmount(aPaymentAmount);
-    expect(isSome(amountInEuroCents)).toBeTruthy();
-    if (isSome(amountInEuroCents)) {
-      expect(amountInEuroCents.value).toEqual("01" as AmountInEuroCents);
-    }
+    const amountInEuroCents = getAmountFromPaymentAmount(
+      aPaymentAmount
+    ).getOrElse("💰" as AmountInEuroCents);
+    expect(amountInEuroCents).toEqual("01" as AmountInEuroCents);
   });
 });
 
@@ -52,11 +49,8 @@ describe("getRptIdFromNoticeNumber", () => {
     const rptId = getRptIdFromNoticeNumber(
       anOrganizationFiscalCode,
       aNoticeNumber
-    );
-    expect(isSome(rptId)).toBeTruthy();
-    if (isSome(rptId)) {
-      expect(rptId.value).toEqual(anRptId);
-    }
+    ).getOrElse({} as RptId);
+    expect(rptId).toEqual(anRptId);
   });
 });
 
@@ -290,9 +284,11 @@ describe("getV2ErrorMacro", () => {
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_SINTASSI_EXTRAXSD", "DATA"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_STAZIONE_INT_PA_TIMEOUT", "EC"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_IN_CORSO", "ONGOING"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_PAGAMENTO_IN_CORSO", "ONGOING"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_ANNULLATO", "REVOKED"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_SCADUTO", "EXPIRED"),
       Tuple2<DetailV2Keys, ErrorTypes>("PAA_PAGAMENTO_DUPLICATO", "DUPLICATED"),
+      Tuple2<DetailV2Keys, ErrorTypes>("PPT_PAGAMENTO_DUPLICATO", "DUPLICATED"),
       Tuple2<DetailV2Keys, ErrorTypes>("PPT_RT_SCONOSCIUTA", "UNCOVERED")
     ].forEach(t => {
       expect(getV2ErrorMainType(t.e1)).toBe(t.e2);
@@ -320,6 +316,10 @@ describe("getErrorDescriptionV2", () => {
         I18n.t("wallet.errors.ONGOING")
       ),
       Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_PAGAMENTO_IN_CORSO",
+        I18n.t("wallet.errors.ONGOING")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_ANNULLATO",
         I18n.t("wallet.errors.REVOKED")
       ),
@@ -329,6 +329,10 @@ describe("getErrorDescriptionV2", () => {
       ),
       Tuple2<DetailV2Keys | undefined, string>(
         "PAA_PAGAMENTO_DUPLICATO",
+        I18n.t("wallet.errors.DUPLICATED")
+      ),
+      Tuple2<DetailV2Keys | undefined, string>(
+        "PPT_PAGAMENTO_DUPLICATO",
         I18n.t("wallet.errors.DUPLICATED")
       ),
       Tuple2<DetailV2Keys | undefined, string>(

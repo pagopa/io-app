@@ -53,10 +53,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onBack: () => dispatch(walletAddBPayBack()),
   searchAccounts: (abi?: string) => {
     dispatch(searchUserBPay.request(abi));
-    dispatch(navigateToOnboardingBPaySearchAvailableUserAccount());
+    navigateToOnboardingBPaySearchAvailableUserAccount();
   },
   navigateToSearchBankScreen: () => {
-    dispatch(navigateToOnboardingBPayChooseBank());
+    navigateToOnboardingBPayChooseBank();
   }
 });
 

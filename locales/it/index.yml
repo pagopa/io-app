@@ -65,6 +65,7 @@ global:
     moreInfo: più info
   accessibility:
     reload: "Ricarica"
+    switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
     description: Descrizione
@@ -216,8 +217,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
-exit:
-  pressAgain: Premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -610,10 +609,10 @@ authentication:
       button: "Scarica / Apri CieID"
     card:
       title: Appoggia la carta
-      titleiOS: Riprova di nuovo
+      titleiOS: Tieni ferma la carta
       headerTitle: Entra con CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageHeaderiOS: Appoggia la tua carta d'identità elettronica nella parte alta del telefono
+      layCardMessageHeaderiOS: Il sensore è posizionato nella parte alta del dispositivo.
       layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
       cieCardValid: Ok, la tua carta CIE è valida! Puoi rimuoverla.
       readerCardTitle: Tieni ferma la carta per qualche secondo
@@ -1027,6 +1026,14 @@ wallet:
           row2Description2: ". Vedrai l'importo esatto prima della conferma."
           row3Description1: "Informativa Privacy"
           row3Description2: "Termini e condizioni d’uso"
+        whatIsPspBottomSheet:
+          title: "Cos’è il gestore della transazione?"
+          body: "È il soggetto, conosciuto anche come PSP (Prestatore di Servizi di Pagamento), che incassa l’importo per conto dell’Ente Creditore e può applicare un costo per il servizio offerto.\nAd ogni pagamento, potrai scegliere il gestore che ti conviene di più, che tu sia cliente o no."
+      onBoardingCompleted:
+        title: "Fatto!"
+        body: "Ora puoi dare uno sguardo alle impostazioni del tuo nuovo metodo."
+        secondaryButton: "Chiudi"
+        primaryButton: "Vedi metodo"
     coBadge:
       headerTitle: "Aggiungi circuito internazionale"
       start:
@@ -1307,7 +1314,7 @@ wallet:
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
-  addPaymentMethodTitle: Aggiungi app e altri metodi
+  addPaymentMethodTitle: Aggiungi un metodo
   continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
@@ -1316,7 +1323,7 @@ wallet:
     card:
       name: Carta di credito, debito o prepagata
       shortName: "Carta"
-      description: La carta emessa dalla tua banca che usi normalmente per pagare nei negozi e online
+      description: La carta che usi online e nei negozi
       pagoPaCapability:
         title: Pagamenti in app
         description: Paga gli avvisi che hanno il logo pagoPA
@@ -1334,18 +1341,19 @@ wallet:
       description: I tuoi strumenti digitali preferiti su IO
     loyalty:
       name: Carta di pagamento supermercati
-      description: Le carte emesse dalle catene di supermercati che usi per pagare la spesa
+      description: Il circuito che usi per pagare la spesa
     pagobancomat:
       name: Carta PagoBANCOMAT
-      description: La carta con il logo PagoBANCOMAT che usi per prelevare contante o pagare nei negozi
+      description: Il circuito che usi per pagare nei negozi
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     satispay:
       name: Satispay
-      description: Abbina il tuo account Satispay
+      description: L’app per pagare in modo smart
     bancomatPay:
       name: BANCOMAT Pay
+      description: Abbina il tuo account BANCOMAT Pay
     postepayApp:
       name: Postepay
       description: la tua app Postepay
@@ -1354,6 +1362,7 @@ wallet:
       description: Le carte emesse da Poste Italiane
     paypal:
       name: PayPal
+      description: Paga con la carta o conto corrente collegati
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -2798,6 +2807,10 @@ bonus:
         cta:
           exit: "Esci"
           voucherRevocation: "Revoca voucher"
+    pdfVoucher:
+      toast:
+        ok: "Voucher salvato con successo"
+        ko: "Problemi durante il salvataggio del voucher"
 
 features:
   euCovidCertificate:

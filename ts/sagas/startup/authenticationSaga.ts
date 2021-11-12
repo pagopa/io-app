@@ -24,7 +24,7 @@ export function* authenticationSaga(): Generator<Effect, SessionToken, any> {
   const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
-  yield put(resetToAuthenticationRoute);
+  yield call(resetToAuthenticationRoute);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?

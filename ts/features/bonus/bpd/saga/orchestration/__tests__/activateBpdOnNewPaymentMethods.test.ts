@@ -33,14 +33,14 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .withState(store.getState())
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -48,17 +48,17 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), left(new Error("An error"))],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .call(isBpdEnabled)
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -74,17 +74,17 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
           ]
         }
       ],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
-      .put(navigateToWalletHome())
+      .call(navigateToWalletHome)
       .not.call(isBpdEnabled)
       .not.select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -92,17 +92,17 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
-      .not.put(navigateToWalletHome())
+      .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -110,7 +110,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(true)],
@@ -119,11 +119,11 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
           { ...enrollAfterAddFalse, program_active: false }
         ]
       ])
-      .not.put(navigateToWalletHome())
+      .not.call(navigateToWalletHome)
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -131,7 +131,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(false)],
@@ -139,14 +139,14 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
 
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(false)],
@@ -154,8 +154,8 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .not.put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .not.call(navigateToSuggestBpdActivation)
       .run();
   });
 
@@ -163,7 +163,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
     await expectSaga(
       activateBpdOnNewPaymentMethods,
       [mockPrivativeCard],
-      navigateToActivateBpdOnNewPrivative()
+      navigateToActivateBpdOnNewPrivative
     )
       .provide([
         [matchers.call(isBpdEnabled), right(false)],
@@ -171,8 +171,8 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       ])
       .call(isBpdEnabled)
       .select(bpdRemoteConfigSelector)
-      .not.put(navigateToActivateBpdOnNewPrivative())
-      .put(navigateToSuggestBpdActivation())
+      .not.call(navigateToActivateBpdOnNewPrivative)
+      .call(navigateToSuggestBpdActivation)
       .run();
   });
 });

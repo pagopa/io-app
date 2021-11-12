@@ -1,15 +1,16 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import { none, some } from "fp-ts/lib/Option";
 import * as React from "react";
+import { NavigationActions } from "react-navigation";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { none, some } from "fp-ts/lib/Option";
-import { NavigationActions } from "react-navigation";
 import I18n from "../../../../../i18n";
+import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
 import { mockPrivativeCard } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import { PrivativePaymentMethod } from "../../../../../types/pagopa";
-import PrivativeWalletPreview from "../PrivativeWalletPreview";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
-import ROUTES from "../../../../../navigation/routes";
+import PrivativeWalletPreview from "../PrivativeWalletPreview";
 
 describe("PrivativeWalletPreview", () => {
   it("should show the caption", () => {
@@ -56,16 +57,19 @@ describe("PrivativeWalletPreview", () => {
   });
   it("should call navigateToPrivativeDetailScreen when it is pressed", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
-    const { component, store } = getComponent(mockPrivativeCard);
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
+
+    const { component } = getComponent(mockPrivativeCard);
     const cardComponent = component.queryByTestId("cardPreview");
-    const expectedPayload = {
-      type: NavigationActions.NAVIGATE,
-      routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
-      params: { privative: mockPrivativeCard }
-    };
+
     if (cardComponent) {
       fireEvent.press(cardComponent);
-      expect(store.getActions()).toEqual([expectedPayload]);
+      expect(spy).toHaveBeenCalledWith(
+        NavigationActions.navigate({
+          routeName: ROUTES.WALLET_PRIVATIVE_DETAIL,
+          params: { privative: mockPrivativeCard }
+        })
+      );
     }
   });
 });

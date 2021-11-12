@@ -10,6 +10,7 @@ import {
   myPortalEnabled,
   svEnabled
 } from "../../../../config";
+import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { Dispatch } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
@@ -39,7 +40,9 @@ const BPD_ROUTE_NAMES: ReadonlyArray<string> = [
   BPD_ROUTES.CTA_BPD_IBAN_EDIT
 ];
 
-const CGN_ROUTE_NAMES: ReadonlyArray<string> = [CGN_ROUTES.CTA_START_CGN];
+const CGN_ROUTE_NAMES: ReadonlyArray<string> = [
+  CGN_ROUTES.ACTIVATION.CTA_START_CGN
+];
 
 const MY_PORTAL_ROUTES: ReadonlyArray<string> = [ROUTES.SERVICE_WEBVIEW];
 
@@ -118,7 +121,7 @@ export function handleInternalLink(
         params: { ...internalNavigation.params, serviceId }
       })
     );
-    dispatch(
+    NavigationService.dispatchNavigationAction(
       NavigationActions.navigate({
         routeName: internalNavigation.routeName
       })

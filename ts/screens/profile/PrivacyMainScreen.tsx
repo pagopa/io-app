@@ -180,7 +180,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
   public render() {
     const ContentComponent = withLoadingSpinner(() => (
       <TopScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
       >

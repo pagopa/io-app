@@ -30,6 +30,12 @@ Launching the test suite:
 yarn detox test --configuration ios.sim.release
 ```
 
+To run in _debug_ mode use `ios.sim.debug` as configuration target and `--loglevel verbose` to see more
+logs from the tests.
+
+Important: the tests run in a **headless simulator**. You must open it by yourself **before running them** if 
+you want to see what happens on the UI on your machine.
+
 Please look at [CircleCI config](./circleci/config.yml) for more options and to see how the
  different parts interact.
 
