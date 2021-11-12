@@ -84,8 +84,12 @@ export const RadioButtonList = <T extends unknown>(props: Props<T>) => (
       </H4>
     )}
     <View style={styles.itemsContainer}>
-      {props.items.map((item, key) => (
-        <View key={`radio_item_${key}`} style={styles.item}>
+      {props.items.map(item => (
+        <View
+          key={`radio_item_${item.id}`}
+          style={styles.item}
+          testID={`pspItemTestID_${item.id}`}
+        >
           <IconFont
             name={
               props.selectedItem === item.id ? "io-radio-on" : "io-radio-off"

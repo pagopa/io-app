@@ -438,7 +438,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: yarn detox build -c ios.sim.release
+          command: yarn detox build -c ios.sim.debug
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -455,11 +455,12 @@ jobs:
             yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.release \
+              -c ios.sim.debug \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
+              --record-videos failing \
               --debug-synchronization 1000
 
       # store detox artifacts
@@ -483,6 +484,15 @@ workflows:
           filters:
             branches:
               ignore: master
+
+      # TODO: Native Android e2e tests
+      # TODO: Slack integration
+      - run-e2e-test-IOS:
+          requires:
+            - compile-typescript
+          filters:
+            branches:
+              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
@@ -567,24 +577,6 @@ workflows:
       - io_check_uris
       # see https://www.pivotaltracker.com/n/projects/2048617/stories/177755852
       # - io_check_cie_button_exists_ios
-
-  # weekly workflow to run e2e tests
-  # set to run on Monday at 0 so that by office hours we get a fresh report
-  weekly-e2e-tests:
-    triggers:
-      - schedule:
-          cron: "0 0 * * 1"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      # TODO: Native Android e2e tests
-      # TODO: Slack integration
-      - compile-typescript
-      - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
 
   # Run a weekly report At 16:00 on Friday
   weekly-report:

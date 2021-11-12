@@ -20,7 +20,10 @@ module.exports = {
     }
   },
   setupFiles: ["./jestSetup.js"],
-  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  setupFilesAfterEnv: [
+    "@testing-library/jest-native/extend-expect",
+    "./ts/__e2e__/init.js"
+  ],
   testMatch: ["**/__e2e__/*.e2e.ts?(x)"],
   forceExit: true,
   verbose: true
