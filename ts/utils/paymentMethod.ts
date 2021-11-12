@@ -68,6 +68,9 @@ export const getTitleFromCard = (
 export const getBancomatAbiIconUrl = (abi: string) =>
   `${contentRepoUrl}/logos/abi/${abi}.png`;
 
+export const getPayPalPspIconUrl = (abi: string) =>
+  `${contentRepoUrl}/logos/abi/${abi}.png`;
+
 export const getPrivativeGdoLogoUrl = (abi: string): ImageURISource => ({
   uri: `${contentRepoUrl}/logos/privative/gdo/${abi}.png`
 });
