@@ -185,7 +185,7 @@ class MessageList extends React.Component<Props, State> {
 
   private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current.scrollToIndex({ animated, index });
+      // this.flatListRef.current.scrollToIndex({ animated, index });
     }
   };
 
@@ -322,7 +322,6 @@ class MessageList extends React.Component<Props, State> {
     );
     return (
       <React.Fragment>
-        <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         {/* in iOS refresh indicator is shown only when user does pull to refresh on list
           so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
           see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load

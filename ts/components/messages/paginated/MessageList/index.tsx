@@ -194,7 +194,6 @@ const MessageList = ({
 
   return (
     <>
-      <NavigationEvents onWillFocus={() => scrollTo(0)} />
       {/* in iOS refresh indicator is shown only when user does pull to refresh on list
           so only for iOS devices the ActivityIndicator is shown in place of RefreshControl
           see https://stackoverflow.com/questions/50307314/react-native-flatlist-refreshing-not-showing-when-its-true-during-first-load
