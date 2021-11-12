@@ -56,10 +56,10 @@ setNativeExceptionHandler(exceptionString => {
 // TODO: temp only, to complete the porting to 0.63.x
 LogBox.ignoreLogs([
   "componentWillReceiveProps",
-  "currentlyFocusedField",
   "Function components cannot be given refs",
   "Animated",
-  "Virtualized"
+  "Virtualized",
+  "currentlyFocusedField"
 ]);
 
 // Disable allowFontScaling for Text/TextInput component

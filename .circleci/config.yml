@@ -438,7 +438,7 @@ jobs:
 
       - run:
           name: Prepare build for Detox
-          command: yarn detox build -c ios.sim.release
+          command: yarn detox build -c ios.sim.debug
 
       - run:
           name: Run E2E tests with io-dev-api server
@@ -455,11 +455,12 @@ jobs:
             yarn detox build-framework-cache
             yarn detox test \
               --loglevel verbose \
-              -c ios.sim.release \
+              -c ios.sim.debug \
               --cleanup \
               --artifacts-location /tmp/e2e_artifacts/detox/ \
               --record-logs all \
               --take-screenshots all \
+              --record-videos failing \
               --debug-synchronization 1000
 
       # store detox artifacts

@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "1.38.0-rc.0",
+  "version": "1.38.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/special-service-specs/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v7.23.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml",
@@ -91,7 +91,7 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "detox": "^18.23.1",
+    "detox": "^19.0.0",
     "fp-ts": "1.17.4",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
@@ -274,7 +274,7 @@
     "apps": {
       "ios.release": {
         "type": "ios.app",
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ItaliaApp.app",
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app",
         "build": "xcodebuild -workspace ios/ItaliaApp.xcworkspace -scheme ItaliaApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
       },
       "ios.debug": {
