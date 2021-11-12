@@ -1,5 +1,5 @@
 import { NavigationParams } from "react-navigation";
-import { createStore, Store } from "redux";
+import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -26,10 +26,8 @@ jest.mock("../../../../../../utils/bottomSheet", () => {
 
 describe("PayPalPpsSelectionScreen", () => {
   jest.useFakeTimers();
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
   it(`screen should be defined when the psp list is ready`, () => {
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(searchPaypalPsp.success(pspList));
     expect(
       render.component.queryByTestId("PayPalPpsSelectionScreen")
@@ -37,8 +35,7 @@ describe("PayPalPpsSelectionScreen", () => {
   });
 
   it(`footer buttons should be defined when the psp list is ready`, () => {
-    const store = createStore(appReducer, globalState as any);
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(searchPaypalPsp.success(pspList));
     expect(
       render.component.queryByText(I18n.t("global.buttons.cancel"))
@@ -48,8 +45,7 @@ describe("PayPalPpsSelectionScreen", () => {
     ).not.toBeNull();
   });
   it("psp items shown should match those one in the store", () => {
-    const store = createStore(appReducer, globalState as any);
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(searchPaypalPsp.success(pspList));
     pspList.forEach(psp => {
       expect(
@@ -58,16 +54,14 @@ describe("PayPalPpsSelectionScreen", () => {
     });
   });
   it("loading should be shown when the data is loading", () => {
-    const store = createStore(appReducer, globalState as any);
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(searchPaypalPsp.request());
     expect(
       render.component.queryByTestId(`PayPalPpsSelectionScreenLoadingError`)
     ).not.toBeNull();
   });
   it("error and retry button should be shown when some error occurred while retrieving data", () => {
-    const store = createStore(appReducer, globalState as any);
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(
       searchPaypalPsp.failure(getNetworkError(new Error("test")))
     );
@@ -77,8 +71,7 @@ describe("PayPalPpsSelectionScreen", () => {
   });
 
   it(`"what is a psp" link should be defined open a bottom sheet on onPress, when the psp list is ready`, () => {
-    const store = createStore(appReducer, globalState as any);
-    const render = renderComponent(store);
+    const render = renderComponent();
     render.store.dispatch(searchPaypalPsp.success(pspList));
     const link = render.component.getByText(
       I18n.t("wallet.onboarding.paypal.selectPsp.link")
@@ -91,12 +84,16 @@ describe("PayPalPpsSelectionScreen", () => {
   });
 });
 
-const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
-    PayPalPpsSelectionScreen,
-    "N/A",
-    {},
+const renderComponent = () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, globalState as any);
+  return {
+    component: renderScreenFakeNavRedux<GlobalState, NavigationParams>(
+      PayPalPpsSelectionScreen,
+      "N/A",
+      {},
+      store
+    ),
     store
-  ),
-  store
-});
+  };
+};
