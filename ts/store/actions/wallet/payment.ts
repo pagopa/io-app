@@ -1,4 +1,3 @@
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import {
   OmitStatusFromResponse,
   TypeofApiResponse
@@ -8,6 +7,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { Detail_v2Enum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -26,6 +27,8 @@ import {
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
+// where the payment started, more info https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p
+export type PaymentStartOrigin = "message" | "qrcode_scan" | "manual_insertion";
 /**
  * Resets the payment state before starting a new payment
  */
@@ -58,7 +61,7 @@ export const paymentVerifica = createAsyncAction(
   "PAYMENT_VERIFICA_SUCCESS",
   "PAYMENT_VERIFICA_FAILURE"
 )<
-  RptId,
+  { rptId: RptId; startOrigin: PaymentStartOrigin },
   PaymentRequestsGetResponse,
   keyof typeof PaymentProblemErrorEnum | undefined
 >();

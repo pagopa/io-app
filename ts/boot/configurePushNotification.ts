@@ -10,7 +10,7 @@ import { Alert } from "react-native";
 import PushNotification from "react-native-push-notification";
 import { debugRemotePushNotification } from "../config";
 import { setMixpanelPushNotificationToken } from "../mixpanel";
-import { loadMessages } from "../store/actions/messages";
+import { DEPRECATED_loadMessages as loadMessages } from "../store/actions/messages";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage

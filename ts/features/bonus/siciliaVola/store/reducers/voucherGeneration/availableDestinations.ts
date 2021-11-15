@@ -1,19 +1,26 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { AvailableDestinations } from "../../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../../utils/errors";
 import { Action } from "../../../../../../store/actions/types";
 import {
   svGenerateVoucherAvailableDestination,
-  svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherStart
 } from "../../actions/voucherGeneration";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../bpd/model/RemoteValue";
 
-export type AvailableDestinationsState = pot.Pot<
+export type AvailableDestinationsState = RemoteValue<
   AvailableDestinations,
   NetworkError
 >;
-const INITIAL_STATE: AvailableDestinationsState = pot.none;
+const INITIAL_STATE: AvailableDestinationsState = remoteUndefined;
 
 const reducer = (
   state: AvailableDestinationsState = INITIAL_STATE,
@@ -22,17 +29,24 @@ const reducer = (
   switch (action.type) {
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
-    case getType(svGenerateVoucherAvailableDestinationAbroad.request):
     case getType(svGenerateVoucherAvailableDestination.request):
-      return pot.toLoading(state);
-    case getType(svGenerateVoucherAvailableDestinationAbroad.success):
+      return remoteLoading;
     case getType(svGenerateVoucherAvailableDestination.success):
-      return pot.some(action.payload);
-    case getType(svGenerateVoucherAvailableDestinationAbroad.failure):
+      return remoteReady(action.payload);
     case getType(svGenerateVoucherAvailableDestination.failure):
-      return pot.toError(state, action.payload);
+      return remoteError(action.payload);
   }
   return state;
 };
+
+export const availableDestinationsSelector = createSelector(
+  [
+    (state: GlobalState) =>
+      state.bonus.sv.voucherGeneration.availableDestinations
+  ],
+  (
+    availableDestinations: AvailableDestinationsState
+  ): AvailableDestinationsState => availableDestinations
+);
 
 export default reducer;

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { messagesUnreadedAndUnarchivedSelector } from "../store/reducers/entities/messages";
+import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
 
@@ -29,7 +29,7 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 
 function mapStateToProps(state: GlobalState) {
   return {
-    messagesUnreaded: messagesUnreadedAndUnarchivedSelector(state)
+    messagesUnreaded: messagesUnreadAndUnarchivedSelector(state)
   };
 }
 

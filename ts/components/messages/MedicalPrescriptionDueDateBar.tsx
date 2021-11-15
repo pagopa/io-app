@@ -8,7 +8,6 @@ import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import {
@@ -28,7 +27,6 @@ import CalendarIconComponent from "./CalendarIconComponent";
 
 type Props = {
   message: CreatedMessageWithContentAndAttachments;
-  service?: ServicePublic;
 };
 
 const styles = StyleSheet.create({

@@ -123,7 +123,7 @@ const CreditCardOnboardingAttemptDetailScreen: React.FC<Props> = (
       : undefined;
   return (
     <BaseScreenComponent
-      goBack={props.navigation.goBack}
+      goBack={() => props.navigation.goBack()}
       showInstabugChat={false}
       dark={true}
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}

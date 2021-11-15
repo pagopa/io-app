@@ -102,12 +102,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddPrivativeCancel()),
   chooseIssuer: (issuerId: PrivativeIssuerId) => {
     dispatch(walletAddPrivativeChooseIssuer(issuerId));
-    dispatch(navigateToOnboardingPrivativeInsertCardNumberScreen());
+    navigateToOnboardingPrivativeInsertCardNumberScreen();
   },
-  navigateToDisabled: () =>
-    dispatch(navigateToOnboardingPrivativeKoDisabledScreen()),
+  navigateToDisabled: () => navigateToOnboardingPrivativeKoDisabledScreen(),
   navigateToUnavailable: () =>
-    dispatch(navigateToOnboardingPrivativeKoUnavailableScreen())
+    navigateToOnboardingPrivativeKoUnavailableScreen()
 });
 
 const mapStateToProps = (_: GlobalState) => ({});

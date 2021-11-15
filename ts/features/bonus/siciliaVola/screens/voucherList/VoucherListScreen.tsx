@@ -51,6 +51,7 @@ import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingE
 import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
 import { showToast } from "../../../../../utils/showToast";
 import { navigateToSvVoucherDetailsScreen } from "../../navigation/actions";
+import { selectedVoucherRevocationStateSelector } from "../../store/reducers/selectedVoucher";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -63,7 +64,7 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
-        dispatch(navigateToSvVoucherDetailsScreen());
+        navigateToSvVoucherDetailsScreen();
       }}
     />
   );
@@ -118,8 +119,13 @@ const EmptyVoucherList = () => {
 
 const VoucherListScreen = (props: Props): React.ReactElement => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const { requestVoucherState, resetFilter, filters, requestVoucherPage } =
-    props;
+  const {
+    requestVoucherState,
+    resetFilter,
+    filters,
+    requestVoucherPage,
+    revocationState
+  } = props;
 
   const [isFirstPageLoadedSuccessfully, setIsFirstPageLoadedSuccessfully] =
     useState<boolean>(false);
@@ -147,6 +153,15 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
     }
   }, [isDataLoadedError, isFirstPageLoadedSuccessfully]);
 
+  useEffect(() => {
+    if (isReady(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ok"),
+        "success"
+      );
+    }
+  }, [revocationState]);
+
   const openFiltersModal = () =>
     showAnimatedModal(
       <SvVoucherListFilters onClose={hideModal} onConfirm={hideModal} />,
@@ -168,7 +183,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
           isLoading={
             isLoading(props.possibleVoucherState) || isDataLoadedLoading
           }
-          loadingCaption={I18n.t("bonus.sv.voucherList.loading")}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
           onRetry={() => {
             if (isDataLoadedError) {
               props.requestVoucherPage(props.filters);
@@ -247,7 +262,8 @@ const mapStateToProps = (state: GlobalState) => ({
   filters: svFiltersSelector(state),
   requiredDataLoaded: svRequiredDataLoadedSelector(state),
   uiParameters: svVouchersListUiSelector(state),
-  possibleVoucherState: possibleVoucherStateSelector(state)
+  possibleVoucherState: possibleVoucherStateSelector(state),
+  revocationState: selectedVoucherRevocationStateSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VoucherListScreen);

@@ -70,7 +70,6 @@ import {
   runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
-import { navSelector } from "../../store/reducers/navigationHistory";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
@@ -200,8 +199,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const shouldPop =
       this.newMethodAdded && this.navigationKeyFrom !== undefined;
 
-    this.props.navigateBack(shouldPop ? this.navigationKeyFrom : undefined);
-    return true;
+    if (shouldPop) {
+      this.props.navigateBack(this.navigationKeyFrom);
+      return true;
+    }
+    return false;
   };
 
   private onFocus = () => {
@@ -624,7 +626,6 @@ const mapStateToProps = (state: GlobalState) => {
     areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
     isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
     readTransactions: transactionsReadSelector(state),
-    nav: navSelector(state),
     isPagoPaVersionSupported,
     bpdLoadState: bpdLastUpdateSelector(state),
     cgnDetails: cgnDetailSelector(state),
@@ -638,16 +639,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom })),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+    navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
+  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
-    dispatch(
-      navigateToTransactionDetailsScreen({
-        transaction,
-        isPaymentCompletedTransaction: false
-      })
-    );
+
+    navigateToTransactionDetailsScreen({
+      transaction,
+      isPaymentCompletedTransaction: false
+    });
   },
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
@@ -655,10 +655,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     bonus: BonusActivationWithQrCode,
     validFrom?: Date,
     validTo?: Date
-  ) =>
-    dispatch(navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo })),
-  navigateToBonusList: () => dispatch(navigateToAvailableBonusScreen()),
-  navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
+  ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
+  navigateToBonusList: () => navigateToAvailableBonusScreen(),
+  navigateBack: (keyFrom?: string) => navigateBack({ key: keyFrom }),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff()),

@@ -10,12 +10,7 @@ import availableDestinationReducer, {
 import availableStatesReducer, {
   AvailableStatesState
 } from "./availableStates";
-import availableRegionsReducer, {
-  AvailableRegionsState
-} from "./availableRegions";
-import availableProvincesReducer, {
-  AvailableProvincesState
-} from "./availableProvinces";
+
 import availableMunicipalitiesReducer, {
   AvailableMunicipalitiesState
 } from "./availableMunicipalities";
@@ -25,8 +20,6 @@ export type VoucherGenerationState = {
   voucherGenerated: VoucherGeneratedState;
   availableDestinations: AvailableDestinationsState;
   availableStates: AvailableStatesState;
-  availableRegions: AvailableRegionsState;
-  availableProvinces: AvailableProvincesState;
   availableMunicipalities: AvailableMunicipalitiesState;
 };
 
@@ -38,8 +31,6 @@ const svVoucherGenerationReducer = combineReducers<
   availableDestinations: availableDestinationReducer,
   voucherGenerated: voucherGeneratedReducer,
   availableStates: availableStatesReducer,
-  availableRegions: availableRegionsReducer,
-  availableProvinces: availableProvincesReducer,
   availableMunicipalities: availableMunicipalitiesReducer
 });
 

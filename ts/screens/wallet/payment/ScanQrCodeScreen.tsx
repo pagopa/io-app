@@ -3,7 +3,6 @@
  */
 import { head } from "fp-ts/lib/Array";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
-import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -16,6 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
+import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
@@ -24,11 +24,13 @@ import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
+import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 
 import I18n from "../../../i18n";
 import {
@@ -45,8 +47,6 @@ import { openAppSettings } from "../../../utils/appSettings";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -347,7 +347,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           <FooterWithButtons
             type="TwoButtonsInlineThird"
             leftButton={cancelButtonProps(
-              this.props.navigation.goBack,
+              () => this.props.navigation.goBack(),
               I18n.t("global.buttons.cancel")
             )}
             rightButton={primaryButtonProps}
@@ -359,20 +359,20 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateToWalletHome: () => navigateToWalletHome(),
   navigateToPaymentManualDataInsertion: () =>
-    dispatch(navigateToPaymentManualDataInsertion()),
+    navigateToPaymentManualDataInsertion(),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
     dispatch(paymentInitializeState());
-    dispatch(
-      navigateToPaymentTransactionSummaryScreen({
-        rptId,
-        initialAmount
-      })
-    );
+
+    navigateToPaymentTransactionSummaryScreen({
+      rptId,
+      initialAmount,
+      paymentStartOrigin: "qrcode_scan"
+    });
   }
 });
 

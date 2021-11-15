@@ -6,7 +6,7 @@ import {
   RptId,
   rptIdFromPaymentNoticeQrCode,
   RptIdFromString
-} from "italia-pagopa-commons/lib/pagopa";
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
@@ -253,12 +253,14 @@ export const getV2ErrorMainType = (
 
   switch (error) {
     case "PAA_PAGAMENTO_IN_CORSO":
+    case "PPT_PAGAMENTO_IN_CORSO":
       return "ONGOING";
     case "PAA_PAGAMENTO_ANNULLATO":
       return "REVOKED";
     case "PAA_PAGAMENTO_SCADUTO":
       return "EXPIRED";
     case "PAA_PAGAMENTO_DUPLICATO":
+    case "PPT_PAGAMENTO_DUPLICATO":
       return "DUPLICATED";
     default:
       return "UNCOVERED";
@@ -297,7 +299,7 @@ export const getTransactionFee = (
 };
 
 // try to extract IUV from transaction description
-// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo3.html
+// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo3.html
 export const getTransactionIUV = (
   transactionDescription: string
 ): Option<string> => {
@@ -335,7 +337,7 @@ export const getIuv = (data: RptId): string => {
 };
 
 // return the notice code from the given rptId
-// see https://docs.italia.it/italia/pagopa/pagopa-codici-docs/it/stabile/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
+// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
 export const getCodiceAvviso = (rptId: RptId) => {
   const pnn = rptId.paymentNoticeNumber;
   switch (pnn.auxDigit) {

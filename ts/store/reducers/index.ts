@@ -20,10 +20,12 @@ import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
 import backendStatusReducer from "./backendStatus";
+import backoffErrorReducer from "./backoffError";
 import cieReducer from "./cie";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
+import crossSessionsReducer from "./crossSessions";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
@@ -34,8 +36,8 @@ import entitiesReducer, {
 import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
-import navigationReducer from "./navigation";
-import navigationHistoryReducer from "./navigationHistory";
+import internalRouteNavigationReducer from "./internalRouteNavigation";
+import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
@@ -44,14 +46,11 @@ import persistedPreferencesReducer, {
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
-import crossSessionsReducer from "./crossSessions";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
-import internalRouteNavigationReducer from "./internalRouteNavigation";
-import backoffErrorReducer from "./backoffError";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -86,15 +85,14 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   // ephemeral state
   //
   appState: appStateReducer,
+  navigation: navigationReducer,
   network: networkReducer,
   backoffError: backoffErrorReducer,
-  nav: navigationReducer,
   deepLink: deepLinkReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
-  navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
   cie: cieReducer,
@@ -186,6 +184,10 @@ export function createRootReducer(
               persistedPreferences: {
                 ...initialPreferencesState,
                 isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
+              },
+              // notifications must be kept
+              notifications: {
+                ...state.notifications
               }
             } as GlobalState)
           : state;

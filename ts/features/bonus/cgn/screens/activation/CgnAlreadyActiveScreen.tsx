@@ -42,7 +42,7 @@ const mapStateToProps = (_: GlobalState) => ({});
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToDetail: () => {
     dispatch(cgnActivationCancel());
-    dispatch(navigateToCgnDetails());
+    navigateToCgnDetails();
   }
 });
 

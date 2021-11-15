@@ -64,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
@@ -216,8 +217,6 @@ betaBanner:
 connection:
   status:
     offline: Offline! Some features will not work.
-exit:
-  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -602,10 +601,10 @@ authentication:
       button: "Load/open CieID"
     card:
       headerTitle: Login with CIE
-      titleiOS: Please try again
+      titleiOS: Hold the card still
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Place your electronic ID card on the top of your iPhone
+      layCardMessageHeaderiOS: The sensor is located on top of the device.
       layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
@@ -989,6 +988,34 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is a payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "Privacy Policy"
+          row3Description2: "Terms and Conditions"
+        whatIsPspBottomSheet:
+          title: "What is a payment provider?"
+          body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
+      onBoardingCompleted:
+        title: "That's it!"
+        body: "Now have a look at the current settings of your new method."
+        secondaryButton: "Close"
+        primaryButton: "View method"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1265,7 +1292,7 @@ wallet:
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
-  addPaymentMethodTitle: Add app and other methods
+  addPaymentMethodTitle: Add a method
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
@@ -1274,7 +1301,7 @@ wallet:
     card:
       name: Credit, debit or prepaid card
       shortName: "Card"
-      description: The card issued by your bank that you normally use to pay in stores and online
+      description: The card that you use to pay in stores and online
       pagoPaCapability:
         title: In app payments
         description: Pay your notices with pagoPA logo
@@ -1292,18 +1319,19 @@ wallet:
       description: Use your favourite mobile payment apps in IO
     loyalty:
       name: Supermarket Loyalty Card
-      description: The payment card issued by your supermarket, used to pay for groceries
+      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
-      description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
+      description: The card used to pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
-      description: Pay with Satispay
+      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
+      description: Link your BANCOMAT Pay account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -1312,6 +1340,7 @@ wallet:
       description: Cards issued by Poste Italiane
     paypal:
       name: PayPal
+      description: Pay with your linked card or bank account
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -2652,7 +2681,27 @@ bonus:
           departure: "Departure date"
           return: "Return date"
       summary:
-        title: "SummaryScreen"
+        title: "Summary"
+        subtitle1:
+          normal1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts ("
+          link: "art.76 of the Presidential Decree of 28 December 2000, n.445"
+          normal2: ") that you meet the following requirements:"
+        subtitle2: "And to request a discount code for a flight with the following characteristics:"
+        fields:
+          residence:
+            label: "Residence:"
+            value: "Sicily"
+          category:
+            label: "Category:"
+            value:
+              disabled: "Severely disabled pursuant to article 3, paragraph 3, of law no. 104"
+              student: "Off-site student"
+              worker: "Employee with a workplace outside Sicily"
+              sick: "Patient in need of treatment outside the Sicily region"
+          flightDate:
+            label: "Flight date:"
+            disabled: "All"
+          availableDestination: "Possible destinations:"
       voucherGenerated:
         title: "Here is your discount code"
         subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
@@ -2705,6 +2754,16 @@ bonus:
         cta:
           voucherRevocation: "Voucher revocation"
           openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
     components:
       voucherVisualDetails:
         uniqueCode: "Unique code"
@@ -2720,6 +2779,10 @@ bonus:
         cta:
           exit: "Exit"
           voucherRevocation: "Voucher revocation"
+    pdfVoucher:
+      toast:
+        ok: "Voucher saved successfully"
+        ko: "Problems saving the voucher"
 
 features:
   euCovidCertificate:

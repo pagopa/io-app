@@ -3,6 +3,17 @@
           xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
 
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="http"/>
+    </intent>
+    <intent>
+      <action android:name="android.intent.action.VIEW" />
+      <data android:scheme="https"/>
+    </intent>
+  </queries>
+
   <supports-screens android:smallScreens="true"
                     android:normalScreens="true"
                     android:largeScreens="true"

@@ -177,7 +177,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestOfflineMerchants: () =>
     dispatch(cgnOfflineMerchants.request(OFFLINE_FIXED_BOUNDINGBOX)),
   navigateToMerchantDetail: (id: Merchant["id"]) =>
-    dispatch(navigateToCgnMerchantDetail({ merchantID: id }))
+    navigateToCgnMerchantDetail({ merchantID: id })
 });
 
 export default connect(

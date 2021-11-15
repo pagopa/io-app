@@ -134,11 +134,9 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onContinue: (isFirstOnboarding: boolean) =>
     // if the user is not new, navigate to the thank-you screen
-    dispatch(
-      !isFirstOnboarding
-        ? navigateToOnboardingServicePreferenceCompleteAction()
-        : servicesOptinCompleted()
-    ),
+    !isFirstOnboarding
+      ? navigateToOnboardingServicePreferenceCompleteAction()
+      : dispatch(servicesOptinCompleted()),
   onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
     dispatch(profileUpsert.request({ service_preferences_settings: { mode } }))
 });

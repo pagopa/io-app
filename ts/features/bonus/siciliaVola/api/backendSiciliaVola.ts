@@ -16,16 +16,18 @@ import {
 import { SessionToken } from "../../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
-  getAeroportiBeneficiarioDefaultDecoder,
-  GetAeroportiBeneficiarioT,
-  getAeroportiStatoDefaultDecoder,
-  GetAeroportiStatoT,
+  getAeroportiAmmessiDefaultDecoder,
+  GetAeroportiAmmessiT,
+  AnnullaVoucherT,
+  annullaVoucherDefaultDecoder,
   getListaComuniBySiglaProvinciaDefaultDecoder,
   GetListaComuniBySiglaProvinciaT,
   getListaProvinceByIdRegioneDefaultDecoder,
   GetListaProvinceByIdRegioneT,
   getListaRegioniDefaultDecoder,
   GetListaRegioniT,
+  getPdfDefaultDecoder,
+  GetPdfT,
   getStatiUEDefaultDecoder,
   GetStatiUET,
   getStatiVoucherDefaultDecoder,
@@ -35,6 +37,8 @@ import {
 } from "../../../../../definitions/api_sicilia_vola/requestTypes";
 import { MitVoucherToken } from "../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { VoucherBeneficiarioInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherBeneficiarioInputBean";
+import { AeroportiAmmessiInputBean } from "../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
+import { VoucherCodeInputBean } from "../../../../../definitions/api_sicilia_vola/VoucherCodeInputBean";
 
 /**
  * Get the Sicilia Vola session token
@@ -94,31 +98,30 @@ const GetListaComuniBySiglaProvincia: GetListaComuniBySiglaProvinciaT = {
 };
 
 /**
- * Get the list of the airports available for the voucher given a regionId when the selected state is Italy
+ * Get the list of the airports available for the voucher given a stateId, a longitude and a latitude
  */
-const GetAeroportiBeneficiario: GetAeroportiBeneficiarioT = {
-  method: "get",
-  url: params =>
-    `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idRegione}`,
+const GetAeroportiAmmessi: GetAeroportiAmmessiT = {
+  method: "post",
+  url: _ =>
+    `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiAmmessi`,
   query: _ => ({}),
-  headers: h => ({
-    Authorization: h.Bearer
-  }),
-  response_decoder: getAeroportiBeneficiarioDefaultDecoder()
+  body: ({ aeroportiAmmessiInputBean }) =>
+    JSON.stringify({ aeroportiAmmessiInputBean }),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getAeroportiAmmessiDefaultDecoder()
 };
 
 /**
- * Get the list of the airports available for the voucher given a stateId when the selected state is an abroad state
+/**
+ * Revoke a voucher identified by id
  */
-const GetAeroportiStato: GetAeroportiStatoT = {
-  method: "get",
-  url: params =>
-    `/api/v1/mitvoucher/data/rest/secured/beneficiario/aeroportiSede/${params.idStato}`,
+const PostAnnullaVoucher: AnnullaVoucherT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/annullaVoucher`,
   query: _ => ({}),
-  headers: h => ({
-    Authorization: h.Bearer
-  }),
-  response_decoder: getAeroportiStatoDefaultDecoder()
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: annullaVoucherDefaultDecoder()
 };
 
 /**
@@ -146,6 +149,19 @@ const GetStatiVoucher: GetStatiVoucherT = {
   query: _ => ({}),
   headers: ApiHeaderJson,
   response_decoder: getStatiVoucherDefaultDecoder()
+};
+
+/**
+ * Get the pdf voucher
+ *
+ */
+const GetStampaVoucher: GetPdfT = {
+  method: "post",
+  url: _ => `/api/v1/mitvoucher/data/rest/secured/beneficiario/stampaVoucher`,
+  query: _ => ({}),
+  body: ({ voucherCodeInputBean }) => JSON.stringify(voucherCodeInputBean),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: getPdfDefaultDecoder()
 };
 
 const withSiciliaVolaToken =
@@ -181,18 +197,14 @@ export const BackendSiciliaVolaClient = (
       GetListaComuniBySiglaProvincia,
       options
     ),
-    getAeroportiBeneficiario: (idRegione: number) =>
+    getAeroportiAmmessi: (
+      avilableDestinationRequest: AeroportiAmmessiInputBean
+    ) =>
       flip(
         withSiciliaVolaToken(
-          createFetchRequestForApi(GetAeroportiBeneficiario, options)
+          createFetchRequestForApi(GetAeroportiAmmessi, options)
         )
-      )({ idRegione }),
-    getAeroportiStato: (idStato: number) =>
-      flip(
-        withSiciliaVolaToken(
-          createFetchRequestForApi(GetAeroportiStato, options)
-        )
-      )({ idStato }),
+      )({ aeroportiAmmessiInputBean: avilableDestinationRequest }),
     getVoucherBeneficiario: (
       voucherListRequest: VoucherBeneficiarioInputBean
     ) =>
@@ -201,7 +213,19 @@ export const BackendSiciliaVolaClient = (
         GetVoucherBeneficiario,
         options
       )({ voucherBeneficiarioInputBean: voucherListRequest }),
-    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options)
+    getStatiVoucher: createFetchRequestForApi(GetStatiVoucher, options),
+    getStampaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(GetStampaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode }),
+    postAnnullaVoucher: (voucherCode: VoucherCodeInputBean) =>
+      flip(
+        withSiciliaVolaToken(
+          createFetchRequestForApi(PostAnnullaVoucher, options)
+        )
+      )({ voucherCodeInputBean: voucherCode })
   };
 };
 

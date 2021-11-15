@@ -20,6 +20,21 @@ definitions:
         type: "string"
       sigla:
         type: "string"
+  AeroportiAmmessiInputBean:
+    type: object
+    properties:
+      latitudine:
+        type: number
+        format: double
+      longitudine:
+        type: number
+        format: double
+      stato:
+        type: string
+    required:
+      - latitudine
+      - longitudine
+      - stato
   BeneficiarioBean:
     type: "object"
     properties:
@@ -59,6 +74,12 @@ definitions:
         type: "string"
       primaRichiesta:
         type: "boolean"
+  VoucherCodeInputBean:
+    type: object
+    properties:
+      codiceVoucher:
+        type: "integer"
+        format: "int64"
   VoucherBean:
     type: "object"
     properties:
@@ -222,6 +243,20 @@ definitions:
     type: "object"
     properties:
       codErrore:
+        type: "string"
+  ProblemBean:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+      title:
+        type: "string"
+      status:
+        type: "integer"
+        format: "int32"
+      detail:
+        type: "string"
+      instance:
         type: "string"
   ListaVoucherBeneficiarioOutputBean:
     type: "object"
@@ -495,7 +530,42 @@ definitions:
         format: "int64"
       descrizione:
         type: "string"
+  PdfData:
+    type: "object"
+    properties:
+      data:
+        type: "string"
+    required:
+      - data
 paths:
+  /rest/secured/beneficiario/aeroportiAmmessi:
+    post:
+      tags:
+        - securedBeneficiario
+      operationId: getAeroportiAmmessi
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "voucherBean"
+        required: true
+        schema:
+          $ref: "#/definitions/AeroportiAmmessiInputBean"
+      responses:
+        200:
+          description: "Tutto OK"
+          schema:
+            $ref: "#/definitions/AeroportoSedeBeanList"
+        "400":
+          description: "Validazioni non superate"
+          schema:
+            $ref: "#/definitions/ProblemBean"
+        "500":
+          description: "Errore interno."
   /rest/secured/beneficiario/aeroportiSede/{idRegione}:
     get:
       tags:
@@ -547,24 +617,32 @@ paths:
   /rest/secured/beneficiario/annullaVoucher:
     post:
       tags:
-      - "securedBeneficiario"
+        - "securedBeneficiario"
       operationId: "annullaVoucher"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
       parameters:
-      - in: "body"
-        name: "body"
-        description: "voucherBean"
-        required: true
-        schema:
-          $ref: "#/definitions/VoucherBean"
+        - in: "body"
+          name: "body"
+          description: "VoucherCodeInputBean"
+          required: true
+          schema:
+            $ref: "#/definitions/VoucherCodeInputBean"
       responses:
         200:
           description: "Tutto OK"
           schema:
             $ref: "#/definitions/SimpleResponseBean"
+        400:
+          description: "Validazioni non superate"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/ProblemBean"
+            application/problem+json:
+              schema:
+                $ref: "#/definitions/ProblemBean"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/beneficiario:
@@ -663,6 +741,32 @@ paths:
           description: "Tutto OK"
           schema:
             $ref: "#/definitions/ListaVoucherBeneficiarioOutputBean"
+        500:
+          description: "Errore interno."
+  /rest/secured/beneficiario/stampaVoucher:
+    post:
+      tags:
+        - "securedBeneficiario"
+      operationId: "getPdf"
+      security:
+        - Bearer: [ ]
+          OcpApimSubscriptionKey: [ ]
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "VoucherCodeInputBean"
+          required: true
+          schema:
+            $ref: "#/definitions/VoucherCodeInputBean"
+      responses:
+        200:
+          description: "a base64 string representing the image to be shown"
+          schema:
+            $ref: "#/definitions/PdfData"
+        400:
+          description: "Validazioni non superate"
+          schema:
+            $ref: "#/definitions/ProblemBean"
         500:
           description: "Errore interno."
   /rest/secured/beneficiario/statiVoucher:

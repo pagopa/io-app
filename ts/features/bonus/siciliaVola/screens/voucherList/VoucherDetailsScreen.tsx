@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { fromNullable } from "fp-ts/lib/Option";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -10,23 +10,27 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  svGenerateVoucherBack,
-  svGenerateVoucherCompleted,
-  svGenerateVoucherGeneratedVoucher
-} from "../../store/actions/voucherGeneration";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { VoucherRequest } from "../../types/SvVoucherRequest";
 import I18n from "../../../../../i18n";
-import { svVoucherDetailGet } from "../../store/actions/voucherList";
+import {
+  svVoucherDetailGet,
+  svVoucherRevocation
+} from "../../store/actions/voucherList";
 import { SvVoucherId } from "../../types/SvVoucher";
 import {
+  selectedPdfVoucherStateSelector,
   selectedVoucherCodeSelector,
+  selectedVoucherRevocationStateSelector,
   selectedVoucherSelector
 } from "../../store/reducers/selectedVoucher";
 import { H3 } from "../../../../../components/core/typography/H3";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
-import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import {
+  fold,
+  isError,
+  isLoading,
+  isReady
+} from "../../../bpd/model/RemoteValue";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useIOBottomSheetRaw } from "../../../../../utils/bottomSheet";
@@ -34,7 +38,9 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { fromVoucherToDestinationLabels } from "../../utils";
-import { navigateToWorkunitGenericFailureScreen } from "../../../../../store/actions/navigation";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import { showToast } from "../../../../../utils/showToast";
+import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -47,14 +53,69 @@ const styles = StyleSheet.create({
   }
 });
 
+const handleVoucherRevocation = (onVoucherRevocation: () => void) => {
+  Alert.alert(
+    I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.title"),
+    I18n.t("bonus.sv.voucherList.details.voucherRevocation.alert.message"),
+    [
+      {
+        text: I18n.t(
+          "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ok"
+        ),
+        style: "default",
+        onPress: onVoucherRevocation
+      },
+      {
+        text: I18n.t(
+          "bonus.sv.voucherList.details.voucherRevocation.alert.cta.ko"
+        ),
+        style: "default"
+      }
+    ]
+  );
+};
+
 const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
-  const { selectedVoucherCode, getVoucherDetail } = props;
+  const {
+    selectedVoucherCode,
+    getVoucherDetail,
+    revocationState,
+    back,
+    pdfVoucherState
+  } = props;
 
   useEffect(() => {
     if (selectedVoucherCode !== undefined) {
       getVoucherDetail(selectedVoucherCode);
     }
   }, [selectedVoucherCode, getVoucherDetail]);
+
+  useEffect(() => {
+    if (isError(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ko")
+      );
+    }
+    // Return to the VoucherListScreen if the revocation is completed since the voucher doesn't exist anymore.
+    if (isReady(revocationState)) {
+      showToast(
+        I18n.t("bonus.sv.voucherList.details.voucherRevocation.toast.ok"),
+        "success"
+      );
+      back();
+    }
+  }, [revocationState, back]);
+
+  useEffect(() => {
+    fold(
+      pdfVoucherState,
+      () => null,
+      () => null,
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ok"), "success"),
+      _ => showToast(I18n.t("bonus.sv.pdfVoucher.toast.ko"))
+    );
+  }, [pdfVoucherState]);
+
   const { present, dismiss } = useIOBottomSheetRaw(650);
 
   // The selectedVoucherCode can't be undefined in this screen
@@ -81,6 +142,11 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
         barCode={selectedVoucher.barCode}
         qrCode={selectedVoucher.qrCode}
         onExit={dismiss}
+        onSaveVoucher={() => {
+          dismiss();
+          props.stampaVoucher(selectedVoucher.id);
+        }}
+        pdfVoucherState={pdfVoucherState}
       />,
       I18n.t("bonus.sv.components.voucherBottomsheet.title")
     );
@@ -90,7 +156,10 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       borderColor: IOColors.red
     },
     labelColor: IOColors.red,
-    onPress: props.back,
+    onPress: () =>
+      handleVoucherRevocation(() =>
+        props.voucherRevocationRequest(selectedVoucher.id)
+      ),
     title: I18n.t("bonus.sv.voucherList.details.cta.voucherRevocation")
   };
   const openQrButtonProps = {
@@ -101,6 +170,23 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   };
 
   const voucherId = selectedVoucher.id?.toString() ?? "";
+
+  // The check isReady(revocationState) is needed in order to avoid glitch while change screen
+  if (isLoading(revocationState) || isReady(revocationState)) {
+    return (
+      <BaseScreenComponent
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
+        <LoadingErrorComponent
+          isLoading={true}
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={() => null}
+        />
+      </BaseScreenComponent>
+    );
+  }
 
   return (
     <BaseScreenComponent
@@ -172,7 +258,9 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
             </H4>
             <View style={{ flex: 1, alignItems: "flex-end" }}>
               {selectedVoucher.availableDestination.map(d => (
-                <H4 key={d}>{d}</H4>
+                <H4 style={{ textAlign: "right" }} key={d}>
+                  {d}
+                </H4>
               ))}
             </View>
           </View>
@@ -187,17 +275,19 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  back: () => dispatch(svGenerateVoucherBack()),
-  completed: () => dispatch(svGenerateVoucherCompleted()),
-  generateVoucherRequest: (voucherRequest: VoucherRequest) =>
-    dispatch(svGenerateVoucherGeneratedVoucher.request(voucherRequest)),
+  back: () => navigateBack(),
+  voucherRevocationRequest: (voucherId: SvVoucherId) =>
+    dispatch(svVoucherRevocation.request(voucherId)),
   getVoucherDetail: (voucherId: SvVoucherId) =>
     dispatch(svVoucherDetailGet.request(voucherId)),
-  navigateToGenericFailure: () => navigateToWorkunitGenericFailureScreen()
+  stampaVoucher: (voucherId: SvVoucherId) =>
+    dispatch(svGetPdfVoucher.request(voucherId))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedVoucher: selectedVoucherSelector(state),
-  selectedVoucherCode: selectedVoucherCodeSelector(state)
+  selectedVoucherCode: selectedVoucherCodeSelector(state),
+  revocationState: selectedVoucherRevocationStateSelector(state),
+  pdfVoucherState: selectedPdfVoucherStateSelector(state)
 });
 
 export default connect(

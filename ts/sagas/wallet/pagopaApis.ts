@@ -1,8 +1,9 @@
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { Either, left, right } from "fp-ts/lib/Either";
+
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
@@ -723,7 +724,7 @@ export function* paymentVerificaRequestHandler(
     const response: SagaCallReturnType<typeof getVerificaRpt> = yield call(
       getVerificaRpt,
       {
-        rptId: RptIdFromString.encode(action.payload),
+        rptId: RptIdFromString.encode(action.payload.rptId),
         test: isPagoPATestEnabled
       }
     );

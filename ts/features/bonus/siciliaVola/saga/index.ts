@@ -6,13 +6,11 @@ import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
 import {
   svGenerateVoucherAvailableDestination,
-  svGenerateVoucherAvailableDestinationAbroad,
   svGenerateVoucherAvailableMunicipality,
-  svGenerateVoucherAvailableProvince,
-  svGenerateVoucherAvailableRegion,
   svGenerateVoucherAvailableState,
   svGenerateVoucherGeneratedVoucher,
-  svGenerateVoucherStart
+  svGenerateVoucherStart,
+  svGetPdfVoucher
 } from "../store/actions/voucherGeneration";
 import { BackendSiciliaVolaClient } from "../api/backendSiciliaVola";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -32,16 +30,15 @@ import { handleSvVoucherGenerationStartActivationSaga } from "./orchestration/vo
 import { handleSvServiceAlive } from "./networking/handleSvServiceAlive";
 import { handleGetStatiUE } from "./networking/handleGetStatiUE";
 import { handleSvTosAccepted } from "./networking/handleSvTosAccepted";
-import { handleGetListaRegioni } from "./networking/handleGetListaRegioni";
-import { handleGetListaProvinceByIdRegione } from "./networking/handleGetListaProvinceByIdRegione";
 import { handleGetListaComuniBySiglaProvincia } from "./networking/handleGetListaComuniBySiglaProvincia";
 import { handleGetDettaglioVoucher } from "./networking/handleGetDettaglioVoucher";
 import { handlePostAggiungiVoucher } from "./networking/handlePostAggiungiVoucher";
 import { handleGetVoucherBeneficiario } from "./networking/handleGetVoucherBeneficiario";
 import { handleSvAccepTos } from "./networking/handleSvAcceptTos";
-import { handleGetAeroportiBeneficiario } from "./networking/handleGetAeroportiBeneficiario";
+import { handleGetAeroportiAmmessi } from "./networking/handleGetAeroportAmmessi";
 import { handleVoucherRevocation } from "./networking/handleVoucherRevocation";
 import { handleGetVoucheStati } from "./networking/handleGetVoucherStati";
+import { handleGetStampaVoucher } from "./networking/handleGetStampaVoucher";
 
 export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // Client for the Sicilia Vola
@@ -95,20 +92,6 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
     siciliaVolaClient.getStatiUE
   );
 
-  // SV get the list of the Italian regions
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableRegion.request),
-    handleGetListaRegioni,
-    siciliaVolaClient.getListaRegioni
-  );
-
-  // SV get the list of province given a region id
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableProvince.request),
-    handleGetListaProvinceByIdRegione,
-    siciliaVolaClient.getListaProvinceByIdRegione
-  );
-
   // SV get the list municipalities given a province
   yield takeLatest(
     getType(svGenerateVoucherAvailableMunicipality.request),
@@ -119,15 +102,8 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   // SV get the list of available destination given a region when the selected state is Italy
   yield takeLatest(
     getType(svGenerateVoucherAvailableDestination.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiBeneficiario,
-    svSessionManager
-  );
-  // SV get the list of available destination given a state when the selected state is an abroad state
-  yield takeLatest(
-    getType(svGenerateVoucherAvailableDestinationAbroad.request),
-    handleGetAeroportiBeneficiario,
-    siciliaVolaClient.getAeroportiStato,
+    handleGetAeroportiAmmessi,
+    siciliaVolaClient.getAeroportiAmmessi,
     svSessionManager
   );
 
@@ -163,10 +139,17 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   );
 
   // SV post the voucher revocation
-  // TODO: pass the client when it will be created
   yield takeLatest(
     getType(svVoucherRevocation.request),
     handleVoucherRevocation,
+    siciliaVolaClient.postAnnullaVoucher,
+    svSessionManager
+  );
+
+  yield takeLatest(
+    getType(svGetPdfVoucher.request),
+    handleGetStampaVoucher,
+    siciliaVolaClient.getStampaVoucher,
     svSessionManager
   );
 }

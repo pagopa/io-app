@@ -1,13 +1,13 @@
 // gets the current screen from navigation state
 
-import { index } from "fp-ts/lib/Array";
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import {
   NavigationLeafRoute,
   NavigationRoute,
   NavigationState
 } from "react-navigation";
-import { NavigationHistoryState } from "../store/reducers/navigationHistory";
+import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 
 /**
  * Assuming that each and every NavigationRoute will eventually lead
@@ -24,6 +24,9 @@ const findLeafRoute = (
   return branchOrLeaf;
 };
 
+/**
+ * @param navState
+ */
 export function getCurrentRouteName(
   navState: NavigationState
 ): string | undefined {
@@ -34,6 +37,9 @@ export function getCurrentRouteName(
   }
 }
 
+/**
+ * @param navState
+ */
 export function getCurrentRouteKey(
   navState: NavigationState
 ): string | undefined {
@@ -43,6 +49,16 @@ export function getCurrentRouteKey(
     return undefined;
   }
 }
+
+export const getCurrentRoute = (
+  navState: NavigationState
+): NavigationLeafRoute | undefined => {
+  try {
+    return findLeafRoute(navState.routes[navState.index]);
+  } catch {
+    return undefined;
+  }
+};
 
 /**
  * This function returns the route name from a given NavigationRoute param
@@ -59,12 +75,12 @@ export function getRouteName(route: NavigationRoute): Option<string> {
 }
 
 /**
- * This function returns the name of the precedent navigation route to understand
- * from where the current route has been navigated
+ * @deprecated
  */
-export function whereAmIFrom(nav: NavigationHistoryState): Option<string> {
-  const navLength = nav.length;
-  return index(navLength - 1, [...nav]).fold(none, ln =>
-    getRouteName(ln.routes[ln.index])
-  );
-}
+export const isOnboardingCompleted = () => {
+  const route = NavigationService.getCurrentState();
+  if (route === null) {
+    return false;
+  }
+  return route.routes?.length > 0 && route.routes[0].routeName === ROUTES.MAIN;
+};
