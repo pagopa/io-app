@@ -19,9 +19,9 @@ import WrappedFlatList from "./WrappedMunicipalityFlatList";
 type OwnProps = {
   availableStates: IndexedById<State>;
   selectedState?: State;
-  setSelectedState: (state: State) => void;
+  onStateSelected: (state: State) => void;
   selectedMunicipality?: Municipality;
-  setSelectedMunicipality: (municipality: Municipality) => void;
+  onMunicipalitySelected: (municipality: Municipality) => void;
 };
 
 type Props = OwnProps &
@@ -63,7 +63,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
               <ListItem
                 icon={false}
                 onPress={() => {
-                  props.setSelectedState(i.item);
+                  props.onStateSelected(i.item);
                   hideModal();
                 }}
               >
@@ -95,7 +95,7 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
         disabled={props.selectedState === undefined}
         showModalInputTextbox={true}
         wrappedFlatlist={
-          <WrappedFlatList onPress={props.setSelectedMunicipality} />
+          <WrappedFlatList onPress={props.onMunicipalitySelected} />
         }
         selectedValue={props.selectedMunicipality?.name}
       />
