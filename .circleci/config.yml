@@ -461,7 +461,8 @@ jobs:
               --record-logs all \
               --take-screenshots all \
               --record-videos failing \
-              --debug-synchronization 1000
+              --debug-synchronization 1000 \
+              --retries 3
 
       # store detox artifacts
       - store_artifacts:
