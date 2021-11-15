@@ -421,16 +421,11 @@ export const navigateToSatispayDetailScreen = (
     })
   );
 
-/**
- * @deprecated
- */
 export const navigateToPayPalDetailScreen = (paypal: PayPalPaymentMethod) =>
-  NavigationService.dispatchNavigationAction(
-    NavigationActions.navigate({
-      routeName: ROUTES.WALLET_PAYPAL_DETAIL,
-      params: { paypal }
-    })
-  );
+  NavigationActions.navigate({
+    routeName: ROUTES.WALLET_PAYPAL_DETAIL,
+    params: { paypal }
+  });
 
 /**
  * @deprecated
