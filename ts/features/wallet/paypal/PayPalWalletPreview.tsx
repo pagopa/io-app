@@ -1,6 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { constNull } from "fp-ts/lib/function";
 import payPalCard from "../../../../img/wallet/cards-icons/paypal_card.png";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -8,7 +9,6 @@ import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { CardLogoPreview } from "../component/card/CardLogoPreview";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
-import { navigateToPayPalDetailScreen } from "../../../store/actions/navigation";
 
 type OwnProps = {
   paypal: PayPalPaymentMethod;
@@ -44,9 +44,7 @@ const PayPalWalletPreview: React.FunctionComponent<Props> = props => (
 
 const mapDispatchToProps = (_: Dispatch) => ({
   // TODO replace with the effective handler
-  navigateToPayPalDetails: (paypal: PayPalPaymentMethod) => {
-    navigateToPayPalDetailScreen(paypal);
-  }
+  navigateToPayPalDetails: (_: PayPalPaymentMethod) => constNull
 });
 
 const mapStateToProps = (_: GlobalState) => ({});
