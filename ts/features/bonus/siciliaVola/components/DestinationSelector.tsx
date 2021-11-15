@@ -10,7 +10,6 @@ import TextboxWithSuggestion from "../../../../components/ui/TextboxWithSuggesti
 import { H4 } from "../../../../components/core/typography/H4";
 import { IndexedById, toArray } from "../../../../store/helpers/indexer";
 import { Municipality, State } from "../types/SvVoucherRequest";
-import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
 import { svGenerateVoucherAvailableMunicipality } from "../store/actions/voucherGeneration";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
