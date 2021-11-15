@@ -1,26 +1,28 @@
+import { Content } from "native-base";
 import * as React from "react";
+import { useRef } from "react";
+import { SafeAreaView } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { NavigationActions, NavigationEvents } from "react-navigation";
-import { SafeAreaView } from "react-native";
-import { Content } from "native-base";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { fetchPagoPaTimeout } from "../../../../../config";
 import I18n from "../../../../../i18n";
+import { navigateBack } from "../../../../../store/actions/navigation";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
   isError,
   isLoading,
   isUndefined
 } from "../../../../bonus/bpd/model/RemoteValue";
-import { abiListSelector, abiSelector } from "../../store/abi";
 import { loadAbi } from "../../bancomat/store/actions";
-import { fetchPagoPaTimeout } from "../../../../../config";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
+import { abiListSelector, abiSelector } from "../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";
 
 type MethodType = "bancomatPay" | "bancomat";
@@ -53,15 +55,17 @@ const getSectionName = (methodType: MethodType): SectionStatusKey => {
  * @constructor
  */
 const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
-  // eslint-disable-next-line functional/no-let
-  let errorRetry: number | undefined;
+  const errorRetry = useRef<number | undefined>(undefined);
+  const { bankRemoteValue, loadAbis } = props;
+
   React.useEffect(() => {
-    if (isUndefined(props.bankRemoteValue)) {
-      props.loadAbis();
-    } else if (isError(props.bankRemoteValue)) {
-      errorRetry = setTimeout(props.loadAbis, fetchPagoPaTimeout);
+    if (isUndefined(bankRemoteValue)) {
+      loadAbis();
+    } else if (isError(bankRemoteValue)) {
+      // eslint-disable-next-line functional/immutable-data
+      errorRetry.current = setTimeout(loadAbis, fetchPagoPaTimeout);
     }
-  }, [props.bankRemoteValue]);
+  }, [bankRemoteValue, loadAbis]);
 
   return (
     <BaseScreenComponent
@@ -74,7 +78,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       })}
       contextualHelp={emptyContextualHelp}
     >
-      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry)} />
+      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry.current)} />
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <SearchBankComponent
@@ -92,7 +96,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAbis: () => dispatch(loadAbi.request()),
-  onBack: () => dispatch(NavigationActions.back())
+  onBack: () => navigateBack()
 });
 
 const mapStateToProps = (state: GlobalState) => ({

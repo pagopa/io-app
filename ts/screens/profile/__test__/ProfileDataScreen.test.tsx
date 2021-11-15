@@ -6,20 +6,14 @@ import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  hasProfileEmailSelector,
   profileEmailSelector,
   profileNameSurnameSelector,
-  profileSpidEmailSelector,
   isProfileEmailValidatedSelector
 } from "../../../store/reducers/profile";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import ProfileDataScreen from "../ProfileDataScreen";
 import I18n from "../../../i18n";
-import {
-  navigateToEmailReadScreen,
-  navigateToEmailInsertScreen
-} from "../../../store/actions/navigation";
 
 const mockPresentFn = jest.fn();
 jest.mock("../../../utils/bottomSheet", () => ({
@@ -70,18 +64,12 @@ describe("Test ProfileDataScreen", () => {
     }
   });
   it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
-    const { component, store } = renderComponent();
+    const { component } = renderComponent();
 
     expect(component).not.toBeNull();
     const listItemComponent = component.getByTestId("insert-or-edit-email");
     expect(listItemComponent).not.toBeNull();
     fireEvent.press(listItemComponent);
-    const hasProfileEmail = hasProfileEmailSelector(store.getState());
-    if (hasProfileEmail) {
-      store.dispatch(navigateToEmailReadScreen());
-    } else {
-      store.dispatch(navigateToEmailInsertScreen());
-    }
   });
   it("should render ListItemComponent name and surname with the right title and subtitle", () => {
     const { component, store } = renderComponent();
@@ -97,52 +85,6 @@ describe("Test ProfileDataScreen", () => {
       expect(listItemComponent).toHaveTextContent(nameSurname);
     } else {
       expect(listItemComponent).toBeNull();
-    }
-  });
-  it("should render View spid data if spid email exists", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-    } else {
-      expect(viewComponent).toBeNull();
-    }
-  });
-  it("should render ListItemComponent spid email with the right title and subtitle if spid email exists", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-      const listItemComponent = component.queryByTestId("spid-email");
-      expect(listItemComponent).not.toBeNull();
-      expect(listItemComponent).toHaveTextContent(
-        I18n.t("profile.data.list.spid.email")
-      );
-      expect(listItemComponent).toHaveTextContent(spidEmail.value);
-    } else {
-      expect(viewComponent).toBeNull();
-    }
-  });
-  it("when press ListItemComponent spid email, should call useIOBottomSheet present function", () => {
-    const { component, store } = renderComponent();
-
-    expect(component).not.toBeNull();
-    const spidEmail = profileSpidEmailSelector(store.getState());
-    const viewComponent = component.queryByTestId("spid-data");
-    if (spidEmail.isSome()) {
-      expect(viewComponent).not.toBeNull();
-      const listItemComponent = component.getByTestId("spid-email");
-      expect(listItemComponent).not.toBeNull();
-      fireEvent.press(listItemComponent);
-      expect(mockPresentFn).toHaveBeenCalled();
-    } else {
-      expect(viewComponent).toBeNull();
     }
   });
 });

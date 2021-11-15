@@ -65,13 +65,15 @@ const LocalServicesWebView = (props: Props) => {
   const [webViewError, setWebViewError] = React.useState<boolean>(false);
   const webViewRef = React.createRef<WebView>();
 
+  const { servicesById, onServiceSelect } = props;
+
   React.useEffect(() => {
     fromNullable(serviceIdToLoad)
-      .mapNullable(sid => props.servicesById[sid])
+      .mapNullable(sid => servicesById[sid])
       .map(servicePot => {
         // if service has been loaded
         if (isStrictSome(servicePot)) {
-          props.onServiceSelect(servicePot.value);
+          onServiceSelect(servicePot.value);
           setServiceIdToLoad(undefined);
           return;
         }
@@ -79,7 +81,7 @@ const LocalServicesWebView = (props: Props) => {
           showToast(I18n.t("global.genericError"));
         }
       });
-  }, [props.servicesById]);
+  }, [servicesById, onServiceSelect, serviceIdToLoad]);
 
   const reloadWebView = () => {
     if (webViewRef.current) {
@@ -109,6 +111,8 @@ const LocalServicesWebView = (props: Props) => {
       {isLoadingServiceLoading && renderLoading()}
 
       <WebView
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
         ref={webViewRef}
         injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
         style={{ flex: 1 }}

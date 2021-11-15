@@ -8,15 +8,15 @@ import {
   Company,
   Hospital,
   Municipality,
-  Province,
-  Region,
   State,
   SvBeneficiaryCategory,
   University,
   VoucherRequest
 } from "../../types/SvVoucherRequest";
 import { NetworkError } from "../../../../../utils/errors";
-import { SvVoucherGeneratedResponse } from "../../types/svVoucherResponse";
+import { SvVoucherGeneratedResponse } from "../../types/SvVoucherResponse";
+import { SvVoucherId } from "../../types/SvVoucher";
+import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
 
 /**
  * The user chooses to start the workflow to generate a new SiciliaVola voucher
@@ -103,12 +103,11 @@ export const svGenerateVoucherSelectFlightsDate = createStandardAction(
 /**
  * get and handle available destination for a voucher request
  */
-// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableDestination = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_DESTINATION_FAILURE"
-)<void, AvailableDestinations, NetworkError>();
+)<AeroportiAmmessiInputBean, AvailableDestinations, NetworkError>();
 
 /**
  * get and handle the generated voucher
@@ -123,7 +122,6 @@ export const svGenerateVoucherGeneratedVoucher = createAsyncAction(
 /**
  * get and handle the available state
  */
-// TODO: the request type will be defined when the API will be fixed
 export const svGenerateVoucherAvailableState = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_STATE_SUCCESS",
@@ -131,34 +129,22 @@ export const svGenerateVoucherAvailableState = createAsyncAction(
 )<void, ReadonlyArray<State>, NetworkError>();
 
 /**
- * get and handle the available region
- */
-// TODO: check the request type when the API will be fixed
-export const svGenerateVoucherAvailableRegion = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_REGION_FAILURE"
-)<State, ReadonlyArray<Region>, NetworkError>();
-
-/**
- * get and handle the available province
- */
-// TODO: check the request type when the API will be fixed
-export const svGenerateVoucherAvailableProvince = createAsyncAction(
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_REQUEST",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_SUCCESS",
-  "SV_GENERATE_VOUCHER_AVAILABLE_PROVINCE_FAILURE"
-)<Region, ReadonlyArray<Province>, NetworkError>();
-
-/**
  * get and handle the available municipality
  */
-// TODO: check the request type when the API will be fixed
 export const svGenerateVoucherAvailableMunicipality = createAsyncAction(
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_REQUEST",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_SUCCESS",
   "SV_GENERATE_VOUCHER_AVAILABLE_MUNICIPALITY_FAILURE"
-)<Province, ReadonlyArray<Municipality>, NetworkError>();
+)<string, ReadonlyArray<Municipality>, NetworkError>();
+
+/**
+ * get and handle the voucher pdf download
+ */
+export const svGetPdfVoucher = createAsyncAction(
+  "SV_GENERATE_GET_VOUCHER_PDF_REQUEST",
+  "SV_GENERATE_GET_VOUCHER_PDF_SUCCESS",
+  "SV_GENERATE_GET_VOUCHER_PDF_FAILURE"
+)<SvVoucherId, string, NetworkError>();
 
 export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherStart>
@@ -175,6 +161,5 @@ export type SvVoucherGenerationActions =
   | ActionType<typeof svGenerateVoucherAvailableDestination>
   | ActionType<typeof svGenerateVoucherGeneratedVoucher>
   | ActionType<typeof svGenerateVoucherAvailableState>
-  | ActionType<typeof svGenerateVoucherAvailableRegion>
-  | ActionType<typeof svGenerateVoucherAvailableProvince>
-  | ActionType<typeof svGenerateVoucherAvailableMunicipality>;
+  | ActionType<typeof svGenerateVoucherAvailableMunicipality>
+  | ActionType<typeof svGetPdfVoucher>;

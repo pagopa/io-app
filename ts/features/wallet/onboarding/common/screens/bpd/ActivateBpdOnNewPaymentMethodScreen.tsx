@@ -1,19 +1,19 @@
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
+import { navigateBack } from "../../../../../../store/actions/navigation";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../../../types/pagopa";
 import { PaymentMethodRawList } from "../../../../../bonus/bpd/components/paymentMethodActivationToggle/list/PaymentMethodRawList";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { areAnyPaymentMethodsActiveSelector } from "../../../../../bonus/bpd/store/reducers/details/paymentMethods";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 
 type OwnProps = {
   paymentMethods: ReadonlyArray<PaymentMethod>;
@@ -64,35 +64,36 @@ const getFooter = (props: Props) => {
   );
 };
 
-const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> = props => {
-  const { title, body1, body2 } = loadLocales();
+const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> =
+  props => {
+    const { title, body1, body2 } = loadLocales();
 
-  return (
-    <BaseScreenComponent
-      headerTitle={props.title}
-      contextualHelp={props.contextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView>
-          <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} large={true} />
-            <H1>{title}</H1>
-            <View spacer={true} large={true} />
-            <Body>{body1}</Body>
-            <View spacer={true} large={true} />
-            <PaymentMethodRawList paymentList={props.paymentMethods} />
-            <View spacer={true} large={true} />
-            <Body>{body2}</Body>
-          </View>
-        </ScrollView>
-        {getFooter(props)}
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+    return (
+      <BaseScreenComponent
+        headerTitle={props.title}
+        contextualHelp={props.contextualHelp}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView>
+            <View style={IOStyles.horizontalContentPadding}>
+              <View spacer={true} large={true} />
+              <H1>{title}</H1>
+              <View spacer={true} large={true} />
+              <Body>{body1}</Body>
+              <View spacer={true} large={true} />
+              <PaymentMethodRawList paymentList={props.paymentMethods} />
+              <View spacer={true} large={true} />
+              <Body>{body2}</Body>
+            </View>
+          </ScrollView>
+          {getFooter(props)}
+        </SafeAreaView>
+      </BaseScreenComponent>
+    );
+  };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  skip: () => dispatch(NavigationActions.back())
+const mapDispatchToProps = (_: Dispatch) => ({
+  skip: () => navigateBack()
 });
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({

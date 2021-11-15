@@ -4,15 +4,12 @@ import { StyleSheet } from "react-native";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
 import { InfoBox } from "../../../../components/box/InfoBox";
 import { useIOBottomSheet } from "../../../../utils/bottomSheet";
 import { Link } from "../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../utils/url";
 import Markdown from "../../../../components/ui/Markdown";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { localeDateFormat } from "../../../../utils/locale";
 import {
@@ -106,22 +103,20 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      <TouchableDefaultOpacity style={styles.row} onPress={present}>
-        <IconFont name={"io-notice"} size={24} color={IOColors.blue} />
-        <View hspacer={true} small={true} />
-        <View>
-          <H5 color={"bluegrey"} weight={"Regular"}>
+      <View style={styles.row}>
+        <InfoBox iconName={"io-notice"} iconSize={32}>
+          <H4 weight={"Regular"}>
             {I18n.t("bonus.bpd.details.transaction.detail.summary.lastUpdated")}
-            <H5 color={"bluegrey"} weight={"SemiBold"}>
-              {props.lastUpdateDate}
-            </H5>
-          </H5>
-          <H5 color={"blue"} weight={"SemiBold"}>
+            <H4>{props.lastUpdateDate}</H4>
+          </H4>
+          <Link onPress={present} weight={"SemiBold"}>
             {I18n.t("bonus.bpd.details.transaction.detail.summary.link")}
-          </H5>
-        </View>
-      </TouchableDefaultOpacity>
+          </Link>
+        </InfoBox>
+      </View>
+
       <View spacer={true} />
+
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}
         <H4 weight={"Bold"}>{`${localeDateFormat(

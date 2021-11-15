@@ -15,6 +15,7 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Millisecond } from "italia-ts-commons/lib/units";
+import _ from "lodash";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -39,7 +40,6 @@ import {
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
-  GetUserMessagesT,
   GetUserMessageT,
   getUserMetadataDefaultDecoder,
   GetUserMetadataT,
@@ -63,6 +63,7 @@ import {
   tokenHeaderProducer,
   withBearerToken as withToken
 } from "../utils/api";
+import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -178,10 +179,42 @@ export function BackendClient(
     response_decoder: getVisibleServicesDefaultDecoder()
   };
 
-  const getMessagesT: GetUserMessagesT = {
+  // TODO: this is a temporary fix due to a bug in openapi-codegen-ts
+  // https://github.com/pagopa/openapi-codegen-ts/pull/265
+  // Please remove it once we upgrade
+  type GetUserMessagesTCustom = r.IGetApiRequestType<
+    {
+      readonly enrich_result_data?: boolean;
+      readonly page_size?: number;
+      readonly maximum_id?: string;
+      readonly minimum_id?: string;
+      readonly Bearer: string;
+    },
+    "Authorization",
+    never,
+    | r.IResponseType<200, PaginatedPublicMessagesCollection>
+    | r.IResponseType<400, ProblemJson>
+    | r.IResponseType<401, undefined>
+    | r.IResponseType<404, ProblemJson>
+    | r.IResponseType<429, ProblemJson>
+    | r.IResponseType<500, ProblemJson>
+  >;
+
+  const getMessagesT: GetUserMessagesTCustom = {
     method: "get",
-    url: () => `/api/v1/messages`,
-    query: _ => ({}),
+    url: _ => "/api/v1/messages",
+    query: params => {
+      const { maximum_id, enrich_result_data, minimum_id, page_size } = params;
+      return _.pickBy(
+        {
+          maximum_id,
+          enrich_result_data,
+          minimum_id,
+          page_size
+        },
+        v => !_.isUndefined(v)
+      );
+    },
     headers: tokenHeaderProducer,
     response_decoder: getUserMessagesDefaultDecoder()
   };

@@ -1,19 +1,20 @@
 import * as React from "react";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { Dispatch } from "redux";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { cgnActivationStart } from "../../store/actions/activation";
 import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { cgnActivationStart } from "../../store/actions/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -26,12 +27,15 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
   // load available bonus when component is focused
   useActionOnFocus(props.loadAvailableBonus);
 
+  const { availableBonus, startCgn, cgnBonus } = props;
+
   React.useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
-    if (props.availableBonus.length > 0 && props.cgnBonus) {
-      props.startCgn();
+    if (availableBonus.length > 0 && cgnBonus) {
+      navigateBack();
+      startCgn();
     }
-  }, [props.availableBonus]);
+  }, [availableBonus, startCgn, cgnBonus]);
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.cgn.name")}>

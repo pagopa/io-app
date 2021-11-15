@@ -2,9 +2,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
+import { StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RadioButtonList } from "../../components/core/selection/RadioButtonList";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../components/core/selection/RadioButtonList";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -16,6 +20,7 @@ import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/compone
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import I18n from "../../i18n";
+import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
@@ -32,24 +37,23 @@ type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const getMotivationItems = (): ReadonlyArray<{
-  label: string;
-  id: RemoveAccountMotivationEnum;
-}> => [
+const getMotivationItems = (): ReadonlyArray<
+  RadioItem<RemoveAccountMotivationEnum>
+> => [
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
     id: RemoveAccountMotivationEnum.NOT_UTILS
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
     id: RemoveAccountMotivationEnum.NOT_SAFE
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
     id: RemoveAccountMotivationEnum.NEVER_USED
   },
   {
-    label: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+    body: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
     id: RemoveAccountMotivationEnum.OTHERS
   }
 ];
@@ -59,9 +63,10 @@ const getMotivationItems = (): ReadonlyArray<{
  */
 const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   // Initially no motivation is selected
-  const [selectedMotivation, setSelectedMotivation] = React.useState<
-    RemoveAccountMotivationEnum
-  >(RemoveAccountMotivationEnum.UNDEFINED);
+  const [selectedMotivation, setSelectedMotivation] =
+    React.useState<RemoveAccountMotivationEnum>(
+      RemoveAccountMotivationEnum.UNDEFINED
+    );
 
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
@@ -213,7 +218,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
           shufflePinPadOnPayment
         )
       ),
-    navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome())
+    navigateToWalletHomeScreen: () => {
+      NavigationService.dispatchNavigationAction(StackActions.popToTop());
+      navigateToWalletHome();
+    }
   };
 };
 

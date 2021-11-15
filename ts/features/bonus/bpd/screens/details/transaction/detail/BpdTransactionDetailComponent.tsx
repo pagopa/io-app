@@ -23,9 +23,10 @@ export type BpdTransactionDetailRepresentation = EnhancedBpdTransaction & {
   validForCashback: boolean;
 };
 
-export type BpdTransactionDetailRepresentationV2 = BpdTransactionDetailRepresentation & {
-  isPivot: boolean;
-};
+export type BpdTransactionDetailRepresentationV2 =
+  BpdTransactionDetailRepresentation & {
+    isPivot: boolean;
+  };
 
 type Props = { transaction: BpdTransactionDetailRepresentation };
 
@@ -160,31 +161,32 @@ const IdBlock = (props: IdBlockProps) => (
  * @param props
  * @constructor
  */
-export const BpdTransactionDetailComponent: React.FunctionComponent<Props> = props => {
-  const { paymentMethod, acquirerId, issuerId } = loadLocales();
+export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
+  props => {
+    const { paymentMethod, acquirerId, issuerId } = loadLocales();
 
-  return (
-    <View>
-      <View spacer={true} />
-      <Body>{paymentMethod}</Body>
-      <View spacer={true} />
-      <View style={[IOStyles.flex, IOStyles.row]}>
-        <Image
-          source={props.transaction.image}
-          style={styles.image}
-          resizeMode={"contain"}
-        />
-        <View hspacer={true} small={true} />
-        <H4>{props.transaction.title}</H4>
+    return (
+      <View>
+        <View spacer={true} />
+        <Body>{paymentMethod}</Body>
+        <View spacer={true} />
+        <View style={IOStyles.row}>
+          <Image
+            source={props.transaction.image}
+            style={styles.image}
+            resizeMode={"contain"}
+          />
+          <View hspacer={true} small={true} />
+          <H4>{props.transaction.title}</H4>
+        </View>
+        <View spacer={true} />
+        {/* using the keyvaluetable with custom style in order to be quick */}
+        <Table transaction={props.transaction} />
+        <BpdTransactionWarning transaction={props.transaction} />
+        <View spacer={true} />
+        <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
+        <View spacer={true} />
+        <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
       </View>
-      <View spacer={true} />
-      {/* using the keyvaluetable with custom style in order to be quick */}
-      <Table transaction={props.transaction} />
-      <BpdTransactionWarning transaction={props.transaction} />
-      <View spacer={true} />
-      <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
-      <View spacer={true} />
-      <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
-    </View>
-  );
-};
+    );
+  };

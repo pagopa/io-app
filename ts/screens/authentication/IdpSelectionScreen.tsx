@@ -51,6 +51,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const [counter, setCounter] = useState(0);
+  const { requestIdps, setSelectedIdp, navigateToIdpTest } = props;
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
@@ -64,16 +65,16 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   };
 
   useEffect(() => {
-    props.requestIdps();
-  }, []);
+    requestIdps();
+  }, [requestIdps]);
 
   useEffect(() => {
     if (counter === TAPS_TO_OPEN_TESTIDP) {
       setCounter(0);
-      props.setSelectedIdp(testIdp);
-      props.navigateToIdpTest();
+      setSelectedIdp(testIdp);
+      navigateToIdpTest();
     }
-  }, [counter]);
+  }, [counter, setSelectedIdp, navigateToIdpTest]);
 
   return (
     <BaseScreenComponent
@@ -122,9 +123,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToIdpSelection: () => dispatch(navigateToSPIDLogin()),
-  navigateToIdpTest: () => dispatch(navigateToSPIDTestIDP()),
-  goBack: () => dispatch(navigateBack()),
+  navigateToIdpSelection: () => navigateToSPIDLogin(),
+  navigateToIdpTest: () => navigateToSPIDTestIDP(),
+  goBack: () => navigateBack(),
   requestIdps: () => dispatch(loadIdps.request()),
   setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
 });

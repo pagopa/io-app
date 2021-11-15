@@ -19,9 +19,9 @@ export function* previousInstallationDataDeleteSaga(): Generator<
   void,
   boolean
 > {
-  const isFirstRunAfterInstall: ReturnType<typeof isFirstRunAfterInstallSelector> = yield select(
-    isFirstRunAfterInstallSelector
-  );
+  const isFirstRunAfterInstall: ReturnType<
+    typeof isFirstRunAfterInstallSelector
+  > = yield select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
     // invalidate the session

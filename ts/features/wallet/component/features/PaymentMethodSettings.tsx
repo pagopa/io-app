@@ -10,11 +10,9 @@ import IconFont from "../../../../components/ui/IconFont";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  EnableableFunctionsTypeEnum,
-  PaymentMethod
-} from "../../../../types/pagopa";
+import { PaymentMethod } from "../../../../types/pagopa";
 import { hasFunctionEnabled } from "../../../../utils/walletv2";
+import { EnableableFunctionsEnum } from "../../../../../definitions/pagopa/EnableableFunctions";
 import PagoPaPaymentCapability from "./PagoPaPaymentCapability";
 
 type OwnProps = { paymentMethod: PaymentMethod };
@@ -49,10 +47,7 @@ const PaymentMethodSettings = (props: Props): React.ReactElement => (
     </View>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
-    {hasFunctionEnabled(
-      props.paymentMethod,
-      EnableableFunctionsTypeEnum.pagoPA
-    ) &&
+    {hasFunctionEnabled(props.paymentMethod, EnableableFunctionsEnum.pagoPA) &&
       props.paymentMethod.pagoPA && (
         <>
           <FavoritePaymentMethodSwitch paymentMethod={props.paymentMethod} />

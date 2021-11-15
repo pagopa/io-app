@@ -25,11 +25,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const CheckStatusRouterScreen = (props: Props): React.ReactElement => {
+  const { start, checkServiceAvailable, checkTosAccepted } = props;
+
   React.useEffect(() => {
-    props.start();
-    props.checkServiceAvailable();
-    props.checkTosAccepted();
-  }, []);
+    start();
+    checkServiceAvailable();
+    checkTosAccepted();
+  }, [start, checkServiceAvailable, checkTosAccepted]);
 
   if (
     !isReady(props.isServiceAlive) ||

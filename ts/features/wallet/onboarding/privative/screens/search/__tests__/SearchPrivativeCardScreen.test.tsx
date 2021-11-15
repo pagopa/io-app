@@ -74,12 +74,12 @@ const searchRequestMetaPending: SearchRequestMetadata = {
   retrievedInstrumentsCount: 0,
   serviceProviderName: "ServiceNameHere"
 };
-const withSearchRequestMetadata = (
-  metadataList: ReadonlyArray<SearchRequestMetadata>
-) => (response: PrivativeResponse) => ({
-  ...response,
-  searchRequestMetadata: [...metadataList]
-});
+const withSearchRequestMetadata =
+  (metadataList: ReadonlyArray<SearchRequestMetadata>) =>
+  (response: PrivativeResponse) => ({
+    ...response,
+    searchRequestMetadata: [...metadataList]
+  });
 describe("SearchPrivativeCardScreen", () => {
   jest.useFakeTimers();
   it("if privativeQuery is undefined a failure action is dispatched and a toast is shown", () => {

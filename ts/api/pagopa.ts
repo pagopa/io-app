@@ -50,11 +50,15 @@ import {
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
   DeleteBySessionCookieExpiredUsingDELETET,
+  deleteWalletsByServiceUsingDELETEDefaultDecoder,
+  DeleteWalletsByServiceUsingDELETET,
   DeleteWalletUsingDELETET,
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
   getConsumerUsingGETDefaultDecoder,
+  getPaypalPspsUsingGETDefaultDecoder,
+  GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
   getPspUsingGETDecoder,
@@ -90,7 +94,7 @@ import { BPayRequest } from "../../definitions/pagopa/walletv2/BPayRequest";
 import { CobadegPaymentInstrumentsRequest } from "../../definitions/pagopa/walletv2/CobadegPaymentInstrumentsRequest";
 import { format } from "../utils/dates";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
-import { WalletPaymentstatus } from "../../definitions/pagopa/WalletPaymentstatus";
+import { WalletPaymentStatusRequest } from "../../definitions/pagopa/WalletPaymentStatusRequest";
 
 /**
  * A decoder that ignores the content of the payload and only decodes the status
@@ -106,17 +110,14 @@ const constantEmptyDecoder = composeResponseDecoders(
   constantResponseDecoder<undefined, 403>(403, undefined)
 );
 
-const getSession: MapResponseType<
-  StartSessionUsingGETT,
-  200,
-  SessionResponse
-> = {
-  method: "get",
-  url: _ => "/v1/users/actions/start-session",
-  query: _ => _,
-  headers: () => ({}),
-  response_decoder: startSessionUsingGETDecoder(SessionResponse)
-};
+const getSession: MapResponseType<StartSessionUsingGETT, 200, SessionResponse> =
+  {
+    method: "get",
+    url: _ => "/v1/users/actions/start-session",
+    query: _ => _,
+    headers: () => ({}),
+    response_decoder: startSessionUsingGETDecoder(SessionResponse)
+  };
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
 // because the generated one doesn't support 'start' due to weak specs in api definition
@@ -146,11 +147,13 @@ const ParamAuthorizationBearerHeader = <
   ...(p.LookUpId ? { [pmLookupHeaderKey]: p.LookUpId } : {})
 });
 
-const ParamAuthorizationBearerHeaderProducer = <
-  P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> => (
-  p: P
-): RequestHeaders<"Authorization"> => ParamAuthorizationBearerHeader(p);
+const ParamAuthorizationBearerHeaderProducer =
+  <P extends { readonly Bearer: string }>(): RequestHeaderProducer<
+    P,
+    "Authorization"
+  > =>
+  (p: P): RequestHeaders<"Authorization"> =>
+    ParamAuthorizationBearerHeader(p);
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 const transactionsSliceLength = 10;
@@ -541,9 +544,10 @@ const addCobadgeToWallet: AddWalletsCobadge = {
     // see https://www.pivotaltracker.com/story/show/176720702
     JSON.stringify(cobadegPaymentInstrumentsRequest, cobadgeInstrumentReplacer),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
-    PatchedWalletV2ListResponse
-  )
+  response_decoder:
+    addWalletsCobadgePaymentInstrumentAsCreditCardUsingPOSTDecoder(
+      PatchedWalletV2ListResponse
+    )
 };
 
 export type AddWalletsBPayUsingPOSTTExtra = r.IPostApiRequestType<
@@ -571,7 +575,7 @@ export type ChangePayOptionT = r.IPutApiRequestType<
   {
     readonly Bearer: string;
     readonly idWallet: number;
-    readonly walletPaymentstatus: WalletPaymentstatus;
+    readonly walletPaymentStatusRequest: WalletPaymentStatusRequest;
   },
   "Content-Type" | "Authorization",
   never,
@@ -585,25 +589,39 @@ const updatePaymentStatus: ChangePayOptionT = {
   method: "put",
   url: ({ idWallet }) => `/v2/wallet/${idWallet}/payment-status`,
   query: () => ({}),
-  body: ({ walletPaymentstatus }) => JSON.stringify(walletPaymentstatus),
+  body: ({ walletPaymentStatusRequest }) =>
+    JSON.stringify(walletPaymentStatusRequest),
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: changePayOptionDecoder(PatchedWalletV2Response)
 };
 
-const withPaymentManagerToken = <
-  P extends { Bearer: string; LookUpId?: string },
-  R
->(
-  f: (p: P) => Promise<R>
-) => (token: PaymentManagerToken) => async (
-  po: Omit<P, "Bearer">
-): Promise<R> => {
-  const params = Object.assign(
-    { Bearer: String(token), LookUpId: getLookUpId() },
-    po
-  ) as P;
-  return f(params);
+const deleteWallets: DeleteWalletsByServiceUsingDELETET = {
+  method: "delete",
+  url: () => `/v2/wallet/delete-wallets`,
+  query: ({ service }) => ({ service }),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: deleteWalletsByServiceUsingDELETEDefaultDecoder()
 };
+
+const searchPayPalPsp: GetPaypalPspsUsingGETT = {
+  method: "get",
+  url: () => `/v3/paypal/searchPSP`,
+  query: params => ({ language: params.language }),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPaypalPspsUsingGETDefaultDecoder()
+};
+const withPaymentManagerToken =
+  <P extends { Bearer: string; LookUpId?: string }, R>(
+    f: (p: P) => Promise<R>
+  ) =>
+  (token: PaymentManagerToken) =>
+  async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign(
+      { Bearer: String(token), LookUpId: getLookUpId() },
+      po
+    ) as P;
+    return f(params);
+  };
 
 export function PaymentManagerClient(
   baseUrl: string,
@@ -802,8 +820,19 @@ export function PaymentManagerClient(
         )
       )({
         idWallet: payload.idWallet,
-        walletPaymentstatus: { pagoPA: payload.paymentEnabled }
-      })
+        walletPaymentStatusRequest: { data: { pagoPA: payload.paymentEnabled } }
+      }),
+    deleteAllPaymentMethodsByFunction: (service: string) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(deleteWallets, altOptions)
+        )
+      )({ service }),
+    searchPayPalPsp: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(searchPayPalPsp, options)
+      )
+    )({ language: getLocalePrimaryWithFallback() })
   };
 }
 

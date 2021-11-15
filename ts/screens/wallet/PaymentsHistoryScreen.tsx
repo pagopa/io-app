@@ -4,11 +4,11 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { connect } from "react-redux";
+import { H2 } from "../../components/core/typography/H2";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import H5 from "../../components/ui/H5";
 import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
 import I18n from "../../i18n";
 import { navigateToPaymentHistoryDetail } from "../../store/actions/navigation";
@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
   whiteBg: {
     backgroundColor: variables.colorWhite
   }
@@ -42,9 +39,7 @@ const ListEmptyComponent = (
     scrollEnabled={false}
     style={[styles.noBottomPadding, styles.whiteBg]}
   >
-    <H5 style={styles.brandDarkGray}>
-      {I18n.t("payment.details.list.empty.title")}
-    </H5>
+    <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <View spacer={true} />
     <Text>{I18n.t("payment.details.list.empty.description")}</Text>
     <View spacer={true} large={true} />
@@ -61,7 +56,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
     const { historyPayments } = this.props;
     return (
       <BaseScreenComponent
-        goBack={this.props.navigation.goBack}
+        goBack={() => this.props.navigation.goBack()}
         headerTitle={I18n.t("payment.details.list.title")}
       >
         <PaymentHistoryList
@@ -83,9 +78,9 @@ const mapStateToProps = (state: GlobalState) => ({
   historyPayments: paymentsHistorySelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   navigateToPaymentHistoryDetail: (param: { payment: PaymentHistory }) =>
-    dispatch(navigateToPaymentHistoryDetail(param))
+    navigateToPaymentHistoryDetail(param)
 });
 
 export default withValidatedPagoPaVersion(

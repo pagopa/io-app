@@ -8,8 +8,6 @@ import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import {
@@ -23,12 +21,12 @@ import {
   ExpireStatus,
   getMessagePaymentExpirationInfo
 } from "../../utils/messages";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type Props = {
-  message: CreatedMessageWithContent;
-  service?: ServicePublic;
+  message: CreatedMessageWithContentAndAttachments;
 };
 
 const styles = StyleSheet.create({

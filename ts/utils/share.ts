@@ -2,7 +2,8 @@ import CameraRoll from "@react-native-community/cameraroll";
 import { fromLeft, TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import { PermissionsAndroid, Platform } from "react-native";
 import Share from "react-native-share";
-import { hasAndroidPermission } from "./permission";
+import I18n from "../i18n";
+import { requestIOAndroidPermission } from "./permission";
 
 /**
  * share an url see https://react-native-share.github.io/react-native-share/docs/share-open#supported-options
@@ -42,8 +43,13 @@ export const isShareEnabled = () =>
 export const saveImageToGallery = (uri: string): TaskEither<Error, string> => {
   const hasPermission = tryCatch(
     () =>
-      hasAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      requestIOAndroidPermission(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: I18n.t("permissionRationale.storage.title"),
+          message: I18n.t("permissionRationale.storage.message"),
+          buttonPositive: I18n.t("global.buttons.choose")
+        }
       ),
     errorMsg => new Error(String(errorMsg))
   );

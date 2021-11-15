@@ -6,13 +6,13 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { fromNullable } from "fp-ts/lib/Option";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import OrganizationLogo from "../services/OrganizationLogo";
-import H5 from "../ui/H5";
 import { MultiImage } from "../ui/MultiImage";
+import { H2 } from "../core/typography/H2";
+import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = Readonly<{
   sectionHeader: string;
@@ -31,10 +31,6 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.spacerWidth,
     paddingBottom: 0,
     alignItems: "center"
-  },
-  sectionTitle: {
-    ...makeFontStyleObject(Platform.select, "700"),
-    flex: 1
   },
   sectionView: {
     backgroundColor: "#FFF",
@@ -61,13 +57,9 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           this.props.style
         ]}
       >
-        <H5
-          style={styles.sectionTitle}
-          accessible={true}
-          accessibilityRole={"text"}
-        >
+        <H2 style={IOStyles.flex} accessible={true} accessibilityRole={"text"}>
           {this.props.sectionHeader}
-        </H5>
+        </H2>
         <>
           {rightItem}
           <View spacer={true} extralarge={true} />

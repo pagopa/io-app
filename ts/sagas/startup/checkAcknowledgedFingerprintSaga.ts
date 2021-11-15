@@ -1,16 +1,13 @@
-import TouchID from "react-native-touch-id";
-import { IsSupportedConfig } from "react-native-touch-id";
 import { call, Effect, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
-export type BiometrySimpleType =
-  | "FINGERPRINT"
-  | "FACE_ID"
-  | "TOUCH_ID"
-  | "NOT_ENROLLED"
-  | "UNAVAILABLE";
+import {
+  BiometricsType,
+  getBiometricsType,
+  isBiometricsValidType
+} from "../../utils/biometrics";
 
 /**
  * Query TouchID library to retrieve availability information. The ONLY cases
@@ -24,21 +21,19 @@ export type BiometrySimpleType =
 function* onboardFingerprintIfAvailableSaga(): Generator<
   Effect,
   void,
-  BiometrySimpleType
+  BiometricsType
 > {
   // Check if user device has biometric recognition feature by trying to
   // query data from TouchID library
-  const biometryTypeOrUnsupportedReason = yield call(getFingerprintSettings);
+  const biometricsType = yield call(getBiometricsType);
 
-  if (biometryTypeOrUnsupportedReason !== "UNAVAILABLE") {
+  if (isBiometricsValidType(biometricsType)) {
     // If biometric recognition is available, navigate to the Fingerprint
     // Screen and wait for the user to press "Continue". Otherwise the whole
     // step is bypassed
-    yield put(
-      navigateToOnboardingFingerprintScreenAction({
-        biometryType: biometryTypeOrUnsupportedReason
-      })
-    );
+    yield call(navigateToOnboardingFingerprintScreenAction, {
+      biometryType: biometricsType
+    });
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
@@ -51,7 +46,7 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
     // Set Fingerprint usage system preferences to true if available and enrolled
     yield put(
       preferenceFingerprintIsEnabledSaveSuccess({
-        isFingerprintEnabled: biometryTypeOrUnsupportedReason !== "NOT_ENROLLED"
+        isFingerprintEnabled: true
       })
     );
   } else {
@@ -85,30 +80,4 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
     // Navigate to the FingerprintScreen and wait for acknowledgment
     yield call(onboardFingerprintIfAvailableSaga);
   }
-}
-
-const isTouchIdSupportedConfig: IsSupportedConfig = {
-  unifiedErrors: true
-};
-
-/**
- * Retrieve fingerpint settings from the base system. This function wraps the basic
- * method "isSupported" of TouchID library and simplifies the possible returned values in
- * function of its usage:
- * * FaceID/TouchID/Fingerprint: in case of biometric recognition supported.
- * * Not Enrolled: in case of biometric recognition supported but no data registered.
- * * Unavailable: for all other negative cases.
- *
- * More info about library can be found here: https://github.com/naoufal/react-native-touch-id
- */
-export function getFingerprintSettings(): Promise<BiometrySimpleType> {
-  return new Promise((resolve, _) => {
-    TouchID.isSupported(isTouchIdSupportedConfig)
-      .then(biometryType => {
-        resolve(biometryType === "FaceID" ? "FACE_ID" : "TOUCH_ID");
-      })
-      .catch(reason => {
-        resolve(reason.code === "NOT_ENROLLED" ? reason.code : "UNAVAILABLE");
-      });
-  });
 }

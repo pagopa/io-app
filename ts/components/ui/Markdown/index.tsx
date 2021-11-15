@@ -188,7 +188,7 @@ const OLD_DEMO_TAG_MARKDOWN_REGEX = /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/;
 const convertOldDemoMarkdownTag = (markdown: string) =>
   markdown.replace(
     OLD_DEMO_TAG_MARKDOWN_REGEX,
-    (_, g1: string) => `[[IO-DEMO]]\n| ${g1}\n`
+    (_, g1: string) => `::div[${g1}]{.io-demo-block}\n`
   );
 
 type OwnProps = {
@@ -258,13 +258,8 @@ class Markdown extends React.PureComponent<Props, State> {
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevChildren } = prevProps;
-    const {
-      children,
-      animated,
-      onError,
-      cssStyle,
-      useCustomSortedList
-    } = this.props;
+    const { children, animated, onError, cssStyle, useCustomSortedList } =
+      this.props;
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
@@ -329,6 +324,8 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                androidCameraAccessDisabled={true}
+                androidMicrophoneAccessDisabled={true}
                 testID={this.props.testID}
                 accessible={false}
                 key={this.state.webviewKey}

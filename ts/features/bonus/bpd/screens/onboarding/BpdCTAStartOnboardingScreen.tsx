@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import * as React from "react";
 import { Alert } from "react-native";
 import { Dispatch } from "redux";
@@ -22,6 +23,29 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
+const BaseBpdCTAStartOnboardingComponent = (props: Props) => {
+  const { availableBonus, startBpd } = props;
+  // load available bonus when component is focused
+  useActionOnFocus(props.loadAvailableBonus);
+
+  useEffect(() => {
+    // bpdOnboardingStart navigate to ToS screen that needs availableBonus data
+    if (availableBonus.length > 0) {
+      startBpd();
+    }
+  }, [availableBonus, startBpd]);
+
+  return (
+    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
+      <LoadingErrorComponent
+        isLoading={!props.hasError}
+        loadingCaption={loadingCaption()}
+        onRetry={props.loadAvailableBonus}
+      />
+    </BaseScreenComponent>
+  );
+};
+
 /**
  * this is a dummy screen reachable only from a message CTA
  */
@@ -34,26 +58,9 @@ const BpdCTAStartOnboardingScreen: React.FC<Props> = (props: Props) => {
     );
     navigation.goBack();
     return null;
+  } else {
+    return <BaseBpdCTAStartOnboardingComponent {...props} />;
   }
-  // load available bonus when component is focused
-  useActionOnFocus(props.loadAvailableBonus);
-
-  React.useEffect(() => {
-    // bpdOnboardingStart navigate to ToS screen that needs availableBonus data
-    if (props.availableBonus.length > 0) {
-      props.startBpd();
-    }
-  }, [props.availableBonus]);
-
-  return (
-    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.bpd.title")}>
-      <LoadingErrorComponent
-        isLoading={!props.hasError}
-        loadingCaption={loadingCaption()}
-        onRetry={props.loadAvailableBonus}
-      />
-    </BaseScreenComponent>
-  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

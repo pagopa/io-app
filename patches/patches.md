@@ -15,14 +15,6 @@ Created on **29/07/2020**
 - **04/03/2021** Improve track function type definition.
 
 
-
-### react-native-touch-id+4.4.1
-Created on **09/05/2019** and **20/12/2019**
-
-#### Reason:
-- Solve crash on Android and export types.
-
-
 ### reactotron-redux-saga+2.1.4
 Created on **13/12/2019**
 
@@ -50,16 +42,7 @@ Created on **06/08/2020**
 #### Reason:
 - Recognizes the ids of pivotal stories even if they are not at the beginning of the line
 
-
-### react-native-popup-menu+0.14.2
-Created on **12/08/2020**
-
-#### Reason:
-
-- Use TouchableHighlight instead of TouchableNativeFeedback on Android sdk < 19 to avoid crash.
-
 ### react-native-push-notification+7.3.1
-
 Created on **10/05/2021**
 
 #### Reason:
@@ -80,10 +63,19 @@ Created on **20/08/2021**
   To be removed when updating to `react-native` *0.65*
   
 ### react-native-maps+0.28.0
-
 Created on **27/05/2021**
 
 #### Reason:
 
 - NativeEvent for the onPress handler on a map is missing attributes used to distinguish what user is pressing (eg. "
   marker-press")
+
+### react-native-qrcode-scanner+1.5.3
+Created on **16/09/2021**
+
+#### Reason:
+- The package use the prop `checkAndroid6Permissions` for both display the `notAuthorizedView` and display the rationale.
+  We need always to display the rationale alert and not only when requested by the Android OS. Without this patch is impossible
+  to use the `notAuthorizedView` without displaying again the alert.
+  ⚠️ The `QRCodeScanner` component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
+  buttonPositive.

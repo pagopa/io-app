@@ -4,11 +4,12 @@
 
 publiccodeYmlVersion: '0.2'
 name: IO
-releaseDate: '2019-05-02'
+logo: "img/app-logo.svg"
+releaseDate: '2021-11-11'
 url: 'https://github.com/pagopa/io-app'
 applicationSuite: IO
 landingURL: 'https://io.italia.it/'
-softwareVersion: 0.1.0
+softwareVersion: 1.38.0-rc.1
 developmentStatus: beta
 softwareType: standalone/mobile
 roadmap: 'https://io.italia.it/'
@@ -20,12 +21,12 @@ categories:
 maintenance:
   type: internal
   contacts:
-    - name: Federico Feroldi
-      email: federico.feroldi@pagopa.it
+    - name: Matteo Boschi
+      email: matteo.boschi@pagopa.it
 legal:
   license: EUPL-1.2
-  mainCopyrightOwner: pagoPA SpA
-  repoOwner: https://www.pagopa.gov.it/
+  mainCopyrightOwner: PagoPA S.p.A.
+  repoOwner: https://www.pagopa.it/
   authorsFile: AUTHORS.md
 intendedAudience:
   scope:

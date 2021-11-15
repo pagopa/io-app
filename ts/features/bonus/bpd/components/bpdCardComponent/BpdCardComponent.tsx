@@ -249,19 +249,16 @@ const statusHandlersMap = new Map<
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
 const calculateGraphicalState = (props: Props) =>
-  fromNullable(
-    statusHandlersMap.get(props.period.status)
-  ).fold(initialGraphicalState, handler => handler(props));
+  fromNullable(statusHandlersMap.get(props.period.status)).fold(
+    initialGraphicalState,
+    handler => handler(props)
+  );
 
 export const BpdCardComponent: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const {
-    amount,
-    isInGracePeriod,
-    iconName,
-    statusBadge
-  } = calculateGraphicalState(props);
+  const { amount, isInGracePeriod, iconName, statusBadge } =
+    calculateGraphicalState(props);
 
   const isPeriodClosed = props.period.status === "Closed" && !isInGracePeriod;
   const isPeriodInactive = props.period.status === "Inactive";
@@ -324,8 +321,26 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
     <TouchableDefaultOpacity
       style={[styles.row, styles.spaced, styles.paddedContentPreview]}
       onPress={props.onPress}
+      accessible={true}
+      accessibilityRole={"button"}
+      accessibilityLabel={I18n.t("bonus.bpd.accessibility.card.preview", {
+        startDate: localeDateFormat(
+          props.period.startDate,
+          I18n.t("global.dateFormats.dayFullMonth")
+        ),
+        endDate: localeDateFormat(
+          props.period.endDate,
+          I18n.t("global.dateFormats.dayFullMonth")
+        ),
+        amount: formatNumberAmount(props.totalAmount.totalCashback)
+      })}
     >
-      <View style={[styles.column, { width: widthPercentageToDP("60%") }]}>
+      <View
+        style={[styles.column, { width: widthPercentageToDP("60%") }]}
+        accessible={false}
+        accessibilityElementsHidden={true}
+        importantForAccessibility={"no-hide-descendants"}
+      >
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H5
             color={"white"}
@@ -388,7 +403,14 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
 
   return (
     <>
-      {Platform.OS === "android" && <View style={styles.upperShadowBox} />}
+      {Platform.OS === "android" && (
+        <View
+          style={styles.upperShadowBox}
+          accessible={false}
+          importantForAccessibility={"no"}
+          accessibilityElementsHidden={true}
+        />
+      )}
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
         style={[props.preview ? styles.preview : styles.container]}

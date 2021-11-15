@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { Pressable, View } from "react-native";
-import { Text } from "native-base";
 import { GlobalState } from "../../store/reducers/types";
 import {
   SectionStatusKey,
@@ -14,7 +13,8 @@ import { openWebUrl } from "../../utils/url";
 import { getFullLocale } from "../../utils/locale";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { useNavigationContext } from "../../utils/hooks/useOnFocus";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { Link } from "../core/typography/Link";
 import StatusContent from "./StatusContent";
 
 type OwnProps = {
@@ -24,10 +24,10 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export const statusColorMap: Record<LevelEnum, string> = {
-  [LevelEnum.normal]: IOColors.aqua,
-  [LevelEnum.critical]: IOColors.red,
-  [LevelEnum.warning]: IOColors.orange
+export const statusColorMap: Record<LevelEnum, IOColorType> = {
+  [LevelEnum.normal]: "aqua",
+  [LevelEnum.critical]: "red",
+  [LevelEnum.warning]: "orange"
 };
 
 const statusIconMap: Record<LevelEnum, string> = {
@@ -35,23 +35,21 @@ const statusIconMap: Record<LevelEnum, string> = {
   [LevelEnum.critical]: "io-warning",
   [LevelEnum.warning]: "io-info"
 };
-const color = IOColors.white;
 
-/**
- * this component shows a full width banner with an icon and text
- * it could be tappable if the web url is defined
- * it renders nothing if for the given props.sectionKey there is no data or it is not visible
- */
-const SectionStatus: React.FC<Props> = (props: Props) => {
-  if (props.sectionStatus === undefined) {
-    return null;
-  }
-  if (props.sectionStatus.is_visible !== true) {
-    return null;
-  }
+// map the text background color with the relative text color
+const textDefaultColor = "white";
+export const getStatusTextColor = (
+  level: LevelEnum
+): "bluegreyDark" | "white" =>
+  level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
 
+const InnerSectionStatus = (
+  props: Omit<Props, "sectionStatus"> & {
+    sectionStatus: NonNullable<Props["sectionStatus"]>;
+  }
+) => {
   const viewRef = React.createRef<View>();
-  const sectionStatus = props.sectionStatus;
+  const { sectionStatus, onSectionRef } = props;
   const iconName = statusIconMap[sectionStatus.level];
   const backgroundColor = statusColorMap[sectionStatus.level];
   const locale = getFullLocale();
@@ -60,17 +58,19 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
   );
   const navigation = useNavigationContext();
 
-  const handleOnSectionRef = () => {
+  const color = getStatusTextColor(sectionStatus.level);
+
+  const handleOnSectionRef = useCallback(() => {
     if (viewRef.current) {
-      props.onSectionRef?.(viewRef);
+      onSectionRef?.(viewRef);
     }
-  };
+  }, [onSectionRef, viewRef]);
 
   React.useEffect(() => {
     handleOnSectionRef();
     const unsubscribe = navigation?.addListener("didFocus", handleOnSectionRef);
     return () => unsubscribe?.remove();
-  }, [viewRef]);
+  }, [handleOnSectionRef, navigation, viewRef]);
 
   return maybeWebUrl.fold(
     // render text only
@@ -79,10 +79,11 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
         "global.accessibility.alert"
       )}`}
       backgroundColor={backgroundColor}
-      iconColor={color}
+      iconColor={IOColors[color]}
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
+      labelColor={color}
     >
       {`${sectionStatus.message[locale]} `}
     </StatusContent>,
@@ -100,25 +101,38 @@ const SectionStatus: React.FC<Props> = (props: Props) => {
       >
         <StatusContent
           backgroundColor={backgroundColor}
-          iconColor={color}
+          iconColor={IOColors[color]}
           iconName={iconName}
           viewRef={viewRef}
+          labelColor={color}
         >
           {`${sectionStatus.message[locale]} `}
-          <Text
+          <Link
             testID={"SectionStatusComponentMoreInfo"}
-            style={{
-              color,
-              textDecorationLine: "underline",
-              fontWeight: "bold"
-            }}
+            color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
+            weight={"Bold"}
           >
             {I18n.t("global.sectionStatus.moreInfo")}
-          </Text>
+          </Link>
         </StatusContent>
       </Pressable>
     )
   );
+};
+
+/**
+ * this component shows a full width banner with an icon and text
+ * it could be tappable if the web url is defined
+ * it renders nothing if for the given props.sectionKey there is no data or it is not visible
+ */
+const SectionStatus: React.FC<Props> = (props: Props) => {
+  if (props.sectionStatus === undefined) {
+    return null;
+  }
+  if (props.sectionStatus.is_visible !== true) {
+    return null;
+  }
+  return <InnerSectionStatus {...props} sectionStatus={props.sectionStatus} />;
 };
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
@@ -133,4 +147,5 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => ({
 const component = React.memo(SectionStatus, (prev: Props, curr: Props) =>
   _.isEqual(prev.sectionStatus, curr.sectionStatus)
 );
+
 export default connect(mapStateToProps)(component);

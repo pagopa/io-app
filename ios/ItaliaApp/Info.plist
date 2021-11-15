@@ -17,7 +17,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.33.0</string>
+    <string>1.38.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleURLTypes</key>
@@ -34,11 +34,20 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>8</string>
+    <string>1</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>http</string>
+      <string>https</string>
+    </array>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>NFCReaderUsageDescription</key>
+    <string>NFC tag to read NDEF messages into the application</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSExceptionDomains</key>
@@ -59,7 +68,7 @@
     <key>NSCalendarsUsageDescription</key>
     <string>IO needs access to the calendar to add event reminders</string>
     <key>NSCameraUsageDescription</key>
-    <string>IO needs access to the camera to scan QR codes</string>
+    <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
     <key>NSContactsUsageDescription</key>
     <string>IO needs access to your contacts to let you add them in calendar events</string>
     <key>NSFaceIDUsageDescription</key>
@@ -77,7 +86,7 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>With IO you can save your bonuses and certificates, in addition to uploading screenshots or payment notices</string>
+    <string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>UIAppFonts</key>
@@ -106,6 +115,8 @@
     <array>
       <string>remote-notification</string>
     </array>
+    <key>UIFileSharingEnabled</key>
+    <true/>
     <key>UILaunchStoryboardName</key>
     <string>LaunchScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
@@ -128,12 +139,5 @@
     </array>
     <key>method</key>
     <string>app-store</string>
-    <key>NFCReaderUsageDescription</key>
-    <string>NFC tag to read NDEF messages into the application</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>http</string>
-      <string>https</string>
-    </array>
   </dict>
 </plist>

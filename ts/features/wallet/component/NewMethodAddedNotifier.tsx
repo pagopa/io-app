@@ -17,9 +17,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const NewPaymentMethodAddedNotifier = (props: Props) => {
   // Save the latest visualized bottom sheet, in order to avoid to show it again if focus changed
-  const [lastNotifiedBancomatHash, setLastNotifiedBancomatHash] = useState<
-    string
-  >("");
+  const [lastNotifiedBancomatHash, setLastNotifiedBancomatHash] =
+    useState<string>("");
 
   const { present } = bancomatInformationBottomSheet(
     props.startCoBadgeOnboarding
@@ -40,9 +39,9 @@ const NewPaymentMethodAddedNotifier = (props: Props) => {
   return null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (_: Dispatch) => ({
   startCoBadgeOnboarding: () =>
-    dispatch(navigateToOnboardingCoBadgeChooseTypeStartScreen({}))
+    navigateToOnboardingCoBadgeChooseTypeStartScreen({})
 });
 
 const mapStateToProps = (state: GlobalState) => ({

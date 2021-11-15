@@ -51,13 +51,8 @@ class ChooserList<T> extends React.Component<Props<T>> {
   };
 
   public render() {
-    const {
-      onRefresh,
-      isRefreshing,
-      items,
-      keyExtractor,
-      selectedItemIds
-    } = this.props;
+    const { onRefresh, isRefreshing, items, keyExtractor, selectedItemIds } =
+      this.props;
 
     const refreshControl = (
       <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />

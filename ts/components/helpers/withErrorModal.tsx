@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import { H2, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
@@ -7,6 +7,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Overlay } from "../ui/Overlay";
+import { H1 } from "../core/typography/H1";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -83,7 +84,7 @@ export function withErrorModal<
             style={styles.image}
             source={require("../../../img/error.png")}
           />
-          <H2>{errorMessage}</H2>
+          <H1>{errorMessage}</H1>
         </View>
         {this.renderButtons()}
       </View>

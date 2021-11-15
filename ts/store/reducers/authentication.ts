@@ -233,7 +233,7 @@ const reducer = (
     return {
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
-      sessionToken: action.payload
+      sessionToken: action.payload.token
     };
   }
 

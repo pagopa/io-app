@@ -7,7 +7,8 @@ import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://assets.cdn.io.italia.it" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL =
+  "https://assets.cdn.io.italia.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -31,6 +32,8 @@ const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
 // Default number of workers to fetch service.
 const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
+
+const DEFAULT_PAGE_SIZE = 8;
 
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
@@ -73,9 +76,15 @@ export const euCovidCertificateEnabled: boolean =
 // SiciliaVola Feature Flag
 export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
-// PM activate payment on payment method Feature Flag
-export const pmActivatePaymentEnabled: boolean =
-  Config.PM_ACTIVATE_PAYMENT_ENABLED === "YES";
+// Paypal configuration
+export const payPalEnabled: boolean = Config.PAYPAL_ENABLED === "YES";
+
+// Zendesk Feature Flag
+export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
+
+// Paginated messages
+export const usePaginatedMessages: boolean =
+  Config.PAGINATED_MESSAGES === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 2.4 as NonNegativeNumber;
@@ -125,3 +134,5 @@ export const privacyUrl: string = t.string
 export const localServicesWebUrl: string = t.string
   .decode(Config.LOCAL_SERVICE_WEB_URL)
   .getOrElse("https://io.italia.it");
+
+export const pageSize: number = DEFAULT_PAGE_SIZE;

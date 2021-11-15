@@ -9,7 +9,6 @@ import { InfoScreenComponent } from "../../../../../../components/infoScreen/Inf
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
-import { navigationHistoryPop } from "../../../../../../store/actions/navigationHistory";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
@@ -66,8 +65,7 @@ const BancomatKoServiceError: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(walletAddBancomatCancel()),
   navigateToBancomatChooseBankScreen: () => {
-    dispatch(navigateToOnboardingBancomatChooseBank());
-    dispatch(navigationHistoryPop());
+    navigateToOnboardingBancomatChooseBank();
   }
 });
 

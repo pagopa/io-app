@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     width: 40,
     textAlign: "center",
-    backgroundColor: "#EB9505"
+    backgroundColor: "#9B5897"
   },
   discountValueBox: {
     borderRadius: 6.5,
@@ -26,11 +26,12 @@ const styles = StyleSheet.create({
     width: 48,
     marginLeft: "auto",
     height: 48,
-    backgroundColor: "#EB9505"
+    backgroundColor: "#9B5897"
   }
 });
 
 const PERCENTAGE_SYMBOL = "%";
+const MINUS_SYMBOL = "-";
 
 const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
   const normalizedValue = WithinRangeInteger(0, 100)
@@ -46,11 +47,13 @@ const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
     <View style={small ? styles.smallValueBox : styles.discountValueBox}>
       {small ? (
         <H4 weight={"Bold"} color={"white"} style={styles.percentage}>
+          {MINUS_SYMBOL}
           {normalizedValue}
           {percentage}
         </H4>
       ) : (
         <H3 weight={"Bold"} color={"white"} style={styles.percentage}>
+          {MINUS_SYMBOL}
           {normalizedValue}
           {percentage}
         </H3>

@@ -1,29 +1,26 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
+import { fromNullable, fromPredicate, Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import DeviceInfo from "react-native-device-info";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { loadServiceMetadata } from "../../store/actions/content";
-import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getCTA,
-  isExpirable,
   isExpired,
+  MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../../utils/messages";
 import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
 };
@@ -35,7 +32,7 @@ type Props = OwnProps &
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    paddingBottom: Platform.OS === 'ios' && DeviceInfo.hasNotch() ? 28 : 15,
+    paddingBottom: Platform.OS === "ios" && DeviceInfo.hasNotch() ? 28 : 15
   }
 });
 
@@ -47,16 +44,12 @@ const styles = StyleSheet.create({
  * - a button to show/start a payment
  */
 class MessageDetailCTABar extends React.PureComponent<Props> {
-  get paymentExpirationInfo() {
+  get paymentExpirationInfo(): Option<MessagePaymentExpirationInfo> {
     return paymentExpirationInfo(this.props.message);
   }
 
   get paid(): boolean {
     return this.props.payment !== undefined;
-  }
-
-  get isPaymentExpirable() {
-    return this.paymentExpirationInfo.fold(false, isExpirable);
   }
 
   get isPaymentExpired() {
@@ -65,12 +58,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
 
   get dueDate() {
     return fromNullable(this.props.message.content.due_date);
-  }
-
-  public componentDidMount() {
-    if (!this.props.serviceMetadata && this.props.service) {
-      this.props.loadServiceMetadata(this.props.service);
-    }
   }
 
   // Render a button to add/remove an event related to the message in the calendar
@@ -82,30 +69,25 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
       .fold(null, _ => <CalendarEventButton message={this.props.message} />);
 
-  // Render a button to display details of the payment related to the message
-  private renderPaymentButton() {
-    if (this.paid) {
+  // return a payment button only when the advice is not paid and the payment_data is defined
+  private renderPaymentButton(): React.ReactNode {
+    if (this.paid || this.props.message.content.payment_data === undefined) {
       return null;
     }
-    // the payment is expired and it is not valid (can't pay after due date)
-    if (this.isPaymentExpired && this.isPaymentExpirable) {
-      return null;
-    }
-    // The button is displayed if the payment has an expiration date in the future
-    return this.paymentExpirationInfo.fold(null, pei => {
-      const { message, service } = this.props;
-      return (
-        <PaymentButton
-          paid={this.paid}
-          messagePaymentExpirationInfo={pei}
-          service={service}
-          message={message}
-        />
-      );
-    });
+    const paymentData = this.props.message.content.payment_data;
+    const { amount, notice_number } = paymentData;
+    return (
+      <PaymentButton
+        amount={amount}
+        noticeNumber={notice_number}
+        organizationFiscalCode={paymentData.payee.fiscal_code}
+      />
+    );
   }
 
   public render() {
+    const maybeServiceMetadata = this.props.service?.service_metadata;
+
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
     const footer1 = (paymentButton || calendarButton) && (
@@ -115,14 +97,18 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
         {paymentButton}
       </View>
     );
-    const maybeCtas = getCTA(this.props.message, this.props.serviceMetadata);
+    const maybeCtas = getCTA(
+      this.props.message,
+      maybeServiceMetadata,
+      this.props.service?.service_id
+    );
     const footer2 = maybeCtas.isSome() && (
       <View footer={true} style={styles.row}>
         <ExtractedCTABar
           ctas={maybeCtas.value}
           xsmall={false}
           dispatch={this.props.dispatch}
-          serviceMetadata={this.props.serviceMetadata}
+          serviceMetadata={maybeServiceMetadata}
           service={this.props.service}
         />
       </View>
@@ -136,19 +122,9 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const servicesMetadataByID = servicesMetadataByIdSelector(state);
-
-  return {
-    serviceMetadata: ownProps.service
-      ? servicesMetadataByID[ownProps.service.service_id]
-      : pot.none
-  };
-};
+const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadServiceMetadata: (service: ServicePublic) =>
-    dispatch(loadServiceMetadata.request(service.service_id)),
   dispatch
 });
 

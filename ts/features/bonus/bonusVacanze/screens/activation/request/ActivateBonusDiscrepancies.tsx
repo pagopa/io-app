@@ -27,22 +27,23 @@ const iconSize = 24;
  * @param props
  * @constructor
  */
-export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> = props => (
-  <View
-    style={[
-      styles.verticalPadding,
-      styles.discrepanciesBox,
-      bonusVacanzeStyle.row,
-      bonusVacanzeStyle.horizontalPadding
-    ]}
-  >
-    <IconFont name={"io-notice"} size={iconSize} />
-    <View hspacer={true} />
-    <Text style={activateBonusStyle.boxText} dark={true}>
-      <Text bold={true} style={activateBonusStyle.boxText} dark={true}>
-        {`${props.attention} `}
+export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
+  props => (
+    <View
+      style={[
+        styles.verticalPadding,
+        styles.discrepanciesBox,
+        bonusVacanzeStyle.row,
+        bonusVacanzeStyle.horizontalPadding
+      ]}
+    >
+      <IconFont name={"io-notice"} size={iconSize} />
+      <View hspacer={true} />
+      <Text style={activateBonusStyle.boxText} dark={true}>
+        <Text bold={true} style={activateBonusStyle.boxText} dark={true}>
+          {`${props.attention} `}
+        </Text>
+        {props.text}
       </Text>
-      {props.text}
-    </Text>
-  </View>
-);
+    </View>
+  );

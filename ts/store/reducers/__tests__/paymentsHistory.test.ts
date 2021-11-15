@@ -1,7 +1,8 @@
 import { range } from "fp-ts/lib/Array";
 import { none, some } from "fp-ts/lib/Option";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Transaction } from "../../../types/pagopa";
 import {
@@ -49,7 +50,10 @@ describe("payments history", () => {
   }).value as PaymentRequestsGetResponse;
 
   it("should add a payment in the history", () => {
-    state = reducer(state, paymentVerifica.request(anRptId));
+    state = reducer(
+      state,
+      paymentVerifica.request({ rptId: anRptId, startOrigin: "message" })
+    );
     expect(state.length).toEqual(1);
   });
 
@@ -57,8 +61,12 @@ describe("payments history", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
   });
 
+  // eslint-disable-next-line sonarjs/no-identical-functions
   it("should not add a payment in the history because it is the same", () => {
-    state = reducer(state, paymentVerifica.request(anRptId));
+    state = reducer(
+      state,
+      paymentVerifica.request({ rptId: anRptId, startOrigin: "message" })
+    );
     expect(state.length).toEqual(1);
   });
 
@@ -167,9 +175,9 @@ describe("payments history", () => {
   });
 
   it("should update the existing payment history with failure value", () => {
-    state = reducer(state, paymentVerifica.failure("INVALID_AMOUNT"));
+    state = reducer(state, paymentVerifica.failure("PPT_IMPORTO_ERRATO"));
     expect(state.length).toEqual(1);
-    expect(state[0].failure).toEqual("INVALID_AMOUNT");
+    expect(state[0].failure).toEqual("PPT_IMPORTO_ERRATO");
   });
 
   it("should recognize a failed payment", () => {
@@ -181,8 +189,11 @@ describe("payments history", () => {
     state = reducer(
       state,
       paymentVerifica.request({
-        ...anRptId,
-        organizationFiscalCode: "123098" as OrganizationFiscalCode
+        rptId: {
+          ...anRptId,
+          organizationFiscalCode: "123098" as OrganizationFiscalCode
+        },
+        startOrigin: "message"
       })
     );
     expect(state.length).toEqual(2);
@@ -195,8 +206,11 @@ describe("payments history", () => {
       state = reducer(
         state,
         paymentVerifica.request({
-          ...anRptId,
-          organizationFiscalCode: `123098${_}` as OrganizationFiscalCode
+          rptId: {
+            ...anRptId,
+            organizationFiscalCode: `123098${_}` as OrganizationFiscalCode
+          },
+          startOrigin: "message"
         })
       );
     });

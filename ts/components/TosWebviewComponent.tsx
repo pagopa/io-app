@@ -20,6 +20,8 @@ const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
   <>
     <View style={{ flex: 1 }}>
       <WebView
+        androidCameraAccessDisabled={true}
+        androidMicrophoneAccessDisabled={true}
         textZoom={100}
         style={{ flex: 1 }}
         onLoadEnd={props.handleLoadEnd}

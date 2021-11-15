@@ -66,9 +66,9 @@ const getComponent = () => {
     } as CreditCard,
     inPayment: none
   } as NavigationParams;
-  const ToBeTested: React.FunctionComponent<React.ComponentProps<
-    typeof ConfirmCardDetailsScreen
-  >> = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
+  const ToBeTested: React.FunctionComponent<
+    React.ComponentProps<typeof ConfirmCardDetailsScreen>
+  > = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
     <ConfirmCardDetailsScreen {...props} />
   );
 

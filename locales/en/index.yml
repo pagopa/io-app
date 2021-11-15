@@ -64,6 +64,7 @@ global:
   sectionStatus:
     moreInfo: more info
   accessibility:
+    switchLabel: "Select to activate"
     reload: "Reload"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
@@ -160,6 +161,7 @@ global:
     update: "Update"
     findOutMore: "Find out more"
     details: "Details"
+    choose: "Scegli"
   navigator:
     messages: messages
     wallet: wallet
@@ -215,11 +217,16 @@ betaBanner:
 connection:
   status:
     offline: Offline! Some features will not work.
-exit:
-  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
+permissionRationale:
+  storage:
+    title: "Allow gallery access"
+    message: "You’ll be able to save bonuses, certificates and upload screenshots or payment notices."
+  camera:
+    title: "Allow camera access"
+    message: "You’ll be able to read QR codes and pay pagoPA notices."
 startup:
   title: Initialization
   authentication: User authenticated
@@ -238,7 +245,7 @@ login:
   welcome:
     line1: welcome in your
     line2: Digital Citizenship
-  expiration_info: For security reasons, after 30 days from your last login with SPID or CIE, you'll need to sign in again to use IO.
+  expiration_info: For security reasons, you’ll need to sign in again with CIE or SPID every 30 days.
 inbox:
   enableButton: Enable Inbox
   disableButton: Disable Inbox
@@ -397,7 +404,7 @@ profile:
           confirmToast: "Preferences updated!"
         alert:
           title: "You are not giving IO consent to collect your usage data"
-          body: "By confirming this choice, IO team might not always be able to support you properly to solve your issues."
+          body: "If you confirm this option, in case of technical problems, the IO support team may not have all the data needed to solve your issue."
         whyBottomSheet:
           title: "For what purposes do we collect information?"
           body: "**IO does not collect data for marketing purposes.**  \nWe use tools to collect data related to your app usage, with the sole purpose of offering you a better service and support you in case of issues."
@@ -594,15 +601,25 @@ authentication:
       button: "Load/open CieID"
     card:
       headerTitle: Login with CIE
-      titleiOS: Please try again
+      titleiOS: Hold the card still
       title: Hold the card again
       layCardMessageHeader: Hold your Electronic ID Card on the back of your phone for a few seconds.
-      layCardMessageHeaderiOS: Hold your electronic ID card on the back of the iPhone, at the top.
-      layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
+      layCardMessageHeaderiOS: The sensor is located on top of the device.
+      layCardMessageFooter: If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.
       cieCardValid: Ok, your card is valid! You can remove it.
       readerCardTitle: Hold the card for a few seconds
       readerCardHeader: We are reading the data of your CIE and verifying its validity.
       readerCardFooter: Hold the card in this position for a few more seconds
+      iosAlert:
+        readingInstructions: Keep your electronic ID card on the top of the iPhone.
+        moreTags: More cards have been identified. Please bring one card at a time.
+        readingInProgress: "READING IN PROGRESS\nHold the card still for a few seconds..."
+        readingSuccess: "Successful reading.\nYou can remove the card while we complete the data verification."
+        invalidCard: It seems that this card is not an Electronic Identity Card (CIE).
+        tagLost: You removed the card too soon.
+        cardLocked: CIE card locked
+        wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
+        wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
       error:
         readerCardLostTitle: Hold the card again for a few seconds
         readerCardLostTitleiOS: You removed the card too soon.
@@ -827,7 +844,7 @@ payment:
     info:
       buttons:
         copy: copy
-        help: Contact support
+        help: Get support
       title: Payment Detail
       enteCreditore: Payee institution
       causaleVersamento: Payment description
@@ -971,6 +988,34 @@ wallet:
       koNotFound:
         title: "Sorry, we do not know that you have activated Satispay yet"
         body: "Contact Satispay for activation"
+    paypal:
+      name: "PayPal"
+      headerTitle: "Add PayPal"
+      start:
+        title: "Pay on IO with PayPal"
+        body: "Add your PayPal account and pay pagoPA notices more easily: you can also use your bank account!"
+      selectPsp:
+        title: "Which payment provider do you want to use PayPal with?"
+        body: "When using pagoPA, you can choose the payment provider more convenient for you: you'll be able to change it during any payment, depending on the proposed fee."
+        link: "What is a payment provider?"
+        leftColumnTitle: "Provider"
+        rightColumnTitle: "Info & Fees"
+        infoBottomSheet:
+          title: "Who is {{pspName}}?"
+          ctaTitle: "Got it"
+          row1Description: "It's a Payment Service Provider (PSP) which can process your transactions via PayPal."
+          row2Description1: "When you pay a notice, this PSP can apply a maximum fee of "
+          row2Description2: ". You'll see the right amount before confirming the payment."
+          row3Description1: "Privacy Policy"
+          row3Description2: "Terms and Conditions"
+        whatIsPspBottomSheet:
+          title: "What is a payment provider?"
+          body: "The Payment Service Provider (PSP) collects the amount on behalf of the Payee, and it may charge a fee for its service.\nWhenever you'll pay, you can to choose the provider that suits you best, whether you're a customer or not."
+      onBoardingCompleted:
+        title: "That's it!"
+        body: "Now have a look at the current settings of your new method."
+        secondaryButton: "Close"
+        primaryButton: "View method"
     coBadge:
       headerTitle: "Add international circuit"
       start:
@@ -1080,18 +1125,8 @@ wallet:
       message: This payment method will be available in a future release
   add: add
   delete:
-    bancomat:
-      successful: Bancomat successfully removed
-      failed: The bancomat could not be removed
-    satispay:
-      successful: Satispay successfully removed
-      failed: Satispay could not be removed
-    bPay:
-      successful: BancomatPay successfully removed
-      failed: BancomatPay could not be removed
-    successful: Payment method successfully removed
-    failed: The payment method could not be removed
-    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
+    successful: Method removed from your Wallet
+    failed: The method could not be removed from your Wallet
   newPaymentMethod:
     add: add
     show: show
@@ -1220,9 +1255,9 @@ wallet:
     contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Enter notice data
-    title: Insert the notice data
-    info: which allow us to identify the transaction
-    link: Where are they?
+    title: What do you have to pay for?
+    info: Enter the information as shown on the payment notice.
+    link: Where can I find the data?
     noticeCode: Notice Code
     entityCode: Creditor Entity Fiscal Code
     amount: Amount (€)
@@ -1257,7 +1292,7 @@ wallet:
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
-  addPaymentMethodTitle: Add payment method
+  addPaymentMethodTitle: Add a method
   continue: Pay this notice
   backToPayments: Back to payments
   methods:
@@ -1266,7 +1301,7 @@ wallet:
     card:
       name: Credit, debit or prepaid card
       shortName: "Card"
-      description: The card issued by your bank that you normally use to pay in stores and online
+      description: The card that you use to pay in stores and online
       pagoPaCapability:
         title: In app payments
         description: Pay your notices with pagoPA logo
@@ -1284,19 +1319,19 @@ wallet:
       description: Use your favourite mobile payment apps in IO
     loyalty:
       name: Supermarket Loyalty Card
-      description: The payment card issued by your supermarket, used to pay for groceries
+      description: The payment card you use to pay for groceries
     pagobancomat:
       name: PagoBANCOMAT card
-      description: The card with the PagoBANCOMAT logo typically used to withdraw cash or pay in stores
+      description: The card used to pay in stores
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
     satispay:
       name: Satispay
-      description: Pay with Satispay
+      description: The app to pay in a smart way
     bancomatPay:
       name: BANCOMAT Pay
-      description: Pay with BANCOMAT Pay
+      description: Link your BANCOMAT Pay account
     postepayApp:
       name: Postepay
       description: your Postepay app
@@ -1304,7 +1339,8 @@ wallet:
       name: BancoPosta or Postepay card
       description: Cards issued by Poste Italiane
     paypal:
-      name: Paypal
+      name: PayPal
+      description: Pay with your linked card or bank account
     bancomat:
       name: PagoBANCOMAT
     cobadge:
@@ -1363,9 +1399,6 @@ wallet:
       manually enter the data (Notice Code and Payee Fiscal Code).
     setManually: Enter manually
     enroll_cta: To scan the QR code, IO needs your permission to use your phone camera. This can be done from the 'Settings' menu of your device.
-    cameraUsagePermissionInfobox:
-      title: "IO Camera usage permission"
-      message: "IO app needs Camera usage permission to shoot at the QR code"
     settingsAlert:
       title: It seems access to Photos has been denied
       message: IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices
@@ -1378,19 +1411,28 @@ wallet:
     title: Why is there a transaction fee?
     text: !include wallet/why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: This notice has been already paid!
+    TECHNICAL: Sorry, a technical problem has occurred with this notice
+    DATA: Sorry, the payment information is incorrect
+    EC: Sorry, Payee is having problems in responding
+    ONGOING: This payment is still ongoing, please try again in a few minutes
+    ONGOING_SUBTITLE: If it has been too long, please let us know!
+    REVOKED: Sorry, the Payee has revoked this notice
+    EXPIRED: Sorry, the notice has expired, it is not possible to pay it
+    GENERIC_ERROR: Sorry, an unexpected error has occurred
+    GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
+    DUPLICATED: This notice has been already paid!
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
     DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the pagoPA network, the payment cannot be started.
-    GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
     MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
     PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
+    contactECsubtitle: Contact the Institution for more information.
+    assistanceLabel: "Use this code to get support:"
     sendReport: Send report
     loadingData: loading failure, try again.
   walletCardTransaction:
@@ -1406,8 +1448,6 @@ wallet:
         title: "Does your card have more than one logo?"
         body: "If your PagoBANCOMAT card shows other international circuits, you can add them by searching for all debit (or credit) cards registered to you. When you enable Cashback on this method, you will also be able to collect transactions on these circuits."
         addCta: "Add second circuit"
-      removeCta: "Delete this payment method"
-      deleteLoading: Payment method deletion in progress
   satispay:
     details:
       infobox:
@@ -1419,8 +1459,8 @@ wallet:
       card:
         validUntil: "Valid until {{expiryDate}}"
   newRemove:
-    title: "Delete this payment method?"
-    body: "This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
+    title: "Delete this method?"
+    body: "This method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours."
     warningCapability: "The functions will also be disabled:"
   capability:
     title: "Available initiatives"
@@ -1475,7 +1515,7 @@ cardComponent:
   unsetFavorite: Remove from favourites
   deleteTitle: Delete this payment method?
   deleteMsg: This payment method will be removed. Any related feature, such as Cashback, will be disabled within 24 hours.
-  deleteLoading: Payment method deletion in progress
+  deleteLoading: Method deletion in progress
   neverUsed: Never used
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
@@ -1742,9 +1782,7 @@ identification:
     popup:
       reason: Identification by touch ID failed
       title: Identification required
-      sensorDescription: Touch sensor
-      sensorErrorDescription: Fingerprint not recognized. Touch the sensor again.
-      fallbackLabel: Use the unlock code
+      sensorDescription: Login quickly
   fail:
     remainingAttempts: You have {{attempts}} attempts left.
     remainingAttemptSingle: You have {{attempts}} attempt left.
@@ -2070,7 +2108,8 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      card: Your Bonus Vacanze with code {{code}} worth {{value}} euro is {{status}}
+      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
+      card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
     statusInfo:
       validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
       bonusRejected: Attention! This Bonus Vacanze has been rejected
@@ -2202,6 +2241,9 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
+    accessibility:
+      card:
+        preview: "Cashback, period from {{startDate}} to {{endDate}}. Earned amount € {{amount}}"
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
@@ -2472,19 +2514,23 @@ bonus:
         deals: Discounts
         description: Description
         services: Services
+        addresses: Addresses
         hours: Working Hours
         validity: Validity
         discountCode: Discount code
         conditions: Conditions
       cta:
         label: Navigate to merchant website
+        landingPage: Get the benefit
       categories:
-        theater: theater, cinema and entertainment
-        travel: travel
-        mobility: carsharing and mobility
-        telco: telecommunications, internet services
-        book: books, audiobooks, e-books
-        museum: museums, galleries, parks
+        counting: and other {{count}}
+        theater: free time
+        travel: travels, transportation and mobility
+        food: restaurant and cooking
+        hotel: hotel
+        service: services
+        book: instruction
+        shopping: shopping
         sport: sport
         health: health and wellness
     cta:
@@ -2492,7 +2538,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: See merchants
+        buyers: See benefits
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number
@@ -2635,9 +2681,30 @@ bonus:
           departure: "Departure date"
           return: "Return date"
       summary:
-        title: "SummaryScreen"
+        title: "Summary"
+        subtitle1:
+          normal1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts ("
+          link: "art.76 of the Presidential Decree of 28 December 2000, n.445"
+          normal2: ") that you meet the following requirements:"
+        subtitle2: "And to request a discount code for a flight with the following characteristics:"
+        fields:
+          residence:
+            label: "Residence:"
+            value: "Sicily"
+          category:
+            label: "Category:"
+            value:
+              disabled: "Severely disabled pursuant to article 3, paragraph 3, of law no. 104"
+              student: "Off-site student"
+              worker: "Employee with a workplace outside Sicily"
+              sick: "Patient in need of treatment outside the Sicily region"
+          flightDate:
+            label: "Flight date:"
+            disabled: "All"
+          availableDestination: "Possible destinations:"
       voucherGenerated:
-        title: "VoucherGeneratedScreen"
+        title: "Here is your discount code"
+        subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
       ko:
         checkIncome:
           title: "Sorry, you do not have the features to access the discounts."
@@ -2652,7 +2719,71 @@ bonus:
           title: "Your Sicilia Vola discount code is being generated."
           body: "You will receive a message in the IO app when it is ready."
     voucherList:
-      title: "VoucherListScreen"
+      title: "Your discount codes available"
+      loading: "Loading"
+      filter:
+        title: "Filter vouchers"
+        searchValuePlaceholder: "Search coupon code"
+        stateSection:
+          title: "State"
+        dateSection:
+          title: "Date"
+          departure: "Departure date"
+          return: "Return date"
+        cta:
+          removeFilter: "Remove"
+          applyFilter:
+            zero: "Apply filters"
+            other: "Apply filters ({{count}})"
+      emptyList:
+        title: "There are no discount codes available"
+        subtitle: "Search to see your used or expired codes or request a new code"
+        cta: "Generate a new code"
+      error: "We are unable to recover your vouchers, please try again."
+      details:
+        title: "Your discount code"
+        fields:
+          uniqueCode: "Unique code"
+          beneficiary: "Beneficiary"
+          residence:
+            label: "Residence"
+            value: "Sicily"
+          category: "Category"
+          flightDate: "Flight date"
+          possibleDestination: "Possible destinations"
+        cta:
+          voucherRevocation: "Voucher revocation"
+          openQr: "Open QR code"
+        voucherRevocation:
+          alert:
+            title: "Attention"
+            message: "Are you sure you want to proceed? The discount code will be deleted."
+            cta:
+              ok: "Continue"
+              ko: "Cancel the request"
+          toast:
+            ok: "Voucher successfully deleted"
+            ko: "Error while deleting the voucher. Try again"
+    components:
+      voucherVisualDetails:
+        uniqueCode: "Unique code"
+        qrCode: "QR Code"
+        barCode: "Bar Code"
+      destinationLabels:
+        universityName: "University name"
+        companyName: "Company name"
+        hospitalName: "Hospital or professional name"
+        municipality: "Municipality"
+      voucherBottomsheet:
+        title: "Sicilia Vola discount code"
+        cta:
+          exit: "Exit"
+          voucherRevocation: "Voucher revocation"
+    pdfVoucher:
+      toast:
+        ok: "Voucher saved successfully"
+        ko: "Problems saving the voucher"
+
 features:
   euCovidCertificate:
     save:
@@ -2693,7 +2824,7 @@ features:
       notFound:
         title: "It seems that the certificate does not \nexist: contact support"
         subtitle: "Details to receive support:"
-        cta: "Contact support"
+        cta: "Get support"
       notOperational:
         title: "The EU Digital COVID Certificate is not currently operational"
         subtitle: "TMP"
@@ -2703,7 +2834,7 @@ features:
       wrongFormat:
         title: "This certificate cannot be retrieved"
         subtitle: "Details to receive support:"
-        cta: "Contact support"
+        cta: "Get support"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

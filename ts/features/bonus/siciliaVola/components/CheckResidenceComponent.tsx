@@ -25,13 +25,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 const getCheckResidencyRegionItems = (): ReadonlyArray<RadioItem<boolean>> => [
   {
-    label: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily"),
+    body: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.inSicily"),
     id: true
   },
   {
-    label: I18n.t(
-      "bonus.sv.voucherGeneration.checkResidence.items.notInSicily"
-    ),
+    body: I18n.t("bonus.sv.voucherGeneration.checkResidence.items.notInSicily"),
     id: false
   }
 ];
@@ -92,9 +90,8 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
   navigateToSvSelectBeneficiaryCategory: () =>
-    dispatch(navigateToSvSelectBeneficiaryCategoryScreen()),
-  navigateToSvKoCheckResidence: () =>
-    dispatch(navigateToSvKoCheckResidenceScreen())
+    navigateToSvSelectBeneficiaryCategoryScreen(),
+  navigateToSvKoCheckResidence: () => navigateToSvKoCheckResidenceScreen()
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

@@ -8,9 +8,8 @@ import ActivateBpdOnNewPaymentMethodScreen from "./ActivateBpdOnNewPaymentMethod
 type ActivateBpdOnNewCreditCardScreenNavigationParams = {
   creditCards: ReadonlyArray<PaymentMethod>;
 };
-type Props = NavigationStackScreenProps<
-  ActivateBpdOnNewCreditCardScreenNavigationParams
->;
+type Props =
+  NavigationStackScreenProps<ActivateBpdOnNewCreditCardScreenNavigationParams>;
 
 export const ActivateBpdOnNewCreditCardScreen: React.FC<Props> = (
   props: Props

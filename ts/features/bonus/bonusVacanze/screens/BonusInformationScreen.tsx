@@ -47,8 +47,8 @@ const mapStateToProps = (state: GlobalState) => ({
   hasOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 0
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
+const mapDispatchToProps = (_: Dispatch) => ({
+  navigateBack: () => navigateBack()
 });
 
 export default connect(

@@ -5,16 +5,21 @@ import {
   NonEmptyString,
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
-import { NavigationParams } from "react-navigation";
+import { NavigationActions, NavigationParams } from "react-navigation";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
-import { loadMessage, loadMessages } from "../../../store/actions/messages";
+import {
+  loadMessage,
+  DEPRECATED_loadMessages as loadMessages
+} from "../../../store/actions/messages";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
@@ -31,16 +36,20 @@ const mockMeta: CreatedMessageWithoutContent = {
 const mockMessage: CreatedMessageWithContentAndAttachments = {
   content: {
     subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-    markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-      80,
-      10001
-    >,
+    markdown:
+      "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+        80,
+        10001
+      >,
     due_date: new Date(),
     payment_data: {
       amount: 1 as PaymentAmount,
       notice_number: "002718270840468918" as string &
         IPatternStringTag<"^[0123][0-9]{17}$">,
-      invalid_after_due_date: true
+      invalid_after_due_date: true,
+      payee: {
+        fiscal_code: "00000000001" as OrganizationFiscalCode
+      }
     }
   },
   created_at: new Date(),
@@ -67,16 +76,20 @@ const mockEUCovidMessage: pot.Pot<
     content: {
       eu_covid_cert: { auth_code: "eu_covid_cert" },
       subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-      markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-        80,
-        10001
-      >,
+      markdown:
+        "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+          80,
+          10001
+        >,
       due_date: new Date(),
       payment_data: {
         amount: 1 as PaymentAmount,
         notice_number: "002718270840468918" as string &
           IPatternStringTag<"^[0123][0-9]{17}$">,
-        invalid_after_due_date: true
+        invalid_after_due_date: true,
+        payee: {
+          fiscal_code: "00000000001" as OrganizationFiscalCode
+        }
       }
     },
     created_at: new Date(),
@@ -86,31 +99,6 @@ const mockEUCovidMessage: pot.Pot<
     time_to_live: 3600 as TimeToLiveSeconds
   }
 };
-
-const euCovidCertActions = [
-  { type: "Navigation/BACK" },
-  {
-    type: "Navigation/NAVIGATE",
-    routeName: "EUCOVIDCERT_CERTIFICATE",
-    params: {
-      authCode: "eu_covid_cert",
-      messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
-    }
-  }
-];
-
-const standardMessageActions = [
-  {
-    type: "Navigation/BACK"
-  },
-  {
-    params: {
-      messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
-    },
-    routeName: "MESSAGE_DETAIL",
-    type: "Navigation/NAVIGATE"
-  }
-];
 
 jest.mock("../../../config", () => ({ euCovidCertificateEnabled: true }));
 
@@ -129,6 +117,7 @@ describe("Test MessageRouterScreen", () => {
   });
   it("With the messages allIds pot.some and byId some, default message, the navigation to MESSAGE_DETAIL should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
 
     const routerScreen = renderComponentMockStore({
       ...globalState,
@@ -147,12 +136,21 @@ describe("Test MessageRouterScreen", () => {
       }
     });
 
-    // eslint-disable-next-line no-console
+    expect(routerScreen).not.toBeNull();
 
-    expect(routerScreen.store.getActions()).toEqual(standardMessageActions);
+    expect(spy).toHaveBeenCalledWith(NavigationActions.back());
+    expect(spy).toHaveBeenCalledWith(
+      NavigationActions.navigate({
+        params: {
+          messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
+        },
+        routeName: "MESSAGE_DETAIL"
+      })
+    );
   });
   it("With the euCovidCertificate feature flag enabled, messages allIds pot.some and byId some, EU Covid message, the navigation to EUCOVIDCERT_DETAILS should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
 
     const routerScreen = renderComponentMockStore({
       ...globalState,
@@ -170,8 +168,18 @@ describe("Test MessageRouterScreen", () => {
         }
       }
     });
+    expect(routerScreen).not.toBeNull();
 
-    expect(routerScreen.store.getActions()).toEqual(euCovidCertActions);
+    expect(spy).toHaveBeenCalledWith(NavigationActions.back());
+    expect(spy).toHaveBeenCalledWith(
+      NavigationActions.navigate({
+        routeName: "EUCOVIDCERT_CERTIFICATE",
+        params: {
+          authCode: "eu_covid_cert",
+          messageId: "01DQQGBXWSCNNY44CH2QZ95PIO"
+        }
+      })
+    );
   });
   it("With the messages allIds pot.noneLoading, the screen should be loading", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));

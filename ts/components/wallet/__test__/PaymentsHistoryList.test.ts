@@ -1,9 +1,10 @@
 import { none, some } from "fp-ts/lib/Option";
-import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import {
   IPatternStringTag,
   IWithinRangeStringTag
 } from "italia-ts-commons/lib/strings";
+
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
@@ -108,7 +109,7 @@ const paymentHistoryFailed: PaymentHistory = {
       IPatternStringTag<"^[0-9]{11}$">
   },
   started_at: "2020-04-05T15:51:16.237Z",
-  failure: "DOMAIN_UNKNOWN"
+  failure: "PPT_DOMINIO_SCONOSCIUTO"
 };
 
 describe("test the checkPaymentOutcome function", () => {

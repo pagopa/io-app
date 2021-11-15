@@ -1,11 +1,11 @@
 import { View } from "native-base";
 import React from "react";
 import { StyleProp, StyleSheet, TextStyle } from "react-native";
-import H5 from "../../../../../components/ui/H5";
-import H6 from "../../../../../components/ui/H6";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H2 } from "../../../../../components/core/typography/H2";
 import {
   KeyValueRow,
   KeyValueTable,
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
  */
 const header = (key: string, value: string) => (
   <View style={keyValueTableStyle.baseRow} accessible={true}>
-    <H6>{key}</H6>
-    <H5>{value}</H5>
+    <Body weight={"SemiBold"}>{key}</Body>
+    <H2 weight={"SemiBold"}>{value}</H2>
   </View>
 );
 
@@ -69,26 +69,27 @@ const getRow = (
  * @param props
  * @constructor
  */
-export const BonusCompositionDetails: React.FunctionComponent<Props> = props => {
-  const amountTitle = I18n.t("bonus.bonusVacanze.composition.amount");
-  const expendableText = I18n.t("bonus.bonusVacanze.composition.expendable");
-  const taxBenefitText = I18n.t("bonus.bonusVacanze.composition.taxBenefit");
+export const BonusCompositionDetails: React.FunctionComponent<Props> =
+  props => {
+    const amountTitle = I18n.t("bonus.bonusVacanze.composition.amount");
+    const expendableText = I18n.t("bonus.bonusVacanze.composition.expendable");
+    const taxBenefitText = I18n.t("bonus.bonusVacanze.composition.taxBenefit");
 
-  const expendableAmount = props.bonusAmount - props.taxBenefit;
+    const expendableAmount = props.bonusAmount - props.taxBenefit;
 
-  const displayBonusAmount = formatNumberAmount(props.bonusAmount, true);
-  const displayExpendableAmount = formatNumberAmount(expendableAmount, true);
-  const displayTaxBenefit = formatNumberAmount(props.taxBenefit, true);
+    const displayBonusAmount = formatNumberAmount(props.bonusAmount, true);
+    const displayExpendableAmount = formatNumberAmount(expendableAmount, true);
+    const displayTaxBenefit = formatNumberAmount(props.taxBenefit, true);
 
-  const rows: ReadonlyArray<KeyValueRow> = [
-    getRow(expendableText, displayExpendableAmount, undefined, styles.bold),
-    getRow(taxBenefitText, displayTaxBenefit)
-  ];
+    const rows: ReadonlyArray<KeyValueRow> = [
+      getRow(expendableText, displayExpendableAmount, undefined, styles.bold),
+      getRow(taxBenefitText, displayTaxBenefit)
+    ];
 
-  return (
-    <View>
-      {header(amountTitle, displayBonusAmount)}
-      <KeyValueTable leftFlex={3} rightFlex={1} rows={rows} />
-    </View>
-  );
-};
+    return (
+      <View>
+        {header(amountTitle, displayBonusAmount)}
+        <KeyValueTable leftFlex={3} rightFlex={1} rows={rows} />
+      </View>
+    );
+  };

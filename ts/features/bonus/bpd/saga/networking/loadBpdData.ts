@@ -20,14 +20,10 @@ import { bpdTransactionsLoad } from "../../store/actions/transactions";
  */
 function* checkPreviousFailures() {
   // wait if some previous errors occurred
-  const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
-    getBackoffTime,
-    bpdLoadActivationStatus.failure
-  );
-  const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> = yield call(
-    getBackoffTime,
-    bpdPeriodsAmountLoad.failure
-  );
+  const loadActivationBackOff: SagaCallReturnType<typeof getBackoffTime> =
+    yield call(getBackoffTime, bpdLoadActivationStatus.failure);
+  const loadPeriodsBackOff: SagaCallReturnType<typeof getBackoffTime> =
+    yield call(getBackoffTime, bpdPeriodsAmountLoad.failure);
   const waitingTime = Math.max(loadActivationBackOff, loadPeriodsBackOff);
   if (waitingTime > 0) {
     yield delay(waitingTime);

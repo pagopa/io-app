@@ -121,6 +121,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
     };
   }
 
+  get idp(): string {
+    return this.props.loggedOutWithIdpAuth?.idp.id ?? "n/a";
+  }
+
   private updateLoginTrace = (url: string): void => {
     this.setState({ loginTrace: url });
   };
@@ -140,7 +144,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleLoginFailure = (errorCode?: string) => {
     this.props.dispatchLoginFailure(
-      new Error(`login failure with code ${errorCode || "n/a"}`)
+      new Error(`login failure with code ${errorCode || "n/a"}`),
+      this.idp
     );
     const logText = fromNullable(errorCode).fold(
       "login failed with no error code available",
@@ -159,7 +164,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleLoginSuccess = (token: SessionToken) => {
     instabugLog(`login success`, TypeLogs.DEBUG, "login");
     Instabug.resetTags();
-    this.props.dispatchLoginSuccess(token);
+    this.props.dispatchLoginSuccess(token, this.idp);
   };
 
   private setRequestStateToLoading = (): void =>
@@ -236,7 +241,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           <View style={styles.errorButtonsContainer}>
             <ButtonDefaultOpacity
-              onPress={this.props.navigation.goBack}
+              onPress={() => this.props.navigation.goBack()}
               style={styles.cancelButtonStyle}
               block={true}
               light={true}
@@ -302,6 +307,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
+            androidCameraAccessDisabled={true}
+            androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
             source={{ uri: loginUri }}
@@ -338,8 +345,10 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
-  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
+  dispatchLoginSuccess: (token: SessionToken, idp: string) =>
+    dispatch(loginSuccess({ token, idp })),
+  dispatchLoginFailure: (error: Error, idp: string) =>
+    dispatch(loginFailure({ error, idp }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IdpLoginScreen);

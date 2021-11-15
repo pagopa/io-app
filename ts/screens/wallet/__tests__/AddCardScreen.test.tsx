@@ -146,9 +146,9 @@ const getComponent = () => {
     inPayment: none
   } as NavigationParams;
 
-  const ToBeTested: React.FunctionComponent<React.ComponentProps<
-    typeof AddCardScreen
-  >> = (props: React.ComponentProps<typeof AddCardScreen>) => (
+  const ToBeTested: React.FunctionComponent<
+    React.ComponentProps<typeof AddCardScreen>
+  > = (props: React.ComponentProps<typeof AddCardScreen>) => (
     <AddCardScreen {...props} />
   );
 
