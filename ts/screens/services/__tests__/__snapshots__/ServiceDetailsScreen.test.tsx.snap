@@ -1,0 +1,1327 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServiceDetailsScreen expect to match snapshot 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    collapsable={false}
+    forwardedRef={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#eee",
+        "flex": 1,
+        "flexDirection": "column-reverse",
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        pointerEvents="none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "opacity": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "transform": Array [
+              Object {
+                "translateX": 1000000,
+              },
+              Object {
+                "translateY": 1000000,
+              },
+            ],
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={true}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "flex": 1,
+            }
+          }
+        />
+      </View>
+      <View
+        forwardedRef={[Function]}
+        pointerEvents="box-only"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "transform": Array [
+              Object {
+                "translateX": 0,
+              },
+              Object {
+                "translateY": 0,
+              },
+            ],
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#fff",
+                "flex": 1,
+                "height": 1334,
+              }
+            }
+          >
+            <View
+              style={Object {}}
+            >
+              <View>
+                <RCTSafeAreaView
+                  emulateUnlessSupported={true}
+                  style={
+                    Object {
+                      "backgroundColor": "#F8F8F8",
+                    }
+                  }
+                >
+                  <View
+                    androidStatusBarColor="#FFFFFF"
+                    iosBarStyle="dark-content"
+                    noShadow={false}
+                    style={
+                      Object {
+                        "backgroundColor": "#F8F8F8",
+                        "borderBottomColor": "#a7a6ab",
+                        "borderBottomWidth": 0.5,
+                        "elevation": 3,
+                        "flexDirection": "row",
+                        "height": 64,
+                        "justifyContent": "center",
+                        "left": 0,
+                        "paddingLeft": 6,
+                        "paddingRight": 10,
+                        "right": 0,
+                        "shadowColor": undefined,
+                        "shadowOffset": undefined,
+                        "shadowOpacity": undefined,
+                        "shadowRadius": undefined,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "flex-start",
+                          "alignSelf": "center",
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        accessibilityLabel="Back"
+                        accessibilityRole="button"
+                        accessibilityState={
+                          Object {
+                            "disabled": undefined,
+                          }
+                        }
+                        accessible={true}
+                        focusable={true}
+                        forwardedRef={[Function]}
+                        hitSlop={
+                          Object {
+                            "bottom": 4,
+                            "top": 4,
+                          }
+                        }
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "alignSelf": null,
+                            "backgroundColor": "transparent",
+                            "borderBottomWidth": null,
+                            "borderColor": null,
+                            "borderLeftWidth": null,
+                            "borderRadius": 5,
+                            "borderRightWidth": null,
+                            "borderTopWidth": null,
+                            "borderWidth": undefined,
+                            "elevation": 0,
+                            "flexDirection": "row",
+                            "height": 45,
+                            "justifyContent": "space-between",
+                            "marginLeft": -3,
+                            "opacity": 1,
+                            "paddingBottom": 6,
+                            "paddingLeft": 4,
+                            "paddingRight": 6,
+                            "paddingTop": 6,
+                            "shadowColor": null,
+                            "shadowOffset": null,
+                            "shadowOpacity": null,
+                            "shadowRadius": null,
+                          }
+                        }
+                        testID="back-button"
+                      >
+                        <Text
+                          accessibilityElementsHidden={true}
+                          accessibilityLabel=""
+                          accessible={false}
+                          allowFontScaling={false}
+                          importantForAccessibility="no-hide-descendants"
+                          style={
+                            Array [
+                              Object {
+                                "color": undefined,
+                                "fontSize": 12,
+                              },
+                              Array [
+                                Array [
+                                  Object {},
+                                  Object {
+                                    "color": "#000000",
+                                  },
+                                ],
+                                Object {},
+                                Object {},
+                              ],
+                              Object {
+                                "fontFamily": "io-icon-font",
+                                "fontStyle": "normal",
+                                "fontWeight": "normal",
+                              },
+                              Object {},
+                            ]
+                          }
+                        >
+                          v
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "alignItems": "center",
+                            "alignSelf": "center",
+                            "flex": 1,
+                          },
+                          Object {
+                            "alignItems": "center",
+                          },
+                        ]
+                      }
+                    >
+                      <View
+                        accessible={true}
+                        style={Object {}}
+                      >
+                        <Text
+                          accessibilityRole="header"
+                          accessible={true}
+                          numberOfLines={1}
+                          style={
+                            Array [
+                              Object {
+                                "color": "#000",
+                                "fontFamily": "System",
+                                "fontSize": 16,
+                              },
+                              Object {
+                                "color": "#475A6D",
+                              },
+                            ]
+                          }
+                        >
+                          Service details
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "flex-end",
+                          "alignSelf": "center",
+                          "flex": 1,
+                          "flexDirection": "row",
+                          "justifyContent": "flex-end",
+                        }
+                      }
+                    >
+                      <View
+                        accessibilityHint="Access information about the contents of the current screen"
+                        accessibilityLabel="Contextual Help"
+                        accessibilityRole="button"
+                        accessibilityState={
+                          Object {
+                            "disabled": undefined,
+                          }
+                        }
+                        accessible={true}
+                        focusable={true}
+                        forwardedRef={[Function]}
+                        hitSlop={
+                          Object {
+                            "bottom": 4,
+                            "left": 4,
+                            "right": 4,
+                            "top": 4,
+                          }
+                        }
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "alignSelf": null,
+                            "backgroundColor": "transparent",
+                            "borderBottomWidth": null,
+                            "borderColor": null,
+                            "borderLeftWidth": null,
+                            "borderRadius": 50,
+                            "borderRightWidth": null,
+                            "borderTopWidth": null,
+                            "borderWidth": undefined,
+                            "elevation": 0,
+                            "flexDirection": "row",
+                            "height": 45,
+                            "justifyContent": "space-between",
+                            "marginRight": -9,
+                            "opacity": 1,
+                            "padding": 8,
+                            "paddingBottom": 6,
+                            "paddingLeft": 15,
+                            "paddingRight": 15,
+                            "paddingTop": 6,
+                            "shadowColor": null,
+                            "shadowOffset": null,
+                            "shadowOpacity": null,
+                            "shadowRadius": null,
+                          }
+                        }
+                      >
+                        <Text
+                          accessibilityElementsHidden={true}
+                          accessibilityLabel=""
+                          accessible={false}
+                          allowFontScaling={false}
+                          importantForAccessibility="no-hide-descendants"
+                          style={
+                            Array [
+                              Object {
+                                "color": undefined,
+                                "fontSize": 12,
+                              },
+                              Array [
+                                Object {},
+                                Object {},
+                                Object {},
+                              ],
+                              Object {
+                                "fontFamily": "io-icon-font",
+                                "fontStyle": "normal",
+                                "fontWeight": "normal",
+                              },
+                              Object {},
+                            ]
+                          }
+                        >
+                          r
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </RCTSafeAreaView>
+              </View>
+            </View>
+            <RCTSafeAreaView
+              emulateUnlessSupported={true}
+              style={
+                Object {
+                  "backgroundColor": "transparent",
+                  "flex": 1,
+                }
+              }
+            >
+              <RCTScrollView
+                automaticallyAdjustContentInsets={false}
+                contentContainerStyle={
+                  Array [
+                    Object {
+                      "padding": undefined,
+                    },
+                    undefined,
+                  ]
+                }
+                contentInset={
+                  Object {
+                    "bottom": 0,
+                  }
+                }
+                enableAutomaticScroll={true}
+                enableOnAndroid={false}
+                enableResetScrollToCoords={true}
+                extraHeight={75}
+                extraScrollHeight={0}
+                getScrollResponder={[Function]}
+                handleOnScroll={[Function]}
+                keyboardDismissMode="interactive"
+                keyboardOpeningTime={250}
+                keyboardShouldPersistTaps="handled"
+                keyboardSpace={0}
+                onScroll={[Function]}
+                resetKeyboardSpace={[Function]}
+                resetScrollToCoords={
+                  Object {
+                    "x": 0,
+                    "y": 0,
+                  }
+                }
+                scrollEventThrottle={1}
+                scrollForExtraHeightOnAndroid={[Function]}
+                scrollIntoView={[Function]}
+                scrollToEnd={[Function]}
+                scrollToFocusedInput={[Function]}
+                scrollToPosition={[Function]}
+                showsVerticalScrollIndicator={true}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "flex": 1,
+                  }
+                }
+                update={[Function]}
+                viewIsInsideTabBar={false}
+              >
+                <View>
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                          "flexDirection": "row",
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "flex": 1,
+                            "flexDirection": "column",
+                            "marginRight": 16,
+                          }
+                        }
+                      >
+                        <Text
+                          color="bluegreyDark"
+                          defaultColor="bluegreyDark"
+                          defaultWeight="Bold"
+                          font="TitilliumWeb"
+                          fontStyle={
+                            Object {
+                              "fontSize": 20,
+                            }
+                          }
+                          style={
+                            Array [
+                              Object {
+                                "fontSize": 20,
+                              },
+                              Object {
+                                "color": "#17324D",
+                                "fontFamily": "Titillium Web",
+                                "fontStyle": "normal",
+                                "fontWeight": "700",
+                              },
+                            ]
+                          }
+                          weight="Bold"
+                        >
+                          org
+                        </Text>
+                        <Text
+                          style={
+                            Object {
+                              "color": "#000",
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                            }
+                          }
+                        >
+                          ciao service
+                        </Text>
+                      </View>
+                      <View
+                        style={
+                          Object {
+                            "flex": 0,
+                            "flexDirection": "column",
+                            "width": 60,
+                          }
+                        }
+                      >
+                        <Image
+                          onError={[Function]}
+                          source={
+                            Object {
+                              "uri": "https://assets.cdn.io.italia.it/logos/services/a01.png",
+                            }
+                          }
+                          style={
+                            Object {
+                              "height": 60,
+                              "width": 60,
+                            }
+                          }
+                        />
+                      </View>
+                    </View>
+                  </View>
+                  <View
+                    small={true}
+                    spacer={true}
+                    style={Object {}}
+                  />
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "paddingVertical": 8,
+                      }
+                    }
+                  >
+                    <Text
+                      accessibilityElementsHidden={true}
+                      accessibilityLabel=""
+                      accessible={false}
+                      allowFontScaling={false}
+                      importantForAccessibility="no-hide-descendants"
+                      style={
+                        Array [
+                          Object {
+                            "color": "#475A6D",
+                            "fontSize": 18,
+                          },
+                          Array [
+                            Array [
+                              Object {},
+                              Object {
+                                "marginRight": 8,
+                              },
+                            ],
+                            Object {
+                              "color": "#475A6D",
+                            },
+                            Object {
+                              "fontSize": 18,
+                            },
+                          ],
+                          Object {
+                            "fontFamily": "io-icon-font",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      Z
+                    </Text>
+                    <Text
+                      accessibilityRole="header"
+                      color="bluegrey"
+                      font="TitilliumWeb"
+                      fontStyle={
+                        Object {
+                          "fontSize": 18,
+                        }
+                      }
+                      style={
+                        Array [
+                          Object {
+                            "fontSize": 18,
+                          },
+                          Object {
+                            "color": "#475A6D",
+                            "fontFamily": "Titillium Web",
+                            "fontStyle": "normal",
+                            "fontWeight": "600",
+                          },
+                        ]
+                      }
+                      weight="SemiBold"
+                      weightColorFactory={[Function]}
+                    >
+                      This service can:
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "flex": 1,
+                          "flexDirection": "row",
+                          "justifyContent": "space-between",
+                          "paddingVertical": 12,
+                        },
+                      ]
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <Text
+                        accessibilityRole="text"
+                        color="bluegreyDark"
+                        font="TitilliumWeb"
+                        fontStyle={
+                          Object {
+                            "fontSize": 16,
+                          }
+                        }
+                        style={
+                          Array [
+                            Object {
+                              "fontSize": 16,
+                            },
+                            Object {
+                              "color": "#17324D",
+                              "fontFamily": "Titillium Web",
+                              "fontStyle": "normal",
+                              "fontWeight": "400",
+                            },
+                          ]
+                        }
+                        testID="contact-preferences-inbox-switch-label"
+                        weight="Regular"
+                        weightColorFactory={[Function]}
+                      >
+                        Contact you in app
+                      </Text>
+                    </View>
+                    <RCTSwitch
+                      accessibilityLabel="Select to activate"
+                      accessibilityRole="switch"
+                      accessibilityState={
+                        Object {
+                          "checked": false,
+                          "disabled": undefined,
+                        }
+                      }
+                      accessible={true}
+                      onChange={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      onTintColor="#0073E6"
+                      style={
+                        Array [
+                          Object {
+                            "height": 31,
+                            "width": 51,
+                          },
+                          Object {
+                            "marginBottom": -5,
+                            "marginTop": -5,
+                          },
+                        ]
+                      }
+                      testID="contact-preferences-inbox-switch"
+                      thumbTintColor="default"
+                      tintColor="default"
+                      value={false}
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {},
+                        Object {
+                          "backgroundColor": "#C9C9C9",
+                        },
+                        false,
+                        Object {
+                          "height": 0.5,
+                        },
+                      ]
+                    }
+                  />
+                  <View
+                    large={true}
+                    spacer={true}
+                    style={Object {}}
+                  />
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "paddingVertical": 8,
+                      }
+                    }
+                  >
+                    <Text
+                      accessibilityElementsHidden={true}
+                      accessibilityLabel=""
+                      accessible={false}
+                      allowFontScaling={false}
+                      importantForAccessibility="no-hide-descendants"
+                      style={
+                        Array [
+                          Object {
+                            "color": "#475A6D",
+                            "fontSize": 18,
+                          },
+                          Array [
+                            Array [
+                              Object {},
+                              Object {
+                                "marginRight": 8,
+                              },
+                            ],
+                            Object {
+                              "color": "#475A6D",
+                            },
+                            Object {
+                              "fontSize": 18,
+                            },
+                          ],
+                          Object {
+                            "fontFamily": "io-icon-font",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                    <Text
+                      accessibilityRole="header"
+                      color="bluegrey"
+                      font="TitilliumWeb"
+                      fontStyle={
+                        Object {
+                          "fontSize": 18,
+                        }
+                      }
+                      style={
+                        Array [
+                          Object {
+                            "fontSize": 18,
+                          },
+                          Object {
+                            "color": "#475A6D",
+                            "fontFamily": "Titillium Web",
+                            "fontStyle": "normal",
+                            "fontWeight": "600",
+                          },
+                        ]
+                      }
+                      weight="SemiBold"
+                      weightColorFactory={[Function]}
+                    >
+                      Contacts and info
+                    </Text>
+                  </View>
+                  <View
+                    style={
+                      Object {
+                        "flexDirection": "column",
+                      }
+                    }
+                  >
+                    <View
+                      accessibilityHint="copy"
+                      accessibilityRole="button"
+                      accessible={true}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "flexDirection": "row",
+                          "marginVertical": 24,
+                          "opacity": 1,
+                        }
+                      }
+                    >
+                      <Text
+                        color="bluegrey"
+                        ellipsizeMode="tail"
+                        font="TitilliumWeb"
+                        fontStyle={
+                          Object {
+                            "fontSize": 16,
+                          }
+                        }
+                        numberOfLines={1}
+                        style={
+                          Array [
+                            Object {
+                              "flex": 1,
+                            },
+                            Object {
+                              "fontSize": 16,
+                            },
+                            Object {
+                              "color": "#475A6D",
+                              "fontFamily": "Titillium Web",
+                              "fontStyle": "normal",
+                              "fontWeight": "400",
+                            },
+                          ]
+                        }
+                        weight="Regular"
+                        weightColorFactory={[Function]}
+                      >
+                        Organization's Fiscal Code
+                      </Text>
+                      <View
+                        hspacer={true}
+                        style={Object {}}
+                      />
+                      <Text
+                        color="blue"
+                        ellipsizeMode="tail"
+                        font="TitilliumWeb"
+                        fontStyle={
+                          Object {
+                            "fontSize": 16,
+                          }
+                        }
+                        numberOfLines={1}
+                        style={
+                          Array [
+                            Array [
+                              Object {
+                                "flex": 1,
+                              },
+                              Object {
+                                "textAlign": "right",
+                              },
+                            ],
+                            Object {
+                              "fontSize": 16,
+                            },
+                            Object {
+                              "color": "#0073E6",
+                              "fontFamily": "Titillium Web",
+                              "fontStyle": "normal",
+                              "fontWeight": "600",
+                            },
+                          ]
+                        }
+                        weight="SemiBold"
+                        weightColorFactory={[Function]}
+                      >
+                        12341234
+                      </Text>
+                    </View>
+                    <View
+                      style={
+                        Array [
+                          Object {},
+                          Object {
+                            "backgroundColor": "#C9C9C9",
+                          },
+                          false,
+                          Object {
+                            "height": 0.5,
+                          },
+                        ]
+                      }
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {},
+                        Object {
+                          "alignSelf": "center",
+                          "flexDirection": "row",
+                          "justifyContent": "center",
+                          "marginBottom": 40,
+                          "marginTop": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <Image
+                      source={
+                        Object {
+                          "testUri": "../../../img/messages/smile.png",
+                        }
+                      }
+                    />
+                  </View>
+                  <View
+                    spacer={true}
+                    style={Object {}}
+                  />
+                  <View
+                    extralarge={true}
+                    spacer={true}
+                    style={Object {}}
+                  />
+                </View>
+              </RCTScrollView>
+            </RCTSafeAreaView>
+            <Modal
+              animationType="slide"
+              hardwareAccelerated={false}
+              onDismiss={[Function]}
+              onRequestClose={[Function]}
+              onShow={[Function]}
+              transparent={true}
+              visible={false}
+            >
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#fff",
+                    "flex": 1,
+                    "height": 1334,
+                  }
+                }
+              >
+                <View
+                  style={Object {}}
+                >
+                  <View>
+                    <RCTSafeAreaView
+                      emulateUnlessSupported={true}
+                      style={
+                        Object {
+                          "backgroundColor": "#F8F8F8",
+                        }
+                      }
+                    >
+                      <View
+                        androidStatusBarColor="#FFFFFF"
+                        iosBarStyle="dark-content"
+                        noShadow={false}
+                        style={
+                          Object {
+                            "backgroundColor": "#F8F8F8",
+                            "borderBottomColor": "#a7a6ab",
+                            "borderBottomWidth": 0.5,
+                            "elevation": 3,
+                            "flexDirection": "row",
+                            "height": 64,
+                            "justifyContent": "center",
+                            "left": 0,
+                            "paddingLeft": 6,
+                            "paddingRight": 10,
+                            "right": 0,
+                            "shadowColor": undefined,
+                            "shadowOffset": undefined,
+                            "shadowOpacity": undefined,
+                            "shadowRadius": undefined,
+                            "top": 0,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Array [
+                              Object {
+                                "alignItems": "center",
+                                "alignSelf": "center",
+                                "flex": 1,
+                              },
+                              Object {
+                                "marginLeft": 12,
+                              },
+                            ]
+                          }
+                        >
+                          <View
+                            accessible={true}
+                            style={Object {}}
+                          >
+                            <Text
+                              accessibilityRole="header"
+                              accessible={true}
+                              numberOfLines={1}
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#000",
+                                    "fontFamily": "System",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#475A6D",
+                                  },
+                                ]
+                              }
+                            >
+                              IO helps you
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "flex-end",
+                              "alignSelf": "center",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "justifyContent": "flex-end",
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityLabel="Close the contextual help"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              Object {
+                                "disabled": undefined,
+                              }
+                            }
+                            accessible={true}
+                            focusable={true}
+                            forwardedRef={[Function]}
+                            hitSlop={
+                              Object {
+                                "bottom": 4,
+                                "top": 4,
+                              }
+                            }
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "alignSelf": null,
+                                "backgroundColor": "transparent",
+                                "borderBottomWidth": null,
+                                "borderColor": null,
+                                "borderLeftWidth": null,
+                                "borderRadius": 50,
+                                "borderRightWidth": null,
+                                "borderTopWidth": null,
+                                "borderWidth": undefined,
+                                "elevation": 0,
+                                "flexDirection": "row",
+                                "height": 45,
+                                "justifyContent": "space-between",
+                                "marginRight": -9,
+                                "opacity": 1,
+                                "paddingBottom": 6,
+                                "paddingLeft": 15,
+                                "paddingRight": 15,
+                                "paddingTop": 6,
+                                "shadowColor": null,
+                                "shadowOffset": null,
+                                "shadowOpacity": null,
+                                "shadowRadius": null,
+                              }
+                            }
+                          >
+                            <Text
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              allowFontScaling={false}
+                              importantForAccessibility="no-hide-descendants"
+                              style={
+                                Array [
+                                  Object {
+                                    "color": undefined,
+                                    "fontSize": 12,
+                                  },
+                                  Array [
+                                    Object {},
+                                    Object {},
+                                    Object {},
+                                  ],
+                                  Object {
+                                    "fontFamily": "io-icon-font",
+                                    "fontStyle": "normal",
+                                    "fontWeight": "normal",
+                                  },
+                                  Object {},
+                                ]
+                              }
+                            >
+                              z
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </RCTSafeAreaView>
+                  </View>
+                </View>
+                <RCTSafeAreaView
+                  emulateUnlessSupported={true}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <RCTScrollView
+                    automaticallyAdjustContentInsets={false}
+                    contentContainerStyle={
+                      Array [
+                        Object {
+                          "padding": undefined,
+                        },
+                        Object {
+                          "padding": 24,
+                        },
+                      ]
+                    }
+                    contentInset={
+                      Object {
+                        "bottom": 0,
+                      }
+                    }
+                    enableAutomaticScroll={true}
+                    enableOnAndroid={false}
+                    enableResetScrollToCoords={true}
+                    extraHeight={75}
+                    extraScrollHeight={0}
+                    getScrollResponder={[Function]}
+                    handleOnScroll={[Function]}
+                    keyboardDismissMode="interactive"
+                    keyboardOpeningTime={250}
+                    keyboardShouldPersistTaps="handled"
+                    keyboardSpace={0}
+                    noPadded={true}
+                    onScroll={[Function]}
+                    resetKeyboardSpace={[Function]}
+                    resetScrollToCoords={
+                      Object {
+                        "x": 0,
+                        "y": 0,
+                      }
+                    }
+                    scrollEventThrottle={1}
+                    scrollForExtraHeightOnAndroid={[Function]}
+                    scrollIntoView={[Function]}
+                    scrollToEnd={[Function]}
+                    scrollToFocusedInput={[Function]}
+                    scrollToPosition={[Function]}
+                    showsVerticalScrollIndicator={true}
+                    style={
+                      Object {
+                        "backgroundColor": "transparent",
+                        "flex": 1,
+                      }
+                    }
+                    update={[Function]}
+                    viewIsInsideTabBar={false}
+                  >
+                    <View>
+                      <Text
+                        accessible={true}
+                        color="bluegreyDark"
+                        font="TitilliumWeb"
+                        fontStyle={
+                          Object {
+                            "fontSize": 18,
+                          }
+                        }
+                        style={
+                          Array [
+                            Object {
+                              "fontSize": 18,
+                            },
+                            Object {
+                              "color": "#17324D",
+                              "fontFamily": "Titillium Web",
+                              "fontStyle": "normal",
+                              "fontWeight": "600",
+                            },
+                          ]
+                        }
+                        weight="SemiBold"
+                        weightColorFactory={[Function]}
+                      >
+                        Service details
+                      </Text>
+                      <View
+                        spacer={true}
+                        style={Object {}}
+                      />
+                    </View>
+                  </RCTScrollView>
+                </RCTSafeAreaView>
+                <View
+                  footer={true}
+                  style={
+                    Array [
+                      Object {},
+                      Object {
+                        "borderTopColor": "#0073E6",
+                        "borderTopWidth": 2,
+                        "paddingHorizontal": 24,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Array [
+                        Object {},
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
+                      ]
+                    }
+                  >
+                    <Text
+                      accessibilityElementsHidden={true}
+                      accessibilityLabel=""
+                      accessible={false}
+                      allowFontScaling={false}
+                      importantForAccessibility="no-hide-descendants"
+                      style={
+                        Array [
+                          Object {
+                            "color": "#0073E6",
+                            "fontSize": 24,
+                          },
+                          Array [
+                            Object {},
+                            Object {
+                              "color": "#0073E6",
+                            },
+                            Object {
+                              "fontSize": 24,
+                            },
+                          ],
+                          Object {
+                            "fontFamily": "io-icon-font",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      T
+                    </Text>
+                    <View
+                      style={
+                        Array [
+                          Object {},
+                          Object {
+                            "borderRightColor": "#0073E6",
+                            "borderRightWidth": 1,
+                            "height": "100%",
+                            "marginHorizontal": 16,
+                            "width": 1,
+                          },
+                        ]
+                      }
+                    />
+                    <View
+                      style={
+                        Array [
+                          Object {},
+                          Object {
+                            "flex": 1,
+                          },
+                        ]
+                      }
+                    >
+                      <Text
+                        primary={true}
+                        style={
+                          Object {
+                            "color": "#000",
+                            "fontFamily": "System",
+                            "fontSize": 16,
+                          }
+                        }
+                      >
+                        Your reports help us to improve day after day.
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    spacer={true}
+                    style={Object {}}
+                  />
+                </View>
+              </View>
+            </Modal>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
