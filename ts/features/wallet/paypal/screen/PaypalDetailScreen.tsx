@@ -1,8 +1,5 @@
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { GlobalState } from "../../../../store/reducers/types";
 import { PayPalPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
@@ -12,9 +9,7 @@ type NavigationParams = Readonly<{
   paypal: PayPalPaymentMethod;
 }>;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  NavigationInjectedProps<NavigationParams>;
+type Props = NavigationInjectedProps<NavigationParams>;
 
 /**
  * Detail screen for a paypal payment method
@@ -33,8 +28,4 @@ const PaypalDetailScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaypalDetailScreen);
+export default PaypalDetailScreen;
