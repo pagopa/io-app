@@ -46,7 +46,7 @@ type CommonProps = {
 
 /**
  * Props explanation:
- * - onSelectValue -> method that inform about selected value from the suggested ones. The returned string will be used to set the search text-box.
+ * - selectedValue -> value to show in the initial textbox.
  * - disabled -> if true disable the onPress on the initial textBox and show the border light gray
  */
 type Props = {
@@ -105,9 +105,8 @@ const TextboxWithSuggestionModal = (props: ModalProps) => {
  * This component is a wrapper around a modal that contains:
  * - a LabelledItem component
  * - a Flatlist that shows a list of results from which the user has to choose
- * Two callbacks are available:
+ * A callback is available:
  * - onChangeText -> executed when the user inserts or cancels some character from the LabelledItem
- * - onSelectValue -> executed when the user selects an item before the modal is hide
  * @param props
  * @constructor
  */
