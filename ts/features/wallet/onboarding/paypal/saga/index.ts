@@ -18,7 +18,7 @@ const convertNetworkPsp = (psp: NetworkPsp): IOPayPalPsp => ({
   name: psp.ragioneSociale,
   fee: psp.maxFee as NonNegativeNumber,
   privacyUrl: psp.privacyUrl,
-  // TODO see https://www.figma.com/file/YokChZzMKIaQ4ouWaS22En?node-id=333:7168#122840225
+  // TODO see https://pagopa.atlassian.net/browse/IA-436
   tosUrl: ""
 });
 
