@@ -462,8 +462,7 @@ jobs:
               --take-screenshots all \
               --record-videos failing \
               --debug-synchronization 1000 \
-              --retries 3 \
-              --workers 4
+              --retries 3
 
       # store detox artifacts
       - store_artifacts:
@@ -492,9 +491,9 @@ workflows:
       - run-e2e-test-IOS:
           requires:
             - compile-typescript
-#          filters:
-#            branches:
-#              only: master
+          filters:
+            branches:
+              only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
