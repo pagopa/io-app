@@ -13,6 +13,7 @@ import {
 import bPayImage from "../../img/wallet/cards-icons/bPay.png";
 import pagoBancomatImage from "../../img/wallet/cards-icons/pagobancomat.png";
 import satispayImage from "../../img/wallet/cards-icons/satispay.png";
+import paypalImage from "../../img/wallet/cards-icons/paypal.png";
 import {
   cardIcons,
   getCardIconFromBrandLogo
@@ -27,6 +28,7 @@ import {
   isRawBancomat,
   isRawBPay,
   isRawCreditCard,
+  isRawPayPal,
   isRawPrivative,
   isRawSatispay,
   PaymentMethod,
@@ -35,6 +37,7 @@ import {
   RawBPayPaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
+  RawPayPalPaymentMethod,
   RawPrivativePaymentMethod,
   RawSatispayPaymentMethod,
   SatispayPaymentMethod
@@ -49,6 +52,8 @@ export const getPaymentMethodHash = (
   switch (pm.kind) {
     case "Satispay":
       return pm.info.uuid;
+    case "PayPal":
+      return pm.info.emailPp;
     case "BPay":
       return pm.info.uidHash;
     case "Bancomat":
@@ -96,6 +101,9 @@ export const getImageFromPaymentMethod = (
   if (isRawSatispay(paymentMethod)) {
     return satispayImage;
   }
+  if (isRawPayPal(paymentMethod)) {
+    return paypalImage;
+  }
   if (isRawBPay(paymentMethod)) {
     return bPayImage;
   }
@@ -111,8 +119,9 @@ export const getTitleFromBancomat = (
     .chain(abi => fromNullable(abi.name))
     .getOrElse(I18n.t("wallet.methods.bancomat.name"));
 
-export const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
-
+const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
+const getTitleForPaypal = (paypal: RawPayPalPaymentMethod) =>
+  paypal.info.emailPp;
 /**
  * Choose a textual representation for a {@link PatchedWalletV2}
  * @param paymentMethod
@@ -140,6 +149,9 @@ export const getTitleFromPaymentMethod = (
       paymentMethod.info.bankName ??
       I18n.t("wallet.methods.bancomatPay.name")
     );
+  }
+  if (isRawPayPal(paymentMethod)) {
+    return getTitleForPaypal(paymentMethod);
   }
   return FOUR_UNICODE_CIRCLES;
 };
@@ -220,6 +232,7 @@ export const enhancePaymentMethod = (
       return enhanceCreditCard(pm, abiList);
     case "Privative":
       return enhancePrivativeCard(pm, abiList);
+    case "PayPal":
     case "Satispay":
       return {
         ...pm,
@@ -246,6 +259,7 @@ export const isPaymentMethodExpired = (
 ): Either<Error, boolean> => {
   switch (paymentMethod.kind) {
     case "BPay":
+    case "PayPal":
     case "Satispay":
       return right(false);
     case "Bancomat":
